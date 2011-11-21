@@ -27,43 +27,45 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCTexture2D.h"
 
-namespace cocos2d{
+namespace cocos2d {
 
-	/** @brief CCLabelTTF is a subclass of CCTextureNode that knows how to render text labels
-	*
-	* All features from CCTextureNode are valid in CCLabelTTF
-	*
-	* CCLabelTTF objects are slow. Consider using CCLabelAtlas or CCLabelBMFont instead.
-	*/
-	class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
-	{
-	public:
-		CCLabelTTF();
-		virtual ~CCLabelTTF();
-		char * description();
-		/** creates a CCLabelTTF from a fontname, alignment, dimension and font size */
-		static CCLabelTTF * labelWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-		/** creates a CCLabelTTF from a fontname and font size */
-		static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
-		/** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
-		bool initWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-		/** initializes the CCLabelTTF with a font name and font size */
-		bool initWithString(const char *label, const char *fontName, float fontSize);
+/** @brief CCLabelTTF is a subclass of CCTextureNode that knows how to render text labels
+*
+* All features from CCTextureNode are valid in CCLabelTTF
+*
+* CCLabelTTF objects are slow. Consider using CCLabelAtlas or CCLabelBMFont instead.
+*/
+class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
+{
+public:
+    CCLabelTTF();
+    virtual ~CCLabelTTF();
+    char * description();
+    /** creates a CCLabelTTF from a fontname, alignment, dimension and font size */
+    static CCLabelTTF * labelWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    /** creates a CCLabelTTF from a fontname and font size */
+    static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
+    /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
+    bool initWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    /** initializes the CCLabelTTF with a font name and font size */
+    bool initWithString(const char *label, const char *fontName, float fontSize);
 
-		/** changes the string to render
-		* @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
-		*/
-		virtual void setString(const char *label);
-		virtual const char* getString(void);
+    /** changes the string to render
+    * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
+    */
+    virtual void setString(const char *label);
+    virtual const char* getString(void);
 
-		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
-	protected:
-		CCSize m_tDimensions;
-		CCTextAlignment m_eAlignment;
-        std::string * m_pFontName;
-		float m_fFontSize;
-        std::string * m_pString;
-	};
+    virtual CCLabelProtocol* convertToLabelProtocol() {
+        return (CCLabelProtocol*)this;
+    }
+protected:
+    CCSize m_tDimensions;
+    CCTextAlignment m_eAlignment;
+    std::string * m_pFontName;
+    float m_fFontSize;
+    std::string * m_pString;
+};
 
 } //namespace cocos2d
 #endif //__CCLABEL_H__

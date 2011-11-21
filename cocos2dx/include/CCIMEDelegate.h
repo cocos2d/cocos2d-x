@@ -55,7 +55,9 @@ protected:
 
     Called by CCIMEDispatcher.
     */
-    virtual bool canAttachWithIME() { return false; }
+    virtual bool canAttachWithIME() {
+        return false;
+    }
     /**
     @brief	When the delegate detach with IME, this method call by CCIMEDispatcher.
     */
@@ -64,7 +66,9 @@ protected:
     /**
     @brief	Decide the delegate instance can stop receive ime message or not.
     */
-    virtual bool canDetachWithIME() { return false; }
+    virtual bool canDetachWithIME() {
+        return false;
+    }
 
     /**
     @brief	When the delegate detach with IME, this method call by CCIMEDispatcher.
@@ -74,7 +78,10 @@ protected:
     /**
     @brief	Called by CCIMEDispatcher when some text input from IME.
     */
-    virtual void insertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
+    virtual void insertText(const char * text, int len) {
+        CC_UNUSED_PARAM(text);
+        CC_UNUSED_PARAM(len);
+    }
 
     /**
     @brief	Called by CCIMEDispatcher when user clicked the backward key.
@@ -84,15 +91,25 @@ protected:
     /**
     @brief	Called by CCIMEDispatcher for get text which delegate already has.
     */
-    virtual const char * getContentText() { return 0; }
+    virtual const char * getContentText() {
+        return 0;
+    }
 
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////
-    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info)   {CC_UNUSED_PARAM(info);}
-    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info)    {CC_UNUSED_PARAM(info);}
-    virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info)   {CC_UNUSED_PARAM(info);}
-    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info)    {CC_UNUSED_PARAM(info);}
+    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info)   {
+        CC_UNUSED_PARAM(info);
+    }
+    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info)    {
+        CC_UNUSED_PARAM(info);
+    }
+    virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info)   {
+        CC_UNUSED_PARAM(info);
+    }
+    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info)    {
+        CC_UNUSED_PARAM(info);
+    }
 
 protected:
     CCIMEDelegate();

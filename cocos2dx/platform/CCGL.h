@@ -154,8 +154,8 @@ OpenGL GLU implementation
 
 /** OpenGL gluLookAt implementation */
 void CC_DLL gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ,
-               GLfloat fLookAtX, GLfloat fLookAtY, GLfloat fLookAtZ,
-               GLfloat fUpX, GLfloat fUpY, GLfloat fUpZ);
+                      GLfloat fLookAtX, GLfloat fLookAtY, GLfloat fLookAtZ,
+                      GLfloat fUpX, GLfloat fUpY, GLfloat fUpZ);
 
 /** OpenGL gluPerspective implementation */
 void CC_DLL gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);

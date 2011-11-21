@@ -2,7 +2,7 @@ cocos2d-x multiplatform
 ==================
 
 [cocos2d-x][1] is a multi-platform 2D game engine in C++, based on [cocos2d-iphone][2] and licensed under MIT.
-Now this engine has been ported to WOPhone, iOS 4.1, Android 2.1 and higher, WindowsXP & Windows7. 
+Now this engine has been ported to WOPhone, iOS 4.1, Android 2.1 and higher, WindowsXP & Windows7.
 
 Multi Platform
 -------------
@@ -16,14 +16,14 @@ Multi Platform
 Document
 ------------------
    * Website: [www.cocos2d-x.org][7]
-   * [Online API References][8] 
-	
+   * [Online API References][8]
+
 Contact us
 ------------------
    * Forum: [http://forum.cocos2d-x.org][9]
    * Twitter: [http://www.twitter.com/cocos2dx][10]
    * Sina mini-blog: [http://t.sina.com.cn/cocos2dx][11]
-   
+
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [3]: http://www.cocos2d-x.org/wiki/cocos2d-x/Cocos2d-iphone-cpp "cocos2d-iphone-cpp"

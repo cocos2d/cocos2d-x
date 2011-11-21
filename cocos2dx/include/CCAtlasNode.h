@@ -47,64 +47,66 @@ class CC_DLL CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextur
 {
 protected:
 
-	//! chars per row
-	unsigned int m_uItemsPerRow;
-	//! chars per column
-	unsigned int m_uItemsPerColumn;
+    //! chars per row
+    unsigned int m_uItemsPerRow;
+    //! chars per column
+    unsigned int m_uItemsPerColumn;
 
-	//! width of each char
-	unsigned int	m_uItemWidth;
-	//! height of each char
-	unsigned int	m_uItemHeight;
+    //! width of each char
+    unsigned int	m_uItemWidth;
+    //! height of each char
+    unsigned int	m_uItemHeight;
 
-	ccColor3B	m_tColorUnmodified;
+    ccColor3B	m_tColorUnmodified;
 
-	CC_PROPERTY(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
+    CC_PROPERTY(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
 
-	// protocol variables
-	CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
-	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
-	CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
-	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
+    // protocol variables
+    CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+    CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
+    CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
+    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
 
-	// quads to draw
-	CC_PROPERTY(unsigned int, m_uQuadsToDraw, QuadsToDraw);
+    // quads to draw
+    CC_PROPERTY(unsigned int, m_uQuadsToDraw, QuadsToDraw);
 
 public:
-	CCAtlasNode();
-	virtual ~CCAtlasNode();
+    CCAtlasNode();
+    virtual ~CCAtlasNode();
 
-	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
-		unsigned int itemsToRender);
+    /** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight,
+                                           unsigned int itemsToRender);
 
-	/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+    /** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 
-	/** updates the Atlas (indexed vertex array).
-	* Shall be overriden in subclasses
-	*/
-	virtual void updateAtlasValues();
+    /** updates the Atlas (indexed vertex array).
+    * Shall be overriden in subclasses
+    */
+    virtual void updateAtlasValues();
 
-	virtual void draw();
+    virtual void draw();
 
-	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+    virtual CCRGBAProtocol* convertToRGBAProtocol() {
+        return (CCRGBAProtocol*)this;
+    }
 
-	// CC Texture protocol
+    // CC Texture protocol
 
-	/** returns the used texture*/
-	virtual CCTexture2D* getTexture(void);
+    /** returns the used texture*/
+    virtual CCTexture2D* getTexture(void);
 
-	/** sets a new texture. it will be retained*/
-	virtual void setTexture(CCTexture2D *texture);
+    /** sets a new texture. it will be retained*/
+    virtual void setTexture(CCTexture2D *texture);
 
 private :
-	void calculateMaxItems();
-	void updateBlendFunc();
-	void updateOpacityModifyRGB();
+    void calculateMaxItems();
+    void updateBlendFunc();
+    void updateOpacityModifyRGB();
 
 };
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __CCATLAS_NODE_H__
 

@@ -1,51 +1,34 @@
 
-#include "support/data_support/ccCArray.h"
-
-
-
-namespace cocos2d
+class CCArray : public CCObject
 {
+    unsigned int count();
+    unsigned int capacity();
 
-	class  CCArray : public CCObject
-	{
+    unsigned int indexOfObject(CCObject* object);
+    CCObject* objectAtIndex(unsigned int index);
+    CCObject* lastObject();
+    CCObject* randomObject();
 
-		static CCArray* array();
-		static CCArray* arrayWithCapacity(unsigned int capacity);
-		static CCArray* arrayWithArray(CCArray* otherArray);
+    bool containsObject(CCObject* object);
 
-		bool init();
-		bool initWithCapacity(unsigned int capacity);
-		bool initWithArray(CCArray* otherArray);
+    void addObject(CCObject* object);
+    void addObjectsFromArray(CCArray* otherArray);
+    void insertObject(CCObject* object, unsigned int index);
 
-		unsigned int count();
-		unsigned int capacity();
-		unsigned int indexOfObject(CCObject* object);
-		CCObject* objectAtIndex(unsigned int index);
-		CCObject* lastObject();
-		CCObject* randomObject();
-		bool containsObject(CCObject* object);
+    void removeLastObject();
+    void removeObject(CCObject* object);
+    void removeObjectAtIndex(unsigned int index);
+    void removeObjectsInArray(CCArray* otherArray);
+    void removeAllObjects();
+    void fastRemoveObject(CCObject* object);
+    void fastRemoveObjectAtIndex(unsigned int index);
 
-		void addObject(CCObject* object);
-		void addObjectsFromArray(CCArray* otherArray);
-		void insertObject(CCObject* object, unsigned int index);
-
-		void removeLastObject();
-		void removeObject(CCObject* object);
-		void removeObjectAtIndex(unsigned int index);
-		void removeObjectsInArray(CCArray* otherArray);
-		void removeAllObjects();
-		void fastRemoveObject(CCObject* object);
-		void fastRemoveObjectAtIndex(unsigned int index);
-		
     void exchangeObject(CCObject* object1, CCObject* object2);
     void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
     void reverseObjects();
     void reduceMemoryFootprint();
 
-	public:
-		ccArray* data;
-	};
-
-}
-
-
+    static CCArray* array();
+    static CCArray* arrayWithCapacity(unsigned int capacity);
+    static CCArray* arrayWithArray(CCArray* otherArray);
+};

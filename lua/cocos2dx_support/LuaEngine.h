@@ -24,35 +24,98 @@ THE SOFTWARE.
 #ifndef __LUA_ENGINE_H__
 #define __LUA_ENGINE_H__
 
-#include "CCScriptSupport.h"
-#include "cocos2d.h"
+extern "C" {
+#include "lua.h"
+}
 
-class LuaEngine : public cocos2d::CCScriptEngineProtocol
+#include "tolua++.h"
+#include "tolua_fix.h"
+
+#include "CCObject.h"
+#include "CCTouch.h"
+#include "CCSet.h"
+#include "CCNode.h"
+
+#include <map>
+
+using namespace cocos2d;
+
+class LuaEngine
 {
 public:
-	virtual ~LuaEngine();
+    ~LuaEngine();
+    
+    /**
+     @brief Method used to get a pointer to the lua_State that the script module is attached to.
+     @return A pointer to the lua_State that the script module is attached to.
+     */
+    lua_State* getLuaState(void) const {
+        return m_state;
+    }
 
-	// functions for excute touch event
-	virtual bool executeTouchEvent(const char *pszFuncName, cocos2d::CCTouch *pTouch);
-	virtual bool executeTouchesEvent(const char *pszFuncName, cocos2d::CCSet *pTouches);
+    /**
+     @brief Remove CCObject from lua state
+     @param object to remove
+     */
+    void removeCCObject(CCObject *object);
+    
+    void removeFunctionByRefId(int refid);
 
-	// functions for CCCallFuncX
-	virtual bool executeCallFunc(const char *pszFuncName);
-	virtual bool executeCallFuncN(const char *pszFuncName, cocos2d::CCNode *pNode);
-	virtual bool executeCallFuncND(const char *pszFuncName, cocos2d::CCNode *pNode, void *pData);
-	virtual bool executeCallFunc0(const char *pszFuncName, cocos2d::CCObject *pObject);
+    /**
+     @brief Add a path to find lua files in
+     @param path to be added to the Lua path
+     */
+    void addSearchPath(const char* path);
 
-	// excute a script function without params
-	virtual int executeFuction(const char *pszFuncName);
-	// excute a script file
-	virtual bool executeScriptFile(const char* pszFileName);
-	// excute script from string
-	virtual bool executeString(const char* pszCodes);
+    /**
+     @brief Execute a script file.
+     @param filename String object holding the filename of the script file that is to be executed
+     */
+    bool executeScriptFile(const char* filename);
+    
+    /**
+     @brief Execute a scripted global function.
+     @brief The function should not take any parameters and should return an integer.
+     @param function_name String object holding the name of the function, in the global script environment, that is to be executed.
+     @return The integer value returned from the script function.
+     */
+    int executeGlobalFunction(const char* function_name);
 
-	// execute a schedule function
-	virtual bool executeSchedule(const char* pszFuncName, cocos2d::ccTime t);
-    // add a search path  
-    virtual bool addSearchPath(const char* pszPath);
+    /**
+     @brief Execute a function by ref id
+     @param The function ref id
+     @return The integer value returned from the script function.
+     */
+    int executeFunctionByRefId(int functionRefId);
+
+    int retainRefID(int refID);
+    int releaseRefID(int refID);
+
+    // functions for excute touch event
+    bool executeTouchEvent(const char *pszFuncName, cocos2d::CCTouch *pTouch);
+    bool executeTouchesEvent(const char *pszFuncName, cocos2d::CCSet *pTouches);
+
+    // functions for CCCallFuncX
+    bool executeCallFunc(const char *pszFuncName);
+    bool executeCallFuncN(const char *pszFuncName, cocos2d::CCNode *pNode);
+    bool executeCallFuncND(const char *pszFuncName, cocos2d::CCNode *pNode, void *pData);
+    bool executeCallFunc0(const char *pszFuncName, cocos2d::CCObject *pObject);
+
+    // excute a script function without params
+    int executeFuction(const char *pszFuncName);
+
+    // execute a schedule function
+    bool executeSchedule(int refid, cocos2d::ccTime dt);
+    
+    static LuaEngine* sharedEngine();
+    static void purgeSharedEngine();
+
+private:
+    LuaEngine();
+    
+    static LuaEngine* s_engine;
+    lua_State* m_state;
+    std::map<int, int> m_refIDMap;
 };
 
 #endif // __LUA_ENGINE_H__

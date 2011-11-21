@@ -163,7 +163,7 @@ LUA_API void  (lua_pushinteger) (lua_State *L, lua_Integer n);
 LUA_API void  (lua_pushlstring) (lua_State *L, const char *s, size_t l);
 LUA_API void  (lua_pushstring) (lua_State *L, const char *s);
 LUA_API const char *(lua_pushvfstring) (lua_State *L, const char *fmt,
-                                                      va_list argp);
+                                        va_list argp);
 LUA_API const char *(lua_pushfstring) (lua_State *L, const char *fmt, ...);
 LUA_API void  (lua_pushcclosure) (lua_State *L, lua_CFunction fn, int n);
 LUA_API void  (lua_pushboolean) (lua_State *L, int b);
@@ -202,7 +202,7 @@ LUA_API void  (lua_call) (lua_State *L, int nargs, int nresults);
 LUA_API int   (lua_pcall) (lua_State *L, int nargs, int nresults, int errfunc);
 LUA_API int   (lua_cpcall) (lua_State *L, lua_CFunction func, void *ud);
 LUA_API int   (lua_load) (lua_State *L, lua_Reader reader, void *dt,
-                                        const char *chunkname);
+                          const char *chunkname);
 
 LUA_API int (lua_dump) (lua_State *L, lua_Writer writer, void *data);
 
@@ -245,7 +245,7 @@ LUA_API void lua_setallocf (lua_State *L, lua_Alloc f, void *ud);
 
 
 
-/* 
+/*
 ** ===============================================================
 ** some useful macros
 ** ===============================================================
@@ -344,18 +344,18 @@ LUA_API int lua_gethookcount (lua_State *L);
 
 
 struct lua_Debug {
-  int event;
-  const char *name;	/* (n) */
-  const char *namewhat;	/* (n) `global', `local', `field', `method' */
-  const char *what;	/* (S) `Lua', `C', `main', `tail' */
-  const char *source;	/* (S) */
-  int currentline;	/* (l) */
-  int nups;		/* (u) number of upvalues */
-  int linedefined;	/* (S) */
-  int lastlinedefined;	/* (S) */
-  char short_src[LUA_IDSIZE]; /* (S) */
-  /* private part */
-  int i_ci;  /* active function */
+    int event;
+    const char *name;	/* (n) */
+    const char *namewhat;	/* (n) `global', `local', `field', `method' */
+    const char *what;	/* (S) `Lua', `C', `main', `tail' */
+    const char *source;	/* (S) */
+    int currentline;	/* (l) */
+    int nups;		/* (u) number of upvalues */
+    int linedefined;	/* (S) */
+    int lastlinedefined;	/* (S) */
+    char short_src[LUA_IDSIZE]; /* (S) */
+    /* private part */
+    int i_ci;  /* active function */
 };
 
 /* }====================================================================== */

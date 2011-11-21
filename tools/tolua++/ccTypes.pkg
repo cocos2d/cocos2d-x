@@ -1,3 +1,6 @@
+
+typedef _lua_function       LUA_FUNCTION;
+
 typedef unsigned char    GLubyte;
 typedef int              GLint;
 typedef int              GLsizei;
@@ -5,54 +8,44 @@ typedef unsigned char	 GLubyte;
 typedef unsigned short   GLushort;
 typedef unsigned int     GLuint;
 typedef float			 GLfloat;
-namespace   cocos2d {
-
-/** RGB color composed of bytes 3 bytes
-@since v0.8
- */
-
 
 typedef float ccTime;
 typedef struct _ccColor3B
 {
-	GLubyte	r;
-	GLubyte	g;
-	GLubyte b;
+    GLubyte	r;
+    GLubyte	g;
+    GLubyte b;
 } ccColor3B;
 
-//! helper macro that creates an ccColor3B type
-static  ccColor3B ccc3(const GLubyte r, const GLubyte g, const GLubyte b);
-/*
-//ccColor3B predefined colors
-//! White color (255,255,255)
-const ccColor3B ccWHITE;
+static ccColor3B ccc3(const GLubyte r, const GLubyte g, const GLubyte b);
+
+// static const ccColor3B ccWHITE;
 //! Yellow color (255,255,0)
-const ccColor3B ccYELLOW;
+// static const ccColor3B ccYELLOW;
 //! Blue color (0,0,255)
-const ccColor3B ccBLUE;
+// static const ccColor3B ccBLUE;
 //! Green Color (0,255,0)
-const ccColor3B ccGREEN;
+// static const ccColor3B ccGREEN;
 //! Red Color (255,0,0,)
-const ccColor3B ccRED;
+// static const ccColor3B ccRED;
 //! Magenta Color (255,0,255)
-const ccColor3B ccMAGENTA;
+// static const ccColor3B ccMAGENTA;
 //! Black Color (0,0,0)
-const ccColor3B ccBLACK;
+// static const ccColor3B ccBLACK;
 //! Orange Color (255,127,0)
-const ccColor3B ccORANGE;
+// static const ccColor3B ccORANGE;
 //! Gray Color (166,166,166)
-const ccColor3B ccGRAY;
-*/
+// static const ccColor3B ccGRAY;
 
 /** RGBA color composed of 4 bytes
 @since v0.8
 */
 typedef struct _ccColor4B
 {
-	GLubyte r;
-	GLubyte g;
-	GLubyte b;
-	GLubyte a;
+    GLubyte r;
+    GLubyte g;
+    GLubyte b;
+    GLubyte a;
 } ccColor4B;
 //! helper macro that creates an ccColor4B type
 static  ccColor4B ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o);
@@ -62,10 +55,10 @@ static  ccColor4B ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const 
 @since v0.8
 */
 typedef struct _ccColor4F {
-	GLfloat r;
-	GLfloat g;
-	GLfloat b;
-	GLfloat a;
+    GLfloat r;
+    GLfloat g;
+    GLfloat b;
+    GLfloat a;
 } ccColor4F;
 
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
@@ -87,8 +80,8 @@ static bool ccc4FEqual(ccColor4F a, ccColor4F b);
  */
 typedef struct _ccVertex2F
 {
-	GLfloat x;
-	GLfloat y;
+    GLfloat x;
+    GLfloat y;
 } ccVertex2F;
 
 static  ccVertex2F vertex2(const float x, const float y);
@@ -99,55 +92,55 @@ static  ccVertex2F vertex2(const float x, const float y);
  */
 typedef struct _ccVertex3F
 {
-	GLfloat x;
-	GLfloat y;
-	GLfloat z;
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
 } ccVertex3F;
 
 static  ccVertex3F vertex3(const float x, const float y, const float z);
-		
+
 /** A texcoord composed of 2 floats: u, y
  @since v0.8
  */
 typedef struct _ccTex2F {
-	 GLfloat u;
-	 GLfloat v;
+    GLfloat u;
+    GLfloat v;
 } ccTex2F;
 
 static  ccTex2F tex2(const float u, const float v);
 
 
- 
+
 //! Point Sprite component
 typedef struct _ccPointSprite
 {
-	ccVertex2F	pos;		// 8 bytes
-	ccColor4B	color;		// 4 bytes
-	GLfloat		size;		// 4 bytes
+    ccVertex2F	pos;		// 8 bytes
+    ccColor4B	color;		// 4 bytes
+    GLfloat		size;		// 4 bytes
 } ccPointSprite;
 
 //!	A 2D Quad. 4 * 2 floats
 typedef struct _ccQuad2 {
-	ccVertex2F		tl;
-	ccVertex2F		tr;
-	ccVertex2F		bl;
-	ccVertex2F		br;
+    ccVertex2F		tl;
+    ccVertex2F		tr;
+    ccVertex2F		bl;
+    ccVertex2F		br;
 } ccQuad2;
 
 
 //!	A 3D Quad. 4 * 3 floats
 typedef struct _ccQuad3 {
-	ccVertex3F		bl;
-	ccVertex3F		br;
-	ccVertex3F		tl;
-	ccVertex3F		tr;
+    ccVertex3F		bl;
+    ccVertex3F		br;
+    ccVertex3F		tl;
+    ccVertex3F		tr;
 } ccQuad3;
 
 //! A 2D grid size
 typedef struct _ccGridSize
 {
-	int	x;
-	int	y;
+    int	x;
+    int	y;
 } ccGridSize;
 
 //! helper function to create a ccGridSize
@@ -156,86 +149,86 @@ static  ccGridSize ccg(const int x, const int y);
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV2F_C4B_T2F
 {
-	//! vertices (2F)
-	ccVertex2F		vertices;
-	//! colors (4B)
-	ccColor4B		colors;
-	//! tex coords (2F)
-	ccTex2F			texCoords;
+    //! vertices (2F)
+    ccVertex2F		vertices;
+    //! colors (4B)
+    ccColor4B		colors;
+    //! tex coords (2F)
+    ccTex2F			texCoords;
 } ccV2F_C4B_T2F;
 
 //! a Point with a vertex point, a tex coord point and a color 4F
 typedef struct _ccV2F_C4F_T2F
 {
-	//! vertices (2F)
-	ccVertex2F		vertices;
-	//! colors (4F)
-	ccColor4F		colors;
-	//! tex coords (2F)
-	ccTex2F			texCoords;
+    //! vertices (2F)
+    ccVertex2F		vertices;
+    //! colors (4F)
+    ccColor4F		colors;
+    //! tex coords (2F)
+    ccTex2F			texCoords;
 } ccV2F_C4F_T2F;
 
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV3F_C4B_T2F
 {
-	//! vertices (3F)
-	ccVertex3F		vertices;			// 12 bytes
+    //! vertices (3F)
+    ccVertex3F		vertices;			// 12 bytes
 //	char __padding__[4];
 
-	//! colors (4B)
-	ccColor4B		colors;				// 4 bytes
+    //! colors (4B)
+    ccColor4B		colors;				// 4 bytes
 //	char __padding2__[4];
 
-	// tex coords (2F)
-	ccTex2F			texCoords;			// 8 byts
+    // tex coords (2F)
+    ccTex2F			texCoords;			// 8 byts
 } ccV3F_C4B_T2F;
 
 //! 4 ccVertex2FTex2FColor4B Quad
 typedef struct _ccV2F_C4B_T2F_Quad
 {
-	//! bottom left
-	ccV2F_C4B_T2F	bl;
-	//! bottom right
-	ccV2F_C4B_T2F	br;
-	//! top left
-	ccV2F_C4B_T2F	tl;
-	//! top right
-	ccV2F_C4B_T2F	tr;
+    //! bottom left
+    ccV2F_C4B_T2F	bl;
+    //! bottom right
+    ccV2F_C4B_T2F	br;
+    //! top left
+    ccV2F_C4B_T2F	tl;
+    //! top right
+    ccV2F_C4B_T2F	tr;
 } ccV2F_C4B_T2F_Quad;
 
 //! 4 ccVertex3FTex2FColor4B
 typedef struct _ccV3F_C4B_T2F_Quad
 {
-	//! top left
-	ccV3F_C4B_T2F	tl;
-	//! bottom left
-	ccV3F_C4B_T2F	bl;
-	//! top right
-	ccV3F_C4B_T2F	tr;
-	//! bottom right
-	ccV3F_C4B_T2F	br;
+    //! top left
+    ccV3F_C4B_T2F	tl;
+    //! bottom left
+    ccV3F_C4B_T2F	bl;
+    //! top right
+    ccV3F_C4B_T2F	tr;
+    //! bottom right
+    ccV3F_C4B_T2F	br;
 } ccV3F_C4B_T2F_Quad;
 
 //! 4 ccVertex2FTex2FColor4F Quad
 typedef struct _ccV2F_C4F_T2F_Quad
 {
-	//! bottom left
-	ccV2F_C4F_T2F	bl;
-	//! bottom right
-	ccV2F_C4F_T2F	br;
-	//! top left
-	ccV2F_C4F_T2F	tl;
-	//! top right
-	ccV2F_C4F_T2F	tr;
+    //! bottom left
+    ccV2F_C4F_T2F	bl;
+    //! bottom right
+    ccV2F_C4F_T2F	br;
+    //! top left
+    ccV2F_C4F_T2F	tl;
+    //! top right
+    ccV2F_C4F_T2F	tr;
 } ccV2F_C4F_T2F_Quad;
 
 //! Blend Function used for textures
 typedef struct _ccBlendFunc
 {
-	//! source blend function
-	GLenum src;
-	//! destination blend function
-	GLenum dst;
+    //! source blend function
+    GLenum src;
+    //! destination blend function
+    GLenum dst;
 } ccBlendFunc;
 
 //! delta time type
@@ -243,13 +236,9 @@ typedef struct _ccBlendFunc
 
 //typedef double ccTime;
 
-typedef enum 
+typedef enum
 {
-	CCTextAlignmentLeft,
-	CCTextAlignmentCenter,
-	CCTextAlignmentRight,
+    CCTextAlignmentLeft,
+    CCTextAlignmentCenter,
+    CCTextAlignmentRight,
 } CCTextAlignment;
-
-}//namespace   cocos2d 
-
-

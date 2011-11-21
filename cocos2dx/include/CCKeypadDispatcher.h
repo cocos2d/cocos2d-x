@@ -95,6 +95,6 @@ protected:
     struct _ccCArray *m_pHandlersToRemove;
 };
 
-} // namespace   cocos2d 
+} // namespace   cocos2d
 
 #endif //__CCKEYPAD_DISPATCHER_H__

@@ -25,21 +25,21 @@
 
 #if (!defined(_WIN32)) && (!defined(WIN32))
 
-  // Linux needs this to support file operation on files larger then 4+GB
-  // But might need better if/def to select just the platforms that needs them.
+// Linux needs this to support file operation on files larger then 4+GB
+// But might need better if/def to select just the platforms that needs them.
 
-        #ifndef __USE_FILE_OFFSET64
-                #define __USE_FILE_OFFSET64
-        #endif
-        #ifndef __USE_LARGEFILE64
-                #define __USE_LARGEFILE64
-        #endif
-        #ifndef _LARGEFILE64_SOURCE
-                #define _LARGEFILE64_SOURCE
-        #endif
-        #ifndef _FILE_OFFSET_BIT
-                #define _FILE_OFFSET_BIT 64
-        #endif
+#ifndef __USE_FILE_OFFSET64
+#define __USE_FILE_OFFSET64
+#endif
+#ifndef __USE_LARGEFILE64
+#define __USE_LARGEFILE64
+#endif
+#ifndef _LARGEFILE64_SOURCE
+#define _LARGEFILE64_SOURCE
+#endif
+#ifndef _FILE_OFFSET_BIT
+#define _FILE_OFFSET_BIT 64
+#endif
 #endif
 
 #include <stdio.h>
@@ -54,14 +54,14 @@ namespace cocos2d {
 #define fseeko64 fseek
 #else
 #ifdef _MSC_VER
- #define fopen64 fopen
- #if (_MSC_VER >= 1400) && (!(defined(NO_MSCVER_FILE64_FUNC)))
-  #define ftello64 _ftelli64
-  #define fseeko64 _fseeki64
- #else // old MSC
-  #define ftello64 ftell
-  #define fseeko64 fseek
- #endif
+#define fopen64 fopen
+#if (_MSC_VER >= 1400) && (!(defined(NO_MSCVER_FILE64_FUNC)))
+#define ftello64 _ftelli64
+#define fseeko64 _fseeki64
+#else // old MSC
+#define ftello64 ftell
+#define fseeko64 fseek
+#endif
 #endif
 #endif
 
@@ -113,11 +113,11 @@ typedef unsigned long long int ZPOS64_T;
 
 
 #ifndef ZCALLBACK
- #if (defined(WIN32) || defined(_WIN32) || defined (WINDOWS) || defined (_WINDOWS)) && defined(CALLBACK) && defined (USEWINDOWS_CALLBACK)
-   #define ZCALLBACK CALLBACK
- #else
-   #define ZCALLBACK
- #endif
+#if (defined(WIN32) || defined(_WIN32) || defined (WINDOWS) || defined (_WINDOWS)) && defined(CALLBACK) && defined (USEWINDOWS_CALLBACK)
+#define ZCALLBACK CALLBACK
+#else
+#define ZCALLBACK
+#endif
 #endif
 
 

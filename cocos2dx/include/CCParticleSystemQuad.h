@@ -3,7 +3,7 @@ Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Leonardo Kasperavičius
 Copyright (c) 2011      ynga Inc.
- 
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -37,7 +37,7 @@ class CCSpriteFrame;
 
 It includes all the features of ParticleSystem.
 
-Special features and Limitations:	
+Special features and Limitations:
 - Particle size can be any float number.
 - The system can be scaled
 - The particles can be rotated
@@ -50,45 +50,45 @@ Special features and Limitations:
 class CC_DLL CCParticleSystemQuad : public CCParticleSystem
 {
 protected:
-	ccV2F_C4B_T2F_Quad	*m_pQuads;		// quads to be rendered
-	GLushort			*m_pIndices;	// indices
+    ccV2F_C4B_T2F_Quad	*m_pQuads;		// quads to be rendered
+    GLushort			*m_pIndices;	// indices
 #if CC_USES_VBO
-	GLuint				m_uQuadsID;	// VBO id
+    GLuint				m_uQuadsID;	// VBO id
 #endif
 public:
-	CCParticleSystemQuad()
-		:m_pQuads(NULL)
-		,m_pIndices(NULL)
-	{}
-	virtual ~CCParticleSystemQuad();
+    CCParticleSystemQuad()
+        :m_pQuads(NULL)
+        ,m_pIndices(NULL)
+    {}
+    virtual ~CCParticleSystemQuad();
 
     /** creates an initializes a CCParticleSystemQuad from a plist file.
-    This plist files can be creted manually or with Particle Designer:  
+    This plist files can be creted manually or with Particle Designer:
     */
     static CCParticleSystemQuad * particleWithFile(const char *plistFile);
 
-	/** initialices the indices for the vertices*/
-	void initIndices();
+    /** initialices the indices for the vertices*/
+    void initIndices();
 
     /** initilizes the texture with a rectangle measured Points */
-	void initTexCoordsWithRect(const CCRect& rect);
+    void initTexCoordsWithRect(const CCRect& rect);
 
-	/** Sets a new CCSpriteFrame as particle.
-	WARNING: this method is experimental. Use setTexture:withRect instead.
-	@since v0.99.4
-	*/
-	void setDisplayFrame(CCSpriteFrame *spriteFrame);
+    /** Sets a new CCSpriteFrame as particle.
+    WARNING: this method is experimental. Use setTexture:withRect instead.
+    @since v0.99.4
+    */
+    void setDisplayFrame(CCSpriteFrame *spriteFrame);
 
     /** Sets a new texture with a rect. The rect is in Points.
-	@since v0.99.4
-	*/
-	void setTextureWithRect(CCTexture2D *texture, const CCRect& rect);
-	// super methods
-	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-	virtual void setTexture(CCTexture2D* texture);
-	virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
-	virtual void postStep();
-	virtual void draw();
+    @since v0.99.4
+    */
+    void setTextureWithRect(CCTexture2D *texture, const CCRect& rect);
+    // super methods
+    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
+    virtual void setTexture(CCTexture2D* texture);
+    virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
+    virtual void postStep();
+    virtual void draw();
 };
 
 }// namespace cocos2d

@@ -429,7 +429,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 	
 	// Use this table to cache all fontTable objects
 	CFMutableDictionaryRef fontTableMap = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks,
-																	 &kFontTableDictionaryValueCallBacks);
+                                                                    &kFontTableDictionaryValueCallBacks);
 	
 	// Fetch initial style values
 	NSUInteger currentRunIdx = 0;
@@ -439,8 +439,8 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 	fontTable *currentTable;
 	
 #define READ_RUN() readRunInformation(attributes, len, fontTableMap, \
-									  currentRunIdx, &currentRun, &nextRunStart, \
-									  &currentFont, &currentTable)
+currentRunIdx, &currentRun, &nextRunStart, \
+&currentFont, &currentTable)
 	
 	READ_RUN();
 	
@@ -449,10 +449,10 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 	NSUInteger glyphIdx;
 	
 #define READ_GLYPHS() do { \
-		mapCharactersToGlyphsInFont(currentTable, &characters[currentRun.index], (nextRunStart - currentRun.index), glyphs, &glyphCount); \
-		mapGlyphsToAdvancesInFont(currentFont, (nextRunStart - currentRun.index), glyphs, advances); \
-		glyphIdx = 0; \
-	} while (0)
+mapCharactersToGlyphsInFont(currentTable, &characters[currentRun.index], (nextRunStart - currentRun.index), glyphs, &glyphCount); \
+mapGlyphsToAdvancesInFont(currentFont, (nextRunStart - currentRun.index), glyphs, advances); \
+glyphIdx = 0; \
+} while (0)
 	
 	READ_GLYPHS();
 	
@@ -894,14 +894,14 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, U
 
 @implementation FontLabelStringDrawingHelper
 + (CGSize)sizeWithZFont:(NSString*)string zfont:(ZFont *)font {
-        CGSize size = drawOrSizeTextConstrainedToSize(NO, string, attributeRunForFont(font), CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), 1,
+    CGSize size = drawOrSizeTextConstrainedToSize(NO, string, attributeRunForFont(font), CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), 1,
 												  UILineBreakModeClip, UITextAlignmentLeft, YES);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
 + (CGSize)drawInRect:(NSString*)string rect:(CGRect)rect withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode 
            alignment:(UITextAlignment)alignment {
-       return [string drawInRect:rect withZFont:font lineBreakMode:lineBreakMode alignment:alignment];
+    return [string drawInRect:rect withZFont:font lineBreakMode:lineBreakMode alignment:alignment];
 }
 @end
 

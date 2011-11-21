@@ -28,41 +28,43 @@ THE SOFTWARE.
 #include "CCObject.h"
 namespace cocos2d {
 
-	class CC_DLL CCString : public CCObject
-	{
-	public:
-		std::string m_sString;
-	public:
-		CCString()
-			:m_sString("")
-		{}
-		CCString(const char * str)
-		{
-			m_sString = str;
-		}
-		virtual ~CCString(){ m_sString.clear(); }
-		
-		int toInt()
-		{
-			return atoi(m_sString.c_str());
-		}
-		unsigned int toUInt()
-		{
-			return (unsigned int)atoi(m_sString.c_str());
-		}
-		float toFloat()
-		{
-			return (float)atof(m_sString.c_str());
-		}
-		std::string toStdString()
-		{
-			return m_sString;
-		}
+class CC_DLL CCString : public CCObject
+{
+public:
+    std::string m_sString;
+public:
+    CCString()
+        :m_sString("")
+    {}
+    CCString(const char * str)
+    {
+        m_sString = str;
+    }
+    virtual ~CCString() {
+        m_sString.clear();
+    }
 
-		bool isEmpty()
-		{
-			return m_sString.empty();
-		}
-	};
+    int toInt()
+    {
+        return atoi(m_sString.c_str());
+    }
+    unsigned int toUInt()
+    {
+        return (unsigned int)atoi(m_sString.c_str());
+    }
+    float toFloat()
+    {
+        return (float)atof(m_sString.c_str());
+    }
+    std::string toStdString()
+    {
+        return m_sString;
+    }
+
+    bool isEmpty()
+    {
+        return m_sString.empty();
+    }
+};
 }// namespace cocos2d
 #endif //__CCSTRING_H__
