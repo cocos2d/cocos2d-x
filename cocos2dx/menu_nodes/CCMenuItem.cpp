@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabelTTF.h"
-//#include "CCScriptSupport.h"
 
 #include <stdarg.h>
 
