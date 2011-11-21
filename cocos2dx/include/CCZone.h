@@ -33,12 +33,12 @@ class CCObject;
 class CCZone
 {
 public:
-	CCZone(CCObject *pObject = NULL);
+    CCZone(CCObject *pObject = NULL);
 
 public:
-	CCObject *m_pCopyObject;
+    CCObject *m_pCopyObject;
 };
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __CC_ZONE_H__
 

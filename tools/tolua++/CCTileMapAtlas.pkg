@@ -1,29 +1,15 @@
 
-namespace cocos2d {
-	typedef std::map<std::string, int> StringToIntegerDictionary;
-	typedef std::pair<std::string, int> StringToIntegerPair;
-	struct sImageTGA;
-	class CCTileMapAtlas : public CCAtlasNode 
-	{
+typedef std::map<std::string, int> StringToIntegerDictionary;
+typedef std::pair<std::string, int> StringToIntegerPair;
+struct sImageTGA;
 
-		/** TileMap info */
-		struct sImageTGA* getTGAInfo();
-		void setTGAInfo(struct sImageTGA* val);
+class CCTileMapAtlas : public CCAtlasNode
+{
+    struct sImageTGA* getTGAInfo();
+    void setTGAInfo(struct sImageTGA* val);
 
-		CCTileMapAtlas();
-		~CCTileMapAtlas();
-	
-		static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-	
-		bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-	
-	
-		void setTile(ccColor3B tile, ccGridSize position);
-		/** dealloc the map from memory */
-		void releaseMap();
-	};
-	
+    void setTile(ccColor3B tile, ccGridSize position);
+    void releaseMap();
 
-}// namespace cocos2d
-
-
+    static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+};

@@ -34,6 +34,7 @@ NS_CC_BEGIN;
 CCApplication* CCApplication::sm_pSharedApplication = 0;
 
 CCApplication::CCApplication()
+: m_initOrientation(0)
 {
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
@@ -45,9 +46,10 @@ CCApplication::~CCApplication()
     sm_pSharedApplication = 0;
 }
 
-int CCApplication::run()
+int CCApplication::run(int initOrientation)
 {
-    if (initInstance() && applicationDidFinishLaunching()) 
+    m_initOrientation = initOrientation;
+    if (initInstance() && applicationDidFinishLaunching())
     {
         [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
     }
@@ -65,21 +67,21 @@ CCApplication::Orientation CCApplication::setOrientation(Orientation eOritation)
     UIInterfaceOrientation newOrientation;
     switch (eOritation)
     {
-    case kOrientationPortrait:
-        newOrientation = UIInterfaceOrientationPortrait;
-        break;
-    case kOrientationPortraitUpsideDown:
-        newOrientation = UIInterfaceOrientationPortraitUpsideDown;
-        break;
-    case kOrientationLandscapeLeft:
-        newOrientation = UIInterfaceOrientationLandscapeRight;
-        break;
-    case kOrientationLandscapeRight:
-        newOrientation = UIInterfaceOrientationLandscapeLeft;
-        break;
-    default:
-        newOrientation = UIInterfaceOrientationPortrait;
-        break;
+        case kOrientationPortrait:
+            newOrientation = UIInterfaceOrientationPortrait;
+            break;
+        case kOrientationPortraitUpsideDown:
+            newOrientation = UIInterfaceOrientationPortraitUpsideDown;
+            break;
+        case kOrientationLandscapeLeft:
+            newOrientation = UIInterfaceOrientationLandscapeLeft;
+            break;
+        case kOrientationLandscapeRight:
+            newOrientation = UIInterfaceOrientationLandscapeRight;
+            break;
+        default:
+            newOrientation = UIInterfaceOrientationPortrait;
+            break;
     }
     if (newOrientation != [app statusBarOrientation])
     {
@@ -112,11 +114,11 @@ ccLanguageType CCApplication::getCurrentLanguage()
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
     NSString *currentLanguage = [languages objectAtIndex:0];
-
+    
     // get the current language code.(such as English is "en", Chinese is "zh" and so on)
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
-
+    
     ccLanguageType ret = kLanguageEnglish;
     if ([languageCode isEqualToString:@"zh"])
     {
@@ -126,22 +128,22 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageEnglish;
     }
-    else if ([languageCode isEqualToString:@"fr"]){
+    else if ([languageCode isEqualToString:@"fr"]) {
         ret = kLanguageFrench;
     }
-    else if ([languageCode isEqualToString:@"it"]){
+    else if ([languageCode isEqualToString:@"it"]) {
         ret = kLanguageItalian;
     }
-    else if ([languageCode isEqualToString:@"de"]){
+    else if ([languageCode isEqualToString:@"de"]) {
         ret = kLanguageGerman;
     }
-    else if ([languageCode isEqualToString:@"es"]){
+    else if ([languageCode isEqualToString:@"es"]) {
         ret = kLanguageSpanish;
     }
-	else if ([languageCode isEqualToString:@"ru"]){
+    else if ([languageCode isEqualToString:@"ru"]) {
         ret = kLanguageRussian;
     }
-
+    
     return ret;
 }
 

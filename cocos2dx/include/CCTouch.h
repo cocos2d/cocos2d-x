@@ -36,9 +36,17 @@ public:
     CCTouch() {}
     CCTouch(int nViewId, float x, float y) : m_nViewId(nViewId), m_point(x, y), m_prevPoint(x, y) {}
 
-    CCPoint locationInView(int nViewId) {CC_UNUSED_PARAM(nViewId); return m_point; }
-    CCPoint previousLocationInView(int nViewId) {CC_UNUSED_PARAM(nViewId); return m_prevPoint; }
-    int view() { return m_nViewId; }
+    CCPoint locationInView(int nViewId) {
+        CC_UNUSED_PARAM(nViewId);
+        return m_point;
+    }
+    CCPoint previousLocationInView(int nViewId) {
+        CC_UNUSED_PARAM(nViewId);
+        return m_prevPoint;
+    }
+    int view() {
+        return m_nViewId;
+    }
 
     void SetTouchInfo(int nViewId, float x, float y)
     {

@@ -27,21 +27,21 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-    #include "wophone/CCAccelerometer_wophone.h"
+#include "wophone/CCAccelerometer_wophone.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "win32/CCAccelerometer_win32.h"
+#include "win32/CCAccelerometer_win32.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "android/CCAccelerometer_android.h"
+#include "android/CCAccelerometer_android.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "ios/CCAccelerometer_ios.h"
+#include "ios/CCAccelerometer_ios.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-	#include "airplay/CCAccelerometer_airplay.h"
+#include "airplay/CCAccelerometer_airplay.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "Linux/CCAccelerometer_linux.h"
+#include "Linux/CCAccelerometer_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCAccelerometer_bada.h"
 #else
-    #error
+#error
 #endif
 
 #endif // __CC_UIACCELEROMETER_PLATFORM_H__

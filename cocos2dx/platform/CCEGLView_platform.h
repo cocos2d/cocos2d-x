@@ -28,21 +28,21 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-    #include "wophone/CCEGLView_wophone.h"
+#include "wophone/CCEGLView_wophone.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "win32/CCEGLView_win32.h"
+#include "win32/CCEGLView_win32.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "android/CCEGLView_android.h"
+#include "android/CCEGLView_android.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "ios/CCEGLView_ios.h"
+#include "ios/CCEGLView_ios.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-	#include "airplay/CCEGLView_airplay.h"
+#include "airplay/CCEGLView_airplay.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "Linux/CCEGLView_linux.h"
+#include "Linux/CCEGLView_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCEGLView_bada.h"
 #else
-    #error
+#error
 #endif
 
 #endif	// end of __CC_EGLVIEW_PLATFORM_H__

@@ -1,72 +1,44 @@
 
-#include "CCSpriteBatchNode.h"
-namespace cocos2d{
+struct _KerningHashElement;
 
-	struct _KerningHashElement;
+typedef struct _BMFontDef {
+    unsigned int charID;
+    CCRect rect;
+    int xOffset;
+    int yOffset;
+    int xAdvance;
+} ccBMFontDef;
 
+typedef struct _BMFontPadding {
+    int	left;
+    int top;
+    int right;
+    int bottom;
+} ccBMFontPadding;
 
-	typedef struct _BMFontDef {
+enum {
+    kCCBMFontMaxChars = 2048, //256,
+};
 
-		unsigned int charID;
+class CCBMFontConfiguration : public CCObject
+{
+    char * description();
 
-		CCRect rect;
+    static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
+};
 
-		int xOffset;
-		//! The Y amount the image should be offset when drawing the image (in pixels)
-		int yOffset;
-		//! The amount to move the current position after drawing the character (in pixels)
-		int xAdvance;
-	} ccBMFontDef;
+class CCLabelBMFont : public CCSpriteBatchNode
+{
+    void createFontChars();
 
+    void setString(const char *label);
+    const char* getString(void);
+    void setCString(const char *label);
 
-	typedef struct _BMFontPadding {
-		/// padding left
-		int	left;
-		/// padding top
-		int top;
-		/// padding right
-		int right;
-		/// padding bottom
-		int bottom;
-	} ccBMFontPadding;
+    static void purgeCachedData();
+    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
+};
 
-	enum {
-		// how many characters are supported
-		kCCBMFontMaxChars = 2048, //256,
-	};
+CCBMFontConfiguration * FNTConfigLoadFile(const char *file);
 
-
-	class CCBMFontConfiguration : public CCObject
-	{	
-		CCBMFontConfiguration();	
-		char * description();
-		static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);		
-		bool initWithFNTfile(const char *FNTfile);
-	};
-
-
-	class CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
-	{
-
-		CCLabelBMFont();	
-		static void purgeCachedData();		
-		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);       
-		bool initWithString(const char *str, const char *fntFile);		
-		void createFontChars();	
-		void setString(const char *label);
-		const char* getString(void);
-		void setCString(const char *label);
-		void setAnchorPoint(CCPoint var);
-		CCRGBAProtocol* convertToRGBAProtocol();
-		CCLabelProtocol* convertToLabelProtocol();
-		void draw();
-	};
-
-
-	CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
-
-	void FNTConfigRemoveCache( void );
-
-}// namespace cocos2d
-
-
+void FNTConfigRemoveCache(void);

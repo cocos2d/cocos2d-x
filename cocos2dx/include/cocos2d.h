@@ -88,6 +88,7 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
+#include "CCTimer.h"
 
 // havn't implement on wophone and airplay
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
@@ -116,7 +117,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "CCFileUtils.h"
 #include "CCAccelerometer.h"
- 
+
 //
 // cocos2d macros
 //
@@ -127,6 +128,6 @@ namespace   cocos2d {
 
 const char* cocos2dVersion();
 
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __COCOS2D_H__

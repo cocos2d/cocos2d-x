@@ -31,13 +31,13 @@ THE SOFTWARE.
  @file
  CCPoint extensions based on Chipmunk's cpVect file.
  These extensions work both with CCPoint and cpVect.
- 
+
  The "ccp" prefix means: "CoCos2d Point"
- 
+
  Examples:
   - ccpAdd( ccp(1,1), ccp(2,2) ); // preferred cocos2d way
   - ccpAdd( CCPointMake(1,1), CCPointMake(2,2) ); // also ok but more verbose
-  
+
   - cpvadd( cpv(1,1), cpv(2,2) ); // way of the chipmunk
   - ccpAdd( cpv(1,1), cpv(2,2) ); // mixing chipmunk and cocos2d (avoid)
   - cpvadd( CCPointMake(1,1), CCPointMake(2,2) ); // mixing chipmunk and CG (avoid)
@@ -61,7 +61,7 @@ namespace   cocos2d {
 static inline CCPoint
 ccpNeg(const CCPoint& v)
 {
-	return ccp(-v.x, -v.y);
+    return ccp(-v.x, -v.y);
 }
 
 /** Calculates sum of two points.
@@ -71,7 +71,7 @@ ccpNeg(const CCPoint& v)
 static inline CCPoint
 ccpAdd(const CCPoint& v1, const CCPoint& v2)
 {
-	return ccp(v1.x + v2.x, v1.y + v2.y);
+    return ccp(v1.x + v2.x, v1.y + v2.y);
 }
 
 /** Calculates difference of two points.
@@ -81,7 +81,7 @@ ccpAdd(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpSub(const CCPoint& v1, const CCPoint& v2)
 {
-	return ccp(v1.x - v2.x, v1.y - v2.y);
+    return ccp(v1.x - v2.x, v1.y - v2.y);
 }
 
 /** Returns point multiplied by given factor.
@@ -91,7 +91,7 @@ ccpSub(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpMult(const CCPoint& v, const CGFloat s)
 {
-	return ccp(v.x*s, v.y*s);
+    return ccp(v.x*s, v.y*s);
 }
 
 /** Calculates midpoint between two points.
@@ -101,7 +101,7 @@ ccpMult(const CCPoint& v, const CGFloat s)
 static inline CCPoint
 ccpMidpoint(const CCPoint& v1, const CCPoint& v2)
 {
-	return ccpMult(ccpAdd(v1, v2), 0.5f);
+    return ccpMult(ccpAdd(v1, v2), 0.5f);
 }
 
 /** Calculates dot product of two points.
@@ -111,7 +111,7 @@ ccpMidpoint(const CCPoint& v1, const CCPoint& v2)
 static inline CGFloat
 ccpDot(const CCPoint& v1, const CCPoint& v2)
 {
-	return v1.x*v2.x + v1.y*v2.y;
+    return v1.x*v2.x + v1.y*v2.y;
 }
 
 /** Calculates cross product of two points.
@@ -121,7 +121,7 @@ ccpDot(const CCPoint& v1, const CCPoint& v2)
 static inline CGFloat
 ccpCross(const CCPoint& v1, const CCPoint& v2)
 {
-	return v1.x*v2.y - v1.y*v2.x;
+    return v1.x*v2.y - v1.y*v2.x;
 }
 
 /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
@@ -131,7 +131,7 @@ ccpCross(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpPerp(const CCPoint& v)
 {
-	return ccp(-v.y, v.x);
+    return ccp(-v.y, v.x);
 }
 
 /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
@@ -141,7 +141,7 @@ ccpPerp(const CCPoint& v)
 static inline CCPoint
 ccpRPerp(const CCPoint& v)
 {
-	return ccp(v.y, -v.x);
+    return ccp(v.y, -v.x);
 }
 
 /** Calculates the projection of v1 over v2.
@@ -151,7 +151,7 @@ ccpRPerp(const CCPoint& v)
 static inline CCPoint
 ccpProject(const CCPoint& v1, const CCPoint& v2)
 {
-	return ccpMult(v2, ccpDot(v1, v2)/ccpDot(v2, v2));
+    return ccpMult(v2, ccpDot(v1, v2)/ccpDot(v2, v2));
 }
 
 /** Rotates two points.
@@ -161,7 +161,7 @@ ccpProject(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpRotate(const CCPoint& v1, const CCPoint& v2)
 {
-	return ccp(v1.x*v2.x - v1.y*v2.y, v1.x*v2.y + v1.y*v2.x);
+    return ccp(v1.x*v2.x - v1.y*v2.y, v1.x*v2.y + v1.y*v2.x);
 }
 
 /** Unrotates two points.
@@ -171,7 +171,7 @@ ccpRotate(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpUnrotate(const CCPoint& v1, const CCPoint& v2)
 {
-	return ccp(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
+    return ccp(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
 }
 
 /** Calculates the square length of a CCPoint (not calling sqrt() )
@@ -181,7 +181,7 @@ ccpUnrotate(const CCPoint& v1, const CCPoint& v2)
 static inline CGFloat
 ccpLengthSQ(const CCPoint& v)
 {
-	return ccpDot(v, v);
+    return ccpDot(v, v);
 }
 
 /** Calculates distance between point an origin
@@ -281,29 +281,29 @@ float CC_DLL ccpAngle(const CCPoint& a, const CCPoint& b);
 CCPoint CC_DLL ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle);
 
 /** A general line-line intersection test
- @param p1 
+ @param p1
 	is the startpoint for the first line P1 = (p1 - p2)
- @param p2 
+ @param p2
 	is the endpoint for the first line P1 = (p1 - p2)
- @param p3 
+ @param p3
 	is the startpoint for the second line P2 = (p3 - p4)
- @param p4 
+ @param p4
 	is the endpoint for the second line P2 = (p3 - p4)
- @param s 
+ @param s
 	is the range for a hitpoint in P1 (pa = p1 + s*(p2 - p1))
  @param t
 	is the range for a hitpoint in P3 (pa = p2 + t*(p4 - p3))
- @return bool 
+ @return bool
 	indicating successful intersection of a line
-	note that to truly test intersection for segments we have to make 
+	note that to truly test intersection for segments we have to make
 	sure that s & t lie within [0..1] and for rays, make sure s & t > 0
 	the hit point is		p3 + t * (p4 - p3);
 	the hit point also is	p1 + s * (p2 - p1);
  @since v0.99.1
  */
-bool CC_DLL ccpLineIntersect(const CCPoint& p1, const CCPoint& p2, 
-					  const CCPoint& p3, const CCPoint& p4,
-					  float *s, float *t);
+bool CC_DLL ccpLineIntersect(const CCPoint& p1, const CCPoint& p2,
+                             const CCPoint& p3, const CCPoint& p4,
+                             float *s, float *t);
 
 /*
 ccpSegmentIntersect returns YES if Segment A-B intersects with segment C-D
@@ -317,7 +317,7 @@ ccpIntersectPoint returns the intersection point of line A-B, C-D
 */
 CCPoint CC_DLL ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
 
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __SUPPORT_CGPOINTEXTENSION_H__
 

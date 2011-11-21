@@ -33,18 +33,18 @@ namespace   cocos2d {
 class CCData : public CCObject
 {
 public:
-	CCData(void);
-	~CCData(void);
-	
-	void* bytes(void);
+    CCData(void);
+    ~CCData(void);
+
+    void* bytes(void);
 
 public:
-	static CCData* dataWithBytes(unsigned char *pBytes, int size);
-	static CCData* dataWithContentsOfFile(const std::string &strPath);
+    static CCData* dataWithBytes(unsigned char *pBytes, int size);
+    static CCData* dataWithContentsOfFile(const std::string &strPath);
 
 private:
-	char *m_pData;
+    char *m_pData;
 };
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif //__CCDATA_H__

@@ -39,202 +39,202 @@ template<class _KeyT, class _ValueT = CCObject*>
 class CCMutableDictionary : public CCObject
 {
 public:
-	typedef std::map<_KeyT, _ValueT>	CCObjectMap;
-	typedef typename CCObjectMap::iterator	CCObjectMapIter;
+    typedef std::map<_KeyT, _ValueT>	CCObjectMap;
+    typedef typename CCObjectMap::iterator	CCObjectMapIter;
 
 protected:
-	typedef pair<_KeyT, _ValueT> Int_Pair;
-	CCObjectMap		m_Map;
-	bool			m_bBegin;
-	CCObjectMapIter m_MapIter;
+    typedef pair<_KeyT, _ValueT> Int_Pair;
+    CCObjectMap		m_Map;
+    bool			m_bBegin;
+    CCObjectMapIter m_MapIter;
 
 public:
-	CCMutableDictionary(void)
-	{
-		m_bBegin = false;
-	}
+    CCMutableDictionary(void)
+    {
+        m_bBegin = false;
+    }
 
-	~CCMutableDictionary(void)
-	{
-		removeAllObjects();
-	}
+    ~CCMutableDictionary(void)
+    {
+        removeAllObjects();
+    }
 
-	/// return the number of items
-	unsigned int count()
-	{
-		return m_Map.size();
-	}
+    /// return the number of items
+    unsigned int count()
+    {
+        return m_Map.size();
+    }
 
-	/// return all the keys
-	std::vector<_KeyT> allKeys()
-	{
-		std::vector<_KeyT> tRet;
-		if (m_Map.size() > 0)
-		{
-			CCObjectMapIter it;
-			for( it = m_Map.begin(); it != m_Map.end(); ++it)
-			{
-				tRet.push_back(it->first);
-			}
-		}
-		return tRet;
-	}
+    /// return all the keys
+    std::vector<_KeyT> allKeys()
+    {
+        std::vector<_KeyT> tRet;
+        if (m_Map.size() > 0)
+        {
+            CCObjectMapIter it;
+            for( it = m_Map.begin(); it != m_Map.end(); ++it)
+            {
+                tRet.push_back(it->first);
+            }
+        }
+        return tRet;
+    }
 
-	/** @warning : We use '==' to compare two objects*/
-	std::vector<_KeyT> allKeysForObject(_ValueT object)
-	{
-		std::vector<_KeyT> tRet;
-		if (m_Map.size() > 0)
-		{
-			CCObjectMapIter it;
-			for( it= m_Map.begin(); it != m_Map.end(); ++it)
-			{
-				if (it->second == object)
-				{
-					tRet.push_back(it->first);
-				}
-			}
-		}
-		return tRet;
-	}
+    /** @warning : We use '==' to compare two objects*/
+    std::vector<_KeyT> allKeysForObject(_ValueT object)
+    {
+        std::vector<_KeyT> tRet;
+        if (m_Map.size() > 0)
+        {
+            CCObjectMapIter it;
+            for( it= m_Map.begin(); it != m_Map.end(); ++it)
+            {
+                if (it->second == object)
+                {
+                    tRet.push_back(it->first);
+                }
+            }
+        }
+        return tRet;
+    }
 
-	_ValueT objectForKey(const _KeyT& key)			///< 
-	{
-		CCObjectMapIter it;
+    _ValueT objectForKey(const _KeyT& key)			///<
+    {
+        CCObjectMapIter it;
 
-		it = m_Map.find(key);
+        it = m_Map.find(key);
 
-		if(it == m_Map.end()) //no match case
-			return NULL;
+        if(it == m_Map.end()) //no match case
+            return NULL;
 
-		return it->second;
-	}
+        return it->second;
+    }
 
 
-	bool setObject(_ValueT pObject, const _KeyT& key)
-	{
-		pair<CCObjectMapIter, bool > pr;
+    bool setObject(_ValueT pObject, const _KeyT& key)
+    {
+        pair<CCObjectMapIter, bool > pr;
 
-		pr = m_Map.insert( Int_Pair(key, pObject) );
+        pr = m_Map.insert( Int_Pair(key, pObject) );
 
-		if(pr.second == true)
-		{
-			pObject->retain(); 
-			return true;
-		}
+        if(pr.second == true)
+        {
+            pObject->retain();
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	void removeObjectForKey(const _KeyT& key)
-	{
-		CCObjectMapIter it;
+    void removeObjectForKey(const _KeyT& key)
+    {
+        CCObjectMapIter it;
 
-		it = m_Map.find(key);
+        it = m_Map.find(key);
 
-		if(it == m_Map.end()) //no match case
-			return;
+        if(it == m_Map.end()) //no match case
+            return;
 
-		if(it->second )
-		{
-			it->second->release() ; 
-			m_Map.erase(it);
-		}
-	}
+        if(it->second )
+        {
+            it->second->release() ;
+            m_Map.erase(it);
+        }
+    }
 
-	bool begin()
-	{
-		if(m_Map.size() == 0)
-			return false;
+    bool begin()
+    {
+        if(m_Map.size() == 0)
+            return false;
 
-		m_MapIter = m_Map.begin();
-		m_bBegin = true;
+        m_MapIter = m_Map.begin();
+        m_bBegin = true;
 
-		return true;
-	}
+        return true;
+    }
 
-	_ValueT next(_KeyT* key = NULL)
-	{
-		if(!m_bBegin)
-			return NULL;
+    _ValueT next(_KeyT* key = NULL)
+    {
+        if(!m_bBegin)
+            return NULL;
 
-		_ValueT pObject = m_MapIter->second;
+        _ValueT pObject = m_MapIter->second;
 
-		if(m_MapIter == m_Map.end())
-		{
-			m_bBegin = false;
-		}
-		else
-		{
-			if(key)
-			{
-				*key = m_MapIter->first;
-			}
+        if(m_MapIter == m_Map.end())
+        {
+            m_bBegin = false;
+        }
+        else
+        {
+            if(key)
+            {
+                *key = m_MapIter->first;
+            }
 
-			++m_MapIter;
+            ++m_MapIter;
 
-			if(m_MapIter == m_Map.end())
-			{
-				m_bBegin = false;
-			}
-		}
+            if(m_MapIter == m_Map.end())
+            {
+                m_bBegin = false;
+            }
+        }
 
-		return pObject;
-	}
+        return pObject;
+    }
 
-	/*
-	* end is a keyword of lua, so should use other name
-	* to export to lua
-	*/
-	void endToLua()
-	{
-		end();
-	} 
+    /*
+    * end is a keyword of lua, so should use other name
+    * to export to lua
+    */
+    void endToLua()
+    {
+        end();
+    }
 
-	void end()
-	{
-		m_bBegin = false;
-	}
+    void end()
+    {
+        m_bBegin = false;
+    }
 
-	void removeAllObjects()
-	{
-		if (m_Map.size() > 0)
-		{
-			CCObjectMapIter it;
-			for( it = m_Map.begin(); it != m_Map.end(); ++it)
-			{
-				if (it->second)
-				{
-					it->second->release();
-				}
-			}
-		}
-		m_Map.clear();
-	}
+    void removeAllObjects()
+    {
+        if (m_Map.size() > 0)
+        {
+            CCObjectMapIter it;
+            for( it = m_Map.begin(); it != m_Map.end(); ++it)
+            {
+                if (it->second)
+                {
+                    it->second->release();
+                }
+            }
+        }
+        m_Map.clear();
+    }
 
-	static CCMutableDictionary<_KeyT, _ValueT>* dictionaryWithDictionary(CCMutableDictionary<_KeyT, _ValueT>* srcDict)
-	{
-		CCMutableDictionary<_KeyT, _ValueT>* pNewDict = new CCMutableDictionary<_KeyT, _ValueT>();
+    static CCMutableDictionary<_KeyT, _ValueT>* dictionaryWithDictionary(CCMutableDictionary<_KeyT, _ValueT>* srcDict)
+    {
+        CCMutableDictionary<_KeyT, _ValueT>* pNewDict = new CCMutableDictionary<_KeyT, _ValueT>();
 
-		srcDict->begin();
+        srcDict->begin();
 
-		_KeyT key;
-		_ValueT value;
+        _KeyT key;
+        _ValueT value;
 
-		while( (value = srcDict->next(&key)) )
-		{
-			pNewDict->setObject(value, key);
-		}
+        while( (value = srcDict->next(&key)) )
+        {
+            pNewDict->setObject(value, key);
+        }
 
-		srcDict->end();
+        srcDict->end();
 
-		return pNewDict;
-	}
+        return pNewDict;
+    }
 };
 
 #define CCDictionary	CCMutableDictionary
 typedef CCDictionary<std::string, CCString*> CCStringToStringDictionary;
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 
 #endif //__CCMUTABLE_DICTIONARY_H__
