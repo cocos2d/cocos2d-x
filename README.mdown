@@ -66,6 +66,7 @@ Lua Support FIX Readme
 
 
 **TODO:**
+
    * When C++ object deleted, remove Lua object userdata
    * CCMenuItem support script function
 
