@@ -36,7 +36,7 @@ bool initExtensions() {
 	bool bRet = false;
 	do {
 
-		char* p = (char*) glGetString(GL_EXTENSIONS);
+//		char* p = (char*) glGetString(GL_EXTENSIONS);
 //		printf(p);
 
 		/* Supports frame buffer? */
@@ -85,9 +85,9 @@ CCEGLView::CCEGLView()
 , m_bOrientationReverted(false)
 , m_bOrientationInitVertical(false)
 , m_pDelegate(NULL)
+, bIsInit(false)
 , m_eInitOrientation(CCDeviceOrientationPortrait)
 , m_fScreenScaleFactor(1.0f)
-, bIsInit(false)
 {
 	m_pTouch = new CCTouch;
 	m_pSet = new CCSet;
@@ -298,6 +298,7 @@ void CCEGLView::swapBuffers() {
 
 int CCEGLView::setDeviceOrientation(int eOritation) {
 	CCLog("warning:could not setDeviceOrientation after initialized");
+    return -1;
 }
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h) {

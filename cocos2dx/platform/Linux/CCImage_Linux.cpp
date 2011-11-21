@@ -57,7 +57,7 @@ public:
 		FT_Load_Glyph(face, FT_Get_Char_Index(face, cLastChar),
 				FT_LOAD_DEFAULT);
 
-		oTempLine.iLineWidth = iCurXCursor - SHIFT6(face->glyph->metrics.horiAdvance+face->glyph->metrics.horiBearingX-face->glyph->metrics.width)/*-iInterval*/;//TODO interval
+        oTempLine.iLineWidth = iCurXCursor - SHIFT6((face->glyph->metrics.horiAdvance + face->glyph->metrics.horiBearingX - face->glyph->metrics.width))/*-iInterval*/;//TODO interval
 		iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
 		ss.clear();
 		ss.str("");
@@ -204,7 +204,7 @@ public:
 
 			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
 
-			for (int i = 0; i < vLines.size(); i++) {
+            for (size_t i = 0; i < vLines.size(); i++) {
 				pText = vLines[i].sLineStr.c_str();
 				//initialize the origin cursor
 				iCurXCursor = computeLineStart(face, eAlignMask, *pText, i);
