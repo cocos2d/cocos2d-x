@@ -371,4 +371,8 @@ NS_CC_END;
 #include "android/CCFileUtils_android.cpp"
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include "bada/CCFileUtils_bada.cpp"
+#endif
+
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)

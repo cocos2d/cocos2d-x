@@ -77,7 +77,7 @@ CCRect::CCRect(void)
 CCRect::CCRect(float x, float y, float width, float height)
 {
 	// Only support that, the width and height > 0
-	assert(width >= 0 && height >= 0);
+	CC_ASSERT(width >= 0 && height >= 0);
 
 	origin.x = x;
 	origin.y = y;

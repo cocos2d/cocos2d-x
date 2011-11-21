@@ -570,6 +570,16 @@ void CCScheduler::unscheduleAllSelectors(void)
 	{
         unscheduleUpdateForTarget(pEntry->target);
 	}
+
+	// unschedule all script functions
+	for (tHashScriptFuncEntry *elt = m_pHashForScriptFunctions; elt != NULL; )
+	{
+		tHashScriptFuncEntry *pNextElement = (tHashScriptFuncEntry *)elt->hh.next;
+		elt->timer->release();
+		HASH_DEL(m_pHashForScriptFunctions, elt);
+		free(elt);
+		elt = pNextElement;
+	}
 }
 
 void CCScheduler::unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget)
