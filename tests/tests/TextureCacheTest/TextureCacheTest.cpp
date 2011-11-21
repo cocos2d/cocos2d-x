@@ -3,6 +3,8 @@
 
 #include "TextureCacheTest.h"
 
+using namespace cocos2d;
+
 TextureCacheTest::TextureCacheTest()
 : m_nNumberOfSprites(24)
 , m_nNumberOfLoadedSprites(0)
@@ -17,6 +19,8 @@ TextureCacheTest::TextureCacheTest()
 
 	this->addChild(m_pLabelLoading);
 	this->addChild(m_pLabelPercent);
+
+	CCTime::gettimeofdayCocos2d(&m_time, NULL);
 
 	// load textrues
 	CCTextureCache::sharedTextureCache()->addImageAsync("Images/HelloWorld.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
@@ -62,6 +66,12 @@ void TextureCacheTest::loadingCallBack(CCObject *obj)
 
 void TextureCacheTest::addSprite()
 {
+
+	struct cc_timeval endTime;
+	CCTime::gettimeofdayCocos2d(&endTime, NULL);
+
+	CCLog("time is %d secodes %d ns", endTime.tv_sec - m_time.tv_sec, endTime.tv_usec - m_time.tv_usec);
+
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// create sprites
