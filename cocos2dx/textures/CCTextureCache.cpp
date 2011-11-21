@@ -172,7 +172,7 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 		pthread_cond_init(&s_condition, NULL);
 		s_pImageAsync = NULL;
 
-		CCScheduler::sharedScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 1.0f, false);
+		CCScheduler::sharedScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
         
 		firstRun = false;
 	}

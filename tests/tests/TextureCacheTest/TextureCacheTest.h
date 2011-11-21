@@ -1,8 +1,10 @@
 #ifndef _TEXTURECACHE_TEST_H_
 #define _TEXTURECACHE_TEST_H_
 
+
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "platform/platform.h"
 
 class TextureCacheTest : public CCLayer
 {
@@ -16,6 +18,8 @@ private:
 	cocos2d::CCLabelTTF *m_pLabelPercent;
 	int m_nNumberOfSprites;
 	int m_nNumberOfLoadedSprites;
+
+	struct cocos2d::cc_timeval m_time;
 
 };
 

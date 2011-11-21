@@ -1,6 +1,6 @@
 #!/bin/bash
 # set params
-ANDROID_NDK_ROOT=/cygdrive/d/programe/android/ndk/android-ndk-r5
+ANDROID_NDK_ROOT=/cygdrive/d/programe/android/ndk/android-ndk-r6
 COCOS2DX_ROOT=/cygdrive/e/cocos2d-x
 TESTS_ROOT=$COCOS2DX_ROOT/tests/test.android
 
