@@ -25,8 +25,11 @@
 
 #include "CCObject.h"
 #include "CCAutoreleasePool.h"
-#include "LuaEngine.h"
 #include <assert.h>
+
+#ifdef LUA_ENGINE
+#include "LuaEngine.h"
+#endif
 
 namespace cocos2d {
 
@@ -56,11 +59,13 @@ CCObject::~CCObject(void)
     {
         CCPoolManager::getInstance()->removeObject(this);
     }
-
+    
+#ifdef LUA_ENGINE
     if (m_refID != 0)
     {
         LuaEngine::sharedEngine()->removeCCObject(this);
     }
+#endif
 }
 
 CCObject* CCObject::copy()
