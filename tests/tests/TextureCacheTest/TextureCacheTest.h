@@ -18,9 +18,6 @@ private:
 	cocos2d::CCLabelTTF *m_pLabelPercent;
 	int m_nNumberOfSprites;
 	int m_nNumberOfLoadedSprites;
-
-	struct cocos2d::cc_timeval m_time;
-
 };
 
 class TextureCacheTestScene : public TestScene
