@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "LuaEngine.h"
+#include "tolua++.h"
+#include "tolua_fix.h"
 
 extern "C" {
 #include "lualib.h"
