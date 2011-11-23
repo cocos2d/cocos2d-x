@@ -124,6 +124,10 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "ccMacros.h"
 
+#ifdef LUA_ENGINE
+#include "LuaEngine.h"
+#endif
+
 namespace   cocos2d {
 
 const char* cocos2dVersion();
