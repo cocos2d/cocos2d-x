@@ -49,7 +49,7 @@ LuaEngine::LuaEngine()
     tolua_SimpleAudioEngine_open(m_state);
     tolua_prepare_ccobject_table(m_state);
     tolua_LuaGameInterfaces_open(m_state);
-    luax_initpreload(m_state);
+    luax_loadexts(m_state);
 }
 
 LuaEngine::~LuaEngine()

@@ -11,6 +11,6 @@
 
 #include "lauxlib.h"
 
-void luax_initpreload(lua_State *L);
+void luax_loadexts(lua_State *L);
 
 #endif // __LUALOADEXTS_H_
