@@ -58,13 +58,6 @@ OpenGLESString OpenGLESString::operator+ (int val)
 	return OpenGLESString(string + out.str());
 }
 
-OpenGLESString OpenGLESString::operator+ (size_t val)
-{
-	std::stringstream out;
-	out << (int)val;
-	return OpenGLESString(string + out.str());
-}
-
 OpenGLESString OpenGLESString::operator+ (unsigned int val)
 {
 	std::stringstream out;

@@ -19,14 +19,32 @@
 
 using namespace OpenGLES;
 
-OpenGLESImplementation::OpenGLESImplementation() 
+OpenGLESImplementation::OpenGLESImplementation()
+: colorReadFormat(GL_RGBA)
+, colorReadType(GL_UNSIGNED_BYTE)
+, maxCombinedTextureImageUnits(8)
+, maxCubeMapTextureSize(0)
+, maxFragmentUniformVectors(16)
+, maxRenderBufferSize(0)
+, maxTextureImageUnits(8)
+, maxTextureSize(0)
+, maxVaryingVectors(8)
+, maxVertexAttribs(8)
+, maxVertexTextureImageUnits(0)
+, maxVertexUniformVectors(128)
+, numCompressedTextureFormats(0)
+, numShaderBinaryFormats(0)
+, shaderBinaryFormats(0)
+, shaderCompilerSupported(false)
+, depthBits(0)
+, stencilBits(0)
 {
 	
 }
 
 OpenGLESImplementation::~OpenGLESImplementation() 
 {
-	free(shaderBinaryFormats);
+	delete[] shaderBinaryFormats;
 }
 
 void OpenGLESImplementation::print()

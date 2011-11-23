@@ -19,7 +19,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <OpenGLES/ES2/gl.h>
+
+#include "CCGL2Header.h"
+
 #include <vector>
 #include "OpenGLESString.h"
 

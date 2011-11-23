@@ -14,8 +14,7 @@
  limitations under the License.
  */
 
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#include "CCGL2Header.h"
 #include "OpenGLES20Context.h"
 #include "ShaderProgram.h"
 #include "OpenGLESUtil.h"
@@ -575,7 +574,7 @@ void OpenGLES20Context::glLightf (GLenum l, GLenum pname, GLfloat param)
 	{
 		case GL_SPOT_EXPONENT:
 			openGLESState.setLightSpotExponent(lightIndex, param);
-			if (OpenGLESConfig::DEBUG) {
+			if (OpenGLESConfig::OPENGLESCONFIG_DEBUG) {
 				if (param > 128) {
 					OPENGLES_LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Spot exponent cannot be over 128");
 				}
@@ -583,7 +582,7 @@ void OpenGLES20Context::glLightf (GLenum l, GLenum pname, GLfloat param)
 			break;
 		case GL_SPOT_CUTOFF:
 			openGLESState.setLightSpotCutoffAngleCos(lightIndex, cosf(param*PI/180.0f));
-			if (OpenGLESConfig::DEBUG) {
+			if (OpenGLESConfig::OPENGLESCONFIG_DEBUG) {
 				if (param > 90 && param != 180) {
 					OPENGLES_LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Spot cutoff cannot be over 90 and different from 180.");
 				}
@@ -625,7 +624,7 @@ void OpenGLES20Context::glLightfv (GLenum l, GLenum pname, const GLfloat *params
 			OpenGLESMath::multiply(&vec, modelViewMatrix, &vec);
 			openGLESState.setLightPosition(lightIndex, vec);
 			
-			if (OpenGLESConfig::DEBUG) {
+			if (OpenGLESConfig::OPENGLESCONFIG_DEBUG) {
 				if (vec[3] == 0.0f && !OpenGLESMath::isUnitVector(&vec)) {
 					OPENGLES_LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Directional light's position is not unit vector.");
 				}
@@ -696,7 +695,7 @@ void OpenGLES20Context::glMaterialf (GLenum face, GLenum pname, GLfloat param)
 	{
 		case GL_SHININESS:
 			openGLESState.setMaterialShininess(param);
-			if (OpenGLESConfig::DEBUG) {
+			if (OpenGLESConfig::OPENGLESCONFIG_DEBUG) {
 				if (param > 128) {
 					OPENGLES_LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Shininess cannot be over 128");
 				}
@@ -1450,8 +1449,12 @@ void OpenGLES20Context::glDisableVertexAttribArray (GLuint index)
 }
 
 void OpenGLES20Context::glDiscardFramebufferEXT(GLenum target, GLsizei numAttachments, const GLenum *attachments) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	::glDiscardFramebufferEXT(target, numAttachments, attachments);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
+#else
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: glPointSizePointerOES No effect in OpenGL ES 2.x");
+#endif
 }
 
 void OpenGLES20Context::glEnableVertexAttribArray (GLuint index)
@@ -1635,13 +1638,21 @@ void OpenGLES20Context::glRenderbufferStorage (GLenum target, GLenum internalfor
 }
 
 void OpenGLES20Context::glRenderbufferStorageMultisampleAPPLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	::glRenderbufferStorageMultisampleAPPLE(target, samples, internalformat, width, height);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
+#else
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: glPointSizePointerOES No effect in OpenGL ES 2.x");
+#endif
 }
 
 void OpenGLES20Context::glResolveMultisampleFramebufferAPPLE(void) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	::glResolveMultisampleFramebufferAPPLE();
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
+#else
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: glPointSizePointerOES No effect in OpenGL ES 2.x");
+#endif
 }
 
 void OpenGLES20Context::glShaderBinary (GLsizei n, const GLuint* shaders, GLenum binaryformat, const GLvoid* binary, GLsizei length)
@@ -1865,7 +1876,7 @@ void OpenGLES20Context::glVertexAttribPointer (GLuint indx, GLint size, GLenum t
 // OpenGL ES 2 Extensions
 void OpenGLES20Context::glGetBufferPointervOES (GLenum target, GLenum pname, GLvoid **params)
 {
-#if GL_OES_mapbuffer
+#if GL_OES_mapbuffer && (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	::glGetBufferPointervOES(target, pname, params);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 #else
@@ -1875,7 +1886,7 @@ void OpenGLES20Context::glGetBufferPointervOES (GLenum target, GLenum pname, GLv
 
 GLvoid * OpenGLES20Context::glMapBufferOES (GLenum target, GLenum access)
 {
-#if GL_OES_mapbuffer
+#if GL_OES_mapbuffer && (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	return ::glMapBufferOES(target, access);
 #else
 	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: glMapBufferOES Not supported");
@@ -1885,7 +1896,7 @@ GLvoid * OpenGLES20Context::glMapBufferOES (GLenum target, GLenum access)
 
 GLboolean OpenGLES20Context::glUnmapBufferOES (GLenum target)
 {
-#if GL_OES_mapbuffer
+#if GL_OES_mapbuffer && (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	return ::glUnmapBufferOES(target);
 #else
 	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: glUnmapBufferOES Not supported");

@@ -23,6 +23,7 @@
 #include "OpenGLESState.h"
 #include <string>
 
+using namespace OpenGLES;
 using namespace OpenGLES::OpenGLES2;
 
 ShaderProgram::ShaderProgram(OpenGLESString name, Shader *vertexShader, Shader *fragmentShader) : name(name)
@@ -55,9 +56,9 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 {
 	GLuint vertexShaderId = vertexShader->compile();
 	GLuint fragmentShaderId = fragmentShader->compile();
-	
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 	glReleaseShaderCompiler();
-	
+#endif
 	GLuint program = glCreateProgram();
 	
 	if (program == 0) 
@@ -75,7 +76,7 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 	GLint linked;
 	glGetProgramiv(program, GL_LINK_STATUS, &linked);
 	
-	if (!linked || OpenGLESConfig::DEBUG)
+	if (!linked || OpenGLESConfig::OPENGLESCONFIG_DEBUG)
 	{
 		GLint infoLength;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLength);

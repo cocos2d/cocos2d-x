@@ -25,7 +25,8 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 
 #include "EGL/egl.h"
-#include "gles/gl.h"
+#include "OpenGLES11/OpenGLES11Context.h"
+#include "OpenGLES20/OpenGLES20Context.h"
 
 #include "CCSet.h"
 #include "ccMacros.h"
@@ -61,6 +62,7 @@ public:
 		{
 			ReleaseDC(m_eglNativeWindow, m_eglNativeDisplay);
 		}
+		delete m_pglContent;
 	}
 
 	static CCEGL * create(CCEGLView * pWindow)
@@ -80,7 +82,7 @@ public:
 
 			EGLint nMajor, nMinor;
 			CC_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
-
+			
 			const EGLint aConfigAttribs[] =
 			{
 				EGL_LEVEL,				0,
@@ -96,7 +98,12 @@ public:
 				|| (iConfigs != 1));
 
 			EGLContext eglContext;
-			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
+			const EGLint * pAttribsList = 0;
+#if CC_OPENGLES20_SUPPORT
+			EGLint ai32ContextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+			pAttribsList = ai32ContextAttribs;
+#endif
+			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, pAttribsList);
 			CC_BREAK_IF(EGL_NO_CONTEXT == eglContext);
 
 			EGLSurface eglSurface;
@@ -109,6 +116,13 @@ public:
 			pEGL->m_eglConfig  = eglConfig;
 			pEGL->m_eglContext = eglContext;
 			pEGL->m_eglSurface = eglSurface;
+
+#if CC_OPENGLES20_SUPPORT
+			pEGL->m_pglContent = new OpenGLES::OpenGLES2::OpenGLES20Context();
+#else
+			pEGL->m_pglContent = new OpenGLES::OpenGLES1::OpenGLES11Context();
+#endif
+			CC_BREAK_IF(! pEGL->m_pglContent);
 			bSuccess = TRUE;
 		} while (0);
 
@@ -118,6 +132,11 @@ public:
 		}
 
 		return pEGL;
+	}
+
+	OpenGLES::OpenGLESContext * getGLESContent()
+	{
+		return m_pglContent;
 	}
 
 	void resizeSurface()
@@ -154,6 +173,7 @@ private:
 		, m_eglConfig(0)
 		, m_eglSurface(EGL_NO_SURFACE)
 		, m_eglContext(EGL_NO_CONTEXT)
+		, m_pglContent(0)
 	{}
 
 	EGLNativeWindowType     m_eglNativeWindow;
@@ -162,10 +182,11 @@ private:
 	EGLConfig               m_eglConfig;
 	EGLSurface              m_eglSurface;
 	EGLContext              m_eglContext;
+	OpenGLES::OpenGLESContext * m_pglContent;
 };
 
 //////////////////////////////////////////////////////////////////////////
-// impliment CCEGLView
+// implement CCEGLView
 //////////////////////////////////////////////////////////////////////////
 static CCEGLView * s_pMainWindow;
 static const WCHAR * kWindowClassName = L"Cocos2dxWin32";
@@ -255,13 +276,13 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
 		// init egl
 		m_pEGL = CCEGL::create(this);
-
 		if (! m_pEGL)
 		{
 			DestroyWindow(m_hWnd);
 			m_hWnd = NULL;
 			break;
 		}
+		CCDirector::sharedDirector()->setGLContext(m_pEGL->getGLESContent());
 
 		s_pMainWindow = this;
 		bRet = true;
@@ -456,7 +477,7 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
     if (m_pEGL)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glViewport((GLint)(x * factor) + m_rcViewPort.left,
+        m_pEGL->getGLESContent()->glViewport((GLint)(x * factor) + m_rcViewPort.left,
             (GLint)(y * factor) + m_rcViewPort.top,
             (GLint)(w * factor),
             (GLint)(h * factor));
@@ -468,7 +489,7 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
     if (m_pEGL)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glScissor((GLint)(x * factor) + m_rcViewPort.left,
+        m_pEGL->getGLESContent()->glScissor((GLint)(x * factor) + m_rcViewPort.left,
             (GLint)(y * factor) + m_rcViewPort.top,
             (GLint)(w * factor),
             (GLint)(h * factor));

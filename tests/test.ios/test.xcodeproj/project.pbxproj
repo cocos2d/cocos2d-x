@@ -619,6 +619,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		012D3F49142D17DF00D83547 /* CCAccelerometer_android.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCAccelerometer_android.cpp; sourceTree = "<group>"; };
+		012D3F4A142D17DF00D83547 /* CCAccelerometer_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer_android.h; sourceTree = "<group>"; };
+		012D3F4B142D17DF00D83547 /* CCApplication_android.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication_android.cpp; sourceTree = "<group>"; };
+		012D3F4C142D17DF00D83547 /* CCApplication_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication_android.h; sourceTree = "<group>"; };
+		012D3F4D142D17DF00D83547 /* CCEGLView_android.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLView_android.cpp; sourceTree = "<group>"; };
+		012D3F4E142D17DF00D83547 /* CCEGLView_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEGLView_android.h; sourceTree = "<group>"; };
+		012D3F4F142D17DF00D83547 /* CCFileUtils_android.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils_android.cpp; sourceTree = "<group>"; };
+		012D3F50142D17DF00D83547 /* CCImage_android.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage_android.cpp; sourceTree = "<group>"; };
+		012D3F51142D17DF00D83547 /* CCThread_android.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCThread_android.cpp; sourceTree = "<group>"; };
+		012D3F53142D17DF00D83547 /* IMEJni.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IMEJni.cpp; sourceTree = "<group>"; };
+		012D3F54142D17DF00D83547 /* IMEJni.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMEJni.h; sourceTree = "<group>"; };
+		012D3F55142D17DF00D83547 /* JniHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = JniHelper.cpp; sourceTree = "<group>"; };
+		012D3F56142D17DF00D83547 /* JniHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JniHelper.h; sourceTree = "<group>"; };
+		012D3F57142D17DF00D83547 /* MessageJni.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MessageJni.cpp; sourceTree = "<group>"; };
+		012D3F58142D17DF00D83547 /* MessageJni.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageJni.h; sourceTree = "<group>"; };
+		012D3F59142D17DF00D83547 /* SensorJni.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SensorJni.cpp; sourceTree = "<group>"; };
+		012D3F5A142D17DF00D83547 /* SensorJni.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorJni.h; sourceTree = "<group>"; };
+		012D3F5B142D17DF00D83547 /* SystemInfoJni.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SystemInfoJni.cpp; sourceTree = "<group>"; };
+		012D3F5C142D17DF00D83547 /* SystemInfoJni.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemInfoJni.h; sourceTree = "<group>"; };
+		012D3F5D142D17DF00D83547 /* TouchesJni.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TouchesJni.cpp; sourceTree = "<group>"; };
 		01C1B8C7142A0466003DBDAB /* OpenGLES11Context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLES11Context.cpp; sourceTree = "<group>"; };
 		01C1B8C8142A0466003DBDAB /* OpenGLES11Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLES11Context.h; sourceTree = "<group>"; };
 		01C1B8C9142A0466003DBDAB /* OpenGLES11Implementation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLES11Implementation.cpp; sourceTree = "<group>"; };
@@ -1360,6 +1380,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		012D3F48142D17DF00D83547 /* android */ = {
+			isa = PBXGroup;
+			children = (
+				012D3F49142D17DF00D83547 /* CCAccelerometer_android.cpp */,
+				012D3F4A142D17DF00D83547 /* CCAccelerometer_android.h */,
+				012D3F4B142D17DF00D83547 /* CCApplication_android.cpp */,
+				012D3F4C142D17DF00D83547 /* CCApplication_android.h */,
+				012D3F4D142D17DF00D83547 /* CCEGLView_android.cpp */,
+				012D3F4E142D17DF00D83547 /* CCEGLView_android.h */,
+				012D3F4F142D17DF00D83547 /* CCFileUtils_android.cpp */,
+				012D3F50142D17DF00D83547 /* CCImage_android.cpp */,
+				012D3F51142D17DF00D83547 /* CCThread_android.cpp */,
+				012D3F52142D17DF00D83547 /* jni */,
+			);
+			path = android;
+			sourceTree = "<group>";
+		};
+		012D3F52142D17DF00D83547 /* jni */ = {
+			isa = PBXGroup;
+			children = (
+				012D3F53142D17DF00D83547 /* IMEJni.cpp */,
+				012D3F54142D17DF00D83547 /* IMEJni.h */,
+				012D3F55142D17DF00D83547 /* JniHelper.cpp */,
+				012D3F56142D17DF00D83547 /* JniHelper.h */,
+				012D3F57142D17DF00D83547 /* MessageJni.cpp */,
+				012D3F58142D17DF00D83547 /* MessageJni.h */,
+				012D3F59142D17DF00D83547 /* SensorJni.cpp */,
+				012D3F5A142D17DF00D83547 /* SensorJni.h */,
+				012D3F5B142D17DF00D83547 /* SystemInfoJni.cpp */,
+				012D3F5C142D17DF00D83547 /* SystemInfoJni.h */,
+				012D3F5D142D17DF00D83547 /* TouchesJni.cpp */,
+			);
+			path = jni;
+			sourceTree = "<group>";
+		};
 		01C1B8C4142A0466003DBDAB /* gl_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -2633,6 +2688,7 @@
 		BF83591A13276C7700F3C033 /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				012D3F48142D17DF00D83547 /* android */,
 				BF316084133DE0A500E0532D /* CCFileUtils.h */,
 				D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */,
 				D4F1A26F133B2FE700937FFA /* CCSAXParser.h */,

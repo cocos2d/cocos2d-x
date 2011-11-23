@@ -17,7 +17,8 @@
 #ifndef Uniform_H_
 #define Uniform_H_
 
-#include <OpenGLES/ES2/gl.h>
+#include "CCGL2Header.h"
+
 #include <string>
 #include <sstream>
 #include <utility>
@@ -65,7 +66,7 @@ namespace OpenGLES {
 			Uniform();
 			~Uniform();
 			
-			void setValue(T val);
+			inline void setValue(T val);
 			virtual const T getValue();
 			void upload(ShaderProgram *program);
 			virtual std::vector<ShaderFile *> getAdditionalRequiredShaderFiles();
@@ -201,7 +202,7 @@ namespace OpenGLES {
 		}
 		
 		template <class T>
-		void Uniform<T>::setValue( T val )
+		inline void Uniform<T>::setValue( T val )
 		{
 			// TODO: Profile whether this if clause is an optimization
 			//if (value != val) {

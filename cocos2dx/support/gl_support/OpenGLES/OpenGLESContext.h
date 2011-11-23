@@ -19,6 +19,7 @@
 
 #include "OpenGLESConfig.h"
 #include "OpenGLESImplementation.h"
+#include "ccConfig.h"
 
 typedef void            GLvoid;
 typedef char            GLchar;
@@ -38,10 +39,32 @@ typedef int             GLfixed;
 typedef int             GLclampx;
 
 /* GL types for handling large vertex buffer objects */
-typedef long             GLintptr;
-typedef long             GLsizeiptr;
+#if !defined (__ANDROID__)
+#	if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#		include <Availability.h>
+#		if __IPHONE_OS_VERSION_MAX_ALLOWED >= 50000 
+#			ifdef CC_OPENGLES20_SUPPORT
+				typedef long GLintptr;
+				typedef long GLsizeiptr;
+#			else
+				typedef int GLintptr;
+				typedef int GLsizeiptr;
+#			endif
+#		else
+			typedef int GLintptr;
+			typedef int GLsizeiptr;
+#		endif
+#	else
+		typedef long GLintptr;
+		typedef long GLsizeiptr;
+#	endif
+#else
+	typedef signed   long  int GLintptr;
+	typedef signed   long  int  GLsizeiptr;
+#endif
 
 /* Extensions */
+#if !defined (__ANDROID__)
 #define GL_OES_byte_coordinates           1
 #define GL_OES_compressed_paletted_texture 1
 #define GL_OES_draw_texture               1
@@ -52,6 +75,7 @@ typedef long             GLsizeiptr;
 #define GL_OES_point_sprite               1
 #define GL_OES_read_format                1
 #define GL_OES_single_precision           1
+#endif
 
 /* ClearBufferMask */
 #define GL_DEPTH_BUFFER_BIT               0x00000100
@@ -551,6 +575,7 @@ typedef long             GLsizeiptr;
 #define GL_RGBA4                                            0x8056
 #define GL_RGB5_A1                                          0x8057
 #define GL_RGB565                                           0x8D62
+#define GL_RGBA8_OES                                        0x8058
 #define GL_DEPTH_COMPONENT16                                0x81A5
 #define GL_STENCIL_INDEX                                    0x1901
 #define GL_STENCIL_INDEX8                                   0x8D48

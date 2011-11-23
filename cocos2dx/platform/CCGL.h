@@ -51,30 +51,6 @@ THE SOFTWARE.
 
 #include "support/gl_support/OpenGLES/OpenGLESContext.h"
 
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//#include "OpenGLES/ES1/gl.h"
-//#include "OpenGLES/ES1/glext.h"
-//#endif
-//
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//#include <GLES/gl.h>
-//#include <GLES/glext.h>
-//#endif
-//
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-//#include <GLES/gl.h>
-//#include <GLES/glext.h>
-//#endif
-//
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//#include <GLES/gl.h>
-//#include <GLES/glext.h>
-//#endif
-//
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-//#include <IwGL.h>
-//#endif
-
 NS_CC_BEGIN;
 
 /*

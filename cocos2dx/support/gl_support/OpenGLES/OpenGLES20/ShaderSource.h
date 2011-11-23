@@ -17,7 +17,7 @@
 #ifndef ShaderSource_H_
 #define ShaderSource_H_
 
-#include <OpenGLES/ES2/gl.h>
+#include "CCGL2Header.h"
 #include <string>
 
 namespace OpenGLES {

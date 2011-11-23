@@ -33,7 +33,11 @@ bool OpenGLESFile::open()
 //	fp = fopen(name.c_str(), "r");
 //	return fp;
 	offset = 0;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	std::string fullpath = cocos2d::CCFileUtils::fullPathFromRelativePath(name.c_str());
+#else
+	std::string fullpath = cocos2d::CCFileUtils::fullPathFromRelativePath(std::string("shaders/" + name).c_str());
+#endif
 	fileData = new cocos2d::CCFileData(fullpath.c_str(), "rt");
 	return fileData && fileData->getBuffer();
 }

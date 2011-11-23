@@ -23,6 +23,7 @@
 #include "Shader.h"
 #include "OpenGLESImplementation.h"
 
+using namespace OpenGLES;
 using namespace OpenGLES::OpenGLES2;
 
 OpenGLESState::OpenGLESState() : stateShaderPrograms(), currentStateShaderProgram(0), stateSize(1 + (UniformId::STATE_UNIFORM_BOOL_COUNT / 32) + UniformId::STATE_UNIFORM_INT_COUNT), stateSizeBool(1 + (UniformId::STATE_UNIFORM_BOOL_COUNT / 32)), activeTexture(0), clientActiveTexture(0)
@@ -859,7 +860,7 @@ void OpenGLESState::uploadUniforms()
 
 void OpenGLESState::setCurrentProgram()
 {
-	if (OpenGLESConfig::USE_ONLY_UBER_SHADER) {
+	if (OpenGLESConfig::OPENGLESCONFIG_USE_ONLY_UBER_SHADER) {
 		static bool uberShaderCompiled = false;
 		if (!uberShaderCompiled) {
 			std::vector<ShaderSource *> vertexShaderSources;
@@ -954,7 +955,7 @@ void OpenGLESState::setCurrentProgram()
 		
 		addDefinesToShaderSources(vertexShaderSources, fragmentShaderSources);
 		
-		if (OpenGLESConfig::DEBUG) {
+		if (OpenGLESConfig::OPENGLESCONFIG_DEBUG) {
 			OPENGLES_LOG_MESSAGE("Using shader files:");
 			for (size_t i = 0; i < vertexShaderSources.size(); i++)
 			{
@@ -973,7 +974,7 @@ void OpenGLESState::setCurrentProgram()
 		currentStateShaderProgram = new StateShaderProgram(getCopyOfCurrentState(), new ShaderProgram(OpenGLESString("Optimized Shader ") + (stateShaderPrograms.size() + 1), vertexShader, fragmentShader));
 		stateShaderPrograms.push_back(currentStateShaderProgram);
 	}
-	
+
 	if (currentStateShaderProgram != oldStateShaderProgram) {
 		currentStateShaderProgram->shaderProgram->use();
 		setActiveUniformLocations(currentStateShaderProgram->shaderProgram->getActiveUniforms());
@@ -1037,7 +1038,7 @@ void OpenGLESState::addDefinesToShaderSources(std::vector<ShaderSource *> &verte
 	}
 	
 	// Additional defines for shader optimization
-	if (dynamic_cast<UniformState<bool> *>(uniforms[UniformId::LIGHTING_ENABLED]) && dynamic_cast<UniformState<bool> *>(uniforms[UniformId::LIGHT0_ENABLED]) && dynamic_cast<UniformState<bool> *>(uniforms[UniformId::LIGHT1_ENABLED]) && dynamic_cast<UniformState<bool> *>(uniforms[UniformId::LIGHT2_ENABLED])) {
+	if ((UniformState<bool> *)(uniforms[UniformId::LIGHTING_ENABLED]) && (UniformState<bool> *)(uniforms[UniformId::LIGHT0_ENABLED]) && (UniformState<bool> *)(uniforms[UniformId::LIGHT1_ENABLED]) && (UniformState<bool> *)(uniforms[UniformId::LIGHT2_ENABLED])) {
 		bool nonDirectionalLightEnabled = false;
 		if (static_cast<Uniform<bool> * >(uniforms[UniformId::LIGHTING_ENABLED])->getValue()) {
 			for (int i = 0; i < 3; i++) {

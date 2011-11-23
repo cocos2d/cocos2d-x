@@ -57,8 +57,8 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\platform;..\support\gl_support\OpenGLES;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;GL_GLEXT_PROTOTYPES;COCOS2DXWIN32_EXPORTS;_DEBUG;COCOS2D_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -74,7 +74,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -95,8 +95,8 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\platform;..\support\gl_support\OpenGLES;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;GL_GLEXT_PROTOTYPES;COCOS2DXWIN32_EXPORTS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -110,7 +110,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -190,6 +190,22 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\support\CCProfiling.cpp" />
     <ClCompile Include="..\support\CCUserDefault.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\MatrixStack.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Context.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Implementation.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLESState.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Shader.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderFile.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderProgram.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderSource.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Uniform.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESConfig.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESContext.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESFile.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESImplementation.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESString.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESUtil.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
@@ -315,6 +331,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\CCEGLView_platform.h" />
     <ClInclude Include="..\platform\CCFileUtils.h" />
     <ClInclude Include="..\platform\CCGL.h" />
+    <ClInclude Include="..\platform\CCGLHeader.h" />
     <ClInclude Include="..\platform\CCImage.h" />
     <ClInclude Include="..\platform\CCLibxml2.h" />
     <ClInclude Include="..\platform\CCPlatformConfig.h" />
@@ -329,6 +346,23 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\support\base64.h" />
     <ClInclude Include="..\support\CCProfiling.h" />
     <ClInclude Include="..\support\ccUtils.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\MatrixStack.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Context.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Implementation.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLESState.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Shader.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderFile.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderProgram.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderSource.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Uniform.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESConfig.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESContext.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESFile.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESImplementation.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESMath.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESString.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESUtil.h" />
     <ClInclude Include="..\support\TransformUtils.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
     <ClInclude Include="..\support\data_support\uthash.h" />

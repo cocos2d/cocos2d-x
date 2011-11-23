@@ -17,7 +17,7 @@
 #ifndef Attribute_H_
 #define Attribute_H_
 
-#include <OpenGLES/ES2/gl.h>
+#include "CCGL2Header.h"
 #include <string>
 
 namespace OpenGLES {
