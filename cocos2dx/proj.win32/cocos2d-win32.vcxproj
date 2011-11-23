@@ -58,7 +58,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\platform;..\support\gl_support\OpenGLES;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;GL_GLEXT_PROTOTYPES;COCOS2DXWIN32_EXPORTS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;GL_GLEXT_PROTOTYPES;COCOS2DXWIN32_EXPORTS;_DEBUG;COCOS2D_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -74,7 +74,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -110,7 +110,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -190,8 +190,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\support\CCProfiling.cpp" />
     <ClCompile Include="..\support\CCUserDefault.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
-    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Context.cpp" />
-    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.cpp" />
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.cpp" />
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\MatrixStack.cpp" />
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Context.cpp" />
@@ -348,8 +346,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\support\base64.h" />
     <ClInclude Include="..\support\CCProfiling.h" />
     <ClInclude Include="..\support\ccUtils.h" />
-    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Context.h" />
-    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.h" />
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.h" />
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\MatrixStack.h" />
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Context.h" />

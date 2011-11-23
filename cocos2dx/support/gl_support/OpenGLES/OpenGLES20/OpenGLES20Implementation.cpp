@@ -68,14 +68,17 @@ void OpenGLES20Implementation::init()
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 	glGetIntegerv(GL_NUM_SHADER_BINARY_FORMATS, &numShaderBinaryFormats);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
-	shaderBinaryFormats =  new int[numShaderBinaryFormats];
-	glGetIntegerv(GL_SHADER_BINARY_FORMATS, shaderBinaryFormats);
-	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
-	
-	unsigned char tmp;
+	if (numShaderBinaryFormats > 0)
+	{
+		shaderBinaryFormats =  new int[numShaderBinaryFormats];
+		glGetIntegerv(GL_SHADER_BINARY_FORMATS, shaderBinaryFormats);
+		OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
+	}
+
+	unsigned char tmp = 0;
 	glGetBooleanv(GL_SHADER_COMPILER, &tmp);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
-	shaderCompilerSupported = tmp == 0;
+	shaderCompilerSupported = (tmp != 1);
 	
 	glGetIntegerv(GL_DEPTH_BITS, &depthBits);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);

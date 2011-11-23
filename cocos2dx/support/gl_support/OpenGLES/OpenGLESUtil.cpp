@@ -57,12 +57,12 @@ void OpenGLESUtil::checkGlError(GLenum errorCode, const char *file, const unsign
 
 void OpenGLESUtil::logMessage(const char *file, int line, OpenGLESString msg)
 {
-	CCLOG("%s:%d %s\n", file, line, msg().c_str());
+	CCLOG("%s:%d %s", file, line, msg().c_str());
 }
 
 void OpenGLESUtil::logMessage(OpenGLESString msg)
 {
-	CCLOG("%s\n", msg().c_str());
+	CCLOG("%s", msg().c_str());
 }
 
 void OpenGLESUtil::print( const char* format, ... ) 

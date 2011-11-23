@@ -121,7 +121,9 @@ bool Shader::readShaderSource()
 
 	for (size_t i = 0; i < sources.size(); i++) 
 	{
-		shaderSources[i] = convertStringToChar(sources[i]->getSource());
+		std::string sSource = sources[i]->getSource();
+		OPENGLES_LOG_DEBUG_MESSAGE(sSource);
+		shaderSources[i] = convertStringToChar(sSource);
 	}
 
 	glShaderSource(id, sources.size(), (const char **)shaderSources, NULL);

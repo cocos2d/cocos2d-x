@@ -1,7 +1,7 @@
 #ifdef GL_FRAGMENT_PRECISION_HIGH
-	precision highp float;
+    precision highp float;
 #else
-	precision mediump float;
+    precision mediump float;
 #endif
 
 
@@ -11,5 +11,5 @@ varying vec2 v_texCoord;
 
 void main() 
 {
-	gl_FragColor = texture2D(u_texture, v_texCoord);
+    gl_FragColor = texture2D(u_texture, v_texCoord);
 }

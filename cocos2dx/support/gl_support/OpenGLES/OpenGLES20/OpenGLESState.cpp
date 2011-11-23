@@ -974,7 +974,7 @@ void OpenGLESState::setCurrentProgram()
 		currentStateShaderProgram = new StateShaderProgram(getCopyOfCurrentState(), new ShaderProgram(OpenGLESString("Optimized Shader ") + (stateShaderPrograms.size() + 1), vertexShader, fragmentShader));
 		stateShaderPrograms.push_back(currentStateShaderProgram);
 	}
-	
+
 	if (currentStateShaderProgram != oldStateShaderProgram) {
 		currentStateShaderProgram->shaderProgram->use();
 		setActiveUniformLocations(currentStateShaderProgram->shaderProgram->getActiveUniforms());

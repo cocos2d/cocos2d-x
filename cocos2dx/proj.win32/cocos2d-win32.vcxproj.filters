@@ -363,12 +363,6 @@
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESUtil.cpp">
       <Filter>support\gl_support\OpenGLES</Filter>
     </ClCompile>
-    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Context.cpp">
-      <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.cpp">
-      <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.cpp">
       <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
     </ClCompile>
@@ -776,12 +770,6 @@
     </ClInclude>
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESUtil.h">
       <Filter>support\gl_support\OpenGLES</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Context.h">
-      <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.h">
-      <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCGLHeader.h">
       <Filter>platform</Filter>

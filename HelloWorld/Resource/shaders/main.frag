@@ -1,58 +1,58 @@
 #ifdef GL_FRAGMENT_PRECISION_HIGH
-	precision highp float;
+    precision highp float;
 #else
-	precision mediump float;
+    precision mediump float;
 #endif
 #define OGL_FASTEST 0x1101
 #define OGL_NICEST 0x1102
 #if !defined(TEXTURE0_ENABLED)
-	#define TEXTURE0_ENABLED -1
+    #define TEXTURE0_ENABLED -1
 #endif
 #if !defined(TEXTURE1_ENABLED)
-	#define TEXTURE1_ENABLED -1
+    #define TEXTURE1_ENABLED -1
 #endif
 #if !defined(TEXTURE2_ENABLED)
-	#define TEXTURE2_ENABLED -1
+    #define TEXTURE2_ENABLED -1
 #endif
 
 #if !defined(FOG_ENABLED)
-	#define FOG_ENABLED -1
+    #define FOG_ENABLED -1
 #endif
 
 #if !defined(FOG_HINT)
-	#define FOG_HINT -1
+    #define FOG_HINT -1
 #endif
 
 #if !defined(LIGHTING_ENABLED)
-	#define LIGHTING_ENABLED -1
+    #define LIGHTING_ENABLED -1
 #endif
 
 #if !defined(ALPHA_TEST_ENABLED)
-	#define ALPHA_TEST_ENABLED -1
+    #define ALPHA_TEST_ENABLED -1
 #endif
 
 #if !defined(CLIP_PLANE0_ENABLED)
-	#define CLIP_PLANE0_ENABLED -1
+    #define CLIP_PLANE0_ENABLED -1
 #endif
 
 #if !defined(CLIP_PLANE1_ENABLED)
-	#define CLIP_PLANE1_ENABLED -1
+    #define CLIP_PLANE1_ENABLED -1
 #endif
 
 #if !defined(CLIP_PLANE2_ENABLED)
-	#define CLIP_PLANE2_ENABLED -1
+    #define CLIP_PLANE2_ENABLED -1
 #endif
 
 #if !defined(CLIP_PLANE3_ENABLED)
-	#define CLIP_PLANE3_ENABLED -1
+    #define CLIP_PLANE3_ENABLED -1
 #endif
 
 #if !defined(CLIP_PLANE4_ENABLED)
-	#define CLIP_PLANE4_ENABLED -1
+    #define CLIP_PLANE4_ENABLED -1
 #endif
 
 #if !defined(CLIP_PLANE5_ENABLED)
-	#define CLIP_PLANE5_ENABLED -1
+    #define CLIP_PLANE5_ENABLED -1
 #endif
 
 uniform bool u_fogEnabled;
@@ -80,59 +80,59 @@ void calcTextureColorContribution(inout vec4 color);
 void main() 
 {
 #if CLIP_PLANE0_ENABLED != 0 || CLIP_PLANE1_ENABLED != 0 || CLIP_PLANE2_ENABLED != 0 || CLIP_PLANE3_ENABLED != 0 || CLIP_PLANE4_ENABLED != 0 || CLIP_PLANE5_ENABLED != 0
-	clipPlanesTest();
+    clipPlanesTest();
 #endif
-	
-	vec4 color;
+    
+    vec4 color;
 #if LIGHTING_ENABLED == 1
-	calcLighting(color);
+    calcLighting(color);
 #elif LIGHTING_ENABLED == 0
-	color = v_frontColor;
+    color = v_frontColor;
 #else
-	if (u_lightingEnabled) {
-		calcLighting(color);
-	} else {
-		color = v_frontColor;
-	}
+    if (u_lightingEnabled) {
+        calcLighting(color);
+    } else {
+        color = v_frontColor;
+    }
 #endif
-	
+    
 #if TEXTURE0_ENABLED != 0 || TEXTURE1_ENABLED != 0 || TEXTURE2_ENABLED != 0
-	calcTextureColorContribution(color);
+    calcTextureColorContribution(color);
 #endif
-	
+    
 #if ALPHA_TEST_ENABLED == 1 || ALPHA_TEST_ENABLED == -1
-	#if ALPHA_TEST_ENABLED == -1
-	if (u_alphaTestEnabled) {
-	#endif
-	alphaTest(color.a);
-	#if ALPHA_TEST_ENABLED == -1
-	}
-	#endif
+    #if ALPHA_TEST_ENABLED == -1
+    if (u_alphaTestEnabled) {
+    #endif
+    alphaTest(color.a);
+    #if ALPHA_TEST_ENABLED == -1
+    }
+    #endif
 #endif
-	
+    
 #if FOG_ENABLED == 1 || FOG_ENABLED == -1
-	#if FOG_ENABLED == -1
-	if (u_fogEnabled) {
-	#endif
-		
-	float fogFactor;
-	#if FOG_HINT == OGL_FASTEST
-		fogFactor = v_fogFactor;
-	#elif FOG_HINT == OGL_NICEST
-		fogFactor = calcFogFactor(v_eyeDistance);
-	#elif FOG_HINT == -1
-		if (u_fogHint == OGL_FASTEST) {
-			fogFactor = v_fogFactor;
-		} else {
-			fogFactor = calcFogFactor(v_eyeDistance);
-		}
-	#endif
-	color.rgb = mix(u_fogColor, color.rgb, fogFactor);
-	
-	#if FOG_ENABLED == -1
-	}
-	#endif
+    #if FOG_ENABLED == -1
+    if (u_fogEnabled) {
+    #endif
+        
+    float fogFactor;
+    #if FOG_HINT == OGL_FASTEST
+        fogFactor = v_fogFactor;
+    #elif FOG_HINT == OGL_NICEST
+        fogFactor = calcFogFactor(v_eyeDistance);
+    #elif FOG_HINT == -1
+        if (u_fogHint == OGL_FASTEST) {
+            fogFactor = v_fogFactor;
+        } else {
+            fogFactor = calcFogFactor(v_eyeDistance);
+        }
+    #endif
+    color.rgb = mix(u_fogColor, color.rgb, fogFactor);
+    
+    #if FOG_ENABLED == -1
+    }
+    #endif
 #endif
-	
-	gl_FragColor = color;
+    
+    gl_FragColor = color;
 }
