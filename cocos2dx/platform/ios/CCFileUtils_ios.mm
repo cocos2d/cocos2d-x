@@ -291,7 +291,16 @@ namespace cocos2d {
         pRet->m_sString += pszFilename;
         return pRet->m_sString.c_str();
     }
+    
     CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+    {
+        CCDictionary<std::string, CCObject*> *ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
+	      ret->autorelease();
+	      
+	      return ret;
+    }
+    
+    CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
     {
         NSString* pPath = [NSString stringWithUTF8String:pFileName];
         NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
@@ -301,9 +310,10 @@ namespace cocos2d {
             id value = [pDict objectForKey:key];
             static_addValueToCCDict(key, value, pRet);
         }
-        pRet->autorelease();
+
         return pRet;
     }
+    
     unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
     {
         unsigned char * pBuffer = NULL;
@@ -321,14 +331,19 @@ namespace cocos2d {
             *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
             fclose(fp);
         } while (0);
-
-        if (! pBuffer && getIsPopupNotify()) 
+        
+        if (! pBuffer)
         {
-            std::string title = "Notification";
-            std::string msg = "Get data from file(";
-            msg.append(pszFileName).append(") failed!");
+            CCLOG("Get data from file(%s) failed!", pszFileName);
+            
+            if (getIsPopupNotify()) 
+            {
+                std::string title = "Notification";
+                std::string msg = "Get data from file(";
+                msg.append(pszFileName).append(") failed!");
 
-            CCMessageBox(msg.c_str(), title.c_str());
+                CCMessageBox(msg.c_str(), title.c_str());
+            }
         }
         return pBuffer;
     }
