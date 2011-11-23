@@ -1,5 +1,5 @@
 # set params
-ANDROID_NDK_ROOT=/cygdrive/d/programe/android/ndk/android-ndk-r6
+ANDROID_NDK_ROOT=/cygdrive/d/programe/android/ndk/android-ndk-r6b
 COCOS2DX_ROOT=/cygdrive/e/cocos2d-x
 HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloWorld/android
 
