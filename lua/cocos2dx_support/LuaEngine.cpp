@@ -29,12 +29,12 @@ THE SOFTWARE.
 extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
+#include "lualoadexts.h"
 }
 
-#include "LuaSimpleAudioEngine.h"
 #include "LuaCocos2d.h"
+#include "LuaSimpleAudioEngine.h"
 #include "LuaGameInterfaces.h"
-#include "cocos2d.h"
 
 using namespace cocos2d;
 
@@ -49,6 +49,7 @@ LuaEngine::LuaEngine()
     tolua_SimpleAudioEngine_open(m_state);
     tolua_prepare_ccobject_table(m_state);
     tolua_LuaGameInterfaces_open(m_state);
+    luax_initpreload(m_state);
 }
 
 LuaEngine::~LuaEngine()
