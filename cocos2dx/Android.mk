@@ -110,7 +110,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/third_party/android/iconv \
                     $(LOCAL_PATH)/platform/third_party/android/libpng \
                     $(LOCAL_PATH)/platform/third_party/android/libxml2 \
-                    $(LOCAL_PATH)/platform/third_party/android/libjpeg                 
+                    $(LOCAL_PATH)/platform/third_party/android/libjpeg           
 
 LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries/$(TARGET_ARCH_ABI)) \
                  -lGLESv1_CM -llog -lz \
