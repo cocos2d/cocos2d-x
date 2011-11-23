@@ -5,6 +5,6 @@ subdirs := $(addprefix $(LOCAL_PATH)/../../../,$(addsuffix /Android.mk, \
            cocos2dx \
            CocosDenshion/android \
 	))
-subdirs += $(LOCAL_PATH)/helloworld/Android.mk
+subdirs += $(LOCAL_PATH)/../../Classes/Android.mk $(LOCAL_PATH)/helloworld/Android.mk
 
 include $(subdirs)

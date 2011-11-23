@@ -3,8 +3,10 @@
 
 #include "TextureCacheTest.h"
 
+using namespace cocos2d;
+
 TextureCacheTest::TextureCacheTest()
-: m_nNumberOfSprites(24)
+: m_nNumberOfSprites(20)
 , m_nNumberOfLoadedSprites(0)
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
@@ -38,11 +40,7 @@ TextureCacheTest::TextureCacheTest()
 	CCTextureCache::sharedTextureCache()->addImageAsync("Images/background1.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
 	CCTextureCache::sharedTextureCache()->addImageAsync("Images/background2.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
 	CCTextureCache::sharedTextureCache()->addImageAsync("Images/background3.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-	CCTextureCache::sharedTextureCache()->addImageAsync("Images/background1-hd.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-	CCTextureCache::sharedTextureCache()->addImageAsync("Images/background2-hd.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-	CCTextureCache::sharedTextureCache()->addImageAsync("Images/background3-hd.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
 	CCTextureCache::sharedTextureCache()->addImageAsync("Images/blocks.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-	CCTextureCache::sharedTextureCache()->addImageAsync("Images/blocks-hd.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
 }
 
 void TextureCacheTest::loadingCallBack(CCObject *obj)
@@ -89,11 +87,7 @@ void TextureCacheTest::addSprite()
 	CCSprite *s16 = CCSprite::spriteWithFile("Images/background1.png");
 	CCSprite *s17 = CCSprite::spriteWithFile("Images/background2.png");
 	CCSprite *s18 = CCSprite::spriteWithFile("Images/background3.png");
-	CCSprite *s19 = CCSprite::spriteWithFile("Images/background1-hd.png");
-	CCSprite *s20 = CCSprite::spriteWithFile("Images/background2-hd.png");
-	CCSprite *s21 = CCSprite::spriteWithFile("Images/background3-hd.png");
-	CCSprite *s22 = CCSprite::spriteWithFile("Images/blocks.png");
-	CCSprite *s23 = CCSprite::spriteWithFile("Images/blocks-hd.png");
+	CCSprite *s19 = CCSprite::spriteWithFile("Images/blocks.png");
 
 	s1->setPosition(CCPointMake(50, 50));
 	s2->setPosition(CCPointMake(60, 50));
