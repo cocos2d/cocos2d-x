@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCCommon.h"
 
 namespace   cocos2d {
+    
 class CCZone;
 class CCObject;
 class CCString;

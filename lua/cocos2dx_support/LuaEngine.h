@@ -28,15 +28,11 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "tolua++.h"
-#include "tolua_fix.h"
-
+#include <map>
 #include "CCObject.h"
 #include "CCTouch.h"
 #include "CCSet.h"
 #include "CCNode.h"
-
-#include <map>
 
 using namespace cocos2d;
 
@@ -57,8 +53,8 @@ public:
      @brief Remove CCObject from lua state
      @param object to remove
      */
-    void removeCCObject(CCObject *object);
-    
+    void removeCCObject(cocos2d::CCObject *object);
+
     void removeFunctionByRefId(int refid);
 
     /**
