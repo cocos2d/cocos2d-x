@@ -43,11 +43,12 @@ public:
 		CC_SAFE_DELETE(m_pCanvas);
 	}
 
-	bool drawText(const char * pszText, CCSize& dimensions, CCImage::ETextAlign alignment, const char * fontName = NULL, int fontSize = 0)
+	bool drawText(const char * pszText, Dimension& dimensions, CCImage::ETextAlign alignment, const char * fontName = NULL, int fontSize = 0)
 	{
 		bool nRet = false;
 		do 
 		{
+			CC_BREAK_IF(pszText == NULL || strlen(pszText) <= 0);
 			// text
 			Osp::Base::String strText(pszText);
 			// Set a font to the TextElement
@@ -55,7 +56,7 @@ public:
 			font.Construct(FONT_STYLE_PLAIN, fontSize);
 
 			// calculate text size
-			if (CCSize::CCSizeEqualToSize(dimensions, CCSizeZero))
+			if (dimensions.width <= 0)
 			{
 				Dimension dim;
 				font.GetTextExtent(strText, strText.GetLength(), dim);
@@ -63,16 +64,11 @@ public:
 				dimensions.height = dim.height;
 			}
 
-			CC_SAFE_DELETE(m_pCanvas);
-
-			CC_BREAK_IF(dimensions.width <= 0 || dimensions.height <= 0);
-
-			m_pCanvas = new Canvas();
-			m_pCanvas->Construct(Rectangle(0, 0, dimensions.width, dimensions.height));
+			CC_BREAK_IF(dimensions.width <= 0);
 
 			// Create an EnrichedText
 			m_pEnrichedText = new EnrichedText();
-			m_pEnrichedText->Construct(Dimension(dimensions.width, dimensions.height));
+			m_pEnrichedText->Construct(Dimension(dimensions.width, 10));
 
 			switch (alignment)
 			{
@@ -130,6 +126,13 @@ public:
 			// Add the TextElement to the EnrichedText
 			m_pEnrichedText->Add(*pTextElement);
 
+			m_pEnrichedText->Refresh();
+			dimensions.height = m_pEnrichedText->GetTotalLineHeight();
+			m_pEnrichedText->SetSize(dimensions.width, dimensions.height);
+
+			CC_SAFE_DELETE(m_pCanvas);
+			m_pCanvas = new Canvas();
+			m_pCanvas->Construct(Rectangle(0, 0, dimensions.width, dimensions.height));
 			m_pCanvas->DrawText(Point(0, 0), *m_pEnrichedText);
 
 			m_pEnrichedText->RemoveAllTextElements(true);
@@ -169,7 +172,7 @@ bool CCImage::initWithString(
 
 		BitmapDC& dc = sharedBitmapDC();
 
-		CCSize size(nWidth, nHeight);
+		Dimension size(nWidth, nHeight);
 
 		bRet = dc.drawText(pText, size, eAlignMask, pFontName, nSize);
 
@@ -186,23 +189,13 @@ bool CCImage::initWithString(
 		CC_BREAK_IF(!m_pData);
 		memcpy(m_pData, bufferInfo.pPixels, nLen);
 
-		if (bufferInfo.bitsPerPixel == 32)
-		{
-			if (bufferInfo.width * 4 != bufferInfo.pitch)
-			{
-				m_nWidth = bufferInfo.pitch / 4;
-			}
-			else
-			{
-				m_nWidth = bufferInfo.width;
-			}
-		}
+		int iBytesPerPixel = bufferInfo.bitsPerPixel/8;
 
-		m_nHeight		= bufferInfo.height;
-
+		m_nWidth = bufferInfo.pitch / iBytesPerPixel;
+		m_nHeight = bufferInfo.height;
 		m_bHasAlpha	= true;
 		m_bPreMulti = false;
-		m_nBitsPerComponent = bufferInfo.bitsPerPixel / 4;
+		m_nBitsPerComponent = 8;
 		dc.m_pCanvas->Unlock();
 
 		bRet = true;
