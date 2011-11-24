@@ -20,6 +20,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+
+#ifndef CC_BADA_2_0
+
 #include "pthread.h"
 #include <FApp.h>
 #include <FBaseRtThread.h>
@@ -380,3 +383,5 @@ int pthread_condattr_setpshared(pthread_condattr_t*attr,int pshared)
 }
 
 }
+
+#endif

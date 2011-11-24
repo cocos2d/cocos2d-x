@@ -15,9 +15,7 @@ static long long s_nAnimationInterval = 1000/60;
 CCApplication::CCApplication() :
 		m_pTimer(null)
 {
-	CCLog("CCApplication constructor...");
 	s_pApplication = this;
-
 }
 
 CCApplication::~CCApplication()

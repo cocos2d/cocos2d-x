@@ -1,4 +1,4 @@
-#include "CCPlatformFunc_bada.h"
+#include "CCCommon.h"
 #include <FApp.h>
 #include <FBase.h>
 #include <FUi.h>
@@ -81,15 +81,26 @@ static char _ctype_b[128 + 256] = {
 //char *__ctype_ptr__ = (char *) _ctype_b + 127;
 
 
+int printf(const char* format, ...)
+{
+	char szBuf[cocos2d::kMaxLogLen] = {0};
+	va_list args;
+	va_start(args, format);
+	int n = vsnprintf(szBuf, cocos2d::kMaxLogLen, format, args);
+	va_end(args);
+	AppLog(szBuf);
+	return n;
+}
+
 int sprintf(char* buf, const char *format, ...)
 {
 	va_list ap;
 
 	va_start(ap, format);
 
-	char szBuf[256] = {0};
+	char szBuf[cocos2d::kMaxLogLen] = {0};
 
-	int n = vsnprintf(szBuf, 256, format, ap);
+	int n = vsnprintf(szBuf, cocos2d::kMaxLogLen, format, ap);
 	va_end(ap) ;
 
 	strcpy(buf, szBuf);
