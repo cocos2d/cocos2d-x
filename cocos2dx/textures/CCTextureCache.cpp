@@ -23,11 +23,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#define COCOS2D_DEBUG 1
 
 #include <stack>
 #include <string>
 #include <cctype>
+#include <queue>
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
@@ -50,13 +50,23 @@ typedef struct _AsyncStruct
 	SEL_CallFuncO		selector;
 } AsyncStruct;
 
-static cocos2d::CCImage* s_pImageAsync;
-// only allow one loading thread at a time
-static pthread_mutex_t		s_loadingThreadMutex;
+typedef struct _ImageInfo
+{
+	AsyncStruct *asyncStruct;
+	CCImage		*image;
+} ImageInfo;
+
+static pthread_t s_loadingThread;
+
+static pthread_mutex_t		s_asyncStructQueueMutex;
+static pthread_mutex_t      s_ImageInfoMutex;
+
 // condition
 static pthread_cond_t		s_condition;
 static pthread_mutex_t		s_conditionMutex;
-static AsyncStruct			*s_pAsyncObject;
+
+static std::queue<AsyncStruct*>		*s_pAsyncStructQueue;
+static std::queue<ImageInfo*>		*s_pImageQueue;
 
 static void* loadImage(void* data)
 {
@@ -64,41 +74,87 @@ static void* loadImage(void* data)
 	CCThread thread;
 	thread.createAutoreleasePool();
 
-	if (! ((AsyncStruct*)data)->filename.c_str())
+    AsyncStruct *pAsyncStruct = NULL;
+	CCImage *pImage = NULL;
+
+	while (true)
 	{
-		return 0;
-	}
+		std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
 
-	// one loading thread at a time
-	pthread_mutex_lock(&s_loadingThreadMutex);
+		pthread_mutex_lock(&s_asyncStructQueueMutex);
+		if (pQueue->empty())
+		{
+			pthread_mutex_unlock(&s_asyncStructQueueMutex);
 
-	s_pAsyncObject = (AsyncStruct*)data;
-	const char *filename = s_pAsyncObject->filename.c_str();
-
-	CCLOG("thread 0x%x is loading image %s", pthread_self(), filename);
-
-	CCImage *tmpImage = new CCImage();
-	tmpImage->initWithImageFile(filename);
-	s_pImageAsync = tmpImage;
-
-	/* Wait for rendering thread to comsume the image.
-	 * The implemntation of pthread_cond_wait() of win32 has a bug, it can not
-	 * wait the condition at first time.
-	 */
+			/* Wait for rendering thread to add loading image info.
+			 * The implemntation of pthread_cond_wait() of win32 has a bug, it can not
+			 * wait the condition at first time.
+			 */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	static bool firstRun = true;
-	if (firstRun)
-	{
-		pthread_cond_wait(&s_condition, &s_conditionMutex);
-		firstRun = false;
-	}
+			static bool firstRun = true;
+			if (firstRun)
+			{
+				pthread_cond_wait(&s_condition, &s_conditionMutex);
+				firstRun = false;
+			}
 #endif
-    pthread_cond_wait(&s_condition, &s_conditionMutex);
+			pthread_cond_wait(&s_condition, &s_conditionMutex);
 
-	CCLOG("thread 0x%x has pass the condition, new loading thread is avalable", pthread_self());
+		    continue;
+		}
+		else
+		{
+			// get async struct from queue
+			pAsyncStruct = pQueue->front();
+			pQueue->pop();
+            pthread_mutex_unlock(&s_asyncStructQueueMutex);
+		}
 
-	pthread_mutex_unlock(&s_loadingThreadMutex);
+		const char *filename = pAsyncStruct->filename.c_str();
 
+		CCLOG("thread 0x%x is loading image %s", pthread_self(), filename);
+
+		// generate image
+		CCImage *pImage = NULL;
+		if (std::string::npos != pAsyncStruct->filename.find(".jpg") || std::string::npos != pAsyncStruct->filename.find(".jpeg"))
+		{
+			pImage = new CCImage();
+			if (!pImage->initWithImageFileThreadSafe(filename, cocos2d::CCImage::kFmtJpg))
+			{
+				delete pImage;
+				CCLOG("can not load %s", filename);
+				continue;
+			}
+		}
+		else if (std::string::npos != pAsyncStruct->filename.find(".png"))
+		{
+			pImage = new CCImage();
+			if (! pImage->initWithImageFileThreadSafe(filename, cocos2d::CCImage::kFmtPng))
+			{
+				delete pImage;
+				CCLOG("can not load %s", filename);
+				continue;
+			}
+		}
+		else
+		{
+			CCLog("unsupportted format %s",filename);
+			delete pAsyncStruct;
+			
+			continue;
+		}
+
+		// generate image info
+		ImageInfo *pImageInfo = new ImageInfo();
+		pImageInfo->asyncStruct = pAsyncStruct;
+		pImageInfo->image = pImage;
+
+		// put the image info into the queue
+		pthread_mutex_lock(&s_ImageInfoMutex);
+		s_pImageQueue->push(pImageInfo);
+		pthread_mutex_unlock(&s_ImageInfoMutex);	
+	}
+	
 	return 0;
 }
 
@@ -166,40 +222,60 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 	// lazy init
 	static bool firstRun = true;
 	if (firstRun)
-	{
-		pthread_mutex_init(&s_loadingThreadMutex, NULL);
+	{		     
+        s_pAsyncStructQueue = new queue<AsyncStruct*>();
+	    s_pImageQueue = new queue<ImageInfo*>();		
+
+		pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
 		pthread_mutex_init(&s_conditionMutex, NULL);
 		pthread_cond_init(&s_condition, NULL);
-		s_pImageAsync = NULL;
+		pthread_mutex_init(&s_ImageInfoMutex, NULL);
+		pthread_create(&s_loadingThread, NULL, loadImage, NULL);
 
-		CCScheduler::sharedScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 1.0f, false);
-        
+		CCScheduler::sharedScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
+
 		firstRun = false;
 	}
 
+	// generate async struct
 	AsyncStruct *data = new AsyncStruct();
 	data->filename = fullpath.c_str();
 	data->target = target;
 	data->selector = selector;
 
-	// load image in a new thread
-	pthread_t p;
-	pthread_create(&p, NULL, loadImage, (void*)data);
+	// add async struct into queue
+	pthread_mutex_lock(&s_asyncStructQueueMutex);
+	s_pAsyncStructQueue->push(data);
+	pthread_cond_signal(&s_condition);
+	pthread_mutex_unlock(&s_asyncStructQueueMutex);
 }
 
 void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 {
 	// the image is generated in loading thread
-	if (s_pImageAsync != NULL)
+	std::queue<ImageInfo*> *imagesQueue = s_pImageQueue;
+
+	pthread_mutex_lock(&s_ImageInfoMutex);
+	if (imagesQueue->empty())
 	{
-		
-		SelectorProtocol *target = s_pAsyncObject->target;
-		SEL_CallFuncO selector = s_pAsyncObject->selector;
-		const char* filename = s_pAsyncObject->filename.c_str();
+		pthread_mutex_unlock(&s_ImageInfoMutex);
+	}
+	else
+	{
+		ImageInfo *pImageInfo = imagesQueue->front();
+		imagesQueue->pop();
+		pthread_mutex_unlock(&s_ImageInfoMutex);
+
+		AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
+		CCImage *pImage = pImageInfo->image;
+
+		SelectorProtocol *target = pAsyncStruct->target;
+		SEL_CallFuncO selector = pAsyncStruct->selector;
+		const char* filename = pAsyncStruct->filename.c_str();
 
 		// generate texture in render thread
 		CCTexture2D *texture = new CCTexture2D();
-		texture->initWithImage(s_pImageAsync);
+		texture->initWithImage(pImage);
 
 		// cache the texture
 		m_pTextures->setObject(texture, filename);
@@ -207,13 +283,9 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 
 		(target->*selector)(texture);
 
-		// the object is newed in addImageAsync() and will be assigned in the loading thread
-		delete s_pAsyncObject;
-
-		delete s_pImageAsync;
-		s_pImageAsync = NULL;
-
-		pthread_cond_signal(&s_condition);
+		delete pImage;
+		delete pAsyncStruct;
+		delete pImageInfo;
 	}
 }
 
