@@ -448,6 +448,18 @@ CCPoint CCDirector::convertToUI(const CCPoint& obPoint)
 	return uiPoint;
 }
 
+CCNode* CCDirector::getNotificationNode() 
+{ 
+    return m_pNotificationNode;
+}
+
+void  CCDirector::setNotificationNode(CCNode *node)
+{
+    CC_SAFE_RELEASE(m_pNotificationNode);
+    m_pNotificationNode = node;
+    CC_SAFE_RETAIN(m_pNotificationNode);
+}
+
 CCSize CCDirector::getWinSize(void)
 {
 	CCSize s = m_obWinSizeInPoints;

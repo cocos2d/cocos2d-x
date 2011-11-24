@@ -21,8 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include <FBase.h>
 #include <FGraphics.h>
+
+using namespace Osp::Base;
+using namespace Osp::Base::Collection;
 using namespace Osp::Graphics;
+
 
 NS_CC_BEGIN;
 
@@ -53,7 +58,47 @@ public:
 			Osp::Base::String strText(pszText);
 			// Set a font to the TextElement
 			Font font;
-			font.Construct(FONT_STYLE_PLAIN, fontSize);
+			bool bUseDefaultFont = true;
+			if (fontName != NULL && strlen(fontName) > 0)
+			{
+				String strFonName(fontName);
+				if (strFonName.EndsWith(".ttf") || strFonName.EndsWith(".TTF"))
+				{
+					bUseDefaultFont = false;
+					const char* pFullFontPath = CCFileUtils::fullPathFromRelativePath(fontName);
+					font.Construct(pFullFontPath, FONT_STYLE_PLAIN, fontSize);
+				}
+				else
+				{
+					IList* pSystemFontList = Font::GetSystemFontListN();
+					if (pSystemFontList != NULL)
+					{
+						IEnumerator* pEnum = pSystemFontList->GetEnumeratorN();
+						Object* pObj = null;
+						while (pEnum->MoveNext() == E_SUCCESS)
+						{
+							pObj = pEnum->GetCurrent();
+							String* pStrName = static_cast<String*>(pObj);
+							if (pStrName->Equals(strFonName, false))
+							{
+								bUseDefaultFont = false;
+								font.Construct(*pStrName, FONT_STYLE_PLAIN, fontSize);
+								break;
+							}
+						}
+
+						delete pEnum;
+
+						pSystemFontList->RemoveAll(true);
+						delete pSystemFontList;
+					}
+				}
+			}
+
+			if (bUseDefaultFont)
+			{
+				font.Construct(FONT_STYLE_PLAIN, fontSize);
+			}
 
 			// calculate text size
 			if (dimensions.width <= 0)

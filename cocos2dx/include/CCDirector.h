@@ -35,7 +35,6 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCEGLView.h"
 #include "CCGL.h"
-#include "CCNode.h"
 
 namespace   cocos2d {
 
@@ -139,7 +138,7 @@ class CCLabelTTF;
 class CCScene;
 class CCEGLView;
 class CCProjectionProtocol;
-
+class CCNode;
 /**
 @brief Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
@@ -215,14 +214,9 @@ public:
 	 This object MUST implement the "visit" selector.
 	 Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
 	 @since v0.99.5
-	 */
-	inline CCNode* getNotificationNode() { return m_pNotificationNode; }
-	inline void setNotificationNode(CCNode *node)
-	{
-		CC_SAFE_RELEASE(m_pNotificationNode);
-		m_pNotificationNode = node;
-		CC_SAFE_RETAIN(m_pNotificationNode);
-	}
+	 */ 
+	inline CCNode* getNotificationNode();
+	inline void setNotificationNode(CCNode *node);
 
 
 	// window size
