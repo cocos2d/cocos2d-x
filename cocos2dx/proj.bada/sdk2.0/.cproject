@@ -62,6 +62,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/pthread.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.debug.so.option.libs.paths.1907274854" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs.paths" valueType="libPaths">
@@ -579,6 +580,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/pthread.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.release.so.option.libs.paths.255541031" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.so.option.libs.paths" valueType="libPaths">

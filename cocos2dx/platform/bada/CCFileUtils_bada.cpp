@@ -40,8 +40,8 @@ void CCFileUtils::setResourcePath(const char* pszResourcePath)
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-	int len = strlen(pszRelativePath);
-	if (pszRelativePath == NULL || len <= 0)
+	int len = 0;
+	if (pszRelativePath == NULL || (len = strlen(pszRelativePath)) <= 0)
 		return NULL;
 	CCString * pRet = new CCString();
     pRet->autorelease();
@@ -70,14 +70,21 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
     unsigned char * pData = 0;
+    int len = 0;
+    CC_ASSERT(pszFileName != NULL && pszMode != NULL);
+    CC_ASSERT((len = strlen(pszFileName)) > 0 && strlen(pszMode) > 0);
+
     string fullPath;
 
-    if ((! pszFileName) || (! pszMode))
+    if (len > 1 && pszFileName[0] == '/')
     {
-        return 0;
+    	fullPath = pszFileName;
     }
-
-    fullPath = fullPathFromRelativePath(pszFileName);
+    else
+    {
+    	fullPath = s_strResourcePath;
+    	fullPath += pszFileName;
+    }
 
     do 
     {

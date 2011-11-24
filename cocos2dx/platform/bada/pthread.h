@@ -21,8 +21,12 @@
  THE SOFTWARE.
 */
 
-#ifndef PTHREAD_H_
-#define PTHREAD_H_
+#ifndef __BADA_PTHREAD_H__
+#define __BADA_PTHREAD_H__
+
+#ifdef CC_BADA_2_0
+#include <libxml/../pthread.h>
+#else
 
 #ifdef __cplusplus
 extern "C" {
@@ -256,4 +260,6 @@ int pthread_equal(pthread_t __thread1,pthread_t __thread2);
 }
 #endif
 
-#endif /* PTHREAD_H_ */
+#endif /* CC_BADA_2_0 */
+
+#endif /* __BADA_PTHREAD_H__ */
