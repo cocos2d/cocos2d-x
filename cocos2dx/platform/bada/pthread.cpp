@@ -307,8 +307,12 @@ int pthread_cond_init(pthread_cond_t*cond,pthread_condattr_t*cond_attr)
 
 int pthread_cond_destroy(pthread_cond_t*cond)
 {
-	delete (*cond)->lock;
-	delete (*cond);
+	if (cond != NULL)
+	{
+		delete (*cond)->lock;
+		delete (*cond);
+		return 1;
+	}
 	return 0;
 }
 
@@ -337,25 +341,10 @@ int pthread_cond_timedwait(pthread_cond_t*cond,pthread_mutex_t*mutex,
 	{
 		return -1;
 	}
-	return (*cond)->lock->Wait();
-}
-
-int pthread_cond_enter(pthread_cond_t*cond)
-{
-	if (!cond)
-	{
-		return -1;
-	}
-	return (*cond)->lock->Enter();
-}
-
-int pthread_cond_exit(pthread_cond_t*cond)
-{
-	if (!cond)
-	{
-		return -1;
-	}
-	return (*cond)->lock->Exit();
+	(*cond)->lock->Enter();
+	(*cond)->lock->Wait();
+	(*cond)->lock->Exit();
+	return 1;
 }
 
 int pthread_cond_wait(pthread_cond_t*cond,pthread_mutex_t*mutex)
@@ -364,9 +353,9 @@ int pthread_cond_wait(pthread_cond_t*cond,pthread_mutex_t*mutex)
 	{
 		return -1;
 	}
-	pthread_cond_enter(cond);
+	(*cond)->lock->Enter();
 	(*cond)->lock->Wait();
-	pthread_cond_exit(cond);
+	(*cond)->lock->Exit();
 	return 1;
 }
 
