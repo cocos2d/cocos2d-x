@@ -23,10 +23,12 @@
 
 #ifndef PTHREAD_H_
 #define PTHREAD_H_
-#include <FBaseRtThread.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#define PTHREAD_STACK_SIZE Osp::Base::Runtime::DEFAULT_STACK_SIZE
+#define PTHREAD_STACK_SIZE (64*1024)
 #define PTHREAD_STACK_MINSIZE	16384
 #define PTHREAD_THREADS_MAX	1024
 
@@ -37,9 +39,7 @@
 #define PTHREAD_KEYS_MAX	32
 
 
-typedef Osp::Base::Runtime::Thread* pthread_t;
-
-
+typedef void* pthread_t;
 struct pthread_mutex;
 typedef struct pthread_mutex* pthread_mutex_t;
 struct pthread_attr;
@@ -243,7 +243,7 @@ int pthread_create(pthread_t*__threadarg,
 		void*(*__start_routine)(void *),
 		void*__arg);
 
-void pthread_exit(void*__retval) __attribute__((__noreturn__));
+void pthread_exit(void*__retval);
 
 int pthread_join(pthread_t __th,void**__thread_return);
 
@@ -251,5 +251,9 @@ int pthread_detach(pthread_t __th);
 int pthread_equal(pthread_t __thread1,pthread_t __thread2);
 
 //int pthread_sigmask(int how,const sigset_t*newset,sigset_t*oldset);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PTHREAD_H_ */

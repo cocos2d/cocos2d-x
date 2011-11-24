@@ -20,14 +20,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
-
-#include <FApp.h>
 #include "pthread.h"
-
-typedef void*(*pthread_func)(void *);
+#include <FApp.h>
+#include <FBaseRtThread.h>
 
 using namespace Osp::Base;
 using namespace Osp::Base::Runtime;
+
+extern "C" {
+
+typedef void*(*pthread_func)(void *);
 
 //struct _pthread_fastlock
 //{
@@ -122,6 +124,10 @@ int pthread_create(pthread_t*__threadarg,
 			void*(*__start_routine)(void *),
 			void*__arg)
 {
+	if (NULL == __threadarg)
+	{
+		return -1;
+	}
 	Thread *thread = new Thread();
 	RunnableProxy *proxy = new RunnableProxy();
 	proxy->SetFunc(__start_routine);
@@ -142,7 +148,7 @@ int pthread_join(pthread_t __th,void**__thread_return)
 	{
 		return -1;
 	}
-	return __th->Join();
+	return ((Thread*)__th)->Join();
 }
 
 int pthread_cancel(pthread_t thread)
@@ -151,14 +157,14 @@ int pthread_cancel(pthread_t thread)
 	{
 		return -1;
 	}
-	return thread->Exit();
+	return ((Thread*)thread)->Exit();
 }
 
 int pthread_detach(pthread_t __th)
 {
 	if (__th)
 	{
-		__th->Exit();
+		((Thread*)__th)->Exit();
 		delete __th;
 	}
 	return 0;
@@ -170,7 +176,7 @@ int pthread_equal(pthread_t __thread1,pthread_t __thread2)
 	{
 		return (void *)__thread1 == (void *)__thread2;
 	}
-	return __thread1->Equals(*__thread2);
+	return ((Thread*)__thread1)->Equals(*((Thread*)__thread2));
 }
 
 int pthread_kill(pthread_t thread,int sig)
@@ -179,7 +185,7 @@ int pthread_kill(pthread_t thread,int sig)
 	{
 		return -1;
 	}
-	return thread->Exit(sig);
+	return ((Thread*)thread)->Exit(sig);
 }
 
 int pthread_attr_init(pthread_attr_t*attr)
@@ -382,4 +388,6 @@ int pthread_condattr_getpshared(const pthread_condattr_t*attr,int*pshared)
 int pthread_condattr_setpshared(pthread_condattr_t*attr,int pshared)
 {
 	return 0;
+}
+
 }
