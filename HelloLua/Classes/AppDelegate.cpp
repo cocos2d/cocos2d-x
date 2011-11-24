@@ -24,7 +24,8 @@ using namespace CocosDenshion;
 AppDelegate::AppDelegate()
 :m_pLuaEngine(NULL)
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
+	// fixed me
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
 }
 
 AppDelegate::~AppDelegate()
