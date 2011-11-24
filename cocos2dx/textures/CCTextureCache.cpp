@@ -201,6 +201,10 @@ char * CCTextureCache::description()
 void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, SEL_CallFuncO selector)
 {
 	CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");	
+    CCAssert(target != NULL, "TextureCache: target MUST not be NULL");	
+    CCAssert(selector != NULL, "TextureCache: selector MUST not be NULL");	
+
+    target->selectorProtocolRetain();
 
 	CCTexture2D *texture = NULL;
 
@@ -216,6 +220,7 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 	if (texture = m_pTextures->objectForKey(pathKey))
 	{
 		(target->*selector)(texture);
+        target->selectorProtocolRelease();
 		return;
 	}
 
@@ -282,6 +287,7 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 		texture->autorelease();
 
 		(target->*selector)(texture);
+        target->selectorProtocolRelease();
 
 		delete pImage;
 		delete pAsyncStruct;
