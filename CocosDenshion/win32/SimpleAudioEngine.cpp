@@ -170,22 +170,47 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 {
+	EffectList::iterator p = sharedList().find(nSoundId);
+    if (p != sharedList().end())
+    {
+        p->second->Pause();
+    }
 }
 
 void SimpleAudioEngine::pauseAllEffects()
 {
+    EffectList::iterator iter;
+	for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+	{
+		iter->second->Pause();
+	}
 }
 
 void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 {
+	EffectList::iterator p = sharedList().find(nSoundId);
+    if (p != sharedList().end())
+    {
+        p->second->Resume();
+    }
 }
 
 void SimpleAudioEngine::resumeAllEffects()
 {
+	EffectList::iterator iter;
+	for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+	{
+		iter->second->Resume();
+	}
 }
 
 void SimpleAudioEngine::stopAllEffects()
 {
+	EffectList::iterator iter;
+	for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+	{
+		iter->second->Stop();
+	}
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
