@@ -69,6 +69,10 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying() {
 	return oAudioPlayer->isBackgroundMusicPlaying();
 }
 
+void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
+	return oAudioPlayer->preloadBackgroundMusic(pszFilePath);
+}
+
 //////////////////////////////////////////////////////////////////////////
 // effect function
 //////////////////////////////////////////////////////////////////////////
@@ -86,13 +90,26 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath) {
 	return oAudioPlayer->preloadEffect(pszFilePath);
 }
 
-void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
-	return oAudioPlayer->preloadBackgroundMusic(pszFilePath);
-}
-
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath) {
 	return oAudioPlayer->unloadEffect(pszFilePath);
 }
+
+void SimpleAudioEngine::pauseEffect(unsigned int uSoundId) {
+}
+
+void SimpleAudioEngine::pauseAllEffects() {
+}
+
+void SimpleAudioEngine::resumeEffect(unsigned int uSoundId) {
+}
+
+void SimpleAudioEngine::resumeAllEffects() {
+}
+
+void SimpleAudioEngine::stopAllEffects() {
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // volume interface
