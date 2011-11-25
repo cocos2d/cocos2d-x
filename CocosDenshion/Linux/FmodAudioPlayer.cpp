@@ -341,6 +341,81 @@ void FmodAudioPlayer::stopEffect(unsigned int nSoundId) {
 	mapEffectSoundChannel.erase(nSoundId);
 }
 
+void FmodAudioPlayer::pauseEffect(unsigned int uSoundId) {
+	FMOD::Channel* pChannel;
+	pSystem->update();
+
+	map<unsigned int, FMOD::Channel*>::iterator l_it =
+			mapEffectSoundChannel.find(uSoundId);
+	if (l_it == mapEffectSoundChannel.end()) {
+		//no play  yet
+		return;
+	}
+	pChannel = l_it->second;
+	//pause the channel;
+	pChannel->setPaused(true);
+}
+
+void FmodAudioPlayer::pauseAllEffects() {
+	FMOD::Channel* pChannel;
+	pSystem->update();
+
+	map<unsigned int, FMOD::Channel*>::iterator l_it =
+			mapEffectSoundChannel.begin();
+	
+	for (; l_it != mapEffectSoundChannel.end(); l_it++) {
+		pChannel = l_it->second;
+		//pause the channel;
+		pChannel->setPaused(true);
+	}
+}
+
+void FmodAudioPlayer::resumeEffect(unsigned int uSoundId) {
+	FMOD::Channel* pChannel;
+	pSystem->update();
+
+	map<unsigned int, FMOD::Channel*>::iterator l_it =
+			mapEffectSoundChannel.find(uSoundId);
+	if (l_it == mapEffectSoundChannel.end()) {
+		//no play  yet
+		return;
+	}
+
+	pChannel = l_it->second;
+	//resume the channel;
+	pChannel->setPaused(false);
+}
+
+void FmodAudioPlayer::resumeAllEffects() {
+	FMOD::Channel* pChannel;
+	pSystem->update();
+
+	map<unsigned int, FMOD::Channel*>::iterator l_it =
+			mapEffectSoundChannel.begin();
+	
+	for (; l_it != mapEffectSoundChannel.end(); l_it++) {
+		pChannel = l_it->second;
+		//resume the channel;
+		pChannel->setPaused(false);
+	}
+}
+
+void FmodAudioPlayer::stopAllEffects() {
+	FMOD::Channel* pChannel;
+	pSystem->update();
+
+	map<unsigned int, FMOD::Channel*>::iterator l_it =
+			mapEffectSoundChannel.begin();
+	
+	for (; l_it != mapEffectSoundChannel.end(); l_it++) {
+		pChannel = l_it->second;
+		//resume the channel;
+		pChannel->stop();
+	}
+
+	mapEffectSoundChannel.clear();
+}
+
 void FmodAudioPlayer::preloadEffect(const char* pszFilePath) {
 	FMOD::Sound* pLoadSound;
 
