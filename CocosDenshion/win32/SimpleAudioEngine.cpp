@@ -168,6 +168,26 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
     } while (0);
 }
 
+void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
+{
+}
+
+void SimpleAudioEngine::pauseAllEffects()
+{
+}
+
+void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
+{
+}
+
+void SimpleAudioEngine::resumeAllEffects()
+{
+}
+
+void SimpleAudioEngine::stopAllEffects()
+{
+}
+
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
 
