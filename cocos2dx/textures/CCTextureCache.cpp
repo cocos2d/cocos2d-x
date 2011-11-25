@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "pthread.h"
 #include "CCThread.h"
+#include "semaphore.h"
 
 namespace   cocos2d {
 
@@ -61,9 +62,7 @@ static pthread_t s_loadingThread;
 static pthread_mutex_t		s_asyncStructQueueMutex;
 static pthread_mutex_t      s_ImageInfoMutex;
 
-// condition
-static pthread_cond_t		s_condition;
-static pthread_mutex_t		s_conditionMutex;
+static sem_t s_sem;
 
 static std::queue<AsyncStruct*>		*s_pAsyncStructQueue;
 static std::queue<ImageInfo*>		*s_pImageQueue;
@@ -75,39 +74,27 @@ static void* loadImage(void* data)
 	thread.createAutoreleasePool();
 
     AsyncStruct *pAsyncStruct = NULL;
+    CCLog("hhhhhhhh");
 
 	while (true)
 	{
+		// wait for rendering thread to ask for loading if s_pAsyncStructQueue is empty
+		sem_wait(&s_sem);
+
 		std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
 
-		pthread_mutex_lock(&s_asyncStructQueueMutex);
-		if (pQueue->empty())
-		{
-			pthread_mutex_unlock(&s_asyncStructQueueMutex);
-
-			/* Wait for rendering thread to add loading image info.
-			 * The implemntation of pthread_cond_wait() of win32 has a bug, it can not
-			 * wait the condition at first time.
-			 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-			static bool firstRun = true;
-			if (firstRun)
-			{
-				pthread_cond_wait(&s_condition, &s_conditionMutex);
-				firstRun = false;
-			}
-#endif
-			pthread_cond_wait(&s_condition, &s_conditionMutex);
-
-		    continue;
-		}
-		else
-		{
-			// get async struct from queue
-			pAsyncStruct = pQueue->front();
-			pQueue->pop();
+		pthread_mutex_lock(&s_asyncStructQueueMutex);// get async struct from queue
+        if (pQueue->empty())
+        {
             pthread_mutex_unlock(&s_asyncStructQueueMutex);
-		}
+            continue;
+        }
+        else
+        {
+            pAsyncStruct = pQueue->front();
+            pQueue->pop();
+            pthread_mutex_unlock(&s_asyncStructQueueMutex);
+        }		
 
 		const char *filename = pAsyncStruct->filename.c_str();
 
@@ -214,8 +201,17 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 	std::string fullpath = pathKey;
 	if (texture = m_pTextures->objectForKey(pathKey))
 	{
-		(target->*selector)(texture);
+		if (target && selector)
+		{
+			(target->*selector)(texture);
+		}
+		
 		return;
+	}
+
+	if (target)
+	{
+		target->selectorProtocolRetain();
 	}
 
 	// lazy init
@@ -226,8 +222,7 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 	    s_pImageQueue = new queue<ImageInfo*>();		
 
 		pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
-		pthread_mutex_init(&s_conditionMutex, NULL);
-		pthread_cond_init(&s_condition, NULL);
+		sem_init(&s_sem, 0, 0);
 		pthread_mutex_init(&s_ImageInfoMutex, NULL);
 		pthread_create(&s_loadingThread, NULL, loadImage, NULL);
 
@@ -245,8 +240,9 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 	// add async struct into queue
 	pthread_mutex_lock(&s_asyncStructQueueMutex);
 	s_pAsyncStructQueue->push(data);
-	pthread_cond_signal(&s_condition);
 	pthread_mutex_unlock(&s_asyncStructQueueMutex);
+
+	sem_post(&s_sem);
 }
 
 void CCTextureCache::addImageAsyncCallBack(ccTime dt)
@@ -280,7 +276,11 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 		m_pTextures->setObject(texture, filename);
 		texture->autorelease();
 
-		(target->*selector)(texture);
+		if (target && selector)
+		{
+			(target->*selector)(texture);
+			target->selectorProtocolRelease();
+		}		
 
 		delete pImage;
 		delete pAsyncStruct;
