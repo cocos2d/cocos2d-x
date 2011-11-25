@@ -139,6 +139,7 @@ class CCScene;
 class CCEGLView;
 class CCProjectionProtocol;
 class CCNode;
+
 /**
 @brief Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
@@ -214,10 +215,9 @@ public:
 	 This object MUST implement the "visit" selector.
 	 Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
 	 @since v0.99.5
-	 */ 
-	inline CCNode* getNotificationNode();
-	inline void setNotificationNode(CCNode *node);
-
+	 */
+	CCNode* getNotificationNode();
+	void setNotificationNode(CCNode *node);
 
 	// window size
 
