@@ -74,7 +74,6 @@ static void* loadImage(void* data)
 	thread.createAutoreleasePool();
 
     AsyncStruct *pAsyncStruct = NULL;
-    CCLog("hhhhhhhh");
 
 	while (true)
 	{
