@@ -95,18 +95,23 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath) {
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int uSoundId) {
+	oAudioPlayer->pauseEffect(uSoundId);
 }
 
 void SimpleAudioEngine::pauseAllEffects() {
+	oAudioPlayer->pauseAllEffects();
 }
 
 void SimpleAudioEngine::resumeEffect(unsigned int uSoundId) {
+	oAudioPlayer->resumeEffect(uSoundId);
 }
 
 void SimpleAudioEngine::resumeAllEffects() {
+	oAudioPlayer->resumeAllEffects();
 }
 
 void SimpleAudioEngine::stopAllEffects() {
+	oAudioPlayer->stopAllEffects();
 }
 
 
