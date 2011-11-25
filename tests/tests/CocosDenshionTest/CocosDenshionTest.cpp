@@ -39,7 +39,12 @@ m_nSoundId(0)
 		"add background music volume",
 		"sub background music volume",
 		"add effects volume",
-		"sub effects volume"
+		"sub effects volume",
+		"pause effect",
+		"resume effect",
+		"pause all effects",
+		"resume all effects",
+		"stop all effects"
 	};
 
 	// add menu items for tests
@@ -157,6 +162,21 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
 		// sub effects volume
 	case 13:
 		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() - 0.1);
+		break;
+	case 14:
+		SimpleAudioEngine::sharedEngine()->pauseEffect(m_nSoundId);
+		break;
+	case 15:
+		SimpleAudioEngine::sharedEngine()->resumeEffect(m_nSoundId);
+		break;
+	case 16:
+		SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+		break;
+	case 17:
+		SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+		break;
+	case 18:
+		SimpleAudioEngine::sharedEngine()->stopAllEffects();
 		break;
 	}
 	
