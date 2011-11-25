@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2008-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2008-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -36,8 +36,8 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -69,10 +69,10 @@ public:
 		}
 
 		// Should the body break?
-		int count = contact->GetManifold()->pointCount;
+		int32 count = contact->GetManifold()->pointCount;
 
 		float32 maxImpulse = 0.0f;
-		for (int i = 0; i < count; ++i)
+		for (int32 i = 0; i < count; ++i)
 		{
 			maxImpulse = b2Max(maxImpulse, impulse->normalImpulses[i]);
 		}

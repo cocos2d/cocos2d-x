@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2007-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -24,21 +24,31 @@ class Pulleys : public Test
 public:
 	Pulleys()
 	{
+		float32 y = 16.0f;
+		float32 L = 12.0f;
+		float32 a = 1.0f;
+		float32 b = 2.0f;
+
 		b2Body* ground = NULL;
 		{
 			b2BodyDef bd;
 			ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
-			ground->CreateFixture(&shape, 0.0f);
+			b2EdgeShape edge;
+			edge.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			//ground->CreateFixture(&shape, 0.0f);
+
+			b2CircleShape circle;
+			circle.m_radius = 2.0f;
+
+			circle.m_p.Set(-10.0f, y + b + L);
+			ground->CreateFixture(&circle, 0.0f);
+
+			circle.m_p.Set(10.0f, y + b + L);
+			ground->CreateFixture(&circle, 0.0f);
 		}
 
 		{
-			float32 a = 2.0f;
-			float32 b = 4.0f;
-			float32 y = 16.0f;
-			float32 L = 12.0f;
 
 			b2PolygonShape shape;
 			shape.SetAsBox(a, b);
@@ -46,6 +56,7 @@ public:
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
 
+			//bd.fixedRotation = true;
 			bd.position.Set(-10.0f, y);
 			b2Body* body1 = m_world->CreateBody(&bd);
 			body1->CreateFixture(&shape, 5.0f);
@@ -59,7 +70,7 @@ public:
 			b2Vec2 anchor2(10.0f, y + b);
 			b2Vec2 groundAnchor1(-10.0f, y + b + L);
 			b2Vec2 groundAnchor2(10.0f, y + b + L);
-			pulleyDef.Initialize(body1, body2, groundAnchor1, groundAnchor2, anchor1, anchor2, 2.0f);
+			pulleyDef.Initialize(body1, body2, groundAnchor1, groundAnchor2, anchor1, anchor2, 1.5f);
 
 			m_joint1 = (b2PulleyJoint*)m_world->CreateJoint(&pulleyDef);
 		}
@@ -79,7 +90,7 @@ public:
 		Test::Step(settings);
 
 		float32 ratio = m_joint1->GetRatio();
-		float32 L = m_joint1->GetLength1() + ratio * m_joint1->GetLength2();
+		float32 L = m_joint1->GetLengthA() + ratio * m_joint1->GetLengthB();
 		m_debugDraw.DrawString(5, m_textLine, "L1 + %4.2f * L2 = %4.2f", (float) ratio, (float) L);
 		m_textLine += 15;
 	}

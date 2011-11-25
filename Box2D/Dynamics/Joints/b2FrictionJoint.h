@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2007 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -61,6 +61,12 @@ public:
 	b2Vec2 GetReactionForce(float32 inv_dt) const;
 	float32 GetReactionTorque(float32 inv_dt) const;
 
+	/// The local anchor point relative to bodyA's origin.
+	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
+
+	/// The local anchor point relative to bodyB's origin.
+	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
+
 	/// Set the maximum friction force in N.
 	void SetMaxForce(float32 force);
 
@@ -73,27 +79,41 @@ public:
 	/// Get the maximum friction torque in N*m.
 	float32 GetMaxTorque() const;
 
+	/// Dump joint to dmLog
+	void Dump();
+
 protected:
 
 	friend class b2Joint;
 
 	b2FrictionJoint(const b2FrictionJointDef* def);
 
-	void InitVelocityConstraints(const b2TimeStep& step);
-	void SolveVelocityConstraints(const b2TimeStep& step);
-	bool SolvePositionConstraints(float32 baumgarte);
+	void InitVelocityConstraints(const b2SolverData& data);
+	void SolveVelocityConstraints(const b2SolverData& data);
+	bool SolvePositionConstraints(const b2SolverData& data);
 
 	b2Vec2 m_localAnchorA;
 	b2Vec2 m_localAnchorB;
 
-	b2Mat22 m_linearMass;
-	float32 m_angularMass;
-
+	// Solver shared
 	b2Vec2 m_linearImpulse;
 	float32 m_angularImpulse;
-
 	float32 m_maxForce;
 	float32 m_maxTorque;
+
+	// Solver temp
+	int32 m_indexA;
+	int32 m_indexB;
+	b2Vec2 m_rA;
+	b2Vec2 m_rB;
+	b2Vec2 m_localCenterA;
+	b2Vec2 m_localCenterB;
+	float32 m_invMassA;
+	float32 m_invMassB;
+	float32 m_invIA;
+	float32 m_invIB;
+	b2Mat22 m_linearMass;
+	float32 m_angularMass;
 };
 
 #endif
