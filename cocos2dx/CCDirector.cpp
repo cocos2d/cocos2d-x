@@ -835,6 +835,18 @@ void CCDirector::setContentScaleFactor(CGFloat scaleFactor)
 	}
 }
 
+CCNode* getNotificationNode() 
+{ 
+	return m_pNotificationNode; 
+}
+
+void setNotificationNode(CCNode *node)
+{
+	CC_SAFE_RELEASE(m_pNotificationNode);
+	m_pNotificationNode = node;
+	CC_SAFE_RETAIN(m_pNotificationNode);
+}
+
 void CCDirector::applyOrientation(void)
 {
 	CCSize s = m_obWinSizeInPixels;
