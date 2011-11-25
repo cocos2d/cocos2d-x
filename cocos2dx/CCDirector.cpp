@@ -835,12 +835,12 @@ void CCDirector::setContentScaleFactor(CGFloat scaleFactor)
 	}
 }
 
-CCNode* getNotificationNode() 
+CCNode* CCDirector::getNotificationNode() 
 { 
 	return m_pNotificationNode; 
 }
 
-void setNotificationNode(CCNode *node)
+void CCDirector::setNotificationNode(CCNode *node)
 {
 	CC_SAFE_RELEASE(m_pNotificationNode);
 	m_pNotificationNode = node;
