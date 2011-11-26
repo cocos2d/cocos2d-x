@@ -72,7 +72,7 @@ float clampf(float value, float min_inclusive, float max_inclusive)
 		float ftmp;
 		ftmp = min_inclusive;
 		min_inclusive = max_inclusive;
-		max_inclusive = min_inclusive;
+		max_inclusive = ftmp;
 	}
 	return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
 }
