@@ -26,9 +26,11 @@ public:
 	void ReFeedBuffer(void);
 	void Finalize(void);
 
-	result Play(void);
+	result Play(bool bLoop = false);
 	result Stop(void);
-	result Reset(void);
+	result Pause(void);
+	result Resume(void);
+
 	void SetVolume(int volume);
 	int GetVolume(void) const;
 	Osp::Media::AudioOutState GetState(void) const;
@@ -54,11 +56,8 @@ private:
 	char* __pAllPcmBuffer;
 	int __iAllPcmBufferSize;
 	int __iAllPcmPos;
-	int quiet;
-	int bits;
-	int endian;
-	int raw;
-	int sign;
+	bool __bLoop;
+	bool __bPause;
 };
 
 }
