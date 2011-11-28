@@ -32,6 +32,7 @@ static EffectList	s_List;
 static float   s_fBackgroundMusicVolume = 1.0f;
 static float   s_fEffectsVolume = 1.0f;
 static bool    s_bWillPlayBackgroundMusic = false;
+static bool    s_bBackgroundMusicPaused = false;
 static string s_strResourcePath = "/Res/";
 
 static unsigned int _Hash(const char *key)
@@ -53,7 +54,9 @@ static string fullPathFromRelativePath(const char *pszRelativePath)
 	string strRet="";
 	int len = strlen(pszRelativePath);
 	if (pszRelativePath == NULL || len <= 0)
-		return NULL;
+	{
+		return strRet;
+	}
 
     if (len > 1 && pszRelativePath[0] == '/')
     {
@@ -87,7 +90,7 @@ public:
 	*/
 	virtual void OnPlayerOpened( result r )
 	{
-		//AppLog("OnPlayerOpened");
+
 	}
 
 	/**
@@ -96,7 +99,7 @@ public:
 	*/
 	virtual void OnPlayerEndOfClip(void)
 	{
-		//AppLog("OnPlayerEndOfClip");
+
 	}
 
 	/**
@@ -109,7 +112,7 @@ public:
 
 	virtual void OnPlayerSeekCompleted( result r )
 	{
-		//AppLog("OnPlayerSeekCompleted");
+
 	}
 
 
@@ -121,7 +124,7 @@ public:
 	*/
 	virtual void OnPlayerBuffering(int percent)
 	{
-		//AppLog("OnPlayerBuffering");
+
 	}
 
 	/**
@@ -135,7 +138,7 @@ public:
 	*/
 	virtual void OnPlayerErrorOccurred( PlayerErrorReason r )
 	{
-		//AppLog("OnPlayerErrorOccurred");
+
 	}
 
 
@@ -146,7 +149,6 @@ public:
 	virtual void OnPlayerInterrupted(void)
 	{
 		//Insert your code here
-		//AppLog("OnPlayerInterrupted");
 		if (s_pBackPlayer->GetState() == PLAYER_STATE_PLAYING)
 			s_pBackPlayer->Pause();
 	}
@@ -158,7 +160,6 @@ public:
 	virtual void OnPlayerReleased(void)
 	{
 		//Insert your code here
-		//AppLog("OnPlayerReleased");
 		if (s_pBackPlayer->GetState() != PLAYER_STATE_PLAYING)
 			s_pBackPlayer->Play();
 	}
@@ -176,12 +177,10 @@ static void closeMediaPlayer(Player*& pPlayer)
 		{
 			pPlayer->Stop();
 			pPlayer->Close();
-			//AppLog("audio player closed");
 		}
 		else if(nowState == PLAYER_STATE_OPENED || nowState == PLAYER_STATE_ENDOFCLIP || nowState == PLAYER_STATE_STOPPED )
 		{
 			pPlayer->Close();
-			//AppLog("audio player closed");
 		}
 	}
 }
@@ -201,7 +200,7 @@ static bool openMediaPlayer(Player*& pPlayer, const char* pszFilePath, bool bLoo
 			r = pPlayer->Construct(s_playerListener, null);
 			if (IsFailed(r))
 			{
-				//AppLog("player construct fails, pszFilePath = %s", pszFilePath);
+				AppLog("player construct fails, pszFilePath = %s", pszFilePath);
 				delete pPlayer;
 				pPlayer = NULL;
 				break;
@@ -213,7 +212,7 @@ static bool openMediaPlayer(Player*& pPlayer, const char* pszFilePath, bool bLoo
 		r = pPlayer->OpenFile(strFilePath.c_str(), false);
 		if (IsFailed(r))
 		{
-			//AppLog("Open (%s) fails\n", strFilePath.c_str());
+			AppLog("Open (%s) fails\n", strFilePath.c_str());
 			delete pPlayer;
 			pPlayer = NULL;
 			break;
@@ -240,7 +239,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
 
 	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
 	{
-		it->second->Reset();
+		it->second->Stop();
 		delete it->second;
 	}
 
@@ -298,6 +297,7 @@ void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 {
     if (s_pBackPlayer && PLAYER_STATE_PLAYING == s_pBackPlayer->GetState())
     {
+    	s_bBackgroundMusicPaused = false;
         s_pBackPlayer->Stop();
     }
 }
@@ -306,14 +306,16 @@ void SimpleAudioEngine::pauseBackgroundMusic()
 {
     if (s_pBackPlayer && PLAYER_STATE_PLAYING == s_pBackPlayer->GetState())
     {
+    	s_bBackgroundMusicPaused = true;
         s_pBackPlayer->Pause();
     }
 }
 
 void SimpleAudioEngine::resumeBackgroundMusic()
 {
-    if (s_pBackPlayer && PLAYER_STATE_PLAYING != s_pBackPlayer->GetState())
+    if (s_pBackPlayer && s_bBackgroundMusicPaused && PLAYER_STATE_PLAYING != s_pBackPlayer->GetState())
     {
+    	s_bBackgroundMusicPaused = false;
         s_pBackPlayer->Play();
     }
 }
@@ -372,11 +374,9 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
     	s_pBackPlayer->SetVolume((int) (volume * 99));
     	if (volume > 0.0f && s_pBackPlayer->GetVolume() == 0)
     	{
-    		//AppLog("volume is lowest");
     		s_pBackPlayer->SetVolume(1);
     	}
     }
-    //AppLog("volume = %f", volume);
     s_fBackgroundMusicVolume = volume;
 }
 
@@ -402,12 +402,10 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 // for sound effects
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/* = false*/)
 {
-	long long curTick, oldTick;
-	SystemTime::GetTicks(oldTick);
 	result r = E_FAILURE;
 	string strFilePath = fullPathFromRelativePath(pszFilePath);
 	unsigned int nRet = _Hash(strFilePath.c_str());
-	//AppLog("play effect (%s)", pszFilePath);
+
 	preloadEffect(pszFilePath);
 
 	EffectList::iterator p = s_List.find(nRet);
@@ -415,34 +413,28 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 	{
 		p->second->SetVolume((int) (s_fEffectsVolume * 99));
 		int volume = p->second->GetVolume();
-		//AppLog("volume = %d, s_fEffectsVolume = %f", volume, s_fEffectsVolume);
+
     	if (s_fEffectsVolume > 0.0f && volume == 0)
     	{
-    		//AppLog("effect volume is lowest");
     		p->second->SetVolume(1);
     	}
 
 	    if (AUDIOOUT_STATE_PLAYING == p->second->GetState())
 		{
-            return nRet; // reset waste a lot of time, so just return.
-	    	//AppLog("Reset effect...");
-	    	r = p->second->Reset();
+            return nRet; // Stop waste a lot of time, so just return.
+	    	r = p->second->Stop();
 		}
-
-	    //AppLog("play...");
 
 	    if (s_fEffectsVolume > 0.0f)
 	    {
-	    	r = p->second->Play();
+	    	r = p->second->Play(bLoop);
 	    }
 
     	if (IsFailed(r))
     	{
-    		//AppLog("play effect fails, error code = %d", r);
+    		AppLog("play effect fails, error code = %d", r);
     	}
 	}
-	SystemTime::GetTicks(curTick);
-	//AppLog("play effect waste %ld ms...", (long)(curTick-oldTick));
 	return nRet;
 }
 
@@ -451,7 +443,41 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 	CCAudioOut*& pPlayer = s_List[nSoundId];
 	if (pPlayer != NULL)
 	{
-		pPlayer->Reset();
+		pPlayer->Stop();
+	}
+}
+
+void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
+{
+	CCAudioOut*& pPlayer = s_List[nSoundId];
+	if (pPlayer != NULL)
+	{
+		pPlayer->Pause();
+	}
+}
+
+void SimpleAudioEngine::pauseAllEffects()
+{
+	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
+	{
+		it->second->Pause();
+	}
+}
+
+void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
+{
+	CCAudioOut*& pPlayer = s_List[nSoundId];
+	if (pPlayer != NULL)
+	{
+		pPlayer->Resume();
+	}
+}
+
+void SimpleAudioEngine::resumeAllEffects()
+{
+	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
+	{
+		it->second->Resume();
 	}
 }
 
@@ -459,7 +485,7 @@ void SimpleAudioEngine::stopAllEffects()
 {
 	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
 	{
-		it->second->Reset();
+		it->second->Stop();
 	}
 }
 
@@ -478,23 +504,19 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 		BREAK_IF(s_List.end() != s_List.find(nRet));
 
 		//AppLog("not find effect, create it...");
-		// bada only support 10 player instance, we use one for background music, other for effect music.
 		if (s_List.size() >= 64)
 		{
 			// get the first effect, and remove it form list
-			//AppLog("effect preload more than 9, delete the first effect");
+			//AppLog("effect preload more than 64, delete the first effect");
 			pEffectPlayer = s_List.begin()->second;
-//			closeMediaPlayer(pEffectPlayer);
 			pEffectPlayer->Finalize();
 			s_List.erase(s_List.begin()->first);
 		}
 		if (pEffectPlayer == NULL)
 			pEffectPlayer = new CCAudioOut;
 		pEffectPlayer->Initialize(strFilePath.c_str());
-	//	if (openMediaPlayer(pEffectPlayer, pszFilePath, false))
-		{
-			s_List.insert(Effect(nRet, pEffectPlayer));
-		}
+
+		s_List.insert(Effect(nRet, pEffectPlayer));
 
 	} while (0);
 }
@@ -504,8 +526,7 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	string strFilePath = fullPathFromRelativePath(pszFilePath);
 	unsigned int nSoundId = _Hash(strFilePath.c_str());
 	CCAudioOut*& pPlayer = s_List[nSoundId];
-	pPlayer->Reset();
-	//closeMediaPlayer(pPlayer);
+	pPlayer->Stop();
 }
 
 } // end of namespace CocosDenshion
