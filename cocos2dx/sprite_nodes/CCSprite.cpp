@@ -588,7 +588,7 @@ void CCSprite::updateTransform(void)
 			// 4th: Matrix multiplication
 			matrix = CCAffineTransformConcat( matrix, newMatrix);
 
-			prevHonor = ((CCSprite*)p)->getHornorParentTransform();
+			prevHonor = ((CCSprite*)p)->getHonorParentTransform();
 		}
 	}
 

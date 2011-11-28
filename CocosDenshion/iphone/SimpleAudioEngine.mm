@@ -112,6 +112,31 @@ static void static_unloadEffect(const char* pszFilePath)
     [[SimpleAudioEngine sharedEngine] unloadEffect: [NSString stringWithUTF8String: pszFilePath]];
 }
 
+static void static_pauseEffect(unsigned int uSoundId)
+{
+    [[SimpleAudioEngine sharedEngine] pauseEffect: uSoundId];
+}
+
+static void static_pauseAllEffects()
+{
+    [[SimpleAudioEngine sharedEngine] pauseAllEffects];
+}
+
+static void static_resumeEffect(unsigned int uSoundId)
+{
+    [[SimpleAudioEngine sharedEngine] resumeEffect: uSoundId];
+}
+
+static void static_resumeAllEffects()
+{
+    [[SimpleAudioEngine sharedEngine] resumeAllEffects];
+}
+
+static void static_stopAllEffects()
+{
+    [[SimpleAudioEngine sharedEngine] stopAllEffects];
+}
+
 namespace CocosDenshion
 {
 	static SimpleAudioEngine *s_pEngine;
@@ -230,5 +255,30 @@ namespace CocosDenshion
 	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	{
                 static_unloadEffect(pszFilePath);
+	}
+	
+	void SimpleAudioEngine::pauseEffect(unsigned int uSoundId)
+	{
+	    static_pauseEffect(uSoundId);
+	}
+	
+	void SimpleAudioEngine::resumeEffect(unsigned int uSoundId)
+	{
+	    static_resumeEffect(uSoundId);
+	}
+	
+	void SimpleAudioEngine::pauseAllEffects()
+	{
+	    static_pauseAllEffects();
+	}
+	
+	void SimpleAudioEngine::resumeAllEffects()
+	{
+	    static_resumeAllEffects();
+	}
+	
+	void SimpleAudioEngine::stopAllEffects()
+	{
+	    static_stopAllEffects();
 	}
 }

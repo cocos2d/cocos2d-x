@@ -2385,10 +2385,10 @@ SpriteBatchNodeChildren2::SpriteBatchNodeChildren2()
     sprite11->addChild(sprite13, 2);
 
     // don't rotate with it's parent
-    sprite12->setHornorParentTransform((ccHonorParentTransform) (sprite12->getHornorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_ROTATE));
+    sprite12->setHonorParentTransform((ccHonorParentTransform) (sprite12->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_ROTATE));
 
     // don't scale and rotate with it's parent
-    sprite13->setHornorParentTransform((ccHonorParentTransform) (sprite13->getHornorParentTransform() & ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE) ));
+    sprite13->setHonorParentTransform((ccHonorParentTransform) (sprite13->getHonorParentTransform() & ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE) ));
     
     CCActionInterval* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
     CCActionInterval* action_back = action->reverse();
@@ -2420,10 +2420,10 @@ SpriteBatchNodeChildren2::SpriteBatchNodeChildren2()
     sprite21->addChild(sprite23, 2);
     
     // don't rotate with it's parent
-    sprite22->setHornorParentTransform((ccHonorParentTransform) (sprite22->getHornorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_TRANSLATE));
+    sprite22->setHonorParentTransform((ccHonorParentTransform) (sprite22->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_TRANSLATE));
     
     // don't scale and rotate with it's parent
-    sprite23->setHornorParentTransform((ccHonorParentTransform) (sprite23->getHornorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_SCALE));
+    sprite23->setHonorParentTransform((ccHonorParentTransform) (sprite23->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_SCALE));
     
     sprite21->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(1, 360) ));
     sprite21->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions( CCScaleTo::actionWithDuration(0.5f, 5.0f), CCScaleTo::actionWithDuration(0.5f, 1), NULL ) )) );

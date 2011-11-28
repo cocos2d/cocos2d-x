@@ -254,4 +254,59 @@ extern "C"
 			env->DeleteLocalRef(stringArg);
 		}
 	}
+
+	void pauseEffectJNI(unsigned int nSoundId)
+	{
+		// void pauseEffect(int)
+		jmethodID pauseEffectMethodID = getMethodID("pauseEffect", "(I)V");
+
+		if (pauseEffectMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, pauseEffectMethodID, (int)nSoundId);
+		}
+	}
+
+	void pauseAllEffectsJNI()
+	{
+		// void pauseAllEffects()
+		jmethodID pauseAllEffectsMethodID = getMethodID("pauseAllEffects", "()V");
+
+		if (pauseAllEffectsMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, pauseAllEffectsMethodID);
+		}
+	}
+
+	void resumeEffectJNI(unsigned int nSoundId)
+	{
+		// void resumeEffect(int)
+		jmethodID resumeEffectMethodID = getMethodID("resumeEffect", "(I)V");
+
+		if (resumeEffectMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, resumeEffectMethodID, (int)nSoundId);
+		}
+	}
+
+	void resumeAllEffectsJNI()
+	{
+		// void resumeAllEffects()
+		jmethodID resumeAllEffectsMethodID = getMethodID("resumeAllEffects", "()V");
+
+		if (resumeAllEffectsMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, resumeAllEffectsMethodID);
+		}
+	}
+
+	void stopAllEffectsJNI()
+	{
+		// void stopAllEffects()
+		jmethodID stopAllEffectsMethodID = getMethodID("stopAllEffects", "()V");
+
+		if (stopAllEffectsMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, stopAllEffectsMethodID);
+		}
+	}
 }
