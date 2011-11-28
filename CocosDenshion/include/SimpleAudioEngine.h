@@ -131,6 +131,30 @@ public:
     */
     unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
 
+	/**
+    @brief Pause playing sound effect
+    @param nSoundId The return value of function playEffect
+    */
+	void pauseEffect(unsigned int nSoundId);
+
+	/**
+    @brief Pause all playing sound effect
+    @param nSoundId The return value of function playEffect
+    */
+	void pauseAllEffects();
+
+	/**
+    @brief Resume playing sound effect
+    @param nSoundId The return value of function playEffect
+    */
+	void resumeEffect(unsigned int nSoundId);
+
+	/**
+    @brief Resume all playing sound effect
+    @param nSoundId The return value of function playEffect
+    */
+	void resumeAllEffects();
+
     /**
     @brief Stop playing sound effect
     @param nSoundId The return value of function playEffect

@@ -22,15 +22,8 @@
 */
 
 #include "semaphore.h"
-#include <FBaseRtThread.h>
 #include <map>
 #include <string>
-
-struct sem{
-  Osp::Base::Runtime::Semaphore *id;
-  int value;
-  Osp::Base::Runtime::Mutex *mutex;
-};
 
 static std::map<std::string, sem_t *> _semaphores;
 
