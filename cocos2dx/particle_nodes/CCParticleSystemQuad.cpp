@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include "CCParticleSystemQuad.h"
 #include "CCSpriteFrame.h"
+#include "CCDirector.h"
 
 namespace cocos2d {
 

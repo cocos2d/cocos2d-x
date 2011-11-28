@@ -50,6 +50,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
+#include "CCDirector.h"
 
 // opengl
 #include "platform/CCGL.h"
@@ -291,7 +292,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 			else
 			{						
                 char *textureData = (char*)valueForKey("textureImageData", dictionary);
-				assert(textureData);
+				CCAssert(textureData, "");
 
 				int dataLen = strlen(textureData);
 				if(dataLen != 0)

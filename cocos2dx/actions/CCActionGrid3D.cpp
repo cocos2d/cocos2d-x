@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCActionGrid3D.h"
 #include "CCPointExtension.h"
+#include "CCDirector.h"
 
 #include <stdlib.h>
 
@@ -134,7 +135,7 @@ namespace cocos2d
 		if (gridSize.x != 1 || gridSize.y != 1)
 		{
 			// Grid size must be (1,1)
-			assert(0);
+			CCAssert(0, "");
 
 			return false;
 		}
