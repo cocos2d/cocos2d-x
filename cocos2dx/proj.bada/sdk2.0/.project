@@ -3,6 +3,9 @@
 	<name>cocos2dx</name>
 	<comment></comment>
 	<projects>
+		<project>libjpeg</project>
+		<project>png</project>
+		<project>zlib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

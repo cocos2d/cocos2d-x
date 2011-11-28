@@ -255,6 +255,14 @@ typedef struct _sourceInfo {
 - (void) stopSourceGroup:(int) sourceGroupId;
 /** Stops all playing sounds */
 -(void) stopAllSounds;
+/** Pause a sound */
+-(void) pauseSound:(ALuint) sourceId;
+/** Pause all sounds */
+-(void) pauseAllSounds;
+/** Resume a sound */
+-(void) resumeSound:(ALuint) sourceId;
+/** Resume all sounds */
+-(void) resumeAllSounds;
 -(void) defineSourceGroups:(NSArray*) sourceGroupDefinitions;
 -(void) defineSourceGroups:(int[]) sourceGroupDefinitions total:(NSUInteger) total;
 -(void) setSourceGroupNonInterruptible:(int) sourceGroupId isNonInterruptible:(BOOL) isNonInterruptible;

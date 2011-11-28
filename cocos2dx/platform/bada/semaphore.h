@@ -24,10 +24,14 @@
 #ifndef SEMAPHORE_H_
 #define SEMAPHORE_H_
 
+#include <FBaseRtThread.h>
 #include <time.h>
 
-struct sem;
-typedef struct sem sem_t;
+typedef struct sem{
+  Osp::Base::Runtime::Semaphore *id;
+  int value;
+  Osp::Base::Runtime::Mutex *mutex;
+}sem_t;
 
 #define SEM_FAILED	((sem_t*)0)
 #define SEM_VALUE_MAX	((int)((~0u)>>1))

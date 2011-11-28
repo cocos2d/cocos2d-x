@@ -172,9 +172,9 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #include "CCPlatformFunc_bada.h"
 
 #ifdef _DEBUG
-#define CC_ASSERT(cond)  if (!(cond)) badaAssert(__PRETTY_FUNCTION__ , __LINE__ , #cond)
+#define CC_ASSERT(cond)  (void)( (!!(cond)) || (badaAssert(__PRETTY_FUNCTION__ , __LINE__ , #cond),0) )
 #else
-#define CC_ASSERT(cond) 
+#define CC_ASSERT(cond)  void(0)
 #endif /* _DEBUG */
 #endif
 

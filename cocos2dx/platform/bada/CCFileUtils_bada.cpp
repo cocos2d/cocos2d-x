@@ -69,12 +69,12 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
+	CC_ASSERT(pszFileName != NULL && pszMode != NULL);
     unsigned char * pData = 0;
     int len = 0;
-    CC_ASSERT(pszFileName != NULL && pszMode != NULL);
-    CC_ASSERT((len = strlen(pszFileName)) > 0 && strlen(pszMode) > 0);
-
     string fullPath;
+
+    len = strlen(pszFileName);
 
     if (len > 1 && pszFileName[0] == '/')
     {
