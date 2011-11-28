@@ -22,7 +22,11 @@
 #include <Box2D/Common/b2Settings.h>
 
 #include <cmath>
+#ifndef SHP
 #include <cfloat>
+#else
+#include <float.h>
+#endif
 #include <cstddef>
 #include <limits>
 
