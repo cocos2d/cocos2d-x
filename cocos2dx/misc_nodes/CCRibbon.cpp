@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCRibbon.h"
 #include "CCTextureCache.h"
 #include "CCPointExtension.h"
+#include "CCDirector.h"
 
 namespace cocos2d {
 

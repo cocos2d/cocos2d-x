@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "selector_protocol.h"
+#include "CCMutableArray.h"
 
 namespace cocos2d{
 
