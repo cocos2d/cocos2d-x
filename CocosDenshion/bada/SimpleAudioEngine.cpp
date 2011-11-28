@@ -1,3 +1,27 @@
+/****************************************************************************
+Copyright (c) 2010 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "SimpleAudioEngine.h"
 #include "CCAudioOut.h"
 #include <FBase.h>
@@ -90,7 +114,7 @@ public:
 	*/
 	virtual void OnPlayerOpened( result r )
 	{
-
+		AppLog("OnPlayerOpened result = %d", r);
 	}
 
 	/**
@@ -99,7 +123,7 @@ public:
 	*/
 	virtual void OnPlayerEndOfClip(void)
 	{
-
+		AppLog("OnPlayerEndOfClip");
 	}
 
 	/**
@@ -112,7 +136,7 @@ public:
 
 	virtual void OnPlayerSeekCompleted( result r )
 	{
-
+		AppLog("OnPlayerSeekCompleted result = %d", r);
 	}
 
 
@@ -124,7 +148,7 @@ public:
 	*/
 	virtual void OnPlayerBuffering(int percent)
 	{
-
+		AppLog("OnPlayerBuffering percent = %d%", percent);
 	}
 
 	/**
@@ -138,7 +162,7 @@ public:
 	*/
 	virtual void OnPlayerErrorOccurred( PlayerErrorReason r )
 	{
-
+		AppLog("OnPlayerErrorOccurred PlayerErrorReason = %d", r);
 	}
 
 
@@ -148,6 +172,7 @@ public:
 	 */
 	virtual void OnPlayerInterrupted(void)
 	{
+		AppLog("OnPlayerInterrupted");
 		//Insert your code here
 		if (s_pBackPlayer->GetState() == PLAYER_STATE_PLAYING)
 			s_pBackPlayer->Pause();
@@ -159,6 +184,7 @@ public:
 	 */
 	virtual void OnPlayerReleased(void)
 	{
+		AppLog("OnPlayerReleased");
 		//Insert your code here
 		if (s_pBackPlayer->GetState() != PLAYER_STATE_PLAYING)
 			s_pBackPlayer->Play();
@@ -185,7 +211,7 @@ static void closeMediaPlayer(Player*& pPlayer)
 	}
 }
 
-static bool openMediaPlayer(Player*& pPlayer, const char* pszFilePath, bool bLoop)
+static bool openMediaPlayer(Player*& pPlayer, const char* pszFilePath)
 {
 	bool bRet = false;
 	result r = E_FAILURE;
@@ -219,11 +245,12 @@ static bool openMediaPlayer(Player*& pPlayer, const char* pszFilePath, bool bLoo
 		}
 		else
 		{
-			pPlayer->SetLooping(bLoop);
 			bRet = true;
 		}
 	}
 	while (0);
+
+	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(s_fBackgroundMusicVolume);
 
 	return bRet;
 }
@@ -235,8 +262,6 @@ SimpleAudioEngine::SimpleAudioEngine()
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
-	//AppLog("destroy SimpleAudioEngine");
-
 	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
 	{
 		it->second->Stop();
@@ -276,28 +301,27 @@ void SimpleAudioEngine::setResource(const char* pszZipFileName)
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
-
+	openMediaPlayer(s_pBackPlayer, pszFilePath);
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
 	result r = E_FAILURE;
 	bool bRet = false;
-	bRet = openMediaPlayer(s_pBackPlayer, pszFilePath, bLoop);
-
-	setBackgroundMusicVolume(s_fBackgroundMusicVolume);
+	bRet = openMediaPlayer(s_pBackPlayer, pszFilePath);
 
     if (bRet)
     {
+    	s_pBackPlayer->SetLooping(bLoop);
     	r = s_pBackPlayer->Play();
     }
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 {
+	s_bBackgroundMusicPaused = false;
     if (s_pBackPlayer && PLAYER_STATE_PLAYING == s_pBackPlayer->GetState())
     {
-    	s_bBackgroundMusicPaused = false;
         s_pBackPlayer->Stop();
     }
 }
@@ -322,12 +346,16 @@ void SimpleAudioEngine::resumeBackgroundMusic()
 
 void SimpleAudioEngine::rewindBackgroundMusic()
 {
+	stopBackgroundMusic();
     if (s_pBackPlayer)
     {
-        s_pBackPlayer->SeekTo(0);
         if (PLAYER_STATE_PLAYING != s_pBackPlayer->GetState())
         {
-         	s_pBackPlayer->Play();
+         	result r = s_pBackPlayer->Play();
+         	if (IsFailed(r))
+         	{
+         		AppLog("ERROR: %s", GetErrorMessage(r));
+         	}
         }
     }
 }
