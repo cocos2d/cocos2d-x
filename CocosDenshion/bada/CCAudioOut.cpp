@@ -532,17 +532,16 @@ result CCAudioOut::Play(bool bLoop/* = false*/)
 
 result CCAudioOut::Stop(void)
 {
-	//AppLog("Enter");
 	AudioOutState state = __pAudioOut->GetState();
 	result r = E_SUCCESS;
 
 	if(state == AUDIOOUT_STATE_PLAYING)
 	{
-		//AppLog("reset ...");
+		__bPause = false;
 		r = __pAudioOut->Reset();
 		if(IsFailed(r))
 		{
-			//AppLog("[Error] AudioOut Reset is failed");
+			AppLog("[Error] AudioOut Reset is failed");
 		}
 		ReWriteBuffer();
 	}
