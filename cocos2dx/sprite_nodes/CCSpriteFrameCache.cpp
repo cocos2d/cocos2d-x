@@ -91,7 +91,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 	}
 
 	// check the format
-	assert(format >=0 && format <= 3);
+	CCAssert(format >=0 && format <= 3, "");
 
 	framesDict->begin();
 	std::string key = "";
@@ -206,7 +206,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
 {
-	assert(textureFileName);
+	CCAssert(textureFileName, "texture name should not be null");
 	CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(textureFileName);
 
 	if (texture)
