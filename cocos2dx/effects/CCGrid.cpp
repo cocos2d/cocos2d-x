@@ -274,17 +274,17 @@ namespace cocos2d
 
 	void CCGridBase::blit(void)
 	{
-		assert(0);
+		CCAssert(0, "");
 	}
 
 	void CCGridBase::reuse(void)
 	{
-		assert(0);
+		CCAssert(0, "");
 	}
 
 	void CCGridBase::calculateVertexPoints(void)
 	{
-		assert(0);
+		CCAssert(0, "");
 	}
 
 	// implementation of CCGrid3D
