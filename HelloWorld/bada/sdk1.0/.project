@@ -3,10 +3,6 @@
 	<name>HelloWorld</name>
 	<comment></comment>
 	<projects>
-		<project>Box2D</project>
-		<project>chipmunk</project>
-		<project>cocos2dx</project>
-		<project>CocosDenshion</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
