@@ -357,11 +357,11 @@ namespace cocos2d{
                 CCNode* pChild = (CCNode*) pObject;
                 if (pChild)
                 {
-                    assert(row < rows.size());
+                    CCAssert(row < rows.size(), "");
 
 				    rowColumns = rows[row];
 				    // can not have zero columns on a row
-				    assert(rowColumns);
+				    CCAssert(rowColumns, "");
 
 				    float tmp = pChild->getContentSize().height;
 				    rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
@@ -380,7 +380,7 @@ namespace cocos2d{
 		}	
 
 		// check if too many rows/columns for available menu items
-		assert(! columnsOccupied);
+		CCAssert(! columnsOccupied, "");
 
 		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -467,11 +467,11 @@ namespace cocos2d{
                 if (pChild)
                 {
                     // check if too many menu items for the amount of rows/columns
-				    assert(column < columns.size());
+				    CCAssert(column < columns.size(), "");
 
 				    columnRows = columns[column];
 				    // can't have zero rows on a column
-				    assert(columnRows);
+				    CCAssert(columnRows, "");
 
 				    // columnWidth = fmaxf(columnWidth, [item contentSize].width);
 				    float tmp = pChild->getContentSize().width;
@@ -496,7 +496,7 @@ namespace cocos2d{
 		}
 
 		// check if too many rows/columns for available menu items.
-		assert(! rowsOccupied);
+		CCAssert(! rowsOccupied, "");
 
 		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 

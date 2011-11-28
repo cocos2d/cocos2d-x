@@ -137,7 +137,7 @@ CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fRate)
 
 bool CCSpeed::initWithAction(CCActionInterval *pAction, float fRate)
 {
-	assert(pAction != NULL);
+	CCAssert(pAction != NULL, "");
 	pAction->retain();
 	m_pInnerAction = pAction;
 	m_fSpeed = fRate;	
@@ -235,7 +235,7 @@ CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, const CCRect& rect)
 
 bool CCFollow::initWithTarget(CCNode *pFollowedNode)
 {
-	assert(pFollowedNode != NULL);
+	CCAssert(pFollowedNode != NULL, "");
 	pFollowedNode->retain();
 	m_pobFollowedNode = pFollowedNode;
 	m_bBoundarySet = false;
@@ -249,7 +249,7 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode)
 
 bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect)
 {
-	assert(pFollowedNode != NULL);
+	CCAssert(pFollowedNode != NULL, "");
 	pFollowedNode->retain();
 	m_pobFollowedNode = pFollowedNode;
 	m_bBoundarySet = true;
