@@ -18,7 +18,7 @@
 
 #include <Box2D/Common/b2Timer.h>
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(SHP)
 
 float64 b2Timer::s_invFrequency = 0.0f;
 
