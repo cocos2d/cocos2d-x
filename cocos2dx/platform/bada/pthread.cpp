@@ -21,13 +21,18 @@
  THE SOFTWARE.
 */
 
-#include <FApp.h>
-#include "pthread.h"
+#ifndef CC_BADA_2_0
 
-typedef void*(*pthread_func)(void *);
+#include "pthread.h"
+#include <FApp.h>
+#include <FBaseRtThread.h>
 
 using namespace Osp::Base;
 using namespace Osp::Base::Runtime;
+
+extern "C" {
+
+typedef void*(*pthread_func)(void *);
 
 //struct _pthread_fastlock
 //{
@@ -122,6 +127,10 @@ int pthread_create(pthread_t*__threadarg,
 			void*(*__start_routine)(void *),
 			void*__arg)
 {
+	if (NULL == __threadarg)
+	{
+		return -1;
+	}
 	Thread *thread = new Thread();
 	RunnableProxy *proxy = new RunnableProxy();
 	proxy->SetFunc(__start_routine);
@@ -142,7 +151,7 @@ int pthread_join(pthread_t __th,void**__thread_return)
 	{
 		return -1;
 	}
-	return __th->Join();
+	return ((Thread*)__th)->Join();
 }
 
 int pthread_cancel(pthread_t thread)
@@ -151,14 +160,14 @@ int pthread_cancel(pthread_t thread)
 	{
 		return -1;
 	}
-	return thread->Exit();
+	return ((Thread*)thread)->Exit();
 }
 
 int pthread_detach(pthread_t __th)
 {
 	if (__th)
 	{
-		__th->Exit();
+		((Thread*)__th)->Exit();
 		delete __th;
 	}
 	return 0;
@@ -170,7 +179,7 @@ int pthread_equal(pthread_t __thread1,pthread_t __thread2)
 	{
 		return (void *)__thread1 == (void *)__thread2;
 	}
-	return __thread1->Equals(*__thread2);
+	return ((Thread*)__thread1)->Equals(*((Thread*)__thread2));
 }
 
 int pthread_kill(pthread_t thread,int sig)
@@ -179,7 +188,7 @@ int pthread_kill(pthread_t thread,int sig)
 	{
 		return -1;
 	}
-	return thread->Exit(sig);
+	return ((Thread*)thread)->Exit(sig);
 }
 
 int pthread_attr_init(pthread_attr_t*attr)
@@ -301,8 +310,12 @@ int pthread_cond_init(pthread_cond_t*cond,pthread_condattr_t*cond_attr)
 
 int pthread_cond_destroy(pthread_cond_t*cond)
 {
-	delete (*cond)->lock;
-	delete (*cond);
+	if (cond != NULL)
+	{
+		delete (*cond)->lock;
+		delete (*cond);
+		return 1;
+	}
 	return 0;
 }
 
@@ -331,25 +344,10 @@ int pthread_cond_timedwait(pthread_cond_t*cond,pthread_mutex_t*mutex,
 	{
 		return -1;
 	}
-	return (*cond)->lock->Wait();
-}
-
-int pthread_cond_enter(pthread_cond_t*cond)
-{
-	if (!cond)
-	{
-		return -1;
-	}
-	return (*cond)->lock->Enter();
-}
-
-int pthread_cond_exit(pthread_cond_t*cond)
-{
-	if (!cond)
-	{
-		return -1;
-	}
-	return (*cond)->lock->Exit();
+	(*cond)->lock->Enter();
+	(*cond)->lock->Wait();
+	(*cond)->lock->Exit();
+	return 1;
 }
 
 int pthread_cond_wait(pthread_cond_t*cond,pthread_mutex_t*mutex)
@@ -358,9 +356,9 @@ int pthread_cond_wait(pthread_cond_t*cond,pthread_mutex_t*mutex)
 	{
 		return -1;
 	}
-	pthread_cond_enter(cond);
+	(*cond)->lock->Enter();
 	(*cond)->lock->Wait();
-	pthread_cond_exit(cond);
+	(*cond)->lock->Exit();
 	return 1;
 }
 
@@ -383,3 +381,7 @@ int pthread_condattr_setpshared(pthread_condattr_t*attr,int pshared)
 {
 	return 0;
 }
+
+}
+
+#endif

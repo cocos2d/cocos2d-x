@@ -138,4 +138,29 @@ namespace CocosDenshion
 	{
 		unloadEffectJNI(pszFilePath);
 	}
+
+	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
+	{
+		pauseEffectJNI(nSoundId);
+	}
+
+	void SimpleAudioEngine::pauseAllEffects()
+	{
+		pauseAllEffectsJNI();
+	}
+
+	void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
+	{
+		resumeEffectJNI(nSoundId);
+	}
+
+	void SimpleAudioEngine::resumeAllEffects()
+	{
+		resumeAllEffectsJNI();
+	}
+
+	void SimpleAudioEngine::stopAllEffects()
+	{
+		stopAllEffectsJNI();
+	}
 }

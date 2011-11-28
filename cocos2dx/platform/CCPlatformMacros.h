@@ -154,7 +154,7 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #endif // COCOS2D_DEBUG
 
 // shared library declartor
-#define CC_DLL                 
+#define CC_DLL 
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 // assertion
@@ -162,6 +162,7 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #define CC_ASSERT(cond)                assert(cond)
 #else
 // bada platform
+
 #include <FBaseConfig.h>
 #include <FBaseSys.h>
 
@@ -171,9 +172,9 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #include "CCPlatformFunc_bada.h"
 
 #ifdef _DEBUG
-#define CC_ASSERT(cond)                if (!(cond)) badaAssert(__PRETTY_FUNCTION__ , __LINE__ , #cond)
+#define CC_ASSERT(cond)  (void)( (!!(cond)) || (badaAssert(__PRETTY_FUNCTION__ , __LINE__ , #cond),0) )
 #else
-#define CC_ASSERT(cond) 
+#define CC_ASSERT(cond)  void(0)
 #endif /* _DEBUG */
 #endif
 

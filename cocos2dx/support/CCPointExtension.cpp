@@ -69,10 +69,7 @@ CCPoint ccpLerp(const CCPoint& a, const CCPoint& b, float alpha)
 float clampf(float value, float min_inclusive, float max_inclusive)
 {
 	if (min_inclusive > max_inclusive) {
-		float ftmp;
-		ftmp = min_inclusive;
-		min_inclusive = max_inclusive;
-		max_inclusive = min_inclusive;
+        CC_SWAP(min_inclusive, max_inclusive, float);
 	}
 	return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
 }
