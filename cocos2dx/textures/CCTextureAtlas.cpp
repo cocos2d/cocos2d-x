@@ -141,7 +141,7 @@ bool CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
 
 bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
-	assert(texture != NULL);
+	CCAssert(texture != NULL, "texture should not be null");
 	m_uCapacity = capacity;
 	m_uTotalQuads = 0;
 
@@ -150,7 +150,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 	CC_SAFE_RETAIN(m_pTexture);
 
 	// Re-initialization is not allowed
-	assert(m_pQuads == NULL && m_pIndices == NULL);
+	CCAssert(m_pQuads == NULL && m_pIndices == NULL, "");
 
 	m_pQuads = (ccV3F_C4B_T2F_Quad*)calloc( sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity, 1 );
 	m_pIndices = (GLushort *)calloc( sizeof(GLushort) * m_uCapacity * 6, 1 );
