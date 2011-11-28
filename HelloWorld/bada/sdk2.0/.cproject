@@ -715,7 +715,6 @@
 								<option id="osp.gnu.target.cpp.compiler.release.exe.option.preprocessor.def.1056983953" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.release.exe.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="SHP"/>
 									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
-									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1869011242" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
