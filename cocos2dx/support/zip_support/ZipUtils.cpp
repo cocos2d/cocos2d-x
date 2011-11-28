@@ -143,8 +143,8 @@ namespace cocos2d
 		int len;
 		unsigned int offset = 0;
 
-		assert( out );
-		assert( &*out );
+		CCAssert(out, "");
+		CCAssert(&*out, "");
 
 		gzFile inFile = gzopen(path, "rb");
 		if( inFile == NULL ) {
@@ -210,8 +210,8 @@ namespace cocos2d
 
 	int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
 	{
- 		assert( out );
- 		assert( &*out );
+ 		CCAssert(out, "");
+ 		CCAssert(&*out, "");
  
  		// load file into memory
  		unsigned char *compressed = NULL;

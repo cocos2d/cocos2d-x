@@ -156,7 +156,7 @@ CCDirector::~CCDirector(void)
 void CCDirector::setGLDefaultValues(void)
 {
 	// This method SHOULD be called only after openGLView_ was initialized
-	assert(m_pobOpenGLView);
+	CCAssert(m_pobOpenGLView, "opengl view should not be null");
 
 	setAlphaBlending(true);
 	setDepthTest(true);
@@ -275,7 +275,7 @@ void CCDirector::calculateDeltaTime(void)
 
 void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 {
-	assert(pobOpenGLView);
+	CCAssert(pobOpenGLView, "opengl view should not be null");
 
 	if (m_pobOpenGLView != pobOpenGLView)
 	{
@@ -494,8 +494,8 @@ void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 
 void CCDirector::runWithScene(CCScene *pScene)
 {
-	assert(pScene != NULL);
-	assert(m_pRunningScene == NULL);
+	CCAssert(pScene != NULL, "running scene should not be null");
+	CCAssert(m_pRunningScene == NULL, "m_pRunningScene should be null");
 
 	pushScene(pScene);
 	startAnimation();
@@ -503,7 +503,7 @@ void CCDirector::runWithScene(CCScene *pScene)
 
 void CCDirector::replaceScene(CCScene *pScene)
 {
-	assert(pScene != NULL);
+	CCAssert(pScene != NULL, "the scene should not be null");
 
 	unsigned int index = m_pobScenesStack->count();
 
@@ -515,7 +515,7 @@ void CCDirector::replaceScene(CCScene *pScene)
 
 void CCDirector::pushScene(CCScene *pScene)
 {
-	assert(pScene);
+	CCAssert(pScene, "the scene should not null");
 
 	m_bSendCleanupToScene = false;
 
@@ -525,7 +525,7 @@ void CCDirector::pushScene(CCScene *pScene)
 
 void CCDirector::popScene(void)
 {
-	assert(m_pRunningScene != NULL);
+	CCAssert(m_pRunningScene != NULL, "running scene should not null");
 
 	m_pobScenesStack->removeLastObject();
 	unsigned int c = m_pobScenesStack->count();
