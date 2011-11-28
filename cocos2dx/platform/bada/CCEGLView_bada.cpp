@@ -347,7 +347,7 @@ void CCEGLView::resize(int width, int height)
 	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
 	m_rcViewPort.size.width = viewPortW;
 	m_rcViewPort.size.height = viewPortH;
-	//AppLog("m_rcViewPort.origin.x = %f, y = %f, width = %f, height = %f", \
+	//CCLOG("m_rcViewPort.origin.x = %f, y = %f, width = %f, height = %f", \
 			m_rcViewPort.origin.x, m_rcViewPort.origin.y, m_rcViewPort.size.width, m_rcViewPort.size.height);
 }
 
@@ -381,7 +381,7 @@ result CCEGLView::OnInitializing(void)
 	// calculate the factor and the rect of viewport
 	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width,
 		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-	//AppLog("rc.width = %d, rc.height = %d, m_fScreenScaleFactor = %f", rc.width, rc.height, m_fScreenScaleFactor);
+	//CCLOG("rc.width = %d, rc.height = %d, m_fScreenScaleFactor = %f", rc.width, rc.height, m_fScreenScaleFactor);
 	resize(m_sSizeInPoint.width, m_sSizeInPoint.height);
 
 	return r;
@@ -398,7 +398,7 @@ result CCEGLView::OnTerminating(void)
 
 //void CCEGLView::onPenDown(int nIndex, float x, float y)
 //{
-//	AppLog("onPenDown nIndex = %d,x = %f, y=%f", nIndex, x, y);
+//	CCLOG("onPenDown nIndex = %d,x = %f, y=%f", nIndex, x, y);
 //    if (m_pDelegate && nIndex < MAX_TOUCHES)
 //    {
 //        CCTouch* pTouch = s_pTouches[nIndex];
@@ -433,7 +433,7 @@ void CCEGLView::onTouchesBegin(int id[], float x[], float y[], int pointerNumber
 		}
 		else
 		{
-			AppLog("Beginnig touches with id: %d error", id[i]);
+			CCLOG("Beginnig touches with id: %d error", id[i]);
 		}
 	}
 }
@@ -443,7 +443,7 @@ void CCEGLView::onTouchesMove(int id[], float x[], float y[], int pointerNumber)
 	result r = E_SUCCESS;
 	CCSet set;
 	for(int i = 0 ; i < pointerNumber ; i++ ) {
-		AppLog("Moving touches with id: %d, x=%f, y=%f", id[i], x[i], y[i]);
+		CCLOG("Moving touches with id: %d, x=%f, y=%f", id[i], x[i], y[i]);
 		CCTouch *pTouch = NULL;
 		r = s_mapTouches.GetValue(id[i], pTouch);
 
@@ -456,7 +456,7 @@ void CCEGLView::onTouchesMove(int id[], float x[], float y[], int pointerNumber)
 		else
 		{
 			// It is error, should return.
-			AppLog("Moving touches with id: %d error", id[i]);
+			CCLOG("Moving touches with id: %d error", id[i]);
 			return;
 		}
 	}
@@ -478,7 +478,7 @@ void CCEGLView::onTouchesEnd(int id[], float x[], float y[], int pointerNumber)
 			set.addObject(pTouch);
 			s_mapTouches.Remove(id[i]);
 			pTouch->release();
-			AppLog("Ending touches with id: %d, x=%f, y=%f, retain count = %d", id[i], x[i], y[i], pTouch->retainCount());
+			CCLOG("Ending touches with id: %d, x=%f, y=%f, retain count = %d", id[i], x[i], y[i], pTouch->retainCount());
 		}
 	}
 
@@ -556,7 +556,7 @@ void CCEGLView::OnTouchPressed(const Control& source,
 	int id = (int)touchInfo.GetPointId();
     float x = (float)touchInfo.GetCurrentPosition().x;
     float y = (float)touchInfo.GetCurrentPosition().y;
-    AppLog("OnTouchPressed id = %d,x = %f,y = %f, count = %d", id, x, y, s_mapTouches.GetCount());
+    CCLOG("OnTouchPressed id = %d,x = %f,y = %f, count = %d", id, x, y, s_mapTouches.GetCount());
 	if (!m_bNotHVGA)
 	{
 		x = x * 2 / 3;
@@ -586,7 +586,7 @@ void CCEGLView::OnTouchReleased(const Control& source,
 	}
 
 	onTouchesEnd(&id, &x, &y, 1);
-	AppLog("OnTouchReleased id = %d,x = %f,y = %f", id, x, y);
+	CCLOG("OnTouchReleased id = %d,x = %f,y = %f", id, x, y);
 }
 
 
