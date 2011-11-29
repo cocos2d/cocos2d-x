@@ -228,6 +228,30 @@ int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
     return ret;
 }
 
+int CCLuaEngine::executeFunctionWithIntegerData(int functionRefId, int data)
+{
+    lua_pushinteger(m_state, data);
+    int ret = executeFunctionByRefID(functionRefId, 1);
+    lua_pop(m_state, 1);
+    return ret;
+}
+
+int CCLuaEngine::executeFunctionWithFloatData(int functionRefId, float data)
+{
+    lua_pushnumber(m_state, data);
+    int ret = executeFunctionByRefID(functionRefId, 1);
+    lua_pop(m_state, 1);
+    return ret;
+}
+
+int CCLuaEngine::executeFunctionWithBooleanData(int functionRefId, bool data)
+{
+    lua_pushboolean(m_state, data);
+    int ret = executeFunctionByRefID(functionRefId, 1);
+    lua_pop(m_state, 1);
+    return ret;
+}
+
 // functions for excute touch event
 int CCLuaEngine::executeTouchEvent(int functionRefId, CCTouch *pTouch)
 {
