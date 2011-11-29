@@ -8,6 +8,8 @@ typedef enum
 class CCScene : public CCNode
 {
     ccSceneFlag getSceneType(void);
+    void registerScriptEventsHandler(LUA_FUNCTION functionRefID);
+    void unregisterScriptEventsHandler(void);
 
     static CCScene *node(void);
 };
