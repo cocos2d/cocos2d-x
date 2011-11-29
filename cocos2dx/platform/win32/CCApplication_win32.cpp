@@ -127,32 +127,39 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
+    int arrayChineseCode[] = {
+        2052, 4100, 1028, 3076, 5124
+    };
+
+    LCID LanguageID = GetUserDefaultLCID();
     ccLanguageType ret = kLanguageEnglish;
 
-	LCID localeID = GetUserDefaultLCID();
-	unsigned short primaryLanguageID = localeID & 0xFF;
-	
-	switch (primaryLanguageID)
-	{
-		case LANG_CHINESE:
-			ret = kLanguageChinese;
-			break;
-		case LANG_FRENCH:
-			ret = kLanguageFrench;
-			break;
-		case LANG_ITALIAN:
-			ret = kLanguageItalian;
-			break;
-		case LANG_GERMAN:
-			ret = kLanguageGerman;
-			break;
-		case LANG_SPANISH:
-			ret = kLanguageSpanish;
-			break;
-		case LANG_RUSSIAN:
-			ret = kLanguageRussian;
-			break;
-	}
+    do 
+    {
+        int nCount = sizeof(arrayChineseCode) / sizeof(int);
+        for (int i = 0; i < nCount; ++i)
+        {
+            if (arrayChineseCode[i] == LanguageID)
+            {
+                if (LanguageID == 2052)
+                {
+                    ret = kLanguageChinese_Simplified;
+                }
+                else
+                {
+                    ret = kLanguageChinese_Traditional;
+                }
+                break;
+            }
+        }
+
+        CC_BREAK_IF(kLanguageEnglish != ret);
+
+        if (1041 == LanguageID)
+        {
+            ret = kLanguageJapanese;
+        }
+    } while (0);
 
     return ret;
 }

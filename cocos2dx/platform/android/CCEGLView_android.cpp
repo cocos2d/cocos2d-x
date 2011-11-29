@@ -58,7 +58,7 @@ void CCEGLView::create(int width, int height)
 	m_sSizeInPoint.height = height;
 
 	// calculate the factor and the rect of viewport	
-	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
+	m_fScreenScaleFactor =  MAX((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
 		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
 	int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
 	int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
@@ -194,5 +194,12 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     setKeyboardStateJNI((int)bOpen);
 }
 
-}       // end of namespace cocos2d
+void CCEGLView::getScreenRectInView(CCRect& rect)
+{
+    rect.origin.x       = -m_rcViewPort.origin.x / m_fScreenScaleFactor;
+    rect.origin.y       = -m_rcViewPort.origin.y / m_fScreenScaleFactor;
+    rect.size.width     = m_sSizeInPixel.width / m_fScreenScaleFactor;
+    rect.size.height    = m_sSizeInPixel.height / m_fScreenScaleFactor;
+}
 
+}       // end of namespace cocos2d
