@@ -1,7 +1,0 @@
-
-class CCTransitionPageTurn : public CCTransitionScene
-{
-    CCActionInterval* actionWithSize(ccGridSize vector);
-
-    static CCTransitionPageTurn* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
-};

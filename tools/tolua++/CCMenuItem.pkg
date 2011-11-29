@@ -6,13 +6,12 @@ class CCMenuItem : public CCNode
     void selected();
     void unselected();
 
-    void registerScriptHandler(const char* pszFunctionName);
-    static CCMenuItem * itemWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
+    void registerScriptHandler(LUA_FUNCTION functionRefID);
 };
 
 class CCMenuItemLabel : public CCMenuItem
 {
-    void setString(const char * label);
+    void setString(const char*  label);
     void setIsEnabled(bool enabled);
 
     void setOpacity(GLubyte opacity);
@@ -20,24 +19,25 @@ class CCMenuItemLabel : public CCMenuItem
     void setColor(ccColor3B color);
     ccColor3B getColor();
 
-    static CCMenuItemLabel* itemWithLabel(CCNode* label, SelectorProtocol* target, SEL_MenuHandler selector);
     static CCMenuItemLabel* itemWithLabel(CCNode* label);
 };
 
-class CCMenuItemAtlasFont : public CCMenuItemLabel
+class CCMenuItemAtlasFont : public CCMenuItem
 {
-    static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
-    static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector);
+    static CCMenuItemAtlasFont* itemFromString(const char* value,
+                                               const char* charMapFile,
+                                               int itemWidth,
+                                               int itemHeight,
+                                               char startCharMap);
 };
 
-class CCMenuItemFont : public CCMenuItemLabel
+class CCMenuItemFont : public CCMenuItem
 {
     static void setFontSize(int s);
     static int fontSize();
-    static void setFontName(const char *name);
-    static const char *fontName();
-    static CCMenuItemFont * itemFromString(const char *value);
-    static CCMenuItemFont * itemFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector);
+    static void setFontName(const char* name);
+    static const char* fontName();
+    static CCMenuItemFont * itemFromString(const char* value);
 };
 
 class CCMenuItemSprite : public CCMenuItem
@@ -51,30 +51,31 @@ class CCMenuItemSprite : public CCMenuItem
     void unselected();
     void setIsEnabled(bool bEnabled);
 
-    static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite);
-    static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, SelectorProtocol* target, SEL_MenuHandler selector);
-    static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
+    static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite,
+                                                   CCNode* selectedSprite);
+    static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite,
+                                                   CCNode* selectedSprite,
+                                                   CCNode* disabledSprite);
 };
 
-class CCMenuItemImage : public CCMenuItemSprite
+class CCMenuItemImage : public CCMenuItem
 {
     void setColor(ccColor3B color);
     ccColor3B getColor();
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
 
-    static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage);
-    static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
-    static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, SelectorProtocol* target, SEL_MenuHandler selector);
-    static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
+    static CCMenuItemImage* itemFromNormalImage(const char* normalImage,
+                                                const char* selectedImage);
+    static CCMenuItemImage* itemFromNormalImage(const char* normalImage,
+                                                const char* selectedImage,
+                                                const char* disabledImage);
 };
 
 class CCMenuItemToggle : public CCMenuItem
 {
     void addSubItem(CCMenuItem *item);
-
     CCMenuItem* selectedItem();
     void setIsEnabled(bool var);
-
     static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
 };

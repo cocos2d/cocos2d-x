@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <map>
 #include "CCObject.h"
 #include "ccConfig.h"
-#include "LuaEngine.h"
+//#include "LuaEngine.h"
 
 namespace cocos2d
 {

@@ -12,8 +12,8 @@ class CCScheduler : public CCObject
     void setTimeScale(ccTime fTimeScale);
 
 
-    int scheduleScriptFunc(LUA_FUNCTION function, ccTime fInterval, bool bPaused);
-    void unscheduleScriptFunc(int handle);
+    int scheduleScriptFunc(LUA_FUNCTION functionRefID, ccTime fInterval, bool bPaused);
+    void unscheduleScriptFunc(int scheduleEntryID);
 
     void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
     void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
