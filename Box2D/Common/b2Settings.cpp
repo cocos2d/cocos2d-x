@@ -41,7 +41,7 @@ void b2Log(const char* string, ...)
 {
 #if defined(SHP)
 	#ifdef _DEBUG
-		__App_info(__PRETTY_FUNCTION__ , __LINE__, string);
+	__App_info(__PRETTY_FUNCTION__ , __LINE__, string);
 	#endif
 #else
 	va_list args;
