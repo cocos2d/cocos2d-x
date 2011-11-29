@@ -13,12 +13,12 @@ class CCMenu : public CCLayer
     void alignItemsInColumns(unsigned int columns, va_list args);
     void alignItemsInRows(unsigned int rows, va_list args);
 
+    void addChild(CCMenuItem* child, int zOrder = 0, int tag = -1);
+
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity(void);
     void setColor(ccColor3B color);
     ccColor3B getColor(void);
 
     static CCMenu* node();
-    static CCMenu* menuWithItem(CCMenuItem* item);
-    // static CCMenu* menuWithItems(CCMenuItem* item, ...);
 };

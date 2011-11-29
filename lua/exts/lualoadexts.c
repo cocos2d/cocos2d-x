@@ -13,7 +13,7 @@
 #include "mime.h"
 #include "luasocketscripts.h"
 
-static luaL_Reg luax_preload_list[] = {
+static luaL_Reg luax_exts[] = {
     {"socket.core", luaopen_socket_core},
     {"mime.core", luaopen_mime_core},
     {"socket", luaopen_socket},
@@ -27,10 +27,10 @@ static luaL_Reg luax_preload_list[] = {
     {NULL, NULL}
 };
 
-void luax_initpreload(lua_State *L)
+void luax_loadexts(lua_State *L)
 {
-    luaL_Reg* lib = luax_preload_list;
-    luaL_findtable(L, LUA_GLOBALSINDEX, "package.preload", sizeof(luax_preload_list)/sizeof(luax_preload_list[0])-1);
+    luaL_Reg* lib = luax_exts;
+    luaL_findtable(L, LUA_GLOBALSINDEX, "package.preload", sizeof(luax_exts)/sizeof(luax_exts[0])-1);
     for (; lib->func; lib++) {
         lua_pushstring(L, lib->name);
         lua_pushcfunction(L, lib->func);

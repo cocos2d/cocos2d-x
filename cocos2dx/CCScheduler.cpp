@@ -30,14 +30,16 @@
 #include "support/data_support/utlist.h"
 #include "support/data_support/uthash.h"
 #include "CCArray.h"
-#include "CCLuaSupport.h"
-#include "LuaEngine.h"
+
+#if LUA_ENGINE
+#include "CCLuaEngine.h"
+#endif
 
 using namespace std;
 
 namespace cocos2d
 {
-
+    
 // data structures
 
 // A list double-linked list used for "updates with priority"
@@ -92,7 +94,7 @@ CCScheduler::CCScheduler(void)
 CCScheduler::~CCScheduler(void)
 {
     unscheduleAllSelectors();
-    unscheduleScriptFunctions();
+    unscheduleAllScriptFunctions();
     pSharedScheduler = NULL;
     m_scriptFunctions->release();
 }
@@ -193,32 +195,6 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
     pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
     ccArrayAppendObject(pElement->timers, pTimer);
     pTimer->release();
-}
-
-int CCScheduler::scheduleScriptFunc(int refID, ccTime fInterval, bool bPaused)
-{
-    CCSchedulerFuncEntry* entry = CCSchedulerFuncEntry::entryWithRefID(refID, fInterval, bPaused);
-    m_scriptFunctions->addObject(entry);
-    
-    //    CCLOG("CCScheduler::scheduleScriptFunc() - add script entry, handle: %d, refid: %d", entry->getHandle(), refID);
-    return entry->getHandle();
-}
-
-void CCScheduler::unscheduleScriptFunc(int handle)
-{
-    for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
-    {
-        CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
-        if (entry->getHandle() == handle)
-        {
-            entry->markDeleted();
-        }
-    }
-}
-
-void CCScheduler::unscheduleScriptFunctions()
-{
-    m_scriptFunctions->removeAllObjects();
 }
 
 void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget)
@@ -452,7 +428,7 @@ void CCScheduler::unscheduleAllSelectors(void)
         unscheduleUpdateForTarget(pEntry->target);
     }
     
-    unscheduleScriptFunctions();
+    unscheduleAllScriptFunctions();
 }
 
 void CCScheduler::unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget)
@@ -660,6 +636,7 @@ void CCScheduler::tick(ccTime dt)
     
     m_pCurrentTarget = NULL;
     
+#if LUA_ENGINE
     // Interate all script functions
     for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
     {
@@ -675,6 +652,7 @@ void CCScheduler::tick(ccTime dt)
         CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
         if (entry->isMarkDeleted()) m_scriptFunctions->removeObjectAtIndex(i);
     }
+#endif // LUA_ENGINE
 }
 
 void CCScheduler::purgeSharedScheduler(void)
@@ -683,4 +661,34 @@ void CCScheduler::purgeSharedScheduler(void)
     pSharedScheduler = NULL;
 }
 
+
+#if LUA_ENGINE
+int CCScheduler::scheduleScriptFunc(int functionRefID, ccTime fInterval, bool bPaused)
+{
+    CCSchedulerFuncEntry* entry = CCSchedulerFuncEntry::entryWithFunctionRefID(functionRefID, fInterval, bPaused);
+    m_scriptFunctions->addObject(entry);
+    return entry->getEntryID();
+}
+
+void CCScheduler::unscheduleScriptFunc(int scheduleEntryID)
+{
+    for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
+    {
+        CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
+        if (entry->getEntryID() == scheduleEntryID)
+        {
+            entry->markDeleted();
+            break;
+        }
+    }
+}
+
+void CCScheduler::unscheduleAllScriptFunctions()
+{
+    m_scriptFunctions->removeAllObjects();
+}
+
+#endif // LUA_ENGINE
+    
 } // namespace cocos2d
+

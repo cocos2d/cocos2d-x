@@ -104,7 +104,7 @@ static NSString* getDoubleResolutionImage(NSString* path)
         if( [fileManager fileExistsAtPath:retinaName] )
             return retinaName;
 
-        CCLOG("cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
+        CCLOG("cocos2d: CCFileUtils: Warning HD file not found: %s", [[retinaName lastPathComponent] UTF8String] );
     }
 
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED
@@ -331,7 +331,7 @@ namespace cocos2d {
             *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
             fclose(fp);
         } while (0);
-        
+
         if (! pBuffer)
         {
             CCLOG("Get data from file(%s) failed!", pszFileName);

@@ -28,7 +28,7 @@
 #include <assert.h>
 
 #ifdef LUA_ENGINE
-#include "LuaEngine.h"
+#include "CCLuaEngine.h"
 #endif
 
 namespace cocos2d {
@@ -63,7 +63,7 @@ CCObject::~CCObject(void)
 #ifdef LUA_ENGINE
     if (m_refID != 0)
     {
-        LuaEngine::sharedEngine()->removeCCObject(this);
+        CCLuaEngine::sharedEngine()->removeCCObject(this);
     }
 #endif
 }

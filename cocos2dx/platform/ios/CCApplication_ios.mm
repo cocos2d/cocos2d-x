@@ -34,7 +34,6 @@ NS_CC_BEGIN;
 CCApplication* CCApplication::sm_pSharedApplication = 0;
 
 CCApplication::CCApplication()
-: m_initOrientation(0)
 {
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
@@ -46,9 +45,8 @@ CCApplication::~CCApplication()
     sm_pSharedApplication = 0;
 }
 
-int CCApplication::run(int initOrientation)
+int CCApplication::run()
 {
-    m_initOrientation = initOrientation;
     if (initInstance() && applicationDidFinishLaunching())
     {
         [[CCDirectorCaller sharedDirectorCaller] startMainLoop];

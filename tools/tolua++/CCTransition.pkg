@@ -144,3 +144,20 @@ class CCTransitionFadeDown : public CCScene
 {
     static  CCTransitionFadeDown* transitionWithDuration(ccTime t, CCScene* scene);
 };
+
+class CCTransitionRadialCCW : public CCScene
+{
+    static CCTransitionRadialCCW* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionRadialCW : public CCScene
+{
+    static CCTransitionRadialCW* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionPageTurn : public CCScene
+{
+    CCActionInterval* actionWithSize(ccGridSize vector);
+
+    static CCTransitionPageTurn* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
+};
