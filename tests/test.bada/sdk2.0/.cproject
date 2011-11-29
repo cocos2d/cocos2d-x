@@ -60,6 +60,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/pthread.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
 								</option>
 								<option id="osp.gnu.cpp.link.option.other.689865278" name="Other options (-Xlinker [option])" superClass="osp.gnu.cpp.link.option.other"/>

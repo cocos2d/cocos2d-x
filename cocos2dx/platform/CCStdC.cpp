@@ -49,6 +49,8 @@ int CC_DLL gettimeofday(struct timeval * val, struct timezone *)
 }
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 
+using namespace Osp::System;
+
 int CC_DLL gettimeofday(struct timeval * val, struct timezone *)
 {
     if (val)

@@ -70,6 +70,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/pthread.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.1537454940" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">

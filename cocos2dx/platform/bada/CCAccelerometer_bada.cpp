@@ -31,28 +31,24 @@ using namespace Osp::Uix;
 
 NS_CC_BEGIN;
 
-CCAccelerometer* CCAccelerometer::m_spCCAccelerometer = NULL;
 
-CCAccelerometer::CCAccelerometer() :
-  m_pAccelDelegate(NULL)
+CCAccelerometer::CCAccelerometer()
+: m_pAccelDelegate(NULL)
 , m_pSensor(NULL)
+, m_bEnabled(false)
 {
 
 }
 
 CCAccelerometer::~CCAccelerometer() 
 {
-	m_spCCAccelerometer = NULL;
 	CC_SAFE_DELETE(m_pSensor);
 }
 
 CCAccelerometer* CCAccelerometer::sharedAccelerometer() 
 {
-  if (m_spCCAccelerometer == NULL)
-  {
-  	m_spCCAccelerometer = new CCAccelerometer();
-  }
-  return m_spCCAccelerometer;
+	static CCAccelerometer s_CCAccelerometer;
+	return &s_CCAccelerometer;
 }
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
@@ -106,39 +102,52 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
 void CCAccelerometer::setEnable(bool bEnable)
 {
 	result	r = E_INVALID_STATE;
-	static long	interval = 50;
-	if (m_pSensor == NULL)
+	if (m_bEnabled == bEnable)
 	{
-		bool	available = false;
+		return;
+	}
+
+	m_bEnabled = bEnable;
+
+	if (m_bEnabled)
+	{
+		bool available = false;
+		long interval = 50;
+
+		CC_SAFE_DELETE(m_pSensor);
 		m_pSensor = new SensorManager();
 		m_pSensor->Construct();
 
 		available = m_pSensor->IsAvailable(SENSOR_TYPE_ACCELERATION);
 		if (available)
 		{
-			long	intervalTemp = 0;
+			long intervalTemp = 0;
 			m_pSensor->GetMaxInterval(SENSOR_TYPE_ACCELERATION, intervalTemp);
 			if (interval > intervalTemp)
+			{
 				interval = intervalTemp;
+			}
 			m_pSensor->GetMinInterval(SENSOR_TYPE_ACCELERATION, intervalTemp);
 			if (interval < intervalTemp)
+			{
 				interval = intervalTemp;
-		}
-		else
-		{
-			delete m_pSensor;
-			m_pSensor = NULL;
-		}
-	}
-	if (m_pSensor != NULL)
-	{
-		if (bEnable)
-		{
+			}
 			r = m_pSensor->AddSensorListener(*this, SENSOR_TYPE_ACCELERATION, interval, true);
 		}
 		else
 		{
+			CCLOG("Accelerometer Sensor unavailable!");
+			delete m_pSensor;
+			m_pSensor = NULL;
+		}
+	}
+	else
+	{
+		if (m_pSensor != NULL)
+		{
 			r = m_pSensor->RemoveSensorListener(*this);
+			delete m_pSensor;
+			m_pSensor = NULL;
 		}
 	}
 }

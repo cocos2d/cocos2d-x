@@ -59,6 +59,7 @@
 									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/libjpeg/sdk2.0/.Target-Debug/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/png/sdk2.0/.Target-Debug/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/zlib/sdk2.0/.Target-Debug/libzlib.a"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/pthread.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
@@ -579,6 +580,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/pthread.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.release.so.option.libs.paths.255541031" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.so.option.libs.paths" valueType="libPaths">
