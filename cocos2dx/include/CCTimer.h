@@ -32,55 +32,60 @@
 
 namespace cocos2d
 {
-    //
-    // CCTimer
-    //
-    /** @brief Light weight timer */
-    class CC_DLL CCTimer : public CCObject
-    {
-    public:
-        CCTimer(void);
-        ~CCTimer();
-        
-        /** get interval in seconds */
-        inline ccTime getInterval(void) {
-            return m_fInterval;
-        }
-        /** set interval in seconds */
-        inline void setInterval(ccTime fInterval) {
-            m_fInterval = fInterval;
-        }
-        
-        /** Initializes a timer with a target and a selector. */
-        bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
-        
-        /** Initializes a timer with a target, a selector and an interval in seconds. */
-        bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-        
-        bool initWithScriptFunc(int refid, ccTime fSeconds);
-        
-        /** triggers the timer */
-        void update(ccTime dt);
-        
-    public:
-        /** Allocates a timer with a target and a selector. */
-        static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
-        
-        /** Allocates a timer with a script function. */
-        static CCTimer* timerWithScriptFunc(int refid, ccTime fSeconds);
-        
-        /** Allocates a timer with a target, a selector and an interval in seconds. */
-        static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-        
-    public:
-        SEL_SCHEDULE m_pfnSelector;
-        ccTime m_fInterval;
-        int m_refID;
-        
-    protected:
-        SelectorProtocol *m_pTarget;
-        ccTime m_fElapsed;
-    };
+//
+// CCTimer
+//
+/** @brief Light weight timer */
+class CC_DLL CCTimer : public CCObject
+{
+public:
+    CCTimer(void);
+    ~CCTimer();
+    
+    /** get interval in seconds */
+    inline ccTime getInterval(void) {
+        return m_fInterval;
+    }
+    /** set interval in seconds */
+    inline void setInterval(ccTime fInterval) {
+        m_fInterval = fInterval;
+    }
+    
+    /** Initializes a timer with a target and a selector. */
+    bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
+    
+    /** Initializes a timer with a target, a selector and an interval in seconds. */
+    bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+    
+#if LUA_ENGINE
+    bool initWithScriptFunc(int functionRefID, ccTime fSeconds);
+#endif
+    
+    /** triggers the timer */
+    void update(ccTime dt);
+    
+public:
+    /** Allocates a timer with a target and a selector. */
+    static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
+    
+    /** Allocates a timer with a script function. */
+    static CCTimer* timerWithScriptFunc(int refid, ccTime fSeconds);
+    
+    /** Allocates a timer with a target, a selector and an interval in seconds. */
+    static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+    
+public:
+    SEL_SCHEDULE m_pfnSelector;
+    ccTime m_fInterval;
+    
+#if LUA_ENGINE
+    int m_functionRefID;
+#endif
+    
+protected:
+    SelectorProtocol *m_pTarget;
+    ccTime m_fElapsed;
+};
     
 } // namespace cocos2d
 

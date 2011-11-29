@@ -1,28 +1,28 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2008-2011 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2010-2011 cocos2d-x.org
+ Copyright (c) 2008-2011 Ricardo Quesada
+ Copyright (c) 2011      Zynga Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #include <cstring>
 #include "CCMenuItem.h"
 #include "CCPointExtension.h"
@@ -32,6 +32,10 @@ THE SOFTWARE.
 #include "CCLabelTTF.h"
 
 #include <stdarg.h>
+
+#if LUA_ENGINE
+#include "CCLuaEngine.h"
+#endif
 
 namespace cocos2d {
 
@@ -45,7 +49,7 @@ const unsigned int	kZoomActionTag = 0xc0c05002;
 //
 // CCMenuItem
 //
-CCMenuItem * CCMenuItem::itemWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector)
+CCMenuItem* CCMenuItem::itemWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector)
 {
     CCMenuItem *pRet = new CCMenuItem();
     pRet->initWithTarget(rec, selector);
@@ -61,6 +65,13 @@ bool CCMenuItem::initWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector)
     m_bIsSelected = false;
     return true;
 }
+    
+CCMenuItem::~CCMenuItem()
+{
+#if LUA_ENGINE
+    unregisterScriptHandler();
+#endif
+}
 
 void CCMenuItem::selected()
 {
@@ -72,17 +83,24 @@ void CCMenuItem::unselected()
     m_bIsSelected = false;
 }
 
-void CCMenuItem::registerScriptHandler(const char* pszFunctionName)
+#if LUA_ENGINE
+void CCMenuItem::registerScriptHandler(int functionRefID)
 {
-    if (pszFunctionName)
-    {
-        this->m_functionName = string(pszFunctionName);
-    }
-    else
-    {
-        this->m_functionName.clear();
-    }
+    unregisterScriptHandler();
+    m_functionRefID = functionRefID;
+    CCLOG("[LUA] ADD function refID: %04d, add CCMenuItem script handler", m_functionRefID);
 }
+
+void CCMenuItem::unregisterScriptHandler(void)
+{
+    if (m_functionRefID)
+    {
+        CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_functionRefID);
+        CCLOG("[LUA] DEL function refID: %04d, remove CCMenuItem script handler", m_functionRefID);
+    }
+    m_functionRefID = 0;
+}
+#endif
 
 void CCMenuItem::activate()
 {
@@ -92,11 +110,13 @@ void CCMenuItem::activate()
         {
             (m_pListener->*m_pfnSelector)(this);
         }
-
-//			if (m_functionName.size() && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
-//			{
-//				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_functionName.c_str(), this);
-//			}
+        
+#if LUA_ENGINE
+        if (m_functionRefID)
+        {
+            CCLuaEngine::sharedEngine()->executeFunctionByRefID(m_functionRefID, m_uID);
+        }
+#endif
     }
 }
 
@@ -113,8 +133,8 @@ bool CCMenuItem::getIsEnabled()
 CCRect CCMenuItem::rect()
 {
     return CCRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x,
-                       m_tPosition.y - m_tContentSize.height * m_tAnchorPoint.y,
-                       m_tContentSize.width, m_tContentSize.height);
+                      m_tPosition.y - m_tContentSize.height * m_tAnchorPoint.y,
+                      m_tContentSize.width, m_tContentSize.height);
 }
 
 bool CCMenuItem::getIsSelected()
@@ -151,12 +171,12 @@ void CCMenuItemLabel::setLabel(CCNode* var)
         var->setAnchorPoint(ccp(0, 0));
         setContentSize(var->getContentSize());
     }
-
+    
     if (m_pLabel)
     {
         removeChild(m_pLabel, true);
     }
-
+    
     m_pLabel = var;
 }
 CCMenuItemLabel * CCMenuItemLabel::itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MenuHandler selector)
@@ -205,7 +225,7 @@ void CCMenuItemLabel::selected()
     if(m_bIsEnabled)
     {
         CCMenuItem::selected();
-
+        
         CCAction *action = getActionByTag(kZoomActionTag);
         if (action)
         {
@@ -215,7 +235,7 @@ void CCMenuItemLabel::selected()
         {
             m_fOriginalScale = this->getScale();
         }
-
+        
         CCAction *zoomAction = CCScaleTo::actionWithDuration(0.1f, m_fOriginalScale * 1.2f);
         zoomAction->setTag(kZoomActionTag);
         this->runAction(zoomAction);
@@ -334,10 +354,10 @@ CCMenuItemFont * CCMenuItemFont::itemFromString(const char *value)
 bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector)
 {
     CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
-
+    
     m_strFontName = _fontName;
     m_uFontSize = _fontSize;
-
+    
     CCLabelTTF *label = CCLabelTTF::labelWithString(value, m_strFontName.c_str(), (float)m_uFontSize);
     if (CCMenuItemLabel::initWithLabel(label, target, selector))
     {
@@ -349,7 +369,7 @@ bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target,
 void CCMenuItemFont::recreateLabel()
 {
     CCLabelTTF *label = CCLabelTTF::labelWithString(m_pLabel->convertToLabelProtocol()->getString(),
-                        m_strFontName.c_str(), (float)m_uFontSize);
+                                                    m_strFontName.c_str(), (float)m_uFontSize);
     this->setLabel(label);
 }
 
@@ -390,12 +410,12 @@ void CCMenuItemSprite::setNormalImage(CCNode* var)
         var->setAnchorPoint(ccp(0, 0));
         var->setIsVisible(true);
     }
-
+    
     if (m_pNormalImage)
     {
         removeChild(m_pNormalImage, true);
     }
-
+    
     m_pNormalImage = var;
 }
 CCNode * CCMenuItemSprite::getSelectedImage()
@@ -410,12 +430,12 @@ void CCMenuItemSprite::setSelectedImage(CCNode* var)
         var->setAnchorPoint(ccp(0, 0));
         var->setIsVisible(false);
     }
-
+    
     if (m_pSelectedImage)
     {
         removeChild(m_pSelectedImage, true);
     }
-
+    
     m_pSelectedImage = var;
 }
 CCNode * CCMenuItemSprite::getDisabledImage()
@@ -430,12 +450,12 @@ void CCMenuItemSprite::setDisabledImage(CCNode* var)
         var->setAnchorPoint(ccp(0, 0));
         var->setIsVisible(false);
     }
-
+    
     if (m_pDisabledImage)
     {
         removeChild(m_pDisabledImage, true);
     }
-
+    
     m_pDisabledImage = var;
 }
 //
@@ -444,12 +464,12 @@ void CCMenuItemSprite::setDisabledImage(CCNode* var)
 void CCMenuItemSprite::setOpacity(GLubyte opacity)
 {
     m_pNormalImage->convertToRGBAProtocol()->setOpacity(opacity);
-
+    
     if (m_pSelectedImage)
     {
         m_pSelectedImage->convertToRGBAProtocol()->setOpacity(opacity);
     }
-
+    
     if (m_pDisabledImage)
     {
         m_pDisabledImage->convertToRGBAProtocol()->setOpacity(opacity);
@@ -458,12 +478,12 @@ void CCMenuItemSprite::setOpacity(GLubyte opacity)
 void CCMenuItemSprite::setColor(const ccColor3B& color)
 {
     m_pNormalImage->convertToRGBAProtocol()->setColor(color);
-
+    
     if (m_pSelectedImage)
     {
         m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
     }
-
+    
     if (m_pDisabledImage)
     {
         m_pDisabledImage->convertToRGBAProtocol()->setColor(color);
@@ -477,9 +497,9 @@ const ccColor3B& CCMenuItemSprite::getColor()
 {
     return m_pNormalImage->convertToRGBAProtocol()->getColor();
 }
-CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite)
+CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
 {
-    return CCMenuItemSprite::itemFromNormalSprite(normalSprite, selectedSprite, NULL, NULL, NULL);
+    return CCMenuItemSprite::itemFromNormalSprite(normalSprite, selectedSprite, disabledSprite, NULL, NULL);
 }
 CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, SelectorProtocol* target, SEL_MenuHandler selector)
 {
@@ -499,23 +519,23 @@ bool CCMenuItemSprite::initFromNormalSprite(CCNode* normalSprite, CCNode* select
     setNormalImage(normalSprite);
     setSelectedImage(selectedSprite);
     setDisabledImage(disabledSprite);
-
+    
     this->setContentSize(m_pNormalImage->getContentSize());
     return true;
 }
 
 /**
-@since v0.99.5
-*/
+ @since v0.99.5
+ */
 void CCMenuItemSprite::selected()
 {
     CCMenuItem::selected();
-
+    
     if (m_pDisabledImage)
     {
         m_pDisabledImage->setIsVisible(false);
     }
-
+    
     if (m_pSelectedImage)
     {
         m_pNormalImage->setIsVisible(false);
@@ -530,14 +550,14 @@ void CCMenuItemSprite::selected()
 void CCMenuItemSprite::unselected()
 {
     CCMenuItem::unselected();
-
+    
     m_pNormalImage->setIsVisible(true);
-
+    
     if (m_pSelectedImage)
     {
         m_pSelectedImage->setIsVisible(false);
     }
-
+    
     if (m_pDisabledImage)
     {
         m_pDisabledImage->setIsVisible(false);
@@ -547,16 +567,16 @@ void CCMenuItemSprite::unselected()
 void CCMenuItemSprite::setIsEnabled(bool bEnabled)
 {
     CCMenuItem::setIsEnabled(bEnabled);
-
+    
     if (m_pSelectedImage)
     {
         m_pSelectedImage->setIsVisible(false);
     }
-
+    
     if (bEnabled)
     {
         m_pNormalImage->setIsVisible(true);
-
+        
         if (m_pDisabledImage)
         {
             m_pDisabledImage->setIsVisible(false);
@@ -611,12 +631,12 @@ bool CCMenuItemImage::initFromNormalImage(const char *normalImage, const char *s
     CCNode *normalSprite = CCSprite::spriteWithFile(normalImage);
     CCNode *selectedSprite = NULL;
     CCNode *disabledSprite = NULL;
-
+    
     if (selectedImage)
     {
         selectedSprite = CCSprite::spriteWithFile(selectedImage);
     }
-
+    
     if(disabledImage)
     {
         disabledSprite = CCSprite::spriteWithFile(disabledImage);
@@ -730,7 +750,7 @@ void CCMenuItemToggle::activate()
 void CCMenuItemToggle::setIsEnabled(bool enabled)
 {
     CCMenuItem::setIsEnabled(enabled);
-
+    
     if(m_pSubItems && m_pSubItems->count() > 0)
     {
         CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
@@ -779,5 +799,5 @@ void CCMenuItemToggle::setColor(const ccColor3B& color)
         }
     }
 }
-
+    
 } // namespace cocos2d

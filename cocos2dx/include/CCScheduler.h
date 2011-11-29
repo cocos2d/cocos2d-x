@@ -86,15 +86,17 @@ public:
      @since v0.99.3
      */
 
-    /** Schedule the script function
+#if LUA_ENGINE
+    /** Schedule the script function, return schedule entry id
      */
     int scheduleScriptFunc(int refid, ccTime fInterval, bool bPaused);
 
-    /** Unschedule the script function
+    /** Unschedule the script function by schedule entry id
      */
-    void unscheduleScriptFunc(int handle);
-    void unscheduleScriptFunctions();
-
+    void unscheduleScriptFunc(int scheduleEntryID);
+    void unscheduleAllScriptFunctions();
+#endif
+    
     void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
 
     /** Schedules the 'update' selector for a given target with a given priority.
