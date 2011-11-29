@@ -136,6 +136,10 @@ public:
      */
     int executeFunctionByRefID(int functionRefId, int numArgs = 0);
     
+    int executeFunctionWithIntegerData(int functionRefId, int data);
+    int executeFunctionWithFloatData(int functionRefId, float data);
+    int executeFunctionWithBooleanData(int functionRefId, bool data);
+    
     // functions for excute touch event
     int executeTouchEvent(int functionRefId, cocos2d::CCTouch *pTouch);
     int executeTouchesEvent(int functionRefId, cocos2d::CCSet *pTouches);
