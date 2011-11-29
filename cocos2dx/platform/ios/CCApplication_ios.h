@@ -94,11 +94,7 @@ public:
     /**
      @brief	Run the message loop.
      */
-    int run(int initOrientation);
-    
-    int getInitOrientation() {
-        return m_initOrientation;
-    }
+    int run();
     
     /**
      @brief	Get current applicaiton instance.
@@ -114,8 +110,6 @@ public:
     
 protected:
     static CCApplication * sm_pSharedApplication;
-    
-    int m_initOrientation;
 };
 
 NS_CC_END;
