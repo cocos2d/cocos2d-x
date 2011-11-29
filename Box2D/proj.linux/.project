@@ -84,17 +84,22 @@
 		<link>
 			<name>Collision</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Collision</locationURI>
+			<location>/home/xm/workspace/cocos2d-x/Box2D/Collision</location>
 		</link>
 		<link>
 			<name>Common</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Common</locationURI>
+			<location>/home/xm/workspace/cocos2d-x/Box2D/Common</location>
 		</link>
 		<link>
 			<name>Dynamics</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Dynamics</locationURI>
+			<location>/home/xm/workspace/cocos2d-x/Box2D/Dynamics</location>
+		</link>
+		<link>
+			<name>Rope</name>
+			<type>2</type>
+			<location>/home/xm/workspace/cocos2d-x/Box2D/Rope</location>
 		</link>
 	</linkedResources>
 </projectDescription>

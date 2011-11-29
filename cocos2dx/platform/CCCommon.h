@@ -30,7 +30,7 @@ THE SOFTWARE.
 NS_CC_BEGIN;
 
 /// The max length of CCLog message.
-static const int kMaxLogLen = 1024;
+static const int kMaxLogLen = 16*1024;
 
 /**
 @brief Output Debug message.
@@ -42,7 +42,7 @@ void CC_DLL CCLog(const char * pszFormat, ...);
  */
 inline void CC_DLL CCLuaLog(const char * pszFormat)
 {
-    CCLog(pszFormat);
+	CCLog(pszFormat);
 }
 
 

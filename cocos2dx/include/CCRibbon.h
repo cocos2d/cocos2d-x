@@ -28,6 +28,7 @@ THE SOFTWARE.
 /*#include <GLES/egl.h>*/
 #include "CCNode.h"
 #include "CCProtocols.h"
+#include "CCMutableArray.h"
 
 namespace cocos2d {
 

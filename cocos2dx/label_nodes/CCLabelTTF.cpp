@@ -23,126 +23,127 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelTTF.h"
+#include "CCDirector.h"
 
-namespace cocos2d {
-//
-//CCLabelTTF
-//
-CCLabelTTF::CCLabelTTF()
-    : m_eAlignment(CCTextAlignmentCenter)
-    , m_pFontName(NULL)
-    , m_fFontSize(0.0)
-    , m_pString(NULL)
-{
-}
-
-CCLabelTTF::~CCLabelTTF()
-{
-    CC_SAFE_DELETE(m_pFontName);
-    CC_SAFE_DELETE(m_pString);
-}
-
-CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
-{
-    CCLabelTTF *pRet = new CCLabelTTF();
-    if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
+namespace cocos2d{
+	//
+	//CCLabelTTF
+	//
+    CCLabelTTF::CCLabelTTF()
+        : m_eAlignment(CCTextAlignmentCenter)
+        , m_pFontName(NULL)
+        , m_fFontSize(0.0)
+        , m_pString(NULL)
     {
-        pRet->autorelease();
-        return pRet;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
-}
-CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const char *fontName, float fontSize)
-{
-    CCLabelTTF *pRet = new CCLabelTTF();
-    if(pRet && pRet->initWithString(label, fontName, fontSize))
+
+    CCLabelTTF::~CCLabelTTF()
     {
-        pRet->autorelease();
-        return pRet;
+		CC_SAFE_DELETE(m_pFontName);
+		CC_SAFE_DELETE(m_pString);        
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
-}
 
-bool CCLabelTTF::initWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
-{
-    assert(label != NULL);
-    if (CCSprite::init())
-    {
-        m_tDimensions = CCSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
-        m_eAlignment = alignment;
+	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+	{
+		CCLabelTTF *pRet = new CCLabelTTF();
+		if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CC_SAFE_DELETE(pRet);
+		return NULL;
+	}
+	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const char *fontName, float fontSize)
+	{
+		CCLabelTTF *pRet = new CCLabelTTF();
+		if(pRet && pRet->initWithString(label, fontName, fontSize))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CC_SAFE_DELETE(pRet);
+		return NULL;
+	}
 
-        if (m_pFontName)
+	bool CCLabelTTF::initWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+	{
+		CCAssert(label != NULL, "");
+		if (CCSprite::init())
+		{
+			m_tDimensions = CCSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
+			m_eAlignment = alignment;
+
+            if (m_pFontName)
+            {
+                delete m_pFontName;
+                m_pFontName = NULL;
+            }
+            m_pFontName = new std::string(fontName);
+
+			m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
+			this->setString(label);
+			return true;
+		}
+		return false;
+	}
+	bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
+	{
+		CCAssert(label != NULL, "");
+		if (CCSprite::init())
+		{
+			m_tDimensions = CCSizeZero;
+
+            if (m_pFontName)
+            {
+                delete m_pFontName;
+                m_pFontName = NULL;
+            }
+            m_pFontName = new std::string(fontName);
+
+			m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
+			this->setString(label);
+			return true;
+		}
+		return false;
+	}
+	void CCLabelTTF::setString(const char *label)
+	{
+        if (m_pString)
         {
-            delete m_pFontName;
-            m_pFontName = NULL;
+            delete m_pString;
+            m_pString = NULL;
         }
-        m_pFontName = new std::string(fontName);
+        m_pString = new std::string(label);
+        
+		CCTexture2D *texture;
+		if( CCSize::CCSizeEqualToSize( m_tDimensions, CCSizeZero ) )
+		{
+			texture = new CCTexture2D();
+			texture->initWithString(label, m_pFontName->c_str(), m_fFontSize);
+		}
+		else
+		{
+			texture = new CCTexture2D();
+			texture->initWithString(label, m_tDimensions, m_eAlignment, m_pFontName->c_str(), m_fFontSize);
+		}
+		this->setTexture(texture);
+		texture->release();
 
-        m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
-        this->setString(label);
-        return true;
-    }
-    return false;
-}
-bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
-{
-    assert(label != NULL);
-    if (CCSprite::init())
-    {
-        m_tDimensions = CCSizeZero;
+        CCRect rect = CCRectZero;
+		rect.size = m_pobTexture->getContentSize();
+		this->setTextureRect(rect);
+	}
 
-        if (m_pFontName)
-        {
-            delete m_pFontName;
-            m_pFontName = NULL;
-        }
-        m_pFontName = new std::string(fontName);
+	const char* CCLabelTTF::getString(void)
+	{
+		return m_pString->c_str();
+	}
 
-        m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
-        this->setString(label);
-        return true;
-    }
-    return false;
-}
-void CCLabelTTF::setString(const char *label)
-{
-    if (m_pString)
-    {
-        delete m_pString;
-        m_pString = NULL;
-    }
-    m_pString = new std::string(label);
-
-    CCTexture2D *texture;
-    if( CCSize::CCSizeEqualToSize( m_tDimensions, CCSizeZero ) )
-    {
-        texture = new CCTexture2D();
-        texture->initWithString(label, m_pFontName->c_str(), m_fFontSize);
-    }
-    else
-    {
-        texture = new CCTexture2D();
-        texture->initWithString(label, m_tDimensions, m_eAlignment, m_pFontName->c_str(), m_fFontSize);
-    }
-    this->setTexture(texture);
-    texture->release();
-
-    CCRect rect = CCRectZero;
-    rect.size = m_pobTexture->getContentSize();
-    this->setTextureRect(rect);
-}
-
-const char* CCLabelTTF::getString(void)
-{
-    return m_pString->c_str();
-}
-
-char * CCLabelTTF::description()
-{
-    char *ret = new char[100] ;
-    sprintf(ret, "<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize);
-    return ret;
-}
+	char * CCLabelTTF::description()
+	{
+		char *ret = new char[100] ;
+		sprintf(ret, "<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize);
+		return ret;
+	}
 }// namespace cocos2d

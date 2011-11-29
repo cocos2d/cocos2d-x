@@ -122,6 +122,33 @@ public:
 	 */
 	virtual void unloadEffect(const char* pszFilePath);
 
+	/**
+	 @brief  		pause an effect identified by sound id
+	 @param[in]		uSoundId 	sound id
+	 */
+	virtual void pauseEffect(unsigned int uSoundId);
+
+	/**
+	 @brief  		pause all playing effects
+	 */
+	virtual void pauseAllEffects();
+
+	/**
+	 @brief  		resume an effect identified by sound id
+	 @param[in]		uSoundId 	sound id
+	 */
+	virtual void resumeEffect(unsigned int uSoundId);
+
+	/**
+	 @brief  		resume a effect identified by sound id
+	 */
+	virtual void resumeAllEffects();
+
+	/**
+	 @brief  		stop all playing effects
+	 */
+	virtual void stopAllEffects();
+
 private:
 
 	void init();

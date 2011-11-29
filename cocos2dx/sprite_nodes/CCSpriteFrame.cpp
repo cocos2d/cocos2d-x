@@ -25,6 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCSpriteFrame.h"
+#include "CCDirector.h"
 
 namespace   cocos2d {
 // implementation of CCSpriteFrame

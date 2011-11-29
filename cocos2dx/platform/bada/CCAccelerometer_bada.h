@@ -47,9 +47,9 @@ public:
 private:
     void setEnable(bool bEnable);
 
-	static CCAccelerometer* m_spCCAccelerometer;
 	CCAccelerometerDelegate* m_pAccelDelegate;
 	Osp::Uix::SensorManager* m_pSensor;
+	bool m_bEnabled;
 };
 
 }//namespace   cocos2d 

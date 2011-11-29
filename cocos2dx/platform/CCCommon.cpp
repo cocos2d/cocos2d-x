@@ -272,7 +272,7 @@ void CCLog(const char * pszFormat, ...)
 	va_start(args, pszFormat);
 	vsnprintf(buf, MAX_LEN, pszFormat, args);
 	va_end(args);
-	AppLog(buf);
+	__App_info(__PRETTY_FUNCTION__ , __LINE__, buf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)

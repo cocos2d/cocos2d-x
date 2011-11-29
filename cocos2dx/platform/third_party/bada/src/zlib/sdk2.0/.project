@@ -90,7 +90,7 @@
 	<variableList>
 		<variable>
 			<name>cocos2dx_root</name>
-			<value>file:/E:/cocos2d-x</value>
+			<value>file:/F:/Project/dumganhar/cocos2d-x</value>
 		</variable>
 	</variableList>
 </projectDescription>
