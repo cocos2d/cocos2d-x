@@ -146,12 +146,12 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 			[self release];
 			return nil;
 		}
+        touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
+        indexBitsUsed = 0x00000000;
+        
+        view = self;
 	}
         
-                touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
-                indexBitsUsed = 0x00000000;
-
-	view = self;
 	return self;
 }
 
@@ -398,30 +398,33 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     cocos2d::CCTouch *pTouch;
     
 	for (UITouch *touch in touches) {
-                NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
-                int unUsedIndex = 0;
+        NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+        int unUsedIndex = 0;
         
-                // it is a new touch
-                if (! index) {
-                    unUsedIndex = [self getUnUsedIndex];
-                    
-                    // The touches is more than MAX_TOUCHES ?
-                    if (unUsedIndex == -1) {
-                        return;
-                    }
-                    
-                    pTouch = s_pTouches[unUsedIndex] = new cocos2d::CCTouch();
-                }
-
-		float x = [touch locationInView: [touch view]].x;
-		float y = [touch locationInView: [touch view]].y;
-		pTouch->SetTouchInfo(0, x, y);
+        // it is a new touch
+        if (! index) {
+            unUsedIndex = [self getUnUsedIndex];
+            
+            // The touches is more than MAX_TOUCHES ?
+            if (unUsedIndex == -1) {
+                return;
+            }
+            
+            pTouch = s_pTouches[unUsedIndex] = new cocos2d::CCTouch();
+            float x = [touch locationInView: [touch view]].x;
+            float y = [touch locationInView: [touch view]].y;
+            pTouch->SetTouchInfo(0, x, y);
+            
+            CFDictionaryAddValue(touchesIntergerDict, touch, [NSNumber numberWithInt:unUsedIndex]);
+            
+            set.addObject(pTouch);
+        }
         
-                CFDictionaryAddValue(touchesIntergerDict, touch, [NSNumber numberWithInt:unUsedIndex]);
-		
-		set.addObject(pTouch);
 	}
 	
+    if (set.count() == 0)
+        return;
+    
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesBegan(&set);
 }
 
