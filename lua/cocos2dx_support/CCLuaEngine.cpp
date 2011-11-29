@@ -1,28 +1,28 @@
 /****************************************************************************
-Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2011 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
-
-#include "LuaEngine.h"
+#include "CCLuaEngine.h"
 #include "tolua++.h"
 #include "tolua_fix.h"
 
@@ -35,13 +35,56 @@ extern "C" {
 #include "LuaCocos2d.h"
 #include "LuaSimpleAudioEngine.h"
 #include "LuaGameInterfaces.h"
+#include "CCArray.h"
+#include "CCTimer.h"
 
-using namespace cocos2d;
+namespace cocos2d
+{
+
+CCSchedulerFuncEntry* CCSchedulerFuncEntry::entryWithFunctionRefID(int functionRefID, ccTime fInterval, bool bPaused)
+{
+    CCSchedulerFuncEntry* entry = new CCSchedulerFuncEntry();
+    entry->initWithFunctionRefID(functionRefID, fInterval, bPaused);
+    entry->autorelease();
+    return entry;
+}
+
+bool CCSchedulerFuncEntry::initWithFunctionRefID(int functionRefID, ccTime fInterval, bool bPaused)
+{
+    m_timer = new CCTimer();
+    m_timer->initWithScriptFunc(functionRefID, fInterval);
+    m_timer->autorelease();
+    m_timer->retain();
+    m_functionRefID = functionRefID;
+    m_paused = bPaused;
+    CCLOG("[LUA] ADD function refID: %04d, add schedule entryID: %d", m_functionRefID, m_entryID);
+    return true;
+}
+
+CCSchedulerFuncEntry::CCSchedulerFuncEntry(void)
+: m_timer(NULL)
+, m_functionRefID(0)
+, m_paused(true)
+, m_isMarkDeleted(false)
+{
+    static int entryIDCount = 0;
+    ++entryIDCount;
+    m_entryID = entryIDCount;
+}
+
+CCSchedulerFuncEntry::~CCSchedulerFuncEntry(void)
+{
+    m_timer->release();
+    CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_functionRefID);
+    CCLOG("[LUA] DEL function refID: %04d, remove schedule entryID: %d", m_functionRefID, m_entryID);
+}
+
+// ----------------------------
 
 
-LuaEngine* LuaEngine::s_engine = NULL;
+CCLuaEngine* CCLuaEngine::s_engine = NULL;
 
-LuaEngine::LuaEngine()
+CCLuaEngine::CCLuaEngine()
 {
     m_state = lua_open();
     luaL_openlibs(m_state);
@@ -52,40 +95,39 @@ LuaEngine::LuaEngine()
     luax_loadexts(m_state);
 }
 
-LuaEngine::~LuaEngine()
+CCLuaEngine::~CCLuaEngine()
 {
     lua_close(m_state);
     s_engine = NULL;
 }
 
-LuaEngine* LuaEngine::sharedEngine()
+CCLuaEngine* CCLuaEngine::sharedEngine()
 {
     if (!s_engine)
     {
-        s_engine = new LuaEngine();
+        s_engine = new CCLuaEngine();
     }
     return s_engine;
 }
 
-void LuaEngine::purgeSharedEngine()
+void CCLuaEngine::purgeSharedEngine()
 {
     if (s_engine) delete s_engine;
 }
 
 // -------------------------------------------
 
-void LuaEngine::removeCCObject(CCObject *object)
+void CCLuaEngine::removeCCObject(CCObject *object)
 {
     tolua_remove_ccobject_by_refid(m_state, object->m_refID);
 }
 
-void LuaEngine::removeFunctionByRefId(int refid)
+void CCLuaEngine::removeLuaFunctionRef(int functionRefID)
 {
-//    CCLOG("LuaEngine::removeFunctionByRefId() - refid: %d", refid);
-    tolua_remove_function_by_refid(m_state, refid);
+    tolua_remove_function_by_refid(m_state, functionRefID);
 }
 
-void LuaEngine::addSearchPath(const char* path)
+void CCLuaEngine::addSearchPath(const char* path)
 {
     lua_getglobal(m_state, "package");                              /* stack: package */
     lua_getfield(m_state, -1, "path");            /* get package.path, stack: package path */
@@ -96,21 +138,21 @@ void LuaEngine::addSearchPath(const char* path)
     lua_pop(m_state, 1);                                            /* stack: - */
 }
 
-bool LuaEngine::executeScriptFile(const char* filename)
+int CCLuaEngine::executeScriptFile(const char* filename)
 {
     int nRet = luaL_dofile(m_state, filename);
-    lua_gc(m_state, LUA_GCCOLLECT, 0);
+//    lua_gc(m_state, LUA_GCCOLLECT, 0);
     
     if (nRet != 0)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
         lua_pop(m_state, 1);
-        return false;
+        return nRet;
     }
-    return true;
+    return 0;
 }
 
-int	LuaEngine::executeGlobalFunction(const char* function_name)
+int	CCLuaEngine::executeGlobalFunction(const char* function_name)
 {
     lua_getglobal(m_state, function_name);  /* query function by name, stack: function */
     if (!lua_isfunction(m_state, -1))
@@ -121,7 +163,7 @@ int	LuaEngine::executeGlobalFunction(const char* function_name)
     }
     
     int error = lua_pcall(m_state, 0, 1, 0);         /* call function, stack: ret */
-    lua_gc(m_state, LUA_GCCOLLECT, 0);
+//    lua_gc(m_state, LUA_GCCOLLECT, 0);
     
     if (error)
     {
@@ -133,116 +175,76 @@ int	LuaEngine::executeGlobalFunction(const char* function_name)
     // get return value
     if (!lua_isnumber(m_state, -1))
     {
-        CCLOG("[LUA ERROR] '%s' return value is not a number", function_name);
         lua_pop(m_state, 1);
         return 0;
     }
-
+    
     int ret = lua_tointeger(m_state, -1);
     lua_pop(m_state, 1);                                            /* stack: - */
     return ret;
 }
 
-int LuaEngine::executeFunctionByRefId(int functionRefId)
+int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
 {
-    lua_rawgeti(m_state, LUA_REGISTRYINDEX, functionRefId);         /* stack: function */
+    lua_pushstring(m_state, TOLUA_REFID_FUNC_MAPPING);
+    lua_rawget(m_state, LUA_REGISTRYINDEX);                         /* stack: refid_func */
+    lua_pushinteger(m_state, functionRefId);                        /* stack: refid_func refid */
+    lua_rawget(m_state, -2);                                        /* stack: refid_func func */
+    
     if (!lua_isfunction(m_state, -1))
     {
         CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", functionRefId);
         lua_pop(m_state, 1);
         return 0;
     }
-
-    int error = lua_pcall(m_state, 0, 1, 0);                        /* stack: ret */
+    
+    if (numArgs > 0)
+    {
+        int lo = -2 - numArgs;
+        while (lo <= -3)
+        {
+            tolua_pushvalue(m_state, lo);                           /* stack: refid_func func (...) */
+            ++lo;
+        }
+    }
+    
+    int error = lua_pcall(m_state, numArgs, 1, 0);                  /* stack: refid_func ret */
     if (error)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
-        lua_pop(m_state, 1); // clean error message
+        lua_pop(m_state, 2); // clean error message
         return 0;
     }
     
     // get return value
     if (!lua_isnumber(m_state, -1))
     {
-        CCLOG("[LUA ERROR] function '%d' return value is not a number", functionRefId);
-        lua_pop(m_state, 1);
+        lua_pop(m_state, 2);
         return 0;
     }
     
     int ret = lua_tointeger(m_state, -1);
+    lua_pop(m_state, 2);
+    return ret;
+}
+
+// functions for excute touch event
+int CCLuaEngine::executeTouchEvent(int functionRefId, CCTouch *pTouch)
+{
+    return false;
+}
+
+int CCLuaEngine::executeTouchesEvent(int functionRefId, CCSet *pTouches)
+{
+    return false;
+}
+
+int CCLuaEngine::executeSchedule(int functionRefID, ccTime dt)
+{
+    lua_pushnumber(m_state, dt);
+    int ret = executeFunctionByRefID(functionRefID, 1);
     lua_pop(m_state, 1);
     return ret;
 }
 
-int LuaEngine::retainRefID(int refID)
-{
-    int r = ++m_refIDMap[refID];
-    return r;
-}
-
-int LuaEngine::releaseRefID(int refID)
-{
-    std::map<int, int>::iterator it = m_refIDMap.find(refID);
-    if (it == m_refIDMap.end()) return 0;
-    
-    --(it->second);
-    if (it->second <= 0)
-    {
-        m_refIDMap.erase(it);
-        return 0;
-    }
-    return it->second;
-}
-
-// functions for excute touch event
-bool LuaEngine::executeTouchEvent(const char *pszFuncName, CCTouch *pTouch)
-{
-    return false;
-}
-
-bool LuaEngine::executeTouchesEvent(const char *pszFuncName, CCSet *pTouches)
-{
-    return false;
-}
-
-// functions for CCCallFuncX
-bool LuaEngine::executeCallFunc(const char *pszFuncName)
-{
-    return false;
-}
-
-bool LuaEngine::executeCallFuncN(const char *pszFuncName, CCNode *pNode)
-{
-    return false;
-}
-
-bool LuaEngine::executeCallFuncND(const char *pszFuncName, CCNode *pNode, void *pData)
-{
-    return false;
-}
-
-bool LuaEngine::executeCallFunc0(const char *pszFuncName, CCObject *pObject)
-{
-    return false;
-}
-
-bool LuaEngine::executeSchedule(int refid, ccTime dt)
-{
-    lua_rawgeti(m_state, LUA_REGISTRYINDEX, refid);                         /* stack: function */
-    if (!lua_isfunction(m_state, -1))
-    {
-        CCLOG("[LUA ERROR] function refid %d invalid", refid);
-        lua_pop(m_state, 1);
-        return false;
-    }
-    
-    lua_pushnumber(m_state, dt);                                            /* stack: function time */
-    int error = lua_pcall(m_state, 1, 0, 0);                                /* stack: [error] */
-    if (error)
-    {
-        CCLOG("[LUA ERROR] function %d, %s", refid, lua_tostring(m_state, -1));
-        lua_pop(m_state, 1);
-        return false;
-    }
-    return true;
-}
+} // namespace cocos2d
