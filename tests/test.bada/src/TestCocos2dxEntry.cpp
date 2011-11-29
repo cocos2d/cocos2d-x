@@ -16,7 +16,6 @@ _EXPORT_ int OspMain(int argc, char *pArgv[]);
 static Osp::App::Application* _CreateInstance(void)
 {
 	// Create the instance through the constructor.
-	AppLog("Create AppDelgate Instance ... size = %d", sizeof(AppDelegate));
 	AppDelegate * pApp = new AppDelegate;
 	do
 	{

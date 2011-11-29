@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -31,8 +31,8 @@ public:
 			b2BodyDef bd;
 			ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -86,6 +86,7 @@ public:
 
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
+				bd.fixedRotation = true;
 				bd.position.Set(0.0f, 17.0f);
 				b2Body* body = m_world->CreateBody(&bd);
 				body->CreateFixture(&shape, 2.0f);
@@ -138,7 +139,7 @@ public:
 		Test::Step(settings);
 		m_debugDraw.DrawString(5, m_textLine, "Keys: (f) toggle friction, (m) toggle motor");
 		m_textLine += 15;
-		float32 torque = m_joint1->GetMotorTorque();
+		float32 torque = m_joint1->GetMotorTorque(settings->hz);
 		m_debugDraw.DrawString(5, m_textLine, "Motor Torque = %5.0f", (float) torque);
 		m_textLine += 15;
 	}

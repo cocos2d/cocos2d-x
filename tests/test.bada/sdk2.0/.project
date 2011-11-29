@@ -3,6 +3,10 @@
 	<name>TestCocos2dx</name>
 	<comment></comment>
 	<projects>
+		<project>Box2D</project>
+		<project>chipmunk</project>
+		<project>cocos2dx</project>
+		<project>CocosDenshion</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -100,7 +104,7 @@
 	<variableList>
 		<variable>
 			<name>cocos2dx_root</name>
-			<value>file:/E:/cocos2d-x</value>
+			<value>file:/F:/Project/dumganhar/cocos2d-x</value>
 		</variable>
 	</variableList>
 </projectDescription>

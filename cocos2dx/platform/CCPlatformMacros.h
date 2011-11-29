@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2010 cocos2d-x.org
-
+ 
  http://www.cocos2d-x.org
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,9 +40,9 @@ Basically,it's only enabled in android
 It's new in cocos2d-x since v0.99.5
 */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#define CC_ENABLE_CACHE_TEXTTURE_DATA       1
+    #define CC_ENABLE_CACHE_TEXTTURE_DATA       1
 #else
-#define CC_ENABLE_CACHE_TEXTTURE_DATA       0
+    #define CC_ENABLE_CACHE_TEXTTURE_DATA       0
 #endif
 
 
@@ -138,9 +138,9 @@ public: inline void set##funName(const varType& var){ varName = var; }
 
 // cocos2d debug
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-#define CCLOG(...)
-#define CCLOGINFO(...)
-#define CCLOGERROR(...)
+#define CCLOG(...)              
+#define CCLOGINFO(...)         
+#define CCLOGERROR(...)         
 
 #elif COCOS2D_DEBUG == 1
 #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
@@ -154,7 +154,7 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #endif // COCOS2D_DEBUG
 
 // shared library declartor
-#define CC_DLL
+#define CC_DLL 
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 // assertion
@@ -162,6 +162,7 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #define CC_ASSERT(cond)                assert(cond)
 #else
 // bada platform
+
 #include <FBaseConfig.h>
 #include <FBaseSys.h>
 
@@ -171,9 +172,9 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #include "CCPlatformFunc_bada.h"
 
 #ifdef _DEBUG
-#define CC_ASSERT(cond)                if (!(cond)) badaAssert(__PRETTY_FUNCTION__ , __LINE__ , #cond)
+#define CC_ASSERT(cond)  (void)( (!!(cond)) || (badaAssert(__PRETTY_FUNCTION__ , __LINE__ , #cond),0) )
 #else
-#define CC_ASSERT(cond) 
+#define CC_ASSERT(cond)  void(0)
 #endif /* _DEBUG */
 #endif
 
@@ -189,23 +190,23 @@ public: inline void set##funName(const varType& var){ varName = var; }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-#undef CC_DLL
-#if defined(_USRDLL)
-#define CC_DLL     __declspec(dllexport)
-#else 		/* use a DLL library */
-#define CC_DLL     __declspec(dllimport)
-#endif
+    #undef CC_DLL
+    #if defined(_USRDLL)
+        #define CC_DLL     __declspec(dllexport)
+    #else 		/* use a DLL library */
+        #define CC_DLL     __declspec(dllimport)
+    #endif
 
 #endif  // CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_))
 
-#undef CC_DLL
-#if defined(SS_MAKEDLL)
-#define CC_DLL     __declspec(dllexport)
-#else 		/* use a DLL library */
-#define CC_DLL     __declspec(dllimport)
-#endif
+    #undef CC_DLL
+    #if defined(SS_MAKEDLL)
+        #define CC_DLL     __declspec(dllexport)
+    #else 		/* use a DLL library */
+        #define CC_DLL     __declspec(dllimport)
+    #endif
 
 #endif  // wophone VM
 

@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "windows.h"
+#include "CCDirector.h"
 
 using namespace std;
 

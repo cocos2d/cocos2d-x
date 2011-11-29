@@ -96,11 +96,16 @@
 			<type>2</type>
 			<locationURI>cocos2dx_root/Box2D/Dynamics</locationURI>
 		</link>
+		<link>
+			<name>Rope</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/Box2D/Rope</locationURI>
+		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>cocos2dx_root</name>
-			<value>file:/E:/cocos2d-x</value>
+			<value>file:/F:/Project/dumganhar/cocos2d-x</value>
 		</variable>
 	</variableList>
 </projectDescription>

@@ -21,6 +21,11 @@ extern "C"
 	extern void setEffectsVolumeJNI(float volume);
 	extern void preloadEffectJNI(const char *path);
 	extern void unloadEffectJNI(const char* path);
+	extern void pauseEffectJNI(unsigned int nSoundId);
+	extern void pauseAllEffectsJNI();
+	extern void resumeEffectJNI(unsigned int nSoundId);
+	extern void resumeAllEffectsJNI();
+	extern void stopAllEffectsJNI();
 }
 
 #endif // __SIMPLE_AUDIO_ENGINE_JNI__

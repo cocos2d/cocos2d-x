@@ -3,6 +3,9 @@
 	<name>cocos2dx</name>
 	<comment></comment>
 	<projects>
+		<project>libjpeg</project>
+		<project>png</project>
+		<project>zlib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -211,7 +214,7 @@
 	<variableList>
 		<variable>
 			<name>cocos2dx_root</name>
-			<value>file:/E:/cocos2d-x</value>
+			<value>file:/F:/Project/dumganhar/cocos2d-x</value>
 		</variable>
 	</variableList>
 </projectDescription>
