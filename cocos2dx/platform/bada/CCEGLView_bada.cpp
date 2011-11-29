@@ -668,6 +668,14 @@ void CCEGLView::OnTextValueChangeCanceled(const Control& source)
 	CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
 }
 
+void CCEGLView::getScreenRectInView(CCRect& rect)
+{
+	rect.origin.x       = -m_rcViewPort.origin.x / m_fScreenScaleFactor;
+	rect.origin.y       = -m_rcViewPort.origin.y / m_fScreenScaleFactor;
+	rect.size.width     = m_sSizeInPixel.width / m_fScreenScaleFactor;
+	rect.size.height    = m_sSizeInPixel.height / m_fScreenScaleFactor;
+}
+
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
     CC_ASSERT(s_pMainWindow);

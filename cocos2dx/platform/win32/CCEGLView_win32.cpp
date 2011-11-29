@@ -235,7 +235,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,	// Extended Style For The Window
 			kWindowClassName,									// Class Name
 			pTitle,												// Window Title
-			WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,		// Defined Window Style
+			WS_CAPTION | WS_POPUPWINDOW,	// Defined Window Style
 			0, 0,								                // Window Position
 			0,                                                  // Window Width
 			0,                                                  // Window Height
@@ -373,7 +373,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_CLOSE:
-		CCDirector::sharedDirector()->end();
+        CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+//		CCDirector::sharedDirector()->end();
 		break;
 
 	case WM_DESTROY:
@@ -478,6 +479,19 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
 
 void CCEGLView::setIMEKeyboardState(bool /*bOpen*/)
 {
+}
+
+void CCEGLView::getScreenRectInView(CCRect& rect)
+{
+    RECT rcClient;
+    GetClientRect(m_hWnd, &rcClient);
+    RECT rcScreenRectInView = {0};
+    IntersectRect(&rcScreenRectInView, &rcClient, &m_rcViewPort);
+    
+    rect.origin.x = float(- m_rcViewPort.left) / m_fScreenScaleFactor;
+    rect.origin.y = float((m_rcViewPort.bottom - m_rcViewPort.top) - (rcScreenRectInView.bottom - m_rcViewPort.top)) / m_fScreenScaleFactor;
+    rect.size.width = float(rcScreenRectInView.right - rcScreenRectInView.left) / m_fScreenScaleFactor;
+    rect.size.height = float(rcScreenRectInView.bottom - rcScreenRectInView.top) / m_fScreenScaleFactor;
 }
 
 HWND CCEGLView::getHWnd()
