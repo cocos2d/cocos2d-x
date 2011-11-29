@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Application>
+    <Entry>TestCocos2dx</Entry>
+    <Name>
+        <English>TestCocos2dx</English>
+        <eng-GB>TestCocos2dx</eng-GB>
+    </Name>
+    <Vendor/>
+    <Description/>
+    <Icons>
+        <MainMenu>TestCocos2dx.png<Type1>TestCocos2dx.png</Type1>
+            <Type2/>
+        </MainMenu>
+        <Setting/>
+        <Ticker/>
+        <QuickPanel/>
+        <LaunchImage>Splash.png<Type1>Splash.png</Type1>
+            <Type2/>
+        </LaunchImage>
+    </Icons>
+    <AutoScaling>
+        <Enabled>false</Enabled>
+    </AutoScaling>
+</Application>

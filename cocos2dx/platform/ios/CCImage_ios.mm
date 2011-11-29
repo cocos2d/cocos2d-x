@@ -507,6 +507,16 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
 }
 
+bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+{
+	  CC_UNUSED_PARAM(imageType);
+	  /*
+	   * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
+	   */
+    CCFileData data(fullpath, "rb");
+    return initWithImageData(data.getBuffer(), data.getSize(), imageType);
+}
+
 bool CCImage::initWithImageData(void * pData, 
                                 int nDataLen, 
                                 EImageFormat eFmt,

@@ -284,7 +284,8 @@ public class Cocos2dxBitmap{
          */
         if (fontName.endsWith(".ttf")){
         	 try {
-        		Typeface typeFace = Typeface.createFromAsset(context.getAssets(), fontName);
+        		//Typeface typeFace = Typeface.createFromAsset(context.getAssets(), fontName);
+        		 Typeface typeFace = Cocos2dxTypefaces.get(context, fontName);
               	paint.setTypeface(typeFace);
              } catch (Exception e){
              	Log.e("Cocos2dxBitmap", 

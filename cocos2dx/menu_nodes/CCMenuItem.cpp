@@ -43,6 +43,9 @@ namespace cocos2d{
     const unsigned int	kCurrentItem = 0xc0c05001;
     const unsigned int	kZoomActionTag = 0xc0c05002;
 
+    const unsigned int	kNormalTag = 0x1;
+    const unsigned int	kSelectedTag = 0x2;
+    const unsigned int	kDisableTag = 0x3;
 	//
 	// CCMenuItem
 	//
@@ -387,7 +390,7 @@ namespace cocos2d{
 	{
         if (var)
         {
-            addChild(var);
+            addChild(var, 0, kNormalTag);
             var->setAnchorPoint(ccp(0, 0));
             var->setIsVisible(true);
         }
@@ -407,7 +410,7 @@ namespace cocos2d{
 	{
         if (var)
         {
-            addChild(var);
+            addChild(var, 0, kSelectedTag);
             var->setAnchorPoint(ccp(0, 0));
             var->setIsVisible(false);
         }
@@ -427,7 +430,7 @@ namespace cocos2d{
 	{
         if (var)
         {
-            addChild(var);
+            addChild(var, 0, kDisableTag);
             var->setAnchorPoint(ccp(0, 0));
             var->setIsVisible(false);
         }
@@ -495,7 +498,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItemSprite::initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		assert(normalSprite != NULL);
+		CCAssert(normalSprite != NULL, "");
 		CCMenuItem::initWithTarget(target, selector); 
         setNormalImage(normalSprite);
         setSelectedImage(selectedSprite);

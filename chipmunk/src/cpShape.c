@@ -109,11 +109,13 @@ cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info
 void
 cpSegmentQueryInfoPrint(cpSegmentQueryInfo *info)
 {
+#ifndef SHP
 	printf("Segment Query:\n");
 	printf("\tt: %f\n", info->t);
 //	printf("\tdist: %f\n", info->dist);
 //	printf("\tpoint: %s\n", cpvstr(info->point));
 	printf("\tn: %s\n", cpvstr(info->n));
+#endif
 }
 
 

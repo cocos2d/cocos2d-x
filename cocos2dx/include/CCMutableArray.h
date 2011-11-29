@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __COCOA_CC_MUTABLE_ARRAY_H__
 
 #include "CCObject.h"
+#include "ccMacros.h"
 #include <vector>
-#include <assert.h>
 #include <stdarg.h>
 
 namespace   cocos2d {
@@ -113,7 +113,7 @@ public:
 
 	T getObjectAtIndex(unsigned int uIndex)
 	{
-		assert(uIndex < count());
+		CCAssert(uIndex < count(), "");
 
 		if (uIndex >= count())
 		{
@@ -155,7 +155,7 @@ public:
 
     void insertObjectAtIndex(T pObject, unsigned int uIndex)
 	{
-		assert(uIndex <= count());
+		CCAssert(uIndex <= count(), "");
 		// make sure the object is not null
                 if (pObject == 0)
 		{
@@ -279,6 +279,22 @@ public:
 	inline CCMutableArrayRevIterator rbegin(void)
 	{
 		return m_array.rbegin();
+	}
+
+	CCMutableArrayIterator getLastValidIterator(void)
+	{
+		CCMutableArrayIterator iter;
+		CCMutableArrayIterator ret;
+		for (iter = m_array.begin(); iter != m_array.end(); ++iter)
+		{
+			ret = iter;
+			if (! (*iter))
+			{
+				break;
+			}
+		}
+
+		return ret;
 	}
 
 	/*

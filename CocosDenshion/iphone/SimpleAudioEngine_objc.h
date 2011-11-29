@@ -77,6 +77,16 @@
 -(void) stopEffect:(ALuint) soundId;
 /** plays an audio effect with a file path, pitch, pan and gain */
 -(ALuint) playEffect:(NSString*) filePath loop:(BOOL)loop pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain;
+/** pause an audio */
+-(void) pauseEffect:(ALuint) soundId;
+/** pause all audioes */
+-(void) pauseAllEffects;
+/** resume an audio */
+-(void) resumeEffect:(ALuint) soundId;
+/** resume all audioes */
+-(void) resumeAllEffects;
+/** stop all audioes */
+-(void) stopAllEffects;
 /** preloads an audio effect */
 -(void) preloadEffect:(NSString*) filePath;
 /** unloads an audio effect from memory */

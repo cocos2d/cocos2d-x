@@ -50,6 +50,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
+#include "CCDirector.h"
 
 // opengl
 #include "platform/CCGL.h"
@@ -141,11 +142,15 @@ CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
 }
 bool CCParticleSystem::initWithFile(const char *plistFile)
 {
+	bool bRet = false;
 	m_sPlistFile = CCFileUtils::fullPathFromRelativePath(plistFile);
-	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(m_sPlistFile.c_str());
+	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
 	CCAssert( dict != NULL, "Particles: file not found");
-	return this->initWithDictionary(dict);
+	bRet = this->initWithDictionary(dict);
+	dict->release();
+
+	return bRet;
 }
 
 bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *dictionary)
@@ -287,7 +292,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 			else
 			{						
                 char *textureData = (char*)valueForKey("textureImageData", dictionary);
-				assert(textureData);
+				CCAssert(textureData, "");
 
 				int dataLen = strlen(textureData);
 				if(dataLen != 0)
