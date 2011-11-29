@@ -42,11 +42,15 @@ Lua Support FIX Readme
 ------------------
    * CCScheduler support local function
    * Support autorelease C++ object
-   * When C++ object deletd set Lua object userdata to nil
+   * When C++ object deleted, set Lua object userdata to nil
    * Add CCNode:setPosition(x, y), CCNode::getPosition(), huge performance boost
    * Remove needless class and functions from tolua++ .pkg files, improved performance
+   * CCMenuItem support script function
+   * CCScene script callback
 
 **How to use:**
+
+    -- use CCSchedule::scheduleScriptFunc()
 
     local scheduler = CCScheduler:sharedScheduler()
 
@@ -54,7 +58,7 @@ Lua Support FIX Readme
 
     local frameCount = 0
     local function onEnterFrame(dt)
-        print("onEnterFrame:", frameCount)
+        print("onEnterFrame:", frameCount, dt)
         frameCount = frameCount + 1
         if frameCount >= 60 then
             -- remove script callback
@@ -64,9 +68,55 @@ Lua Support FIX Readme
 
     handle = scheduler:scheduleScriptFunc(onEnterFrame, 1.0 / 60, false)
 
+- - -
+
+    -- use CCMenuItem:registerScriptHandler()
+
+    local function onMenuItemTap(menuItemTag)
+        print(menuItemTag) -- output "1"
+    end
+
+    local menuItem = CCMenuItemImage:itemFromNormalImage("button.png", "button.png")
+    menuItem:registerScriptHandler(onMenuItemTap)
+
+    local menu = CCMenu:node()
+    menu:addChild(menuItem)
+    menuItem:setTag(1) -- menuItemTag
+
+    scene:addChild(menu)
+
+- - -
+
+    -- use CCScene script callback
+
+    local function newScene()
+        local scene = CCScene:node()
+
+        local function sceneEventHandler(isOnEnter)
+            if isOnEnter then
+                if scene.onEnter then scene:onEnter() end
+            else
+                if scene.onExit then scene:onExit() end
+                scene:unregisterScriptEventsHandler()
+            end
+        end
+
+        scene:registerScriptEventsHandler(sceneEventHandler)
+        return scene
+    end
+
+    local myScene = newScene("MyScene")
+    function myScene:onEnter()
+        print("MyScene:onEnter()")
+    end
+
+    function myScene:onExit()
+        print("MyScene:onExit()")
+    end
+
+    CCDirector:sharedDirector():runWithScene(myScene)
+
 
 **TODO:**
 
    * When C++ object deleted, remove Lua object userdata
-   * CCMenuItem support script function
-
