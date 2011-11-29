@@ -114,7 +114,7 @@ void CCMenuItem::activate()
 #if LUA_ENGINE
         if (m_functionRefID)
         {
-            CCLuaEngine::sharedEngine()->executeFunctionByRefID(m_functionRefID, m_uID);
+            CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_functionRefID, getTag());
         }
 #endif
     }
