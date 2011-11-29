@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelTTF.h"
+#include "CCDirector.h"
 
 namespace cocos2d{
 	//
@@ -67,7 +68,7 @@ namespace cocos2d{
 
 	bool CCLabelTTF::initWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 	{
-		assert(label != NULL);
+		CCAssert(label != NULL, "");
 		if (CCSprite::init())
 		{
 			m_tDimensions = CCSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
@@ -88,7 +89,7 @@ namespace cocos2d{
 	}
 	bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 	{
-		assert(label != NULL);
+		CCAssert(label != NULL, "");
 		if (CCSprite::init())
 		{
 			m_tDimensions = CCSizeZero;

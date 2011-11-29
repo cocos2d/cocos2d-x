@@ -78,7 +78,7 @@ namespace cocos2d
 			}
 			else
 			{
-				assert(0);
+				CCAssert(0, "");
 			}
 		}
 		else
@@ -96,7 +96,7 @@ namespace cocos2d
 	CCGridBase* CCGridAction::getGrid(void)
 	{
 		// Abstract class needs implementation
-		assert(0);
+		CCAssert(0, "");
 
 		return NULL;
 	}

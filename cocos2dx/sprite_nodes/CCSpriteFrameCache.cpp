@@ -91,7 +91,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 	}
 
 	// check the format
-	assert(format >=0 && format <= 3);
+	CCAssert(format >=0 && format <= 3, "");
 
 	framesDict->begin();
 	std::string key = "";
@@ -197,14 +197,16 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
 {
 	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
-	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
+	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(pszPath);
 
 	addSpriteFramesWithDictionary(dict, pobTexture);
+
+	dict->release();
 }
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
 {
-	assert(textureFileName);
+	CCAssert(textureFileName, "texture name should not be null");
 	CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(textureFileName);
 
 	if (texture)
@@ -220,7 +222,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
 	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
-	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
+	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(pszPath);
 	
 	string texturePath("");
 
@@ -261,6 +263,8 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 	{
 		CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
 	}
+
+	dict->release();
 }
 
 void CCSpriteFrameCache::addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName)
@@ -316,9 +320,11 @@ void CCSpriteFrameCache::removeSpriteFrameByName(const char *pszName)
 void CCSpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 {
 	const char* path = CCFileUtils::fullPathFromRelativePath(plist);
-	CCDictionary<std::string, CCObject*>* dict = CCFileUtils::dictionaryWithContentsOfFile(path);
+	CCDictionary<std::string, CCObject*>* dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(path);
 
 	removeSpriteFramesFromDictionary((CCDictionary<std::string, CCSpriteFrame*>*)dict);
+
+	dict->release();
 }
 
 void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary<std::string, CCSpriteFrame*> *dictionary)

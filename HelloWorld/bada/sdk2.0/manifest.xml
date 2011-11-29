@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+	<Id>93bt1p123e</Id>
+	<Secret>9C645DDBA19C71BAD1204DA4DAA7A0B9</Secret>
+	<AppVersion>1.0.0</AppVersion>
+	<ManifestVersion>1.1</ManifestVersion>
+	<Privileges>
+		<Privilege>
+            <Name>SYSTEM_SERVICE</Name>
+        </Privilege>
+	</Privileges>
+	<DeviceProfile>
+		<CPU>ARM9</CPU>
+		<ScreenSize>240x400</ScreenSize>
+		<ScreenSize>480x800</ScreenSize>
+		<Connectivity>Bluetooth</Connectivity>
+		<Connectivity>Wi-Fi</Connectivity>
+		<Sensor>GPS</Sensor>
+		<Sensor>Accelerometer</Sensor>
+		<Sensor>Proximity</Sensor>
+		<InputDevice>Touch</InputDevice>
+		<SoundMixing>Enable</SoundMixing>
+		<UserInteraction>Vibration-effects</UserInteraction>
+		<APIVersion>2.0</APIVersion>
+	</DeviceProfile>
+</Manifest>

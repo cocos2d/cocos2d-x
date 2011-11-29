@@ -62,7 +62,7 @@ namespace cocos2d {
 
 	bool CCActionEase::initWithAction(CCActionInterval *pAction)
 	{
-		assert(pAction != NULL);
+		CCAssert(pAction != NULL, "");
 
 		if (CCActionInterval::initWithDuration(pAction->getDuration()))
 		{
@@ -740,7 +740,7 @@ namespace cocos2d {
 
 	CCActionInterval* CCEaseElastic::reverse(void)
 	{
-		assert(0);
+		CCAssert(0, "");
 
 		return NULL;
 	}

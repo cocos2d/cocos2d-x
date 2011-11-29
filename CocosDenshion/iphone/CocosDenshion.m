@@ -970,6 +970,36 @@ static BOOL _mixerRateSet = NO;
 	alGetError();//Clear error in case we stopped any sounds that couldn't be stopped
 }	
 
+- (void) pauseSound:(ALuint) sourceId {
+  if (!functioning_) {
+      return;
+  }
+  alSourcePause(sourceId);
+  alGetError();//Clear error in case we stopped any sounds that couldn't be paused
+}
+
+- (void) pauseAllSounds {
+  for (int i = 0; i < sourceTotal_; i++) {
+      [self pauseSound:_sources[i].sourceId];
+  }
+  alGetError();//Clear error in case we stopped any sounds that couldn't be paused
+}
+
+- (void) resumeSound:(ALuint) soundId {
+  if (!functioning_) {
+    return;
+  }
+  alSourcePlay(soundId);
+  alGetError();//Clear error in case we stopped any sounds that couldn't be resumed
+}
+
+- (void) resumeAllSounds {
+  for (int i = 0; i < sourceTotal_; i++) {
+      [self resumeSound:_sources[i].sourceId];
+  }
+  alGetError();//Clear error in case we stopped any sounds that couldn't be resumed
+}
+
 /**
  * Set a source group as non interruptible.  Default is that source groups are interruptible.
  * Non interruptible means that if a request to play a sound is made for a source group and there are

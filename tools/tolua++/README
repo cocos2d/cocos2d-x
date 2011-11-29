@@ -1,4 +1,5 @@
 1. Generating the lua<-->C bindings with tolua++
+tolua++.exe -tCocos2d -o LuaCocos2d.cpp Cocos2d.pkg
 
     An ant script has been provided to generate the relevant files, to do this after
     modifying the .pkg files you should use the following command in this directory:

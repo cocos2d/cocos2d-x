@@ -105,6 +105,33 @@ public:
 	 @param[in]		pszFilePath		The path of the effect file,or the FileName of T_SoundResInfo
 	 */
 	virtual void unloadEffect(const char* pszFilePath) = 0;
+
+	/**
+	 @brief  		pause an effect identified by sound id
+	 @param[in]		uSoundId 	sound id
+	 */
+	virtual void pauseEffect(unsigned int uSoundId) = 0;
+
+	/**
+	 @brief  		pause all playing effects
+	 */
+	virtual void pauseAllEffects() = 0;
+
+	/**
+	 @brief  		resume an effect identified by sound id
+	 @param[in]		uSoundId 	sound id
+	 */
+	virtual void resumeEffect(unsigned int uSoundId) = 0;
+
+	/**
+	 @brief  		resume a effect identified by sound id
+	 */
+	virtual void resumeAllEffects() = 0;
+
+	/**
+	 @brief  		stop all playing effects
+	 */
+	virtual void stopAllEffects() = 0;
 };
 }
 

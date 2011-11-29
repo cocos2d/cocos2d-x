@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "ccMacros.h"
 #include "ccConfig.h"
-
+#include <string.h>
 using namespace std;
 namespace   cocos2d {
 

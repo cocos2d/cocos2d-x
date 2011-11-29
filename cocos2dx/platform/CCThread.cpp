@@ -24,18 +24,16 @@ THE SOFTWARE.
 
 #include "CCThread.h"
 
-#if CC_SUPPORT_MULTITHREAD
+NS_CC_BEGIN;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "win32/CCThread_win32.cpp"
-#endif // CC_PLATFORM_WIN32
+CCThread::~CCThread()
+{
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include "wophone/CCThread_wophone.cpp"
-#endif // CC_PLATFORM_WOPHONE
+}
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "android/CCThread_android.cpp"
-#endif // CC_PLATFORM_ANDROID
+void CCThread::createAutoreleasePool()
+{
 
-#endif  // CC_SUPPORT_MULTITHREAD
+}
+
+NS_CC_END;

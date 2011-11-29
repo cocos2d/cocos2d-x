@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <stack>
 #include <string>
 #include <cctype>
+#include <queue>
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
@@ -36,24 +37,111 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "CCImage.h"
 #include "support/ccUtils.h"
+#include "CCScheduler.h"
+#include "pthread.h"
+#include "CCThread.h"
+#include "semaphore.h"
 
 namespace   cocos2d {
 
-class CCAsyncObject : CCObject
+typedef struct _AsyncStruct
 {
-public:
-	fpAsyncCallback m_pfnCallback;
-	CCObject* m_pTarget;
-	std::string *  m_pData;
-public:
-	CCAsyncObject();
-	~CCAsyncObject()
+	std::string			filename;
+	SelectorProtocol	*target;
+	SEL_CallFuncO		selector;
+} AsyncStruct;
+
+typedef struct _ImageInfo
+{
+	AsyncStruct *asyncStruct;
+	CCImage		*image;
+} ImageInfo;
+
+static pthread_t s_loadingThread;
+
+static pthread_mutex_t		s_asyncStructQueueMutex;
+static pthread_mutex_t      s_ImageInfoMutex;
+
+static sem_t s_sem;
+
+static std::queue<AsyncStruct*>		*s_pAsyncStructQueue;
+static std::queue<ImageInfo*>		*s_pImageQueue;
+
+static void* loadImage(void* data)
+{
+	// create autorelease pool for iOS
+	CCThread thread;
+	thread.createAutoreleasePool();
+
+    AsyncStruct *pAsyncStruct = NULL;
+
+	while (true)
 	{
-		CCLOGINFO("cocos2d: deallocing CCAsyncObject.");
-		CC_SAFE_DELETE(m_pTarget);
-		CC_SAFE_DELETE(m_pData);
+		// wait for rendering thread to ask for loading if s_pAsyncStructQueue is empty
+		sem_wait(&s_sem);
+
+		std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
+
+		pthread_mutex_lock(&s_asyncStructQueueMutex);// get async struct from queue
+        if (pQueue->empty())
+        {
+            pthread_mutex_unlock(&s_asyncStructQueueMutex);
+            continue;
+        }
+        else
+        {
+            pAsyncStruct = pQueue->front();
+            pQueue->pop();
+            pthread_mutex_unlock(&s_asyncStructQueueMutex);
+        }		
+
+		const char *filename = pAsyncStruct->filename.c_str();
+
+		CCLOG("thread 0x%x is loading image %s", pthread_self(), filename);
+
+		// generate image
+		CCImage *pImage = NULL;
+		if (std::string::npos != pAsyncStruct->filename.find(".jpg") || std::string::npos != pAsyncStruct->filename.find(".jpeg"))
+		{
+			pImage = new CCImage();
+			if (!pImage->initWithImageFileThreadSafe(filename, cocos2d::CCImage::kFmtJpg))
+			{
+				delete pImage;
+				CCLOG("can not load %s", filename);
+				continue;
+			}
+		}
+		else if (std::string::npos != pAsyncStruct->filename.find(".png"))
+		{
+			pImage = new CCImage();
+			if (! pImage->initWithImageFileThreadSafe(filename, cocos2d::CCImage::kFmtPng))
+			{
+				delete pImage;
+				CCLOG("can not load %s", filename);
+				continue;
+			}
+		}
+		else
+		{
+			CCLog("unsupportted format %s",filename);
+			delete pAsyncStruct;
+			
+			continue;
+		}
+
+		// generate image info
+		ImageInfo *pImageInfo = new ImageInfo();
+		pImageInfo->asyncStruct = pAsyncStruct;
+		pImageInfo->image = pImage;
+
+		// put the image info into the queue
+		pthread_mutex_lock(&s_ImageInfoMutex);
+		s_pImageQueue->push(pImageInfo);
+		pthread_mutex_unlock(&s_ImageInfoMutex);	
 	}
-};
+	
+	return 0;
+}
 
 // implementation CCTextureCache
 
@@ -73,8 +161,6 @@ CCTextureCache::CCTextureCache()
 	CCAssert(g_sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
 	
 	m_pTextures = new CCMutableDictionary<std::string, CCTexture2D*>();
-	m_pDictLock = new CCLock();
-	m_pContextLock = new CCLock();
 }
 
 CCTextureCache::~CCTextureCache()
@@ -82,8 +168,6 @@ CCTextureCache::~CCTextureCache()
 	CCLOGINFO("cocos2d: deallocing CCTextureCache.");
 
 	CC_SAFE_RELEASE(m_pTextures);
-	CC_SAFE_DELETE(m_pDictLock);
-	CC_SAFE_DELETE(m_pContextLock);
 }
 
 void CCTextureCache::purgeSharedTextureCache()
@@ -99,77 +183,109 @@ char * CCTextureCache::description()
 	return ret;
 }
 
-
-// TextureCache - Add Images
-/* @todo EAGLContext
-void CCTextureCache::addImageWithAsyncObject(CCAsyncObject* async)
+void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, SEL_CallFuncO selector)
 {
-	
-	CCAutoreleasePool *autoreleasepool = [[CCAutoreleasePool alloc] init];
+	CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");	
 
-	// textures will be created on the main OpenGL context
-	// it seems that in SDK 2.2.x there can't be 2 threads creating textures at the same time
-	// the lock is used for this purpose: issue #472
-	[contextLock lock];
-	if( auxEAGLcontext == nil ) {
-		auxEAGLcontext = [[EAGLContext alloc]
-initWithAPI:kEAGLRenderingAPIOpenGLES1
-sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
-
-		if( ! auxEAGLcontext )
-			CCLOG(@"cocos2d: TextureCache: Could not create EAGL context");
-	}
-
-	if( [EAGLContext setCurrentContext:auxEAGLcontext] ) {
-
-		// load / create the texture
-		CCTexture2D *tex = [self addImage:async.data];
-
-		// The callback will be executed on the main thread
-		[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];
-
-		[EAGLContext setCurrentContext:nil];
-	} else {
-		CCLOG(@"cocos2d: TetureCache: EAGLContext error");
-	}
-	[contextLock unlock];
-
-	[autoreleasepool release];
-}*/
-
-/* @todo selector, NSThread
-void CCTextureCache::addImageAsync(const char* filename, CCObject *target, fpAsyncCallback func)
-{
-	CCAssert(filename != NULL , "TextureCache: fileimage MUST not be nill");
+	CCTexture2D *texture = NULL;
 
 	// optimization
 
-	CCTexture2D * tex;
- 
- 	if ( (tex = m_pTextures->objectForKey(filename)) )
+	std::string pathKey = path;
+	CCFileUtils::ccRemoveHDSuffixFromFile(pathKey);
 
- 	{
+	pathKey = CCFileUtils::fullPathFromRelativePath(pathKey.c_str());
+	texture = m_pTextures->objectForKey(pathKey);
 
- 		target->
+	std::string fullpath = pathKey;
+	if (texture != NULL)
+	{
+		if (target && selector)
+		{
+			(target->*selector)(texture);
+		}
+		
+		return;
+	}
 
- 	}
+	if (target)
+	{
+		target->selectorProtocolRetain();
+	}
 
- 	
- 	if( (tex=[textures objectForKey: filename] ) ) {
- 		[target performSelector:selector withObject:tex];
- 		return;
- 	}
- 
- 	// schedule the load
- 
- 	CCAsyncObject *asyncObject = [[CCAsyncObject alloc] init];
- 	asyncObject.selector = selector;
- 	asyncObject.target = target;
- 	asyncObject.data = filename;
- 
- 	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
- 	[asyncObject release];
-}*/
+	// lazy init
+	static bool firstRun = true;
+	if (firstRun)
+	{		     
+        s_pAsyncStructQueue = new queue<AsyncStruct*>();
+	    s_pImageQueue = new queue<ImageInfo*>();		
+
+		pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
+		sem_init(&s_sem, 0, 0);
+		pthread_mutex_init(&s_ImageInfoMutex, NULL);
+		pthread_create(&s_loadingThread, NULL, loadImage, NULL);
+
+		CCScheduler::sharedScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
+
+		firstRun = false;
+	}
+
+	// generate async struct
+	AsyncStruct *data = new AsyncStruct();
+	data->filename = fullpath.c_str();
+	data->target = target;
+	data->selector = selector;
+
+	// add async struct into queue
+	pthread_mutex_lock(&s_asyncStructQueueMutex);
+	s_pAsyncStructQueue->push(data);
+	pthread_mutex_unlock(&s_asyncStructQueueMutex);
+
+	sem_post(&s_sem);
+}
+
+void CCTextureCache::addImageAsyncCallBack(ccTime dt)
+{
+	// the image is generated in loading thread
+	std::queue<ImageInfo*> *imagesQueue = s_pImageQueue;
+
+	pthread_mutex_lock(&s_ImageInfoMutex);
+	if (imagesQueue->empty())
+	{
+		pthread_mutex_unlock(&s_ImageInfoMutex);
+	}
+	else
+	{
+		ImageInfo *pImageInfo = imagesQueue->front();
+		imagesQueue->pop();
+		pthread_mutex_unlock(&s_ImageInfoMutex);
+
+		AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
+		CCImage *pImage = pImageInfo->image;
+
+		SelectorProtocol *target = pAsyncStruct->target;
+		SEL_CallFuncO selector = pAsyncStruct->selector;
+		const char* filename = pAsyncStruct->filename.c_str();
+
+		// generate texture in render thread
+		CCTexture2D *texture = new CCTexture2D();
+		texture->initWithImage(pImage);
+
+		// cache the texture
+		m_pTextures->setObject(texture, filename);
+		texture->autorelease();
+
+		if (target && selector)
+		{
+			(target->*selector)(texture);
+			target->selectorProtocolRelease();
+		}		
+
+		delete pImage;
+		delete pAsyncStruct;
+		delete pImageInfo;
+	}
+}
 
 CCTexture2D * CCTextureCache::addImage(const char * path)
 {
@@ -180,7 +296,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	// MUTEX:
 	// Needed since addImageAsync calls this method from a different thread
 	
-	m_pDictLock->lock();
+	//pthread_mutex_lock(m_pDictLock);
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
     std::string pathKey = path;
@@ -263,7 +379,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 		} while (0);
 	}
-	m_pDictLock->unlock();
+
+	//pthread_mutex_unlock(m_pDictLock);
 	return texture;
 }
 
@@ -335,30 +452,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 	return tex;
 }
 
-/* @todo CGImageRef
--(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (string & )key
-{
-	CCAssert(imageref != nil, @"TextureCache: image MUST not be nill");
 
-	CCTexture2D * tex = nil;
-
-	// If key is nil, then create a new texture each time
-	if( key && (tex=[textures objectForKey: key] ) ) {
-		return tex;
-	}
-
-	// prevents overloading the autorelease pool
-	UIImage *image = [[UIImage alloc] initWithCGImage:imageref];
-	tex = [[CCTexture2D alloc] initWithImage: image];
-	[image release];
-
-	if(tex && key)
-		[textures setObject: tex forKey:key];
-	else
-		CCLOG(@"cocos2d: Couldn't add CGImage in CCTextureCache");
-
-	return [tex autorelease];
-}*/
 CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 {
 	CCAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
@@ -367,7 +461,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 	// textureForKey() use full path,so the key should be full path
 	std::string forKey = CCFileUtils::fullPathFromRelativePath(key);
 
-	m_pDictLock->lock();
+	//m_pDictLock->lock();
 
 	do 
 	{
@@ -393,7 +487,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 
 	} while (0);
 	
-	m_pDictLock->unlock();
+	//m_pDictLock->unlock();
 
 	return texture;
 }

@@ -156,7 +156,7 @@ CCDirector::~CCDirector(void)
 void CCDirector::setGLDefaultValues(void)
 {
 	// This method SHOULD be called only after openGLView_ was initialized
-	assert(m_pobOpenGLView);
+	CCAssert(m_pobOpenGLView, "opengl view should not be null");
 
 	setAlphaBlending(true);
 	setDepthTest(true);
@@ -275,7 +275,7 @@ void CCDirector::calculateDeltaTime(void)
 
 void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 {
-	assert(pobOpenGLView);
+	CCAssert(pobOpenGLView, "opengl view should not be null");
 
 	if (m_pobOpenGLView != pobOpenGLView)
 	{
@@ -494,8 +494,8 @@ void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 
 void CCDirector::runWithScene(CCScene *pScene)
 {
-	assert(pScene != NULL);
-	assert(m_pRunningScene == NULL);
+	CCAssert(pScene != NULL, "running scene should not be null");
+	CCAssert(m_pRunningScene == NULL, "m_pRunningScene should be null");
 
 	pushScene(pScene);
 	startAnimation();
@@ -503,7 +503,7 @@ void CCDirector::runWithScene(CCScene *pScene)
 
 void CCDirector::replaceScene(CCScene *pScene)
 {
-	assert(pScene != NULL);
+	CCAssert(pScene != NULL, "the scene should not be null");
 
 	unsigned int index = m_pobScenesStack->count();
 
@@ -515,7 +515,7 @@ void CCDirector::replaceScene(CCScene *pScene)
 
 void CCDirector::pushScene(CCScene *pScene)
 {
-	assert(pScene);
+	CCAssert(pScene, "the scene should not null");
 
 	m_bSendCleanupToScene = false;
 
@@ -525,7 +525,7 @@ void CCDirector::pushScene(CCScene *pScene)
 
 void CCDirector::popScene(void)
 {
-	assert(m_pRunningScene != NULL);
+	CCAssert(m_pRunningScene != NULL, "running scene should not null");
 
 	m_pobScenesStack->removeLastObject();
 	unsigned int c = m_pobScenesStack->count();
@@ -545,7 +545,44 @@ void CCDirector::end()
 {
 	m_bPurgeDirecotorInNextLoop = true;
 }
-	
+
+
+void CCDirector::resetDirector()
+{
+	// don't release the event handlers
+	// They are needed in case the director is run again
+	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
+
+    if (m_pRunningScene)
+    {
+    	m_pRunningScene->onExit();
+    	m_pRunningScene->cleanup();
+    	m_pRunningScene->release();
+    }
+    
+	m_pRunningScene = NULL;
+	m_pNextScene = NULL;
+
+	// remove all objects, but don't release it.
+	// runWithScene might be executed after 'end'.
+	m_pobScenesStack->removeAllObjects();
+
+	stopAnimation();
+
+	CC_SAFE_RELEASE_NULL(m_pProjectionDelegate);
+
+	// purge bitmap cache
+	CCLabelBMFont::purgeCachedData();
+
+	// purge all managers
+	CCAnimationCache::purgeSharedAnimationCache();
+ 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
+	CCActionManager::sharedManager()->purgeSharedManager();
+	CCScheduler::purgeSharedScheduler();
+	CCTextureCache::purgeSharedTextureCache();
+}
+
+
 void CCDirector::purgeDirector()
 {
 	// don't release the event handlers
@@ -796,6 +833,18 @@ void CCDirector::setContentScaleFactor(CGFloat scaleFactor)
 		// update projection
 		setProjection(m_eProjection);
 	}
+}
+
+CCNode* CCDirector::getNotificationNode() 
+{ 
+	return m_pNotificationNode; 
+}
+
+void CCDirector::setNotificationNode(CCNode *node)
+{
+	CC_SAFE_RELEASE(m_pNotificationNode);
+	m_pNotificationNode = node;
+	CC_SAFE_RETAIN(m_pNotificationNode);
 }
 
 void CCDirector::applyOrientation(void)

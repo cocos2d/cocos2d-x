@@ -89,6 +89,7 @@ OBJECTS = ../tests/AccelerometerTest/AccelerometerTest.o \
 					../tests/SchedulerTest/SchedulerTest.o \
 					../tests/SpriteTest/SpriteTest.o \
 					../tests/TextInputTest/TextInputTest.o \
+                                        ../tests/TextureCacheTest/TextureCacheTest.o \
 					../tests/Texture2dTest/Texture2dTest.o \
 					../tests/TileMapTest/TileMapTest.o \
 					../tests/TouchesTest/Ball.o \
