@@ -40,8 +40,8 @@
     </replace>
 
     <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[LUA_FUNCTION function = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
-      <replacevalue><![CDATA[int function = (tolua_ref_function(tolua_S,]]></replacevalue>
+      <replacetoken><![CDATA[LUA_FUNCTION functionRefID = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
+      <replacevalue><![CDATA[int functionRefID = (tolua_ref_function(tolua_S,]]></replacevalue>
     </replace>
 
     <replace file="LuaCocos2d.cpp">
