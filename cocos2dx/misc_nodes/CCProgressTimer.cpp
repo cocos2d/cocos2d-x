@@ -343,7 +343,7 @@ void CCProgressTimer::updateRadial(void)
 	{
 		m_nVertexDataCount = index + 3;
 		m_pVertexData = new ccV2F_C4B_T2F[m_nVertexDataCount];
-		assert(m_pVertexData);
+		CCAssert(m_pVertexData, "");
 
 		updateColor();
 	}
@@ -432,7 +432,7 @@ void CCProgressTimer::updateBar(void)
 	{
 		m_nVertexDataCount = kProgressTextureCoordsCount;
 		m_pVertexData = new ccV2F_C4B_T2F[m_nVertexDataCount];
-		assert(m_pVertexData);
+		CCAssert(m_pVertexData, "");
 
 		if (m_eType == kCCProgressTimerTypeHorizontalBarLR)
 		{

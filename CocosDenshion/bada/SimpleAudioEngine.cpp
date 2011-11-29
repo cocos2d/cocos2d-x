@@ -450,7 +450,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 	    if (AUDIOOUT_STATE_PLAYING == p->second->GetState())
 		{
             return nRet; // Stop waste a lot of time, so just return.
-	    	r = p->second->Stop();
+	    	//r = p->second->Stop();
 		}
 
 	    if (s_fEffectsVolume > 0.0f)
