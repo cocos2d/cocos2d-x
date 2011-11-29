@@ -57,10 +57,23 @@ public:
     inline ccSceneFlag getSceneType(void) {
         return m_eSceneType;
     }
+    
+#if LUA_ENGINE
+    virtual void onEnter();
+    virtual void onExit();
+
+    void registerScriptEventsHandler(int functionRefID);
+    void unregisterScriptEventsHandler(void);
+#endif // LUA_ENGINE
 
 protected:
     ccSceneFlag m_eSceneType;
+
+#if LUA_ENGINE
+    int m_eventsFunctionRefID;
+#endif
 };
+
 }//namespace   cocos2d
 
 // for the subclass of CCScene, each has to implement the static "node" method
