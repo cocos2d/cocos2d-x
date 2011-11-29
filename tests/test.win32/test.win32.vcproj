@@ -666,6 +666,10 @@
 						Name="Tests"
 						>
 						<File
+							RelativePath="..\tests\Box2DTestBed\Tests\AddPair.h"
+							>
+						</File>
+						<File
 							RelativePath="..\tests\Box2DTestBed\Tests\ApplyForce.h"
 							>
 						</File>
@@ -682,7 +686,15 @@
 							>
 						</File>
 						<File
+							RelativePath="..\tests\Box2DTestBed\Tests\BulletTest.h"
+							>
+						</File>
+						<File
 							RelativePath="..\tests\Box2DTestBed\Tests\Cantilever.h"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\Box2DTestBed\Tests\Car.h"
 							>
 						</File>
 						<File
@@ -722,6 +734,10 @@
 							>
 						</File>
 						<File
+							RelativePath="..\tests\Box2DTestBed\Tests\DumpShell.h"
+							>
+						</File>
+						<File
 							RelativePath="..\tests\Box2DTestBed\Tests\DynamicTreeTest.h"
 							>
 						</File>
@@ -730,7 +746,7 @@
 							>
 						</File>
 						<File
-							RelativePath="..\tests\Box2DTestBed\Tests\ElasticBody.h"
+							RelativePath="..\tests\Box2DTestBed\Tests\EdgeTest.h"
 							>
 						</File>
 						<File
@@ -738,11 +754,11 @@
 							>
 						</File>
 						<File
-							RelativePath="..\tests\Box2DTestBed\Tests\LineJoint.h"
+							RelativePath="..\tests\Box2DTestBed\Tests\OneSidedPlatform.h"
 							>
 						</File>
 						<File
-							RelativePath="..\tests\Box2DTestBed\Tests\OneSidedPlatform.h"
+							RelativePath="..\tests\Box2DTestBed\Tests\Pinball.h"
 							>
 						</File>
 						<File
@@ -774,6 +790,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\tests\Box2DTestBed\Tests\Rope.h"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\Box2DTestBed\Tests\RopeJoint.h"
+							>
+						</File>
+						<File
 							RelativePath="..\tests\Box2DTestBed\Tests\SensorTest.h"
 							>
 						</File>
@@ -794,7 +818,15 @@
 							>
 						</File>
 						<File
+							RelativePath="..\tests\Box2DTestBed\Tests\Tiles.h"
+							>
+						</File>
+						<File
 							RelativePath="..\tests\Box2DTestBed\Tests\TimeOfImpact.h"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\Box2DTestBed\Tests\Tumbler.h"
 							>
 						</File>
 						<File

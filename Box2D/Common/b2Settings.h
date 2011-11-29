@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -32,6 +32,7 @@ typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
 typedef float float32;
+typedef double float64;
 
 #define	b2_maxFloat		FLT_MAX
 #define	b2_epsilon		FLT_EPSILON
@@ -43,10 +44,12 @@ typedef float float32;
 
 // Collision
 
-/// The maximum number of contact points between two convex shapes.
+/// The maximum number of contact points between two convex shapes. Do
+/// not change this value.
 #define b2_maxManifoldPoints	2
 
-/// The maximum number of vertices on a convex polygon.
+/// The maximum number of vertices on a convex polygon. You cannot increase
+/// this too much because b2BlockAllocator has a maximum object size.
 #define b2_maxPolygonVertices	8
 
 /// This is used to fatten AABBs in the dynamic tree. This allows proxies
@@ -71,6 +74,9 @@ typedef float float32;
 /// this smaller means polygons will have an insufficient buffer for continuous collision.
 /// Making it larger may create artifacts for vertex collision.
 #define b2_polygonRadius		(2.0f * b2_linearSlop)
+
+/// Maximum number of sub-steps per contact in continuous physics simulation.
+#define b2_maxSubSteps			8
 
 
 // Dynamics
@@ -103,7 +109,9 @@ typedef float float32;
 /// This scale factor controls how fast overlap is resolved. Ideally this would be 1 so
 /// that overlap is removed in one time step. However using values close to 1 often lead
 /// to overshoot.
-#define b2_contactBaumgarte			0.2f
+#define b2_baumgarte				0.2f
+#define b2_toiBaugarte				0.75f
+
 
 // Sleep
 
@@ -124,6 +132,9 @@ void* b2Alloc(int32 size);
 /// If you implement b2Alloc, you should also implement this function.
 void b2Free(void* mem);
 
+/// Logging function.
+void b2Log(const char* string, ...);
+
 /// Version numbering scheme.
 /// See http://en.wikipedia.org/wiki/Software_versioning
 struct b2Version
@@ -135,17 +146,5 @@ struct b2Version
 
 /// Current version.
 extern b2Version b2_version;
-
-/// Friction mixing law. Feel free to customize this.
-inline float32 b2MixFriction(float32 friction1, float32 friction2)
-{
-	return sqrtf(friction1 * friction2);
-}
-
-/// Restitution mixing law. Feel free to customize this.
-inline float32 b2MixRestitution(float32 restitution1, float32 restitution2)
-{
-	return restitution1 > restitution2 ? restitution1 : restitution2;
-}
 
 #endif

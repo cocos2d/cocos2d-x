@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -34,7 +34,7 @@ public:
 			bd.position.Set(0.0f, 20.0f);
 			ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
+			b2EdgeShape shape;
 
 			b2FixtureDef sd;
 			sd.shape = &shape;
@@ -42,26 +42,26 @@ public:
 			sd.restitution = k_restitution;
 
 			// Left vertical
-			shape.SetAsEdge(b2Vec2(-20.0f, -20.0f), b2Vec2(-20.0f, 20.0f));
+			shape.Set(b2Vec2(-20.0f, -20.0f), b2Vec2(-20.0f, 20.0f));
 			ground->CreateFixture(&sd);
 
 			// Right vertical
-			shape.SetAsEdge(b2Vec2(20.0f, -20.0f), b2Vec2(20.0f, 20.0f));
+			shape.Set(b2Vec2(20.0f, -20.0f), b2Vec2(20.0f, 20.0f));
 			ground->CreateFixture(&sd);
 
 			// Top horizontal
-			shape.SetAsEdge(b2Vec2(-20.0f, 20.0f), b2Vec2(20.0f, 20.0f));
+			shape.Set(b2Vec2(-20.0f, 20.0f), b2Vec2(20.0f, 20.0f));
 			ground->CreateFixture(&sd);
 
 			// Bottom horizontal
-			shape.SetAsEdge(b2Vec2(-20.0f, -20.0f), b2Vec2(20.0f, -20.0f));
+			shape.Set(b2Vec2(-20.0f, -20.0f), b2Vec2(20.0f, -20.0f));
 			ground->CreateFixture(&sd);
 		}
 
 		{
 			b2Transform xf1;
-			xf1.R.Set(0.3524f * b2_pi);
-			xf1.position = b2Mul(xf1.R, b2Vec2(1.0f, 0.0f));
+			xf1.q.Set(0.3524f * b2_pi);
+			xf1.p = xf1.q.GetXAxis();
 
 			b2Vec2 vertices[3];
 			vertices[0] = b2Mul(xf1, b2Vec2(-1.0f, 0.0f));
@@ -76,8 +76,8 @@ public:
 			sd1.density = 4.0f;
 
 			b2Transform xf2;
-			xf2.R.Set(-0.3524f * b2_pi);
-			xf2.position = b2Mul(xf2.R, b2Vec2(-1.0f, 0.0f));
+			xf2.q.Set(-0.3524f * b2_pi);
+			xf2.p = -xf2.q.GetXAxis();
 
 			vertices[0] = b2Mul(xf2, b2Vec2(-1.0f, 0.0f));
 			vertices[1] = b2Mul(xf2, b2Vec2(1.0f, 0.0f));
