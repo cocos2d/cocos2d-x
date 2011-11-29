@@ -60,8 +60,11 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]]></replacetoken>
 #include "tolua_fix.h"
 #include "cocos2d.h"
 #include "CCRibbon.h"
+#include "SimpleAudioEngine.h"
 
-using namespace cocos2d;]]></replacevalue>
+using namespace cocos2d;
+using namespace CocosDenshion;
+]]></replacevalue>
     </replace>
 
     <echo message="Copying new bindings to target location" />

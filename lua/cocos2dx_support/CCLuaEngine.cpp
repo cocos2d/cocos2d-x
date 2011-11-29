@@ -33,7 +33,6 @@ extern "C" {
 }
 
 #include "LuaCocos2d.h"
-#include "LuaSimpleAudioEngine.h"
 #include "LuaGameInterfaces.h"
 #include "CCArray.h"
 #include "CCTimer.h"
@@ -89,7 +88,6 @@ CCLuaEngine::CCLuaEngine()
     m_state = lua_open();
     luaL_openlibs(m_state);
     tolua_Cocos2d_open(m_state);
-    tolua_SimpleAudioEngine_open(m_state);
     tolua_prepare_ccobject_table(m_state);
     tolua_LuaGameInterfaces_open(m_state);
     luax_loadexts(m_state);
@@ -265,10 +263,7 @@ int CCLuaEngine::executeTouchesEvent(int functionRefId, CCSet *pTouches)
 
 int CCLuaEngine::executeSchedule(int functionRefID, ccTime dt)
 {
-    lua_pushnumber(m_state, dt);
-    int ret = executeFunctionByRefID(functionRefID, 1);
-    lua_pop(m_state, 1);
-    return ret;
+    return executeFunctionWithFloatData(functionRefID, dt);
 }
 
 } // namespace cocos2d
