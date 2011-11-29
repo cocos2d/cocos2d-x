@@ -129,7 +129,6 @@ int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 
 #include <FSysSystemTime.h>
-using namespace Osp::System;
 
 struct timeval
 {
@@ -142,6 +141,7 @@ struct timezone
     int tz_minuteswest;
     int tz_dsttime;
 };
+
 
 int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
