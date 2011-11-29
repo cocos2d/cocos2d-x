@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2008-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2008-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -27,7 +27,7 @@ public:
 	{
 		e_unknown,
 		e_above,
-		e_below,
+		e_below
 	};
 
 	OneSidedPlatform()
@@ -37,8 +37,8 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-20.0f, 0.0f), b2Vec2(20.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-20.0f, 0.0f), b2Vec2(20.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -66,7 +66,7 @@ public:
 			m_radius = 0.5f;
 			b2CircleShape shape;
 			shape.m_radius = m_radius;
-			m_character = body->CreateFixture(&shape, 1.0f);
+			m_character = body->CreateFixture(&shape, 20.0f);
 
 			body->SetLinearVelocity(b2Vec2(0.0f, -50.0f));
 
@@ -86,14 +86,14 @@ public:
 			return;
 		}
 
-		if (fixtureB != m_character && fixtureB != m_character)
+		if (fixtureB != m_platform && fixtureB != m_character)
 		{
 			return;
 		}
 
 		b2Vec2 position = m_character->GetBody()->GetPosition();
 
-		if (position.y < m_top)
+		if (position.y < m_top + m_radius - 3.0f * b2_linearSlop)
 		{
 			contact->SetEnabled(false);
 		}

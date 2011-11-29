@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2007-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -29,9 +29,55 @@ public:
 			b2BodyDef bd;
 			ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(50.0f, 0.0f), b2Vec2(-50.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(50.0f, 0.0f), b2Vec2(-50.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
+		}
+
+		// Gears co
+		{
+			b2CircleShape circle1;
+			circle1.m_radius = 1.0f;
+
+			b2PolygonShape box;
+			box.SetAsBox(0.5f, 5.0f);
+
+			b2CircleShape circle2;
+			circle2.m_radius = 2.0f;
+			
+			b2BodyDef bd1;
+			bd1.type = b2_staticBody;
+			bd1.position.Set(10.0f, 9.0f);
+			b2Body* body1 = m_world->CreateBody(&bd1);
+			body1->CreateFixture(&circle1, 0.0f);
+
+			b2BodyDef bd2;
+			bd2.type = b2_dynamicBody;
+			bd2.position.Set(10.0f, 8.0f);
+			b2Body* body2 = m_world->CreateBody(&bd2);
+			body2->CreateFixture(&box, 5.0f);
+
+			b2BodyDef bd3;
+			bd3.type = b2_dynamicBody;
+			bd3.position.Set(10.0f, 6.0f);
+			b2Body* body3 = m_world->CreateBody(&bd3);
+			body3->CreateFixture(&circle2, 5.0f);
+
+			b2RevoluteJointDef jd1;
+			jd1.Initialize(body2, body1, bd1.position);
+			b2Joint* joint1 = m_world->CreateJoint(&jd1);
+
+			b2RevoluteJointDef jd2;
+			jd2.Initialize(body2, body3, bd3.position);
+			b2Joint* joint2 = m_world->CreateJoint(&jd2);
+
+			b2GearJointDef jd4;
+			jd4.bodyA = body1;
+			jd4.bodyB = body3;
+			jd4.joint1 = joint1;
+			jd4.joint2 = joint2;
+			jd4.ratio = circle2.m_radius / circle1.m_radius;
+			m_world->CreateJoint(&jd4);
 		}
 
 		{
