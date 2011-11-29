@@ -25,14 +25,16 @@
  ****************************************************************************/
 
 #include "CCTimer.h"
-#include "LuaEngine.h"
+#if LUA_ENGINE
+#include "CCLuaEngine.h"
+#endif
 
 namespace cocos2d
 {
 
 CCTimer::CCTimer()
 : m_pTarget(NULL)
-, m_refID(0)
+, m_functionRefID(0)
 , m_fInterval(0.0f)
 , m_fElapsed(0.0f)
 , m_pfnSelector(NULL)
@@ -41,10 +43,12 @@ CCTimer::CCTimer()
 
 CCTimer::~CCTimer()
 {
-    if (m_refID)
+#if LUA_ENGINE
+    if (m_functionRefID)
     {
-        LuaEngine::sharedEngine()->releaseRefID(m_refID);
+        CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_functionRefID);
     }
+#endif
 }
 
 CCTimer* CCTimer::timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector)
@@ -77,19 +81,19 @@ CCTimer* CCTimer::timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSel
     return pTimer;
 }
 
-bool CCTimer::initWithScriptFunc(int newRefID, ccTime fSeconds)
+#if LUA_ENGINE
+bool CCTimer::initWithScriptFunc(int functionRefID, ccTime fSeconds)
 {
-    LuaEngine::sharedEngine()->retainRefID(newRefID);
-    if (m_refID)
+    if (m_functionRefID)
     {
-        LuaEngine::sharedEngine()->releaseRefID(m_refID);
+        CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_functionRefID);
     }
-    m_refID = newRefID;
+    m_functionRefID = functionRefID;
     m_fInterval = fSeconds;
     m_fElapsed = -1;
     return true;
 }
-
+#endif
 
 bool CCTimer::initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector)
 {
@@ -123,14 +127,15 @@ void CCTimer::update(ccTime dt)
             (m_pTarget->*m_pfnSelector)(m_fElapsed);
             m_fElapsed = 0;
         }
-        if (m_refID)
+#if LUA_ENGINE
+        if (m_functionRefID)
         {
-            LuaEngine::sharedEngine()->executeSchedule(m_refID, m_fElapsed);
+            CCLuaEngine::sharedEngine()->executeSchedule(m_functionRefID, m_fElapsed);
             m_fElapsed = 0;
         }
+#endif
     }
 }
 
-    
 } // namespace cocos2d
 
