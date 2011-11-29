@@ -102,7 +102,7 @@ namespace cocos2d{
 	}
 	bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
 	{
-		assert(FNTfile != NULL && strlen(FNTfile)!=0);
+		CCAssert(FNTfile != NULL && strlen(FNTfile)!=0, "");
 		m_pKerningDictionary = NULL;
 		this->parseConfigFile(FNTfile);
 		return true;
@@ -395,7 +395,7 @@ namespace cocos2d{
 
 	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 	{	
-		assert(theString != NULL);
+		CCAssert(theString != NULL, "");
 		CC_SAFE_RELEASE(m_pConfiguration);// allow re-init
 		m_pConfiguration = FNTConfigLoadFile(fntFile);
 		m_pConfiguration->retain();

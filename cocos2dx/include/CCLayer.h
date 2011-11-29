@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCTouchDelegateProtocol.h"
 #include "CCAccelerometerDelegate.h"
 #include "CCKeypadDelegate.h"
+#include "CCMutableArray.h"
 
 namespace   cocos2d {
 

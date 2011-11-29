@@ -152,11 +152,11 @@ namespace cocos2d
 
 	void CCSpriteBatchNode::addChild(CCNode *child, int zOrder, int tag)
 	{
-		assert(child != NULL);
+		CCAssert(child != NULL, "child should not be null");
 
 		CCSprite *pSprite = (CCSprite*)(child);
 		// check CCSprite is using the same texture id
-		assert(pSprite->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName());
+		CCAssert(pSprite->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName(), "");
 
 		CCNode::addChild(child, zOrder, tag);
 
@@ -177,8 +177,8 @@ namespace cocos2d
 	// override reorderChild
 	void CCSpriteBatchNode::reorderChild(CCNode *child, int zOrder)
 	{
-		assert(child != NULL);
-		assert(m_pChildren->containsObject(child));
+		CCAssert(child != NULL, "the child should not be null");
+		CCAssert(m_pChildren->containsObject(child), "sprite batch node should contain the child");
 
 		if (zOrder == child->getZOrder())
 		{
@@ -203,7 +203,7 @@ namespace cocos2d
 			return;
 		}
 
-		assert(m_pChildren->containsObject(pSprite));
+		CCAssert(m_pChildren->containsObject(pSprite), "sprite batch node should contain the child");
 
 		// cleanup before removing
 		removeSpriteFromAtlas(pSprite);
@@ -307,7 +307,7 @@ namespace cocos2d
 		{
 			// serious problems
 			CCLOG("cocos2d: WARNING: Not enough memory to resize the atlas");
-			assert(false);
+			CCAssert(false, "Not enough memory to resize the atla");
 		}
 	}
 
@@ -435,7 +435,7 @@ namespace cocos2d
 		}
 
 		// Should not happen. Error calculating Z on SpriteSheet
-		assert(0);
+		CCAssert(0, "should not run here");
 		return 0;
 	}
 

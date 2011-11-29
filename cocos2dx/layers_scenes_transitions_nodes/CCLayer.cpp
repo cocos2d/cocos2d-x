@@ -665,7 +665,7 @@ CCLayerMultiplex * CCLayerMultiplex::layerWithLayer(CCLayer* layer)
 }
 void CCLayerMultiplex::addLayer(CCLayer* layer)
 {
-	assert(m_pLayers);
+	CCAssert(m_pLayers, "");
 	m_pLayers->addObject(layer);
 }
 
