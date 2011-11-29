@@ -96,5 +96,10 @@
 			<type>2</type>
 			<locationURI>cocos2dx_root/Box2D/Dynamics</locationURI>
 		</link>
+		<link>
+			<name>Rope</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/Box2D/Rope</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

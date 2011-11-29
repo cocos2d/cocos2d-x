@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -33,29 +33,4 @@ bool b2ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 
 	bool collide = (filterA.maskBits & filterB.categoryBits) != 0 && (filterA.categoryBits & filterB.maskBits) != 0;
 	return collide;
-}
-
-b2DebugDraw::b2DebugDraw()
-{
-	m_drawFlags = 0;
-}
-
-void b2DebugDraw::SetFlags(uint32 flags)
-{
-	m_drawFlags = flags;
-}
-
-uint32 b2DebugDraw::GetFlags() const
-{
-	return m_drawFlags;
-}
-
-void b2DebugDraw::AppendFlags(uint32 flags)
-{
-	m_drawFlags |= flags;
-}
-
-void b2DebugDraw::ClearFlags(uint32 flags)
-{
-	m_drawFlags &= ~flags;
 }
