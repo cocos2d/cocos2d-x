@@ -51,7 +51,7 @@ OBJECTS = ../Collision/Shapes/b2ChainShape.o \
 ../Dynamics/b2Body.o \
 ../Dynamics/b2ContactManager.o \
 ../Dynamics/b2Fixture.o \
-vDynamics/b2Island.o \
+../Dynamics/b2Island.o \
 ../Dynamics/b2World.o \
 ../Dynamics/b2WorldCallbacks.o \
 ../Rope/b2Rope.o 
@@ -63,7 +63,7 @@ $(TARGET): $(OBJECTS)
 	$(AR) $(ARFLAGS) $(TARGET) $(OBJECTS)  
 	
 ####### Compile
-%.o: %.o
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 %.o: %.c
