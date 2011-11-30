@@ -9696,7 +9696,7 @@ static int tolua_Cocos2d_cocos2d_CCSprite_getHornorParentTransform00(lua_State* 
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHornorParentTransform'", NULL);
 #endif
   {
-   cocos2d::ccHonorParentTransform tolua_ret = (cocos2d::ccHonorParentTransform)  self->getHornorParentTransform();
+   cocos2d::ccHonorParentTransform tolua_ret = (cocos2d::ccHonorParentTransform)  self->getHonorParentTransform();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -9730,7 +9730,7 @@ static int tolua_Cocos2d_cocos2d_CCSprite_setHornorParentTransform00(lua_State* 
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHornorParentTransform'", NULL);
 #endif
   {
-   self->setHornorParentTransform(eHonorParentTransform);
+   self->setHonorParentTransform(eHonorParentTransform);
   }
  }
  return 0;
