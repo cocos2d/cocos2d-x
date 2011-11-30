@@ -9677,9 +9677,9 @@ static int tolua_Cocos2d_cocos2d_CCSprite_setSpriteBatchNode00(lua_State* tolua_
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getHornorParentTransform of class  cocos2d::CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCSprite_getHornorParentTransform00
-static int tolua_Cocos2d_cocos2d_CCSprite_getHornorParentTransform00(lua_State* tolua_S)
+/* method: getHonorParentTransform of class  cocos2d::CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCSprite_getHonorParentTransform00
+static int tolua_Cocos2d_cocos2d_CCSprite_getHonorParentTransform00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -9693,7 +9693,7 @@ static int tolua_Cocos2d_cocos2d_CCSprite_getHornorParentTransform00(lua_State* 
  {
   cocos2d::CCSprite* self = (cocos2d::CCSprite*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHornorParentTransform'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHonorParentTransform'", NULL);
 #endif
   {
    cocos2d::ccHonorParentTransform tolua_ret = (cocos2d::ccHonorParentTransform)  self->getHonorParentTransform();
@@ -9703,15 +9703,15 @@ static int tolua_Cocos2d_cocos2d_CCSprite_getHornorParentTransform00(lua_State* 
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getHornorParentTransform'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getHonorParentTransform'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setHornorParentTransform of class  cocos2d::CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCSprite_setHornorParentTransform00
-static int tolua_Cocos2d_cocos2d_CCSprite_setHornorParentTransform00(lua_State* tolua_S)
+/* method: setHonorParentTransform of class  cocos2d::CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCSprite_setHonorParentTransform00
+static int tolua_Cocos2d_cocos2d_CCSprite_setHonorParentTransform00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -9727,7 +9727,7 @@ static int tolua_Cocos2d_cocos2d_CCSprite_setHornorParentTransform00(lua_State* 
   cocos2d::CCSprite* self = (cocos2d::CCSprite*)  tolua_tousertype(tolua_S,1,0);
   cocos2d::ccHonorParentTransform eHonorParentTransform = ((cocos2d::ccHonorParentTransform) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHornorParentTransform'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHonorParentTransform'", NULL);
 #endif
   {
    self->setHonorParentTransform(eHonorParentTransform);
@@ -9736,7 +9736,7 @@ static int tolua_Cocos2d_cocos2d_CCSprite_setHornorParentTransform00(lua_State* 
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setHornorParentTransform'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'setHonorParentTransform'.",&tolua_err);
  return 0;
 #endif
 }
@@ -73168,8 +73168,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setTextureAtlas",tolua_Cocos2d_cocos2d_CCSprite_setTextureAtlas00);
     tolua_function(tolua_S,"getSpriteBatchNode",tolua_Cocos2d_cocos2d_CCSprite_getSpriteBatchNode00);
     tolua_function(tolua_S,"setSpriteBatchNode",tolua_Cocos2d_cocos2d_CCSprite_setSpriteBatchNode00);
-    tolua_function(tolua_S,"getHornorParentTransform",tolua_Cocos2d_cocos2d_CCSprite_getHornorParentTransform00);
-    tolua_function(tolua_S,"setHornorParentTransform",tolua_Cocos2d_cocos2d_CCSprite_setHornorParentTransform00);
+    tolua_function(tolua_S,"getHonorParentTransform",tolua_Cocos2d_cocos2d_CCSprite_getHonorParentTransform00);
+    tolua_function(tolua_S,"setHonorParentTransform",tolua_Cocos2d_cocos2d_CCSprite_setHonorParentTransform00);
     tolua_function(tolua_S,"getOffsetPositionInPixels",tolua_Cocos2d_cocos2d_CCSprite_getOffsetPositionInPixels00);
     tolua_function(tolua_S,"getBlendFunc",tolua_Cocos2d_cocos2d_CCSprite_getBlendFunc00);
     tolua_function(tolua_S,"setBlendFunc",tolua_Cocos2d_cocos2d_CCSprite_setBlendFunc00);
