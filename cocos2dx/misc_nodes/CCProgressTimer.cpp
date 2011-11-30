@@ -254,7 +254,8 @@ void CCProgressTimer::updateRadial(void)
 		//	If the alpha is zero then the hit point is top mid and the index is 0.
 		hit = topMid;
 		index = 0;
-    } else if (alpha == 1.f)
+	} else
+	if (alpha == 1.f)
 	{
 		//	More efficient since we don't always need to check intersection
 		//	If the alpha is one then the hit point is top mid and the index is 4.
@@ -281,7 +282,8 @@ void CCProgressTimer::updateRadial(void)
 			if (i == 0)
 			{
 				edgePtB = ccpLerp(edgePtA, edgePtB, 0.5f);
-            } else if (i == 4)
+			} else
+			if (i == 4)
 			{
 				edgePtA = ccpLerp(edgePtA, edgePtB, 0.5f);
 			}
@@ -436,15 +438,18 @@ void CCProgressTimer::updateBar(void)
 		{
 			m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y);
 			m_pVertexData[vIndexes[1] = 1].texCoords = tex2(tMin.x, tMax.y);
-        } else if (m_eType == kCCProgressTimerTypeHorizontalBarRL)
+		} else
+		if (m_eType == kCCProgressTimerTypeHorizontalBarRL)
 		{
 			m_pVertexData[vIndexes[0] = 2].texCoords = tex2(tMax.x, tMax.y);
 			m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMin.y);
-        } else if (m_eType == kCCProgressTimerTypeVerticalBarBT)
+		} else
+		if (m_eType == kCCProgressTimerTypeVerticalBarBT)
 		{
 			m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMin.x, tMax.y);
 			m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMax.y);
-        } else if (m_eType == kCCProgressTimerTypeVerticalBarTB)
+		} else
+		if (m_eType == kCCProgressTimerTypeVerticalBarTB)
 		{
 			m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y);
 			m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, tMin.y);
@@ -484,13 +489,16 @@ void CCProgressTimer::updateBar(void)
 	{
 		m_pVertexData[vIndexes[0] = 3].texCoords = tex2(tMin.x + (tMax.x - tMin.x) *alpha, tMax.y);
 		m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMin.x + (tMax.x - tMin.x) *alpha, tMin.y);
-    } else if (m_eType == kCCProgressTimerTypeHorizontalBarRL)
+	} else 
+	if (m_eType == kCCProgressTimerTypeHorizontalBarRL) 
 	{
 		m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMin.x + (tMax.x - tMin.x) * (1.f - alpha), tMin.y);
-    } else if (m_eType == kCCProgressTimerTypeVerticalBarBT)
+		m_pVertexData[vIndexes[1] = 0].texCoords = tex2(tMin.x + (tMax.x - tMin.x) * (1.f - alpha), tMax.y);
+	} else 
 	if (m_eType == kCCProgressTimerTypeVerticalBarBT) 
 	{
-    } else if (m_eType == kCCProgressTimerTypeVerticalBarTB)
+		m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y + (tMax.y - tMin.y) * (1.f - alpha));
+		m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, tMin.y + (tMax.y - tMin.y) * (1.f - alpha));
 	} else 
 	if (m_eType == kCCProgressTimerTypeVerticalBarTB) 
 	{
@@ -572,7 +580,8 @@ void CCProgressTimer::draw(void)
 	glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].texCoords);
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].colors);
 	
-    } else if (	m_eType == kCCProgressTimerTypeHorizontalBarLR ||
+	if(m_eType == kCCProgressTimerTypeRadialCCW || m_eType == kCCProgressTimerTypeRadialCW)
+	{
 		glDrawArrays(GL_TRIANGLE_FAN, 0, m_nVertexDataCount);
 	} else 
 	if (	m_eType == kCCProgressTimerTypeHorizontalBarLR ||

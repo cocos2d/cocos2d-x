@@ -620,9 +620,9 @@ void CCScheduler::tick(ccTime dt)
 	// updates with priority == 0
 	DL_FOREACH_SAFE(m_pUpdates0List, pEntry, pTmp)
 	{
-		{
 		if (pEntry->markedForDeletion)
-            //            this->removeUpdateFromHash(pEntry);
+		{
+			this->removeUpdateFromHash(pEntry);
 		}
 	}
 
