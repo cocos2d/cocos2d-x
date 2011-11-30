@@ -47,6 +47,7 @@ Lua Support FIX Readme
    * Remove needless class and functions from tolua++ .pkg files, improved performance
    * CCMenuItem support script function
    * CCScene script callback
+   * CCLayer touch & multi-touches events handler
 
 **How to use:**
 
@@ -116,6 +117,34 @@ Lua Support FIX Readme
 
     CCDirector:sharedDirector():runWithScene(myScene)
 
+- - -
+
+    -- use CCLayer touch event handler
+
+    local layer = CCLayer:node()
+    local function onTouch(event, x, y)
+        -- event: CCTOUCHBEGAN, CCTOUCHMOVED, CCTOUCHENDED, CCTOUCHCANCELLED
+        print(event, x, y)
+        if event == CCTOUCHBEGAN then return true end
+    end
+
+    layer:registerScriptTouchHandler(onTouch, false)
+
+- - -
+
+    -- use CCLayer multi-touches event handler
+
+    local layer = CCLayer:node()
+    local function onTouches(event, points)
+        -- event: CCTOUCHBEGAN, CCTOUCHMOVED, CCTOUCHENDED, CCTOUCHCANCELLED
+        print(event)
+
+        for i = 1, #points, 2 do
+            print(string.format("x: 0.2f, y: 0.2f", points[i], points[i + 1]))
+        end
+    end
+
+    layer:registerScriptTouchHandler(onTouches, true)
 
 **TODO:**
 
