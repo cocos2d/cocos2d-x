@@ -198,11 +198,14 @@ int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
     
     if (numArgs > 0)
     {
+        // [a1] [a2] refid_func func
+        //  -4   -3     -2       -1
+        // [a1] [a2] refid_func func [a1]
+        //  -5   -4     -3       -2   -1
         int lo = -2 - numArgs;
-        while (lo <= -3)
+        for (int i = 0; i < numArgs; i++)
         {
             tolua_pushvalue(m_state, lo);                           /* stack: refid_func func (...) */
-            ++lo;
         }
     }
     
@@ -215,13 +218,16 @@ int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
     }
     
     // get return value
-    if (!lua_isnumber(m_state, -1))
+    int ret = 0;
+    if (lua_isnumber(m_state, -1))
     {
-        lua_pop(m_state, 2);
-        return 0;
+        ret = lua_tointeger(m_state, -1);
+    }
+    else if (lua_isboolean(m_state, -1))
+    {
+        ret = lua_toboolean(m_state, -1);
     }
     
-    int ret = lua_tointeger(m_state, -1);
     lua_pop(m_state, 2);
     return ret;
 }
@@ -251,14 +257,39 @@ int CCLuaEngine::executeFunctionWithBooleanData(int functionRefId, bool data)
 }
 
 // functions for excute touch event
-int CCLuaEngine::executeTouchEvent(int functionRefId, CCTouch *pTouch)
+int CCLuaEngine::executeTouchEvent(int functionRefId, int eventType, CCTouch *pTouch)
 {
-    return false;
+    lua_pushinteger(m_state, eventType);
+    const CCPoint& pos = pTouch->locationInView(0);
+    lua_pushnumber(m_state, pos.x);
+    lua_pushnumber(m_state, pos.y);
+    int ret = executeFunctionByRefID(functionRefId, 3);
+    lua_pop(m_state, 3);
+    return ret;
 }
 
-int CCLuaEngine::executeTouchesEvent(int functionRefId, CCSet *pTouches)
+int CCLuaEngine::executeTouchesEvent(int functionRefId, int eventType, CCSet *pTouches)
 {
-    return false;
+    lua_pushinteger(m_state, eventType);
+    lua_newtable(m_state);
+    
+    CCSetIterator it = pTouches->begin();
+    CCTouch* touch;
+    int n = 1;
+    while (it != pTouches->end())
+    {
+        touch = (CCTouch*)*it;
+        const CCPoint& pos = touch->locationInView(0);
+        lua_pushnumber(m_state, pos.x);
+        lua_rawseti(m_state, -2, n++);
+        lua_pushnumber(m_state, pos.y);
+        lua_rawseti(m_state, -2, n++);
+        ++it;
+    }
+    
+    int ret = executeFunctionByRefID(functionRefId, 2);
+    lua_pop(m_state, 2);
+    return ret;
 }
 
 int CCLuaEngine::executeSchedule(int functionRefID, ccTime dt)

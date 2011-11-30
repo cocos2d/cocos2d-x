@@ -56,9 +56,13 @@ public:
     virtual void onEnter();
     virtual void onExit();
     virtual void onEnterTransitionDidFinish();
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-
+    
     // default implements are used to call script callback if exist
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
@@ -85,7 +89,12 @@ public:
      @since v0.8.0
      */
     virtual void registerWithTouchDispatcher(void);
-
+    
+#if LUA_ENGINE
+    void registerScriptTouchHandler(int functionRefID, bool isMultiTouches = false);
+    void unregisterScriptTouchHandler(void);
+#endif
+    
     /** whether or not it will receive Touch events.
      You can enable / disable touch events with this property.
      Only the touches of this node will be affected. This "method" is not propagated to it's children.
@@ -102,6 +111,14 @@ public:
      it's new in cocos2d-x
      */
     CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
+    
+#if LUA_ENGINE
+private:
+    int m_scriptTouchHandler;
+
+    int excuteScriptTouchHandler(int eventType, CCTouch *pTouch);
+    int excuteScriptTouchHandler(int eventType, CCSet *pTouches);
+#endif
 };
 
 // for the subclass of CCLayer, each has to implement the static "node" method
