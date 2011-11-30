@@ -189,7 +189,7 @@ public: inline void set##funName(const varType& var){ varName = var; }
 // platform depended macros
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
+#include <vld.h>
     #undef CC_DLL
     #if defined(_USRDLL)
         #define CC_DLL     __declspec(dllexport)
