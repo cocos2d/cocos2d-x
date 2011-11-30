@@ -94,6 +94,16 @@ modify_layout(){
     rm -f $APP_DIR/android/res/layout/helloworld_demo.xml
 }
 
+# android.bat of android 4.0 don't create res/drawable-hdpi res/drawable-ldpi and res/drawable-mdpi.
+# These work are done in ADT
+copy_icon(){
+    if [ ! -d $APP_DIR/android/res/drawable-hdpi ]; then
+        cp -r $HELLOWORLD_ROOT/android/res/drawable-hdpi $APP_DIR/android/res
+        cp -r $HELLOWORLD_ROOT/android/res/drawable-ldpi $APP_DIR/android/res
+        cp -r $HELLOWORLD_ROOT/android/res/drawable-mdpi $APP_DIR/android/res
+    fi
+}
+
 
 move_files_into_android
 copy_cpp_h_from_helloworld
@@ -103,3 +113,4 @@ copy_build_native
 modify_androidmanifest
 modify_applicationdemo
 modify_layout
+copy_icon

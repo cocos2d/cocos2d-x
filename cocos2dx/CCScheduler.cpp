@@ -337,7 +337,7 @@ void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriori
 	if (pHashElement)
 	{
 #if COCOS2D_DEBUG >= 1
-		CCAssert(pHashElement->entry->markedForDeletion);
+		CCAssert(pHashElement->entry->markedForDeletion,"");
 #endif
 		// TODO: check if priority has changed!
 
@@ -349,8 +349,9 @@ void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriori
 	// is an special list for updates with priority 0
 	if (nPriority == 0)
 	{
-    } else if (nPriority < 0)
-    } else if (nPriority < 0)
+		appendIn(&m_pUpdates0List, pTarget, bPaused);
+	} else
+	if (nPriority < 0)
 	{
 		priorityIn(&m_pUpdatesNegList, pTarget, nPriority, bPaused);
 	}
@@ -619,8 +620,8 @@ void CCScheduler::tick(ccTime dt)
 	// updates with priority == 0
 	DL_FOREACH_SAFE(m_pUpdates0List, pEntry, pTmp)
 	{
+		{
 		if (pEntry->markedForDeletion)
-			this->removeUpdateFromHash(pEntry);
             //            this->removeUpdateFromHash(pEntry);
 		}
 	}

@@ -1591,8 +1591,9 @@ std::string SpriteBatchNodeNewTexture::title()
 //
 //------------------------------------------------------------------
 
-SpriteFrameTest::SpriteFrameTest()
+void SpriteFrameTest::onEnter()
 {
+    SpriteTestDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // IMPORTANT:
@@ -1608,7 +1609,7 @@ SpriteFrameTest::SpriteFrameTest()
     //
     m_pSprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
     m_pSprite1->setPosition( ccp( s.width/2-80, s.height/2) );
-    
+
     CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
     spritebatch->addChild(m_pSprite1);
     addChild(spritebatch);
@@ -1636,7 +1637,7 @@ SpriteFrameTest::SpriteFrameTest()
     m_pSprite2 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
     m_pSprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
     addChild(m_pSprite2);
-    
+
 
     CCMutableArray<CCSpriteFrame*>* moreFrames = new CCMutableArray<CCSpriteFrame*>(20);
     for(int i = 1; i < 15; i++) 
@@ -1652,12 +1653,12 @@ SpriteFrameTest::SpriteFrameTest()
         CCSpriteFrame *frame = cache->spriteFrameByName(str);
         moreFrames->addObject(frame);
     }
-    
+
     // append frames from another batch
     moreFrames->addObjectsFromArray(animFrames);
     CCAnimation *animMixed = CCAnimation::animationWithFrames(moreFrames);
 
-    
+
     m_pSprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed, false) ) );
 
     animFrames->release();
@@ -1678,10 +1679,6 @@ void SpriteFrameTest::onExit()
     cache->removeSpriteFramesFromFile("animations/grossini.plist");
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
     cache->removeSpriteFramesFromFile("animations/grossini_blue.plist");
-}
-
-SpriteFrameTest::~SpriteFrameTest()
-{
 }
 
 std::string SpriteFrameTest::title()
@@ -1790,8 +1787,9 @@ void SpriteFrameAliasNameTest::onEnter()
     sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(14.0f, animation, false)));
 }
 
-SpriteFrameAliasNameTest::~SpriteFrameAliasNameTest()
+void SpriteFrameAliasNameTest::onExit()
 {
+    SpriteTestDemo::onExit();
     CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("animations/grossini-aliases.plist");
 }
 

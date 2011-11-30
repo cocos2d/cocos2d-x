@@ -67,7 +67,7 @@ class CCSprite : public CCNode
 	bool isFlipX(void);
 	bool isFlipY(void);
 	void updateColor(void);
-
+	
 	void setOpacity(GLubyte opacity);
 	GLubyte getOpacity(void);
 	void setColor(ccColor3B color3);
@@ -75,12 +75,12 @@ class CCSprite : public CCNode
 	void setIsOpacityModifyRGB(bool bValue);
 	bool getIsOpacityModifyRGB(void);
 
-   	void setTexture(CCTexture2D *texture);
+   void setTexture(CCTexture2D *texture);
 	CCTexture2D* getTexture(void);
 
 	void updateTransform(void);
 	void useSelfRender(void);
-    void setTextureRect(CCRect rect);
+        void setTextureRect(CCRect rect);
 	void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
 	void useBatchNode(CCSpriteBatchNode *batchNode);
 	void setDisplayFrame(CCSpriteFrame *pNewFrame);
