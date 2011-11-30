@@ -50,8 +50,8 @@ class  CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 	CCSpriteBatchNode* getSpriteBatchNode(void);
 	void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
 
-	ccHonorParentTransform getHornorParentTransform(void);
-	void setHornorParentTransform(ccHonorParentTransform eHonorParentTransform);
+	ccHonorParentTransform getHonorParentTransform(void);
+	void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform);
 
 	CCPoint getOffsetPositionInPixels(void);
 
