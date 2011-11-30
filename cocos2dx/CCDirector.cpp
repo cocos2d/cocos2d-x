@@ -822,8 +822,8 @@ void CCDirector::setContentScaleFactor(CGFloat scaleFactor)
 {
 	if (scaleFactor != m_fContentScaleFactor)
 	{
+		m_fContentScaleFactor = scaleFactor;
 		m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * scaleFactor, m_obWinSizeInPoints.height * scaleFactor);
-                                         m_obWinSizeInPoints.height * scaleFactor);
 
 		if (m_pobOpenGLView)
 		{
@@ -879,13 +879,13 @@ void CCDirector::applyOrientation(void)
 	}
 }
 
-    return m_eDeviceOrientationIOS;
-#endif
+ccDeviceOrientation CCDirector::getDeviceOrientation(void)
+{
 	return m_eDeviceOrientation;
 }
 
-#endif
-
+void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
+{
 	ccDeviceOrientation eNewOrientation;
 
 	eNewOrientation = (ccDeviceOrientation)CCApplication::sharedApplication().setOrientation(
@@ -899,9 +899,9 @@ void CCDirector::applyOrientation(void)
     {
         // this logic is only run on win32 now
         // On win32,the return value of CCApplication::setDeviceOrientation is always kCCDeviceOrientationPortrait
+        // So,we should calculate the Projection and window size again.
+        m_obWinSizeInPoints = m_pobOpenGLView->getSize();
         m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
-                                         m_obWinSizeInPoints.height * m_fContentScaleFactor);
         setProjection(m_eProjection);
     }
 }
