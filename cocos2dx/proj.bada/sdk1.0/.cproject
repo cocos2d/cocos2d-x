@@ -41,6 +41,11 @@
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
 </option>
+<option id="osp.gnu.simul.cpp.compiler.simual.so.option.preprocessor.def.456466980" name="Defined symbols (-D)" superClass="osp.gnu.simul.cpp.compiler.simual.so.option.preprocessor.def" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="_DEBUG"/>
+<listOptionValue builtIn="false" value="SHP"/>
+<listOptionValue builtIn="false" value="BUILD_DLL"/>
+</option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1712318022" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.c.compiler.so.simul.1349044647" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.simul.c.compiler.so.simul">
@@ -722,6 +727,10 @@
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
 </option>
+<option id="osp.gnu.target.cpp.compiler.debug.so.option.preprocessor.def.543378194" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.debug.so.option.preprocessor.def" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="SHP"/>
+<listOptionValue builtIn="false" value="_DEBUG"/>
+</option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.802852259" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.debug.871912230" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.debug">
@@ -1398,6 +1407,9 @@
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
+</option>
+<option id="osp.gnu.target.cpp.compiler.release.so.option.preprocessor.def.1417023131" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.release.so.option.preprocessor.def" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="SHP"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1146129724" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
