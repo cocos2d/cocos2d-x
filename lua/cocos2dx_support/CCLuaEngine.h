@@ -55,10 +55,6 @@ public:
         return m_paused;
     }
     
-    inline int getRefID(void) {
-        return m_refID;
-    }
-    
     inline int getEntryID(void) {
         return m_entryID;
     }
@@ -80,6 +76,14 @@ private:
     int         m_functionRefID;    // Lua function reference
     int         m_entryID;
     bool        m_isMarkDeleted;
+};
+
+
+// Lua support for touch events
+class CCTouchEventEntry : public CCObject
+{
+public:
+    static CCTouchEventEntry* entryWithFunctionRefID(int functionRefID);
 };
 
 
@@ -133,8 +137,8 @@ public:
     int executeFunctionWithBooleanData(int functionRefId, bool data);
     
     // functions for excute touch event
-    int executeTouchEvent(int functionRefId, cocos2d::CCTouch *pTouch);
-    int executeTouchesEvent(int functionRefId, cocos2d::CCSet *pTouches);
+    int executeTouchEvent(int functionRefId, int eventType, cocos2d::CCTouch *pTouch);
+    int executeTouchesEvent(int functionRefId, int eventType, cocos2d::CCSet *pTouches);
     
     // execute a schedule function
     int executeSchedule(int functionRefID, cocos2d::ccTime dt);
