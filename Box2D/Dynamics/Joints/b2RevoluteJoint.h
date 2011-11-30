@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -52,13 +52,13 @@ struct b2RevoluteJointDef : public b2JointDef
 	/// anchor point.
 	void Initialize(b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor);
 
-	/// The local anchor point relative to body1's origin.
+	/// The local anchor point relative to bodyA's origin.
 	b2Vec2 localAnchorA;
 
-	/// The local anchor point relative to body2's origin.
+	/// The local anchor point relative to bodyB's origin.
 	b2Vec2 localAnchorB;
 
-	/// The body2 angle minus body1 angle in the reference state (radians).
+	/// The bodyB angle minus bodyA angle in the reference state (radians).
 	float32 referenceAngle;
 
 	/// A flag to enable joint limits.
@@ -93,8 +93,14 @@ public:
 	b2Vec2 GetAnchorA() const;
 	b2Vec2 GetAnchorB() const;
 
-	b2Vec2 GetReactionForce(float32 inv_dt) const;
-	float32 GetReactionTorque(float32 inv_dt) const;
+	/// The local anchor point relative to bodyA's origin.
+	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
+
+	/// The local anchor point relative to bodyB's origin.
+	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
+
+	/// Get the reference angle.
+	float32 GetReferenceAngle() const { return m_referenceAngle; }
 
 	/// Get the current joint angle in radians.
 	float32 GetJointAngle() const;
@@ -131,9 +137,22 @@ public:
 
 	/// Set the maximum motor torque, usually in N-m.
 	void SetMaxMotorTorque(float32 torque);
+	float32 GetMaxMotorTorque() const { return m_maxMotorTorque; }
 
-	/// Get the current motor torque, usually in N-m.
-	float32 GetMotorTorque() const;
+	/// Get the reaction force given the inverse time step.
+	/// Unit is N.
+	b2Vec2 GetReactionForce(float32 inv_dt) const;
+
+	/// Get the reaction torque due to the joint limit given the inverse time step.
+	/// Unit is N*m.
+	float32 GetReactionTorque(float32 inv_dt) const;
+
+	/// Get the current motor torque given the inverse time step.
+	/// Unit is N*m.
+	float32 GetMotorTorque(float32 inv_dt) const;
+
+	/// Dump to b2Log.
+	void Dump();
 
 protected:
 	
@@ -142,19 +161,16 @@ protected:
 
 	b2RevoluteJoint(const b2RevoluteJointDef* def);
 
-	void InitVelocityConstraints(const b2TimeStep& step);
-	void SolveVelocityConstraints(const b2TimeStep& step);
+	void InitVelocityConstraints(const b2SolverData& data);
+	void SolveVelocityConstraints(const b2SolverData& data);
+	bool SolvePositionConstraints(const b2SolverData& data);
 
-	bool SolvePositionConstraints(float32 baumgarte);
-
-	b2Vec2 m_localAnchor1;	// relative
-	b2Vec2 m_localAnchor2;
+	// Solver shared
+	b2Vec2 m_localAnchorA;
+	b2Vec2 m_localAnchorB;
 	b2Vec3 m_impulse;
 	float32 m_motorImpulse;
 
-	b2Mat33 m_mass;			// effective mass for point-to-point constraint.
-	float32 m_motorMass;	// effective mass for motor/limit angular constraint.
-	
 	bool m_enableMotor;
 	float32 m_maxMotorTorque;
 	float32 m_motorSpeed;
@@ -163,6 +179,20 @@ protected:
 	float32 m_referenceAngle;
 	float32 m_lowerAngle;
 	float32 m_upperAngle;
+
+	// Solver temp
+	int32 m_indexA;
+	int32 m_indexB;
+	b2Vec2 m_rA;
+	b2Vec2 m_rB;
+	b2Vec2 m_localCenterA;
+	b2Vec2 m_localCenterB;
+	float32 m_invMassA;
+	float32 m_invMassB;
+	float32 m_invIA;
+	float32 m_invIB;
+	b2Mat33 m_mass;			// effective mass for point-to-point constraint.
+	float32 m_motorMass;	// effective mass for motor/limit angular constraint.
 	b2LimitState m_limitState;
 };
 

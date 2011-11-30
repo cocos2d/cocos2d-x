@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -30,8 +30,8 @@ public:
 	{
 		// Ground body
 		{
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-50.0f, 0.0f), b2Vec2(50.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-50.0f, 0.0f), b2Vec2(50.0f, 0.0f));
 
 			b2FixtureDef sd;
 			sd.shape = &shape;;
@@ -126,13 +126,13 @@ public:
 		// We are going to destroy some bodies according to contact
 		// points. We must buffer the bodies that should be destroyed
 		// because they may belong to multiple contact points.
-		const int k_maxNuke = 6;
+		const int32 k_maxNuke = 6;
 		b2Body* nuke[k_maxNuke];
-		int nukeCount = 0;
+		int32 nukeCount = 0;
 
 		// Traverse the contact results. Destroy bodies that
 		// are touching heavier bodies.
-		for (int i = 0; i < m_pointCount; ++i)
+		for (int32 i = 0; i < m_pointCount; ++i)
 		{
 			ContactPoint* point = m_points + i;
 
@@ -163,7 +163,7 @@ public:
 		std::sort(nuke, nuke + nukeCount);
 
 		// Destroy the bodies, skipping duplicates.
-		int i = 0;
+		int32 i = 0;
 		while (i < nukeCount)
 		{
 			b2Body* b = nuke[i++];
@@ -172,7 +172,10 @@ public:
 				++i;
 			}
 
-			m_world->DestroyBody(b);
+			if (b != m_bomb)
+			{
+				m_world->DestroyBody(b);
+			}
 		}
 	}
 

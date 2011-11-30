@@ -117,13 +117,13 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
 
 void GLESDebugDraw::DrawTransform(const b2Transform& xf)
 {
-	b2Vec2 p1 = xf.position, p2;
+	b2Vec2 p1 = xf.p, p2;
 	const float32 k_axisScale = 0.4f;
 
-	p2 = p1 + k_axisScale * xf.R.col1;
+	p2 = p1 + k_axisScale * xf.q.GetXAxis();
 	DrawSegment(p1,p2,b2Color(1,0,0));
 	
-	p2 = p1 + k_axisScale * xf.R.col2;
+	p2 = p1 + k_axisScale * xf.q.GetYAxis();
 	DrawSegment(p1,p2,b2Color(0,1,0));
 }
 

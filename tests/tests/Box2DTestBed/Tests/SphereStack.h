@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -34,8 +34,8 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -43,7 +43,7 @@ public:
 			b2CircleShape shape;
 			shape.m_radius = 1.0f;
 
-			for (int i = 0; i < e_count; ++i)
+			for (int32 i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -53,7 +53,7 @@ public:
 
 				m_bodies[i]->CreateFixture(&shape, 1.0f);
 
-				//m_bodies[i]->SetLinearVelocity(b2Vec2(0.0f, -100.0f));
+				m_bodies[i]->SetLinearVelocity(b2Vec2(0.0f, -50.0f));
 			}
 		}
 	}
@@ -62,12 +62,12 @@ public:
 	{
 		Test::Step(settings);
 
-		//for (int i = 0; i < e_count; ++i)
+		//for (int32 i = 0; i < e_count; ++i)
 		//{
 		//	printf("%g ", m_bodies[i]->GetWorldCenter().y);
 		//}
 
-		//for (int i = 0; i < e_count; ++i)
+		//for (int32 i = 0; i < e_count; ++i)
 		//{
 		//	printf("%g ", m_bodies[i]->GetLinearVelocity().y);
 		//}
