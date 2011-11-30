@@ -223,8 +223,7 @@ public:
 class SpriteFrameTest: public SpriteTestDemo
 {
 public:
-	SpriteFrameTest();
-	~SpriteFrameTest();
+    virtual void onEnter();
 	virtual void onExit();
 	virtual std::string title();
     virtual std::string subtitle();
@@ -241,7 +240,7 @@ class SpriteFrameAliasNameTest : public SpriteTestDemo
 {
 public:
     virtual void onEnter();
-    ~SpriteFrameAliasNameTest();
+    virtual void onExit();
     virtual std::string title();
     virtual std::string subtitle();
 };
