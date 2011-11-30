@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2010 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2010 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -18,8 +18,6 @@
 
 #ifndef EDGE_SHAPES_H
 #define EDGE_SHAPES_H
-
-#include <string.h>
 
 class EdgeShapesCallback : public b2RayCastCallback
 {
@@ -50,7 +48,7 @@ public:
 
 	enum
 	{
-		e_maxBodies = 256,
+		e_maxBodies = 256
 	};
 
 	EdgeShapes()
@@ -62,13 +60,13 @@ public:
 
 			float32 x1 = -20.0f;
 			float32 y1 = 2.0f * cosf(x1 / 10.0f * b2_pi);
-			for (int i = 0; i < 80; ++i)
+			for (int32 i = 0; i < 80; ++i)
 			{
 				float32 x2 = x1 + 0.5f;
 				float32 y2 = 2.0f * cosf(x2 / 10.0f * b2_pi);
 
-				b2PolygonShape shape;
-				shape.SetAsEdge(b2Vec2(x1, y1), b2Vec2(x2, y2));
+				b2EdgeShape shape;
+				shape.Set(b2Vec2(x1, y1), b2Vec2(x2, y2));
 				ground->CreateFixture(&shape, 0.0f);
 
 				x1 = x2;
@@ -94,8 +92,8 @@ public:
 
 		{
 			float32 w = 1.0f;
-			float32 b = w / (2.0f + sqrtf(2.0f));
-			float32 s = sqrtf(2.0f) * b;
+			float32 b = w / (2.0f + b2Sqrt(2.0f));
+			float32 s = b2Sqrt(2.0f) * b;
 
 			b2Vec2 vertices[8];
 			vertices[0].Set(0.5f * s, 0.0f);
@@ -124,7 +122,7 @@ public:
 		m_angle = 0.0f;
 	}
 
-	void Create(int index)
+	void Create(int32 index)
 	{
 		if (m_bodies[m_bodyIndex] != NULL)
 		{
@@ -169,7 +167,7 @@ public:
 
 	void DestroyBody()
 	{
-		for (int i = 0; i < e_maxBodies; ++i)
+		for (int32 i = 0; i < e_maxBodies; ++i)
 		{
 			if (m_bodies[i] != NULL)
 			{
@@ -200,6 +198,8 @@ public:
 
 	void Step(Settings* settings)
 	{
+		bool advanceRay = settings->pause == 0 || settings->singleStep;
+
 		Test::Step(settings);
 		m_debugDraw.DrawString(5, m_textLine, "Press 1-5 to drop stuff");
 		m_textLine += 15;
@@ -227,7 +227,10 @@ public:
 			m_debugDraw.DrawSegment(point1, point2, b2Color(0.8f, 0.8f, 0.8f));
 		}
 
-		m_angle += 0.25f * b2_pi / 180.0f;
+		if (advanceRay)
+		{
+			m_angle += 0.25f * b2_pi / 180.0f;
+		}
 	}
 
 	static Test* Create()
@@ -235,7 +238,7 @@ public:
 		return new EdgeShapes;
 	}
 
-	int m_bodyIndex;
+	int32 m_bodyIndex;
 	b2Body* m_bodies[e_maxBodies];
 	b2PolygonShape m_polygons[4];
 	b2CircleShape m_circle;

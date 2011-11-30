@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -20,6 +20,8 @@
 #define RAY_CAST_H
 
 // This test demonstrates how to use the world ray-cast feature.
+// NOTE: we are intentionally filtering one of the polygons, therefore
+// the ray will always miss one type of polygon.
 
 // This callback finds the closest hit. Polygon 0 is filtered.
 class RayCastClosestCallback : public b2RayCastCallback
@@ -37,7 +39,7 @@ public:
 		void* userData = body->GetUserData();
 		if (userData)
 		{
-			int index = *(int*)userData;
+			int32 index = *(int32*)userData;
 			if (index == 0)
 			{
 				// filter
@@ -72,7 +74,7 @@ public:
 		void* userData = body->GetUserData();
 		if (userData)
 		{
-			int index = *(int*)userData;
+			int32 index = *(int32*)userData;
 			if (index == 0)
 			{
 				// filter
@@ -109,11 +111,10 @@ public:
 		const b2Vec2& normal, float32 fraction)
 	{
 		b2Body* body = fixture->GetBody();
-		//int index = 0;
 		void* userData = body->GetUserData();
 		if (userData)
 		{
-			int index = *(int*)userData;
+			int32 index = *(int32*)userData;
 			if (index == 0)
 			{
 				// filter
@@ -137,7 +138,7 @@ public:
 
 	b2Vec2 m_points[e_maxCount];
 	b2Vec2 m_normals[e_maxCount];
-	int m_count;
+	int32 m_count;
 };
 
 
@@ -147,7 +148,7 @@ public:
 
 	enum
 	{
-		e_maxBodies = 256,
+		e_maxBodies = 256
 	};
 
 	enum Mode
@@ -164,8 +165,8 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -187,8 +188,8 @@ public:
 
 		{
 			float32 w = 1.0f;
-			float32 b = w / (2.0f + sqrtf(2.0f));
-			float32 s = sqrtf(2.0f) * b;
+			float32 b = w / (2.0f + b2Sqrt(2.0f));
+			float32 s = b2Sqrt(2.0f) * b;
 
 			b2Vec2 vertices[8];
 			vertices[0].Set(0.5f * s, 0.0f);
@@ -219,7 +220,7 @@ public:
 		m_mode = e_closest;
 	}
 
-	void Create(int index)
+	void Create(int32 index)
 	{
 		if (m_bodies[m_bodyIndex] != NULL)
 		{
@@ -265,7 +266,7 @@ public:
 
 	void DestroyBody()
 	{
-		for (int i = 0; i < e_maxBodies; ++i)
+		for (int32 i = 0; i < e_maxBodies; ++i)
 		{
 			if (m_bodies[i] != NULL)
 			{
@@ -310,6 +311,8 @@ public:
 
 	void Step(Settings* settings)
 	{
+		bool advanceRay = settings->pause == 0 || settings->singleStep;
+
 		Test::Step(settings);
 		m_debugDraw.DrawString(5, m_textLine, "Press 1-5 to drop stuff, m to change the mode");
 		m_textLine += 15;
@@ -361,7 +364,7 @@ public:
 			m_world->RayCast(&callback, point1, point2);
 			m_debugDraw.DrawSegment(point1, point2, b2Color(0.8f, 0.8f, 0.8f));
 
-			for (int i = 0; i < callback.m_count; ++i)
+			for (int32 i = 0; i < callback.m_count; ++i)
 			{
 				b2Vec2 p = callback.m_points[i];
 				b2Vec2 n = callback.m_normals[i];
@@ -372,7 +375,50 @@ public:
 			}
 		}
 
-		m_angle += 0.25f * b2_pi / 180.0f;
+		if (advanceRay)
+		{
+			m_angle += 0.25f * b2_pi / 180.0f;
+		}
+
+#if 0
+		// This case was failing.
+		{
+			b2Vec2 vertices[4];
+			//vertices[0].Set(-22.875f, -3.0f);
+			//vertices[1].Set(22.875f, -3.0f);
+			//vertices[2].Set(22.875f, 3.0f);
+			//vertices[3].Set(-22.875f, 3.0f);
+
+			b2PolygonShape shape;
+			//shape.Set(vertices, 4);
+			shape.SetAsBox(22.875f, 3.0f);
+
+			b2RayCastInput input;
+			input.p1.Set(10.2725f,1.71372f);
+			input.p2.Set(10.2353f,2.21807f);
+			//input.maxFraction = 0.567623f;
+			input.maxFraction = 0.56762173f;
+
+			b2Transform xf;
+			xf.SetIdentity();
+			xf.position.Set(23.0f, 5.0f);
+
+			b2RayCastOutput output;
+			bool hit;
+			hit = shape.RayCast(&output, input, xf);
+			hit = false;
+
+			b2Color color(1.0f, 1.0f, 1.0f);
+			b2Vec2 vs[4];
+			for (int32 i = 0; i < 4; ++i)
+			{
+				vs[i] = b2Mul(xf, shape.m_vertices[i]);
+			}
+
+			m_debugDraw.DrawPolygon(vs, 4, color);
+			m_debugDraw.DrawSegment(input.p1, input.p2, color);
+		}
+#endif
 	}
 
 	static Test* Create()
@@ -380,9 +426,9 @@ public:
 		return new RayCast;
 	}
 
-	int m_bodyIndex;
+	int32 m_bodyIndex;
 	b2Body* m_bodies[e_maxBodies];
-	int m_userData[e_maxBodies];
+	int32 m_userData[e_maxBodies];
 	b2PolygonShape m_polygons[4];
 	b2CircleShape m_circle;
 

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -19,13 +19,17 @@
 #ifndef CANTILEVER_H
 #define CANTILEVER_H
 
+// It is difficult to make a cantilever made of links completely rigid with weld joints.
+// You will have to use a high number of iterations to make them stiff.
+// So why not go ahead and use soft weld joints? They behave like a revolute
+// joint with a rotational spring.
 class Cantilever : public Test
 {
 public:
 
 	enum
 	{
-		e_count = 8,
+		e_count = 8
 	};
 
 	Cantilever()
@@ -35,8 +39,8 @@ public:
 			b2BodyDef bd;
 			ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -51,7 +55,7 @@ public:
 			b2WeldJointDef jd;
 
 			b2Body* prevBody = ground;
-			for (int i = 0; i < e_count; ++i)
+			for (int32 i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -69,25 +73,26 @@ public:
 
 		{
 			b2PolygonShape shape;
-			shape.SetAsBox(0.5f, 0.125f);
+			shape.SetAsBox(1.0f, 0.125f);
 
 			b2FixtureDef fd;
 			fd.shape = &shape;
 			fd.density = 20.0f;
 
 			b2WeldJointDef jd;
+			jd.frequencyHz = 5.0f;
+			jd.dampingRatio = 0.7f;
 
 			b2Body* prevBody = ground;
-			for (int i = 0; i < e_count; ++i)
+			for (int32 i = 0; i < 3; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
-				bd.position.Set(-14.5f + 1.0f * i, 15.0f);
-				bd.inertiaScale = 10.0f;
+				bd.position.Set(-14.0f + 2.0f * i, 15.0f);
 				b2Body* body = m_world->CreateBody(&bd);
 				body->CreateFixture(&fd);
 
-				b2Vec2 anchor(-15.0f + 1.0f * i, 15.0f);
+				b2Vec2 anchor(-15.0f + 2.0f * i, 15.0f);
 				jd.Initialize(prevBody, body, anchor);
 				m_world->CreateJoint(&jd);
 
@@ -106,7 +111,7 @@ public:
 			b2WeldJointDef jd;
 
 			b2Body* prevBody = ground;
-			for (int i = 0; i < e_count; ++i)
+			for (int32 i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -134,14 +139,15 @@ public:
 			fd.density = 20.0f;
 
 			b2WeldJointDef jd;
+			jd.frequencyHz = 8.0f;
+			jd.dampingRatio = 0.7f;
 
 			b2Body* prevBody = ground;
-			for (int i = 0; i < e_count; ++i)
+			for (int32 i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
 				bd.position.Set(5.5f + 1.0f * i, 10.0f);
-				bd.inertiaScale = 10.0f;
 				b2Body* body = m_world->CreateBody(&bd);
 				body->CreateFixture(&fd);
 
@@ -156,7 +162,7 @@ public:
 			}
 		}
 
-		for (int i = 0; i < 2; ++i)
+		for (int32 i = 0; i < 2; ++i)
 		{
 			b2Vec2 vertices[3];
 			vertices[0].Set(-0.5f, 0.0f);
@@ -177,7 +183,7 @@ public:
 			body->CreateFixture(&fd);
 		}
 
-		for (int i = 0; i < 2; ++i)
+		for (int32 i = 0; i < 2; ++i)
 		{
 			b2CircleShape shape;
 			shape.m_radius = 0.5f;
