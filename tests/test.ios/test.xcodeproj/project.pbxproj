@@ -933,8 +933,8 @@
 		BF31E17312E979A100D4F513 /* CocosDenshionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshionTest.h; sourceTree = "<group>"; };
 		BF31E17512E979A100D4F513 /* CocosNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosNodeTest.cpp; sourceTree = "<group>"; };
 		BF31E17612E979A100D4F513 /* CocosNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodeTest.h; sourceTree = "<group>"; };
-		BF31E17712E979A100D4F513 /* controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = controller.cpp; sourceTree = "<group>"; };
-		BF31E17812E979A100D4F513 /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controller.h; sourceTree = "<group>"; };
+		BF31E17712E979A100D4F513 /* controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = controller.cpp; path = tests/controller.cpp; sourceTree = "<group>"; };
+		BF31E17812E979A100D4F513 /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controller.h; path = tests/controller.h; sourceTree = "<group>"; };
 		BF31E17A12E979A100D4F513 /* DrawPrimitivesTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawPrimitivesTest.cpp; sourceTree = "<group>"; };
 		BF31E17B12E979A100D4F513 /* DrawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPrimitivesTest.h; sourceTree = "<group>"; };
 		BF31E17D12E979A100D4F513 /* EaseActionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EaseActionsTest.cpp; sourceTree = "<group>"; };
@@ -971,10 +971,10 @@
 		BF31E1AB12E979A200D4F513 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchedulerTest.h; sourceTree = "<group>"; };
 		BF31E1AD12E979A200D4F513 /* SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteTest.cpp; sourceTree = "<group>"; };
 		BF31E1AE12E979A200D4F513 /* SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteTest.h; sourceTree = "<group>"; };
-		BF31E1AF12E979A200D4F513 /* testBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testBasic.cpp; sourceTree = "<group>"; };
-		BF31E1B012E979A200D4F513 /* testBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBasic.h; sourceTree = "<group>"; };
-		BF31E1B112E979A200D4F513 /* testResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testResource.h; sourceTree = "<group>"; };
-		BF31E1B212E979A200D4F513 /* tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tests.h; sourceTree = "<group>"; };
+		BF31E1AF12E979A200D4F513 /* testBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testBasic.cpp; path = tests/testBasic.cpp; sourceTree = "<group>"; };
+		BF31E1B012E979A200D4F513 /* testBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testBasic.h; path = tests/testBasic.h; sourceTree = "<group>"; };
+		BF31E1B112E979A200D4F513 /* testResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testResource.h; path = tests/testResource.h; sourceTree = "<group>"; };
+		BF31E1B212E979A200D4F513 /* tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tests.h; path = tests/tests.h; sourceTree = "<group>"; };
 		BF31E1B412E979A200D4F513 /* TileMapTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest.cpp; sourceTree = "<group>"; };
 		BF31E1B512E979A200D4F513 /* TileMapTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapTest.h; sourceTree = "<group>"; };
 		BF31E1B712E979A200D4F513 /* Ball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ball.cpp; sourceTree = "<group>"; };
@@ -1719,8 +1719,7 @@
 				BF1B49EE13FE04C300838E41 /* CurrentLanguageTest.h */,
 				BF1B49EF13FE04C300838E41 /* CurrentLanguageTest.cpp */,
 			);
-			name = CurrentLanguageTest;
-			path = tests/CurrentLanguageTest;
+			path = CurrentLanguageTest;
 			sourceTree = "<group>";
 		};
 		BF1E7A4213E2629800C2D68B /* FontTest */ = {
@@ -1816,7 +1815,12 @@
 		BF31DF1312E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */,
+				BF31E1AF12E979A200D4F513 /* testBasic.cpp */,
+				BF31E1B012E979A200D4F513 /* testBasic.h */,
+				BF31E1B112E979A200D4F513 /* testResource.h */,
+				BF31E1B212E979A200D4F513 /* tests.h */,
+				BF31E17812E979A100D4F513 /* controller.h */,
+				BF31E17712E979A100D4F513 /* controller.cpp */,
 				BF31DF1412E979A100D4F513 /* AppDelegate.cpp */,
 				BF31DF1512E979A100D4F513 /* AppDelegate.h */,
 				BF31E11812E979A100D4F513 /* tests */,
@@ -1828,6 +1832,7 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */,
 				ADF1707A1474F632004E9212 /* TextureCacheTest */,
 				BF1E7A4213E2629800C2D68B /* FontTest */,
 				BF1EB66513D6B915008D2559 /* Texture2dTest */,
@@ -1843,8 +1848,6 @@
 				BF31E16E12E979A100D4F513 /* ClickAndMoveTest */,
 				BF31E17112E979A100D4F513 /* CocosDenshionTest */,
 				BF31E17412E979A100D4F513 /* CocosNodeTest */,
-				BF31E17712E979A100D4F513 /* controller.cpp */,
-				BF31E17812E979A100D4F513 /* controller.h */,
 				BF31E17912E979A100D4F513 /* DrawPrimitivesTest */,
 				BF31E17C12E979A100D4F513 /* EaseActionsTest */,
 				BF31E17F12E979A100D4F513 /* EffectsAdvancedTest */,
@@ -1865,10 +1868,6 @@
 				BF31E1A612E979A100D4F513 /* SceneTest */,
 				BF31E1A912E979A100D4F513 /* SchedulerTest */,
 				BF31E1AC12E979A200D4F513 /* SpriteTest */,
-				BF31E1AF12E979A200D4F513 /* testBasic.cpp */,
-				BF31E1B012E979A200D4F513 /* testBasic.h */,
-				BF31E1B112E979A200D4F513 /* testResource.h */,
-				BF31E1B212E979A200D4F513 /* tests.h */,
 				BF31E1B312E979A200D4F513 /* TileMapTest */,
 				BF31E1B612E979A200D4F513 /* TouchesTest */,
 				BF31E1BD12E979A200D4F513 /* TransitionsTest */,
