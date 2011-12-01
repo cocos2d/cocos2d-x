@@ -187,8 +187,24 @@ public class Cocos2dxSound {
 		return (this.mLeftVolume + this.mRightVolume) / 2;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setEffectsVolume(float volume){
+		// volume should be in [0, 1.0]
+		if (volume < 0){
+			volume = 0;
+		}	
+		if (volume > 1){
+			volume = 1;
+		}
+		
 		this.mLeftVolume = this.mRightVolume = volume;
+		
+		// change the volume of playing sounds
+		Iterator<?> iter = this.mSoundIdStreamIdMap.entrySet().iterator();
+		while (iter.hasNext()){
+			Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>)iter.next();
+			this.mSoundPool.setVolume(entry.getValue(), mLeftVolume, mRightVolume);
+		}
 	}
 	
 	public void end(){		
