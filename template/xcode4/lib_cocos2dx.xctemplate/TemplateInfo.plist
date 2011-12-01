@@ -1914,17 +1914,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/platform/CCThread.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>platform</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/platform/CCThread.cpp</string>
-		</dict>
 		<key>libs/cocos2dx/platform/CCThread.h</key>
 		<dict>
 			<key>Group</key>
@@ -2129,6 +2118,18 @@
 			<string>libs/cocos2dx/platform/ios/CCLock.h</string>
 			<key>TargetIndices</key>
 			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/CCThread_ios.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/CCThread_ios.mm</string>
 		</dict>
 		<key>libs/cocos2dx/platform/ios/EAGLView.h</key>
 		<dict>
@@ -3053,7 +3054,6 @@
 		<string>libs/cocos2dx/platform/CCSAXParser.h</string>
 		<string>libs/cocos2dx/platform/CCStdC.cpp</string>
 		<string>libs/cocos2dx/platform/CCStdC.h</string>
-		<string>libs/cocos2dx/platform/CCThread.cpp</string>
 		<string>libs/cocos2dx/platform/CCThread.h</string>
 		<string>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.h</string>
 		<string>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.mm</string>
@@ -3070,6 +3070,7 @@
 		<string>libs/cocos2dx/platform/ios/CCImage_ios.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCLock.cpp</string>
 		<string>libs/cocos2dx/platform/ios/CCLock.h</string>
+		<string>libs/cocos2dx/platform/ios/CCThread_ios.mm</string>
 		<string>libs/cocos2dx/platform/ios/EAGLView.h</string>
 		<string>libs/cocos2dx/platform/ios/EAGLView.mm</string>
 		<string>libs/cocos2dx/platform/ios/ES1Renderer.h</string>
