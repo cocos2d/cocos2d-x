@@ -67,6 +67,14 @@ IntervalLayer::IntervalLayer()
 	addChild( menu );
 }
 
+IntervalLayer::~IntervalLayer()
+{
+    if(CCDirector::sharedDirector()->isPaused())
+    {
+        CCDirector::sharedDirector()->resume();
+    }
+}
+
 void IntervalLayer::update(ccTime dt)
 {
     m_time0 +=dt;
