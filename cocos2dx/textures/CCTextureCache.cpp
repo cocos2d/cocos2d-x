@@ -55,6 +55,7 @@ typedef struct _ImageInfo
 {
 	AsyncStruct *asyncStruct;
 	CCImage		*image;
+	CCImage::EImageFormat imageType;
 } ImageInfo;
 
 static pthread_t s_loadingThread;
@@ -101,6 +102,7 @@ static void* loadImage(void* data)
 
 		// generate image
 		CCImage *pImage = NULL;
+		CCImage::EImageFormat imageType;
 		if (std::string::npos != pAsyncStruct->filename.find(".jpg") || std::string::npos != pAsyncStruct->filename.find(".jpeg"))
 		{
 			pImage = new CCImage();
@@ -108,6 +110,7 @@ static void* loadImage(void* data)
 			{
 				delete pImage;
 				CCLOG("can not load %s", filename);
+				imageType = CCImage::kFmtJpg;
 				continue;
 			}
 		}
@@ -118,12 +121,13 @@ static void* loadImage(void* data)
 			{
 				delete pImage;
 				CCLOG("can not load %s", filename);
+				imageType = CCImage::kFmtPng;
 				continue;
 			}
 		}
 		else
 		{
-			CCLog("unsupportted format %s",filename);
+			CCLOG("unsupportted format %s",filename);
 			delete pAsyncStruct;
 			
 			continue;
@@ -270,6 +274,18 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 		// generate texture in render thread
 		CCTexture2D *texture = new CCTexture2D();
 		texture->initWithImage(pImage);
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+        // cache the texture file name
+		if (pImageInfo->imageType == CCImage::kFmtJpg)
+		{
+			VolatileTexture::addImageTexture(texture, filename, CCImage::kFmtJpg);
+		}
+		else
+		{
+			VolatileTexture::addImageTexture(texture, filename, CCImage::kFmtPng);
+		}
+#endif
 
 		// cache the texture
 		m_pTextures->setObject(texture, filename);
