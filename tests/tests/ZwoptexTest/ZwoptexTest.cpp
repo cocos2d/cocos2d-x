@@ -219,6 +219,9 @@ ZwoptexGenericTest::~ZwoptexGenericTest()
 {
     sprite1->release();
     sprite2->release();
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("zwoptex/grossini.plist");
+    cache->removeSpriteFramesFromFile("zwoptex/grossini-generic.plist");
 }
 
 std::string ZwoptexGenericTest::title()
