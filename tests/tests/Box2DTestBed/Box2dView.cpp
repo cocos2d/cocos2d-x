@@ -167,7 +167,7 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 
 bool Box2DView::initWithEntryID(int entryId)
 {    
-	setIsAccelerometerEnabled( true );
+//	setIsAccelerometerEnabled( true );
 	setIsTouchEnabled( true );
 
 	schedule( schedule_selector(Box2DView::tick) );

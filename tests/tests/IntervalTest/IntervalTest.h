@@ -16,7 +16,7 @@ protected:
 
 public:
 	IntervalLayer(void);
-
+    virtual ~IntervalLayer();
 public:
 	void onPause(CCObject* pSender);
 

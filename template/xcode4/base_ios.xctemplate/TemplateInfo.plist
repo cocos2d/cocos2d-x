@@ -4,15 +4,14 @@
 <dict>
 	<key>Definitions</key>
 	<dict>
-        <key>Resources/CloseNormal.png</key>
+		<key>Resources/CloseNormal.png</key>
 		<dict>
 			<key>Group</key>
 			<string>Resources</string>
 			<key>Path</key>
 			<string>Resources/CloseNormal.png</string>
 		</dict>
-        
-        <key>Resources/CloseSelected.png</key>
+		<key>Resources/CloseSelected.png</key>
 		<dict>
 			<key>Group</key>
 			<string>Resources</string>
@@ -98,8 +97,8 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
 	<array>
-        <string>Resources/CloseNormal.png</string>
-        <string>Resources/CloseSelected.png</string>
+		<string>Resources/CloseNormal.png</string>
+		<string>Resources/CloseSelected.png</string>
 		<string>Resources/Default.png</string>
 		<string>Resources/HelloWorld.png</string>
 		<string>Resources/Icon-72.png</string>
@@ -133,8 +132,6 @@
 			<string>$(ARCHS_STANDARD_32_BIT)</string>
 			<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
 			<string>iPhone Developer</string>
-			<key>GCC_VERSION</key>
-			<string>com.apple.compilers.llvmgcc42</string>
 			<key>IPHONEOS_DEPLOYMENT_TARGET</key>
 			<string>latest_iphoneos</string>
 		</dict>

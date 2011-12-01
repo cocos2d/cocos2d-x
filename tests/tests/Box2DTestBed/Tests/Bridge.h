@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -25,7 +25,7 @@ public:
 
 	enum
 	{
-		e_count = 30,
+		e_count = 30
 	};
 
 	Bridge()
@@ -35,8 +35,8 @@ public:
 			b2BodyDef bd;
 			ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -52,7 +52,7 @@ public:
 			b2RevoluteJointDef jd;
 
 			b2Body* prevBody = ground;
-			for (int i = 0; i < e_count; ++i)
+			for (int32 i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -76,7 +76,7 @@ public:
 			m_world->CreateJoint(&jd);
 		}
 
-		for (int i = 0; i < 2; ++i)
+		for (int32 i = 0; i < 2; ++i)
 		{
 			b2Vec2 vertices[3];
 			vertices[0].Set(-0.5f, 0.0f);
@@ -97,7 +97,7 @@ public:
 			body->CreateFixture(&fd);
 		}
 
-		for (int i = 0; i < 3; ++i)
+		for (int32 i = 0; i < 3; ++i)
 		{
 			b2CircleShape shape;
 			shape.m_radius = 0.5f;

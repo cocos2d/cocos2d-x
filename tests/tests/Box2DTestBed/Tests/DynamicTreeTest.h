@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -25,7 +25,7 @@ public:
 
 	enum
 	{
-		e_actorCount = 128,
+		e_actorCount = 128
 	};
 
 	DynamicTreeTest()
@@ -35,7 +35,7 @@ public:
 
 		srand(888);
 
-		for (int i = 0; i < e_actorCount; ++i)
+		for (int32 i = 0; i < e_actorCount; ++i)
 		{
 			Actor* actor = m_actors + i;
 			GetRandomAABB(&actor->aabb);
@@ -67,7 +67,7 @@ public:
 		B2_NOT_USED(settings);
 
 		m_rayActor = NULL;
-		for (int i = 0; i < e_actorCount; ++i)
+		for (int32 i = 0; i < e_actorCount; ++i)
 		{
 			m_actors[i].fraction = 1.0f;
 			m_actors[i].overlap = false;
@@ -75,9 +75,9 @@ public:
 
 		if (m_automated == true)
 		{
-			int actionCount = b2Max(1, e_actorCount >> 2);
+			int32 actionCount = b2Max(1, e_actorCount >> 2);
 
-			for (int i = 0; i < actionCount; ++i)
+			for (int32 i = 0; i < actionCount; ++i)
 			{
 				Action();
 			}
@@ -86,7 +86,7 @@ public:
 		Query();
 		RayCast();
 
-		for (int i = 0; i < e_actorCount; ++i)
+		for (int32 i = 0; i < e_actorCount; ++i)
 		{
 			Actor* actor = m_actors + i;
 			if (actor->proxyId == b2_nullNode)
@@ -126,6 +126,12 @@ public:
 			m_debugDraw.DrawPoint(p, 6.0f, cr);
 		}
 
+		{
+			int32 height = m_tree.GetHeight();
+			m_debugDraw.DrawString(5, m_textLine, "dynamic tree height = %d", height);
+			m_textLine += 15;
+		}
+
 		++m_stepCount;
 	}
 
@@ -151,14 +157,14 @@ public:
 		}
 	}
 
-	bool QueryCallback(int proxyId)
+	bool QueryCallback(int32 proxyId)
 	{
 		Actor* actor = (Actor*)m_tree.GetUserData(proxyId);
 		actor->overlap = b2TestOverlap(m_queryAABB, actor->aabb);
 		return true;
 	}
 
-	float32 RayCastCallback(const b2RayCastInput& input, int proxyId)
+	float32 RayCastCallback(const b2RayCastInput& input, int32 proxyId)
 	{
 		Actor* actor = (Actor*)m_tree.GetUserData(proxyId);
 
@@ -183,7 +189,7 @@ private:
 		b2AABB aabb;
 		float32 fraction;
 		bool overlap;
-		int proxyId;
+		int32 proxyId;
 	};
 
 	void GetRandomAABB(b2AABB* aabb)
@@ -217,9 +223,9 @@ private:
 
 	void CreateProxy()
 	{
-		for (int i = 0; i < e_actorCount; ++i)
+		for (int32 i = 0; i < e_actorCount; ++i)
 		{
-			int j = rand() % e_actorCount;
+			int32 j = rand() % e_actorCount;
 			Actor* actor = m_actors + j;
 			if (actor->proxyId == b2_nullNode)
 			{
@@ -232,9 +238,9 @@ private:
 
 	void DestroyProxy()
 	{
-		for (int i = 0; i < e_actorCount; ++i)
+		for (int32 i = 0; i < e_actorCount; ++i)
 		{
-			int j = rand() % e_actorCount;
+			int32 j = rand() % e_actorCount;
 			Actor* actor = m_actors + j;
 			if (actor->proxyId != b2_nullNode)
 			{
@@ -247,9 +253,9 @@ private:
 
 	void MoveProxy()
 	{
-		for (int i = 0; i < e_actorCount; ++i)
+		for (int32 i = 0; i < e_actorCount; ++i)
 		{
-			int j = rand() % e_actorCount;
+			int32 j = rand() % e_actorCount;
 			Actor* actor = m_actors + j;
 			if (actor->proxyId == b2_nullNode)
 			{
@@ -266,7 +272,7 @@ private:
 
 	void Action()
 	{
-		int choice = rand() % 20;
+		int32 choice = rand() % 20;
 
 		switch (choice)
 		{
@@ -287,7 +293,7 @@ private:
 	{
 		m_tree.Query(this, m_queryAABB);
 
-		for (int i = 0; i < e_actorCount; ++i)
+		for (int32 i = 0; i < e_actorCount; ++i)
 		{
 			if (m_actors[i].proxyId == b2_nullNode)
 			{
@@ -312,7 +318,7 @@ private:
 		// Brute force ray cast.
 		Actor* bruteActor = NULL;
 		b2RayCastOutput bruteOutput;
-		for (int i = 0; i < e_actorCount; ++i)
+		for (int32 i = 0; i < e_actorCount; ++i)
 		{
 			if (m_actors[i].proxyId == b2_nullNode)
 			{
@@ -344,7 +350,7 @@ private:
 	b2RayCastOutput m_rayCastOutput;
 	Actor* m_rayActor;
 	Actor m_actors[e_actorCount];
-	int m_stepCount;
+	int32 m_stepCount;
 	bool m_automated;
 };
 

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -128,19 +128,19 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-50.0f, 0.0f), b2Vec2(50.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-50.0f, 0.0f), b2Vec2(50.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 
-			shape.SetAsEdge(b2Vec2(-50.0f, 0.0f), b2Vec2(-50.0f, 10.0f));
+			shape.Set(b2Vec2(-50.0f, 0.0f), b2Vec2(-50.0f, 10.0f));
 			ground->CreateFixture(&shape, 0.0f);
 
-			shape.SetAsEdge(b2Vec2(50.0f, 0.0f), b2Vec2(50.0f, 10.0f));
+			shape.Set(b2Vec2(50.0f, 0.0f), b2Vec2(50.0f, 10.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
 		// Balls
-		for (int i = 0; i < 40; ++i)
+		for (int32 i = 0; i < 40; ++i)
 		{
 			b2CircleShape shape;
 			shape.m_radius = 0.25f;
