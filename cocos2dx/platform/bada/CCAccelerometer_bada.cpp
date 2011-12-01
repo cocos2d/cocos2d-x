@@ -101,6 +101,7 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
 
 void CCAccelerometer::setEnable(bool bEnable)
 {
+	return;
 	result	r = E_INVALID_STATE;
 	if (m_bEnabled == bEnable)
 	{
