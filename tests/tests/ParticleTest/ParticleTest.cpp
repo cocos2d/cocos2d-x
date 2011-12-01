@@ -482,7 +482,10 @@ void DemoModernArt::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCParticleSystemPoint();
+//FIXME: If use CCParticleSystemPoint, bada 1.0 device will crash. 
+//  Crash place: CCParticleSystemPoint.cpp Line 149, function: glDrawArrays(GL_POINTS, 0, m_uParticleIdx);
+//  m_emitter = new CCParticleSystemPoint();
+    m_emitter = new CCParticleSystemQuad();
 	m_emitter->initWithTotalParticles(1000);
 	//m_emitter->autorelease();
 
