@@ -145,8 +145,18 @@ class CC_DLL CCNode : public SelectorProtocol, public CCObject
         *x = m_tPosition.x;
         *y = m_tPosition.y;
     }
+    
+    float getPositionX(void) {
+        return m_tPosition.x;
+    }
+    
+    float getPositionY(void) {
+        return m_tPosition.y;
+    }
 
     void setPosition(float x, float y);
+    void setPositionX(float x);
+    void setPositionY(float y);
 
     void getPositionInPixels(float* x, float* y) {
         *x = m_tPositionInPixels.x;
