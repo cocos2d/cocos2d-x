@@ -35,8 +35,8 @@ HelloWorld::HelloWorld()
 	bool doSleep = true;
     
 	// Construct a world object, which will hold and simulate the rigid bodies.
-	world = new b2World(gravity, doSleep);
-    
+	world = new b2World(gravity);
+    world->SetAllowSleeping(doSleep);    
 	world->SetContinuousPhysics(true);
     
     /*	
@@ -52,9 +52,9 @@ HelloWorld::HelloWorld()
      m_debugDraw->SetFlags(flags);		
      */
 	
-	// Define the ground body.
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0, 0); // bottom-left corner
+	groundBodyDef.position.Set(screenSize.width/2/PTM_RATIO, 
+                               screenSize.height/2/PTM_RATIO); // bottom-left corner
 	
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
@@ -64,25 +64,24 @@ HelloWorld::HelloWorld()
 	// Define the ground box shape.
 	b2PolygonShape groundBox;		
 	
-	// bottom
-	groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(screenSize.width/PTM_RATIO,0));
-	groundBody->CreateFixture(&groundBox, 0);
+    // bottom
+    groundBox.SetAsBox(screenSize.width/2/PTM_RATIO, 0, b2Vec2(0, -screenSize.height/2/PTM_RATIO), 0);
+ 	groundBody->CreateFixture(&groundBox, 0);
 	
-	// top
-	groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO));
-	groundBody->CreateFixture(&groundBox, 0);
-	
-	// left
-	groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(0,0));
-	groundBody->CreateFixture(&groundBox, 0);
-	
-	// right
-	groundBox.SetAsEdge(b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,0));
-	groundBody->CreateFixture(&groundBox, 0);
+    // top
+    groundBox.SetAsBox(screenSize.width/2/PTM_RATIO, 0, b2Vec2(0, screenSize.height/2/PTM_RATIO), 0);
+    groundBody->CreateFixture(&groundBox, 0);
+    
+    // left
+    groundBox.SetAsBox(0, screenSize.height/2/PTM_RATIO, b2Vec2(-screenSize.width/2/PTM_RATIO, 0), 0);
+    groundBody->CreateFixture(&groundBox, 0);
+    
+    // right
+    groundBox.SetAsBox(0, screenSize.height/2/PTM_RATIO, b2Vec2(screenSize.width/2/PTM_RATIO, 0), 0);
+    groundBody->CreateFixture(&groundBox, 0);
     
 	
 	//Set up sprite
-	
 	CCSpriteBatchNode *mgr = CCSpriteBatchNode::batchNodeWithFile("blocks.png", 150);
 	addChild(mgr, 0, kTagSpriteManager);
 	
