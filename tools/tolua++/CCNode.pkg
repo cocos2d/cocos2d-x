@@ -21,6 +21,13 @@ class CCNode : public CCObject
     void    setPositionX(float x);
     void    setPositionY(float y);
 
+    tolua_property__CCPositionX float x;
+    tolua_property__CCPositionY float y;
+    tolua_property__CCScale     float scale;
+    tolua_property__CCRotation  float rotation;
+    tolua_property__CCIsVisible bool  isVisible;
+    tolua_property__CCTag       int tag;
+
     float   getSkewX();
     void    setSkewX(float skewX);
     float   getSkewY();
