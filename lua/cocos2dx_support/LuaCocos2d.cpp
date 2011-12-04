@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Dec  4 10:56:32 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Dec  4 11:14:24 2011.
 */
 
 #include <vector>
@@ -18703,9 +18703,9 @@ static int tolua_Cocos2d_CCNode_setScaleY00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getPosition of class  CCNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getPosition00
-static int tolua_Cocos2d_CCNode_getPosition00(lua_State* tolua_S)
+/* method: getPositionLua of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getPositionLua00
+static int tolua_Cocos2d_CCNode_getPositionLua00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -18719,10 +18719,10 @@ static int tolua_Cocos2d_CCNode_getPosition00(lua_State* tolua_S)
  {
   CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPositionLua'", NULL);
 #endif
   {
-   CCPoint tolua_ret = (CCPoint)  self->getPosition();
+   CCPoint tolua_ret = (CCPoint)  self->getPositionLua();
    {
 #ifdef __cplusplus
     void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
@@ -18739,16 +18739,17 @@ static int tolua_Cocos2d_CCNode_getPosition00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getPosition'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getPositionLua'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: getPosition of class  CCNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getPosition01
-static int tolua_Cocos2d_CCNode_getPosition01(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getPosition00
+static int tolua_Cocos2d_CCNode_getPosition00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
@@ -18758,6 +18759,7 @@ static int tolua_Cocos2d_CCNode_getPosition01(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
   float x = ((float)  tolua_tonumber(tolua_S,2,0));
@@ -18772,8 +18774,11 @@ static int tolua_Cocos2d_CCNode_getPosition01(lua_State* tolua_S)
   }
  }
  return 2;
-tolua_lerror:
- return tolua_Cocos2d_CCNode_getPosition00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPosition'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -40050,8 +40055,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setScaleX",tolua_Cocos2d_CCNode_setScaleX00);
    tolua_function(tolua_S,"getScaleY",tolua_Cocos2d_CCNode_getScaleY00);
    tolua_function(tolua_S,"setScaleY",tolua_Cocos2d_CCNode_setScaleY00);
+   tolua_function(tolua_S,"getPositionLua",tolua_Cocos2d_CCNode_getPositionLua00);
    tolua_function(tolua_S,"getPosition",tolua_Cocos2d_CCNode_getPosition00);
-   tolua_function(tolua_S,"getPosition",tolua_Cocos2d_CCNode_getPosition01);
    tolua_function(tolua_S,"getPositionX",tolua_Cocos2d_CCNode_getPositionX00);
    tolua_function(tolua_S,"getPositionY",tolua_Cocos2d_CCNode_getPositionY00);
    tolua_function(tolua_S,"setPosition",tolua_Cocos2d_CCNode_setPosition00);
