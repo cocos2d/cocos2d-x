@@ -180,3 +180,11 @@ end
 -- register LUA_FUNCTION type
 _to_functions["LUA_FUNCTION"] = "tolua_ref_function"
 _is_functions["LUA_FUNCTION"] = "tolua_isfunction"
+
+
+function get_property_methods_hook(ptype, name)
+    if string.sub(ptype, 1, 2) == "CC" then
+        ptype = string.sub(ptype, 3)
+    end
+    return "get"..ptype, "set"..ptype
+end

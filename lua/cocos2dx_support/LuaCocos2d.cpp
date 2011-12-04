@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Thu Dec  1 22:01:09 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Dec  4 10:26:02 2011.
 */
 
 #include <vector>
@@ -18967,6 +18967,192 @@ static int tolua_Cocos2d_CCNode_setPositionY00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'setPositionY'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: x of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_get_CCNode_x
+static int tolua_get_CCNode_x(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->getPositionX());
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: x of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_set_CCNode_x
+static int tolua_set_CCNode_x(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->setPositionX(((float)  tolua_tonumber(tolua_S,2,0))
+)
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: y of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_get_CCNode_y
+static int tolua_get_CCNode_y(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->getPositionY());
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: y of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_set_CCNode_y
+static int tolua_set_CCNode_y(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->setPositionY(((float)  tolua_tonumber(tolua_S,2,0))
+)
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: scale of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_get_CCNode_scale
+static int tolua_get_CCNode_scale(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'scale'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->getScale());
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: scale of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_set_CCNode_scale
+static int tolua_set_CCNode_scale(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'scale'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->setScale(((float)  tolua_tonumber(tolua_S,2,0))
+)
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: rotation of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_get_CCNode_rotation
+static int tolua_get_CCNode_rotation(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'rotation'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->getRotation());
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: rotation of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_set_CCNode_rotation
+static int tolua_set_CCNode_rotation(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'rotation'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->setRotation(((float)  tolua_tonumber(tolua_S,2,0))
+)
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: isVisible of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_get_CCNode_isVisible
+static int tolua_get_CCNode_isVisible(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'isVisible'",NULL);
+#endif
+  tolua_pushboolean(tolua_S,(bool)self->getIsVisible());
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: isVisible of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_set_CCNode_isVisible
+static int tolua_set_CCNode_isVisible(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'isVisible'",NULL);
+  if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->setIsVisible(((bool)  tolua_toboolean(tolua_S,2,0))
+)
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: tag of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_get_CCNode_tag
+static int tolua_get_CCNode_tag(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tag'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->getTag());
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: tag of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_set_CCNode_tag
+static int tolua_set_CCNode_tag(lua_State* tolua_S)
+{
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tag'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->setTag(((int)  tolua_tonumber(tolua_S,2,0))
+)
+;
+ return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -40263,6 +40449,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setPosition",tolua_Cocos2d_CCNode_setPosition01);
    tolua_function(tolua_S,"setPositionX",tolua_Cocos2d_CCNode_setPositionX00);
    tolua_function(tolua_S,"setPositionY",tolua_Cocos2d_CCNode_setPositionY00);
+   tolua_variable(tolua_S,"x",tolua_get_CCNode_x,tolua_set_CCNode_x);
+   tolua_variable(tolua_S,"y",tolua_get_CCNode_y,tolua_set_CCNode_y);
+   tolua_variable(tolua_S,"scale",tolua_get_CCNode_scale,tolua_set_CCNode_scale);
+   tolua_variable(tolua_S,"rotation",tolua_get_CCNode_rotation,tolua_set_CCNode_rotation);
+   tolua_variable(tolua_S,"isVisible",tolua_get_CCNode_isVisible,tolua_set_CCNode_isVisible);
+   tolua_variable(tolua_S,"tag",tolua_get_CCNode_tag,tolua_set_CCNode_tag);
    tolua_function(tolua_S,"getSkewX",tolua_Cocos2d_CCNode_getSkewX00);
    tolua_function(tolua_S,"setSkewX",tolua_Cocos2d_CCNode_setSkewX00);
    tolua_function(tolua_S,"getSkewY",tolua_Cocos2d_CCNode_getSkewY00);
