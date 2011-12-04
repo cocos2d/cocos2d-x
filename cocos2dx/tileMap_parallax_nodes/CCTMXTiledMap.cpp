@@ -183,7 +183,7 @@ namespace cocos2d{
 							if( gid != 0 ) 
 							{
 								// Optimization: quick return
-								// if the layer is invalid (more than 1 tileset per layer) an assert will be thrown later
+								// if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
 								if( gid >= tileset->m_uFirstGid )
 									return tileset;
 							}

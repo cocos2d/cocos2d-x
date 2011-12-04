@@ -37,10 +37,11 @@ extern "C" {
 void
 cpMessage(const char *message, const char *condition, const char *file, int line, int isError)
 {
+#ifndef SHP
 	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: %s\n" : "Chipmunk warning: %s\n"), message);
 	fprintf(stderr, "\tFailed condition: %s\n", condition);
 	fprintf(stderr, "\tSource:%s:%d\n", file, line);
-	
+#endif
 	if(isError) abort();
 }
 
@@ -51,10 +52,11 @@ void
 cpInitChipmunk(void)
 {
 #ifndef NDEBUG
+#ifndef SHP
 	printf("Initializing Chipmunk v%s (Debug Enabled)\n", cpVersionString);
 	printf("Compile with -DNDEBUG defined to disable debug mode and runtime assertion checks\n");
 #endif
-	
+#endif
 	cpInitCollisionFuncs();
 }
 

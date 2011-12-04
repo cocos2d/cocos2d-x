@@ -498,7 +498,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItemSprite::initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		assert(normalSprite != NULL);
+		CCAssert(normalSprite != NULL, "");
 		CCMenuItem::initWithTarget(target, selector); 
         setNormalImage(normalSprite);
         setSelectedImage(selectedSprite);

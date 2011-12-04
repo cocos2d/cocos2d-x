@@ -41,6 +41,7 @@ THE SOFTWARE.
 #include "support/ccUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "CCTexturePVR.h"
+#include "CCDirector.h"
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
     #include "CCTextureCache.h"
@@ -229,8 +230,8 @@ bool CCTexture2D::initWithImage(CCImage * uiImage)
 #if CC_TEXTURE_NPOT_SUPPORT
 	if( conf->isSupportsNPOT() ) 
 	{
-		POTWide = uiimage->getWidth();
-		POTHigh = uiimage->getHeight();
+		POTWide = uiImage->getWidth();
+		POTHigh = uiImage->getHeight();
 	}
 	else 
 #endif
@@ -672,7 +673,7 @@ unsigned int CCTexture2D::bitsPerPixelForFormat()
             break;
 		default:
 			ret = -1;
-			assert(false);
+			CCAssert(false, "illegal pixel format");
 			CCLOG("bitsPerPixelForFormat: %d, cannot give useful result", m_ePixelFormat);
 			break;
 	}

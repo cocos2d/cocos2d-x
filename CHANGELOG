@@ -1,6 +1,31 @@
+cocos2d-1.0.1-x-0.10.0 @ Dec.2 2011
+ [bada]
+    Feature  #223  integrate cocos2d-bada branch to master
+    Bug      #852  fix a bug that CCSpriteBatchNode cannot be drawn correctly
+ [all platforms]
+    Feature  #854  integrate pthread and write a test case on all platforms
+    Feature  #465  implement CCTextureCache::addImageAsync()
+    Feature  #850  upgrade box2d from 2.1.2 to last 2.2.1
+    Feature  #781  add functions for effects
+    Feature  #760  add methods to get/set CCDirector::m_pNotificationNode
+    Bug      #883  fix the crash of SpriteTest
+    Refactor #879  use CCAssert() instead of assert() 
+    Document #882  Write a document describes some cautions about using pthread
+ [android]
+    Feature  #838  support android x86 platform
+    Bug      #758  fix a bug that custom TTF fonts causing low memory
+    Bug      #848  fix a bug that accelerometer values are wrong if the content is scaled
+    Bug      #885  fix a bug that SimpleAudioEngine::setEffectVolume() don't take effect immediately
+    Document #864  write a describe how to build on sdk 4.0 & ndk-r7
+    Document #878  write a document describe how to build project for x86 android
+    Document #881  write a document describes building android ndk project with ndk-r7
+ [linux]
+    Bug      #780  fix build error on ubuntu 11.0
+    Bug      #776  fix a bug in the audio player
+
 cocos2d-1.0.1-x-0.9.2 @ Oct.20,2011
  [linux]
-    Feature #728  Linux port is born! http://www.cocos2d-x.org/projects/cocos2d-x/wiki/How_to_run_HelloWorld_and_tests_on_linux
+    Feature  #728  Linux port is born! http://www.cocos2d-x.org/projects/cocos2d-x/wiki/How_to_run_HelloWorld_and_tests_on_linux
  [all platforms]
     Feature  #672  Implements copyWithZone() for CCShow & CCHide
     Feature  #676  add more languages into CCApplication::getCurrentLanguage()

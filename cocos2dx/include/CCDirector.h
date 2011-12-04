@@ -137,8 +137,8 @@ typedef enum {
 class CCLabelTTF;
 class CCScene;
 class CCEGLView;
-class CCNode;
 class CCProjectionProtocol;
+class CCNode;
 
 /**
 @brief Class that creates and handle the main Window and manages how
@@ -211,6 +211,13 @@ public:
 	 */
 	inline bool isSendCleanupToScene(void) { return m_bSendCleanupToScene; }
 
+	/** This object will be visited after the main scene is visited.
+	 This object MUST implement the "visit" selector.
+	 Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
+	 @since v0.99.5
+	 */
+	CCNode* getNotificationNode();
+	void setNotificationNode(CCNode *node);
 
 	// window size
 

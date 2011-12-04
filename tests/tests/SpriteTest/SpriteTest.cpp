@@ -1591,8 +1591,9 @@ std::string SpriteBatchNodeNewTexture::title()
 //
 //------------------------------------------------------------------
 
-SpriteFrameTest::SpriteFrameTest()
+void SpriteFrameTest::onEnter()
 {
+    SpriteTestDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // IMPORTANT:
@@ -1608,7 +1609,7 @@ SpriteFrameTest::SpriteFrameTest()
     //
     m_pSprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
     m_pSprite1->setPosition( ccp( s.width/2-80, s.height/2) );
-    
+
     CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
     spritebatch->addChild(m_pSprite1);
     addChild(spritebatch);
@@ -1636,7 +1637,7 @@ SpriteFrameTest::SpriteFrameTest()
     m_pSprite2 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
     m_pSprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
     addChild(m_pSprite2);
-    
+
 
     CCMutableArray<CCSpriteFrame*>* moreFrames = new CCMutableArray<CCSpriteFrame*>(20);
     for(int i = 1; i < 15; i++) 
@@ -1652,12 +1653,12 @@ SpriteFrameTest::SpriteFrameTest()
         CCSpriteFrame *frame = cache->spriteFrameByName(str);
         moreFrames->addObject(frame);
     }
-    
+
     // append frames from another batch
     moreFrames->addObjectsFromArray(animFrames);
     CCAnimation *animMixed = CCAnimation::animationWithFrames(moreFrames);
 
-    
+
     m_pSprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed, false) ) );
 
     animFrames->release();
@@ -1678,10 +1679,6 @@ void SpriteFrameTest::onExit()
     cache->removeSpriteFramesFromFile("animations/grossini.plist");
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
     cache->removeSpriteFramesFromFile("animations/grossini_blue.plist");
-}
-
-SpriteFrameTest::~SpriteFrameTest()
-{
 }
 
 std::string SpriteFrameTest::title()
@@ -1790,8 +1787,9 @@ void SpriteFrameAliasNameTest::onEnter()
     sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(14.0f, animation, false)));
 }
 
-SpriteFrameAliasNameTest::~SpriteFrameAliasNameTest()
+void SpriteFrameAliasNameTest::onExit()
 {
+    SpriteTestDemo::onExit();
     CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("animations/grossini-aliases.plist");
 }
 
@@ -2385,10 +2383,10 @@ SpriteBatchNodeChildren2::SpriteBatchNodeChildren2()
     sprite11->addChild(sprite13, 2);
 
     // don't rotate with it's parent
-    sprite12->setHornorParentTransform((ccHonorParentTransform) (sprite12->getHornorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_ROTATE));
+    sprite12->setHonorParentTransform((ccHonorParentTransform) (sprite12->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_ROTATE));
 
     // don't scale and rotate with it's parent
-    sprite13->setHornorParentTransform((ccHonorParentTransform) (sprite13->getHornorParentTransform() & ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE) ));
+    sprite13->setHonorParentTransform((ccHonorParentTransform) (sprite13->getHonorParentTransform() & ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE) ));
     
     CCActionInterval* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
     CCActionInterval* action_back = action->reverse();
@@ -2420,10 +2418,10 @@ SpriteBatchNodeChildren2::SpriteBatchNodeChildren2()
     sprite21->addChild(sprite23, 2);
     
     // don't rotate with it's parent
-    sprite22->setHornorParentTransform((ccHonorParentTransform) (sprite22->getHornorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_TRANSLATE));
+    sprite22->setHonorParentTransform((ccHonorParentTransform) (sprite22->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_TRANSLATE));
     
     // don't scale and rotate with it's parent
-    sprite23->setHornorParentTransform((ccHonorParentTransform) (sprite23->getHornorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_SCALE));
+    sprite23->setHonorParentTransform((ccHonorParentTransform) (sprite23->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_SCALE));
     
     sprite21->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(1, 360) ));
     sprite21->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions( CCScaleTo::actionWithDuration(0.5f, 5.0f), CCScaleTo::actionWithDuration(0.5f, 1), NULL ) )) );

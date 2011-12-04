@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCFileUtils.h"
+#include "CCDirector.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 
@@ -369,6 +370,10 @@ NS_CC_END;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtils_android.cpp"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include "bada/CCFileUtils_bada.cpp"
 #endif
 
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)

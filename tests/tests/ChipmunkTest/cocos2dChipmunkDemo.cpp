@@ -493,10 +493,9 @@ void ChipmunkTestLayer::onEnter()
     glOrthof(-320/factor, 320/factor, 0/factor, 960/factor, 1.0f, -1.0f); 
 #else
     // portraint
-    // glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
+    //glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
     // landscape
-    glOrthof(-480/factor, 480/factor, -320/factor, 320/factor, 1.0f, -1.0f); 
-
+    glOrthof(-480/factor, 480/factor, -320/factor, 320/factor, 1.0f, -1.0f);
 #endif
 
     glMatrixMode(GL_MODELVIEW);
