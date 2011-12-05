@@ -7,14 +7,17 @@
 //
 
 #include "lualoadexts.h"
-
+ 
 // luasocket
 #include "luasocket.h"
 #include "mime.h"
 #include "luasocketscripts.h"
 
 // cjson
-//#include "lua_cjson.h"
+#include "lua_cjson.h"
+
+// llthread
+#include "llthreads.h"
 
 static luaL_Reg luax_exts[] = {
     {"socket.core", luaopen_socket_core},
@@ -27,7 +30,8 @@ static luaL_Reg luax_exts[] = {
     {"socket.url", luaopen_socket_url},
     {"mime", luaopen_socket_mime},
     {"ltn12", luaopen_socket_ltn12},
-//    {"cjson", luaopen_cjson},
+    {"cjson", luaopen_cjson},
+    {"llthreads", luaopen_llthreads},
     {NULL, NULL}
 };
 
