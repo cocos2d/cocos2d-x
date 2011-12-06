@@ -63,7 +63,10 @@ do {                                                                            
 #ifdef _MSC_VER
 typedef unsigned int uint32_t;
 #else
+#ifdef __QNX__
+#else
 #include <inttypes.h>   /* uint32_t */
+#endif
 #endif
 
 #define UTHASH_VERSION 1.9.3
