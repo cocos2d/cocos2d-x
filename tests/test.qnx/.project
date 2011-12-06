@@ -27,7 +27,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/TestCocos2dx/Device-Debug}</value>
+					<value>${workspace_loc:/TestCocos2dx/Simulator}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>
@@ -84,6 +84,11 @@
 			<name>AppDelegate.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/AppDelegate.h</locationURI>
+		</link>
+		<link>
+			<name>Res</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Res</locationURI>
 		</link>
 		<link>
 			<name>tests</name>
