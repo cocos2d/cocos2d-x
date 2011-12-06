@@ -27,7 +27,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/CocosDenshion/Device-Debug}</value>
+					<value>${workspace_loc:/CocosDenshion/Simulator}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>
@@ -76,14 +76,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>blackberry</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/blackberry</locationURI>
-		</link>
-		<link>
 			<name>include</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
+		</link>
+		<link>
+			<name>qnx</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/qnx</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

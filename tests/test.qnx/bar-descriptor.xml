@@ -48,7 +48,10 @@
     <!--  The category where the application appears. Either core.games or core.media. -->
     <category>core.games</category>
     <asset path="icon.png">icon.png</asset>
+    <asset path="${workspace_loc:/TestCocos2dx/Res}">Res</asset>
     <asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libbps.so" type="Qnx/Elf">lib/libbps.so.1</asset>
+    <asset path="${QNX_TARGET}\..\target-override\${CPUVARDIR}/usr/lib/libOpenAL.so" type="Qnx/Elf">lib/libOpenAL.so.1</asset>
+    <asset path="${QNX_TARGET}\..\target-override\${CPUVARDIR}/usr/lib/libalut.so" type="Qnx/Elf">lib/libalut.so.1</asset>
     <configuration id="com.qnx.qcc.configuration.exe.debug.2142540956" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
@@ -68,6 +71,9 @@
     <configuration id="com.qnx.qcc.configuration.exe.debug.538064218" name="Simulator">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="Simulator/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
+       <asset path="${workspace_loc:/cocos2dx/Simulator/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
+	   <asset path="${workspace_loc:/CocosDenshion/Simulator/libCocosDenshion.so}" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+	   <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/x86/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.808507225" name="Simulator-Profile">
        <platformArchitecture>x86</platformArchitecture>
