@@ -706,33 +706,6 @@ void llthread_destroy(Lua_LLThread *this)
     free(this);
 }
 
-void stackDump(lua_State *L)
-{
-    int i;
-    int top = lua_gettop(L);
-    for(i = 1; i <= top; i++)
-    {
-        int t = lua_type(L, i);
-        switch (t)
-        {
-            case LUA_TSTRING:
-//                printf("`%s'", lua_tostring(L, i));
-                printf("string");
-                break;
-            case LUA_TBOOLEAN:
-                printf(lua_toboolean(L, i) ? "true" : "false");
-                break;
-            case LUA_TNUMBER:
-                printf("%g", lua_tonumber(L, i));
-                break;
-            default:
-                printf("%s", lua_typename(L, t));
-        }
-        printf(" ");
-    }
-    printf("\n\n");
-}
-
 RUN_CHILD_THREAD run_child_thread(void *arg)
 {
     Lua_LLThread_child *this = (Lua_LLThread_child *)arg;
@@ -757,9 +730,9 @@ RUN_CHILD_THREAD run_child_thread(void *arg)
         lua_rawget(parent_L, -2);                                       /* stack: refid_func func */
         
 //        printf("---- parent_L stackDump ----\n");
-//        stackDump(parent_L);
+//        tolua_stack_dump(parent_L);
 //        printf("---- child->L stackDump ----\n");
-//        stackDump(this->L);
+//        tolua_stack_dump(this->L);
 //        
         if (!lua_isfunction(parent_L, -1))
         {
