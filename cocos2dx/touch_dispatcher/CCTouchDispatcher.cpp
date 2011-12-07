@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "support/data_support/ccCArray.h"
 
-#include <assert.h>
 #include <algorithm>
 
 /**
@@ -131,7 +130,7 @@ void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, CCMutableArray
  
  		    if (h->getDelegate() == pHandler->getDelegate())
  		    {
- 			    assert(0);
+ 			    CCAssert(0, "");
  			    return;
  		    }
          }
@@ -269,13 +268,13 @@ void CCTouchDispatcher::rearrangeHandlers(CCMutableArray<CCTouchHandler*> *pArra
 
 void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 {
-    assert(pDelegate != NULL);
+    CCAssert(pDelegate != NULL, "");
 
 	CCTouchHandler *handler = NULL;
 
 	handler = this->findHandler(pDelegate);
 
-	assert(handler != NULL);
+	CCAssert(handler != NULL, "");
 
 	handler->setPriority(nPriority);
 
@@ -288,7 +287,7 @@ void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 //
 void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int uIndex)
 {
-	assert(uIndex >= 0 && uIndex < 4);
+	CCAssert(uIndex >= 0 && uIndex < 4, "");
 
 	CCSet *pMutableTouches;
 	m_bLocked = true;

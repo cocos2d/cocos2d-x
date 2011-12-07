@@ -718,7 +718,7 @@ void CCNode::reorderChild(CCNode *child, int zOrder)
 
  void CCNode::draw()
  {
-	 //assert(0);
+	 //CCAssert(0);
  	// override me
  	// Only use- this function to draw your staff.
  	// DON'T draw your stuff outside this method

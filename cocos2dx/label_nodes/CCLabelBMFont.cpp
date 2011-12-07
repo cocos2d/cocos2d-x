@@ -102,7 +102,7 @@ namespace cocos2d{
 	}
 	bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
 	{
-		assert(FNTfile != NULL && strlen(FNTfile)!=0);
+		CCAssert(FNTfile != NULL && strlen(FNTfile)!=0, "");
 		m_pKerningDictionary = NULL;
 		this->parseConfigFile(FNTfile);
 		return true;
@@ -147,7 +147,8 @@ namespace cocos2d{
         // parse spacing / padding
         std::string line;
         std::string strLeft(pBuffer, nBufSize);
-        while (strLeft.length() > 0)        {
+        while (strLeft.length() > 0)
+        {
             int pos = strLeft.find('\n');
 
             if (pos != (int)std::string::npos)
@@ -394,7 +395,7 @@ namespace cocos2d{
 
 	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 	{	
-		assert(theString != NULL);
+		CCAssert(theString != NULL, "");
 		CC_SAFE_RELEASE(m_pConfiguration);// allow re-init
 		m_pConfiguration = FNTConfigLoadFile(fntFile);
 		m_pConfiguration->retain();
@@ -503,7 +504,7 @@ namespace cocos2d{
 				fontChar->setOpacity(255);
 			}
 
-            float yOffset = (float) (m_pConfiguration->m_uCommonHeight - fontDef.yOffset);
+            float yOffset = (float)(m_pConfiguration->m_uCommonHeight) - fontDef.yOffset;
 			fontChar->setPositionInPixels( ccp( nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width / 2.0f + kerningAmount,
 				                                (float) nextFontPositionY + yOffset - rect.size.height/2.0f ) );		
 
@@ -553,7 +554,8 @@ namespace cocos2d{
                 {
                     pNode->setIsVisible(false);
                 }
-            }		}
+            }
+		}
 		this->createFontChars();
 	}
 
@@ -581,7 +583,8 @@ namespace cocos2d{
                 {
                     pNode->setColor(m_tColor);
                 }
-            }		}
+            }
+		}
 	}
 	const ccColor3B& CCLabelBMFont::getColor()
 	{
@@ -605,7 +608,8 @@ namespace cocos2d{
                         pRGBAProtocol->setOpacity(m_cOpacity);
                     }
                 }
-            }		}
+            }
+		}
 	}
 	GLubyte CCLabelBMFont::getOpacity()
 	{
@@ -628,7 +632,8 @@ namespace cocos2d{
                         pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
                     }
                 }
-            }		}
+            }
+		}
 	}
 	bool CCLabelBMFont::getIsOpacityModifyRGB()
 	{

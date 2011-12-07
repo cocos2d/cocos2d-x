@@ -66,6 +66,12 @@ bool AppDelegate::initInstance()
 		// MaxAksenov said it's NOT a very elegant solution. I agree, haha
 		CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 #endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+        CCEGLView * pMainWnd = new CCEGLView();
+        CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this));
+        CCFileUtils::setResourcePath("/Res/");
+#endif
         bRet = true;
     } while (0);
     return bRet;
@@ -77,6 +83,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 	CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+    CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+#endif
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
     // pDirector->enableRetinaDisplay(true);
 

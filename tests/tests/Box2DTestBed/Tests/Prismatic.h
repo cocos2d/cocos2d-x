@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -19,6 +19,7 @@
 #ifndef PRISMATIC_H
 #define PRISMATIC_H
 
+// The motor in this test gets smoother with higher velocity iterations.
 class Prismatic : public Test
 {
 public:
@@ -29,8 +30,8 @@ public:
 			b2BodyDef bd;
 			ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -90,7 +91,7 @@ public:
 		Test::Step(settings);
 		m_debugDraw.DrawString(5, m_textLine, "Keys: (l) limits, (m) motors, (s) speed");
 		m_textLine += 15;
-		float32 force = m_joint->GetMotorForce();
+		float32 force = m_joint->GetMotorForce(settings->hz);
 		m_debugDraw.DrawString(5, m_textLine, "Motor Force = %4.0f", (float) force);
 		m_textLine += 15;
 	}

@@ -38,6 +38,8 @@ THE SOFTWARE.
 	#include "airplay/CCAccelerometer_airplay.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 	#include "Linux/CCAccelerometer_linux.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+	#include "bada/CCAccelerometer_bada.h"
 #else
     #error
 #endif

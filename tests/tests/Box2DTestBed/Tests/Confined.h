@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -35,22 +35,22 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
+			b2EdgeShape shape;
 
 			// Floor
-			shape.SetAsEdge(b2Vec2(-10.0f, 0.0f), b2Vec2(10.0f, 0.0f));
+			shape.Set(b2Vec2(-10.0f, 0.0f), b2Vec2(10.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 
 			// Left wall
-			shape.SetAsEdge(b2Vec2(-10.0f, 0.0f), b2Vec2(-10.0f, 20.0f));
+			shape.Set(b2Vec2(-10.0f, 0.0f), b2Vec2(-10.0f, 20.0f));
 			ground->CreateFixture(&shape, 0.0f);
 
 			// Right wall
-			shape.SetAsEdge(b2Vec2(10.0f, 0.0f), b2Vec2(10.0f, 20.0f));
+			shape.Set(b2Vec2(10.0f, 0.0f), b2Vec2(10.0f, 20.0f));
 			ground->CreateFixture(&shape, 0.0f);
 
 			// Roof
-			shape.SetAsEdge(b2Vec2(-10.0f, 20.0f), b2Vec2(10.0f, 20.0f));
+			shape.Set(b2Vec2(-10.0f, 20.0f), b2Vec2(10.0f, 20.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -64,7 +64,7 @@ public:
 		fd.density = 1.0f;
 		fd.friction = 0.1f;
 
-		for (int j = 0; j < e_columnCount; ++j)
+		for (int32 j = 0; j < e_columnCount; ++j)
 		{
 			for (int i = 0; i < e_rowCount; ++i)
 			{
@@ -82,7 +82,7 @@ public:
 
 	void CreateCircle()
 	{
-		float32 radius = 0.5f;
+		float32 radius = 2.0f;
 		b2CircleShape shape;
 		shape.m_p.SetZero();
 		shape.m_radius = radius;
@@ -92,9 +92,11 @@ public:
 		fd.density = 1.0f;
 		fd.friction = 0.0f;
 
+		b2Vec2 p(RandomFloat(), 3.0f + RandomFloat());
 		b2BodyDef bd;
 		bd.type = b2_dynamicBody;
-		bd.position.Set(RandomFloat(), (2.0f + RandomFloat()) * radius);
+		bd.position = p;
+		//bd.allowSleep = false;
 		b2Body* body = m_world->CreateBody(&bd);
 
 		body->CreateFixture(&fd);
@@ -112,12 +114,48 @@ public:
 
 	void Step(Settings* settings)
 	{
-		int flag = settings->enableContinuous;
-		settings->enableContinuous = 0;
+		bool sleeping = true;
+		for (b2Body* b = m_world->GetBodyList(); b; b = b->GetNext())
+		{
+			if (b->GetType() != b2_dynamicBody)
+			{
+				continue;
+			}
+
+			if (b->IsAwake())
+			{
+				sleeping = false;
+			}
+		}
+
+		if (m_stepCount == 180)
+		{
+			m_stepCount += 0;
+		}
+
+		//if (sleeping)
+		//{
+		//	CreateCircle();
+		//}
+
 		Test::Step(settings);
+
+		for (b2Body* b = m_world->GetBodyList(); b; b = b->GetNext())
+		{
+			if (b->GetType() != b2_dynamicBody)
+			{
+				continue;
+			}
+
+			b2Vec2 p = b->GetPosition();
+			if (p.x <= -10.0f || 10.0f <= p.x || p.y <= 0.0f || 20.0f <= p.y)
+			{
+				p.x += 0.0;
+			}
+		}
+
 		m_debugDraw.DrawString(5, m_textLine, "Press 'c' to create a circle.");
 		m_textLine += 15;
-		settings->enableContinuous = flag;
 	}
 
 	static Test* Create()

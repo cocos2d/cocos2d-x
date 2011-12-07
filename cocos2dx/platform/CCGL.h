@@ -55,6 +55,13 @@ THE SOFTWARE.
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+// GL_GLEXT_PROTOTYPES isn't defined in glplatform.h on android ndk r7 
+// we manually define it here
+#include <GLES/glplatform.h>
+#ifndef GL_GLEXT_PROTOTYPES
+#define GL_GLEXT_PROTOTYPES 1
+#endif
+// normal process
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #endif
@@ -136,6 +143,12 @@ extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 #include <IwGL.h>
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include "GLES/gl.h"
+#include "GLES/glext.h"
+
 #endif
 
 NS_CC_BEGIN;

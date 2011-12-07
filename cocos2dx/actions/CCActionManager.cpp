@@ -89,7 +89,7 @@ CCActionManager::CCActionManager(void)
   m_pCurrentTarget(NULL),
   m_bCurrentTargetSalvaged(false)
 {
-	assert(gSharedManager == NULL);
+	CCAssert(gSharedManager == NULL, "");
 }
 
 CCActionManager::~CCActionManager(void)
@@ -191,8 +191,8 @@ void CCActionManager::resumeTarget(CCObject *pTarget)
 
 void CCActionManager::addAction(CCAction *pAction, CCNode *pTarget, bool paused)
 {
-	assert(pAction != NULL);
-	assert(pTarget != NULL);
+	CCAssert(pAction != NULL, "");
+	CCAssert(pTarget != NULL, "");
 
 	tHashElement *pElement = NULL;
 	// we should convert it to CCObject*, because we save it as CCObject*
@@ -209,7 +209,7 @@ void CCActionManager::addAction(CCAction *pAction, CCNode *pTarget, bool paused)
 
  	actionAllocWithHashElement(pElement);
  
- 	assert(! ccArrayContainsObject(pElement->actions, pAction));
+ 	CCAssert(! ccArrayContainsObject(pElement->actions, pAction), "");
  	ccArrayAppendObject(pElement->actions, pAction);
  
  	pAction->startWithTarget(pTarget);
@@ -288,8 +288,8 @@ void CCActionManager::removeAction(CCAction *pAction)
 
 void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 {
-    assert((int)tag != kCCActionTagInvalid);
-	assert(pTarget != NULL);
+    CCAssert((int)tag != kCCActionTagInvalid, "");
+	CCAssert(pTarget != NULL, "");
 
 	tHashElement *pElement = NULL;
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
@@ -314,7 +314,7 @@ void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 
 CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
 {
-    assert((int)tag != kCCActionTagInvalid);
+    CCAssert((int)tag != kCCActionTagInvalid, "");
 
 	tHashElement *pElement = NULL;
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);

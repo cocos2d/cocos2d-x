@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "CCAtlasNode.h"
 #include "CCTextureAtlas.h"
+#include "CCDirector.h"
 
 namespace   cocos2d {
 
@@ -66,7 +67,7 @@ CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, unsigned int tile
 bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
 								   unsigned int itemsToRender)
 {
-	assert(tile != NULL);
+	CCAssert(tile != NULL, "title should not be null");
 	m_uItemWidth  = (int) (tileWidth * CC_CONTENT_SCALE_FACTOR());
 	m_uItemHeight = (int) (tileHeight * CC_CONTENT_SCALE_FACTOR());
 

@@ -45,6 +45,7 @@ build for which target platform
 #define CC_PLATFORM_AIRPLAY            5
 #define CC_PLATFORM_LINUX              7
 
+#define CC_PLATFORM_BADA               6
 // Determine tartet platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
 
@@ -93,6 +94,11 @@ build for which target platform
 #undef  CC_TARGET_PLATFORM
 #define CC_TARGET_PLATFORM         CC_PLATFORM_AIRPLAY
 #endif
+// bada
+#if ! CC_TARGET_PLATFORM && defined(SHP)
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_BADA
+#endif
 //////////////////////////////////////////////////////////////////////////
 // user configure
 //////////////////////////////////////////////////////////////////////////
@@ -126,6 +132,12 @@ build for which target platform
 #undef  CC_TARGET_PLATFORM
 #define CC_TARGET_PLATFORM			   CC_PLATFORM_LINUX
 #endif
+
+#if defined(CC_UNDER_BADA)
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM			   CC_PLATFORM_BADA
+#endif
+
 // Check user assigned supportive of multi-thread
 #if defined(CC_ENABLE_MULTITHREAD)
     #undef  CC_SUPPORT_MULTITHREAD

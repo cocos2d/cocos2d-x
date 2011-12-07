@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -29,8 +29,8 @@ public:
 			b2BodyDef bd;
 			ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-20.0f, 0.0f), b2Vec2(20.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-20.0f, 0.0f), b2Vec2(20.0f, 0.0f));
 
 			b2FixtureDef fd;
 			fd.shape = &shape;
@@ -81,7 +81,7 @@ public:
 			pjd.upperTranslation = 10.0f;
 			pjd.enableLimit = true;
 
-			(b2PrismaticJoint*)m_world->CreateJoint(&pjd);
+			m_world->CreateJoint(&pjd);
 
 			m_speed = 3.0f;
 		}
@@ -130,7 +130,7 @@ public:
 		// Drive the kinematic body.
 		if (m_platform->GetType() == b2_kinematicBody)
 		{
-			b2Vec2 p = m_platform->GetTransform().position;
+			b2Vec2 p = m_platform->GetTransform().p;
 			b2Vec2 v = m_platform->GetLinearVelocity();
 
 			if ((p.x < -10.0f && v.x < 0.0f) ||

@@ -48,8 +48,6 @@ public class Cocos2dxSound {
 	private HashMap<Integer,Integer> mSoundIdStreamIdMap;
 	// sound path and sound id map
 	private HashMap<String,Integer> mPathSoundIDMap;
-	// repeat effect's sound id and stream id map
-	private HashMap<Integer, Integer> mRepeatSoundIdStreamIdMap;
 	
 	private static final String TAG = "Cocos2dxSound";
 	private static final int MAX_SIMULTANEOUS_STREAMS_DEFAULT = 5;
@@ -113,11 +111,6 @@ public class Cocos2dxSound {
 			
 			// record sound id and stream id map
 			this.mSoundIdStreamIdMap.put(soundId, streamId);
-			
-			// record sound id and stream id map of the effect that loops for ever
-			if (isLoop){
-				this.mRepeatSoundIdStreamIdMap.put(soundId, streamId);
-			}
 		} else {
 			// the effect is not prepared
 			soundId = preloadEffect(path);	
@@ -149,33 +142,75 @@ public class Cocos2dxSound {
         if (streamId != null && streamId.intValue() != INVALID_STREAM_ID){
         	this.mSoundPool.stop(streamId.intValue());
         	this.mPathSoundIDMap.remove(soundId);
-        	this.mRepeatSoundIdStreamIdMap.remove(soundId);
         }
 	}
 	
-	public void pauseAllEffect(){
-		// autoPause() is available since level 8
-		pauseOrResumeAllEffect(true);
+	public void pauseEffect(int soundId){
+        Integer streamId = this.mSoundIdStreamIdMap.get(soundId);
+        
+        if (streamId != null && streamId.intValue() != INVALID_STREAM_ID){
+        	this.mSoundPool.pause(streamId.intValue());
+        	this.mPathSoundIDMap.remove(soundId);
+        }
 	}
 	
-	public void resumeAllEffect(){
+	public void resumeEffect(int soundId){
+        Integer streamId = this.mSoundIdStreamIdMap.get(soundId);
+        
+        if (streamId != null && streamId.intValue() != INVALID_STREAM_ID){
+        	this.mSoundPool.resume(streamId.intValue());
+        	this.mPathSoundIDMap.remove(soundId);
+        }
+	}
+	
+	public void pauseAllEffects(){
 		// autoResume is available since level 8
-		pauseOrResumeAllEffect(false);
+		pauseOrResumeAllEffects(true);
+	}
+	
+	public void resumeAllEffects(){
+		// autoPause() is available since level 8
+		pauseOrResumeAllEffects(false);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void stopAllEffects(){
+		Iterator<?> iter = this.mSoundIdStreamIdMap.entrySet().iterator();
+		while (iter.hasNext()){
+			Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>)iter.next();
+			int soundId = entry.getKey();
+			this.stopEffect(soundId);
+		}
 	}
 	
 	public float getEffectsVolume(){
 		return (this.mLeftVolume + this.mRightVolume) / 2;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setEffectsVolume(float volume){
+		// volume should be in [0, 1.0]
+		if (volume < 0){
+			volume = 0;
+		}	
+		if (volume > 1){
+			volume = 1;
+		}
+		
 		this.mLeftVolume = this.mRightVolume = volume;
+		
+		// change the volume of playing sounds
+		Iterator<?> iter = this.mSoundIdStreamIdMap.entrySet().iterator();
+		while (iter.hasNext()){
+			Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>)iter.next();
+			this.mSoundPool.setVolume(entry.getValue(), mLeftVolume, mRightVolume);
+		}
 	}
 	
 	public void end(){		
 		this.mSoundPool.release();	
 		this.mPathSoundIDMap.clear();	
 		this.mSoundIdStreamIdMap.clear();
-		this.mRepeatSoundIdStreamIdMap.clear();
 		
 		initData();
 	}
@@ -194,7 +229,6 @@ public class Cocos2dxSound {
 	
 	private void initData(){
 		this.mSoundIdStreamIdMap = new HashMap<Integer,Integer>();
-		this.mRepeatSoundIdStreamIdMap = new HashMap<Integer,Integer>();
 		mSoundPool = new SoundPool(MAX_SIMULTANEOUS_STREAMS_DEFAULT, AudioManager.STREAM_MUSIC, SOUND_QUALITY);
 		mPathSoundIDMap = new HashMap<String,Integer>();
 		
@@ -203,15 +237,15 @@ public class Cocos2dxSound {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void pauseOrResumeAllEffect(boolean isPause){
-		Iterator<?> iter = this.mRepeatSoundIdStreamIdMap.entrySet().iterator();
+	private void pauseOrResumeAllEffects(boolean isPause){
+		Iterator<?> iter = this.mSoundIdStreamIdMap.entrySet().iterator();
 		while (iter.hasNext()){
 			Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>)iter.next();
-			int streamId = entry.getValue();
+			int soundId = entry.getKey();
 			if (isPause) {
-				this.mSoundPool.pause(streamId);
+				this.pauseEffect(soundId);
 			} else {
-				this.mSoundPool.resume(streamId);
+				this.resumeEffect(soundId);
 			}
 		}
 	}
