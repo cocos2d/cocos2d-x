@@ -88,7 +88,6 @@ bool CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
 		m_pInScene->retain();
 		m_pOutScene = CCDirector::sharedDirector()->getRunningScene();
 		m_pOutScene->retain();
-		m_eSceneType = ccTransitionScene;
 
 		CCAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
 
