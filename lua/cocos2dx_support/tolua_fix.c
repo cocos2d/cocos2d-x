@@ -177,3 +177,32 @@ TOLUA_API int tolua_isfunction(lua_State* L, int lo, tolua_Error* err)
     err->type = "[not function]";
     return 0;
 }
+
+TOLUA_API void tolua_stack_dump(lua_State *L)
+{
+    int i;
+    int top = lua_gettop(L);
+    printf("Lua Stack: ");
+    for(i = 1; i <= top; i++)
+    {
+        int t = lua_type(L, i);
+        switch (t)
+        {
+            case LUA_TSTRING:
+                //                printf("`%s'", lua_tostring(L, i));
+                printf("string");
+                break;
+            case LUA_TBOOLEAN:
+                printf(lua_toboolean(L, i) ? "true" : "false");
+                break;
+            case LUA_TNUMBER:
+                printf("%g", lua_tonumber(L, i));
+                break;
+            default:
+                printf("%s", lua_typename(L, t));
+        }
+        printf(" ");
+    }
+    printf("\n\n");
+}
+
