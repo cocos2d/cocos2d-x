@@ -1,8 +1,9 @@
 [S3E]
 
-MemSize=[s3e]SCREENSIZE + 50331648
+#MemSize=[s3e]SCREENSIZE + 50331648
 #MemFlags0=USE_STACK_ALLOCATOR
-FixScreenOrientation = 1
+MemSize=DispAreaQ + 50331648
+DispFixRot = 1
 
 
 [Trace]

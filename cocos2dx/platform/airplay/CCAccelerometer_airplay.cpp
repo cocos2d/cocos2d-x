@@ -39,27 +39,28 @@ CCAccelerometerDelegate* CCAccelerometerHandler::getDelegate()
 }
 CCAccelerometerHandler::~CCAccelerometerHandler()
 {
-    m_pDelegate->AccelerometerDestroy();
+//    m_pDelegate->AccelerometerDestroy();
 }
 void CCAccelerometerHandler::setDelegate(CCAccelerometerDelegate *pDelegate)
 {
     if (pDelegate)
     {
-        pDelegate->AccelerometerKeep();
+        CCAccelerometer::sharedAccelerometer()->setDelegate(pDelegate);
     }
-
+    
     if (m_pDelegate)
     {
-        m_pDelegate->AccelerometerDestroy();
+        CCAccelerometer::sharedAccelerometer()->setDelegate(m_pDelegate);
     }
     m_pDelegate = pDelegate;
 }
+    
 bool CCAccelerometerHandler::initWithDelegate(CCAccelerometerDelegate *pDelegate)
 {
     assert(pDelegate != NULL);
 
     m_pDelegate = pDelegate;
-    pDelegate->AccelerometerKeep();
+//    pDelegate->AccelerometerKeep();
 
     return true;
 }
@@ -128,7 +129,7 @@ void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate)
 //        m_pSensor = NULL;
     }
 }
-void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
+void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 {
     CCAccelerometerHandler* pHandler = CCAccelerometerHandler::handlerWithDelegate(pDelegate);
 

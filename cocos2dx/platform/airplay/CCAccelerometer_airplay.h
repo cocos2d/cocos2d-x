@@ -74,7 +74,7 @@ public:
     /**
     @brief add delegate to concern accelerometer sensor
     */
-    void addDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(CCAccelerometerDelegate* pDelegate);
 
     /**
     @brief remove the delegate from the delegates who concern Accelerometer Sensor

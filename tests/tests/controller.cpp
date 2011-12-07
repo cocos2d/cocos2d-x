@@ -137,7 +137,8 @@ TestController::TestController()
     for (int i = 0; i < TESTS_COUNT; ++i)
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-		CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+		CCLabelBMFont* label = CCLabelBMFont::labelWithString(g_aTestNames[i].c_str(), "fonts/arial16.fnt");
+//        bitmapFontAtlasWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 #else
         CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);
 #endif		
@@ -178,6 +179,10 @@ void TestController::menuCallback(CCObject * pSender)
 void TestController::closeCallback(CCObject * pSender)
 {
     CCDirector::sharedDirector()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	exit(0);
+#endif
+
 }
 
 void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)

@@ -246,3 +246,10 @@ files
 }
 }
 }
+#### AUTO GENERATED deployment settings from DeployTool.exe. Do not edit below this line ####
+deployments
+{
+	["Default"]
+	iphone-no-splash='1'
+	iphone-nosign='1'
+}

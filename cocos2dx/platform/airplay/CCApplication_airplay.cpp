@@ -77,7 +77,7 @@ int CCApplication::Run()
 			s3eKeyboardUpdate();
 			s3ePointerUpdate();
 			
-			ccAccelerationUpdate();
+//			ccAccelerationUpdate();
 			CCDirector::sharedDirector()->mainLoop();
 		}
 		else 

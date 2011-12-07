@@ -123,7 +123,13 @@ CCSize  CCEGLView::getSize()
 void CCEGLView::setTouch(void* systemData)
 {
 	s3ePointerEvent* event =(s3ePointerEvent*)systemData;
-	
+    
+    //가상 좌표로 변환
+    CIwGLPoint point(event->m_x,event->m_y);
+    point = IwGLTransform(point);
+    
+    event->m_x = point.x;
+    event->m_y = point.y;
 	switch (event->m_Pressed)
 	{
 	case 1 :
