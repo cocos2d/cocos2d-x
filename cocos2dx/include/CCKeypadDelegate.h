@@ -33,11 +33,6 @@ namespace   cocos2d {
 class CC_DLL CCKeypadDelegate
 {
 public:
-    //! call the release() in child layer
-    virtual void KeypadDestroy() {}
-    //! call the retain() in child layer
-    virtual void KeypadKeep() {}
-
     // The back key clicked
     virtual void keyBackClicked() {}
 
