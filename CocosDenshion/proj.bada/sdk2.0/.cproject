@@ -8,7 +8,6 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/.Target-Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CocosDenshion"/>
 					</externalSetting>
@@ -28,7 +27,12 @@
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.so.debug.1191634796." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.so.debug.329667272" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.so.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.so.debug.1155249821" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.so.debug"/>
-							<builder buildPath="${workspace_loc:/CocosDenshion/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.so.debug.2090001571" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.so.debug"/>
+							<builder buildPath="${workspace_loc:/CocosDenshion/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.so.debug.2090001571" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.so.debug">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+								</outputEntries>
+							</builder>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.base.1685402292" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.so.debug.1064963857" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.so.debug">
 								<option id="osp.gnu.target.cpp.compiler.debug.so.option.preprocessor.def.630710739" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.debug.so.option.preprocessor.def" valueType="definedSymbols">
@@ -51,6 +55,11 @@
 									<listOptionValue builtIn="false" value="../../../bada"/>
 									<listOptionValue builtIn="false" value="../../../bada/vorbis"/>
 								</option>
+								<option id="osp.gnu.target.c.compiler.debug.so.option.preprocessor.def.619845926" name="Defined symbols (-D)" superClass="osp.gnu.target.c.compiler.debug.so.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="SHP"/>
+									<listOptionValue builtIn="false" value="_DEBUG"/>
+									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.1332966355" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug.1930124323" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug"/>
@@ -66,13 +75,13 @@
 								</inputType>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.assembler.so.debug.825378510" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.so.debug">
+								<option id="osp.gnu.both.asm.option.include.paths.1787564687" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths" valueType="includePath"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.assembler.input.1912873224" superClass="cdt.managedbuild.tool.osp.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="bada"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="include"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -562,8 +571,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="bada"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
