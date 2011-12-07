@@ -88,23 +88,22 @@
 		<link>
 			<name>AppDelegate.cpp</name>
 			<type>1</type>
-			<locationURI>cocos2dx_root/tests/AppDelegate.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/AppDelegate.cpp</locationURI>
+		</link>
+		<link>
+			<name>AppDelegate.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/AppDelegate.h</locationURI>
 		</link>
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/tests/test.bada/src</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src</locationURI>
 		</link>
 		<link>
 			<name>tests</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/tests/tests</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/tests</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>cocos2dx_root</name>
-			<value>file:/F:/Project/dumganhar/cocos2d-x</value>
-		</variable>
-	</variableList>
 </projectDescription>
