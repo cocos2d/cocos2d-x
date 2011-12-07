@@ -197,6 +197,23 @@ void CCDirector::drawScene(void)
 
 	glPushMatrix();
 
+/*	
+	// GZ ADDED
+	s3eSurfaceBlitDirection rotDir = (s3eSurfaceBlitDirection)IwGLGetInt(IW_GL_ROTATE) ;
+	if( rotDir == S3E_SURFACE_BLIT_DIR_NORMAL ) {
+		setDeviceOrientation(kCCDeviceOrientationPortrait) ;
+	}
+	else if( rotDir == S3E_SURFACE_BLIT_DIR_ROT90 ) {
+		setDeviceOrientation(kCCDeviceOrientationLandscapeRight) ;
+	}
+	else if( rotDir == S3E_SURFACE_BLIT_DIR_ROT180 ) {
+		setDeviceOrientation(kCCDeviceOrientationPortraitUpsideDown) ;
+	}
+	else if( rotDir == S3E_SURFACE_BLIT_DIR_ROT270 ) {
+		setDeviceOrientation(kCCDeviceOrientationLandscapeLeft) ;
+	}
+	// GZ ADDED
+*/
 	applyOrientation();
 
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
