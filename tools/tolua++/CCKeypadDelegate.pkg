@@ -3,10 +3,6 @@ namespace   cocos2d {
 	class  CCKeypadDelegate
 	{
 
-		void KeypadDestroy();
-	 
-		void KeypadKeep();
-
 		// The back key clicked
 		void keyBackClicked();
 
