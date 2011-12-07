@@ -60,9 +60,15 @@ CCImage::~CCImage()
 }
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
-	IW_CALLSTACK("UIImage::initWithImageFile");
     CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
     return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
+}
+
+bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+{
+	CC_UNUSED_PARAM(imageType);
+    CCFileData data(fullpath, "rb");
+    return initWithImageData(data.getBuffer(), data.getSize(), imageType);
 }
 
 bool CCImage::initWithImageData(void * pData, 
@@ -104,13 +110,11 @@ void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
 #define PNGSIGSIZE 8
 bool CCImage::_initWithPngData(void * pData, int nDatalen)
 {
-	IW_CALLSTACK("CCImage::_initWithPngData");
 	
     bool bRet = false;
 	
 	s3eFile* pFile = s3eFileOpenFromMemory(pData, nDatalen);
 	
-	IwAssert(GAME, pFile);
 	
 	png_byte pngsig[PNGSIGSIZE];
 	

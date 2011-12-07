@@ -22,15 +22,13 @@
  ****************************************************************************/
 
 #include "CCFileUtils.h"
+#include "CCDirector.h"
 #include "string.h"
-#include "stack"
-#include "expat.h"
+#include <stack>
 #include "CCString.h"
+#include "CCSAXParser.h"
 
-#include "support/zip_support/unzip.h"
-#include "../CCSAXParser.h"
-#include "CCApplication.h"
-#include "CCMutableArray.h"
+using namespace std;
 
 NS_CC_BEGIN;
 
@@ -95,7 +93,9 @@ public:
             m_pCurDict = new CCDictionary<std::string, CCObject*>();
             if(! m_pRootDict)
             {
+				// Because it will call m_pCurDict->release() later, so retain here.
                 m_pRootDict = m_pCurDict;
+				m_pRootDict->retain();
             }
             m_tState = SAX_DICT;
 
@@ -117,7 +117,8 @@ public:
                 CCDictionary<std::string, CCObject*>* pPreDict = m_tDictStack.top();
                 pPreDict->setObject(m_pCurDict, m_sCurKey);
             }
-            m_pCurDict->autorelease();
+
+			m_pCurDict->release();
 
             // record the dict state
             m_tStateStack.push(m_tState);
@@ -356,9 +357,15 @@ std::string& CCFileUtils::ccRemoveHDSuffixFromFile(std::string& path)
     return path;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Notification support when getFileData from a invalid file
-///////////////////////////////////////////////////////////////////////////////
+CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+{
+	CCDictMaker tMaker;
+    return tMaker.dictionaryWithContentsOfFile(pFileName);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Notification support when getFileData from invalid file path.
+//////////////////////////////////////////////////////////////////////////
 static bool s_bPopupNotify = true;
 
 void CCFileUtils::setIsPopupNotify(bool bNotify)
