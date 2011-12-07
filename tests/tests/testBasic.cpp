@@ -18,7 +18,7 @@ void TestScene::onEnter()
 
     //add the menu item for back to main menu
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-    CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("MainMenu",  "fonts/arial16.fnt");
+    CCLabelBMFont* label = CCLabelBMFont::labelWithString("MainMenu",  "fonts/arial16.fnt");
 #else
     CCLabelTTF* label = CCLabelTTF::labelWithString("MainMenu", "Arial", 20);
 #endif
