@@ -56,6 +56,10 @@ TOLUA_API void tolua_pushusertype (lua_State* L, void* value, const char* type)
     else
     {        
         luaL_getmetatable(L, type);                                 /* stack: mt */
+        if (lua_isnil(L, -1)) { /* NOT FOUND metatable */
+            lua_pop(L, 1);
+            return;
+        }
         lua_pushstring(L,"tolua_ubox");
         lua_rawget(L,-2);                                           /* stack: mt ubox */
         if (lua_isnil(L, -1)) {
