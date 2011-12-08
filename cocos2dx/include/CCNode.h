@@ -140,11 +140,17 @@ class CC_DLL CCNode : public SelectorProtocol, public CCObject
     /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
     CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPosition, Position)
     CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPositionInPixels, PositionInPixels)
+    
+#if LUA_ENGINE
+    const CCPoint& getPositionLua(void) {
+        return m_tPosition;
+    }
 
     void getPosition(float* x, float* y) {
         *x = m_tPosition.x;
         *y = m_tPosition.y;
     }
+#endif
     
     float getPositionX(void) {
         return m_tPosition.x;
@@ -158,10 +164,12 @@ class CC_DLL CCNode : public SelectorProtocol, public CCObject
     void setPositionX(float x);
     void setPositionY(float y);
 
+#if LUA_ENGINE
     void getPositionInPixels(float* x, float* y) {
         *x = m_tPositionInPixels.x;
         *y = m_tPositionInPixels.y;
     }
+#endif
 
     void setPositionInPixels(float x, float y);
 

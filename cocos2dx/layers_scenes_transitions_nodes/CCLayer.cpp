@@ -97,12 +97,12 @@ void CCLayer::registerScriptTouchHandler(int functionRefID, bool isMultiTouches)
     if (isMultiTouches)
     {
         CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0);
-        CCLOG("[LUA] ADD function refID: %04d, add multi touches event handler", functionRefID);
+        LUALOG("[LUA] ADD function refID: %04d, add multi touches event handler", functionRefID);
     }
     else
     {
         CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
-        CCLOG("[LUA] ADD function refID: %04d, add touch event handler", functionRefID);
+        LUALOG("[LUA] ADD function refID: %04d, add touch event handler", functionRefID);
     }    
     m_scriptTouchHandler = functionRefID;
 }
@@ -113,7 +113,7 @@ void CCLayer::unregisterScriptTouchHandler(void)
     {
         CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_scriptTouchHandler);
         CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
-        CCLOG("[LUA] DEL function refID: %04d, remove touch event handler", m_scriptTouchHandler);
+        LUALOG("[LUA] DEL function refID: %04d, remove touch event handler", m_scriptTouchHandler);
     }
     m_scriptTouchHandler = 0;
 }

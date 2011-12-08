@@ -16,7 +16,6 @@ typedef enum {
 
 class CCSprite : public CCNode
 {
-	void draw(void);
 	void setDirty(bool bDirty);
 	bool isDirty(void);
 
@@ -40,47 +39,30 @@ class CCSprite : public CCNode
 
 	CCPoint getOffsetPositionInPixels(void);
 
-	void removeChild(CCNode* pChild, bool bCleanup);
-	void removeAllChildrenWithCleanup(bool bCleanup);
-	void reorderChild(CCNode *pChild, int zOrder);
-	void addChild(CCNode *pChild);
-	void addChild(CCNode *pChild, int zOrder);
-	void addChild(CCNode *pChild, int zOrder, int tag);
-
 	void setDirtyRecursively(bool bValue);
-	void setPosition(CCPoint pos);
-	void setPosition(float x, float y);
-	void setPositionInPixels(CCPoint pos);
-	void setPositionInPixels(float x, float y);
-	void setRotation(float fRotation);
-	void setSkewX(float sx);
-	void setSkewY(float sy);
-	void setScaleX(float fScaleX);
-	void setScaleY(float fScaleY);
-	void setScale(float fScale);
-	void setVertexZ(float fVertexZ);
-	void setAnchorPoint(CCPoint anchor);
 	void setIsRelativeAnchorPoint(bool bRelative);
-	void setIsVisible(bool bVisible);
 	void setFlipX(bool bFlipX);
 	void setFlipY(bool bFlipY);
 	bool isFlipX(void);
 	bool isFlipY(void);
 	void updateColor(void);
-	
+
 	void setOpacity(GLubyte opacity);
 	GLubyte getOpacity(void);
+
+	tolua_property__CCOpacity	GLubyte opacity;
+
 	void setColor(ccColor3B color3);
 	ccColor3B getColor(void);
 	void setIsOpacityModifyRGB(bool bValue);
 	bool getIsOpacityModifyRGB(void);
 
-   void setTexture(CCTexture2D *texture);
+	void setTexture(CCTexture2D *texture);
 	CCTexture2D* getTexture(void);
 
 	void updateTransform(void);
 	void useSelfRender(void);
-        void setTextureRect(CCRect rect);
+    void setTextureRect(CCRect rect);
 	void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
 	void useBatchNode(CCSpriteBatchNode *batchNode);
 	void setDisplayFrame(CCSpriteFrame *pNewFrame);
