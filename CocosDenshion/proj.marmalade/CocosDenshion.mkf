@@ -12,7 +12,7 @@ files
 	[include]
 	"SimpleAudioEngine.h"
 
-	("../airplay")
+	("../marmalade")
 	[src]
 	"*.cpp"
 

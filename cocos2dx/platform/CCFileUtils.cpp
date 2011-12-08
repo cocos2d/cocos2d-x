@@ -372,8 +372,8 @@ NS_CC_END;
 #include "android/CCFileUtils_android.cpp"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-#include "airplay/CCFileUtils_airplay.cpp"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+#include "marmalade/CCFileUtils_marmalade.cpp"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)

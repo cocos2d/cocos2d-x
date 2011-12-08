@@ -48,7 +48,7 @@ THE SOFTWARE.
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "CCUserDefault.h"
 #endif
 
@@ -638,7 +638,7 @@ void CCDirector::purgeDirector()
 	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
 	
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)	
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	
 	CCUserDefault::purgeSharedUserDefault();
 #endif
 	// OpenGL view
