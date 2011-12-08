@@ -45,7 +45,7 @@
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.c.linker.base.91819967" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.arm.c.linker.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.cpp.linker.base.609563850" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.arm.cpp.linker.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.assembler.lib.debug.837980931" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.lib.debug">
-								<option id="osp.gnu.both.asm.option.include.paths.1266555631" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="osp.gnu.both.asm.option.include.paths.1266555631" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.assembler.input.527987996" superClass="cdt.managedbuild.tool.osp.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
