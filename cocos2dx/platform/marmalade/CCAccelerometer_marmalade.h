@@ -20,8 +20,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __PLATFORM_AIRPLAY_ACCELEROMETER_H__
-#define __PLATFORM_AIRPLAY_ACCELEROMETER_H__
+#ifndef __PLATFORM_MARMALADE_ACCELEROMETER_H__
+#define __PLATFORM_MARMALADE_ACCELEROMETER_H__
 
 #include "CCAccelerometerDelegate.h"
 #include "CCMutableArray.h"

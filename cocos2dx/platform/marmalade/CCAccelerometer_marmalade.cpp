@@ -21,7 +21,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCAccelerometer_airplay.h"
+#include "CCAccelerometer_marmalade.h"
 #include "ccMacros.h"
 
 namespace cocos2d

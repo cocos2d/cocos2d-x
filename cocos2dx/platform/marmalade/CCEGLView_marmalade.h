@@ -21,8 +21,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_AIRPLAY_H__
-#define __CC_EGLVIEW_AIRPLAY_H__
+#ifndef __CC_EGLVIEW_MARMALADE_H__
+#define __CC_EGLVIEW_MARMALADE_H__
 
 #include "CCGeometry.h"
 #include "s3eKeyboard.h"
@@ -111,4 +111,4 @@ private:
 	
 NS_CC_END;
 
-#endif	// end of __CC_EGLVIEW_AIRPLAY_H__
+#endif	// end of __CC_EGLVIEW_MARMALADE_H__

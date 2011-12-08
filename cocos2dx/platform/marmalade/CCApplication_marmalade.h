@@ -21,8 +21,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_APPLICATION_AIRPLAY_H__
-#define __CC_APPLICATION_AIRPLAY_H__
+#ifndef __CC_APPLICATION_MARMALADE_H__
+#define __CC_APPLICATION_MARMALADE_H__
 
 #include "CCCommon.h"
 
@@ -118,4 +118,4 @@ protected:
 };
 
 NS_CC_END;
-#endif	// end of __CC_APPLICATION_AIRPLAY_H__
+#endif	// end of __CC_APPLICATION_MARMALADE_H__

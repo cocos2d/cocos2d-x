@@ -89,8 +89,8 @@ THE SOFTWARE.
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
 
-// havn't implement on wophone and airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+// havn't implement on wophone and marmalade
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "CCTextFieldTTF.h"
 #endif
 
