@@ -15,8 +15,9 @@ options
 subprojects
 {
 	zlib
-	expat
+	# expat
 	libpng
+    libxml2
 }
 includepaths
 {
@@ -87,6 +88,7 @@ files
 	"CCStdC.cpp"
 	"CCGL.cpp"
 	"CCCommon.cpp"
+	"CCSaxParser.cpp"
 
 	("../platform/airplay")
 	[platforms/airplay]
