@@ -17,12 +17,12 @@ TOLUA_API void tolua_prepare_ccobject_table(lua_State* L)
     lua_rawset(L, LUA_REGISTRYINDEX);
 }
 
-TOLUA_API void tolua_pushusertype_ccobject(lua_State* L, int refid, int* p_refid, void* ptr, const char* type)
+TOLUA_API int tolua_pushusertype_ccobject(lua_State* L, int refid, int* p_refid, void* ptr, const char* type)
 {
     if (ptr == NULL || p_refid == NULL)
     {
         lua_pushnil(L);
-        return;
+        return -1;
     }
     
     if (*p_refid == 0)
@@ -42,16 +42,16 @@ TOLUA_API void tolua_pushusertype_ccobject(lua_State* L, int refid, int* p_refid
         lua_pushstring(L, type);                                    /* stack: refid_type refid type */
         lua_rawset(L, -3);                /* refid_type[refid] = type, stack: refid_type */
         lua_pop(L, 1);                                              /* stack: - */
-        
-        //printf("[LUA] push CCObject - refid: %d, ptr: %x, type: %s\n", *p_refid, (int)ptr, type);
+//        printf("[LUA] push CCObject - refid: %d, ptr: %x, type: %s\n", *p_refid, (int)ptr, type);
     }
     
     tolua_pushusertype(L, ptr, type);
+    return 0;
 }
 
-TOLUA_API void tolua_remove_ccobject_by_refid(lua_State* L, int refid)
+TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
 {
-    if (refid == 0) return;
+    if (refid == 0) return -1;
     
     // get ptr from tolua_refid_ptr_mapping
     lua_pushstring(L, TOLUA_REFID_PTR_MAPPING);
@@ -65,7 +65,7 @@ TOLUA_API void tolua_remove_ccobject_by_refid(lua_State* L, int refid)
         lua_pop(L, 1);
         // Lua stack has closed, C++ object not in Lua.
         //printf("[LUA ERROR] remove CCObject with NULL ptr, refid: %d\n", refid);
-        return;
+        return -2;
     }
     
     // remove ptr from tolua_refid_ptr_mapping
@@ -84,7 +84,7 @@ TOLUA_API void tolua_remove_ccobject_by_refid(lua_State* L, int refid)
     {
         lua_pop(L, 2);
         printf("[LUA ERROR] remove CCObject with NULL type, refid: %d, ptr: %x\n", refid, (int)ptr);
-        return;
+        return -1;
     }
     
     const char* type = lua_tostring(L, -1);
@@ -115,7 +115,7 @@ TOLUA_API void tolua_remove_ccobject_by_refid(lua_State* L, int refid)
         // Lua object has released (GC), C++ object not in ubox.
         //printf("[LUA ERROR] remove CCObject with NULL ubox, refid: %d, ptr: %x, type: %s\n", refid, (int)ptr, type);
         lua_pop(L, 3);
-        return;
+        return -3;
     }
     
     void** ud = (void**)lua_touserdata(L, -1);
@@ -124,7 +124,7 @@ TOLUA_API void tolua_remove_ccobject_by_refid(lua_State* L, int refid)
     {
         printf("[LUA ERROR] remove CCObject with NULL userdata, refid: %d, ptr: %x, type: %s\n", refid, (int)ptr, type);
         lua_pop(L, 2);
-        return;
+        return -1;
     }
     
     // clean userdata
@@ -135,7 +135,8 @@ TOLUA_API void tolua_remove_ccobject_by_refid(lua_State* L, int refid)
     lua_rawset(L, -3);                             /* ubox[ptr] = nil, stack: mt ubox */
     
     lua_pop(L, 2);
-    //printf("[LUA] remove CCObject, refid: %d, ptr: %x, type: %s\n", refid, (int)ptr, type);
+//    printf("[LUA] remove CCObject, refid: %d, ptr: %x, type: %s\n", refid, (int)ptr, type);
+    return 0;
 }
 
 TOLUA_API int tolua_ref_function(lua_State* L, int lo, int def)
