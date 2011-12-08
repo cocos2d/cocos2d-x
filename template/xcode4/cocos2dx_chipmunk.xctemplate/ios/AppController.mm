@@ -21,8 +21,8 @@
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
@@ -34,8 +34,8 @@ static AppDelegate s_sharedApplication;
                                       sharegroup: nil
                                    multiSampling: NO
                                  numberOfSamples: 0 ];
-                                 
-    // Use RootViewController manage EAGLView 
+
+    // Use RootViewController manage EAGLView
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
     viewController.wantsFullScreenLayout = YES;
     viewController.view = __glView;
@@ -45,7 +45,7 @@ static AppDelegate s_sharedApplication;
     [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
-    
+
     cocos2d::CCApplication::sharedApplication().run();
     return YES;
 }
@@ -68,17 +68,17 @@ static AppDelegate s_sharedApplication;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
-	cocos2d::CCApplication::sharedApplication().applicationDidEnterBackground();
+    cocos2d::CCApplication::sharedApplication().applicationDidEnterBackground();
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     /*
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
-	cocos2d::CCApplication::sharedApplication().applicationWillEnterForeground();
+    cocos2d::CCApplication::sharedApplication().applicationWillEnterForeground();
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
