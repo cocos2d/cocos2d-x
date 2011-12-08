@@ -1,0 +1,47 @@
+defines
+{
+TARGET_OS_IPHONE=1
+}
+
+
+includepaths
+{
+	"../"
+	"../include/chipmunk"
+
+}
+
+
+
+if {{ defined MARMALADEUSECHIPMUNK}}
+{
+if {{ MARMALADEUSECHIPMUNK == 1 }}
+{
+
+files
+{
+
+
+	("../include/chipmunk")
+	[include]
+	"*.h"
+
+	("../include/chipmunk/constraints")
+
+	[include/constraints]
+	"*.h"
+
+	("../src")
+	[src]
+	"*.h"
+	"*.c"
+
+	("../src/constraints")
+	[src/constraints]
+	"*.c"
+	
+}
+}
+}
+
+
