@@ -111,14 +111,7 @@ void CCApplication::statusBarFrame(CCRect * rect)
 }
 void CCApplication::ccAccelerationUpdate()
 {
-	CCAcceleration AccValue;
-	AccValue.x = (double)s3eAccelerometerGetX()/200;
-	AccValue.y = (double)s3eAccelerometerGetY()/200;
-	AccValue.z = (double)s3eAccelerometerGetZ()/200;
-	AccValue.timestamp = (double) 50/ 100;
-	
-	// call delegates' didAccelerate function
-	CCAccelerometer::sharedAccelerometer()->didAccelerate(&AccValue);
+	CCAccelerometer::sharedAccelerometer()->update(s3eAccelerometerGetX(),s3eAccelerometerGetY(),s3eAccelerometerGetZ(),s3eTimerGetMs());
 }
 	
 //////////////////////////////////////////////////////////////////////////
