@@ -56,7 +56,7 @@ bool CCSchedulerFuncEntry::initWithFunctionRefID(int functionRefID, ccTime fInte
     m_timer->retain();
     m_functionRefID = functionRefID;
     m_paused = bPaused;
-    CCLOG("[LUA] ADD function refID: %04d, add schedule entryID: %d", m_functionRefID, m_entryID);
+    LUALOG("[LUA] ADD function refID: %04d, add schedule entryID: %d", m_functionRefID, m_entryID);
     return true;
 }
 
@@ -75,7 +75,7 @@ CCSchedulerFuncEntry::~CCSchedulerFuncEntry(void)
 {
     m_timer->release();
     CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_functionRefID);
-    CCLOG("[LUA] DEL function refID: %04d, remove schedule entryID: %d", m_functionRefID, m_entryID);
+    LUALOG("[LUA] DEL function refID: %04d, remove schedule entryID: %d", m_functionRefID, m_entryID);
 }
 
 // ----------------------------

@@ -30,7 +30,9 @@
 #pragma warning (disable:4800)
 #endif
 
-//#define TOLUA_RELEASE
+#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
+#define TOLUA_RELEASE
+#endif
 
 #include "tolua++.h"
 

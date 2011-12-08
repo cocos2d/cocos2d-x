@@ -106,8 +106,7 @@ void CCScene::registerScriptEventsHandler(int functionRefID)
 {
     unregisterScriptEventsHandler();
     m_eventsFunctionRefID = functionRefID;
-    
-    CCLOG("[LUA] ADD Scene events handler: %d", functionRefID);
+    LUALOG("[LUA] ADD Scene events handler: %d", functionRefID);
 }
 
 void CCScene::unregisterScriptEventsHandler(void)
@@ -115,7 +114,7 @@ void CCScene::unregisterScriptEventsHandler(void)
     if (m_eventsFunctionRefID)
     {
         CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_eventsFunctionRefID);
-        CCLOG("[LUA] DEL Scene events handler: %d", m_eventsFunctionRefID);
+        LUALOG("[LUA] DEL Scene events handler: %d", m_eventsFunctionRefID);
     }
     m_eventsFunctionRefID = 0;
 }

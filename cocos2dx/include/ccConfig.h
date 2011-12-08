@@ -325,6 +325,7 @@
 /** Enable lua support
  */
 #define LUA_ENGINE 1
+#define LUA_ENGINE_DEBUG 1
 
 
 #endif // __CCCONFIG_H__

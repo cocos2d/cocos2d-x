@@ -97,7 +97,7 @@ public:
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
      */
-    lua_State* getLuaState(void) const {
+    lua_State* getLuaState(void) {
         return m_state;
     }
     
@@ -132,6 +132,13 @@ public:
      */
     int executeGlobalFunction(const char* function_name);
     
+    /**
+     @brief Execute a function by ref id
+     @param The function ref id
+     @param Number of parameters
+     @return The integer value returned from the script function.
+     */
+    int executeFunctionByRefID(int functionRefId, int numArgs = 0);
     int executeFunctionWithIntegerData(int functionRefId, int data);
     int executeFunctionWithFloatData(int functionRefId, float data);
     int executeFunctionWithBooleanData(int functionRefId, bool data);
@@ -151,14 +158,6 @@ private:
     
     static CCLuaEngine* s_engine;
     lua_State* m_state;
-    
-    /**
-     @brief Execute a function by ref id
-     @param The function ref id
-     @param Number of parameters
-     @return The integer value returned from the script function.
-     */
-    int executeFunctionByRefID(int functionRefId, int numArgs = 0);
 };
     
 } // namespace cocos2d
