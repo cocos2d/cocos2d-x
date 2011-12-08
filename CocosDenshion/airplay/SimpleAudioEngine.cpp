@@ -207,4 +207,29 @@ namespace CocosDenshion
 	{
 		s3eFreeBase(g_SoundBuffer);
 	}
+
+	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
+	{
+		s3eSoundChannelPause (nSoundId);
+	}
+
+	void SimpleAudioEngine::pauseAllEffects()
+	{
+		s3eSoundPauseAllChannels ();
+	}
+
+	void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
+	{
+		s3eSoundChannelResume (nSoundId);
+	}
+
+	void SimpleAudioEngine::resumeAllEffects()
+	{
+		s3eSoundResumeAllChannels ();
+	}
+
+	void SimpleAudioEngine::stopAllEffects()
+	{
+		s3eSoundStopAllChannels ();
+	}
 }

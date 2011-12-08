@@ -126,14 +126,14 @@ void CCEGLView::setTouch(void* systemData)
 	
 	switch (event->m_Pressed)
 	{
-	case 1 :
+	case S3E_POINTER_STATE_DOWN :
 		m_bCaptured = true;
 		m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
 		m_pSet->addObject(m_pTouch);
 		m_pDelegate->touchesBegan(m_pSet, NULL);
 		break;
 
-	case 0 :
+	case S3E_POINTER_STATE_UP :
 		if (m_bCaptured)
 		{
 			m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
