@@ -15,8 +15,8 @@ options
 subprojects
 {
 	zlib
-	libxml2
 	libpng
+	libxml2
 }
 includepaths
 {
@@ -97,9 +97,9 @@ files
 	"CCEGLView_marmalade.cpp"
 	"CCImage_marmalade.cpp"
 
-  ("../script_support")
-  [script_support]
-  "*.cpp"
+	("../script_support")
+	[script_support]
+	"*.cpp"
 	
 	("../sprite_nodes")
 	[sprite_nodes]

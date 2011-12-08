@@ -232,9 +232,9 @@ files
 	"*.cpp"
 }
 
-if {{ defined AIRPLAYUSECHIPMUNK}}
+if {{ defined MARMALADEUSECHIPMUNK}}
 {
-if {{ AIRPLAYUSECHIPMUNK == 1 }}
+if {{ MARMALADEUSECHIPMUNK == 1 }}
 {
 files
 {
