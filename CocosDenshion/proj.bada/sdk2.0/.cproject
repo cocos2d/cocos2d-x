@@ -75,7 +75,7 @@
 								</inputType>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.assembler.so.debug.825378510" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.so.debug">
-								<option id="osp.gnu.both.asm.option.include.paths.1787564687" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="osp.gnu.both.asm.option.include.paths.1787564687" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.assembler.input.1912873224" superClass="cdt.managedbuild.tool.osp.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
