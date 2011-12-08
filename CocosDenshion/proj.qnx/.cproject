@@ -44,9 +44,9 @@
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.includePath.4424722" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
-									<listOptionValue builtIn="false" value="E:/blackberry/bbndk-1.0/target/qnx6/usr/include/freetype2"/>
-									<listOptionValue builtIn="false" value="E:/blackberry/bbndk-1.0/target/target-override/usr/include"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
+									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1849571146" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -67,7 +67,7 @@
 								<option id="com.qnx.qcc.option.linker.shared.1713352495" name="Shared (-shared)" superClass="com.qnx.qcc.option.linker.shared" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.1317149184" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.security.1575313632" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.libraryPaths.1420758037" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths"/>
+								<option id="com.qnx.qcc.option.linker.libraryPaths.1420758037" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths"/>
 								<inputType id="com.qnx.qcc.inputType.linker.1016187136" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

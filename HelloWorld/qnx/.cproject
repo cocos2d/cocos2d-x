@@ -29,6 +29,14 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.892081154" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1174705489" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -40,12 +48,16 @@
 								<option id="com.qnx.qcc.option.linker.debug.2017324338" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.670245200" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1760958269" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="grskia"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.1794064552" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1757627798" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Device-Debug"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.697035559" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -303,7 +315,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Simulator"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries/x86"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.objectFiles.1451516298" name="Additional Object Files" superClass="com.qnx.qcc.option.linker.objectFiles" valueType="userObjs"/>
+								<option id="com.qnx.qcc.option.linker.objectFiles.1451516298" name="Additional Object Files" superClass="com.qnx.qcc.option.linker.objectFiles"/>
 								<inputType id="com.qnx.qcc.inputType.linker.439307041" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

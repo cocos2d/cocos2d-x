@@ -33,6 +33,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.511453289" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../../"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.501697723" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>

@@ -56,6 +56,8 @@
     <configuration id="com.qnx.qcc.configuration.exe.debug.446234419" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/HelloWorld" entry="true" type="Qnx/Elf">HelloWorld</asset>
+       <asset path="${workspace_loc:/cocos2dx/Device-Debug/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
+       <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.release.1265921422" name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
