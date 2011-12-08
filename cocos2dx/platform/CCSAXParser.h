@@ -29,20 +29,7 @@
 
 NS_CC_BEGIN;
 
-// libxml2 on most platforms are using "unsigned char" as type of string, while on airplay sdk using "char"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE) || \
-    (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)   || \
-    (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || \
-	(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)     || \
-	(CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)   || \
-	(CC_TARGET_PLATFORM == CC_PLATFORM_BADA)	|| \
-	(CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 typedef unsigned char CC_XML_CHAR;
-//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-//typedef char CC_XML_CHAR;
-#else
-#error
-#endif
 
 class CC_DLL CCSAXDelegator
 {

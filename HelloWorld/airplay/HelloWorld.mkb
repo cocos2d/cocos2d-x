@@ -20,14 +20,10 @@ subprojects
 files
 {
 	[Main]
+	("../Classes")
+	"*.h"
+	"*.cpp"
 	
-	Main.h
-	Main.cpp
-	(../)
-	AppDelegate.h
-	AppDelegate.cpp
-	HelloWorldScene.h
-	HelloWorldScene.cpp
 }
 
 
