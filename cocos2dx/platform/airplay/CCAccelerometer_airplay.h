@@ -27,6 +27,7 @@
 #include "CCMutableArray.h"
 #include "ccCommon.h"
 
+
 namespace   cocos2d {
 
 /**
@@ -45,14 +46,10 @@ public:
     */
     static CCAccelerometer* sharedAccelerometer();
 
-    /**
-    @brief call delegates' didAccelerate function
-    */
-    void didAccelerate(CCAcceleration* pAccelerationValue);
+	void setDelegate(CCAccelerometerDelegate* pDelegate);
+	void update(float x, float y, float z, uint64 sensorTimeStamp);
 
-    void setDelegate(CCAccelerometerDelegate* pDelegate);
-
-protected:
+private:
 	static CCAccelerometer* m_spCCAccelerometer;
 	CCAccelerometerDelegate* m_pAccelDelegate;
 	CCAcceleration m_obAccelerationValue;
