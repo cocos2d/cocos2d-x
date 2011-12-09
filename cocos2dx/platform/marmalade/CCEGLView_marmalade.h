@@ -88,6 +88,8 @@ private:
     CCSet *             m_pSet;
     CCTouch *           m_pTouch;
 	
+	static CCEGLView*	m_pInstance ;
+	
 	void setTouch(void* systemData);
 	void setMotionTouch(void* systemData);
 	void setKeyTouch(void* systemData);
