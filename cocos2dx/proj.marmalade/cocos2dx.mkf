@@ -17,6 +17,8 @@ subprojects
 	zlib
 	libpng
 	libxml2
+	freetype
+	libjpeg
 }
 includepaths
 {

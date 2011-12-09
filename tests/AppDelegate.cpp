@@ -13,6 +13,9 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	delete CCDirector::sharedDirector() ;
+#endif
 //    SimpleAudioEngine::end();
 }
 
