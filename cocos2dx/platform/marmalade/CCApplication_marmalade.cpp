@@ -59,6 +59,8 @@ int CCApplication::Run()
 {
 	IW_CALLSTACK("CCApplication::Run");
 	
+	s3eBool quitRequested = 0;
+
 	if ( ! initInstance() || !applicationDidFinishLaunching() )
 	{
 		return 0;
@@ -78,7 +80,17 @@ int CCApplication::Run()
 			s3ePointerUpdate();
 			
 			ccAccelerationUpdate();
+
+			if( (quitRequested = s3eDeviceCheckQuitRequest()) ) {
+				CCDirector::sharedDirector()->end() ;
+				// end status will be processed in CCDirector::sharedDirector()->mainLoop();
+			}
+
 			CCDirector::sharedDirector()->mainLoop();
+
+			if( quitRequested ) {
+				break ;
+			}
 		}
 		else 
 		{
@@ -127,5 +139,6 @@ ccLanguageType CCApplication::getCurrentLanguage()
 {
     return kLanguageEnglish;
 }
+
 
 NS_CC_END;
