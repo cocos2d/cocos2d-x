@@ -86,7 +86,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.sharedLib.release.1714403537">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.sharedLib.release.1714403537" moduleId="org.eclipse.cdt.core.settings" name="Device-Release">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/Device-Release"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="CocosDenshion"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="com.qnx.tools.ide.qde.core.QDELinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -111,6 +117,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1455383152" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.82187465" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -135,7 +142,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -143,7 +150,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.sharedLib.profile.567812986">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.sharedLib.profile.567812986" moduleId="org.eclipse.cdt.core.settings" name="Device-Profile">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/Device-Profile"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="CocosDenshion"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="com.qnx.tools.ide.qde.core.QDELinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -169,6 +182,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1902073323" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.2036659301" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -196,7 +210,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -204,7 +218,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.sharedLib.coverage.319080166">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.sharedLib.coverage.319080166" moduleId="org.eclipse.cdt.core.settings" name="Device-Coverage">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/Device-Coverage"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="CocosDenshion"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="com.qnx.tools.ide.qde.core.QDELinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -230,6 +250,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1623606780" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1381169559" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -257,7 +278,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -330,7 +351,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.sharedLib.profile.1679221709">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.sharedLib.profile.1679221709" moduleId="org.eclipse.cdt.core.settings" name="Simulator-Profile">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/Simulator-Profile"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="CocosDenshion"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="com.qnx.tools.ide.qde.core.QDELinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -355,6 +382,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1642853310" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.746859765" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -382,7 +410,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -390,7 +418,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.sharedLib.coverage.675379562">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.sharedLib.coverage.675379562" moduleId="org.eclipse.cdt.core.settings" name="Simulator-Coverage">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/Simulator-Coverage"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="CocosDenshion"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="com.qnx.tools.ide.qde.core.QDELinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -415,6 +449,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.2120251176" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1894319763" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -442,7 +477,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -476,5 +511,6 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="refreshScope"/>
 	<storageModule moduleId="com.qnx.tools.ide.qde.core.QNXProjectProperties"/>
 </cproject>
