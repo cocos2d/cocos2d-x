@@ -25,6 +25,7 @@
 
 #include "IwGL.h"
 
+#include "CCApplication.h"
 #include "CCDirector.h"
 #include "CCSet.h"
 #include "CCTouch.h"
@@ -35,6 +36,9 @@
 #include <stdlib.h>
 
 NS_CC_BEGIN;
+
+CCEGLView* CCEGLView::m_pInstance = 0 ;
+
 
 CCEGLView::CCEGLView()
 : m_pDelegate(NULL)
@@ -182,9 +186,14 @@ void CCEGLView::release()
 {
 	IW_CALLSTACK("CCEGLView::release");
 
+	s3ePointerUnRegister(S3E_POINTER_BUTTON_EVENT, &TouchEventHandler);
+	s3ePointerUnRegister(S3E_POINTER_MOTION_EVENT, &MotionEventHandler);
+	s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler);
 
 	if (IwGLIsInitialised())
-		IwGLTerminate();
+  		IwGLTerminate();
+
+	 s3eDeviceRequestQuit() ;
 }
 
 void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
@@ -253,8 +262,10 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
 
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
-	static CCEGLView instance;
-	return instance;
+	if( !m_pInstance ) {
+		m_pInstance = new CCEGLView() ;
+	}
+	return *m_pInstance;
 }
 	
 float CCEGLView::getScreenScaleFactor()
@@ -274,5 +285,6 @@ CCRect CCEGLView::getViewPort()
 		return rect;
 	}
 }
-	
+
+
 NS_CC_END;
