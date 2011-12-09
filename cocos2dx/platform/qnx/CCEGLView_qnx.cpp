@@ -1121,6 +1121,14 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
     }
 }
 
+void CCEGLView::getScreenRectInView(CCRect& rect)
+{
+	rect.origin.x       = -m_rcViewPort.origin.x / m_fScreenScaleFactor;
+	rect.origin.y       = -m_rcViewPort.origin.y / m_fScreenScaleFactor;
+	rect.size.width     = m_sSizeInPixel.width / m_fScreenScaleFactor;
+	rect.size.height    = m_sSizeInPixel.height / m_fScreenScaleFactor;
+}
+
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
 	static CCEGLView instance;

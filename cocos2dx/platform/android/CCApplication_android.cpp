@@ -78,38 +78,38 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    const char *pLanguageName = getCurrentLanguageJNI();
+    std::string localInfo = getCurrentLanguageJNI();
     ccLanguageType ret = kLanguageEnglish;
 
-    if (0 == strcmp("zh", pLanguageName))
+    int pos = localInfo.find("@");
+    if (pos == std::string::npos)
     {
-        ret = kLanguageChinese;
+        return kLanguageEnglish;
     }
-    else if (0 == strcmp("en", pLanguageName))
+
+    std::string languageName = localInfo.substr(0, pos);
+    std::string countryName  = localInfo.substr(pos + 1);
+
+    if (0 == languageName.compare("zh"))
+    {
+        if (0 == countryName.compare("CN"))
+        {
+            ret = kLanguageChinese_Simplified;
+        }
+        else
+        {
+            ret = kLanguageChinese_Traditional;
+        }
+    }
+    else if (0 == languageName.compare("ja"))
+    {
+        ret = kLanguageJapanese;
+    }
+    else if (0 == languageName.compare("en"))
     {
         ret = kLanguageEnglish;
     }
-    else if (0 == strcmp("fr", pLanguageName))
-    {
-        ret = kLanguageFrench;
-    }
-    else if (0 == strcmp("it", pLanguageName))
-    {
-        ret = kLanguageItalian;
-    }
-    else if (0 == strcmp("de", pLanguageName))
-    {
-        ret = kLanguageGerman;
-    }
-    else if (0 == strcmp("es", pLanguageName))
-    {
-        ret = kLanguageSpanish;
-    }
-	else if (0 == strcmp("ru", pLanguageName))
-    {
-        ret = kLanguageRussian;
-    }
-    
+
     return ret;
 }
 
