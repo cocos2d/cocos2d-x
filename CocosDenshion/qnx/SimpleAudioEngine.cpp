@@ -71,6 +71,7 @@ namespace CocosDenshion
 	static strm_dict_t 		  *s_volumeDictionary = 0;
 
 	static SimpleAudioEngine  *s_engine = 0;
+	static string s_strResourcePath = "./app/native/Resource/";
 
 	static void printALError(int err)
 	{
@@ -220,12 +221,13 @@ namespace CocosDenshion
     		char 			 cwd[PATH_MAX];
     		mode_t 			 mode = S_IRUSR | S_IXUSR;
 
-//cjh    		getcwd(cwd, PATH_MAX);
+    		getcwd(cwd, PATH_MAX);
     		string path = "file://";
-//    		path += cwd;
-//    		path += "/";
-//    		path += cocos2d::CCFileUtils::getResourcePath();
-//    		path += pszFilePath;
+    		path += cwd;
+    		path += "/";
+    		// CocosDenshion is an independent module, we should not make the coupling between Cocos2dx and CocosDenshion.
+    		path += s_strResourcePath;//cocos2d::CCFileUtils::getResourcePath();
+    		path += pszFilePath;
 
     		s_mmrConnection = mmr_connect(mmrname);
     		if (!s_mmrConnection)
@@ -428,7 +430,8 @@ namespace CocosDenshion
 			ALuint 		source;
 			soundData  *data = new soundData;
 
-			string path = "";//cjh cocos2d::CCFileUtils::getResourcePath();
+    		// CocosDenshion is an independent module, we should not make the coupling between Cocos2dx and CocosDenshion.
+			string path = s_strResourcePath;// cocos2d::CCFileUtils::getResourcePath();
 			path += pszFilePath;
 
 			buffer = alutCreateBufferFromFile(path.data());
@@ -472,27 +475,51 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 	{
-
+		alSourcePause(nSoundId);
 	}
 
 	void SimpleAudioEngine::pauseAllEffects()
 	{
+		EffectsMap::iterator iter = s_effects.begin();
 
+		if (iter != s_effects.end())
+	    {
+			alSourcePause(iter->second->source);
+			int err = alGetError();
+			if (err != AL_NO_ERROR)
+				printALError(err);
+	    }
 	}
 
 	void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 	{
-
+		alSourcePlay(nSoundId);
 	}
 
 	void SimpleAudioEngine::resumeAllEffects()
 	{
+		EffectsMap::iterator iter = s_effects.begin();
 
+		if (iter != s_effects.end())
+	    {
+			alSourcePlay(iter->second->source);
+			int err = alGetError();
+			if (err != AL_NO_ERROR)
+				printALError(err);
+	    }
 	}
 
     void SimpleAudioEngine::stopAllEffects()
     {
+		EffectsMap::iterator iter = s_effects.begin();
 
+		if (iter != s_effects.end())
+	    {
+	        alSourceStop(iter->second->source);
+			int err = alGetError();
+			if (err != AL_NO_ERROR)
+				printALError(err);
+	    }
     }
 
 }

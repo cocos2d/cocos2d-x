@@ -1,7 +1,7 @@
 #include "cocos2d.h"
 #include "AppDelegate.h"
 
-#define RESOURCE_PATH        "./app/native/Res"
+#define RESOURCE_PATH        "./app/native/Resource"
 
 USING_NS_CC;
 
