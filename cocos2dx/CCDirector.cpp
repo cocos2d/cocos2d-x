@@ -64,7 +64,11 @@ namespace  cocos2d
 {
 
 // singleton stuff
-static CCDisplayLinkDirector s_sharedDirector;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	static CCDisplayLinkDirector* s_sharedDirector = 0 ;
+#else
+	static CCDisplayLinkDirector s_sharedDirector;
+#endif
 static bool s_bFirstRun = true;
 
 #define kDefaultFPS		60  // 60 frames per second
@@ -74,11 +78,20 @@ CCDirector* CCDirector::sharedDirector(void)
 {
 	if (s_bFirstRun)
 	{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+		s_sharedDirector = new CCDisplayLinkDirector() ;
+		s_sharedDirector->init();
+#else
 		s_sharedDirector.init();
-        s_bFirstRun = false;
+#endif
+		s_bFirstRun = false;
 	}
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	return s_sharedDirector;
+#else
 	return &s_sharedDirector;
+#endif
 }
 
 bool CCDirector::init(void)
@@ -101,6 +114,9 @@ bool CCDirector::init(void)
 	m_pProjectionDelegate = NULL;
 
 	// FPS
+#if CC_DIRECTOR_FAST_FPS
+	m_pFPSLabel = 0 ;
+#endif 
 	m_bDisplayFPS = false;
 	m_uTotalFrames = m_uFrames = 0;
 	m_pszFPS = new char[10];
@@ -641,9 +657,14 @@ void CCDirector::purgeDirector()
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	
 	CCUserDefault::purgeSharedUserDefault();
 #endif
+
 	// OpenGL view
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	
 	m_pobOpenGLView->release();
 	m_pobOpenGLView = NULL;
+#else
+	CC_SAFE_DELETE(m_pobOpenGLView) ;
+#endif
 }
 
 void CCDirector::setNextScene(void)
