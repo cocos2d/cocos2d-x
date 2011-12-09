@@ -8,7 +8,7 @@ options
 
 includepaths
 {
-	..
+	../Classes
 }
 subprojects
 {
@@ -23,7 +23,8 @@ files
 	
 	Main.h
 	Main.cpp
-	(../)
+
+	(../Classes)
 	AppDelegate.h
 	AppDelegate.cpp
 	HelloWorldScene.h
