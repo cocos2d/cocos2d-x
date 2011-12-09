@@ -79,12 +79,14 @@ static struct {
 
 #define MAX_TOUCHES         4
 static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
+static CCEGLView* s_pInstance = NULL;
 
 CCEGLView::CCEGLView()
 : m_pDelegate(NULL),
   m_fScreenScaleFactor(1.0),
   m_bNotHVGA(false)
 {
+	s_pInstance = this;
 	m_eglDisplay = EGL_NO_DISPLAY;
 	m_eglContext = EGL_NO_CONTEXT;
 	m_eglSurface = EGL_NO_SURFACE;
@@ -147,18 +149,18 @@ void CCEGLView::setFrameWidthAndHeight(int width, int height)
 	m_sSizeInPixel.height = height;
 }
 
-void CCEGLView::create(int width, int height)
+bool CCEGLView::Create(int width, int height)
 {
 	if (width == 0 || height == 0)
 	{
-		return;
+		return false;
 	}
 
 	m_sSizeInPoint.width = width;
 	m_sSizeInPoint.height = height;
 
 	// calculate the factor and the rect of viewport	
-	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
+	m_fScreenScaleFactor =  MAX((float)m_sSizeInPixel.width / m_sSizeInPoint.width,
 		                        (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
 
 	int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
@@ -171,6 +173,7 @@ void CCEGLView::create(int width, int height)
 	
 	m_bNotHVGA = true;
 	
+	return true;
 }
 
 EGLConfig CCEGLView::chooseConfig(const EGLDisplay &eglDisplay, const char* str)
@@ -838,7 +841,7 @@ bool CCEGLView::HandleEvents()
 			rc = screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_TYPE, &val);
 			if (rc || val == SCREEN_EVENT_NONE)
 				break;
-			//printf("val = %d \n", val);
+
 			switch (val)
 			{
 				case SCREEN_EVENT_CLOSE:
@@ -855,8 +858,8 @@ bool CCEGLView::HandleEvents()
 						if (touch)
 						{
 							CCSet set;
-							touch->SetTouchInfo(0, (float)(mtouch_event.x - m_rcViewPort.size.width) / m_fScreenScaleFactor,
-												   (float)(mtouch_event.y - m_rcViewPort.size.height) / m_fScreenScaleFactor);
+							touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+									((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 							set.addObject(touch);
 							m_pDelegate->touchesEnded(&set, NULL);
 
@@ -887,8 +890,8 @@ bool CCEGLView::HandleEvents()
 						if (!touch)
 							touch = new CCTouch;
 
-						touch->SetTouchInfo(0, (float)(mtouch_event.x - m_rcViewPort.size.width) / m_fScreenScaleFactor,
-											   (float)(mtouch_event.y - m_rcViewPort.size.height) / m_fScreenScaleFactor);
+						touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+								((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 						s_pTouches[touch_id] = touch;
 
 						CCSet set;
@@ -908,8 +911,8 @@ bool CCEGLView::HandleEvents()
 						if (touch)
 						{
 							CCSet set;
-							touch->SetTouchInfo(0, (float)(mtouch_event.x - m_rcViewPort.size.width) / m_fScreenScaleFactor,
-												   (float)(mtouch_event.y - m_rcViewPort.size.height) / m_fScreenScaleFactor);
+							touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+									((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 							set.addObject(touch);
 
 							// we can likely optimize this call and move it outside of the while loop and just call at the end if we
@@ -930,7 +933,6 @@ bool CCEGLView::HandleEvents()
 								&buttons);
 						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_SOURCE_POSITION,
 								pair);
-						printf("buttons = %d \n", buttons);
 						if (buttons == SCREEN_LEFT_MOUSE_BUTTON) {
 
 							if (mouse_pressed) {
@@ -941,8 +943,8 @@ bool CCEGLView::HandleEvents()
 									if (touch)
 									{
 										CCSet set;
-										touch->SetTouchInfo(0, (float)(pair[0] - m_rcViewPort.size.width) / m_fScreenScaleFactor,
-															   (float)(pair[1] - m_rcViewPort.size.height) / m_fScreenScaleFactor);
+										touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+												((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 										set.addObject(touch);
 
 										// we can likely optimize this call and move it outside of the while loop and just call at the end if we
@@ -961,8 +963,8 @@ bool CCEGLView::HandleEvents()
 									if (!touch)
 										touch = new CCTouch;
 
-									touch->SetTouchInfo(0, (float)(pair[0] - m_rcViewPort.size.width) / m_fScreenScaleFactor,
-														   (float)(pair[1] - m_rcViewPort.size.height) / m_fScreenScaleFactor);
+									touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+											((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 									s_pTouches[touch_id] = touch;
 
 									CCSet set;
@@ -982,8 +984,8 @@ bool CCEGLView::HandleEvents()
 									if (touch)
 									{
 										CCSet set;
-										touch->SetTouchInfo(0, (float)(pair[0] - m_rcViewPort.size.width) / m_fScreenScaleFactor,
-															   (float)(pair[1] - m_rcViewPort.size.height) / m_fScreenScaleFactor);
+										touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+												((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 										set.addObject(touch);
 										m_pDelegate->touchesEnded(&set, NULL);
 
@@ -1131,8 +1133,8 @@ void CCEGLView::getScreenRectInView(CCRect& rect)
 
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
-	static CCEGLView instance;
-	return instance;
+	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
+	return *s_pInstance;
 }
 
 float CCEGLView::getScreenScaleFactor()

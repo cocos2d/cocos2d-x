@@ -69,14 +69,17 @@ public:
 			SkTypeface *pTypeFace = SkTypeface::CreateFromName(pFontName, SkTypeface::kNormal);
 			if (! pTypeFace)
 			{
-				// let's replace with Arial first before failing
-				pTypeFace = SkTypeface::CreateFromName("Arial", SkTypeface::kNormal);
-				CCLOG("could not find font %s replacing with Arial\n", pFontName);
-
 				if (!pTypeFace)
 				{
-					CC_SAFE_DELETE(m_pPaint);
-					break;
+					// let's replace with Arial first before failing
+					pTypeFace = SkTypeface::CreateFromName("Arial", SkTypeface::kNormal);
+					CCLOG("could not find font %s replacing with Arial\n", pFontName);
+
+					if (!pTypeFace)
+					{
+						CC_SAFE_DELETE(m_pPaint);
+						break;
+					}
 				}
 			}
 			m_pPaint->setTypeface( pTypeFace );
@@ -134,6 +137,7 @@ public:
 			/* create canvas */
 			SkPaint::FontMetrics font;
 			m_pPaint->getFontMetrics(&font);
+
 			SkCanvas canvas(*m_pBitmap);
 
 			/*
