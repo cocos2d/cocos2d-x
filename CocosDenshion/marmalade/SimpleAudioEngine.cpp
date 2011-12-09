@@ -174,7 +174,7 @@ namespace CocosDenshion
 
 	bool SimpleAudioEngine::isBackgroundMusicPlaying()
 	{
-		return s3eAudioIsPlaying();
+		return s3eAudioIsPlaying() == S3E_TRUE ;
 	}
 
 	float SimpleAudioEngine::getBackgroundMusicVolume()
