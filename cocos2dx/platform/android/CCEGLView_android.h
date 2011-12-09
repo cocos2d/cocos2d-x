@@ -63,6 +63,8 @@ public:
 	float   getScreenScaleFactor();
     void    setIMEKeyboardState(bool bOpen);
 
+    void    getScreenRectInView(CCRect& rect);
+
 	// static function
 	/**
 	@brief	get the shared main open gl window

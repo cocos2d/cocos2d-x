@@ -68,7 +68,7 @@ public:
     void    setIMEKeyboardState(bool bOpen);
 
     bool 	HandleEvents();
-
+    void getScreenRectInView(CCRect& rect);
 	// static function
 	/**
 	@brief	get the shared main open gl window
