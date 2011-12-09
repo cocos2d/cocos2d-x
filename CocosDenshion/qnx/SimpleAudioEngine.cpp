@@ -149,6 +149,10 @@ namespace CocosDenshion
 
     static void setBackgroundVolume(float volume)
     {
+    	if (!s_isBackgroundInitialized)
+    	{
+    		return;
+    	}
 		char volume_str[128];
 
 		// set it up the background volume
@@ -251,8 +255,6 @@ namespace CocosDenshion
     			return;
     		}
 
-    		setBackgroundVolume(s_volume);
-
     		if (mmr_input_attach(s_mmrContext, path.data(), "autolist") < 0)
     		{
     			fprintf(stderr, "unable to load %s\n", path.data());
@@ -262,12 +264,13 @@ namespace CocosDenshion
 
     		s_currentBackgroundStr 	  = pszFilePath;
 			s_isBackgroundInitialized = true;
+			setBackgroundVolume(s_volume);
     	}
 	}
 
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
-		if (0 == strcmp(s_currentBackgroundStr.c_str(), pszFilePath))
+		if (0 != strcmp(s_currentBackgroundStr.c_str(), pszFilePath))
 		{
 			stopBackgroundMusic(true);
 		}

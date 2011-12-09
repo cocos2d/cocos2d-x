@@ -52,7 +52,7 @@ public:
 	 * create a drawing rect, 
 	 * the width and heiht is the resource size match best
 	 */
-	void    create(int width, int height);
+	bool    Create(int width, int height);
     EGLTouchDelegate* getDelegate(void);
     
     // keep compatible
