@@ -54,7 +54,10 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Rope"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -62,7 +65,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.staticLib.release.1751821339">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.staticLib.release.1751821339" moduleId="org.eclipse.cdt.core.settings" name="Device-Release">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Device-Release"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -85,6 +94,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.524835884" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../../"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1144257796" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -104,7 +114,10 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Rope"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -112,7 +125,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.staticLib.profile.2144964085">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.staticLib.profile.2144964085" moduleId="org.eclipse.cdt.core.settings" name="Device-Profile">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Device-Profile"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -135,6 +154,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1407632228" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../../"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.2054147847" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -156,7 +176,10 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Rope"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -164,7 +187,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.staticLib.coverage.1943191253">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.staticLib.coverage.1943191253" moduleId="org.eclipse.cdt.core.settings" name="Device-Coverage">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Device-Coverage"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -187,6 +216,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1567489840" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../../"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1486734612" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -208,7 +238,10 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Rope"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -275,7 +308,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.staticLib.profile.1859315817">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.staticLib.profile.1859315817" moduleId="org.eclipse.cdt.core.settings" name="Simulator-Profile">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Simulator-Profile"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -297,6 +336,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1859748069" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../../"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1852645041" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -318,7 +358,10 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Rope"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -326,7 +369,13 @@
 		</cconfiguration>
 		<cconfiguration id="com.qnx.qcc.configuration.staticLib.coverage.1380945475">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.staticLib.coverage.1380945475" moduleId="org.eclipse.cdt.core.settings" name="Simulator-Coverage">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Simulator-Coverage"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -348,6 +397,7 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.2146584979" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../../"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1157336165" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -369,7 +419,10 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Rope"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -403,4 +456,5 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="refreshScope"/>
 </cproject>

@@ -82,6 +82,10 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1413823449" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include/chipmunk/"/>
+								</option>
+								<option id="com.qnx.qcc.option.compiler.ccoptions.182296748" name="Compiler Options (-Wc,)" superClass="com.qnx.qcc.option.compiler.ccoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-std=c99"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.541626312" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -132,6 +136,10 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.457752393" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include/chipmunk/"/>
+								</option>
+								<option id="com.qnx.qcc.option.compiler.ccoptions.1319095965" name="Compiler Options (-Wc,)" superClass="com.qnx.qcc.option.compiler.ccoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-std=c99"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1468665397" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -184,6 +192,10 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.1964928480" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include/chipmunk/"/>
+								</option>
+								<option id="com.qnx.qcc.option.compiler.ccoptions.1197791714" name="Compiler Options (-Wc,)" superClass="com.qnx.qcc.option.compiler.ccoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-std=c99"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1050246422" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -288,6 +300,10 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.567560220" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include/chipmunk/"/>
+								</option>
+								<option id="com.qnx.qcc.option.compiler.ccoptions.54752735" name="Compiler Options (-Wc,)" superClass="com.qnx.qcc.option.compiler.ccoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-std=c99"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1266914626" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -339,6 +355,10 @@
 								<option id="com.qnx.qcc.option.compiler.includePath.895872756" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="../../include/chipmunk/"/>
+								</option>
+								<option id="com.qnx.qcc.option.compiler.ccoptions.51249600" name="Compiler Options (-Wc,)" superClass="com.qnx.qcc.option.compiler.ccoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-std=c99"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.138334023" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -395,4 +415,7 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="com.qnx.tools.ide.qde.core.QNXProjectProperties"/>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/chipmunk"/>
+	</storageModule>
 </cproject>
