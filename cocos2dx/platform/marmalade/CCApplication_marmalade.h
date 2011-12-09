@@ -113,8 +113,8 @@ public:
 
 protected:
 	int64       m_nAnimationInterval;
-    static CCApplication * sm_pSharedApplication;
 
+	static CCApplication * sm_pSharedApplication;
 };
 
 NS_CC_END;
