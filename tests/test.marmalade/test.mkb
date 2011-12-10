@@ -211,6 +211,11 @@ files
 	"*.h"
 	"*.cpp"
 
+	[Test/UserDefaultTest]
+	("../tests/UserDefaultTest")
+	"*.h"
+	"*.cpp"
+	
 	[Tests/ZwoptexTest]
 	("../tests/ZwoptexTest")
 	"*.h"

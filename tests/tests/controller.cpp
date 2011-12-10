@@ -104,9 +104,9 @@ static TestScene* CreateTestScene(int nIdx)
 	case TEST_CURL:
 		pScene = new CurlTestScene(); break;
 #endif
+#endif
 	case TEST_USERDEFAULT:
 		pScene = new UserDefaultTestScene(); break;
-#endif
     case TEST_DIRECTOR:
         pScene = new DirectorTestScene(); break;
     case TEST_BUGS:
