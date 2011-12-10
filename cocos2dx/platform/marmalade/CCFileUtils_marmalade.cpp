@@ -101,8 +101,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 std::string CCFileUtils::getWriteablePath()
 {
-	// fixed me, what path can airplay can write
-	return string("");
+	return string("ram://");
 }
 
 NS_CC_END; 
