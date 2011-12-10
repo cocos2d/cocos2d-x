@@ -58,7 +58,10 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 
 	if (pDelegate)
 	{		
-		s3eAccelerometerStart();
+		if (s3eAccelerometerStart() != S3E_RESULT_SUCCESS)
+		{
+			CCLog("s3eAccelerometerStart() - ERROR\n");
+		}
 	}
 	else
 	{
@@ -66,7 +69,7 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 	}
 }
 
-void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
+void CCAccelerometer::update(float x, float y, float z, uint64 sensorTimeStamp) 
 {
 	if (m_pAccelDelegate)
 	{

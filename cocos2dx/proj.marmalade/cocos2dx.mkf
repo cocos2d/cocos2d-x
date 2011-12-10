@@ -115,6 +115,7 @@ files
 	"CCPointExtension.cpp"
 	"CCProfiling.cpp"
 	"CCProfiling.h"
+	"CCUserDefault.cpp"
 	"ccUtils.cpp"
 	"ccUtils.h"
 	"TransformUtils.cpp"

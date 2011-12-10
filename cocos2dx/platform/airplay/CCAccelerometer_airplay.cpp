@@ -33,7 +33,7 @@ CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
 {
 }
 
-CCAccelerometer::~CCAccelerometer() 
+CCAccelerometer::~CCAccelerometer()
 {
 	if( m_spCCAccelerometer ) {
 		delete m_spCCAccelerometer ;
@@ -58,7 +58,10 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 
 	if (pDelegate)
 	{		
-		s3eAccelerometerStart();
+		if (s3eAccelerometerStart() != S3E_RESULT_SUCCESS)
+		{
+			CCLog("s3eAccelerometerStart() - ERROR\n");
+		}
 	}
 	else
 	{
