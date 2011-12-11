@@ -211,7 +211,7 @@ files
 	"*.h"
 	"*.cpp"
 
-	[Test/UserDefaultTest]
+	[Tests/UserDefaultTest]
 	("../tests/UserDefaultTest")
 	"*.h"
 	"*.cpp"
