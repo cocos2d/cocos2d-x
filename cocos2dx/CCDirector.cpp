@@ -48,7 +48,7 @@ THE SOFTWARE.
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "CCUserDefault.h"
 #endif
 
@@ -101,6 +101,9 @@ bool CCDirector::init(void)
 	m_pProjectionDelegate = NULL;
 
 	// FPS
+#if CC_DIRECTOR_FAST_FPS
+	m_pFPSLabel = 0 ;
+#endif 
 	m_bDisplayFPS = false;
 	m_uTotalFrames = m_uFrames = 0;
 	m_pszFPS = new char[10];
@@ -621,7 +624,7 @@ void CCDirector::purgeDirector()
 	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
 	
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)	
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	
 	CCUserDefault::purgeSharedUserDefault();
 #endif
 	// OpenGL view

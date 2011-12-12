@@ -53,18 +53,18 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
         pScene = new ChipmunkTestScene(); break;
 #else
-#ifdef AIRPLAYUSECHIPMUNK
-#if	(AIRPLAYUSECHIPMUNK == 1)
+#ifdef MARMALADEUSECHIPMUNK
+#if	(MARMALADEUSECHIPMUNK == 1)
         pScene = new ChipmunkTestScene(); break;
 #endif
 #endif
 #endif
     case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     case TEST_TEXT_INPUT:
         pScene = new TextInputTestScene(); break;
 #endif
@@ -98,20 +98,20 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:
         pScene = new ZwoptexTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	case TEST_CURL:
 		pScene = new CurlTestScene(); break;
 #endif
+#endif
 	case TEST_USERDEFAULT:
 		pScene = new UserDefaultTestScene(); break;
-#endif
     case TEST_DIRECTOR:
         pScene = new DirectorTestScene(); break;
     case TEST_BUGS:
         pScene = new BugsTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 	case TEST_FONTS:
 		pScene = new FontTestScene(); break;
 	case TEST_CURRENT_LANGUAGE:
@@ -141,7 +141,7 @@ TestController::TestController()
     m_pItmeMenu = CCMenu::menuWithItems(NULL);
     for (int i = 0; i < TESTS_COUNT; ++i)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 		CCLabelBMFont* label = CCLabelBMFont::labelWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 #else
         CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);

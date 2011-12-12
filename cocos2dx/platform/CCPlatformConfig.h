@@ -42,7 +42,7 @@ build for which target platform
 #define CC_PLATFORM_ANDROID            2
 #define CC_PLATFORM_WOPHONE            3
 #define CC_PLATFORM_WIN32              4
-#define CC_PLATFORM_AIRPLAY            5
+#define CC_PLATFORM_MARMALADE          5
 #define CC_PLATFORM_LINUX              6
 #define CC_PLATFORM_BADA               7
 #define CC_PLATFORM_QNX				   8
@@ -90,10 +90,10 @@ build for which target platform
     #define CC_TARGET_PLATFORM         CC_PLATFORM_LINUX
 #endif
 
-// airplay
-#if ! CC_TARGET_PLATFORM && defined(AIRPLAY)
+// marmalade
+#if ! CC_TARGET_PLATFORM && defined(MARMALADE)
 #undef  CC_TARGET_PLATFORM
-#define CC_TARGET_PLATFORM         CC_PLATFORM_AIRPLAY
+#define CC_TARGET_PLATFORM         CC_PLATFORM_MARMALADE
 #endif
 // bada
 #if ! CC_TARGET_PLATFORM && defined(SHP)
@@ -132,9 +132,9 @@ build for which target platform
     #define CC_TARGET_PLATFORM         CC_PLATFORM_WIN32
 #endif
 
-#if defined(CC_UNDER_AIRPLAY)
+#if defined(CC_UNDER_MARMALADE)
 #undef  CC_TARGET_PLATFORM
-#define CC_TARGET_PLATFORM			   CC_PLATFORM_AIRPLAY
+#define CC_TARGET_PLATFORM			   CC_PLATFORM_MARMALADE
 #endif
 #if defined(CC_UNDER_LINUX)
 #undef  CC_TARGET_PLATFORM
