@@ -191,7 +191,7 @@ namespace cocos2d{
 	}
 	void CCMenuItemLabel::setString(const char * label)
 	{
-		m_pLabel->convertToLabelProtocol()->setString(label);
+		dynamic_cast<CCLabelProtocol*>(m_pLabel)->setString(label);
 		this->setContentSize(m_pLabel->getContentSize());
 	}
 	void CCMenuItemLabel::activate()
@@ -243,31 +243,31 @@ namespace cocos2d{
 		{
 			if(enabled == false)
 			{
-				m_tColorBackup = m_pLabel->convertToRGBAProtocol()->getColor();
-				m_pLabel->convertToRGBAProtocol()->setColor(m_tDisabledColor);
+				m_tColorBackup = dynamic_cast<CCRGBAProtocol*>(m_pLabel)->getColor();
+				dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(m_tDisabledColor);
 			}
 			else
 			{
-				m_pLabel->convertToRGBAProtocol()->setColor(m_tColorBackup);
+				dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(m_tColorBackup);
 			}
 		}
 		CCMenuItem::setIsEnabled(enabled);
 	}
 	void CCMenuItemLabel::setOpacity(GLubyte opacity)
 	{
-		m_pLabel->convertToRGBAProtocol()->setOpacity(opacity);
+		dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setOpacity(opacity);
 	}
 	GLubyte CCMenuItemLabel::getOpacity()
 	{
-		return m_pLabel->convertToRGBAProtocol()->getOpacity();
+		return dynamic_cast<CCRGBAProtocol*>(m_pLabel)->getOpacity();
 	}
 	void CCMenuItemLabel::setColor(const ccColor3B& color)
 	{
-		m_pLabel->convertToRGBAProtocol()->setColor(color);
+		dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(color);
 	}
 	const ccColor3B& CCMenuItemLabel::getColor()
 	{
-		return m_pLabel->convertToRGBAProtocol()->getColor();
+		return dynamic_cast<CCRGBAProtocol*>(m_pLabel)->getColor();
 	}
 
 	//
@@ -352,7 +352,7 @@ namespace cocos2d{
 
 	void CCMenuItemFont::recreateLabel()
 	{
-		CCLabelTTF *label = CCLabelTTF::labelWithString(m_pLabel->convertToLabelProtocol()->getString(), 
+		CCLabelTTF *label = CCLabelTTF::labelWithString(dynamic_cast<CCLabelProtocol*>(m_pLabel)->getString(), 
 			m_strFontName.c_str(), (float)m_uFontSize);
 		this->setLabel(label);
 	}
@@ -447,39 +447,39 @@ namespace cocos2d{
     //
     void CCMenuItemSprite::setOpacity(GLubyte opacity)
     {
-        m_pNormalImage->convertToRGBAProtocol()->setOpacity(opacity);
+        dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->setOpacity(opacity);
 
 		if (m_pSelectedImage)
 		{
-			m_pSelectedImage->convertToRGBAProtocol()->setOpacity(opacity);
+			dynamic_cast<CCRGBAProtocol*>(m_pSelectedImage)->setOpacity(opacity);
 		}
 
         if (m_pDisabledImage)
         {
-            m_pDisabledImage->convertToRGBAProtocol()->setOpacity(opacity);
+            dynamic_cast<CCRGBAProtocol*>(m_pDisabledImage)->setOpacity(opacity);
         }
     }
     void CCMenuItemSprite::setColor(const ccColor3B& color)
     {
-        m_pNormalImage->convertToRGBAProtocol()->setColor(color);
+        dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->setColor(color);
 
 		if (m_pSelectedImage)
 		{
-			m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
+			dynamic_cast<CCRGBAProtocol*>(m_pSelectedImage)->setColor(color);
 		}    
 
         if (m_pDisabledImage)
         {
-            m_pDisabledImage->convertToRGBAProtocol()->setColor(color);
+            dynamic_cast<CCRGBAProtocol*>(m_pDisabledImage)->setColor(color);
         }
     }
     GLubyte CCMenuItemSprite::getOpacity()
     {
-        return m_pNormalImage->convertToRGBAProtocol()->getOpacity();
+        return dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->getOpacity();
     }
     const ccColor3B& CCMenuItemSprite::getColor()
     {
-        return m_pNormalImage->convertToRGBAProtocol()->getColor();
+        return dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->getColor();
     }
 	CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite)
 	{
@@ -763,7 +763,7 @@ namespace cocos2d{
 			CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
 			for( it = m_pSubItems->begin(); it != m_pSubItems->end(); ++it)
 			{
-				(*it)->convertToRGBAProtocol()->setOpacity(opacity);
+				dynamic_cast<CCRGBAProtocol*>(*it)->setOpacity(opacity);
 			}
 		}
 	}
@@ -779,7 +779,7 @@ namespace cocos2d{
 			CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
 			for( it = m_pSubItems->begin(); it != m_pSubItems->end(); ++it)
 			{
-				(*it)->convertToRGBAProtocol()->setColor(color);
+				dynamic_cast<CCRGBAProtocol*>(*it)->setColor(color);
 			}
 		}
 	}

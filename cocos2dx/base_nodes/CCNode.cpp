@@ -991,16 +991,6 @@ void CCNode::pauseSchedulerAndActions()
 	CCActionManager::sharedManager()->pauseTarget(this);
 }
 
-void CCNode::selectorProtocolRetain(void)
-{
-	retain();
-}
-
-void CCNode::selectorProtocolRelease(void)
-{
-	release();
-}
-
 CCAffineTransform CCNode::nodeToParentTransform(void)
 {
 	if (m_bIsTransformDirty) {

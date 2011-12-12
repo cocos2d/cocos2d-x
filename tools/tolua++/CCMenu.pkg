@@ -45,9 +45,6 @@ namespace cocos2d{
 		void ccTouchCancelled(CCTouch *touch, CCEvent* event);
 		void ccTouchMoved(CCTouch* touch, CCEvent* event);
 
-		void destroy(void);
-		void keep(void);
-
 
 		void onExit();
 
@@ -64,13 +61,9 @@ namespace cocos2d{
 		void onExit();
 		void onEnterTransitionDidFinish();
 		bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-		void destroy(void);
-		void keep(void);
 
 		void didAccelerate(CCAcceleration* pAccelerationValue) {}
 
-		void KeypadDestroy();
-		void KeypadKeep();
 		void registerWithTouchDispatcher(void);
 
 		void setIsTouchEnabled(bool bValue);
