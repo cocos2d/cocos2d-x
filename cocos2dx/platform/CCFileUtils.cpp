@@ -376,4 +376,8 @@ NS_CC_END;
 #include "bada/CCFileUtils_bada.cpp"
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#include "qnx/CCFileUtils_qnx.cpp"
+#endif
+
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)

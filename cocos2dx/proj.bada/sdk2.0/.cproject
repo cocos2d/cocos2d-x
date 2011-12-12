@@ -94,7 +94,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="platform/airplay/|platform/android/|platform/ios/|platform/Linux/|platform/third_party/|platform/win32/|platform/wophone/|platform/bada/CCFileUtils_bada.cpp|platform/bada/CCImage_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="platform/airplay/|platform/android/|platform/ios/|platform/Linux/|platform/third_party/|platform/win32/|platform/wophone/|platform/bada/CCFileUtils_bada.cpp|platform/bada/CCImage_bada.cpp|platform/qnx/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -593,7 +593,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="platform/airplay/|platform/android/|platform/ios/|platform/Linux/|platform/third_party/|platform/win32/|platform/wophone/|platform/bada/CCFileUtils_bada.cpp|platform/bada/CCImage_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="platform/airplay/|platform/android/|platform/ios/|platform/Linux/|platform/third_party/|platform/win32/|platform/wophone/|platform/bada/CCFileUtils_bada.cpp|platform/bada/CCImage_bada.cpp|platform/qnx/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

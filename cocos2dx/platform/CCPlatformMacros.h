@@ -39,7 +39,7 @@ Basically,it's only enabled in android
 
 It's new in cocos2d-x since v0.99.5
 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       0

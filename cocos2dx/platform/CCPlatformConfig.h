@@ -43,9 +43,10 @@ build for which target platform
 #define CC_PLATFORM_WOPHONE            3
 #define CC_PLATFORM_WIN32              4
 #define CC_PLATFORM_AIRPLAY            5
-#define CC_PLATFORM_LINUX              7
+#define CC_PLATFORM_LINUX              6
+#define CC_PLATFORM_BADA               7
+#define CC_PLATFORM_QNX				   8
 
-#define CC_PLATFORM_BADA               6
 // Determine tartet platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
 
@@ -99,6 +100,13 @@ build for which target platform
 #undef  CC_TARGET_PLATFORM
 #define CC_TARGET_PLATFORM         CC_PLATFORM_BADA
 #endif
+
+// qnx
+#if ! CC_TARGET_PLATFORM && defined(__QNX__)
+    #undef  CC_TARGET_PLATFORM
+    #define CC_TARGET_PLATFORM     CC_PLATFORM_QNX
+#endif
+
 //////////////////////////////////////////////////////////////////////////
 // user configure
 //////////////////////////////////////////////////////////////////////////
@@ -136,6 +144,11 @@ build for which target platform
 #if defined(CC_UNDER_BADA)
 #undef  CC_TARGET_PLATFORM
 #define CC_TARGET_PLATFORM			   CC_PLATFORM_BADA
+#endif
+
+#if defined(CC_UNDER_QNX)
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM        	  CC_PLATFORM_QNX
 #endif
 
 // Check user assigned supportive of multi-thread
