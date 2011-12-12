@@ -88,18 +88,12 @@
 		<link>
 			<name>Classes</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/HelloWorld/Classes</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Classes</locationURI>
 		</link>
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/HelloWorld/bada/src</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/src</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>cocos2dx_root</name>
-			<value>file:/F:/Project/dumganhar/cocos2d-x</value>
-		</variable>
-	</variableList>
 </projectDescription>

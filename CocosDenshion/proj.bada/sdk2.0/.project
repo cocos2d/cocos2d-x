@@ -85,18 +85,12 @@
 		<link>
 			<name>bada</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/CocosDenshion/bada</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/bada</locationURI>
 		</link>
 		<link>
 			<name>include</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/CocosDenshion/include</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/include</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>cocos2dx_root</name>
-			<value>file:/F:/Project/dumganhar/cocos2d-x</value>
-		</variable>
-	</variableList>
 </projectDescription>
