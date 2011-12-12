@@ -31,12 +31,6 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-typedef enum
-{
-	ccNormalScene     = 1 << 0,
-	ccTransitionScene = 1 << 1,
-} ccSceneFlag;
-
 /** @brief CCScene is a subclass of CCNode that is used only as an abstract concept.
 
 CCScene an CCNode are almost identical with the difference that CCScene has it's
@@ -54,10 +48,6 @@ public:
 	virtual ~CCScene();
 	bool init();
 	static CCScene *node(void);
-	inline ccSceneFlag getSceneType(void) { return m_eSceneType; }
-
-protected:
-	ccSceneFlag m_eSceneType;
 };
 }//namespace   cocos2d 
 

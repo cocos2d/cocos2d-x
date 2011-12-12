@@ -1,12 +1,5 @@
 namespace   cocos2d {
 
-typedef enum
-{
-	ccTouchDelegateStandardBit = 1 << 0,
-	ccTouchDelegateTargetedBit = 1 << 1,
-	ccTouchDelegateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
-} ccTouchDelegateFlag;
-
 class CCTouch;
 class CCEvent;
 class CCSet;
@@ -16,13 +9,7 @@ class  CCTouchDelegate
 {
 
 public:
-	
-	 ccTouchDelegateFlag getTouchDelegateType(void);
-	
-	//! call the release() in child(layer or menu)
-	virtual void destroy(void);
-	//! call the retain() in child (layer or menu)
-	virtual void keep(void);
+
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	// optional

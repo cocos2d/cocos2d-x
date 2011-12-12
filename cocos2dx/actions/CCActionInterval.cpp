@@ -1601,7 +1601,7 @@ CCObject* CCFadeIn::copyWithZone(CCZone *pZone)
 
 void CCFadeIn::update(ccTime time)
 {
-	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
 	if (pRGBAProtocol)
 	{
         pRGBAProtocol->setOpacity((GLubyte)(255 * time));
@@ -1651,7 +1651,7 @@ CCObject* CCFadeOut::copyWithZone(CCZone *pZone)
 
 void CCFadeOut::update(ccTime time)
 {
-	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
 	if (pRGBAProtocol)
 	{
 		pRGBAProtocol->setOpacity(GLubyte(255 * (1 - time)));
@@ -1714,7 +1714,7 @@ void CCFadeTo::startWithTarget(CCNode *pTarget)
 {
 	CCActionInterval::startWithTarget(pTarget);
 
-	CCRGBAProtocol *pRGBAProtocol = pTarget->convertToRGBAProtocol();
+	CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pTarget);
 	if (pRGBAProtocol)
 	{
 		m_fromOpacity = pRGBAProtocol->getOpacity();
@@ -1724,7 +1724,7 @@ void CCFadeTo::startWithTarget(CCNode *pTarget)
 
 void CCFadeTo::update(ccTime time)
 {
-	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
 	if (pRGBAProtocol)
 	{
 		pRGBAProtocol->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
@@ -1781,7 +1781,7 @@ CCObject* CCTintTo::copyWithZone(CCZone *pZone)
 void CCTintTo::startWithTarget(CCNode *pTarget)
 {
 	CCActionInterval::startWithTarget(pTarget);
-    CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
 	if (pRGBAProtocol)
 	{
 		m_from = pRGBAProtocol->getColor();
@@ -1791,7 +1791,7 @@ void CCTintTo::startWithTarget(CCNode *pTarget)
 
 void CCTintTo::update(ccTime time)
 {
-	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
 	if (pRGBAProtocol)
 	{
 		pRGBAProtocol->setColor(ccc3(GLubyte(m_from.r + (m_to.r - m_from.r) * time), 
@@ -1853,7 +1853,7 @@ void CCTintBy::startWithTarget(CCNode *pTarget)
 {
 	CCActionInterval::startWithTarget(pTarget);
 
-	CCRGBAProtocol *pRGBAProtocol = pTarget->convertToRGBAProtocol();
+	CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pTarget);
 	if (pRGBAProtocol)
 	{
 		ccColor3B color = pRGBAProtocol->getColor();
@@ -1865,7 +1865,7 @@ void CCTintBy::startWithTarget(CCNode *pTarget)
 
 void CCTintBy::update(ccTime time)
 {
-	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
 	if (pRGBAProtocol)
 	{
 		pRGBAProtocol->setColor(ccc3((GLubyte)(m_fromR + m_deltaR * time),
