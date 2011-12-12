@@ -22,7 +22,10 @@
 #include <cstring>
 #include <memory>
 using namespace std;
-
+#ifdef __QNX__
+using std::memset;
+using std::memcpy;
+#endif
 int32 b2BlockAllocator::s_blockSizes[b2_blockSizes] = 
 {
 	16,		// 0
