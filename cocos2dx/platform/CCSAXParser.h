@@ -38,6 +38,7 @@ NS_CC_BEGIN;
 	(CC_TARGET_PLATFORM == CC_PLATFORM_BADA)    || \
     (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
 typedef unsigned char CC_XML_CHAR;
+#endif
 
 class CC_DLL CCSAXDelegator
 {

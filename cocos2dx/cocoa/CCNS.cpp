@@ -27,9 +27,7 @@ THE SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef __QNX__
 using namespace std;
-#endif
 
 typedef std::vector<std::string> strArray;
 

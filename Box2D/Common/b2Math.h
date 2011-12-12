@@ -29,9 +29,9 @@
 #endif
 #include <cstddef>
 #include <limits>
-#ifdef __QNX__
+
 using namespace std;
-#endif
+
 
 /// This function is used to ensure that a floating point number is
 /// not a NaN or infinity.
