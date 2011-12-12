@@ -59,10 +59,6 @@ class CCNode : public CCObject, public SelectorProtocol
 	void	cleanup(void);
 	void	draw(void);
 	void	visit(void);
-	void	selectorProtocolRetain(void);
-	void	selectorProtocolRelease(void);
-	CCRGBAProtocol* convertToRGBAProtocol(void);
-	CCLabelProtocol* convertToLabelProtocol(void);
 	void	transform(void);
 	void	transformAncestors(void);
 	CCRect	boundingBox(void);

@@ -142,7 +142,7 @@ TestController::TestController()
     for (int i = 0; i < TESTS_COUNT; ++i)
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-		CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+		CCLabelBMFont* label = CCLabelBMFont::labelWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 #else
         CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);
 #endif		

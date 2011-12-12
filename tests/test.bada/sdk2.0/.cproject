@@ -8,7 +8,6 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/TestCocos2dx"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/TestCocos2dx/.Target-Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/TestCocos2dx"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="TestCocos2dx"/>
 					</externalSetting>
@@ -28,7 +27,12 @@
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.debug.1659310185." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug.209599858" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug.1675194339" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug"/>
-							<builder buildPath="${workspace_loc:/TestCocos2dx/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug.1822153090" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug"/>
+							<builder buildPath="${workspace_loc:/TestCocos2dx/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug.1822153090" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+								</outputEntries>
+							</builder>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.base.290782400" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug.1197240377" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug">
 								<option id="osp.gnu.target.cpp.compiler.debug.exe.option.include.paths.1047198092" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.exe.option.include.paths" valueType="includePath">
@@ -49,6 +53,15 @@
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1400420237" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug.567155673" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug">
+								<option id="osp.gnu.target.c.compiler.debug.exe.option.include.paths.732308122" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.debug.exe.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
+								</option>
+								<option id="osp.gnu.target.c.compiler.debug.exe.option.preprocessor.def.1393879548" name="Defined symbols (-D)" superClass="osp.gnu.target.c.compiler.debug.exe.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="_DEBUG"/>
+									<listOptionValue builtIn="false" value="SHP"/>
+									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.138094470" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.debug.1825436455" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.debug"/>
@@ -78,14 +91,13 @@
 								</inputType>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.assembler.exe.debug.1871127602" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.exe.debug">
+								<option id="osp.gnu.both.asm.option.include.paths.1839493667" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.assembler.input.1757010688" superClass="cdt.managedbuild.tool.osp.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="CurlTest/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tests"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
-						<entry excluding="tests|src" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="tests/CurlTest/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -738,6 +750,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/pthread.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.809122631" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
@@ -751,9 +764,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="CurlTest/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tests"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
-						<entry excluding="tests|src|tests/CurlTest/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="tests/CurlTest/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

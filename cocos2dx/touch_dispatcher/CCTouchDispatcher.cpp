@@ -140,9 +140,7 @@ void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, CCMutableArray
 }
 
 void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPriority)
-{
-	pDelegate->m_eTouchDelegateType = ccTouchDelegateStandardBit;
-	
+{	
 	CCTouchHandler *pHandler = CCStandardTouchHandler::handlerWithDelegate(pDelegate, nPriority);
 	if (! m_bLocked)
 	{
@@ -156,9 +154,7 @@ void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPri
 }
 
 void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches)
-{
-	pDelegate->m_eTouchDelegateType = ccTouchDelegateTargetedBit;
-	
+{	
 	CCTouchHandler *pHandler = CCTargetedTouchHandler::handlerWithDelegate(pDelegate, nPriority, bSwallowsTouches);
 	if (! m_bLocked)
 	{
@@ -433,7 +429,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                 break;
             }
 
-			if (pHandler->getDelegate()->getTouchDelegateType() & ccTouchDelegateTargetedBit)
+		    if (dynamic_cast<CCTargetedTouchHandler*>(pHandler) != NULL)
 			{				
 				forceAddHandler(pHandler, m_pTargetedHandlers);
 			}
