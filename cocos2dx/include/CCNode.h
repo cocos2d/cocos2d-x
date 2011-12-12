@@ -480,14 +480,6 @@ namespace   cocos2d {
 		*/
 		void pauseSchedulerAndActions(void);
 
-		// SelecterProtocol methods
-
-		virtual void selectorProtocolRetain(void);
-		virtual void selectorProtocolRelease(void);
-
-		virtual CCRGBAProtocol* convertToRGBAProtocol(void) { return NULL; }
-		virtual CCLabelProtocol* convertToLabelProtocol(void) { return NULL; }
-
 		// transformation methods
 
 		/** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
