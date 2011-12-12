@@ -13,6 +13,9 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	delete CCDirector::sharedDirector() ;
+#endif
 //    SimpleAudioEngine::end();
 }
 
@@ -58,7 +61,7 @@ bool AppDelegate::initInstance()
 
 #endif
 	
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 #endif
 

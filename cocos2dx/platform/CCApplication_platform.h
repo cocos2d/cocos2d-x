@@ -35,8 +35,8 @@ THE SOFTWARE.
     # include "ios/CCApplication_ios.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
     #include "wophone/CCApplication_wophone.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-	#include "airplay/CCApplication_airplay.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	#include "marmalade/CCApplication_marmalade.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 	#include "Linux/CCAplication_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)

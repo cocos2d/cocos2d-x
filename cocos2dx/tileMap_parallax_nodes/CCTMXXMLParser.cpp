@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 
 /*
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 	#include "expat.h"
 #else
 	#include <libxml/parser.h>
