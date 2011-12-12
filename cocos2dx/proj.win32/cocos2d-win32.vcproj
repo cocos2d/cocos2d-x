@@ -612,6 +612,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCTouchHandler.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCTransition.h"
 				>
 			</File>
@@ -1045,10 +1049,6 @@
 			</File>
 			<File
 				RelativePath="..\touch_dispatcher\CCTouchHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\touch_dispatcher\CCTouchHandler.h"
 				>
 			</File>
 		</Filter>

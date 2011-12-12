@@ -63,14 +63,8 @@ public:
 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
-
-	virtual void destroy(void);
-	virtual void keep(void);
 	
     virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
-
-    virtual void KeypadDestroy();
-    virtual void KeypadKeep();
 
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.

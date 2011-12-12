@@ -112,9 +112,6 @@ namespace cocos2d{
 		virtual void ccTouchCancelled(CCTouch *touch, CCEvent* event);
 		virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
 
-		virtual void destroy(void);
-		virtual void keep(void);
-
         /**
         @since v0.99.5
         override onExit

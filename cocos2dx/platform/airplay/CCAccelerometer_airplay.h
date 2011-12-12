@@ -27,33 +27,7 @@
 #include "CCMutableArray.h"
 #include "ccCommon.h"
 
-
 namespace   cocos2d {
-
-/**
-@brief
-CCAccelerometerHandler
-Object than contains the CCAccelerometerDelegate.
-*/
-class CC_DLL CCAccelerometerHandler : public CCObject
-{
-public:
-    virtual ~CCAccelerometerHandler(void);
-
-    /** delegate */
-    CCAccelerometerDelegate* getDelegate();
-    void setDelegate(CCAccelerometerDelegate *pDelegate);
-
-    /** initializes a CCAccelerometerHandler with a delegate */
-    virtual bool initWithDelegate(CCAccelerometerDelegate *pDelegate);
-
-public:
-    /** allocates a CCAccelerometerHandler with a delegate */
-    static CCAccelerometerHandler* handlerWithDelegate(CCAccelerometerDelegate *pDelegate);
-
-protected:
-    CCAccelerometerDelegate* m_pDelegate;
-};
 
 /**
 @brief 
@@ -72,25 +46,16 @@ public:
     static CCAccelerometer* sharedAccelerometer();
 
     /**
-    @brief add delegate to concern accelerometer sensor
-    */
-    void addDelegate(CCAccelerometerDelegate* pDelegate);
-
-    /**
-    @brief remove the delegate from the delegates who concern Accelerometer Sensor
-    */
-    void removeDelegate(CCAccelerometerDelegate* pDelegate);
-
-    /**
     @brief call delegates' didAccelerate function
     */
     void didAccelerate(CCAcceleration* pAccelerationValue);
 
+    void setDelegate(CCAccelerometerDelegate* pDelegate);
+
 protected:
-    typedef CCMutableArray<CCAccelerometerHandler*> AccDelegateArray;
-
-    AccDelegateArray*               m_pDelegates;
-
+	static CCAccelerometer* m_spCCAccelerometer;
+	CCAccelerometerDelegate* m_pAccelDelegate;
+	CCAcceleration m_obAccelerationValue;
 };
 
 }//namespace   cocos2d 

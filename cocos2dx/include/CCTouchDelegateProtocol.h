@@ -34,13 +34,6 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-typedef enum
-{
-	ccTouchDelegateStandardBit = 1 << 0,
-	ccTouchDelegateTargetedBit = 1 << 1,
-	ccTouchDelegateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
-} ccTouchDelegateFlag;
-
 class CCTouch;
 class CCEvent;
 class CCSet;
@@ -49,12 +42,9 @@ class CCTouchDispatcher;
 class CC_DLL CCTouchDelegate
 {
 protected:
-	ccTouchDelegateFlag m_eTouchDelegateType;
 	std::map<int, std::string> *m_pEventTypeFuncMap;
 
 public:
-	friend class CCTouchDispatcher; // only CCTouchDispatcher & children can change m_eTouchDelegateType
-	inline ccTouchDelegateFlag getTouchDelegateType(void) { return m_eTouchDelegateType; }
 
 	CCTouchDelegate() : m_pEventTypeFuncMap(NULL) {}
 
@@ -62,11 +52,6 @@ public:
 	{
 		CC_SAFE_DELETE(m_pEventTypeFuncMap);
 	}
-	
-	//! call the release() in child(layer or menu)
-	virtual void destroy(void) {}
-	//! call the retain() in child (layer or menu)
-	virtual void keep(void) {}
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
 	// optional
@@ -138,7 +123,6 @@ public:
  class CC_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  {
  public:
- 	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
  	/** Return YES to claim the touch.
  	 @since v0
 	 */
@@ -157,7 +141,6 @@ public:
  class CC_DLL CCStandardTouchDelegate : public CCTouchDelegate
  {
  public:
- 	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateStandardBit; }
  	// optional
  	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
  	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
