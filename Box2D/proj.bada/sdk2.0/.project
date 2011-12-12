@@ -84,28 +84,22 @@
 		<link>
 			<name>Collision</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/Box2D/Collision</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Collision</locationURI>
 		</link>
 		<link>
 			<name>Common</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/Box2D/Common</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Common</locationURI>
 		</link>
 		<link>
 			<name>Dynamics</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/Box2D/Dynamics</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Dynamics</locationURI>
 		</link>
 		<link>
 			<name>Rope</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/Box2D/Rope</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Rope</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>cocos2dx_root</name>
-			<value>file:/F:/Project/dumganhar/cocos2d-x</value>
-		</variable>
-	</variableList>
 </projectDescription>
