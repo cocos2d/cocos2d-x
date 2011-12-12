@@ -54,7 +54,7 @@ bool AppDelegate::initInstance() {
 #endif
 
 #endif  // CC_PLATFORM_WOPHONE
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 		// MaxAksenov said it's NOT a very elegant solution. I agree, haha
 		CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 #endif
