@@ -147,7 +147,7 @@ Disabled by default on iPhone with ARMv6 processors.
 @since v0.99.5
 */
 #ifndef CC_USES_VBO
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 #define CC_USES_VBO 0
 #else
 #define CC_USES_VBO 1

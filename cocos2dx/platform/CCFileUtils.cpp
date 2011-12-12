@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 
 #include <stack>
 #include <libxml/parser.h>
@@ -372,6 +372,10 @@ NS_CC_END;
 #include "android/CCFileUtils_android.cpp"
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+#include "marmalade/CCFileUtils_marmalade.cpp"
+#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 #include "bada/CCFileUtils_bada.cpp"
 #endif
@@ -380,4 +384,4 @@ NS_CC_END;
 #include "qnx/CCFileUtils_qnx.cpp"
 #endif
 
-#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)

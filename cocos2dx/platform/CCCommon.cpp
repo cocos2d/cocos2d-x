@@ -208,7 +208,7 @@ void CCLog(const char * pszFormat, ...)
 	printf(buf);
 }
 
-// airplay no MessageBox, use CCLog instead
+// marmalade no MessageBox, use CCLog instead
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
     CCLog("%s: %s", pszTitle, pszMsg);
@@ -217,9 +217,9 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 NS_CC_END;
 #endif
 /****************************************************
- * airplay
+ * marmalade
  ***************************************************/
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 
 #include <s3e.h>
 #include "IwUtil.h"
@@ -241,7 +241,7 @@ void CCLog(const char * pszFormat, ...)
 	IwTrace(GAME, (buf));
 }
 
-// airplay no MessageBox, use CCLog instead
+// marmalade no MessageBox, use CCLog instead
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
     CCLog("%s: %s", pszTitle, pszMsg);
@@ -249,7 +249,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 
 NS_CC_END;
 
-#endif // CC_PLATFORM_AIRPLAY
+#endif // CC_PLATFORM_MARMALADE
 
 /****************************************************
  * bada
