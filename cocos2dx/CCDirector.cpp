@@ -101,9 +101,6 @@ bool CCDirector::init(void)
 	m_pProjectionDelegate = NULL;
 
 	// FPS
-#if CC_DIRECTOR_FAST_FPS
-	m_pFPSLabel = 0 ;
-#endif 
 	m_bDisplayFPS = false;
 	m_uTotalFrames = m_uFrames = 0;
 	m_pszFPS = new char[10];

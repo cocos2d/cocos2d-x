@@ -68,7 +68,7 @@ int CCApplication::Run()
 	
 	int64 updateTime = s3eTimerGetMs();
 	
-	while (!s3eDeviceCheckQuitRequest()) 
+	while (true) 
 	{ 
 		int64 currentTime = s3eTimerGetMs();
 		if (currentTime - updateTime > m_nAnimationInterval)
