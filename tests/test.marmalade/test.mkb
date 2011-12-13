@@ -2,7 +2,7 @@ defines
 {
 	# chipmunk currently only supported on Mac OS (Xcode).
 	# if you want to use the chipmunk - set MARMALADEUSECHIPMUNK = 1
-	MARMALADEUSECHIPMUNK = 1
+	MARMALADEUSECHIPMUNK = 0
 }
 
 options
