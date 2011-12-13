@@ -116,10 +116,14 @@ public:
 		ss << '\0';
 		oTempLine.sLineStr = ss.str();
 		//get last glyph
-		FT_Load_Glyph(face, FT_Get_Char_Index(face, cLastChar),
-				FT_LOAD_DEFAULT);
+		FT_Load_Glyph(face, FT_Get_Char_Index(face, cLastChar), FT_LOAD_DEFAULT);
 
-		oTempLine.iLineWidth = iCurXCursor - SHIFT6(face->glyph->metrics.horiAdvance+face->glyph->metrics.horiBearingX-face->glyph->metrics.width)/*-iInterval*/;//TODO interval
+		oTempLine.iLineWidth =
+			iCurXCursor - 
+			SHIFT6( face->glyph->metrics.horiAdvance +
+					face->glyph->metrics.horiBearingX
+					- face->glyph->metrics.width)/*-iInterval*/;	//TODO interval
+
 		iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
 		ss.clear();
 		ss.str("");
@@ -130,8 +134,7 @@ public:
 		const char* pText = sText;
 		int iError = 0;
 		int iCurXCursor;
-		iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
-				FT_LOAD_DEFAULT);
+		iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_DEFAULT);
 		if (iError) {
 			return false;
 		}
@@ -146,8 +149,7 @@ public:
 				buildLine(ss, face, iCurXCursor, cLastCh);
 
 				pText++;
-				iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
-						FT_LOAD_DEFAULT);
+				iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_DEFAULT);
 				if (iError) {
 					return false;
 				}
@@ -155,8 +157,7 @@ public:
 				continue;
 			}
 
-			iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
-					FT_LOAD_DEFAULT);
+			iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_DEFAULT);
 
 			if (iError) {
 				return false;
@@ -164,9 +165,7 @@ public:
 			}
 			//check its width
 			//divide it when exceeding
-			if ((iMaxWidth > 0
-							&& iCurXCursor + SHIFT6(face->glyph->metrics.width)
-							> iMaxWidth)) {
+			if ((iMaxWidth > 0 && iCurXCursor + SHIFT6(face->glyph->metrics.width) > iMaxWidth)) {
 				buildLine(ss, face , iCurXCursor, cLastCh);
 
 				iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
@@ -198,19 +197,16 @@ public:
 	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, char cText,
 			int iLineIndex) {
 		int iRet;
-		int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText),
-				FT_LOAD_DEFAULT);
+		int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText), FT_LOAD_DEFAULT);
 		if (iError) {
 			return -1;
 		}
 
 		if (eAlignMask == CCImage::kAlignCenter) {
-			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
-			- SHIFT6(face->glyph->metrics.horiBearingX );
+			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2 - SHIFT6(face->glyph->metrics.horiBearingX );
 
 		} else if (eAlignMask == CCImage::kAlignRight) {
-			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
-			- SHIFT6(face->glyph->metrics.horiBearingX );
+			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) - SHIFT6(face->glyph->metrics.horiBearingX );
 		} else {
 			// left or other situation
 			iRet = -SHIFT6(face->glyph->metrics.horiBearingX );
@@ -235,7 +231,6 @@ public:
 		}
 		do {
 			iError = FT_New_Face( library, pFontName, 0, &face );
-
 			if (iError) {
 				//no valid font found use default
 //				CCLog("no valid font, use default %s\n", pFontName);
@@ -250,20 +245,26 @@ public:
 			iError = FT_Set_Pixel_Sizes(face, fontSize,fontSize);
 			CC_BREAK_IF(iError);
 
-			iError = divideString(face, text, nWidth, nHeight)?0:1;
+			iError = divideString(face, text, nWidth, nHeight) ? 0 : 1 ;
 
 			//compute the final line width
 			iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
 
-			iMaxLineHeight = (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+			FT_Pos ascenderPixels = SHIFT6(face->size->metrics.ascender) ;
+			FT_Pos descenderPixels = SHIFT6(face->size->metrics.descender) ;
+
+			iMaxLineHeight = ascenderPixels - descenderPixels;
 			iMaxLineHeight *= vLines.size();
 
 			//compute the final line height
 			iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
-			m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
-			iCurYCursor = SHIFT6(face->size->metrics.ascender);
 
-			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
+			uint bitmapSize = iMaxLineWidth * iMaxLineHeight*4 ;
+
+			m_pData = new unsigned char[bitmapSize];
+			iCurYCursor = ascenderPixels;
+
+			memset(m_pData,0, bitmapSize);
 
 			for (size_t i = 0; i < vLines.size(); i++) {
 				pText = vLines[i].sLineStr.c_str();
@@ -271,7 +272,7 @@ public:
 				iCurXCursor = computeLineStart(face, eAlignMask, *pText, i);
 
 				while (*pText != 0) {
-					int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),FT_LOAD_RENDER);
+					int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_RENDER);
 					if (iError) {
 						break;
 					}
@@ -280,20 +281,23 @@ public:
 					//  and get the bitmap
 					FT_Bitmap & bitmap = face->glyph->bitmap;
 
-					uint32 memLimit = iMaxLineWidth*iMaxLineHeight*4 ;
+					FT_Pos horiBearingYPixels = SHIFT6(face->glyph->metrics.horiBearingY) ;
+					FT_Pos horiBearingXPixels = SHIFT6(face->glyph->metrics.horiBearingX) ;
+					FT_Pos horiAdvancePixels = SHIFT6(face->glyph->metrics.horiAdvance) ;
 
 					for (int i = 0; i < bitmap.rows; ++i) {
 						for (int j = 0; j < bitmap.width; ++j) {
 							//  if it has gray>0 we set show it as 1, o otherwise
-							int iY = iCurYCursor + i - (face->glyph->metrics.horiBearingY >> 6) ;
-							int iX = iCurXCursor + j + (face->glyph->metrics.horiBearingX >> 6) ;
+							int iY = iCurYCursor + i - horiBearingYPixels;
+							int iX = iCurXCursor + j + horiBearingXPixels;
 
 							if (iY < 0 || iY>=iMaxLineHeight) {
 								//exceed the height truncate
 								continue;
 							}
 
-							IwAssert( GAME, (((iY * iMaxLineWidth + iX) * 4 + 3) < memLimit) ) ;
+							IwAssert( GAME, (((iY * iMaxLineWidth + iX) * 4 + 3) < bitmapSize) ) ;
+
 // 							m_pData[(iY * iMaxLineWidth + iX) * 4 + 3] = bitmap.buffer[i * bitmap.width + j] ? 0xff : 0;//alpha
 // 							m_pData[(iY * iMaxLineWidth + iX) * 4 + 1] = bitmap.buffer[i * bitmap.width + j];//R
 // 							m_pData[(iY * iMaxLineWidth + iX) * 4 + 2] = bitmap.buffer[i * bitmap.width + j];//G
@@ -301,26 +305,18 @@ public:
 
 							int iTemp = 0;
 							unsigned char cTemp = bitmap.buffer[i	* bitmap.width + j];
-							iTemp |= (cTemp ? 0xff : 0)<<24;
+							iTemp |= (cTemp ? 0xff : 0) << 24;
 							iTemp |= cTemp << 16 | cTemp << 8 | cTemp;
-							*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
+							*(int*) &m_pData[ (iY * iMaxLineWidth + iX) * 4 ] = iTemp;
 						}
 					}
-					//step to next glyph
-					iCurXCursor += (face->glyph->metrics.horiAdvance >> 6) + iInterval;
 
+					//step to next glyph
+					iCurXCursor += horiAdvancePixels + iInterval;
 					pText++;
 				}
-				iCurYCursor += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+				iCurYCursor += ascenderPixels - descenderPixels ;
 			}
-			//print all image bitmap
-//			for (int i = 0; i < iMaxLineHeight; i++) {
-//				for (int j = 0; j < iMaxLineWidth; j++) {
-//					printf("%d",
-//							m_pData[(i * iMaxLineWidth + j) * 4] ? 1 : 0);
-//				}
-//				printf("\n");
-//			}
 
 			//  free face
 			FT_Done_Face(face);
@@ -667,7 +663,7 @@ bool CCImage::initWithString(
 
 		const char* pFullFontName = CCFileUtils::fullPathFromRelativePath(pFontName);
 
-		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFullFontName, nSize));
+		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFullFontName, (float)nSize));
 
 		// assign the dc.m_pData to m_pData in order to save time
 		m_pData = dc.m_pData;

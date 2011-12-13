@@ -102,8 +102,6 @@ CCEGLView::~CCEGLView()
 {
 	IW_CALLSTACK("CCEGLView::~CCEGLView");
 
-	release();
-	
 	CC_SAFE_DELETE(m_pDelegate);
     CC_SAFE_DELETE(m_pSet);
 	CC_SAFE_DELETE(m_pTouch);
@@ -194,6 +192,8 @@ void CCEGLView::release()
   		IwGLTerminate();
 
 	 s3eDeviceRequestQuit() ;
+
+	 delete this ;
 }
 
 void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
