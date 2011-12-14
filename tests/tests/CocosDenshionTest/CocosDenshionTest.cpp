@@ -5,23 +5,15 @@
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	#define EFFECT_FILE		"effect2.ogg"
-#elif( CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-	#define EFFECT_FILE		"effect1.raw"
-#elif( CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-	#define EFFECT_FILE		"app/native/Resource/effect1.wav"
 #else
 	#define EFFECT_FILE		"effect1.wav"
 #endif // CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	#define MUSIC_FILE		"music.mid"
-#elif( CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-	#define MUSIC_FILE		"app/native/Resource/background.mp3"
 #else
 	#define MUSIC_FILE		"background.mp3"
 #endif // CC_PLATFORM_WIN32
-
-
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -62,7 +54,7 @@ m_nSoundId(0)
 
 	for (int i = 0; i < m_nTestCount; ++i)
 	{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 		CCLabelBMFont* label = CCLabelBMFont::labelWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
 #else
         CCLabelTTF* label = CCLabelTTF::labelWithString(testItems[i].c_str(), "Arial", 24);
@@ -80,8 +72,8 @@ m_nSoundId(0)
 	setIsTouchEnabled(true);
 
 	// preload background music and effect
-	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::fullPathFromRelativePath(MUSIC_FILE) );
-	SimpleAudioEngine::sharedEngine()->preloadEffect( CCFileUtils::fullPathFromRelativePath(EFFECT_FILE) );
+	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(std::string(CCFileUtils::fullPathFromRelativePath(MUSIC_FILE)).c_str());
+	SimpleAudioEngine::sharedEngine()->preloadEffect(std::string(CCFileUtils::fullPathFromRelativePath(EFFECT_FILE)).c_str());
     
     // set default volume
     SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
