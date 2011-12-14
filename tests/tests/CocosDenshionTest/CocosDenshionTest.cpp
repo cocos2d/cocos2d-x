@@ -5,6 +5,8 @@
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	#define EFFECT_FILE		"effect2.ogg"
+#elif( CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	#define EFFECT_FILE		"effect1.raw"
 #else
 	#define EFFECT_FILE		"effect1.wav"
 #endif // CC_PLATFORM_ANDROID
@@ -54,7 +56,7 @@ m_nSoundId(0)
 
 	for (int i = 0; i < m_nTestCount; ++i)
 	{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 		CCLabelBMFont* label = CCLabelBMFont::labelWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
 #else
         CCLabelTTF* label = CCLabelTTF::labelWithString(testItems[i].c_str(), "Arial", 24);
@@ -72,8 +74,8 @@ m_nSoundId(0)
 	setIsTouchEnabled(true);
 
 	// preload background music and effect
-	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(std::string(CCFileUtils::fullPathFromRelativePath(MUSIC_FILE)).c_str());
-	SimpleAudioEngine::sharedEngine()->preloadEffect(std::string(CCFileUtils::fullPathFromRelativePath(EFFECT_FILE)).c_str());
+	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::fullPathFromRelativePath(MUSIC_FILE) );
+	SimpleAudioEngine::sharedEngine()->preloadEffect( CCFileUtils::fullPathFromRelativePath(EFFECT_FILE) );
     
     // set default volume
     SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
