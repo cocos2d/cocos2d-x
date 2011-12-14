@@ -7,15 +7,21 @@
 	#define EFFECT_FILE		"effect2.ogg"
 #elif( CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 	#define EFFECT_FILE		"effect1.raw"
+#elif( CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+	#define EFFECT_FILE		"app/native/Resource/effect1.wav"
 #else
 	#define EFFECT_FILE		"effect1.wav"
 #endif // CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	#define MUSIC_FILE		"music.mid"
+#elif( CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+	#define MUSIC_FILE		"app/native/Resource/background.mp3"
 #else
 	#define MUSIC_FILE		"background.mp3"
 #endif // CC_PLATFORM_WIN32
+
+
 
 using namespace cocos2d;
 using namespace CocosDenshion;
