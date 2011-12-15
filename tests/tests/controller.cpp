@@ -58,8 +58,9 @@ static TestScene* CreateTestScene(int nIdx)
 #else
 #ifdef MARMALADEUSECHIPMUNK
 #if	(MARMALADEUSECHIPMUNK == 1)
-        pScene = new ChipmunkTestScene(); break;
+        pScene = new ChipmunkTestScene(); 
 #endif
+		break;
 #endif
 #endif
     case TEST_LABEL:
@@ -111,11 +112,11 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new DirectorTestScene(); break;
     case TEST_BUGS:
         pScene = new BugsTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 	case TEST_FONTS:
 		pScene = new FontTestScene(); break;
 	case TEST_CURRENT_LANGUAGE:
 		pScene = new CurrentLanguageTestScene(); break;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 	case TEST_TEXTURECACHE: pScene = new TextureCacheTestScene(); break;
 #endif
 	
