@@ -32,7 +32,7 @@ using namespace std;
 typedef std::vector<std::string> strArray;
 
 // string toolkit
-void split(std::string src, const char* token, strArray& vect)
+static inline void split(std::string src, const char* token, strArray& vect)
 {
     int nend=0;
     int nbegin=0;
@@ -51,7 +51,7 @@ void split(std::string src, const char* token, strArray& vect)
 // if the form is right,the string will be splited into the parameter strs;
 // or the parameter strs will be empty.
 // if the form is right return true,else return false.
-bool splitWithForm(const char* pStr, strArray& strs)
+static bool splitWithForm(const char* pStr, strArray& strs)
 {
     bool bRet = false;
 

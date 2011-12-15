@@ -87,7 +87,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -154,7 +154,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.libraries.1437641894" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+								<option id="com.qnx.qcc.option.linker.libraries.1437641894" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -183,7 +183,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -254,7 +254,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.libraries.291046300" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+								<option id="com.qnx.qcc.option.linker.libraries.291046300" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -283,7 +283,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -354,7 +354,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.libraries.401564982" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+								<option id="com.qnx.qcc.option.linker.libraries.401564982" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -383,7 +383,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -482,7 +482,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/|ios/|Linux/|third_party/|win32/|wophone/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="android/|bada/|ios/|Linux/|third_party/|win32/|wophone/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -552,7 +552,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.libraries.490343997" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+								<option id="com.qnx.qcc.option.linker.libraries.490343997" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -581,7 +581,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -651,7 +651,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.libraries.1680504569" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+								<option id="com.qnx.qcc.option.linker.libraries.1680504569" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -680,7 +680,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -698,6 +698,8 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="cocos2dx.null.1927439532" name="cocos2dx"/>
 	</storageModule>
+	<storageModule moduleId="com.qnx.tools.ide.qde.core.QNXProjectProperties"/>
+	<storageModule moduleId="refreshScope"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.sharedLib.debug.855962661">
@@ -709,19 +711,17 @@
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.sharedLib.coverage.781663096">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.sharedLib.coverage.2128521745">
+		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.sharedLib.release.37843110">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.sharedLib.debug.700584380">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.sharedLib.release.37843110">
+		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.sharedLib.coverage.2128521745">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.sharedLib.profile.720591932">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="com.qnx.tools.ide.qde.core.QNXProjectProperties"/>
-	<storageModule moduleId="refreshScope"/>
 </cproject>
