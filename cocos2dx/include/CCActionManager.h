@@ -104,11 +104,6 @@ public:
 	 @since v0.99.0
 	 */
 	void purgeSharedManager(void);
-
-	// SelectorProtocol methods
-
-	virtual void selectorProtocolRetain(void);
-	virtual void selectorProtocolRelease(void);
  
 public:
 	/** returns a shared instance of the CCActionManager */
