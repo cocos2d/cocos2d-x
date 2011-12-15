@@ -87,7 +87,7 @@ bool AppDelegate::initInstance()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
 		CCEGLView * pMainWnd = new CCEGLView();
 		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(480, 320));
-		CCFileUtils::setResourcePath("./app/native/Resource");
+		CCFileUtils::setResourcePath("app/native/Resource");
 #endif // CC_PLATFORM_QNX
 
         bRet = true;

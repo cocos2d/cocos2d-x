@@ -71,7 +71,6 @@ namespace CocosDenshion
 	static strm_dict_t 		  *s_volumeDictionary = 0;
 
 	static SimpleAudioEngine  *s_engine = 0;
-	static string s_strResourcePath = "./app/native/Resource/";
 
 	static void printALError(int err)
 	{
@@ -229,8 +228,6 @@ namespace CocosDenshion
     		string path = "file://";
     		path += cwd;
     		path += "/";
-    		// CocosDenshion is an independent module, we should not make the coupling between Cocos2dx and CocosDenshion.
-    		path += s_strResourcePath;//cocos2d::CCFileUtils::getResourcePath();
     		path += pszFilePath;
 
     		s_mmrConnection = mmr_connect(mmrname);
@@ -433,9 +430,7 @@ namespace CocosDenshion
 			ALuint 		source;
 			soundData  *data = new soundData;
 
-    		// CocosDenshion is an independent module, we should not make the coupling between Cocos2dx and CocosDenshion.
-			string path = s_strResourcePath;// cocos2d::CCFileUtils::getResourcePath();
-			path += pszFilePath;
+			string path = pszFilePath;
 
 			buffer = alutCreateBufferFromFile(path.data());
 
