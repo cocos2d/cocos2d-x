@@ -115,6 +115,11 @@ files
 	"*.h"
 	"*.cpp"
 
+	[Tests/FontTest]
+	("../tests/FontTest")
+	"*.h"
+	"*.cpp"
+
 	[Tests/HiResTest]
 	("../tests/HiResTest")
 	"*.h"
@@ -132,6 +137,11 @@ files
 
 	[Tests/LayerTest]
 	("../tests/LayerTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/CurrentLanguageTest]
+	("../tests/CurrentLanguageTest")
 	"*.h"
 	"*.cpp"
 
