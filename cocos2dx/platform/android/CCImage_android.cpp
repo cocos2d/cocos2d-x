@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#define COCOS2D_DEBUG 1
+//#define COCOS2D_DEBUG 1
 
 #include <android/log.h>
 #include <string.h>
@@ -72,8 +72,8 @@ public:
 		jstring jstrText = methodInfo.env->NewStringUTF(text);
 		jstring jstrFont = methodInfo.env->NewStringUTF(pFontName);
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, methodInfo.env->NewStringUTF(text), 
-			methodInfo.env->NewStringUTF(pFontName), (int)fontSize, eAlignMask, nWidth, nHeight);
+		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, jstrText, 
+			jstrFont, (int)fontSize, eAlignMask, nWidth, nHeight);
 
 		methodInfo.env->DeleteLocalRef(jstrText);
 		methodInfo.env->DeleteLocalRef(jstrFont);
