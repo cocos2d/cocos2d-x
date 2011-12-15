@@ -214,7 +214,7 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 
 	if (target)
 	{
-		target->selectorProtocolRetain();
+		dynamic_cast<CCObject*>(target)->retain();
 	}
 
 	// lazy init
@@ -294,7 +294,7 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 		if (target && selector)
 		{
 			(target->*selector)(texture);
-			target->selectorProtocolRelease();
+			dynamic_cast<CCObject*>(target)->release();
 		}		
 
 		delete pImage;

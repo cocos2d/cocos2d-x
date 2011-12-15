@@ -187,7 +187,7 @@ namespace cocos2d {
 		{
 			if (m_pSelectorTarget)
 			{
-				m_pSelectorTarget->selectorProtocolRelease();
+				dynamic_cast<CCObject*>(m_pSelectorTarget)->release();
 			}
 		}
 		/** creates the action with the callback 
@@ -221,14 +221,14 @@ namespace cocos2d {
 			{
 				if (m_pSelectorTarget)
 				{
-					m_pSelectorTarget->selectorProtocolRelease();
+					dynamic_cast<CCObject*>(m_pSelectorTarget)->release();
 				}
 				
 				m_pSelectorTarget = pSel;
 
 				if (m_pSelectorTarget)
 				{
-					m_pSelectorTarget->selectorProtocolRetain();
+					dynamic_cast<CCObject*>(m_pSelectorTarget)->retain();
 				}				
 			}
 		}
