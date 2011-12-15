@@ -54,7 +54,7 @@ namespace cocos2d {
 	void tmx_characters(void *ctx, const xmlChar *ch, int len);
 	*/
 	
-	const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
+	static const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
 	{
 		if (dict)
 		{
