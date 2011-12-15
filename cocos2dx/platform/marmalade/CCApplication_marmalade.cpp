@@ -137,7 +137,47 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    return kLanguageEnglish;
+	int nLanguageIdx;
+	ccLanguageType currentLanguage;
+
+	nLanguageIdx = s3eDeviceGetInt(S3E_DEVICE_LANGUAGE);
+	
+	switch (nLanguageIdx)
+	{
+		case S3E_DEVICE_LANGUAGE_ENGLISH:
+			currentLanguage = kLanguageEnglish;
+			break;
+
+		case S3E_DEVICE_LANGUAGE_SIMPL_CHINESE:
+		case  S3E_DEVICE_LANGUAGE_TRAD_CHINESE:
+			currentLanguage = kLanguageChinese;
+			break;
+
+		case S3E_DEVICE_LANGUAGE_FRENCH:
+			currentLanguage = kLanguageFrench;
+			break;
+
+		case S3E_DEVICE_LANGUAGE_ITALIAN:
+			currentLanguage = kLanguageItalian;
+			break;
+
+		case S3E_DEVICE_LANGUAGE_GERMAN:
+			currentLanguage = kLanguageGerman;
+			break;
+
+		case S3E_DEVICE_LANGUAGE_SPANISH:
+			currentLanguage = kLanguageSpanish;
+			break;
+
+		case S3E_DEVICE_LANGUAGE_RUSSIAN:
+			currentLanguage = kLanguageItalian;
+			break;
+
+		default:
+			currentLanguage = kLanguageRussian;
+			break;
+	}
+	return currentLanguage;
 }
 
 
