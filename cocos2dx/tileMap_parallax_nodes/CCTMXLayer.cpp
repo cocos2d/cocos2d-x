@@ -386,7 +386,7 @@ namespace cocos2d {
 	}
 
 	// CCTMXLayer - atlasIndex and Z
-	int compareInts(const void * a, const void * b)
+	static inline int compareInts(const void * a, const void * b)
 	{
 		return ( *(int*)a - *(int*)b );
 	}
