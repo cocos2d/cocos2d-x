@@ -55,7 +55,18 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-	return pszRelativePath;
+	// It works like this: if the relative path already includes the resource path
+	// it will be returned as it is
+	const std::string relPath = pszRelativePath;
+	if (relPath.find(s_strResourcePath) == std::string::npos) {
+		CCString *pRet = new CCString();
+		pRet->autorelease();
+		pRet->m_sString = s_strResourcePath + pszRelativePath;
+		return pRet->m_sString.c_str();
+	}
+	else {
+		return pszRelativePath;
+	}
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
@@ -72,17 +83,22 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 {	
 	unsigned char * buffer = NULL;
 
+	std::string full_path = pszFileName;
+
+	// If it is not inside resource path
+	if (full_path.find(s_strResourcePath) == std::string::npos) {
+			full_path = s_strResourcePath + pszFileName;
+	}
+
 	// if specify the zip file,load from it first
 	if (s_pszZipFilePath[0] != 0)
 	{
-		buffer = getFileDataFromZip(s_pszZipFilePath.c_str(), pszFileName, pSize);
+		buffer = getFileDataFromZip(s_pszZipFilePath.c_str(), full_path.c_str(), pSize);
 	}
 
 	// if that failed then let's try and load the file ourselves
 	if (!buffer)
 	{
-		std::string full_path = s_strResourcePath + pszFileName;
-
 		// read the file from hardware
 		FILE *fp = fopen(full_path.c_str(), pszMode);
 		if (fp)
@@ -101,7 +117,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 	{
 		std::string title = "Notification";
 		std::string msg = "Get data from file(";
-		msg.append(pszFileName);
+		msg.append(full_path);
 		if (s_pszZipFilePath[0] != 0)
 		{
 			msg.append(") in zip archive(").append(s_pszZipFilePath);
