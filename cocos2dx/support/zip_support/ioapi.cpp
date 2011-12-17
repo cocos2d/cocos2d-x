@@ -11,10 +11,11 @@
 */
 
 #if (defined(_WIN32))
-#define _CRT_SECURE_NO_WARNINGS
+        #define _CRT_SECURE_NO_WARNINGS
 #endif
 
 #include "ioapi.h"
+
 
 namespace cocos2d {
 
@@ -88,9 +89,11 @@ static voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char* filename, in
     const char* mode_fopen = NULL;
     if ((mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER)==ZLIB_FILEFUNC_MODE_READ)
         mode_fopen = "rb";
-    else if (mode & ZLIB_FILEFUNC_MODE_EXISTING)
+    else
+    if (mode & ZLIB_FILEFUNC_MODE_EXISTING)
         mode_fopen = "r+b";
-    else if (mode & ZLIB_FILEFUNC_MODE_CREATE)
+    else
+    if (mode & ZLIB_FILEFUNC_MODE_CREATE)
         mode_fopen = "wb";
 
     if ((filename!=NULL) && (mode_fopen != NULL))
@@ -104,17 +107,19 @@ static voidpf ZCALLBACK fopen64_file_func (voidpf opaque, const void* filename, 
     const char* mode_fopen = NULL;
     if ((mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER)==ZLIB_FILEFUNC_MODE_READ)
         mode_fopen = "rb";
-    else if (mode & ZLIB_FILEFUNC_MODE_EXISTING)
+    else
+    if (mode & ZLIB_FILEFUNC_MODE_EXISTING)
         mode_fopen = "r+b";
-    else if (mode & ZLIB_FILEFUNC_MODE_CREATE)
+    else
+    if (mode & ZLIB_FILEFUNC_MODE_CREATE)
         mode_fopen = "wb";
 
     if ((filename!=NULL) && (mode_fopen != NULL))
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY || CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-        file = NULL;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+		file = NULL;
 #else
-        file = fopen64((const char*)filename, mode_fopen);
+	    file = fopen64((const char*)filename, mode_fopen);	
 #endif
     }
 
@@ -147,7 +152,7 @@ static long ZCALLBACK ftell_file_func (voidpf opaque, voidpf stream)
 static ZPOS64_T ZCALLBACK ftell64_file_func (voidpf opaque, voidpf stream)
 {
     ZPOS64_T ret;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY || CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
     ret = NULL;
 #else
     ret = ftello64((FILE *)stream);
@@ -170,8 +175,7 @@ static long ZCALLBACK fseek_file_func (voidpf  opaque, voidpf stream, uLong offs
     case ZLIB_FILEFUNC_SEEK_SET :
         fseek_origin = SEEK_SET;
         break;
-    default:
-        return -1;
+    default: return -1;
     }
     ret = 0;
     if (fseek((FILE *)stream, offset, fseek_origin) != 0)
@@ -194,16 +198,15 @@ static long ZCALLBACK fseek64_file_func (voidpf  opaque, voidpf stream, ZPOS64_T
     case ZLIB_FILEFUNC_SEEK_SET :
         fseek_origin = SEEK_SET;
         break;
-    default:
-        return -1;
+    default: return -1;
     }
     ret = 0;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY || CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    ret = -1;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+	ret = -1;
 #else
     if(fseeko64((FILE *)stream, offset, fseek_origin) != 0)
-        ret = -1;
+		ret = -1;
 #endif
     return ret;
 }

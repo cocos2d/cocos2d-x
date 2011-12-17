@@ -31,12 +31,6 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-typedef enum
-{
-    ccNormalScene     = 1 << 0,
-    ccTransitionScene = 1 << 1,
-} ccSceneFlag;
-
 /** @brief CCScene is a subclass of CCNode that is used only as an abstract concept.
 
 CCScene an CCNode are almost identical with the difference that CCScene has it's
@@ -50,33 +44,25 @@ It is a good practice to use and CCScene as the parent of all your nodes.
 class CC_DLL CCScene : public CCNode
 {
 public:
-    CCScene();
-    virtual ~CCScene();
-    bool init();
-    static CCScene *node(void);
-    inline ccSceneFlag getSceneType(void) {
-        return m_eSceneType;
-    }
-    
+	CCScene();
+	virtual ~CCScene();
+	bool init();
+	static CCScene *node(void);
+
 #if LUA_ENGINE
     virtual void onEnter();
     virtual void onExit();
-
+    
     void registerScriptEventsHandler(int functionRefID);
     void unregisterScriptEventsHandler(void);
-#endif // LUA_ENGINE
-
+    
 protected:
-    ccSceneFlag m_eSceneType;
-
-#if LUA_ENGINE
     int m_eventsFunctionRefID;
-#endif
+#endif // LUA_ENGINE
 };
+}//namespace   cocos2d 
 
-}//namespace   cocos2d
-
-// for the subclass of CCScene, each has to implement the static "node" method
+// for the subclass of CCScene, each has to implement the static "node" method 
 #define SCENE_NODE_FUNC(scene) \
 static scene* node() \
 { \
@@ -92,7 +78,7 @@ static scene* node() \
 		pRet = NULL; \
 		return NULL; \
 	} \
-};
+}; 
 
 #define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
 	static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \

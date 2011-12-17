@@ -1,0 +1,91 @@
+
+includepaths
+{
+	"../"
+	"../include"
+	"../include/chipmunk"
+	"../include/chipmunk/constraints"
+
+}
+
+
+
+if {{ defined MARMALADEUSECHIPMUNK}}
+{
+if {{ MARMALADEUSECHIPMUNK == 1 }}
+{
+
+files
+{
+	[include]
+	(../include/chipmunk)
+	chipmunk.h
+	chipmunk_ffi.h
+	chipmunk_private.h
+	chipmunk_types.h
+	chipmunk_unsafe.h
+	cpArbiter.h
+	cpArray.h
+	cpBB.h
+	cpBody.h
+	cpCollision.h
+	cpHashSet.h
+	cpPolyShape.h
+	cpShape.h
+	cpSpace.h
+	cpSpaceHash.h
+	cpVect.h
+	
+	[include/constraints]
+	(../include/chipmunk/constraints)
+	cpConstraint.h
+	cpDampedRotarySpring.h
+	cpDampedSpring.h
+	cpGearJoint.h
+	cpGrooveJoint.h
+	cpPinJoint.h
+	cpPivotJoint.h
+	cpRatchetJoint.h
+	cpRotaryLimitJoint.h
+	cpSimpleMotor.h
+	cpSlideJoint.h
+	util.h
+	
+	[src]
+	(../src)
+	chipmunk.cpp
+	cpArbiter.cpp
+	cpArray.cpp
+	cpBB.cpp
+	cpBody.cpp
+	cpCollision.cpp
+	cpHashSet.cpp
+	cpPolyShape.cpp
+	cpShape.cpp
+	cpSpace.cpp
+	cpSpaceComponent.cpp
+	cpSpaceHash.cpp
+	cpSpaceQuery.cpp
+	cpSpaceStep.cpp
+	cpVect.cpp
+	prime.h
+	
+	[src/constraints]
+	(../src/constraints)
+	cpConstraint.cpp
+	cpDampedRotarySpring.cpp
+	cpDampedSpring.cpp
+	cpGearJoint.cpp
+	cpGrooveJoint.cpp
+	cpPinJoint.cpp
+	cpPivotJoint.cpp
+	cpRatchetJoint.cpp
+	cpRotaryLimitJoint.cpp
+	cpSimpleMotor.cpp
+	cpSlideJoint.cpp
+		
+}
+}
+}
+
+

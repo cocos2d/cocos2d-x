@@ -8,7 +8,6 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/png"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/png/.Target-Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/png"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="png"/>
 					</externalSetting>
@@ -28,9 +27,18 @@
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.lib.debug.1805617267." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.lib.debug.707891067" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.lib.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.lib.debug.1255878491" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.lib.debug"/>
-							<builder buildPath="${workspace_loc:/png/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug.2119060085" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug"/>
+							<builder buildPath="${workspace_loc:/png/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug.2119060085" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+								</outputEntries>
+							</builder>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.lib.debug.669666636" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.lib.debug"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug.409087324" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug">
+								<option id="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths.1548740645" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.761734192" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.debug.2114029477" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.debug">
@@ -43,12 +51,13 @@
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.c.linker.base.907373212" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.arm.c.linker.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.cpp.linker.base.1175549160" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.arm.cpp.linker.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.assembler.lib.debug.1918951518" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.lib.debug">
+								<option id="osp.gnu.both.asm.option.include.paths.1176413678" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.assembler.input.718828764" superClass="cdt.managedbuild.tool.osp.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -310,6 +319,8 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/png"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/png/.Target-Release"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/png"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="png"/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -347,7 +358,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

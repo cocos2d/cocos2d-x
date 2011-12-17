@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 
 /*
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 	#include "expat.h"
 #else
 	#include <libxml/parser.h>
@@ -54,7 +54,7 @@ namespace cocos2d {
 	void tmx_characters(void *ctx, const xmlChar *ch, int len);
 	*/
 	
-	const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
+	static const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
 	{
 		if (dict)
 		{

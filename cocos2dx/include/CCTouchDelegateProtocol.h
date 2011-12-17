@@ -37,14 +37,6 @@
 
 namespace cocos2d
 {
-
-typedef enum
-{
-    ccTouchDelegateStandardBit = 1 << 0,
-    ccTouchDelegateTargetedBit = 1 << 1,
-    ccTouchDelegateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
-} ccTouchDelegateFlag;
-
 class CCTouch;
 class CCEvent;
 class CCSet;
@@ -52,62 +44,63 @@ class CCTouchDispatcher;
 
 class CC_DLL CCTouchDelegate
 {
-protected:
-    ccTouchDelegateFlag m_eTouchDelegateType;
-    
 public:
-    friend class CCTouchDispatcher; // only CCTouchDispatcher & children can change m_eTouchDelegateType
-    inline ccTouchDelegateFlag getTouchDelegateType(void) {
-        return m_eTouchDelegateType;
-    }
-    
     CCTouchDelegate()
     {}
     
     virtual ~CCTouchDelegate()
+    {}
+    
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     {
-    }
-    
-    //! call the release() in child(layer or menu)
-    virtual void destroy(void) {}
-    //! call the retain() in child(layer or menu)
-    virtual void keep(void) {}
-    
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
         CC_UNUSED_PARAM(pTouch);
         CC_UNUSED_PARAM(pEvent);
         return false;
     };
-    // optional
     
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-    }
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-    }
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
+    // optional
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouch);
         CC_UNUSED_PARAM(pEvent);
     }
     
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+    {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+        
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+    {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    
     // optional
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouches);
         CC_UNUSED_PARAM(pEvent);
     }
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {
+    
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouches);
         CC_UNUSED_PARAM(pEvent);
     }
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {
+    
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouches);
         CC_UNUSED_PARAM(pEvent);
     }
-    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouches);
+    
+    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pEvent);
     }
 };
@@ -120,7 +113,7 @@ public:
  - 2. You can *claim* a UITouch by returning YES in ccTouchBegan. Updates of claimed
  touches are sent only to the delegate(s) that claimed them. So if you get a move/
  ended/cancelled update you're sure it's your touch. This frees you from doing a
- lot of checks when doing multi-touch.
+ lot of checks when doing multi-touch. 
  
  (The name TargetedTouchDelegate relates to updates "targeting" their specific
  handler, without bothering the other handlers.)
@@ -128,29 +121,24 @@ public:
  */
 class CC_DLL CCTargetedTouchDelegate : public CCTouchDelegate
 {
-public:
-    CCTargetedTouchDelegate() {
-        m_eTouchDelegateType = ccTouchDelegateTargetedBit;
-    }
-    /** Return YES to claim the touch.
-     @since v0
-     */
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouch);
         CC_UNUSED_PARAM(pEvent);
         return false;
     };
-    
-    // optional
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouch);
         CC_UNUSED_PARAM(pEvent);
     }
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouch);
         CC_UNUSED_PARAM(pEvent);
     }
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouch);
         CC_UNUSED_PARAM(pEvent);
     }
@@ -158,33 +146,35 @@ public:
 
 /** @brief
  This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
- @since v0.8
  */
+
 class CC_DLL CCStandardTouchDelegate : public CCTouchDelegate
 {
 public:
-    CCStandardTouchDelegate() {
-        m_eTouchDelegateType = ccTouchDelegateStandardBit;
-    }
-    // optional
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouches);
         CC_UNUSED_PARAM(pEvent);
     }
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {
+    
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouches);
         CC_UNUSED_PARAM(pEvent);
     }
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {
+    
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouches);
         CC_UNUSED_PARAM(pEvent);
     }
-    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {
+    
+    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
+    {
         CC_UNUSED_PARAM(pTouches);
         CC_UNUSED_PARAM(pEvent);
     }
 };
-    
-} // namespace cocos2d
+} //namespace   cocos2d 
 
 #endif // __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__

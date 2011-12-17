@@ -28,21 +28,23 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "win32/CCApplication_win32.h"
+    #include "win32/CCApplication_win32.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "android/CCApplication_android.h"
+    #include "android/CCApplication_android.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-# include "ios/CCApplication_ios.h"
+    # include "ios/CCApplication_ios.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include "wophone/CCApplication_wophone.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-#include "airplay/CCApplication_airplay.h"
+    #include "wophone/CCApplication_wophone.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	#include "marmalade/CCApplication_marmalade.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#include "Linux/CCAplication_linux.h"
+	#include "Linux/CCAplication_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCApplication_bada.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+    #include "qnx/CCApplication_qnx.h"
 #else
-#error
+    #error
 #endif
 
 #endif	// __CC_APPLICATION_PLATFORM_H__

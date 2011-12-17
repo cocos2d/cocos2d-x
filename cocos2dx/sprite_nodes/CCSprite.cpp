@@ -782,7 +782,7 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
         CCObject* pObject = NULL;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
-            CCSprite* pChild = (CCSprite*) pObject;
+            CCSprite* pChild = dynamic_cast<CCSprite*>(pObject);
             if (pChild)
             {
                 m_pobBatchNode->removeSpriteFromAtlas(pChild);
@@ -809,7 +809,7 @@ void CCSprite::setDirtyRecursively(bool bValue)
         CCObject* pObject = NULL;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
-            CCSprite* pChild = (CCSprite*) pObject;
+            CCSprite* pChild = dynamic_cast<CCSprite*>(pObject);
             if (pChild)
             {
                 pChild->setDirtyRecursively(true);

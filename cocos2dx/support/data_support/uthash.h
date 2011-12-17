@@ -61,10 +61,12 @@ do {                                                                            
 
 /* a number of the hash function use uint32_t which isn't defined on win32 */
 #ifdef _MSC_VER
-typedef unsigned int uint32_t;
+	typedef unsigned int uint32_t;
 #else
-#include <inttypes.h>   /* uint32_t */
-#endif
+	#ifndef __QNX__
+	#include <inttypes.h>   /* uint32_t */
+	#endif /* __QNX__ */
+#endif /* _MSC_VER */
 
 #define UTHASH_VERSION 1.9.3
 
