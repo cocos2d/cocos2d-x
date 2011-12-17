@@ -22,7 +22,7 @@ TOLUA_API void tolua_remove_function_by_refid(lua_State* L, int refid);
 
 TOLUA_API int tolua_isfunction(lua_State* L, int lo, tolua_Error* err);
     
-TOLUA_API void tolua_stack_dump(lua_State *L);
+TOLUA_API void tolua_stack_dump(lua_State* L, const char* label);
 
 #ifdef __cplusplus
 } // extern "C"
