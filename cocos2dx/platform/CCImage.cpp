@@ -615,3 +615,7 @@ NS_CC_END;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 #include "bada/CCImage_bada.cpp"
 #endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#include "qnx/CCImage_qnx.cpp"
+#endif

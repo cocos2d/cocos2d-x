@@ -91,7 +91,7 @@ static xmlNodePtr getXMLNodeForKey(const char* pKey, xmlNodePtr *rootNode, xmlDo
     return curNode;
 }
 
-const char* getValueForKey(const char* pKey)
+static inline const char* getValueForKey(const char* pKey)
 {
     const char* ret = NULL;
     xmlNodePtr rootNode;
@@ -113,7 +113,7 @@ const char* getValueForKey(const char* pKey)
     return ret;
 }
 
-void setValueForKey(const char* pKey, const char* pValue)
+static void setValueForKey(const char* pKey, const char* pValue)
 {
     xmlNodePtr rootNode;
     xmlDocPtr doc;

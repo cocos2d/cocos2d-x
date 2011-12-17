@@ -1,66 +1,76 @@
 
 class CCLayer : public CCNode
-{
-    void KeypadDestroy();
-    void KeypadKeep();
+	{
+	public:
+		CCLayer();	
+		bool init();
+		static CCLayer *node(void);
+		void onEnter();
+		void onExit();
+		void onEnterTransitionDidFinish();
+		bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 
-    void setIsTouchEnabled(bool bValue);
-    bool getIsTouchEnabled();
+		void didAccelerate(CCAcceleration* pAccelerationValue) {}
 
-    void setIsAccelerometerEnabled(bool bValue);
-    bool getIsAccelerometerEnabled();
+		void registerWithTouchDispatcher(void);
 
-    void setIsKeypadEnabled(bool bValue);
-    bool getIsKeypadEnabled();
+		void setIsTouchEnabled(bool bValue);
+		bool getIsTouchEnabled();
 
+		void setIsAccelerometerEnabled(bool bValue);
+		bool getIsAccelerometerEnabled();
+
+		void setIsKeypadEnabled(bool bValue);
+		bool getIsKeypadEnabled();
+		
     void registerScriptTouchHandler(LUA_FUNCTION functionRefID, bool isMultiTouches = false);
     void unregisterScriptTouchHandler();
 
     static CCLayer *node(void);
-};
+	};
 
 class CCLayerColor : public CCLayer
-{
-    void changeWidth(GLfloat w);
-    void changeHeight(GLfloat h);
-    void changeWidthAndHeight(GLfloat w ,GLfloat h);
+	{
+		void changeWidth(GLfloat w);
+		void changeHeight(GLfloat h);
+		void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
-    void setOpacity(GLubyte var);
+		void setOpacity(GLubyte var);
     GLubyte getOpacity(void);
-    void setColor(ccColor3B Value);
-    ccColor3B getColor(void);
-    void setBlendFunc(ccBlendFunc Value);
-    ccBlendFunc getBlendFunc(void);
+		void setColor(ccColor3B Value);
+		ccColor3B getColor(void);
+		void setBlendFunc(ccBlendFunc Value);
+		ccBlendFunc getBlendFunc(void); 
 
     static CCLayerColor * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
     static CCLayerColor * layerWithColor(ccColor4B color);
-};
+	};
 
-class CCLayerGradient : public CCLayerColor
-{
-    void setStartColor(ccColor3B colors);
+	class  CCLayerGradient : public CCLayerColor
+	{
+		void      setStartColor(ccColor3B colors);
     ccColor3B getStartColor();
-    void setEndColor(ccColor3B Value);
-    ccColor3B getEndColor(void);
-    void setStartOpacity(GLubyte Value);
-    GLubyte getStartOpacity(void);
-    void setEndOpacity(GLubyte Value);
-    GLubyte getEndOpacity(void);
-    void setVector(CCPoint Value);
-    CCPoint getVector(void);
-
-    void setIsCompressedInterpolation(bool Value);
-    bool getIsCompressedInterpolation(void);
+		void setEndColor(ccColor3B Value);
+		ccColor3B getEndColor(void);
+		void setStartOpacity(GLubyte Value);
+		GLubyte getStartOpacity(void);
+		void setEndOpacity(GLubyte Value);
+		GLubyte getEndOpacity(void);
+		void setVector(CCPoint Value);
+		CCPoint getVector(void);
+		
+		void setIsCompressedInterpolation(bool Value);
+		bool getIsCompressedInterpolation(void);
 
     static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
     static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CCPoint v);
-};
+	};
 
-class CCLayerMultiplex : public CCLayer
-{
-    void addLayer(CCLayer* layer);
-    void switchTo(unsigned int n);
-    void switchToAndReleaseMe(unsigned int n);
+	class  CCLayerMultiplex : public CCLayer
+	{
+		void addLayer(CCLayer* layer);
+		void switchTo(unsigned int n);
+		void switchToAndReleaseMe(unsigned int n);
 
     static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
-};
+	};

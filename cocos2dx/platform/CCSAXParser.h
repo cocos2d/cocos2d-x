@@ -29,6 +29,7 @@
 
 NS_CC_BEGIN;
 
+
 typedef unsigned char CC_XML_CHAR;
 
 class CC_DLL CCSAXDelegator

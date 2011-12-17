@@ -141,7 +141,7 @@ bool CCScheduler::init(void)
 void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 {
 	ccArrayFree(pElement->timers);
-	pElement->target->selectorProtocolRelease();
+	dynamic_cast<CCObject*>(pElement->target)->release();
 	pElement->target = NULL;
 	HASH_DEL(m_pHashForSelectors, pElement);
 	free(pElement);
@@ -161,7 +161,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 		pElement->target = pTarget;
 		if (pTarget)
 		{
-		    pTarget->selectorProtocolRetain();
+		    dynamic_cast<CCObject*>(pTarget)->retain();
 		}
 		HASH_ADD_INT(m_pHashForSelectors, target, pElement);
 
@@ -304,7 +304,7 @@ void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int
 	// update hash entry for quick access
 	tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
 	pHashElement->target = pTarget;
-	pTarget->selectorProtocolRetain();
+	dynamic_cast<CCObject*>(pTarget)->retain();
 	pHashElement->list = ppList;
 	pHashElement->entry = pListElement;
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
@@ -323,7 +323,7 @@ void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool 
 	// update hash entry for quicker access
 	tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
 	pHashElement->target = pTarget;
-	pTarget->selectorProtocolRetain();
+	dynamic_cast<CCObject*>(pTarget)->retain();
 	pHashElement->list = ppList;
 	pHashElement->entry = pListElement;
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
@@ -374,7 +374,7 @@ void CCScheduler::removeUpdateFromHash(struct _listEntry *entry)
 		free(element->entry);
 
 		// hash entry
-		element->target->selectorProtocolRelease();
+		dynamic_cast<CCObject*>(element->target)->release();
 		HASH_DEL(m_pHashForUpdates, element);
 		free(element);
 	}

@@ -208,7 +208,7 @@ void CCLog(const char * pszFormat, ...)
     printf(buf);
 }
 
-// airplay no MessageBox, use CCLog instead
+// marmalade no MessageBox, use CCLog instead
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
     CCLog("%s: %s", pszTitle, pszMsg);
@@ -217,9 +217,9 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 NS_CC_END;
 #endif
 /****************************************************
- * airplay
+ * marmalade
  ***************************************************/
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 
 #include <s3e.h>
 #include "IwUtil.h"
@@ -241,7 +241,7 @@ void CCLog(const char * pszFormat, ...)
     IwTrace(GAME, (buf));
 }
 
-// airplay no MessageBox, use CCLog instead
+// marmalade no MessageBox, use CCLog instead
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
     CCLog("%s: %s", pszTitle, pszMsg);
@@ -249,7 +249,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 
 NS_CC_END;
 
-#endif // CC_PLATFORM_AIRPLAY
+#endif // CC_PLATFORM_MARMALADE
 
 /****************************************************
  * bada
@@ -289,3 +289,37 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 NS_CC_END;
 
 #endif // CC_PLATFORM_BADA
+
+
+/****************************************************
+ * qnx
+ ***************************************************/
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#include <cstdio>
+#include <cstdarg>
+#include <stdio.h>
+#include <stdarg.h>
+using namespace std;
+
+NS_CC_BEGIN;
+
+void CCLog(const char * pszFormat, ...)
+{
+	char buf[MAX_LEN];
+
+	va_list args;
+	va_start(args, pszFormat);
+	vsprintf(buf, pszFormat, args);
+	va_end(args);
+
+	fprintf(stderr, "cocos2d-x debug info [%s]\n",  buf);
+}
+
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+	CCLog("%s: %s", pszTitle, pszMsg);
+}
+
+NS_CC_END;
+
+#endif // CC_PLATFORM_QNX

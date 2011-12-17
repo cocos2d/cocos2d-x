@@ -54,7 +54,7 @@ bool AppDelegate::initInstance() {
 #endif
 
 #endif  // CC_PLATFORM_WOPHONE
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 		// MaxAksenov said it's NOT a very elegant solution. I agree, haha
 		CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 #endif
@@ -79,6 +79,11 @@ bool AppDelegate::initInstance() {
 
 #endif  // CC_PLATFORM_BADA
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+		CCEGLView * pMainWnd = new CCEGLView();
+		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(480, 320));
+		CCFileUtils::setResourcePath("./app/native/Resource");
+#endif // CC_PLATFORM_QNX
 		bRet = true;
 	} while (0);
 	return bRet;
