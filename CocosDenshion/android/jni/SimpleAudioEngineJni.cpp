@@ -9,7 +9,7 @@ extern "C"
 {
 	static JavaVM *gJavaVM = 0;
 	static jclass classOfCocos2dxActivity = 0;
-	JNIEnv *env = 0;
+	static JNIEnv *env = 0;
 
 	jint JNI_OnLoad(JavaVM *vm, void *reserved)
 	{
@@ -18,34 +18,57 @@ extern "C"
 		return JNI_VERSION_1_4;
 	}
 
+	// get env and cache it
+	static void getJNIEnv(void)
+	{
+		if (! env)
+		{
+			// get jni environment
+			if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
+			{
+				LOGD("Failed to get the environment using GetEnv()");
+			}
+
+			if (gJavaVM->AttachCurrentThread(&env, 0) < 0)
+			{
+				LOGD("Failed to get the environment using AttachCurrentThread()");
+			}
+		}
+	}
+
+	// get class and make it a global reference, release it at endJni().
+	static void getClass(void)
+	{
+		if (! classOfCocos2dxActivity)
+		{
+			getJNIEnv();
+
+			jclass tmpClass = 0;
+			tmpClass = env->FindClass("org/cocos2dx/lib/Cocos2dxActivity");
+			if (! tmpClass)
+			{
+				LOGD("Failed to find class of org/cocos2dx/lib/Cocos2dxActivity");
+			}
+
+			// make it a global reference
+			classOfCocos2dxActivity = (jclass)env->NewGlobalRef(tmpClass);
+			env->DeleteLocalRef(tmpClass);
+			if (! classOfCocos2dxActivity)
+			{
+				LOGD("Failed to new global class of org/cocos2dx/lib/Cocos2dxActivity");
+			}
+		}
+	}
+
 	static jmethodID getMethodID(const char *methodName, const char *paramCode)
 	{
 		jmethodID ret = 0;
 
-		// get jni environment and java class for Cocos2dxActivity
-		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
-		{
-			LOGD("Failed to get the environment using GetEnv()");
-			return 0;
-		}
-
-		if (gJavaVM->AttachCurrentThread(&env, 0) < 0)
-		{
-			LOGD("Failed to get the environment using AttachCurrentThread()");
-			return 0;
-		}
-
-		classOfCocos2dxActivity = env->FindClass("org/cocos2dx/lib/Cocos2dxActivity");
-		if (! classOfCocos2dxActivity)
-		{
-			LOGD("Failed to find class of org/cocos2dx/lib/Cocos2dxActivity");
-			return 0;
-		}
+		getClass();
 
 		if (env != 0 && classOfCocos2dxActivity != 0)
 		{
 			ret = env->GetStaticMethodID(classOfCocos2dxActivity, methodName, paramCode);
-			env->DeleteLocalRef(classOfCocos2dxActivity);
 		}
 
 		if (! ret)
@@ -202,6 +225,10 @@ extern "C"
 		{
 			env->CallStaticVoidMethod(classOfCocos2dxActivity, endMethodID);
 		}
+
+		// release classOfCocos2dxActivity
+		env->DeleteGlobalRef(classOfCocos2dxActivity);
+		classOfCocos2dxActivity = 0;
 	}
 
 	float getEffectsVolumeJNI()
