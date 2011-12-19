@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2011      cocos2d-x.org   http://cocos2d-x.org
  Copyright (c) 2011      Максим Аксенов
- 
+ Copyright (c) 2011      Giovanni Zito, Francis Styck
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -81,7 +82,8 @@ int CCApplication::Run()
 			
 			ccAccelerationUpdate();
 
-			if( (quitRequested = s3eDeviceCheckQuitRequest()) ) {
+			quitRequested = s3eDeviceCheckQuitRequest() ;
+			if( quitRequested && CCDirector::sharedDirector()->getOpenGLView() != NULL ) {
 				CCDirector::sharedDirector()->end() ;
 				// end status will be processed in CCDirector::sharedDirector()->mainLoop();
 			}
