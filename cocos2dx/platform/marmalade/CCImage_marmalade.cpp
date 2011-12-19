@@ -34,8 +34,8 @@
 #include "png.h"
 #include "ft2build.h"
 #include FT_FREETYPE_H 
-#define szFont_kenning 2
-#define SHIFT6(num) ((num)>>6)
+#define FONT_KERNING 2
+#define RSHIFT6(num) ((num)>>6)
 
 #include <strings.h>
 
@@ -171,7 +171,7 @@ BitmapDC::BitmapDC() :
 	m_face(NULL)
 	,m_fontName()
 	,m_fontSize(0)
-	,m_iInterval(szFont_kenning)
+	,m_iInterval(FONT_KERNING)
 	,m_pData(NULL)
 {
 	m_libError = FT_Init_FreeType( &m_library );
@@ -210,7 +210,7 @@ void BitmapDC::buildLine( stringstream& ss, FT_Face face, int iCurXCursor, char 
 
 	oTempLine.iLineWidth =
 		iCurXCursor - 
-		SHIFT6( face->glyph->metrics.horiAdvance +
+		RSHIFT6( face->glyph->metrics.horiAdvance +
 		face->glyph->metrics.horiBearingX
 		- face->glyph->metrics.width)/*-iInterval*/;	//TODO interval
 
@@ -229,7 +229,7 @@ bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int
 	if (iError) {
 		return false;
 	}
-	iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
+	iCurXCursor = -RSHIFT6(face->glyph->metrics.horiBearingX);
 	//init stringstream
 	stringstream ss;
 
@@ -244,7 +244,7 @@ bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int
 			if (iError) {
 				return false;
 			}
-			iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
+			iCurXCursor = -RSHIFT6(face->glyph->metrics.horiBearingX);
 			continue;
 		}
 
@@ -256,16 +256,16 @@ bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int
 		}
 		//check its width
 		//divide it when exceeding
-		if ((iMaxWidth > 0 && iCurXCursor + SHIFT6(face->glyph->metrics.width) > iMaxWidth)) {
+		if ((iMaxWidth > 0 && iCurXCursor + RSHIFT6(face->glyph->metrics.width) > iMaxWidth)) {
 			buildLine(ss, face , iCurXCursor, cLastCh);
 
-			iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
+			iCurXCursor = -RSHIFT6(face->glyph->metrics.horiBearingX);
 
 		}
 
 		cLastCh = *pText;
 		ss << *pText;
-		iCurXCursor += SHIFT6(face->glyph->metrics.horiAdvance) + m_iInterval;
+		iCurXCursor += RSHIFT6(face->glyph->metrics.horiAdvance) + m_iInterval;
 		pText++;
 
 /*
@@ -312,13 +312,13 @@ int BitmapDC::computeLineStart( FT_Face face, CCImage::ETextAlign eAlignMask, ch
 	}
 
 	if (eAlignMask == CCImage::kAlignCenter) {
-		iRet = (m_iMaxLineWidth - m_vLines[iLineIndex].iLineWidth) / 2 - SHIFT6(face->glyph->metrics.horiBearingX );
+		iRet = (m_iMaxLineWidth - m_vLines[iLineIndex].iLineWidth) / 2 - RSHIFT6(face->glyph->metrics.horiBearingX );
 
 	} else if (eAlignMask == CCImage::kAlignRight) {
-		iRet = (m_iMaxLineWidth - m_vLines[iLineIndex].iLineWidth) - SHIFT6(face->glyph->metrics.horiBearingX );
+		iRet = (m_iMaxLineWidth - m_vLines[iLineIndex].iLineWidth) - RSHIFT6(face->glyph->metrics.horiBearingX );
 	} else {
 		// left or other situation
-		iRet = -SHIFT6(face->glyph->metrics.horiBearingX );
+		iRet = -RSHIFT6(face->glyph->metrics.horiBearingX );
 	}
 	return iRet;
 }
@@ -402,8 +402,8 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 		//compute the final line width
 		m_iMaxLineWidth = MAX(m_iMaxLineWidth, nWidth);
 
-		FT_Pos ascenderPixels = SHIFT6(m_face->size->metrics.ascender) ;
-		FT_Pos descenderPixels = SHIFT6(m_face->size->metrics.descender) ;
+		FT_Pos ascenderPixels = RSHIFT6(m_face->size->metrics.ascender) ;
+		FT_Pos descenderPixels = RSHIFT6(m_face->size->metrics.descender) ;
 
 		m_iMaxLineHeight = ascenderPixels - descenderPixels;
 		m_iMaxLineHeight *= m_vLines.size();
@@ -434,9 +434,9 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 				//  and get the bitmap
 				FT_Bitmap & bitmap = m_face->glyph->bitmap;
 
-				FT_Pos horiBearingYPixels = SHIFT6(m_face->glyph->metrics.horiBearingY) ;
-				FT_Pos horiBearingXPixels = SHIFT6(m_face->glyph->metrics.horiBearingX) ;
-				FT_Pos horiAdvancePixels = SHIFT6(m_face->glyph->metrics.horiAdvance) ;
+				FT_Pos horiBearingYPixels = RSHIFT6(m_face->glyph->metrics.horiBearingY) ;
+				FT_Pos horiBearingXPixels = RSHIFT6(m_face->glyph->metrics.horiBearingX) ;
+				FT_Pos horiAdvancePixels = RSHIFT6(m_face->glyph->metrics.horiAdvance) ;
 
 				for (int i = 0; i < bitmap.rows; ++i) {
 
