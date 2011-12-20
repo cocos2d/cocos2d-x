@@ -44,7 +44,10 @@ Developers:
         authors of lua binding
 
     Max Aksenov
-        author and maintainer of Marmalade(Airplay) port
+        author and maintainer of Airplay port
+    Giovanni Zito
+    Francis Styck
+        maintainers of Marmalade port
 
     Carlos Sessa
 	implement the accelerometer module onto Android
