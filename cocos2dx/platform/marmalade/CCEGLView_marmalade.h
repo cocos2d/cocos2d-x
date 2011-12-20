@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2011      cocos2d-x.org   http://cocos2d-x.org
  Copyright (c) 2011      Максим Аксенов
- 
+ Copyright (c) 2011      Giovanni Zito, Francis Styck
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -26,8 +27,8 @@
 
 #include "CCGeometry.h"
 #include "s3eKeyboard.h"
+#include "s3ePointer.h"
 #include "IwUtil.h"
-#include "IwUtilInitTerm.h"
 
 NS_CC_BEGIN;
 class CCSet;
@@ -42,29 +43,29 @@ public:
     CCEGLView();
     virtual ~CCEGLView();
 
-    CCSize  getSize();
-    bool    isOpenGLReady();
+    CCSize	getSize();
+    bool	isOpenGLReady();
 	/**
 	 * the width and height is the real size of phone
 	 */
-    void    setFrameWidthAndHeight(int width, int height);
+    void	setFrameWidthAndHeight(int width, int height);
 	/**
 	 * create a drawing rect, 
 	 * the width and heiht is the resource size match best
 	 */
-	void    create(int width, int height);
+	void	create(int width, int height);
     EGLTouchDelegate* getDelegate(void);
     
     // keep compatible
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
-    void    swapBuffers();
-    bool    canSetContentScaleFactor();
-    void    setContentScaleFactor(float contentScaleFactor);
-	void    setViewPortInPoints(float x, float y, float w, float h);
-    void    setScissorInPoints(float x, float y, float w, float h);
-	CCRect  getViewPort();
-	float   getScreenScaleFactor();
+    void	release();
+    void	setTouchDelegate(EGLTouchDelegate * pDelegate);
+    void	swapBuffers();
+    bool	canSetContentScaleFactor();
+    void	setContentScaleFactor(float contentScaleFactor);
+	void	setViewPortInPoints(float x, float y, float w, float h);
+    void	setScissorInPoints(float x, float y, float w, float h);
+	CCRect	getViewPort();
+	float	getScreenScaleFactor();
 
 	// static function
 	/**
@@ -74,36 +75,57 @@ public:
 
 private:
 
-	CCSize m_sSizeInPixel;
-	CCSize m_sSizeInPoint;
-	CCRect m_rcViewPort;
-	bool   m_bNotHVGA;
+	CCSize				m_sSizeInPixel;
+	CCSize				m_sSizeInPoint;
+	CCRect				m_rcViewPort;
+	bool				m_bNotHVGA;
 	
-	EGLTouchDelegate *m_pDelegate;
-	float  m_fScreenScaleFactor;
+	EGLTouchDelegate*	m_pDelegate;
+	float				m_fScreenScaleFactor;
 	
 	bool				m_bAccelState;
 	bool				m_bCaptured;
 	s3eKey				m_Key;
     CCSet *             m_pSet;
     CCTouch *           m_pTouch;
+    
+    bool				m_isMultiTouch;
 	
 	static CCEGLView*	m_pInstance ;
 	
-	void setTouch(void* systemData);
-	void setMotionTouch(void* systemData);
-	void setKeyTouch(void* systemData);
+	void	setTouch(void* systemData);
+	void	setMotionTouch(void* systemData);
+    void	setMultiTouch(void* systemData);
+	void	setMultiMotionTouch(void* systemData);
+	void	setKeyTouch(void* systemData);
+    
+    CCTouch* findTouch(int id);
+    CCTouch* touchSet[S3E_POINTER_TOUCH_MAX];
 
 	static int32 TouchEventHandler(void* systemData, void* userData)
 	{
 		((CCEGLView*)userData)->setTouch(systemData);
 		return 0;
 	}
+
 	static int32 MotionEventHandler(void* systemData, void* userData)
 	{
 		((CCEGLView*)userData)->setMotionTouch(systemData);
 		return 0;
 	}
+	
+    static int32 MultiTouchEventHandler(void* systemData, void* userData)
+	{
+		((CCEGLView*)userData)->setMultiTouch(systemData);
+		return 0;
+	}
+	
+    static int32 MultiMotionEventHandler(void* systemData, void* userData)
+	{
+		((CCEGLView*)userData)->setMultiMotionTouch(systemData);
+		return 0;
+	}
+
 	static int32 KeyEventHandler(void* systemData, void* userData)
 	{
 		((CCEGLView*)userData)->setKeyTouch(systemData);
