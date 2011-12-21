@@ -39,19 +39,22 @@ public:
     CCPoint locationInView(int nViewId) {CC_UNUSED_PARAM(nViewId); return m_point; }
     CCPoint previousLocationInView(int nViewId) {CC_UNUSED_PARAM(nViewId); return m_prevPoint; }
     int view() { return m_nViewId; }
+    int id(){ return m_iID; }
 
-    void SetTouchInfo(int nViewId, float x, float y)
+    void SetTouchInfo(int nViewId, float x, float y, int iID=0)
     {
         m_nViewId   = nViewId;
         m_prevPoint = m_point;
         m_point.x   = x;
         m_point.y   = y;
+        m_iID       = iID;
     }
 
 private:
     int     m_nViewId;
     CCPoint m_point;
     CCPoint	m_prevPoint;
+    int     m_iID;
 };
 
 class CCEvent : public CCObject
