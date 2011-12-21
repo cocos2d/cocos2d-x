@@ -41,7 +41,7 @@ public:
     int view() { return m_nViewId; }
     int id(){ return m_iID; }
 
-    void SetTouchInfo(int nViewId, float x, float y, int iID)
+    void SetTouchInfo(int nViewId, float x, float y, int iID=0)
     {
         m_nViewId   = nViewId;
         m_prevPoint = m_point;
