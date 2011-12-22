@@ -68,6 +68,22 @@ static sem_t s_sem;
 static std::queue<AsyncStruct*>		*s_pAsyncStructQueue;
 static std::queue<ImageInfo*>		*s_pImageQueue;
 
+static CCImage::EImageFormat computeImageFormatType(string& filename)
+{
+	CCImage::EImageFormat ret = CCImage::kFmtUnKnown;
+
+	if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
+	{
+		ret = CCImage::kFmtJpg;
+	}
+	else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
+	{
+		ret = CCImage::kFmtPng;
+	}
+
+	return ret;
+}
+
 static void* loadImage(void* data)
 {
 	// create autorelease pool for iOS
@@ -98,38 +114,22 @@ static void* loadImage(void* data)
 
 		const char *filename = pAsyncStruct->filename.c_str();
 
-		CCLOG("thread 0x%x is loading image %s", pthread_self(), filename);
-
-		// generate image
-		CCImage *pImage = NULL;
-		CCImage::EImageFormat imageType;
-		if (std::string::npos != pAsyncStruct->filename.find(".jpg") || std::string::npos != pAsyncStruct->filename.find(".jpeg"))
-		{
-			pImage = new CCImage();
-			if (!pImage->initWithImageFileThreadSafe(filename, cocos2d::CCImage::kFmtJpg))
-			{
-				delete pImage;
-				CCLOG("can not load %s", filename);
-				imageType = CCImage::kFmtJpg;
-				continue;
-			}
-		}
-		else if (std::string::npos != pAsyncStruct->filename.find(".png"))
-		{
-			pImage = new CCImage();
-			if (! pImage->initWithImageFileThreadSafe(filename, cocos2d::CCImage::kFmtPng))
-			{
-				delete pImage;
-				CCLOG("can not load %s", filename);
-				imageType = CCImage::kFmtPng;
-				continue;
-			}
-		}
-		else
+		// compute image type
+		CCImage::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
+		if (imageType == CCImage::kFmtUnKnown)
 		{
 			CCLOG("unsupportted format %s",filename);
 			delete pAsyncStruct;
 			
+			continue;
+		}
+		
+        // generate image			
+		CCImage *pImage = new CCImage();
+		if (! pImage->initWithImageFileThreadSafe(filename, imageType))
+		{
+			delete pImage;
+			CCLOG("can not load %s", filename);
 			continue;
 		}
 
