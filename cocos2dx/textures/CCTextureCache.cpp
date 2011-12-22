@@ -472,18 +472,20 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 
 CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 {
-	CCAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
+	CCAssert(image != NULL, "TextureCache: image MUST not be nill");
 
 	CCTexture2D * texture = NULL;
 	// textureForKey() use full path,so the key should be full path
-	std::string forKey = CCFileUtils::fullPathFromRelativePath(key);
-
-	//m_pDictLock->lock();
+	std::string forKey;
+	if (key)
+	{
+		forKey = CCFileUtils::fullPathFromRelativePath(key);
+	}
 
 	do 
 	{
 		// If key is nil, then create a new texture each time
-		if((texture = m_pTextures->objectForKey(forKey)))
+		if(key && (texture = m_pTextures->objectForKey(forKey)))
 		{
 			break;
 		}
@@ -492,7 +494,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 		texture = new CCTexture2D();
 		texture->initWithImage(image);
 
-		if(texture)
+		if(key && texture)
 		{
 			m_pTextures->setObject(texture, forKey);
 			texture->autorelease();
@@ -503,8 +505,6 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 		}
 
 	} while (0);
-	
-	//m_pDictLock->unlock();
 
 	return texture;
 }
