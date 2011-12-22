@@ -137,6 +137,7 @@ static void* loadImage(void* data)
 		ImageInfo *pImageInfo = new ImageInfo();
 		pImageInfo->asyncStruct = pAsyncStruct;
 		pImageInfo->image = pImage;
+		pImageInfo->imageType = imageType;
 
 		// put the image info into the queue
 		pthread_mutex_lock(&s_ImageInfoMutex);
