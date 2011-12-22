@@ -116,7 +116,7 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 			if (pTouch)
 			{
 				pTouch->SetTouchInfo(0, (x[i] - rcRect.origin.x) / fScreenScaleFactor , 
-			                        (y[i] - rcRect.origin.y) / fScreenScaleFactor), id[i]);
+			                        (y[i] - rcRect.origin.y) / fScreenScaleFactor, id[i]);
 				set.addObject(pTouch);
 			}
 			else
