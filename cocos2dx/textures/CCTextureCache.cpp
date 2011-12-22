@@ -469,7 +469,6 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 	return tex;
 }
 
-
 CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 {
 	CCAssert(image != NULL, "TextureCache: image MUST not be nill");
@@ -481,6 +480,9 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 	{
 		forKey = CCFileUtils::fullPathFromRelativePath(key);
 	}
+
+	// Don't have to lock here, because addImageAsync() will not 
+	// invoke opengl function in loading thread.
 
 	do 
 	{
