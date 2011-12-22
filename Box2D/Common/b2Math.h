@@ -30,6 +30,9 @@
 #include <cstddef>
 #include <limits>
 
+using namespace std;
+
+
 /// This function is used to ensure that a floating point number is
 /// not a NaN or infinity.
 inline bool b2IsValid(float32 x)

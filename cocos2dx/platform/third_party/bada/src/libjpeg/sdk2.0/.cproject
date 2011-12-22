@@ -8,7 +8,6 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/libjpeg"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/libjpeg/.Target-Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/libjpeg"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="jpeg"/>
 					</externalSetting>
@@ -28,23 +27,37 @@
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.lib.debug.1963573653." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.lib.debug.424108108" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.lib.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.lib.debug.530287103" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.lib.debug"/>
-							<builder buildPath="${workspace_loc:/libjpeg/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug.1113371971" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug"/>
+							<builder buildPath="${workspace_loc:/libjpeg/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug.1113371971" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+								</outputEntries>
+							</builder>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.lib.debug.480495029" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.lib.debug"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug.1383778979" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug">
+								<option id="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths.960055473" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1094647355" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.debug.494983528" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.debug">
+								<option id="osp.gnu.target.c.compiler.debug.lib.option.include.paths.1857006633" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.debug.lib.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.867319883" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.c.linker.base.91819967" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.arm.c.linker.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.cpp.linker.base.609563850" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.arm.cpp.linker.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.assembler.lib.debug.837980931" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.lib.debug">
+								<option id="osp.gnu.both.asm.option.include.paths.1266555631" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.assembler.input.527987996" superClass="cdt.managedbuild.tool.osp.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -341,7 +354,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

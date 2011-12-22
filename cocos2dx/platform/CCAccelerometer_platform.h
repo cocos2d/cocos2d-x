@@ -34,12 +34,14 @@ THE SOFTWARE.
     #include "android/CCAccelerometer_android.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "ios/CCAccelerometer_ios.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-	#include "airplay/CCAccelerometer_airplay.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	#include "marmalade/CCAccelerometer_marmalade.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 	#include "Linux/CCAccelerometer_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCAccelerometer_bada.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+    #include "qnx/CCAccelerometer_qnx.h"
 #else
     #error
 #endif

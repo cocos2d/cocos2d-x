@@ -1503,6 +1503,7 @@
 				GCC_PREFIX_HEADER = HelloWorld_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_OS_IPHONE;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
@@ -1527,6 +1528,7 @@
 				GCC_PREFIX_HEADER = HelloWorld_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_OS_IPHONE;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
@@ -1555,7 +1557,7 @@
 					GL_GLEXT_PROTOTYPES,
 					TARGET_OS_IPHONE,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 					"\"$(SRCROOT)/../../cocos2dx/\"",
@@ -1583,6 +1585,7 @@
 					GL_GLEXT_PROTOTYPES,
 					TARGET_OS_IPHONE,
 				);
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 					"\"$(SRCROOT)/../../cocos2dx/\"",

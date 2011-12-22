@@ -602,7 +602,7 @@ namespace cocos2d{
                 CCNode* pNode = (CCNode*) child;
                 if (pNode)
                 {
-                    CCRGBAProtocol *pRGBAProtocol = pNode->convertToRGBAProtocol();
+                    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pNode);
                     if (pRGBAProtocol)
                     {
                         pRGBAProtocol->setOpacity(m_cOpacity);
@@ -626,7 +626,7 @@ namespace cocos2d{
                 CCNode* pNode = (CCNode*) child;
                 if (pNode)
                 {
-                    CCRGBAProtocol *pRGBAProtocol = pNode->convertToRGBAProtocol();
+                    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pNode);
                     if (pRGBAProtocol)
                     {
                         pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);

@@ -34,12 +34,21 @@ THE SOFTWARE.
 #define CC_GLVIEW                   cocos2d::CCEGLView
 #define ccglOrtho					glOrthof
 #define	ccglClearDepth				glClearDepthf
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#define ccglGenerateMipmap			CCEGLView::glGenerateMipmapOES
+#define ccglGenFramebuffers			CCEGLView::glGenFramebuffersOES
+#define ccglBindFramebuffer			CCEGLView::glBindFramebufferOES
+#define ccglFramebufferTexture2D	CCEGLView::glFramebufferTexture2DOES
+#define ccglDeleteFramebuffers		CCEGLView::glDeleteFramebuffersOES
+#define ccglCheckFramebufferStatus	CCEGLView::glCheckFramebufferStatusOES
+#else
 #define ccglGenerateMipmap			glGenerateMipmapOES
 #define ccglGenFramebuffers			glGenFramebuffersOES
 #define ccglBindFramebuffer			glBindFramebufferOES
 #define ccglFramebufferTexture2D	glFramebufferTexture2DOES
 #define ccglDeleteFramebuffers		glDeleteFramebuffersOES
 #define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
+#endif
 #define ccglTranslate				glTranslatef
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
@@ -55,6 +64,13 @@ THE SOFTWARE.
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+// GL_GLEXT_PROTOTYPES isn't defined in glplatform.h on android ndk r7 
+// we manually define it here
+#include <GLES/glplatform.h>
+#ifndef GL_GLEXT_PROTOTYPES
+#define GL_GLEXT_PROTOTYPES 1
+#endif
+// normal process
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #endif
@@ -134,14 +150,18 @@ extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
 #define GL_POINT_SIZE_ARRAY_OES     GL_POINT_SIZE
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 #include <IwGL.h>
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 #include "GLES/gl.h"
 #include "GLES/glext.h"
+#endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#include <GLES/gl.h>
+#include <GLES/glext.h>
 #endif
 
 NS_CC_BEGIN;

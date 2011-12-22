@@ -27,12 +27,12 @@ set /P _PACKAGEPATH=Please enter your package path:
 set /P _PROJECTNAME=Please enter your project name:
 echo "Now cocos2d-x suppurts Android 2.1-update1, 2.2, 2.3 & 3.0"
 echo "Other versions have not tested."
-call %_ANDROIDTOOLS%\android.bat list targets
+call "%_ANDROIDTOOLS%\android.bat" list targets
 set /P _TARGETID=Please input target id:
 set _PROJECTDIR=%CD%\%_PROJECTNAME%
 
 echo Create android project
-call %_ANDROIDTOOLS%\android.bat create project -n %_PROJECTNAME% -t %_TARGETID% -k %_PACKAGEPATH% -a %_PROJECTNAME% -p %_PROJECTDIR%
+call "%_ANDROIDTOOLS%\android.bat" create project -n %_PROJECTNAME% -t %_TARGETID% -k %_PACKAGEPATH% -a %_PROJECTNAME% -p %_PROJECTDIR%
 	 
 :: Resolve ___.sh to /cygdrive based *nix path and store in %_CYGSCRIPT%
 for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%~dpn0.sh"') do set _CYGSCRIPT=%%A

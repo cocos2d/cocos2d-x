@@ -1,11 +1,5 @@
 namespace   cocos2d {
 
-typedef enum
-{
-	ccNormalScene     = 1 << 0,
-	ccTransitionScene = 1 << 1,
-} ccSceneFlag;
-
 
 class CCScene : public CCNode
 {
@@ -14,7 +8,6 @@ class CCScene : public CCNode
 	virtual ~CCScene();
 	bool init();
 	static CCScene *node(void);
-	ccSceneFlag getSceneType(void);
 
 
 };

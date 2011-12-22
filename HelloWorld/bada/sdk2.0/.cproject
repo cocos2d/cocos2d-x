@@ -8,7 +8,6 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/HelloWorld"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/HelloWorld/.Target-Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/HelloWorld"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="HelloWorld"/>
 					</externalSetting>
@@ -28,7 +27,12 @@
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug.2127488964" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug.1117105675" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug"/>
-							<builder buildPath="${workspace_loc:/HelloWorld/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug.104820112" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug"/>
+							<builder buildPath="${workspace_loc:/HelloWorld/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug.104820112" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+								</outputEntries>
+							</builder>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.base.1421650513" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug.1042444633" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug">
 								<option id="osp.gnu.target.cpp.compiler.debug.exe.option.include.paths.1118027441" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.exe.option.include.paths" valueType="includePath">
@@ -49,6 +53,15 @@
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1707579424" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug.194057110" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug">
+								<option id="osp.gnu.target.c.compiler.debug.exe.option.include.paths.2145359838" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.debug.exe.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
+								</option>
+								<option id="osp.gnu.target.c.compiler.debug.exe.option.preprocessor.def.439981867" name="Defined symbols (-D)" superClass="osp.gnu.target.c.compiler.debug.exe.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="_DEBUG"/>
+									<listOptionValue builtIn="false" value="SHP"/>
+									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.870115635" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.debug.1406585521" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.debug"/>
@@ -79,13 +92,14 @@
 								</inputType>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.assembler.exe.debug.1283864175" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.exe.debug">
+								<option id="osp.gnu.both.asm.option.include.paths.852182002" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.assembler.input.1894266994" superClass="cdt.managedbuild.tool.osp.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Classes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -753,7 +767,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
