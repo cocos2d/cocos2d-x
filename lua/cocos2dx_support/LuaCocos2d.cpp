@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 12/07/11 15:22:40.
+** Generated automatically by tolua++-1.0.92 on 12/23/11 11:08:51.
 */
 
 #include "LuaCocos2d.h"
@@ -33844,68 +33844,6 @@ static int tolua_Cocos2d_cocos2d_SelectorProtocol_eventHandler00(lua_State* tolu
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: selectorProtocolRetain of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_selectorProtocolRetain00
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_selectorProtocolRetain00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'selectorProtocolRetain'", NULL);
-#endif
-  {
-   self->selectorProtocolRetain();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'selectorProtocolRetain'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: selectorProtocolRelease of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_selectorProtocolRelease00
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_selectorProtocolRelease00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'selectorProtocolRelease'", NULL);
-#endif
-  {
-   self->selectorProtocolRelease();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'selectorProtocolRelease'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: new of class  cocos2d::CCMutableArray<CCObject*> */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMutableArray_CCObject___new00
 static int tolua_Cocos2d_cocos2d_CCMutableArray_CCObject___new00(lua_State* tolua_S)
@@ -52400,68 +52338,6 @@ static int tolua_Cocos2d_cocos2d_CCActionManager_purgeSharedManager00(lua_State*
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'purgeSharedManager'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: selectorProtocolRetain of class  cocos2d::CCActionManager */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCActionManager_selectorProtocolRetain00
-static int tolua_Cocos2d_cocos2d_CCActionManager_selectorProtocolRetain00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::CCActionManager",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::CCActionManager* self = (cocos2d::CCActionManager*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'selectorProtocolRetain'", NULL);
-#endif
-  {
-   self->selectorProtocolRetain();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'selectorProtocolRetain'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: selectorProtocolRelease of class  cocos2d::CCActionManager */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCActionManager_selectorProtocolRelease00
-static int tolua_Cocos2d_cocos2d_CCActionManager_selectorProtocolRelease00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::CCActionManager",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::CCActionManager* self = (cocos2d::CCActionManager*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'selectorProtocolRelease'", NULL);
-#endif
-  {
-   self->selectorProtocolRelease();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'selectorProtocolRelease'.",&tolua_err);
  return 0;
 #endif
 }
@@ -73992,8 +73868,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"callfunc",tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc02);
     tolua_function(tolua_S,"menuHandler",tolua_Cocos2d_cocos2d_SelectorProtocol_menuHandler00);
     tolua_function(tolua_S,"eventHandler",tolua_Cocos2d_cocos2d_SelectorProtocol_eventHandler00);
-    tolua_function(tolua_S,"selectorProtocolRetain",tolua_Cocos2d_cocos2d_SelectorProtocol_selectorProtocolRetain00);
-    tolua_function(tolua_S,"selectorProtocolRelease",tolua_Cocos2d_cocos2d_SelectorProtocol_selectorProtocolRelease00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"cocos2d",0);
@@ -74973,8 +74847,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"pauseTarget",tolua_Cocos2d_cocos2d_CCActionManager_pauseTarget00);
     tolua_function(tolua_S,"resumeTarget",tolua_Cocos2d_cocos2d_CCActionManager_resumeTarget00);
     tolua_function(tolua_S,"purgeSharedManager",tolua_Cocos2d_cocos2d_CCActionManager_purgeSharedManager00);
-    tolua_function(tolua_S,"selectorProtocolRetain",tolua_Cocos2d_cocos2d_CCActionManager_selectorProtocolRetain00);
-    tolua_function(tolua_S,"selectorProtocolRelease",tolua_Cocos2d_cocos2d_CCActionManager_selectorProtocolRelease00);
     tolua_function(tolua_S,"sharedManager",tolua_Cocos2d_cocos2d_CCActionManager_sharedManager00);
     tolua_variable(tolua_S,"__SelectorProtocol__",tolua_get_cocos2d__CCActionManager___SelectorProtocol__,NULL);
    tolua_endmodule(tolua_S);
