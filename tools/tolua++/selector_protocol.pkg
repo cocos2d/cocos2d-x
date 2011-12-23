@@ -14,10 +14,6 @@ public:
 	void callfunc(CCNode* pSender, void* pData);
 	void menuHandler(CCObject* pSender);
         void eventHandler(CCEvent* pEvent);
-
-	// the child call responding retain/release function
-	void selectorProtocolRetain(void);
-	void selectorProtocolRelease(void);
 };
 /*
 class CCNode;
