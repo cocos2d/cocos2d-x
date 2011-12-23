@@ -23,8 +23,6 @@ public:
 	void pauseTarget(CCObject *pTarget);
 	void resumeTarget(CCObject *pTarget);
 	void purgeSharedManager(void);
-	void selectorProtocolRetain(void);
-	void selectorProtocolRelease(void);
 	static CCActionManager* sharedManager(void);
 
 };
