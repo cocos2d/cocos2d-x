@@ -66,5 +66,11 @@ create_android_project(){
 check_path
 create_android_project
 
-# invoke template/android/copy_files.sh
-sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH
+if [ $# -eq 1 ]; then
+    # invoked by create-linux-android-project.sh
+    sh `pwd`/template/linux/mycopy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH 
+else
+    # invoke template/android/copy_files.sh
+    sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH
+fi
+
