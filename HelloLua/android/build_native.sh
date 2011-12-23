@@ -37,7 +37,7 @@ do
 done
 
 # build
-pushd $ANDROID_NDK_ROOT_LOCAL
+pushd $NDK_ROOT_LOCAL
 ./ndk-build -C $GAME_ANDROID_ROOT $*
 popd
 
