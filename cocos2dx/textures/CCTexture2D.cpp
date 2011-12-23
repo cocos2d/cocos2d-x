@@ -59,6 +59,9 @@ namespace   cocos2d {
 // Default is: RGBA8888 (32-bit textures)
 static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelFormat_Default;
 
+// By default PVR images are treated as if they don't have the alpha channel premultiplied
+static bool PVRHaveAlphaPremultiplied_ = false;
+
 CCTexture2D::CCTexture2D()
 : m_uPixelsWide(0)
 , m_uPixelsHigh(0)
@@ -538,7 +541,7 @@ bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool h
 	m_uPixelsHigh = length;
 	m_fMaxS = 1.0f;
 	m_fMaxT = 1.0f;
-    m_bHasPremultipliedAlpha = m_bPVRHaveAlphaPremultiplied;
+    m_bHasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
     m_ePixelFormat = pixelFormat;
 
 	return true;
@@ -562,8 +565,8 @@ bool CCTexture2D::initWithPVRFile(const char* file)
         m_fMaxT = 1.0f;
         m_uPixelsWide = pvr->getWidth();
         m_uPixelsHigh = pvr->getHeight();
-        m_tContentSize = CCSizeMake(m_uPixelsWide, m_uPixelsHigh);
-        m_bHasPremultipliedAlpha = m_bPVRHaveAlphaPremultiplied;
+        m_tContentSize = CCSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
+        m_bHasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
         m_ePixelFormat = pvr->getFormat();
                 
         this->setAntiAliasTexParameters();
@@ -577,9 +580,9 @@ bool CCTexture2D::initWithPVRFile(const char* file)
     return bRet;
 }
 
-void CCTexture2D::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
+void CCTexture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
-    m_bPVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
+    PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
 }
 
     

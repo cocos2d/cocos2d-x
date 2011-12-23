@@ -20,7 +20,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../cocos2dx \
                     $(LOCAL_PATH)/../../lua/cocos2dx_support \
                     $(LOCAL_PATH)/../../lua/CocosDenshion_support
  
-LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../Android/libs/$(TARGET_ARCH_ABI)) \
+LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../android/libs/$(TARGET_ARCH_ABI)) \
 		-L$(call host-path, $(LOCAL_PATH)/../../cocos2dx/platform/third_party/android/libraries/$(TARGET_ARCH_ABI)) -lcurl \
 		-lcocos2d \
 		-lcocosdenshion \
