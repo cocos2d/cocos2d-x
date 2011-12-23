@@ -9,9 +9,9 @@ NDK_ROOT_LOCAL="/home/laschweinski/android/android-ndk-r5"
 ANDROID_SDK_ROOT_LOCAL="/home/laschweinski/android/android-sdk-linux_86"
 
 # try to get global variable
-if [ $ANDROID_NDK_ROOT"aaa" != "aaa" ]; then
-    echo "use global definition of NDK_ROOT: $ANDROID_NDK_ROOT"
-    NDK_ROOT_LOCAL=$ANDROID_NDK_ROOT
+if [ $NDK_ROOT"aaa" != "aaa" ]; then
+    echo "use global definition of NDK_ROOT: $NDK_ROOT"
+    NDK_ROOT_LOCAL=$NDK_ROOT
 fi
 
 if [ $ANDROID_SDK_ROOT"aaa" != "aaa" ]; then
