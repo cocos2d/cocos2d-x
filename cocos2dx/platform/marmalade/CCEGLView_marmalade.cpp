@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2011      cocos2d-x.org   http://cocos2d-x.org
  Copyright (c) 2011      Максим Аксенов
- 
+ Copyright (c) 2011      Giovanni Zito, Francis Styck
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -44,7 +45,6 @@ CCEGLView::CCEGLView()
 : m_pDelegate(NULL)
 , m_fScreenScaleFactor(1.0)
 , m_bNotHVGA(false)
-	
 , m_bCaptured(false)
 , m_bAccelState(false)
 , m_Key(s3eKeyFirst)
@@ -60,12 +60,28 @@ CCEGLView::CCEGLView()
     m_pSet      = new CCSet;
 	m_pTouch    = new CCTouch;
 
-	// Register pointer touch button event handler
-	s3ePointerRegister(S3E_POINTER_BUTTON_EVENT, &TouchEventHandler, this);
-
-	// Register pointer motion button event handler
-	s3ePointerRegister(S3E_POINTER_MOTION_EVENT, &MotionEventHandler, this);
-
+    // Determine if the device supports multi-touch
+    m_isMultiTouch = s3ePointerGetInt(S3E_POINTER_MULTI_TOUCH_AVAILABLE) ? true : false;
+    
+	// For multi-touch devices we handle touch and motion events using different callbacks
+    if (m_isMultiTouch)
+    {
+        s3ePointerRegister(S3E_POINTER_TOUCH_EVENT, &MultiTouchEventHandler, this);
+        s3ePointerRegister(S3E_POINTER_TOUCH_MOTION_EVENT, &MultiMotionEventHandler, this);
+        
+        for (int i = 0; i < S3E_POINTER_TOUCH_MAX; i++) {
+            touchSet[i] = NULL;
+        }
+    }
+    else
+    {        
+        // Register pointer touch button event handler
+        s3ePointerRegister(S3E_POINTER_BUTTON_EVENT, &TouchEventHandler, this);
+        
+        // Register pointer motion button event handler
+        s3ePointerRegister(S3E_POINTER_MOTION_EVENT, &MotionEventHandler, this);
+    }
+    
     // Register keyboard event handler
 	s3eKeyboardRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler, this);
 }
@@ -122,6 +138,7 @@ CCSize  CCEGLView::getSize()
 	}
 		
 }
+
 void CCEGLView::setTouch(void* systemData)
 {
 	s3ePointerEvent* event =(s3ePointerEvent*)systemData;
@@ -146,6 +163,7 @@ void CCEGLView::setTouch(void* systemData)
 		break;
 	}
 }
+
 void CCEGLView::setMotionTouch(void* systemData)
 {
 		s3ePointerMotionEvent* event =(s3ePointerMotionEvent*)systemData;
@@ -156,6 +174,65 @@ void CCEGLView::setMotionTouch(void* systemData)
 
 		}
 }
+
+void CCEGLView::setMultiTouch(void* systemData)
+{
+	s3ePointerTouchEvent* event =(s3ePointerTouchEvent*)systemData;
+	
+    if (touchSet[event->m_TouchID] == NULL) {
+        m_pTouch = new CCTouch;
+        touchSet[event->m_TouchID] = m_pTouch;
+    }
+    else {
+        m_pTouch = touchSet[event->m_TouchID];
+    }
+    
+	switch (event->m_Pressed)
+	{
+        case S3E_POINTER_STATE_DOWN :
+            m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
+            m_pSet->addObject(m_pTouch);
+            m_pDelegate->touchesBegan(m_pSet, NULL);
+            break;
+            
+        case S3E_POINTER_STATE_UP :
+            {
+                m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
+                m_pDelegate->touchesEnded(m_pSet, NULL);
+                m_pSet->removeObject(m_pTouch);
+                touchSet[event->m_TouchID] = NULL;
+            }
+            break;
+	}
+}
+
+void CCEGLView::setMultiMotionTouch(void* systemData)
+{
+    s3ePointerTouchMotionEvent* event =(s3ePointerTouchMotionEvent*)systemData;
+     m_pTouch = touchSet[event->m_TouchID];
+    if (m_pTouch)
+    {
+        m_pTouch->SetTouchInfo((int)event, (float)event->m_x, (float)event->m_y);
+        m_pDelegate->touchesMoved(m_pSet, NULL);
+        
+    }
+}
+
+CCTouch* CCEGLView::findTouch(int id) 
+{
+    CCSetIterator iter;
+	for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
+	{
+        CCTouch *touch = (CCTouch*)*iter;
+                
+		if(touch->view() == id)
+            return touch;
+	}
+    
+    return NULL;
+}
+
+
 void CCEGLView::setKeyTouch(void* systemData)
 {
     s3eKeyboardEvent* event = (s3eKeyboardEvent*)systemData;
@@ -184,8 +261,17 @@ void CCEGLView::release()
 {
 	IW_CALLSTACK("CCEGLView::release");
 
-	s3ePointerUnRegister(S3E_POINTER_BUTTON_EVENT, &TouchEventHandler);
-	s3ePointerUnRegister(S3E_POINTER_MOTION_EVENT, &MotionEventHandler);
+    if (m_isMultiTouch)
+    {
+        s3ePointerUnRegister(S3E_POINTER_TOUCH_EVENT, &MultiTouchEventHandler);
+        s3ePointerUnRegister(S3E_POINTER_TOUCH_MOTION_EVENT, &MultiMotionEventHandler);
+    }
+    else
+    {
+        s3ePointerUnRegister(S3E_POINTER_BUTTON_EVENT, &TouchEventHandler);
+        s3ePointerUnRegister(S3E_POINTER_MOTION_EVENT, &MotionEventHandler);
+    }
+    
 	s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler);
 
 	if (IwGLIsInitialised())
