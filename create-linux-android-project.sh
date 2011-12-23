@@ -59,4 +59,4 @@ check_path
 create_android_project
 
 # invoke template/android/copy_files.sh
-sh $`pwd`/template/linux/mycopy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH $PROREAL_DIR
+sh `pwd`/template/linux/mycopy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH $PROREAL_DIR
