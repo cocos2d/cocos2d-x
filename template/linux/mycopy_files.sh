@@ -45,8 +45,6 @@ move_files_into_linux(){
             cp $file $APP_DIR/Linux
         fi
     done
-
-    cp $HELLOWORLD_ROOT/Linux/postCompiled.sh $APP_DIR/Linux
 }
 
 #copy eclipse configures
