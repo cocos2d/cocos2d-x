@@ -47,10 +47,6 @@ namespace CocosDenshion
 
 	static int16*		g_AudioBuffer = 0;
 	static int32		g_AudioFileSize = 0;
-// 	static int			g_SoundChannel = 0;
-// 	static bool			g_SoundIsPlaying = false;
-//	static s3eBool		g_MP3Support = S3E_FALSE;
-
 
 	typedef map<string,SoundFx> SoundFxMap ;
 	static SoundFxMap* g_pSoundFxMap = 0 ;
@@ -101,7 +97,7 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::setResource(const char* pszZipFileName)
 	{
-
+		// todo
 	}
 
     void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
@@ -125,14 +121,7 @@ namespace CocosDenshion
 		
 		if ( result == S3E_RESULT_ERROR)
 		{
-			if (bLoop)
-			{
-				result = s3eAudioPlay(pszFilePath, 0);
-			}
-			else
-			{
-				result = s3eAudioPlay(pszFilePath, 1);
-			}
+			result = s3eAudioPlay(pszFilePath, bLoop ? 0 : 1);
 		}
 		
 		if ( result == S3E_RESULT_ERROR) 
@@ -164,11 +153,12 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::rewindBackgroundMusic()
 	{
-
+		//todo
 	}
 
 	bool SimpleAudioEngine::willPlayBackgroundMusic()
 	{
+		// todo
 		return true;
 	}
 
@@ -256,26 +246,26 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 	{
-		s3eSoundChannelPause (nSoundId);
+		s3eSoundChannelPause(nSoundId);
 	}
 
 	void SimpleAudioEngine::pauseAllEffects()
 	{
-		s3eSoundPauseAllChannels ();
+		s3eSoundPauseAllChannels();
 	}
 
 	void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 	{
-		s3eSoundChannelResume (nSoundId);
+		s3eSoundChannelResume(nSoundId);
 	}
 
 	void SimpleAudioEngine::resumeAllEffects()
 	{
-		s3eSoundResumeAllChannels ();
+		s3eSoundResumeAllChannels();
 	}
 
 	void SimpleAudioEngine::stopAllEffects()
 	{
-		s3eSoundStopAllChannels ();
+		s3eSoundStopAllChannels();
 	}
 }

@@ -29,6 +29,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.view.Display;
+import android.view.Surface;
+import android.view.WindowManager;
 
 /**
  * 
@@ -41,6 +44,7 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 	private Context mContext;
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
+	private int mNaturalOrientation;
 
 	public Cocos2dxAccelerometer(Context context){
 		mContext = context;
@@ -48,6 +52,9 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 		//Get an instance of the SensorManager
 	    mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
 	    mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+	    
+	    Display display = ((WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+	    mNaturalOrientation = display.getOrientation();
 	}
 
 	public void enable() {
@@ -72,9 +79,11 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 		/*
 		 * Because the axes are not swapped when the device's screen orientation changes. 
 		 * So we should swap it here.
+		 * In tablets such as Motorola Xoom, the default orientation is landscape, don't
+		 * need to translate coordinate.
 		 */
 		int orientation = mContext.getResources().getConfiguration().orientation;
-		if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+		if ((orientation == Configuration.ORIENTATION_LANDSCAPE) && (mNaturalOrientation != Surface.ROTATION_0)){
 			float tmp = x;
 			x = -y;
 			y = tmp;

@@ -68,6 +68,22 @@ static sem_t s_sem;
 static std::queue<AsyncStruct*>		*s_pAsyncStructQueue;
 static std::queue<ImageInfo*>		*s_pImageQueue;
 
+static CCImage::EImageFormat computeImageFormatType(string& filename)
+{
+	CCImage::EImageFormat ret = CCImage::kFmtUnKnown;
+
+	if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
+	{
+		ret = CCImage::kFmtJpg;
+	}
+	else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
+	{
+		ret = CCImage::kFmtPng;
+	}
+
+	return ret;
+}
+
 static void* loadImage(void* data)
 {
 	// create autorelease pool for iOS
@@ -98,38 +114,22 @@ static void* loadImage(void* data)
 
 		const char *filename = pAsyncStruct->filename.c_str();
 
-		CCLOG("thread 0x%x is loading image %s", pthread_self(), filename);
-
-		// generate image
-		CCImage *pImage = NULL;
-		CCImage::EImageFormat imageType;
-		if (std::string::npos != pAsyncStruct->filename.find(".jpg") || std::string::npos != pAsyncStruct->filename.find(".jpeg"))
-		{
-			pImage = new CCImage();
-			if (!pImage->initWithImageFileThreadSafe(filename, cocos2d::CCImage::kFmtJpg))
-			{
-				delete pImage;
-				CCLOG("can not load %s", filename);
-				imageType = CCImage::kFmtJpg;
-				continue;
-			}
-		}
-		else if (std::string::npos != pAsyncStruct->filename.find(".png"))
-		{
-			pImage = new CCImage();
-			if (! pImage->initWithImageFileThreadSafe(filename, cocos2d::CCImage::kFmtPng))
-			{
-				delete pImage;
-				CCLOG("can not load %s", filename);
-				imageType = CCImage::kFmtPng;
-				continue;
-			}
-		}
-		else
+		// compute image type
+		CCImage::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
+		if (imageType == CCImage::kFmtUnKnown)
 		{
 			CCLOG("unsupportted format %s",filename);
 			delete pAsyncStruct;
 			
+			continue;
+		}
+		
+        // generate image			
+		CCImage *pImage = new CCImage();
+		if (! pImage->initWithImageFileThreadSafe(filename, imageType))
+		{
+			delete pImage;
+			CCLOG("can not load %s", filename);
 			continue;
 		}
 
@@ -137,6 +137,7 @@ static void* loadImage(void* data)
 		ImageInfo *pImageInfo = new ImageInfo();
 		pImageInfo->asyncStruct = pAsyncStruct;
 		pImageInfo->image = pImage;
+		pImageInfo->imageType = imageType;
 
 		// put the image info into the queue
 		pthread_mutex_lock(&s_ImageInfoMutex);
@@ -468,21 +469,25 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 	return tex;
 }
 
-
 CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 {
-	CCAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
+	CCAssert(image != NULL, "TextureCache: image MUST not be nill");
 
 	CCTexture2D * texture = NULL;
 	// textureForKey() use full path,so the key should be full path
-	std::string forKey = CCFileUtils::fullPathFromRelativePath(key);
+	std::string forKey;
+	if (key)
+	{
+		forKey = CCFileUtils::fullPathFromRelativePath(key);
+	}
 
-	//m_pDictLock->lock();
+	// Don't have to lock here, because addImageAsync() will not 
+	// invoke opengl function in loading thread.
 
 	do 
 	{
 		// If key is nil, then create a new texture each time
-		if((texture = m_pTextures->objectForKey(forKey)))
+		if(key && (texture = m_pTextures->objectForKey(forKey)))
 		{
 			break;
 		}
@@ -491,7 +496,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 		texture = new CCTexture2D();
 		texture->initWithImage(image);
 
-		if(texture)
+		if(key && texture)
 		{
 			m_pTextures->setObject(texture, forKey);
 			texture->autorelease();
@@ -502,8 +507,6 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 		}
 
 	} while (0);
-	
-	//m_pDictLock->unlock();
 
 	return texture;
 }
