@@ -1,5 +1,5 @@
 
-class CCWaves3D : public CCGrid3DAction
+class CCWaves3D : public CCAction
 {
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
@@ -9,17 +9,17 @@ class CCWaves3D : public CCGrid3DAction
     static CCWaves3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 };
 
-class CCFlipX3D : public CCGrid3DAction
+class CCFlipX3D : public CCAction
 {
     static CCFlipX3D* actionWithDuration(ccTime duration);
 };
 
-class CCFlipY3D : public CCFlipX3D
+class CCFlipY3D : public CCAction
 {
     static CCFlipY3D* actionWithDuration(ccTime duration);
 };
 
-class CCLens3D : public CCGrid3DAction
+class CCLens3D : public CCAction
 {
     float getLensEffect(void);
     void setLensEffect(float fLensEffect);
@@ -31,7 +31,7 @@ class CCLens3D : public CCGrid3DAction
     static CCLens3D* actionWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
 };
 
-class CCRipple3D : public CCGrid3DAction
+class CCRipple3D : public CCAction
 {
     CCPoint getPosition(void);
     void getPosition(float* x = 0, float* y = 0);
@@ -45,12 +45,12 @@ class CCRipple3D : public CCGrid3DAction
     static CCRipple3D* actionWithPosition(CCPoint pos, float r, int wav, float amp, ccGridSize gridSize, ccTime duration);
 };
 
-class CCShaky3D : public CCGrid3DAction
+class CCShaky3D : public CCAction
 {
     static CCShaky3D* actionWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
 };
 
-class CCLiquid : public CCGrid3DAction
+class CCLiquid : public CCAction
 {
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
@@ -60,7 +60,7 @@ class CCLiquid : public CCGrid3DAction
     static CCLiquid* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 };
 
-class CCWaves : public CCGrid3DAction
+class CCWaves : public CCAction
 {
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
@@ -70,7 +70,7 @@ class CCWaves : public CCGrid3DAction
     static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,ccTime duration);
 };
 
-class CCTwirl : public CCGrid3DAction
+class CCTwirl : public CCAction
 {
     CCPoint getPosition(void);
     void setPosition(CCPoint position);

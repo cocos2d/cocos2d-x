@@ -1,60 +1,30 @@
 
-class CCActionInstant : public CCFiniteTimeAction
-{
-};
-
-class CCShow : public CCActionInstant
+class CCShow : public CCAction
 {
     static CCShow * action();
 };
 
-class CCHide : public CCActionInstant
+class CCHide : public CCAction
 {
     static CCHide * action();
 };
 
-class CCToggleVisibility : public CCActionInstant
+class CCToggleVisibility : public CCAction
 {
     static CCToggleVisibility * action();
 };
 
-class CCFlipX : public CCActionInstant
+class CCFlipX : public CCAction
 {
     static CCFlipX * actionWithFlipX(bool x);
 };
 
-class CCFlipY : public CCActionInstant
+class CCFlipY : public CCAction
 {
     static CCFlipY * actionWithFlipY(bool y);
 };
 
-class CCPlace : public CCActionInstant //<NSCopying>
+class CCPlace : public CCAction //<NSCopying>
 {
     static CCPlace * actionWithPosition(CCPoint pos);
-};
-
-class CCCallFunc : public CCActionInstant //<NSCopying>
-{
-    void execute();
-
-    static CCCallFunc* actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFunc selector);
-    static CCCallFunc* actionWithScriptFuncName(const char* pszFuncName);
-};
-
-class CCCallFuncN : public CCCallFunc
-{
-    static CCCallFuncN* actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
-    static CCCallFuncN* actionWithScriptFuncName(const char* pszFuncName);
-};
-
-class CCCallFuncND : public CCCallFuncN
-{
-    static CCCallFuncND* actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
-    static CCCallFuncND* actionWithScriptFuncName(const char* pszFuncName, void *d);
-};
-
-class CCCallFuncO : public CCCallFunc
-{
-    static CCCallFuncO* actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
-    static CCCallFuncO* actionWithScriptFuncName(const char* pszFuncName);
 };
