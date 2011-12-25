@@ -39,8 +39,9 @@ public:
     {
         kFmtJpg = 0,
         kFmtPng,
-        kFmtRawData,
-    } EImageFormat;
+		kFmtRawData,
+		kFmtUnKnown
+    }EImageFormat;
 
     typedef enum
     {
@@ -53,10 +54,10 @@ public:
         kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bottom.
         kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
         kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
-    } ETextAlign;
+    }ETextAlign;
 
-    /**
-    @brief  Load the image from the specified path.
+    /** 
+    @brief  Load the image from the specified path. 
     @param strPath   the absolute file path
     @param imageType the type of image, now only support tow types.
     @return  true if load correctly
@@ -75,18 +76,18 @@ public:
     /**
     @brief  Load image from stream buffer.
 
-    @warning kFmtRawData only support RGBA8888
+	@warning kFmtRawData only support RGBA8888
     @param pBuffer  stream buffer that hold the image data
     @param nLength  the length of data(managed in byte)
-    @param nWidth, nHeight, nBitsPerComponent are used for kFmtRawData
+	@param nWidth, nHeight, nBitsPerComponent are used for kFmtRawData
     @return true if load correctly
     */
-    bool initWithImageData(void * pData,
-                           int nDataLen,
-                           EImageFormat eFmt = kFmtPng,
-                           int nWidth = 0,
-                           int nHeight = 0,
-                           int nBitsPerComponent = 8);
+    bool initWithImageData(void * pData, 
+						   int nDataLen, 
+						   EImageFormat eFmt = kFmtPng,
+						   int nWidth = 0,
+						   int nHeight = 0,
+						   int nBitsPerComponent = 8);
 
     /**
     @brief	Create image with specified string.
@@ -98,33 +99,25 @@ public:
     @param  nSize       the font size, if 0, use the system default size.
     */
     bool initWithString(
-        const char *    pText,
-        int             nWidth = 0,
+        const char *    pText, 
+        int             nWidth = 0, 
         int             nHeight = 0,
         ETextAlign      eAlignMask = kAlignCenter,
         const char *    pFontName = 0,
         int             nSize = 0);
 
-    unsigned char *   getData()               {
-        return m_pData;
-    }
-    int         getDataLen()            {
-        return m_nWidth * m_nHeight;
-    }
+    unsigned char *   getData()               { return m_pData; }
+    int         getDataLen()            { return m_nWidth * m_nHeight; }
 
-    bool hasAlpha()                     {
-        return m_bHasAlpha;
-    }
-    bool isPremultipliedAlpha()         {
-        return m_bPreMulti;
-    }
+    bool hasAlpha()                     { return m_bHasAlpha; }
+    bool isPremultipliedAlpha()         { return m_bPreMulti; }
 
     void release();
 
     /**
     @brief	Save the CCImage data to specified file with specified format.
-    @param	pszFilePath		the file's absolute path, including file subfix
-    @param	bIsToRGB		if the image is saved as RGB format
+	@param	pszFilePath		the file's absolute path, including file subfix
+	@param	bIsToRGB		if the image is saved as RGB format
     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
@@ -136,11 +129,11 @@ protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);
 
-    // @warning kFmtRawData only support RGBA8888
-    bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent);
+	// @warning kFmtRawData only support RGBA8888
+	bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent);
 
-    bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
-    bool _saveImageToJPG(const char *pszFilePath);
+	bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
+	bool _saveImageToJPG(const char *pszFilePath);
 
     unsigned char *m_pData;
     bool m_bHasAlpha;
