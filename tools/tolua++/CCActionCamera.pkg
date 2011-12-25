@@ -1,10 +1,10 @@
 
-class CCActionCamera : public CCActionInterval
+class CCActionCamera : public CCAction
 {
     void startWithTarget(CCNode *pTarget);
 };
 
-class CCOrbitCamera : public CCActionCamera
+class CCOrbitCamera : public CCAction
 {
     void sphericalRadius(float *r, float *zenith, float *azimuth);
 

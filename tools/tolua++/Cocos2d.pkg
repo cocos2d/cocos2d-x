@@ -61,6 +61,5 @@ $pfile "CCTouch.pkg"
 $pfile "CCTransition.pkg"
 $pfile "ccTypes.pkg"
 $pfile "CCUserDefault.pkg"
-$pfile "selector_protocol.pkg"
 
 $pfile "SimpleAudioEngine.pkg"

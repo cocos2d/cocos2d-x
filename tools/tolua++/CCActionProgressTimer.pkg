@@ -1,10 +1,10 @@
 
-class CCProgressTo : public CCActionInterval
+class CCProgressTo : public CCAction
 {
     static CCProgressTo* actionWithDuration(ccTime duration, float fPercent);
 };
 
-class CCProgressFromTo : public CCActionInterval
+class CCProgressFromTo : public CCAction
 {
     static CCProgressFromTo* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
 };
