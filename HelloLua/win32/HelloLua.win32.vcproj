@@ -73,7 +73,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libgles_cm.lib liblua.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib liblua.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"

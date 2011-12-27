@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 /*#include "Availability.h"*/
 #include "CCParticleSystem.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "CCParticleSystemQuad.h"
 #endif
 
@@ -48,7 +48,7 @@ Features:
 Limitations:
 * On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCParticleSystemQuad.
 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 class CC_DLL CCParticleSystemPoint : public CCParticleSystemQuad{
 	//nothing to do
 };

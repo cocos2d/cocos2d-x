@@ -48,10 +48,6 @@ int CCApplication::run()
         return 0;
     }
 
-    CCEGLView& mainWnd = CCEGLView::sharedOpenGLView();
-    mainWnd.centerWindow();
-    ShowWindow(mainWnd.getHWnd(), SW_SHOW);
-
     while (1)
     {
         if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
