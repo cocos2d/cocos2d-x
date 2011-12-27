@@ -40,6 +40,7 @@ public:
         kFmtJpg = 0,
         kFmtPng,
 		kFmtRawData,
+		kFmtUnKnown
     }EImageFormat;
 
     typedef enum
