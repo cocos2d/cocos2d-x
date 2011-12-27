@@ -347,7 +347,7 @@ void CCEGLView::resize(int width, int height)
 	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
 	m_rcViewPort.size.width = viewPortW;
 	m_rcViewPort.size.height = viewPortH;
-	//CCLOG("m_rcViewPort.origin.x = %f, y = %f, width = %f, height = %f", \
+	CCLOG("m_rcViewPort.origin.x = %f, y = %f, width = %f, height = %f", \
 			m_rcViewPort.origin.x, m_rcViewPort.origin.y, m_rcViewPort.size.width, m_rcViewPort.size.height);
 }
 
@@ -381,7 +381,7 @@ result CCEGLView::OnInitializing(void)
 	// calculate the factor and the rect of viewport
 	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width,
 		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-	//CCLOG("rc.width = %d, rc.height = %d, m_fScreenScaleFactor = %f", rc.width, rc.height, m_fScreenScaleFactor);
+	CCLOG("rc.width = %d, rc.height = %d, m_fScreenScaleFactor = %f", rc.width, rc.height, m_fScreenScaleFactor);
 	resize(m_sSizeInPoint.width, m_sSizeInPoint.height);
 
 	return r;
@@ -396,26 +396,6 @@ result CCEGLView::OnTerminating(void)
 	return r;
 }
 
-//void CCEGLView::onPenDown(int nIndex, float x, float y)
-//{
-//	CCLOG("onPenDown nIndex = %d,x = %f, y=%f", nIndex, x, y);
-//    if (m_pDelegate && nIndex < MAX_TOUCHES)
-//    {
-//        CCTouch* pTouch = s_pTouches[nIndex];
-//        if (!pTouch)
-//        {
-//            pTouch = new CCTouch;
-//        }
-//
-//        pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-//        		(y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-//        s_pTouches[nIndex] = pTouch;
-//        CCSet set;
-//        set.addObject(pTouch);
-//        m_pDelegate->touchesBegan(&set, NULL);
-//    }
-//}
-
 void CCEGLView::onTouchesBegin(int id[], float x[], float y[], int pointerNumber)
 {
 	result r = E_SUCCESS;
@@ -426,7 +406,8 @@ void CCEGLView::onTouchesBegin(int id[], float x[], float y[], int pointerNumber
 		if (E_OBJ_NOT_FOUND == r && NULL == pTouch)
 		{
 			pTouch = new CCTouch();
-			pTouch->SetTouchInfo(0, (x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+			pTouch->SetTouchInfo(0, (x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+					             (y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor, id[i]);
 			s_mapTouches.Add(id[i], pTouch);
 			set.addObject(pTouch);
 			m_pDelegate->touchesBegan(&set, NULL);
@@ -449,8 +430,8 @@ void CCEGLView::onTouchesMove(int id[], float x[], float y[], int pointerNumber)
 
 		if (E_SUCCESS == r && pTouch != NULL)
 		{
-			pTouch->SetTouchInfo(0, (x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor ,
-								(y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+			pTouch->SetTouchInfo(0, (x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+								(y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor, id[i]);
 			set.addObject(pTouch);
 		}
 		else
@@ -473,8 +454,8 @@ void CCEGLView::onTouchesEnd(int id[], float x[], float y[], int pointerNumber)
 		r = s_mapTouches.GetValue(id[i], pTouch);
 		if (E_SUCCESS == r && pTouch != NULL)
 		{
-			pTouch->SetTouchInfo(0, (x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor ,
-		                        (y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+			pTouch->SetTouchInfo(0, (x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+		                        (y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor, id[i]);
 			set.addObject(pTouch);
 			s_mapTouches.Remove(id[i]);
 			pTouch->release();
@@ -600,7 +581,8 @@ void CCEGLView::OnTouchMoved(const Control& source,
 void CCEGLView::OnTouchDoublePressed(const Control& source,
 	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
-
+	CCLOG("double pressed..");
+	OnTouchPressed(source, currentPosition, touchInfo);
 }
 
 
