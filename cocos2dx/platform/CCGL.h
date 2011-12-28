@@ -82,12 +82,8 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <glew.h>
+#include <wglew.h>
 #include <glfw.h>
-
-#undef ccglOrtho
-
-#define ccglOrtho					glOrtho
-#define glFrustumf                  glFrustum
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -107,10 +103,10 @@ extern PFNGLBINDBUFFERARBPROC 				glBindBufferARB;
 extern PFNGLBUFFERDATAARBPROC 				glBufferDataARB;
 extern PFNGLBUFFERSUBDATAARBPROC 			glBufferSubDataARB;
 extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
+#endif
 
 
-
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #undef ccglOrtho
 #undef ccglClearDepth
 #undef ccglTranslate
@@ -137,6 +133,12 @@ extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
 #define ccglDeleteFramebuffers		glDeleteFramebuffersEXT
 #define ccglCheckFramebufferStatus	glCheckFramebufferStatusEXT
 
+#undef glFrustumf
+#undef glGenBuffers
+#undef glBindBuffer
+#undef glBufferData
+#undef glBufferSubData
+#undef glDeleteBuffers
 
 #define glFrustumf                  glFrustum
 #define glGenBuffers                glGenBuffersARB

@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glew32.lib opengl32.lib GLFW.lib GLFWDLL.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="glew32.lib opengl32.lib GLFW.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -141,11 +141,11 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.lib&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\msvc90\*.lib&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\msvc90\*.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.lib&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\msvc90\*.lib&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\msvc90\*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glew32.lib opengl32.lib GLFW.lib GLFWDLL.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="glew32.lib opengl32.lib GLFW.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
