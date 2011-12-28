@@ -52,8 +52,8 @@ public:
 	CCObject(void);
 	virtual ~CCObject(void);
     
-	virtual void release(void);
-	virtual void retain(void);
+    void release(void);
+	void retain(void);
 	CCObject* autorelease(void);
 	CCObject* copy(void);
 	bool isSingleRefrence(void);
