@@ -42,19 +42,19 @@ THE SOFTWARE.
 #define ccglDeleteFramebuffers		CCEGLView::glDeleteFramebuffersOES
 #define ccglCheckFramebufferStatus	CCEGLView::glCheckFramebufferStatusOES
 #else
-#define ccglGenerateMipmap			glGenerateMipmapOES
-#define ccglGenFramebuffers			glGenFramebuffersOES
-#define ccglBindFramebuffer			glBindFramebufferOES
-#define ccglFramebufferTexture2D	glFramebufferTexture2DOES
-#define ccglDeleteFramebuffers		glDeleteFramebuffersOES
-#define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
+#define ccglGenerateMipmap			glGenerateMipmap
+#define ccglGenFramebuffers			glGenFramebuffers
+#define ccglBindFramebuffer			glBindFramebuffer
+#define ccglFramebufferTexture2D	glFramebufferTexture2D
+#define ccglDeleteFramebuffers		glDeleteFramebuffers
+#define ccglCheckFramebufferStatus	glCheckFramebufferStatus
 #endif
 #define ccglTranslate				glTranslatef
 
-#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
-#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
-#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0_OES
-#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
+#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
+#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
+#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
+#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
 
 #include "CCCommon.h"
 
@@ -81,8 +81,9 @@ THE SOFTWARE.
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
+#include <glew.h>
+#include <wglew.h>
+#include <glfw.h>
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -102,10 +103,10 @@ extern PFNGLBINDBUFFERARBPROC 				glBindBufferARB;
 extern PFNGLBUFFERDATAARBPROC 				glBufferDataARB;
 extern PFNGLBUFFERSUBDATAARBPROC 			glBufferSubDataARB;
 extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
+#endif
 
 
-
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #undef ccglOrtho
 #undef ccglClearDepth
 #undef ccglTranslate
@@ -132,6 +133,12 @@ extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
 #define ccglDeleteFramebuffers		glDeleteFramebuffersEXT
 #define ccglCheckFramebufferStatus	glCheckFramebufferStatusEXT
 
+#undef glFrustumf
+#undef glGenBuffers
+#undef glBindBuffer
+#undef glBufferData
+#undef glBufferSubData
+#undef glDeleteBuffers
 
 #define glFrustumf                  glFrustum
 #define glGenBuffers                glGenBuffersARB

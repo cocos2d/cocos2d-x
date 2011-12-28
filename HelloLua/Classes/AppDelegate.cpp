@@ -47,7 +47,7 @@ bool AppDelegate::initInstance()
         // The HelloWorld is designed as HVGA.
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), CC_WIDTH, CC_HEIGHT));
+            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), CC_WIDTH, CC_HEIGHT, CC_WIDTH, CC_HEIGHT));
 
 #endif  // CC_PLATFORM_WIN32
         

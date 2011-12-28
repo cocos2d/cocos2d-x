@@ -20,7 +20,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -49,7 +49,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)\lua\cocos2dx_support&quot;;&quot;$(SolutionDir)\lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)\lua\lua&quot;;&quot;$(SolutionDir)\lua\tolua&quot;;&quot;$(SolutionDir)\lua\src&quot;;.;&quot;$(SolutionDir)\cocos2dx&quot;;&quot;$(SolutionDir)\cocos2dx\include&quot;;&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)\CocosDenshion\Include&quot;"
+				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)\lua\cocos2dx_support&quot;;&quot;$(SolutionDir)\lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)\lua\lua&quot;;&quot;$(SolutionDir)\lua\tolua&quot;;&quot;$(SolutionDir)\lua\src&quot;;.;&quot;$(SolutionDir)\cocos2dx&quot;;&quot;$(SolutionDir)\cocos2dx\include&quot;;&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)\cocos2dx\platform\third_party\win32\gl&quot;;&quot;$(SolutionDir)\CocosDenshion\Include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -73,7 +73,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libgles_cm.lib liblua.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib liblua.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
@@ -135,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)lua\cocos2dx_support&quot;;&quot;$(SolutionDir)lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)lua\tolua&quot;;&quot;$(SolutionDir)lua\lua&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)CocosDenshion\Include&quot;"
+				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)lua\cocos2dx_support&quot;;&quot;$(SolutionDir)lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)lua\tolua&quot;;&quot;$(SolutionDir)lua\lua&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\gl&quot;;&quot;$(SolutionDir)CocosDenshion\Include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"

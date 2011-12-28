@@ -30,13 +30,13 @@ THE SOFTWARE.
 #include "CCCommon.h"
 #include "CCGeometry.h"
 
+bool initExtensions();
+
 NS_CC_BEGIN;
 
 class CCSet;
 class CCTouch;
 class EGLTouchDelegate;
-
-class CCEGL;
 
 class CC_DLL CCEGLView
 {
@@ -44,6 +44,18 @@ public:
 
     CCEGLView();
     virtual ~CCEGLView();
+
+	friend void keyEventHandle(int,int);
+	friend void mouseButtonEventHandle(int,int);
+	friend void mousePosEventHandle(int,int);
+	friend void charEventHandle(int,int);
+
+	/**
+	 * iPixelWidth, height: the window's size
+	 * iWidth ,height: the point size, which may scale.
+	 * iDepth is not the buffer depth of opengl, it indicate how may bits for a pixel
+	 */
+	virtual bool Create(const char* pTitle, int iPixelWidth, int iPixelHeight, int iWidth, int iHeight, int iDepth=16);
 
     CCSize  getSize();
     bool    isOpenGLReady();
@@ -53,20 +65,16 @@ public:
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor);
 
-	virtual bool Create(LPCTSTR pTitle, int w, int h);
-	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
-
     int setDeviceOrientation(int eOritation);
     void setViewPortInPoints(float x, float y, float w, float h);
     void setScissorInPoints(float x, float y, float w, float h);
 
     void setIMEKeyboardState(bool bOpen);
 
-    // win32 platform function
-    HWND getHWnd();
-    void resize(int width, int height);
-    void centerWindow();
-    void setScreenScale(float factor);
+    /**
+	 * the width and height is the real size of phone
+	 */
+	void setFrameWidthAndHeight(int width, int height);
 
     // static function
 
@@ -84,16 +92,19 @@ private:
 	bool				m_bOrientationInitVertical;
     CCSet *             m_pSet;
     CCTouch *           m_pTouch;
+
+	//store current mouse point for moving, valid if and only if the mouse pressed
+	CCPoint m_mousePoint;
+
     EGLTouchDelegate *  m_pDelegate;
 
-    CCEGL *            m_pEGL;
+	CCSize				m_sSizeInPixel;
+	CCSize				m_sSizeInPoint;
+	CCRect				m_rcViewPort;
 
-	HWND				m_hWnd;
-
-	int					m_eInitOrientation;
-    SIZE                m_tSizeInPoints;
-    float               m_fScreenScaleFactor;
-    RECT                m_rcViewPort;
+	bool                bIsInit;
+	int                 m_eInitOrientation;
+	float               m_fScreenScaleFactor;
 };
 
 NS_CC_END;
