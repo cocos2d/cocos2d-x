@@ -646,7 +646,7 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
     vt->m_eCashedImageType = kImageFile;
     vt->m_strFileName = imageFileName;
     vt->m_FmtImage    = format;
-    vt->m_PixelFormat = CCTexture2D::defaultAlphaPixelFormat();
+    vt->m_PixelFormat = tt->getPixelFormat();
 }
 
 void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize)
