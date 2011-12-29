@@ -646,6 +646,7 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
     vt->m_eCashedImageType = kImageFile;
     vt->m_strFileName = imageFileName;
     vt->m_FmtImage    = format;
+    vt->m_PixelFormat = CCTexture2D::defaultAlphaPixelFormat();
 }
 
 void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize)
@@ -735,7 +736,10 @@ void VolatileTexture::reloadAllTextures()
 
 				if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
 				{
+                    CCTexture2DPixelFormat oldPixelFormat = CCTexture2D::defaultAlphaPixelFormat();
+                    CCTexture2D::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
 					vt->texture->initWithImage(&image);
+                    CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
 				}
 			}
 			break;
