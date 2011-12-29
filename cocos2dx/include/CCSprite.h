@@ -246,8 +246,6 @@ public:
 	virtual void setIsOpacityModifyRGB(bool bValue);
 	virtual bool getIsOpacityModifyRGB(void);
 
-	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol *)this; }
-
 	// CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);
 	virtual CCTexture2D* getTexture(void);
