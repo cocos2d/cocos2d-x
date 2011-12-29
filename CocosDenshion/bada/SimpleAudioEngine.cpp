@@ -552,9 +552,14 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
 	string strFilePath = fullPathFromRelativePath(pszFilePath);
-	unsigned int nSoundId = _Hash(strFilePath.c_str());
-	CCAudioOut*& pPlayer = s_List[nSoundId];
-	pPlayer->Stop();
+	unsigned int nID = _Hash(strFilePath.c_str());
+	EffectList::iterator p = s_List.find(nID);
+	if (p != s_List.end())
+	{
+		delete p->second;
+		p->second = NULL;
+		s_List.erase(nID);
+	}
 }
 
 } // end of namespace CocosDenshion
