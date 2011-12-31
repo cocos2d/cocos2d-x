@@ -111,26 +111,24 @@ int CCAudioOut::DecodeOgg(const char *infile)
     int seekable = 0;
     int percent = 0;
 
-    //AppLog("enter, %s", infile);
 	in = fopen(infile, "rb");
 	if(!in) {
-		//AppLog("ERROR: Failed to open input file:\n");
+		AppLog("ERROR: Failed to open input file:\n");
 		return 1;
 	}
-	 //AppLog("enter");
+
     if(ov_open(in, &vf, NULL, 0) < 0) {
-    	//AppLog("ERROR: Failed to open input as vorbis\n");
+    	AppLog("ERROR: Failed to open input as vorbis\n");
         fclose(in);
-//        fclose(out);
         return 1;
     }
-    //AppLog("enter");
+
     if(ov_seekable(&vf)) {
         seekable = 1;
         length = ov_pcm_total(&vf, 0);
         size = 16/8 * ov_info(&vf, 0)->channels;
     }
-    //AppLog("enter");
+
     if (ov_info(&vf,0)->channels == 2)
     {
     	__sampleChannelType = AUDIO_CHANNEL_TYPE_STEREO;
@@ -139,19 +137,19 @@ int CCAudioOut::DecodeOgg(const char *infile)
     {
     	__sampleChannelType = AUDIO_CHANNEL_TYPE_MONO;
     }
-    //AppLog("enter");
+
     __sampleRate = ov_info(&vf,0)->rate;
     __sampleBitdepth = AUDIO_TYPE_PCM_S16_LE;
 
-    //AppLog("enter");
+
     while((ret = ov_read(&vf, buf, buflen, 0, 16/8, 1, &bs)) != 0) {
         if(bs != 0) {
-            //AppLog("Only one logical bitstream currently supported\n");
+            AppLog("Only one logical bitstream currently supported\n");
             break;
         }
 
         if(ret < 0) {
-            //AppLog("Warning: hole in data\n");
+            AppLog("Warning: hole in data\n");
             continue;
         }
 
@@ -178,25 +176,18 @@ int CCAudioOut::DecodeOgg(const char *infile)
 
     __iAllPcmBufferSize = written;
 
-//    if(seekable && !quiet)
-//        //AppLog("\n");
-
-//    if(!raw)
-//        rewrite_header(out, written); /* We don't care if it fails, too late */
-
-    //AppLog("enter");
     ov_clear(&vf);
     fclose(in);
-//    fclose(out);
+
 #endif
-    //AppLog("enter");
+
     return 0;
 }
 
 
 CCAudioOut::CCAudioOut()
 {
-	//AppLog("Enter");
+
 	__volumeLevel = -1;
 	__pAllPcmBuffer = null;
 	__iAllPcmBufferSize = 0;
@@ -214,7 +205,7 @@ CCAudioOut::CCAudioOut()
 
 CCAudioOut::~CCAudioOut()
 {
-	//AppLog("Enter");
+
 	Finalize();
 	if(__pAudioOut)
 	{
@@ -231,7 +222,7 @@ CCAudioOut::~CCAudioOut()
 
 result CCAudioOut::Initialize(const char* pszFilePath)
 {
-	//AppLog("Enter");
+
 	// This is called when AudioOut form is moving on the foreground.
 	result r = E_SUCCESS;
 
@@ -255,20 +246,20 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			__pAudioOut = new AudioOut();
 			if (!__pAudioOut)
 			{
-				//AppLog("[E_OUT_OF_MEMORY] m_pAudio new failed\n");
+				AppLog("[E_OUT_OF_MEMORY] m_pAudio new failed\n");
 				return r;
 			}
 
 			r = __pAudioOut->Construct(*this);
 			if (IsFailed(r))
 			{
-				//AppLog("[Error] m_AudioOut.Construct failed");
+				AppLog("[Error] m_AudioOut.Construct failed");
 				return r;
 			}
 		}
 		else
 		{
-			//AppLog("[Error] __pAudioOut is already existed\n");
+			AppLog("[Error] __pAudioOut is already existed\n");
 		}
 
 		String strFile(pszFilePath);
@@ -279,13 +270,13 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			__pFile = new File();
 			if(!__pFile)
 			{
-				//AppLog("[Error] __pFile new failed\n");
+				AppLog("[Error] __pFile new failed\n");
 				return E_SYSTEM;
 			}
 
 			r = __pFile->Construct(pszFilePath, L"rb");
 			if (IsFailed(r)) {
-				//AppLog("[Error] __pFile.Construct failed : %d \n", r);
+				AppLog("[Error] __pFile.Construct failed : %d \n", r);
 				return r;
 			}
 
@@ -328,7 +319,7 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			}
 			else
 			{
-				//AppLog("not more memory...");
+				AppLog("not more memory...");
 			}
 		}
 		else if (strFile.EndsWith(".ogg"))
@@ -344,7 +335,7 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 		r = __pAudioOut->Prepare( __sampleBitdepth, __sampleChannelType, __sampleRate );
 		if (IsFailed(r))
 		{
-			//AppLog("[Error] m_AudioOut.Prepare failed");
+			AppLog("[Error] m_AudioOut.Prepare failed");
 			return r;
 		}
 
@@ -356,7 +347,7 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 		r = __pAudioOut->SetVolume(DEFAULT_VOLUME_LEVEL);
 		if (IsFailed(r))
 		{
-			//AppLog("[Error] m_AudioOut.SetVolume failed");
+			AppLog("[Error] m_AudioOut.SetVolume failed");
 			return r;
 		}
 
@@ -366,25 +357,25 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			r = __byteBuffer[0].Construct(__bufferSize);
 			if (E_SUCCESS != r)
 			{
-				//AppLog( "[Error] __byteBuffer[0].Construct failed..%d ",r);
+				AppLog( "[Error] __byteBuffer[0].Construct failed..%d ",r);
 				return E_OUT_OF_MEMORY;
 			}
 			r = __byteBuffer[1].Construct(__bufferSize);
 			if (E_SUCCESS != r)
 			{
-				//AppLog( "[Error] __byteBuffer[1].Construct failed..%d ",r);
+				AppLog( "[Error] __byteBuffer[1].Construct failed..%d ",r);
 				return E_OUT_OF_MEMORY;
 			}
 			r = __byteBuffer[2].Construct(__bufferSize);
 			if (E_SUCCESS != r)
 			{
-				//AppLog( "[Error] __byteBuffer[2].Construct failed..%d ",r);
+				AppLog( "[Error] __byteBuffer[2].Construct failed..%d ",r);
 				return E_OUT_OF_MEMORY;
 			}
 			r = __byteBuffer[3].Construct(__bufferSize);
 			if (E_SUCCESS != r)
 			{
-				//AppLog( "[Error] __byteBuffer[3].Construct failed..%d ",r);
+				AppLog( "[Error] __byteBuffer[3].Construct failed..%d ",r);
 				return E_OUT_OF_MEMORY;
 			}
 		}
@@ -491,7 +482,7 @@ result CCAudioOut::ReWriteBuffer(void)
 			r = __pAudioOut->WriteBuffer(__byteBuffer[i]);
 			if (IsFailed(r))
 			{
-				//AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+				AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
 				return r;
 			}
 		}
@@ -508,7 +499,7 @@ result CCAudioOut::ReWriteBuffer(void)
 			r = __pAudioOut->WriteBuffer(__byteBuffer[i]);
 			if (IsFailed(r))
 			{
-				//AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+				AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
 				return r;
 			}
 		}
