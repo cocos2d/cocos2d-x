@@ -58,7 +58,7 @@ public:
 	CCObject* copy(void);
 	bool isSingleRefrence(void);
 	unsigned int retainCount(void);
-	bool isEqual(const CCObject* pObject);
+	virtual bool isEqual(const CCObject* pObject);
 
 	friend class CCAutoreleasePool;
 };
