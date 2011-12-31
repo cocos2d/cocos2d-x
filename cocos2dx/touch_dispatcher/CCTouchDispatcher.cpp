@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTexture2D.h"
 #include "support/data_support/ccCArray.h"
-
+#include "ccMacros.h"
 #include <algorithm>
 
 /**
@@ -286,7 +286,7 @@ CCTouchHandler* CCTouchDispatcher::findHandler(CCTouchDelegate *pDelegate)
 
 CCTouchHandler* CCTouchDispatcher::findHandler(CCMutableArray<CCTouchHandler*> *pArray, CCTouchDelegate *pDelegate)
 {
-	CCAssert(pArray != NULL && pDelegate != NULL);
+	CCAssert(pArray != NULL && pDelegate != NULL, "");
 
 	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
 
