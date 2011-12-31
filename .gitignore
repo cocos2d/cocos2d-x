@@ -28,6 +28,9 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 
+# Ignore files build by Qt Creator
+*.pro.user
+
 # Ignore files build by ndk and eclipse
 libs/
 bin/
