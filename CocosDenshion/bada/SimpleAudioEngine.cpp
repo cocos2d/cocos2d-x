@@ -422,6 +422,14 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
     }
 
     s_fEffectsVolume = volume;
+	EffectList::iterator it;
+	for (it = s_List.begin(); it != s_List.end(); ++it)
+	{
+		if (it->second != NULL)
+		{
+			it->second->SetVolume((int)(s_fEffectsVolume * 99));
+		}
+	}
 }
 
 // for sound effects
