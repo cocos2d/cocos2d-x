@@ -320,7 +320,7 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 {
 	s_bBackgroundMusicPaused = false;
-    if (s_pBackPlayer && PLAYER_STATE_PLAYING == s_pBackPlayer->GetState())
+    if (s_pBackPlayer != NULL && PLAYER_STATE_PLAYING == s_pBackPlayer->GetState())
     {
         s_pBackPlayer->Stop();
     }
@@ -328,7 +328,7 @@ void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 
 void SimpleAudioEngine::pauseBackgroundMusic()
 {
-    if (s_pBackPlayer && PLAYER_STATE_PLAYING == s_pBackPlayer->GetState())
+    if (s_pBackPlayer != NULL && PLAYER_STATE_PLAYING == s_pBackPlayer->GetState())
     {
     	s_bBackgroundMusicPaused = true;
         s_pBackPlayer->Pause();
@@ -337,7 +337,7 @@ void SimpleAudioEngine::pauseBackgroundMusic()
 
 void SimpleAudioEngine::resumeBackgroundMusic()
 {
-    if (s_pBackPlayer && s_bBackgroundMusicPaused && PLAYER_STATE_PLAYING != s_pBackPlayer->GetState())
+    if (s_pBackPlayer != NULL && s_bBackgroundMusicPaused && PLAYER_STATE_PLAYING != s_pBackPlayer->GetState())
     {
     	s_bBackgroundMusicPaused = false;
         s_pBackPlayer->Play();
@@ -347,7 +347,7 @@ void SimpleAudioEngine::resumeBackgroundMusic()
 void SimpleAudioEngine::rewindBackgroundMusic()
 {
 	stopBackgroundMusic();
-    if (s_pBackPlayer)
+    if (s_pBackPlayer != NULL)
     {
         if (PLAYER_STATE_PLAYING != s_pBackPlayer->GetState())
         {
@@ -369,12 +369,9 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 {
     bool bRet = false;
 
-    if (s_pBackPlayer)
+    if (s_pBackPlayer != NULL && s_pBackPlayer->GetState() == PLAYER_STATE_PLAYING)
     {
-        if (s_pBackPlayer->GetState() == PLAYER_STATE_PLAYING)
-        {
-        	bRet = true;
-        }
+        bRet = true;
     }
 
     return bRet;
@@ -397,7 +394,7 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
         volume = 0.0f;
     }
 
-    if (s_pBackPlayer)
+    if (s_pBackPlayer != NULL)
     {
     	s_pBackPlayer->SetVolume((int) (volume * 99));
     	if (volume > 0.0f && s_pBackPlayer->GetVolume() == 0)
@@ -439,6 +436,11 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 	EffectList::iterator p = s_List.find(nRet);
 	if (p != s_List.end())
 	{
+		if (NULL == p->second)
+		{
+			AppLog("CCAudioOut instance must not be NULL, id = %d", p->first);
+			return 0;
+		}
 		p->second->SetVolume((int) (s_fEffectsVolume * 99));
 		int volume = p->second->GetVolume();
 
@@ -468,19 +470,25 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
-	CCAudioOut*& pPlayer = s_List[nSoundId];
-	if (pPlayer != NULL)
+	EffectList::iterator it = s_List.find(nSoundId);
+	if (it != s_List.end())
 	{
-		pPlayer->Stop();
+		if (it->second != NULL)
+		{
+			it->second->Stop();
+		}
 	}
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 {
-	CCAudioOut*& pPlayer = s_List[nSoundId];
-	if (pPlayer != NULL)
+	EffectList::iterator it = s_List.find(nSoundId);
+	if (it != s_List.end())
 	{
-		pPlayer->Pause();
+		if (it->second != NULL)
+		{
+			it->second->Pause();
+		}
 	}
 }
 
@@ -488,16 +496,22 @@ void SimpleAudioEngine::pauseAllEffects()
 {
 	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
 	{
-		it->second->Pause();
+		if (it->second != NULL)
+		{
+			it->second->Pause();
+		}
 	}
 }
 
 void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 {
-	CCAudioOut*& pPlayer = s_List[nSoundId];
-	if (pPlayer != NULL)
+	EffectList::iterator it = s_List.find(nSoundId);
+	if (it != s_List.end())
 	{
-		pPlayer->Resume();
+		if (it->second != NULL)
+		{
+			it->second->Resume();
+		}
 	}
 }
 
@@ -505,7 +519,10 @@ void SimpleAudioEngine::resumeAllEffects()
 {
 	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
 	{
-		it->second->Resume();
+		if (it->second != NULL)
+		{
+			it->second->Resume();
+		}
 	}
 }
 
@@ -513,7 +530,10 @@ void SimpleAudioEngine::stopAllEffects()
 {
 	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
 	{
-		it->second->Stop();
+		if (it->second != NULL)
+		{
+			it->second->Stop();
+		}
 	}
 }
 
@@ -535,13 +555,17 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 		if (s_List.size() >= 64)
 		{
 			// get the first effect, and remove it form list
-			//AppLog("effect preload more than 64, delete the first effect");
+			AppLog("effect preload more than 64, delete the first effect");
 			pEffectPlayer = s_List.begin()->second;
 			pEffectPlayer->Finalize();
-			s_List.erase(s_List.begin()->first);
+			s_List.erase(s_List.begin());
 		}
-		if (pEffectPlayer == NULL)
-			pEffectPlayer = new CCAudioOut;
+
+		if (NULL == pEffectPlayer)
+		{
+			pEffectPlayer = new CCAudioOut();
+		}
+
 		pEffectPlayer->Initialize(strFilePath.c_str());
 
 		s_List.insert(Effect(nRet, pEffectPlayer));
@@ -556,9 +580,17 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	EffectList::iterator p = s_List.find(nID);
 	if (p != s_List.end())
 	{
-		delete p->second;
-		p->second = NULL;
-		s_List.erase(nID);
+		if (p->second != NULL)
+		{
+			delete p->second;
+			p->second = NULL;
+			AppLog("delete CCAudioOut, id = %d", nID);
+		}
+		else
+		{
+			AppLog("CCAudioOut instance is NULL, id = %d", nID);
+		}
+		s_List.erase(p);
 	}
 }
 
