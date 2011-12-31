@@ -180,8 +180,7 @@ namespace cocos2d{
 		virtual const char* getString(void);
         virtual void setCString(const char *label);
 		virtual void setAnchorPoint(const CCPoint& var);
-		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
-		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
+
 #if CC_LABELBMFONT_DEBUG_DRAW
 		virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW
