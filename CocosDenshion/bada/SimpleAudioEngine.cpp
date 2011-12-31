@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 using namespace std;
 using namespace Osp::Media;
@@ -396,11 +397,7 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 
     if (s_pBackPlayer != NULL)
     {
-    	s_pBackPlayer->SetVolume((int) (volume * 99));
-    	if (volume > 0.0f && s_pBackPlayer->GetVolume() == 0)
-    	{
-    		s_pBackPlayer->SetVolume(1);
-    	}
+    	s_pBackPlayer->SetVolume(ceil(volume));
     }
     s_fBackgroundMusicVolume = volume;
 }
@@ -421,15 +418,15 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
         volume = 0.0f;
     }
 
-    s_fEffectsVolume = volume;
 	EffectList::iterator it;
 	for (it = s_List.begin(); it != s_List.end(); ++it)
 	{
 		if (it->second != NULL)
 		{
-			it->second->SetVolume((int)(s_fEffectsVolume * 99));
+			it->second->SetVolume(ceil(volume));
 		}
 	}
+	s_fEffectsVolume = volume;
 }
 
 // for sound effects
