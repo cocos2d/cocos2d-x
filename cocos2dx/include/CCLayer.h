@@ -182,7 +182,8 @@ public:
 	/** BlendFunction. Conforms to CCBlendProtocol protocol */
 	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
-	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+	virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool getIsOpacityModifyRGB(void) { return false;}
     LAYER_NODE_FUNC(CCLayerColor);
     
 protected:
