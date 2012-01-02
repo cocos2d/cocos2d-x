@@ -82,13 +82,13 @@ public: virtual const varType& get##funName(void);
  */
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
-public: virtual varType get##funName(void);\
-public: virtual void set##funName(varType var);
+public: varType get##funName(void);\
+public: void set##funName(varType var);
 
 #define CC_PROPERTY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: virtual const varType& get##funName(void);\
-public: virtual void set##funName(const varType& var);
+public: const varType& get##funName(void);\
+public: void set##funName(const varType& var);
 
 /** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
  We can use getter to read the variable.

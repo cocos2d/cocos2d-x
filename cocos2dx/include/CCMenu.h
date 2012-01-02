@@ -118,7 +118,8 @@ namespace cocos2d{
         */
         virtual void onExit();
 
-		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+		virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+	    virtual bool getIsOpacityModifyRGB(void) { return false;}
 
 	protected:
 		CCMenuItem* itemForTouch(CCTouch * touch);

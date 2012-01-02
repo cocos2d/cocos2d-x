@@ -149,6 +149,7 @@ protected:
 	void forceAddHandler(CCTouchHandler *pHandler, CCMutableArray<CCTouchHandler*> *pArray);
 	void forceRemoveAllDelegates(void);
 	void rearrangeHandlers(CCMutableArray<CCTouchHandler*> *pArray);
+	CCTouchHandler* findHandler(CCMutableArray<CCTouchHandler*> *pArray, CCTouchDelegate *pDelegate);
 
 protected:
  	CCMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
