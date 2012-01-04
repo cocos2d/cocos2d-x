@@ -57,8 +57,6 @@ namespace cocos2d{
 		const char* getString(void);
 		void setCString(const char *label);
 		void setAnchorPoint(CCPoint var);
-		CCRGBAProtocol* convertToRGBAProtocol();
-		CCLabelProtocol* convertToLabelProtocol();
 		void draw();
 	};
 
