@@ -113,7 +113,7 @@ extern "C"
 			, "terminateProcess"
 			, "()V"))
 		{
-			t.env->CallStaticObjectMethod(t.classID, t.methodID);
+			t.env->CallStaticVoidMethod(t.classID, t.methodID);
 			t.env->DeleteLocalRef(t.classID);
 		}
 	}
