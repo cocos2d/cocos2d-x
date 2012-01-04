@@ -17,7 +17,6 @@ namespace   cocos2d {
 		void updateAtlasValues();
 
 		void draw();
-		CCRGBAProtocol* convertToRGBAProtocol();	
 		CCTexture2D* getTexture(void);	
 		void setTexture(CCTexture2D *texture);
 
