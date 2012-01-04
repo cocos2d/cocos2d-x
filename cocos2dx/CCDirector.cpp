@@ -687,10 +687,14 @@ void CCDirector::pause(void)
 
 void CCDirector::resume(void)
 {
+//    CCTextureCache::sharedTextureCache()->reloadAllTextures();
+    
 	if (! m_bPaused)
 	{
 		return;
 	}
+
+
 
 	setAnimationInterval(m_dOldAnimationInterval);
 

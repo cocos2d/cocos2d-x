@@ -335,6 +335,12 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			if (std::string::npos != lowerCase.find(".pvr"))
 			{
 				texture = this->addPVRImage(fullpath.c_str());
+                
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+                // cache the texture file name
+                VolatileTexture::addImagePVRTexture(texture, fullpath.c_str());
+#endif
+                
 			}
 			// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
@@ -433,7 +439,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
 	}
 	CC_SAFE_DELETE(data);
-
+    
 	return texture;
 }
 #endif // CC_SUPPORT_PVRTC
@@ -644,6 +650,30 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
     vt->m_strFileName = imageFileName;
     vt->m_FmtImage    = format;
 }
+    
+    void VolatileTexture::addImagePVRTexture(CCTexture2D *tt, const char* imageFileName)
+    {
+        if (isReloading)
+            return;
+        
+        VolatileTexture *vt = 0;
+        std::list<VolatileTexture *>::iterator i = textures.begin();
+        while( i != textures.end() )
+        {
+            VolatileTexture *v = *i++;
+            if (v->texture == tt) {
+                vt = v;
+                break;
+            }
+        }
+        
+        if (!vt)
+            vt = new VolatileTexture(tt);
+        
+        vt->m_eCashedImageType = kImagePVRFile;
+        vt->m_strFileName = imageFileName;
+    }
+    
 
 void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize)
 {
@@ -736,6 +766,13 @@ void VolatileTexture::reloadAllTextures()
 				}
 			}
 			break;
+        case kImagePVRFile:
+            {
+                vt->texture->initWithPVRFile(vt->m_strFileName.c_str());
+            }
+            break;
+                
+                
 		case kImageData:
 			{
 				unsigned int nPOTWide, nPOTHigh;

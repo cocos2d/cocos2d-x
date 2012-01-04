@@ -172,6 +172,7 @@ class VolatileTexture
 typedef enum {
 	kInvalid = 0,
 	kImageFile,
+    kImagePVRFile,
 	kImageData,
 	kString,
 }ccCachedImageType;
@@ -181,6 +182,7 @@ public:
     ~VolatileTexture();
 
     static void addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format);
+    static void addImagePVRTexture(CCTexture2D *tt, const char* imageFileName);
     static void addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 	static void addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize);
 

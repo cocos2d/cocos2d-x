@@ -33,7 +33,8 @@ extern "C" {
 #include "CCTouch.h"
 #include "CCNode.h"
 #include "CCObject.h"
-#include "LuaCocos2d.h"
+
+//#include "LuaCocos2d.h"
 #include "LuaSimpleAudioEngine.h"
 #include "Cocos2dxLuaLoader.h"
 
@@ -64,10 +65,10 @@ CCLuaScriptModule::CCLuaScriptModule()
 	d_ownsState = true;
 	d_state = lua_open();
 	luaL_openlibs(d_state);
-	int nOpen = tolua_Cocos2d_open(d_state);
-    CC_UNUSED_PARAM(nOpen);
-    nOpen = tolua_SimpleAudioEngine_open(d_state);
-    CC_UNUSED_PARAM(nOpen);
+//	int nOpen = tolua_Cocos2d_open(d_state);
+//    CC_UNUSED_PARAM(nOpen);
+//    nOpen = tolua_SimpleAudioEngine_open(d_state);
+//    CC_UNUSED_PARAM(nOpen);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	addLuaLoader(loader_Android);

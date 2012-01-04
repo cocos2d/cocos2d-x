@@ -27,6 +27,7 @@
 #include "CCFileUtils.h"
 #include "s3eFile.h"
 #include "png.h"
+#include <IwMemBucketHelpers.h>
 
 #include <string>
 typedef struct 
@@ -63,6 +64,11 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 	IW_CALLSTACK("UIImage::initWithImageFile");
     CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
     return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
+}
+
+bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+{
+    return CCImage::initWithImageFile(fullpath, imageType);
 }
 
 bool CCImage::initWithImageData(void * pData, 

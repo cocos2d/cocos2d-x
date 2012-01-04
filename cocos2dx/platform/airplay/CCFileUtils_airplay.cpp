@@ -306,6 +306,12 @@ CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(
 	return tMaker.dictionaryWithContentsOfFile(pFileName);
 }
 
+CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+{
+    return CCFileUtils::dictionaryWithContentsOfFile(pFileName);
+}
+
+
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
 	IW_CALLSTACK("CCFileUtils::getFileData");

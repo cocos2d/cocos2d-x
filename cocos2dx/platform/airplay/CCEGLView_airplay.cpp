@@ -94,6 +94,8 @@ void CCEGLView::create(int width, int height)
 	m_bNotHVGA = true;
 		
 }
+
+
 CCEGLView::~CCEGLView()
 {
 	IW_CALLSTACK("CCEGLView::~CCEGLView");
