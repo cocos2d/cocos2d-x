@@ -51,7 +51,7 @@ check_path(){
 create_android_project(){
     echo "Input package path. For example: org.cocos2dx.example"
     read PACKAGE_PATH
-    echo "Now cocos2d-x suppurts Android 2.1-update1, 2.2, 2.3 & 3.0"
+    echo "Now cocos2d-x supports Android 2.1-update1, 2.2, 2.3 & 3.0"
     echo "Other versions have not tested."
     $ANDROID_SDK_ROOT_LOCAL/tools/android list targets
     echo "input target id:"
