@@ -17,7 +17,6 @@ namespace cocos2d{
 		void setString(const char *label);
 		const char* getString(void);
 		void draw();
-		CCLabelProtocol* convertToLabelProtocol();
 
 
 		static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);
@@ -28,7 +27,6 @@ namespace cocos2d{
 		void updateAtlasValues();
 
 		void draw();
-		CCRGBAProtocol* convertToRGBAProtocol();	
 		CCTexture2D* getTexture(void);	
 		void setTexture(CCTexture2D *texture);
 	};
