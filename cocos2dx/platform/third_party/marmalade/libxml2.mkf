@@ -36,12 +36,6 @@ defines
 
 }
 
-if {{ defined __APPLE__ }}
-{
-	define FT_CONFIG_OPTION_NO_ASSEMBLER
-	define DARWIN_NO_CARBON
-}
-
 undefines
 {
 	LIBXML_SCHEMAS_ENABLED
