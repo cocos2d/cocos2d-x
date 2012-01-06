@@ -50,14 +50,14 @@ void CCFileUtils::setResourcePath(const char* pszResourcePath)
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
 #if (CC_IS_RETINA_DISPLAY_SUPPORTED)
-    if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
+    if (CC_CONTENT_SCALE_FACTOR() > 1.0f)
     {
         std::string hiRes = pszRelativePath;
         std::string::size_type pos = hiRes.find_last_of("/");
         std::string::size_type dotPos = hiRes.find_last_of(".");
 		bool available = false;
         
-        if (std::string::npos != dotPos && dotPos > pos)
+        if (std::string::npos != dotPos && (dotPos > pos || pos == std::string::npos))
         {
             hiRes.insert(dotPos, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
         }
@@ -106,14 +106,14 @@ const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 	pRet->m_sString += pszFilename;
 
 #if (CC_IS_RETINA_DISPLAY_SUPPORTED)
-    if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
+    if (CC_CONTENT_SCALE_FACTOR() > 1.0f)
     {
         std::string hiRes = pRet->m_sString.c_str();
         std::string::size_type pos = hiRes.find_last_of("/");
         std::string::size_type dotPos = hiRes.find_last_of(".");
 		bool available = false;
         
-        if (std::string::npos != dotPos && dotPos > pos)
+        if (std::string::npos != dotPos && (dotPos > pos || pos == std::string::npos))
         {
             hiRes.insert(dotPos, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
         }
