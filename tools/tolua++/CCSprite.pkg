@@ -120,7 +120,6 @@ class  CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 	void setIsOpacityModifyRGB(bool bValue);
 	bool getIsOpacityModifyRGB(void);
 
-	CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol *)this; }
    void setTexture(CCTexture2D *texture);
 	CCTexture2D* getTexture(void);
 

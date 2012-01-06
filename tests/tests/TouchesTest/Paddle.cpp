@@ -82,3 +82,13 @@ void Paddle::ccTouchEnded(CCTouch* touch, CCEvent* event)
 	
 	m_state = kPaddleStateUngrabbed;
 } 
+
+void Paddle::touchDelegateRetain()
+{
+	this->retain();
+}
+
+void Paddle::touchDelegateRelease()
+{
+	this->release();
+}
