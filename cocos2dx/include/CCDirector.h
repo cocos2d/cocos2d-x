@@ -170,53 +170,35 @@ public:
 	// attribute
 
 	/** Get current running Scene. Director can only run one Scene at the time */
-    inline CCScene* getRunningScene(void) {
-        return m_pRunningScene;
-    }
+	inline CCScene* getRunningScene(void) { return m_pRunningScene; }
 
 	/** Get the FPS value */
-    inline double getAnimationInterval(void) {
-        return m_dAnimationInterval;
-    }
+	inline double getAnimationInterval(void) { return m_dAnimationInterval; }
 	/** Set the FPS value. */
 	virtual void setAnimationInterval(double dValue) = 0;
 
 	/** Whether or not to display the FPS on the bottom-left corner */
-    inline bool isDisplayFPS(void) {
-        return m_bDisplayFPS;
-    }
+	inline bool isDisplayFPS(void) { return m_bDisplayFPS; }
 	/** Display the FPS on the bottom-left corner */
-    inline void setDisplayFPS(bool bDisplayFPS) {
-        m_bDisplayFPS = bDisplayFPS;
-    }
+	inline void setDisplayFPS(bool bDisplayFPS) { m_bDisplayFPS = bDisplayFPS; }
 
 	/** Get the CCEGLView, where everything is rendered */
-    inline CC_GLVIEW* getOpenGLView(void) {
-        return m_pobOpenGLView;
-    }
+	inline CC_GLVIEW* getOpenGLView(void) { return m_pobOpenGLView; }
 	void setOpenGLView(CC_GLVIEW *pobOpenGLView);
 
-    inline bool isNextDeltaTimeZero(void) {
-        return m_bNextDeltaTimeZero;
-    }
+	inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
 	void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
 
 	/** Whether or not the Director is paused */
-    inline bool isPaused(void) {
-        return m_bPaused;
-    }
+	inline bool isPaused(void) { return m_bPaused; }
     
     /** How many frames were called since the director started */
-    inline unsigned int getFrames(void) {
-        return m_uFrames;
-    }
+    inline unsigned int getFrames(void) { return m_uFrames; }
     
 	/** Sets an OpenGL projection
 	 @since v0.8.2
 	 */
-    inline ccDirectorProjection getProjection(void) {
-        return m_eProjection;
-    }
+	inline ccDirectorProjection getProjection(void) { return m_eProjection; }
 	void setProjection(ccDirectorProjection kProjection);
 
     /** How many frames were called since the director started */
@@ -227,9 +209,7 @@ public:
 	 If the new scene replaces the old one, the it will receive the "cleanup" message.
 	 @since v0.99.0
 	 */
-    inline bool isSendCleanupToScene(void) {
-        return m_bSendCleanupToScene;
-    }
+	inline bool isSendCleanupToScene(void) { return m_bSendCleanupToScene; }
 
 	/** This object will be visited after the main scene is visited.
 	 This object MUST implement the "visit" selector.
@@ -305,9 +285,7 @@ public:
 	 */
 
 	/* end is key word of lua, use other name to export to lua. */
-    inline void endToLua(void) {
-        end();
-    }
+	inline void endToLua(void){end();}
 
 	void end(void);
 
@@ -385,9 +363,7 @@ public:
 	@since v0.99.5
 	*/
 	bool enableRetinaDisplay(bool enabled);
-    bool isRetinaDisplay() {
-        return m_bRetinaDisplay;
-    }
+    bool isRetinaDisplay() { return m_bRetinaDisplay; }
 
 	/** There are 4 types of Director.
 	- kCCDirectorTypeNSTimer (default)
@@ -425,8 +401,7 @@ protected:
 	void showFPS(void) {}
 #endif // CC_DIRECTOR_FAST_FPS
 
-    /** calculates delta time since last time it was called */	void calculateDeltaTime();
-protected:
+/** calculates delta time since last time it was called */	void calculateDeltaTime();protected:
 	/* The CCEGLView, where everything is rendered */
     CC_GLVIEW	*m_pobOpenGLView;
 

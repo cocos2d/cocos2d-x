@@ -37,48 +37,42 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-class CCProfilingTimer;
+	class CCProfilingTimer;
 
-class CC_DLL CCProfiler : public CCObject
-{
-public:
-    ~CCProfiler(void);
-    void displayTimers(void);
-    bool init(void);
+	class CC_DLL CCProfiler : public CCObject
+	{
+	public:
+		~CCProfiler(void);
+		void displayTimers(void);
+		bool init(void);
 
-public:
-    static CCProfiler* sharedProfiler(void);
-    static CCProfilingTimer* timerWithName(const char *pszTimerName, CCObject *pInstance);
-    static void releaseTimer(CCProfilingTimer *pTimer);
+	public:
+		static CCProfiler* sharedProfiler(void);
+		static CCProfilingTimer* timerWithName(const char *pszTimerName, CCObject *pInstance);
+		static void releaseTimer(CCProfilingTimer *pTimer);
 
-protected:
-    CCArray *m_pActiveTimers;
-};
+	protected:
+		CCArray *m_pActiveTimers;
+	};
 
-class CCProfilingTimer : public CCObject
-{
-public:
-    bool initWithName(const char* pszTimerName, CCObject *pInstance);
-    ~CCProfilingTimer(void);
-    char* description(void);
-    inline struct cc_timeval * getStartTime(void) {
-        return &m_sStartTime;
-    };
-    inline void setAverageTime(double value) {
-        m_dAverageTime = value;
-    }
-    inline double getAverageTime(void) {
-        return m_dAverageTime;
-    }
+	class CCProfilingTimer : public CCObject
+	{
+	public:
+		bool initWithName(const char* pszTimerName, CCObject *pInstance);
+		~CCProfilingTimer(void);
+		char* description(void);
+		inline struct cc_timeval * getStartTime(void) { return &m_sStartTime; };
+		inline void setAverageTime(double value) { m_dAverageTime = value; }
+		inline double getAverageTime(void) { return m_dAverageTime; }
 
-protected:
-    std::string m_NameStr;
-    struct cc_timeval m_sStartTime;
-    double m_dAverageTime;
-};
+	protected:
+		std::string m_NameStr;
+        struct cc_timeval m_sStartTime;
+		double m_dAverageTime;
+	};
 
-void CC_DLL CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer);
-void CC_DLL CCProfilingEndTimingBlock(CCProfilingTimer *pTimer);
+	void CC_DLL CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer);
+	void CC_DLL CCProfilingEndTimingBlock(CCProfilingTimer *pTimer);
 
 } // end of namespace cocos2d
 

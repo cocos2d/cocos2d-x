@@ -14,7 +14,11 @@ extern "C"
 #define TOLUA_REFID_FUNC_MAPPING "tolua_refid_func_mapping"
 
 TOLUA_API void tolua_prepare_ccobject_table(lua_State* L);
-TOLUA_API int tolua_pushusertype_ccobject(lua_State* L, int uid, int* p_refid, void* ptr, const char* type);
+TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
+                                          unsigned int uid,
+                                          unsigned int* p_refid,
+                                          void* ptr,
+                                          const char* type);
 TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid);
 
 TOLUA_API int tolua_ref_function(lua_State* L, int lo, int def);

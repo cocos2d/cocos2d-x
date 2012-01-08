@@ -151,24 +151,24 @@ public: virtual void set##funName(varType var)   \
 #define CCLOG(...)              
 #define CCLOGINFO(...)         
 #define CCLOGERROR(...)         
-#define LUALOG(format, ...)
 
 #elif COCOS2D_DEBUG == 1
 #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   do {} while (0)
 
-#if LUA_ENGINE_DEBUG == 1
-#define LUALOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
-#else
-#define LUALOG(format, ...)
-#endif
-
 #elif COCOS2D_DEBUG > 1
 #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   cocos2d::CCLog(format, ##__VA_ARGS__)
 #endif // COCOS2D_DEBUG
+
+// Lua engine debug
+#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0 || CC_LUA_ENGINE_DEBUG == 0
+#define LUALOG(...)
+#else
+#define LUALOG(format, ...)     cocos2d::CCLog(format, ##__VA_ARGS__)
+#endif // Lua engine debug
 
 // shared library declartor
 #define CC_DLL 

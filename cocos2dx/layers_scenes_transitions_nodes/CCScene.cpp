@@ -28,17 +28,9 @@ THE SOFTWARE.
 #include "CCPointExtension.h"
 #include "CCDirector.h"
 
-#if LUA_ENGINE
-#include "CCLuaEngine.h"
-#endif
-
-namespace cocos2d
-{
+namespace   cocos2d {
 
 CCScene::CCScene()
-#if LUA_ENGINE
-: m_eventsFunctionRefID(0)
-#endif
 {
 	m_bIsRelativeAnchorPoint = false;
 	setAnchorPoint(ccp(0.5f, 0.5f));
@@ -46,9 +38,6 @@ CCScene::CCScene()
 
 CCScene::~CCScene()
 {
-#if LUA_ENGINE
-    unregisterScriptEventsHandler();
-#endif
 }
 
 bool CCScene::init()
@@ -79,45 +68,4 @@ CCScene *CCScene::node()
 	    return NULL;
     }
 }
-
-
-#if LUA_ENGINE
-
-void CCScene::onEnter()
-{
-    if (m_eventsFunctionRefID)
-    {
-        CCLuaEngine::sharedEngine()->executeFunctionWithBooleanData(m_eventsFunctionRefID, true);
-    }
-    CCNode::onEnter();
-}
-
-void CCScene::onExit()
-{
-    if (m_eventsFunctionRefID)
-    {
-        CCLuaEngine::sharedEngine()->executeFunctionWithBooleanData(m_eventsFunctionRefID, false);
-    }
-    CCNode::onExit();
-}
-
-void CCScene::registerScriptEventsHandler(int functionRefID)
-{
-    unregisterScriptEventsHandler();
-    m_eventsFunctionRefID = functionRefID;
-    LUALOG("[LUA] ADD Scene events handler: %d", functionRefID);
-}
-
-void CCScene::unregisterScriptEventsHandler(void)
-{
-    if (m_eventsFunctionRefID)
-    {
-        CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_eventsFunctionRefID);
-        LUALOG("[LUA] DEL Scene events handler: %d", m_eventsFunctionRefID);
-    }
-    m_eventsFunctionRefID = 0;
-}
-
-#endif // LUA_ENGINE
-    
 }//namespace   cocos2d 

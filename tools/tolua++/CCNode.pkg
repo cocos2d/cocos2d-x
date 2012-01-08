@@ -1,4 +1,9 @@
 
+enum {
+    kCCNodeOnEnter,
+    kCCNodeOnExit
+};
+
 class CCNode : public CCObject
 {
     int     getZOrder();
@@ -107,8 +112,11 @@ class CCNode : public CCObject
     CCPoint convertTouchToNodeSpace(CCTouch * touch);
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
 
-    void    removeFromParentAndCleanup(bool cleanup);
-    void    removeChildByTag(int tag, bool cleanup);
+    void removeFromParentAndCleanup(bool cleanup);
+    void removeChildByTag(int tag, bool cleanup);
+
+    void registerScriptHandler(LUA_FUNCTION funcID);
+    void unregisterScriptHandler(void);
 
     static CCNode * node(void);
 };

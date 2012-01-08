@@ -33,18 +33,18 @@ namespace cocos2d
  @since v0.99.1
  */
 typedef enum {
-    /// Radial Counter-Clockwise
-    kCCProgressTimerTypeRadialCCW,
-    /// Radial ClockWise
-    kCCProgressTimerTypeRadialCW,
-    /// Horizontal Left-Right
-    kCCProgressTimerTypeHorizontalBarLR,
-    /// Horizontal Right-Left
-    kCCProgressTimerTypeHorizontalBarRL,
-    /// Vertical Bottom-top
-    kCCProgressTimerTypeVerticalBarBT,
-    /// Vertical Top-Bottom
-    kCCProgressTimerTypeVerticalBarTB,
+	/// Radial Counter-Clockwise 
+	kCCProgressTimerTypeRadialCCW,
+	/// Radial ClockWise
+	kCCProgressTimerTypeRadialCW,
+	/// Horizontal Left-Right
+	kCCProgressTimerTypeHorizontalBarLR,
+	/// Horizontal Right-Left
+	kCCProgressTimerTypeHorizontalBarRL,
+	/// Vertical Bottom-top
+	kCCProgressTimerTypeVerticalBarBT,
+	/// Vertical Top-Bottom
+	kCCProgressTimerTypeVerticalBarTB,
 } CCProgressTimerType;
 
 /**
@@ -56,50 +56,44 @@ typedef enum {
 class CC_DLL CCProgressTimer : public CCNode
 {
 public:
-    ~CCProgressTimer(void);
+	~CCProgressTimer(void);
 
-    /**	Change the percentage to change progress. */
-    inline CCProgressTimerType getType(void) {
-        return m_eType;
-    }
+	/**	Change the percentage to change progress. */
+	inline CCProgressTimerType getType(void) { return m_eType; }
 
-    /** Percentages are from 0 to 100 */
-    inline float getPercentage(void) {
-        return m_fPercentage;
-    }
+	/** Percentages are from 0 to 100 */
+	inline float getPercentage(void) {return m_fPercentage; }
 
-    /** The image to show the progress percentage, retain */
-    inline CCSprite* getSprite(void) {
-        return m_pSprite;
-    }
+	/** The image to show the progress percentage, retain */
+	inline CCSprite* getSprite(void) { return m_pSprite; }
 
-    bool initWithFile(const char *pszFileName);
-    bool initWithTexture(CCTexture2D *pTexture);
+	bool initWithFile(const char *pszFileName);
+	bool initWithTexture(CCTexture2D *pTexture);
 
-    void setPercentage(float fPercentage);
-    void setSprite(CCSprite *pSprite);
-    void setType(CCProgressTimerType type);
+	void setPercentage(float fPercentage);
+	void setSprite(CCSprite *pSprite);
+	void setType(CCProgressTimerType type);
 
-    virtual void draw(void);
+	virtual void draw(void);
 
 public:
-    static CCProgressTimer* progressWithFile(const char *pszFileName);
-    static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
+	static CCProgressTimer* progressWithFile(const char *pszFileName);
+	static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
 
 protected:
-    ccVertex2F vertexFromTexCoord(const CCPoint& texCoord);
-    void updateProgress(void);
-    void updateBar(void);
-    void updateRadial(void);
-    void updateColor(void);
-    CCPoint boundaryTexCoord(char index);
+	ccVertex2F vertexFromTexCoord(const CCPoint& texCoord);
+	void updateProgress(void);
+	void updateBar(void);
+	void updateRadial(void);
+	void updateColor(void);
+	CCPoint boundaryTexCoord(char index);
 
 protected:
-    CCProgressTimerType m_eType;
-    float m_fPercentage;
-    CCSprite *m_pSprite;
-    int m_nVertexDataCount;
-    ccV2F_C4B_T2F *m_pVertexData;
+	CCProgressTimerType m_eType;
+	float m_fPercentage;
+	CCSprite *m_pSprite;
+	int m_nVertexDataCount;
+	ccV2F_C4B_T2F *m_pVertexData;
 };
 
 }

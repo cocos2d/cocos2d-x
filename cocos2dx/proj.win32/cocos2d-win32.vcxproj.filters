@@ -593,9 +593,6 @@
     <ClInclude Include="..\include\cocos2d.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\selector_protocol.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCAccelerometer_platform.h">
       <Filter>platform</Filter>
     </ClInclude>

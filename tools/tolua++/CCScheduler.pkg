@@ -12,18 +12,18 @@ class CCScheduler : public CCObject
     void setTimeScale(ccTime fTimeScale);
 
 
-    int scheduleScriptFunc(LUA_FUNCTION functionRefID, ccTime fInterval, bool bPaused);
-    void unscheduleScriptFunc(int scheduleEntryID);
+    unsigned int scheduleScriptFunc(LUA_FUNCTION funcID, ccTime fInterval, bool bPaused);
+    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
 
-    void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
-    void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
+    void scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused);
+    void unscheduleUpdateForTarget(CCObject *pTarget);
 
-    void unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget);
+    void unscheduleAllSelectorsForTarget(CCObject *pTarget);
     void unscheduleAllSelectors(void);
 
-    void pauseTarget(SelectorProtocol *pTarget);
-    void resumeTarget(SelectorProtocol *pTarget);
-    bool isTargetPaused(SelectorProtocol *pTarget);
+    void pauseTarget(CCObject *pTarget);
+    void resumeTarget(CCObject *pTarget);
+    bool isTargetPaused(CCObject *pTarget);
 
     static CCScheduler* sharedScheduler(void);
 };

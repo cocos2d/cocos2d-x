@@ -410,11 +410,6 @@ namespace cocos2d
         }
     }
 
-void CCLens3D::setPosition(float x, float y)
-{
-    setPosition(ccp(x, y));
-}
-
 	void CCLens3D::update(ccTime time)
 	{
         CC_UNUSED_PARAM(time);
@@ -501,11 +496,6 @@ void CCLens3D::setPosition(float x, float y)
         m_positionInPixels.x = position.x * CC_CONTENT_SCALE_FACTOR();
         m_positionInPixels.y = position.y * CC_CONTENT_SCALE_FACTOR();
     }
-
-void CCRipple3D::setPosition(float x, float y)
-{
-    setPosition(ccp(x, y));
-}
 
 	CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
 	{
@@ -834,11 +824,6 @@ void CCRipple3D::setPosition(float x, float y)
         m_positionInPixels.x = position.x * CC_CONTENT_SCALE_FACTOR();
         m_positionInPixels.y = position.y * CC_CONTENT_SCALE_FACTOR();
     }
-
-void CCTwirl::setPosition(float x, float y)
-{
-    setPosition(ccp(x, y));
-}
 
 	CCObject* CCTwirl::copyWithZone(CCZone *pZone)
 	{

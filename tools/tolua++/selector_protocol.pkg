@@ -1,9 +1,0 @@
-
-class SelectorProtocol
-{
-    void callfunc();
-    void callfunc(CCNode* pSender);
-    void callfunc(CCNode* pSender, void* pData);
-    void menuHandler(CCObject* pSender);
-    void eventHandler(CCEvent* pEvent);
-};

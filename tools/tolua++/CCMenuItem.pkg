@@ -11,7 +11,8 @@ class CCMenuItem : public CCNode
 
     tolua_property__CCIsEnabled bool isEnabled;
 
-    void registerScriptHandler(LUA_FUNCTION functionRefID);
+    void registerScriptHandler(LUA_FUNCTION funcID);
+    void unregisterScriptHandler(void);
 };
 
 class CCMenuItemLabel : public CCMenuItem

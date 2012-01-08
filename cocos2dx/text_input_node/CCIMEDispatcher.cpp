@@ -100,7 +100,7 @@ public:
 //////////////////////////////////////////////////////////////////////////
 
 CCIMEDispatcher::CCIMEDispatcher()
-    : m_pImpl(new CCIMEDispatcher::Impl)
+: m_pImpl(new CCIMEDispatcher::Impl)
 {
     m_pImpl->init();
 }
@@ -143,11 +143,11 @@ bool CCIMEDispatcher::attachDelegateWithIME(CCIMEDelegate * pDelegate)
 
         if (m_pImpl->m_DelegateWithIme)
         {
-            // if old delegate canDetachWithIME return false
+            // if old delegate canDetachWithIME return false 
             // or pDelegate canAttachWithIME return false,
             // do nothing.
             CC_BREAK_IF(! m_pImpl->m_DelegateWithIme->canDetachWithIME()
-                        || ! pDelegate->canAttachWithIME());
+                || ! pDelegate->canAttachWithIME());
 
             // detach first
             CCIMEDelegate * pOldDelegate = m_pImpl->m_DelegateWithIme;
@@ -191,7 +191,7 @@ bool CCIMEDispatcher::detachDelegateWithIME(CCIMEDelegate * pDelegate)
 
 void CCIMEDispatcher::removeDelegate(CCIMEDelegate* pDelegate)
 {
-    do
+    do 
     {
         CC_BREAK_IF(! pDelegate || ! m_pImpl);
 
@@ -201,10 +201,10 @@ void CCIMEDispatcher::removeDelegate(CCIMEDelegate* pDelegate)
 
         if (m_pImpl->m_DelegateWithIme)
 
-            if (*iter == m_pImpl->m_DelegateWithIme)
-            {
-                m_pImpl->m_DelegateWithIme = 0;
-            }
+        if (*iter == m_pImpl->m_DelegateWithIme)
+        {
+            m_pImpl->m_DelegateWithIme = 0;
+        }
         m_pImpl->m_DelegateList.erase(iter);
     } while (0);
 }
@@ -215,7 +215,7 @@ void CCIMEDispatcher::removeDelegate(CCIMEDelegate* pDelegate)
 
 void CCIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
 {
-    do
+    do 
     {
         CC_BREAK_IF(! m_pImpl || ! pText || nLen <= 0);
 
@@ -228,7 +228,7 @@ void CCIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
 
 void CCIMEDispatcher::dispatchDeleteBackward()
 {
-    do
+    do 
     {
         CC_BREAK_IF(! m_pImpl);
 

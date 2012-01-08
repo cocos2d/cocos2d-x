@@ -65,6 +65,6 @@ protected:
     CCKeypadDelegate* m_pDelegate;
 };
 
-} //namespace   cocos2d
+} //namespace   cocos2d 
 
 #endif // __CCKEYPAD_DELEGATE_H__

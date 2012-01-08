@@ -40,78 +40,78 @@ namespace   cocos2d {
 //#import "Support/CCPointExtension.h"
 
 enum {
-    kSceneRadial = 0xc001,
+	kSceneRadial = 0xc001,
 };
 
 void CCTransitionRadialCCW::sceneOrder()
 {
-    m_bIsInSceneOnTop = false;
+	m_bIsInSceneOnTop = false;
 }
 
 CCProgressTimerType CCTransitionRadialCCW::radialType()
 {
-    return kCCProgressTimerTypeRadialCCW;
+	return kCCProgressTimerTypeRadialCCW;
 }
 
 void CCTransitionRadialCCW::onEnter()
 {
-    CCTransitionScene::onEnter();
-    // create a transparent color layer
-    // in which we are going to add our rendertextures
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
+	CCTransitionScene::onEnter();
+	// create a transparent color layer
+	// in which we are going to add our rendertextures
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-    // create the second render texture for outScene
-    CCRenderTexture *outTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
+	// create the second render texture for outScene
+	CCRenderTexture *outTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
 
-    if (NULL == outTexture)
-    {
-        return;
-    }
+	if (NULL == outTexture)
+	{
+		return;
+	}
+	
+	outTexture->getSprite()->setAnchorPoint(ccp(0.5f,0.5f));
+	outTexture->setPosition(ccp(size.width/2, size.height/2));
+	outTexture->setAnchorPoint(ccp(0.5f,0.5f));
 
-    outTexture->getSprite()->setAnchorPoint(ccp(0.5f,0.5f));
-    outTexture->setPosition(ccp(size.width/2, size.height/2));
-    outTexture->setAnchorPoint(ccp(0.5f,0.5f));
+	// render outScene to its texturebuffer
+	outTexture->clear(0,0,0,1);
+	outTexture->begin();
+	m_pOutScene->visit();
+	outTexture->end();
 
-    // render outScene to its texturebuffer
-    outTexture->clear(0,0,0,1);
-    outTexture->begin();
-    m_pOutScene->visit();
-    outTexture->end();
+	//	Since we've passed the outScene to the texture we don't need it.
+	this->hideOutShowIn();
 
-    //	Since we've passed the outScene to the texture we don't need it.
-    this->hideOutShowIn();
+	//	We need the texture in RenderTexture.
+	CCProgressTimer *outNode = CCProgressTimer::progressWithTexture(outTexture->getSprite()->getTexture());
+	// but it's flipped upside down so we flip the sprite
+	outNode->getSprite()->setFlipY(true);
+	//	Return the radial type that we want to use
+	outNode->setType(radialType());
+	outNode->setPercentage(100.f);
+	outNode->setPosition(ccp(size.width/2, size.height/2));
+	outNode->setAnchorPoint(ccp(0.5f,0.5f));
 
-    //	We need the texture in RenderTexture.
-    CCProgressTimer *outNode = CCProgressTimer::progressWithTexture(outTexture->getSprite()->getTexture());
-    // but it's flipped upside down so we flip the sprite
-    outNode->getSprite()->setFlipY(true);
-    //	Return the radial type that we want to use
-    outNode->setType(radialType());
-    outNode->setPercentage(100.f);
-    outNode->setPosition(ccp(size.width/2, size.height/2));
-    outNode->setAnchorPoint(ccp(0.5f,0.5f));
+	// create the blend action
+	CCAction * layerAction = CCSequence::actions
+	(
+		CCProgressFromTo::actionWithDuration(m_fDuration, 100.0f, 0.0f),
+		CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
+		NULL
+	);
+	// run the blend action
+	outNode->runAction(layerAction);
 
-    // create the blend action
-    CCAction * layerAction = CCSequence::actions
-                             (
-                                 CCProgressFromTo::actionWithDuration(m_fDuration, 100.0f, 0.0f),
-                                 CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
-                                 NULL
-                             );
-    // run the blend action
-    outNode->runAction(layerAction);
-
-    // add the layer (which contains our two rendertextures) to the scene
-    this->addChild(outNode, 2, kSceneRadial);
+	// add the layer (which contains our two rendertextures) to the scene
+	this->addChild(outNode, 2, kSceneRadial);
 }
 
 
 // clean up on exit
 void CCTransitionRadialCCW::onExit()
 {
-    // remove our layer and release all containing objects
-    this->removeChildByTag(kSceneRadial, false);
-    CCTransitionScene::onExit();
+	// remove our layer and release all containing objects 
+	this->removeChildByTag(kSceneRadial, false);
+	CCTransitionScene::onExit();
 }
 
 CCTransitionRadialCCW* CCTransitionRadialCCW::transitionWithDuration(ccTime t, CCScene* scene)
@@ -125,7 +125,7 @@ CCTransitionRadialCCW* CCTransitionRadialCCW::transitionWithDuration(ccTime t, C
 
 CCProgressTimerType CCTransitionRadialCW::radialType()
 {
-    return kCCProgressTimerTypeRadialCW;
+	return kCCProgressTimerTypeRadialCW;
 }
 
 CCTransitionRadialCW* CCTransitionRadialCW::transitionWithDuration(ccTime t, CCScene* scene)
@@ -137,4 +137,4 @@ CCTransitionRadialCW* CCTransitionRadialCW::transitionWithDuration(ccTime t, CCS
     return pScene;
 }
 
-}//namespace   cocos2d
+}//namespace   cocos2d 

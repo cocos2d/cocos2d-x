@@ -36,17 +36,17 @@ namespace   cocos2d {
 class CC_DLL CCTransitionRadialCCW : public CCTransitionScene
 {
 public:
-    CCTransitionRadialCCW() {}
-    virtual ~CCTransitionRadialCCW() {}
+	CCTransitionRadialCCW(){}
+	virtual ~CCTransitionRadialCCW(){}
 
-    virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter();
+	virtual void onExit();
 
     static CCTransitionRadialCCW* transitionWithDuration(ccTime t, CCScene* scene);
 
 protected:
-    virtual void sceneOrder();
-    virtual CCProgressTimerType radialType();
+	virtual void sceneOrder();
+	virtual CCProgressTimerType radialType();
 };
 
 /**
@@ -55,15 +55,15 @@ protected:
 class CC_DLL CCTransitionRadialCW : public CCTransitionRadialCCW
 {
 public:
-    CCTransitionRadialCW() {}
-    virtual ~CCTransitionRadialCW() {}
+	CCTransitionRadialCW(){}
+	virtual ~CCTransitionRadialCW(){}
     static CCTransitionRadialCW* transitionWithDuration(ccTime t, CCScene* scene);
 
 protected:
-    virtual CCProgressTimerType radialType();
+	virtual CCProgressTimerType radialType();
 };
 
-}//namespace   cocos2d
+}//namespace   cocos2d 
 
 #endif //__CCRADIAL_TRANSITION_H__
 

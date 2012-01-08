@@ -30,58 +30,58 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-CCAnimationCache* CCAnimationCache::s_pSharedAnimationCache = NULL;
+	CCAnimationCache* CCAnimationCache::s_pSharedAnimationCache = NULL;
 
-CCAnimationCache* CCAnimationCache::sharedAnimationCache(void)
-{
-    if (! s_pSharedAnimationCache)
-    {
-        s_pSharedAnimationCache = new CCAnimationCache();
-        s_pSharedAnimationCache->init();
-    }
+	CCAnimationCache* CCAnimationCache::sharedAnimationCache(void)
+	{
+        if (! s_pSharedAnimationCache)
+		{
+			s_pSharedAnimationCache = new CCAnimationCache();
+			s_pSharedAnimationCache->init();
+		}
 
-    return s_pSharedAnimationCache;
-}
+		return s_pSharedAnimationCache;
+	}
 
-void CCAnimationCache::purgeSharedAnimationCache(void)
-{
-    CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
-}
+	void CCAnimationCache::purgeSharedAnimationCache(void)
+	{
+        CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
+	}
 
-bool CCAnimationCache::init()
-{
-    m_pAnimations = new CCMutableDictionary<std::string, CCAnimation*>();
-    return true;
-}
+	bool CCAnimationCache::init()
+	{
+		m_pAnimations = new CCMutableDictionary<std::string, CCAnimation*>();
+		return true;
+	}
 
-CCAnimationCache::CCAnimationCache()
+	CCAnimationCache::CCAnimationCache()
     : m_pAnimations(NULL)
-{
-}
+	{
+	}
 
-CCAnimationCache::~CCAnimationCache()
-{
-    CCLOGINFO("cocos2d: deallocing %p", this);
-    CC_SAFE_RELEASE(m_pAnimations);
-}
+	CCAnimationCache::~CCAnimationCache()
+	{
+		CCLOGINFO("cocos2d: deallocing %p", this);
+		CC_SAFE_RELEASE(m_pAnimations);
+	}
 
-void CCAnimationCache::addAnimation(CCAnimation *animation, const char * name)
-{
-    m_pAnimations->setObject(animation, std::string(name));
-}
+	void CCAnimationCache::addAnimation(CCAnimation *animation, const char * name)
+	{
+		m_pAnimations->setObject(animation, std::string(name));
+	}
 
-void CCAnimationCache::removeAnimationByName(const char* name)
-{
-    if (! name)
-    {
-        return;
-    }
+	void CCAnimationCache::removeAnimationByName(const char* name)
+	{
+        if (! name)
+		{
+			return;
+		}
 
-    m_pAnimations->removeObjectForKey(std::string(name));
-}
+		m_pAnimations->removeObjectForKey(std::string(name));
+	}
 
-CCAnimation* CCAnimationCache::animationByName(const char* name)
-{
-    return m_pAnimations->objectForKey(std::string(name));
-}
+	CCAnimation* CCAnimationCache::animationByName(const char* name)
+	{
+		return m_pAnimations->objectForKey(std::string(name));
+	}
 }

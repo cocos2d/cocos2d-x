@@ -307,7 +307,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\include\CCUserDefault.h" />
     <ClInclude Include="..\include\CCZone.h" />
     <ClInclude Include="..\include\cocos2d.h" />
-    <ClInclude Include="..\include\selector_protocol.h" />
     <ClInclude Include="..\platform\CCAccelerometer_platform.h" />
     <ClInclude Include="..\platform\CCApplication_platform.h" />
     <ClInclude Include="..\platform\CCArchOptimalParticleSystem.h" />

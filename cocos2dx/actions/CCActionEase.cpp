@@ -1052,11 +1052,13 @@ namespace cocos2d {
 		if (time < 1 / 2.75)
 		{
 			return 7.5625f * time * time;
-    } else if (time < 2 / 2.75)
+		} else 
+		if (time < 2 / 2.75)
 		{
 			time -= 1.5f / 2.75f;
 			return 7.5625f * time * time + 0.75f;
-    } else if(time < 2.5 / 2.75)
+		} else
+		if(time < 2.5 / 2.75)
 		{
 			time -= 2.25f / 2.75f;
 			return 7.5625f * time * time + 0.9375f;
@@ -1392,8 +1394,7 @@ namespace cocos2d {
 		else
 		{
 			time = time - 2;
-			m_pOther->update((time * time * ((overshoot + 1) + overshoot)) / 2 + 1);
+			m_pOther->update((time * time * ((overshoot + 1) * time + overshoot)) / 2 + 1);
 		}
 	}
-
-} // namespace cocos2d
+}

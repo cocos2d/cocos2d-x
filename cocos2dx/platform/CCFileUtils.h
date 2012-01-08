@@ -76,9 +76,9 @@ public:
     /**
     @brief  Set the ResourcePath,we will find resource in this path
     @param pszResourcePath  The absolute resource path
-    @warning Don't call this function in android and iOS, it has not effect.
-    In android, if you want to read file other than apk, you shoud use invoke getFileData(), and pass the
-    absolute path.
+	@warning Don't call this function in android and iOS, it has not effect.
+	In android, if you want to read file other than apk, you shoud use invoke getFileData(), and pass the 
+	absolute path.
     */
     static void setResourcePath(const char *pszResourcePath);
 
@@ -95,11 +95,11 @@ public:
 	*/
 	static CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
 
-    /**
-    @brief   Get the writeable path
-    @return  The path that can write/read file
-    */
-    static std::string getWriteablePath();
+	/**
+	@brief   Get the writeable path
+	@return  The path that can write/read file
+	*/
+	static std::string getWriteablePath();
 
     /**
     @brief Set/Get whether pop-up a message box when the image load failed

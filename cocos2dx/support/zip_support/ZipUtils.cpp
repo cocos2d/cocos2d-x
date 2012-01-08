@@ -110,10 +110,12 @@ namespace cocos2d
 			if (err == Z_MEM_ERROR)
 			{
 				CCLOG("cocos2d: ZipUtils: Out of memory while decompressing map data!");
-        } else if (err == Z_VERSION_ERROR)
+			} else 
+			if (err == Z_VERSION_ERROR)
 			{
 				CCLOG("cocos2d: ZipUtils: Incompatible zlib version!");
-        } else if (err == Z_DATA_ERROR)
+			} else 
+			if (err == Z_DATA_ERROR)
 			{
 				CCLOG("cocos2d: ZipUtils: Incorrect zlib compressed data!");
 			}
