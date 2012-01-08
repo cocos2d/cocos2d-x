@@ -72,8 +72,6 @@ namespace cocos2d{
 		*/
 		static CCMenu*menuWithItem(CCMenuItem* item);
 
-                /** initializes an empty CCMenu */
-                bool init();
 		/** initializes a CCMenu with it's items */
 		bool initWithItems(CCMenuItem* item, va_list args);
 

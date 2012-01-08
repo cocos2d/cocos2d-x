@@ -31,79 +31,79 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-// implementation of CCAnimation
+	// implementation of CCAnimation
 
-CCAnimation* CCAnimation::animation()
-{
-    CCAnimation *pAnimation = new CCAnimation();
-    pAnimation->init();
-    pAnimation->autorelease();
+	CCAnimation* CCAnimation::animation()
+	{
+		CCAnimation *pAnimation = new CCAnimation();
+		pAnimation->init();
+		pAnimation->autorelease();
 
-    return pAnimation;
-}
+		return pAnimation;
+	} 
 
-bool CCAnimation::init()
-{
-    return initWithFrames(NULL, 0);
-}
+	bool CCAnimation::init()
+	{
+		return initWithFrames(NULL, 0);
+	}
 
-CCAnimation* CCAnimation::animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames)
-{
-    CCAnimation *pAnimation = new CCAnimation();
-    pAnimation->initWithFrames(frames);
-    pAnimation->autorelease();
+	CCAnimation* CCAnimation::animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames)
+	{
+		CCAnimation *pAnimation = new CCAnimation();
+		pAnimation->initWithFrames(frames);
+		pAnimation->autorelease();
 
-    return pAnimation;
-}
+		return pAnimation;
+	}
 
-CCAnimation* CCAnimation::animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay)
-{
-    CCAnimation *pAnimation = new CCAnimation();
-    pAnimation->initWithFrames(frames, delay);
-    pAnimation->autorelease();
+	CCAnimation* CCAnimation::animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay)
+	{
+		CCAnimation *pAnimation = new CCAnimation();
+		pAnimation->initWithFrames(frames, delay);
+		pAnimation->autorelease();
 
-    return pAnimation;
-}
+		return pAnimation;
+	}
 
-bool CCAnimation::initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay)
-{
-    m_fDelay = delay;
-    m_pobFrames = CCMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
-    m_pobFrames->retain();
+	bool CCAnimation::initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay)
+	{
+        m_fDelay = delay;
+		m_pobFrames = CCMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
+        m_pobFrames->retain();
+        
+		return true;
+	}
 
-    return true;
-}
+	bool CCAnimation::initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
+	{
+        return initWithFrames(pFrames, 0);
+	}
 
-bool CCAnimation::initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
-{
-    return initWithFrames(pFrames, 0);
-}
+	CCAnimation::~CCAnimation(void)
+	{
+		CCLOGINFO("cocos2d, deallocing %p", this);
+		// [name_ release];
+		m_nameStr.clear();
+		CC_SAFE_RELEASE(m_pobFrames);
+	}
 
-CCAnimation::~CCAnimation(void)
-{
-    CCLOGINFO("cocos2d, deallocing %p", this);
-    // [name_ release];
-    m_nameStr.clear();
-    CC_SAFE_RELEASE(m_pobFrames);
-}
+	void CCAnimation::addFrame(CCSpriteFrame *pFrame)
+	{
+		m_pobFrames->addObject(pFrame);
+	}
 
-void CCAnimation::addFrame(CCSpriteFrame *pFrame)
-{
-    m_pobFrames->addObject(pFrame);
-}
+	void CCAnimation::addFrameWithFileName(const char *pszFileName)
+	{
+		CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFileName);
+		CCRect rect = CCRectZero;
+		rect.size = pTexture->getContentSize();
+		CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pTexture, rect);
+		m_pobFrames->addObject(pFrame);
+	}
 
-void CCAnimation::addFrameWithFileName(const char *pszFileName)
-{
-    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFileName);
-    CCRect rect = CCRectZero;
-    rect.size = pTexture->getContentSize();
-    CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pTexture, rect);
-    m_pobFrames->addObject(pFrame);
-}
-
-void CCAnimation::addFrameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
-{
-    CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pobTexture, rect);
-    m_pobFrames->addObject(pFrame);
-}
+	void CCAnimation::addFrameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
+	{
+		CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pobTexture, rect);
+		m_pobFrames->addObject(pFrame);
+	}
 }

@@ -32,50 +32,49 @@ extern "C" {
 #include "lualoadexts.h"
 }
 
+#include "cocos2d.h"
 #include "LuaCocos2d.h"
-#include "LuaGameInterfaces.h"
 #include "CCArray.h"
-#include "CCTimer.h"
+#include "CCScheduler.h"
 
 namespace cocos2d
 {
 
-CCSchedulerFuncEntry* CCSchedulerFuncEntry::entryWithFunctionRefID(int functionRefID, ccTime fInterval, bool bPaused)
+CCSchedulerFuncEntry* CCSchedulerFuncEntry::entryWithFuncID(int uFuncID, ccTime fInterval, bool bPaused)
 {
-    CCSchedulerFuncEntry* entry = new CCSchedulerFuncEntry();
-    entry->initWithFunctionRefID(functionRefID, fInterval, bPaused);
-    entry->autorelease();
-    return entry;
+    CCSchedulerFuncEntry* pEntry = new CCSchedulerFuncEntry();
+    pEntry->initWithuFuncID(uFuncID, fInterval, bPaused);
+    pEntry->autorelease();
+    return pEntry;
 }
 
-bool CCSchedulerFuncEntry::initWithFunctionRefID(int functionRefID, ccTime fInterval, bool bPaused)
+bool CCSchedulerFuncEntry::initWithuFuncID(int uFuncID, ccTime fInterval, bool bPaused)
 {
-    m_timer = new CCTimer();
-    m_timer->initWithScriptFunc(functionRefID, fInterval);
-    m_timer->autorelease();
-    m_timer->retain();
-    m_functionRefID = functionRefID;
-    m_paused = bPaused;
-    LUALOG("[LUA] ADD function refID: %04d, add schedule entryID: %d", m_functionRefID, m_entryID);
+    m_pTimer = new CCTimer();
+    m_pTimer->initWithScriptFuncID(uFuncID, fInterval);
+    m_pTimer->autorelease();
+    m_pTimer->retain();
+    m_uFuncID = uFuncID;
+    m_bPaused = bPaused;
+    LUALOG("[LUA] ADD function refID: %04d, add schedule entryID: %d", m_uFuncID, m_entryID);
     return true;
 }
 
 CCSchedulerFuncEntry::CCSchedulerFuncEntry(void)
-: m_timer(NULL)
-, m_functionRefID(0)
-, m_paused(true)
-, m_isMarkDeleted(false)
+: m_pTimer(NULL)
+, m_uFuncID(0)
+, m_bPaused(true)
+, m_bMarkedForDeletion(false)
 {
-    static int entryIDCount = 0;
-    ++entryIDCount;
-    m_entryID = entryIDCount;
+    static unsigned int uEntryCount = 0;
+    m_uEntryID = ++uEntryCount;
 }
 
 CCSchedulerFuncEntry::~CCSchedulerFuncEntry(void)
 {
-    m_timer->release();
-    CCLuaEngine::sharedEngine()->removeLuaFunctionRef(m_functionRefID);
-    LUALOG("[LUA] DEL function refID: %04d, remove schedule entryID: %d", m_functionRefID, m_entryID);
+    m_pTimer->release();
+    CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uFuncID);
+    LUALOG("[LUA] DEL function refID: %04d, remove schedule entryID: %d", m_uFuncID, m_entryID);
 }
 
 // ----------------------------
@@ -89,7 +88,6 @@ CCLuaEngine::CCLuaEngine()
     luaL_openlibs(m_state);
     tolua_Cocos2d_open(m_state);
     tolua_prepare_ccobject_table(m_state);
-    tolua_LuaGameInterfaces_open(m_state);
     luax_loadexts(m_state);
 }
 
@@ -115,14 +113,14 @@ void CCLuaEngine::purgeSharedEngine()
 
 // -------------------------------------------
 
-void CCLuaEngine::removeCCObject(CCObject *object)
+void CCLuaEngine::removeCCObjectByID(unsigned int uLuaID)
 {
-    tolua_remove_ccobject_by_refid(m_state, object->m_refID);
+    tolua_remove_ccobject_by_refid(m_state, uLuaID);
 }
 
-void CCLuaEngine::removeLuaFunctionRef(int functionRefID)
+void CCLuaEngine::removeLuaFuncID(int uFuncID)
 {
-    tolua_remove_function_by_refid(m_state, functionRefID);
+    tolua_remove_function_by_refid(m_state, uFuncID);
 }
 
 void CCLuaEngine::addSearchPath(const char* path)
@@ -134,6 +132,20 @@ void CCLuaEngine::addSearchPath(const char* path)
     lua_pushfstring(m_state, "%s;%s/?.lua", cur_path, path);        /* stack: package newpath */
     lua_setfield(m_state, -2, "path");      /* package.path = newpath, stack: package */
     lua_pop(m_state, 1);                                            /* stack: - */
+}
+
+int CCLuaEngine::executeString(const char *codes)
+{
+	int nRet =	luaL_dostring(m_state, codes);
+	lua_gc(m_state, LUA_GCCOLLECT, 0);
+    
+    if (nRet != 0)
+    {
+        CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
+        lua_pop(m_state, 1);
+        return nRet;
+    }
+    return 0;
 }
 
 int CCLuaEngine::executeScriptFile(const char* filename)
@@ -182,16 +194,16 @@ int	CCLuaEngine::executeGlobalFunction(const char* function_name)
     return ret;
 }
 
-int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
+int CCLuaEngine::executeFunctionByRefID(int uFuncID, int numArgs)
 {
     lua_pushstring(m_state, TOLUA_REFID_FUNC_MAPPING);
     lua_rawget(m_state, LUA_REGISTRYINDEX);                         /* stack: ... refid_func */
-    lua_pushinteger(m_state, functionRefId);                        /* stack: ... refid_func refid */
+    lua_pushinteger(m_state, uFuncID);                        /* stack: ... refid_func refid */
     lua_rawget(m_state, -2);                                        /* stack: ... refid_func func */
     
     if (!lua_isfunction(m_state, -1))
     {
-        CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", functionRefId);
+        CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", uFuncID);
         lua_pop(m_state, 2 + numArgs);
         return 0;
     }
@@ -216,13 +228,13 @@ int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
     }
     catch (exception& e)
     {
-        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", functionRefId, e.what());
+        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", uFuncID, e.what());
         lua_settop(m_state, 0);
         return 0;
     }
     catch (...)
     {
-        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", functionRefId);
+        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", uFuncID);
         lua_settop(m_state, 0);
         return 0;
     }
@@ -248,59 +260,60 @@ int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
     return ret;
 }
 
-int CCLuaEngine::executeFunctionWithIntegerData(int functionRefId, int data)
+int CCLuaEngine::executeFunctionWithIntegerData(int uFuncID, int data)
 {
     lua_pushinteger(m_state, data);
-    return executeFunctionByRefID(functionRefId, 1);
+    return executeFunctionByRefID(uFuncID, 1);
 }
 
-int CCLuaEngine::executeFunctionWithFloatData(int functionRefId, float data)
+int CCLuaEngine::executeFunctionWithFloatData(int uFuncID, float data)
 {
     lua_pushnumber(m_state, data);
-    return executeFunctionByRefID(functionRefId, 1);
+    return executeFunctionByRefID(uFuncID, 1);
 }
 
-int CCLuaEngine::executeFunctionWithBooleanData(int functionRefId, bool data)
+int CCLuaEngine::executeFunctionWithBooleanData(int uFuncID, bool data)
 {
     lua_pushboolean(m_state, data);
-    return executeFunctionByRefID(functionRefId, 1);
+    return executeFunctionByRefID(uFuncID, 1);
 }
 
 // functions for excute touch event
-int CCLuaEngine::executeTouchEvent(int functionRefId, int eventType, CCTouch *pTouch)
+int CCLuaEngine::executeTouchEvent(int uFuncID, int eventType, CCTouch *pTouch)
 {
     CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->locationInView(pTouch->view()));
     lua_pushinteger(m_state, eventType);
     lua_pushnumber(m_state, pt.x);
     lua_pushnumber(m_state, pt.y);
-    return executeFunctionByRefID(functionRefId, 3);
+    return executeFunctionByRefID(uFuncID, 3);
 }
 
-int CCLuaEngine::executeTouchesEvent(int functionRefId, int eventType, CCSet *pTouches)
+int CCLuaEngine::executeTouchesEvent(int uFuncID, int eventType, CCSet *pTouches)
 {
     lua_pushinteger(m_state, eventType);
     lua_newtable(m_state);
     
+    CCDirector* pDirector = CCDirector::sharedDirector();
     CCSetIterator it = pTouches->begin();
-    CCTouch* touch;
+    CCTouch* pTouch;
     int n = 1;
     while (it != pTouches->end())
     {
-        touch = (CCTouch*)*it;
-        const CCPoint& pos = touch->locationInView(0);
-        lua_pushnumber(m_state, pos.x);
+        pTouch = (CCTouch*)*it;
+        CCPoint pt = pDirector->convertToGL(pTouch->locationInView(pTouch->view()));
+        lua_pushnumber(m_state, pt.x);
         lua_rawseti(m_state, -2, n++);
-        lua_pushnumber(m_state, pos.y);
+        lua_pushnumber(m_state, pt.y);
         lua_rawseti(m_state, -2, n++);
         ++it;
     }
     
-    return executeFunctionByRefID(functionRefId, 2);
+    return executeFunctionByRefID(uFuncID, 2);
 }
 
-int CCLuaEngine::executeSchedule(int functionRefID, ccTime dt)
+int CCLuaEngine::executeSchedule(int uFuncID, ccTime dt)
 {
-    return executeFunctionWithFloatData(functionRefID, dt);
+    return executeFunctionWithFloatData(uFuncID, dt);
 }
 
 } // namespace cocos2d

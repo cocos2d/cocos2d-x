@@ -41,21 +41,21 @@ class CCData;
  @brief Structure which can tell where mimap begins and how long is it
 */
 struct CCPVRMipmap {
-    unsigned char *address;
-    unsigned int len;
+	unsigned char *address;
+	unsigned int len;
 };
 
 /**
- @brief Detemine how many mipmaps can we have.
+ @brief Detemine how many mipmaps can we have. 
  Its same as define but it respects namespaces
 */
 enum {
-    CC_PVRMIPMAP_MAX = 16,
+	CC_PVRMIPMAP_MAX = 16,
 };
 
 
 /** CCTexturePVR
-
+     
  Object that loads PVR images.
 
  Supported PVR formats:
@@ -69,10 +69,10 @@ enum {
     - AI88
     - PVRTC 4BPP
     - PVRTC 2BPP
-
+     
  Limitations:
     Pre-generated mipmaps, such as PVR textures with mipmap levels embedded in file,
-    are only supported if all individual sprites are of _square_ size.
+    are only supported if all individual sprites are of _square_ size. 
     To use mipmaps with non-square textures, instead call CCTexture2D#generateMipmap on the sheet texture itself
     (and to save space, save the PVR sprite sheet without mip maps included).
 */
@@ -80,59 +80,59 @@ class CCTexturePVR : public CCObject
 {
 public:
 
-    CCTexturePVR();
-    virtual ~CCTexturePVR();
+	CCTexturePVR();
+	virtual ~CCTexturePVR();
 
-    /** initializes a CCTexturePVR with a path */
-    bool initWithContentsOfFile(const char* path);
+	/** initializes a CCTexturePVR with a path */
+	bool initWithContentsOfFile(const char* path);
 
-    /** creates and initializes a CCTexturePVR with a path */
-    static CCTexturePVR * pvrTextureWithContentsOfFile(const char* path);
+	/** creates and initializes a CCTexturePVR with a path */
+	static CCTexturePVR * pvrTextureWithContentsOfFile(const char* path);
 
-    CC_PROPERTY_READONLY(GLuint, m_uName, Name)
-    CC_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
-    CC_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
-    CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_eFormat, Format)
-    CC_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
+	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
+	CC_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
+	CC_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
+	CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_eFormat, Format)
+	CC_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
 
-    // cocos2d integration
-    CC_PROPERTY(bool, m_bRetainName, RetainName);
+	// cocos2d integration
+	CC_PROPERTY(bool, m_bRetainName, RetainName);
 
 protected:
 
-    /*
-    	Unpacks data (data of pvr texture file) and determine
-    	how many mipmaps it uses (m_uNumberOfMipmaps). Adresses
-    	of mimaps (m_asMipmaps). And basic data like size, format
-    	and alpha presence
-    */
+	/*
+		Unpacks data (data of pvr texture file) and determine 
+		how many mipmaps it uses (m_uNumberOfMipmaps). Adresses
+		of mimaps (m_asMipmaps). And basic data like size, format
+		and alpha presence
+	*/
     bool unpackPVRData(unsigned char* data, unsigned int len);
 
-    /*
-    	Binds all mipmaps to the GL state machine as separate
-    	textures
-    */
-    bool createGLTexture();
+	/*
+		Binds all mipmaps to the GL state machine as separate
+		textures
+	*/
+	bool createGLTexture();
 
-    /*
-    	Index to the tableFormats array. Which tells us what exact
-    	format is file which initializes this object.
-    */
-    unsigned int m_uTableFormatIndex;
+	/*
+		Index to the tableFormats array. Which tells us what exact 
+		format is file which initializes this object. 
+	*/
+	unsigned int m_uTableFormatIndex;
 
-    /*
-    	How many mipmaps do we have. It must be at least one
-    	when proper initialization finishes
-    */
-    unsigned int m_uNumberOfMipmaps;
+	/*
+		How many mipmaps do we have. It must be at least one
+		when proper initialization finishes
+	*/
+	unsigned int m_uNumberOfMipmaps;
 
-    /*
-    	Makrs for mipmaps. Each entry contains position in file
-    	and lenght of data which represents one mipmap.
-    */
-    struct CCPVRMipmap m_asMipmaps[CC_PVRMIPMAP_MAX];
+	/*
+		Makrs for mipmaps. Each entry contains position in file
+		and lenght of data which represents one mipmap.
+	*/
+	struct CCPVRMipmap m_asMipmaps[CC_PVRMIPMAP_MAX];
 };
-}//namespace   cocos2d
+}//namespace   cocos2d 
 
 
 #endif //__CCPVRTEXTURE_H__

@@ -14,7 +14,6 @@
 
 #include "tolua++.h"
 #include "lauxlib.h"
-#include "tolua_fix.h"
 
 #include <stdlib.h>
 

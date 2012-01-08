@@ -1,10 +1,3 @@
-//
-//  lualoadexts.c
-//  Mystic-Fish-Puzzle
-//
-//  Created by  on 11-10-3.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
-//
 
 #include "lualoadexts.h"
  
@@ -15,9 +8,6 @@
 
 // cjson
 #include "lua_cjson.h"
-
-// llthread
-#include "llthreads.h"
 
 static luaL_Reg luax_exts[] = {
     {"socket.core", luaopen_socket_core},
@@ -31,7 +21,6 @@ static luaL_Reg luax_exts[] = {
     {"mime", luaopen_socket_mime},
     {"ltn12", luaopen_socket_ltn12},
     {"cjson", luaopen_cjson},
-    {"llthreads", luaopen_llthreads},
     {NULL, NULL}
 };
 

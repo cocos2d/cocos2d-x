@@ -321,11 +321,12 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_IS_RETINA_DISPLAY_SUPPORTED 0
 #endif
 
-
-/** Enable lua support
- */
-#define LUA_ENGINE 1
-#define LUA_ENGINE_DEBUG 1
-
+/** Enable Lua engine */
+#ifndef CC_LUA_ENGINE_ENABLED
+#define CC_LUA_ENGINE_ENABLED 0
+#endif
+#ifndef CC_LUA_ENGINE_DEBUG
+#define CC_LUA_ENGINE_DEBUG 0
+#endif
 
 #endif // __CCCONFIG_H__

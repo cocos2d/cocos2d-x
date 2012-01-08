@@ -116,7 +116,8 @@ void CCActionManager::actionAllocWithHashElement(tHashElement *pElement)
 	if (pElement->actions == NULL)
 	{
 		pElement->actions = ccArrayNew(4);
-    } else if (pElement->actions->num == pElement->actions->max)
+	}else 
+	if (pElement->actions->num == pElement->actions->max)
 	{
 		ccArrayDoubleCapacity(pElement->actions);
 	}
@@ -246,7 +247,7 @@ void CCActionManager::removeAllActionsFromTarget(CCObject *pTarget)
 	}
 	else
 	{
-        //		CCLOG("cocos2d: removeAllActionsFromTarget: Target not found");
+//		CCLOG("cocos2d: removeAllActionsFromTarget: Target not found");
 	}
 }
 
@@ -375,7 +376,8 @@ void CCActionManager::update(ccTime dt)
 					// accidentally deallocating itself before finishing its step, we retained
 					// it. Now that step is done, it's safe to release it.
 					m_pCurrentTarget->currentAction->release();
-                } else if (m_pCurrentTarget->currentAction->isDone())
+				} else
+				if (m_pCurrentTarget->currentAction->isDone())
 				{
 					m_pCurrentTarget->currentAction->stop();
 
@@ -404,4 +406,4 @@ void CCActionManager::update(ccTime dt)
 	m_pCurrentTarget = NULL;
 }
 
-} // namespace cocos2d
+}

@@ -322,7 +322,7 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 }
 */
 
-CCSprite::CCSprite()
+CCSprite::CCSprite(void)
 : m_pobTexture(NULL)
 {
 }
@@ -833,20 +833,10 @@ void CCSprite::setPosition(const CCPoint& pos)
     SET_DIRTY_RECURSIVELY();
 }
 
-void CCSprite::setPosition(float x, float y)
-{
-    setPosition(ccp(x, y));
-}
-
 void CCSprite::setPositionInPixels(const CCPoint& pos)
 {
 	CCNode::setPositionInPixels(pos);
 	SET_DIRTY_RECURSIVELY();
-}
-
-void CCSprite::setPositionInPixels(float x, float y)
-{
-    setPositionInPixels(ccp(x, y));
 }
 
 void CCSprite::setRotation(float fRotation)

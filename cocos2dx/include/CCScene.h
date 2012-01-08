@@ -48,17 +48,6 @@ public:
 	virtual ~CCScene();
 	bool init();
 	static CCScene *node(void);
-
-#if LUA_ENGINE
-    virtual void onEnter();
-    virtual void onExit();
-    
-    void registerScriptEventsHandler(int functionRefID);
-    void unregisterScriptEventsHandler(void);
-    
-protected:
-    int m_eventsFunctionRefID;
-#endif // LUA_ENGINE
 };
 }//namespace   cocos2d 
 

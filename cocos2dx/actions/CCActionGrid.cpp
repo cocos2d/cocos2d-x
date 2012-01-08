@@ -411,5 +411,4 @@ namespace cocos2d
 			m_pTarget->getGrid()->setReuseGrid(m_pTarget->getGrid()->getReuseGrid() + m_nTimes);
 		}
 	}
-
 } // end of namespace cocos2d

@@ -301,7 +301,7 @@ void CCPlace::startWithTarget(CCNode *pTarget) {
 // CallFunc
 //
 
-CCCallFunc * CCCallFunc::actionWithTarget(SelectorProtocol* pSelectorTarget,
+CCCallFunc * CCCallFunc::actionWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFunc selector) {
 	CCCallFunc *pRet = new CCCallFunc();
 
@@ -315,24 +315,7 @@ CCCallFunc * CCCallFunc::actionWithTarget(SelectorProtocol* pSelectorTarget,
 	return NULL;
 }
 
-CCCallFunc* CCCallFunc::actionWithScriptFuncName(const char* pszFuncName) {
-	CCCallFunc *pRet = new CCCallFunc();
-
-	if (pRet && pRet->initWithScriptFuncName(pszFuncName)) {
-		pRet->autorelease();
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
-}
-
-bool CCCallFunc::initWithScriptFuncName(const char *pszFuncName) {
-	this->m_scriptFuncName = string(pszFuncName);
-	return true;
-}
-
-bool CCCallFunc::initWithTarget(SelectorProtocol* pSelectorTarget) {
+bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
 	if (pSelectorTarget) 
 	{
 		dynamic_cast<CCObject*>(pSelectorTarget)->retain();
@@ -362,7 +345,6 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
 	CCActionInstant::copyWithZone(pZone);
 	pRet->initWithTarget(m_pSelectorTarget);
 	pRet->m_pCallFunc = m_pCallFunc;
-	pRet->m_scriptFuncName = m_scriptFuncName;
 	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
@@ -376,12 +358,7 @@ void CCCallFunc::execute() {
 	if (m_pCallFunc) {
 		(m_pSelectorTarget->*m_pCallFunc)();
 	}
-
-    //    if (m_scriptFuncName)
-    //    {
-    //        LuaEngine::sharedEngine()->executeCallFunc(m_scriptFuncName.c_str());
-    //    }
-	}
+}
 
 //
 // CallFuncN
@@ -390,14 +367,9 @@ void CCCallFuncN::execute() {
 	if (m_pCallFuncN) {
 		(m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
 	}
+}
 
-    //    if (m_scriptFuncName)
-    //    {
-    //        LuaEngine::sharedEngine()->executeCallFuncN(m_scriptFuncName.c_str(), m_pTarget);
-    //    }
-	}
-
-CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget,
+CCCallFuncN * CCCallFuncN::actionWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncN selector) {
 	CCCallFuncN *pRet = new CCCallFuncN();
 
@@ -410,19 +382,7 @@ CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget,
 	return NULL;
 }
 
-CCCallFuncN* CCCallFuncN::actionWithScriptFuncName(const char *pszFuncName) {
-	CCCallFuncN *pRet = new CCCallFuncN();
-
-	if (pRet && pRet->initWithScriptFuncName(pszFuncName)) {
-		pRet->autorelease();
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
-}
-
-bool CCCallFuncN::initWithTarget(SelectorProtocol* pSelectorTarget,
+bool CCCallFuncN::initWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncN selector) {
 	if (CCCallFunc::initWithTarget(pSelectorTarget)) {
 		m_pCallFuncN = selector;
@@ -453,7 +413,7 @@ CCObject * CCCallFuncN::copyWithZone(CCZone* zone) {
 //
 // CallFuncND
 //
-CCCallFuncND * CCCallFuncND::actionWithTarget(SelectorProtocol* pSelectorTarget,
+CCCallFuncND * CCCallFuncND::actionWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncND selector, void* d) {
 	CCCallFuncND* pRet = new CCCallFuncND();
 
@@ -466,21 +426,7 @@ CCCallFuncND * CCCallFuncND::actionWithTarget(SelectorProtocol* pSelectorTarget,
 	return NULL;
 }
 
-CCCallFuncND* CCCallFuncND::actionWithScriptFuncName(const char* pszFuncName,
-		void *d) {
-	CCCallFuncND* pRet = new CCCallFuncND();
-
-	if (pRet && pRet->initWithScriptFuncName(pszFuncName)) {
-		pRet->autorelease();
-		pRet->m_pData = d;
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
-}
-
-bool CCCallFuncND::initWithTarget(SelectorProtocol* pSelectorTarget,
+bool CCCallFuncND::initWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncND selector, void* d) {
 	if (CCCallFunc::initWithTarget(pSelectorTarget)) {
 		m_pData = d;
@@ -513,12 +459,7 @@ void CCCallFuncND::execute() {
 	if (m_pCallFuncND) {
 		(m_pSelectorTarget->*m_pCallFuncND)(m_pTarget, m_pData);
 	}
-
-    //	if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()) {
-    //		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncND(
-    //				m_scriptFuncName.c_str(), m_pTarget, m_pData);
-    //	}
-	}
+}
 
 //
 // CCCallFuncO
@@ -535,14 +476,9 @@ void CCCallFuncO::execute() {
 	if (m_pCallFuncO) {
 		(m_pSelectorTarget->*m_pCallFuncO)(m_pObject);
 	}
+}
 
-    //	if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()) {
-    //		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc0(
-    //				m_scriptFuncName.c_str(), m_pObject);
-    //	}
-	}
-
-CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget,
+CCCallFuncO * CCCallFuncO::actionWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncO selector, CCObject* pObject) {
 	CCCallFuncO *pRet = new CCCallFuncO();
 
@@ -555,19 +491,7 @@ CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget,
 	return NULL;
 }
 
-CCCallFuncO* CCCallFuncO::actionWithScriptFuncName(const char *pszFuncName) {
-	CCCallFuncO *pRet = new CCCallFuncO();
-
-	if (pRet && pRet->initWithScriptFuncName(pszFuncName)) {
-		pRet->autorelease();
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
-}
-
-bool CCCallFuncO::initWithTarget(SelectorProtocol* pSelectorTarget,
+bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncO selector, CCObject* pObject) {
 	if (CCCallFunc::initWithTarget(pSelectorTarget)) {
 		m_pObject = pObject;
@@ -597,5 +521,4 @@ CCObject * CCCallFuncO::copyWithZone(CCZone* zone) {
 	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
-
-} // namespace cocos2d
+}

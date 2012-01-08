@@ -130,5 +130,4 @@ void CCCamera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)
 	*pUpY = m_fUpY;
 	*pUpZ = m_fUpZ;
 }
-
 }//namespace   cocos2d 

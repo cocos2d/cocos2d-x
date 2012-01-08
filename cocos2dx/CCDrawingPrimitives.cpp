@@ -315,5 +315,4 @@ void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCP
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);	
 }
-
 }//namespace   cocos2d 

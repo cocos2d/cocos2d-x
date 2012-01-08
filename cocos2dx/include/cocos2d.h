@@ -88,7 +88,6 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
-#include "CCTimer.h"
 
 // havn't implement on wophone
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE)
@@ -105,7 +104,6 @@ THE SOFTWARE.
 #include "CCZone.h"
 #include "CCGeometry.h"
 #include "CCAffineTransform.h"
-#include "selector_protocol.h"
 #include "CCTouch.h"
 #include "CCPointExtension.h"
 
@@ -117,7 +115,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "CCFileUtils.h"
 #include "CCAccelerometer.h"
-
+ 
 //
 // cocos2d macros
 //
@@ -128,6 +126,6 @@ namespace   cocos2d {
 
 const char* cocos2dVersion();
 
-}//namespace   cocos2d
+}//namespace   cocos2d 
 
 #endif // __COCOS2D_H__

@@ -10,7 +10,7 @@ class CCLayer : public CCNode
     void setIsKeypadEnabled(bool bValue);
     bool getIsKeypadEnabled();
 
-    void registerScriptTouchHandler(LUA_FUNCTION functionRefID,
+    void registerScriptTouchHandler(LUA_FUNCTION funcID,
                                     bool isMultiTouches = false,
                                     int nPriority = 0,
                                     bool bSwallowsTouches = false);

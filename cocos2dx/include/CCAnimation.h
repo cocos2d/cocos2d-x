@@ -33,100 +33,90 @@ THE SOFTWARE.
 #include <string>
 
 namespace   cocos2d {
-class CCSpriteFrame;
-class CCTexture2D;
-/** A CCAnimation object is used to perform animations on the CCSprite objects.
+	class CCSpriteFrame;
+    class CCTexture2D;
+	/** A CCAnimation object is used to perform animations on the CCSprite objects.
 
-The CCAnimation object contains CCSpriteFrame objects, and a possible delay between the frames.
-You can animate a CCAnimation object by using the CCAnimate action. Example:
+	The CCAnimation object contains CCSpriteFrame objects, and a possible delay between the frames.
+	You can animate a CCAnimation object by using the CCAnimate action. Example:
 
-[sprite runAction:[CCAnimate actionWithAnimation:animation]];
+	[sprite runAction:[CCAnimate actionWithAnimation:animation]];
 
-*/
-class CC_DLL CCAnimation : public CCObject
-{
-protected:
-    std::string m_nameStr;
-    float m_fDelay;
-    CCMutableArray<CCSpriteFrame*> *m_pobFrames;
+	*/
+	class CC_DLL CCAnimation : public CCObject
+	{
+	protected:
+		std::string m_nameStr;
+		float m_fDelay;
+		CCMutableArray<CCSpriteFrame*> *m_pobFrames;
 
-public:
-    // attributes
+	public:
+		// attributes
 
-    /** get name of the animation */
-    inline const char* getName(void) {
-        return m_nameStr.c_str();
-    }
-    /** set name of the animation */
-    inline void setName(const char *pszName) {
-        m_nameStr = pszName;
-    }
+		/** get name of the animation */
+		inline const char* getName(void) { return m_nameStr.c_str(); }
+		/** set name of the animation */
+		inline void setName(const char *pszName){ m_nameStr = pszName; }
 
-    /** get delay between frames in seconds */
-    inline float getDelay(void) {
-        return m_fDelay;
-    }
-    /** set delay between frames in seconds */
-    inline void setDelay(float fDelay) {
-        m_fDelay = fDelay;
-    }
+		/** get delay between frames in seconds */
+		inline float getDelay(void) { return m_fDelay; }
+		/** set delay between frames in seconds */
+		inline void setDelay(float fDelay) { m_fDelay = fDelay; }
 
-    /** get array of frames */
-    inline CCMutableArray<CCSpriteFrame*>* getFrames(void) {
-        return m_pobFrames;
-    }
-    /** set array of frames, the Frames is retained */
-    inline void setFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
-    {
-        CC_SAFE_RETAIN(pFrames);
-        CC_SAFE_RELEASE(m_pobFrames);
-        m_pobFrames = pFrames;
-    }
+		/** get array of frames */
+		inline CCMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
+		/** set array of frames, the Frames is retained */
+		inline void setFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
+		{
+			CC_SAFE_RETAIN(pFrames);
+			CC_SAFE_RELEASE(m_pobFrames);
+			m_pobFrames = pFrames;
+		}
 
-public:
-    ~CCAnimation(void);
+	public:
+		~CCAnimation(void);
 
-    /** Initializes a CCAnimation with frames.
-    @since v0.99.5
-    */
-    bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames);
+		/** Initializes a CCAnimation with frames.
+		@since v0.99.5
+		*/
+		bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames);
 
-    /** Initializes a CCAnimation with frames and a delay between frames
-    @since v0.99.5
-    */
-    bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay);
+		/** Initializes a CCAnimation with frames and a delay between frames
+		@since v0.99.5
+		*/
+		bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay);
 
-    /** adds a frame to a CCAnimation */
-    void addFrame(CCSpriteFrame *pFrame);
+		/** adds a frame to a CCAnimation */
+		void addFrame(CCSpriteFrame *pFrame);
 
-    /** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
-    Added to facilitate the migration from v0.8 to v0.9.
-    */
-    void addFrameWithFileName(const char *pszFileName);
+		/** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
+		Added to facilitate the migration from v0.8 to v0.9.
+		*/
+		void addFrameWithFileName(const char *pszFileName);
 
-    /** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
-    Added to facilitate the migration from v0.8 to v0.9.
-    */
-    void addFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+		/** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
+		Added to facilitate the migration from v0.8 to v0.9.
+		*/
+		void addFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
 
-    bool init(void);
+		bool init(void);
 
-public:
-    /** Creates an animation
-    @since v0.99.5
-    */
-    static CCAnimation* animation(void);
+	public:
+		/** Creates an animation
+		@since v0.99.5
+		*/
+        static CCAnimation* animation(void);
 
-    /** Creates an animation with frames.
-    @since v0.99.5
-    */
-    static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames);
+		/** Creates an animation with frames.
+		@since v0.99.5
+		*/
+		static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames);
 
-    /* Creates an animation with frames and a delay between frames.
-    @since v0.99.5
-    */
-    static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay);
-};
+		/* Creates an animation with frames and a delay between frames.
+		@since v0.99.5
+		*/
+		static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay);
+	};
 } // end of name sapce cocos2d
 
 #endif // __CC_ANIMATION_H__

@@ -643,5 +643,4 @@ namespace cocos2d
 			--m_nReuseGrid;
 		}
 	}
-
-} // namespace cocos2d
+} // end of namespace cocos2d

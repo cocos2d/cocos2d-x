@@ -42,95 +42,95 @@ CCTransitionPageTurn::~CCTransitionPageTurn()
 /** creates a base transition with duration and incoming scene */
 CCTransitionPageTurn * CCTransitionPageTurn::transitionWithDuration(ccTime t, CCScene *scene, bool backwards)
 {
-    CCTransitionPageTurn * pTransition = new CCTransitionPageTurn();
-    pTransition->initWithDuration(t,scene,backwards);
-    pTransition->autorelease();
-    return pTransition;
+	CCTransitionPageTurn * pTransition = new CCTransitionPageTurn();
+	pTransition->initWithDuration(t,scene,backwards);
+	pTransition->autorelease();
+	return pTransition;
 }
 
 /** initializes a transition with duration and incoming scene */
 bool CCTransitionPageTurn::initWithDuration(ccTime t, CCScene *scene, bool backwards)
 {
-    // XXX: needed before [super init]
-    m_bBack = backwards;
+	// XXX: needed before [super init]
+	m_bBack = backwards;
 
-    if( CCTransitionScene::initWithDuration(t, scene) )
-    {
-        // do something
-    }
-    return true;
+	if( CCTransitionScene::initWithDuration(t, scene) )
+	{
+		// do something
+	}
+	return true;
 }
 
 void CCTransitionPageTurn::sceneOrder()
 {
-    m_bIsInSceneOnTop = m_bBack;
+	m_bIsInSceneOnTop = m_bBack;
 }
 
 void CCTransitionPageTurn::onEnter()
 {
-    CCTransitionScene::onEnter();
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    int x,y;
-    if( s.width > s.height)
-    {
-        x=16;
+	CCTransitionScene::onEnter();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+	int x,y;
+	if( s.width > s.height)
+	{
+		x=16;
         y=12;
-    }
-    else
-    {
-        x=12;
+	}
+	else
+	{
+		x=12;
         y=16;
-    }
+	}
 
-    CCActionInterval *action  = this->actionWithSize(ccg(x,y));
+	CCActionInterval *action  = this->actionWithSize(ccg(x,y));
 
-    if(! m_bBack )
-    {
-        m_pOutScene->runAction
-        (
-            CCSequence::actions
-            (
-                action,
-                CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
-                CCStopGrid::action(),
-                NULL
-            )
-        );
-    }
-    else
-    {
-        // to prevent initial flicker
-        m_pInScene->setIsVisible(false);
-        m_pInScene->runAction
-        (
-            CCSequence::actions
-            (
-                CCShow::action(),
-                action,
-                CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
-                CCStopGrid::action(),
-                NULL
-            )
-        );
-    }
+	if(! m_bBack )
+	{
+		m_pOutScene->runAction
+		(
+			CCSequence::actions
+			(
+				action,
+				CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
+				CCStopGrid::action(),
+				NULL
+			)
+		);
+	}
+	else
+	{
+		// to prevent initial flicker
+		m_pInScene->setIsVisible(false);
+		m_pInScene->runAction
+		(
+			CCSequence::actions
+			(
+			    CCShow::action(),
+				action,
+				CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
+				CCStopGrid::action(),
+				NULL
+			)
+		);
+	}
 }
 
 
 CCActionInterval* CCTransitionPageTurn:: actionWithSize(const ccGridSize& vector)
 {
-    if( m_bBack )
-    {
-        // Get hold of the PageTurn3DAction
-        return CCReverseTime::actionWithAction
-               (
-                   CCPageTurn3D::actionWithSize(vector, m_fDuration)
-               );
-    }
-    else
-    {
-        // Get hold of the PageTurn3DAction
-        return CCPageTurn3D::actionWithSize(vector, m_fDuration);
-    }
+	if( m_bBack )
+	{
+		// Get hold of the PageTurn3DAction
+		return CCReverseTime::actionWithAction
+		(
+			CCPageTurn3D::actionWithSize(vector, m_fDuration)
+		);
+	}
+	else
+	{
+		// Get hold of the PageTurn3DAction
+		return CCPageTurn3D::actionWithSize(vector, m_fDuration);
+	}
 }
 
-}//namespace   cocos2d
+}//namespace   cocos2d 

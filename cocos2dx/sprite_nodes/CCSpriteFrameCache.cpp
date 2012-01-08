@@ -153,7 +153,8 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 				offset,
 				sourceSize
 				);
-        } else if (format == 3)
+		} else
+		if (format == 3)
 		{
 			// get values
 			CCSize spriteSize = CCSizeFromString(valueForKey("spriteSize", frameDict));

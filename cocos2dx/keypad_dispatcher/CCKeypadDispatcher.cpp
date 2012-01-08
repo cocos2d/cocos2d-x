@@ -34,9 +34,9 @@ static CCKeypadDispatcher* s_KeypadDispatcher = NULL;
 //
 //------------------------------------------------------------------
 CCKeypadDispatcher::CCKeypadDispatcher()
-    : m_bLocked(false)
-    , m_bToAdd(false)
-    , m_bToRemove(false)
+: m_bLocked(false)
+, m_bToAdd(false)
+, m_bToRemove(false)
 {
     m_pDelegates = new KeypadDelegateArray;
 
@@ -46,16 +46,16 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 
 CCKeypadDispatcher::~CCKeypadDispatcher()
 {
-    CC_SAFE_RELEASE(m_pDelegates);
-    if (m_pHandlersToAdd)
-    {
-        ccCArrayFree(m_pHandlersToAdd);
-    }
-
-    if (m_pHandlersToRemove)
-    {
-        ccCArrayFree(m_pHandlersToRemove);
-    }
+	CC_SAFE_RELEASE(m_pDelegates);
+	if (m_pHandlersToAdd)
+	{
+		ccCArrayFree(m_pHandlersToAdd);
+	}
+    
+	if (m_pHandlersToRemove)
+	{
+		ccCArrayFree(m_pHandlersToRemove);
+	}    
 }
 
 CCKeypadDispatcher* CCKeypadDispatcher::sharedDispatcher()

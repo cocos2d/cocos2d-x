@@ -2187,4 +2187,4 @@ CCActionInterval* CCAnimate::reverse(void)
 	return CCAnimate::actionWithDuration(m_fDuration, pNewAnim, m_bRestoreOriginalFrame);
 }
 
-} // namespace cocos2d
+}

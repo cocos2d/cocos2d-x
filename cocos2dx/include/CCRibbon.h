@@ -50,73 +50,73 @@ class CCRibbonSegment;
 */
 class CC_DLL CCRibbon : public CCNode, public CCTextureProtocol
 {
-    /** Texture used by the ribbon. Conforms to CCTextureProtocol protocol */
-    CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
-    /** Texture lengths in pixels */
-    CC_PROPERTY(float, m_fTextureLength, TextureLength)
-    /** GL blendind function */
-    CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
-    /** color used by the Ribbon (RGBA) */
-    CC_PROPERTY_PASS_BY_REF(ccColor4B, m_tColor, Color)
+	/** Texture used by the ribbon. Conforms to CCTextureProtocol protocol */
+	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
+	/** Texture lengths in pixels */
+	CC_PROPERTY(float, m_fTextureLength, TextureLength)
+	/** GL blendind function */
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	/** color used by the Ribbon (RGBA) */
+	CC_PROPERTY_PASS_BY_REF(ccColor4B, m_tColor, Color)
 
 public:
-    CCRibbon() : m_pTexture(0), m_pSegments(0), m_pDeletedSegments(0) {}
-    virtual ~CCRibbon();
+    CCRibbon() : m_pTexture(0), m_pSegments(0), m_pDeletedSegments(0){}
+	virtual ~CCRibbon();
 
-    /** creates the ribbon */
-    static CCRibbon * ribbonWithWidth(float w, const char *path, float length, const ccColor4B& color, float fade);
-    /** init the ribbon */
-    bool initWithWidth(float w, const char *path, float length, const ccColor4B& color, float fade);
-    /** add a point to the ribbon */
-    void addPointAt(CCPoint location, float width);
-    /** polling function */
-    void update(ccTime delta);
-    /** determine side of line */
-    float sideOfLine(const CCPoint& p, const CCPoint& l1, const CCPoint& l2);
-    // super method
-    virtual void draw();
+	/** creates the ribbon */
+	static CCRibbon * ribbonWithWidth(float w, const char *path, float length, const ccColor4B& color, float fade);
+	/** init the ribbon */
+	bool initWithWidth(float w, const char *path, float length, const ccColor4B& color, float fade);
+	/** add a point to the ribbon */
+	void addPointAt(CCPoint location, float width);
+	/** polling function */
+	void update(ccTime delta);
+	/** determine side of line */
+	float sideOfLine(const CCPoint& p, const CCPoint& l1, const CCPoint& l2);
+	// super method
+	virtual void draw();
 private:
-    /** rotates a point around 0, 0 */
-    CCPoint rotatePoint(const CCPoint& vec, float rotation);
+	/** rotates a point around 0, 0 */
+	CCPoint rotatePoint(const CCPoint& vec, float rotation);
 protected:
-    CCMutableArray<CCRibbonSegment*> *m_pSegments;
-    CCMutableArray<CCRibbonSegment*> *m_pDeletedSegments;
+	CCMutableArray<CCRibbonSegment*> *m_pSegments;
+	CCMutableArray<CCRibbonSegment*> *m_pDeletedSegments;
 
-    CCPoint	m_tLastPoint1;
-    CCPoint	m_tLastPoint2;
-    CCPoint	m_tLastLocation;
+	CCPoint	m_tLastPoint1;
+	CCPoint	m_tLastPoint2;
+	CCPoint	m_tLastLocation;
 // 	int		m_nVertCount_;
-    float	m_fTexVPos;
-    float	m_fCurTime;
-    float	m_fFadeTime;
-    float	m_fDelta;
-    float	m_fLastWidth;
-    float	m_fLastSign;
-    bool	m_bPastFirstPoint;
+	float	m_fTexVPos;
+	float	m_fCurTime;
+	float	m_fFadeTime;
+	float	m_fDelta;
+	float	m_fLastWidth;
+	float	m_fLastSign;
+	bool	m_bPastFirstPoint;
 };
 
 /** @brief object to hold ribbon segment data */
 class CC_DLL CCRibbonSegment : public CCObject
 {
 public:
-    GLfloat	m_pVerts[50*6];
-    GLfloat	m_pCoords[50*4];
-    GLubyte	m_pColors[50*8];
-    float	m_pCreationTime[50];
-    bool	m_bFinished;
-    unsigned int	m_uEnd;
-    unsigned int	m_uBegin;
+	GLfloat	m_pVerts[50*6];
+	GLfloat	m_pCoords[50*4];
+	GLubyte	m_pColors[50*8];
+	float	m_pCreationTime[50];
+	bool	m_bFinished;
+	unsigned int	m_uEnd;
+	unsigned int	m_uBegin;
 public:
-    CCRibbonSegment()
-        : m_bFinished(false)
+	CCRibbonSegment()
+		: m_bFinished(false)
         , m_uEnd(0)
-        , m_uBegin(0)
-    {}
-    virtual ~CCRibbonSegment();
-    char * description();
-    bool init();
-    void reset();
-    void draw(float curTime, float fadeTime, const ccColor4B& color);
+		, m_uBegin(0)		
+	{}
+	virtual ~CCRibbonSegment();
+	char * description();
+	bool init();
+	void reset();
+	void draw(float curTime, float fadeTime, const ccColor4B& color);
 };
 
 } // namespace cocos2d

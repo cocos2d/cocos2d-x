@@ -38,7 +38,7 @@ class CCRibbon;
 * the streak to fade out, the minimum segment size it how many pixels the
 * streak will move before adding a new ribbon segement, and the texture
 * length is the how many pixels the texture is stretched across. The texture
-* is vertically aligned along the streak segemnts.
+* is vertically aligned along the streak segemnts. 
 *
 * Limitations:
 *   CCMotionStreak, by default, will use the GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA blending function.
@@ -50,31 +50,31 @@ class CCRibbon;
 */
 class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol
 {
-    /** Ribbon used by MotionStreak (weak reference) */
-    CC_PROPERTY_READONLY(CCRibbon*, m_pRibbon, Ribbon)
-    //CCTextureProtocol methods
-    CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
-    CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	/** Ribbon used by MotionStreak (weak reference) */
+	CC_PROPERTY_READONLY(CCRibbon*, m_pRibbon, Ribbon)
+	//CCTextureProtocol methods
+	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 public:
-    CCMotionStreak()
-        : m_pRibbon(NULL)
+	CCMotionStreak()
+		: m_pRibbon(NULL)
         , m_pTexture(NULL)
         , m_fSegThreshold(0.0)
-        , m_fWidth(0.0)
-    {}
-    virtual ~CCMotionStreak() {}
-    /** creates the a MotionStreak. The image will be loaded using the TextureMgr. */
-    static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, const ccColor4B& color);
+		, m_fWidth(0.0)		
+	{}
+	virtual ~CCMotionStreak(){}
+	/** creates the a MotionStreak. The image will be loaded using the TextureMgr. */
+	static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, const ccColor4B& color);
 
-    /** initializes a MotionStreak. The file will be loaded using the TextureMgr. */
-    bool initWithFade(float fade, float seg, const char *imagePath, float width, float length, const ccColor4B& color);
+	/** initializes a MotionStreak. The file will be loaded using the TextureMgr. */
+	bool initWithFade(float fade, float seg, const char *imagePath, float width, float length, const ccColor4B& color);
 
-    /** polling function */
-    void update(ccTime delta);
+	/** polling function */
+	void update(ccTime delta);
 protected:
-    float		m_fSegThreshold;
-    float		m_fWidth;
-    CCPoint		m_tLastLocation;
+	float		m_fSegThreshold;
+	float		m_fWidth;
+	CCPoint		m_tLastLocation;
 };
 
 } // namespace cocos2d

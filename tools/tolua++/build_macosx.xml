@@ -19,8 +19,8 @@
     <replace file="LuaCocos2d.cpp">
       <replacetoken><![CDATA[tolua_pushusertype_ccobject(tolua_S,(void*)tolua_ret]]></replacetoken>
       <replacevalue><![CDATA[int uID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pRefID = (tolua_ret) ? &tolua_ret->m_refID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, uID, pRefID, (void*)tolua_ret]]></replacevalue>
+    unsigned int* pLuaID = (tolua_ret) ? &tolua_ret->m_uLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, uID, pLuaID, (void*)tolua_ret]]></replacevalue>
     </replace>
 
     <replace file="LuaCocos2d.cpp">
@@ -40,8 +40,8 @@
     </replace>
 
     <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[LUA_FUNCTION functionRefID = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
-      <replacevalue><![CDATA[int functionRefID = (tolua_ref_function(tolua_S,]]></replacevalue>
+      <replacetoken><![CDATA[LUA_FUNCTION funcID = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
+      <replacevalue><![CDATA[unsigned int funcID = (tolua_ref_function(tolua_S,]]></replacevalue>
     </replace>
 
     <replace file="LuaCocos2d.cpp">

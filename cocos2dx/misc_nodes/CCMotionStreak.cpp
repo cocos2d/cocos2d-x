@@ -34,73 +34,73 @@ namespace cocos2d {
  * the streak to fade out, the minimum segment size it how many pixels the
  * streak will move before adding a new ribbon segement, and the texture
  * length is the how many pixels the texture is stretched across. The texture
- * is vertically aligned along the streak segemnts.
+ * is vertically aligned along the streak segemnts. 
  */
 //implementation CCMotionStreak
 
 CCMotionStreak * CCMotionStreak::streakWithFade(float fade, float seg, const char *imagePath, float width, float length, const ccColor4B& color)
 {
-    CCMotionStreak *pRet = new CCMotionStreak();
-    if(pRet && pRet->initWithFade(fade, seg, imagePath, width, length, color))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet)
-    return NULL;
+	CCMotionStreak *pRet = new CCMotionStreak();
+	if(pRet && pRet->initWithFade(fade, seg, imagePath, width, length, color))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	CC_SAFE_DELETE(pRet)
+	return NULL;
 }
 
 bool CCMotionStreak::initWithFade(float fade, float seg, const char *imagePath, float width, float length, const ccColor4B& color)
 {
-    m_fSegThreshold = seg;
-    m_fWidth = width;
-    m_tLastLocation = CCPointZero;
-    m_pRibbon = CCRibbon::ribbonWithWidth(m_fWidth, imagePath, length, color, fade);
-    this->addChild(m_pRibbon);
+	m_fSegThreshold = seg;
+	m_fWidth = width;
+	m_tLastLocation = CCPointZero;
+	m_pRibbon = CCRibbon::ribbonWithWidth(m_fWidth, imagePath, length, color, fade);
+	this->addChild(m_pRibbon);
 
-    // update ribbon position. Use schedule:interval and not scheduleUpdated. (cocos2d-iphone)issue #1075
-    this->schedule(schedule_selector(CCMotionStreak::update), 0);
-    return true;
+	// update ribbon position. Use schedule:interval and not scheduleUpdated. (cocos2d-iphone)issue #1075
+	this->schedule(schedule_selector(CCMotionStreak::update), 0);
+	return true;
 }
 
 void CCMotionStreak::update(ccTime delta)
 {
-    CCPoint location = this->convertToWorldSpace(CCPointZero);
-    m_pRibbon->setPosition(ccp(-1*location.x, -1*location.y));
+	CCPoint location = this->convertToWorldSpace(CCPointZero);
+	m_pRibbon->setPosition(ccp(-1*location.x, -1*location.y));
     float len = ccpLength(ccpSub(m_tLastLocation, location));
-    if (len > m_fSegThreshold)
-    {
-        m_pRibbon->addPointAt(location, m_fWidth);
-        m_tLastLocation = location;
-    }
-    m_pRibbon->update(delta);
+	if (len > m_fSegThreshold)
+	{
+		m_pRibbon->addPointAt(location, m_fWidth);
+		m_tLastLocation = location;
+	}
+	m_pRibbon->update(delta);
 }
 
 //MotionStreak - CocosNodeTexture protocol
 
 void CCMotionStreak::setTexture(CCTexture2D* texture)
 {
-    m_pRibbon->setTexture(texture);
+	m_pRibbon->setTexture(texture);
 }
 
 CCTexture2D * CCMotionStreak::getTexture()
 {
-    return m_pRibbon->getTexture();
+	return m_pRibbon->getTexture();
 }
 
 ccBlendFunc CCMotionStreak::getBlendFunc()
 {
-    return m_pRibbon->getBlendFunc();
+	return m_pRibbon->getBlendFunc();
 }
 
 void CCMotionStreak::setBlendFunc(ccBlendFunc blendFunc)
 {
-    m_pRibbon->setBlendFunc(blendFunc);
+	m_pRibbon->setBlendFunc(blendFunc);
 }
 
 CCRibbon * CCMotionStreak::getRibbon()
 {
-    return m_pRibbon;
+	return m_pRibbon;
 }
 
 }// namespace cocos2d

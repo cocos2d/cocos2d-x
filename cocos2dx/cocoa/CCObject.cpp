@@ -25,9 +25,9 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 #include "CCAutoreleasePool.h"
-#include <assert.h>
+#include "ccMacros.h"
 
-#ifdef LUA_ENGINE
+#if CC_LUA_ENGINE_ENABLED
 #include "CCLuaEngine.h"
 #endif
 
@@ -36,7 +36,7 @@ namespace   cocos2d {
 CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
     CC_UNUSED_PARAM(pZone);
-	CCAssert(0, "not implement");
+    CCAssert(0, "not implement");
     return 0;
 }
 
@@ -45,11 +45,11 @@ CCObject::CCObject(void)
 	static unsigned int uObjectCount = 0;
 
 	m_uID = ++uObjectCount;
+    m_uLuaID = 0;
 
 	// when the object is created, the refrence count of it is 1
 	m_uReference = 1;
 	m_bManaged = false;
-    m_refID = 0;
 }
 
 CCObject::~CCObject(void)
@@ -60,18 +60,19 @@ CCObject::~CCObject(void)
 	{
 		CCPoolManager::getInstance()->removeObject(this);
 	}
-    
-#ifdef LUA_ENGINE
-    if (m_refID != 0)
+
+#if CC_LUA_ENGINE_ENABLED
+    // if the object is referenced by Lua engine, remove it
+    if (m_uLuaID)
     {
-        CCLuaEngine::sharedEngine()->removeCCObject(this);
-}
+        CCLuaEngine::sharedEngine()->removeCCObjectByID(m_uLuaID);
+    }
 #endif
 }
 
 CCObject* CCObject::copy()
 {
-        return copyWithZone(0);
+    return copyWithZone(0);
 }
 
 void CCObject::release(void)

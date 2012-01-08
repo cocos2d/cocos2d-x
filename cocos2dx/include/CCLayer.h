@@ -63,6 +63,7 @@ public:
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
+	// default implements are used to call script callback if exist
 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
@@ -81,17 +82,17 @@ public:
 	@since v0.8.0
 	*/
 	virtual void registerWithTouchDispatcher(void);
-#if LUA_ENGINE
-    void registerScriptTouchHandler(int functionRefID,
-                                    bool isMultiTouches = false,
-                                    int nPriority = INT_MIN,
-                                    bool bSwallowsTouches = false);
+    
+#if CC_LUA_ENGINE_ENABLED
+    /** Register script touch events handler */
+    void registerScriptTouchHandler(unsigned int uFuncID, bool isMultiTouches, int nPriority, bool bSwallowsTouches);
+    /** Unregister script touch events handler */
     void unregisterScriptTouchHandler(void);
 #endif
-    
-    virtual void touchDelegateRetain();
+
+	virtual void touchDelegateRetain();
 	virtual void touchDelegateRelease();
-    
+
 	/** whether or not it will receive Touch events.
 	You can enable / disable touch events with this property.
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.
@@ -109,12 +110,12 @@ public:
     */
     CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
     
-#if LUA_ENGINE
+#if CC_LUA_ENGINE_ENABLED
 private:
-    int m_scriptTouchHandler;
-    
-    int excuteScriptTouchHandler(int eventType, CCTouch *pTouch);
-    int excuteScriptTouchHandler(int eventType, CCSet *pTouches);
+    // Script touch events handler function reference ID
+    unsigned int m_uScriptHandlerFuncID;
+    int excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
+    int excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
 #endif
 };
     

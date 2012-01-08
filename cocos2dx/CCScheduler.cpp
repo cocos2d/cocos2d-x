@@ -25,21 +25,18 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScheduler.h"
-#include "CCTimer.h"
 #include "ccMacros.h"
 #include "support/data_support/utlist.h"
-#include "support/data_support/uthash.h"
-#include "CCArray.h"
+#include "support/data_support/ccCArray.h"
+#include "CCMutableArray.h"
 
-#if LUA_ENGINE
+#if CC_LUA_ENGINE_ENABLED
 #include "CCLuaEngine.h"
 #endif
 
 using namespace std;
 
-namespace cocos2d
-{
-
+namespace   cocos2d {
 
 // data structures
 
@@ -47,18 +44,18 @@ namespace cocos2d
 typedef struct _listEntry
 {
 	struct	_listEntry	*prev, *next;
-	SelectorProtocol	*target;		// not retained (retained by hashUpdateEntry)
+	CCObject	*target;		// not retained (retained by hashUpdateEntry)
 	int				    priority;
 	bool				paused;
-	
 	bool				markedForDeletion; // selector will no longer be called and entry will be removed at end of the next tick
+
 } tListEntry;
 
 typedef struct _hashUpdateEntry
 {
 	tListEntry			**list;		// Which list does it belong to ?
 	tListEntry			*entry;		// entry in the list
-	SelectorProtocol	*target;		// hash key (retained)
+	CCObject	*target;		// hash key (retained)
 	UT_hash_handle		hh;
 } tHashUpdateEntry;
 
@@ -66,13 +63,111 @@ typedef struct _hashUpdateEntry
 typedef struct _hashSelectorEntry
 {
 	ccArray          	        *timers;
-	SelectorProtocol			*target;	// hash key (retained)
+	CCObject			*target;	// hash key (retained)
 	unsigned int				timerIndex;
 	CCTimer						*currentTimer;
 	bool						currentTimerSalvaged;
 	bool						paused;
 	UT_hash_handle				hh;
 } tHashSelectorEntry;
+
+// implementation CCTimer
+
+CCTimer::CCTimer()
+: m_pfnSelector(NULL)
+, m_fInterval(0.0f)
+, m_pTarget(NULL)
+, m_fElapsed(0.0f)
+#if CC_LUA_ENGINE_ENABLED
+, m_uScriptFuncID(0)
+#endif
+{
+
+}
+
+CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
+{
+	CCTimer *pTimer = new CCTimer();
+
+	pTimer->initWithTarget(pTarget, pfnSelector);
+	pTimer->autorelease();
+
+	return pTimer;
+}
+
+CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
+{
+	CCTimer *pTimer = new CCTimer();
+
+	pTimer->initWithTarget(pTarget, pfnSelector, fSeconds);
+	pTimer->autorelease();
+
+	return pTimer;
+}
+
+#if CC_LUA_ENGINE_ENABLED
+CCTimer* CCTimer::timerWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds)
+{
+    CCTimer *pTimer = new CCTimer();
+
+    pTimer->initWithScriptFuncID(uFuncID, fSeconds);
+    pTimer->autorelease();
+
+    return pTimer;
+}
+
+bool CCTimer::initWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds)
+{
+    m_uScriptFuncID = uFuncID;
+    m_fElapsed = -1;
+    m_fInterval = fSeconds;
+
+    return true;
+}
+#endif // CC_LUA_ENGINE_ENABLED
+
+bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
+{
+    return initWithTarget(pTarget, pfnSelector, 0);
+}
+
+bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
+{
+	m_pTarget = pTarget;
+	m_pfnSelector = pfnSelector;
+	m_fElapsed = -1;
+	m_fInterval = fSeconds;
+
+	return true;
+}
+
+void CCTimer::update(ccTime dt)
+{
+	if (m_fElapsed == -1)
+	{
+		m_fElapsed = 0;
+	}
+	else
+	{
+		m_fElapsed += dt;
+	}
+
+	if (m_fElapsed >= m_fInterval)
+	{
+        if (0 != m_pfnSelector)
+		{
+			(m_pTarget->*m_pfnSelector)(m_fElapsed);
+			m_fElapsed = 0;
+		}
+#if CC_LUA_ENGINE_ENABLED
+        if (m_uScriptFuncID)
+        {
+            CCLuaEngine::sharedEngine()->executeSchedule(m_uScriptFuncID, m_fElapsed);
+            m_fElapsed = 0;
+        }
+#endif
+	}
+}
 
 
 // implementation of CCScheduler
@@ -88,7 +183,9 @@ CCScheduler::CCScheduler(void)
 , m_pHashForSelectors(NULL)
 , m_pCurrentTarget(NULL)
 , m_bCurrentTargetSalvaged(false)
-, m_scriptFunctions(NULL)
+#if CC_LUA_ENGINE_ENABLED
+, m_pScriptEntries(NULL)
+#endif
 {
 	CCAssert(pSharedScheduler == NULL, "");
 }
@@ -96,9 +193,11 @@ CCScheduler::CCScheduler(void)
 CCScheduler::~CCScheduler(void)
 {
 	unscheduleAllSelectors();
-    unscheduleAllScriptFunctions();
+
 	pSharedScheduler = NULL;
-    m_scriptFunctions->release();
+#if CC_LUA_ENGINE_ENABLED
+    m_pScriptEntries->release();
+#endif
 }
 
 CCScheduler* CCScheduler::sharedScheduler(void)
@@ -131,10 +230,12 @@ bool CCScheduler::init(void)
     m_bCurrentTargetSalvaged = false;
 	m_pHashForSelectors = NULL;
 	m_bUpdateHashLocked = false;
-
-    m_scriptFunctions = CCArray::arrayWithCapacity(20);
-    m_scriptFunctions->retain();
     
+#if CC_LUA_ENGINE_ENABLED
+    m_pScriptEntries = CCArray::arrayWithCapacity(20);
+    m_pScriptEntries->retain();
+#endif
+
 	return true;
 }
 
@@ -147,7 +248,7 @@ void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 	free(pElement);
 }
 
-void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, float fInterval, bool bPaused)
+void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused)
 {
 	CCAssert(pfnSelector, "");
 	CCAssert(pTarget, "");
@@ -177,7 +278,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 	{
 		pElement->timers = ccArrayNew(10);
 	}
-	else 
+	else
 	{
 		for (unsigned int i = 0; i < pElement->timers->num; ++i)
 		{
@@ -188,7 +289,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 				CCLOG("CCSheduler#scheduleSelector. Selector already scheduled.");
 				timer->m_fInterval = fInterval;
 				return;
-			}		
+			}
 		}
 		ccArrayEnsureExtraCapacity(pElement->timers, 1);
 	}
@@ -196,10 +297,10 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 	CCTimer *pTimer = new CCTimer();
 	pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
 	ccArrayAppendObject(pElement->timers, pTimer);
-	pTimer->release();	
+	pTimer->release();
 }
 
-void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget)
+void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget)
 {
 	// explicity handle nil arguments when removing an object
 	if (pTarget == 0 || pfnSelector == 0)
@@ -253,7 +354,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 	}
 }
 
-void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int nPriority, bool bPaused)
+void CCScheduler::priorityIn(tListEntry **ppList, CCObject *pTarget, int nPriority, bool bPaused)
 {
 	tListEntry *pListElement = (tListEntry *)malloc(sizeof(*pListElement));
 
@@ -310,7 +411,7 @@ void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
 }
 
-void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool bPaused)
+void CCScheduler::appendIn(_listEntry **ppList, CCObject *pTarget, bool bPaused)
 {
 	tListEntry *pListElement = (tListEntry *)malloc(sizeof(*pListElement));
 
@@ -329,7 +430,7 @@ void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool 
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
 }
 
-void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused)
+void CCScheduler::scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused)
 {
 
 	tHashUpdateEntry *pHashElement = NULL;
@@ -380,7 +481,7 @@ void CCScheduler::removeUpdateFromHash(struct _listEntry *entry)
 	}
 }
 
-void CCScheduler::unscheduleUpdateForTarget(const SelectorProtocol *pTarget)
+void CCScheduler::unscheduleUpdateForTarget(const CCObject *pTarget)
 {
 	if (pTarget == NULL)
 	{
@@ -430,11 +531,13 @@ void CCScheduler::unscheduleAllSelectors(void)
 	{
         unscheduleUpdateForTarget(pEntry->target);
 	}
+    
+#if CC_LUA_ENGINE_ENABLED
+    m_pScriptEntries->removeAllObjects();
+#endif
+}
 
-    unscheduleAllScriptFunctions();
-	}
-
-void CCScheduler::unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget)
+void CCScheduler::unscheduleAllSelectorsForTarget(CCObject *pTarget)
 {
 	// explicit NULL handling
 	if (pTarget == NULL)
@@ -470,7 +573,29 @@ void CCScheduler::unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget)
 	unscheduleUpdateForTarget(pTarget);
 }
 
-void CCScheduler::resumeTarget(SelectorProtocol *pTarget)
+#if CC_LUA_ENGINE_ENABLED
+unsigned int CCScheduler::scheduleScriptFunc(unsigned int uFuncID, ccTime fInterval, bool bPaused)
+{
+    CCSchedulerFuncEntry* pEntry = CCSchedulerFuncEntry::entryWithFuncID(uFuncID, fInterval, bPaused);
+    m_pScriptEntries->addObject(pEntry);
+    return pEntry->getEntryID();
+}
+
+void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
+{
+    for (int i = m_pScriptEntries->count() - 1; i >= 0; i--)
+    {
+        CCSchedulerFuncEntry* pEntry = static_cast<CCSchedulerFuncEntry*>(m_pScriptEntries->objectAtIndex(i));
+        if (pEntry->getEntryID() == uScheduleScriptEntryID)
+        {
+            pEntry->markedForDeletion();
+            break;
+        }
+    }
+}
+#endif
+
+void CCScheduler::resumeTarget(CCObject *pTarget)
 {
 	CCAssert(pTarget != NULL, "");
 
@@ -492,7 +617,7 @@ void CCScheduler::resumeTarget(SelectorProtocol *pTarget)
 	}
 }
 
-void CCScheduler::pauseTarget(SelectorProtocol *pTarget)
+void CCScheduler::pauseTarget(CCObject *pTarget)
 {
 	CCAssert(pTarget != NULL, "");
 
@@ -514,7 +639,7 @@ void CCScheduler::pauseTarget(SelectorProtocol *pTarget)
 	}
 }
 
-bool CCScheduler::isTargetPaused(SelectorProtocol *pTarget)
+bool CCScheduler::isTargetPaused(CCObject *pTarget)
 {
     CCAssert( pTarget != NULL, "target must be non nil" );
 
@@ -555,7 +680,7 @@ void CCScheduler::tick(ccTime dt)
 	{
 		if ((! pEntry->paused) && (! pEntry->markedForDeletion))
 		{
-			pEntry->target->update(dt);			
+			pEntry->target->update(dt);
 		}
 	}
 
@@ -564,7 +689,7 @@ void CCScheduler::tick(ccTime dt)
 	{
 		if ((! pEntry->paused) && (! pEntry->markedForDeletion))
 		{
-			pEntry->target->update(dt);			
+			pEntry->target->update(dt);
 		}
 	}
 
@@ -606,6 +731,22 @@ void CCScheduler::tick(ccTime dt)
 			removeHashElement(m_pCurrentTarget);
 		}
 	}
+    
+#if CC_LUA_ENGINE_ENABLED
+    // Interate all over the script callbacks
+    for (int i = m_pScriptEntries->count() - 1; i >= 0; i--)
+    {
+        CCSchedulerFuncEntry* pEntry = static_cast<CCSchedulerFuncEntry*>(m_pScriptEntries->objectAtIndex(i));
+        if (pEntry->isMarkedForDeletion())
+        {
+            m_pScriptEntries->removeObjectAtIndex(i);
+        }
+        else if (!pEntry->isPaused())
+        {
+            pEntry->getTimer()->update(dt);
+        }
+    }
+#endif // CC_LUA_ENGINE_ENABLED
 
 	// delete all updates that are morked for deletion
 	// updates with priority < 0
@@ -638,24 +779,6 @@ void CCScheduler::tick(ccTime dt)
 	m_bUpdateHashLocked = false;
 
 	m_pCurrentTarget = NULL;
-
-#if LUA_ENGINE
-	// Interate all script functions
-    for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
-	{
-        CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
-        if (!entry->isMarkDeleted() && !entry->isPaused())
-		{
-            entry->getTimer()->update(dt);
-		}
-    }
-
-    for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
-    {
-        CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
-        if (entry->isMarkDeleted()) m_scriptFunctions->removeObjectAtIndex(i);
-	}
-#endif // LUA_ENGINE
 }
 
 void CCScheduler::purgeSharedScheduler(void)
@@ -663,35 +786,4 @@ void CCScheduler::purgeSharedScheduler(void)
 	pSharedScheduler->release();
 	pSharedScheduler = NULL;
 }
-
-
-#if LUA_ENGINE
-int CCScheduler::scheduleScriptFunc(int functionRefID, ccTime fInterval, bool bPaused)
-{
-    CCSchedulerFuncEntry* entry = CCSchedulerFuncEntry::entryWithFunctionRefID(functionRefID, fInterval, bPaused);
-    m_scriptFunctions->addObject(entry);
-    return entry->getEntryID();
-}
-
-void CCScheduler::unscheduleScriptFunc(int scheduleEntryID)
-{
-    for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
-    {
-        CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
-        if (entry->getEntryID() == scheduleEntryID)
-        {
-            entry->markDeleted();
-            break;
-        }
-    }
-}
-
-void CCScheduler::unscheduleAllScriptFunctions()
-{
-    m_scriptFunctions->removeAllObjects();
-}
-
-#endif // LUA_ENGINE
-    
-}//namespace   cocos2d 
-
+}//namespace   cocos2d

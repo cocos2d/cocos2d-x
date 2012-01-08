@@ -28,7 +28,7 @@ THE SOFTWARE.
 NS_CC_BEGIN;
 
 void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
-{
+{	
     GLfloat xmin, xmax, ymin, ymax;
 
     ymax = zNear * (GLfloat)tanf(fovy * (float)M_PI / 360);
@@ -39,13 +39,13 @@ void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
 
 
     glFrustumf(xmin, xmax,
-               ymin, ymax,
-               zNear, zFar);
+        ymin, ymax,
+        zNear, zFar);	
 }
 
 void gluLookAt(float fEyeX, float fEyeY, float fEyeZ,
-               float fCenterX, float fCenterY, float fCenterZ,
-               float fUpX, float fUpY, float fUpZ)
+    float fCenterX, float fCenterY, float fCenterZ,
+    float fUpX, float fUpY, float fUpZ)
 {
     GLfloat m[16];
     GLfloat x[3], y[3], z[3];

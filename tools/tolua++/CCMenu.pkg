@@ -21,4 +21,5 @@ class CCMenu : public CCLayer
     ccColor3B getColor(void);
 
     static CCMenu* node();
+    static CCMenu* menuWithItem(CCMenuItem* item);
 };

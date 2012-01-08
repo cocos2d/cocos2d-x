@@ -186,4 +186,4 @@ CCAutoreleasePool* CCPoolManager::getCurReleasePool()
 	return m_pCurReleasePool;
 }
 
-} // namespace cocos2d
+}
