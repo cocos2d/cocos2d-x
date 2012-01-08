@@ -43,10 +43,12 @@ void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
 		if (dynamic_cast<CCObject*>(pDelegate))
 		{
 			dynamic_cast<CCObject*>(pDelegate)->retain();
+            CCLog("CCTouchHandler::setDelegate: dynamic_cast succeed.");
 		}
 		else
 		{
 			pDelegate->touchDelegateRetain();
+            CCLog("CCTouchHandler::setDelegate: dynamic_cast fails.");
 		}
     }
 
@@ -58,10 +60,12 @@ void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
 		if (dynamic_cast<CCObject*>(m_pDelegate))
 		{
 			dynamic_cast<CCObject*>(m_pDelegate)->release();
+            CCLog("CCTouchHandler::setDelegate: dynamic_cast succeed.");
 		}
 		else
 		{
 			m_pDelegate->touchDelegateRelease();
+            CCLog("CCTouchHandler::setDelegate: dynamic_cast fails.");
 		}
     }
 	m_pDelegate = pDelegate;
@@ -119,10 +123,12 @@ bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 	if (dynamic_cast<CCObject*>(pDelegate))
 	{
 		dynamic_cast<CCObject*>(pDelegate)->retain();
+        CCLog("CCTouchHandler::initWithDelegate: succeed.");
 	}
 	else
 	{
 		pDelegate->touchDelegateRetain();
+        CCLog("CCTouchHandler::initWithDelegate: fails.");
 	}
 
 	m_nPriority = nPriority;

@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCMutableDictionary.h"
 #include "CCTexture2D.h"
-#include "selector_protocol.h"
+
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
     #include "CCImage.h"
@@ -46,7 +46,7 @@ class CCImage;
 * Once the texture is loaded, the next time it will return
 * a reference of the previously loaded texture reducing GPU & CPU memory
 */
-class CC_DLL CCTextureCache : public SelectorProtocol, public CCObject
+class CC_DLL CCTextureCache : public CCObject
 {
 protected:
 	CCMutableDictionary<std::string, CCTexture2D*> * m_pTextures;
@@ -88,7 +88,7 @@ public:
 	* @since v0.8
 	*/
 	
-	void addImageAsync(const char *path, SelectorProtocol *target, SEL_CallFuncO selector);
+	void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 
 	/* Returns a Texture2D object given an CGImageRef image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.

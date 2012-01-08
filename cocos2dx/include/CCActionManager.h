@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "CCAction.h"
 #include "CCMutableArray.h"
 #include "CCObject.h"
-#include "selector_protocol.h"
 
 namespace cocos2d {
 
@@ -47,7 +46,7 @@ struct _hashElement;
  
  @since v0.8
  */
-class CC_DLL CCActionManager : public CCObject, public SelectorProtocol
+class CC_DLL CCActionManager : public CCObject
 {
 public:
 	CCActionManager(void);

@@ -569,7 +569,8 @@ void CCDirector::resetDirector()
 
 	stopAnimation();
 
-	CC_SAFE_RELEASE_NULL(m_pProjectionDelegate);
+    CCObject* pProjectionDelegate = (CCObject*)m_pProjectionDelegate;
+	CC_SAFE_RELEASE_NULL(pProjectionDelegate);
 
 	// purge bitmap cache
 	CCLabelBMFont::purgeCachedData();
@@ -609,7 +610,8 @@ void CCDirector::purgeDirector()
 	CC_SAFE_RELEASE_NULL(m_pFPSLabel);
 #endif
 
-		CC_SAFE_RELEASE_NULL(m_pProjectionDelegate);
+    CCObject* pProjectionDelegate = (CCObject*)m_pProjectionDelegate;
+    CC_SAFE_RELEASE_NULL(pProjectionDelegate);
 
 	// purge bitmap cache
 	CCLabelBMFont::purgeCachedData();
