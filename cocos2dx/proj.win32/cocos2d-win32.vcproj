@@ -643,10 +643,6 @@
 				RelativePath="..\include\cocos2d.h"
 				>
 			</File>
-			<File
-				RelativePath="..\include\selector_protocol.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="label_nodes"

@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "selector_protocol.h"
 #include "CCMutableArray.h"
 
 namespace cocos2d{
@@ -60,9 +59,9 @@ namespace cocos2d{
 		{}
 		virtual ~CCMenuItem(){}
 		/** Creates a CCMenuItem with a target/selector */
-		static CCMenuItem * itemWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
+		static CCMenuItem * itemWithTarget(CCObject *rec, SEL_MenuHandler selector);
 		/** Initializes a CCMenuItem with a target/selector */
-		bool initWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
+		bool initWithTarget(CCObject *rec, SEL_MenuHandler selector);
 		/** Returns the outside box */
 		CCRect rect();
 		/** Activate the item */
@@ -77,9 +76,9 @@ namespace cocos2d{
 		virtual void registerScriptHandler(const char* pszFunctionName);
 
                 /** set the target/selector of the menu item*/
-                void setTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
+                void setTarget(CCObject *rec, SEL_MenuHandler selector);
 	protected:
-		SelectorProtocol*	m_pListener;
+		CCObject*	m_pListener;
 		SEL_MenuHandler		m_pfnSelector;
 		std::string         m_functionName;
 	};
@@ -104,11 +103,11 @@ namespace cocos2d{
 		{}
 		virtual ~CCMenuItemLabel();
 		/** creates a CCMenuItemLabel with a Label, target and selector */
-		static CCMenuItemLabel * itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MenuHandler selector);
+		static CCMenuItemLabel * itemWithLabel(CCNode*label, CCObject* target, SEL_MenuHandler selector);
 		/** creates a CCMenuItemLabel with a Label. Target and selector will be nill */
 		static CCMenuItemLabel* itemWithLabel(CCNode *label);
 		/** initializes a CCMenuItemLabel with a Label, target and selector */
-		bool initWithLabel(CCNode* label, SelectorProtocol* target, SEL_MenuHandler selector);
+		bool initWithLabel(CCNode* label, CCObject* target, SEL_MenuHandler selector);
 		/** sets a new string to the inner label */
 		void setString(const char * label);
 		// super methods
@@ -142,9 +141,9 @@ namespace cocos2d{
 		/** creates a menu item from a string and atlas with a target/selector */
 		static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
 		/** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-		static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector);
+		static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
 		/** initializes a menu item from a string and atlas with a target/selector */
-		bool initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector);
+		bool initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
 	};
 
 	/** @brief A CCMenuItemFont
@@ -166,9 +165,9 @@ namespace cocos2d{
 		/** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
 		static CCMenuItemFont * itemFromString(const char *value);
 		/** creates a menu item from a string with a target/selector */
-		static CCMenuItemFont * itemFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector);
+		static CCMenuItemFont * itemFromString(const char *value, CCObject* target, SEL_MenuHandler selector);
 		/** initializes a menu item from a string with a target/selector */
-		bool initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector);
+		bool initFromString(const char *value, CCObject* target, SEL_MenuHandler selector);
 
 		/** set font size
 		  * c++ can not overload static and non-static member functions with the same parameter types
@@ -219,11 +218,11 @@ namespace cocos2d{
 		/** creates a menu item with a normal and selected image*/
 		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite);
 		/** creates a menu item with a normal and selected image with target/selector */
-		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, SelectorProtocol* target, SEL_MenuHandler selector);
+		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
 		/** creates a menu item with a normal,selected  and disabled image with target/selector */
-		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
+		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 		/** initializes a menu item with a normal, selected  and disabled image with target/selector */
-		bool initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
+		bool initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 		// super methods
         virtual void setColor(const ccColor3B& color);
         virtual const ccColor3B& getColor();
@@ -259,11 +258,11 @@ namespace cocos2d{
 		/** creates a menu item with a normal,selected  and disabled image*/
 		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
 		/** creates a menu item with a normal and selected image with target/selector */
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, SelectorProtocol* target, SEL_MenuHandler selector);
+		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
 		/** creates a menu item with a normal,selected  and disabled image with target/selector */
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
+		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
 		/** initializes a menu item with a normal, selected  and disabled image with target/selector */
-		bool initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
+		bool initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
 	};
 
 	/** @brief A CCMenuItemToggle
@@ -290,9 +289,9 @@ namespace cocos2d{
 		{}
 		virtual ~CCMenuItemToggle();
 		/** creates a menu item from a list of items with a target/selector */
-		static CCMenuItemToggle* itemWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, ...);		
+		static CCMenuItemToggle* itemWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);		
 		/** initializes a menu item from a list of items with a target selector */
-		bool initWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args);
+		bool initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args);
 
 		// The follow methods offered to lua
 		/** creates a menu item with a item */
