@@ -78,7 +78,7 @@ CCNode::CCNode(void)
 {
     // nothing
 }
-CCNode::~CCNode()
+CCNode::~CCNode(void)
 {
 	CCLOGINFO( "cocos2d: deallocing" );
 

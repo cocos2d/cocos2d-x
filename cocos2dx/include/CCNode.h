@@ -248,9 +248,9 @@ namespace   cocos2d {
 
 	public:
 
-		CCNode();
+		CCNode(void);
 
-		virtual ~CCNode();
+		virtual ~CCNode(void);
 
 		char * description(void);
 
