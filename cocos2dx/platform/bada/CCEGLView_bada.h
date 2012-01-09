@@ -117,6 +117,7 @@ public:
     virtual void OnTextValueChanged(const Osp::Ui::Control& source);
 	virtual void OnTextValueChangeCanceled(const Osp::Ui::Control& source);
 
+#ifdef CC_BADA_2_0
 	// pointer to OES methods from EGL
 	static PFNGLGENERATEMIPMAPOESPROC         glGenerateMipmapOES;
 	static PFNGLGENFRAMEBUFFERSOESPROC        glGenFramebuffersOES;
@@ -124,6 +125,7 @@ public:
 	static PFNGLFRAMEBUFFERTEXTURE2DOESPROC   glFramebufferTexture2DOES;
 	static PFNGLDELETEFRAMEBUFFERSOESPROC     glDeleteFramebuffersOES;
 	static PFNGLCHECKFRAMEBUFFERSTATUSOESPROC glCheckFramebufferStatusOES;
+#endif
 
 private:
 	Osp::Ui::Controls::Keypad *m_pKeypad;

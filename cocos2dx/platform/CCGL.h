@@ -34,7 +34,7 @@ THE SOFTWARE.
 #define CC_GLVIEW                   cocos2d::CCEGLView
 #define ccglOrtho					glOrthof
 #define	ccglClearDepth				glClearDepthf
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX) || (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX) || defined(CC_BADA_2_0)
 #define ccglGenerateMipmap			CCEGLView::glGenerateMipmapOES
 #define ccglGenFramebuffers			CCEGLView::glGenFramebuffersOES
 #define ccglBindFramebuffer			CCEGLView::glBindFramebufferOES
