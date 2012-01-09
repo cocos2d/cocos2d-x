@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include <FUi.h>
 #include <FSystem.h>
 #include "CCGeometry.h"
+#include <GLES/egl.h>
+#include <GLES/gl.h>
+#include <GLES/glext.h>
 
 NS_CC_BEGIN;
 
@@ -113,6 +116,16 @@ public:
 
     virtual void OnTextValueChanged(const Osp::Ui::Control& source);
 	virtual void OnTextValueChangeCanceled(const Osp::Ui::Control& source);
+
+#ifdef CC_BADA_2_0
+	// pointer to OES methods from EGL
+	static PFNGLGENERATEMIPMAPOESPROC         glGenerateMipmapOES;
+	static PFNGLGENFRAMEBUFFERSOESPROC        glGenFramebuffersOES;
+	static PFNGLBINDFRAMEBUFFEROESPROC		  glBindFramebufferOES;
+	static PFNGLFRAMEBUFFERTEXTURE2DOESPROC   glFramebufferTexture2DOES;
+	static PFNGLDELETEFRAMEBUFFERSOESPROC     glDeleteFramebuffersOES;
+	static PFNGLCHECKFRAMEBUFFERSTATUSOESPROC glCheckFramebufferStatusOES;
+#endif
 
 private:
 	Osp::Ui::Controls::Keypad *m_pKeypad;
