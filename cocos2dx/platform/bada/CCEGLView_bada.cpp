@@ -173,14 +173,14 @@ private:
 //////////////////////////////////////////////////////////////////////////
 // impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
-
+#ifdef CC_BADA_2_0
 PFNGLGENERATEMIPMAPOESPROC         CCEGLView::glGenerateMipmapOES = 0;
 PFNGLGENFRAMEBUFFERSOESPROC        CCEGLView::glGenFramebuffersOES = 0;
 PFNGLBINDFRAMEBUFFEROESPROC		   CCEGLView::glBindFramebufferOES = 0;
 PFNGLFRAMEBUFFERTEXTURE2DOESPROC   CCEGLView::glFramebufferTexture2DOES = 0;
 PFNGLDELETEFRAMEBUFFERSOESPROC     CCEGLView::glDeleteFramebuffersOES = 0;
 PFNGLCHECKFRAMEBUFFERSTATUSOESPROC CCEGLView::glCheckFramebufferStatusOES = 0;
-
+#endif
 CCEGLView::CCEGLView()
 : m_pKeypad(null)
 , m_bNotHVGA(true)
@@ -189,13 +189,14 @@ CCEGLView::CCEGLView()
 , m_bCaptured(false)
 , m_pEGL(NULL)
 {
+#ifdef CC_BADA_2_0
 	glGenerateMipmapOES = (PFNGLGENERATEMIPMAPOESPROC)eglGetProcAddress("glGenerateMipmapOES");
 	glGenFramebuffersOES = (PFNGLGENFRAMEBUFFERSOESPROC)eglGetProcAddress("glGenFramebuffersOES");
 	glBindFramebufferOES = (PFNGLBINDFRAMEBUFFEROESPROC)eglGetProcAddress("glBindFramebufferOES");
 	glFramebufferTexture2DOES = (PFNGLFRAMEBUFFERTEXTURE2DOESPROC)eglGetProcAddress("glFramebufferTexture2DOES");
 	glDeleteFramebuffersOES = (PFNGLDELETEFRAMEBUFFERSOESPROC)eglGetProcAddress("glDeleteFramebuffersOES");
 	glCheckFramebufferStatusOES = (PFNGLCHECKFRAMEBUFFERSTATUSOESPROC)eglGetProcAddress("glCheckFramebufferStatusOES");
-
+#endif
     m_pTouch    = new CCTouch;
     m_pSet      = new CCSet;
 	m_eInitOrientation = CCDirector::sharedDirector()->getDeviceOrientation();
