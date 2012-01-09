@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 #include "CCSAXParser.h"
+#include "support/zip_support/unzip.h"
 
 #define MAX_PATH 260
 
