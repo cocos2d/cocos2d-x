@@ -3,6 +3,7 @@
 	<name>HelloWorld</name>
 	<comment></comment>
 	<projects>
+		<project>cocos2dx</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -39,7 +39,7 @@ Basically,it's only enabled in android
 
 It's new in cocos2d-x since v0.99.5
 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       0
@@ -126,6 +126,16 @@ public: virtual void set##funName(varType var){ varName = var; }
 protected: varType varName;\
 public: virtual const varType& get##funName(void) const { return varName; }\
 public: virtual void set##funName(const varType& var){ varName = var; }
+
+#define CC_SYNTHESIZE_RETAIN(varType, varName, funName)    \
+protected: varType varName; \
+public: virtual varType get##funName(void) const { return varName; } \
+public: virtual void set##funName(varType var)   \
+{ \
+    CC_SAFE_RETAIN(var); \
+    CC_SAFE_RELEASE(varName); \
+    varName = var; \
+} 
 
 #define CC_SAFE_DELETE(p)			if(p) { delete (p); (p) = 0; }
 #define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] (p); (p) = 0; }
