@@ -5,9 +5,13 @@ includepaths
 }
 options
 {
-#	module_path_append="$MARMALADE_ROOT/modules/third_party"
 	strict=0
-	#extension=start_configure
+}
+
+if {{ defined __APPLE__ }}
+{
+	define FT_CONFIG_OPTION_NO_ASSEMBLER
+	define DARWIN_NO_CARBON
 }
 
 files
@@ -158,15 +162,4 @@ files
 	freetype/tttables.h	
 	freetype/tttags.h	
 	freetype/ttunpat.h	
-
-
 }
-#subprojects
-#{
-#	iwgraphics
-#	iwgx
-#	iwutil
-#	zlib
-#}
-#package zlib
-#subproject zlib
