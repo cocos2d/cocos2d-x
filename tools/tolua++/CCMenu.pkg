@@ -52,7 +52,6 @@ namespace cocos2d{
 		GLubyte getOpacity(void);
 		ccColor3B getColor(void);
 		void setColor(ccColor3B color);
-		CCRGBAProtocol* convertToRGBAProtocol();
 
 
 		bool init();

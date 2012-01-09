@@ -201,12 +201,9 @@ public:
 	/** returns the bits-per-pixel of the in-memory OpenGL texture
 	@since v1.0
 	*/
-    unsigned int bitsPerPixelForFormat();
-
-
-    void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    unsigned int bitsPerPixelForFormat();  
     
-	/** sets the default pixel format for UIImages that contains alpha channel.
+	/** sets the default pixel format for UIImagescontains alpha channel.
 	If the UIImage contains alpha channel, then the options are:
 	- generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
 	- generate 24-bit textures: kCCTexture2DPixelFormat_RGB888
@@ -227,6 +224,16 @@ public:
 	@since v0.8
 	*/
 	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
+
+	/** treats (or not) PVR files as if they have alpha premultiplied.
+	 Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
+	 possible load them as if they have (or not) the alpha channel premultiplied.
+	 
+	 By default it is disabled.
+	 
+	 @since v0.99.5
+	 */
+	static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
 private:
 	bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);

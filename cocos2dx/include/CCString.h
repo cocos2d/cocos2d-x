@@ -63,6 +63,20 @@ namespace cocos2d {
 		{
 			return m_sString.empty();
 		}
+
+        virtual bool isEqual(const CCObject* pObject)
+        {
+            bool bRet = false;
+            const CCString* pStr = dynamic_cast<const CCString*>(pObject);
+            if (pStr != NULL)
+            {
+                if (0 == m_sString.compare(pStr->m_sString))
+                {
+                    bRet = true;
+                }
+            }
+            return bRet;
+        }
 	};
 }// namespace cocos2d
 #endif //__CCSTRING_H__

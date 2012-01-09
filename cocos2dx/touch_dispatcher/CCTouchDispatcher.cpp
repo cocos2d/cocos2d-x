@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTexture2D.h"
 #include "support/data_support/ccCArray.h"
-
+#include "ccMacros.h"
 #include <algorithm>
 
 /**
@@ -148,6 +148,15 @@ void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPri
 	}
 	else
 	{
+		/* If pHandler is contained in m_pHandlersToRemove, if so remove it from m_pHandlersToRemove and retrun.
+		 * Refer issue #752(cocos2d-x)
+		 */
+		if (ccCArrayContainsValue(m_pHandlersToRemove, pDelegate))
+		{
+			ccCArrayRemoveValue(m_pHandlersToRemove, pDelegate);
+			return;
+		}
+
 		m_pHandlersToAdd->addObject(pHandler);
 		m_bToAdd = true;
 	}
@@ -162,6 +171,15 @@ void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPri
 	}
 	else
 	{
+		/* If pHandler is contained in m_pHandlersToRemove, if so remove it from m_pHandlersToRemove and retrun.
+		 * Refer issue #752(cocos2d-x)
+		 */
+		if (ccCArrayContainsValue(m_pHandlersToRemove, pDelegate))
+		{
+			ccCArrayRemoveValue(m_pHandlersToRemove, pDelegate);
+			return;
+		}
+		
 		m_pHandlersToAdd->addObject(pHandler);
 		m_bToAdd = true;
 	}
@@ -184,7 +202,6 @@ void CCTouchDispatcher::forceRemoveDelegate(CCTouchDelegate *pDelegate)
 			break;
 		}
 	}
-
 
     // remove handler from m_pTargetedHandlers
 	for (iter = m_pTargetedHandlers->begin(); iter != m_pTargetedHandlers->end(); ++iter)
@@ -211,6 +228,16 @@ void CCTouchDispatcher::removeDelegate(CCTouchDelegate *pDelegate)
 	}
 	else
 	{
+		/* If pHandler is contained in m_pHandlersToAdd, if so remove it from m_pHandlersToAdd and retrun.
+		 * Refer issue #752(cocos2d-x)
+		 */
+		CCTouchHandler *pHandler = findHandler(m_pHandlersToAdd, pDelegate);
+		if (pHandler)
+		{
+			m_pHandlersToAdd->removeObject(pHandler);
+			return;
+		}
+
 		ccCArrayAppendValue(m_pHandlersToRemove, pDelegate);
 		m_bToRemove = true;
 	}
@@ -253,6 +280,23 @@ CCTouchHandler* CCTouchDispatcher::findHandler(CCTouchDelegate *pDelegate)
 			return *iter;
 		}
 	} 
+
+	return NULL;
+}
+
+CCTouchHandler* CCTouchDispatcher::findHandler(CCMutableArray<CCTouchHandler*> *pArray, CCTouchDelegate *pDelegate)
+{
+	CCAssert(pArray != NULL && pDelegate != NULL, "");
+
+	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
+
+	for (iter = pArray->begin(); iter != pArray->end(); ++iter)
+	{
+		if ((*iter)->getDelegate() == pDelegate)
+		{
+			return *iter;
+		}
+	}
 
 	return NULL;
 }

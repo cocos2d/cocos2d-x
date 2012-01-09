@@ -1,0 +1,176 @@
+includepath header
+
+includepaths
+{
+	libxml2/include
+	libxml2/marmalade
+}
+
+defines
+{
+	XMLCDECL=" "
+	XMLPUBFUN=" "
+	XMLPUBVAR="extern"
+	XMLCALL=" "
+	
+	"LIBXML_ATTR_ALLOC_SIZE(x)"=" "
+	"LIBXML_ATTR_FORMAT(fmt,args)"=" "
+
+	TRIO_FPCLASSIFY_HACK
+	WITHOUT_TRIO
+
+	LIBXML_WRITER_ENABLED
+	LIBXML_OUTPUT_ENABLED
+
+	LIBXML_HTML_ENABLED
+	LIBXML_XPATH_ENABLED
+	LIBXML_XPTR_ENABLED
+	LIBXML_XINCLUDE_ENABLED
+	LIBXML_CATALOG_ENABLED
+	LIBXML_TREE_ENABLED
+	LIBXML_PUSH_ENABLED
+	LIBXML_SAX1_ENABLED
+
+	LIBXML_DEBUG_ENABLED
+	# DEBUG_MEMORY_LOCATION
+
+}
+
+undefines
+{
+	LIBXML_SCHEMAS_ENABLED
+	LIBXML_REGEXP_ENABLED
+	LIBXML_THREAD_ENABLED
+	LIBXML_FTP_ENABLED
+	LIBXML_HTTP_ENABLED
+	LIBXML_DOCB_ENABLED
+	LIBXML_C14N_ENABLED
+	LIBXML_ICONV_ENABLED
+	LIBXML_MODULES_ENABLED
+
+	WITH_TRIO
+}
+
+files
+{
+	(libxml2/sources)
+	elfgcchack.h
+	libxml.h
+	trio.h
+	triodef.h
+	trionan.h
+	triop.h
+	triostr.h
+
+	(libxml2/include/libxml)
+	["common/libxml"]
+	c14n.h
+	catalog.h
+	chvalid.h
+	debugXML.h
+	dict.h
+	DOCBparser.h
+	encoding.h
+	entities.h
+	globals.h
+	hash.h
+	HTMLparser.h
+	HTMLtree.h
+	list.h
+	nanoftp.h
+	nanohttp.h
+	parser.h
+	parserInternals.h
+	pattern.h
+	# relaxng.h
+	SAX.h
+	SAX2.h
+	schemasInternals.h
+	schematron.h
+	threads.h
+	tree.h
+	uri.h
+	valid.h
+	xinclude.h
+	xlink.h
+	xmlautomata.h
+	xmlerror.h
+	xmlexports.h
+	xmlIO.h
+	xmlmemory.h
+	xmlmodule.h
+	xmlreader.h
+	xmlregexp.h
+	xmlsave.h
+	xmlschemas.h
+	xmlschemastypes.h
+	xmlstring.h
+	xmlunicode.h
+	xmlwriter.h
+	xpath.h
+	xpathInternals.h
+	xpointer.h
+	
+	(libxml2/marmalade)
+	["marmalade"]
+	config.h
+	libxml2_public.defines.txt
+	
+	(libxml2/marmalade/libxml)
+	["marmalade/libxml"]
+	xmlversion.h
+	
+	(libxml2/sources)
+	["sources"]
+	c14n.c
+	catalog.c
+	chvalid.c
+	debugXML.c
+	dict.c
+	DOCBparser.c
+	encoding.c
+	entities.c
+	error.c
+	globals.c
+	hash.c
+	HTMLparser.c
+	HTMLtree.c
+	legacy.c
+	list.c
+	nanoftp.c
+	nanohttp.c
+	parser.c
+	parserInternals.c
+	pattern.c
+	# relaxng.c
+	# rngparser.c
+	# runsuite.c
+	# runtest.c
+	# runxmlconf.c
+	SAX.c
+	SAX2.c
+	schematron.c
+	threads.c
+	tree.c
+	# trio.c
+	# trionan.c
+	# triostr.c
+	uri.c
+	valid.c
+	xmlIO.c
+	xinclude.c
+	xlink.c
+	#xmlcatalog.c
+	xmlmemory.c
+	xmlmodule.c
+	xmlreader.c
+	xmlregexp.c
+	xmlsave.c
+	xmlschemas.c
+	xmlschemastypes.c
+	xmlstring.c
+	xmlunicode.c
+	xmlwriter.c
+	xpath.c
+	xpointer.c
+}

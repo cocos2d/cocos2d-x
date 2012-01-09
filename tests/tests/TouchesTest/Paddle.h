@@ -28,6 +28,9 @@ public:
 	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
 	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
 
+	virtual void touchDelegateRetain();
+	virtual void touchDelegateRelease();
+
 	static Paddle* paddleWithTexture(CCTexture2D* aTexture);
 };
 
