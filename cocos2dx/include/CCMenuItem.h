@@ -124,7 +124,8 @@ namespace cocos2d{
 		virtual void setColor(const ccColor3B& color);
 		virtual const ccColor3B& getColor();
 
-		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+		virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+	    virtual bool getIsOpacityModifyRGB(void) { return false;}
 	protected:
 		ccColor3B	m_tColorBackup;
 		float		m_fOriginalScale;
@@ -236,7 +237,8 @@ namespace cocos2d{
         virtual void unselected();
         virtual void setIsEnabled(bool bEnabled);
 
-		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+		virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+	    virtual bool getIsOpacityModifyRGB(void) { return false;}
 	};
 
 	/** @brief CCMenuItemImage accepts images as items.
@@ -308,7 +310,8 @@ namespace cocos2d{
 		virtual void unselected();
 		virtual void setIsEnabled(bool var);
 
-		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+		virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+	    virtual bool getIsOpacityModifyRGB(void) { return false;}
 	};
 
 }

@@ -64,8 +64,6 @@ namespace   cocos2d {
 		void setBlendFunc(ccBlendFunc Value);
 		ccBlendFunc getBlendFunc(void); 
 
-		CCRGBAProtocol* convertToRGBAProtocol();
-
 	};
 
 	class  CCLayerGradient : public CCLayerColor

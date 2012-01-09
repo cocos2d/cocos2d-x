@@ -59,7 +59,7 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 			LOGD("Beginning touches with id: %d, x=%f, y=%f", id, x, y);
 
 			pTouch = new CCTouch();			
-			pTouch->SetTouchInfo(0, (x - rcRect.origin.x) / fScreenScaleFactor, (y - rcRect.origin.y) / fScreenScaleFactor);
+			pTouch->SetTouchInfo(0, (x - rcRect.origin.x) / fScreenScaleFactor, (y - rcRect.origin.y) / fScreenScaleFactor, id);
 			s_pTouches[id] = pTouch;
 			set.addObject(pTouch);
 
@@ -83,7 +83,7 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 		{
 			LOGD("Ending touches with id: %d, x=%f, y=%f", id, x, y);
 
-			pTouch->SetTouchInfo(0, (x - rcRect.origin.x) / fScreenScaleFactor , (y - rcRect.origin.y) / fScreenScaleFactor);
+			pTouch->SetTouchInfo(0, (x - rcRect.origin.x) / fScreenScaleFactor , (y - rcRect.origin.y) / fScreenScaleFactor, id);
 		    set.addObject(pTouch);
 
 			// release the object
@@ -116,7 +116,7 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 			if (pTouch)
 			{
 				pTouch->SetTouchInfo(0, (x[i] - rcRect.origin.x) / fScreenScaleFactor , 
-			                        (y[i] - rcRect.origin.y) / fScreenScaleFactor);
+			                        (y[i] - rcRect.origin.y) / fScreenScaleFactor, id[i]);
 				set.addObject(pTouch);
 			}
 			else
@@ -149,7 +149,7 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 			if (pTouch)
 			{
 				pTouch->SetTouchInfo(0, (x[i] - rcRect.origin.x) / fScreenScaleFactor , 
-			                        (y[i] - rcRect.origin.y) / fScreenScaleFactor);
+			                        (y[i] - rcRect.origin.y) / fScreenScaleFactor, id[i]);
 				set.addObject(pTouch);
 				s_pTouches[id[i]] = NULL;
 				pTouch->release();
