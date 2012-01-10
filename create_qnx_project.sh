@@ -77,6 +77,7 @@ create_qnx_project(){
     modify_file_content bar-descriptor.xml
     copy_cpp_h_from_helloworld
     copy_resouces
+    echo "Congratulations, the '$PROJECT_NAME' project have been created successfully, please input the project from QNX IDE!"
 }
 
 create_qnx_project
