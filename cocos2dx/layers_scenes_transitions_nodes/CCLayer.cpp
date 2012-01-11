@@ -221,6 +221,16 @@ void CCLayer::onEnterTransitionDidFinish()
     CCNode::onEnterTransitionDidFinish();
 }
 
+void CCLayer::touchDelegateRetain()
+{
+	retain();
+}
+
+void CCLayer::touchDelegateRelease()
+{
+	release();
+}
+
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CC_UNUSED_PARAM(pTouch);
