@@ -70,12 +70,12 @@ public:
 	 * In TouchesTest, class Padle inherits from CCSprite and CCTargetedTouchDelegate.
 	 * When it invoke  CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true),
 	 * it will crash in CCTouchHandler::initWithDelegate() because of dynamic_cast() on android.
-	 * I don't know why, so add these functions for the subclass to invoke it's know retain() and
+	 * I don't know why, so add these functions for the subclass to invoke it's own retain() and
 	 * release().
 	 * More detain info please refer issue #926(cocos2d-x).
 	 */
-	virtual void touchDelegateRetain(){}
-	virtual void touchDelegateRelease(){}
+	virtual void touchDelegateRetain() = 0;
+	virtual void touchDelegateRelease() = 0;
 
 	// functions for script call back
 	inline void registerScriptTouchHandler(int eventType, const char* pszScriptFunctionName)
