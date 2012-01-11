@@ -397,7 +397,7 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 
     if (s_pBackPlayer != NULL)
     {
-    	s_pBackPlayer->SetVolume(ceil(volume));
+    	s_pBackPlayer->SetVolume(ceil(volume*99));
     }
     s_fBackgroundMusicVolume = volume;
 }
@@ -423,7 +423,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 	{
 		if (it->second != NULL)
 		{
-			it->second->SetVolume(ceil(volume));
+			it->second->SetVolume(ceil(volume*99));
 		}
 	}
 	s_fEffectsVolume = volume;
@@ -446,13 +446,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 			AppLog("CCAudioOut instance must not be NULL, id = %d", p->first);
 			return 0;
 		}
-		p->second->SetVolume((int) (s_fEffectsVolume * 99));
-		int volume = p->second->GetVolume();
-
-    	if (s_fEffectsVolume > 0.0f && volume == 0)
-    	{
-    		p->second->SetVolume(1);
-    	}
+		p->second->SetVolume(ceil(s_fEffectsVolume * 99));
 
 	    if (AUDIOOUT_STATE_PLAYING == p->second->GetState())
 		{
