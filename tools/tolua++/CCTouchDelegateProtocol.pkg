@@ -24,8 +24,6 @@ public:
  	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
  	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
  	
- 	CCTouchDelegate();
- 	
  	void registerScriptTouchHandler(int eventType, const char* pszScriptFunctionName);
 	bool isScriptHandlerExist(int eventType);
 	void excuteScriptTouchHandler(int eventType, CCTouch *pTouch);
@@ -48,7 +46,7 @@ public:
  class  CCTargetedTouchDelegate : public CCTouchDelegate
  {
  public:
- 	CCTargetedTouchDelegate();
+
  	/** Return YES to claim the touch.
  	 @since v0
 	 */
@@ -67,7 +65,6 @@ public:
  class  CCStandardTouchDelegate : public CCTouchDelegate
  {
  public:
- 	CCStandardTouchDelegate();
  	// optional
  	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
  	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
