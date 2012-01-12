@@ -88,10 +88,5 @@
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
 		</link>
-		<link>
-			<name>android</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/android</locationURI>
-		</link>
 	</linkedResources>
 </projectDescription>

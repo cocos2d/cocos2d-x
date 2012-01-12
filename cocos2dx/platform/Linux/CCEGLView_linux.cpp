@@ -282,6 +282,7 @@ void CCEGLView::release()
 {
 	/* Exits from GLFW */
 	glfwTerminate();
+	exit(0);
 }
 
 void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate) {

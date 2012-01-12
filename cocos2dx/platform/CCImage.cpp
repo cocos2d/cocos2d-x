@@ -619,3 +619,7 @@ NS_CC_END;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
 #include "qnx/CCImage_qnx.cpp"
 #endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include "Linux/CCImage_Linux.cpp"
+#endif
