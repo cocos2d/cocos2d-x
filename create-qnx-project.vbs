@@ -70,7 +70,7 @@ function ConfigureProject()
     call ReplaceFileContent(szProjectName+"\qnx\.project", "HelloWorld", szProjectName)
     call ReplaceFileContent(szProjectName+"\qnx\.cproject", "HelloWorld", szProjectName)
 
-    call msgbox("Congratulations, the '"+szProjectName+"' project have been created successfully, please input the project from QNX IDE!", 0, szPrompt)
+    call msgbox("Congratulations, the '"+szProjectName+"' project have been created successfully, please use QNX IDE to import the project!", 0, szPrompt)
 
 end function
 
