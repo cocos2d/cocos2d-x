@@ -73,7 +73,7 @@ function ConfigureProject()
         call ReplaceFileContent(szProjectName+"\bada\sdk"+cstr(i)+".0\.cproject", "HelloWorld", szProjectName)
     next
     
-    call msgbox("Congratulations, the '"+szProjectName+"' project have been created successfully, please input the project from Bada IDE!", 0, szPrompt)
+    call msgbox("Congratulations, the '"+szProjectName+"' project have been created successfully, please use Bada IDE to import the project!", 0, szPrompt)
 
 end function
 
