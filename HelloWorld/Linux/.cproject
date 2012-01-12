@@ -5,10 +5,6 @@
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.1378309016">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.1378309016" moduleId="org.eclipse.cdt.core.settings" name="Debug">
-				<macros>
-					<stringMacro name="cocos2dx_loc" type="VALUE_TEXT" value="../../../"/>
-					<stringMacro name="lib_name" type="VALUE_TEXT" value="helloworld"/>
-				</macros>
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -30,11 +26,14 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.513215504" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.354795965" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.577331571" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/cocos2dx&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/CocosDenshion/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Classes}&quot;"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.753894218" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -44,13 +43,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1024548975" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.1846873676" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.624794682" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.141168982" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Classes}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/CocosDenshion/include&quot;"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx"/>
-								</option>
+								<option id="gnu.c.compiler.option.include.paths.141168982" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1586206751" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
 								</option>
@@ -65,9 +58,9 @@
 									<listOptionValue builtIn="false" value="cocosdenshion"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1730426040" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/cocos2dx/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/CocosDenshion/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/CocosDenshion/third_party/fmod/api/lib&quot;"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.338357910" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -80,7 +73,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="wophone|win32|airplay|ios|android|android/jni" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry excluding="Classes" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -89,10 +83,6 @@
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.release.1261731462">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.release.1261731462" moduleId="org.eclipse.cdt.core.settings" name="Release">
-				<macros>
-					<stringMacro name="cocos2dx_loc" type="VALUE_TEXT" value="../../../"/>
-					<stringMacro name="lib_name" type="VALUE_TEXT" value="helloworld"/>
-				</macros>
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -114,11 +104,14 @@
 								<option id="gnu.cpp.compiler.exe.release.option.optimization.level.1579660092" name="Optimization Level" superClass="gnu.cpp.compiler.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.67257659" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1175073911" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/cocos2dx&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/CocosDenshion/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Classes}&quot;"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1649765609" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -128,13 +121,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1992070152" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
 								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.925598500" name="Optimization Level" superClass="gnu.c.compiler.exe.release.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.release.option.debugging.level.1434439101" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.92708570" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Classes}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/CocosDenshion/include&quot;"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="${cocos2dx_loc}/cocos2dx"/>
-								</option>
+								<option id="gnu.c.compiler.option.include.paths.92708570" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1314682529" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
 								</option>
@@ -149,9 +136,9 @@
 									<listOptionValue builtIn="false" value="cocosdenshion"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.510724007" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/cocos2dx/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/CocosDenshion/third_party/fmod/api/lib&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cocos2dx_loc}/CocosDenshion/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.970027608" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -164,7 +151,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="wophone|win32|airplay|ios|android|android/jni" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry excluding="Classes" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -184,16 +172,16 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1378309016.1046894403;cdt.managedbuild.config.gnu.exe.debug.1378309016.1046894403.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1116079203;cdt.managedbuild.tool.gnu.c.compiler.input.1941427790">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1378309016.708057448;cdt.managedbuild.config.gnu.exe.debug.1378309016.708057448.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1818259119;cdt.managedbuild.tool.gnu.cpp.compiler.input.810275929">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
-		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1261731462;cdt.managedbuild.config.gnu.exe.release.1261731462.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1347395052;cdt.managedbuild.tool.gnu.cpp.compiler.input.627062533">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1378309016.708057448;cdt.managedbuild.config.gnu.exe.debug.1378309016.708057448.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.175957853;cdt.managedbuild.tool.gnu.c.compiler.input.838160662">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1378309016.708057448;cdt.managedbuild.config.gnu.exe.debug.1378309016.708057448.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1818259119;cdt.managedbuild.tool.gnu.cpp.compiler.input.810275929">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1378309016;cdt.managedbuild.config.gnu.exe.debug.1378309016.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1024548975;cdt.managedbuild.tool.gnu.c.compiler.input.1184297872">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1378309016.708057448;cdt.managedbuild.config.gnu.exe.debug.1378309016.708057448.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.175957853;cdt.managedbuild.tool.gnu.c.compiler.input.838160662">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1378309016.1046894403;cdt.managedbuild.config.gnu.exe.debug.1378309016.1046894403.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.942164708;cdt.managedbuild.tool.gnu.cpp.compiler.input.1074068007">

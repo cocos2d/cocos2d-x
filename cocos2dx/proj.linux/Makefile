@@ -67,8 +67,6 @@ OBJECTS = ../actions/CCAction.o \
 					../platform/platform.o \
 					../platform/Linux/CCAplication_linux.o \
 					../platform/Linux/CCEGLView_linux.o \
-					../platform/Linux/CCFileUtils_Linux.o \
-					../platform/Linux/CCImage_Linux.o \
 					../script_support/CCScriptSupport.o \
 					../sprite_nodes/CCAnimation.o \
 					../sprite_nodes/CCAnimationCache.o \
