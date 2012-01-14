@@ -49,15 +49,30 @@
 								<option id="com.qnx.qcc.option.linker.langcpp.670245200" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1760958269" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
+									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="mmrndclient"/>
+									<listOptionValue builtIn="false" value="strm"/>
 									<listOptionValue builtIn="false" value="grskia"/>
+									<listOptionValue builtIn="false" value="OpenAL"/>
+									<listOptionValue builtIn="false" value="alut"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="asound"/>
+									<listOptionValue builtIn="false" value="xml2"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.1794064552" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1757627798" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Device-Debug"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.qnx/Device-Debug"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries"/>
+								</option>
+								<option id="com.qnx.qcc.option.linker.ldoptions.1363839882" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="../../../Box2D/proj.qnx/Device-Debug/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/proj.qnx/Device-Debug/libchipmunk.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.697035559" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -121,8 +136,18 @@
 								<option id="com.qnx.qcc.option.linker.langcpp.1928031496" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1701813567" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
+									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="mmrndclient"/>
+									<listOptionValue builtIn="false" value="strm"/>
 									<listOptionValue builtIn="false" value="grskia"/>
+									<listOptionValue builtIn="false" value="OpenAL"/>
+									<listOptionValue builtIn="false" value="alut"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="asound"/>
+									<listOptionValue builtIn="false" value="xml2"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.1061945690" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.pie.2077677263" name="Position Independent Executable (-pie)" superClass="com.qnx.qcc.option.linker.pie" value="true" valueType="boolean"/>
@@ -130,7 +155,12 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Device-Release"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.qnx/Device-Release"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries"/>
+								</option>
+								<option id="com.qnx.qcc.option.linker.ldoptions.2141259757" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="../../../Box2D/proj.qnx/Device-Release/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/proj.qnx/Device-Release/libchipmunk.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1321710093" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -197,15 +227,30 @@
 								<option id="com.qnx.qcc.option.linker.langcpp.1232550377" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1289108024" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
+									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="mmrndclient"/>
+									<listOptionValue builtIn="false" value="strm"/>
 									<listOptionValue builtIn="false" value="grskia"/>
+									<listOptionValue builtIn="false" value="OpenAL"/>
+									<listOptionValue builtIn="false" value="alut"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="asound"/>
+									<listOptionValue builtIn="false" value="xml2"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.29518400" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.150600101" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Device-Profile"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.qnx/Device-Profile"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries"/>
+								</option>
+								<option id="com.qnx.qcc.option.linker.ldoptions.1370019185" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="../../../Box2D/proj.qnx/Device-Profile/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/proj.qnx/Device-Profile/libchipmunk.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1078171597" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -272,15 +317,30 @@
 								<option id="com.qnx.qcc.option.linker.langcpp.1160718760" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1736864271" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
+									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="mmrndclient"/>
+									<listOptionValue builtIn="false" value="strm"/>
 									<listOptionValue builtIn="false" value="grskia"/>
+									<listOptionValue builtIn="false" value="OpenAL"/>
+									<listOptionValue builtIn="false" value="alut"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="asound"/>
+									<listOptionValue builtIn="false" value="xml2"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.1670627205" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.322375874" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Device-Coverage"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.qnx/Device-Coverage"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries"/>
+								</option>
+								<option id="com.qnx.qcc.option.linker.ldoptions.619637072" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="../../../Box2D/proj.qnx/Device-Coverage/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/proj.qnx/Device-Coverage/libchipmunk.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.1438498440" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -344,17 +404,32 @@
 								<option id="com.qnx.qcc.option.linker.langcpp.550638471" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1179286572" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
+									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="mmrndclient"/>
+									<listOptionValue builtIn="false" value="strm"/>
 									<listOptionValue builtIn="false" value="grskia"/>
+									<listOptionValue builtIn="false" value="OpenAL"/>
+									<listOptionValue builtIn="false" value="alut"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="asound"/>
+									<listOptionValue builtIn="false" value="xml2"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.2014666509" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.927694704" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Simulator"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.qnx/Simulator"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries/x86"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.objectFiles.1451516298" name="Additional Object Files" superClass="com.qnx.qcc.option.linker.objectFiles"/>
+								<option id="com.qnx.qcc.option.linker.ldoptions.526534847" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="../../../Box2D/proj.qnx/Simulator/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/proj.qnx/Simulator/libchipmunk.a"/>
+								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.439307041" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -419,15 +494,30 @@
 								<option id="com.qnx.qcc.option.linker.langcpp.1840561937" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1031790004" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
+									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="mmrndclient"/>
+									<listOptionValue builtIn="false" value="strm"/>
 									<listOptionValue builtIn="false" value="grskia"/>
+									<listOptionValue builtIn="false" value="OpenAL"/>
+									<listOptionValue builtIn="false" value="alut"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="asound"/>
+									<listOptionValue builtIn="false" value="xml2"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.931994389" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.681434121" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Simulator-Profile"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.qnx/Simulator-Profile"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries/x86"/>
+								</option>
+								<option id="com.qnx.qcc.option.linker.ldoptions.536840311" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="../../../Box2D/proj.qnx/Simulator-Profile/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/proj.qnx/Simulator-Profile/libchipmunk.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.2044213175" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -493,15 +583,30 @@
 								<option id="com.qnx.qcc.option.linker.langcpp.769428310" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1325336223" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
+									<listOptionValue builtIn="false" value="CocosDenshion"/>
+									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="mmrndclient"/>
+									<listOptionValue builtIn="false" value="strm"/>
 									<listOptionValue builtIn="false" value="grskia"/>
+									<listOptionValue builtIn="false" value="OpenAL"/>
+									<listOptionValue builtIn="false" value="alut"/>
+									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="asound"/>
+									<listOptionValue builtIn="false" value="xml2"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.2136296969" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1115848281" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.qnx/Simulator-Coverage"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.qnx/Simulator-Coverage"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/libraries/x86"/>
+								</option>
+								<option id="com.qnx.qcc.option.linker.ldoptions.259366688" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="../../../Box2D/proj.qnx/Simulator-Coverage/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../chipmunk/proj.qnx/Simulator-Coverage/libchipmunk.a"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.linker.780133405" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
