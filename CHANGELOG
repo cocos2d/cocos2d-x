@@ -1,3 +1,49 @@
+cocos2d-1.0.1-x-0.11.0 @ Jan.13 2012
+ [blackberry] 
+     Feature  #907: support blackberry playbook
+ [all platforms]
+     Bug      #752: fix a bug that enable and disable touch more times in touch handler callback function may cause memory leak
+     Bug      #911: fix a bug that TextureCache::addUIImage() cannot create texture when key is null
+     Bug      #920: export export functions in CCAffineTransform with CC_DLL
+     Bug      #922: make CCTexture2D::setPVRImagesHavePremultipliedAlpha() to be a static function
+     Bug      #926: fix a crash caused by RTTI when running TouchesTest
+     Bug      #936: fix a bug that touch menu item may crash when selector is null
+     Feature  #892: use RTTI to simplify the codes
+     Feature  #903: add touch index for CCTouch
+     Refactor #934: add 'isEqual' function for CCString, make CCObject::isEqual to a virtual function
+     Refactor #940: use new icons and new background pictures with new logo of cocos2d-x
+ [android]
+     Bug      #923: fix a bug that CCTextureCache::addImageAsync() crashes when a game enters foreground from background
+     Bug      #906: remove unneeded codes in CCImage_android.cpp
+     Bug      #910: fix a bug that create-android-project.bat may erase exist folder with appointed name
+     Bug      #884: fix a crash error caused by CocosDenshion on android simulator
+     Bug      #921: fix a bug that accelerometer axes inverted in Motorola Xoom tablet
+     Bug      #928: fix a bug that 16-bit texture is changed to 32-bit after application enter foreground
+     Bug      #935: fix a bug that terminateProcessJNI() invoke wrong jni function
+     Bug      #937: fix a compiling error on android x86
+     Bug      #941: fix a bug that volume of background music may not in [0, 1.0]
+     Feature  #887: define GL_GLEXT_PROTOTYPES = 1 automatically when compile on ndk r7
+     Feature  #919: improve build_native.sh and create-android-project.sh
+     Refactor #924: make loading music resources thread safe
+     Document #837: Write a document describes how to use jni
+     Document #914: update document to fit android r5~r7
+ [iOS]
+     Bug      #917: implement CCFileUtils::getFileDataFromZip()
+     Feature  #893: remove cached data when receiving memory warning on iOS
+ [bada]
+     Bug      #918: fix a compiling error after renaming airplay to marmalade
+     Bug      #927: fix a crash caused by invoking unloadEffect after invoking stopEffect
+     Bug      #938: fix a bug that glGenFramebuffersOES isn't supported on wave m device
+     Bug      #943: fix a bug that box2d can't be compiled successfully on bada sdk 1.2.1
+     Refactor #904: Recreate bada 2.0 projects
+ [win32]
+     Bug      #915: fix a bug that msvc template uses old version of .cpp files
+ [linux]
+     Bug      #888: fix compiling error with eclipse
+     Bug      #930: fix a crash caused by load jpg format files
+ [marmalade]
+     Refactor #908: merge marmalade to latest cocos2d-x source
+
 cocos2d-1.0.1-x-0.10.0 @ Dec.2 2011
  [bada]
     Feature  #223  integrate cocos2d-bada branch to master

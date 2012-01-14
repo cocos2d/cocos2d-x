@@ -39,7 +39,7 @@ Basically,it's only enabled in android
 
 It's new in cocos2d-x since v0.99.5
 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       0
@@ -82,13 +82,13 @@ public: virtual const varType& get##funName(void);
  */
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
-public: varType get##funName(void);\
-public: void set##funName(varType var);
+public: virtual varType get##funName(void);\
+public: virtual void set##funName(varType var);
 
 #define CC_PROPERTY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: const varType& get##funName(void);\
-public: void set##funName(const varType& var);
+public: virtual const varType& get##funName(void);\
+public: virtual void set##funName(const varType& var);
 
 /** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
@@ -101,11 +101,11 @@ public: void set##funName(const varType& var);
  */
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
-public: inline varType get##funName(void) const { return varName; }
+public: virtual varType get##funName(void) const { return varName; }
 
 #define CC_SYNTHESIZE_READONLY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: inline const varType& get##funName(void) const { return varName; }
+public: virtual const varType& get##funName(void) const { return varName; }
 
 /** CC_SYNTHESIZE is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
@@ -119,20 +119,30 @@ public: inline const varType& get##funName(void) const { return varName; }
  */
 #define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
-public: inline varType get##funName(void) const { return varName; }\
-public: inline void set##funName(varType var){ varName = var; }
+public: virtual varType get##funName(void) const { return varName; }\
+public: virtual void set##funName(varType var){ varName = var; }
 
 #define CC_SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: inline const varType& get##funName(void) const { return varName; }\
-public: inline void set##funName(const varType& var){ varName = var; }
+public: virtual const varType& get##funName(void) const { return varName; }\
+public: virtual void set##funName(const varType& var){ varName = var; }
 
-#define CC_SAFE_DELETE(p)			if(p) { delete p; p = 0; }
-#define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] p; p = 0; }
-#define CC_SAFE_FREE(p)			if(p) { free(p); p = 0; }
-#define CC_SAFE_RELEASE(p)			if(p) { p->release(); }
-#define CC_SAFE_RELEASE_NULL(p)	if(p) { p->release(); p = 0; }
-#define CC_SAFE_RETAIN(p)			if(p) { p->retain(); }
+#define CC_SYNTHESIZE_RETAIN(varType, varName, funName)    \
+protected: varType varName; \
+public: virtual varType get##funName(void) const { return varName; } \
+public: virtual void set##funName(varType var)   \
+{ \
+    CC_SAFE_RETAIN(var); \
+    CC_SAFE_RELEASE(varName); \
+    varName = var; \
+} 
+
+#define CC_SAFE_DELETE(p)			if(p) { delete (p); (p) = 0; }
+#define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] (p); (p) = 0; }
+#define CC_SAFE_FREE(p)			if(p) { free(p); (p) = 0; }
+#define CC_SAFE_RELEASE(p)			if(p) { (p)->release(); }
+#define CC_SAFE_RELEASE_NULL(p)	if(p) { (p)->release(); (p) = 0; }
+#define CC_SAFE_RETAIN(p)			if(p) { (p)->retain(); }
 #define CC_BREAK_IF(cond)			if(cond) break;
 
 
