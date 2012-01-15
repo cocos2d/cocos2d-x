@@ -130,6 +130,11 @@ files
 	"*.h"
 	"*.cpp"
 
+	[Tests/InputTest]
+	("../tests/TextInputTest")
+	"*.h"
+	"*.cpp"
+
 	[Tests/KeypadTest]
 	("../tests/KeypadTest")
 	"*.h"
@@ -201,7 +206,7 @@ files
 	"*.h"
 	"*.cpp"
 
-  [Tests/Texture2dTest]
+	[Tests/Texture2dTest]
 	("../tests/Texture2dTest")
 	"*.h"
 	"*.cpp"
