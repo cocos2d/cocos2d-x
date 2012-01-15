@@ -144,6 +144,10 @@ files
 	"*.cpp"
 	"*.h"
 	
+	("../text_input_node")
+	[text_input_node]
+	"*.cpp"
+
 	("../textures")
 	[textures]
 	"*.cpp"
