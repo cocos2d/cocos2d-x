@@ -32,13 +32,15 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.1363689121" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.182720845" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1224978101" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../../"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libfreetype2}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libpng}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libxml2}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libjpeg}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.954744053" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -49,15 +51,7 @@
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.1079128222" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.703039623" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.500257262" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../../"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libjpeg}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libpng}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libfreetype2}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libxml2}&quot;"/>
-								</option>
+								<option id="gnu.c.compiler.option.include.paths.500257262" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1531770269" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols"/>
 								<option id="gnu.c.compiler.option.warnings.allwarn.1446204747" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.697502414" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -73,11 +67,11 @@
 								</option>
 								<option id="gnu.cpp.link.option.soname.2012475291" name="Shared object name (-Wl,-soname=)" superClass="gnu.cpp.link.option.soname" value="" valueType="string"/>
 								<option id="gnu.cpp.link.option.userobjs.1360463693" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libfreetype.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libcurl.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libxml2.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libpng.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libjpeg.a}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libfreetype.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libxml2.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libpng.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libjpeg.a"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.620370737" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -90,7 +84,26 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="platform/marmalade|platform (copy)|platform/wophone|particle_nodes/CCParticleSystemPoint.cpp|proj.wophone|platform/ios|proj.win32|platform/android|platform/win32|proj.airplay|platform/third_party|platform/bada|platform/qnx" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="actions"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="base_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocoa"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="effects"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="keypad_dispatcher"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="label_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="layers_scenes_transitions_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
+						<entry excluding="android/|bada/|ios/|Linux/CCFileUtils_Linux.cpp|Linux/CCImage_Linux.cpp|marmalade/|qnx/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="text_input_node"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -127,13 +140,15 @@
 								<option id="gnu.cpp.compiler.exe.release.option.optimization.level.1498871898" name="Optimization Level" superClass="gnu.cpp.compiler.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.1985273019" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1571711257" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../../"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libfreetype2}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libpng}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libxml2}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libjpeg}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1432872181" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -144,15 +159,7 @@
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
 								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.1465078999" name="Optimization Level" superClass="gnu.c.compiler.exe.release.option.optimization.level" value="gnu.c.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.release.option.debugging.level.519142307" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.1095324729" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../../"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libjpeg}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libpng}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libfreetype2}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libxml2}&quot;"/>
-								</option>
+								<option id="gnu.c.compiler.option.include.paths.1095324729" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1479035749" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols"/>
 								<option id="gnu.c.compiler.option.warnings.allwarn.2077117046" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.191330176" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -168,11 +175,11 @@
 								</option>
 								<option id="gnu.cpp.link.option.soname.1066283521" name="Shared object name (-Wl,-soname=)" superClass="gnu.cpp.link.option.soname" value="" valueType="string"/>
 								<option id="gnu.cpp.link.option.userobjs.394630625" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libfreetype.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libcurl.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libxml2.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libpng.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/linux/libraries/libjpeg.a}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libfreetype.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libxml2.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libpng.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libjpeg.a"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.319060310" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -185,7 +192,26 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="platform/airplay|platform (copy)|platform/wophone|particle_nodes/CCParticleSystemPoint.cpp|proj.wophone|platform/ios|proj.win32|platform/android|platform/win32|proj.airplay|platform/third_party" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="actions"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="base_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocoa"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="effects"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="keypad_dispatcher"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="label_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="layers_scenes_transitions_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
+						<entry excluding="android/|bada/|ios/|Linux/CCFileUtils_Linux.cpp|Linux/CCImage_Linux.cpp|marmalade/|qnx/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="text_input_node"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

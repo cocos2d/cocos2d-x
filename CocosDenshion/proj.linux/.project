@@ -87,11 +87,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Linux</locationURI>
 		</link>
 		<link>
-			<name>android</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/android</locationURI>
-		</link>
-		<link>
 			<name>include</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>

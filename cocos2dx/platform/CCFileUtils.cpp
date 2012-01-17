@@ -384,4 +384,8 @@ NS_CC_END;
 #include "qnx/CCFileUtils_qnx.cpp"
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include "Linux/CCFileUtils_Linux.cpp"
+#endif
+
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)

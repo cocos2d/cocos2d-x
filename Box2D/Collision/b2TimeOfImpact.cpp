@@ -22,7 +22,12 @@
 #include <Box2D/Collision/Shapes/b2CircleShape.h>
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
 
+#ifdef SHP
+#include <stdio.h>
+#else
 #include <cstdio>
+#endif
+
 using namespace std;
 
 int32 b2_toiCalls, b2_toiIters, b2_toiMaxIters;

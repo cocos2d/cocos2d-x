@@ -38,7 +38,7 @@ move_eclipse_configures_into(){
 
 	sed -i "s/HelloWorld/$APP_NAME/" $APP_DIR/Linux/.project
 
-	sed -i "s:\.\./\.\./\.\./:$COCOS2DX_ROOT:;s:helloworld:$APP_NAME:" $APP_DIR/Linux/.cproject
+	sed -i "s/HelloWorld/$APP_NAME/" $APP_DIR/Linux/.cproject
 }
 
 move_files_into_linux
