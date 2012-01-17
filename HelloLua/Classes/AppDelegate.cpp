@@ -79,7 +79,7 @@ bool AppDelegate::initInstance()
 
 #endif  // CC_PLATFORM_WOPHONE
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 		// MaxAksenov said it's NOT a very elegant solution. I agree, haha
 		CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 #endif
@@ -126,7 +126,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	}
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
 	CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
