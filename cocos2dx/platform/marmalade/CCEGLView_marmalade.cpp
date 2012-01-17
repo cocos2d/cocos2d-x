@@ -32,9 +32,11 @@
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 #include "CCKeypadDispatcher.h"
+#include "CCIMEDispatcher.h"
 #include "ccMacros.h"
 
 #include <stdlib.h>
+#include <s3eOSReadString.h>
 
 NS_CC_BEGIN;
 
@@ -83,7 +85,8 @@ CCEGLView::CCEGLView()
     }
     
     // Register keyboard event handler
-	s3eKeyboardRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler, this);
+//	s3eKeyboardRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler, this);
+//	s3eKeyboardRegister(S3E_KEYBOARD_CHAR_EVENT, &CharEventHandler, this);
 }
 
 void CCEGLView::setFrameWidthAndHeight(int width, int height)
@@ -235,21 +238,27 @@ CCTouch* CCEGLView::findTouch(int id)
 
 void CCEGLView::setKeyTouch(void* systemData)
 {
-    s3eKeyboardEvent* event = (s3eKeyboardEvent*)systemData;
-	if (event->m_Pressed)
-	{
-		if (event->m_Key!=m_Key)
-		{
-			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
-		}
-		else
-		{
-			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+// 	s3eKeyboardEvent* event = (s3eKeyboardEvent*)systemData;
+// 	if (event->m_Pressed)
+// 	{
+// 		if (event->m_Key!=m_Key)
+// 		{
+// 			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+// 		}
+// 		else
+// 		{
+// 			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+// 
+// 		}
+// 		m_Key =event->m_Key;
+// 	}
+}
 
-		}
-	m_Key =event->m_Key;
-	}
-
+void CCEGLView::setCharTouch( void* systemData )
+{
+//     s3eKeyboardCharEvent* event = (s3eKeyboardCharEvent*)systemData;
+// 	s3eWChar c = event->m_Char ;
+// 	CCIMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&c, 1);
 }
 
 bool CCEGLView::isOpenGLReady()
@@ -272,7 +281,8 @@ void CCEGLView::release()
         s3ePointerUnRegister(S3E_POINTER_MOTION_EVENT, &MotionEventHandler);
     }
     
-	s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler);
+//	s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler);
+//	s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &CharEventHandler);
 
 	if (IwGLIsInitialised())
   		IwGLTerminate();
@@ -344,6 +354,16 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
             (GLint)w,
             (GLint)h);
     }		
+}
+
+void CCEGLView::setIMEKeyboardState(bool bOpen)
+{
+	if(bOpen && s3eOSReadStringAvailable() == S3E_TRUE) {
+		const char* inputText = s3eOSReadStringUTF8("") ;
+		if( inputText!=0 ) {
+			CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(inputText, strlen(inputText));
+		}
+	}
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()
