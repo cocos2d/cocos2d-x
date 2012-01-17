@@ -28,6 +28,13 @@ THE SOFTWARE.
 #include "ccMacros.h"
 namespace   cocos2d {
 
+CCObject* CCObject::copyWithZone(CCZone *pZone)
+{
+    CC_UNUSED_PARAM(pZone);
+    CCAssert(0, "not implement");
+    return 0;
+}
+
 CCObject::CCObject(void)
 {
 	static unsigned int uObjectCount = 0;
@@ -93,13 +100,6 @@ unsigned int CCObject::retainCount(void)
 bool CCObject::isEqual(const CCObject *pObject)
 {
 	return this == pObject;
-}
-
-CCObject* CCObject::copyWithZone(CCZone *pZone)
-{
-    CC_UNUSED_PARAM(pZone);
-    CCAssert(0, "not implement");
-    return 0;
 }
 
 }//namespace   cocos2d 

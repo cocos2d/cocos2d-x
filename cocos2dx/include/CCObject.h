@@ -35,7 +35,13 @@ class CCString;
 class CCNode;
 class CCEvent;
 
-class CC_DLL CCObject
+class CC_DLL CCCopying
+{
+public:
+    virtual CCObject* copyWithZone(CCZone* pZone);
+};
+
+class CC_DLL CCObject : public CCCopying
 {
 protected:
 	// object id
@@ -56,7 +62,7 @@ public:
 	unsigned int retainCount(void);
 	virtual bool isEqual(const CCObject* pObject);
     
-    // CCObject move to here
+    // Move SelectorProtocol to here
     virtual void update(ccTime dt) {CC_UNUSED_PARAM(dt);};
     virtual void tick(ccTime dt){CC_UNUSED_PARAM(dt);};
     virtual void callfunc(){};
@@ -64,8 +70,6 @@ public:
     virtual void callfunc(CCNode* pSender, void* pData){CC_UNUSED_PARAM(pSender);CC_UNUSED_PARAM(pData);};
     virtual void menuHandler(CCObject* pSender){CC_UNUSED_PARAM(pSender);};
     virtual void eventHandler(CCEvent* pEvent) {CC_UNUSED_PARAM(pEvent);};
-
-    virtual CCObject* copyWithZone(CCZone* pZone);
 
 	friend class CCAutoreleasePool;
 };
