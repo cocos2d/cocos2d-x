@@ -48,9 +48,9 @@ THE SOFTWARE.
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "CCUserDefault.h"
-#endif
+//#endif
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -621,9 +621,9 @@ void CCDirector::purgeDirector()
 	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
 	
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	
 	CCUserDefault::purgeSharedUserDefault();
-#endif
+//#endif
 	// OpenGL view
 	m_pobOpenGLView->release();
 	m_pobOpenGLView = NULL;

@@ -64,6 +64,7 @@ public:
     void	setContentScaleFactor(float contentScaleFactor);
 	void	setViewPortInPoints(float x, float y, float w, float h);
     void	setScissorInPoints(float x, float y, float w, float h);
+    void	setIMEKeyboardState(bool bOpen);
 	CCRect	getViewPort();
 	float	getScreenScaleFactor();
 
@@ -98,7 +99,8 @@ private:
     void	setMultiTouch(void* systemData);
 	void	setMultiMotionTouch(void* systemData);
 	void	setKeyTouch(void* systemData);
-    
+	void	setCharTouch(void* systemData);
+
     CCTouch* findTouch(int id);
     CCTouch* touchSet[S3E_POINTER_TOUCH_MAX];
 
@@ -129,6 +131,12 @@ private:
 	static int32 KeyEventHandler(void* systemData, void* userData)
 	{
 		((CCEGLView*)userData)->setKeyTouch(systemData);
+		return 0;
+	}
+
+	static int32 CharEventHandler(void* systemData, void* userData)
+	{
+		((CCEGLView*)userData)->setCharTouch(systemData);
 		return 0;
 	}
 };
