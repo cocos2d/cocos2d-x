@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 namespace   cocos2d {
 
-CCObject* CCObject::copyWithZone(CCZone *pZone)
+CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
     CC_UNUSED_PARAM(pZone);
     CCAssert(0, "not implement");
