@@ -674,15 +674,15 @@ namespace cocos2d{
 		{
 			unsigned short c = pUniStr[i];
 
-            std::map<unsigned int, ccBMFontDef>::iterator it = m_pConfiguration->m_pBitmapFontArray->find(c);
-            CCAssert(it != m_pConfiguration->m_pBitmapFontArray->end(), "LabelBMFont: character is not supported");
-
             if (c == '\n')
             {
                 nextFontPositionX = 0;
                 nextFontPositionY -= m_pConfiguration->m_uCommonHeight;
                 continue;
             }
+
+            std::map<unsigned int, ccBMFontDef>::iterator it = m_pConfiguration->m_pBitmapFontArray->find(c);
+            CCAssert(it != m_pConfiguration->m_pBitmapFontArray->end(), "LabelBMFont: character is not supported");
             
 			kerningAmount = this->kerningAmountForFirst(prev, c);
 
