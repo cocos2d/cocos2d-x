@@ -56,11 +56,11 @@ m_nSoundId(0)
 
 	for (int i = 0; i < m_nTestCount; ++i)
 	{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-		CCLabelBMFont* label = CCLabelBMFont::labelWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
-#else
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+//		CCLabelBMFont* label = CCLabelBMFont::labelWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
+//#else
         CCLabelTTF* label = CCLabelTTF::labelWithString(testItems[i].c_str(), "Arial", 24);
-#endif		
+//#endif		
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(CocosDenshionTest::menuCallback));
 		
 		m_pItmeMenu->addChild(pMenuItem, i + 10000);
