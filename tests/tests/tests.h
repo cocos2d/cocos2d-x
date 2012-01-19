@@ -22,9 +22,9 @@
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
 // havn't implement on marmalade
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "TextInputTest/TextInputTest.h"
-#endif
+//#endif
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"

@@ -57,11 +57,11 @@ bool MenuLayer::initWithEntryID(int entryId)
 	view->setScale(15);
 	view->setAnchorPoint( ccp(0,0) );
 	view->setPosition( ccp(s.width/2, s.height/3) );
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-	CCLabelBMFont* label = CCLabelBMFont::labelWithString(view->title().c_str(),  "fonts/arial16.fnt");
-#else	
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+//	CCLabelBMFont* label = CCLabelBMFont::labelWithString(view->title().c_str(),  "fonts/arial16.fnt");
+//#else	
 	CCLabelTTF* label = CCLabelTTF::labelWithString(view->title().c_str(), "Arial", 28);
-#endif
+//#endif
 	addChild(label, 1);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 
