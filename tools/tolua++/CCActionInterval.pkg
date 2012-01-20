@@ -21,7 +21,7 @@ class CCRepeat : public CCAction
 
 class CCRepeatForever : public CCAction
 {
-    static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
+    static CCRepeatForever* actionWithAction(CCFiniteTimeAction *pAction);
 };
 
 class CCSpawn : public CCAction
