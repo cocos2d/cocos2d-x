@@ -1,5 +1,4 @@
 
-
 class CCScene : public CCNode
 {
     void registerScriptEventsHandler(LUA_FUNCTION functionRefID);

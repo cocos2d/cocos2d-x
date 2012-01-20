@@ -1,114 +1,114 @@
 
-class CCActionEase : public CCAction
+class CCActionEase : public CCActionInterval
 {
-    static CCActionEase* actionWithAction(CCActionInterval *pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction);
 };
 
-class CCEaseRateAction : public CCAction
+class CCEaseRateAction : public CCActionInterval
 {
-    static CCEaseRateAction* actionWithAction(CCActionInterval* pAction, float fRate);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction, float fRate);
 };
 
-class CCEaseIn : public CCAction
+class CCEaseIn : public CCActionInterval
 {
-    static CCEaseIn* actionWithAction(CCActionInterval* pAction, float fRate);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction, float fRate);
 };
 
-class CCEaseOut : public CCAction
+class CCEaseOut : public CCActionInterval
 {
-    static CCEaseOut* actionWithAction(CCActionInterval* pAction, float fRate);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction, float fRate);
 };
 
-class CCEaseInOut : public CCAction
+class CCEaseInOut : public CCActionInterval
 {
-    static CCEaseInOut* actionWithAction(CCActionInterval* pAction, float fRate);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction, float fRate);
 };
 
-class CCEaseExponentialIn : public CCAction
+class CCEaseExponentialIn : public CCActionInterval
 {
-    static CCEaseExponentialIn* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseExponentialOut : public CCAction
+class CCEaseExponentialOut : public CCActionInterval
 {
-    static CCEaseExponentialOut* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseExponentialInOut : public CCAction
+class CCEaseExponentialInOut : public CCActionInterval
 {
-    static CCEaseExponentialInOut* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseSineIn : public CCAction
+class CCEaseSineIn : public CCActionInterval
 {
-    static CCEaseSineIn* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseSineOut : public CCAction
+class CCEaseSineOut : public CCActionInterval
 {
-    static CCEaseSineOut* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseSineInOut : public CCAction
+class CCEaseSineInOut : public CCActionInterval
 {
-    static CCEaseSineInOut* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseElastic : public CCAction
+class CCEaseElastic : public CCActionInterval
 {
-    static CCEaseElastic* actionWithAction(CCActionInterval *pAction);
-    static CCEaseElastic* actionWithAction(CCActionInterval *pAction, float fPeriod);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction, float fPeriod);
 };
 
-class CCEaseElasticIn : public CCAction
+class CCEaseElasticIn : public CCActionInterval
 {
-    static CCEaseElasticIn* actionWithAction(CCActionInterval *pAction);
-    static CCEaseElasticIn* actionWithAction(CCActionInterval *pAction, float fPeriod);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction, float fPeriod);
 };
 
-class  CCEaseElasticOut : public CCAction
+class  CCEaseElasticOut : public CCActionInterval
 {
-    static CCEaseElasticOut* actionWithAction(CCActionInterval *pAction);
-    static CCEaseElasticOut* actionWithAction(CCActionInterval *pAction, float fPeriod);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction, float fPeriod);
 };
 
-class CCEaseElasticInOut : public CCAction
+class CCEaseElasticInOut : public CCActionInterval
 {
-    static CCEaseElasticInOut* actionWithAction(CCActionInterval *pAction);
-    static CCEaseElasticInOut* actionWithAction(CCActionInterval *pAction, float fPeriod);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval *pAction, float fPeriod);
 };
 
-class CCEaseBounce : public CCAction
+class CCEaseBounce : public CCActionInterval
 {
-    static CCEaseBounce* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseBounceIn : public CCAction
+class CCEaseBounceIn : public CCActionInterval
 {
-    static CCEaseBounceIn* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseBounceOut : public CCAction
+class CCEaseBounceOut : public CCActionInterval
 {
-    static CCEaseBounceOut* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseBounceInOut : public CCAction
+class CCEaseBounceInOut : public CCActionInterval
 {
-    static CCEaseBounceInOut* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseBackIn : public CCAction
+class CCEaseBackIn : public CCActionInterval
 {
-    static CCEaseBackIn* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseBackOut : public CCAction
+class CCEaseBackOut : public CCActionInterval
 {
-    static CCEaseBackOut* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };
 
-class CCEaseBackInOut : public CCAction
+class CCEaseBackInOut : public CCActionInterval
 {
-    static CCEaseBackInOut* actionWithAction(CCActionInterval* pAction);
+    static CCActionInterval* actionWithAction(CCActionInterval* pAction);
 };

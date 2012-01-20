@@ -1,46 +1,24 @@
 
-	enum {
-		//* priority used by the menu
-		kCCMenuTouchPriority = -128,
-	};
+enum {
+    //* priority used by the menu
+    kCCMenuTouchPriority = -128,
+};
 
 class CCMenu : public CCLayer
-	{
-		void alignItemsVertically();
-		void alignItemsVerticallyWithPadding(float padding);	
-		void alignItemsHorizontally();		
-		void alignItemsHorizontallyWithPadding(float padding);
-		void alignItemsInColumns(unsigned int columns, va_list args);
-		void alignItemsInRows(unsigned int rows, va_list args);
+{
+    void alignItemsVertically();
+    void alignItemsVerticallyWithPadding(float padding);
+    void alignItemsHorizontally();
+    void alignItemsHorizontallyWithPadding(float padding);
+    void alignItemsInColumns(unsigned int columns, va_list args);
+    void alignItemsInRows(unsigned int rows, va_list args);
 
     void addChild(CCMenuItem* child, int zOrder = 0, int tag = -1);
 
-
-		void onExit();
-
-		void setOpacity(GLubyte opacity);
-		GLubyte getOpacity(void);
-		void setColor(ccColor3B color);
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity(void);
+    void setColor(ccColor3B color);
     ccColor3B getColor(void);
 
-
-		bool init();
-		static CCLayer *node(void);
-		void onEnter();
-		void onExit();
-		void onEnterTransitionDidFinish();
-		bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-
-		void didAccelerate(CCAcceleration* pAccelerationValue) {}
-
-		void registerWithTouchDispatcher(void);
-
-		void setIsTouchEnabled(bool bValue);
-		bool getIsTouchEnabled();
-
-		void setIsAccelerometerEnabled(bool bValue);
-		bool getIsAccelerometerEnabled();
-
-		void setIsKeypadEnabled(bool bValue);
-		bool getIsKeypadEnabled();
-	};
+    static CCMenu* node();
+};
