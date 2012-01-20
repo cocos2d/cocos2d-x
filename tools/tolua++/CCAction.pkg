@@ -5,29 +5,37 @@ enum {
 
 class CCAction : public CCObject
 {
-    bool isDone(void);
-    CCNode* getTarget(void);
-    void setTarget(CCNode *pTarget);
-    CCNode* getOriginalTarget(void);
-    void setOriginalTarget(CCNode *pOriginalTarget);
-    int getTag(void);
-    void setTag(int nTag);
+    // bool isDone(void);
+    // CCNode* getTarget(void);
+    // void setTarget(CCNode *pTarget);
+    // CCNode* getOriginalTarget(void);
+    // void setOriginalTarget(CCNode *pOriginalTarget);
+    // int getTag(void);
+    // void setTag(int nTag);
 
-    static CCAction* action();
+    // static CCAction* action();
 };
 
-class CCFiniteTimeAction : public CCAction
+class CCActionInterval : public CCAction
 {
-    ccTime getDuration(void);
-    void setDuration(ccTime duration);
-    CCFiniteTimeAction* reverse(void);
+    // ccTime getElapsed(void);
+    // void setAmplitudeRate(CGFloat amp);
+    // CGFloat getAmplitudeRate(void);
 };
 
+class CCFiniteTimeAction : public CCActionInterval
+{
+    // ccTime getDuration(void);
+    // void setDuration(ccTime duration);
+    // CCFiniteTimeAction* reverse(void);
+};
+
+// CCActionInterval
 class CCSpeed : public CCAction
 {
     float getSpeed(void);
     void setSpeed(float fSpeed);
-    CCActionInterval* reverse(void);
+    CCAction* reverse(void);
 
     static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);
 };
@@ -39,4 +47,186 @@ class CCFollow : public CCAction
 
     static CCFollow* actionWithTarget(CCNode *pFollowedNode);
     static CCFollow* actionWithTarget(CCNode *pFollowedNode, CCRect rect);
+};
+
+class CCSequence : public CCActionInterval
+{
+    static CCFiniteTimeAction* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+};
+
+class CCRepeat : public CCActionInterval
+{
+    static CCRepeat* actionWithAction(CCActionInterval *pAction, unsigned int times);
+};
+
+class CCRepeatForever : public CCActionInterval
+{
+    static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
+};
+
+class CCSpawn : public CCActionInterval
+{
+    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+    static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+};
+
+class CCRotateTo : public CCActionInterval
+{
+    static CCRotateTo* actionWithDuration(ccTime duration, float fDeltaAngle);
+};
+
+class CCRotateBy : public CCActionInterval
+{
+    static CCRotateBy* actionWithDuration(ccTime duration, float fDeltaAngle);
+};
+
+class CCMoveTo : public CCActionInterval
+{
+    static CCMoveTo* actionWithDuration(ccTime duration, CCPoint position);
+};
+
+class CCMoveBy : public CCActionInterval
+{
+    static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
+};
+
+class CCSkewTo : public CCActionInterval
+{
+    static CCSkewTo* actionWithDuration(ccTime t, float sx, float sy);
+};
+
+class CCSkewBy : public CCActionInterval
+{
+    static CCSkewBy* actionWithDuration(ccTime t, float deltaSkewX, float deltaSkewY);
+};
+
+class CCJumpBy : public CCActionInterval
+{
+    static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+};
+
+class CCJumpTo : public CCActionInterval
+{
+    static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+};
+
+typedef struct _ccBezierConfig {
+    CCPoint endPosition;
+    CCPoint controlPoint_1;
+    CCPoint controlPoint_2;
+} ccBezierConfig;
+
+class CCBezierBy : public CCActionInterval
+{
+    static CCBezierBy* actionWithDuration(ccTime t, ccBezierConfig c);
+};
+
+class CCBezierTo : public CCActionInterval
+{
+    static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
+};
+
+class CCScaleTo : public CCActionInterval
+{
+    static CCScaleTo* actionWithDuration(ccTime duration, float s);
+    static CCScaleTo* actionWithDuration(ccTime duration, float sx, float sy);
+};
+
+class CCScaleBy : public CCActionInterval
+{
+    static CCScaleBy* actionWithDuration(ccTime duration, float s);
+    static CCScaleBy* actionWithDuration(ccTime duration, float sx, float sy);
+};
+
+class CCBlink : public CCActionInterval
+{
+    static CCBlink* actionWithDuration(ccTime duration, unsigned int uBlinks);
+};
+
+class CCFadeIn : public CCActionInterval
+{
+    static CCFadeIn* actionWithDuration(ccTime d);
+};
+
+class CCFadeOut : public CCActionInterval
+{
+    static CCFadeOut* actionWithDuration(ccTime d);
+};
+
+class CCFadeTo : public CCActionInterval
+{
+    static CCFadeTo* actionWithDuration(ccTime duration, GLubyte opacity);
+};
+
+class CCTintTo : public CCActionInterval
+{
+    static CCTintTo* actionWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
+};
+
+class CCTintBy : public CCActionInterval
+{
+    static CCTintBy* actionWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+};
+
+class CCDelayTime : public CCActionInterval
+{
+    static CCDelayTime* actionWithDuration(ccTime d);
+};
+
+class CCReverseTime : public CCActionInterval
+{
+    static CCReverseTime* actionWithAction(CCFiniteTimeAction *pAction);
+};
+
+class CCAnimate : public CCActionInterval
+{
+    CCAnimation* getAnimation(void);
+    void setAnimation(CCAnimation *pAnimation);
+
+    static CCAction* actionWithAnimation(CCAnimation *pAnimation);
+    static CCAction* actionWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+    static CCAction* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+};
+
+class CCProgressTo : public CCAction
+{
+    static CCAction* actionWithDuration(ccTime duration, float fPercent);
+};
+
+class CCProgressFromTo : public CCAction
+{
+    static CCAction* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
+};
+
+
+// CCActionInstant
+class CCShow : public CCAction
+{
+    static CCAction* action();
+};
+
+class CCHide : public CCAction
+{
+    static CCAction* action();
+};
+
+class CCToggleVisibility : public CCAction
+{
+    static CCAction* action();
+};
+
+class CCFlipX : public CCAction
+{
+    static CCAction* actionWithFlipX(bool x);
+};
+
+class CCFlipY : public CCAction
+{
+    static CCAction* actionWithFlipY(bool y);
+};
+
+class CCPlace : public CCAction //<NSCopying>
+{
+    static CCAction* actionWithPosition(CCPoint pos);
 };

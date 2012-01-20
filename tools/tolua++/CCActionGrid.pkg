@@ -1,12 +1,12 @@
 
-class CCGridAction : public CCAction
+class CCGridAction : public CCActionInterval
 {
     CCGridBase* getGrid(void);
 
     static CCGridAction* actionWithSize(ccGridSize gridSize, ccTime duration);
 };
 
-class CCAccelDeccelAmplitude : public CCAction
+class CCAccelDeccelAmplitude : public CCActionInterval
 {
     float getRate(void);
     void setRate(float fRate);
@@ -14,7 +14,7 @@ class CCAccelDeccelAmplitude : public CCAction
     static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
 };
 
-class CCAccelAmplitude : public CCAction
+class CCAccelAmplitude : public CCActionInterval
 {
     float getRate(void);
     void setRate(float fRate);
@@ -22,7 +22,7 @@ class CCAccelAmplitude : public CCAction
     static CCAccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
 };
 
-class CCDeccelAmplitude : public CCAction
+class CCDeccelAmplitude : public CCActionInterval
 {
     float getRate(void);
     void setRate(float fRate);
@@ -30,12 +30,12 @@ class CCDeccelAmplitude : public CCAction
     static CCDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
 };
 
-class CCStopGrid : public CCAction
+class CCStopGrid : public CCActionInstant
 {
     static CCStopGrid* action(void);
 };
 
-class CCReuseGrid : public CCAction
+class CCReuseGrid : public CCActionInstant
 {
     static CCReuseGrid* actionWithTimes(int times);
 };

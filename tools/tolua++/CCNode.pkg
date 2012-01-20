@@ -1,7 +1,7 @@
 
 class CCNode : public CCObject
 {
-    int getZOrder();
+    int     getZOrder();
     float   getVertexZ();
     void    setVertexZ(float var);
     float   getRotation();
@@ -20,9 +20,9 @@ class CCNode : public CCObject
     void    setPosition(float x, float y);
     void    setPositionX(float x);
     void    setPositionY(float y);
-    float getSkewX();
+    float   getSkewX();
     void    setSkewX(float skewX);
-    float getSkewY();
+    float   getSkewY();
     void    setSkewY(float skewY);
     bool    getIsVisible();
     void    setIsVisible(bool var);
@@ -48,9 +48,11 @@ class CCNode : public CCObject
     tolua_property__CCContentSize   CCSize contentSize;
     tolua_property__CCTag           int tag;
 
-    CCMutableArray<CCNode*> *  getChildren();
-    CCCamera*  getCamera();
-    CCGridBase*  getGrid();
+    CCMutableArray<CCNode*>* getChildren();
+    unsigned int getChildrenCount(void);
+
+    CCCamera*   getCamera();
+    CCGridBase* getGrid();
     void    setGrid(CCGridBase* pGrid);
     CCPoint getAnchorPointInPixels();
     CCSize  getContentSizeInPixels();
@@ -80,11 +82,11 @@ class CCNode : public CCObject
     void    stopAction(CCAction* action);
 
     void    stopActionByTag(int tag);
-    CCAction* getActionByTag(int tag);
-    char *  description(void);
+    CCAction*   getActionByTag(int tag);
+    char *      description(void);
     CCNode* getChildByTag(int tag);
 
-    unsigned int    numberOfRunningActions(void);
+    unsigned int numberOfRunningActions(void);
 
     void    scheduleUpdate(void);
     void    scheduleUpdateWithPriority(int priority);

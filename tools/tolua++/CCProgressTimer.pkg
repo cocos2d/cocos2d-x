@@ -18,7 +18,6 @@ class CCProgressTimer : public CCNode
 {
     CCProgressTimerType getType(void);
     float getPercentage(void);
-
     CCSprite* getSprite(void);
 
     void setPercentage(float fPercentage);
