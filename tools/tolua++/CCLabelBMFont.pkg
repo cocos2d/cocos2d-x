@@ -1,40 +1,14 @@
 
-	struct _KerningHashElement;
+class CCLabelBMFont : public CCNode
+{
+	void setString(const char* label);
+	const char* getString(void);
 
-	typedef struct _BMFontDef {
-		unsigned int charID;
-		CCRect rect;
-		int xOffset;
-		int yOffset;
-		int xAdvance;
-	} ccBMFontDef;
+	void setOpacity(GLubyte opacity);
+	GLubyte getOpacity(void);
 
-	typedef struct _BMFontPadding {
-		int	left;
-		int top;
-		int right;
-		int bottom;
-	} ccBMFontPadding;
+	tolua_property__CCOpacity	GLubyte opacity;
 
-	class CCBMFontConfiguration : public CCObject
-	{
-		char * description();
-
-		static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
-	};
-
-class CCLabelBMFont : public CCSpriteBatchNode
-	{
-		void createFontChars();
-
-		void setString(const char *label);
-		const char* getString(void);
-		void setCString(const char *label);
-
-    static void purgeCachedData();
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
-	};
-
-	CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
-
-	void FNTConfigRemoveCache( void );
+	static void purgeCachedData();
+	static CCLabelBMFont* labelWithString(const char* str, const char* fntFile);
+};
