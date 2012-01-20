@@ -319,6 +319,11 @@ CCArray* CCNode::getChildren()
 	return m_pChildren;
 }
 
+unsigned int CCNode::getChildrenCount(void)
+{
+    return m_pChildren ? m_pChildren->count() : 0;
+}
+
 /// camera getter: lazy alloc
 CCCamera* CCNode::getCamera()
 {

@@ -191,6 +191,8 @@ class CC_DLL CCNode : public SelectorProtocol, public CCObject
     
     CC_PROPERTY_READONLY(CCArray*, m_pChildren, Children)
     
+    unsigned int getChildrenCount(void);
+    
     /** A CCCamera object that lets you move the node using a gluLookAt
      */
     CC_PROPERTY_READONLY(CCCamera *, m_pCamera, Camera)
