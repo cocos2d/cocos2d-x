@@ -14,6 +14,10 @@
 			<triggers>clean,full,incremental,</triggers>
 			<arguments>
 				<dictionary>
+					<key>?children?</key>
+					<value>?name?=outputEntries\|?children?=?name?=entry\\\\\\\|\\\|?name?=entry\\\\\\\|\\\|\||</value>
+				</dictionary>
+				<dictionary>
 					<key>?name?</key>
 					<value></value>
 				</dictionary>
@@ -98,7 +102,7 @@
 		<link>
 			<name>tests</name>
 			<type>2</type>
-			<location>/home/xm/workspace/cocos2d-x/tests/tests</location>
+			<locationURI>PARENT-1-PROJECT_LOC/tests</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

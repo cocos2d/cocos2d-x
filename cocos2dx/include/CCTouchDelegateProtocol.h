@@ -80,6 +80,17 @@ public:
         CC_UNUSED_PARAM(pEvent);
     }
     
+    /*
+     * In TouchesTest, class Padle inherits from CCSprite and CCTargetedTouchDelegate.
+     * When it invoke  CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true),
+     * it will crash in CCTouchHandler::initWithDelegate() because of dynamic_cast() on android.
+     * I don't know why, so add these functions for the subclass to invoke it's own retain() and
+     * release().
+     * More detain info please refer issue #926(cocos2d-x).
+     */
+    virtual void touchDelegateRetain() = 0;
+    virtual void touchDelegateRelease() = 0;
+    
     // optional
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     {
@@ -113,7 +124,7 @@ public:
  - 2. You can *claim* a UITouch by returning YES in ccTouchBegan. Updates of claimed
  touches are sent only to the delegate(s) that claimed them. So if you get a move/
  ended/cancelled update you're sure it's your touch. This frees you from doing a
- lot of checks when doing multi-touch. 
+ lot of checks when doing multi-touch.
  
  (The name TargetedTouchDelegate relates to updates "targeting" their specific
  handler, without bothering the other handlers.)
@@ -121,60 +132,32 @@ public:
  */
 class CC_DLL CCTargetedTouchDelegate : public CCTouchDelegate
 {
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
-    {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-        return false;
-    };
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
-    {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-    }
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
-    {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-    }
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
-    {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-    }
+public:
+    /** Return YES to claim the touch.
+     @since v0
+     */
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);return false;};
+    
+    // optional
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
 };
 
 /** @brief
  This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
+ @since v0.8
  */
 
 class CC_DLL CCStandardTouchDelegate : public CCTouchDelegate
 {
-public:
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
-    {
-        CC_UNUSED_PARAM(pTouches);
-        CC_UNUSED_PARAM(pEvent);
-    }
-    
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
-    {
-        CC_UNUSED_PARAM(pTouches);
-        CC_UNUSED_PARAM(pEvent);
-    }
-    
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
-    {
-        CC_UNUSED_PARAM(pTouches);
-        CC_UNUSED_PARAM(pEvent);
-    }
-    
-    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
-    {
-        CC_UNUSED_PARAM(pTouches);
-        CC_UNUSED_PARAM(pEvent);
-    }
+    // optional
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
 };
-} //namespace   cocos2d 
+
+}//namespace   cocos2d
 
 #endif // __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__

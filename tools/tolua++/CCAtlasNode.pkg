@@ -1,9 +1,9 @@
 
 class CCAtlasNode : public CCNode
-{
-    void updateAtlasValues();
-    CCTexture2D* getTexture(void);
-    void setTexture(CCTexture2D *texture);
+	{
+		void updateAtlasValues();
+		CCTexture2D* getTexture(void);	
+		void setTexture(CCTexture2D *texture);
 
     static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
-};
+	};

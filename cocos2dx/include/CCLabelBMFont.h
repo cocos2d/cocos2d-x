@@ -33,174 +33,165 @@ Use any of these editors to generate BMFonts:
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
 #include "CCSpriteBatchNode.h"
-namespace cocos2d {
+#include <map>
 
-struct _KerningHashElement;
+namespace cocos2d{
 
-/**
-@struct ccBMFontDef
-BMFont definition
-*/
-typedef struct _BMFontDef {
-    //! ID of the character
-    unsigned int charID;
-    //! origin and size of the font
-    CCRect rect;
-    //! The X amount the image should be offset when drawing the image (in pixels)
-    int xOffset;
-    //! The Y amount the image should be offset when drawing the image (in pixels)
-    int yOffset;
-    //! The amount to move the current position after drawing the character (in pixels)
-    int xAdvance;
-} ccBMFontDef;
+	struct _KerningHashElement;
 
-/** @struct ccBMFontPadding
-BMFont padding
-@since v0.8.2
-*/
-typedef struct _BMFontPadding {
-    /// padding left
-    int	left;
-    /// padding top
-    int top;
-    /// padding right
-    int right;
-    /// padding bottom
-    int bottom;
-} ccBMFontPadding;
+	/**
+    @struct ccBMFontDef
+    BMFont definition
+	*/
+	typedef struct _BMFontDef {
+		//! ID of the character
+		unsigned int charID;
+		//! origin and size of the font
+		CCRect rect;
+		//! The X amount the image should be offset when drawing the image (in pixels)
+		int xOffset;
+		//! The Y amount the image should be offset when drawing the image (in pixels)
+		int yOffset;
+		//! The amount to move the current position after drawing the character (in pixels)
+		int xAdvance;
+	} ccBMFontDef;
 
-enum {
-    // how many characters are supported
-    kCCBMFontMaxChars = 2048, //256,
-};
+    /** @struct ccBMFontPadding
+    BMFont padding
+	@since v0.8.2
+	*/
+	typedef struct _BMFontPadding {
+		/// padding left
+		int	left;
+		/// padding top
+		int top;
+		/// padding right
+		int right;
+		/// padding bottom
+		int bottom;
+	} ccBMFontPadding;
 
-/** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
-@since v0.8
-*/
-class CC_DLL CCBMFontConfiguration : public CCObject
-{
-    // XXX: Creating a public interface so that the bitmapFontArray[] is accesible
-public://@public
-    //! The characters building up the font
-    ccBMFontDef	m_pBitmapFontArray[kCCBMFontMaxChars];
-    //! FNTConfig: Common Height
-    unsigned int m_uCommonHeight;
-    //! Padding
-    ccBMFontPadding	m_tPadding;
-    //! atlas name
-    std::string m_sAtlasName;
-    //! values for kerning
-    struct _KerningHashElement	*m_pKerningDictionary;
-public:
-    CCBMFontConfiguration()
-        : m_uCommonHeight(0)
-        , m_pKerningDictionary(NULL)
-    {}
-    virtual ~CCBMFontConfiguration();
-    char * description();
-    /** allocates a CCBMFontConfiguration with a FNT file */
-    static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
-    /** initializes a BitmapFontConfiguration with a FNT file */
-    bool initWithFNTfile(const char *FNTfile);
-private:
-    void parseConfigFile(const char *controlFile);
-    void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
-    void parseInfoArguments(std::string line);
-    void parseCommonArguments(std::string line);
-    void parseImageFileName(std::string line, const char *fntFile);
-    void parseKerningCapacity(std::string line);
-    void parseKerningEntry(std::string line);
-    void purgeKerningDictionary();
-};
 
-/** @brief CCLabelBMFont is a subclass of CCSpriteSheet.
+	/** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
+	@since v0.8
+	*/
+	class CC_DLL CCBMFontConfiguration : public CCObject
+	{
+		// XXX: Creating a public interface so that the bitmapFontArray[] is accesible
+	public://@public
+		//! The characters building up the font
+        std::map<unsigned int, ccBMFontDef>* m_pBitmapFontArray;
 
-Features:
-- Treats each character like a CCSprite. This means that each individual character can be:
-- rotated
-- scaled
-- translated
-- tinted
-- chage the opacity
-- It can be used as part of a menu item.
-- anchorPoint can be used to align the "label"
-- Supports AngelCode text format
+		//! FNTConfig: Common Height
+		unsigned int m_uCommonHeight;
+		//! Padding
+		ccBMFontPadding	m_tPadding;
+		//! atlas name
+		std::string m_sAtlasName;
+		//! values for kerning
+		struct _KerningHashElement	*m_pKerningDictionary;
+	public:
+		CCBMFontConfiguration();
+		virtual ~CCBMFontConfiguration();
+		char * description();
+		/** allocates a CCBMFontConfiguration with a FNT file */
+		static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
+		/** initializes a BitmapFontConfiguration with a FNT file */
+		bool initWithFNTfile(const char *FNTfile);
+	private:
+		void parseConfigFile(const char *controlFile);
+		void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
+		void parseInfoArguments(std::string line);
+		void parseCommonArguments(std::string line);
+		void parseImageFileName(std::string line, const char *fntFile);
+		void parseKerningCapacity(std::string line);
+		void parseKerningEntry(std::string line);
+		void purgeKerningDictionary();
+	};
 
-Limitations:
-- All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
-because it might affect the rendering
+	/** @brief CCLabelBMFont is a subclass of CCSpriteSheet.
 
-CCLabelBMFont implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
-CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.
-If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
+	Features:
+	- Treats each character like a CCSprite. This means that each individual character can be:
+	- rotated
+	- scaled
+	- translated
+	- tinted
+	- chage the opacity
+	- It can be used as part of a menu item.
+	- anchorPoint can be used to align the "label"
+	- Supports AngelCode text format
 
-Supported editors:
-http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
-http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
-http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
-http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+	Limitations:
+	- All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
+	because it might affect the rendering
 
-@since v0.8
-*/
+	CCLabelBMFont implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
+	CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.
+	If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
 
-class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
-{
-    /** conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
-    /** conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
-    /** conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
-protected:
-    // string to render
-    std::string m_sString;
-    CCBMFontConfiguration *m_pConfiguration;
-public:
-    CCLabelBMFont()
-        : m_cOpacity(0)
-        , m_bIsOpacityModifyRGB(false)
-        , m_sString("")
-        , m_pConfiguration(NULL)
-    {}
-    virtual ~CCLabelBMFont();
-    /** Purges the cached data.
-    Removes from memory the cached configurations and the atlas name dictionary.
-    @since v0.99.3
-    */
-    static void purgeCachedData();
-    /** creates a bitmap font altas with an initial string and the FNT file */
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
+	Supported editors:
+    http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+    http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+    http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+    http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
-    /** init a bitmap font altas with an initial string and the FNT file */
-    bool initWithString(const char *str, const char *fntFile);
-    /** updates the font chars based on the string to render */
-    void createFontChars();
-    // super method
-    virtual void setString(const char *label);
-    virtual const char* getString(void);
-    virtual void setCString(const char *label);
-    virtual void setAnchorPoint(const CCPoint& var);
-    virtual CCRGBAProtocol* convertToRGBAProtocol() {
-        return (CCRGBAProtocol*)this;
-    }
-    virtual CCLabelProtocol* convertToLabelProtocol() {
-        return (CCLabelProtocol*)this;
-    }
+	@since v0.8
+	*/
+
+	class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
+	{
+		/** conforms to CCRGBAProtocol protocol */
+		CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
+		/** conforms to CCRGBAProtocol protocol */
+		CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
+		/** conforms to CCRGBAProtocol protocol */
+		CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+	protected:
+		// string to render
+		std::string m_sString;
+		CCBMFontConfiguration *m_pConfiguration;
+	public:
+		CCLabelBMFont()
+			: m_cOpacity(0)           
+			, m_bIsOpacityModifyRGB(false)
+			, m_sString("")
+             , m_pConfiguration(NULL)
+		{}
+		virtual ~CCLabelBMFont();
+		/** Purges the cached data.
+		Removes from memory the cached configurations and the atlas name dictionary.
+		@since v0.99.3
+		*/
+		static void purgeCachedData();
+		/** creates a bitmap font altas with an initial string and the FNT file */
+		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
+
+		/** init a bitmap font altas with an initial string and the FNT file */
+		bool initWithString(const char *str, const char *fntFile);
+		/** updates the font chars based on the string to render */
+		void createFontChars();
+		// super method
+		virtual void setString(const char *label);
+		virtual const char* getString(void);
+        virtual void setCString(const char *label);
+		virtual void setAnchorPoint(const CCPoint& var);
+
 #if CC_LABELBMFONT_DEBUG_DRAW
-    virtual void draw();
+		virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW
-private:
-    char * atlasNameFromFntFile(const char *fntFile);
-    int kerningAmountForFirst(unsigned short first, unsigned short second);
+	private:
+		char * atlasNameFromFntFile(const char *fntFile);
+		int kerningAmountForFirst(unsigned short first, unsigned short second);
 
-};
+	};
 
-/** Free function that parses a FNT file a place it on the cache
-*/
-CC_DLL CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
-/** Purges the FNT config cache
-*/
-CC_DLL void FNTConfigRemoveCache( void );
+	/** Free function that parses a FNT file a place it on the cache
+	*/
+	CC_DLL CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
+	/** Purges the FNT config cache
+	*/
+	CC_DLL void FNTConfigRemoveCache( void );
 }// namespace cocos2d
 
 #endif //__CCBITMAP_FONT_ATLAS_H__

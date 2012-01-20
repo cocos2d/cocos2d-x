@@ -56,11 +56,11 @@ m_nSoundId(0)
 
 	for (int i = 0; i < m_nTestCount; ++i)
 	{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-		CCLabelBMFont* label = CCLabelBMFont::labelWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
-#else
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+//		CCLabelBMFont* label = CCLabelBMFont::labelWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
+//#else
         CCLabelTTF* label = CCLabelTTF::labelWithString(testItems[i].c_str(), "Arial", 24);
-#endif		
+//#endif		
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(CocosDenshionTest::menuCallback));
 		
 		m_pItmeMenu->addChild(pMenuItem, i + 10000);
@@ -151,19 +151,19 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
 		break;
 		// add bakcground music volume
 	case 10:
-		SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() + 0.1);
+		SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() + 0.1f);
 		break;
 		// sub backgroud music volume
 	case 11:
-		SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() - 0.1);
+		SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() - 0.1f);
 		break;
 		// add effects volume
 	case 12:
-		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() + 0.1);
+		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() + 0.1f);
 		break;
 		// sub effects volume
 	case 13:
-		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() - 0.1);
+		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() - 0.1f);
 		break;
 	case 14:
 		SimpleAudioEngine::sharedEngine()->pauseEffect(m_nSoundId);

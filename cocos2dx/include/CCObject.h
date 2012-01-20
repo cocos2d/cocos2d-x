@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCCommon.h"
 
 namespace   cocos2d {
-    
+
 class CCZone;
 class CCObject;
 class CCString;
@@ -36,36 +36,36 @@ class CCString;
 class CC_DLL CCCopying
 {
 public:
-    virtual CCObject* copyWithZone(CCZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 };
 
 class CC_DLL CCObject : public CCCopying
 {
 public:
-    // object id
-    unsigned int        m_uID;
-    // count of refrence
-    unsigned int        m_uReference;
-    // is the object autoreleased
-    bool                m_bManaged;
+	// object id
+    unsigned int		m_uID;
+	// count of refrence
+	unsigned int		m_uReference;
+	// is the object autoreleased
+	bool		m_bManaged;		
 
 public:
-    CCObject(void);
-    virtual ~CCObject(void);
+	CCObject(void);
+	virtual ~CCObject(void);
+    
+    void release(void);
+	void retain(void);
+	CCObject* autorelease(void);
+	CCObject* copy(void);
+	bool isSingleRefrence(void);
+	unsigned int retainCount(void);
+	virtual bool isEqual(const CCObject* pObject);
 
-    virtual void release(void);
-    virtual void retain(void);
-    CCObject* autorelease(void);
-    CCObject* copy(void);
-    bool isSingleRefrence(void);
-    unsigned int retainCount(void);
-    bool isEqual(const CCObject* pObject);
-
-    friend class CCAutoreleasePool;
+	friend class CCAutoreleasePool;
 
     // Lua ref id
     int                 m_refID;
 };
-}//namespace   cocos2d
+}//namespace   cocos2d 
 
 #endif // __COCOA_NSOBJECT_H__
