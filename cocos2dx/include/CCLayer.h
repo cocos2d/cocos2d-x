@@ -82,7 +82,10 @@ public:
 	*/
 	virtual void registerWithTouchDispatcher(void);
 #if LUA_ENGINE
-    void registerScriptTouchHandler(int functionRefID, bool isMultiTouches = false);
+    void registerScriptTouchHandler(int functionRefID,
+                                    bool isMultiTouches = false,
+                                    int nPriority = INT_MIN,
+                                    bool bSwallowsTouches = false);
     void unregisterScriptTouchHandler(void);
 #endif
     

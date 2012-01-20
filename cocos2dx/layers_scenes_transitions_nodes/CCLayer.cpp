@@ -90,7 +90,10 @@ void CCLayer::registerWithTouchDispatcher(void)
 
 #if LUA_ENGINE
 // functions for script call back
-void CCLayer::registerScriptTouchHandler(int functionRefID, bool isMultiTouches)
+void CCLayer::registerScriptTouchHandler(int functionRefID,
+                                         bool isMultiTouches,
+                                         int nPriority,
+                                         bool bSwallowsTouches)
 {
     unregisterScriptTouchHandler();
     if (isMultiTouches)
@@ -100,7 +103,8 @@ void CCLayer::registerScriptTouchHandler(int functionRefID, bool isMultiTouches)
     }
     else
     {
-        CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
+        if (nPriority == INT_MIN) { nPriority++; }
+        CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,nPriority,bSwallowsTouches);
         LUALOG("[LUA] ADD function refID: %04d, add touch event handler", functionRefID);
     }    
     m_scriptTouchHandler = functionRefID;
