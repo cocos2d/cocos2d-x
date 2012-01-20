@@ -185,14 +185,14 @@ int	CCLuaEngine::executeGlobalFunction(const char* function_name)
 int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
 {
     lua_pushstring(m_state, TOLUA_REFID_FUNC_MAPPING);
-    lua_rawget(m_state, LUA_REGISTRYINDEX);                         /* stack: refid_func */
-    lua_pushinteger(m_state, functionRefId);                        /* stack: refid_func refid */
-    lua_rawget(m_state, -2);                                        /* stack: refid_func func */
+    lua_rawget(m_state, LUA_REGISTRYINDEX);                         /* stack: ... refid_func */
+    lua_pushinteger(m_state, functionRefId);                        /* stack: ... refid_func refid */
+    lua_rawget(m_state, -2);                                        /* stack: ... refid_func func */
     
     if (!lua_isfunction(m_state, -1))
     {
         CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", functionRefId);
-        lua_pop(m_state, 1);
+        lua_pop(m_state, 2 + numArgs);
         return 0;
     }
     
@@ -205,15 +205,31 @@ int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
         int lo = -2 - numArgs;
         for (int i = 0; i < numArgs; i++)
         {
-            tolua_pushvalue(m_state, lo);                           /* stack: refid_func func (...) */
+            tolua_pushvalue(m_state, lo);                           /* stack: ... refid_func func (...) */
         }
     }
     
-    int error = lua_pcall(m_state, numArgs, 1, 0);                  /* stack: refid_func ret */
+    int error = 0;
+    try
+    {
+        error = lua_pcall(m_state, numArgs, 1, 0);                  /* stack: ... refid_func ret */
+    }
+    catch (exception& e)
+    {
+        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", functionRefId, e.what());
+        lua_settop(m_state, 0);
+        return 0;
+    }
+    catch (...)
+    {
+        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", functionRefId);
+        lua_settop(m_state, 0);
+        return 0;
+    }
     if (error)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
-        lua_pop(m_state, 2); // clean error message
+        lua_pop(m_state, 2 + numArgs); // clean error message
         return 0;
     }
     
@@ -228,44 +244,36 @@ int CCLuaEngine::executeFunctionByRefID(int functionRefId, int numArgs)
         ret = lua_toboolean(m_state, -1);
     }
     
-    lua_pop(m_state, 2);
+    lua_pop(m_state, 2 + numArgs);
     return ret;
 }
 
 int CCLuaEngine::executeFunctionWithIntegerData(int functionRefId, int data)
 {
     lua_pushinteger(m_state, data);
-    int ret = executeFunctionByRefID(functionRefId, 1);
-    lua_pop(m_state, 1);
-    return ret;
+    return executeFunctionByRefID(functionRefId, 1);
 }
 
 int CCLuaEngine::executeFunctionWithFloatData(int functionRefId, float data)
 {
     lua_pushnumber(m_state, data);
-    int ret = executeFunctionByRefID(functionRefId, 1);
-    lua_pop(m_state, 1);
-    return ret;
+    return executeFunctionByRefID(functionRefId, 1);
 }
 
 int CCLuaEngine::executeFunctionWithBooleanData(int functionRefId, bool data)
 {
     lua_pushboolean(m_state, data);
-    int ret = executeFunctionByRefID(functionRefId, 1);
-    lua_pop(m_state, 1);
-    return ret;
+    return executeFunctionByRefID(functionRefId, 1);
 }
 
 // functions for excute touch event
 int CCLuaEngine::executeTouchEvent(int functionRefId, int eventType, CCTouch *pTouch)
 {
+    CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->locationInView(pTouch->view()));
     lua_pushinteger(m_state, eventType);
-    const CCPoint& pos = pTouch->locationInView(0);
-    lua_pushnumber(m_state, pos.x);
-    lua_pushnumber(m_state, pos.y);
-    int ret = executeFunctionByRefID(functionRefId, 3);
-    lua_pop(m_state, 3);
-    return ret;
+    lua_pushnumber(m_state, pt.x);
+    lua_pushnumber(m_state, pt.y);
+    return executeFunctionByRefID(functionRefId, 3);
 }
 
 int CCLuaEngine::executeTouchesEvent(int functionRefId, int eventType, CCSet *pTouches)
@@ -287,9 +295,7 @@ int CCLuaEngine::executeTouchesEvent(int functionRefId, int eventType, CCSet *pT
         ++it;
     }
     
-    int ret = executeFunctionByRefID(functionRefId, 2);
-    lua_pop(m_state, 2);
-    return ret;
+    return executeFunctionByRefID(functionRefId, 2);
 }
 
 int CCLuaEngine::executeSchedule(int functionRefID, ccTime dt)
