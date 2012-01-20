@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Dec 25 11:48:17 2011.
+** Generated automatically by tolua++-1.0.92 on Fri Jan 20 19:05:16 2012.
 */
 
 #include <vector>
@@ -26943,9 +26943,9 @@ static int tolua_Cocos2d_CCSprite_getSpriteBatchNode00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setHornorParentTransform of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setHornorParentTransform00
-static int tolua_Cocos2d_CCSprite_setHornorParentTransform00(lua_State* tolua_S)
+/* method: setHonorParentTransform of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setHonorParentTransform00
+static int tolua_Cocos2d_CCSprite_setHonorParentTransform00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -26961,24 +26961,24 @@ static int tolua_Cocos2d_CCSprite_setHornorParentTransform00(lua_State* tolua_S)
   CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
   ccHonorParentTransform eHonorParentTransform = ((ccHonorParentTransform) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHornorParentTransform'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHonorParentTransform'", NULL);
 #endif
   {
-   self->setHornorParentTransform(eHonorParentTransform);
+   self->setHonorParentTransform(eHonorParentTransform);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setHornorParentTransform'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'setHonorParentTransform'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getHornorParentTransform of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_getHornorParentTransform00
-static int tolua_Cocos2d_CCSprite_getHornorParentTransform00(lua_State* tolua_S)
+/* method: getHonorParentTransform of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_getHonorParentTransform00
+static int tolua_Cocos2d_CCSprite_getHonorParentTransform00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -26992,17 +26992,17 @@ static int tolua_Cocos2d_CCSprite_getHornorParentTransform00(lua_State* tolua_S)
  {
   CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHornorParentTransform'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHonorParentTransform'", NULL);
 #endif
   {
-   ccHonorParentTransform tolua_ret = (ccHonorParentTransform)  self->getHornorParentTransform();
+   ccHonorParentTransform tolua_ret = (ccHonorParentTransform)  self->getHonorParentTransform();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getHornorParentTransform'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getHonorParentTransform'.",&tolua_err);
  return 0;
 #endif
 }
@@ -39954,7 +39954,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"right",tolua_get_ccBMFontPadding_right,tolua_set_ccBMFontPadding_right);
    tolua_variable(tolua_S,"bottom",tolua_get_ccBMFontPadding_bottom,tolua_set_ccBMFontPadding_bottom);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCBMFontMaxChars",kCCBMFontMaxChars);
   tolua_cclass(tolua_S,"CCBMFontConfiguration","CCBMFontConfiguration","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCBMFontConfiguration");
    tolua_function(tolua_S,"description",tolua_Cocos2d_CCBMFontConfiguration_description00);
@@ -40516,8 +40515,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getTextureAtlas",tolua_Cocos2d_CCSprite_getTextureAtlas00);
    tolua_function(tolua_S,"setSpriteBatchNode",tolua_Cocos2d_CCSprite_setSpriteBatchNode00);
    tolua_function(tolua_S,"getSpriteBatchNode",tolua_Cocos2d_CCSprite_getSpriteBatchNode00);
-   tolua_function(tolua_S,"setHornorParentTransform",tolua_Cocos2d_CCSprite_setHornorParentTransform00);
-   tolua_function(tolua_S,"getHornorParentTransform",tolua_Cocos2d_CCSprite_getHornorParentTransform00);
+   tolua_function(tolua_S,"setHonorParentTransform",tolua_Cocos2d_CCSprite_setHonorParentTransform00);
+   tolua_function(tolua_S,"getHonorParentTransform",tolua_Cocos2d_CCSprite_getHonorParentTransform00);
    tolua_function(tolua_S,"setBlendFunc",tolua_Cocos2d_CCSprite_setBlendFunc00);
    tolua_function(tolua_S,"getBlendFunc",tolua_Cocos2d_CCSprite_getBlendFunc00);
    tolua_function(tolua_S,"getOffsetPositionInPixels",tolua_Cocos2d_CCSprite_getOffsetPositionInPixels00);

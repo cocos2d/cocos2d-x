@@ -103,95 +103,59 @@ public:
 	// attributes
 
 	/** whether or not the Sprite needs to be updated in the Atlas */
-    inline bool isDirty(void) {
-        return m_bDirty;
-    }
+	inline bool isDirty(void) { return m_bDirty; }
 	/** make the Sprite to be updated in the Atlas. */
-    inline void setDirty(bool bDirty) {
-        m_bDirty = bDirty;
-    }
+	inline void setDirty(bool bDirty) { m_bDirty = bDirty; }
 
 	/** get the quad (tex coords, vertex coords and color) information */
-    inline ccV3F_C4B_T2F_Quad getQuad(void) {
-        return m_sQuad;
-    }
+	inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
 	/** returns whether or not the texture rectangle is rotated */
-    inline bool isTextureRectRotated(void) {
-        return m_bRectRotated;
-    }
+	inline bool isTextureRectRotated(void) { return m_bRectRotated; }
 	
 	/** Set the index used on the TextureAtlas. */
-    inline unsigned int getAtlasIndex(void) {
-        return m_uAtlasIndex;
-    }
+	inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }
 	/** Set the index used on the TextureAtlas.
 	@warning Don't modify this value unless you know what you are doing 
 	*/
-    inline void setAtlasIndex(unsigned int uAtlasIndex) {
-        m_uAtlasIndex = uAtlasIndex;
-    }
+	inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
 
 	/** returns the rect of the CCSprite in points */
-    inline const CCRect& getTextureRect(void) {
-        return m_obRect;
-    }
+	inline const CCRect& getTextureRect(void) { return m_obRect; }
 
 	/** whether or not the Sprite is rendered using a CCSpriteBatchNode */
-    inline bool isUsesBatchNode(void) {
-        return m_bUsesBatchNode;
-    }
+	inline bool isUsesBatchNode(void) { return m_bUsesBatchNode; }
 	/** make the Sprite been rendered using a CCSpriteBatchNode */
-    inline void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode) {
-        m_bUsesBatchNode = bUsesSpriteBatchNode;
-    }
+	inline void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode) { m_bUsesBatchNode = bUsesSpriteBatchNode; }
 
-    inline CCTextureAtlas* getTextureAtlas(void) {
-        return m_pobTextureAtlas;
-    }
-    inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) {
-        m_pobTextureAtlas = pobTextureAtlas;
-    }
+	inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
+	inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) { m_pobTextureAtlas = pobTextureAtlas; }
 
-    inline CCSpriteBatchNode* getSpriteBatchNode(void) {
-        return m_pobBatchNode;
-    }
-    inline void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode) {
-        m_pobBatchNode = pobSpriteBatchNode;
-    }
+	inline CCSpriteBatchNode* getSpriteBatchNode(void) { return m_pobBatchNode; }
+	inline void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode) { m_pobBatchNode = pobSpriteBatchNode; }
 
 	/** whether or not to transform according to its parent transformations.
 	 Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
 	 IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
 	 @since v0.99.0
 	 */
-    inline ccHonorParentTransform getHornorParentTransform(void) {
-        return m_eHonorParentTransform;
-    }
+	inline ccHonorParentTransform getHonorParentTransform(void) { return m_eHonorParentTransform; }
 	/** whether or not to transform according to its parent transformations.
 	Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
 	IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
 	@since v0.99.0
 	*/
-    inline void setHornorParentTransform(ccHonorParentTransform eHonorParentTransform) {
-        m_eHonorParentTransform = eHonorParentTransform;
-    }
+	inline void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform) { m_eHonorParentTransform = eHonorParentTransform; }
 
 	/** Get offset position of the sprite. Calculated automatically by editors like Zwoptex.
 	 @since v0.99.0
 	 */
-    inline const CCPoint& getOffsetPositionInPixels(void) {
-        return m_obOffsetPositionInPixels;
-    }
+	inline const CCPoint& getOffsetPositionInPixels(void) { return m_obOffsetPositionInPixels; }
 
 	/** conforms to CCTextureProtocol protocol */
-    inline ccBlendFunc getBlendFunc(void) {
-        return m_sBlendFunc;
-    }
+	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
 	/** conforms to CCTextureProtocol protocol */
-    inline void setBlendFunc(ccBlendFunc blendFunc) {
-        m_sBlendFunc = blendFunc;
-    }
+	inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
 
 public:
 	/** Creates an sprite with a texture.
@@ -283,10 +247,6 @@ public:
 	/** opacity: conforms to CCRGBAProtocol protocol */
 	virtual void setIsOpacityModifyRGB(bool bValue);
 	virtual bool getIsOpacityModifyRGB(void);
-
-    virtual CCRGBAProtocol* convertToRGBAProtocol() {
-        return (CCRGBAProtocol *)this;
-    }
 
 	// CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);

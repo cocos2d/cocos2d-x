@@ -22,6 +22,13 @@ move_files_into_linux(){
     done
 }
 
+# set resources path to Resources in AppDelegate.cpp, when #925 is resolved, it should be deleted
+change_resources_path(){
+    sed "s/CCFileUtils::setResourcePath(\"\.\.\\/Resource\/\")/CCFileUtils::setResourcePath(\"\.\.\\/Resources\/\")/" $APP_DIR/Classes/AppDelegate.cpp > $APP_DIR/Classes/temp.cpp
+    rm -f $APP_DIR/Classes/AppDelegate.cpp
+    mv $APP_DIR/Classes/temp.cpp $APP_DIR/Classes/AppDelegate.cpp
+}
+
 #copy eclipse configures
 move_eclipse_configures_into(){
         for file in `ls -a $HELLOWORLD_ROOT/Linux/ | grep -E '\..*project' `
@@ -31,8 +38,9 @@ move_eclipse_configures_into(){
 
 	sed -i "s/HelloWorld/$APP_NAME/" $APP_DIR/Linux/.project
 
-	sed -i "s:\.\./\.\./\.\./:$COCOS2DX_ROOT:;s:helloworld:$APP_NAME:" $APP_DIR/Linux/.cproject
+	sed -i "s/HelloWorld/$APP_NAME/" $APP_DIR/Linux/.cproject
 }
 
 move_files_into_linux
+change_resources_path
 move_eclipse_configures_into

@@ -1,13 +1,13 @@
 
 class CCLabelAtlas : public CCAtlasNode
-{
-    void updateAtlasValues();
+	{
+		void updateAtlasValues();
 
-    void setString(const char *label);
-    const char* getString(void);
+		void setString(const char *label);
+		const char* getString(void);
 
-    CCTexture2D* getTexture(void);
-    void setTexture(CCTexture2D *texture);
+		CCTexture2D* getTexture(void);	
+		void setTexture(CCTexture2D *texture);
 
     static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
     static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);

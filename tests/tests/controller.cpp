@@ -65,10 +65,8 @@ static TestScene* CreateTestScene(int nIdx)
 #endif
     case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     case TEST_TEXT_INPUT:
         pScene = new TextInputTestScene(); break;
-#endif
     case TEST_SPRITE:
         pScene = new SpriteTestScene(); break;
     case TEST_SCHEDULER:
@@ -142,11 +140,11 @@ TestController::TestController()
     m_pItmeMenu = CCMenu::menuWithItems(NULL);
     for (int i = 0; i < TESTS_COUNT; ++i)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-		CCLabelBMFont* label = CCLabelBMFont::labelWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
-#else
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+// 		CCLabelBMFont* label = CCLabelBMFont::labelWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+// #else
         CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);
-#endif		
+// #endif		
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
 
         m_pItmeMenu->addChild(pMenuItem, i + 10000);

@@ -3,6 +3,10 @@
 	<name>TestCocos2dx</name>
 	<comment></comment>
 	<projects>
+		<project>Box2D</project>
+		<project>chipmunk</project>
+		<project>cocos2dx</project>
+		<project>CocosDenshion</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -27,7 +31,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/TestCocos2dx/Device-Release}</value>
+					<value>${workspace_loc:/TestCocos2dx/Device-Debug}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>

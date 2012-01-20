@@ -90,8 +90,8 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "CCTimer.h"
 
-// havn't implement on wophone and marmalade
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+// havn't implement on wophone
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE)
 #include "CCTextFieldTTF.h"
 #endif
 

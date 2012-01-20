@@ -109,7 +109,7 @@ void CCMenuItem::unregisterScriptHandler(void)
 	{
 		if (m_bIsEnabled)
 		{
-			if (m_pListener)
+			if (m_pListener && m_pfnSelector)
 			{
 				(m_pListener->*m_pfnSelector)(this);
 			}

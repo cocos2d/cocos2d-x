@@ -276,6 +276,16 @@ void CCLayer::onEnterTransitionDidFinish()
     CCNode::onEnterTransitionDidFinish();
 }
 
+void CCLayer::touchDelegateRetain()
+{
+	retain();
+}
+
+void CCLayer::touchDelegateRelease()
+{
+	release();
+}
+
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
 #if LUA_ENGINE

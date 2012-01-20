@@ -28,43 +28,55 @@ THE SOFTWARE.
 #include "CCObject.h"
 namespace cocos2d {
 
-class CC_DLL CCString : public CCObject
-{
-public:
-    std::string m_sString;
-public:
-    CCString()
-        :m_sString("")
-    {}
-    CCString(const char * str)
-    {
-        m_sString = str;
-    }
-    virtual ~CCString() {
-        m_sString.clear();
-    }
+	class CC_DLL CCString : public CCObject
+	{
+	public:
+		std::string m_sString;
+	public:
+		CCString()
+			:m_sString("")
+		{}
+		CCString(const char * str)
+		{
+			m_sString = str;
+		}
+		virtual ~CCString(){ m_sString.clear(); }
+		
+		int toInt()
+		{
+			return atoi(m_sString.c_str());
+		}
+		unsigned int toUInt()
+		{
+			return (unsigned int)atoi(m_sString.c_str());
+		}
+		float toFloat()
+		{
+			return (float)atof(m_sString.c_str());
+		}
+		std::string toStdString()
+		{
+			return m_sString;
+		}
 
-    int toInt()
-    {
-        return atoi(m_sString.c_str());
-    }
-    unsigned int toUInt()
-    {
-        return (unsigned int)atoi(m_sString.c_str());
-    }
-    float toFloat()
-    {
-        return (float)atof(m_sString.c_str());
-    }
-    std::string toStdString()
-    {
-        return m_sString;
-    }
+		bool isEmpty()
+		{
+			return m_sString.empty();
+		}
 
-    bool isEmpty()
-    {
-        return m_sString.empty();
-    }
-};
+        virtual bool isEqual(const CCObject* pObject)
+        {
+            bool bRet = false;
+            const CCString* pStr = dynamic_cast<const CCString*>(pObject);
+            if (pStr != NULL)
+            {
+                if (0 == m_sString.compare(pStr->m_sString))
+                {
+                    bRet = true;
+                }
+            }
+            return bRet;
+        }
+	};
 }// namespace cocos2d
 #endif //__CCSTRING_H__

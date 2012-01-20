@@ -427,6 +427,6 @@ public:
     static CCEaseBackInOut* actionWithAction(CCActionInterval* pAction);
 };
 
-#endif // __ACTION_CCEASE_ACTION_H__
-
 }
+
+#endif // __ACTION_CCEASE_ACTION_H__
