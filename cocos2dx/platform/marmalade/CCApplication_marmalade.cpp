@@ -67,36 +67,35 @@ int CCApplication::Run()
 		return 0;
 	}
 	
-	int64 updateTime = s3eTimerGetMs();
+	uint64 updateTime = 0 ;
 	
 	while (true) 
 	{ 
-		int64 currentTime = s3eTimerGetMs();
-		if (currentTime - updateTime > m_nAnimationInterval)
-		{
-			updateTime = currentTime;
+		updateTime = s3eTimerGetMs();
 			
-			s3eDeviceYield(0);
-			s3eKeyboardUpdate();
-			s3ePointerUpdate();
+		s3eDeviceYield(0);
+		s3eKeyboardUpdate();
+		s3ePointerUpdate();
 			
-			ccAccelerationUpdate();
+		ccAccelerationUpdate();
 
-			quitRequested = s3eDeviceCheckQuitRequest() ;
-			if( quitRequested && CCDirector::sharedDirector()->getOpenGLView() != NULL ) {
-				CCDirector::sharedDirector()->end() ;
-				// end status will be processed in CCDirector::sharedDirector()->mainLoop();
-			}
-
-			CCDirector::sharedDirector()->mainLoop();
-
-			if( quitRequested ) {
-				break ;
-			}
+		quitRequested = s3eDeviceCheckQuitRequest() ;
+		if( quitRequested && CCDirector::sharedDirector()->getOpenGLView() != NULL ) {
+			CCDirector::sharedDirector()->end() ;
+			// end status will be processed in CCDirector::sharedDirector()->mainLoop();
 		}
-		else 
-		{
-			s3eDeviceYield(0);
+
+		CCDirector::sharedDirector()->mainLoop();
+
+		if( quitRequested ) {
+			break ;
+		}
+
+		while ((s3eTimerGetMs() - updateTime) < m_nAnimationInterval) {
+			int32 yield = (int32) (m_nAnimationInterval - (s3eTimerGetMs() - updateTime));
+			if (yield<0)
+				break;
+			s3eDeviceYield(yield);
 		}
 		
 	}
