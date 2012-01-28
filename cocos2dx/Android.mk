@@ -1,8 +1,10 @@
 LOCAL_PATH := $(call my-dir)
 
-# compile cocos2d.so
 include $(CLEAR_VARS)
-LOCAL_MODULE := libcocos2d
+
+LOCAL_MODULE := cocos2dx_shared
+
+LOCAL_MODULE_FILENAME := cocos2d
 
 LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
@@ -106,19 +108,21 @@ touch_dispatcher/CCTouchHandler.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
-                    $(LOCAL_PATH)/platform \
-                    $(LOCAL_PATH)/platform/third_party/android/iconv \
-                    $(LOCAL_PATH)/platform/third_party/android/libpng \
-                    $(LOCAL_PATH)/platform/third_party/android/libxml2 \
-                    $(LOCAL_PATH)/platform/third_party/android/libjpeg           
+                    $(LOCAL_PATH)/platform
 
-LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries/$(TARGET_ARCH_ABI)) \
-                 -lGLESv1_CM -llog -lz \
-                 -lpng \
-                 -lxml2 \
-                 -ljpeg
+LOCAL_LDLIBS := -lGLESv1_CM \
+                -llog \
+                -lz
+
+LOCAL_STATIC_LIBRARIES := png_static_prebuilt
+LOCAL_STATIC_LIBRARIES += xml2_static_prebuilt
+LOCAL_STATIC_LIBRARIES += jpeg_static_prebuilt
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
-                                 
+
 include $(BUILD_SHARED_LIBRARY)
+
+$(call import-module,platform/third_party/android/modules/libpng)
+$(call import-module,platform/third_party/android/modules/libxml2)
+$(call import-module,platform/third_party/android/modules/libjpeg)
