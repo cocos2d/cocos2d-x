@@ -17,7 +17,7 @@ class CCTextureCache : public CCObject
 
 	
 	CCTexture2D* addUIImage(CCImage *image, const char *key);
-
+  void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 	
 	CCTexture2D* textureForKey(const char* key);
 
