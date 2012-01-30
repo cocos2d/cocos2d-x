@@ -64,7 +64,7 @@ static pthread_mutex_t		s_asyncStructQueueMutex;
 static pthread_mutex_t      s_ImageInfoMutex;
 
 static sem_t s_sem;
-bool need_quit;
+static bool need_quit;
 
 static std::queue<AsyncStruct*>		*s_pAsyncStructQueue;
 static std::queue<ImageInfo*>		*s_pImageQueue;
