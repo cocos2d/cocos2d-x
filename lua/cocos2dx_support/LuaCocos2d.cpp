@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 01/11/12 16:00:02.
+** Generated automatically by tolua++-1.0.92 on 01/30/12 17:20:10.
 */
 
 #include "LuaCocos2d.h"
@@ -12,10 +12,10 @@
 
 #include "tolua++.h"
 
-using namespace cocos2d;
-
 /* Exported function */
 TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);
+
+using namespace cocos2d;
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
@@ -314,9 +314,9 @@ static int tolua_collect_cocos2d__CCAction (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__SelectorProtocol (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCParticleGalaxy (lua_State* tolua_S)
 {
- cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCParticleGalaxy* self = (cocos2d::CCParticleGalaxy*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -405,9 +405,9 @@ static int tolua_collect_cocos2d__CCTransitionSplitRows (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCMutableArray_CCObject__ (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCFiniteTimeAction (lua_State* tolua_S)
 {
- cocos2d::CCMutableArray<CCObject*>* self = (cocos2d::CCMutableArray<CCObject*>*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCFiniteTimeAction* self = (cocos2d::CCFiniteTimeAction*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -447,9 +447,9 @@ static int tolua_collect_cocos2d__CCActionManager (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCTransitionShrinkGrow (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCDeccelAmplitude (lua_State* tolua_S)
 {
- cocos2d::CCTransitionShrinkGrow* self = (cocos2d::CCTransitionShrinkGrow*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCDeccelAmplitude* self = (cocos2d::CCDeccelAmplitude*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -566,13 +566,6 @@ static int tolua_collect_cocos2d__CCTransitionZoomFlipAngular (lua_State* tolua_
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCMenuItemFont (lua_State* tolua_S)
-{
- cocos2d::CCMenuItemFont* self = (cocos2d::CCMenuItemFont*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_cocos2d__CCTransitionFadeBL (lua_State* tolua_S)
 {
  cocos2d::CCTransitionFadeBL* self = (cocos2d::CCTransitionFadeBL*) tolua_tousertype(tolua_S,1,0);
@@ -580,9 +573,9 @@ static int tolua_collect_cocos2d__CCTransitionFadeBL (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCParticleSnow (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCMenuItemFont (lua_State* tolua_S)
 {
- cocos2d::CCParticleSnow* self = (cocos2d::CCParticleSnow*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCMenuItemFont* self = (cocos2d::CCMenuItemFont*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -594,9 +587,9 @@ static int tolua_collect_cocos2d__CCTransitionFadeUp (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_std__vector_cocos2d__CCFiniteTimeAction____reverse_iterator (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCParticleSnow (lua_State* tolua_S)
 {
- std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator* self = (std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCParticleSnow* self = (cocos2d::CCParticleSnow*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -608,16 +601,16 @@ static int tolua_collect_cocos2d__CCTransitionRadialCW (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCParticleSpiral (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCSkewTo (lua_State* tolua_S)
 {
- cocos2d::CCParticleSpiral* self = (cocos2d::CCParticleSpiral*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCSkewTo* self = (cocos2d::CCSkewTo*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCParticleMeteor (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCParticleSpiral (lua_State* tolua_S)
 {
- cocos2d::CCParticleMeteor* self = (cocos2d::CCParticleMeteor*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCParticleSpiral* self = (cocos2d::CCParticleSpiral*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -636,9 +629,9 @@ static int tolua_collect_cocos2d__CCTransitionZoomFlipY (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCParticleGalaxy (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCParticleMeteor (lua_State* tolua_S)
 {
- cocos2d::CCParticleGalaxy* self = (cocos2d::CCParticleGalaxy*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCParticleMeteor* self = (cocos2d::CCParticleMeteor*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -755,9 +748,9 @@ static int tolua_collect_cocos2d__CCMenuItemAtlasFont (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCAnimationCache (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCMutableArray_CCObject__ (lua_State* tolua_S)
 {
- cocos2d::CCAnimationCache* self = (cocos2d::CCAnimationCache*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCMutableArray<CCObject*>* self = (cocos2d::CCMutableArray<CCObject*>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -769,9 +762,16 @@ static int tolua_collect_cocos2d__CCTMXObjectGroup (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCPoolManager (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCAtlasNode (lua_State* tolua_S)
 {
- cocos2d::CCPoolManager* self = (cocos2d::CCPoolManager*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCAtlasNode* self = (cocos2d::CCAtlasNode*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_cocos2d__CCLabelTTF (lua_State* tolua_S)
+{
+ cocos2d::CCLabelTTF* self = (cocos2d::CCLabelTTF*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -783,13 +783,6 @@ static int tolua_collect_cocos2d__CCScheduler (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCLabelAtlas (lua_State* tolua_S)
-{
- cocos2d::CCLabelAtlas* self = (cocos2d::CCLabelAtlas*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_cocos2d__CCTransitionMoveInL (lua_State* tolua_S)
 {
  cocos2d::CCTransitionMoveInL* self = (cocos2d::CCTransitionMoveInL*) tolua_tousertype(tolua_S,1,0);
@@ -797,9 +790,9 @@ static int tolua_collect_cocos2d__CCTransitionMoveInL (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCKeypadDispatcher (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCLabelAtlas (lua_State* tolua_S)
 {
- cocos2d::CCKeypadDispatcher* self = (cocos2d::CCKeypadDispatcher*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCLabelAtlas* self = (cocos2d::CCLabelAtlas*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -811,16 +804,16 @@ static int tolua_collect_cocos2d__CCSpriteFrame (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCFiniteTimeAction (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCKeypadDispatcher (lua_State* tolua_S)
 {
- cocos2d::CCFiniteTimeAction* self = (cocos2d::CCFiniteTimeAction*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCKeypadDispatcher* self = (cocos2d::CCKeypadDispatcher*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCDeccelAmplitude (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCTransitionShrinkGrow (lua_State* tolua_S)
 {
- cocos2d::CCDeccelAmplitude* self = (cocos2d::CCDeccelAmplitude*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCTransitionShrinkGrow* self = (cocos2d::CCTransitionShrinkGrow*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -846,16 +839,16 @@ static int tolua_collect_cocos2d__CCAccelDeccelAmplitude (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCLabelTTF (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCActionInstant (lua_State* tolua_S)
 {
- cocos2d::CCLabelTTF* self = (cocos2d::CCLabelTTF*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCActionInstant* self = (cocos2d::CCActionInstant*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCAutoreleasePool (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCPoolManager (lua_State* tolua_S)
 {
- cocos2d::CCAutoreleasePool* self = (cocos2d::CCAutoreleasePool*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCPoolManager* self = (cocos2d::CCPoolManager*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -867,16 +860,16 @@ static int tolua_collect_cocos2d__CCTransitionSceneOriented (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCAtlasNode (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCAutoreleasePool (lua_State* tolua_S)
 {
- cocos2d::CCAtlasNode* self = (cocos2d::CCAtlasNode*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCAutoreleasePool* self = (cocos2d::CCAutoreleasePool*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCSkewTo (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCAnimationCache (lua_State* tolua_S)
 {
- cocos2d::CCSkewTo* self = (cocos2d::CCSkewTo*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCAnimationCache* self = (cocos2d::CCAnimationCache*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -895,23 +888,23 @@ static int tolua_collect_cocos2d__CCParticleSmoke (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_std__vector_cocos2d__CCFiniteTimeAction____iterator (lua_State* tolua_S)
+{
+ std::vector<cocos2d::CCFiniteTimeAction*>::iterator* self = (std::vector<cocos2d::CCFiniteTimeAction*>::iterator*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_cocos2d__CCMutableArray_CCFiniteTimeAction__ (lua_State* tolua_S)
+{
+ cocos2d::CCMutableArray<CCFiniteTimeAction*>* self = (cocos2d::CCMutableArray<CCFiniteTimeAction*>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_cocos2d__CCFlipX (lua_State* tolua_S)
 {
  cocos2d::CCFlipX* self = (cocos2d::CCFlipX*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_cocos2d__CCTextFieldTTF (lua_State* tolua_S)
-{
- cocos2d::CCTextFieldTTF* self = (cocos2d::CCTextFieldTTF*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_cocos2d__CCActionInstant (lua_State* tolua_S)
-{
- cocos2d::CCActionInstant* self = (cocos2d::CCActionInstant*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -930,6 +923,13 @@ static int tolua_collect_cocos2d__CCRect (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_cocos2d__CCTextFieldTTF (lua_State* tolua_S)
+{
+ cocos2d::CCTextFieldTTF* self = (cocos2d::CCTextFieldTTF*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_cocos2d__ccVertex3F (lua_State* tolua_S)
 {
  cocos2d::ccVertex3F* self = (cocos2d::ccVertex3F*) tolua_tousertype(tolua_S,1,0);
@@ -944,13 +944,6 @@ static int tolua_collect_cocos2d__CCEaseRateAction (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCTMXTilesetInfo (lua_State* tolua_S)
-{
- cocos2d::CCTMXTilesetInfo* self = (cocos2d::CCTMXTilesetInfo*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_cocos2d__CCTransitionJumpZoom (lua_State* tolua_S)
 {
  cocos2d::CCTransitionJumpZoom* self = (cocos2d::CCTransitionJumpZoom*) tolua_tousertype(tolua_S,1,0);
@@ -958,9 +951,9 @@ static int tolua_collect_cocos2d__CCTransitionJumpZoom (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCMutableArray_CCFiniteTimeAction__ (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCTMXTilesetInfo (lua_State* tolua_S)
 {
- cocos2d::CCMutableArray<CCFiniteTimeAction*>* self = (cocos2d::CCMutableArray<CCFiniteTimeAction*>*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCTMXTilesetInfo* self = (cocos2d::CCTMXTilesetInfo*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -1000,9 +993,9 @@ static int tolua_collect_cocos2d__CCBMFontConfiguration (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_std__vector_cocos2d__CCFiniteTimeAction____iterator (lua_State* tolua_S)
+static int tolua_collect_std__vector_cocos2d__CCFiniteTimeAction____reverse_iterator (lua_State* tolua_S)
 {
- std::vector<cocos2d::CCFiniteTimeAction*>::iterator* self = (std::vector<cocos2d::CCFiniteTimeAction*>::iterator*) tolua_tousertype(tolua_S,1,0);
+ std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator* self = (std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -1131,8 +1124,6 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTextureProtocol), "cocos2d::CCTextureProtocol");
  tolua_usertype(tolua_S,"cocos2d::CCFadeTo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCFadeTo), "cocos2d::CCFadeTo");
- tolua_usertype(tolua_S,"cocos2d::SelectorProtocol");
- Mtolua_typeid(tolua_S,typeid(cocos2d::SelectorProtocol), "cocos2d::SelectorProtocol");
  tolua_usertype(tolua_S,"cocos2d::CCBlink");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCBlink), "cocos2d::CCBlink");
  tolua_usertype(tolua_S,"cocos2d::CCAccelAmplitude");
@@ -1319,8 +1310,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCLabelProtocol), "cocos2d::CCLabelProtocol");
  tolua_usertype(tolua_S,"cocos2d::CCAnimation");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAnimation), "cocos2d::CCAnimation");
- tolua_usertype(tolua_S,"CCData");
- Mtolua_typeid(tolua_S,typeid(CCData), "CCData");
+ tolua_usertype(tolua_S,"cocos2d::CCSpriteBatchNode");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCSpriteBatchNode), "cocos2d::CCSpriteBatchNode");
  tolua_usertype(tolua_S,"cocos2d::CCPageTurn3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCPageTurn3D), "cocos2d::CCPageTurn3D");
  tolua_usertype(tolua_S,"CCDictionary<std::string,cocos2d::CCObject*>");
@@ -1359,8 +1350,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAnimate), "cocos2d::CCAnimate");
  tolua_usertype(tolua_S,"cocos2d::CCActionInstant");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionInstant), "cocos2d::CCActionInstant");
- tolua_usertype(tolua_S,"cocos2d::ccTex2F");
- Mtolua_typeid(tolua_S,typeid(cocos2d::ccTex2F), "cocos2d::ccTex2F");
+ tolua_usertype(tolua_S,"cocos2d::CCActionCamera");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionCamera), "cocos2d::CCActionCamera");
  tolua_usertype(tolua_S,"cocos2d::CCParticleSnow");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCParticleSnow), "cocos2d::CCParticleSnow");
  tolua_usertype(tolua_S,"cocos2d::CCParticleSmoke");
@@ -1375,14 +1366,14 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMotionStreak), "cocos2d::CCMotionStreak");
  tolua_usertype(tolua_S,"cocos2d::CCSpriteFrameCache");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSpriteFrameCache), "cocos2d::CCSpriteFrameCache");
- tolua_usertype(tolua_S,"cocos2d::CCEaseBounce");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounce), "cocos2d::CCEaseBounce");
+ tolua_usertype(tolua_S,"cocos2d::CCPoint");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCPoint), "cocos2d::CCPoint");
  tolua_usertype(tolua_S,"cocos2d::CCTexture2D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTexture2D), "cocos2d::CCTexture2D");
  tolua_usertype(tolua_S,"cocos2d::CCAcceleration");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAcceleration), "cocos2d::CCAcceleration");
- tolua_usertype(tolua_S,"cocos2d::CCActionCamera");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionCamera), "cocos2d::CCActionCamera");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionFlipX");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFlipX), "cocos2d::CCTransitionFlipX");
  tolua_usertype(tolua_S,"cocos2d::CCEaseBackInOut");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBackInOut), "cocos2d::CCEaseBackInOut");
  tolua_usertype(tolua_S,"cocos2d::CCLayerColor");
@@ -1405,8 +1396,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(va_list), "va_list");
  tolua_usertype(tolua_S,"cocos2d::CCTMXTiledMap");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXTiledMap), "cocos2d::CCTMXTiledMap");
- tolua_usertype(tolua_S,"CCIMEDelegate");
- Mtolua_typeid(tolua_S,typeid(CCIMEDelegate), "CCIMEDelegate");
+ tolua_usertype(tolua_S,"cocos2d::ccV3F_C4B_T2F_Quad");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::ccV3F_C4B_T2F_Quad), "cocos2d::ccV3F_C4B_T2F_Quad");
  tolua_usertype(tolua_S,"cocos2d::CCLayerGradient");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCLayerGradient), "cocos2d::CCLayerGradient");
  tolua_usertype(tolua_S,"cocos2d::_KerningHashElement");
@@ -1451,18 +1442,18 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAccelerometerDelegate), "cocos2d::CCAccelerometerDelegate");
  tolua_usertype(tolua_S,"CCMutableArray<CCStringToStringDictionary*>");
  Mtolua_typeid(tolua_S,typeid(CCMutableArray<CCStringToStringDictionary*>), "CCMutableArray<CCStringToStringDictionary*>");
- tolua_usertype(tolua_S,"cocos2d::ccV3F_C4B_T2F_Quad");
- Mtolua_typeid(tolua_S,typeid(cocos2d::ccV3F_C4B_T2F_Quad), "cocos2d::ccV3F_C4B_T2F_Quad");
+ tolua_usertype(tolua_S,"CCIMEDelegate");
+ Mtolua_typeid(tolua_S,typeid(CCIMEDelegate), "CCIMEDelegate");
  tolua_usertype(tolua_S,"CCRect");
  Mtolua_typeid(tolua_S,typeid(CCRect), "CCRect");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionMoveInT");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionMoveInT), "cocos2d::CCTransitionMoveInT");
  tolua_usertype(tolua_S,"cocos2d::CCEvent");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEvent), "cocos2d::CCEvent");
- tolua_usertype(tolua_S,"cocos2d::CCEGLView");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEGLView), "cocos2d::CCEGLView");
- tolua_usertype(tolua_S,"cocos2d::CCPoint");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCPoint), "cocos2d::CCPoint");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseElasticOut");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElasticOut), "cocos2d::CCEaseElasticOut");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseBounce");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounce), "cocos2d::CCEaseBounce");
  tolua_usertype(tolua_S,"cocos2d::CCTextureAtlas");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTextureAtlas), "cocos2d::CCTextureAtlas");
  tolua_usertype(tolua_S,"cocos2d::CCTextFieldDelegate");
@@ -1471,16 +1462,16 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemToggle), "cocos2d::CCMenuItemToggle");
  tolua_usertype(tolua_S,"CC_GLVIEW");
  Mtolua_typeid(tolua_S,typeid(CC_GLVIEW), "CC_GLVIEW");
- tolua_usertype(tolua_S,"cocos2d::CCEaseElasticOut");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElasticOut), "cocos2d::CCEaseElasticOut");
  tolua_usertype(tolua_S,"cocos2d::ccV3F_C4B_T2F");
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccV3F_C4B_T2F), "cocos2d::ccV3F_C4B_T2F");
  tolua_usertype(tolua_S,"cocos2d::CCSet");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSet), "cocos2d::CCSet");
- tolua_usertype(tolua_S,"cocos2d::CCLabelTTF");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCLabelTTF), "cocos2d::CCLabelTTF");
+ tolua_usertype(tolua_S,"cocos2d::CCEGLView");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEGLView), "cocos2d::CCEGLView");
  tolua_usertype(tolua_S,"cocos2d::ccVertex3F");
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccVertex3F), "cocos2d::ccVertex3F");
+ tolua_usertype(tolua_S,"cocos2d::CCLabelTTF");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCLabelTTF), "cocos2d::CCLabelTTF");
  tolua_usertype(tolua_S,"CCAffineTransform");
  Mtolua_typeid(tolua_S,typeid(CCAffineTransform), "CCAffineTransform");
  tolua_usertype(tolua_S,"cocos2d::CCPoolManager");
@@ -1491,26 +1482,26 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAutoreleasePool), "cocos2d::CCAutoreleasePool");
  tolua_usertype(tolua_S,"ccArray");
  Mtolua_typeid(tolua_S,typeid(ccArray), "ccArray");
- tolua_usertype(tolua_S,"cocos2d::CCEaseBounceOut");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounceOut), "cocos2d::CCEaseBounceOut");
- tolua_usertype(tolua_S,"cocos2d::CCTouch");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTouch), "cocos2d::CCTouch");
  tolua_usertype(tolua_S,"cocos2d::ccGridSize");
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccGridSize), "cocos2d::ccGridSize");
+ tolua_usertype(tolua_S,"cocos2d::CCTouch");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTouch), "cocos2d::CCTouch");
  tolua_usertype(tolua_S,"cocos2d::CCEaseSineOut");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseSineOut), "cocos2d::CCEaseSineOut");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseBounceOut");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounceOut), "cocos2d::CCEaseBounceOut");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionZoomFlipAngular");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionZoomFlipAngular), "cocos2d::CCTransitionZoomFlipAngular");
  tolua_usertype(tolua_S,"cocos2d::CCAnimationCache");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAnimationCache), "cocos2d::CCAnimationCache");
+ tolua_usertype(tolua_S,"cocos2d::CCShuffleTiles");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCShuffleTiles), "cocos2d::CCShuffleTiles");
  tolua_usertype(tolua_S,"cocos2d::CCSplitCols");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSplitCols), "cocos2d::CCSplitCols");
- tolua_usertype(tolua_S,"cocos2d::CCObject");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCObject), "cocos2d::CCObject");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionFadeUp");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFadeUp), "cocos2d::CCTransitionFadeUp");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionTurnOffTiles");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionTurnOffTiles), "cocos2d::CCTransitionTurnOffTiles");
+ tolua_usertype(tolua_S,"cocos2d::CCObject");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCObject), "cocos2d::CCObject");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionRadialCW");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionRadialCW), "cocos2d::CCTransitionRadialCW");
  tolua_usertype(tolua_S,"cocos2d::CCSequence");
@@ -1521,14 +1512,14 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTileMapAtlas), "cocos2d::CCTileMapAtlas");
  tolua_usertype(tolua_S,"CCTransitionEaseScene");
  Mtolua_typeid(tolua_S,typeid(CCTransitionEaseScene), "CCTransitionEaseScene");
+ tolua_usertype(tolua_S,"cocos2d::ccTex2F");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::ccTex2F), "cocos2d::ccTex2F");
  tolua_usertype(tolua_S,"cocos2d::CCTurnOffTiles");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTurnOffTiles), "cocos2d::CCTurnOffTiles");
  tolua_usertype(tolua_S,"cocos2d::CCHide");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCHide), "cocos2d::CCHide");
  tolua_usertype(tolua_S,"cocos2d::CCFadeOutBLTiles");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCFadeOutBLTiles), "cocos2d::CCFadeOutBLTiles");
- tolua_usertype(tolua_S,"cocos2d::CCShuffleTiles");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCShuffleTiles), "cocos2d::CCShuffleTiles");
  tolua_usertype(tolua_S,"cocos2d::CCTMXTilesetInfo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXTilesetInfo), "cocos2d::CCTMXTilesetInfo");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionFadeDown");
@@ -1541,8 +1532,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElastic), "cocos2d::CCEaseElastic");
  tolua_usertype(tolua_S,"cocos2d::CCWaves3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCWaves3D), "cocos2d::CCWaves3D");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionFlipX");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFlipX), "cocos2d::CCTransitionFlipX");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionTurnOffTiles");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionTurnOffTiles), "cocos2d::CCTransitionTurnOffTiles");
  tolua_usertype(tolua_S,"cocos2d::CCJumpTiles3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCJumpTiles3D), "cocos2d::CCJumpTiles3D");
  tolua_usertype(tolua_S,"cocos2d::CCEaseExponentialIn");
@@ -1559,12 +1550,12 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounceIn), "cocos2d::CCEaseBounceIn");
  tolua_usertype(tolua_S,"cocos2d::CCProgressFromTo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCProgressFromTo), "cocos2d::CCProgressFromTo");
- tolua_usertype(tolua_S,"cocos2d::_ccCArray");
- Mtolua_typeid(tolua_S,typeid(cocos2d::_ccCArray), "cocos2d::_ccCArray");
- tolua_usertype(tolua_S,"cocos2d::CCActionManager");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionManager), "cocos2d::CCActionManager");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionCrossFade");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionCrossFade), "cocos2d::CCTransitionCrossFade");
  tolua_usertype(tolua_S,"CCDictionary<std::string,cocos2d::CCSpriteFrame*>");
  Mtolua_typeid(tolua_S,typeid(CCDictionary<std::string,cocos2d::CCSpriteFrame*>), "CCDictionary<std::string,cocos2d::CCSpriteFrame*>");
+ tolua_usertype(tolua_S,"cocos2d::CCActionManager");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionManager), "cocos2d::CCActionManager");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionMoveInL");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionMoveInL), "cocos2d::CCTransitionMoveInL");
  tolua_usertype(tolua_S,"cocos2d::CCScheduler");
@@ -1611,28 +1602,28 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMutableArray<CCSpriteFrame*>), "cocos2d::CCMutableArray<CCSpriteFrame*>");
  tolua_usertype(tolua_S,"cocos2d::CCWaves");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCWaves), "cocos2d::CCWaves");
- tolua_usertype(tolua_S,"cocos2d::CCTextFieldTTF");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTextFieldTTF), "cocos2d::CCTextFieldTTF");
  tolua_usertype(tolua_S,"cocos2d::CCFlipY3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCFlipY3D), "cocos2d::CCFlipY3D");
  tolua_usertype(tolua_S,"cocos2d::CCEaseInOut");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseInOut), "cocos2d::CCEaseInOut");
- tolua_usertype(tolua_S,"cocos2d::CCTouchDispatcher");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTouchDispatcher), "cocos2d::CCTouchDispatcher");
  tolua_usertype(tolua_S,"std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator");
  Mtolua_typeid(tolua_S,typeid(std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator), "std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator");
- tolua_usertype(tolua_S,"cocos2d::CCTMXLayerInfo");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXLayerInfo), "cocos2d::CCTMXLayerInfo");
+ tolua_usertype(tolua_S,"cocos2d::CCTouchDispatcher");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTouchDispatcher), "cocos2d::CCTouchDispatcher");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionSlideInL");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionSlideInL), "cocos2d::CCTransitionSlideInL");
+ tolua_usertype(tolua_S,"cocos2d::CCTMXLayerInfo");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXLayerInfo), "cocos2d::CCTMXLayerInfo");
  tolua_usertype(tolua_S,"cocos2d::ccQuad3");
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccQuad3), "cocos2d::ccQuad3");
- tolua_usertype(tolua_S,"cocos2d::CCSpriteBatchNode");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCSpriteBatchNode), "cocos2d::CCSpriteBatchNode");
+ tolua_usertype(tolua_S,"cocos2d::_ccCArray");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::_ccCArray), "cocos2d::_ccCArray");
+ tolua_usertype(tolua_S,"cocos2d::CCTextFieldTTF");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTextFieldTTF), "cocos2d::CCTextFieldTTF");
  tolua_usertype(tolua_S,"std::set<cocos2d::CCObject*>::iterator");
  Mtolua_typeid(tolua_S,typeid(std::set<cocos2d::CCObject*>::iterator), "std::set<cocos2d::CCObject*>::iterator");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionCrossFade");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionCrossFade), "cocos2d::CCTransitionCrossFade");
+ tolua_usertype(tolua_S,"CCData");
+ Mtolua_typeid(tolua_S,typeid(CCData), "CCData");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionPageTurn");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionPageTurn), "cocos2d::CCTransitionPageTurn");
 }
@@ -4476,23 +4467,6 @@ static int tolua_Cocos2d_cocos2d_CCNode_node00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: __SelectorProtocol__ of class  cocos2d::CCNode */
-#ifndef TOLUA_DISABLE_tolua_get_cocos2d__CCNode___SelectorProtocol__
-static int tolua_get_cocos2d__CCNode___SelectorProtocol__(lua_State* tolua_S)
-{
-  cocos2d::CCNode* self = (cocos2d::CCNode*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__SelectorProtocol__'",NULL);
-#endif
-#ifdef __cplusplus
-   tolua_pushusertype(tolua_S,(void*)static_cast<cocos2d::SelectorProtocol*>(self), "cocos2d::SelectorProtocol");
-#else
-   tolua_pushusertype(tolua_S,(void*)((cocos2d::SelectorProtocol*)self), "cocos2d::SelectorProtocol");
-#endif
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: copyWithZone of class  cocos2d::CCCopying */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCCopying_copyWithZone00
 static int tolua_Cocos2d_cocos2d_CCCopying_copyWithZone00(lua_State* tolua_S)
@@ -4832,6 +4806,39 @@ static int tolua_Cocos2d_cocos2d_CCObject_isEqual00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'isEqual'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: update of class  cocos2d::CCObject */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCObject_update00
+static int tolua_Cocos2d_cocos2d_CCObject_update00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCObject",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCObject* self = (cocos2d::CCObject*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::ccTime dt = ((cocos2d::ccTime)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'update'", NULL);
+#endif
+  {
+   self->update(dt);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'update'.",&tolua_err);
  return 0;
 #endif
 }
@@ -8598,7 +8605,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_scheduleSelector00(lua_State* tolua
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCScheduler",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"SEL_SCHEDULE",0,&tolua_err)) ||
-     !tolua_isusertype(tolua_S,3,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
      !tolua_isboolean(tolua_S,5,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,6,&tolua_err)
@@ -8609,7 +8616,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_scheduleSelector00(lua_State* tolua
  {
   cocos2d::CCScheduler* self = (cocos2d::CCScheduler*)  tolua_tousertype(tolua_S,1,0);
   SEL_SCHEDULE pfnSelector = *((SEL_SCHEDULE*)  tolua_tousertype(tolua_S,2,0));
-  cocos2d::SelectorProtocol* pTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,3,0));
+  cocos2d::CCObject* pTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,3,0));
   cocos2d::ccTime fInterval = ((cocos2d::ccTime)  tolua_tonumber(tolua_S,4,0));
   bool bPaused = ((bool)  tolua_toboolean(tolua_S,5,0));
 #ifndef TOLUA_RELEASE
@@ -8706,7 +8713,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_scheduleUpdateForTarget00(lua_State
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCScheduler",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isboolean(tolua_S,4,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
@@ -8716,7 +8723,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_scheduleUpdateForTarget00(lua_State
 #endif
  {
   cocos2d::CCScheduler* self = (cocos2d::CCScheduler*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   int nPriority = ((int)  tolua_tonumber(tolua_S,3,0));
   bool bPaused = ((bool)  tolua_toboolean(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
@@ -8744,7 +8751,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_unscheduleSelector00(lua_State* tol
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCScheduler",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"SEL_SCHEDULE",0,&tolua_err)) ||
-     !tolua_isusertype(tolua_S,3,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
@@ -8753,7 +8760,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_unscheduleSelector00(lua_State* tol
  {
   cocos2d::CCScheduler* self = (cocos2d::CCScheduler*)  tolua_tousertype(tolua_S,1,0);
   SEL_SCHEDULE pfnSelector = *((SEL_SCHEDULE*)  tolua_tousertype(tolua_S,2,0));
-  cocos2d::SelectorProtocol* pTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,3,0));
+  cocos2d::CCObject* pTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unscheduleSelector'", NULL);
 #endif
@@ -8778,7 +8785,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_unscheduleUpdateForTarget00(lua_Sta
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCScheduler",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"const cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"const cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -8786,7 +8793,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_unscheduleUpdateForTarget00(lua_Sta
 #endif
  {
   cocos2d::CCScheduler* self = (cocos2d::CCScheduler*)  tolua_tousertype(tolua_S,1,0);
-  const cocos2d::SelectorProtocol* pTarget = ((const cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  const cocos2d::CCObject* pTarget = ((const cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unscheduleUpdateForTarget'", NULL);
 #endif
@@ -8811,7 +8818,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_unscheduleAllSelectorsForTarget00(l
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCScheduler",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -8819,7 +8826,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_unscheduleAllSelectorsForTarget00(l
 #endif
  {
   cocos2d::CCScheduler* self = (cocos2d::CCScheduler*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unscheduleAllSelectorsForTarget'", NULL);
 #endif
@@ -8875,7 +8882,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_pauseTarget00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCScheduler",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -8883,7 +8890,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_pauseTarget00(lua_State* tolua_S)
 #endif
  {
   cocos2d::CCScheduler* self = (cocos2d::CCScheduler*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pauseTarget'", NULL);
 #endif
@@ -8908,7 +8915,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_resumeTarget00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCScheduler",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -8916,7 +8923,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_resumeTarget00(lua_State* tolua_S)
 #endif
  {
   cocos2d::CCScheduler* self = (cocos2d::CCScheduler*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resumeTarget'", NULL);
 #endif
@@ -8941,7 +8948,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_isTargetPaused00(lua_State* tolua_S
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCScheduler",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -8949,7 +8956,7 @@ static int tolua_Cocos2d_cocos2d_CCScheduler_isTargetPaused00(lua_State* tolua_S
 #endif
  {
   cocos2d::CCScheduler* self = (cocos2d::CCScheduler*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isTargetPaused'", NULL);
 #endif
@@ -16981,6 +16988,43 @@ static int tolua_Cocos2d_cocos2d_CCTextureCache_addUIImage00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'addUIImage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addImageAsync of class  cocos2d::CCTextureCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCTextureCache_addImageAsync00
+static int tolua_Cocos2d_cocos2d_CCTextureCache_addImageAsync00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCTextureCache",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"cocos2d::CCObject",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"SEL_CallFuncO",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCTextureCache* self = (cocos2d::CCTextureCache*)  tolua_tousertype(tolua_S,1,0);
+  const char* path = ((const char*)  tolua_tostring(tolua_S,2,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,3,0));
+  SEL_CallFuncO selector = *((SEL_CallFuncO*)  tolua_tousertype(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addImageAsync'", NULL);
+#endif
+  {
+   self->addImageAsync(path,target,selector);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addImageAsync'.",&tolua_err);
  return 0;
 #endif
 }
@@ -33513,284 +33557,6 @@ static int tolua_Cocos2d_cocos2d_CCProjectionProtocol_updateProjection00(lua_Sta
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_new00
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_new00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   cocos2d::SelectorProtocol* tolua_ret = (cocos2d::SelectorProtocol*)  Mtolua_new((cocos2d::SelectorProtocol)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::SelectorProtocol");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: new_local of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_new00_local
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_new00_local(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   cocos2d::SelectorProtocol* tolua_ret = (cocos2d::SelectorProtocol*)  Mtolua_new((cocos2d::SelectorProtocol)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::SelectorProtocol");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: update of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_update00
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_update00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-   float dt = ((  float)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'update'", NULL);
-#endif
-  {
-   self->update(dt);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'update'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: tick of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_tick00
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_tick00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-   float dt = ((  float)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tick'", NULL);
-#endif
-  {
-   self->tick(dt);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'tick'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: callfunc of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc00
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'callfunc'", NULL);
-#endif
-  {
-   self->callfunc();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'callfunc'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: callfunc of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc01
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc01(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::CCNode* pSender = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'callfunc'", NULL);
-#endif
-  {
-   self->callfunc(pSender);
-  }
- }
- return 0;
-tolua_lerror:
- return tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc00(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: callfunc of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc02
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc02(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
-     !tolua_isuserdata(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::CCNode* pSender = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
-  void* pData = ((void*)  tolua_touserdata(tolua_S,3,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'callfunc'", NULL);
-#endif
-  {
-   self->callfunc(pSender,pData);
-  }
- }
- return 0;
-tolua_lerror:
- return tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc01(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: menuHandler of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_menuHandler00
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_menuHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::CCObject* pSender = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'menuHandler'", NULL);
-#endif
-  {
-   self->menuHandler(pSender);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'menuHandler'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: eventHandler of class  cocos2d::SelectorProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_SelectorProtocol_eventHandler00
-static int tolua_Cocos2d_cocos2d_SelectorProtocol_eventHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::SelectorProtocol",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::CCEvent",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::SelectorProtocol* self = (cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::CCEvent* pEvent = ((cocos2d::CCEvent*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'eventHandler'", NULL);
-#endif
-  {
-   self->eventHandler(pEvent);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'eventHandler'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: new of class  cocos2d::CCMutableArray<CCObject*> */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMutableArray_CCObject___new00
 static int tolua_Cocos2d_cocos2d_CCMutableArray_CCObject___new00(lua_State* tolua_S)
@@ -45967,7 +45733,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFunc_actionWithTarget00(lua_State* tolua_
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"cocos2d::CCCallFunc",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_CallFunc",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -45975,7 +45741,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFunc_actionWithTarget00(lua_State* tolua_
  else
 #endif
  {
-  cocos2d::SelectorProtocol* pSelectorTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSelectorTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_CallFunc selector = *((SEL_CallFunc*)  tolua_tousertype(tolua_S,3,0));
   {
    cocos2d::CCCallFunc* tolua_ret = (cocos2d::CCCallFunc*)  cocos2d::CCCallFunc::actionWithTarget(pSelectorTarget,selector);
@@ -46029,7 +45795,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFunc_initWithTarget00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCCallFunc",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -46037,7 +45803,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFunc_initWithTarget00(lua_State* tolua_S)
 #endif
  {
   cocos2d::CCCallFunc* self = (cocos2d::CCCallFunc*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pSelectorTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSelectorTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithTarget'", NULL);
 #endif
@@ -46206,8 +45972,8 @@ static int tolua_Cocos2d_cocos2d_CCCallFunc_getTargetCallback00(lua_State* tolua
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTargetCallback'", NULL);
 #endif
   {
-   cocos2d::SelectorProtocol* tolua_ret = (cocos2d::SelectorProtocol*)  self->getTargetCallback();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::SelectorProtocol");
+   cocos2d::CCObject* tolua_ret = (cocos2d::CCObject*)  self->getTargetCallback();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCObject");
   }
  }
  return 1;
@@ -46227,7 +45993,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFunc_setTargetCallback00(lua_State* tolua
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCCallFunc",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -46235,7 +46001,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFunc_setTargetCallback00(lua_State* tolua
 #endif
  {
   cocos2d::CCCallFunc* self = (cocos2d::CCCallFunc*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pSel = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSel = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTargetCallback'", NULL);
 #endif
@@ -46317,7 +46083,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncN_actionWithTarget00(lua_State* tolua
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"cocos2d::CCCallFuncN",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_CallFuncN",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -46325,7 +46091,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncN_actionWithTarget00(lua_State* tolua
  else
 #endif
  {
-  cocos2d::SelectorProtocol* pSelectorTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSelectorTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_CallFuncN selector = *((SEL_CallFuncN*)  tolua_tousertype(tolua_S,3,0));
   {
    cocos2d::CCCallFuncN* tolua_ret = (cocos2d::CCCallFuncN*)  cocos2d::CCCallFuncN::actionWithTarget(pSelectorTarget,selector);
@@ -46379,7 +46145,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncN_initWithTarget00(lua_State* tolua_S
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCCallFuncN",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_CallFuncN",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -46388,7 +46154,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncN_initWithTarget00(lua_State* tolua_S
 #endif
  {
   cocos2d::CCCallFuncN* self = (cocos2d::CCCallFuncN*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pSelectorTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSelectorTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_CallFuncN selector = *((SEL_CallFuncN*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithTarget'", NULL);
@@ -46480,7 +46246,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncND_actionWithTarget00(lua_State* tolu
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"cocos2d::CCCallFuncND",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_CallFuncND",0,&tolua_err)) ||
      !tolua_isuserdata(tolua_S,4,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
@@ -46489,7 +46255,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncND_actionWithTarget00(lua_State* tolu
  else
 #endif
  {
-  cocos2d::SelectorProtocol* pSelectorTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSelectorTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_CallFuncND selector = *((SEL_CallFuncND*)  tolua_tousertype(tolua_S,3,0));
   void* d = ((void*)  tolua_touserdata(tolua_S,4,0));
   {
@@ -46546,7 +46312,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncND_initWithTarget00(lua_State* tolua_
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCCallFuncND",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_CallFuncND",0,&tolua_err)) ||
      !tolua_isuserdata(tolua_S,4,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
@@ -46556,7 +46322,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncND_initWithTarget00(lua_State* tolua_
 #endif
  {
   cocos2d::CCCallFuncND* self = (cocos2d::CCCallFuncND*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pSelectorTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSelectorTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_CallFuncND selector = *((SEL_CallFuncND*)  tolua_tousertype(tolua_S,3,0));
   void* d = ((void*)  tolua_touserdata(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
@@ -46706,7 +46472,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncO_actionWithTarget00(lua_State* tolua
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"cocos2d::CCCallFuncO",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_CallFuncO",0,&tolua_err)) ||
      !tolua_isusertype(tolua_S,4,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
@@ -46715,7 +46481,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncO_actionWithTarget00(lua_State* tolua
  else
 #endif
  {
-  cocos2d::SelectorProtocol* pSelectorTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSelectorTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_CallFuncO selector = *((SEL_CallFuncO*)  tolua_tousertype(tolua_S,3,0));
   cocos2d::CCObject* pObject = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,4,0));
   {
@@ -46770,7 +46536,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncO_initWithTarget00(lua_State* tolua_S
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCCallFuncO",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_CallFuncO",0,&tolua_err)) ||
      !tolua_isusertype(tolua_S,4,"cocos2d::CCObject",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
@@ -46780,7 +46546,7 @@ static int tolua_Cocos2d_cocos2d_CCCallFuncO_initWithTarget00(lua_State* tolua_S
 #endif
  {
   cocos2d::CCCallFuncO* self = (cocos2d::CCCallFuncO*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* pSelectorTarget = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* pSelectorTarget = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_CallFuncO selector = *((SEL_CallFuncO*)  tolua_tousertype(tolua_S,3,0));
   cocos2d::CCObject* pObject = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
@@ -52144,23 +51910,6 @@ static int tolua_Cocos2d_cocos2d_CCActionManager_sharedManager00(lua_State* tolu
  tolua_error(tolua_S,"#ferror in function 'sharedManager'.",&tolua_err);
  return 0;
 #endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: __SelectorProtocol__ of class  cocos2d::CCActionManager */
-#ifndef TOLUA_DISABLE_tolua_get_cocos2d__CCActionManager___SelectorProtocol__
-static int tolua_get_cocos2d__CCActionManager___SelectorProtocol__(lua_State* tolua_S)
-{
-  cocos2d::CCActionManager* self = (cocos2d::CCActionManager*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__SelectorProtocol__'",NULL);
-#endif
-#ifdef __cplusplus
-   tolua_pushusertype(tolua_S,(void*)static_cast<cocos2d::SelectorProtocol*>(self), "cocos2d::SelectorProtocol");
-#else
-   tolua_pushusertype(tolua_S,(void*)((cocos2d::SelectorProtocol*)self), "cocos2d::SelectorProtocol");
-#endif
- return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -65745,7 +65494,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItem_itemWithTarget00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"cocos2d::CCMenuItem",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -65753,7 +65502,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItem_itemWithTarget00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::SelectorProtocol* rec = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* rec = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,3,0));
   {
    cocos2d::CCMenuItem* tolua_ret = (cocos2d::CCMenuItem*)  cocos2d::CCMenuItem::itemWithTarget(rec,selector);
@@ -65777,7 +65526,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItem_initWithTarget00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCMenuItem",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -65786,7 +65535,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItem_initWithTarget00(lua_State* tolua_S)
 #endif
  {
   cocos2d::CCMenuItem* self = (cocos2d::CCMenuItem*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::SelectorProtocol* rec = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,2,0));
+  cocos2d::CCObject* rec = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,2,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithTarget'", NULL);
@@ -66039,7 +65788,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemLabel_itemWithLabel00(lua_State* tolu
  if (
      !tolua_isusertable(tolua_S,1,"cocos2d::CCMenuItemLabel",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,3,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
@@ -66048,7 +65797,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemLabel_itemWithLabel00(lua_State* tolu
 #endif
  {
   cocos2d::CCNode* label = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,3,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,3,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,4,0));
   {
    cocos2d::CCMenuItemLabel* tolua_ret = (cocos2d::CCMenuItemLabel*)  cocos2d::CCMenuItemLabel::itemWithLabel(label,target,selector);
@@ -66098,7 +65847,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemLabel_initWithLabel00(lua_State* tolu
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCMenuItemLabel",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,3,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
@@ -66108,7 +65857,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemLabel_initWithLabel00(lua_State* tolu
  {
   cocos2d::CCMenuItemLabel* self = (cocos2d::CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
   cocos2d::CCNode* label = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,3,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,3,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithLabel'", NULL);
@@ -66550,7 +66299,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemAtlasFont_itemFromString01(lua_State*
      !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,7,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,7,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,8,&tolua_err) || !tolua_isusertype(tolua_S,8,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,9,&tolua_err)
  )
@@ -66562,7 +66311,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemAtlasFont_itemFromString01(lua_State*
   int itemWidth = ((int)  tolua_tonumber(tolua_S,4,0));
   int itemHeight = ((int)  tolua_tonumber(tolua_S,5,0));
   char startCharMap = ((char)  tolua_tonumber(tolua_S,6,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,7,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,7,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,8,0));
   {
    cocos2d::CCMenuItemAtlasFont* tolua_ret = (cocos2d::CCMenuItemAtlasFont*)  cocos2d::CCMenuItemAtlasFont::itemFromString(value,charMapFile,itemWidth,itemHeight,startCharMap,target,selector);
@@ -66588,7 +66337,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemAtlasFont_initFromString00(lua_State*
      !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,7,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,7,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,8,&tolua_err) || !tolua_isusertype(tolua_S,8,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,9,&tolua_err)
  )
@@ -66602,7 +66351,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemAtlasFont_initFromString00(lua_State*
   int itemWidth = ((int)  tolua_tonumber(tolua_S,4,0));
   int itemHeight = ((int)  tolua_tonumber(tolua_S,5,0));
   char startCharMap = ((char)  tolua_tonumber(tolua_S,6,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,7,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,7,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,8,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initFromString'", NULL);
@@ -66830,7 +66579,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemFont_itemFromString01(lua_State* tolu
  if (
      !tolua_isusertable(tolua_S,1,"cocos2d::CCMenuItemFont",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,3,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
@@ -66838,7 +66587,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemFont_itemFromString01(lua_State* tolu
  else
  {
   const char* value = ((const char*)  tolua_tostring(tolua_S,2,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,3,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,3,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,4,0));
   {
    cocos2d::CCMenuItemFont* tolua_ret = (cocos2d::CCMenuItemFont*)  cocos2d::CCMenuItemFont::itemFromString(value,target,selector);
@@ -66860,7 +66609,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemFont_initFromString00(lua_State* tolu
  if (
      !tolua_isusertype(tolua_S,1,"cocos2d::CCMenuItemFont",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,3,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
@@ -66870,7 +66619,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemFont_initFromString00(lua_State* tolu
  {
   cocos2d::CCMenuItemFont* self = (cocos2d::CCMenuItemFont*)  tolua_tousertype(tolua_S,1,0);
   const char* value = ((const char*)  tolua_tostring(tolua_S,2,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,3,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,3,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initFromString'", NULL);
@@ -66987,7 +66736,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemSprite_itemFromNormalSprite01(lua_Sta
      !tolua_isusertable(tolua_S,1,"cocos2d::CCMenuItemSprite",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,3,"cocos2d::CCNode",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,4,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,4,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,5,&tolua_err) || !tolua_isusertype(tolua_S,5,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,6,&tolua_err)
  )
@@ -66996,7 +66745,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemSprite_itemFromNormalSprite01(lua_Sta
  {
   cocos2d::CCNode* normalSprite = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
   cocos2d::CCNode* selectedSprite = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,3,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,4,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,4,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,5,0));
   {
    cocos2d::CCMenuItemSprite* tolua_ret = (cocos2d::CCMenuItemSprite*)  cocos2d::CCMenuItemSprite::itemFromNormalSprite(normalSprite,selectedSprite,target,selector);
@@ -67019,7 +66768,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemSprite_itemFromNormalSprite02(lua_Sta
      !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,3,"cocos2d::CCNode",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,4,"cocos2d::CCNode",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,5,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,5,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,7,&tolua_err)
  )
@@ -67029,7 +66778,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemSprite_itemFromNormalSprite02(lua_Sta
   cocos2d::CCNode* normalSprite = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
   cocos2d::CCNode* selectedSprite = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,3,0));
   cocos2d::CCNode* disabledSprite = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,4,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,5,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,5,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,6,0));
   {
    cocos2d::CCMenuItemSprite* tolua_ret = (cocos2d::CCMenuItemSprite*)  cocos2d::CCMenuItemSprite::itemFromNormalSprite(normalSprite,selectedSprite,disabledSprite,target,selector);
@@ -67053,7 +66802,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemSprite_initFromNormalSprite00(lua_Sta
      !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,3,"cocos2d::CCNode",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,4,"cocos2d::CCNode",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,5,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,5,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,7,&tolua_err)
  )
@@ -67065,7 +66814,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemSprite_initFromNormalSprite00(lua_Sta
   cocos2d::CCNode* normalSprite = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
   cocos2d::CCNode* selectedSprite = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,3,0));
   cocos2d::CCNode* disabledSprite = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,4,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,5,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,5,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,6,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initFromNormalSprite'", NULL);
@@ -67463,7 +67212,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemImage_itemFromNormalImage02(lua_State
      !tolua_isusertable(tolua_S,1,"cocos2d::CCMenuItemImage",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,4,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,4,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,5,&tolua_err) || !tolua_isusertype(tolua_S,5,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,6,&tolua_err)
  )
@@ -67472,7 +67221,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemImage_itemFromNormalImage02(lua_State
  {
   const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
   const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,4,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,4,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,5,0));
   {
    cocos2d::CCMenuItemImage* tolua_ret = (cocos2d::CCMenuItemImage*)  cocos2d::CCMenuItemImage::itemFromNormalImage(normalImage,selectedImage,target,selector);
@@ -67495,7 +67244,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemImage_itemFromNormalImage03(lua_State
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,5,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,5,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,7,&tolua_err)
  )
@@ -67505,7 +67254,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemImage_itemFromNormalImage03(lua_State
   const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
   const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* disabledImage = ((const char*)  tolua_tostring(tolua_S,4,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,5,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,5,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,6,0));
   {
    cocos2d::CCMenuItemImage* tolua_ret = (cocos2d::CCMenuItemImage*)  cocos2d::CCMenuItemImage::itemFromNormalImage(normalImage,selectedImage,disabledImage,target,selector);
@@ -67529,7 +67278,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemImage_initFromNormalImage00(lua_State
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,5,"cocos2d::SelectorProtocol",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,5,"cocos2d::CCObject",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"SEL_MenuHandler",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,7,&tolua_err)
  )
@@ -67541,7 +67290,7 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemImage_initFromNormalImage00(lua_State
   const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
   const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* disabledImage = ((const char*)  tolua_tostring(tolua_S,4,0));
-  cocos2d::SelectorProtocol* target = ((cocos2d::SelectorProtocol*)  tolua_tousertype(tolua_S,5,0));
+  cocos2d::CCObject* target = ((cocos2d::CCObject*)  tolua_tousertype(tolua_S,5,0));
   SEL_MenuHandler selector = *((SEL_MenuHandler*)  tolua_tousertype(tolua_S,6,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initFromNormalImage'", NULL);
@@ -71569,7 +71318,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"removeFromParentAndCleanup",tolua_Cocos2d_cocos2d_CCNode_removeFromParentAndCleanup00);
     tolua_function(tolua_S,"removeChildByTag",tolua_Cocos2d_cocos2d_CCNode_removeChildByTag00);
     tolua_function(tolua_S,"node",tolua_Cocos2d_cocos2d_CCNode_node00);
-    tolua_variable(tolua_S,"__SelectorProtocol__",tolua_get_cocos2d__CCNode___SelectorProtocol__,NULL);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"cocos2d",0);
@@ -71595,6 +71343,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"isSingleRefrence",tolua_Cocos2d_cocos2d_CCObject_isSingleRefrence00);
     tolua_function(tolua_S,"retainCount",tolua_Cocos2d_cocos2d_CCObject_retainCount00);
     tolua_function(tolua_S,"isEqual",tolua_Cocos2d_cocos2d_CCObject_isEqual00);
+    tolua_function(tolua_S,"update",tolua_Cocos2d_cocos2d_CCObject_update00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"cocos2d",0);
@@ -72192,6 +71941,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"purgeSharedTextureCache",tolua_Cocos2d_cocos2d_CCTextureCache_purgeSharedTextureCache00);
     tolua_function(tolua_S,"addImage",tolua_Cocos2d_cocos2d_CCTextureCache_addImage00);
     tolua_function(tolua_S,"addUIImage",tolua_Cocos2d_cocos2d_CCTextureCache_addUIImage00);
+    tolua_function(tolua_S,"addImageAsync",tolua_Cocos2d_cocos2d_CCTextureCache_addImageAsync00);
     tolua_function(tolua_S,"textureForKey",tolua_Cocos2d_cocos2d_CCTextureCache_textureForKey00);
     tolua_function(tolua_S,"removeAllTextures",tolua_Cocos2d_cocos2d_CCTextureCache_removeAllTextures00);
     tolua_function(tolua_S,"removeUnusedTextures",tolua_Cocos2d_cocos2d_CCTextureCache_removeUnusedTextures00);
@@ -73300,29 +73050,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setString",tolua_Cocos2d_cocos2d_CCLabelProtocol_setString00);
     tolua_function(tolua_S,"getString",tolua_Cocos2d_cocos2d_CCLabelProtocol_getString00);
    tolua_endmodule(tolua_S);
-   tolua_cclass(tolua_S,"CCProjectionProtocol","cocos2d::CCProjectionProtocol","cocos2d::CCObject",NULL);
+   tolua_cclass(tolua_S,"CCProjectionProtocol","cocos2d::CCProjectionProtocol","",NULL);
    tolua_beginmodule(tolua_S,"CCProjectionProtocol");
     tolua_function(tolua_S,"updateProjection",tolua_Cocos2d_cocos2d_CCProjectionProtocol_updateProjection00);
-   tolua_endmodule(tolua_S);
-  tolua_endmodule(tolua_S);
-  tolua_module(tolua_S,"cocos2d",0);
-  tolua_beginmodule(tolua_S,"cocos2d");
-   #ifdef __cplusplus
-   tolua_cclass(tolua_S,"SelectorProtocol","cocos2d::SelectorProtocol","",tolua_collect_cocos2d__SelectorProtocol);
-   #else
-   tolua_cclass(tolua_S,"SelectorProtocol","cocos2d::SelectorProtocol","",NULL);
-   #endif
-   tolua_beginmodule(tolua_S,"SelectorProtocol");
-    tolua_function(tolua_S,"new",tolua_Cocos2d_cocos2d_SelectorProtocol_new00);
-    tolua_function(tolua_S,"new_local",tolua_Cocos2d_cocos2d_SelectorProtocol_new00_local);
-    tolua_function(tolua_S,".call",tolua_Cocos2d_cocos2d_SelectorProtocol_new00_local);
-    tolua_function(tolua_S,"update",tolua_Cocos2d_cocos2d_SelectorProtocol_update00);
-    tolua_function(tolua_S,"tick",tolua_Cocos2d_cocos2d_SelectorProtocol_tick00);
-    tolua_function(tolua_S,"callfunc",tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc00);
-    tolua_function(tolua_S,"callfunc",tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc01);
-    tolua_function(tolua_S,"callfunc",tolua_Cocos2d_cocos2d_SelectorProtocol_callfunc02);
-    tolua_function(tolua_S,"menuHandler",tolua_Cocos2d_cocos2d_SelectorProtocol_menuHandler00);
-    tolua_function(tolua_S,"eventHandler",tolua_Cocos2d_cocos2d_SelectorProtocol_eventHandler00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"cocos2d",0);
@@ -74282,7 +74012,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"resumeTarget",tolua_Cocos2d_cocos2d_CCActionManager_resumeTarget00);
     tolua_function(tolua_S,"purgeSharedManager",tolua_Cocos2d_cocos2d_CCActionManager_purgeSharedManager00);
     tolua_function(tolua_S,"sharedManager",tolua_Cocos2d_cocos2d_CCActionManager_sharedManager00);
-    tolua_variable(tolua_S,"__SelectorProtocol__",tolua_get_cocos2d__CCActionManager___SelectorProtocol__,NULL);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"cocos2d",0);
@@ -74850,7 +74579,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"right",tolua_get_cocos2d__ccBMFontPadding_right,tolua_set_cocos2d__ccBMFontPadding_right);
     tolua_variable(tolua_S,"bottom",tolua_get_cocos2d__ccBMFontPadding_bottom,tolua_set_cocos2d__ccBMFontPadding_bottom);
    tolua_endmodule(tolua_S);
-   tolua_constant(tolua_S,"kCCBMFontMaxChars",cocos2d::kCCBMFontMaxChars);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"CCBMFontConfiguration","cocos2d::CCBMFontConfiguration","cocos2d::CCObject",tolua_collect_cocos2d__CCBMFontConfiguration);
    #else

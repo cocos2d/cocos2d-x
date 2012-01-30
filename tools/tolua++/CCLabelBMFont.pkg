@@ -30,11 +30,6 @@ namespace cocos2d{
 		int bottom;
 	} ccBMFontPadding;
 
-	enum {
-		// how many characters are supported
-		kCCBMFontMaxChars = 2048, //256,
-	};
-
 
 	class CCBMFontConfiguration : public CCObject
 	{	
