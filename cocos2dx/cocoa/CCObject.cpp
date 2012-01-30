@@ -31,10 +31,9 @@ namespace   cocos2d {
 CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
     CC_UNUSED_PARAM(pZone);
-	CCAssert(0, "not implement");
+    CCAssert(0, "not implement");
     return 0;
 }
-
 
 CCObject::CCObject(void)
 {
@@ -59,7 +58,7 @@ CCObject::~CCObject(void)
 
 CCObject* CCObject::copy()
 {
-        return copyWithZone(0);
+    return copyWithZone(0);
 }
 
 void CCObject::release(void)
@@ -102,4 +101,5 @@ bool CCObject::isEqual(const CCObject *pObject)
 {
 	return this == pObject;
 }
+
 }//namespace   cocos2d 

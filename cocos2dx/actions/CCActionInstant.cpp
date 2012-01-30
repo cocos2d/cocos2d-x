@@ -302,7 +302,7 @@ void CCPlace::startWithTarget(CCNode *pTarget) {
 // CallFunc
 //
 
-CCCallFunc * CCCallFunc::actionWithTarget(SelectorProtocol* pSelectorTarget,
+CCCallFunc * CCCallFunc::actionWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFunc selector) {
 	CCCallFunc *pRet = new CCCallFunc();
 
@@ -333,7 +333,7 @@ bool CCCallFunc::initWithScriptFuncName(const char *pszFuncName) {
 	return true;
 }
 
-bool CCCallFunc::initWithTarget(SelectorProtocol* pSelectorTarget) {
+bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
 	if (pSelectorTarget) 
 	{
 		dynamic_cast<CCObject*>(pSelectorTarget)->retain();
@@ -398,7 +398,7 @@ void CCCallFuncN::execute() {
 	}
 }
 
-CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget,
+CCCallFuncN * CCCallFuncN::actionWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncN selector) {
 	CCCallFuncN *pRet = new CCCallFuncN();
 
@@ -423,7 +423,7 @@ CCCallFuncN* CCCallFuncN::actionWithScriptFuncName(const char *pszFuncName) {
 	return NULL;
 }
 
-bool CCCallFuncN::initWithTarget(SelectorProtocol* pSelectorTarget,
+bool CCCallFuncN::initWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncN selector) {
 	if (CCCallFunc::initWithTarget(pSelectorTarget)) {
 		m_pCallFuncN = selector;
@@ -454,7 +454,7 @@ CCObject * CCCallFuncN::copyWithZone(CCZone* zone) {
 //
 // CallFuncND
 //
-CCCallFuncND * CCCallFuncND::actionWithTarget(SelectorProtocol* pSelectorTarget,
+CCCallFuncND * CCCallFuncND::actionWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncND selector, void* d) {
 	CCCallFuncND* pRet = new CCCallFuncND();
 
@@ -481,7 +481,7 @@ CCCallFuncND* CCCallFuncND::actionWithScriptFuncName(const char* pszFuncName,
 	return NULL;
 }
 
-bool CCCallFuncND::initWithTarget(SelectorProtocol* pSelectorTarget,
+bool CCCallFuncND::initWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncND selector, void* d) {
 	if (CCCallFunc::initWithTarget(pSelectorTarget)) {
 		m_pData = d;
@@ -543,7 +543,7 @@ void CCCallFuncO::execute() {
 	}
 }
 
-CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget,
+CCCallFuncO * CCCallFuncO::actionWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncO selector, CCObject* pObject) {
 	CCCallFuncO *pRet = new CCCallFuncO();
 
@@ -568,7 +568,7 @@ CCCallFuncO* CCCallFuncO::actionWithScriptFuncName(const char *pszFuncName) {
 	return NULL;
 }
 
-bool CCCallFuncO::initWithTarget(SelectorProtocol* pSelectorTarget,
+bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncO selector, CCObject* pObject) {
 	if (CCCallFunc::initWithTarget(pSelectorTarget)) {
 		m_pObject = pObject;

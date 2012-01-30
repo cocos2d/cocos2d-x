@@ -116,7 +116,7 @@ public:
 };
 
 /** OpenGL projection protocol */
-class CC_DLL CCProjectionProtocol : public CCObject
+class CC_DLL CCProjectionProtocol
 {
 public:
 	/** Called by CCDirector when the porjection is updated, and "custom" projection is used
