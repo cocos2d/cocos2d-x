@@ -1,3 +1,5 @@
+#include "ccTypes.h"
+
 namespace   cocos2d {
 
 class  CCCopying
@@ -19,6 +21,7 @@ class  CCObject : public CCCopying
 	bool isSingleRefrence(void);
 	unsigned int retainCount(void);
 	bool isEqual(const CCObject* pObject);
+	void update(ccTime dt);
 
 };
 }//namespace   cocos2d 
