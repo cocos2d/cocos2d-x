@@ -10,15 +10,15 @@ class CCTimer : public CCObject
 
 	void setInterval(ccTime fInterval);
 
-	//bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
+	//bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
 
-    //bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+    //bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
 	void update(ccTime dt);
 
-	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
+	//static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
 
-	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+	//static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 	
 	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
 	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
@@ -41,25 +41,25 @@ class CCScheduler : public CCObject
 
 	void tick(ccTime dt);
 
-	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
+	void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, ccTime fInterval, bool bPaused);
 	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
 	void unscheduleScriptFunc(const char *pszFuncName);
-	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
+	void scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused);
 
-	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
+	void unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget);
 
-	void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
+	void unscheduleUpdateForTarget(const CCObject *pTarget);
 
-	void unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget);
+	void unscheduleAllSelectorsForTarget(CCObject *pTarget);
 	
 	void unscheduleAllSelectors(void);
 
 
-	void pauseTarget(SelectorProtocol *pTarget);
+	void pauseTarget(CCObject *pTarget);
 
-	void resumeTarget(SelectorProtocol *pTarget);
+	void resumeTarget(CCObject *pTarget);
 
-	bool isTargetPaused(SelectorProtocol *pTarget);
+	bool isTargetPaused(CCObject *pTarget);
 
 	static CCScheduler* sharedScheduler(void);
 
