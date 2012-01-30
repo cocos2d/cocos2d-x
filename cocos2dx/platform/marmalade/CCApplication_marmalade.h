@@ -113,7 +113,7 @@ public:
     static ccLanguageType getCurrentLanguage();
 
 protected:
-	int64       m_nAnimationInterval;
+	uint64       m_nAnimationInterval;
 
 	static CCApplication * sm_pSharedApplication;
 };
