@@ -62,14 +62,7 @@ public:
 	unsigned int retainCount(void);
 	virtual bool isEqual(const CCObject* pObject);
     
-    // Move SelectorProtocol to here
     virtual void update(ccTime dt) {CC_UNUSED_PARAM(dt);};
-    virtual void tick(ccTime dt){CC_UNUSED_PARAM(dt);};
-    virtual void callfunc(){};
-    virtual void callfunc(CCNode* pSender){CC_UNUSED_PARAM(pSender);};
-    virtual void callfunc(CCNode* pSender, void* pData){CC_UNUSED_PARAM(pSender);CC_UNUSED_PARAM(pData);};
-    virtual void menuHandler(CCObject* pSender){CC_UNUSED_PARAM(pSender);};
-    virtual void eventHandler(CCEvent* pEvent) {CC_UNUSED_PARAM(pEvent);};
 
 	friend class CCAutoreleasePool;
 };
