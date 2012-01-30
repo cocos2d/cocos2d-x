@@ -64,6 +64,7 @@ static pthread_mutex_t		s_asyncStructQueueMutex;
 static pthread_mutex_t      s_ImageInfoMutex;
 
 static sem_t s_sem;
+bool need_quit;
 
 static std::queue<AsyncStruct*>		*s_pAsyncStructQueue;
 static std::queue<ImageInfo*>		*s_pImageQueue;
@@ -87,7 +88,10 @@ static void* loadImage(void* data)
         if (pQueue->empty())
         {
             pthread_mutex_unlock(&s_asyncStructQueueMutex);
-            continue;
+	if (need_quit)
+		break;
+	else
+		continue;
         }
         else
         {
@@ -170,7 +174,8 @@ CCTextureCache::CCTextureCache()
 CCTextureCache::~CCTextureCache()
 {
 	CCLOGINFO("cocos2d: deallocing CCTextureCache.");
-
+	need_quit = true;
+	sem_post(&s_sem);
 	CC_SAFE_RELEASE(m_pTextures);
 }
 
@@ -230,7 +235,7 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 		pthread_create(&s_loadingThread, NULL, loadImage, NULL);
 
 		CCScheduler::sharedScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
-
+		need_quit = false;
 		firstRun = false;
 	}
 
