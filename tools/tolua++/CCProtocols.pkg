@@ -84,7 +84,7 @@ class  CCLabelProtocol
 };
 
 /** OpenGL projection protocol */
-class  CCProjectionProtocol : public CCObject
+class  CCProjectionProtocol
 {
 
 	/** Called by CCDirector when the porjection is updated, and "custom" projection is used
