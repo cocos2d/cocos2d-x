@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #include <string>
 #include "CCObject.h"
-#include "selector_protocol.h"
 #include "support/data_support/uthash.h"
 
 namespace   cocos2d {
@@ -49,10 +48,10 @@ public:
 	inline void setInterval(ccTime fInterval){ m_fInterval = fInterval; }
 
     /** Initializes a timer with a target and a selector. */
-	bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
+	bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
 
 	/** Initializes a timer with a target, a selector and an interval in seconds. */
-    bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+    bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
 	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
 
@@ -61,13 +60,13 @@ public:
 
 public:
 	/** Allocates a timer with a target and a selector. */
-	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
+	static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
 
 	/** Allocates a timer with a script function name. */
 	static CCTimer* timerWithScriptFuncName(const char* pszFuncName, ccTime fSeconds);
 
 	/** Allocates a timer with a target, a selector and an interval in seconds. */
-	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+	static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
 public:
 	SEL_SCHEDULE m_pfnSelector;
@@ -75,7 +74,7 @@ public:
 	std::string m_scriptFunc;
 
 protected:
-	SelectorProtocol *m_pTarget;	
+	CCObject *m_pTarget;	
 	ccTime m_fElapsed;	
 };
 
@@ -125,7 +124,7 @@ public:
 
 	 @since v0.99.3
 	 */
-	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
+	void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, ccTime fInterval, bool bPaused);
 	/** Schedule the script function
 	 */
 	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
@@ -134,13 +133,13 @@ public:
 	 The lower the priority, the earlier it is called.
 	 @since v0.99.3
 	 */
-	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
+	void scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused);
 
 	/** Unschedule a selector for a given target.
 	 If you want to unschedule the "update", use unscheudleUpdateForTarget.
 	 @since v0.99.3
 	 */
-	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
+	void unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget);
 	/** Unschedule the script function
 	*/
 	void unscheduleScriptFunc(const char *pszFuncName);
@@ -148,13 +147,13 @@ public:
 	/** Unschedules the update selector for a given target
 	 @since v0.99.3
 	 */
-	void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
+	void unscheduleUpdateForTarget(const CCObject *pTarget);
 
 	/** Unschedules all selectors for a given target.
 	 This also includes the "update" selector.
 	 @since v0.99.3
 	 */
-	void unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget);
+	void unscheduleAllSelectorsForTarget(CCObject *pTarget);
 
 	/** Unschedules all selectors from all targets.
 	 You should NEVER call this method, unless you know what you are doing.
@@ -168,19 +167,19 @@ public:
 	 If the target is not present, nothing happens.
 	 @since v0.99.3
 	 */
-	void pauseTarget(SelectorProtocol *pTarget);
+	void pauseTarget(CCObject *pTarget);
 
 	/** Resumes the target.
 	 The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
 	 If the target is not present, nothing happens.
 	 @since v0.99.3
 	 */
-	void resumeTarget(SelectorProtocol *pTarget);
+	void resumeTarget(CCObject *pTarget);
 
     /** Returns whether or not the target is paused
     @since v1.0.0
     */
-    bool isTargetPaused(SelectorProtocol *pTarget);
+    bool isTargetPaused(CCObject *pTarget);
 
 public:
     /** returns a shared instance of the Scheduler */
@@ -199,8 +198,8 @@ private:
 
 	// update specific
 
-	void priorityIn(struct _listEntry **ppList, SelectorProtocol *pTarget, int nPriority, bool bPaused);
-	void appendIn(struct _listEntry **ppList, SelectorProtocol *pTarget, bool bPaused);
+	void priorityIn(struct _listEntry **ppList, CCObject *pTarget, int nPriority, bool bPaused);
+	void appendIn(struct _listEntry **ppList, CCObject *pTarget, bool bPaused);
 
 protected:
 	ccTime m_fTimeScale;

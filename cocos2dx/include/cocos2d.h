@@ -104,7 +104,6 @@ THE SOFTWARE.
 #include "CCZone.h"
 #include "CCGeometry.h"
 #include "CCAffineTransform.h"
-#include "selector_protocol.h"
 #include "CCTouch.h"
 #include "CCPointExtension.h"
 

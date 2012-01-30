@@ -47,7 +47,7 @@ namespace   cocos2d {
 typedef struct _AsyncStruct
 {
 	std::string			filename;
-	SelectorProtocol	*target;
+	CCObject	*target;
 	SEL_CallFuncO		selector;
 } AsyncStruct;
 
@@ -188,7 +188,7 @@ char * CCTextureCache::description()
 	return ret;
 }
 
-void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, SEL_CallFuncO selector)
+void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector)
 {
 	CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");	
 
@@ -268,7 +268,7 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 		AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
 		CCImage *pImage = pImageInfo->image;
 
-		SelectorProtocol *target = pAsyncStruct->target;
+		CCObject *target = pAsyncStruct->target;
 		SEL_CallFuncO selector = pAsyncStruct->selector;
 		const char* filename = pAsyncStruct->filename.c_str();
 

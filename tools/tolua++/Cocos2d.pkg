@@ -68,7 +68,6 @@ $pfile "CCAction.pkg"
 
 $pfile "CCProtocols.pkg"
 
-$pfile "selector_protocol.pkg"
 $pfile "CCSet.pkg"
 
 $pfile "CCMutableArray.pkg"

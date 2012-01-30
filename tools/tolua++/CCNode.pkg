@@ -3,7 +3,7 @@ enum {
 	kCCNodeTagInvalid = -1,
 };
 
-class CCNode : public CCObject, public SelectorProtocol
+class CCNode : public CCObject
 {
         CCNode();
 	int	getZOrder();
