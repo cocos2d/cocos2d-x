@@ -282,9 +282,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
         case MotionEvent.ACTION_POINTER_DOWN:
-        	final int idPointerDown = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
-            final float xPointerDown = event.getX(idPointerDown);
-            final float yPointerDown = event.getY(idPointerDown);
+        	final int indexPointerDown = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+        	final int idPointerDown = event.getPointerId(indexPointerDown);
+            final float xPointerDown = event.getX(indexPointerDown);
+            final float yPointerDown = event.getY(indexPointerDown);
 
             queueEvent(new Runnable() {
                 @Override
@@ -318,9 +319,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             break;
 
         case MotionEvent.ACTION_POINTER_UP:
-        	final int idPointerUp = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
-            final float xPointerUp = event.getX(idPointerUp);
-            final float yPointerUp = event.getY(idPointerUp);
+        	final int indexPointUp = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+        	final int idPointerUp = event.getPointerId(indexPointUp);
+            final float xPointerUp = event.getX(indexPointUp);
+            final float yPointerUp = event.getY(indexPointUp);
             
             queueEvent(new Runnable() {
                 @Override
