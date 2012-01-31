@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 01/30/12 17:20:10.
+** Generated automatically by tolua++-1.0.92 on 01/31/12 14:44:49.
 */
 
 #include "LuaCocos2d.h"
@@ -64979,38 +64979,6 @@ static int tolua_Cocos2d_cocos2d_CCMenu_setColor00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: init of class  cocos2d::CCMenu */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMenu_init00
-static int tolua_Cocos2d_cocos2d_CCMenu_init00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::CCMenu",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  cocos2d::CCMenu* self = (cocos2d::CCMenu*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
-#endif
-  {
-   bool tolua_ret = (bool)  self->init();
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: node of class  cocos2d::CCMenu */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMenu_node00
 static int tolua_Cocos2d_cocos2d_CCMenu_node00(lua_State* tolua_S)
@@ -74750,7 +74718,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_cocos2d_CCMenu_getOpacity00);
     tolua_function(tolua_S,"getColor",tolua_Cocos2d_cocos2d_CCMenu_getColor00);
     tolua_function(tolua_S,"setColor",tolua_Cocos2d_cocos2d_CCMenu_setColor00);
-    tolua_function(tolua_S,"init",tolua_Cocos2d_cocos2d_CCMenu_init00);
     tolua_function(tolua_S,"node",tolua_Cocos2d_cocos2d_CCMenu_node00);
     tolua_function(tolua_S,"onEnter",tolua_Cocos2d_cocos2d_CCMenu_onEnter00);
     tolua_function(tolua_S,"onExit",tolua_Cocos2d_cocos2d_CCMenu_onExit01);
