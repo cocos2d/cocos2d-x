@@ -42,7 +42,7 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCKeypadDispatcher.h"
 #include "CCIMEDispatcher.h"
-
+#include "CCApplication.h"
 
 using namespace std;
 
@@ -1060,6 +1060,26 @@ bool CCEGLView::HandleEvents()
 
 					// exit the application
 					release();
+					break;
+				case NAVIGATOR_WINDOW_ACTIVE:
+					CCApplication::sharedApplication().applicationWillEnterForeground();
+					break;
+				case NAVIGATOR_WINDOW_INACTIVE:
+					CCApplication::sharedApplication().applicationDidEnterBackground();
+					break;
+				case NAVIGATOR_WINDOW_STATE:
+				{
+					switch(navigator_event_get_window_state(event))
+					{
+					case NAVIGATOR_WINDOW_FULLSCREEN:
+						CCApplication::sharedApplication().applicationWillEnterForeground();
+						break;
+					case NAVIGATOR_WINDOW_THUMBNAIL:
+						CCApplication::sharedApplication().applicationDidEnterBackground();
+						break;
+					}
+				break;
+				}
 					break;
 			}
 		}
