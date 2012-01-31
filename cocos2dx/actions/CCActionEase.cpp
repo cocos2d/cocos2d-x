@@ -1394,7 +1394,7 @@ namespace cocos2d {
 		else
 		{
 			time = time - 2;
-			m_pOther->update((time * time * ((overshoot + 1) + overshoot)) / 2 + 1);
+			m_pOther->update((time * time * ((overshoot + 1) * time + overshoot)) / 2 + 1);
 		}
 	}
 }
