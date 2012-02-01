@@ -30,10 +30,8 @@ THE SOFTWARE.
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <AL/alut.h>
-#include <mm/renderer.h>
 #include <sys/stat.h>
-
-//#include "CCFileUtils.h"
+#include <vorbis/vorbisfile.h>
 
 #include "SimpleAudioEngine.h"
 
@@ -56,115 +54,68 @@ namespace CocosDenshion
 		PAUSED,
 	} playStatus;
 
-	static int	 s_audioOid;
+	static float s_volume 				   = 1.0f;
+	static float s_effectVolume			   = 1.0f;
+	static bool  s_isBackgroundInitialized = false;
+	static std::string s_currentBackgroundStr;
 
-	static float s_volume 				  = 1.0f;
-	static float s_effectVolume			  = 1.0f;
-	static bool s_isBackgroundInitialized = false;
-	static bool s_hasMMRError			  = false;
-	static playStatus s_playStatus	  	  = STOPPED;
-
-	static string 		   s_currentBackgroundStr;
-	static mmr_connection_t   *s_mmrConnection 	  = 0;
-	static mmr_context_t 	  *s_mmrContext 	  = 0;
-	static strm_dict_t 		  *s_repeatDictionary = 0;
-	static strm_dict_t 		  *s_volumeDictionary = 0;
+	ALuint s_backgroundBuffer;
+	ALuint s_backgroundSource;
 
 	static SimpleAudioEngine  *s_engine = 0;
 
-	static void printALError(int err)
+	static int checkALError(const char *funcName)
 	{
-		switch (err)
+		int err = alGetError();
+
+		if (err != AL_NO_ERROR)
 		{
-			case AL_NO_ERROR:
-				fprintf(stderr, "AL_NO_ERROR");
-				break;
+			switch (err)
+			{
+				case AL_INVALID_NAME:
+					fprintf(stderr, "AL_INVALID_NAME in %s\n", funcName);
+					break;
 
-			case AL_INVALID_NAME:
-				fprintf(stderr, "AL_INVALID_NAME");
-				break;
+				case AL_INVALID_ENUM:
+					fprintf(stderr, "AL_INVALID_ENUM in %s\n", funcName);
+					break;
 
-			case AL_INVALID_ENUM:
-				fprintf(stderr, "AL_INVALID_ENUM");
-				break;
+				case AL_INVALID_VALUE:
+					fprintf(stderr, "AL_INVALID_VALUE in %s\n", funcName);
+					break;
 
-			case AL_INVALID_VALUE:
-				fprintf(stderr, "AL_INVALID_VALUE");
-				break;
+				case AL_INVALID_OPERATION:
+					fprintf(stderr, "AL_INVALID_OPERATION in %s\n", funcName);
+					break;
 
-			case AL_INVALID_OPERATION:
-				fprintf(stderr, "AL_INVALID_OPERATION");
-				break;
+				case AL_OUT_OF_MEMORY:
+					fprintf(stderr, "AL_OUT_OF_MEMORY in %s\n", funcName);
+					break;
+			}
+		}
 
-			case AL_OUT_OF_MEMORY:
-				fprintf(stderr, "AL_OUT_OF_MEMORY");
-				break;
-		};
+		return err;
 	}
-
-    static void mmrerror(mmr_context_t *ctxt, const char *msg)
-    {
-    	const mmr_error_info_t  *err = mmr_error_info( ctxt );
-    	unsigned 				 errcode = (err) ? err->error_code : -1;
-    	const char 				*name;
-
-    	fprintf(stderr, "%s: error %d \n", msg, errcode);
-    	s_hasMMRError = true;
-    }
 
     static void stopBackground(bool bReleaseData)
     {
-    	s_playStatus = STOPPED;
-
-		if (s_mmrContext)
-			mmr_stop(s_mmrContext);
+    	alSourceStop(s_backgroundSource);
 
 		if (bReleaseData)
 		{
-			if (s_mmrContext)
-			{
-				mmr_input_detach(s_mmrContext);
-				mmr_context_destroy(s_mmrContext);
-			}
-
-			if (s_mmrConnection)
-				mmr_disconnect(s_mmrConnection);
-
-			if (s_repeatDictionary)
-				strm_dict_destroy(s_repeatDictionary);
-
-			if (s_volumeDictionary)
-				strm_dict_destroy(s_volumeDictionary);
-
-			s_mmrContext = 0;
-			s_mmrConnection = 0;
-			s_repeatDictionary = 0;
-			s_volumeDictionary = 0;
-			s_hasMMRError = false;
 			s_currentBackgroundStr = "";
 			s_isBackgroundInitialized = false;
+
+			alDeleteBuffers(1, &s_backgroundBuffer);
+			checkALError("stopBackground");
+			alDeleteSources(1, &s_backgroundSource);
+			checkALError("stopBackground");
 		}
     }
 
     static void setBackgroundVolume(float volume)
     {
-    	if (!s_isBackgroundInitialized)
-    	{
-    		return;
-    	}
-		char volume_str[128];
-
-		// set it up the background volume
-		strm_dict_t *dictionary = strm_dict_new();
-
-		sprintf(volume_str, "%d", (int)(volume * 100) );
-		s_volumeDictionary = strm_dict_set(dictionary, "volume", volume_str);
-
-		if (mmr_output_parameters(s_mmrContext, s_audioOid, s_volumeDictionary) != 0)
-		{
-			mmrerror(s_mmrContext, "output parameters");
-			return;
-		}
+    	alSourcef(s_backgroundSource, AL_GAIN, volume);
     }
 
 	SimpleAudioEngine::SimpleAudioEngine()
@@ -187,22 +138,21 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::end()
 	{
+		checkALError("end");
+
 		// clear all the sounds
 	    EffectsMap::const_iterator end = s_effects.end();
 	    for (EffectsMap::iterator it = s_effects.begin(); it != end; it++)
 	    {
 	        alSourceStop(it->second->source);
-
+	        checkALError("end");
 			alDeleteBuffers(1, &it->second->buffer);
+			checkALError("end");
 			alDeleteSources(1, &it->second->source);
+			checkALError("end");
 			delete it->second;
 	    }
 	    s_effects.clear();
-
-		if (s_isBackgroundInitialized)
-		{
-			s_isBackgroundInitialized = false;
-		}
 
 		// and the background too
 		stopBackground(true);
@@ -213,134 +163,170 @@ namespace CocosDenshion
 	}
 
 	//
-	// background audio (using mmrenderer)
+	// OGG support
+	//
+	static bool isOGGFile(const char *pszFilePath)
+	{
+		FILE			*file;
+		OggVorbis_File   ogg_file;
+		int				 result;
+
+		file = fopen(pszFilePath, "rb");
+		result = ov_test(file, &ogg_file, 0, 0);
+		ov_clear(&ogg_file);
+
+		return (result == 0);
+	}
+
+	static ALuint createBufferFromOGG(const char *pszFilePath)
+	{
+		ALuint 			buffer;
+		OggVorbis_File  ogg_file;
+		vorbis_info*    info;
+		ALenum 			format;
+		int 			result;
+		int 			section;
+		int				err;
+		unsigned int 	size = 0;
+
+		if (ov_fopen(pszFilePath, &ogg_file) < 0)
+		{
+			ov_clear(&ogg_file);
+			fprintf(stderr, "Could not open OGG file %s\n", pszFilePath);
+			return -1;
+		}
+
+		info = ov_info(&ogg_file, -1);
+
+		if (info->channels == 1)
+			format = AL_FORMAT_MONO16;
+		else
+			format = AL_FORMAT_STEREO16;
+
+		// size = #samples * #channels * 2 (for 16 bit)
+		unsigned int data_size = ov_pcm_total(&ogg_file, -1) * info->channels * 2;
+		char* data = new char[data_size];
+
+		while (size < data_size)
+		{
+			result = ov_read(&ogg_file, data + size, data_size - size, 0, 2, 1, &section);
+			if (result > 0)
+			{
+				size += result;
+			}
+			else if (result < 0)
+			{
+				delete [] data;
+				fprintf(stderr, "OGG file problem %s\n", pszFilePath);
+				return -1;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		if (size == 0)
+		{
+			delete [] data;
+			fprintf(stderr, "Unable to read OGG data\n");
+			return -1;
+		}
+
+		// clear al errors
+		checkALError("createBufferFromOGG");
+
+	    // Load audio data into a buffer.
+	    alGenBuffers(1, &buffer);
+
+	    if (checkALError("createBufferFromOGG") != AL_NO_ERROR)
+	    {
+	        fprintf(stderr, "Couldn't generate a buffer for OGG file\n");
+	        delete [] data;
+	        return buffer;
+	    }
+
+		alBufferData(buffer, format, data, data_size, info->rate);
+		checkALError("createBufferFromOGG");
+
+		delete [] data;
+		ov_clear(&ogg_file);
+
+		return buffer;
+	}
+
+
+	//
+	// background audio
 	//
     void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 	{
-    	if (!s_isBackgroundInitialized)
-    	{
-    		const char 		*mmrname = NULL;
-    		const char 		*ctxtname = "mmrplayer";
-    		char 			 cwd[PATH_MAX];
-    		mode_t 			 mode = S_IRUSR | S_IXUSR;
+		if (!s_isBackgroundInitialized || s_currentBackgroundStr != pszFilePath)
+		{
+			string path = pszFilePath;
 
-    		getcwd(cwd, PATH_MAX);
-    		string path = "file://";
-    		path += cwd;
-    		path += "/";
-    		path += pszFilePath;
+			if (isOGGFile(path.data()))
+			{
+				s_backgroundBuffer = createBufferFromOGG(path.data());
+			}
+			else
+			{
+				s_backgroundBuffer = alutCreateBufferFromFile(path.data());
+			}
 
-    		s_mmrConnection = mmr_connect(mmrname);
-    		if (!s_mmrConnection)
-    		{
-    			perror("mmr_connect");
-    			s_hasMMRError = true;
-    			return;
-    		}
+			checkALError("preloadBackgroundMusic");
 
-    		s_mmrContext = mmr_context_create(s_mmrConnection, ctxtname, 0, mode);
-    		if (!s_mmrContext)
-    		{
-    			perror(ctxtname);
-    			s_hasMMRError = true;
-    			return;
-    		}
+			if (s_backgroundBuffer == AL_NONE)
+			{
+				fprintf(stderr, "Error loading file: '%s'\n", path.data());
+				alDeleteBuffers(1, &s_backgroundBuffer);
+				return;
+			}
 
-    		if ((s_audioOid = mmr_output_attach(s_mmrContext, "audio:default", "audio")) < 0)
-    		{
-    			mmrerror(s_mmrContext, "audio:default");
-    			return;
-    		}
+			alGenSources(1, &s_backgroundSource);
+			checkALError("preloadBackgroundMusic");
 
-    		if (mmr_input_attach(s_mmrContext, path.data(), "autolist") < 0)
-    		{
-    			fprintf(stderr, "unable to load %s\n", path.data());
-    			mmrerror(s_mmrContext, path.data());
-    			return;
-    		}
+			alSourcei(s_backgroundSource, AL_BUFFER, s_backgroundBuffer);
+			checkALError("preloadBackgroundMusic");
 
-    		s_currentBackgroundStr 	  = pszFilePath;
-			s_isBackgroundInitialized = true;
-			setBackgroundVolume(s_volume);
-    	}
+			s_currentBackgroundStr = pszFilePath;
+		}
+
+		s_currentBackgroundStr 	  = pszFilePath;
+		s_isBackgroundInitialized = true;
 	}
 
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
-		if (0 != strcmp(s_currentBackgroundStr.c_str(), pszFilePath))
-		{
-			stopBackgroundMusic(true);
-		}
-		else
-		{
-			if (s_playStatus == PAUSED)
-				resumeBackgroundMusic();
-			else
-				rewindBackgroundMusic();
-		}
-
 		if (!s_isBackgroundInitialized)
 			preloadBackgroundMusic(pszFilePath);
 
-		if (bLoop)
-		{
-			// set it up to loop
-			strm_dict_t *dictionary = strm_dict_new();
-			s_repeatDictionary = strm_dict_set(dictionary, "repeat", "all");
-
-    		if (mmr_input_parameters(s_mmrContext, s_repeatDictionary) != 0)
-    		{
-    			mmrerror(s_mmrContext, "input parameters (loop)");
-    			return;
-    		}
-		}
-
-		if (s_hasMMRError || !s_mmrContext)
-			return;
-
-		if (mmr_play(s_mmrContext) < 0)
-		{
-			mmrerror(s_mmrContext, "mmr_play");
-			s_hasMMRError = true;
-		}
-
-		if (!s_hasMMRError)
-			s_playStatus = PLAYING;
+		alSourcei(s_backgroundSource, AL_LOOPING, bLoop ? AL_TRUE : AL_FALSE);
+		alSourcePlay(s_backgroundSource);
+		checkALError("playBackgroundMusic");
 	}
 
 	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 	{
-    	// if we were paused then we need to resume first so that we can play
-		if (s_playStatus == PAUSED)
-			resumeBackgroundMusic();
-
 		stopBackground(bReleaseData);
 	}
 
 	void SimpleAudioEngine::pauseBackgroundMusic()
 	{
-		if (s_mmrContext && mmr_speed_set(s_mmrContext, 0) < 0)
-		{
-			mmrerror(s_mmrContext, "pause");
-		}
-		s_playStatus = PAUSED;
+		alSourcePause(s_backgroundSource);
+		checkALError("pauseBackgroundMusic");
 	}
 
 	void SimpleAudioEngine::resumeBackgroundMusic()
 	{
-		if (s_mmrContext && mmr_speed_set(s_mmrContext, 1000) < 0)
-		{
-			mmrerror(s_mmrContext, "resume");
-		}
-		s_playStatus = PLAYING;
+		alSourcePlay(s_backgroundSource);
+		checkALError("resumeBackgroundMusic");
 	} 
 
 	void SimpleAudioEngine::rewindBackgroundMusic()
 	{
-		if (s_mmrContext && mmr_seek(s_mmrContext, "1:0") < 0)
-		{
-			mmrerror(s_mmrContext, "rewind");
-		}
+		alSourceRewind(s_backgroundSource);
+		checkALError("rewindBackgroundMusic");
 	}
 
 	bool SimpleAudioEngine::willPlayBackgroundMusic()
@@ -350,7 +336,10 @@ namespace CocosDenshion
 
 	bool SimpleAudioEngine::isBackgroundMusicPlaying()
 	{
-		return (s_playStatus == PLAYING) && s_isBackgroundInitialized;
+	    ALint play_status;
+	    alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &play_status);
+
+		return (play_status == AL_PLAYING);
 	}
 
 	float SimpleAudioEngine::getBackgroundMusicVolume()
@@ -407,9 +396,11 @@ namespace CocosDenshion
 			}
 		}
 
+		checkALError("playEffect");
 		iter->second->isLooped = bLoop;
 		alSourcei(iter->second->source, AL_LOOPING, iter->second->isLooped ? AL_TRUE : AL_FALSE);
 		alSourcePlay(iter->second->source);
+		checkALError("playEffect");
 
 		return iter->second->source;
 	}
@@ -417,6 +408,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 	{
 		alSourceStop(nSoundId);
+		checkALError("stopEffect");
 	}
 
 	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
@@ -429,10 +421,19 @@ namespace CocosDenshion
 			ALuint 		buffer;
 			ALuint 		source;
 			soundData  *data = new soundData;
+			string 	    path = pszFilePath;
 
-			string path = pszFilePath;
+			checkALError("preloadEffect");
 
-			buffer = alutCreateBufferFromFile(path.data());
+			if (isOGGFile(path.data()))
+			{
+				buffer = createBufferFromOGG(path.data());
+			}
+			else
+			{
+				buffer = alutCreateBufferFromFile(path.data());
+				checkALError("preloadEffect");
+			}
 
 			if (buffer == AL_NONE)
 			{
@@ -442,7 +443,15 @@ namespace CocosDenshion
 			}
 
 			alGenSources(1, &source);
+
+			if (checkALError("preloadEffect") != AL_NO_ERROR)
+			{
+				alDeleteBuffers(1, &buffer);
+				return;
+			}
+
 			alSourcei(source, AL_BUFFER, buffer);
+			checkALError("preloadEffect");
 
 			data->isLooped = false;
 			data->buffer = buffer;
@@ -458,14 +467,17 @@ namespace CocosDenshion
 
 		if (iter != s_effects.end())
 	    {
-	        alSourceStop(iter->second->source);
-			alDeleteSources(1, &iter->second->source);
-			alDeleteBuffers(1, &iter->second->buffer);
-			delete iter->second;
+			checkALError("unloadEffect");
 
-			int err = alGetError();
-			if (err != AL_NO_ERROR)
-				printALError(err);
+	        alSourceStop(iter->second->source);
+	        checkALError("unloadEffect");
+
+			alDeleteSources(1, &iter->second->source);
+			checkALError("unloadEffect");
+
+			alDeleteBuffers(1, &iter->second->buffer);
+			checkALError("unloadEffect");
+			delete iter->second;
 
 			s_effects.erase(iter);
 	    }
@@ -474,6 +486,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 	{
 		alSourcePause(nSoundId);
+		checkALError("pauseEffect");
 	}
 
 	void SimpleAudioEngine::pauseAllEffects()
@@ -483,15 +496,14 @@ namespace CocosDenshion
 		if (iter != s_effects.end())
 	    {
 			alSourcePause(iter->second->source);
-			int err = alGetError();
-			if (err != AL_NO_ERROR)
-				printALError(err);
+			checkALError("pauseAllEffects");
 	    }
 	}
 
 	void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 	{
 		alSourcePlay(nSoundId);
+		checkALError("resumeEffect");
 	}
 
 	void SimpleAudioEngine::resumeAllEffects()
@@ -500,10 +512,9 @@ namespace CocosDenshion
 
 		if (iter != s_effects.end())
 	    {
+			checkALError("resumeAllEffects");
 			alSourcePlay(iter->second->source);
-			int err = alGetError();
-			if (err != AL_NO_ERROR)
-				printALError(err);
+			checkALError("resumeAllEffects");
 	    }
 	}
 
@@ -513,10 +524,9 @@ namespace CocosDenshion
 
 		if (iter != s_effects.end())
 	    {
+			checkALError("stopAllEffects");
 	        alSourceStop(iter->second->source);
-			int err = alGetError();
-			if (err != AL_NO_ERROR)
-				printALError(err);
+			checkALError("stopAllEffects");
 	    }
     }
 
