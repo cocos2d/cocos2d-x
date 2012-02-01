@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
+#include <bps/locale.h>
 
 #define  LOGD(...)  fprintf(stderr, __VA_ARGS__)
 
@@ -102,7 +103,44 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    return kLanguageEnglish;
+	ccLanguageType ret_language = kLanguageEnglish;
+	char *language, *country;
+
+	locale_get(&language, &country);
+
+	if (strcmp(language, "en") == 0)
+	{
+		ret_language = kLanguageEnglish;
+	}
+	else if (strcmp(language, "fr") == 0)
+	{
+		ret_language = kLanguageFrench;
+	}
+	else if (strcmp(language, "de") == 0)
+	{
+		ret_language = kLanguageGerman;
+	}
+	else if (strcmp(language, "it") == 0)
+	{
+		ret_language = kLanguageItalian;
+	}
+	else if (strcmp(language, "es") == 0)
+	{
+		ret_language = kLanguageSpanish;
+	}
+	else if (strcmp(language, "ch") == 0)
+	{
+		ret_language = kLanguageChinese;
+	}
+	else if (strcmp(language, "ru") == 0)
+	{
+		ret_language = kLanguageRussian;
+	}
+
+	free(language);
+	free(country);
+
+    return ret_language;
 }
 
 NS_CC_END;
