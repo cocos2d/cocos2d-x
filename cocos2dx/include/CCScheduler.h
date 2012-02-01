@@ -27,7 +27,6 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include <string>
 #include "CCObject.h"
 #include "support/data_support/uthash.h"
 
@@ -53,8 +52,6 @@ public:
 	/** Initializes a timer with a target, a selector and an interval in seconds. */
     bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
-	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
-
 	/** triggers the timer */
 	void update(ccTime dt);
 
@@ -62,16 +59,12 @@ public:
 	/** Allocates a timer with a target and a selector. */
 	static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
 
-	/** Allocates a timer with a script function name. */
-	static CCTimer* timerWithScriptFuncName(const char* pszFuncName, ccTime fSeconds);
-
 	/** Allocates a timer with a target, a selector and an interval in seconds. */
 	static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
 public:
 	SEL_SCHEDULE m_pfnSelector;
 	ccTime m_fInterval;
-	std::string m_scriptFunc;
 
 protected:
 	CCObject *m_pTarget;	
@@ -84,7 +77,6 @@ protected:
 struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
-struct _hashScriptFuncEntry;
 
 /** @brief Scheduler is responsible of triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
@@ -125,9 +117,6 @@ public:
 	 @since v0.99.3
 	 */
 	void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, ccTime fInterval, bool bPaused);
-	/** Schedule the script function
-	 */
-	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
 	/** Schedules the 'update' selector for a given target with a given priority.
 	 The 'update' selector will be called every frame.
 	 The lower the priority, the earlier it is called.
@@ -140,9 +129,6 @@ public:
 	 @since v0.99.3
 	 */
 	void unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget);
-	/** Unschedule the script function
-	*/
-	void unscheduleScriptFunc(const char *pszFuncName);
 
 	/** Unschedules the update selector for a given target
 	 @since v0.99.3
@@ -218,9 +204,6 @@ protected:
 	bool m_bCurrentTargetSalvaged;
 	// If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
 	bool m_bUpdateHashLocked;
-
-	// Used for "script function call back with interval"
-	struct _hashScriptFuncEntry *m_pHashForScriptFunctions;
 };
 }//namespace   cocos2d 
 

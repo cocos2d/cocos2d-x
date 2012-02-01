@@ -241,34 +241,18 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-	if (isScriptHandlerExist(CCTOUCHBEGAN))
-	{
-		excuteScriptTouchesHandler(CCTOUCHBEGAN, pTouches);
-	}
 }
 
 void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-	if (isScriptHandlerExist(CCTOUCHENDED))
-	{
-		excuteScriptTouchesHandler(CCTOUCHENDED, pTouches);
-	}
 }
 
 void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-	if (isScriptHandlerExist(CCTOUCHMOVED))
-	{
-		excuteScriptTouchesHandler(CCTOUCHMOVED, pTouches);
-	}
 }
 
 void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
-	if (isScriptHandlerExist(CCTOUCHCANCELLED))
-	{
-		excuteScriptTouchesHandler(CCTOUCHCANCELLED, pTouches);
-	}
 }
 
 /// ColorLayer

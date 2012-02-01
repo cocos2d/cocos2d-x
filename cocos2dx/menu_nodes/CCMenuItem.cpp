@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabelTTF.h"
-#include "CCScriptSupport.h"
 
 #include <stdarg.h>
 
@@ -76,18 +75,6 @@ namespace cocos2d{
 		m_bIsSelected = false;
 	}
 
-	void CCMenuItem::registerScriptHandler(const char* pszFunctionName)
-	{
-		if (pszFunctionName)
-		{
-			this->m_functionName = string(pszFunctionName);
-		}
-		else
-		{
-			this->m_functionName.clear();
-		}
-	}
-
 	void CCMenuItem::activate()
 	{
 		if (m_bIsEnabled)
@@ -95,11 +82,6 @@ namespace cocos2d{
 			if (m_pListener && m_pfnSelector)
 			{
 				(m_pListener->*m_pfnSelector)(this);
-			}
-
-			if (m_functionName.size() && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
-			{
-				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_functionName.c_str(), this);
 			}
 		}
 	}
