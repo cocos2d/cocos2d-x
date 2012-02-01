@@ -85,7 +85,8 @@ static CCEGLView* s_pInstance = NULL;
 CCEGLView::CCEGLView()
 : m_pDelegate(NULL),
   m_fScreenScaleFactor(1.0),
-  m_bNotHVGA(false)
+  m_bNotHVGA(false),
+  m_isWindowActive(false)
 {
 	s_pInstance = this;
 	m_eglDisplay = EGL_NO_DISPLAY;
@@ -856,12 +857,42 @@ bool CCEGLView::HandleEvents()
 					break;
 
 				case NAVIGATOR_WINDOW_INACTIVE:
-					CCApplication::sharedApplication().applicationDidEnterBackground();
+					if(m_isWindowActive)
+					{
+						CCApplication::sharedApplication().applicationDidEnterBackground();
+						m_isWindowActive = false;
+					}
 					break;
 
 				case NAVIGATOR_WINDOW_ACTIVE:
-			        CCApplication::sharedApplication().applicationWillEnterForeground();
+					if(!m_isWindowActive)
+					{
+						CCApplication::sharedApplication().applicationWillEnterForeground();
+						m_isWindowActive = true;
+					}
 					break;
+
+				case NAVIGATOR_WINDOW_STATE:
+				{
+					switch(navigator_event_get_window_state(event))
+					{
+						case NAVIGATOR_WINDOW_FULLSCREEN:
+							if(!m_isWindowActive)
+							{
+								CCApplication::sharedApplication().applicationWillEnterForeground();
+								m_isWindowActive = true;
+							}
+							break;
+						case NAVIGATOR_WINDOW_THUMBNAIL:
+							if(m_isWindowActive)
+							{
+								CCApplication::sharedApplication().applicationDidEnterBackground();
+								m_isWindowActive = false;
+							}
+							break;
+					}
+					break;
+				}
 
 				default:
 					break;
