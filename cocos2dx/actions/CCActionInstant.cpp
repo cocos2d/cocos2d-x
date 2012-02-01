@@ -27,7 +27,6 @@
 #include "CCActionInstant.h"
 #include "CCNode.h"
 #include "CCSprite.h"
-#include "CCScriptSupport.h"
 
 namespace cocos2d {
 //
@@ -316,23 +315,6 @@ CCCallFunc * CCCallFunc::actionWithTarget(CCObject* pSelectorTarget,
 	return NULL;
 }
 
-CCCallFunc* CCCallFunc::actionWithScriptFuncName(const char* pszFuncName) {
-	CCCallFunc *pRet = new CCCallFunc();
-
-	if (pRet && pRet->initWithScriptFuncName(pszFuncName)) {
-		pRet->autorelease();
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
-}
-
-bool CCCallFunc::initWithScriptFuncName(const char *pszFuncName) {
-	this->m_scriptFuncName = string(pszFuncName);
-	return true;
-}
-
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
 	if (pSelectorTarget) 
 	{
@@ -363,7 +345,6 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
 	CCActionInstant::copyWithZone(pZone);
 	pRet->initWithTarget(m_pSelectorTarget);
 	pRet->m_pCallFunc = m_pCallFunc;
-	pRet->m_scriptFuncName = m_scriptFuncName;
 	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
@@ -377,11 +358,6 @@ void CCCallFunc::execute() {
 	if (m_pCallFunc) {
 		(m_pSelectorTarget->*m_pCallFunc)();
 	}
-
-	if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()) {
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(
-				m_scriptFuncName.c_str());
-	}
 }
 
 //
@@ -391,11 +367,6 @@ void CCCallFuncN::execute() {
 	if (m_pCallFuncN) {
 		(m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
 	}
-
-	if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()) {
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(
-				m_scriptFuncName.c_str(), m_pTarget);
-	}
 }
 
 CCCallFuncN * CCCallFuncN::actionWithTarget(CCObject* pSelectorTarget,
@@ -403,18 +374,6 @@ CCCallFuncN * CCCallFuncN::actionWithTarget(CCObject* pSelectorTarget,
 	CCCallFuncN *pRet = new CCCallFuncN();
 
 	if (pRet && pRet->initWithTarget(pSelectorTarget, selector)) {
-		pRet->autorelease();
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
-}
-
-CCCallFuncN* CCCallFuncN::actionWithScriptFuncName(const char *pszFuncName) {
-	CCCallFuncN *pRet = new CCCallFuncN();
-
-	if (pRet && pRet->initWithScriptFuncName(pszFuncName)) {
 		pRet->autorelease();
 		return pRet;
 	}
@@ -467,20 +426,6 @@ CCCallFuncND * CCCallFuncND::actionWithTarget(CCObject* pSelectorTarget,
 	return NULL;
 }
 
-CCCallFuncND* CCCallFuncND::actionWithScriptFuncName(const char* pszFuncName,
-		void *d) {
-	CCCallFuncND* pRet = new CCCallFuncND();
-
-	if (pRet && pRet->initWithScriptFuncName(pszFuncName)) {
-		pRet->autorelease();
-		pRet->m_pData = d;
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
-}
-
 bool CCCallFuncND::initWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncND selector, void* d) {
 	if (CCCallFunc::initWithTarget(pSelectorTarget)) {
@@ -514,11 +459,6 @@ void CCCallFuncND::execute() {
 	if (m_pCallFuncND) {
 		(m_pSelectorTarget->*m_pCallFuncND)(m_pTarget, m_pData);
 	}
-
-	if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()) {
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncND(
-				m_scriptFuncName.c_str(), m_pTarget, m_pData);
-	}
 }
 
 //
@@ -536,11 +476,6 @@ void CCCallFuncO::execute() {
 	if (m_pCallFuncO) {
 		(m_pSelectorTarget->*m_pCallFuncO)(m_pObject);
 	}
-
-	if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()) {
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc0(
-				m_scriptFuncName.c_str(), m_pObject);
-	}
 }
 
 CCCallFuncO * CCCallFuncO::actionWithTarget(CCObject* pSelectorTarget,
@@ -548,18 +483,6 @@ CCCallFuncO * CCCallFuncO::actionWithTarget(CCObject* pSelectorTarget,
 	CCCallFuncO *pRet = new CCCallFuncO();
 
 	if (pRet && pRet->initWithTarget(pSelectorTarget, selector, pObject)) {
-		pRet->autorelease();
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
-}
-
-CCCallFuncO* CCCallFuncO::actionWithScriptFuncName(const char *pszFuncName) {
-	CCCallFuncO *pRet = new CCCallFuncO();
-
-	if (pRet && pRet->initWithScriptFuncName(pszFuncName)) {
 		pRet->autorelease();
 		return pRet;
 	}
