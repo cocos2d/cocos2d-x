@@ -138,7 +138,18 @@ namespace   cocos2d {
 			/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
 			CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPosition, Position)
 			CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPositionInPixels, PositionInPixels)
-
+            
+            float getPositionX(void) {
+                return m_tPosition.x;
+            }
+            
+            float getPositionY(void) {
+                return m_tPosition.y;
+            }
+            
+            void setPositionX(float x);
+            void setPositionY(float y);
+            
             /** The X skew angle of the node in degrees.
             This angle describes the shear distortion in the X direction.
             Thus, it is the angle between the Y axis and the left edge of the shape

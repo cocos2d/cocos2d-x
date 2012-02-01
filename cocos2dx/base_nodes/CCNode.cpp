@@ -267,6 +267,16 @@ void CCNode::setPosition(const CCPoint& newPosition)
 #endif
 }
 
+void CCNode::setPositionX(float x)
+{
+    setPosition(ccp(x, m_tPosition.y));
+}
+
+void CCNode::setPositionY(float y)
+{
+    setPosition(ccp(m_tPosition.x, y));
+}
+
 void CCNode::setPositionInPixels(const CCPoint& newPosition)
 {
     m_tPositionInPixels = newPosition;
