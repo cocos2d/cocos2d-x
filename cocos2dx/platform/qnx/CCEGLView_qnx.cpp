@@ -85,7 +85,8 @@ static CCEGLView* s_pInstance = NULL;
 CCEGLView::CCEGLView()
 : m_pDelegate(NULL),
   m_fScreenScaleFactor(1.0),
-  m_bNotHVGA(false)
+  m_bNotHVGA(false),
+  m_isWindowActive(false)
 {
 	s_pInstance = this;
 	m_eglDisplay = EGL_NO_DISPLAY;
@@ -844,7 +845,6 @@ bool CCEGLView::HandleEvents()
 
 		if (domain == navigator_get_domain())
 		{
-			const bool isPaused = CCDirector::sharedDirector()->isPaused();
 			switch (bps_event_get_code(event))
 			{
 				case NAVIGATOR_SWIPE_DOWN:
@@ -857,13 +857,19 @@ bool CCEGLView::HandleEvents()
 					break;
 
 				case NAVIGATOR_WINDOW_INACTIVE:
-					if(!isPaused)
+					if(m_isWindowActive)
+					{
 						CCApplication::sharedApplication().applicationDidEnterBackground();
+						m_isWindowActive = false;
+					}
 					break;
 
 				case NAVIGATOR_WINDOW_ACTIVE:
-					if(isPaused)
+					if(!m_isWindowActive)
+					{
 						CCApplication::sharedApplication().applicationWillEnterForeground();
+						m_isWindowActive = true;
+					}
 					break;
 
 				case NAVIGATOR_WINDOW_STATE:
@@ -871,12 +877,18 @@ bool CCEGLView::HandleEvents()
 					switch(navigator_event_get_window_state(event))
 					{
 						case NAVIGATOR_WINDOW_FULLSCREEN:
-							if(isPaused)
+							if(!m_isWindowActive)
+							{
 								CCApplication::sharedApplication().applicationWillEnterForeground();
+								m_isWindowActive = true;
+							}
 							break;
 						case NAVIGATOR_WINDOW_THUMBNAIL:
-							if(!isPaused)
+							if(m_isWindowActive)
+							{
 								CCApplication::sharedApplication().applicationDidEnterBackground();
+								m_isWindowActive = false;
+							}
 							break;
 					}
 					break;
