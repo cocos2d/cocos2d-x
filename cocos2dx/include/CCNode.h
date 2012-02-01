@@ -154,6 +154,8 @@ namespace   cocos2d {
             CC_PROPERTY(float, m_fSkewY, SkewY)
 
 			CC_PROPERTY_READONLY(CCArray*, m_pChildren, Children)
+        
+            unsigned int getChildrenCount(void);
 
 			/** A CCCamera object that lets you move the node using a gluLookAt
 			*/
