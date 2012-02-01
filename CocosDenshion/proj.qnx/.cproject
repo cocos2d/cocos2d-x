@@ -47,6 +47,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1849571146" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -118,6 +119,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.82187465" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -183,6 +185,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.2036659301" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -251,6 +254,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1381169559" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -317,6 +321,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1896937509" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -383,6 +388,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.746859765" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -450,6 +456,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1894319763" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -511,6 +518,8 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/CocosDenshion"/>
+	</storageModule>
 	<storageModule moduleId="com.qnx.tools.ide.qde.core.QNXProjectProperties"/>
 </cproject>
