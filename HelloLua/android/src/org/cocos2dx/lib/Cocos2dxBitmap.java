@@ -236,7 +236,7 @@ public class Cocos2dxBitmap{
     		if (tempWidth >= width){
     			int lastIndexOfSpace = content.substring(0, i).lastIndexOf(" ");
     			
-    			if (lastIndexOfSpace != -1){
+    			if (lastIndexOfSpace != -1 && lastIndexOfSpace > start){
     				/**
     				 * Should wrap the word
     				 */
