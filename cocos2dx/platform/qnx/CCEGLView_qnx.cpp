@@ -844,6 +844,7 @@ bool CCEGLView::HandleEvents()
 
 		if (domain == navigator_get_domain())
 		{
+			const bool isPaused = CCDirector::sharedDirector()->isPaused();
 			switch (bps_event_get_code(event))
 			{
 				case NAVIGATOR_SWIPE_DOWN:
@@ -856,12 +857,30 @@ bool CCEGLView::HandleEvents()
 					break;
 
 				case NAVIGATOR_WINDOW_INACTIVE:
-					CCApplication::sharedApplication().applicationDidEnterBackground();
+					if(!isPaused)
+						CCApplication::sharedApplication().applicationDidEnterBackground();
 					break;
 
 				case NAVIGATOR_WINDOW_ACTIVE:
-			        CCApplication::sharedApplication().applicationWillEnterForeground();
+					if(isPaused)
+						CCApplication::sharedApplication().applicationWillEnterForeground();
 					break;
+
+				case NAVIGATOR_WINDOW_STATE:
+				{
+					switch(navigator_event_get_window_state(event))
+					{
+						case NAVIGATOR_WINDOW_FULLSCREEN:
+							if(isPaused)
+								CCApplication::sharedApplication().applicationWillEnterForeground();
+							break;
+						case NAVIGATOR_WINDOW_THUMBNAIL:
+							if(!isPaused)
+								CCApplication::sharedApplication().applicationDidEnterBackground();
+							break;
+					}
+					break;
+				}
 
 				default:
 					break;
