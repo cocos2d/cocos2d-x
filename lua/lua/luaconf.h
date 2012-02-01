@@ -567,7 +567,10 @@
    with a DirectX idiosyncrasy */
 #else
 
-union luai_Cast { double l_d; long l_l; };
+union luai_Cast {
+    double l_d;
+    long l_l;
+};
 #define lua_number2int(i,d) \
   { volatile union luai_Cast u; u.l_d = (d) + 6755399441055744.0; (i) = u.l_l; }
 #define lua_number2integer(i,n)		lua_number2int(i, n)
