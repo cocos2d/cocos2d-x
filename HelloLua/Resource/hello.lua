@@ -151,12 +151,23 @@ function tick()
 
 end
 
+count = 5
+function autoRemove()
+	cocos2d.CCLuaLog("autoRemove ...... ".. count)
+	count = count - 1
+	if count < 1 then
+		cocos2d.CCScheduler:sharedScheduler():unscheduleScriptFunc("autoRemove")
+		cocos2d.CCLuaLog("autoRemove end")
+	end
+end
+
 -- avoid memory leak
 collectgarbage( "setpause", 100) 
 collectgarbage( "setstepmul", 5000)
 
 
 cocos2d.CCScheduler:sharedScheduler():scheduleScriptFunc("tick", 0.01, false)
+cocos2d.CCScheduler:sharedScheduler():scheduleScriptFunc("autoRemove", 0.5, false)
 
 -- play background music
 CocosDenshion.SimpleAudioEngine:sharedEngine():playBackgroundMusic("background.mp3", true);  

@@ -73,6 +73,7 @@ typedef struct _hashScriptFuncEntry
 {
 	CCTimer			*timer;
 	bool			paused;
+	bool			currentTimerSalvaged;
 	const char		*funcName;
 	UT_hash_handle	hh;
 } tHashScriptFuncEntry;
@@ -241,6 +242,17 @@ void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 	free(pElement);
 }
 
+void CCScheduler::removeHashScriptFuncElement(_hashScriptFuncEntry *pElement)
+{
+	if (pElement)
+	{
+		pElement->timer->release();
+		pElement->timer = NULL;
+		HASH_DEL(m_pHashForScriptFunctions, pElement);
+		free(pElement);
+	}
+}
+
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused)
 {
 	CCAssert(pfnSelector, "");
@@ -384,10 +396,7 @@ void CCScheduler::unscheduleScriptFunc(const char *pszFuncName)
 
 	if (pElement)
 	{
-		pElement->timer->release();
-
-		HASH_DEL(m_pHashForScriptFunctions, pElement);
-		free(pElement);
+		pElement->currentTimerSalvaged = true;
 	}
 }
 
@@ -788,13 +797,17 @@ void CCScheduler::tick(ccTime dt)
 	// Interate all script functions
 	for (tHashScriptFuncEntry *elt = m_pHashForScriptFunctions; elt != NULL; )
 	{
-
+		tHashScriptFuncEntry *pNextElement = (tHashScriptFuncEntry *)elt->hh.next;
 		if (! elt->paused)
 		{
 			elt->timer->update(dt);
+			if(	elt->currentTimerSalvaged )
+			{
+				removeHashScriptFuncElement(elt);
+			}
 		}
 
-		elt = (tHashScriptFuncEntry *)elt->hh.next;
+		elt = pNextElement;
 	}
 }
 

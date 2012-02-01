@@ -192,6 +192,7 @@ public:
 
 private:
 	void removeHashElement(struct _hashSelectorEntry *pElement);
+	void removeHashScriptFuncElement(struct _hashScriptFuncEntry *pElement);
 	void removeUpdateFromHash(struct _listEntry *entry);
 	CCScheduler();
 	bool init(void);
