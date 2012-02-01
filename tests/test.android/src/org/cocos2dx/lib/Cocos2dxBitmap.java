@@ -74,8 +74,8 @@ public class Cocos2dxBitmap{
         // Draw string
         FontMetricsInt fm = paint.getFontMetricsInt();
         int x = 0;
-        int y = height == 0 ?(-fm.ascent):
-			(-fm.ascent + (height - textProperty.totalHeight)/2);
+        int y = height == 0 ?(-fm.top):
+			(-fm.top + (height - textProperty.totalHeight)/2);
         String[] lines = textProperty.lines;
         for (String line : lines){
         	x = computeX(paint, line, textProperty.maxWidth, alignment);
@@ -132,7 +132,7 @@ public class Cocos2dxBitmap{
     private static TextProperty computeTextProperty(String content, Paint paint,
     		int maxWidth, int maxHeight){              
         FontMetricsInt fm = paint.getFontMetricsInt();
-        int h = (int)Math.ceil(fm.descent - fm.ascent);
+        int h = (int)Math.ceil(fm.bottom - fm.top);
         int maxContentWidth = 0;
         
         String[] lines = splitString(content, maxHeight, maxWidth, paint);
@@ -165,7 +165,7 @@ public class Cocos2dxBitmap{
     	String[] lines = content.split("\\n");
     	String[] ret = null;
     	FontMetricsInt fm = paint.getFontMetricsInt();
-        int heightPerLine = (int)Math.ceil(fm.descent - fm.ascent);
+        int heightPerLine = (int)Math.ceil(fm.bottom - fm.top);
         int maxLines = maxHeight / heightPerLine;
     	
     	if (maxWidth != 0){
@@ -236,7 +236,7 @@ public class Cocos2dxBitmap{
     		if (tempWidth >= width){
     			int lastIndexOfSpace = content.substring(0, i).lastIndexOf(" ");
     			
-    			if (lastIndexOfSpace != -1){
+    			if (lastIndexOfSpace != -1 && lastIndexOfSpace > start){
     				/**
     				 * Should wrap the word
     				 */
