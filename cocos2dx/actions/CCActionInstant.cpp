@@ -336,12 +336,12 @@ bool CCCallFunc::initWithScriptFuncName(const char *pszFuncName) {
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
 	if (pSelectorTarget) 
 	{
-		dynamic_cast<CCObject*>(pSelectorTarget)->retain();
+		pSelectorTarget->retain();
 	}
 
 	if (m_pSelectorTarget) 
 	{
-		dynamic_cast<CCObject*>(m_pSelectorTarget)->release();
+		m_pSelectorTarget->release();
 	}
 
 	m_pSelectorTarget = pSelectorTarget;
