@@ -18,7 +18,7 @@ python ./tools/xcode4_template_generator/template_generator.py --directory chipm
 
 echo "generating liblua"
 mkdir -p template/xcode4/lib_lua.xctemplate
-python ./tools/xcode4_template_generator/template_generator.py --directory lua --identifier liblua --prefix libs --exclude "android win32 airplay wophone bada Makefile Linux linux CMakeFiles qnx marmalade" > ./template/xcode4/lib_lua.xctemplate/TemplateInfo.plist
+python ./tools/xcode4_template_generator/template_generator.py --directory lua --identifier liblua --prefix libs --append ./tools/xcode4_template_generator/template_lua_patch.txt --exclude "android win32 airplay wophone bada Makefile Linux linux CMakeFiles qnx marmalade" > ./template/xcode4/lib_lua.xctemplate/TemplateInfo.plist
 
 echo "done"
 
