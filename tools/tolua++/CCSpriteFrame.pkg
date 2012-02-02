@@ -1,49 +1,24 @@
-namespace   cocos2d {
 
-class  CCSpriteFrame : public CCObject
+class CCSpriteFrame : public CCObject
 {
+    CCRect getRectInPixels(void);
+    void setRectInPixels(CCRect rectInPixels);
 
-	  CCRect getRectInPixels(void);
-	  void setRectInPixels(CCRect rectInPixels);
+    bool isRotated(void);
+    void setRotated(bool bRotated);
 
-	  bool isRotated(void);
-	  void setRotated(bool bRotated);
+    CCRect getRect(void);
+    void setRect(CCRect rect);
 
-	  CCRect getRect(void);
-	  void setRect(CCRect rect);
+    CCPoint getOffsetInPixels(void);
+    void setOffsetInPixels(CCPoint offsetInPixels);
 
-	  CCPoint getOffsetInPixels(void);
-	  void setOffsetInPixels(CCPoint offsetInPixels);
+    CCSize getOriginalSizeInPixels(void);
+    void setOriginalSizeInPixels(CCSize sizeInPixels);
 
-	  CCSize getOriginalSizeInPixels(void);
-	  void setOriginalSizeInPixels(CCSize sizeInPixels);
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D* pobTexture);
 
-	  CCTexture2D* getTexture(void);
-	  void setTexture(CCTexture2D* pobTexture);
-
-	~CCSpriteFrame(void);
-	virtual CCObject* copyWithZone(CCZone *pZone);
-
-	/** Create a CCSpriteFrame with a texture, rect in points.
-	 It is assumed that the frame was not trimmed.
-	 */
-	static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect);
-
-	/** Create a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
-	 The originalSize is the size in points of the frame before being trimmed.
-	 */
-   static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
-
-	
-	bool initWithTexture(CCTexture2D* pobTexture, CCRect rect);
-
-	/** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
-	The originalSize is the size in points of the frame before being trimmed.
-	*/
-	bool initWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
-
+    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect);
+    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
 };
-
-}//namespace   cocos2d 
-
-
