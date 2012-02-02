@@ -10,8 +10,53 @@
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 
+	<key>Project</key>
+	<dict>
+		<key>Configurations</key>
+		<dict>
+			<key>Debug</key>
+			<dict>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>CC_LUA_ENGINE_ENABLED=1</string>
+				</array>
+			</dict>
+			<key>Release</key>
+			<dict>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>CC_LUA_ENGINE_ENABLED=1</string>
+				</array>
+			</dict>
+		</dict>
+	</dict>
+
 	<key>Definitions</key>
 	<dict>
+		<key>libs/lua/cocos2dx_support/CCLuaEngine.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaEngine.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/CCLuaEngine.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaEngine.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -60,7 +105,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/lua/cocos2dx_support/LuaEngine.cpp</key>
+		<key>libs/lua/cocos2dx_support/tolua_fix.c</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -69,9 +114,9 @@
 				<string>cocos2dx_support</string>
 			</array>
 			<key>Path</key>
-			<string>libs/lua/cocos2dx_support/LuaEngine.cpp</string>
+			<string>libs/lua/cocos2dx_support/tolua_fix.c</string>
 		</dict>
-		<key>libs/lua/cocos2dx_support/LuaEngine.h</key>
+		<key>libs/lua/cocos2dx_support/tolua_fix.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -80,55 +125,485 @@
 				<string>cocos2dx_support</string>
 			</array>
 			<key>Path</key>
-			<string>libs/lua/cocos2dx_support/LuaEngine.h</string>
+			<string>libs/lua/cocos2dx_support/tolua_fix.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/lua/cocos2dx_support/LuaEngineImpl.cpp</key>
+		<key>libs/lua/exts/cjson/lua_cjson.c</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>lua</string>
-				<string>cocos2dx_support</string>
+				<string>exts</string>
+				<string>cjson</string>
 			</array>
 			<key>Path</key>
-			<string>libs/lua/cocos2dx_support/LuaEngineImpl.cpp</string>
+			<string>libs/lua/exts/cjson/lua_cjson.c</string>
 		</dict>
-		<key>libs/lua/cocos2dx_support/LuaEngineImpl.h</key>
+		<key>libs/lua/exts/cjson/lua_cjson.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>lua</string>
-				<string>cocos2dx_support</string>
+				<string>exts</string>
+				<string>cjson</string>
 			</array>
 			<key>Path</key>
-			<string>libs/lua/cocos2dx_support/LuaEngineImpl.h</string>
+			<string>libs/lua/exts/cjson/lua_cjson.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</key>
+		<key>libs/lua/exts/cjson/strbuf.c</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>lua</string>
-				<string>CocosDenshion_support</string>
+				<string>exts</string>
+				<string>cjson</string>
 			</array>
 			<key>Path</key>
-			<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</string>
+			<string>libs/lua/exts/cjson/strbuf.c</string>
 		</dict>
-		<key>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</key>
+		<key>libs/lua/exts/cjson/strbuf.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>lua</string>
-				<string>CocosDenshion_support</string>
+				<string>exts</string>
+				<string>cjson</string>
 			</array>
 			<key>Path</key>
-			<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</string>
+			<string>libs/lua/exts/cjson/strbuf.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/lualoadexts.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/lualoadexts.c</string>
+		</dict>
+		<key>libs/lua/exts/lualoadexts.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/lualoadexts.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/auxiliar.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/auxiliar.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/auxiliar.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/auxiliar.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/buffer.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/buffer.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/buffer.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/buffer.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/except.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/except.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/except.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/except.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/inet.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/inet.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/inet.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/inet.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/io.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/io.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/io.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/io.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/luasocket.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/luasocket.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/luasocket.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/luasocket.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/mime.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/mime.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/mime.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/mime.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/options.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/options.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/options.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/options.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/select.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/select.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/select.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/select.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/socket.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/socket.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/tcp.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/tcp.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/tcp.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/tcp.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/timeout.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/timeout.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/timeout.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/timeout.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/udp.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/udp.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/udp.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/udp.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/unix.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/unix.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/unix.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/unix.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocket/usocket.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/usocket.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocket/usocket.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+				<string>luasocket</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocket/usocket.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/exts/luasocketscripts.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocketscripts.c</string>
+		</dict>
+		<key>libs/lua/exts/luasocketscripts.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>exts</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/exts/luasocketscripts.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -867,16 +1342,51 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/lua/cocos2dx_support/CCLuaEngine.cpp</string>
+		<string>libs/lua/cocos2dx_support/CCLuaEngine.h</string>
 		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</string>
 		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.h</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.cpp</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.h</string>
-		<string>libs/lua/cocos2dx_support/LuaEngine.cpp</string>
-		<string>libs/lua/cocos2dx_support/LuaEngine.h</string>
-		<string>libs/lua/cocos2dx_support/LuaEngineImpl.cpp</string>
-		<string>libs/lua/cocos2dx_support/LuaEngineImpl.h</string>
-		<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</string>
-		<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</string>
+		<string>libs/lua/cocos2dx_support/tolua_fix.c</string>
+		<string>libs/lua/cocos2dx_support/tolua_fix.h</string>
+		<string>libs/lua/exts/cjson/lua_cjson.c</string>
+		<string>libs/lua/exts/cjson/lua_cjson.h</string>
+		<string>libs/lua/exts/cjson/strbuf.c</string>
+		<string>libs/lua/exts/cjson/strbuf.h</string>
+		<string>libs/lua/exts/lualoadexts.c</string>
+		<string>libs/lua/exts/lualoadexts.h</string>
+		<string>libs/lua/exts/luasocket/auxiliar.c</string>
+		<string>libs/lua/exts/luasocket/auxiliar.h</string>
+		<string>libs/lua/exts/luasocket/buffer.c</string>
+		<string>libs/lua/exts/luasocket/buffer.h</string>
+		<string>libs/lua/exts/luasocket/except.c</string>
+		<string>libs/lua/exts/luasocket/except.h</string>
+		<string>libs/lua/exts/luasocket/inet.c</string>
+		<string>libs/lua/exts/luasocket/inet.h</string>
+		<string>libs/lua/exts/luasocket/io.c</string>
+		<string>libs/lua/exts/luasocket/io.h</string>
+		<string>libs/lua/exts/luasocket/luasocket.c</string>
+		<string>libs/lua/exts/luasocket/luasocket.h</string>
+		<string>libs/lua/exts/luasocket/mime.c</string>
+		<string>libs/lua/exts/luasocket/mime.h</string>
+		<string>libs/lua/exts/luasocket/options.c</string>
+		<string>libs/lua/exts/luasocket/options.h</string>
+		<string>libs/lua/exts/luasocket/select.c</string>
+		<string>libs/lua/exts/luasocket/select.h</string>
+		<string>libs/lua/exts/luasocket/socket.h</string>
+		<string>libs/lua/exts/luasocket/tcp.c</string>
+		<string>libs/lua/exts/luasocket/tcp.h</string>
+		<string>libs/lua/exts/luasocket/timeout.c</string>
+		<string>libs/lua/exts/luasocket/timeout.h</string>
+		<string>libs/lua/exts/luasocket/udp.c</string>
+		<string>libs/lua/exts/luasocket/udp.h</string>
+		<string>libs/lua/exts/luasocket/unix.c</string>
+		<string>libs/lua/exts/luasocket/unix.h</string>
+		<string>libs/lua/exts/luasocket/usocket.c</string>
+		<string>libs/lua/exts/luasocket/usocket.h</string>
+		<string>libs/lua/exts/luasocketscripts.c</string>
+		<string>libs/lua/exts/luasocketscripts.h</string>
 		<string>libs/lua/lua/lapi.c</string>
 		<string>libs/lua/lua/lapi.h</string>
 		<string>libs/lua/lua/lauxlib.c</string>
