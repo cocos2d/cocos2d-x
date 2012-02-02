@@ -135,6 +135,20 @@ void CCLuaEngine::addSearchPath(const char* path)
     lua_pop(m_state, 1);                                            /* stack: - */
 }
 
+int CCLuaEngine::executeString(const char *codes)
+{
+	int nRet =	luaL_dostring(m_state, codes);
+	lua_gc(m_state, LUA_GCCOLLECT, 0);
+    
+    if (nRet != 0)
+    {
+        CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
+        lua_pop(m_state, 1);
+        return nRet;
+    }
+    return 0;
+}
+
 int CCLuaEngine::executeScriptFile(const char* filename)
 {
     int nRet = luaL_dofile(m_state, filename);
