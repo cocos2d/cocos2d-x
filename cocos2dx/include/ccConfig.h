@@ -323,7 +323,7 @@ To enable set it to a value different than 0. Disabled by default.
 
 /** Enable Lua engine */
 #ifndef CC_LUA_ENGINE_ENABLED
-#define CC_LUA_ENGINE_ENABLED 1
+#define CC_LUA_ENGINE_ENABLED 0
 #endif
 #ifndef CC_LUA_ENGINE_DEBUG
 #define CC_LUA_ENGINE_DEBUG 0
