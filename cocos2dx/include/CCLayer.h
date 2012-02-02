@@ -56,7 +56,12 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
     virtual void onEnterTransitionDidFinish();
+    
+    // default implements are used to call script callback if exist
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
 	// default implements are used to call script callback if exist
 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
@@ -77,6 +82,13 @@ public:
 	@since v0.8.0
 	*/
 	virtual void registerWithTouchDispatcher(void);
+    
+#if CC_LUA_ENGINE_ENABLED
+    /** Register script touch events handler */
+    void registerScriptTouchHandler(unsigned int uFuncID, bool isMultiTouches, int nPriority, bool bSwallowsTouches);
+    /** Unregister script touch events handler */
+    void unregisterScriptTouchHandler(void);
+#endif
 
 	virtual void touchDelegateRetain();
 	virtual void touchDelegateRelease();
@@ -97,6 +109,14 @@ public:
     it's new in cocos2d-x
     */
     CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
+    
+#if CC_LUA_ENGINE_ENABLED
+private:
+    // Script touch events handler function reference ID
+    unsigned int m_uScriptHandlerFuncID;
+    int excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
+    int excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
+#endif
 };
     
 // for the subclass of CCLayer, each has to implement the static "node" method 
