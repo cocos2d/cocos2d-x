@@ -1,8 +1,5 @@
 
 class CCScene : public CCNode
 {
-    void registerScriptEventsHandler(LUA_FUNCTION funcID);
-    void unregisterScriptEventsHandler(void);
-
     static CCScene *node(void);
 };

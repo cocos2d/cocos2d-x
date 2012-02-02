@@ -100,8 +100,8 @@ namespace cocos2d{
         {
             CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
             LUALOG("[LUA] Remove CCMenuItem script handler: %u", m_uScriptHandlerFuncID);
+            m_uScriptHandlerFuncID = 0;
         }
-        m_uScriptHandlerFuncID = 0;
     }
 #endif
     
@@ -500,9 +500,9 @@ namespace cocos2d{
     {
         return dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->getColor();
     }
-    CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite)
+    CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
     {
-        return CCMenuItemSprite::itemFromNormalSprite(normalSprite, selectedSprite, NULL, NULL, NULL);
+        return CCMenuItemSprite::itemFromNormalSprite(normalSprite, selectedSprite, disabledSprite, NULL, NULL);
     }
     CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector)
     {

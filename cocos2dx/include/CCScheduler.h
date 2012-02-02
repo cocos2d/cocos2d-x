@@ -52,6 +52,11 @@ public:
 	/** Initializes a timer with a target, a selector and an interval in seconds. */
     bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
+#if CC_LUA_ENGINE_ENABLED
+    /** Initializes a timer with a script callback function and an interval in seconds. */
+    bool initWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds);
+#endif
+
 	/** triggers the timer */
 	void update(ccTime dt);
 
@@ -62,13 +67,21 @@ public:
 	/** Allocates a timer with a target, a selector and an interval in seconds. */
 	static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
+#if CC_LUA_ENGINE_ENABLED
+    /** Allocates a timer with a script callback function and an interval in seconds. */
+    static CCTimer* timerWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds);
+#endif
+
 public:
 	SEL_SCHEDULE m_pfnSelector;
 	ccTime m_fInterval;
 
 protected:
-	CCObject *m_pTarget;	
-	ccTime m_fElapsed;	
+	CCObject *m_pTarget;
+	ccTime m_fElapsed;
+#if CC_LUA_ENGINE_ENABLED
+    unsigned int m_uScriptFuncID;
+#endif
 };
 
 //
@@ -77,6 +90,8 @@ protected:
 struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
+
+class CCArray;
 
 /** @brief Scheduler is responsible of triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
@@ -93,7 +108,7 @@ class CC_DLL CCScheduler : public CCObject
 {
 public:
     ~CCScheduler(void);
-	
+
 	inline ccTime getTimeScale(void) { return m_fTimeScale; }
 	/** Modifies the time of all scheduled callbacks.
 	You can use this property to create a 'slow motion' or 'fast forward' effect.
@@ -147,6 +162,18 @@ public:
 	 @since v0.99.3
 	 */
 	void unscheduleAllSelectors(void);
+    
+#if CC_LUA_ENGINE_ENABLED
+    /** The scheduled script callback will be called every 'interval' seconds.
+	 If paused is YES, then it won't be called until it is resumed.
+	 If 'interval' is 0, it will be called every frame.
+     return schedule script entry ID, used for unscheduleScriptFunc().
+     */
+    unsigned int scheduleScriptFunc(unsigned int uFuncID, ccTime fInterval, bool bPaused);
+    
+	/** Unschedule a script entry. */
+    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
+#endif
 
 	/** Pauses the target.
 	 All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
@@ -204,7 +231,11 @@ protected:
 	bool m_bCurrentTargetSalvaged;
 	// If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
 	bool m_bUpdateHashLocked;
+
+#if CC_LUA_ENGINE_ENABLED
+    CCArray* m_pScriptEntries;
+#endif
 };
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __CCSCHEDULER_H__

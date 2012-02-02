@@ -222,8 +222,8 @@ namespace cocos2d{
         ,m_pSelectedImage(NULL)
         ,m_pDisabledImage(NULL)
         {}
-        /** creates a menu item with a normal and selected image*/
-        static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite);
+        /** creates a menu item with a normal, selected and disabled image*/
+        static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
         /** creates a menu item with a normal and selected image with target/selector */
         static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
         /** creates a menu item with a normal,selected  and disabled image with target/selector */

@@ -35,6 +35,10 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCActionManager.h"
 
+#if CC_LUA_ENGINE_ENABLED
+#include "CCLuaEngine.h"
+#endif
+
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
@@ -74,6 +78,9 @@ CCNode::CCNode(void)
 , m_bIsInverseDirty(true)
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 , m_bIsTransformGLDirty(true)
+#endif
+#if CC_LUA_ENGINE_ENABLED
+, m_uScriptHandlerFuncID(0)
 #endif
 {
     // nothing
@@ -287,11 +294,6 @@ void CCNode::setPositionInPixels(const CCPoint& newPosition)
 #endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 }
 
-void CCNode::setPositionInPixels(float x, float y)
-{
-    setPositionInPixels(ccp(x, y));
-}
-
 const CCPoint& CCNode::getPositionInPixels()
 {
 	return m_tPositionInPixels;
@@ -329,6 +331,7 @@ void CCNode::setPositionY(float y)
 {
     setPosition(ccp(m_tPosition.x, y));
 }
+
 void CCNode::setPosition(float x, float y)
 {
     setPosition(ccp(x, y));
@@ -941,6 +944,13 @@ void CCNode::onEnter()
 	this->resumeSchedulerAndActions();
 
 	m_bIsRunning = true;
+
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
+    {
+        CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, kCCNodeOnEnter);
+    }
+#endif
 }
 
 void CCNode::onEnterTransitionDidFinish()
@@ -954,8 +964,35 @@ void CCNode::onExit()
 
 	m_bIsRunning = false;
 
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
+    {
+        CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, kCCNodeOnExit);
+    }
+#endif
+
 	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::onExit);
 }
+
+#if CC_LUA_ENGINE_ENABLED
+void CCNode::registerScriptHandler(unsigned int uFuncID)
+{
+    unregisterScriptHandler();
+    m_uScriptHandlerFuncID = uFuncID;
+    LUALOG("[LUA] Add CCNode event handler: %u", m_uScriptHandlerFuncID);
+}
+
+void CCNode::unregisterScriptHandler(void)
+{
+    if (m_uScriptHandlerFuncID)
+    {
+        CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
+        LUALOG("[LUA] Remove CCNode event handler: %u", m_uScriptHandlerFuncID);
+        m_uScriptHandlerFuncID = 0;
+    }
+}
+#endif
+
 CCAction * CCNode::runAction(CCAction* action)
 {
 	CCAssert( action != NULL, "Argument must be non-nil");
