@@ -50,6 +50,8 @@ void UserDefaultTest::doTest()
 	{
 		CCLOG("bool is false");
 	}
+	
+	//CCUserDefault::sharedUserDefault()->flush();
 
     CCLOG("********************** after change value ***********************");
 
@@ -60,6 +62,8 @@ void UserDefaultTest::doTest()
 	CCUserDefault::sharedUserDefault()->setFloatForKey("float", 2.5f);
 	CCUserDefault::sharedUserDefault()->setDoubleForKey("double", 2.6);
 	CCUserDefault::sharedUserDefault()->setBoolForKey("bool", false);
+
+	CCUserDefault::sharedUserDefault()->flush();
 
 	// print value
 
