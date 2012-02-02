@@ -119,6 +119,14 @@ public:
     void addSearchPath(const char* path);
     
     /**
+     @brief Execute script code contained in the given string.
+     @param codes holding the valid script code that should be executed.
+     @return 0 if the string is excuted correctly.
+     @return other if the string is excuted wrongly.
+     */
+    int executeString(const char* codes);
+    
+    /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
      */
