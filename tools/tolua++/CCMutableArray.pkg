@@ -3,6 +3,8 @@ class CCMutableArray : public CCObject
 {
     TOLUA_TEMPLATE_BIND(T, CCObject*, CCSpriteFrame*, CCFiniteTimeAction*)
 
+    CCMutableArray(unsigned int uSize = 0);
+
     unsigned int count(void);
     unsigned int getIndexOfObject(T pObject);
 

@@ -70,7 +70,7 @@ TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
     {
         lua_pop(L, 1);
         // Lua stack has closed, C++ object not in Lua.
-        printf("[LUA ERROR] remove CCObject with NULL ptr, refid: %d\n", refid);
+        // printf("[LUA ERROR] remove CCObject with NULL ptr, refid: %d\n", refid);
         return -2;
     }
     
