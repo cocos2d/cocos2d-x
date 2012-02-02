@@ -287,16 +287,71 @@ void CCNode::setPositionInPixels(const CCPoint& newPosition)
 #endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 }
 
+void CCNode::setPositionInPixels(float x, float y)
+{
+    setPositionInPixels(ccp(x, y));
+}
+
 const CCPoint& CCNode::getPositionInPixels()
 {
 	return m_tPositionInPixels;
 }
+
+    
+#if CC_LUA_ENGINE_ENABLED
+const CCPoint& CCNode::getPositionLua(void)
+{
+    return m_tPosition;
+}
+
+void CCNode::getPosition(float* x, float* y)
+{
+    *x = m_tPosition.x;
+    *y = m_tPosition.y;
+}
+
+float CCNode::getPositionX(void)
+{
+    return m_tPosition.x;
+}
+
+float CCNode::getPositionY(void)
+{
+    return  m_tPosition.y;
+}
+
+void CCNode::setPositionX(float x)
+{
+    setPosition(ccp(x, m_tPosition.y));
+}
+
+void CCNode::setPositionY(float y)
+{
+    setPosition(ccp(m_tPosition.x, y));
+}
+void CCNode::setPosition(float x, float y)
+{
+    setPosition(ccp(x, y));
+}
+
+void CCNode::setPositionInPixels(float x, float y)
+{
+    setPositionInPixels(ccp(x, y));
+}
+#endif
 
 /// children getter
 CCArray* CCNode::getChildren()
 {
 	return m_pChildren;
 }
+
+#if CC_LUA_ENGINE_ENABLED
+unsigned int CCNode::getChildrenCount(void)
+{
+    return m_pChildren ? m_pChildren->count() : 0;
+}
+#endif
 
 /// camera getter: lazy alloc
 CCCamera* CCNode::getCamera()
