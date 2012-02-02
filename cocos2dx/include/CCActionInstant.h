@@ -186,7 +186,7 @@ namespace cocos2d {
 		{
 			if (m_pSelectorTarget)
 			{
-				dynamic_cast<CCObject*>(m_pSelectorTarget)->release();
+				m_pSelectorTarget->release();
 			}
 		}
 		/** creates the action with the callback 
