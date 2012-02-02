@@ -32,8 +32,8 @@ extern "C" {
 #include "lualoadexts.h"
 }
 
+#include "cocos2d.h"
 #include "LuaCocos2d.h"
-#include "LuaGameInterfaces.h"
 #include "CCArray.h"
 #include "CCScheduler.h"
 
@@ -88,7 +88,6 @@ CCLuaEngine::CCLuaEngine()
     luaL_openlibs(m_state);
     tolua_Cocos2d_open(m_state);
     tolua_prepare_ccobject_table(m_state);
-    tolua_LuaGameInterfaces_open(m_state);
     luax_loadexts(m_state);
 }
 
