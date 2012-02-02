@@ -368,6 +368,12 @@ bool CCUserDefault::createXMLFile()
 		bRet = true;
 	} while (0);
 
+	// if doc is not null, free it
+	if (doc)
+	{
+		xmlFreeDoc(doc);
+	}
+
 	return bRet;
 }
 
