@@ -31,6 +31,11 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "CCDirector.h"
 #include "CCPointExtension.h"
+
+#if CC_LUA_ENGINE_ENABLED
+#include "CCLuaEngine.h"
+#endif
+
 namespace   cocos2d {
 
 // CCLayer

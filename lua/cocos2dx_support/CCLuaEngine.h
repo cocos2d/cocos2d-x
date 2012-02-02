@@ -21,8 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __LUA_ENGINE_H__
-#define __LUA_ENGINE_H__
+
+#ifndef __CC_LUA_ENGINE_H__
+#define __CC_LUA_ENGINE_H__
 
 extern "C" {
 #include "lua.h"
@@ -36,46 +37,45 @@ extern "C" {
 
 namespace cocos2d
 {
-    
 class CCTimer;
 
-// Lua support for CCSchedule
+// Lua support for CCScheduler
 class CCSchedulerFuncEntry : public CCObject
 {
 public:
-    // functionRefID return by tolua_ref_function(), called from LuaCocos2d.cpp
-    static CCSchedulerFuncEntry* entryWithFunctionRefID(int functionRefID, ccTime fInterval, bool bPaused);
+    // uFuncID return by tolua_ref_function(), called from LuaCocos2d.cpp
+    static CCSchedulerFuncEntry* entryWithFuncID(int uFuncID, ccTime fInterval, bool bPaused);
     ~CCSchedulerFuncEntry(void);
     
     inline cocos2d::CCTimer* getTimer(void) {
-        return m_timer;
+        return m_pTimer;
     }
     
     inline bool isPaused(void) {
-        return m_paused;
+        return m_bPaused;
     }
     
     inline int getEntryID(void) {
-        return m_entryID;
+        return m_uEntryID;
     }
     
-    void markDeleted(void) {
-        m_isMarkDeleted = true;
+    inline void markedForDeletion(void) {
+        m_bMarkedForDeletion = true;
     }
     
-    bool isMarkDeleted(void) {
-        return m_isMarkDeleted;
+    inline bool isMarkedForDeletion(void) {
+        return m_bMarkedForDeletion;
     }
     
 private:
     CCSchedulerFuncEntry(void);
-    bool initWithFunctionRefID(int refID, ccTime fInterval, bool bPaused);
+    bool initWithuFuncID(int uFuncID, ccTime fInterval, bool bPaused);
     
-    cocos2d::CCTimer* m_timer;
-    bool        m_paused;
-    int         m_functionRefID;    // Lua function reference
-    int         m_entryID;
-    bool        m_isMarkDeleted;
+    cocos2d::CCTimer*   m_pTimer;
+    bool                m_bPaused;
+    bool                m_bMarkedForDeletion;
+    unsigned int        m_uFuncID;
+    unsigned int        m_uEntryID;
 };
 
 
@@ -83,7 +83,7 @@ private:
 class CCTouchEventEntry : public CCObject
 {
 public:
-    static CCTouchEventEntry* entryWithFunctionRefID(int functionRefID);
+    static CCTouchEventEntry* entryWithuFuncID(int uFuncID);
 };
 
 
@@ -105,12 +105,12 @@ public:
      @brief Remove CCObject from lua state
      @param object to remove
      */
-    void removeCCObject(cocos2d::CCObject *object);
+    void removeCCObjectByID(unsigned int uLuaID);
     
     /**
      @brief Remove Lua function reference
      */
-    void removeLuaFunctionRef(int functionRefID);
+    void removeLuaFuncID(int uFuncID);
     
     /**
      @brief Add a path to find lua files in
@@ -138,17 +138,17 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    int executeFunctionByRefID(int functionRefId, int numArgs = 0);
-    int executeFunctionWithIntegerData(int functionRefId, int data);
-    int executeFunctionWithFloatData(int functionRefId, float data);
-    int executeFunctionWithBooleanData(int functionRefId, bool data);
+    int executeFunctionByRefID(int uFuncID, int numArgs = 0);
+    int executeFunctionWithIntegerData(int uFuncID, int data);
+    int executeFunctionWithFloatData(int uFuncID, float data);
+    int executeFunctionWithBooleanData(int uFuncID, bool data);
     
     // functions for excute touch event
-    int executeTouchEvent(int functionRefId, int eventType, cocos2d::CCTouch *pTouch);
-    int executeTouchesEvent(int functionRefId, int eventType, cocos2d::CCSet *pTouches);
+    int executeTouchEvent(int uFuncID, int eventType, cocos2d::CCTouch *pTouch);
+    int executeTouchesEvent(int uFuncID, int eventType, cocos2d::CCSet *pTouches);
     
     // execute a schedule function
-    int executeSchedule(int functionRefID, cocos2d::ccTime dt);
+    int executeSchedule(int uFuncID, cocos2d::ccTime dt);
     
     static CCLuaEngine* sharedEngine();
     static void purgeSharedEngine();
@@ -162,4 +162,4 @@ private:
     
 } // namespace cocos2d
 
-#endif // __LUA_ENGINE_H__
+#endif // __CC_LUA_ENGINE_H__

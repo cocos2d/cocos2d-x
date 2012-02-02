@@ -17,7 +17,11 @@ TOLUA_API void tolua_prepare_ccobject_table(lua_State* L)
     lua_rawset(L, LUA_REGISTRYINDEX);
 }
 
-TOLUA_API int tolua_pushusertype_ccobject(lua_State* L, int refid, int* p_refid, void* ptr, const char* type)
+TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
+                                          unsigned int refid,
+                                          unsigned int* p_refid,
+                                          void* ptr,
+                                          const char* type)
 {
     if (ptr == NULL || p_refid == NULL)
     {
