@@ -393,18 +393,26 @@ namespace cocos2d{
 	//LabelBMFont - Creation & Init
 	CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
 	{
+		return labelWithString(str, fntFile, CCTextAlignmentLeft, 0);
+	}
+
+	//LabelBMFont - Creation & Init
+	CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, CCTextAlignment alignment
+		, float width)
+	{
 		CCLabelBMFont *pRet = new CCLabelBMFont();
-		if(pRet && pRet->initWithString(str, fntFile))
+		if(pRet && pRet->initWithString(str, fntFile, alignment, width))
 		{
 			pRet->autorelease();
 			return pRet;
 		}
 		CC_SAFE_DELETE(pRet)
-		return NULL;
+			return NULL;
 	}
 
-	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
-	{	
+	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, CCTextAlignment alignment
+		, float width)
+	{
 		CCAssert(theString != NULL, "");
 		CC_SAFE_RELEASE(m_pConfiguration);// allow re-init
 		m_pConfiguration = FNTConfigLoadFile(fntFile);
@@ -413,16 +421,21 @@ namespace cocos2d{
 
 		if (CCSpriteBatchNode::initWithFile(m_pConfiguration->m_sAtlasName.c_str(), strlen(theString)))
 		{
+			m_pAlignment = alignment;
+			m_fWidth = width;
+			m_sString_a = std::string(theString);
 			m_cOpacity = 255;
 			m_tColor = ccWHITE;
 			m_tContentSize = CCSizeZero;
 			m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
 			setAnchorPoint(ccp(0.5f, 0.5f));
 			this->setString(theString);
+			updateLabel();
 			return true;
 		}
 		return false;
 	}
+
 	CCLabelBMFont::~CCLabelBMFont()
 	{
 		m_sString.clear();
@@ -748,23 +761,40 @@ namespace cocos2d{
 
 	//LabelBMFont - CCLabelProtocol protocol
 	void CCLabelBMFont::setString(const char *newString)
-	{	
+	{
+		this->setString(newString, false);
+	}
+
+	void CCLabelBMFont::setString(const char *newString, bool from_update)
+	{
+		if (from_update)
+		{
+			m_sString = std::string(newString);
+		}
+		else
+		{
+			m_sString_a = std::string(newString);
+		}
+
 		m_sString.clear();
 		m_sString = newString;
 
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-            CCObject* child;
-            CCARRAY_FOREACH(m_pChildren, child)
-            {
-                CCNode* pNode = (CCNode*) child;
-                if (pNode)
-                {
-                    pNode->setIsVisible(false);
-                }
-            }
+			CCObject* child;
+			CCARRAY_FOREACH(m_pChildren, child)
+			{
+				CCNode* pNode = (CCNode*) child;
+				if (pNode)
+				{
+					pNode->setIsVisible(false);
+				}
+			}
 		}
 		this->createFontChars();
+
+		if (!from_update)
+			updateLabel();
 	}
 
 	const char* CCLabelBMFont::getString(void)
@@ -856,6 +886,172 @@ namespace cocos2d{
 			CCSpriteBatchNode::setAnchorPoint(point);
 			this->createFontChars();
 		}
+	}
+
+	// LabelBMFont - Alignment
+	void CCLabelBMFont::updateLabel()
+	{
+		this->setString(m_sString_a.c_str(), true);
+
+		if (m_fWidth > 0)
+		{
+			// Step 1: Make multiline
+
+			std::string multilineString;
+			std::string lastWord;
+			int line = 1, i = 0;
+			int stringLength = m_sString.length();
+			float startOfLine = -1, startOfWord = -1;
+			int skip = 0;
+
+			CCArray* children = getChildren();
+			for (unsigned int j = 0; j < children->count(); j++)
+			{
+				CCSprite* characterSprite;
+
+				while (!(characterSprite = (CCSprite*)this->getChildByTag(j + skip)))
+					skip++;
+
+				if (!characterSprite->getIsVisible()) continue;
+
+				if (i >= stringLength || i < 0)
+					break;
+
+				char& character = m_sString.at(i);
+
+				if (startOfWord == -1)
+					startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
+				if (startOfLine == -1)
+					startOfLine = startOfWord;
+
+				// Newline.
+				if (character == '\n')
+				{
+					if (lastWord.find(' ') != -1)
+						lastWord = lastWord.replace(lastWord.find(' '), lastWord.length(), "");
+
+					multilineString += lastWord;
+					lastWord = "";
+					startOfWord = -1;
+					startOfLine = -1;
+					i++;
+					line++;
+
+					if (i >= stringLength || i < 0)
+						break;
+
+					character = m_sString.at(i);
+
+					if (startOfWord == -1)
+						startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
+					if (startOfLine == -1)
+						startOfLine  = startOfWord;
+				}
+
+				// Whitespace.
+				if (character == ' ')
+				{
+					lastWord = lastWord + character;
+					multilineString += lastWord;
+					lastWord = "";
+					startOfWord = -1;
+					i++;
+					continue;
+				}
+
+				// Out of bounds.
+				if (characterSprite->getPosition().x + characterSprite->getContentSize().width / 2.0f - startOfLine 
+					> m_fWidth)
+				{
+					lastWord += character;
+
+					int found = multilineString.find_last_not_of(' ');
+					if (found != std::string::npos)
+						multilineString.erase(found + 1);
+					else
+						multilineString.clear();
+
+					multilineString += '\n';
+					line++;
+					startOfLine = -1;
+					i++;
+					continue;
+				}
+				else
+				{
+					// Character is normal.
+					lastWord += character;
+					i++;
+					continue;
+				}
+			}
+
+			multilineString += lastWord;
+
+			setString(multilineString.c_str(), true);
+		}
+
+		// Step 2: Make alignment
+		if (m_pAlignment != CCTextAlignmentLeft)
+		{
+			int i = 0;
+
+			int lineNumber = 0;
+
+			std::istringstream f(m_sString);
+			std::string lineString;
+			while (std::getline(f, lineString))
+			{
+				float lineWidth = 0;
+				int index = i + lineString.length() - 1 + lineNumber;
+				if (index < 0) continue;
+
+				CCSprite* lastChar = (CCSprite*)getChildByTag(index);
+
+				lineWidth = lastChar->getPosition().x + lastChar->getContentSize().width/2.0f;
+
+				float shift = 0;
+				switch (m_pAlignment)
+				{
+				case CCTextAlignmentCenter:
+					shift = getContentSize().width/2.0f - lineWidth/2.0f;
+					break;
+				case CCTextAlignmentRight:
+					shift = getContentSize().width - lineWidth;
+				default:
+					break;
+				}
+
+				if (shift != 0)
+				{
+					int j = 0;
+					for (unsigned j = 0; j < lineString.length(); j++)
+					{
+						index = i + j + lineNumber;
+						if (index < 0) continue;
+
+						CCSprite* characterSprite = (CCSprite*)getChildByTag(index);
+						characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+					}
+				}
+
+				i += lineString.length();
+				lineNumber++;
+			}
+		}
+	}
+
+	// LabelBMFont - Alignment
+	void CCLabelBMFont::setAlignment(CCTextAlignment alignment)
+	{
+		this->m_pAlignment = alignment;
+		updateLabel();
+	}
+
+	void CCLabelBMFont::setWidth(float width)
+	{
+		this->m_fWidth = width;
+		updateLabel();
 	}
 
 	//LabelBMFont - Debug draw

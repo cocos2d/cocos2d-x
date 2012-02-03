@@ -34,6 +34,8 @@ Use any of these editors to generate BMFonts:
 #define __CCBITMAP_FONT_ATLAS_H__
 #include "CCSpriteBatchNode.h"
 #include <map>
+#include <sstream>
+#include <iostream>
 
 namespace cocos2d{
 
@@ -150,7 +152,10 @@ namespace cocos2d{
 	protected:
 		// string to render
 		std::string m_sString;
+		std::string m_sString_a;
 		CCBMFontConfiguration *m_pConfiguration;
+		CCTextAlignment m_pAlignment;
+		float m_fWidth;
 	public:
 		CCLabelBMFont()
 			: m_cOpacity(0)           
@@ -166,16 +171,21 @@ namespace cocos2d{
 		static void purgeCachedData();
 		/** creates a bitmap font altas with an initial string and the FNT file */
 		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
+		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, CCTextAlignment alignment, float width);
 
 		/** init a bitmap font altas with an initial string and the FNT file */
-		bool initWithString(const char *str, const char *fntFile);
+		bool initWithString(const char *str, const char *fntFile, CCTextAlignment alignment, float width);
 		/** updates the font chars based on the string to render */
 		void createFontChars();
 		// super method
 		virtual void setString(const char *label);
+		virtual void setString(const char *label, bool from_update);
 		virtual const char* getString(void);
         virtual void setCString(const char *label);
 		virtual void setAnchorPoint(const CCPoint& var);
+		virtual void updateLabel();
+		virtual void setAlignment(CCTextAlignment alignment);
+		virtual void setWidth(float width);
 
 #if CC_LABELBMFONT_DEBUG_DRAW
 		virtual void draw();
