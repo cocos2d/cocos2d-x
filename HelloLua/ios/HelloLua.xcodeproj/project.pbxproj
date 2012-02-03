@@ -89,7 +89,6 @@
 		BF82F8E613A8657700616D55 /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F45C13A8657100616D55 /* ccConfig.h */; };
 		BF82F8E713A8657700616D55 /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F45D13A8657100616D55 /* ccMacros.h */; };
 		BF82F8E813A8657700616D55 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F45E13A8657100616D55 /* ccTypes.h */; };
-		BF82F8E913A8657700616D55 /* selector_protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F45F13A8657100616D55 /* selector_protocol.h */; };
 		BF82F8EA13A8657700616D55 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F46013A8657100616D55 /* CCNode.h */; };
 		BF82F8EB13A8657700616D55 /* CCMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F46113A8657100616D55 /* CCMenu.h */; };
 		BF82F8EC13A8657700616D55 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F46213A8657100616D55 /* CCRenderTexture.h */; };
@@ -438,7 +437,6 @@
 		BF82F45C13A8657100616D55 /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
 		BF82F45D13A8657100616D55 /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		BF82F45E13A8657100616D55 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
-		BF82F45F13A8657100616D55 /* selector_protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = selector_protocol.h; sourceTree = "<group>"; };
 		BF82F46013A8657100616D55 /* CCNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode.h; sourceTree = "<group>"; };
 		BF82F46113A8657100616D55 /* CCMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenu.h; sourceTree = "<group>"; };
 		BF82F46213A8657100616D55 /* CCRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture.h; sourceTree = "<group>"; };
@@ -999,7 +997,6 @@
 				BF82F45C13A8657100616D55 /* ccConfig.h */,
 				BF82F45D13A8657100616D55 /* ccMacros.h */,
 				BF82F45E13A8657100616D55 /* ccTypes.h */,
-				BF82F45F13A8657100616D55 /* selector_protocol.h */,
 				BF82F46013A8657100616D55 /* CCNode.h */,
 				BF82F46113A8657100616D55 /* CCMenu.h */,
 				BF82F46213A8657100616D55 /* CCRenderTexture.h */,
@@ -1510,7 +1507,6 @@
 				BF82F8E613A8657700616D55 /* ccConfig.h in Headers */,
 				BF82F8E713A8657700616D55 /* ccMacros.h in Headers */,
 				BF82F8E813A8657700616D55 /* ccTypes.h in Headers */,
-				BF82F8E913A8657700616D55 /* selector_protocol.h in Headers */,
 				BF82F8EA13A8657700616D55 /* CCNode.h in Headers */,
 				BF82F8EB13A8657700616D55 /* CCMenu.h in Headers */,
 				BF82F8EC13A8657700616D55 /* CCRenderTexture.h in Headers */,
