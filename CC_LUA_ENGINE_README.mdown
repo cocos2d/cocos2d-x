@@ -1,0 +1,191 @@
+# Cocos2d-x \*NEW\* Lua Engine README
+
+## Main features
+
+* Support autorelease CCObject object.
+* Call Lua function from C++ (local, global, closure), avoid memory leaks.
+* Add CCNode:setPosition(x, y), CCNode::getPosition() huge performance boost.
+* Remove needless class and functions from tolua++ .pkg files, improved performance.
+* CCMenuItem script callback.
+* CCNode onEnter/onExit events handler.
+* CCLayer touch & multi-touches events handler.
+* Build-in Lua modules: cjson, luasocket.
+
+
+## Changes
+
+* [del] remove old script support from all
+* [add] ccConfig.h, define CC_LUA_ENGINE_ENABLED, CC_LUA_ENGINE_DEBUG macro
+* [add] CCPlatformMacros.h, define LUALOG macro
+* [add] CCObject::m_uLuaID used for Lua VM tracking C++ object
+* [add] CCObject::~CCObject() call CCLuaEngine::removeCCObjectByID()
+* [add] CCNode add some methods for fast read/write position  
+    const CCPoint& getPositionLua(void);  
+    void getPosition(float* x, float* y);  
+    float getPositionX(void);  
+    float getPositionY(void);  
+    void setPositionX(float x);  
+    void setPositionY(float y);  
+    void setPosition(float x, float y);  
+    void setPositionInPixels(float x, float y);  
+* [add] CCNode::getChildrenCount() for Lua
+* [add] CCNode::registerScriptHandler() enable onEnter/onExit event script callback
+* [add] CCNode::unregisterScriptHandler()
+* [add] CCMenuItem::registerScriptHandler()
+* [add] CCMenuItem::unregisterScriptHandler()
+* [add] CCMenuItem::activate() default implements call script callback if exist
+* [add] CCMenuItem::m_uScriptHandlerFuncID save Lua function reference
+* [add] CCLayer::m_uScriptHandlerFuncID save Lua function reference
+* [add] ccTouchBegan(), ccTouchMoved(), ccTouchEnded(), ccTouchCancelled(),
+  ccTouchesBegan(), ccTouchesMoved(), ccTouchesEnded(), ccTouchesCancelled()
+  default implements are used to call script callback if exist
+* [add] CCLayer::registerScriptTouchHandler()
+* [add] CCLayer::unregisterScriptTouchHandler()
+* [add] CCTimer::timerWithScriptFuncID()
+* [add] CCTimer::initWithScriptFuncID()
+* [add] CCTimer::m_uScriptFuncID
+* [add] CCScheduler::scheduleScriptFunc()
+* [add] CCScheduler::unscheduleScriptEntry()
+* [add] CCScheduler::m_pScriptEntries
+* [add] add Lua module: cjson, luasocket
+
+----
+
+## How to use
+
+### CCNode onEnter/onExit events handler
+
+CCNode:registerScriptHandler() register callback function for onEnter/onExit events。Callback function auto unregister after onExit() called.
+
+    local function createScene()
+        local scene = CCScene:node()
+
+        
+    
+        local function sceneEventHandler(eventType)
+            if eventType == kCCNodeOnEnter then
+                if scene.onEnter then scene:onEnter() end
+            else
+                if scene.onExit then scene:onExit() end
+            end
+        end
+    
+        scene:registerScriptHandler(sceneEventHandler)
+    
+        return scene
+    end
+    
+    local scene = createScene()
+    function scene:onEnter()
+        print("on scene enter")
+    end
+    fucntion scene:onExit()
+        print("on scene exit")
+    end
+
+    CCDirector:sharedDirector():runWithScene(scene)
+
+
+### Touch and multi-touches events handler
+
+    local function onTouch(eventType, x, y)
+        -- eventType is CCTOUCHBEGAN, CCTOUCHMOVED,
+        -- CCTOUCHENDED or CCTOUCHCANCELLED
+        -- x, y is touch position (use cocos2d-x/OpenGL coordinate)
+    end
+    
+    local function onTouches(eventType, touches)
+        -- touches is x1, y1, x2, y2, x3, y3, ...
+        for i = 1, #touches, 2 do
+            local x, y = touches[i], touches[i + 1]
+            print(x, y)
+        end
+    end
+    
+    local layer = CCLayer:node()
+    
+    -- enable touch events callback
+    layer:registerScriptTouchHandler(onTouch, false)  -- for single touch
+    OR
+    layer:registerScriptTouchHandler(onTouches, true) -- for multi-touches
+
+    -- remove touch events callback
+    layer:unregisterScriptTouchHandler()
+
+
+### Schedule callback
+
+scheduler module:
+
+    module("scheduler", package.seeall)
+    
+    scheduler = CCScheduler:sharedScheduler()
+    
+    function enterFrame(listener, isPaused)
+        return scheduler:scheduleScriptFunc(listener, 0, isPaused or false)
+    end
+    
+    function schedule(listener, interval, isPaused)
+        return scheduler:scheduleScriptFunc(listener, interval, isPaused or false)
+    end
+    
+    function unschedule(handle)
+        scheduler:unscheduleScriptEntry(handle)
+    end
+    remove = unschedule
+    
+    function performWithDelay(time, listener)
+        local handle
+        handle = scheduler:scheduleScriptFunc(function()
+            scheduler:unscheduleScriptEntry(handle)
+            listener()
+        end, time, false)
+        return handle
+    end
+
+use:
+
+    require("scheduler")
+
+    local handle -- save script callback ID
+
+    -- schedule every frame update
+    local frameCount = 0
+    local function onEnterFrame(dt)
+        -- dt is float number
+        frameCount = frameCount + 1
+        if frameCount >= 60 then
+            -- unschedule callback
+            scheduler.unschedule(handle)
+        end
+    end
+
+    handle = scheduler.enterFrame(onEnterFrame)
+
+    -- print message after delay
+    scheduler.performWithDelay(0.5, function()
+        print("delay 0.5 second")
+    end)
+
+
+### Create menu
+
+    local function onPlayButtonTap()
+        print("PLAY NOW")
+    end
+
+    local button = CCMenuItemSprite:itemFromNormalImage("playButton.png", "playButton.png")
+    button:setPosition(100, 200)
+    button:registerScriptHandler(onPlayButtonTap)
+    
+    local menu = CCMenu:node()
+    menu:addChild(button)
+    scene:addChild(menu)
+
+----
+
+
+## TODO
+
+* When C++ object deleted, remove Lua userdata
+* Improvement tolua_isusertype()
