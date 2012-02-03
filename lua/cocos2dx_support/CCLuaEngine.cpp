@@ -293,16 +293,17 @@ int CCLuaEngine::executeTouchesEvent(int uFuncID, int eventType, CCSet *pTouches
     lua_pushinteger(m_state, eventType);
     lua_newtable(m_state);
     
+    CCDirector* pDirector = CCDirector::sharedDirector();
     CCSetIterator it = pTouches->begin();
-    CCTouch* touch;
+    CCTouch* pTouch;
     int n = 1;
     while (it != pTouches->end())
     {
-        touch = (CCTouch*)*it;
-        const CCPoint& pos = touch->locationInView(0);
-        lua_pushnumber(m_state, pos.x);
+        pTouch = (CCTouch*)*it;
+        CCPoint pt = pDirector->convertToGL(pTouch->locationInView(pTouch->view()));
+        lua_pushnumber(m_state, pt.x);
         lua_rawseti(m_state, -2, n++);
-        lua_pushnumber(m_state, pos.y);
+        lua_pushnumber(m_state, pt.y);
         lua_rawseti(m_state, -2, n++);
         ++it;
     }
