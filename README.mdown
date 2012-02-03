@@ -2,7 +2,7 @@ cocos2d-x multiplatform
 ==================
 
 [cocos2d-x][1] is a multi-platform 2D game engine in C++, based on [cocos2d-iphone][2] and licensed under MIT.
-Now this engine has been ported to WOPhone, iOS 4.1, Android 2.1 and higher, WindowsXP & Windows7.
+Now this engine has been ported to WOPhone, iOS 4.1, Android 2.1 and higher, WindowsXP & Windows7. 
 
 Multi Platform
 -------------
@@ -16,14 +16,14 @@ Multi Platform
 Document
 ------------------
    * Website: [www.cocos2d-x.org][7]
-   * [Online API References][8]
-
+   * [Online API References][8] 
+	
 Contact us
 ------------------
    * Forum: [http://forum.cocos2d-x.org][9]
    * Twitter: [http://www.twitter.com/cocos2dx][10]
    * Sina mini-blog: [http://t.sina.com.cn/cocos2dx][11]
-
+   
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [3]: http://www.cocos2d-x.org/wiki/cocos2d-x/Cocos2d-iphone-cpp "cocos2d-iphone-cpp"
@@ -35,117 +35,3 @@ Contact us
 [9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
-
-
-
-Lua Support FIX Readme
-------------------
-   * CCScheduler support local function
-   * Support autorelease C++ object
-   * When C++ object deleted, set Lua object userdata to nil
-   * Add CCNode:setPosition(x, y), CCNode::getPosition(), huge performance boost
-   * Remove needless class and functions from tolua++ .pkg files, improved performance
-   * CCMenuItem support script function
-   * CCScene script callback
-   * CCLayer touch & multi-touches events handler
-
-**How to use:**
-
-    -- use CCSchedule::scheduleScriptFunc()
-
-    local scheduler = CCScheduler:sharedScheduler()
-
-    local handle    -- save script callback handle
-
-    local frameCount = 0
-    local function onEnterFrame(dt)
-        print("onEnterFrame:", frameCount, dt)
-        frameCount = frameCount + 1
-        if frameCount >= 60 then
-            -- remove script callback
-            scheduler:unscheduleScriptFunc(handle)
-        end
-    end
-
-    handle = scheduler:scheduleScriptFunc(onEnterFrame, 1.0 / 60, false)
-
-- - -
-
-    -- use CCMenuItem:registerScriptHandler()
-
-    local function onMenuItemTap(menuItemTag)
-        print(menuItemTag) -- output "1"
-    end
-
-    local menuItem = CCMenuItemImage:itemFromNormalImage("button.png", "button.png")
-    menuItem:registerScriptHandler(onMenuItemTap)
-
-    local menu = CCMenu:node()
-    menu:addChild(menuItem)
-    menuItem:setTag(1) -- menuItemTag
-
-    scene:addChild(menu)
-
-- - -
-
-    -- use CCScene script callback
-
-    local function newScene()
-        local scene = CCScene:node()
-
-        local function sceneEventHandler(isOnEnter)
-            if isOnEnter then
-                if scene.onEnter then scene:onEnter() end
-            else
-                if scene.onExit then scene:onExit() end
-                scene:unregisterScriptEventsHandler()
-            end
-        end
-
-        scene:registerScriptEventsHandler(sceneEventHandler)
-        return scene
-    end
-
-    local myScene = newScene("MyScene")
-    function myScene:onEnter()
-        print("MyScene:onEnter()")
-    end
-
-    function myScene:onExit()
-        print("MyScene:onExit()")
-    end
-
-    CCDirector:sharedDirector():runWithScene(myScene)
-
-- - -
-
-    -- use CCLayer touch event handler
-
-    local layer = CCLayer:node()
-    local function onTouch(event, x, y)
-        -- event: CCTOUCHBEGAN, CCTOUCHMOVED, CCTOUCHENDED, CCTOUCHCANCELLED
-        print(event, x, y)
-        if event == CCTOUCHBEGAN then return true end
-    end
-
-    layer:registerScriptTouchHandler(onTouch, false)
-
-- - -
-
-    -- use CCLayer multi-touches event handler
-
-    local layer = CCLayer:node()
-    local function onTouches(event, points)
-        -- event: CCTOUCHBEGAN, CCTOUCHMOVED, CCTOUCHENDED, CCTOUCHCANCELLED
-        print(event)
-
-        for i = 1, #points, 2 do
-            print(string.format("x: 0.2f, y: 0.2f", points[i], points[i + 1]))
-        end
-    end
-
-    layer:registerScriptTouchHandler(onTouches, true)
-
-**TODO:**
-
-   * When C++ object deleted, remove Lua object userdata
