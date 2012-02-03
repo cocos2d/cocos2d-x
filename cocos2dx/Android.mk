@@ -106,6 +106,10 @@ tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
 touch_dispatcher/CCTouchHandler.cpp 
 
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
+                           $(LOCAL_PATH)/include \
+                           $(LOCAL_PATH)/platform
+
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/platform
@@ -123,6 +127,9 @@ LOCAL_CFLAGS := -DUSE_FILE32API
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,platform/third_party/android/modules/libpng)
-$(call import-module,platform/third_party/android/modules/libxml2)
-$(call import-module,platform/third_party/android/modules/libjpeg)
+# note that the import-module calls are relative to the parent directory
+# this simplifies makefiles that use this module
+# it requires only one entry in NDK_MODULE_PATH - the module search path
+$(call import-module,cocos2dx/platform/third_party/android/modules/libpng)
+$(call import-module,cocos2dx/platform/third_party/android/modules/libxml2)
+$(call import-module,cocos2dx/platform/third_party/android/modules/libjpeg)
