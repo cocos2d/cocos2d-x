@@ -18,8 +18,8 @@ TOLUA_API void tolua_prepare_ccobject_table(lua_State* L)
 }
 
 TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
-                                          unsigned int refid,
-                                          unsigned int* p_refid,
+                                          int refid,
+                                          int* p_refid,
                                           void* ptr,
                                           const char* type)
 {

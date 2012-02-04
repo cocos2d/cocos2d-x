@@ -45,7 +45,7 @@ CCObject::CCObject(void)
 	static unsigned int uObjectCount = 0;
 
 	m_uID = ++uObjectCount;
-    m_uLuaID = 0;
+    m_nLuaID = 0;
 
 	// when the object is created, the refrence count of it is 1
 	m_uReference = 1;
@@ -63,9 +63,9 @@ CCObject::~CCObject(void)
 
 #if CC_LUA_ENGINE_ENABLED
     // if the object is referenced by Lua engine, remove it
-    if (m_uLuaID)
+    if (m_nLuaID)
     {
-        CCLuaEngine::sharedEngine()->removeCCObjectByID(m_uLuaID);
+        CCLuaEngine::sharedEngine()->removeCCObjectByID(m_nLuaID);
     }
 #endif
 }
