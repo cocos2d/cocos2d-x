@@ -36,6 +36,7 @@ Use any of these editors to generate BMFonts:
 #include <map>
 #include <sstream>
 #include <iostream>
+#include <vector>
 
 namespace cocos2d{
 

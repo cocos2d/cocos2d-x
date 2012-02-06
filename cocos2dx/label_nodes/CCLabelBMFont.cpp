@@ -41,7 +41,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 #include "CCFileUtils.h"
 #include "support/data_support/uthash.h"
-
 namespace cocos2d{
 	
 	//
@@ -551,12 +550,64 @@ namespace cocos2d{
 
     #define cc_utf8_next_char(p) (char *)((p) + g_utf8_skip[*(unsigned char *)(p)])
 
+	/*
+	 * @str:	the string to search through.
+	 * @c:		the character to find.
+	 * 
+	 * Returns the index of the first occurrence of the character, if found.  Otherwise -1 is returned.
+	 * 
+	 * Return value: the index of the first occurrence of the character if found or -1 otherwise.
+	 * */
+	static unsigned int cc_utf8_find_char(std::vector<unsigned short> str, unsigned short c)
+	{
+		unsigned int len = str.size();
+
+		for (unsigned int i = 0; i < len; ++i)
+			if (str[i] == c) return i;
+
+		return -1;
+	}
+
+	/*
+	 * @str:	the string to search through.
+	 * @c:		the character to not look for.
+	 * 
+	 * Return value: the index of the last character that is not c.
+	 * */
+	static unsigned int cc_utf8_find_last_not_char(std::vector<unsigned short> str, unsigned short c)
+	{
+		int len = str.size();
+
+		int i = len - 1;
+		for (; i >= 0; --i)
+			if (str[i] != c) return i;
+
+		return i;
+	}
+
+	/*
+	 * @str:	the string to trim
+	 * @index:	the index to start trimming from.
+	 * 
+	 * Trims str st str=[0, index) after the operation.
+	 * 
+	 * Return value: the trimmed string.
+	 * */
+	static void cc_utf8_trim_from(std::vector<unsigned short>* str, int index)
+	{
+		int size = str->size();
+		if (index >= size || index < 0)
+			return;
+
+		str->erase(str->begin() + index, str->begin() + size);
+	}
+
     /*
      * g_utf8_strlen:
      * @p: pointer to the start of a UTF-8 encoded string.
      * @max: the maximum number of bytes to examine. If @max
      *       is less than 0, then the string is assumed to be
-     *       nul-terminated. If @max is 0, @p will not be examined and
+     *       null-terminated. If @max is 0, @p will not be examined and
      *       may be %NULL.
      *
      * Returns the length of the string in characters.
@@ -632,6 +683,46 @@ namespace cocos2d{
       return result;
     }
 
+	/*
+	 * cc_utf8_from_cstr:
+	 * @str_old: pointer to the start of a C string.
+	 * 
+	 * Creates a utf8 string from a cstring.
+	 * 
+	 * Return value: the newly created utf8 string.
+	 * */
+	static unsigned short* cc_utf8_from_cstr(const char* str_old)
+	{
+		int len = cc_utf8_strlen(str_old, -1);
+
+		if (len <= 0)
+			return NULL;
+
+		unsigned short* str_new = new unsigned short[len + 1];
+		str_new[len] = '\0';
+
+		for (int i = 0; i < len; ++i)
+		{
+			str_new[i] = cc_utf8_get_char(str_old);
+			str_old = cc_utf8_next_char(str_old);
+		}
+
+		return str_new;
+	}
+
+	static std::vector<unsigned short> cc_utf8_vec_from_cstr(const char* str)
+	{
+		const unsigned short* str_sh = cc_utf8_from_cstr(str);
+
+		int len = cc_wcslen(str_sh);
+		std::vector<unsigned short> str_new;
+
+		for (int i = 0; i < len; ++i)
+			str_new.push_back(str_sh[i]);
+
+		CC_SAFE_DELETE(str_sh);
+		return str_new;
+	}
 
 	void CCLabelBMFont::createFontChars()
 	{
@@ -657,17 +748,7 @@ namespace cocos2d{
         {
             return;
         }
-        
-        unsigned short* pUniStr = new unsigned short[utf8len+1];
-        pUniStr[utf8len] = 0;
-
-        const char* p = m_sString.c_str();
-
-        for (int i = 0; i < utf8len; ++i)
-        {
-            pUniStr[i] = cc_utf8_get_char(p);
-            p = cc_utf8_next_char (p);
-        }
+        unsigned short* pUniStr = cc_utf8_from_cstr(m_sString.c_str());
 
         unsigned int stringLen = cc_wcslen(pUniStr);
 
@@ -775,9 +856,6 @@ namespace cocos2d{
 		{
 			m_sString_a = std::string(newString);
 		}
-
-		m_sString.clear();
-		m_sString = newString;
 
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
@@ -891,16 +969,18 @@ namespace cocos2d{
 	// LabelBMFont - Alignment
 	void CCLabelBMFont::updateLabel()
 	{
+		using namespace std;
+
 		this->setString(m_sString_a.c_str(), true);
 
 		if (m_fWidth > 0)
 		{
 			// Step 1: Make multiline
-
-			std::string multilineString;
-			std::string lastWord;
+			vector<unsigned short> str_whole = cc_utf8_vec_from_cstr(m_sString.c_str());
+			unsigned int stringLength = str_whole.size();
+			vector<unsigned short> multiline_string;
+			vector<unsigned short> last_word;
 			int line = 1, i = 0;
-			int stringLength = m_sString.length();
 			float startOfLine = -1, startOfWord = -1;
 			int skip = 0;
 
@@ -917,7 +997,7 @@ namespace cocos2d{
 				if (i >= stringLength || i < 0)
 					break;
 
-				char& character = m_sString.at(i);
+				unsigned short character = str_whole[i];
 
 				if (startOfWord == -1)
 					startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
@@ -927,11 +1007,12 @@ namespace cocos2d{
 				// Newline.
 				if (character == '\n')
 				{
-					if (lastWord.find(' ') != -1)
-						lastWord = lastWord.replace(lastWord.find(' '), lastWord.length(), "");
+					int found = cc_utf8_find_char(last_word, ' ');
+					if (found != -1)
+						cc_utf8_trim_from(&last_word, found + 1);
 
-					multilineString += lastWord;
-					lastWord = "";
+					multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+					last_word.clear();
 					startOfWord = -1;
 					startOfLine = -1;
 					i++;
@@ -940,7 +1021,7 @@ namespace cocos2d{
 					if (i >= stringLength || i < 0)
 						break;
 
-					character = m_sString.at(i);
+					character = str_whole[i];
 
 					if (startOfWord == -1)
 						startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
@@ -951,9 +1032,9 @@ namespace cocos2d{
 				// Whitespace.
 				if (character == ' ')
 				{
-					lastWord = lastWord + character;
-					multilineString += lastWord;
-					lastWord = "";
+					last_word.push_back(character);
+					multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+					last_word.clear();
 					startOfWord = -1;
 					i++;
 					continue;
@@ -963,15 +1044,16 @@ namespace cocos2d{
 				if (characterSprite->getPosition().x + characterSprite->getContentSize().width / 2.0f - startOfLine 
 					> m_fWidth)
 				{
-					lastWord += character;
+					last_word.push_back(character);
 
-					int found = multilineString.find_last_not_of(' ');
-					if (found != std::string::npos)
-						multilineString.erase(found + 1);
+					int found = cc_utf8_find_last_not_char(multiline_string, ' ');
+					if (found != -1)
+						cc_utf8_trim_from(&multiline_string, found + 1);
 					else
-						multilineString.clear();
+						multiline_string.clear();
 
-					multilineString += '\n';
+					if (multiline_string.size() > 0)
+						multiline_string.push_back('\n');
 					line++;
 					startOfLine = -1;
 					i++;
@@ -980,15 +1062,25 @@ namespace cocos2d{
 				else
 				{
 					// Character is normal.
-					lastWord += character;
+					last_word.push_back(character);
 					i++;
 					continue;
 				}
 			}
 
-			multilineString += lastWord;
+			multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 
-			setString(multilineString.c_str(), true);
+			int size = multiline_string.size();
+			char* str_new = new char[size + 1];
+
+			for (int i = 0; i < size; ++i)
+			{
+				str_new[i] = multiline_string[i];
+			}
+
+			str_new[size] = '\0';
+
+			setString(str_new, true);
 		}
 
 		// Step 2: Make alignment
