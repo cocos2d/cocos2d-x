@@ -150,7 +150,7 @@ std::string CCFileUtils::getWriteablePath()
 	char cwd[FILENAME_MAX];
 
 	getcwd(cwd, FILENAME_MAX - 1);
-	cwd[FILENAME_MAX] = '\0';
+	cwd[FILENAME_MAX-1] = '\0';
 
 	std::string path = cwd;
 	path += "/data/";
