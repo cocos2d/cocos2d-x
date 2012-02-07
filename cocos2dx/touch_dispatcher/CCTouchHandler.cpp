@@ -191,7 +191,7 @@ void CCTargetedTouchHandler::setSwallowsTouches(bool bSwallowsTouches)
 	m_bSwallowsTouches = bSwallowsTouches;
 }
 
-NSMutableSet* CCTargetedTouchHandler::getClaimedTouches(void)
+CCSet* CCTargetedTouchHandler::getClaimedTouches(void)
 {
 	return m_pClaimedTouches;
 }
@@ -218,7 +218,7 @@ bool CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nP
 {
 	if (CCTouchHandler::initWithDelegate(pDelegate, nPriority))
 	{
-		m_pClaimedTouches = new NSMutableSet();
+		m_pClaimedTouches = new CCSet();
 		m_bSwallowsTouches = bSwallow;
 
 		return true;
