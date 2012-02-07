@@ -40,45 +40,80 @@ extern "C" {
 namespace cocos2d
 {
 
-CCSchedulerFuncEntry* CCSchedulerFuncEntry::entryWithFuncID(int uFuncID, ccTime fInterval, bool bPaused)
+CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::entryWithHandler(int nHandler, ccTime fInterval, bool bPaused)
 {
-    CCSchedulerFuncEntry* pEntry = new CCSchedulerFuncEntry();
-    pEntry->initWithuFuncID(uFuncID, fInterval, bPaused);
+    CCSchedulerScriptHandlerEntry* pEntry = new CCSchedulerScriptHandlerEntry();
+    pEntry->initWithHandler(nHandler, fInterval, bPaused);
     pEntry->autorelease();
     return pEntry;
 }
 
-bool CCSchedulerFuncEntry::initWithuFuncID(int uFuncID, ccTime fInterval, bool bPaused)
+bool CCSchedulerScriptHandlerEntry::initWithHandler(int nHandler, ccTime fInterval, bool bPaused)
 {
     m_pTimer = new CCTimer();
-    m_pTimer->initWithScriptFuncID(uFuncID, fInterval);
+    m_pTimer->initWithScriptHandler(nHandler, fInterval);
     m_pTimer->autorelease();
     m_pTimer->retain();
-    m_uFuncID = uFuncID;
+    m_nHandler = nHandler;
     m_bPaused = bPaused;
-    LUALOG("[LUA] ADD function refID: %04d, add schedule entryID: %d", m_uFuncID, m_entryID);
+    LUALOG("[LUA] ADD script schedule: %d, entryID: %d", m_nHandler, m_entryID);
     return true;
 }
 
-CCSchedulerFuncEntry::CCSchedulerFuncEntry(void)
+CCSchedulerScriptHandlerEntry::CCSchedulerScriptHandlerEntry(void)
 : m_pTimer(NULL)
-, m_uFuncID(0)
+, m_nHandler(0)
 , m_bPaused(true)
 , m_bMarkedForDeletion(false)
 {
-    static unsigned int uEntryCount = 0;
-    m_uEntryID = ++uEntryCount;
+    static int nEntryCount = 0;
+    m_nEntryID = ++nEntryCount;
 }
 
-CCSchedulerFuncEntry::~CCSchedulerFuncEntry(void)
+CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
 {
     m_pTimer->release();
-    CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uFuncID);
-    LUALOG("[LUA] DEL function refID: %04d, remove schedule entryID: %d", m_uFuncID, m_entryID);
+    CCLuaEngine::sharedEngine()->removeLuaHandler(m_nHandler);
+    LUALOG("[LUA] DEL script schedule %d, entryID: %d", m_nHandler, m_entryID);
 }
 
 // ----------------------------
+    
+    
+CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::entryWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+{
+    CCTouchScriptHandlerEntry* pEntry = new CCTouchScriptHandlerEntry();
+    pEntry->initWithHandler(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
+    pEntry->autorelease();
+    return pEntry;
+}
 
+CCTouchScriptHandlerEntry::CCTouchScriptHandlerEntry(void)
+: m_nHandler(0)
+, m_bIsMultiTouches(false)
+, m_nPriority(0)
+, m_bSwallowsTouches(false)
+{
+}
+
+CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
+{
+    CCLuaEngine::sharedEngine()->removeLuaHandler(m_nHandler);
+    LUALOG("[LUA] Remove touch event handler: %d", m_nHandler);
+}
+
+bool CCTouchScriptHandlerEntry::initWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+{
+    m_nHandler = nHandler;
+    m_bIsMultiTouches = bIsMultiTouches;
+    m_nPriority = nPriority;
+    m_bSwallowsTouches = bSwallowsTouches;
+
+    return true;
+}
+
+
+// ----------------------------
 
 CCLuaEngine* CCLuaEngine::s_engine = NULL;
 
@@ -89,6 +124,7 @@ CCLuaEngine::CCLuaEngine()
     tolua_Cocos2d_open(m_state);
     tolua_prepare_ccobject_table(m_state);
     luax_loadexts(m_state);
+    
 }
 
 CCLuaEngine::~CCLuaEngine()
@@ -113,14 +149,14 @@ void CCLuaEngine::purgeSharedEngine()
 
 // -------------------------------------------
 
-void CCLuaEngine::removeCCObjectByID(unsigned int uLuaID)
+void CCLuaEngine::removeCCObjectByID(int nLuaID)
 {
-    tolua_remove_ccobject_by_refid(m_state, uLuaID);
+    tolua_remove_ccobject_by_refid(m_state, nLuaID);
 }
 
-void CCLuaEngine::removeLuaFuncID(int uFuncID)
+void CCLuaEngine::removeLuaHandler(int nHandler)
 {
-    tolua_remove_function_by_refid(m_state, uFuncID);
+    tolua_remove_function_by_refid(m_state, nHandler);
 }
 
 void CCLuaEngine::addSearchPath(const char* path)
@@ -194,16 +230,16 @@ int	CCLuaEngine::executeGlobalFunction(const char* function_name)
     return ret;
 }
 
-int CCLuaEngine::executeFunctionByRefID(int uFuncID, int numArgs)
+int CCLuaEngine::executeFunctionByRefID(int nHandler, int numArgs)
 {
     lua_pushstring(m_state, TOLUA_REFID_FUNC_MAPPING);
     lua_rawget(m_state, LUA_REGISTRYINDEX);                         /* stack: ... refid_func */
-    lua_pushinteger(m_state, uFuncID);                        /* stack: ... refid_func refid */
+    lua_pushinteger(m_state, nHandler);                        /* stack: ... refid_func refid */
     lua_rawget(m_state, -2);                                        /* stack: ... refid_func func */
     
     if (!lua_isfunction(m_state, -1))
     {
-        CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", uFuncID);
+        CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", nHandler);
         lua_pop(m_state, 2 + numArgs);
         return 0;
     }
@@ -228,13 +264,13 @@ int CCLuaEngine::executeFunctionByRefID(int uFuncID, int numArgs)
     }
     catch (exception& e)
     {
-        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", uFuncID, e.what());
+        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", nHandler, e.what());
         lua_settop(m_state, 0);
         return 0;
     }
     catch (...)
     {
-        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", uFuncID);
+        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", nHandler);
         lua_settop(m_state, 0);
         return 0;
     }
@@ -260,35 +296,35 @@ int CCLuaEngine::executeFunctionByRefID(int uFuncID, int numArgs)
     return ret;
 }
 
-int CCLuaEngine::executeFunctionWithIntegerData(int uFuncID, int data)
+int CCLuaEngine::executeFunctionWithIntegerData(int nHandler, int data)
 {
     lua_pushinteger(m_state, data);
-    return executeFunctionByRefID(uFuncID, 1);
+    return executeFunctionByRefID(nHandler, 1);
 }
 
-int CCLuaEngine::executeFunctionWithFloatData(int uFuncID, float data)
+int CCLuaEngine::executeFunctionWithFloatData(int nHandler, float data)
 {
     lua_pushnumber(m_state, data);
-    return executeFunctionByRefID(uFuncID, 1);
+    return executeFunctionByRefID(nHandler, 1);
 }
 
-int CCLuaEngine::executeFunctionWithBooleanData(int uFuncID, bool data)
+int CCLuaEngine::executeFunctionWithBooleanData(int nHandler, bool data)
 {
     lua_pushboolean(m_state, data);
-    return executeFunctionByRefID(uFuncID, 1);
+    return executeFunctionByRefID(nHandler, 1);
 }
 
 // functions for excute touch event
-int CCLuaEngine::executeTouchEvent(int uFuncID, int eventType, CCTouch *pTouch)
+int CCLuaEngine::executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch)
 {
     CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->locationInView(pTouch->view()));
     lua_pushinteger(m_state, eventType);
     lua_pushnumber(m_state, pt.x);
     lua_pushnumber(m_state, pt.y);
-    return executeFunctionByRefID(uFuncID, 3);
+    return executeFunctionByRefID(nHandler, 3);
 }
 
-int CCLuaEngine::executeTouchesEvent(int uFuncID, int eventType, CCSet *pTouches)
+int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches)
 {
     lua_pushinteger(m_state, eventType);
     lua_newtable(m_state);
@@ -308,12 +344,40 @@ int CCLuaEngine::executeTouchesEvent(int uFuncID, int eventType, CCSet *pTouches
         ++it;
     }
     
-    return executeFunctionByRefID(uFuncID, 2);
+    return executeFunctionByRefID(nHandler, 2);
 }
 
-int CCLuaEngine::executeSchedule(int uFuncID, ccTime dt)
+int CCLuaEngine::executeSchedule(int nHandler, ccTime dt)
 {
-    return executeFunctionWithFloatData(uFuncID, dt);
+    return executeFunctionWithFloatData(nHandler, dt);
 }
+    
+void CCLuaEngine::addLuaLoader(lua_CFunction func)
+{
+    if (! func)
+    {
+        return;
+    }
+    // stack content after the invoking of the function
+    // get loader table
+    lua_getglobal(m_state, "package");                     // package
+    lua_getfield(m_state, -1, "loaders");                  // package, loaders
+    
+    // insert loader into index 2
+    lua_pushcfunction(m_state, func);                      // package, loaders, func
+    for (int i = lua_objlen(m_state, -2) + 1; i > 2; --i)
+    {
+        lua_rawgeti(m_state, -2, i - 1);                   // package, loaders, func, function
+                                                           // we call lua_rawgeti, so the loader table now is at -3
+        lua_rawseti(m_state, -3, i);                       // package, loaders, func
+    }
+    lua_rawseti(m_state, -2, 2);                           // package, loaders
+    
+    // set loaders into package
+    lua_setfield(m_state, -2, "loaders");                  // package
+    
+    lua_pop(m_state, 1);
+}
+
 
 } // namespace cocos2d

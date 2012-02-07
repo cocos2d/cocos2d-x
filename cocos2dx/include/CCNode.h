@@ -261,7 +261,7 @@ namespace   cocos2d {
 #endif
 
 #if CC_LUA_ENGINE_ENABLED
-        unsigned int m_uScriptHandlerFuncID;
+        int m_nScriptHandler;
 #endif
 
 	private:
@@ -321,7 +321,7 @@ namespace   cocos2d {
          
          Script handler auto unregister after onEnter().
          */
-        virtual void registerScriptHandler(unsigned int uFuncID);
+        virtual void registerScriptHandler(int nHandler);
         virtual void unregisterScriptHandler(void);
 #endif
 

@@ -87,20 +87,20 @@ namespace cocos2d{
     }
     
 #if CC_LUA_ENGINE_ENABLED
-    void CCMenuItem::registerScriptHandler(unsigned int uFuncID)
+    void CCMenuItem::registerScriptHandler(int nHandler)
     {
         unregisterScriptHandler();
-        m_uScriptHandlerFuncID = uFuncID;
-        LUALOG("[LUA] Add CCMenuItem script handler: %u", m_uScriptHandlerFuncID);
+        m_nScriptHandler = nHandler;
+        LUALOG("[LUA] Add CCMenuItem script handler: %d", m_nScriptHandler);
     }
     
     void CCMenuItem::unregisterScriptHandler(void)
     {
-        if (m_uScriptHandlerFuncID)
+        if (m_nScriptHandler)
         {
-            CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
-            LUALOG("[LUA] Remove CCMenuItem script handler: %u", m_uScriptHandlerFuncID);
-            m_uScriptHandlerFuncID = 0;
+            CCLuaEngine::sharedEngine()->removeLuaHandler(m_nScriptHandler);
+            LUALOG("[LUA] Remove CCMenuItem script handler: %d", m_nScriptHandler);
+            m_nScriptHandler = 0;
         }
     }
 #endif
@@ -115,9 +115,9 @@ namespace cocos2d{
             }
             
 #if CC_LUA_ENGINE_ENABLED
-            if (m_uScriptHandlerFuncID)
+            if (m_nScriptHandler)
             {
-                CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, getTag());
+                CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_nScriptHandler, getTag());
             }
 #endif
         }

@@ -79,7 +79,7 @@ CCTimer::CCTimer()
 , m_pTarget(NULL)
 , m_fElapsed(0.0f)
 #if CC_LUA_ENGINE_ENABLED
-, m_uScriptFuncID(0)
+, m_nScriptHandler(0)
 #endif
 {
 
@@ -106,19 +106,19 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, c
 }
 
 #if CC_LUA_ENGINE_ENABLED
-CCTimer* CCTimer::timerWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds)
+CCTimer* CCTimer::timerWithScriptHandler(int nHandler, ccTime fSeconds)
 {
 	CCTimer *pTimer = new CCTimer();
 
-    pTimer->initWithScriptFuncID(uFuncID, fSeconds);
+    pTimer->initWithScriptHandler(nHandler, fSeconds);
 	pTimer->autorelease();
 
 	return pTimer;
 }
 
-bool CCTimer::initWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds)
+bool CCTimer::initWithScriptHandler(int nHandler, ccTime fSeconds)
 {
-    m_uScriptFuncID = uFuncID;
+    m_nScriptHandler = nHandler;
 	m_fElapsed = -1;
     m_fInterval = fSeconds;
 
@@ -160,9 +160,9 @@ void CCTimer::update(ccTime dt)
 			m_fElapsed = 0;
 		}
 #if CC_LUA_ENGINE_ENABLED
-        if (m_uScriptFuncID)
+        if (m_nScriptHandler)
 		{
-            CCLuaEngine::sharedEngine()->executeSchedule(m_uScriptFuncID, m_fElapsed);
+            CCLuaEngine::sharedEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
 			m_fElapsed = 0;
 		}
 #endif
@@ -184,7 +184,7 @@ CCScheduler::CCScheduler(void)
 , m_pCurrentTarget(NULL)
 , m_bCurrentTargetSalvaged(false)
 #if CC_LUA_ENGINE_ENABLED
-, m_pScriptEntries(NULL)
+, m_pScriptHandlerEntries(NULL)
 #endif
 {
 	CCAssert(pSharedScheduler == NULL, "");
@@ -196,7 +196,7 @@ CCScheduler::~CCScheduler(void)
 
 	pSharedScheduler = NULL;
 #if CC_LUA_ENGINE_ENABLED
-    m_pScriptEntries->release();
+    m_pScriptHandlerEntries->release();
 #endif
 }
 
@@ -232,8 +232,8 @@ bool CCScheduler::init(void)
 	m_bUpdateHashLocked = false;
 
 #if CC_LUA_ENGINE_ENABLED
-    m_pScriptEntries = CCArray::arrayWithCapacity(20);
-    m_pScriptEntries->retain();
+    m_pScriptHandlerEntries = CCArray::arrayWithCapacity(20);
+    m_pScriptHandlerEntries->retain();
 #endif
 
 	return true;
@@ -533,7 +533,7 @@ void CCScheduler::unscheduleAllSelectors(void)
 	}
 
 #if CC_LUA_ENGINE_ENABLED
-    m_pScriptEntries->removeAllObjects();
+    m_pScriptHandlerEntries->removeAllObjects();
 #endif
 	}
 
@@ -574,18 +574,18 @@ void CCScheduler::unscheduleAllSelectorsForTarget(CCObject *pTarget)
 }
 
 #if CC_LUA_ENGINE_ENABLED
-unsigned int CCScheduler::scheduleScriptFunc(unsigned int uFuncID, ccTime fInterval, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, ccTime fInterval, bool bPaused)
 {
-    CCSchedulerFuncEntry* pEntry = CCSchedulerFuncEntry::entryWithFuncID(uFuncID, fInterval, bPaused);
-    m_pScriptEntries->addObject(pEntry);
+    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::entryWithHandler(nHandler, fInterval, bPaused);
+    m_pScriptHandlerEntries->addObject(pEntry);
     return pEntry->getEntryID();
 }
 
 void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 {
-    for (int i = m_pScriptEntries->count() - 1; i >= 0; i--)
+    for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
     {
-        CCSchedulerFuncEntry* pEntry = static_cast<CCSchedulerFuncEntry*>(m_pScriptEntries->objectAtIndex(i));
+        CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
         if (pEntry->getEntryID() == uScheduleScriptEntryID)
         {
             pEntry->markedForDeletion();
@@ -734,12 +734,12 @@ void CCScheduler::tick(ccTime dt)
 
 #if CC_LUA_ENGINE_ENABLED
     // Interate all over the script callbacks
-    for (int i = m_pScriptEntries->count() - 1; i >= 0; i--)
+    for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
     {
-        CCSchedulerFuncEntry* pEntry = static_cast<CCSchedulerFuncEntry*>(m_pScriptEntries->objectAtIndex(i));
+        CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
         if (pEntry->isMarkedForDeletion())
         {
-            m_pScriptEntries->removeObjectAtIndex(i);
+            m_pScriptHandlerEntries->removeObjectAtIndex(i);
         }
         else if (!pEntry->isPaused())
         {

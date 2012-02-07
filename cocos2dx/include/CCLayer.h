@@ -36,6 +36,10 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
+#if CC_LUA_ENGINE_ENABLED
+class CCTouchScriptHandlerEntry;
+#endif
+
 //
 // CCLayer
 //
@@ -85,7 +89,7 @@ public:
     
 #if CC_LUA_ENGINE_ENABLED
     /** Register script touch events handler */
-    void registerScriptTouchHandler(unsigned int uFuncID, bool isMultiTouches, int nPriority, bool bSwallowsTouches);
+    void registerScriptTouchHandler(int nHandler, bool bIsMultiTouches = false, int nPriority = INT_MIN, bool bSwallowsTouches = false);
     /** Unregister script touch events handler */
     void unregisterScriptTouchHandler(void);
 #endif
@@ -110,12 +114,12 @@ public:
     */
     CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
     
-#if CC_LUA_ENGINE_ENABLED
+#if CC_LUA_ENGINE_ENABLED    
 private:
-    // Script touch events handler function reference ID
-    unsigned int m_uScriptHandlerFuncID;
-    int excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
-    int excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
+    // Script touch events handler
+    CCTouchScriptHandlerEntry* m_pScriptHandlerEntry;
+    int  excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
+    int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
 #endif
 };
     

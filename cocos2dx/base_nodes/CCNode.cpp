@@ -80,7 +80,7 @@ CCNode::CCNode(void)
 , m_bIsTransformGLDirty(true)
 #endif
 #if CC_LUA_ENGINE_ENABLED
-, m_uScriptHandlerFuncID(0)
+, m_nScriptHandler(0)
 #endif
 {
     // nothing
@@ -946,9 +946,9 @@ void CCNode::onEnter()
 	m_bIsRunning = true;
 
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_nScriptHandler)
     {
-        CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, kCCNodeOnEnter);
+        CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter);
     }
 #endif
 }
@@ -965,9 +965,9 @@ void CCNode::onExit()
 	m_bIsRunning = false;
 
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_nScriptHandler)
     {
-        CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, kCCNodeOnExit);
+        CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit);
     }
 #endif
 
@@ -975,20 +975,20 @@ void CCNode::onExit()
 }
 
 #if CC_LUA_ENGINE_ENABLED
-void CCNode::registerScriptHandler(unsigned int uFuncID)
+void CCNode::registerScriptHandler(int nHandler)
 {
     unregisterScriptHandler();
-    m_uScriptHandlerFuncID = uFuncID;
-    LUALOG("[LUA] Add CCNode event handler: %u", m_uScriptHandlerFuncID);
+    m_nScriptHandler = nHandler;
+    LUALOG("[LUA] Add CCNode event handler: %d", m_nScriptHandler);
 }
 
 void CCNode::unregisterScriptHandler(void)
 {
-    if (m_uScriptHandlerFuncID)
+    if (m_nScriptHandler)
     {
-        CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
-        LUALOG("[LUA] Remove CCNode event handler: %u", m_uScriptHandlerFuncID);
-        m_uScriptHandlerFuncID = 0;
+        CCLuaEngine::sharedEngine()->removeLuaHandler(m_nScriptHandler);
+        LUALOG("[LUA] Remove CCNode event handler: %d", m_nScriptHandler);
+        m_nScriptHandler = 0;
     }
 }
 #endif

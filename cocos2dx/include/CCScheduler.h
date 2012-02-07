@@ -54,7 +54,7 @@ public:
 
 #if CC_LUA_ENGINE_ENABLED
     /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds);
+    bool initWithScriptHandler(int nHandler, ccTime fSeconds);
 #endif
 
 	/** triggers the timer */
@@ -69,7 +69,7 @@ public:
 
 #if CC_LUA_ENGINE_ENABLED
     /** Allocates a timer with a script callback function and an interval in seconds. */
-    static CCTimer* timerWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds);
+    static CCTimer* timerWithScriptHandler(int nHandler, ccTime fSeconds);
 #endif
 
 public:
@@ -80,7 +80,7 @@ protected:
 	CCObject *m_pTarget;
 	ccTime m_fElapsed;
 #if CC_LUA_ENGINE_ENABLED
-    unsigned int m_uScriptFuncID;
+    int m_nScriptHandler;
 #endif
 };
 
@@ -169,7 +169,7 @@ public:
 	 If 'interval' is 0, it will be called every frame.
      return schedule script entry ID, used for unscheduleScriptFunc().
      */
-    unsigned int scheduleScriptFunc(unsigned int uFuncID, ccTime fInterval, bool bPaused);
+    unsigned int scheduleScriptFunc(unsigned int nHandler, ccTime fInterval, bool bPaused);
     
 	/** Unschedule a script entry. */
     void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
@@ -233,7 +233,7 @@ protected:
 	bool m_bUpdateHashLocked;
 
 #if CC_LUA_ENGINE_ENABLED
-    CCArray* m_pScriptEntries;
+    CCArray* m_pScriptHandlerEntries;
 #endif
 };
 }//namespace   cocos2d
