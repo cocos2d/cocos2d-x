@@ -463,6 +463,10 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 	tex = new CCTexture2D();
 	if( tex->initWithPVRFile(fullpath.c_str()) )
 	{
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+        // cache the texture file name
+        VolatileTexture::addImageTexture(tex, fullpath.c_str(), CCImage::kFmtRawData);
+#endif
 		m_pTextures->setObject(tex, key);
 		tex->autorelease();
 	}
@@ -732,22 +736,39 @@ void VolatileTexture::reloadAllTextures()
 
 		switch (vt->m_eCashedImageType)
 		{
-		case kImageFile:
-			{
-				CCImage image;
-				CCFileData data(vt->m_strFileName.c_str(), "rb");
-				unsigned long nSize  = data.getSize();
-				unsigned char* pBuffer = data.getBuffer();
+        case kImageFile:
+            {
+                CCImage image;
+                std::string lowerCase(vt->m_strFileName.c_str());
+                for (unsigned int i = 0; i < lowerCase.length(); ++i)
+                {
+                    lowerCase[i] = tolower(lowerCase[i]);
+                }
 
-				if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
-				{
+                if (std::string::npos != lowerCase.find(".pvr")) 
+                {
                     CCTexture2DPixelFormat oldPixelFormat = CCTexture2D::defaultAlphaPixelFormat();
                     CCTexture2D::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
-					vt->texture->initWithImage(&image);
+
+                    vt->texture->initWithPVRFile(vt->m_strFileName.c_str());
                     CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
-				}
-			}
-			break;
+                } 
+                else 
+                {
+                    CCFileData data(vt->m_strFileName.c_str(), "rb");
+                    unsigned long nSize  = data.getSize();
+                    unsigned char* pBuffer = data.getBuffer();
+
+                    if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
+                    {
+                        CCTexture2DPixelFormat oldPixelFormat = CCTexture2D::defaultAlphaPixelFormat();
+                        CCTexture2D::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
+                        vt->texture->initWithImage(&image);
+                        CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
+                    }
+                }
+            }
+            break;
 		case kImageData:
 			{
 				unsigned int nPOTWide, nPOTHigh;
