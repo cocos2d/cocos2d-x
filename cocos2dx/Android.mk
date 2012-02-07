@@ -109,6 +109,10 @@ touch_dispatcher/CCTouchHandler.cpp
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
                            $(LOCAL_PATH)/include \
                            $(LOCAL_PATH)/platform
+                           
+LOCAL_EXPORT_LDLIBS := -llog\
+                       -lz \
+                       -lGLESv1_CM
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
@@ -126,6 +130,8 @@ LOCAL_STATIC_LIBRARIES += jpeg_static_prebuilt
 LOCAL_CFLAGS := -DUSE_FILE32API
 
 include $(BUILD_SHARED_LIBRARY)
+
+$(call import-add-path,$(LOCAL_PATH)/..)
 
 # note that the import-module calls are relative to the parent directory
 # this simplifies makefiles that use this module
