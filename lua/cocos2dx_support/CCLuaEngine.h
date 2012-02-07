@@ -40,12 +40,12 @@ namespace cocos2d
 class CCTimer;
 
 // Lua support for CCScheduler
-class CCSchedulerFuncEntry : public CCObject
+class CCSchedulerScriptHandlerEntry : public CCObject
 {
 public:
-    // uFuncID return by tolua_ref_function(), called from LuaCocos2d.cpp
-    static CCSchedulerFuncEntry* entryWithFuncID(int uFuncID, ccTime fInterval, bool bPaused);
-    ~CCSchedulerFuncEntry(void);
+    // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
+    static CCSchedulerScriptHandlerEntry* entryWithHandler(int nHandler, ccTime fInterval, bool bPaused);
+    ~CCSchedulerScriptHandlerEntry(void);
     
     inline cocos2d::CCTimer* getTimer(void) {
         return m_pTimer;
@@ -56,7 +56,7 @@ public:
     }
     
     inline int getEntryID(void) {
-        return m_uEntryID;
+        return m_nEntryID;
     }
     
     inline void markedForDeletion(void) {
@@ -68,22 +68,48 @@ public:
     }
     
 private:
-    CCSchedulerFuncEntry(void);
-    bool initWithuFuncID(int uFuncID, ccTime fInterval, bool bPaused);
+    CCSchedulerScriptHandlerEntry(void);
+    bool initWithHandler(int nHandler, ccTime fInterval, bool bPaused);
     
     cocos2d::CCTimer*   m_pTimer;
     bool                m_bPaused;
     bool                m_bMarkedForDeletion;
-    unsigned int        m_uFuncID;
-    unsigned int        m_uEntryID;
+    int                 m_nHandler;
+    int                 m_nEntryID;
 };
 
 
 // Lua support for touch events
-class CCTouchEventEntry : public CCObject
+class CCTouchScriptHandlerEntry : public CCObject
 {
 public:
-    static CCTouchEventEntry* entryWithuFuncID(int uFuncID);
+    static CCTouchScriptHandlerEntry* entryWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    ~CCTouchScriptHandlerEntry(void);
+    
+    inline int getHandler(void) {
+        return m_nHandler;
+    }
+    
+    inline bool getIsMultiTouches(void) {
+        return m_bIsMultiTouches;
+    }
+    
+    inline int getPriority(void) {
+        return m_nPriority;
+    }
+    
+    inline bool getSwallowsTouches(void) {
+        return m_bSwallowsTouches;
+    }
+    
+private:
+    CCTouchScriptHandlerEntry(void);
+    bool initWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    
+    int     m_nHandler;
+    bool    m_bIsMultiTouches;
+    int     m_nPriority;
+    bool    m_bSwallowsTouches;
 };
 
 
@@ -105,12 +131,12 @@ public:
      @brief Remove CCObject from lua state
      @param object to remove
      */
-    void removeCCObjectByID(unsigned int uLuaID);
+    void removeCCObjectByID(int nLuaID);
     
     /**
      @brief Remove Lua function reference
      */
-    void removeLuaFuncID(int uFuncID);
+    void removeLuaHandler(int nHandler);
     
     /**
      @brief Add a path to find lua files in
@@ -146,17 +172,20 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    int executeFunctionByRefID(int uFuncID, int numArgs = 0);
-    int executeFunctionWithIntegerData(int uFuncID, int data);
-    int executeFunctionWithFloatData(int uFuncID, float data);
-    int executeFunctionWithBooleanData(int uFuncID, bool data);
+    int executeFunctionByRefID(int nHandler, int numArgs = 0);
+    int executeFunctionWithIntegerData(int nHandler, int data);
+    int executeFunctionWithFloatData(int nHandler, float data);
+    int executeFunctionWithBooleanData(int nHandler, bool data);
     
     // functions for excute touch event
-    int executeTouchEvent(int uFuncID, int eventType, cocos2d::CCTouch *pTouch);
-    int executeTouchesEvent(int uFuncID, int eventType, cocos2d::CCSet *pTouches);
+    int executeTouchEvent(int nHandler, int eventType, cocos2d::CCTouch *pTouch);
+    int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches);
     
     // execute a schedule function
-    int executeSchedule(int uFuncID, cocos2d::ccTime dt);
+    int executeSchedule(int nHandler, cocos2d::ccTime dt);
+    
+    // Add lua loader, now it is used on android
+    void addLuaLoader(lua_CFunction func);
     
     static CCLuaEngine* sharedEngine();
     static void purgeSharedEngine();

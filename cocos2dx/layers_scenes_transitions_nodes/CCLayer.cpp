@@ -44,7 +44,7 @@ CCLayer::CCLayer()
 ,m_bIsAccelerometerEnabled(false)
 ,m_bIsKeypadEnabled(false)
 #if CC_LUA_ENGINE_ENABLED
-,m_uScriptHandlerFuncID(0)
+,m_pScriptHandlerEntry(NULL)
 #endif
 {
 	setAnchorPoint(ccp(0.5f, 0.5f));
@@ -53,6 +53,9 @@ CCLayer::CCLayer()
 
 CCLayer::~CCLayer()
 {
+#if CC_LUA_ENGINE_ENABLED
+    unregisterScriptTouchHandler();
+#endif
 }
 
 bool CCLayer::init()
@@ -90,45 +93,52 @@ CCLayer *CCLayer::node()
 
 void CCLayer::registerWithTouchDispatcher()
 {
+#if CC_LUA_ENGINE_ENABLED
+    if (m_pScriptHandlerEntry)
+    {
+        if (m_pScriptHandlerEntry->getIsMultiTouches())
+        {
+            CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this, 0);
+            LUALOG("[LUA] Add multi-touches event handler: %d", m_pScriptHandlerEntry->getHandler());
+        }
+        else
+        {
+            CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,
+                                                                       m_pScriptHandlerEntry->getPriority(),
+                                                                       m_pScriptHandlerEntry->getSwallowsTouches());
+            LUALOG("[LUA] Add touch event handler: %d", m_pScriptHandlerEntry->getHandler());
+        }
+        return;
+    }
+#endif
 	CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0);
 }
 
 #if CC_LUA_ENGINE_ENABLED
-void CCLayer::registerScriptTouchHandler(unsigned int uFuncID, bool isMultiTouches, int nPriority, bool bSwallowsTouches)
+void CCLayer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
 {
     unregisterScriptTouchHandler();
-    if (isMultiTouches)
-    {
-        CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this, 0);
-        LUALOG("[LUA] Add multi-touches event handler: %u", uFuncID);
-    }
-    else
-    {
-        CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, nPriority, bSwallowsTouches);
-        LUALOG("[LUA] Add touch event handler: %u", uFuncID);
-    }
-    m_uScriptHandlerFuncID = uFuncID;
+    m_pScriptHandlerEntry = CCTouchScriptHandlerEntry::entryWithHandler(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
+    m_pScriptHandlerEntry->retain();
 }
 
 void CCLayer::unregisterScriptTouchHandler(void)
 {
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
-        CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
-        CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
-        LUALOG("[LUA] Remove touch event handler: %u", m_uScriptHandlerFuncID);
+        m_pScriptHandlerEntry->release();
+        m_pScriptHandlerEntry = NULL;
     }
-    m_uScriptHandlerFuncID = 0;
 }
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCTouch *pTouch)
 {
-    return CCLuaEngine::sharedEngine()->executeTouchEvent(m_uScriptHandlerFuncID, nEventType, pTouch);
+    return CCLuaEngine::sharedEngine()->executeTouchEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouch);
 }
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 {
-    return CCLuaEngine::sharedEngine()->executeTouchesEvent(m_uScriptHandlerFuncID, nEventType, pTouches);
+    return CCLuaEngine::sharedEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches);
 }
 #endif // CC_LUA_ENGINE_ENABLED
 
@@ -153,9 +163,6 @@ void CCLayer::setIsTouchEnabled(bool enabled)
 			{
 				// have problems?
 				CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
-#if CC_LUA_ENGINE_ENABLED
-                unregisterScriptTouchHandler();
-#endif
 			}
 		}
 	}
@@ -287,7 +294,7 @@ void CCLayer::touchDelegateRelease()
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
         return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch);
     }
@@ -300,7 +307,7 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
         return;
@@ -312,7 +319,7 @@ void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
     
 void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
         return;
@@ -324,7 +331,7 @@ void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
 
 void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
         return;
@@ -337,7 +344,7 @@ void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
 void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
         return;
@@ -350,7 +357,7 @@ void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
         return;
@@ -363,7 +370,7 @@ void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
         return;
@@ -376,7 +383,7 @@ void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
 #if CC_LUA_ENGINE_ENABLED
-    if (m_uScriptHandlerFuncID)
+    if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
         return;

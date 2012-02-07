@@ -57,7 +57,7 @@ namespace cocos2d{
         , m_pListener(NULL)			
         , m_pfnSelector(NULL)
 #if CC_LUA_ENGINE_ENABLED
-        , m_uScriptHandlerFuncID(0)
+        , m_nScriptHandler(0)
 #endif
         {}
         virtual ~CCMenuItem();
@@ -76,7 +76,7 @@ namespace cocos2d{
         
 #if CC_LUA_ENGINE_ENABLED
         /** Register menu handler script function */
-        virtual void registerScriptHandler(unsigned int uFuncID);
+        virtual void registerScriptHandler(int nHandler);
         virtual void unregisterScriptHandler(void);
 #endif
         
@@ -86,7 +86,7 @@ namespace cocos2d{
         CCObject*       m_pListener;
         SEL_MenuHandler	m_pfnSelector;
 #if CC_LUA_ENGINE_ENABLED
-        unsigned int    m_uScriptHandlerFuncID;
+        int             m_nScriptHandler;
 #endif
     };
     
