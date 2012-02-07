@@ -83,10 +83,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new EffectAdvanceScene(); break;
     case TEST_HIRES:
         pScene = new HiResTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 	case TEST_ACCELEROMRTER:
         pScene = new AccelerometerTestScene(); break;
-#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;

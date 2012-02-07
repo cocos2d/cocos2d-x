@@ -1151,6 +1151,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="AccelerometerTest"
+					>
+					<File
+						RelativePath="..\tests\AccelerometerTest\AccelerometerTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\AccelerometerTest\AccelerometerTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
