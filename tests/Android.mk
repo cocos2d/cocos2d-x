@@ -1,6 +1,10 @@
 LOCAL_PATH := $(call my-dir)
+
 include $(CLEAR_VARS)
-LOCAL_MODULE := game_logic
+
+LOCAL_MODULE := game_shared
+
+LOCAL_MODULE_FILENAME := libgame
 
 LOCAL_SRC_FILES := \
 tests/AccelerometerTest/AccelerometerTest.cpp \
@@ -89,20 +93,13 @@ tests/controller.cpp \
 tests/testBasic.cpp \
 AppDelegate.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../cocos2dx \
-                   $(LOCAL_PATH)/../cocos2dx/include \
-                   $(LOCAL_PATH)/../cocos2dx/platform \
-                   $(LOCAL_PATH)/../cocos2dx/platform/third_party/android/ \
-                   $(LOCAL_PATH)/../chipmunk/include/chipmunk \
-                   $(LOCAL_PATH)/../CocosDenshion/include \
-                   $(LOCAL_PATH)/..
-                
-   
-LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/test.android/libs/$(TARGET_ARCH_ABI)) \
-                -lGLESv1_CM \
-                -lcocos2d -llog -lcocosdenshion \
-                -lbox2d -lchipmunk \
-                -L$(call host-path, $(LOCAL_PATH)/../cocos2dx/platform/third_party/android/libraries/$(TARGET_ARCH_ABI)) -lcurl
+LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
+
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+                   
+LOCAL_SHARED_LIBRARIES := cocos2dx_shared cocosdenshion_shared box2d_shared chipmunk_shared
             
 include $(BUILD_SHARED_LIBRARY)
+
+$(call import-module,cocos2dx/platform/third_party/android/modules/libcurl)
                    
