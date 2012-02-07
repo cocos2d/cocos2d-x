@@ -37,6 +37,10 @@ extern "C" {
 #include "CCArray.h"
 #include "CCScheduler.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "Cocos2dxLuaLoader.h"
+#endif
+
 namespace cocos2d
 {
 
@@ -124,7 +128,9 @@ CCLuaEngine::CCLuaEngine()
     tolua_Cocos2d_open(m_state);
     tolua_prepare_ccobject_table(m_state);
     luax_loadexts(m_state);
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    addLuaLoader(loader_Android);
+#endif
 }
 
 CCLuaEngine::~CCLuaEngine()
