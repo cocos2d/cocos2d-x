@@ -409,6 +409,11 @@ namespace cocos2d{
 			return NULL;
 	}
 
+	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
+	{
+		return initWithString(theString, fntFile, CCTextAlignmentCenter, 0);
+	}
+
 	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, CCTextAlignment alignment
 		, float width)
 	{

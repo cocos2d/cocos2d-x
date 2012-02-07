@@ -176,6 +176,7 @@ namespace cocos2d{
 
 		/** init a bitmap font altas with an initial string and the FNT file */
 		bool initWithString(const char *str, const char *fntFile, CCTextAlignment alignment, float width);
+		bool initWithString(const char *str, const char *fntFile);
 		/** updates the font chars based on the string to render */
 		void createFontChars();
 		// super method
