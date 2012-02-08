@@ -1,8 +1,10 @@
 LOCAL_PATH := $(call my-dir)
-include $(CLEAR_VARS)
-LOCAL_MODULE := game_shared
 
-LOCAL_MODULE_FILENAME := libgame
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := game_logic_shared
+
+LOCAL_MODULE_FILENAME := libgame_logic
 
 LOCAL_SRC_FILES := AppDelegate.cpp \
                    HelloWorldScene.cpp
