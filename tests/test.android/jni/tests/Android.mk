@@ -8,7 +8,7 @@ LOCAL_MODULE_FILENAME := libtests
 
 LOCAL_SRC_FILES := main.cpp
                 
-LOCAL_SHARED_LIBRARIES := cocos2dx_shared game_shared
+LOCAL_SHARED_LIBRARIES := cocos2dx_shared game_logic_shared
             
 include $(BUILD_SHARED_LIBRARY)
                    
