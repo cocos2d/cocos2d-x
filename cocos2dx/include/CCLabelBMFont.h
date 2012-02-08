@@ -152,8 +152,8 @@ namespace cocos2d{
 		CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
 	protected:
 		// string to render
-		std::string m_sString;
-		std::string m_sString_a;
+		unsigned short* m_sString;
+		std::string m_sString_initial;
 		CCBMFontConfiguration *m_pConfiguration;
 		CCTextAlignment m_pAlignment;
 		float m_fWidth;
@@ -161,7 +161,6 @@ namespace cocos2d{
 		CCLabelBMFont()
 			: m_cOpacity(0)           
 			, m_bIsOpacityModifyRGB(false)
-			, m_sString("")
              , m_pConfiguration(NULL)
 		{}
 		virtual ~CCLabelBMFont();
@@ -182,6 +181,7 @@ namespace cocos2d{
 		// super method
 		virtual void setString(const char *label);
 		virtual void setString(const char *label, bool from_update);
+		virtual void updateString(bool from_update);
 		virtual const char* getString(void);
         virtual void setCString(const char *label);
 		virtual void setAnchorPoint(const CCPoint& var);

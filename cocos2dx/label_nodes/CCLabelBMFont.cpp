@@ -42,424 +42,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "CCFileUtils.h"
 #include "support/data_support/uthash.h"
 namespace cocos2d{
-	
-	//
-	//FNTConfig Cache - free functions
-	//
-	CCMutableDictionary<std::string, CCBMFontConfiguration*> *configurations = NULL;
-	CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
-	{
-		CCBMFontConfiguration *pRet = NULL;
-
-		if( configurations == NULL )
-		{
-			configurations = new CCMutableDictionary<std::string, CCBMFontConfiguration*>();
-		}
-		std::string key(fntFile);
-		pRet = configurations->objectForKey(key);
-		if( pRet == NULL )
-		{
-			pRet = CCBMFontConfiguration::configurationWithFNTFile(fntFile);
-			configurations->setObject(pRet, key);
-		}
-
-		return pRet;
-	}
-
-	void FNTConfigRemoveCache( void )
-	{
-		if (configurations)
-		{
-			configurations->removeAllObjects();
-            CC_SAFE_RELEASE_NULL(configurations);
-		}
-	}
-	//
-	//Hash Element
-	//
-	// Equal function for targetSet.
-	typedef struct _KerningHashElement
-	{	
-		int				key;		// key for the hash. 16-bit for 1st element, 16-bit for 2nd element
-		int				amount;
-		UT_hash_handle	hh;
-	} tKerningHashElement;
-	//
-	//BitmapFontConfiguration
-	//
-
-	CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
-	{
-		CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
-		if (pRet->initWithFNTfile(FNTfile))
-		{
-			pRet->autorelease();
-			return pRet;
-		}
-		CC_SAFE_DELETE(pRet);
-		return NULL;
-	}
-	bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
-	{
-		CCAssert(FNTfile != NULL && strlen(FNTfile)!=0, "");
-		m_pKerningDictionary = NULL;
-		this->parseConfigFile(FNTfile);
-		return true;
-	}
-
-    CCBMFontConfiguration::CCBMFontConfiguration()
-        : m_pBitmapFontArray(new std::map<unsigned int, ccBMFontDef>)
-        , m_uCommonHeight(0)
-        , m_pKerningDictionary(NULL)
-    {
- 
-    }
-
-	CCBMFontConfiguration::~CCBMFontConfiguration()
-	{
-		CCLOGINFO( "cocos2d: deallocing CCBMFontConfiguration" );
-        CC_SAFE_DELETE(m_pBitmapFontArray);
-		this->purgeKerningDictionary();
-		m_sAtlasName.clear();
-	}
-	char * CCBMFontConfiguration::description(void)
-	{
-		char *ret = new char[100];
-		sprintf(ret, "<CCBMFontConfiguration | Kernings:%d | Image = %s>", HASH_COUNT(m_pKerningDictionary), m_sAtlasName.c_str());
-		return ret;
-	}
-	void CCBMFontConfiguration::purgeKerningDictionary()
-	{
-		tKerningHashElement *current;
-		while(m_pKerningDictionary) 
-		{
-			current = m_pKerningDictionary; 
-			HASH_DEL(m_pKerningDictionary,current);
-			free(current);
-		}
-	}
-	void CCBMFontConfiguration::parseConfigFile(const char *controlFile)
-	{	
-		std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
-
-        CCFileData data(fullpath.c_str(), "rb");
-        unsigned long nBufSize = data.getSize();
-        char* pBuffer = (char*) data.getBuffer();
-
-        CCAssert(pBuffer, "CCBMFontConfiguration::parseConfigFile | Open file error.");
-
-        if (!pBuffer)
-        {
-            return;
-        }
-
-        // parse spacing / padding
-        std::string line;
-        std::string strLeft(pBuffer, nBufSize);
-        while (strLeft.length() > 0)
-        {
-            int pos = strLeft.find('\n');
-
-            if (pos != (int)std::string::npos)
-            {
-                // the data is more than a line.get one line
-                line = strLeft.substr(0, pos);
-                strLeft = strLeft.substr(pos + 1);
-            }
-            else
-            {
-                // get the left data
-                line = strLeft;
-                strLeft.erase();
-            }
-
-            if(line.substr(0,strlen("info face")) == "info face") 
-            {
-                // XXX: info parsing is incomplete
-                // Not needed for the Hiero editors, but needed for the AngelCode editor
-                //			[self parseInfoArguments:line];
-                this->parseInfoArguments(line);
-            }
-            // Check to see if the start of the line is something we are interested in
-            else if(line.substr(0,strlen("common lineHeight")) == "common lineHeight")
-            {
-                this->parseCommonArguments(line);
-            }
-            else if(line.substr(0,strlen("page id")) == "page id")
-            {
-                this->parseImageFileName(line, controlFile);
-            }
-            else if(line.substr(0,strlen("chars c")) == "chars c")
-            {
-                // Ignore this line
-            }
-            else if(line.substr(0,strlen("char")) == "char")
-            {
-                // Parse the current line and create a new CharDef
-                ccBMFontDef characterDefinition;
-                this->parseCharacterDefinition(line, &characterDefinition);
-
-                // Add the CharDef returned to the charArray
-                (*m_pBitmapFontArray)[ characterDefinition.charID ] = characterDefinition;
-            }
-            else if(line.substr(0,strlen("kernings count")) == "kernings count")
-            {
-                this->parseKerningCapacity(line);
-            }
-            else if(line.substr(0,strlen("kerning first")) == "kerning first")
-            {
-                this->parseKerningEntry(line);
-            }
-        }
-	}
-	void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
-	{
-		//////////////////////////////////////////////////////////////////////////
-		// line to parse:
-		// page id=0 file="bitmapFontTest.png"
-		//////////////////////////////////////////////////////////////////////////
-
-		// page ID. Sanity check
-		int index = line.find('=')+1;
-		int index2 = line.find(' ', index);
-		std::string value = line.substr(index, index2-index);
-		CCAssert(atoi(value.c_str()) == 0, "LabelBMFont file could not be found");
-		// file 
-		index = line.find('"')+1;
-		index2 = line.find('"', index);
-		value = line.substr(index, index2-index);
-
-		m_sAtlasName = CCFileUtils::fullPathFromRelativeFile(value.c_str(), fntFile);
-	}
-	void CCBMFontConfiguration::parseInfoArguments(std::string line)
-	{
-		//////////////////////////////////////////////////////////////////////////
-		// possible lines to parse:
-		// info face="Script" size=32 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=1,4,3,2 spacing=0,0 outline=0
-		// info face="Cracked" size=36 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1
-		//////////////////////////////////////////////////////////////////////////
-
-		// padding
-		int index = line.find("padding=");
-		int index2 = line.find(' ', index);
-		std::string value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "padding=%d,%d,%d,%d", &m_tPadding.top, &m_tPadding.right, &m_tPadding.bottom, &m_tPadding.left);
-		CCLOG("cocos2d: padding: %d,%d,%d,%d", m_tPadding.left, m_tPadding.top, m_tPadding.right, m_tPadding.bottom);
-	}
-	void CCBMFontConfiguration::parseCommonArguments(std::string line)
-	{
-		//////////////////////////////////////////////////////////////////////////
-		// line to parse:
-		// common lineHeight=104 base=26 scaleW=1024 scaleH=512 pages=1 packed=0
-		//////////////////////////////////////////////////////////////////////////
-		
-		// Height
-		int index = line.find("lineHeight=");
-		int index2 = line.find(' ', index);
-		std::string value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "lineHeight=%u", &m_uCommonHeight);
-		// scaleW. sanity check
-		index = line.find("scaleW=") + strlen("scaleW=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		CCAssert(atoi(value.c_str()) <= CCConfiguration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
-		// scaleH. sanity check
-		index = line.find("scaleH=") + strlen("scaleH=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		CCAssert(atoi(value.c_str()) <= CCConfiguration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
-		// pages. sanity check
-		index = line.find("pages=") + strlen("pages=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		CCAssert(atoi(value.c_str()) == 1, "CCBitfontAtlas: only supports 1 page");
-
-		// packed (ignore) What does this mean ??
-	}
-	void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition)
-	{	
-		//////////////////////////////////////////////////////////////////////////
-		// line to parse:
-		// char id=32   x=0     y=0     width=0     height=0     xoffset=0     yoffset=44    xadvance=14     page=0  chnl=0 
-		//////////////////////////////////////////////////////////////////////////
-
-		// Character ID
-		int index = line.find("id=");
-		int index2 = line.find(' ', index);
-		std::string value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "id=%u", &characterDefinition->charID);
-
-		// Character x
-		index = line.find("x=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "x=%f", &characterDefinition->rect.origin.x);
-		// Character y
-		index = line.find("y=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "y=%f", &characterDefinition->rect.origin.y);
-		// Character width
-		index = line.find("width=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "width=%f", &characterDefinition->rect.size.width);
-		// Character height
-		index = line.find("height=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "height=%f", &characterDefinition->rect.size.height);
-		// Character xoffset
-		index = line.find("xoffset=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "xoffset=%d", &characterDefinition->xOffset);
-		// Character yoffset
-		index = line.find("yoffset=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "yoffset=%d", &characterDefinition->yOffset);
-		// Character xadvance
-		index = line.find("xadvance=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "xadvance=%d", &characterDefinition->xAdvance);
-	}
-	void CCBMFontConfiguration::parseKerningCapacity(std::string line)
-	{
-		// When using uthash there is not need to parse the capacity.
-
-		//	CCAssert(!kerningDictionary, @"dictionary already initialized");
-		//	
-		//	// Break the values for this line up using =
-		//	CCMutableArray *values = [line componentsSeparatedByString:@"="];
-		//	NSEnumerator *nse = [values objectEnumerator];	
-		//	CCString *propertyValue;
-		//	
-		//	// We need to move past the first entry in the array before we start assigning values
-		//	[nse nextObject];
-		//	
-		//	// count
-		//	propertyValue = [nse nextObject];
-		//	int capacity = [propertyValue intValue];
-		//	
-		//	if( capacity != -1 )
-		//		kerningDictionary = ccHashSetNew(capacity, targetSetEql);
-	}
-	void CCBMFontConfiguration::parseKerningEntry(std::string line)
-	{		
-		//////////////////////////////////////////////////////////////////////////
-		// line to parse:
-		// kerning first=121  second=44  amount=-7
-		//////////////////////////////////////////////////////////////////////////
-
-		// first
-		int first;
-		int index = line.find("first=");
-		int index2 = line.find(' ', index);
-		std::string value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "first=%d", &first);
-
-		// second
-		int second;
-		index = line.find("second=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "second=%d", &second);
-
-		// amount
-		int amount;
-		index = line.find("amount=");
-		index2 = line.find(' ', index);
-		value = line.substr(index, index2-index);
-		sscanf(value.c_str(), "amount=%d", &amount);
-
-		tKerningHashElement *element = (tKerningHashElement *)calloc( sizeof( *element ), 1 );
-		element->amount = amount;
-		element->key = (first<<16) | (second&0xffff);
-		HASH_ADD_INT(m_pKerningDictionary,key, element);
-	}
-	//
-	//CCLabelBMFont
-	//
-
-	//LabelBMFont - Purge Cache
-	void CCLabelBMFont::purgeCachedData()
-	{
-		FNTConfigRemoveCache();
-	}
-
-	//LabelBMFont - Creation & Init
-	CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
-	{
-		return labelWithString(str, fntFile, CCTextAlignmentLeft, 0);
-	}
-
-	//LabelBMFont - Creation & Init
-	CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, CCTextAlignment alignment
-		, float width)
-	{
-		CCLabelBMFont *pRet = new CCLabelBMFont();
-		if(pRet && pRet->initWithString(str, fntFile, alignment, width))
-		{
-			pRet->autorelease();
-			return pRet;
-		}
-		CC_SAFE_DELETE(pRet)
-			return NULL;
-	}
-
-	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
-	{
-		return initWithString(theString, fntFile, CCTextAlignmentCenter, 0);
-	}
-
-	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, CCTextAlignment alignment
-		, float width)
-	{
-		CCAssert(theString != NULL, "");
-		CC_SAFE_RELEASE(m_pConfiguration);// allow re-init
-		m_pConfiguration = FNTConfigLoadFile(fntFile);
-		m_pConfiguration->retain();
-		CCAssert( m_pConfiguration, "Error creating config for LabelBMFont");
-
-		if (CCSpriteBatchNode::initWithFile(m_pConfiguration->m_sAtlasName.c_str(), strlen(theString)))
-		{
-			m_pAlignment = alignment;
-			m_fWidth = width;
-			m_sString_a = std::string(theString);
-			m_cOpacity = 255;
-			m_tColor = ccWHITE;
-			m_tContentSize = CCSizeZero;
-			m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
-			setAnchorPoint(ccp(0.5f, 0.5f));
-			this->setString(theString);
-			updateLabel();
-			return true;
-		}
-		return false;
-	}
-
-	CCLabelBMFont::~CCLabelBMFont()
-	{
-		m_sString.clear();
-		CC_SAFE_RELEASE(m_pConfiguration);
-	}
-
-	// LabelBMFont - Atlas generation
-	int CCLabelBMFont::kerningAmountForFirst(unsigned short first, unsigned short second)
-	{
-		int ret = 0;
-		unsigned int key = (first<<16) | (second & 0xffff);
-
-		if( m_pConfiguration->m_pKerningDictionary ) {
-			tKerningHashElement *element = NULL;
-			HASH_FIND_INT(m_pConfiguration->m_pKerningDictionary, &key, element);		
-			if(element)
-				ret = element->amount;
-		}
-		return ret;
-	}
 
     static int cc_wcslen(const unsigned short* str)
     {
@@ -607,6 +189,41 @@ namespace cocos2d{
 		str->erase(str->begin() + index, str->begin() + size);
 	}
 
+	/*
+	 * @ch is the unicode character whitespace?
+	 * 
+	 * Reference: http://en.wikipedia.org/wiki/Whitespace_character#Unicode
+	 * 
+	 * Return value: weather the character is a whitespace character.
+	 * */
+	static bool isspace_unicode(unsigned short ch)
+	{
+		return  ch >= 0x0009 && ch <= 0x000D || ch == 0x0020 || ch == 0x0085 || ch == 0x00A0 || ch == 0x1680
+			|| (ch >= 0x2000 && ch <= 0x200A) || ch == 0x2028 || ch == 0x2029 || ch == 0x202F
+			||  ch == 0x205F || ch == 0x3000;
+	}
+
+	static void cc_utf8_trim_ws(std::vector<unsigned short>* str)
+	{
+		using namespace std;
+		int len = str->size();
+		int last_index = len - 1;
+
+		// Only start trimming if the last character is whitespace..
+		if (isspace_unicode((*str)[last_index]))
+		{
+			for (int i = last_index - 1; i >= 0; --i)
+			{
+				if (isspace_unicode((*str)[i]))
+					last_index = i;
+				else
+					break;
+			}
+
+			cc_utf8_trim_from(str, last_index);
+		}
+	}
+
     /*
      * g_utf8_strlen:
      * @p: pointer to the start of a UTF-8 encoded string.
@@ -704,7 +321,7 @@ namespace cocos2d{
 			return NULL;
 
 		unsigned short* str_new = new unsigned short[len + 1];
-		str_new[len] = '\0';
+		str_new[len] = 0;
 
 		for (int i = 0; i < len; ++i)
 		{
@@ -715,18 +332,443 @@ namespace cocos2d{
 		return str_new;
 	}
 
-	static std::vector<unsigned short> cc_utf8_vec_from_cstr(const char* str)
+	static std::vector<unsigned short> cc_utf8_vec_from_cstr(const unsigned short* str)
 	{
-		const unsigned short* str_sh = cc_utf8_from_cstr(str);
-
-		int len = cc_wcslen(str_sh);
+		int len = cc_wcslen(str);
 		std::vector<unsigned short> str_new;
 
 		for (int i = 0; i < len; ++i)
-			str_new.push_back(str_sh[i]);
+			str_new.push_back(str[i]);
 
-		CC_SAFE_DELETE(str_sh);
 		return str_new;
+	}
+
+	//
+	//FNTConfig Cache - free functions
+	//
+	CCMutableDictionary<std::string, CCBMFontConfiguration*> *configurations = NULL;
+	CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
+	{
+		CCBMFontConfiguration *pRet = NULL;
+
+		if( configurations == NULL )
+		{
+			configurations = new CCMutableDictionary<std::string, CCBMFontConfiguration*>();
+		}
+		std::string key(fntFile);
+		pRet = configurations->objectForKey(key);
+		if( pRet == NULL )
+		{
+			pRet = CCBMFontConfiguration::configurationWithFNTFile(fntFile);
+			configurations->setObject(pRet, key);
+		}
+
+		return pRet;
+	}
+
+	void FNTConfigRemoveCache( void )
+	{
+		if (configurations)
+		{
+			configurations->removeAllObjects();
+			CC_SAFE_RELEASE_NULL(configurations);
+		}
+	}
+
+	//
+	//Hash Element
+	//
+	// Equal function for targetSet.
+	typedef struct _KerningHashElement
+	{	
+		int				key;		// key for the hash. 16-bit for 1st element, 16-bit for 2nd element
+		int				amount;
+		UT_hash_handle	hh;
+	} tKerningHashElement;
+	//
+	//BitmapFontConfiguration
+	//
+
+	CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
+	{
+		CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
+		if (pRet->initWithFNTfile(FNTfile))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CC_SAFE_DELETE(pRet);
+		return NULL;
+	}
+
+	bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
+	{
+		CCAssert(FNTfile != NULL && strlen(FNTfile)!=0, "");
+		m_pKerningDictionary = NULL;
+		this->parseConfigFile(FNTfile);
+		return true;
+	}
+
+	CCBMFontConfiguration::CCBMFontConfiguration()
+		: m_pBitmapFontArray(new std::map<unsigned int, ccBMFontDef>)
+		, m_uCommonHeight(0)
+		, m_pKerningDictionary(NULL)
+	{
+
+	}
+
+	CCBMFontConfiguration::~CCBMFontConfiguration()
+	{
+		CCLOGINFO( "cocos2d: deallocing CCBMFontConfiguration" );
+		CC_SAFE_DELETE(m_pBitmapFontArray);
+		this->purgeKerningDictionary();
+		m_sAtlasName.clear();
+	}
+
+	char * CCBMFontConfiguration::description(void)
+	{
+		char *ret = new char[100];
+		sprintf(ret, "<CCBMFontConfiguration | Kernings:%d | Image = %s>", HASH_COUNT(m_pKerningDictionary), m_sAtlasName.c_str());
+		return ret;
+	}
+
+	void CCBMFontConfiguration::purgeKerningDictionary()
+	{
+		tKerningHashElement *current;
+		while(m_pKerningDictionary) 
+		{
+			current = m_pKerningDictionary; 
+			HASH_DEL(m_pKerningDictionary,current);
+			free(current);
+		}
+	}
+
+	void CCBMFontConfiguration::parseConfigFile(const char *controlFile)
+	{	
+		std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
+
+		CCFileData data(fullpath.c_str(), "rb");
+		unsigned long nBufSize = data.getSize();
+		char* pBuffer = (char*) data.getBuffer();
+
+		CCAssert(pBuffer, "CCBMFontConfiguration::parseConfigFile | Open file error.");
+
+		if (!pBuffer)
+		{
+			return;
+		}
+
+		// parse spacing / padding
+		std::string line;
+		std::string strLeft(pBuffer, nBufSize);
+		while (strLeft.length() > 0)
+		{
+			int pos = strLeft.find('\n');
+
+			if (pos != (int)std::string::npos)
+			{
+				// the data is more than a line.get one line
+				line = strLeft.substr(0, pos);
+				strLeft = strLeft.substr(pos + 1);
+			}
+			else
+			{
+				// get the left data
+				line = strLeft;
+				strLeft.erase();
+			}
+
+			if(line.substr(0,strlen("info face")) == "info face") 
+			{
+				// XXX: info parsing is incomplete
+				// Not needed for the Hiero editors, but needed for the AngelCode editor
+				//			[self parseInfoArguments:line];
+				this->parseInfoArguments(line);
+			}
+			// Check to see if the start of the line is something we are interested in
+			else if(line.substr(0,strlen("common lineHeight")) == "common lineHeight")
+			{
+				this->parseCommonArguments(line);
+			}
+			else if(line.substr(0,strlen("page id")) == "page id")
+			{
+				this->parseImageFileName(line, controlFile);
+			}
+			else if(line.substr(0,strlen("chars c")) == "chars c")
+			{
+				// Ignore this line
+			}
+			else if(line.substr(0,strlen("char")) == "char")
+			{
+				// Parse the current line and create a new CharDef
+				ccBMFontDef characterDefinition;
+				this->parseCharacterDefinition(line, &characterDefinition);
+
+				// Add the CharDef returned to the charArray
+				(*m_pBitmapFontArray)[ characterDefinition.charID ] = characterDefinition;
+			}
+			else if(line.substr(0,strlen("kernings count")) == "kernings count")
+			{
+				this->parseKerningCapacity(line);
+			}
+			else if(line.substr(0,strlen("kerning first")) == "kerning first")
+			{
+				this->parseKerningEntry(line);
+			}
+		}
+	}
+
+	void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
+	{
+		//////////////////////////////////////////////////////////////////////////
+		// line to parse:
+		// page id=0 file="bitmapFontTest.png"
+		//////////////////////////////////////////////////////////////////////////
+
+		// page ID. Sanity check
+		int index = line.find('=')+1;
+		int index2 = line.find(' ', index);
+		std::string value = line.substr(index, index2-index);
+		CCAssert(atoi(value.c_str()) == 0, "LabelBMFont file could not be found");
+		// file 
+		index = line.find('"')+1;
+		index2 = line.find('"', index);
+		value = line.substr(index, index2-index);
+
+		m_sAtlasName = CCFileUtils::fullPathFromRelativeFile(value.c_str(), fntFile);
+	}
+
+	void CCBMFontConfiguration::parseInfoArguments(std::string line)
+	{
+		//////////////////////////////////////////////////////////////////////////
+		// possible lines to parse:
+		// info face="Script" size=32 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=1,4,3,2 spacing=0,0 outline=0
+		// info face="Cracked" size=36 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1
+		//////////////////////////////////////////////////////////////////////////
+
+		// padding
+		int index = line.find("padding=");
+		int index2 = line.find(' ', index);
+		std::string value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "padding=%d,%d,%d,%d", &m_tPadding.top, &m_tPadding.right, &m_tPadding.bottom, &m_tPadding.left);
+		CCLOG("cocos2d: padding: %d,%d,%d,%d", m_tPadding.left, m_tPadding.top, m_tPadding.right, m_tPadding.bottom);
+	}
+
+	void CCBMFontConfiguration::parseCommonArguments(std::string line)
+	{
+		//////////////////////////////////////////////////////////////////////////
+		// line to parse:
+		// common lineHeight=104 base=26 scaleW=1024 scaleH=512 pages=1 packed=0
+		//////////////////////////////////////////////////////////////////////////
+
+		// Height
+		int index = line.find("lineHeight=");
+		int index2 = line.find(' ', index);
+		std::string value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "lineHeight=%u", &m_uCommonHeight);
+		// scaleW. sanity check
+		index = line.find("scaleW=") + strlen("scaleW=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		CCAssert(atoi(value.c_str()) <= CCConfiguration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
+		// scaleH. sanity check
+		index = line.find("scaleH=") + strlen("scaleH=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		CCAssert(atoi(value.c_str()) <= CCConfiguration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
+		// pages. sanity check
+		index = line.find("pages=") + strlen("pages=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		CCAssert(atoi(value.c_str()) == 1, "CCBitfontAtlas: only supports 1 page");
+
+		// packed (ignore) What does this mean ??
+	}
+
+	void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition)
+	{	
+		//////////////////////////////////////////////////////////////////////////
+		// line to parse:
+		// char id=32   x=0     y=0     width=0     height=0     xoffset=0     yoffset=44    xadvance=14     page=0  chnl=0 
+		//////////////////////////////////////////////////////////////////////////
+
+		// Character ID
+		int index = line.find("id=");
+		int index2 = line.find(' ', index);
+		std::string value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "id=%u", &characterDefinition->charID);
+
+		// Character x
+		index = line.find("x=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "x=%f", &characterDefinition->rect.origin.x);
+		// Character y
+		index = line.find("y=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "y=%f", &characterDefinition->rect.origin.y);
+		// Character width
+		index = line.find("width=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "width=%f", &characterDefinition->rect.size.width);
+		// Character height
+		index = line.find("height=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "height=%f", &characterDefinition->rect.size.height);
+		// Character xoffset
+		index = line.find("xoffset=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "xoffset=%d", &characterDefinition->xOffset);
+		// Character yoffset
+		index = line.find("yoffset=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "yoffset=%d", &characterDefinition->yOffset);
+		// Character xadvance
+		index = line.find("xadvance=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "xadvance=%d", &characterDefinition->xAdvance);
+	}
+
+	void CCBMFontConfiguration::parseKerningCapacity(std::string line)
+	{
+		// When using uthash there is not need to parse the capacity.
+
+		//	CCAssert(!kerningDictionary, @"dictionary already initialized");
+		//	
+		//	// Break the values for this line up using =
+		//	CCMutableArray *values = [line componentsSeparatedByString:@"="];
+		//	NSEnumerator *nse = [values objectEnumerator];	
+		//	CCString *propertyValue;
+		//	
+		//	// We need to move past the first entry in the array before we start assigning values
+		//	[nse nextObject];
+		//	
+		//	// count
+		//	propertyValue = [nse nextObject];
+		//	int capacity = [propertyValue intValue];
+		//	
+		//	if( capacity != -1 )
+		//		kerningDictionary = ccHashSetNew(capacity, targetSetEql);
+	}
+
+	void CCBMFontConfiguration::parseKerningEntry(std::string line)
+	{		
+		//////////////////////////////////////////////////////////////////////////
+		// line to parse:
+		// kerning first=121  second=44  amount=-7
+		//////////////////////////////////////////////////////////////////////////
+
+		// first
+		int first;
+		int index = line.find("first=");
+		int index2 = line.find(' ', index);
+		std::string value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "first=%d", &first);
+
+		// second
+		int second;
+		index = line.find("second=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "second=%d", &second);
+
+		// amount
+		int amount;
+		index = line.find("amount=");
+		index2 = line.find(' ', index);
+		value = line.substr(index, index2-index);
+		sscanf(value.c_str(), "amount=%d", &amount);
+
+		tKerningHashElement *element = (tKerningHashElement *)calloc( sizeof( *element ), 1 );
+		element->amount = amount;
+		element->key = (first<<16) | (second&0xffff);
+		HASH_ADD_INT(m_pKerningDictionary,key, element);
+	}
+	//
+	//CCLabelBMFont
+	//
+
+	//LabelBMFont - Purge Cache
+	void CCLabelBMFont::purgeCachedData()
+	{
+		FNTConfigRemoveCache();
+	}
+
+	//LabelBMFont - Creation & Init
+	CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
+	{
+		return labelWithString(str, fntFile, CCTextAlignmentLeft, 0);
+	}
+
+	//LabelBMFont - Creation & Init
+	CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, CCTextAlignment alignment
+		, float width)
+	{
+		CCLabelBMFont *pRet = new CCLabelBMFont();
+		if(pRet && pRet->initWithString(str, fntFile, alignment, width))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CC_SAFE_DELETE(pRet)
+			return NULL;
+	}
+
+	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
+	{
+		return initWithString(theString, fntFile, CCTextAlignmentCenter, 0);
+	}
+
+	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, CCTextAlignment alignment
+		, float width)
+	{
+		CCAssert(theString != NULL, "");
+		CC_SAFE_RELEASE(m_pConfiguration);// allow re-init
+		m_pConfiguration = FNTConfigLoadFile(fntFile);
+		m_pConfiguration->retain();
+		CCAssert( m_pConfiguration, "Error creating config for LabelBMFont");
+
+		if (CCSpriteBatchNode::initWithFile(m_pConfiguration->m_sAtlasName.c_str(), strlen(theString)))
+		{
+			m_pAlignment = alignment;
+			m_fWidth = width;
+			m_sString = cc_utf8_from_cstr(theString);
+			m_cOpacity = 255;
+			m_tColor = ccWHITE;
+			m_tContentSize = CCSizeZero;
+			m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
+			this->setString(theString);
+			setAnchorPoint(ccp(0.5f, 0.5f));
+			return true;
+		}
+		return false;
+	}
+
+	CCLabelBMFont::~CCLabelBMFont()
+	{
+		CC_SAFE_DELETE(m_sString);
+		CC_SAFE_RELEASE(m_pConfiguration);
+	}
+
+	// LabelBMFont - Atlas generation
+	int CCLabelBMFont::kerningAmountForFirst(unsigned short first, unsigned short second)
+	{
+		int ret = 0;
+		unsigned int key = (first<<16) | (second & 0xffff);
+
+		if( m_pConfiguration->m_pKerningDictionary ) {
+			tKerningHashElement *element = NULL;
+			HASH_FIND_INT(m_pConfiguration->m_pKerningDictionary, &key, element);		
+			if(element)
+				ret = element->amount;
+		}
+		return ret;
 	}
 
 	void CCLabelBMFont::createFontChars()
@@ -743,23 +785,15 @@ namespace cocos2d{
 
         unsigned int quantityOfLines = 1;
 
-        if (0 == m_sString.length())
-        {
-            return;
-        }
-
-        int utf8len = cc_utf8_strlen(m_sString.c_str(), -1);
-        if (utf8len == 0)
-        {
-            return;
-        }
-        unsigned short* pUniStr = cc_utf8_from_cstr(m_sString.c_str());
-
-        unsigned int stringLen = cc_wcslen(pUniStr);
+		unsigned int stringLen = cc_wcslen(m_sString);
+		if (stringLen == 0)
+		{
+			return;
+		}
 
         for (unsigned int i = 0; i < stringLen - 1; ++i)
         {
-            unsigned short c = pUniStr[i];
+            unsigned short c = m_sString[i];
             if (c == '\n')
             {
                 quantityOfLines++;
@@ -771,7 +805,7 @@ namespace cocos2d{
 
 		for (unsigned int i= 0; i < stringLen; i++)
 		{
-			unsigned short c = pUniStr[i];
+			unsigned short c = m_sString[i];
 
             if (c == '\n')
             {
@@ -841,8 +875,6 @@ namespace cocos2d{
         tmpSize.height = (float) totalHeight;
 
 		this->setContentSizeInPixels(tmpSize);
-
-        CC_SAFE_DELETE_ARRAY(pUniStr);
 	}
 
 	//LabelBMFont - CCLabelProtocol protocol
@@ -855,12 +887,18 @@ namespace cocos2d{
 	{
 		if (from_update)
 		{
-			m_sString = std::string(newString);
+			m_sString = cc_utf8_from_cstr(newString);
 		}
 		else
 		{
-			m_sString_a = std::string(newString);
+			m_sString_initial = std::string(newString);
 		}
+
+		updateString(from_update);
+	}
+
+	void CCLabelBMFont::updateString(bool from_update)
+	{
 
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
@@ -882,7 +920,7 @@ namespace cocos2d{
 
 	const char* CCLabelBMFont::getString(void)
 	{
-		return m_sString.c_str();
+		return m_sString_initial.c_str();
 	}
 
     void CCLabelBMFont::setCString(const char *label)
@@ -967,7 +1005,7 @@ namespace cocos2d{
 		if( ! CCPoint::CCPointEqualToPoint(point, m_tAnchorPoint) )
 		{
 			CCSpriteBatchNode::setAnchorPoint(point);
-			this->createFontChars();
+			updateLabel();
 		}
 	}
 
@@ -976,16 +1014,17 @@ namespace cocos2d{
 	{
 		using namespace std;
 
-		this->setString(m_sString_a.c_str(), true);
+		this->setString(m_sString_initial.c_str(), true);
 
 		if (m_fWidth > 0)
 		{
 			// Step 1: Make multiline
-			vector<unsigned short> str_whole = cc_utf8_vec_from_cstr(m_sString.c_str());
+			vector<unsigned short> str_whole = cc_utf8_vec_from_cstr(m_sString);
 			unsigned int stringLength = str_whole.size();
 			vector<unsigned short> multiline_string;
 			vector<unsigned short> last_word;
 			int line = 1, i = 0;
+			bool start_line = false, start_word = false;
 			float startOfLine = -1, startOfWord = -1;
 			int skip = 0;
 
@@ -1004,20 +1043,30 @@ namespace cocos2d{
 
 				unsigned short character = str_whole[i];
 
-				if (startOfWord == -1)
+				if (!start_word)
+				{
 					startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
-				if (startOfLine == -1)
+					start_word = true;
+				}
+				if (!start_line)
+				{
 					startOfLine = startOfWord;
+					start_line = true;
+				}
 
 				// Newline.
 				if (character == '\n')
 				{
-					int found = cc_utf8_find_char(last_word, ' ');
-					if (found != -1)
-						cc_utf8_trim_from(&last_word, found + 1);
+					cc_utf8_trim_ws(&last_word);
+
+// 					int found = cc_utf8_find_char(last_word, ' ');
+// 					if (found != -1)
+// 						cc_utf8_trim_from(&last_word, found + 1);
 
 					multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 					last_word.clear();
+					start_word = false;
+					start_line = false;
 					startOfWord = -1;
 					startOfLine = -1;
 					i++;
@@ -1028,18 +1077,25 @@ namespace cocos2d{
 
 					character = str_whole[i];
 
-					if (startOfWord == -1)
+					if (!startOfWord)
+					{
 						startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
-					if (startOfLine == -1)
+						start_word = true;
+					}
+					if (!startOfLine)
+					{
 						startOfLine  = startOfWord;
+						start_line = true;
+					}
 				}
 
 				// Whitespace.
-				if (character == ' ')
+				if (isspace_unicode(character))
 				{
 					last_word.push_back(character);
 					multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 					last_word.clear();
+					start_word = false;
 					startOfWord = -1;
 					i++;
 					continue;
@@ -1053,13 +1109,14 @@ namespace cocos2d{
 
 					int found = cc_utf8_find_last_not_char(multiline_string, ' ');
 					if (found != -1)
-						cc_utf8_trim_from(&multiline_string, found + 1);
+						cc_utf8_trim_ws(&multiline_string);
 					else
 						multiline_string.clear();
 
 					if (multiline_string.size() > 0)
 						multiline_string.push_back('\n');
 					line++;
+					start_line = false;
 					startOfLine = -1;
 					i++;
 					continue;
@@ -1076,16 +1133,16 @@ namespace cocos2d{
 			multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 
 			int size = multiline_string.size();
-			char* str_new = new char[size + 1];
+			unsigned short* str_new = new unsigned short[size + 1];
 
 			for (int i = 0; i < size; ++i)
-			{
 				str_new[i] = multiline_string[i];
-			}
 
-			str_new[size] = '\0';
+			str_new[size] = 0;
 
-			setString(str_new, true);
+			delete[] m_sString;
+			m_sString = str_new;
+			updateString(true);
 		}
 
 		// Step 2: Make alignment
@@ -1094,46 +1151,54 @@ namespace cocos2d{
 			int i = 0;
 
 			int lineNumber = 0;
-
-			std::istringstream f(m_sString);
-			std::string lineString;
-			while (std::getline(f, lineString))
+			int str_len = cc_wcslen(m_sString);
+			vector<unsigned short> last_line;
+			for (int ctr = 0; ctr <= str_len; ++ctr)
 			{
-				float lineWidth = 0;
-				int index = i + lineString.length() - 1 + lineNumber;
-				if (index < 0) continue;
-
-				CCSprite* lastChar = (CCSprite*)getChildByTag(index);
-
-				lineWidth = lastChar->getPosition().x + lastChar->getContentSize().width/2.0f;
-
-				float shift = 0;
-				switch (m_pAlignment)
+				if (m_sString[ctr] == '\n' || m_sString[ctr] == 0)
 				{
-				case CCTextAlignmentCenter:
-					shift = getContentSize().width/2.0f - lineWidth/2.0f;
-					break;
-				case CCTextAlignmentRight:
-					shift = getContentSize().width - lineWidth;
-				default:
-					break;
-				}
+					float lineWidth = 0.0f;
+					int line_length = last_line.size();
+					int index = i + line_length - 1 + lineNumber;
+					if (index < 0) continue;
 
-				if (shift != 0)
-				{
-					int j = 0;
-					for (unsigned j = 0; j < lineString.length(); j++)
+					CCSprite* lastChar = (CCSprite*)getChildByTag(index);
+
+					lineWidth = lastChar->getPosition().x + lastChar->getContentSize().width/2.0f;
+
+					float shift = 0;
+					switch (m_pAlignment)
 					{
-						index = i + j + lineNumber;
-						if (index < 0) continue;
-
-						CCSprite* characterSprite = (CCSprite*)getChildByTag(index);
-						characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+					case CCTextAlignmentCenter:
+						shift = getContentSize().width/2.0f - lineWidth/2.0f;
+						break;
+					case CCTextAlignmentRight:
+						shift = getContentSize().width - lineWidth;
+					default:
+						break;
 					}
+
+					if (shift != 0)
+					{
+						int j = 0;
+						for (unsigned j = 0; j < line_length; j++)
+						{
+							index = i + j + lineNumber;
+							if (index < 0) continue;
+
+							CCSprite* characterSprite = (CCSprite*)getChildByTag(index);
+							characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+						}
+					}
+
+					i += line_length;
+					lineNumber++;
+
+					last_line.clear();
+					continue;
 				}
 
-				i += lineString.length();
-				lineNumber++;
+				last_line.push_back(m_sString[ctr]);
 			}
 		}
 	}
