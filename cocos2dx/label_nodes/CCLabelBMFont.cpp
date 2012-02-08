@@ -317,9 +317,6 @@ namespace cocos2d{
 	{
 		int len = cc_utf8_strlen(str_old, -1);
 
-		if (len <= 0)
-			return NULL;
-
 		unsigned short* str_new = new unsigned short[len + 1];
 		str_new[len] = 0;
 
