@@ -16,14 +16,14 @@
 *
 * The idea is to nest function calls with the "try" function. This function
 * checks the first value, and calls "error" on the second if the first is
-* nil. Otherwise, it returns all values it received.
+* nil. Otherwise, it returns all values it received. 
 *
 * The protect function returns a new function that behaves exactly like the
 * function it receives, but the new function doesn't throw exceptions: it
 * returns nil followed by the error message instead.
 *
 * With these two function, it's easy to write functions that throw
-* exceptions on error, but that don't interrupt the user script.
+* exceptions on error, but that don't interrupt the user script. 
 *
 * RCS ID: $Id: except.h,v 1.2 2005/09/29 06:11:41 diego Exp $
 \*=========================================================================*/

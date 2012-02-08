@@ -4,12 +4,12 @@
 * Auxiliar routines for class hierarchy manipulation
 * LuaSocket toolkit (but completely independent of other LuaSocket modules)
 *
-* A LuaSocket class is a name associated with Lua metatables. A LuaSocket
-* group is a name associated with a class. A class can belong to any number
+* A LuaSocket class is a name associated with Lua metatables. A LuaSocket 
+* group is a name associated with a class. A class can belong to any number 
 * of groups. This module provides the functionality to:
 *
-*   - create new classes
-*   - add classes to groups
+*   - create new classes 
+*   - add classes to groups 
 *   - set the class of objects
 *   - check if an object belongs to a given class or group
 *   - get the userdata associated to objects
@@ -26,7 +26,7 @@
 * "class" with the class name.
 *
 * The mapping from class name to the corresponding metatable and the
-* reverse mapping are done using lauxlib.
+* reverse mapping are done using lauxlib. 
 *
 * RCS ID: $Id: auxiliar.h,v 1.9 2005/10/07 04:40:59 diego Exp $
 \*=========================================================================*/
