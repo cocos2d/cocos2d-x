@@ -33,8 +33,8 @@ LUALIB_API void (luaL_setn) (lua_State *L, int t, int n);
 
 
 typedef struct luaL_Reg {
-    const char *name;
-    lua_CFunction func;
+  const char *name;
+  lua_CFunction func;
 } luaL_Reg;
 
 
@@ -42,21 +42,21 @@ typedef struct luaL_Reg {
 LUALIB_API void (luaI_openlib) (lua_State *L, const char *libname,
                                 const luaL_Reg *l, int nup);
 LUALIB_API void (luaL_register) (lua_State *L, const char *libname,
-                                 const luaL_Reg *l);
+                                const luaL_Reg *l);
 LUALIB_API int (luaL_getmetafield) (lua_State *L, int obj, const char *e);
 LUALIB_API int (luaL_callmeta) (lua_State *L, int obj, const char *e);
 LUALIB_API int (luaL_typerror) (lua_State *L, int narg, const char *tname);
 LUALIB_API int (luaL_argerror) (lua_State *L, int numarg, const char *extramsg);
 LUALIB_API const char *(luaL_checklstring) (lua_State *L, int numArg,
-        size_t *l);
+                                                          size_t *l);
 LUALIB_API const char *(luaL_optlstring) (lua_State *L, int numArg,
-        const char *def, size_t *l);
+                                          const char *def, size_t *l);
 LUALIB_API lua_Number (luaL_checknumber) (lua_State *L, int numArg);
 LUALIB_API lua_Number (luaL_optnumber) (lua_State *L, int nArg, lua_Number def);
 
 LUALIB_API lua_Integer (luaL_checkinteger) (lua_State *L, int numArg);
 LUALIB_API lua_Integer (luaL_optinteger) (lua_State *L, int nArg,
-        lua_Integer def);
+                                          lua_Integer def);
 
 LUALIB_API void (luaL_checkstack) (lua_State *L, int sz, const char *msg);
 LUALIB_API void (luaL_checktype) (lua_State *L, int narg, int t);
@@ -83,10 +83,10 @@ LUALIB_API lua_State *(luaL_newstate) (void);
 
 
 LUALIB_API const char *(luaL_gsub) (lua_State *L, const char *s, const char *p,
-                                    const char *r);
+                                                  const char *r);
 
 LUALIB_API const char *(luaL_findtable) (lua_State *L, int idx,
-        const char *fname, int szhint);
+                                         const char *fname, int szhint);
 
 
 
@@ -127,10 +127,10 @@ LUALIB_API const char *(luaL_findtable) (lua_State *L, int idx,
 
 
 typedef struct luaL_Buffer {
-    char *p;			/* current position in buffer */
-    int lvl;  /* number of strings in the stack (level) */
-    lua_State *L;
-    char buffer[LUAL_BUFFERSIZE];
+  char *p;			/* current position in buffer */
+  int lvl;  /* number of strings in the stack (level) */
+  lua_State *L;
+  char buffer[LUAL_BUFFERSIZE];
 } luaL_Buffer;
 
 #define luaL_addchar(B,c) \
