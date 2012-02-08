@@ -50,12 +50,11 @@ int inet_open(lua_State *L)
 * Returns all information provided by the resolver given a host name
 * or ip address
 \*-------------------------------------------------------------------------*/
-static int inet_gethost(const char *address, struct hostent **hp)
-{
+static int inet_gethost(const char *address, struct hostent **hp) {
     struct in_addr addr;
     if (inet_aton(address, &addr))
         return socket_gethostbyaddr((char *) &addr, sizeof(addr), hp);
-    else
+    else 
         return socket_gethostbyname(address, hp);
 }
 
@@ -63,10 +62,9 @@ static int inet_gethost(const char *address, struct hostent **hp)
 * Returns all information provided by the resolver given a host name
 * or ip address
 \*-------------------------------------------------------------------------*/
-static int inet_global_tohostname(lua_State *L)
-{
+static int inet_global_tohostname(lua_State *L) {
     const char *address = luaL_checkstring(L, 1);
-    struct hostent *hp = NULL;
+    struct hostent *hp = NULL; 
     int err = inet_gethost(address, &hp);
     if (err != IO_DONE) {
         lua_pushnil(L);
@@ -85,7 +83,7 @@ static int inet_global_tohostname(lua_State *L)
 static int inet_global_toip(lua_State *L)
 {
     const char *address = luaL_checkstring(L, 1);
-    struct hostent *hp = NULL;
+    struct hostent *hp = NULL; 
     int err = inet_gethost(address, &hp);
     if (err != IO_DONE) {
         lua_pushnil(L);
@@ -165,8 +163,7 @@ static void inet_pushresolved(lua_State *L, struct hostent *hp)
     char **alias;
     struct in_addr **addr;
     int i, resolved;
-    lua_newtable(L);
-    resolved = lua_gettop(L);
+    lua_newtable(L); resolved = lua_gettop(L);
     lua_pushstring(L, "name");
     lua_pushstring(L, hp->h_name);
     lua_settable(L, resolved);
@@ -180,8 +177,7 @@ static void inet_pushresolved(lua_State *L, struct hostent *hp)
             lua_pushnumber(L, i);
             lua_pushstring(L, *alias);
             lua_settable(L, -3);
-            i++;
-            alias++;
+            i++; alias++;
         }
     }
     lua_settable(L, resolved);
@@ -193,8 +189,7 @@ static void inet_pushresolved(lua_State *L, struct hostent *hp)
             lua_pushnumber(L, i);
             lua_pushstring(L, inet_ntoa(**addr));
             lua_settable(L, -3);
-            i++;
-            addr++;
+            i++; addr++;
         }
     }
     lua_settable(L, resolved);
@@ -203,23 +198,22 @@ static void inet_pushresolved(lua_State *L, struct hostent *hp)
 /*-------------------------------------------------------------------------*\
 * Tries to create a new inet socket
 \*-------------------------------------------------------------------------*/
-const char *inet_trycreate(p_socket ps, int type)
-{
+const char *inet_trycreate(p_socket ps, int type) {
     return socket_strerror(socket_create(ps, AF_INET, type, 0));
 }
 
 /*-------------------------------------------------------------------------*\
 * Tries to connect to remote address (address, port)
 \*-------------------------------------------------------------------------*/
-const char *inet_tryconnect(p_socket ps, const char *address,
-                            unsigned short port, p_timeout tm)
+const char *inet_tryconnect(p_socket ps, const char *address, 
+        unsigned short port, p_timeout tm)
 {
     struct sockaddr_in remote;
     int err;
     memset(&remote, 0, sizeof(remote));
     remote.sin_family = AF_INET;
     remote.sin_port = htons(port);
-    if (strcmp(address, "*")) {
+	if (strcmp(address, "*")) {
         if (!inet_aton(address, &remote.sin_addr)) {
             struct hostent *hp = NULL;
             struct in_addr **addr;
@@ -255,7 +249,7 @@ const char *inet_trybind(p_socket ps, const char *address, unsigned short port)
     }
     err = socket_bind(ps, (SA *) &local, sizeof(local));
     if (err != IO_DONE) socket_destroy(ps);
-    return socket_strerror(err);
+    return socket_strerror(err); 
 }
 
 /*-------------------------------------------------------------------------*\
@@ -274,12 +268,9 @@ int inet_aton(const char *cp, struct in_addr *inp)
     if (*cp) return 0;
     if (a > 255 || b > 255 || c > 255 || d > 255) return 0;
     if (inp) {
-        addr += a;
-        addr <<= 8;
-        addr += b;
-        addr <<= 8;
-        addr += c;
-        addr <<= 8;
+        addr += a; addr <<= 8;
+        addr += b; addr <<= 8;
+        addr += c; addr <<= 8;
         addr += d;
         inp->s_addr = htonl(addr);
     }

@@ -68,8 +68,7 @@ static luaL_reg func[] = {
 /*-------------------------------------------------------------------------*\
 * Skip a few arguments
 \*-------------------------------------------------------------------------*/
-static int global_skip(lua_State *L)
-{
+static int global_skip(lua_State *L) {
     int amount = luaL_checkint(L, 1);
     int ret = lua_gettop(L) - amount - 1;
     return ret >= 0 ? ret : 0;
@@ -78,8 +77,7 @@ static int global_skip(lua_State *L)
 /*-------------------------------------------------------------------------*\
 * Unloads the library
 \*-------------------------------------------------------------------------*/
-static int global_unload(lua_State *L)
-{
+static int global_unload(lua_State *L) {
     (void) L;
     socket_close();
     return 0;
@@ -88,8 +86,7 @@ static int global_unload(lua_State *L)
 /*-------------------------------------------------------------------------*\
 * Setup basic stuff.
 \*-------------------------------------------------------------------------*/
-static int base_open(lua_State *L)
-{
+static int base_open(lua_State *L) {
     if (socket_open()) {
         /* export functions (and leave namespace table on top of stack) */
         luaL_openlib(L, "socket", func, 0);
@@ -113,8 +110,7 @@ static int base_open(lua_State *L)
 /*-------------------------------------------------------------------------*\
 * Initializes all library modules.
 \*-------------------------------------------------------------------------*/
-LUASOCKET_API int luaopen_socket_core(lua_State *L)
-{
+LUASOCKET_API int luaopen_socket_core(lua_State *L) {
     int i;
     base_open(L);
     for (i = 0; mod[i].name; i++) mod[i].func(L);

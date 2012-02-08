@@ -1,11 +1,11 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 /*=========================================================================*\
-* Common option interface
+* Common option interface 
 * LuaSocket toolkit
 *
 * This module provides a common interface to socket options, used mainly by
-* modules UDP and TCP.
+* modules UDP and TCP. 
 *
 * RCS ID: $Id: options.h,v 1.4 2005/10/07 04:40:59 diego Exp $
 \*=========================================================================*/
@@ -15,8 +15,8 @@
 
 /* option registry */
 typedef struct t_opt {
-    const char *name;
-    int (*func)(lua_State *L, p_socket ps);
+  const char *name;
+  int (*func)(lua_State *L, p_socket ps);
 } t_opt;
 typedef t_opt *p_opt;
 

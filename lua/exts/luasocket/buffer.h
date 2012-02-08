@@ -1,13 +1,13 @@
 #ifndef BUF_H
-#define BUF_H
+#define BUF_H 
 /*=========================================================================*\
 * Input/Output interface for Lua programs
 * LuaSocket toolkit
 *
 * Line patterns require buffering. Reading one character at a time involves
 * too many system calls and is very slow. This module implements the
-* LuaSocket interface for input/output on connected objects, as seen by
-* Lua programs.
+* LuaSocket interface for input/output on connected objects, as seen by 
+* Lua programs. 
 *
 * Input is buffered. Output is *not* buffered because there was no simple
 * way of making sure the buffered output data would ever be sent.
@@ -31,8 +31,8 @@ typedef struct t_buffer_ {
     size_t sent, received;  /* bytes sent, and bytes received */
     p_io io;                /* IO driver used for this buffer */
     p_timeout tm;           /* timeout management for this buffer */
-    size_t first, last;     /* index of first and last bytes of stored data */
-    char data[BUF_SIZE];    /* storage space for buffer data */
+	size_t first, last;     /* index of first and last bytes of stored data */
+	char data[BUF_SIZE];    /* storage space for buffer data */
 } t_buffer;
 typedef t_buffer *p_buffer;
 

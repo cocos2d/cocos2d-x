@@ -4,7 +4,7 @@
 * Unix domain object
 * LuaSocket toolkit
 *
-* This module is just an example of how to extend LuaSocket with a new
+* This module is just an example of how to extend LuaSocket with a new 
 * domain.
 *
 * RCS ID: $Id: unix.h,v 1.9 2006/03/13 07:16:39 diego Exp $
