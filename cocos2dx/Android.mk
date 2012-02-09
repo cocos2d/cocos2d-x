@@ -257,9 +257,9 @@ LOCAL_LDLIBS := -lGLESv1_CM \
                 -llog \
                 -lz
 
-LOCAL_STATIC_LIBRARIES := png_static_prebuilt
-LOCAL_STATIC_LIBRARIES += xml2_static_prebuilt
-LOCAL_STATIC_LIBRARIES += jpeg_static_prebuilt
+LOCAL_WHOLE_STATIC_LIBRARIES := png_static_prebuilt
+LOCAL_WHOLE_STATIC_LIBRARIES += xml2_static_prebuilt
+LOCAL_WHOLE_STATIC_LIBRARIES += jpeg_static_prebuilt
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
