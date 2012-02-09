@@ -1,33 +1,12 @@
 
-#include "CCActionInterval.h"
+class CCActionCamera : public CCActionInterval
+{
+    void startWithTarget(CCNode *pTarget);
+};
 
-namespace cocos2d {
+class CCOrbitCamera : public CCActionCamera
+{
+    void sphericalRadius(float *r, float *zenith, float *azimuth);
 
-	class CCCamera;
-	class CCActionCamera : public CCActionInterval
-	{	
-		CCActionCamera();		
-		virtual void startWithTarget(CCNode *pTarget);
-		virtual CCActionInterval * reverse();
-	};
-
-
-	class CCOrbitCamera : public CCActionCamera 
-	{
-
-		CCOrbitCamera();	
-		static CCOrbitCamera * actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
-		/** initializes a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
-		bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
-		/** positions the camera according to spherical coordinates */
-		void sphericalRadius(float *r, float *zenith, float *azimuth);
-		// super methods
-		CCObject* copyWithZone(CCZone* pZone);
-		void startWithTarget(CCNode *pTarget);
-		void update(ccTime time);
-
-
-	};
-
-} // namespace cocos2d
-
+    static CCOrbitCamera * actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+};

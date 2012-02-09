@@ -1,41 +1,22 @@
 
-#include "CCObject.h"
-#include "ccMacros.h"
-#include <string>
-namespace   cocos2d {
+class  CCCamera : public CCObject
+{
+    CCCamera(void);
 
-	class  CCCamera : public CCObject
-	{
+    void init(void);
+    char * description(void);
 
-		CCCamera(void);
-		
-		void init(void);
-		char * description(void);
+    void setDirty(bool bValue);
+    bool getDirty(void);
+    void restore(void);
+    void locate(void);
+    void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
+    void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
+    void setUpXYZ(float fUpX, float fUpY, float fUpZ);
 
-		/** sets the dirty value */
-		 void setDirty(bool bValue);
-		 bool getDirty(void);
-		void restore(void);
-		/** Sets the camera using gluLookAt using its eye, center and up_vector */
-		void locate(void);
-		/** sets the eye values in points */
-		void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
-		/** sets the center values in points */
-		void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
-		/** sets the up values */
-		void setUpXYZ(float fUpX, float fUpY, float fUpZ);
+    void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
+    void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
+    void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
 
-		/** get the eye vector values in points */
-		void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
-		/** get the center vector values int points */
-		void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
-		/** get the up vector values */
-		void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
-
-		static float getZEye();
-
-	};
-
-}//namespace   cocos2d 
-
-
+    static float getZEye();
+};

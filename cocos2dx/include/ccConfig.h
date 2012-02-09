@@ -321,4 +321,9 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_IS_RETINA_DISPLAY_SUPPORTED 0
 #endif
 
+/** Enable Lua engine debug log */
+#ifndef CC_LUA_ENGINE_DEBUG
+#define CC_LUA_ENGINE_DEBUG 0
+#endif
+
 #endif // __CCCONFIG_H__

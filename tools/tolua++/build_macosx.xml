@@ -3,7 +3,7 @@
     <description>
         Utilises tolua++ to create the lua bindings to expose cocos2d-x functionality to lua
     </description>
-    <property name="tolua++" location="tolua++.exe"/>
+    <property name="tolua++" location="/usr/local/bin/tolua++"/>
 
   <target name="cocos2d-x-bindings">
     <echo message="Calling tolua++" />
