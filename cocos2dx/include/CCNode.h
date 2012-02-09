@@ -144,7 +144,6 @@ namespace   cocos2d {
         CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPosition, Position)
         CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPositionInPixels, PositionInPixels)
 
-#if CC_LUA_ENGINE_ENABLED
         /** get/set Position for Lua (pass number faster than CCPoint object)
 
          lua code:
@@ -165,7 +164,6 @@ namespace   cocos2d {
         void setPositionY(float y);
         void setPosition(float x, float y);
         void setPositionInPixels(float x, float y);
-#endif
 
         /** The X skew angle of the node in degrees.
          This angle describes the shear distortion in the X direction.
@@ -183,10 +181,8 @@ namespace   cocos2d {
 
         CC_PROPERTY_READONLY(CCArray*, m_pChildren, Children)
 
-#if CC_LUA_ENGINE_ENABLED
         /** Get children count */
         unsigned int getChildrenCount(void);
-#endif
 
         /** A CCCamera object that lets you move the node using a gluLookAt
          */
@@ -260,9 +256,7 @@ namespace   cocos2d {
 		bool m_bIsTransformGLDirty;
 #endif
 
-#if CC_LUA_ENGINE_ENABLED
         int m_nScriptHandler;
-#endif
 
 	private:
 
@@ -316,14 +310,12 @@ namespace   cocos2d {
          */
 		virtual void onExit();
 
-#if CC_LUA_ENGINE_ENABLED
         /** Register onEnter/onExit handler script function
          
          Script handler auto unregister after onEnter().
          */
         virtual void registerScriptHandler(int nHandler);
         virtual void unregisterScriptHandler(void);
-#endif
 
 		// composition: ADD
 

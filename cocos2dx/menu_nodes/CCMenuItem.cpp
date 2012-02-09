@@ -30,12 +30,8 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabelTTF.h"
-
+#include "CCScriptSupport.h"
 #include <stdarg.h>
-
-#if CC_LUA_ENGINE_ENABLED
-#include "CCLuaEngine.h"
-#endif
 
 namespace cocos2d{
     
@@ -71,9 +67,7 @@ namespace cocos2d{
     
     CCMenuItem::~CCMenuItem()
     {
-#if CC_LUA_ENGINE_ENABLED
         unregisterScriptHandler();
-#endif
     }
     
     void CCMenuItem::selected()
@@ -86,7 +80,6 @@ namespace cocos2d{
         m_bIsSelected = false;
     }
     
-#if CC_LUA_ENGINE_ENABLED
     void CCMenuItem::registerScriptHandler(int nHandler)
     {
         unregisterScriptHandler();
@@ -98,12 +91,11 @@ namespace cocos2d{
     {
         if (m_nScriptHandler)
         {
-            CCLuaEngine::sharedEngine()->removeLuaHandler(m_nScriptHandler);
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nScriptHandler);
             LUALOG("[LUA] Remove CCMenuItem script handler: %d", m_nScriptHandler);
             m_nScriptHandler = 0;
         }
     }
-#endif
     
     void CCMenuItem::activate()
     {
@@ -114,12 +106,10 @@ namespace cocos2d{
                 (m_pListener->*m_pfnSelector)(this);
             }
             
-#if CC_LUA_ENGINE_ENABLED
             if (m_nScriptHandler)
             {
-                CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_nScriptHandler, getTag());
+                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, getTag());
             }
-#endif
         }
     }
     
