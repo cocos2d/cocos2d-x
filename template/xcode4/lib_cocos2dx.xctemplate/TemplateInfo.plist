@@ -1104,6 +1104,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/include/CCScriptSupport.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>include</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/include/CCScriptSupport.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/include/CCSet.h</key>
 		<dict>
 			<key>Group</key>
@@ -2364,6 +2377,17 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/script_support/CCScriptSupport.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>script_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/script_support/CCScriptSupport.cpp</string>
+		</dict>
 		<key>libs/cocos2dx/sprite_nodes/CCAnimation.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -2951,6 +2975,7 @@
 		<string>libs/cocos2dx/include/CCRibbon.h</string>
 		<string>libs/cocos2dx/include/CCScene.h</string>
 		<string>libs/cocos2dx/include/CCScheduler.h</string>
+		<string>libs/cocos2dx/include/CCScriptSupport.h</string>
 		<string>libs/cocos2dx/include/CCSet.h</string>
 		<string>libs/cocos2dx/include/CCSprite.h</string>
 		<string>libs/cocos2dx/include/CCSpriteBatchNode.h</string>
@@ -3051,6 +3076,7 @@
 		<string>libs/cocos2dx/platform/ios/OpenGL_Internal.h</string>
 		<string>libs/cocos2dx/platform/platform.cpp</string>
 		<string>libs/cocos2dx/platform/platform.h</string>
+		<string>libs/cocos2dx/script_support/CCScriptSupport.cpp</string>
 		<string>libs/cocos2dx/sprite_nodes/CCAnimation.cpp</string>
 		<string>libs/cocos2dx/sprite_nodes/CCAnimationCache.cpp</string>
 		<string>libs/cocos2dx/sprite_nodes/CCSprite.cpp</string>
