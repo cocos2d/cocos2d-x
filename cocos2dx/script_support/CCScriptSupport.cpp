@@ -137,8 +137,11 @@ CCScriptEngineManager* CCScriptEngineManager::sharedManager(void)
 
 void CCScriptEngineManager::purgeSharedManager(void)
 {
-    delete s_pSharedScriptEngineManager;
-    s_pSharedScriptEngineManager = NULL;
+    if (s_pSharedScriptEngineManager)
+    {
+        delete s_pSharedScriptEngineManager;
+        s_pSharedScriptEngineManager = NULL;
+    }
 }
 
 NS_CC_END;
