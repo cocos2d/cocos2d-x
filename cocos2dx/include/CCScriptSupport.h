@@ -186,13 +186,13 @@ class CC_DLL CCScriptEngineManager
 public:
 	~CCScriptEngineManager(void);
     
-	inline CCScriptEngineProtocol* getScriptEngine(void) {
+	CCScriptEngineProtocol* getScriptEngine(void) {
         return m_pScriptEngine;
     }
 	void setScriptEngine(CCScriptEngineProtocol *pScriptEngine);
     void removeScriptEngine(void);
 
-    static inline CCScriptEngineManager* sharedManager(void);
+    static CCScriptEngineManager* sharedManager(void);
     static void purgeSharedManager(void);
 
 private:
