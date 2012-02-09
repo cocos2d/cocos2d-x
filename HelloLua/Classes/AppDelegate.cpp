@@ -31,7 +31,7 @@ AppDelegate::~AppDelegate()
 {
 	// end simple audio engine here, or it may crashed on win32
 	SimpleAudioEngine::sharedEngine()->end();
-    CCScriptEngineManager::purgeSharedManager();
+    //CCScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::initInstance()
