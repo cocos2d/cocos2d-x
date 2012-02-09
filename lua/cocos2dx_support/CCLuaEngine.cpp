@@ -41,87 +41,14 @@ extern "C" {
 #include "Cocos2dxLuaLoader.h"
 #endif
 
-namespace cocos2d
-{
+NS_CC_BEGIN
 
-CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::entryWithHandler(int nHandler, ccTime fInterval, bool bPaused)
+CCLuaEngine::~CCLuaEngine()
 {
-    CCSchedulerScriptHandlerEntry* pEntry = new CCSchedulerScriptHandlerEntry();
-    pEntry->initWithHandler(nHandler, fInterval, bPaused);
-    pEntry->autorelease();
-    return pEntry;
+    lua_close(m_state);
 }
 
-bool CCSchedulerScriptHandlerEntry::initWithHandler(int nHandler, ccTime fInterval, bool bPaused)
-{
-    m_pTimer = new CCTimer();
-    m_pTimer->initWithScriptHandler(nHandler, fInterval);
-    m_pTimer->autorelease();
-    m_pTimer->retain();
-    m_nHandler = nHandler;
-    m_bPaused = bPaused;
-    LUALOG("[LUA] ADD script schedule: %d, entryID: %d", m_nHandler, m_entryID);
-    return true;
-}
-
-CCSchedulerScriptHandlerEntry::CCSchedulerScriptHandlerEntry(void)
-: m_pTimer(NULL)
-, m_nHandler(0)
-, m_bPaused(true)
-, m_bMarkedForDeletion(false)
-{
-    static int nEntryCount = 0;
-    m_nEntryID = ++nEntryCount;
-}
-
-CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
-{
-    m_pTimer->release();
-    CCLuaEngine::sharedEngine()->removeLuaHandler(m_nHandler);
-    LUALOG("[LUA] DEL script schedule %d, entryID: %d", m_nHandler, m_entryID);
-}
-
-// ----------------------------
-    
-    
-CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::entryWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
-{
-    CCTouchScriptHandlerEntry* pEntry = new CCTouchScriptHandlerEntry();
-    pEntry->initWithHandler(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
-    pEntry->autorelease();
-    return pEntry;
-}
-
-CCTouchScriptHandlerEntry::CCTouchScriptHandlerEntry(void)
-: m_nHandler(0)
-, m_bIsMultiTouches(false)
-, m_nPriority(0)
-, m_bSwallowsTouches(false)
-{
-}
-
-CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
-{
-    CCLuaEngine::sharedEngine()->removeLuaHandler(m_nHandler);
-    LUALOG("[LUA] Remove touch event handler: %d", m_nHandler);
-}
-
-bool CCTouchScriptHandlerEntry::initWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
-{
-    m_nHandler = nHandler;
-    m_bIsMultiTouches = bIsMultiTouches;
-    m_nPriority = nPriority;
-    m_bSwallowsTouches = bSwallowsTouches;
-
-    return true;
-}
-
-
-// ----------------------------
-
-CCLuaEngine* CCLuaEngine::s_engine = NULL;
-
-CCLuaEngine::CCLuaEngine()
+bool CCLuaEngine::init(void)
 {
     m_state = lua_open();
     luaL_openlibs(m_state);
@@ -131,29 +58,16 @@ CCLuaEngine::CCLuaEngine()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     addLuaLoader(loader_Android);
 #endif
+    return true;
 }
 
-CCLuaEngine::~CCLuaEngine()
+CCLuaEngine* CCLuaEngine::engine()
 {
-    lua_close(m_state);
-    s_engine = NULL;
+    CCLuaEngine* pEngine = new CCLuaEngine();
+    pEngine->init();
+    pEngine->autorelease();
+    return pEngine;
 }
-
-CCLuaEngine* CCLuaEngine::sharedEngine()
-{
-    if (!s_engine)
-    {
-        s_engine = new CCLuaEngine();
-    }
-    return s_engine;
-}
-
-void CCLuaEngine::purgeSharedEngine()
-{
-    if (s_engine) delete s_engine;
-}
-
-// -------------------------------------------
 
 void CCLuaEngine::removeCCObjectByID(int nLuaID)
 {
@@ -204,12 +118,12 @@ int CCLuaEngine::executeScriptFile(const char* filename)
     return 0;
 }
 
-int	CCLuaEngine::executeGlobalFunction(const char* function_name)
+int	CCLuaEngine::executeGlobalFunction(const char* functionName)
 {
-    lua_getglobal(m_state, function_name);  /* query function by name, stack: function */
+    lua_getglobal(m_state, functionName);  /* query function by name, stack: function */
     if (!lua_isfunction(m_state, -1))
     {
-        CCLOG("[LUA ERROR] name '%s' does not represent a Lua function", function_name);
+        CCLOG("[LUA ERROR] name '%s' does not represent a Lua function", functionName);
         lua_pop(m_state, 1);
         return 0;
     }
@@ -360,10 +274,8 @@ int CCLuaEngine::executeSchedule(int nHandler, ccTime dt)
     
 void CCLuaEngine::addLuaLoader(lua_CFunction func)
 {
-    if (! func)
-    {
-        return;
-    }
+    if (!func) return;
+
     // stack content after the invoking of the function
     // get loader table
     lua_getglobal(m_state, "package");                     // package
@@ -385,5 +297,4 @@ void CCLuaEngine::addLuaLoader(lua_CFunction func)
     lua_pop(m_state, 1);
 }
 
-
-} // namespace cocos2d
+NS_CC_END

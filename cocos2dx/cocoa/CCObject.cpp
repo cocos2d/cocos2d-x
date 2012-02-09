@@ -26,10 +26,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
-
-#if CC_LUA_ENGINE_ENABLED
-#include "CCLuaEngine.h"
-#endif
+#include "CCScriptSupport.h"
 
 namespace   cocos2d {
 
@@ -61,13 +58,11 @@ CCObject::~CCObject(void)
 		CCPoolManager::getInstance()->removeObject(this);
 	}
 
-#if CC_LUA_ENGINE_ENABLED
     // if the object is referenced by Lua engine, remove it
     if (m_nLuaID)
     {
-        CCLuaEngine::sharedEngine()->removeCCObjectByID(m_nLuaID);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeCCObjectByID(m_nLuaID);
     }
-#endif
 }
 
 CCObject* CCObject::copy()

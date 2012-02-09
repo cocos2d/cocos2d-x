@@ -28,11 +28,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
-#include "CCMutableArray.h"
-
-#if CC_LUA_ENGINE_ENABLED
-#include "CCLuaEngine.h"
-#endif
+#include "CCArray.h"
+#include "CCScriptSupport.h"
 
 using namespace std;
 
@@ -78,9 +75,7 @@ CCTimer::CCTimer()
 , m_fInterval(0.0f)
 , m_pTarget(NULL)
 , m_fElapsed(0.0f)
-#if CC_LUA_ENGINE_ENABLED
 , m_nScriptHandler(0)
-#endif
 {
 
 }
@@ -105,7 +100,6 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, c
 	return pTimer;
 }
 
-#if CC_LUA_ENGINE_ENABLED
 CCTimer* CCTimer::timerWithScriptHandler(int nHandler, ccTime fSeconds)
 {
 	CCTimer *pTimer = new CCTimer();
@@ -124,7 +118,6 @@ bool CCTimer::initWithScriptHandler(int nHandler, ccTime fSeconds)
 
 	return true;
 }
-#endif // CC_LUA_ENGINE_ENABLED
 
 bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
@@ -154,18 +147,15 @@ void CCTimer::update(ccTime dt)
 
 	if (m_fElapsed >= m_fInterval)
 	{
-                if (0 != m_pfnSelector)
+        if (0 != m_pfnSelector)
 		{
 			(m_pTarget->*m_pfnSelector)(m_fElapsed);
-			m_fElapsed = 0;
 		}
-#if CC_LUA_ENGINE_ENABLED
         if (m_nScriptHandler)
 		{
-            CCLuaEngine::sharedEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
-			m_fElapsed = 0;
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
 		}
-#endif
+        m_fElapsed = 0;
 	}
 }
 
@@ -183,9 +173,7 @@ CCScheduler::CCScheduler(void)
 , m_pHashForSelectors(NULL)
 , m_pCurrentTarget(NULL)
 , m_bCurrentTargetSalvaged(false)
-#if CC_LUA_ENGINE_ENABLED
 , m_pScriptHandlerEntries(NULL)
-#endif
 {
 	CCAssert(pSharedScheduler == NULL, "");
 }
@@ -195,9 +183,7 @@ CCScheduler::~CCScheduler(void)
 	unscheduleAllSelectors();
 
 	pSharedScheduler = NULL;
-#if CC_LUA_ENGINE_ENABLED
-    m_pScriptHandlerEntries->release();
-#endif
+    CC_SAFE_RELEASE(m_pScriptHandlerEntries);
 }
 
 CCScheduler* CCScheduler::sharedScheduler(void)
@@ -230,11 +216,6 @@ bool CCScheduler::init(void)
     m_bCurrentTargetSalvaged = false;
 	m_pHashForSelectors = NULL;
 	m_bUpdateHashLocked = false;
-
-#if CC_LUA_ENGINE_ENABLED
-    m_pScriptHandlerEntries = CCArray::arrayWithCapacity(20);
-    m_pScriptHandlerEntries->retain();
-#endif
 
 	return true;
 }
@@ -532,10 +513,11 @@ void CCScheduler::unscheduleAllSelectors(void)
         unscheduleUpdateForTarget(pEntry->target);
 	}
 
-#if CC_LUA_ENGINE_ENABLED
-    m_pScriptHandlerEntries->removeAllObjects();
-#endif
-	}
+    if (m_pScriptHandlerEntries)
+    {
+        m_pScriptHandlerEntries->removeAllObjects();
+    }
+}
 
 void CCScheduler::unscheduleAllSelectorsForTarget(CCObject *pTarget)
 {
@@ -573,10 +555,14 @@ void CCScheduler::unscheduleAllSelectorsForTarget(CCObject *pTarget)
 	unscheduleUpdateForTarget(pTarget);
 }
 
-#if CC_LUA_ENGINE_ENABLED
 unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, ccTime fInterval, bool bPaused)
 {
     CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::entryWithHandler(nHandler, fInterval, bPaused);
+    if (!m_pScriptHandlerEntries)
+    {
+        m_pScriptHandlerEntries = CCArray::arrayWithCapacity(20);
+        m_pScriptHandlerEntries->retain();
+    }
     m_pScriptHandlerEntries->addObject(pEntry);
     return pEntry->getEntryID();
 }
@@ -593,7 +579,6 @@ void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
         }
     }
 }
-#endif
 
 void CCScheduler::resumeTarget(CCObject *pTarget)
 {
@@ -732,21 +717,22 @@ void CCScheduler::tick(ccTime dt)
 		}
 	}
 
-#if CC_LUA_ENGINE_ENABLED
     // Interate all over the script callbacks
-    for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
+    if (m_pScriptHandlerEntries)
     {
-        CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
-        if (pEntry->isMarkedForDeletion())
+        for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
         {
-            m_pScriptHandlerEntries->removeObjectAtIndex(i);
-        }
-        else if (!pEntry->isPaused())
-        {
-            pEntry->getTimer()->update(dt);
+            CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
+            if (pEntry->isMarkedForDeletion())
+            {
+                m_pScriptHandlerEntries->removeObjectAtIndex(i);
+            }
+            else if (!pEntry->isPaused())
+            {
+                pEntry->getTimer()->update(dt);
+            }
         }
     }
-#endif // CC_LUA_ENGINE_ENABLED
 
 	// delete all updates that are morked for deletion
 	// updates with priority < 0

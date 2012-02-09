@@ -56,9 +56,7 @@ namespace cocos2d{
         , m_bIsEnabled(false)            
         , m_pListener(NULL)			
         , m_pfnSelector(NULL)
-#if CC_LUA_ENGINE_ENABLED
         , m_nScriptHandler(0)
-#endif
         {}
         virtual ~CCMenuItem();
         /** Creates a CCMenuItem with a target/selector */
@@ -74,20 +72,16 @@ namespace cocos2d{
         /** The item was unselected */
         virtual void unselected();
         
-#if CC_LUA_ENGINE_ENABLED
         /** Register menu handler script function */
         virtual void registerScriptHandler(int nHandler);
         virtual void unregisterScriptHandler(void);
-#endif
         
         /** set the target/selector of the menu item*/
         void setTarget(CCObject *rec, SEL_MenuHandler selector);
     protected:
         CCObject*       m_pListener;
         SEL_MenuHandler	m_pfnSelector;
-#if CC_LUA_ENGINE_ENABLED
         int             m_nScriptHandler;
-#endif
     };
     
     /** @brief An abstract class for "label" CCMenuItemLabel items 
