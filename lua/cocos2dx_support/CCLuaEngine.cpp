@@ -29,7 +29,6 @@
 extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
-#include "lualoadexts.h"
 }
 
 #include "cocos2d.h"
@@ -54,7 +53,6 @@ bool CCLuaEngine::init(void)
     luaL_openlibs(m_state);
     tolua_Cocos2d_open(m_state);
     tolua_prepare_ccobject_table(m_state);
-    luax_loadexts(m_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     addLuaLoader(loader_Android);
 #endif
