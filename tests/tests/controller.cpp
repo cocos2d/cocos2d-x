@@ -135,7 +135,7 @@ TestController::TestController()
     pCloseItem->setPosition(CCPointMake( s.width - 30, s.height - 30));
 
     // add menu items for tests
-    m_pItmeMenu = CCMenu::menuWithItems(NULL);
+    m_pItemMenu = CCMenu::menuWithItems(NULL);
     for (int i = 0; i < TESTS_COUNT; ++i)
     {
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
@@ -145,13 +145,13 @@ TestController::TestController()
 // #endif		
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
 
-        m_pItmeMenu->addChild(pMenuItem, i + 10000);
+        m_pItemMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
     }
 
-    m_pItmeMenu->setContentSize(CCSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
-    m_pItmeMenu->setPosition(s_tCurPos);
-    addChild(m_pItmeMenu);
+    m_pItemMenu->setContentSize(CCSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
+    m_pItemMenu->setPosition(s_tCurPos);
+    addChild(m_pItemMenu);
 
     setIsTouchEnabled(true);
 
@@ -200,22 +200,22 @@ void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
     float nMoveY = touchLocation.y - m_tBeginPos.y;
 
-    CCPoint curPos  = m_pItmeMenu->getPosition();
+    CCPoint curPos  = m_pItemMenu->getPosition();
     CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     if (nextPos.y < 0.0f)
     {
-        m_pItmeMenu->setPosition(CCPointZero);
+        m_pItemMenu->setPosition(CCPointZero);
         return;
     }
 
     if (nextPos.y > ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height))
     {
-        m_pItmeMenu->setPosition(ccp(0, ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height)));
+        m_pItemMenu->setPosition(ccp(0, ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height)));
         return;
     }
 
-    m_pItmeMenu->setPosition(nextPos);
+    m_pItemMenu->setPosition(nextPos);
     m_tBeginPos = touchLocation;
     s_tCurPos   = nextPos;
 }
