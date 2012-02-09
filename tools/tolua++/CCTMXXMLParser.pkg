@@ -1,118 +1,66 @@
-namespace cocos2d {
 
-	enum {
-		TMXLayerAttribNone = 1 << 0,
-		TMXLayerAttribBase64 = 1 << 1,
-		TMXLayerAttribGzip = 1 << 2,
-		TMXLayerAttribZlib = 1 << 3,
-	};
+enum {
+    TMXLayerAttribNone = 1 << 0,
+    TMXLayerAttribBase64 = 1 << 1,
+    TMXLayerAttribGzip = 1 << 2,
+    TMXLayerAttribZlib = 1 << 3,
+};
 
-	enum {
-		TMXPropertyNone,
-		TMXPropertyMap,
-		TMXPropertyLayer,
-		TMXPropertyObjectGroup,
-		TMXPropertyObject,
-		TMXPropertyTile
-	};
+enum {
+    TMXPropertyNone,
+    TMXPropertyMap,
+    TMXPropertyLayer,
+    TMXPropertyObjectGroup,
+    TMXPropertyObject,
+    TMXPropertyTile
+};
 
-	class CCTMXLayerInfo : public CCObject
-	{
-		CCStringToStringDictionary* getProperties();
-		void setProperties(CCStringToStringDictionary* pval);
-	
-		CCTMXLayerInfo();
-		~CCTMXLayerInfo();
-	};
+class CCTMXLayerInfo : public CCObject
+{
+    CCStringToStringDictionary* getProperties();
+    void setProperties(CCStringToStringDictionary* pval);
+};
 
-	
-	class CCTMXTilesetInfo : public CCObject
-	{
+class CCTMXTilesetInfo : public CCObject
+{
+    CCRect rectForGID(unsigned int gid);
+};
 
-		CCTMXTilesetInfo();
-		~CCTMXTilesetInfo();
-		CCRect rectForGID(unsigned int gid);
-	};
+class CCTMXMapInfo : public CCObject
+{
+    void setOrientation(int val);
+    int getOrientation();
+    void setMapSize(CCSize sz);
+    CCSize getMapSize();
+    void setTileSize(CCSize sz);
+    CCSize getTileSize();
+    void setLayers(CCMutableArray<CCTMXLayerInfo*>* pval);
+    CCMutableArray<CCTMXLayerInfo*>* getLayers();
+    void setTilesets(CCMutableArray<CCTMXTilesetInfo*>* pval);
+    CCMutableArray<CCTMXTilesetInfo*>* getTilesets();
+    void setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* val);
+    CCMutableArray<CCTMXObjectGroup*>* getObjectGroups();
+    void setParentElement(int val);
+    int getParentElement();
+    void setParentGID(unsigned int val);
+    unsigned int getParentGID();
+    void setLayerAttribs(int val);
+    int getLayerAttribs();
+    void setStoringCharacters(bool val);
+    bool getStoringCharacters();
+    void setProperties(CCStringToStringDictionary* pval);
+    CCStringToStringDictionary* getProperties();
+    void setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties);
+    CCDictionary<int, CCStringToStringDictionary*> * getTileProperties();
+    void setCurrentString(const char *currentString);
+    const char* getCurrentString();
+    void setTMXFileName(const char *fileName);
+    const char* getTMXFileName();
 
-	/** @brief CCTMXMapInfo contains the information about the map like:
-	- Map orientation (hexagonal, isometric or orthogonal)
-	- Tile size
-	- Map size
+    void startElement(void *ctx, const char *name, const char **atts);
+    void endElement(void *ctx, const char *name);
+    void textHandler(void *ctx, const char *ch, int len);
+    bool parseXMLFile(const char *xmlFilename);
 
-	And it also contains:
-	- Layers (an array of TMXLayerInfo objects)
-	- Tilesets (an array of TMXTilesetInfo objects)
-	- ObjectGroups (an array of TMXObjectGroupInfo objects)
-
-	This information is obtained from the TMX file.
-
-	*/
-	class CCTMXMapInfo : public CCObject, public CCSAXDelegator
-	{	
-	public:	
-		/// map orientation
-		int getOrientation();
-		void setOrientation(int val);
-		/// map width & height
-		CCSize getMapSize();
-		void setMapSize(CCSize sz);
-		/// tiles width & height
-
-		CCSize getTileSize();
-		void setTileSize(CCSize sz);
-		/// Layers
-		CCMutableArray<CCTMXLayerInfo*>* getLayers();
-		void setLayers(CCMutableArray<CCTMXLayerInfo*>* pval);
-		/// tilesets
-		CCMutableArray<CCTMXTilesetInfo*>* getTilesets();
-		void setTilesets(CCMutableArray<CCTMXTilesetInfo*>* pval);
-		
-		/// ObjectGroups
-		CCMutableArray<CCTMXObjectGroup*>* getObjectGroups();
-		void setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* val);
-		/// parent element
-		int getParentElement();
-		void setParentElement(int val);
-		/// parent GID
-		unsigned int getParentGID();
-		void setParentGID(unsigned int val);
-		
-		/// layer attribs
-		int getLayerAttribs();
-		void setLayerAttribs(int val);
-		/// is stroing characters?
-		bool getStoringCharacters();
-		void setStoringCharacters(bool val);
-	
-		/// properties
-		CCStringToStringDictionary* getProperties();
-		void setProperties(CCStringToStringDictionary* pval);
-
-		CCTMXMapInfo();
-		~CCTMXMapInfo();
-		/** creates a TMX Format with a tmx file */
-		static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
-		/** initializes a TMX format witha  tmx file */
-		bool initWithTMXFile(const char *tmxFile);
-		/** initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
-		bool parseXMLFile(const char *xmlFilename);
-		
-		CCDictionary<int, CCStringToStringDictionary*> * getTileProperties();
-		void setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties);
-
-		// implement pure virtual methods of CCSAXDelegator
-		void startElement(void *ctx, const char *name, const char **atts);
-		void endElement(void *ctx, const char *name);
-		void textHandler(void *ctx, const char *ch, int len);
-		
-		const char* getCurrentString();
-		void setCurrentString(const char *currentString);
-		const char* getTMXFileName();
-		void setTMXFileName(const char *fileName);
-	
-	};
-
-}// namespace cocos2d
-
-
-
+    static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
+};

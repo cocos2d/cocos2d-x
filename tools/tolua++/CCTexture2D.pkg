@@ -1,119 +1,72 @@
-namespace   cocos2d {
 
-class CCImage;
 typedef enum {
-	kCCTexture2DPixelFormat_Automatic = 0,
-	//! 32-bit texture: RGBA8888
-	kCCTexture2DPixelFormat_RGBA8888,
-	//! 24-bit texture: RGBA888
-	kCCTexture2DPixelFormat_RGB888,
-	//! 16-bit texture without Alpha channel
-	kCCTexture2DPixelFormat_RGB565,
-	//! 8-bit textures used as masks
-	kCCTexture2DPixelFormat_A8,
-	//! 8-bit intensity texture
-	kCCTexture2DPixelFormat_I8,
-	//! 16-bit textures used as masks
-	kCCTexture2DPixelFormat_AI88,
-	//! 16-bit textures: RGBA4444
-	kCCTexture2DPixelFormat_RGBA4444,
-	//! 16-bit textures: RGB5A1
-	kCCTexture2DPixelFormat_RGB5A1,	
-	//! 4-bit PVRTC-compressed texture: PVRTC4
-	kCCTexture2DPixelFormat_PVRTC4,
-	//! 2-bit PVRTC-compressed texture: PVRTC2
-	kCCTexture2DPixelFormat_PVRTC2,
+    kCCTexture2DPixelFormat_Automatic = 0,
+    //! 32-bit texture: RGBA8888
+    kCCTexture2DPixelFormat_RGBA8888,
+    //! 24-bit texture: RGBA888
+    kCCTexture2DPixelFormat_RGB888,
+    //! 16-bit texture without Alpha channel
+    kCCTexture2DPixelFormat_RGB565,
+    //! 8-bit textures used as masks
+    kCCTexture2DPixelFormat_A8,
+    //! 8-bit intensity texture
+    kCCTexture2DPixelFormat_I8,
+    //! 16-bit textures used as masks
+    kCCTexture2DPixelFormat_AI88,
+    //! 16-bit textures: RGBA4444
+    kCCTexture2DPixelFormat_RGBA4444,
+    //! 16-bit textures: RGB5A1
+    kCCTexture2DPixelFormat_RGB5A1,
+    //! 4-bit PVRTC-compressed texture: PVRTC4
+    kCCTexture2DPixelFormat_PVRTC4,
+    //! 2-bit PVRTC-compressed texture: PVRTC2
+    kCCTexture2DPixelFormat_PVRTC2,
 
-	//! Default texture format: RGBA8888
-	kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
+    //! Default texture format: RGBA8888
+    kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
 
-	// backward compatibility stuff
-	kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
-	kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
-	kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
-	kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
-	kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
-	kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
-	kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
-	kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
-
+    // backward compatibility stuff
+    kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
+    kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
+    kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
+    kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
+    kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
+    kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
+    kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
+    kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
 } CCTexture2DPixelFormat;
-
-/**
-Extension to set the Min / Mag filter
-*/
-typedef struct _ccTexParams {
-	GLuint	minFilter;
-	GLuint	magFilter;
-	GLuint	wrapS;
-	GLuint	wrapT;
-} ccTexParams;
-
 
 class CCTexture2D : public CCObject
 {
-	/** pixel format of the texture */
-	CCTexture2DPixelFormat getPixelFormat();
-	/** width in pixels */
-	unsigned int getPixelsWide();
-	unsigned int getPixelsHigh();
+    CCTexture2DPixelFormat getPixelFormat();
 
-	/** texture name */
-	GLuint getName();
+    unsigned int getPixelsWide();
+    unsigned int getPixelsHigh();
 
-	/** content size */
-	CCSize getContentSizeInPixels();
-	/** texture max S */
-	void setMaxS(GLfloat val);
-	GLfloat getMaxS();
-	/** texture max T */
-	GLfloat getMaxT();
-	void setMaxT(GLfloat val);
+    GLuint getName();
 
-	bool getHasPremultipliedAlpha();
+    CCSize getContentSizeInPixels();
 
-	CCTexture2D();
-	~CCTexture2D();
+    void setMaxS(GLfloat val);
+    GLfloat getMaxS();
 
-	char * description(void);
+    GLfloat getMaxT();
+    void setMaxT(GLfloat val);
 
-	/** These functions are needed to create mutable textures */
-	void releaseData(void *data);
-	void* keepData(void *data, unsigned int length);
+    bool getHasPremultipliedAlpha();
 
-	/** Intializes with a texture2d with data */
-	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CCSize contentSize);
+    void drawAtPoint(CCPoint point);
+    void drawInRect(CCRect rect);
 
-	
-	/** draws a texture at a given point */
-	void drawAtPoint(CCPoint point);
-	/** draws a texture inside a rect */
-	void drawInRect(CCRect rect);
+    CCSize getContentSize(void);
 
-	/** Initializes a texture from a UIImage object */
-	bool initWithImage(CCImage * uiImage);
-	/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-	bool initWithString(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-	/** Initializes a texture from a string with font name and font size */
-	bool initWithString(const char *text, const char *fontName, float fontSize);
+    void setTexParameters(ccTexParams* texParams);
+    void setAntiAliasTexParameters();
+    void setAliasTexParameters();
+    void generateMipmap();
 
-	/** returns the content size of the texture in points */
-	CCSize getContentSize(void);
+    int bitsPerPixelForFormat();
 
-
-	void setTexParameters(ccTexParams* texParams);
-
-	void setAntiAliasTexParameters();
-
-	void setAliasTexParameters();
-
-	void generateMipmap();
-	
-	int bitsPerPixelForFormat();
-
-	static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
-	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
-
+    static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
+    static CCTexture2DPixelFormat defaultAlphaPixelFormat();
 };
-}//namespace   cocos2d 
-

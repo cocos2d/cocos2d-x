@@ -1,150 +1,43 @@
-#include "platform/CCPlatformMacros.h"
-#include "CCObject.h"
-#include "ccTypes.h"
-#include "CCGeometry.h"
-#include "CCMutableArray.h"
-#include "CCGeometry.h"
-#include "CCEGLView.h"
-#include "CCGL.h"
 
-namespace   cocos2d {
+typedef enum {
+    /// Device oriented vertically, home button on the bottom
+    kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,
+    /// Device oriented vertically, home button on the top
+    kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
+    /// Device oriented horizontally, home button on the right
+    kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
+    /// Device oriented horizontally, home button on the left
+    kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
+} ccDeviceOrientation;
 
-	typedef enum {
-		/// sets a 2D projection (orthogonal projection)
-		kCCDirectorProjection2D,
+class CCDirector : public CCObject
+{
+    CCScene* getRunningScene(void);
 
-		/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
-		kCCDirectorProjection3D,
+    double getAnimationInterval(void);
 
-		/// it calls "updateProjection" on the projection delegate.
-		kCCDirectorProjectionCustom,
+    bool isDisplayFPS(void);
+    void setDisplayFPS(bool bDisplayFPS);
 
-		/// Detault projection is 3D projection
-		kCCDirectorProjectionDefault = kCCDirectorProjection3D,
+    bool isRetinaDisplay();
+    bool isPaused(void);
+    unsigned int getFrames(void);
 
-		// backward compatibility stuff
-		CCDirectorProjection2D = kCCDirectorProjection2D,
-		CCDirectorProjection3D = kCCDirectorProjection3D,
-		CCDirectorProjectionCustom = kCCDirectorProjectionCustom,
-	} ccDirectorProjection;
+    CCSize getWinSize(void);
+    CCSize getWinSizeInPixels(void);
+    CCSize getDisplaySizeInPixels(void);
 
-	
-		typedef enum {	
-			kCCDirectorTypeNSTimer,
-			kCCDirectorTypeMainLoop,	
-			kCCDirectorTypeThreadMainLoop,
-			kCCDirectorTypeDisplayLink,
-			kCCDirectorTypeDefault = kCCDirectorTypeNSTimer,
-			CCDirectorTypeNSTimer = kCCDirectorTypeNSTimer,
-			CCDirectorTypeMainLoop = kCCDirectorTypeMainLoop,
-			CCDirectorTypeThreadMainLoop = kCCDirectorTypeThreadMainLoop,
-			CCDirectorTypeDisplayLink = kCCDirectorTypeDisplayLink,
-			CCDirectorTypeDefault =kCCDirectorTypeDefault,
-	} ccDirectorType;
+    CCPoint convertToGL(CCPoint obPoint);
+    CCPoint convertToUI(CCPoint obPoint);
 
-	typedef enum {
-		/// Device oriented vertically, home button on the bottom
-		kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,	
-		/// Device oriented vertically, home button on the top
-		kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
-		/// Device oriented horizontally, home button on the right
-		kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
-		/// Device oriented horizontally, home button on the left
-		kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
+    void runWithScene(CCScene *pScene);
+    void pushScene(CCScene *pScene);
+    void popScene(void);
+    void replaceScene(CCScene *pScene);
 
-		// Backward compatibility stuff
-		CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
-		CCDeviceOrientationPortraitUpsideDown = kCCDeviceOrientationPortraitUpsideDown,
-		CCDeviceOrientationLandscapeLeft = kCCDeviceOrientationLandscapeLeft,
-		CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
-	} ccDeviceOrientation;
+    CGFloat getContentScaleFactor(void);
 
-	class CCLabelTTF;
-	class CCScene;
-	class CCEGLView;
-	class CCNode;
-	class CCProjectionProtocol;
+    int getDeviceOrientation();
 
-	class  CCDirector : public CCObject
-	{
-	public: 
-		bool init(void);	
-		CCDirector(void);
-
-
-		CCScene* getRunningScene(void);
-
-
-		double getAnimationInterval(void);
-		void setAnimationInterval(double dValue);
-		bool isDisplayFPS(void);
-		void setDisplayFPS(bool bDisplayFPS);
-		CC_GLVIEW* getOpenGLView(void);
-		void setOpenGLView(CC_GLVIEW *pobOpenGLView);
-		bool isNextDeltaTimeZero(void);
-		void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
-		bool isPaused(void);
-		unsigned int getFrames(void);
-		ccDirectorProjection getProjection(void);
-		void setProjection(ccDirectorProjection kProjection);
-		bool isSendCleanupToScene(void);
-		CCSize getWinSize(void);	
-		CCSize getWinSizeInPixels(void);
-		CCSize getDisplaySizeInPixels(void);
-		void reshapeProjection(CCSize newWindowSize);
-		CCPoint convertToGL(CCPoint obPoint);
-		CCPoint convertToUI(CCPoint obPoint);
-		float getZEye(void);
-		void runWithScene(CCScene *pScene);
-		void pushScene(CCScene *pScene);
-		void popScene(void);
-		void replaceScene(CCScene *pScene);
-		void endToLua(void);
-		void pause(void);
-		void resume(void);
-		void drawScene(void);
-		void purgeCachedData(void);
-		void setGLDefaultValues(void);
-
-		/** enables/disables OpenGL alpha blending */
-		void setAlphaBlending(bool bOn);
-
-		/** enables/disables OpenGL depth test */
-		void setDepthTest(bool bOn);
-
-		virtual void mainLoop(void) = 0;
-
-		// Profiler
-		void showProfilers(void);
-
-		/** rotates the screen if an orientation different than Portrait is used */
-		void applyOrientation(void);
-
-		ccDeviceOrientation getDeviceOrientation(void);
-		void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
-
-		void setContentScaleFactor(CGFloat scaleFactor);
-		CGFloat getContentScaleFactor(void);
-
-		bool enableRetinaDisplay(bool enabled);
-		bool isRetinaDisplay() { return m_bRetinaDisplay; }
-
-		static bool setDirectorType(ccDirectorType obDirectorType);
-
-		static CCDirector* sharedDirector(void);
-	};
-
-/*
-	class CCDisplayLinkDirector : public CCDirector
-	{
-
-		CCDisplayLinkDirector(void);
-		void mainLoop(void);
-		void setAnimationInterval(double dValue);
-		void startAnimation(void);
-		void stopAnimation();
-	};
-*/
-}//namespace   cocos2d 
-
-
+    static CCDirector* sharedDirector(void);
+};

@@ -1,0 +1,5 @@
+
+class CCFileUtils
+{
+    static std::string getWriteablePath();
+};

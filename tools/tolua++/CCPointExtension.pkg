@@ -1,71 +1,31 @@
-namespace   cocos2d {
 
 static  CCPoint ccpNeg(const CCPoint& v);
-
 static  CCPoint ccpAdd(const CCPoint& v1, const CCPoint& v2);
-
 static  CCPoint ccpSub(const CCPoint& v1, const CCPoint& v2);
-
 static  CCPoint ccpMult(const CCPoint& v, const CGFloat s);
-
 static  CCPoint ccpMidpoint(const CCPoint& v1, const CCPoint& v2);
-
 static  CGFloat ccpDot(const CCPoint& v1, const CCPoint& v2);
-
-
-static CGFloat ccpCross(const CCPoint& v1, const CCPoint& v2);
-
+static  CGFloat ccpCross(const CCPoint& v1, const CCPoint& v2);
 static  CCPoint ccpPerp(const CCPoint& v);
-
 static  CCPoint ccpRPerp(const CCPoint& v);
-
 static  CCPoint ccpProject(const CCPoint& v1, const CCPoint& v2);
-
 static  CCPoint ccpRotate(const CCPoint& v1, const CCPoint& v2);
-
 static  CCPoint ccpUnrotate(const CCPoint& v1, const CCPoint& v2);
-
 static  CGFloat ccpLengthSQ(const CCPoint& v);
-
-CGFloat  ccpLength(const CCPoint& v);
-
+CGFloat ccpLength(const CCPoint& v);
 CGFloat ccpDistance(const CCPoint& v1, const CCPoint& v2);
-
 CCPoint ccpNormalize(const CCPoint& v);
-
 CCPoint ccpForAngle(const CGFloat a);
-
-CGFloat  ccpToAngle(const CCPoint& v);
-
-float  clampf(float value, float min_inclusive, float max_inclusive);
-
-CCPoint  ccpClamp(const CCPoint& p, const CCPoint& from, const CCPoint& to);
-
-CCPoint  ccpFromSize(const CCSize& s);
-
-//CCPoint  ccpCompOp(const CCPoint& p, float (*opFunc)(float));
-
+CGFloat ccpToAngle(const CCPoint& v);
+float   clampf(float value, float min_inclusive, float max_inclusive);
+CCPoint ccpClamp(const CCPoint& p, const CCPoint& from, const CCPoint& to);
+CCPoint ccpFromSize(const CCSize& s);
 CCPoint  ccpLerp(const CCPoint& a, const CCPoint& b, float alpha);
-
-
 bool  ccpFuzzyEqual(const CCPoint& a, const CCPoint& b, float variance);
-
-
 CCPoint  ccpCompMult(const CCPoint& a, const CCPoint& b);
-
 float  ccpAngleSigned(const CCPoint& a, const CCPoint& b);
-
 float  ccpAngle(const CCPoint& a, const CCPoint& b);
-
 CCPoint  ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle);
-
 bool  ccpLineIntersect(const CCPoint& p1, const CCPoint& p2, const CCPoint& p3, const CCPoint& p4, float *s, float *t);
-
 bool ccpSegmentIntersect(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
-
 CCPoint ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
-
-}//namespace   cocos2d 
-
-
-

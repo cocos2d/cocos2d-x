@@ -1,16 +1,12 @@
 
-namespace cocos2d {
+class CCString : public CCObject
+{
+    CCString();
+    CCString(const char * str);
+    ~CCString();
 
-	class  CCString : public CCObject
-	{
-
-		CCString();
-		CCString(const char * str);
-		~CCString();
-		int toInt();
-		unsigned int toUInt();
-		float toFloat();
-
-		bool isEmpty();
-	};
-}// namespace cocos2d
+    int toInt();
+    unsigned int toUInt();
+    float toFloat();
+    bool isEmpty();
+};

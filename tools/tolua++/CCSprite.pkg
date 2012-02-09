@@ -1,8 +1,4 @@
 
-namespace   cocos2d {
-
-#define CCSpriteIndexNotInitialized 0xffffffff
-
 typedef enum {
 	//! Translate with it's parent
 	CC_HONOR_PARENT_TRANSFORM_TRANSLATE =  1 << 0,
@@ -18,133 +14,55 @@ typedef enum {
 
 } ccHonorParentTransform;
 
-class  CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
+class CCSprite : public CCNode
 {
-
-	void draw(void);
-
-	bool isDirty(void);
-	/** make the Sprite to be updated in the Atlas. */
 	void setDirty(bool bDirty);
+	bool isDirty(void);
 
-	/** get the quad (tex coords, vertex coords and color) information */
 	ccV3F_C4B_T2F_Quad getQuad(void);
 
-	/** returns whether or not the texture rectangle is rotated */
+	CCRect getTextureRect(void);
+	bool isUsesBatchNode(void);
 	bool isTextureRectRotated(void);
-	
-	/** Set the index used on the TextureAtlas. */
-	unsigned int getAtlasIndex(void);
 
 	void setAtlasIndex(unsigned int uAtlasIndex);
-
-	CCRect getTextureRect(void);
-
-	bool isUsesBatchNode(void);
-
+	unsigned int getAtlasIndex(void);
 	void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode);
-
-	CCTextureAtlas* getTextureAtlas(void);
 	void setTextureAtlas(CCTextureAtlas *pobTextureAtlas);
-
-	CCSpriteBatchNode* getSpriteBatchNode(void);
+	CCTextureAtlas* getTextureAtlas(void);
 	void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
-
-	ccHonorParentTransform getHonorParentTransform(void);
+	CCSpriteBatchNode* getSpriteBatchNode(void);
 	void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform);
+	ccHonorParentTransform getHonorParentTransform(void);
+	void setBlendFunc(ccBlendFunc blendFunc);
+	ccBlendFunc getBlendFunc(void);
 
 	CCPoint getOffsetPositionInPixels(void);
 
-	ccBlendFunc getBlendFunc(void);
-	void setBlendFunc(ccBlendFunc blendFunc);
-
-
-	static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
-
-	
-	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect);
-
-	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset);
-
-
-	static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
-
-	static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
-
-
-  static CCSprite* spriteWithFile(const char *pszFileName);
-
-	static CCSprite* spriteWithFile(const char *pszFileName, CCRect rect);
- 
-	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
-
-
-	bool init(void);
-	~CCSprite(void);
-	CCSprite();
-
-	void removeChild(CCNode* pChild, bool bCleanup);
-	void removeAllChildrenWithCleanup(bool bCleanup);
-	void reorderChild(CCNode *pChild, int zOrder);
-	void addChild(CCNode *pChild);
-	void addChild(CCNode *pChild, int zOrder);
-	void addChild(CCNode *pChild, int zOrder, int tag);
-
 	void setDirtyRecursively(bool bValue);
-	void setPosition(CCPoint pos);
-	void setPositionInPixels(CCPoint pos);
-	void setRotation(float fRotation);
-	void setSkewX(float sx);
-	void setSkewY(float sy);
-	void setScaleX(float fScaleX);
-	void setScaleY(float fScaleY);
-	void setScale(float fScale);
-	void setVertexZ(float fVertexZ);
-	void setAnchorPoint(CCPoint anchor);
 	void setIsRelativeAnchorPoint(bool bRelative);
-	void setIsVisible(bool bVisible);
 	void setFlipX(bool bFlipX);
 	void setFlipY(bool bFlipY);
-
 	bool isFlipX(void);
-
 	bool isFlipY(void);
-
 	void updateColor(void);
-	
-	GLubyte getOpacity(void);
+
 	void setOpacity(GLubyte opacity);
-	/** RGB colors: conforms to CCRGBAProtocol protocol */
-	ccColor3B getColor(void);
+	GLubyte getOpacity(void);
+
+	tolua_property__CCOpacity	GLubyte opacity;
+
 	void setColor(ccColor3B color3);
+	ccColor3B getColor(void);
 	void setIsOpacityModifyRGB(bool bValue);
 	bool getIsOpacityModifyRGB(void);
 
-   void setTexture(CCTexture2D *texture);
+	void setTexture(CCTexture2D *texture);
 	CCTexture2D* getTexture(void);
 
-  bool initWithTexture(CCTexture2D *pTexture);
-
-  bool initWithTexture(CCTexture2D *pTexture, CCRect rect);
-
-  bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
-
-  bool initWithSpriteFrameName(const char *pszSpriteFrameName);
-
-  bool initWithFile(const char *pszFilename);
-
-  bool initWithFile(const char *pszFilename, CCRect rect);
-
-	bool initWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
-
-	bool initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, CCRect rect);
-
 	void updateTransform(void);
-
 	void useSelfRender(void);
-
-        void setTextureRect(CCRect rect);
-
+    void setTextureRect(CCRect rect);
 	void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
 	void useBatchNode(CCSpriteBatchNode *batchNode);
 	void setDisplayFrame(CCSpriteFrame *pNewFrame);
@@ -152,6 +70,12 @@ class  CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 	CCSpriteFrame* displayedFrame(void);
 	void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
+	static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
+	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect);
+	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset);
+	static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+	static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
+  	static CCSprite* spriteWithFile(const char *pszFileName);
+	static CCSprite* spriteWithFile(const char *pszFileName, CCRect rect);
+	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
 };
-}//namespace   cocos2d 
-
