@@ -1,27 +1,43 @@
 
-#include "AppDelegate.h"
 #include "cocos2d.h"
+#include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
+#include "CCScriptSupport.h"
 #include "CCLuaEngine.h"
+
+#define IPAD		0
+
+#if IPAD
+#define CC_WIDTH	1024
+#define CC_HEIGHT	768
+#elif IPHONE_4
+#define CC_WIDTH	960
+#define CC_HEIGHT	640
+#else
+#define CC_WIDTH	480
+#define CC_HEIGHT	320
+#endif
 
 USING_NS_CC;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
+	// fixed me
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
 }
 
 AppDelegate::~AppDelegate()
 {
-    // end simple audio engine here, or it may crashed on win32
-    SimpleAudioEngine::sharedEngine()->end();
-    CCLuaEngine::purgeSharedEngine();
+	// end simple audio engine here, or it may crashed on win32
+	SimpleAudioEngine::sharedEngine()->end();
+    CCScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::initInstance()
 {
     bool bRet = false;
-    do
+    do 
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
@@ -29,16 +45,16 @@ bool AppDelegate::initInstance()
         // The HelloWorld is designed as HVGA.
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 480, 320));
+            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), CC_WIDTH, CC_HEIGHT));
 
 #endif  // CC_PLATFORM_WIN32
-
+        
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
         // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
 
 #endif  // CC_PLATFORM_IOS
-
+        
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 		// OpenGLView initialized in HelloWorld/android/jni/helloworld/main.cpp
@@ -54,14 +70,14 @@ bool AppDelegate::initInstance()
         CCEGLView* pMainWnd = new CCEGLView(this);
         CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480, WM_WINDOW_ROTATE_MODE_CW));
 
-#ifndef _TRANZDA_VM_
+#ifndef _TRANZDA_VM_  
         // on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data/ folder instead of zip file
         cocos2d::CCFileUtils::setResource("HelloWorld.zip");
 #endif
 
 #endif  // CC_PLATFORM_WOPHONE
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 		// MaxAksenov said it's NOT a very elegant solution. I agree, haha
 		CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 #endif
@@ -87,31 +103,32 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
 
-    // init lua engine
-    CCLuaEngine* pEngine = CCLuaEngine::sharedEngine();
+	// register lua engine
+    CCScriptEngineProtocol* pEngine = CCLuaEngine::engine();
+    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    unsigned long size;
-    char *pFileContent = (char*)CCFileUtils::getFileData("hello.lua", "r", &size);
+	unsigned long size;
+	char *pFileContent = (char*)CCFileUtils::getFileData("hello.lua", "r", &size);
 
-    if (pFileContent)
-    {
-        // copy the file contents and add '\0' at the end, or the lua parser can not parse it
-        char *pCodes = new char[size + 1];
-        pCodes[size] = '\0';
-        memcpy(pCodes, pFileContent, size);
-        delete[] pFileContent;
+	if (pFileContent)
+	{
+	    // copy the file contents and add '\0' at the end, or the lua parser can not parse it
+	    char *pCodes = new char[size + 1];
+	    pCodes[size] = '\0';
+	    memcpy(pCodes, pFileContent, size);
+	    delete[] pFileContent;
 
-        pEngine->executeString(pCodes);
-        delete []pCodes;
-    }
+	    pEngine->executeString(pCodes);
+	    delete []pCodes;
+	}
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
-#endif
+#endif 
 
 	return true;
 }
@@ -129,7 +146,7 @@ void AppDelegate::applicationDidEnterBackground()
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
-
+	
 	// if you use SimpleAudioEngine, it must resume here
 	// SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
