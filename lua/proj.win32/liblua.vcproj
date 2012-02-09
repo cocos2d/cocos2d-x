@@ -337,10 +337,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\lua\luac.c"
-				>
-			</File>
-			<File
 				RelativePath="..\lua\luaconf.h"
 				>
 			</File>
