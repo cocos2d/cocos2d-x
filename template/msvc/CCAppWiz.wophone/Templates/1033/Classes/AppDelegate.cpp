@@ -25,7 +25,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::initInstance()
 {
     bool bRet = false;
-    do 
+    do
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         // Initialize OpenGLView instance, that release by CCDirector when application terminate.
@@ -95,19 +95,23 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
+    CCDirector::sharedDirector()->stopAnimation();
     CCDirector::sharedDirector()->pause();
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 [! endif]
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    CCDirector::sharedDirector()->startAnimation();
     CCDirector::sharedDirector()->resume();
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
 
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 [! endif]
 }

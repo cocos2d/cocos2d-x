@@ -22,7 +22,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::initInstance()
 {
     bool bRet = false;
-    do 
+    do
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
@@ -33,13 +33,13 @@ bool AppDelegate::initInstance()
             || ! pMainWnd->Create(TEXT("cocos2d: LuaProjectTemplate"), 480, 320));
 
 #endif  // CC_PLATFORM_WIN32
-        
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
         // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
 
 #endif  // CC_PLATFORM_IOS
-        
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 		// OpenGLView initialized in HelloWorld/android/jni/helloworld/main.cpp
@@ -55,7 +55,7 @@ bool AppDelegate::initInstance()
         CCEGLView* pMainWnd = new CCEGLView(this);
         CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480, WM_WINDOW_ROTATE_MODE_CW));
 
-#ifndef _TRANZDA_VM_  
+#ifndef _TRANZDA_VM_
         // on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data/ folder instead of zip file
         cocos2d::CCFileUtils::setResource("LuaProjectTemplate.zip");
 #endif
@@ -98,7 +98,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setAnimationInterval(1.0 / 60);
 
 	// register lua engine
-    m_pLuaEngine = new LuaEngine; 
+    m_pLuaEngine = new LuaEngine;
 	CCScriptEngineManager::sharedScriptEngineManager()->setScriptEngine(m_pLuaEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -122,7 +122,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	string path = CCFileUtils::fullPathFromRelativePath("main.lua");
 	CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
-#endif 
+#endif
 
 	return true;
 }
@@ -130,17 +130,21 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
+    CCDirector::sharedDirector()->stopAnimation();
     CCDirector::sharedDirector()->pause();
 
 	// if you use SimpleAudioEngine, it must be pause
 	// SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    // SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    CCDirector::sharedDirector()->startAnimation();
     CCDirector::sharedDirector()->resume();
-	
+
 	// if you use SimpleAudioEngine, it must resume here
 	// SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    // SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

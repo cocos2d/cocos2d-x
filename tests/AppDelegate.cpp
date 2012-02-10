@@ -19,7 +19,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::initInstance()
 {
     bool bRet = false;
-    do 
+    do
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
@@ -50,14 +50,14 @@ bool AppDelegate::initInstance()
         CCEGLView* pMainWnd = new CCEGLView(this);
         CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320 ,480, WM_WINDOW_ROTATE_MODE_CW));
 
-#ifndef _TRANZDA_VM_  
+#ifndef _TRANZDA_VM_
         // on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data folder instead of zip file
         cocos2d::CCFileUtils::setResource("TestCocos2dx.zip");
         CocosDenshion::SimpleAudioEngine::setResource("TestCocos2dx.zip");
 #endif
 
 #endif
-	
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 #endif
@@ -127,6 +127,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
+    CCDirector::sharedDirector()->stopAnimation();
     CCDirector::sharedDirector()->pause();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 	SimpleAudioEngine::sharedEngine()->pauseAllEffects();
@@ -135,6 +136,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    CCDirector::sharedDirector()->startAnimation();
     CCDirector::sharedDirector()->resume();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 	SimpleAudioEngine::sharedEngine()->resumeAllEffects();

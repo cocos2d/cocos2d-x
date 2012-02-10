@@ -25,7 +25,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::initInstance()
 {
     bool bRet = false;
-    do 
+    do
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
@@ -36,7 +36,7 @@ bool AppDelegate::initInstance()
             || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 320, 480));
 
 #endif  // CC_PLATFORM_WIN32
-        
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
 #endif  // CC_PLATFORM_IOS
@@ -44,7 +44,7 @@ bool AppDelegate::initInstance()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 		// android does not do anything
 #endif
-        
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 
         // Initialize OpenGLView instance, that release by CCDirector when application terminate.
@@ -52,7 +52,7 @@ bool AppDelegate::initInstance()
         CCEGLView* pMainWnd = new CCEGLView(this);
         CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480));
 
-#ifndef _TRANZDA_VM_  
+#ifndef _TRANZDA_VM_
         // on wophone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
         cocos2d::CCFileUtils::setResource("HelloWorld.zip");
 #endif
@@ -94,17 +94,21 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
+    CCDirector::sharedDirector()->stopAnimation();
     CCDirector::sharedDirector()->pause();
 
 	// if you use SimpleAudioEngine, it must be pause
 	// SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    // SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    CCDirector::sharedDirector()->startAnimation();
     CCDirector::sharedDirector()->resume();
-	
+
 	// if you use SimpleAudioEngine, it must resume here
 	// SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    // SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }
