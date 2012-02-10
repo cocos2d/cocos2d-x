@@ -1,13 +1,5 @@
 
-#include "CCActionGrid3D.h"
-
-namespace cocos2d
+class CCPageTurn3D : public CCGrid3DAction
 {
-	
-	class  CCPageTurn3D : public CCGrid3DAction
-	{	
-		 void update(ccTime time);	
-		static CCPageTurn3D* actionWithSize(ccGridSize gridSize, ccTime time);
-	};
-}
-
+    static CCPageTurn3D* actionWithSize(ccGridSize gridSize, ccTime time);
+};

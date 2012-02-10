@@ -1,22 +1,18 @@
-namespace cocos2d {
+
+enum {
+    CCTOUCHBEGAN,
+    CCTOUCHMOVED,
+    CCTOUCHENDED,
+    CCTOUCHCANCELLED,
+};
 
 class CCTouch : public CCObject
 {
-
-    CCTouch();
-    CCTouch(int nViewId, float x, float y);
-
     CCPoint locationInView(int nViewId);
     CCPoint previousLocationInView(int nViewId);
-    int view() { return m_nViewId; }
-
-    void SetTouchInfo(int nViewId, float x, float y);
+    int view();
 };
 
 class CCEvent : public CCObject
 {
 };
-
-}       // end of namespace cocos2d
-
-

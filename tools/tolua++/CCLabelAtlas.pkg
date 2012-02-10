@@ -1,34 +1,14 @@
-#include "CCAtlasNode.h"
-namespace cocos2d{
 
-	
-	class CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol
-	{
-	public:
-		CCLabelAtlas();
-	
-		/** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-		static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
+class CCLabelAtlas : public CCAtlasNode
+{
+    void updateAtlasValues();
 
-		/** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-		bool initWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
-		// super methods
-		void updateAtlasValues();
-		void setString(const char *label);
-		const char* getString(void);
-		void draw();
+    void setString(const char *label);
+    const char* getString(void);
 
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D *texture);
 
-		static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);
-
-		/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-		bool initWithTileFile(const char* tile, int tileWidth, int tileHeight, int itemsToRender);
-
-		void updateAtlasValues();
-
-		void draw();
-		CCTexture2D* getTexture(void);	
-		void setTexture(CCTexture2D *texture);
-	};
-}// namespace cocos2d
-
+    static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
+    static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);
+};

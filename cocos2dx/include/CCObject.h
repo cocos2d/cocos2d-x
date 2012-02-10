@@ -43,28 +43,31 @@ public:
 
 class CC_DLL CCObject : public CCCopying
 {
-protected:
-	// object id
-    unsigned int		m_uID;
-	// count of refrence
-	unsigned int		m_uReference;
-	// is the object autoreleased
-	bool		m_bManaged;		
 public:
-	CCObject(void);
-	virtual ~CCObject(void);
+    // object id, CCScriptSupport need public m_uID
+    unsigned int		m_uID;
+    // Lua reference id
+    int                 m_nLuaID;
+protected:
+    // count of refrence
+    unsigned int		m_uReference;
+    // is the object autoreleased
+    bool		m_bManaged;		
+public:
+    CCObject(void);
+    virtual ~CCObject(void);
     
     void release(void);
-	void retain(void);
-	CCObject* autorelease(void);
-	CCObject* copy(void);
-	bool isSingleRefrence(void);
-	unsigned int retainCount(void);
-	virtual bool isEqual(const CCObject* pObject);
+    void retain(void);
+    CCObject* autorelease(void);
+    CCObject* copy(void);
+    bool isSingleRefrence(void);
+    unsigned int retainCount(void);
+    virtual bool isEqual(const CCObject* pObject);
     
     virtual void update(ccTime dt) {CC_UNUSED_PARAM(dt);};
-
-	friend class CCAutoreleasePool;
+    
+    friend class CCAutoreleasePool;
 };
 
 
@@ -75,7 +78,7 @@ typedef void (CCObject::*SEL_CallFuncND)(CCNode*, void*);
 typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
 typedef void (CCObject::*SEL_MenuHandler)(CCObject*);
 typedef void (CCObject::*SEL_EventHandler)(CCEvent*);
-
+    
 #define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(&_SELECTOR)
 #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)
 #define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(&_SELECTOR)
@@ -83,8 +86,8 @@ typedef void (CCObject::*SEL_EventHandler)(CCEvent*);
 #define callfuncO_selector(_SELECTOR) (SEL_CallFuncO)(&_SELECTOR)
 #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
-
-
+    
+    
 }//namespace   cocos2d 
 
 #endif // __COCOA_NSOBJECT_H__
