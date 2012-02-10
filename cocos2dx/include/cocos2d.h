@@ -115,7 +115,8 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "CCFileUtils.h"
 #include "CCAccelerometer.h"
- 
+#include "support/CCNotificationCenter.h"
+
 //
 // cocos2d macros
 //
