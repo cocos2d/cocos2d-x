@@ -109,6 +109,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\tests\AccelerometerTest\AccelerometerTest.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-1159.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-1174.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-350.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\tests\AccelerometerTest\AccelerometerTest.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-1159.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-1174.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-350.h" />

@@ -224,6 +224,14 @@
 					RelativePath="..\..\lua\cocos2dx_support\tolua_fix.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
