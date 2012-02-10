@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "cocos2d.h"
+#include "platform/android/jni/JniHelper.h"
 #include <jni.h>
 #include <android/log.h>
 
@@ -10,12 +11,19 @@ using namespace cocos2d;
 
 extern "C"
 {
+	
+jint JNI_OnLoad(JavaVM *vm, void *reserved)
+{
+	JniHelper::setJavaVM(vm);
+
+	return JNI_VERSION_1_4;
+}
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
 {
     if (!cocos2d::CCDirector::sharedDirector()->getOpenGLView())
     {
-	cocos2d::CCEGLView *view = &cocos2d::CCEGLView::sharedOpenGLView();
+	    cocos2d::CCEGLView *view = &cocos2d::CCEGLView::sharedOpenGLView();
         view->setFrameWidthAndHeight(w, h);
         // if you want to run in WVGA with HVGA resource, set it
         // view->create(480, 320);
