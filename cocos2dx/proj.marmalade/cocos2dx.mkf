@@ -119,6 +119,8 @@ files
 	"CCProfiling.cpp"
 	"CCProfiling.h"
 	"CCUserDefault.cpp"
+	"CCNotificationCenter.cpp"
+	"CCNotificationCenter.h"
 	"ccUtils.cpp"
 	"ccUtils.h"
 	"TransformUtils.cpp"
