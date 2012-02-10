@@ -191,7 +191,6 @@ CCEGLView::CCEGLView()
 , m_hWnd(NULL)
 , m_eInitOrientation(CCDeviceOrientationPortrait)
 , m_fScreenScaleFactor(1.0f)
-, m_lpfnAccelerometerKeyHook(NULL)
 {
     m_pTouch    = new CCTouch;
     m_pSet      = new CCSet;
@@ -330,16 +329,6 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
 				CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
 		}
-		if ( m_lpfnAccelerometerKeyHook!=NULL )
-		{
-			(*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-		}
-		break;
-	case WM_KEYUP:
-		if ( m_lpfnAccelerometerKeyHook!=NULL )
-		{
-			(*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-		}
 		break;
     case WM_CHAR:
         {
@@ -375,10 +364,6 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
                 CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
             }
-			if ( m_lpfnAccelerometerKeyHook!=NULL )
-			{
-				(*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-			}
         }
         break;
 
@@ -399,11 +384,6 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(m_hWnd, message, wParam, lParam);
 	}
 	return 0;
-}
-
-void CCEGLView::setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook )
-{
-	m_lpfnAccelerometerKeyHook=lpfnAccelerometerKeyHook;
 }
 
 CCSize CCEGLView::getSize()

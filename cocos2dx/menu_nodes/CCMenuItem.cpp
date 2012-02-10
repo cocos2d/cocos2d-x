@@ -30,8 +30,12 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabelTTF.h"
-#include "CCScriptSupport.h"
+
 #include <stdarg.h>
+
+#if CC_LUA_ENGINE_ENABLED
+#include "CCLuaEngine.h"
+#endif
 
 namespace cocos2d{
     
@@ -67,7 +71,9 @@ namespace cocos2d{
     
     CCMenuItem::~CCMenuItem()
     {
+#if CC_LUA_ENGINE_ENABLED
         unregisterScriptHandler();
+#endif
     }
     
     void CCMenuItem::selected()
@@ -80,22 +86,24 @@ namespace cocos2d{
         m_bIsSelected = false;
     }
     
-    void CCMenuItem::registerScriptHandler(int nHandler)
+#if CC_LUA_ENGINE_ENABLED
+    void CCMenuItem::registerScriptHandler(unsigned int uFuncID)
     {
         unregisterScriptHandler();
-        m_nScriptHandler = nHandler;
-        LUALOG("[LUA] Add CCMenuItem script handler: %d", m_nScriptHandler);
+        m_uScriptHandlerFuncID = uFuncID;
+        LUALOG("[LUA] Add CCMenuItem script handler: %u", m_uScriptHandlerFuncID);
     }
     
     void CCMenuItem::unregisterScriptHandler(void)
     {
-        if (m_nScriptHandler)
+        if (m_uScriptHandlerFuncID)
         {
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nScriptHandler);
-            LUALOG("[LUA] Remove CCMenuItem script handler: %d", m_nScriptHandler);
-            m_nScriptHandler = 0;
+            CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
+            LUALOG("[LUA] Remove CCMenuItem script handler: %u", m_uScriptHandlerFuncID);
+            m_uScriptHandlerFuncID = 0;
         }
     }
+#endif
     
     void CCMenuItem::activate()
     {
@@ -106,10 +114,12 @@ namespace cocos2d{
                 (m_pListener->*m_pfnSelector)(this);
             }
             
-            if (m_nScriptHandler)
+#if CC_LUA_ENGINE_ENABLED
+            if (m_uScriptHandlerFuncID)
             {
-                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, getTag());
+                CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, getTag());
             }
+#endif
         }
     }
     

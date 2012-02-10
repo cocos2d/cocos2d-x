@@ -35,18 +35,35 @@ CCTouchDelegate* CCTouchHandler::getDelegate(void)
 
 void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
 {
+	/*
+	 * RTTI may return null on android. More info please refer issue #926(cocos2d-x)
+	 */
 	if (pDelegate)
 	{
-		dynamic_cast<CCObject*>(pDelegate)->retain();
+		if (dynamic_cast<CCObject*>(pDelegate))
+		{
+			dynamic_cast<CCObject*>(pDelegate)->retain();
+		}
+		else
+		{
+			pDelegate->touchDelegateRetain();
+		}
     }
 
-	dynamic_cast<CCObject*>(pDelegate)->retain();
-
+	/*
+	 * RTTI may return null on android. More info please refer issue #926(cocos2d-x)
+	 */
     if (m_pDelegate)
     {
-		dynamic_cast<CCObject*>(m_pDelegate)->release();
+		if (dynamic_cast<CCObject*>(m_pDelegate))
+		{
+			dynamic_cast<CCObject*>(m_pDelegate)->release();
+		}
+		else
+		{
+			m_pDelegate->touchDelegateRelease();
+		}
     }
-
 	m_pDelegate = pDelegate;
 }
 
@@ -95,7 +112,18 @@ bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 
 	m_pDelegate = pDelegate; 
 
-	dynamic_cast<CCObject*>(pDelegate)->retain();
+
+	/*
+	 * RTTI may return null on android. More info please refer issue #926(cocos2d-x)
+	 */
+	if (dynamic_cast<CCObject*>(pDelegate))
+	{
+		dynamic_cast<CCObject*>(pDelegate)->retain();
+	}
+	else
+	{
+		pDelegate->touchDelegateRetain();
+	}
 
 	m_nPriority = nPriority;
 	m_nEnabledSelectors = 0;
@@ -107,7 +135,17 @@ CCTouchHandler::~CCTouchHandler(void)
 {
 	if (m_pDelegate)
 	{
-		dynamic_cast<CCObject*>(m_pDelegate)->release();
+		/*
+	     * RTTI may return null on android. More info please refer issue #926(cocos2d-x)
+	     */
+		if (dynamic_cast<CCObject*>(m_pDelegate))
+		{
+			dynamic_cast<CCObject*>(m_pDelegate)->release();
+		}
+		else
+		{
+			m_pDelegate->touchDelegateRelease();
+		}
 	}   
 }
 
@@ -153,7 +191,7 @@ void CCTargetedTouchHandler::setSwallowsTouches(bool bSwallowsTouches)
 	m_bSwallowsTouches = bSwallowsTouches;
 }
 
-CCSet* CCTargetedTouchHandler::getClaimedTouches(void)
+NSMutableSet* CCTargetedTouchHandler::getClaimedTouches(void)
 {
 	return m_pClaimedTouches;
 }
@@ -180,7 +218,7 @@ bool CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nP
 {
 	if (CCTouchHandler::initWithDelegate(pDelegate, nPriority))
 	{
-		m_pClaimedTouches = new CCSet();
+		m_pClaimedTouches = new NSMutableSet();
 		m_bSwallowsTouches = bSwallow;
 
 		return true;

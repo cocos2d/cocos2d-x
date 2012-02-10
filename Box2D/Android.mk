@@ -1,10 +1,8 @@
 LOCAL_PATH := $(call my-dir)
 
+# compile box2d.a
 include $(CLEAR_VARS)
-
-LOCAL_MODULE := box2d_shared
-
-LOCAL_MODULE_FILENAME := libbox2d
+LOCAL_MODULE := libbox2d
 
 LOCAL_SRC_FILES := \
 Collision/Shapes/b2ChainShape.cpp \
@@ -52,8 +50,6 @@ Dynamics/b2Island.cpp \
 Dynamics/b2World.cpp \
 Dynamics/b2WorldCallbacks.cpp \
 Rope/b2Rope.cpp 
-
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/..
                                  

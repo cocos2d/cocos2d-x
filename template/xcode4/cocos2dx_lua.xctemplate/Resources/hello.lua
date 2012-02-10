@@ -126,7 +126,6 @@ local function createLayerFram()
     end
 
     layerFarm:registerScriptTouchHandler(onTouch)
-    layerFarm:setIsTouchEnabled(true)
 
     return layerFarm
 end

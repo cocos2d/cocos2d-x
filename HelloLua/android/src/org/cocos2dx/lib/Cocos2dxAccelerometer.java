@@ -79,20 +79,14 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 		/*
 		 * Because the axes are not swapped when the device's screen orientation changes. 
 		 * So we should swap it here.
-		 * In tablets such as Motorola Xoom, the default orientation is landscape, so should
-		 * consider this.
+		 * In tablets such as Motorola Xoom, the default orientation is landscape, don't
+		 * need to translate coordinate.
 		 */
 		int orientation = mContext.getResources().getConfiguration().orientation;
 		if ((orientation == Configuration.ORIENTATION_LANDSCAPE) && (mNaturalOrientation != Surface.ROTATION_0)){
 			float tmp = x;
 			x = -y;
 			y = tmp;
-		}
-		else if ((orientation == Configuration.ORIENTATION_PORTRAIT) && (mNaturalOrientation != Surface.ROTATION_0))
-		{
-			 float tmp = x;
-	         x = y;
-	         y = -tmp;
 		}
 				
         onSensorChanged(x, y, z, event.timestamp);

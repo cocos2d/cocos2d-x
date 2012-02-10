@@ -34,7 +34,10 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "CCTouch.h"
 #include "CCActionManager.h"
-#include "CCScriptSupport.h"
+
+#if CC_LUA_ENGINE_ENABLED
+#include "CCLuaEngine.h"
+#endif
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -76,7 +79,9 @@ CCNode::CCNode(void)
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 , m_bIsTransformGLDirty(true)
 #endif
-, m_nScriptHandler(0)
+#if CC_LUA_ENGINE_ENABLED
+, m_uScriptHandlerFuncID(0)
+#endif
 {
     // nothing
 }
@@ -294,6 +299,8 @@ const CCPoint& CCNode::getPositionInPixels()
 	return m_tPositionInPixels;
 }
 
+    
+#if CC_LUA_ENGINE_ENABLED
 const CCPoint& CCNode::getPositionLua(void)
 {
     return m_tPosition;
@@ -334,6 +341,7 @@ void CCNode::setPositionInPixels(float x, float y)
 {
     setPositionInPixels(ccp(x, y));
 }
+#endif
 
 /// children getter
 CCArray* CCNode::getChildren()
@@ -341,10 +349,12 @@ CCArray* CCNode::getChildren()
 	return m_pChildren;
 }
 
+#if CC_LUA_ENGINE_ENABLED
 unsigned int CCNode::getChildrenCount(void)
 {
     return m_pChildren ? m_pChildren->count() : 0;
 }
+#endif
 
 /// camera getter: lazy alloc
 CCCamera* CCNode::getCamera()
@@ -935,10 +945,12 @@ void CCNode::onEnter()
 
 	m_bIsRunning = true;
 
-    if (m_nScriptHandler)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter);
+        CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, kCCNodeOnEnter);
     }
+#endif
 }
 
 void CCNode::onEnterTransitionDidFinish()
@@ -952,30 +964,34 @@ void CCNode::onExit()
 
 	m_bIsRunning = false;
 
-    if (m_nScriptHandler)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit);
+        CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, kCCNodeOnExit);
     }
+#endif
 
 	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::onExit);
 }
 
-void CCNode::registerScriptHandler(int nHandler)
+#if CC_LUA_ENGINE_ENABLED
+void CCNode::registerScriptHandler(unsigned int uFuncID)
 {
     unregisterScriptHandler();
-    m_nScriptHandler = nHandler;
-    LUALOG("[LUA] Add CCNode event handler: %d", m_nScriptHandler);
+    m_uScriptHandlerFuncID = uFuncID;
+    LUALOG("[LUA] Add CCNode event handler: %u", m_uScriptHandlerFuncID);
 }
 
 void CCNode::unregisterScriptHandler(void)
 {
-    if (m_nScriptHandler)
+    if (m_uScriptHandlerFuncID)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nScriptHandler);
-        LUALOG("[LUA] Remove CCNode event handler: %d", m_nScriptHandler);
-        m_nScriptHandler = 0;
+        CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
+        LUALOG("[LUA] Remove CCNode event handler: %u", m_uScriptHandlerFuncID);
+        m_uScriptHandlerFuncID = 0;
     }
 }
+#endif
 
 CCAction * CCNode::runAction(CCAction* action)
 {

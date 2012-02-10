@@ -318,12 +318,12 @@ CCCallFunc * CCCallFunc::actionWithTarget(CCObject* pSelectorTarget,
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
 	if (pSelectorTarget) 
 	{
-		pSelectorTarget->retain();
+		dynamic_cast<CCObject*>(pSelectorTarget)->retain();
 	}
 
 	if (m_pSelectorTarget) 
 	{
-		m_pSelectorTarget->release();
+		dynamic_cast<CCObject*>(m_pSelectorTarget)->release();
 	}
 
 	m_pSelectorTarget = pSelectorTarget;

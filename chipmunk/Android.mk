@@ -1,10 +1,8 @@
 LOCAL_PATH := $(call my-dir)
 
+# compile chipmunk.a
 include $(CLEAR_VARS)
-
-LOCAL_MODULE := chipmunk_shared
-
-LOCAL_MODULE_FILENAME := libchipmunk
+LOCAL_MODULE := libchipmunk
 
 LOCAL_SRC_FILES := \
 src/chipmunk.c \
@@ -33,8 +31,6 @@ src/cpSpaceHash.c \
 src/cpSpaceQuery.c \
 src/cpSpaceStep.c \
 src/cpVect.c
-
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/include/chipmunk
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include/chipmunk
 LOCAL_CFLAGS := -std=c99

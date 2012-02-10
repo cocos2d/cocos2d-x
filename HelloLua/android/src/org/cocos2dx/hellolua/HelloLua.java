@@ -57,8 +57,10 @@ public class HelloLua extends Cocos2dxActivity{
 	 private GLSurfaceView mGLView;
 	
      static {
+         System.loadLibrary("cocos2d");
          System.loadLibrary("cocosdenshion");
          System.loadLibrary("lua");
+         System.loadLibrary("game_logic");
          System.loadLibrary("game");
      }
 }

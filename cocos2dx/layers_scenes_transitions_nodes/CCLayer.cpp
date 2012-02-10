@@ -31,7 +31,10 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "CCDirector.h"
 #include "CCPointExtension.h"
-#include "CCScriptSupport.h"
+
+#if CC_LUA_ENGINE_ENABLED
+#include "CCLuaEngine.h"
+#endif
 
 namespace   cocos2d {
 
@@ -40,7 +43,9 @@ CCLayer::CCLayer()
 :m_bIsTouchEnabled(false)
 ,m_bIsAccelerometerEnabled(false)
 ,m_bIsKeypadEnabled(false)
-,m_pScriptHandlerEntry(NULL)
+#if CC_LUA_ENGINE_ENABLED
+,m_uScriptHandlerFuncID(0)
+#endif
 {
 	setAnchorPoint(ccp(0.5f, 0.5f));
 	m_bIsRelativeAnchorPoint = false;
@@ -48,7 +53,6 @@ CCLayer::CCLayer()
 
 CCLayer::~CCLayer()
 {
-    unregisterScriptTouchHandler();
 }
 
 bool CCLayer::init()
@@ -86,50 +90,47 @@ CCLayer *CCLayer::node()
 
 void CCLayer::registerWithTouchDispatcher()
 {
-    if (m_pScriptHandlerEntry)
-    {
-        if (m_pScriptHandlerEntry->getIsMultiTouches())
-        {
-            CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this, 0);
-            LUALOG("[LUA] Add multi-touches event handler: %d", m_pScriptHandlerEntry->getHandler());
-        }
-        else
-        {
-            CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,
-                                                                       m_pScriptHandlerEntry->getPriority(),
-                                                                       m_pScriptHandlerEntry->getSwallowsTouches());
-            LUALOG("[LUA] Add touch event handler: %d", m_pScriptHandlerEntry->getHandler());
-        }
-        return;
-    }
 	CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0);
 }
 
-void CCLayer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+#if CC_LUA_ENGINE_ENABLED
+void CCLayer::registerScriptTouchHandler(unsigned int uFuncID, bool isMultiTouches, int nPriority, bool bSwallowsTouches)
 {
     unregisterScriptTouchHandler();
-    m_pScriptHandlerEntry = CCTouchScriptHandlerEntry::entryWithHandler(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
-    m_pScriptHandlerEntry->retain();
+    if (isMultiTouches)
+    {
+        CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this, 0);
+        LUALOG("[LUA] Add multi-touches event handler: %u", uFuncID);
+    }
+    else
+    {
+        CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, nPriority, bSwallowsTouches);
+        LUALOG("[LUA] Add touch event handler: %u", uFuncID);
+    }
+    m_uScriptHandlerFuncID = uFuncID;
 }
 
 void CCLayer::unregisterScriptTouchHandler(void)
 {
-    if (m_pScriptHandlerEntry)
+    if (m_uScriptHandlerFuncID)
     {
-        m_pScriptHandlerEntry->release();
-        m_pScriptHandlerEntry = NULL;
+        CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
+        CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
+        LUALOG("[LUA] Remove touch event handler: %u", m_uScriptHandlerFuncID);
     }
+    m_uScriptHandlerFuncID = 0;
 }
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCTouch *pTouch)
 {
-    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouch);
+    return CCLuaEngine::sharedEngine()->executeTouchEvent(m_uScriptHandlerFuncID, nEventType, pTouch);
 }
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 {
-    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches);
+    return CCLuaEngine::sharedEngine()->executeTouchesEvent(m_uScriptHandlerFuncID, nEventType, pTouches);
 }
+#endif // CC_LUA_ENGINE_ENABLED
 
 /// isTouchEnabled getter
 bool CCLayer::getIsTouchEnabled()
@@ -152,6 +153,9 @@ void CCLayer::setIsTouchEnabled(bool enabled)
 			{
 				// have problems?
 				CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
+#if CC_LUA_ENGINE_ENABLED
+                unregisterScriptTouchHandler();
+#endif
 			}
 		}
 	}
@@ -240,7 +244,9 @@ void CCLayer::onExit()
 	if( m_bIsTouchEnabled )
 	{
 		CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
+#if CC_LUA_ENGINE_ENABLED
         unregisterScriptTouchHandler();
+#endif
 	}
 
     // remove this layer from the delegates who concern Accelerometer Sensor
@@ -268,12 +274,24 @@ void CCLayer::onEnterTransitionDidFinish()
     CCNode::onEnterTransitionDidFinish();
 }
 
+void CCLayer::touchDelegateRetain()
+{
+	retain();
+}
+
+void CCLayer::touchDelegateRelease()
+{
+	release();
+}
+
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (m_pScriptHandlerEntry)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
         return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch);
     }
+#endif
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 	CCAssert(false, "Layer#ccTouchBegan override me");
@@ -281,75 +299,89 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 }
 
 void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
-    if (m_pScriptHandlerEntry)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }
     
 void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
-    if (m_pScriptHandlerEntry)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }
 
 void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
-    if (m_pScriptHandlerEntry)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }    
 
 void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (m_pScriptHandlerEntry)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
         excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
 void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (m_pScriptHandlerEntry)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
 void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (m_pScriptHandlerEntry)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
 void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (m_pScriptHandlerEntry)
+#if CC_LUA_ENGINE_ENABLED
+    if (m_uScriptHandlerFuncID)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }

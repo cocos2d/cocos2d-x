@@ -34,12 +34,61 @@ extern "C" {
 #include "CCTouch.h"
 #include "CCSet.h"
 #include "CCNode.h"
-#include "CCScriptSupport.h"
 
-NS_CC_BEGIN
+namespace cocos2d
+{
+class CCTimer;
+
+// Lua support for CCScheduler
+class CCSchedulerFuncEntry : public CCObject
+{
+public:
+    // uFuncID return by tolua_ref_function(), called from LuaCocos2d.cpp
+    static CCSchedulerFuncEntry* entryWithFuncID(int uFuncID, ccTime fInterval, bool bPaused);
+    ~CCSchedulerFuncEntry(void);
+    
+    inline cocos2d::CCTimer* getTimer(void) {
+        return m_pTimer;
+    }
+    
+    inline bool isPaused(void) {
+        return m_bPaused;
+    }
+    
+    inline int getEntryID(void) {
+        return m_uEntryID;
+    }
+    
+    inline void markedForDeletion(void) {
+        m_bMarkedForDeletion = true;
+    }
+    
+    inline bool isMarkedForDeletion(void) {
+        return m_bMarkedForDeletion;
+    }
+    
+private:
+    CCSchedulerFuncEntry(void);
+    bool initWithuFuncID(int uFuncID, ccTime fInterval, bool bPaused);
+    
+    cocos2d::CCTimer*   m_pTimer;
+    bool                m_bPaused;
+    bool                m_bMarkedForDeletion;
+    unsigned int        m_uFuncID;
+    unsigned int        m_uEntryID;
+};
+
+
+// Lua support for touch events
+class CCTouchEventEntry : public CCObject
+{
+public:
+    static CCTouchEventEntry* entryWithuFuncID(int uFuncID);
+};
+
 
 // Lua support for cocos2d-x
-class CCLuaEngine : public CCScriptEngineProtocol
+class CCLuaEngine
 {
 public:
     ~CCLuaEngine();
@@ -48,7 +97,7 @@ public:
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
      */
-    virtual lua_State* getLuaState(void) {
+    lua_State* getLuaState(void) {
         return m_state;
     }
     
@@ -56,18 +105,18 @@ public:
      @brief Remove CCObject from lua state
      @param object to remove
      */
-    virtual void removeCCObjectByID(int nLuaID);
+    void removeCCObjectByID(unsigned int uLuaID);
     
     /**
      @brief Remove Lua function reference
      */
-    virtual void removeLuaHandler(int nHandler);
+    void removeLuaFuncID(int uFuncID);
     
     /**
      @brief Add a path to find lua files in
      @param path to be added to the Lua path
      */
-    virtual void addSearchPath(const char* path);
+    void addSearchPath(const char* path);
     
     /**
      @brief Execute script code contained in the given string.
@@ -75,21 +124,21 @@ public:
      @return 0 if the string is excuted correctly.
      @return other if the string is excuted wrongly.
      */
-    virtual int executeString(const char* codes);
+    int executeString(const char* codes);
     
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
      */
-    virtual int executeScriptFile(const char* filename);
+    int executeScriptFile(const char* filename);
     
     /**
      @brief Execute a scripted global function.
      @brief The function should not take any parameters and should return an integer.
-     @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
+     @param function_name String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
      */
-    virtual int executeGlobalFunction(const char* functionName);
+    int executeGlobalFunction(const char* function_name);
     
     /**
      @brief Execute a function by ref id
@@ -97,34 +146,28 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    virtual int executeFunctionByRefID(int nHandler, int numArgs = 0);
-    virtual int executeFunctionWithIntegerData(int nHandler, int data);
-    virtual int executeFunctionWithFloatData(int nHandler, float data);
-    virtual int executeFunctionWithBooleanData(int nHandler, bool data);
+    int executeFunctionByRefID(int uFuncID, int numArgs = 0);
+    int executeFunctionWithIntegerData(int uFuncID, int data);
+    int executeFunctionWithFloatData(int uFuncID, float data);
+    int executeFunctionWithBooleanData(int uFuncID, bool data);
     
     // functions for excute touch event
-    virtual int executeTouchEvent(int nHandler, int eventType, cocos2d::CCTouch *pTouch);
-    virtual int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches);
+    int executeTouchEvent(int uFuncID, int eventType, cocos2d::CCTouch *pTouch);
+    int executeTouchesEvent(int uFuncID, int eventType, cocos2d::CCSet *pTouches);
     
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, cocos2d::ccTime dt);
+    int executeSchedule(int uFuncID, cocos2d::ccTime dt);
     
-    // Add lua loader, now it is used on android
-    virtual void addLuaLoader(lua_CFunction func);
-    
-    static CCLuaEngine* engine();
+    static CCLuaEngine* sharedEngine();
+    static void purgeSharedEngine();
     
 private:
-    CCLuaEngine(void)
-    : m_state(NULL)
-    {
-    }
+    CCLuaEngine();
     
-    bool init(void);
-    
+    static CCLuaEngine* s_engine;
     lua_State* m_state;
 };
     
-NS_CC_END
+} // namespace cocos2d
 
 #endif // __CC_LUA_ENGINE_H__

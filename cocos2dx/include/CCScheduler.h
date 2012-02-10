@@ -52,8 +52,10 @@ public:
 	/** Initializes a timer with a target, a selector and an interval in seconds. */
     bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
+#if CC_LUA_ENGINE_ENABLED
     /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptHandler(int nHandler, ccTime fSeconds);
+    bool initWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds);
+#endif
 
 	/** triggers the timer */
 	void update(ccTime dt);
@@ -65,8 +67,10 @@ public:
 	/** Allocates a timer with a target, a selector and an interval in seconds. */
 	static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
+#if CC_LUA_ENGINE_ENABLED
     /** Allocates a timer with a script callback function and an interval in seconds. */
-    static CCTimer* timerWithScriptHandler(int nHandler, ccTime fSeconds);
+    static CCTimer* timerWithScriptFuncID(unsigned int uFuncID, ccTime fSeconds);
+#endif
 
 public:
 	SEL_SCHEDULE m_pfnSelector;
@@ -75,7 +79,9 @@ public:
 protected:
 	CCObject *m_pTarget;
 	ccTime m_fElapsed;
-    int m_nScriptHandler;
+#if CC_LUA_ENGINE_ENABLED
+    unsigned int m_uScriptFuncID;
+#endif
 };
 
 //
@@ -157,15 +163,17 @@ public:
 	 */
 	void unscheduleAllSelectors(void);
     
+#if CC_LUA_ENGINE_ENABLED
     /** The scheduled script callback will be called every 'interval' seconds.
 	 If paused is YES, then it won't be called until it is resumed.
 	 If 'interval' is 0, it will be called every frame.
      return schedule script entry ID, used for unscheduleScriptFunc().
      */
-    unsigned int scheduleScriptFunc(unsigned int nHandler, ccTime fInterval, bool bPaused);
+    unsigned int scheduleScriptFunc(unsigned int uFuncID, ccTime fInterval, bool bPaused);
     
 	/** Unschedule a script entry. */
     void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
+#endif
 
 	/** Pauses the target.
 	 All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
@@ -223,7 +231,10 @@ protected:
 	bool m_bCurrentTargetSalvaged;
 	// If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
 	bool m_bUpdateHashLocked;
-    CCArray* m_pScriptHandlerEntries;
+
+#if CC_LUA_ENGINE_ENABLED
+    CCArray* m_pScriptEntries;
+#endif
 };
 }//namespace   cocos2d
 
