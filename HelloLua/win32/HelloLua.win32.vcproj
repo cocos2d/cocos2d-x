@@ -213,6 +213,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\lua\cocos2dx_support\LuaCocos2d.cpp"
 					>
 				</File>
