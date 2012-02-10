@@ -904,6 +904,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\support\CCNotificationCenter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\support\CCNotificationCenter.h"
+				>
+			</File>
+			<File
 				RelativePath="..\support\CCPointExtension.cpp"
 				>
 			</File>
