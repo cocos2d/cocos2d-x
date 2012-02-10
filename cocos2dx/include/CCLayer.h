@@ -90,9 +90,6 @@ public:
     /** Unregister script touch events handler */
     void unregisterScriptTouchHandler(void);
 
-	virtual void touchDelegateRetain();
-	virtual void touchDelegateRelease();
-
 	/** whether or not it will receive Touch events.
 	You can enable / disable touch events with this property.
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.

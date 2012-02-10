@@ -59,16 +59,6 @@ public:
  	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
  	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
 
-	/*
-	 * In TouchesTest, class Padle inherits from CCSprite and CCTargetedTouchDelegate.
-	 * When it invoke  CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true),
-	 * it will crash in CCTouchHandler::initWithDelegate() because of dynamic_cast() on android.
-	 * I don't know why, so add these functions for the subclass to invoke it's own retain() and
-	 * release().
-	 * More detain info please refer issue #926(cocos2d-x).
-	 */
-	virtual void touchDelegateRetain() = 0;
-	virtual void touchDelegateRelease() = 0;
 };
 /**
  @brief
