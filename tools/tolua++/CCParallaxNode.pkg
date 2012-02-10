@@ -1,26 +1,21 @@
-namespace cocos2d {
-	struct _ccArray;
-	class CCParallaxNode : public CCNode 
-	{
-		
-		struct _ccArray * getParallaxArray();
-		void setParallaxArray(struct _ccArray * pval);
 
+struct _ccArray;
 
-		CCParallaxNode();
-		~CCParallaxNode();
-		static CCParallaxNode * node();
-		void addChild(CCNode * child, unsigned int z, CCPoint parallaxRatio, CCPoint positionOffset);
-		void addChild(CCNode * child, unsigned int zOrder, int tag);
-		void removeChild(CCNode* child, bool cleanup);
-		void removeAllChildrenWithCleanup(bool cleanup);
-		void visit(void);
-		struct _ccArray * getParallaxArray();
-		void setParallaxArray(struct _ccArray * val);
+class CCParallaxNode : public CCNode
+{
+    struct _ccArray* getParallaxArray();
+    void setParallaxArray(struct _ccArray * pval);
 
-	};
+    void addChild(CCNode * child, unsigned int z, CCPoint parallaxRatio, CCPoint positionOffset);
+    void addChild(CCNode * child, unsigned int zOrder, int tag);
 
-} // namespace cocos2d
+    void removeChild(CCNode* child, bool cleanup);
+    void removeAllChildrenWithCleanup(bool cleanup);
 
+    void visit(void);
 
+    struct _ccArray* getParallaxArray();
+    void setParallaxArray(struct _ccArray * val);
 
+    static CCParallaxNode* node();
+};

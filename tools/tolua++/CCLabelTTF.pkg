@@ -1,29 +1,9 @@
 
-#include "CCSprite.h"
-#include "CCTexture2D.h"
+class CCLabelTTF : public CCSprite
+{
+    void setString(const char *label);
+    const char* getString(void);
 
-namespace cocos2d{
-	class  CCLabelTTF : public CCSprite, public CCLabelProtocol
-	{
-		CCLabelTTF();
-		~CCLabelTTF();
-		char * description();
-
-		static CCLabelTTF * labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-
-		static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
-	
-		bool initWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-	
-		bool initWithString(const char *label, const char *fontName, float fontSize);
-
-	
-		void setString(const char *label);
-		const char* getString(void);
-
-		CCLabelProtocol* convertToLabelProtocol();
-
-	};
-
-} //namespace cocos2d
-
+    static CCLabelTTF * labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
+};

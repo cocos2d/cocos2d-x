@@ -26,11 +26,8 @@ THE SOFTWARE.
 #ifndef __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
-#include <string>
-#include <map>
 #include "CCObject.h"
 #include "ccConfig.h"
-#include "CCScriptSupport.h"
 
 namespace   cocos2d {
 
@@ -41,16 +38,12 @@ class CCTouchDispatcher;
 	
 class CC_DLL CCTouchDelegate
 {
-protected:
-	std::map<int, std::string> *m_pEventTypeFuncMap;
-
 public:
 
-	CCTouchDelegate() : m_pEventTypeFuncMap(NULL) {}
+	CCTouchDelegate() {}
 
 	virtual ~CCTouchDelegate()
 	{
-		CC_SAFE_DELETE(m_pEventTypeFuncMap);
 	}
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
@@ -76,46 +69,6 @@ public:
 	 */
 	virtual void touchDelegateRetain() = 0;
 	virtual void touchDelegateRelease() = 0;
-
-	// functions for script call back
-	inline void registerScriptTouchHandler(int eventType, const char* pszScriptFunctionName)
-	{
-		if (m_pEventTypeFuncMap == NULL)
-		{
-			m_pEventTypeFuncMap = new std::map<int, std::string>();
-		}
-
-		(*m_pEventTypeFuncMap)[eventType] = pszScriptFunctionName;
-	}
-
-	inline bool isScriptHandlerExist(int eventType)
-	{
-		if (m_pEventTypeFuncMap)
-		{
-			return (*m_pEventTypeFuncMap)[eventType].size() != 0;
-		}
-
-		return false;
-	}
-
-	inline void excuteScriptTouchHandler(int eventType, CCTouch *pTouch)
-	{
-		if (m_pEventTypeFuncMap && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
-		{
-			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeTouchEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
-				                                                                                     pTouch);
-		}
-		
-	}
-
-	inline void excuteScriptTouchesHandler(int eventType, CCSet *pTouches)
-	{
-		if (m_pEventTypeFuncMap && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
-		{
-			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeTouchesEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
-				                                                                                        pTouches);
-		}
-	}
 };
 /**
  @brief

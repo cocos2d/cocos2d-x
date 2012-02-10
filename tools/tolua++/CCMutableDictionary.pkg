@@ -1,35 +1,26 @@
 
-namespace   cocos2d {
-
 class CCMutableDictionary : public CCObject
 {
-	TOLUA_TEMPLATE_BIND(K V, std::string CCObject*)
+    TOLUA_TEMPLATE_BIND(K V, std::string CCObject*)
 
-	CCMutableDictionary(void);
-	~CCMutableDictionary(void);
-	/// return the number of items
-	unsigned int count();
-	/// return all the keys
-	std::vector<std::string> allKeys();
+    unsigned int count();
+    std::vector<std::string> allKeys();
+    std::vector<std::string> allKeysForObject(V object);
 
-	/** @warning : We use '==' to compare two objects*/
-	std::vector<std::string> allKeysForObject(V object);
+    V objectForKey(K key);
 
-	V objectForKey(K key);			///< 
+    bool setObject(V pObject, K key);
+    void removeObjectForKey(K key);
+    bool begin();
+    void endToLua();
 
-	bool setObject(V pObject, K key);
-	void removeObjectForKey(K key);
-	bool begin();
+    V next(K* key = NULL);
 
-	V next(K* key = NULL);
+    void endToLua();
 
-	void endToLua();
+    void removeAllObjects();
 
-	void removeAllObjects();
-	static CCMutableDictionary<K, V>* dictionaryWithDictionary(CCMutableDictionary<K, V>* srcDict);
+    static CCMutableDictionary<K, V>* dictionaryWithDictionary(CCMutableDictionary<K, V>* srcDict);
 };
 
-
 typedef CCMutableDictionary<std::string, CCString*> CCStringToStringDictionary;
-}//namespace   cocos2d 
-

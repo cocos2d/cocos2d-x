@@ -1,28 +1,9 @@
 
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "ccTypes.h"
+class CCAtlasNode : public CCNode
+{
+    void updateAtlasValues();
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D *texture);
 
-namespace   cocos2d {
-	class CCTextureAtlas;
-
-	class  CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
-	{
-
-		CCAtlasNode();
-
-		static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
-		bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
-
-		void updateAtlasValues();
-
-		void draw();
-		CCTexture2D* getTexture(void);	
-		void setTexture(CCTexture2D *texture);
-
-
-	};
-}//namespace   cocos2d 
-
-
-
+    static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+};

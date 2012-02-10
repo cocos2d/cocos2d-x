@@ -1468,19 +1468,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/include/selector_protocol.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>include</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/include/selector_protocol.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2dx/keypad_dispatcher/CCKeypadDelegate.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -3016,7 +3003,6 @@
 		<string>libs/cocos2dx/include/CCUserDefault.h</string>
 		<string>libs/cocos2dx/include/CCZone.h</string>
 		<string>libs/cocos2dx/include/cocos2d.h</string>
-		<string>libs/cocos2dx/include/selector_protocol.h</string>
 		<string>libs/cocos2dx/keypad_dispatcher/CCKeypadDelegate.cpp</string>
 		<string>libs/cocos2dx/keypad_dispatcher/CCKeypadDispatcher.cpp</string>
 		<string>libs/cocos2dx/label_nodes/CCLabelAtlas.cpp</string>

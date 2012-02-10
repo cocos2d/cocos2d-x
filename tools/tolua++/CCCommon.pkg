@@ -1,12 +1,3 @@
 
-
-namespace cocos2d
-{
-
 void CCLuaLog(const char * pszFormat);
-/**
-@brief Pop out a message box
-*/
-void  CCMessageBox(const char * pszMsg, const char * pszTitle);
-
-}
+void CCMessageBox(const char * pszMsg, const char * pszTitle);
