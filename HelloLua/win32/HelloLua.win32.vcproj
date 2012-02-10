@@ -236,7 +236,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							CompileAs="2"
+							CompileAs="1"
 						/>
 					</FileConfiguration>
 				</File>

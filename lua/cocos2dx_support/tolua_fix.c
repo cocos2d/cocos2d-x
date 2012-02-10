@@ -57,6 +57,9 @@ TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
 
 TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
 {
+	void* ptr = NULL;
+    const char* type = NULL;
+    void** ud = NULL;
     if (refid == 0) return -1;
     
     // get ptr from tolua_refid_ptr_mapping
@@ -64,7 +67,7 @@ TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
     lua_rawget(L, LUA_REGISTRYINDEX);                               /* stack: refid_ptr */
     lua_pushinteger(L, refid);                                      /* stack: refid_ptr refid */
     lua_rawget(L, -2);                                              /* stack: refid_ptr ptr */
-    void* ptr = lua_touserdata(L, -1);
+    ptr = lua_touserdata(L, -1);
     lua_pop(L, 1);                                                  /* stack: refid_ptr */
     if (ptr == NULL)
     {
@@ -93,7 +96,7 @@ TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
         return -1;
     }
     
-    const char* type = lua_tostring(L, -1);
+    type = lua_tostring(L, -1);
     lua_pop(L, 1);                                                  /* stack: refid_type */
     
     // remove type from tolua_refid_type_mapping
@@ -124,7 +127,7 @@ TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
         return -3;
     }
     
-    void** ud = (void**)lua_touserdata(L, -1);
+    ud = (void**)lua_touserdata(L, -1);
     lua_pop(L, 1);                                                  /* stack: mt ubox */
     if (ud == NULL)
     {
