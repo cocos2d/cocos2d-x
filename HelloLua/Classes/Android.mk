@@ -8,11 +8,10 @@ LOCAL_MODULE_FILENAME := libgame_logic
 
 LOCAL_SRC_FILES := \
 AppDelegate.cpp \
-../../lua/cocos2dx_support/LuaEngineImpl.cpp \
+../../lua/cocos2dx_support/CCLuaEngine.cpp \
 ../../lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
 ../../lua/cocos2dx_support/LuaCocos2d.cpp \
-../../lua/cocos2dx_support/LuaEngine.cpp \
-../../lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp
+../../lua/cocos2dx_support/tolua_fix.c
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 

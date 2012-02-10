@@ -10,8 +10,53 @@
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 
+	<key>Project</key>
+	<dict>
+		<key>Configurations</key>
+		<dict>
+			<key>Debug</key>
+			<dict>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>CC_LUA_ENGINE_ENABLED=1</string>
+				</array>
+			</dict>
+			<key>Release</key>
+			<dict>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>CC_LUA_ENGINE_ENABLED=1</string>
+				</array>
+			</dict>
+		</dict>
+	</dict>
+
 	<key>Definitions</key>
 	<dict>
+		<key>libs/lua/cocos2dx_support/CCLuaEngine.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaEngine.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/CCLuaEngine.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaEngine.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -60,7 +105,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/lua/cocos2dx_support/LuaEngine.cpp</key>
+		<key>libs/lua/cocos2dx_support/tolua_fix.c</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -69,9 +114,9 @@
 				<string>cocos2dx_support</string>
 			</array>
 			<key>Path</key>
-			<string>libs/lua/cocos2dx_support/LuaEngine.cpp</string>
+			<string>libs/lua/cocos2dx_support/tolua_fix.c</string>
 		</dict>
-		<key>libs/lua/cocos2dx_support/LuaEngine.h</key>
+		<key>libs/lua/cocos2dx_support/tolua_fix.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -80,55 +125,7 @@
 				<string>cocos2dx_support</string>
 			</array>
 			<key>Path</key>
-			<string>libs/lua/cocos2dx_support/LuaEngine.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/lua/cocos2dx_support/LuaEngineImpl.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>lua</string>
-				<string>cocos2dx_support</string>
-			</array>
-			<key>Path</key>
-			<string>libs/lua/cocos2dx_support/LuaEngineImpl.cpp</string>
-		</dict>
-		<key>libs/lua/cocos2dx_support/LuaEngineImpl.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>lua</string>
-				<string>cocos2dx_support</string>
-			</array>
-			<key>Path</key>
-			<string>libs/lua/cocos2dx_support/LuaEngineImpl.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>lua</string>
-				<string>CocosDenshion_support</string>
-			</array>
-			<key>Path</key>
-			<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</string>
-		</dict>
-		<key>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>lua</string>
-				<string>CocosDenshion_support</string>
-			</array>
-			<key>Path</key>
-			<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</string>
+			<string>libs/lua/cocos2dx_support/tolua_fix.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -663,17 +660,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/lua/lua/luac.c</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>lua</string>
-				<string>lua</string>
-			</array>
-			<key>Path</key>
-			<string>libs/lua/lua/luac.c</string>
-		</dict>
 		<key>libs/lua/lua/luaconf.h</key>
 		<dict>
 			<key>Group</key>
@@ -867,16 +853,14 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/lua/cocos2dx_support/CCLuaEngine.cpp</string>
+		<string>libs/lua/cocos2dx_support/CCLuaEngine.h</string>
 		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</string>
 		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.h</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.cpp</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.h</string>
-		<string>libs/lua/cocos2dx_support/LuaEngine.cpp</string>
-		<string>libs/lua/cocos2dx_support/LuaEngine.h</string>
-		<string>libs/lua/cocos2dx_support/LuaEngineImpl.cpp</string>
-		<string>libs/lua/cocos2dx_support/LuaEngineImpl.h</string>
-		<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</string>
-		<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</string>
+		<string>libs/lua/cocos2dx_support/tolua_fix.c</string>
+		<string>libs/lua/cocos2dx_support/tolua_fix.h</string>
 		<string>libs/lua/lua/lapi.c</string>
 		<string>libs/lua/lua/lapi.h</string>
 		<string>libs/lua/lua/lauxlib.c</string>
@@ -922,7 +906,6 @@
 		<string>libs/lua/lua/ltm.h</string>
 		<string>libs/lua/lua/lua.c</string>
 		<string>libs/lua/lua/lua.h</string>
-		<string>libs/lua/lua/luac.c</string>
 		<string>libs/lua/lua/luaconf.h</string>
 		<string>libs/lua/lua/lualib.h</string>
 		<string>libs/lua/lua/lundump.c</string>

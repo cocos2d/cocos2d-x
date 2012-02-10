@@ -1,29 +1,11 @@
 
-#include "CCNode.h"
-#include "CCProtocols.h"
-
-namespace cocos2d {
-
-class CCRibbon;
-class CCMotionStreak : public CCNode, public CCTextureProtocol
+class CCMotionStreak : public CCNode
 {
-	
-//	CC_PROPERTY_READONLY(CCRibbon*, m_pRibbon, Ribbon)
-	CCRibbon* getRibbon(void);
-	
-	//CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
-	CCTexture2D* getTexture(void);
-	void setTexture(CCTexture2D* var);
-
-	ccBlendFunc getBlendFunc(void);
+    CCRibbon* getRibbon(void);
+    void setTexture(CCTexture2D* var);
+    CCTexture2D* getTexture(void);
     void setBlendFunc(ccBlendFunc var);
+    ccBlendFunc getBlendFunc(void);
 
-	CCMotionStreak();	
-	static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
-	bool initWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
-	void update(ccTime delta);
+    static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
 };
-
-} // namespace cocos2d
-
-

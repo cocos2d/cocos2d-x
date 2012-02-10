@@ -176,6 +176,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\platform\CCStdC.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
+    <ClCompile Include="..\platform\win32\CCAccelerometer_win32.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication_win32.cpp" />
     <ClCompile Include="..\platform\win32\CCEGLView_win32.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimation.cpp" />

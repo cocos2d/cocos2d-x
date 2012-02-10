@@ -1,15 +1,8 @@
 
-#include "CCGeometry.h"	// for CCPoint
-namespace   cocos2d {
-
-/** draws a point given x and y coordinate measured in points */
-void  ccDrawPoint( CCPoint point );
-void  ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints );
-void  ccDrawLine( CCPoint origin, CCPoint destination );
-void  ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon );
-void  ccDrawCircle( CCPoint center, float radius, float angle, int segments, bool drawLineToCenter);
+void  ccDrawPoint(CCPoint point);
+void  ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints);
+void  ccDrawLine(CCPoint origin, CCPoint destination);
+void  ccDrawPoly(const CCPoint *vertices, int numOfVertices, bool closePolygon);
+void  ccDrawCircle(CCPoint center, float radius, float angle, int segments, bool drawLineToCenter);
 void  ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, int segments);
 void  ccDrawCubicBezier(CCPoint origin, CCPoint control1, CCPoint control2, CCPoint destination, int segments);
-}//namespace   cocos2d 
-
-
