@@ -33,7 +33,6 @@ LOCAL_SRC_FILES :=../../lua/lapi.c \
 		  ../../lua/ltablib.c \
 		  ../../lua/ltm.c \
 		  ../../lua/lua.c \
-		  ../../lua/luac.c \
 		  ../../lua/lundump.c \
 		  ../../lua/lvm.c \
 		  ../../lua/lzio.c \
@@ -46,8 +45,7 @@ LOCAL_SRC_FILES :=../../lua/lapi.c \
 		  
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../lua \
                            $(LOCAL_PATH)/../../tolua \
-                           $(LOCAL_PATH)/../../cocos2dx_support \
-                           $(LOCAL_PATH)/../../CocosDenshion_support
+                           $(LOCAL_PATH)/../../cocos2dx_support 
 		  
 		  
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \

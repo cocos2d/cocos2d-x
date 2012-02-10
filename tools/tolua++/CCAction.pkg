@@ -1,99 +1,232 @@
-#include "ccTypes.h"
-#include "CCObject.h"
-#include "CCZone.h"
-#include "CCNode.h"
 
-namespace   cocos2d {
+enum {
+    kCCActionTagInvalid = -1,
+};
 
-	enum {
-		kCCActionTagInvalid = -1,
-	};
+class CCAction : public CCObject
+{
+    // bool isDone(void);
+    // CCNode* getTarget(void);
+    // void setTarget(CCNode *pTarget);
+    // CCNode* getOriginalTarget(void);
+    // void setOriginalTarget(CCNode *pOriginalTarget);
+    // int getTag(void);
+    // void setTag(int nTag);
 
-		class  CCAction : public CCObject 
-		{
-	
-			CCAction(void);			
-			char * description();
-			CCObject* copyWithZone(CCZone *pZone);			
-			bool isDone(void);
-			void startWithTarget(CCNode *pTarget); 
-			void stop(void);
-			void step(ccTime dt);
-			void update(ccTime time);
-			CCNode* getTarget(void);
-			void setTarget(CCNode *pTarget);
-			CCNode* getOriginalTarget(void);
+    // static CCAction* action();
+};
 
-			void setOriginalTarget(CCNode *pOriginalTarget);
-			int getTag(void);
-			void setTag(int nTag);
-			static CCAction* action();		 
-	
-		};
+class CCActionInterval : public CCAction
+{
+    // ccTime getElapsed(void);
+    // void setAmplitudeRate(CGFloat amp);
+    // CGFloat getAmplitudeRate(void);
+};
+
+class CCFiniteTimeAction : public CCActionInterval
+{
+    // ccTime getDuration(void);
+    // void setDuration(ccTime duration);
+    // CCFiniteTimeAction* reverse(void);
+};
+
+// CCActionInterval
+class CCSpeed : public CCAction
+{
+    float getSpeed(void);
+    void setSpeed(float fSpeed);
+    CCAction* reverse(void);
+
+    static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);
+};
+
+class CCFollow : public CCAction
+{
+    bool isBoundarySet(void);
+    void setBoudarySet(bool bValue);
+
+    static CCFollow* actionWithTarget(CCNode *pFollowedNode);
+    static CCFollow* actionWithTarget(CCNode *pFollowedNode, CCRect rect);
+};
+
+class CCSequence : public CCActionInterval
+{
+    static CCFiniteTimeAction* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+};
+
+class CCRepeat : public CCActionInterval
+{
+    static CCRepeat* actionWithAction(CCActionInterval *pAction, unsigned int times);
+};
+
+class CCRepeatForever : public CCActionInterval
+{
+    static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
+};
+
+class CCSpawn : public CCActionInterval
+{
+    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+    static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+};
+
+class CCRotateTo : public CCActionInterval
+{
+    static CCRotateTo* actionWithDuration(ccTime duration, float fDeltaAngle);
+};
+
+class CCRotateBy : public CCActionInterval
+{
+    static CCRotateBy* actionWithDuration(ccTime duration, float fDeltaAngle);
+};
+
+class CCMoveTo : public CCActionInterval
+{
+    static CCMoveTo* actionWithDuration(ccTime duration, CCPoint position);
+};
+
+class CCMoveBy : public CCActionInterval
+{
+    static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
+};
+
+class CCSkewTo : public CCActionInterval
+{
+    static CCSkewTo* actionWithDuration(ccTime t, float sx, float sy);
+};
+
+class CCSkewBy : public CCActionInterval
+{
+    static CCSkewBy* actionWithDuration(ccTime t, float deltaSkewX, float deltaSkewY);
+};
+
+class CCJumpBy : public CCActionInterval
+{
+    static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+};
+
+class CCJumpTo : public CCActionInterval
+{
+    static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+};
+
+typedef struct _ccBezierConfig {
+    CCPoint endPosition;
+    CCPoint controlPoint_1;
+    CCPoint controlPoint_2;
+} ccBezierConfig;
+
+class CCBezierBy : public CCActionInterval
+{
+    static CCBezierBy* actionWithDuration(ccTime t, ccBezierConfig c);
+};
+
+class CCBezierTo : public CCActionInterval
+{
+    static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
+};
+
+class CCScaleTo : public CCActionInterval
+{
+    static CCScaleTo* actionWithDuration(ccTime duration, float s);
+    static CCScaleTo* actionWithDuration(ccTime duration, float sx, float sy);
+};
+
+class CCScaleBy : public CCActionInterval
+{
+    static CCScaleBy* actionWithDuration(ccTime duration, float s);
+    static CCScaleBy* actionWithDuration(ccTime duration, float sx, float sy);
+};
+
+class CCBlink : public CCActionInterval
+{
+    static CCBlink* actionWithDuration(ccTime duration, unsigned int uBlinks);
+};
+
+class CCFadeIn : public CCActionInterval
+{
+    static CCFadeIn* actionWithDuration(ccTime d);
+};
+
+class CCFadeOut : public CCActionInterval
+{
+    static CCFadeOut* actionWithDuration(ccTime d);
+};
+
+class CCFadeTo : public CCActionInterval
+{
+    static CCFadeTo* actionWithDuration(ccTime duration, GLubyte opacity);
+};
+
+class CCTintTo : public CCActionInterval
+{
+    static CCTintTo* actionWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
+};
+
+class CCTintBy : public CCActionInterval
+{
+    static CCTintBy* actionWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+};
+
+class CCDelayTime : public CCActionInterval
+{
+    static CCDelayTime* actionWithDuration(ccTime d);
+};
+
+class CCReverseTime : public CCActionInterval
+{
+    static CCReverseTime* actionWithAction(CCFiniteTimeAction *pAction);
+};
+
+class CCAnimate : public CCActionInterval
+{
+    CCAnimation* getAnimation(void);
+    void setAnimation(CCAnimation *pAnimation);
+
+    static CCAction* actionWithAnimation(CCAnimation *pAnimation);
+    static CCAction* actionWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+    static CCAction* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+};
+
+class CCProgressTo : public CCAction
+{
+    static CCAction* actionWithDuration(ccTime duration, float fPercent);
+};
+
+class CCProgressFromTo : public CCAction
+{
+    static CCAction* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
+};
 
 
-		class  CCFiniteTimeAction : public CCAction
-		{		
-			CCFiniteTimeAction();
-			~CCFiniteTimeAction(){}
-			//! get duration in seconds of the action
-			ccTime getDuration(void);
-			//! set duration in seconds of the action
-			void setDuration(ccTime duration);
+// CCActionInstant
+class CCShow : public CCAction
+{
+    static CCAction* action();
+};
 
-	
-			virtual CCFiniteTimeAction* reverse(void);	 
-		};
+class CCHide : public CCAction
+{
+    static CCAction* action();
+};
 
+class CCToggleVisibility : public CCAction
+{
+    static CCAction* action();
+};
 
-		class CCActionInterval;
-		class CCRepeatForever;
+class CCFlipX : public CCAction
+{
+    static CCAction* actionWithFlipX(bool x);
+};
 
-		class  CCSpeed : public CCAction
-		{
-		public:
-			CCSpeed();
-			virtual ~CCSpeed(void);
+class CCFlipY : public CCAction
+{
+    static CCAction* actionWithFlipY(bool y);
+};
 
-			float getSpeed(void);
-			/** alter the speed of the inner function in runtime */
-			void setSpeed(float fSpeed);
-
-			/** initializes the action */
-			bool initWithAction(CCActionInterval *pAction, float fRate);
-
-			CCObject* copyWithZone(CCZone *pZone);
-			void startWithTarget(CCNode* pTarget);
-			void stop();
-			void step(ccTime dt);
-			bool isDone(void);
-			CCActionInterval* reverse(void);
-			
-			void setInnerAction(CCActionInterval *pAction);
-			CCActionInterval* getInnerAction();
-
-			static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);	 
-
-	
-		};
-
-
-		class CCFollow : public CCAction
-		{
-		public:
-			CCFollow();			
-
-			bool isBoundarySet(void);			
-			void setBoudarySet(bool bValue);			
-			bool initWithTarget(CCNode *pFollowedNode);		
-			bool initWithTarget(CCNode *pFollowedNode, CCRect rect);
-			virtual CCObject* copyWithZone(CCZone *pZone);
-			virtual void step(ccTime dt);
-			virtual bool isDone(void);
-			virtual void stop(void);
-		
-			static CCFollow* actionWithTarget(CCNode *pFollowedNode);
-			static CCFollow* actionWithTarget(CCNode *pFollowedNode, CCRect rect);	
-
-		};
-}//namespace   cocos2d 
+class CCPlace : public CCAction //<NSCopying>
+{
+    static CCAction* actionWithPosition(CCPoint pos);
+};

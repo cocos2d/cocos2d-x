@@ -1,10 +1,10 @@
+
 #include "cocos2d.h"
 #include "AppDelegate.h"
-//#include "SimpleAudioEngine.h"
-
 #include "SimpleAudioEngine.h"
+#include "CCScriptSupport.h"
+#include "CCLuaEngine.h"
 
-#include "SimpleAudioEngine.h"
 #define IPAD		0
 
 #if IPAD
@@ -22,7 +22,6 @@ USING_NS_CC;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
-:m_pLuaEngine(NULL)
 {
 	// fixed me
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
@@ -32,8 +31,7 @@ AppDelegate::~AppDelegate()
 {
 	// end simple audio engine here, or it may crashed on win32
 	SimpleAudioEngine::sharedEngine()->end();
-    CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
-    CC_SAFE_DELETE(m_pLuaEngine);
+    //CCScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::initInstance()
@@ -106,8 +104,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setAnimationInterval(1.0 / 60);
 
 	// register lua engine
-    m_pLuaEngine = new LuaEngine; 
-	CCScriptEngineManager::sharedScriptEngineManager()->setScriptEngine(m_pLuaEngine);
+    CCScriptEngineProtocol* pEngine = CCLuaEngine::engine();
+    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	unsigned long size;
@@ -121,15 +119,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 	    memcpy(pCodes, pFileContent, size);
 	    delete[] pFileContent;
 
-	    CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeString(pCodes);
+	    pEngine->executeString(pCodes);
 	    delete []pCodes;
 	}
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
-	CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
-    CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
+    pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
+    pEngine->executeScriptFile(path.c_str());
 #endif 
 
 	return true;

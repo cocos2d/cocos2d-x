@@ -1,65 +1,17 @@
 
-#include "CCSpriteBatchNode.h"
-namespace cocos2d{
+class CCLabelBMFont : public CCNode
+{
+    void setString(const char *label);
+    const char* getString(void);
 
-	struct _KerningHashElement;
+    void setColor(const ccColor3B& color);
+    const ccColor3B& getColor(void);
 
+    GLubyte getOpacity(void);
+    void setOpacity(GLubyte opacity);
 
-	typedef struct _BMFontDef {
+    tolua_property__CCOpacity   GLubyte opacity;
 
-		unsigned int charID;
-
-		CCRect rect;
-
-		int xOffset;
-		//! The Y amount the image should be offset when drawing the image (in pixels)
-		int yOffset;
-		//! The amount to move the current position after drawing the character (in pixels)
-		int xAdvance;
-	} ccBMFontDef;
-
-
-	typedef struct _BMFontPadding {
-		/// padding left
-		int	left;
-		/// padding top
-		int top;
-		/// padding right
-		int right;
-		/// padding bottom
-		int bottom;
-	} ccBMFontPadding;
-
-
-	class CCBMFontConfiguration : public CCObject
-	{	
-		CCBMFontConfiguration();	
-		char * description();
-		static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);		
-		bool initWithFNTfile(const char *FNTfile);
-	};
-
-
-	class CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
-	{
-
-		CCLabelBMFont();	
-		static void purgeCachedData();		
-		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);       
-		bool initWithString(const char *str, const char *fntFile);		
-		void createFontChars();	
-		void setString(const char *label);
-		const char* getString(void);
-		void setCString(const char *label);
-		void setAnchorPoint(CCPoint var);
-		void draw();
-	};
-
-
-	CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
-
-	void FNTConfigRemoveCache( void );
-
-}// namespace cocos2d
-
-
+    static void purgeCachedData();
+    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
+};
