@@ -66,6 +66,7 @@ tests/LayerTest/LayerTest.cpp \
 tests/TextInputTest/TextInputTest.cpp \
 tests/MenuTest/MenuTest.cpp \
 tests/MotionStreakTest/MotionStreakTest.cpp \
+tests/NotificationCenterTest/NotificationCenterTest.cpp \
 tests/ParallaxTest/ParallaxTest.cpp \
 tests/ParticleTest/ParticleTest.cpp \
 tests/PerformanceTest/PerformanceNodeChildrenTest.cpp \

@@ -904,14 +904,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\support\CCNotificationCenter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\support\CCNotificationCenter.h"
-				>
-			</File>
-			<File
 				RelativePath="..\support\CCPointExtension.cpp"
 				>
 			</File>
@@ -996,6 +988,18 @@
 				</File>
 				<File
 					RelativePath="..\support\zip_support\ZipUtils.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="extensions"
+				>
+				<File
+					RelativePath="..\support\extensions\CCNotificationCenter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\support\extensions\CCNotificationCenter.h"
 					>
 				</File>
 			</Filter>

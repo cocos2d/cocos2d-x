@@ -119,13 +119,14 @@ files
 	"CCProfiling.cpp"
 	"CCProfiling.h"
 	"CCUserDefault.cpp"
-	"CCNotificationCenter.cpp"
-	"CCNotificationCenter.h"
 	"ccUtils.cpp"
 	"ccUtils.h"
 	"TransformUtils.cpp"
 	"TransformUtils.h"
-	
+	("../support/extensions")
+	[support/extensions]
+	"CCNotificationCenter.cpp"
+	"CCNotificationCenter.h"
 	("../support/data_support")
 	[support/data_support]
 	"*.h"

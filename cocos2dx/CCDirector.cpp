@@ -48,7 +48,7 @@ THE SOFTWARE.
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
 #include "CCUserDefault.h"
-#include "support/CCNotificationCenter.h"
+#include "support/extensions/CCNotificationCenter.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
