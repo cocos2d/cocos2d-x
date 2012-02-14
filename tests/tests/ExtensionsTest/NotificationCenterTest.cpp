@@ -1,9 +1,12 @@
 #include "NotificationCenterTest.h"
+#include "ExtensionsTest.h"
 
 #define kTagLight 100
 #define kTagConnect 200
 
 #define MSG_SWITCH_STATE  "SwitchState"
+
+USING_NS_CC;
 
 class Light : public CCSprite
 {
@@ -74,11 +77,17 @@ void Light::updateLightState()
     }
 }
 
-
 NotificationCenterTest::NotificationCenterTest()
 : m_bShowImage(false)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCMenuItemFont* pBackItem = CCMenuItemFont::itemFromString("Back", this,
+        menu_selector(NotificationCenterTest::toExtensionsMainLayer));
+    pBackItem->setPosition(ccp(s.width - 50, 25));
+    CCMenu* pBackMenu = CCMenu::menuWithItems(pBackItem, NULL);
+    pBackMenu->setPosition( CCPointZero );
+    addChild(pBackMenu);
 
     CCLabelTTF *label1 = CCLabelTTF::labelWithString("switch off", "Marker Felt", 26);
     CCLabelTTF *label2 = CCLabelTTF::labelWithString("switch on", "Marker Felt", 26);
@@ -121,6 +130,13 @@ NotificationCenterTest::NotificationCenterTest()
     CCNotificationCenter::sharedNotifCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)item->getSelectedIndex());
 }
 
+void NotificationCenterTest::toExtensionsMainLayer(cocos2d::CCObject* sender)
+{
+    ExtensionsTestScene* pScene = new ExtensionsTestScene();
+    pScene->runThisTest();
+    pScene->release();
+}
+
 void NotificationCenterTest::toggleSwitch(CCObject *sender)
 {
     CCMenuItemToggle* item = (CCMenuItemToggle*)sender;
@@ -136,11 +152,11 @@ void NotificationCenterTest::connectToSwitch(CCObject *sender)
     pLight->setIsConnectToSwitch(bConnected);
 }
 
-void NotificationCenterTestScene::runThisTest()
+void runNotificationCenterTest()
 {
-    CCLayer* pLayer = new NotificationCenterTest();
-    addChild(pLayer);
-
-    CCDirector::sharedDirector()->replaceScene(this);
+    CCScene* pScene = CCScene::node();
+    NotificationCenterTest* pLayer = new NotificationCenterTest();
+    pScene->addChild(pLayer);
+    CCDirector::sharedDirector()->replaceScene(pScene);
     pLayer->release();
 }

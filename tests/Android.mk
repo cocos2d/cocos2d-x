@@ -57,6 +57,8 @@ tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 tests/EaseActionsTest/EaseActionsTest.cpp \
 tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 tests/EffectsTest/EffectsTest.cpp \
+tests/ExtensionsTest/ExtensionsTest.cpp \
+tests/ExtensionsTest/NotificationCenterTest.cpp \
 tests/FontTest/FontTest.cpp \
 tests/HiResTest/HiResTest.cpp \
 tests/IntervalTest/IntervalTest.cpp \
@@ -66,7 +68,6 @@ tests/LayerTest/LayerTest.cpp \
 tests/TextInputTest/TextInputTest.cpp \
 tests/MenuTest/MenuTest.cpp \
 tests/MotionStreakTest/MotionStreakTest.cpp \
-tests/NotificationCenterTest/NotificationCenterTest.cpp \
 tests/ParallaxTest/ParallaxTest.cpp \
 tests/ParticleTest/ParticleTest.cpp \
 tests/PerformanceTest/PerformanceNodeChildrenTest.cpp \

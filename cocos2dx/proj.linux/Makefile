@@ -38,6 +38,7 @@ OBJECTS = ../actions/CCAction.o \
 					../cocoa/CCZone.o \
 					../effects/CCGrabber.o \
 					../effects/CCGrid.o \
+					../extensions/CCNotificationCenter.o \
 					../keypad_dispatcher/CCKeypadDelegate.o \
 					../keypad_dispatcher/CCKeypadDispatcher.o \
 					../label_nodes/CCLabelAtlas.o \
@@ -81,7 +82,6 @@ OBJECTS = ../actions/CCAction.o \
 					../support/TransformUtils.o \
 					../support/base64.o \
 					../support/ccUtils.o \
-					../support/extensions/CCNotificationCenter.o \
 					../support/image_support/TGAlib.o \
 					../support/zip_support/ZipUtils.o \
 					../support/zip_support/ioapi.o \

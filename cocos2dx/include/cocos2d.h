@@ -117,7 +117,7 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 
 // extensions
-#include "support/extensions/CCNotificationCenter.h"
+#include "extensions/CCNotificationCenter.h"
 
 //
 // cocos2d macros

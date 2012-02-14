@@ -1,7 +1,7 @@
 #!/bin/bash
 # set params
-NDK_ROOT_LOCAL=/cygdrive/d/programe/android/ndk/android-ndk-r6b
-COCOS2DX_ROOT_LOCAL=/cygdrive/e/cocos2d-x
+NDK_ROOT_LOCAL=/cygdrive/e/android/android-ndk-r6b
+COCOS2DX_ROOT_LOCAL=/cygdrive/f/Project/dumganhar/cocos2d-x
 
 # try to get global variable
 if [ $NDK_ROOT"aaa" != "aaa" ]; then
@@ -24,7 +24,7 @@ fi
 mkdir $TESTS_ROOT/assets
 
 # copy resources
-for file in $COCOS2DX_ROOT_LOCAL/tests/Res/*
+for file in $COCOS2DX_ROOT_LOCAL/tests/Resources/*
 do
     if [ -d $file ]; then
         cp -rf $file $TESTS_ROOT/assets
