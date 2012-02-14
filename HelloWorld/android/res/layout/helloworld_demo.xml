@@ -4,7 +4,8 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <EditText android:id="@+id/textField"
+    <org.cocos2dx.lib.Cocos2dxEditText 
+        android:id="@+id/textField"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:background="@null"/>
