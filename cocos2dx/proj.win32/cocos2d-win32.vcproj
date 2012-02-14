@@ -991,6 +991,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="extensions"
+				>
+				<File
+					RelativePath="..\support\extensions\CCNotificationCenter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\support\extensions\CCNotificationCenter.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="textures"

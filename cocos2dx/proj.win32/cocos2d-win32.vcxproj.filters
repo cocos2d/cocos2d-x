@@ -70,6 +70,9 @@
     <Filter Include="script_support">
       <UniqueIdentifier>{e20bbd88-a111-40c3-9d5d-387a4c9cd4d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="support\extensions">
+      <UniqueIdentifier>{5eb2c043-58bd-4857-aae4-77c2bdea9742}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -335,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="..\platform\win32\CCAccelerometer_win32.cpp">
       <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\extensions\CCNotificationCenter.cpp">
+      <Filter>support\extensions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -689,6 +695,9 @@
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\include\CCTexturePVR.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\extensions\CCNotificationCenter.h">
+      <Filter>support\extensions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

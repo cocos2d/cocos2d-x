@@ -10,6 +10,11 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		78891AB514EA20530072482D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB414EA20530072482D /* Icon@2x.png */; };
+		78891AB714EA205A0072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB614EA205A0072482D /* Default.png */; };
+		78891AB914EA20C70072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB814EA20C70072482D /* Icon.png */; };
+		78E44C9414EA028E000F36CB /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E44C9214EA028E000F36CB /* CCNotificationCenter.cpp */; };
+		78E44C9514EA028E000F36CB /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E44C9314EA028E000F36CB /* CCNotificationCenter.h */; };
 		AD7C5EC514751287008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EC414751287008E5647 /* CCThread_ios.mm */; };
 		AD7C5ED2147512AD008E5647 /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7C5EC7147512AD008E5647 /* FontLabel.h */; };
 		AD7C5ED3147512AD008E5647 /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EC8147512AD008E5647 /* FontLabel.m */; };
@@ -274,7 +279,6 @@
 		BFEE2E4013E16D2D005C0577 /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3513E16D2D005C0577 /* ZFont.h */; };
 		BFEE2E4113E16D2D005C0577 /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E3613E16D2D005C0577 /* ZFont.m */; };
 		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
-		D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F25D12E53386005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -292,6 +296,11 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		78891AB414EA20530072482D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		78891AB614EA205A0072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		78891AB814EA20C70072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		78E44C9214EA028E000F36CB /* CCNotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNotificationCenter.cpp; sourceTree = "<group>"; };
+		78E44C9314EA028E000F36CB /* CCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotificationCenter.h; sourceTree = "<group>"; };
 		AD7C5EC414751287008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCThread_ios.mm; path = ios/CCThread_ios.mm; sourceTree = "<group>"; };
 		AD7C5EC7147512AD008E5647 /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
 		AD7C5EC8147512AD008E5647 /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
@@ -554,7 +563,6 @@
 		BFEE2E3613E16D2D005C0577 /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloWorld-Info.plist"; sourceTree = SOURCE_ROOT; };
-		D4F9F25D12E53386005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -601,6 +609,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				78891AB814EA20C70072482D /* Icon.png */,
+				78891AB614EA205A0072482D /* Default.png */,
+				78891AB414EA20530072482D /* Icon@2x.png */,
 				BF23D4E2143315EB00657E08 /* Classes */,
 				BF5681CC1313A84D0055EEAC /* ios */,
 				BF83517613275F5500F3C033 /* cocos2dx */,
@@ -688,7 +699,6 @@
 		BF755FAC12A1015E00450234 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				D4F9F25D12E53386005CA6D2 /* Icon.png */,
 				D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */,
 				BF755FAD12A1015E00450234 /* CloseNormal.png */,
 				BF755FAE12A1015E00450234 /* CloseSelected.png */,
@@ -993,6 +1003,8 @@
 		BF8353ED13275F5600F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				78E44C9214EA028E000F36CB /* CCNotificationCenter.cpp */,
+				78E44C9314EA028E000F36CB /* CCNotificationCenter.h */,
 				BF126D1A1373F25400C4ABC5 /* CCUserDefault.cpp */,
 				BF193EFF136007D3002463D2 /* CCArray.cpp */,
 				BF8353EE13275F5600F3C033 /* base64.cpp */,
@@ -1266,6 +1278,7 @@
 				AD7C5ED8147512AD008E5647 /* ZAttributedString.h in Headers */,
 				AD7C5EDA147512AD008E5647 /* ZAttributedStringPrivate.h in Headers */,
 				AD7C5EDB147512AD008E5647 /* ZFont.h in Headers */,
+				78E44C9514EA028E000F36CB /* CCNotificationCenter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1340,7 +1353,9 @@
 				BF755FB012A1015E00450234 /* CloseNormal.png in Resources */,
 				BF755FB112A1015E00450234 /* CloseSelected.png in Resources */,
 				BF755FB212A1015E00450234 /* HelloWorld.png in Resources */,
-				D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */,
+				78891AB514EA20530072482D /* Icon@2x.png in Resources */,
+				78891AB714EA205A0072482D /* Default.png in Resources */,
+				78891AB914EA20C70072482D /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1472,6 +1487,7 @@
 				AD7C5ED7147512AD008E5647 /* FontManager.m in Sources */,
 				AD7C5ED9147512AD008E5647 /* ZAttributedString.m in Sources */,
 				AD7C5EDC147512AD008E5647 /* ZFont.m in Sources */,
+				78E44C9414EA028E000F36CB /* CCNotificationCenter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

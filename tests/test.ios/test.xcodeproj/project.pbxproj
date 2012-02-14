@@ -12,6 +12,12 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		787B5C8414EA0A42005C1D52 /* NotificationCenterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 787B5C8214EA0A42005C1D52 /* NotificationCenterTest.cpp */; };
+		7887693F14EA35FA00A9B4E1 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7887693D14EA35FA00A9B4E1 /* CCNotificationCenter.cpp */; };
+		7887694014EA35FA00A9B4E1 /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7887693E14EA35FA00A9B4E1 /* CCNotificationCenter.h */; };
+		78891AAE14EA1DAE0072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AAD14EA1DAE0072482D /* Icon.png */; };
+		78891AB014EA1DBC0072482D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AAF14EA1DBC0072482D /* Icon@2x.png */; };
+		78891AB214EA1DC30072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB114EA1DC30072482D /* Default.png */; };
 		AD7C5EB614750E2E008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EB514750E2E008E5647 /* CCThread_ios.mm */; };
 		ADDD87E51484BB53005306E7 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = ADDD85FA1484BB37005306E7 /* Box2D.h */; };
 		ADDD87E61484BB53005306E7 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADDD85FC1484BB37005306E7 /* b2BroadPhase.cpp */; };
@@ -583,11 +589,18 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* iphone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iphone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		787B5C8214EA0A42005C1D52 /* NotificationCenterTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NotificationCenterTest.cpp; sourceTree = "<group>"; };
+		787B5C8314EA0A42005C1D52 /* NotificationCenterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCenterTest.h; sourceTree = "<group>"; };
+		7887693D14EA35FA00A9B4E1 /* CCNotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNotificationCenter.cpp; sourceTree = "<group>"; };
+		7887693E14EA35FA00A9B4E1 /* CCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotificationCenter.h; sourceTree = "<group>"; };
+		78891AAD14EA1DAE0072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		78891AAF14EA1DBC0072482D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		78891AB114EA1DC30072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		AD7C5EB514750E2E008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread_ios.mm; sourceTree = "<group>"; };
 		ADDD85FA1484BB37005306E7 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		ADDD85FC1484BB37005306E7 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -1301,7 +1314,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* iphone.app */,
+				1D6058910D05DD3D006BFB54 /* tests.app */,
 				BF170DAB12928DAA00B8313A /* libcocos2d.a */,
 				BF17118712928FA700B8313A /* libbox2d.a */,
 				BF1712631292931F00B8313A /* libchipmunk.a */,
@@ -1313,6 +1326,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				78891AB114EA1DC30072482D /* Default.png */,
+				78891AAF14EA1DBC0072482D /* Icon@2x.png */,
+				78891AAD14EA1DAE0072482D /* Icon.png */,
 				ADDD85F81484BB37005306E7 /* Box2D */,
 				BF83588813276C7700F3C033 /* cocos2dx */,
 				080E96DDFE201D6D7F000001 /* ios */,
@@ -1342,6 +1358,24 @@
 				D44C620F132DFF4E0009C878 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		787B5C8114EA0A42005C1D52 /* NotificationCenterTest */ = {
+			isa = PBXGroup;
+			children = (
+				787B5C8214EA0A42005C1D52 /* NotificationCenterTest.cpp */,
+				787B5C8314EA0A42005C1D52 /* NotificationCenterTest.h */,
+			);
+			path = NotificationCenterTest;
+			sourceTree = "<group>";
+		};
+		7887693C14EA35FA00A9B4E1 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7887693D14EA35FA00A9B4E1 /* CCNotificationCenter.cpp */,
+				7887693E14EA35FA00A9B4E1 /* CCNotificationCenter.h */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		ADDD85F81484BB37005306E7 /* Box2D */ = {
@@ -1830,6 +1864,7 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				787B5C8114EA0A42005C1D52 /* NotificationCenterTest */,
 				BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */,
 				ADF1707A1474F632004E9212 /* TextureCacheTest */,
 				BF1E7A4213E2629800C2D68B /* FontTest */,
@@ -2565,6 +2600,7 @@
 		BF835AFF13276C7900F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				7887693C14EA35FA00A9B4E1 /* extensions */,
 				BF99347F1373E6E600197D1B /* CCUserDefault.cpp */,
 				BF193EDD1360055A002463D2 /* CCArray.cpp */,
 				BF835B0013276C7900F3C033 /* base64.cpp */,
@@ -2813,6 +2849,7 @@
 				BF1E7A5C13E2637200C2D68B /* ZAttributedStringPrivate.h in Headers */,
 				BF1E7A5D13E2637200C2D68B /* ZFont.h in Headers */,
 				BF1C5C2913EBF83F0076BDF6 /* CCTouchHandler.h in Headers */,
+				7887694014EA35FA00A9B4E1 /* CCNotificationCenter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2941,7 +2978,7 @@
 			);
 			name = test.ios;
 			productName = iphone;
-			productReference = 1D6058910D05DD3D006BFB54 /* iphone.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* tests.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BF170DAA12928DAA00B8313A /* cocos2d */ = {
@@ -3081,6 +3118,9 @@
 				BF1EB6AB13D6BBB4008D2559 /* test_image.pvrraw in Resources */,
 				BF1EB6AC13D6BBB4008D2559 /* test-rgba1.png in Resources */,
 				D4AD7908144F12D70001BEA2 /* fonts in Resources */,
+				78891AAE14EA1DAE0072482D /* Icon.png in Resources */,
+				78891AB014EA1DBC0072482D /* Icon@2x.png in Resources */,
+				78891AB214EA1DC30072482D /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3182,6 +3222,7 @@
 				BF1E7BC513E273DF00C2D68B /* FontTest.cpp in Sources */,
 				BF1B49F013FE04C300838E41 /* CurrentLanguageTest.cpp in Sources */,
 				ADF1707D1474F632004E9212 /* TextureCacheTest.cpp in Sources */,
+				787B5C8414EA0A42005C1D52 /* NotificationCenterTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3292,6 +3333,7 @@
 				BF1E7A5B13E2637200C2D68B /* ZAttributedString.m in Sources */,
 				BF1E7A5E13E2637200C2D68B /* ZFont.m in Sources */,
 				AD7C5EB614750E2E008E5647 /* CCThread_ios.mm in Sources */,
+				7887693F14EA35FA00A9B4E1 /* CCNotificationCenter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3452,7 +3494,7 @@
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
 				OTHER_CFLAGS = "-O2";
-				PRODUCT_NAME = iphone;
+				PRODUCT_NAME = tests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv6 armv7 i386";
@@ -3490,7 +3532,7 @@
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
-				PRODUCT_NAME = iphone;
+				PRODUCT_NAME = tests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

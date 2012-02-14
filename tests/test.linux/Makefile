@@ -98,6 +98,7 @@ OBJECTS = ../tests/AccelerometerTest/AccelerometerTest.o \
 					../tests/TransitionsTest/TransitionsTest.o \
 					../tests/UserDefaultTest/UserDefaultTest.o \
 					../tests/ZwoptexTest/ZwoptexTest.o \
+					../tests/NotificationCenterTest/NotificationCenterTest.o \
 					../tests/controller.o \
 					../tests/testBasic.o \
 					../AppDelegate.o \

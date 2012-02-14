@@ -81,6 +81,7 @@ OBJECTS = ../actions/CCAction.o \
 					../support/TransformUtils.o \
 					../support/base64.o \
 					../support/ccUtils.o \
+					../support/extensions/CCNotificationCenter.o \
 					../support/image_support/TGAlib.o \
 					../support/zip_support/ZipUtils.o \
 					../support/zip_support/ioapi.o \
