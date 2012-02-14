@@ -1,46 +1,20 @@
-namespace cocos2d {
 
 class CCRibbon: public CCNode
 {
+    void setTexture(CCTexture2D* val);
+    CCTexture2D* getTexture();
 
-	CCRibbon();
-	~CCRibbon();
-	void setTexture(CCTexture2D* val);
-	CCTexture2D* getTexture();
-	/** Texture lengths in pixels */
-	float getTextureLength();
-	void  setTextureLength(float val);
+    void  setTextureLength(float val);
+    float getTextureLength();
 
-	void setBlendFunc(ccBlendFunc val);
-	ccBlendFunc getBlendFunc();
+    void setBlendFunc(ccBlendFunc val);
+    ccBlendFunc getBlendFunc();
 
-	void setColor(ccColor4B val);
-	ccColor4B getColor();
+    void setColor(ccColor4B val);
+    ccColor4B getColor();
 
+    void addPointAt(CCPoint location, float width);
+    float sideOfLine(CCPoint p, CCPoint l1, CCPoint l2);
 
-	static CCRibbon * ribbonWithWidth(float w, const char *path, float length, ccColor4B color, float fade);
-
-	bool initWithWidth(float w, const char *path, float length, ccColor4B color, float fade);
-
-	void addPointAt(CCPoint location, float width);
-
-	void update(ccTime delta);
-
-	float sideOfLine(CCPoint p, CCPoint l1, CCPoint l2);
-	void draw();
-
+    static CCRibbon * ribbonWithWidth(float w, const char *path, float length, ccColor4B color, float fade);
 };
-
-/** @brief object to hold ribbon segment data */
-class CCRibbonSegment: public CCObject
-{
-	CCRibbonSegment();
-	~CCRibbonSegment();
-	char * description();
-	bool init();
-	void reset();
-	void draw(float curTime, float fadeTime, ccColor4B color);
-};
-
-} // namespace cocos2d
-

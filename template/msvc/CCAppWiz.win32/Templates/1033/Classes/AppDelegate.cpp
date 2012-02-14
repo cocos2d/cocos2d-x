@@ -9,6 +9,12 @@ using namespace CocosDenshion;
 [! if !CC_USE_LUA]
 
 #include "HelloWorldScene.h"
+[! else]
+
+#if CC_LUA_ENGINE_ENABLED
+#include "CCLuaEngine.h"
+#endif
+
 [! endif]
 
 #include "CCEGLView.h"
@@ -16,11 +22,7 @@ using namespace CocosDenshion;
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
-[! if CC_USE_LUA]
-:m_pLuaEngine(NULL)
-[! endif]
 {
-
 }
 
 AppDelegate::~AppDelegate()
@@ -29,16 +31,16 @@ AppDelegate::~AppDelegate()
     SimpleAudioEngine::end();
 [! endif]
 [! if CC_USE_LUA]
-
-    CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
-    CC_SAFE_DELETE(m_pLuaEngine);
+#if CC_LUA_ENGINE_ENABLED
+    CCLuaEngine::purgeSharedEngine();
+#endif
 [! endif]
 }
 
 bool AppDelegate::initInstance()
 {
     bool bRet = false;
-    do 
+    do
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
@@ -74,7 +76,7 @@ bool AppDelegate::initInstance()
 		CCEGLView* pMainWnd = new CCEGLView(this);
 		CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480, WM_WINDOW_ROTATE_MODE_CW));
 
-#ifndef _TRANZDA_VM_  
+#ifndef _TRANZDA_VM_
 		// on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data/ folder instead of zip file
 		cocos2d::CCFileUtils::setResource("HelloWorld.zip");
 #endif
@@ -131,9 +133,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
 [! if CC_USE_LUA]
-    // register lua engine
-    m_pLuaEngine = new LuaEngine; 
-    CCScriptEngineManager::sharedScriptEngineManager()->setScriptEngine(m_pLuaEngine);
+    // init lua engine
+    CCLuaEngine* pEngine = CCLuaEngine::sharedEngine();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     unsigned long size;
@@ -147,15 +148,15 @@ bool AppDelegate::applicationDidFinishLaunching()
         memcpy(pCodes, pFileContent, size);
         delete[] pFileContent;
 
-        CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeString(pCodes);
+        pEngine->executeString(pCodes);
         delete []pCodes;
     }
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
-    CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
-#endif 
+    pEngine->executeScriptFile(path.c_str());
+#endif
 [! else]
     // create a scene. it's an autorelease object
     CCScene *pScene = HelloWorld::scene();

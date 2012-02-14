@@ -1,54 +1,39 @@
 
-namespace   cocos2d {
-
 class CCMutableArray : public CCObject
 {
-	TOLUA_TEMPLATE_BIND(T, CCObject*, CCSpriteFrame*, CCFiniteTimeAction*)
+    TOLUA_TEMPLATE_BIND(T, CCObject*, CCSpriteFrame*, CCFiniteTimeAction*)
 
-	CCMutableArray(unsigned int uSize = 0);
+    CCMutableArray(unsigned int uSize = 0);
 
-	~CCMutableArray(void);
+    unsigned int count(void);
 
-	unsigned int count(void);
-	unsigned int getIndexOfObject(T pObject);
+    bool containsObject(T pObject);
 
-	bool containsObject(T pObject);
+    T getLastObject(void);
+    T getObjectAtIndex(unsigned int uIndex);
 
-	T getLastObject(void);
-	T getObjectAtIndex(unsigned int uIndex);
-
-	// Adding objects
-	void addObject(T pObject);
-	void addObjectsFromArray(CCMutableArray<T> *pArray);
+    void addObject(T pObject);
+    void addObjectsFromArray(CCMutableArray<T> *pArray);
 
     void insertObjectAtIndex(T pObject, unsigned int uIndex);
-	// Removing objects
-	void removeLastObject(bool bDeleteObject = true);
+    void removeLastObject(bool bDeleteObject = true);
 
-	void removeObject(T pObject, bool bDeleteObject = true);
+    void removeObject(T pObject, bool bDeleteObject = true);
 
-	void removeObjectsInArray(CCMutableArray<T>* pDeleteArray);
+    void removeObjectsInArray(CCMutableArray<T>* pDeleteArray);
 
-	void removeObjectAtIndex(unsigned int uIndex, bool bDeleteObject = true);
-	void removeAllObjects(bool bDeleteObject = true);
+    void removeObjectAtIndex(unsigned int uIndex, bool bDeleteObject = true);
+    void removeAllObjects(bool bDeleteObject = true);
 
-	void replaceObjectAtIndex(unsigned int uIndex, T pObject, bool bDeleteObject = true);
+    void replaceObjectAtIndex(unsigned int uIndex, T pObject, bool bDeleteObject = true);
 
-	
-	std::vector<T>::iterator begin(void);
+    std::vector<T>::iterator begin(void);
 
-	std::vector<T>::reverse_iterator rbegin(void);
+    std::vector<T>::reverse_iterator rbegin(void);
 
-	std::vector<T>::iterator endToLua(void);
-	std::vector<T>::reverse_iterator rend(void);
-	CCMutableArray<T>* copy(void);
+    std::vector<T>::iterator endToLua(void);
+    std::vector<T>::reverse_iterator rend(void);
+    CCMutableArray<T>* copy(void);
 
-	//static CCMutableArray<T>* arrayWithObjects(T pObject1, ...);
-
-	static CCMutableArray<T>* arrayWithArray(CCMutableArray<T> *pArray);
-
+    static CCMutableArray<T>* arrayWithArray(CCMutableArray<T> *pArray);
 };
-
-}//namespace   cocos2d 
-
-

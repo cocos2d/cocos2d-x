@@ -1,157 +1,41 @@
 
-namespace cocos2d
+class CCGridAction : public CCActionInterval
 {
-	class CCGridBase;
+    CCGridBase* getGrid(void);
 
-	/** @brief Base class for Grid actions */
-	class  CCGridAction : public CCActionInterval
-	{
-	public:
-		virtual CCObject* copyWithZone(CCZone* pZone);
-		virtual void startWithTarget(CCNode *pTarget);
-		virtual CCActionInterval* reverse(void);
+    static CCGridAction* actionWithSize(ccGridSize gridSize, ccTime duration);
+};
 
-		/** initializes the action with size and duration */
-		virtual bool initWithSize(ccGridSize gridSize, ccTime duration);
-		/** returns the grid */
-		virtual CCGridBase* getGrid(void);
+class CCAccelDeccelAmplitude : public CCActionInterval
+{
+    float getRate(void);
+    void setRate(float fRate);
 
-	public:
-		/** creates the action with size and duration */
-		static CCGridAction* actionWithSize(ccGridSize gridSize, ccTime duration);
+    static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+};
 
-	};
+class CCAccelAmplitude : public CCActionInterval
+{
+    float getRate(void);
+    void setRate(float fRate);
 
-	/** 
-	 @brief Base class for CCGrid3D actions.
-	 Grid3D actions can modify a non-tiled grid.
-	 */
-	/*
-	class  CCGrid3DAction : public CCGridAction
-	{
-	public:
-		
-		virtual CCGridBase* getGrid(void);
-		
-		ccVertex3F vertex(ccGridSize pos);
-		
-		ccVertex3F originalVertex(ccGridSize pos);
-		
-		void setVertex(ccGridSize pos, ccVertex3F vertex);
+    static CCAccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+};
 
-	public:
-		
-        static CCGrid3DAction* actionWithSize(ccGridSize gridSize, ccTime duration);
-	};
+class CCDeccelAmplitude : public CCActionInterval
+{
+    float getRate(void);
+    void setRate(float fRate);
 
-	
-	class  CCTiledGrid3DAction : public CCGridAction
-	{
-	public:
-		
-		ccQuad3 tile(ccGridSize pos);
-		
-		ccQuad3 originalTile(ccGridSize pos);
-		
-		void setTile(ccGridSize pos, ccQuad3 coords);
+    static CCDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+};
 
-		
-		virtual CCGridBase* getGrid(void);
+class CCStopGrid : public CCActionInstant
+{
+    static CCStopGrid* action(void);
+};
 
-	public:
-		
-        static CCTiledGrid3DAction* actionWithSize(ccGridSize gridSize, ccTime duration);
-	};
-	*/
-
-	/** @brief CCAccelDeccelAmplitude action */
-	class  CCAccelDeccelAmplitude : public CCActionInterval
-	{
-	public:
-		virtual ~CCAccelDeccelAmplitude(void);
-		/** initializes the action with an inner action that has the amplitude property, and a duration time */
-		bool initWithAction(CCAction *pAction, ccTime duration);
-
-		virtual void startWithTarget(CCNode *pTarget);
-		virtual void update(ccTime time);
-        virtual CCActionInterval* reverse(void);
-
-		/** get amplitude rate */
-		float getRate(void);
-		/** set amplitude rate */
-		void setRate(float fRate);
-
-	public:
-		/** creates the action with an inner action that has the amplitude property, and a duration time */
-		static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
-
-
-	};
-
-	/** @brief CCAccelAmplitude action */
-	class  CCAccelAmplitude : public CCActionInterval
-	{
-	public:
-		~CCAccelAmplitude(void);
-		/** initializes the action with an inner action that has the amplitude property, and a duration time */
-		bool initWithAction(CCAction *pAction, ccTime duration);
-
-		/** get amplitude rate */
-		float getRate(void);
-		/** set amplitude rate */
-		void setRate(float fRate);
-
-		virtual void startWithTarget(CCNode *pTarget);
-		virtual void update(ccTime time);
-		 CCActionInterval* reverse(void);
-		static CCAccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
-
-	};
-
-	/** @brief CCDeccelAmplitude action */
-	class CCDeccelAmplitude : public CCActionInterval
-	{
-	public:
-		~CCDeccelAmplitude(void);
-		bool initWithAction(CCAction *pAction, ccTime duration);
-		/** get amplitude rate */
-		float getRate(void);
-		/** set amplitude rate */
-		void setRate(float fRate);
-
-		virtual void startWithTarget(CCNode *pTarget);
-		virtual void update(ccTime time);
-		 CCActionInterval* reverse(void);
-
-	
-		static CCDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
-
-	};
-
-	/** @brief CCStopGrid action.
-	 @warning Don't call this action if another grid action is active.
-	 Call if you want to remove the the grid effect. Example:
-	 CCSequence::actions(Lens::action(...), CCStopGrid::action(...), NULL);
-	 */
-	class  CCStopGrid : public CCActionInstant
-	{
-		virtual void startWithTarget(CCNode *pTarget);
-
-		static CCStopGrid* action(void);
-	};
-
-	/** @brief CCReuseGrid action */
-	class  CCReuseGrid : public CCActionInstant
-	{
-	
-		bool initWithTimes(int times);
-
-		void startWithTarget(CCNode *pTarget);
-
-		static CCReuseGrid* actionWithTimes(int times);
-
-	};
-
-} // end of namespace cocos2d
-
-
+class CCReuseGrid : public CCActionInstant
+{
+    static CCReuseGrid* actionWithTimes(int times);
+};

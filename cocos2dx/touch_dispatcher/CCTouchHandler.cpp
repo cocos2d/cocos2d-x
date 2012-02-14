@@ -35,35 +35,18 @@ CCTouchDelegate* CCTouchHandler::getDelegate(void)
 
 void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
 {
-	/*
-	 * RTTI may return null on android. More info please refer issue #926(cocos2d-x)
-	 */
 	if (pDelegate)
 	{
-		if (dynamic_cast<CCObject*>(pDelegate))
-		{
-			dynamic_cast<CCObject*>(pDelegate)->retain();
-		}
-		else
-		{
-			pDelegate->touchDelegateRetain();
-		}
+		dynamic_cast<CCObject*>(pDelegate)->retain();
     }
 
-	/*
-	 * RTTI may return null on android. More info please refer issue #926(cocos2d-x)
-	 */
+	dynamic_cast<CCObject*>(pDelegate)->retain();
+
     if (m_pDelegate)
     {
-		if (dynamic_cast<CCObject*>(m_pDelegate))
-		{
-			dynamic_cast<CCObject*>(m_pDelegate)->release();
-		}
-		else
-		{
-			m_pDelegate->touchDelegateRelease();
-		}
+		dynamic_cast<CCObject*>(m_pDelegate)->release();
     }
+
 	m_pDelegate = pDelegate;
 }
 
@@ -112,18 +95,7 @@ bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 
 	m_pDelegate = pDelegate; 
 
-
-	/*
-	 * RTTI may return null on android. More info please refer issue #926(cocos2d-x)
-	 */
-	if (dynamic_cast<CCObject*>(pDelegate))
-	{
-		dynamic_cast<CCObject*>(pDelegate)->retain();
-	}
-	else
-	{
-		pDelegate->touchDelegateRetain();
-	}
+	dynamic_cast<CCObject*>(pDelegate)->retain();
 
 	m_nPriority = nPriority;
 	m_nEnabledSelectors = 0;
@@ -135,17 +107,7 @@ CCTouchHandler::~CCTouchHandler(void)
 {
 	if (m_pDelegate)
 	{
-		/*
-	     * RTTI may return null on android. More info please refer issue #926(cocos2d-x)
-	     */
-		if (dynamic_cast<CCObject*>(m_pDelegate))
-		{
-			dynamic_cast<CCObject*>(m_pDelegate)->release();
-		}
-		else
-		{
-			m_pDelegate->touchDelegateRelease();
-		}
+		dynamic_cast<CCObject*>(m_pDelegate)->release();
 	}   
 }
 

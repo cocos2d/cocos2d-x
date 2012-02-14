@@ -1,0 +1,74 @@
+
+<project name="Cocos2d-xToLua" default="create-lua-bindings" basedir=".">
+    <description>
+        Utilises tolua++ to create the lua bindings to expose cocos2d-x functionality to lua
+    </description>
+    <property name="tolua++" location="/usr/local/bin/tolua++"/>
+
+  <target name="cocos2d-x-bindings">
+    <echo message="Calling tolua++" />
+    <exec executable="${tolua++}">
+      <arg value="-L" />
+      <arg value="basic.lua" />
+      <arg value="-o"/>
+      <arg value="LuaCocos2d.cpp"/>
+      <arg value="Cocos2d.pkg"/>
+    </exec>
+    <echo message="Patching resultant lua bindings" />
+
+    <replace file="LuaCocos2d.cpp">
+      <replacetoken><![CDATA[tolua_pushusertype_ccobject(tolua_S,(void*)tolua_ret]]></replacetoken>
+      <replacevalue><![CDATA[int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret]]></replacevalue>
+    </replace>
+
+    <replace file="LuaCocos2d.cpp">
+      <replacetoken><![CDATA[unsigned void* tolua_ret = (unsigned void*)  self->getTiles();]]></replacetoken>
+      <replacevalue><![CDATA[unsigned int* tolua_ret = (unsigned int*)  self->getTiles();]]></replacevalue>
+    </replace>
+
+    <replace file="LuaCocos2d.cpp">
+      <replacetoken><![CDATA[ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&(const ccColor3B)ccBLACK));]]></replacetoken>
+      <replacevalue><![CDATA[const ccColor3B clr = ccBLACK;
+  ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));]]></replacevalue>
+    </replace>
+
+    <replace file="LuaCocos2d.cpp">
+      <replacetoken><![CDATA["LUA_FUNCTION",0,&tolua_err]]></replacetoken>
+      <replacevalue><![CDATA[&tolua_err]]></replacevalue>
+    </replace>
+
+    <replace file="LuaCocos2d.cpp">
+      <replacetoken><![CDATA[LUA_FUNCTION funcID = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
+      <replacevalue><![CDATA[int funcID = (tolua_ref_function(tolua_S,]]></replacevalue>
+    </replace>
+
+    <replace file="LuaCocos2d.cpp">
+      <replacetoken><![CDATA[#ifndef __cplusplus
+#include "stdlib.h"
+#endif
+#include "string.h"
+
+#include "tolua++.h"
+
+/* Exported function */
+TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]]></replacetoken>
+      <replacevalue><![CDATA[#include <vector>
+#include <map>
+#include "LuaCocos2d.h"
+#include "tolua_fix.h"
+#include "cocos2d.h"
+#include "CCRibbon.h"
+#include "SimpleAudioEngine.h"
+
+using namespace cocos2d;
+using namespace CocosDenshion;
+]]></replacevalue>
+    </replace>
+
+    <echo message="Copying new bindings to target location" />
+    <move file="LuaCocos2d.cpp" todir="../../lua/cocos2dx_support/"/>
+  </target>
+  <target name="create-lua-bindings" depends="cocos2d-x-bindings" />
+</project>

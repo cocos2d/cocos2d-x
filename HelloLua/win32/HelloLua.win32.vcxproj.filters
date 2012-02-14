@@ -10,9 +10,6 @@
     <Filter Include="Classes\cocos2dx_support">
       <UniqueIdentifier>{0421f3bc-da65-4d23-900a-f62683dfa470}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\CocosDenshion_support">
-      <UniqueIdentifier>{15664904-70f4-43bb-aa33-ba131ee365b6}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -21,19 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\lua\cocos2dx_support\CCLuaEngine.cpp">
+      <Filter>Classes\cocos2dx_support</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\lua\cocos2dx_support\LuaCocos2d.cpp">
       <Filter>Classes\cocos2dx_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\lua\cocos2dx_support\LuaEngine.cpp">
-      <Filter>Classes\cocos2dx_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lua\cocos2dx_support\LuaEngineImpl.cpp">
-      <Filter>Classes\cocos2dx_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lua\CocosDenshion_support\LuaSimpleAudioEngine.cpp">
-      <Filter>Classes\CocosDenshion_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp">
+    <ClCompile Include="..\..\lua\cocos2dx_support\tolua_fix.c">
       <Filter>Classes\cocos2dx_support</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,19 +35,13 @@
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\lua\cocos2dx_support\CCLuaEngine.h">
+      <Filter>Classes\cocos2dx_support</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\lua\cocos2dx_support\LuaCocos2d.h">
       <Filter>Classes\cocos2dx_support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\lua\cocos2dx_support\LuaEngine.h">
-      <Filter>Classes\cocos2dx_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lua\cocos2dx_support\LuaEngineImpl.h">
-      <Filter>Classes\cocos2dx_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lua\CocosDenshion_support\LuaSimpleAudioEngine.h">
-      <Filter>Classes\CocosDenshion_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.h">
+    <ClInclude Include="..\..\lua\cocos2dx_support\tolua_fix.h">
       <Filter>Classes\cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,35 +1,19 @@
-namespace cocos2d {
 
-	/** @brief CCTMXObjectGroup represents the TMX object group.
-	@since v0.99.0
-	*/
-	class CCTMXObjectGroup : public CCObject
-	{
-		/** offset position of child objects */
-		CCPoint getPositionOffset();
-		void setPositionOffset(CCPoint pt);
-		/** list of properties stored in a dictionary */
-		CCStringToStringDictionary* getProperties();
-		void setProperties(CCStringToStringDictionary* pval);
-		/** array of the objects */
+class CCTMXObjectGroup : public CCObject
+{
+    void setPositionOffset(CCPoint pt);
+    CCPoint getPositionOffset();
 
-		CCMutableArray<CCStringToStringDictionary*>* getObjects();
-		void setObjects(CCMutableArray<CCStringToStringDictionary*>* val);
+    void setProperties(CCStringToStringDictionary* pval);
+    CCStringToStringDictionary* getProperties();
 
-		CCTMXObjectGroup();
-		~CCTMXObjectGroup();
+    void setObjects(CCMutableArray<CCStringToStringDictionary*>* val);
+    CCMutableArray<CCStringToStringDictionary*>* getObjects();
 
-		const char* getGroupName();
-		void setGroupName(const char *groupName);
+    void setGroupName(const char *groupName);
+    const char* getGroupName();
 
-		/** return the value for the specific property name */
-		CCString *propertyNamed(const char* propertyName);
+    CCString *propertyNamed(const char* propertyName);
 
-		/** return the dictionary for the specific object name.
-		It will return the 1st object found on the array for the given name.
-		*/
-		CCStringToStringDictionary *objectNamed(const char *objectName);
-
-	};
-
-}// namespace cocos2d
+    CCStringToStringDictionary* objectNamed(const char *objectName);
+};
