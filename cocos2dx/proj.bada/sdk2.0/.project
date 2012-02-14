@@ -141,6 +141,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/effects</locationURI>
 		</link>
 		<link>
+			<name>extensions</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/extensions</locationURI>
+		</link>
+		<link>
 			<name>include</name>
 			<type>2</type>
 			<locationURI>PARENT-2-PROJECT_LOC/include</locationURI>
