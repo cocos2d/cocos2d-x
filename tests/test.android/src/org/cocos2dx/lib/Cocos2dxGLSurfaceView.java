@@ -213,16 +213,17 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     private final static int HANDLER_CLOSE_IME_KEYBOARD = 3;
     private static Handler handler;
     private static TextInputWraper textInputWraper;
-    private TextView mTextField;
+    private Cocos2dxEditText mTextField;
     
     public TextView getTextField() {
     	return mTextField;
     }
     
-    public void setTextField(TextView view) {
+    public void setTextField(Cocos2dxEditText view) {
     	mTextField = view;
     	if (null != mTextField && null != textInputWraper) {
     		mTextField.setOnEditorActionListener(textInputWraper);
+    		mTextField.setMainView(this);
     		this.requestFocus();
     	}
     }
