@@ -1,3 +1,17 @@
 
-#include "platform/CCApplication_platform.h"
+typedef enum LanguageType
+{
+    kLanguageEnglish = 0,
+    kLanguageChinese,
+    kLanguageFrench,
+    kLanguageItalian,
+    kLanguageGerman,
+    kLanguageSpanish,
+    kLanguageRussian
+} ccLanguageType;
 
+class CCApplication
+{
+    static CCApplication& sharedApplication();
+    static ccLanguageType getCurrentLanguage();
+};

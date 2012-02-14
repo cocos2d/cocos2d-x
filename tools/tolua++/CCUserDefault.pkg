@@ -1,29 +1,21 @@
-namespace cocos2d {
 
-class  CCUserDefault
+class CCUserDefault
 {
+    // get value methods
+    bool	getBoolForKey(const char* pKey);
+    int		getIntegerForKey(const char* pKey);
+    float	getFloatForKey(const char* pKey);
+    double  getDoubleForKey(const char* pKey);
+    std::string getStringForKey(const char* pKey);
 
-	~CCUserDefault();
+    // set value methods
+    void	setBoolForKey(const char* pKey, bool value);
+    void	setIntegerForKey(const char* pKey, int value);
+    void	setFloatForKey(const char* pKey, float value);
+    void	setDoubleForKey(const char* pKey, double value);
+    void	setStringForKey(const char* pKey, std::string value);
 
-	// get value methods
-	bool	getBoolForKey(const char* pKey);
-	int		getIntegerForKey(const char* pKey);
-	float	getFloatForKey(const char* pKey);
-	double  getDoubleForKey(const char* pKey);
-	std::string getStringForKey(const char* pKey);
-
-	// set value methods
-	void	setBoolForKey(const char* pKey, bool value);
-	void	setIntegerForKey(const char* pKey, int value);
-	void	setFloatForKey(const char* pKey, float value);
-	void	setDoubleForKey(const char* pKey, double value);
-	void	setStringForKey(const char* pKey, std::string value);
-
-	static CCUserDefault* sharedUserDefault();
-	static void purgeSharedUserDefault();
-	const static std::string& getXMLFilePath();
-
+    static CCUserDefault* sharedUserDefault();
+    static void purgeSharedUserDefault();
+    const static std::string& getXMLFilePath();
 };
-
-}
-

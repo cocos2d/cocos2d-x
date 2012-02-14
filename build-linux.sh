@@ -46,7 +46,7 @@ if [ $# -ne 0 ]; then
 		cd ../../
 		rm -r lib/linux/Debug/*.so
 	fi
-	
+
 else
 	cd $p/cocos2dx/proj.linux
 	echo "**********************building cocos2dx**************************"

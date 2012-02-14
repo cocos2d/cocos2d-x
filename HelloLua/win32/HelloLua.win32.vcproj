@@ -205,6 +205,14 @@
 				Name="cocos2dx_support"
 				>
 				<File
+					RelativePath="..\..\lua\cocos2dx_support\CCLuaEngine.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\lua\cocos2dx_support\CCLuaEngine.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp"
 					>
 				</File>
@@ -221,31 +229,27 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\lua\cocos2dx_support\LuaEngine.cpp"
+					RelativePath="..\..\lua\cocos2dx_support\tolua_fix.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\..\lua\cocos2dx_support\LuaEngine.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\lua\cocos2dx_support\LuaEngineImpl.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\lua\cocos2dx_support\LuaEngineImpl.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="CocosDenshion_support"
-				>
-				<File
-					RelativePath="..\..\lua\CocosDenshion_support\LuaSimpleAudioEngine.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\lua\CocosDenshion_support\LuaSimpleAudioEngine.h"
+					RelativePath="..\..\lua\cocos2dx_support\tolua_fix.h"
 					>
 				</File>
 			</Filter>

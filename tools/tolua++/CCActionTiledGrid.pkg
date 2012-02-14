@@ -1,160 +1,83 @@
 
-#include "CCActionGrid.h"
-
-namespace cocos2d 
+class CCShakyTiles3D : public CCTiledGrid3DAction
 {
+    static CCShakyTiles3D* actionWithRange(int nRange, bool bShakeZ, ccGridSize gridSize, ccTime duration);
+};
 
-	class  CCShakyTiles3D : public CCTiledGrid3DAction
-	{	
-		bool initWithRange(int nRange, bool bShakeZ, ccGridSize gridSize,ccTime duration);
+class CCShatteredTiles3D : public CCTiledGrid3DAction
+{
+    static CCShatteredTiles3D* actionWithRange(int nRange, bool bShatterZ, ccGridSize gridSize, ccTime duration);
+};
 
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);	
-		static CCShakyTiles3D* actionWithRange(int nRange, bool bShakeZ, ccGridSize gridSize,
-			ccTime duration);
+class CCShuffleTiles : public CCTiledGrid3DAction
+{
+    void shuffle(int *pArray, int nLen);
+    ccGridSize getDelta(ccGridSize pos);
+    void placeTile(ccGridSize pos, Tile *t);
 
-	};
+    static CCShuffleTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
+};
 
+class CCFadeOutTRTiles : public CCTiledGrid3DAction
+{
+    void turnOnTile(ccGridSize pos);
+    void turnOffTile(ccGridSize pos);
+    void transformTile(ccGridSize pos, float distance);
 
-	class  CCShatteredTiles3D : public CCTiledGrid3DAction
-	{
+    static CCFadeOutTRTiles* actionWithSize(ccGridSize gridSize, ccTime time);
+};
 
-		bool initWithRange(int nRange, bool bShatterZ, ccGridSize gridSize,	ccTime duration);
+class CCFadeOutBLTiles : public CCFadeOutTRTiles
+{
+    static CCFadeOutBLTiles* actionWithSize(ccGridSize gridSize, ccTime time);
+};
 
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);
+class CCFadeOutUpTiles : public CCFadeOutTRTiles
+{
+    static CCFadeOutUpTiles* actionWithSize(ccGridSize gridSize, ccTime time);
+};
 
+class CCFadeOutDownTiles : public CCFadeOutUpTiles
+{
+    static CCFadeOutDownTiles* actionWithSize(ccGridSize gridSize, ccTime time);
+};
 
-		static CCShatteredTiles3D* actionWithRange(int nRange, bool bShatterZ, ccGridSize gridSize,
-			ccTime duration);
-	};
+class CCTurnOffTiles : public CCTiledGrid3DAction
+{
+    void shuffle(int *pArray, int nLen);
+    void turnOnTile(ccGridSize pos);
+    void turnOffTile(ccGridSize pos);
 
-	struct Tile;
+    static CCTurnOffTiles* actionWithSize(ccGridSize size, ccTime d);
+    static CCTurnOffTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
+};
 
-	class  CCShuffleTiles : public CCTiledGrid3DAction
-	{
+class CCWavesTiles3D : public CCTiledGrid3DAction
+{
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
 
-		bool initWithSeed(int s, ccGridSize gridSize, ccTime duration);
-		void shuffle(int *pArray, int nLen);
-		ccGridSize getDelta(ccGridSize pos);
-		void placeTile(ccGridSize pos, Tile *t);
+    static CCWavesTiles3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+};
 
-		virtual void startWithTarget(CCNode *pTarget);
-		virtual void update(ccTime time);
-		virtual CCObject* copyWithZone(CCZone* pZone);	
-		static CCShuffleTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);	
-	};
+class CCJumpTiles3D : public CCTiledGrid3DAction
+{
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
 
+    static CCJumpTiles3D* actionWithJumps(int j, float amp, ccGridSize gridSize, ccTime duration);
+};
 
-	class CCFadeOutTRTiles : public CCTiledGrid3DAction
-	{
+class CCSplitRows : public CCTiledGrid3DAction
+{
+    static CCSplitRows* actionWithRows(int nRows, ccTime duration);
+};
 
-		float testFunc(ccGridSize pos, ccTime time);
-		void turnOnTile(ccGridSize pos);
-		void turnOffTile(ccGridSize pos);
-		virtual void transformTile(ccGridSize pos, float distance);
-		virtual void update(ccTime time);
-		static CCFadeOutTRTiles* actionWithSize(ccGridSize gridSize, ccTime time);
-	};
-
-
-	class  CCFadeOutBLTiles : public CCFadeOutTRTiles
-	{
-
-		float testFunc(ccGridSize pos, ccTime time);	
-		static CCFadeOutBLTiles* actionWithSize(ccGridSize gridSize, ccTime time);
-	};
-
-
-	class  CCFadeOutUpTiles : public CCFadeOutTRTiles
-	{
-
-		float testFunc(ccGridSize pos, ccTime time);
-		virtual void transformTile(ccGridSize pos, float distance);
-		static CCFadeOutUpTiles* actionWithSize(ccGridSize gridSize, ccTime time);
-	};
-
-
-	class  CCFadeOutDownTiles : public CCFadeOutUpTiles
-	{
-
-		virtual float testFunc(ccGridSize pos, ccTime time);	
-		static CCFadeOutDownTiles* actionWithSize(ccGridSize gridSize, ccTime time);
-	};
-
-
-	class  CCTurnOffTiles : public CCTiledGrid3DAction
-	{
-
-		bool initWithSeed(int s, ccGridSize gridSize, ccTime duration);
-		void shuffle(int *pArray, int nLen);
-		void turnOnTile(ccGridSize pos);
-		void turnOffTile(ccGridSize pos);
-
-		CCObject* copyWithZone(CCZone* pZone);
-		void startWithTarget(CCNode *pTarget);
-		void update(ccTime time);
-
-		static CCTurnOffTiles* actionWithSize(ccGridSize size, ccTime d);		
-		static CCTurnOffTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
-	};
-
-	/** @brief CCWavesTiles3D action. */
-	class  CCWavesTiles3D : public CCTiledGrid3DAction
-	{
-
-		float getAmplitude(void);
-		void setAmplitude(float fAmplitude);		
-		float getAmplitudeRate(void);
-		void setAmplitudeRate(float fAmplitudeRate);		
-		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);	
-		static CCWavesTiles3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
-
-	};
-
-	/** @brief CCJumpTiles3D action.
-	A sin function is executed to move the tiles across the Z axis
-	*/
-	class  CCJumpTiles3D : public CCTiledGrid3DAction
-	{
-
-		float getAmplitude(void);
-		void setAmplitude(float fAmplitude);
-		float getAmplitudeRate(void);
-		void setAmplitudeRate(float fAmplitudeRate);
-		bool initWithJumps(int j, float amp, ccGridSize gridSize, ccTime duration);
-		virtual CCObject* copyWithZone(CCZone* pZone);
-		virtual void update(ccTime time);
-		static CCJumpTiles3D* actionWithJumps(int j, float amp, ccGridSize gridSize, ccTime duration);
-
-	};
-
-	/** @brief CCSplitRows action */
-	class  CCSplitRows : public CCTiledGrid3DAction
-	{
-
-		bool initWithRows(int nRows, ccTime duration);
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);
-		void startWithTarget(CCNode *pTarget);
-		static CCSplitRows* actionWithRows(int nRows, ccTime duration);
-
-	};
-
-	/** @brief CCSplitCols action */
-	class  CCSplitCols : public CCTiledGrid3DAction
-	{
-
-		bool initWithCols(int nCols, ccTime duration);
-		virtual CCObject* copyWithZone(CCZone* pZone);
-		virtual void update(ccTime time);
-		virtual void startWithTarget(CCNode *pTarget);
-		static CCSplitCols* actionWithCols(int nCols, ccTime duration);
-
-
-	};
-} // end of namespace cocos2d
-
-
+class CCSplitCols : public CCTiledGrid3DAction
+{
+    static CCSplitCols* actionWithCols(int nCols, ccTime duration);
+};
