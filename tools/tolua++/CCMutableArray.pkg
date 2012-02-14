@@ -6,7 +6,6 @@ class CCMutableArray : public CCObject
     CCMutableArray(unsigned int uSize = 0);
 
     unsigned int count(void);
-    unsigned int getIndexOfObject(T pObject);
 
     bool containsObject(T pObject);
 
