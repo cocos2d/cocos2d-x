@@ -135,6 +135,11 @@
 			<locationURI>cocos2dx_root/cocos2dx/effects</locationURI>
 		</link>
 		<link>
+			<name>extensions</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/cocos2dx/extensions</locationURI>
+		</link>
+		<link>
 			<name>include</name>
 			<type>2</type>
 			<locationURI>cocos2dx_root/cocos2dx/include</locationURI>
