@@ -1163,6 +1163,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="NotificationCenterTest"
+					>
+					<File
+						RelativePath="..\tests\NotificationCenterTest\NotificationCenterTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\NotificationCenterTest\NotificationCenterTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

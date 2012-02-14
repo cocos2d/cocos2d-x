@@ -191,6 +191,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\support\CCProfiling.cpp" />
     <ClCompile Include="..\support\CCUserDefault.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
+    <ClCompile Include="..\support\extensions\CCNotificationCenter.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
@@ -329,6 +330,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\support\base64.h" />
     <ClInclude Include="..\support\CCProfiling.h" />
     <ClInclude Include="..\support\ccUtils.h" />
+    <ClInclude Include="..\support\extensions\CCNotificationCenter.h" />
     <ClInclude Include="..\support\TransformUtils.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
     <ClInclude Include="..\support\data_support\uthash.h" />
