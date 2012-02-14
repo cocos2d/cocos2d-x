@@ -64,7 +64,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -124,6 +124,7 @@
     <ClCompile Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
     <ClCompile Include="..\tests\FontTest\FontTest.cpp" />
+    <ClCompile Include="..\tests\NotificationCenterTest\NotificationCenterTest.cpp" />
     <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp" />
     <ClCompile Include="..\tests\TextureCacheTest\TextureCacheTest.cpp" />
     <ClCompile Include="main.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
     <ClInclude Include="..\tests\FontTest\FontTest.h" />
+    <ClInclude Include="..\tests\NotificationCenterTest\NotificationCenterTest.h" />
     <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h" />
     <ClInclude Include="..\tests\TextureCacheTest\TextureCacheTest.h" />
     <ClInclude Include="main.h" />
