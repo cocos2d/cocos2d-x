@@ -55,7 +55,9 @@
 #endif
 #endif
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-#include "NotificationCenterTest/NotificationCenterTest.h"
+
+#include "ExtensionsTest/ExtensionsTest.h"
+
 enum
 {
     TEST_ACTIONS = 0,
@@ -100,7 +102,7 @@ enum
 	TEST_FONTS,
 	TEST_CURRENT_LANGUAGE,
 	TEST_TEXTURECACHE,
-    TEST_NOTIFICATION,
+    TEST_EXTENSIONS,
     TESTS_COUNT,
 };
 
@@ -147,7 +149,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"FontTest",
 	"CurrentLanguageTest",
 	"TextureCacheTest",
-    "NotificationTest"
+    "ExtensionsTest"
 };
 
 #endif

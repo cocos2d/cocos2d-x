@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Feb  7 11:34:25 2012.
+** Generated automatically by tolua++-1.0.92 on 02/14/12 17:50:34.
 */
 
 #include <vector>
@@ -14790,40 +14790,6 @@ static int tolua_Cocos2d_CCMutableArray_CCObject___count00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getIndexOfObject of class  CCMutableArray<CCObject*> */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMutableArray_CCObject___getIndexOfObject00
-static int tolua_Cocos2d_CCMutableArray_CCObject___getIndexOfObject00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCMutableArray<CCObject*>",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCObject",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCMutableArray<CCObject*>* self = (CCMutableArray<CCObject*>*)  tolua_tousertype(tolua_S,1,0);
-  CCObject* pObject = ((CCObject*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getIndexOfObject'", NULL);
-#endif
-  {
-   unsigned int tolua_ret = (unsigned int)  self->getIndexOfObject(pObject);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getIndexOfObject'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: containsObject of class  CCMutableArray<CCObject*> */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMutableArray_CCObject___containsObject00
 static int tolua_Cocos2d_CCMutableArray_CCObject___containsObject00(lua_State* tolua_S)
@@ -15558,40 +15524,6 @@ static int tolua_Cocos2d_CCMutableArray_CCSpriteFrame___count00(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getIndexOfObject of class  CCMutableArray<CCSpriteFrame*> */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMutableArray_CCSpriteFrame___getIndexOfObject00
-static int tolua_Cocos2d_CCMutableArray_CCSpriteFrame___getIndexOfObject00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCMutableArray<CCSpriteFrame*>",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCSpriteFrame",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCMutableArray<CCSpriteFrame*>* self = (CCMutableArray<CCSpriteFrame*>*)  tolua_tousertype(tolua_S,1,0);
-  CCSpriteFrame* pObject = ((CCSpriteFrame*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getIndexOfObject'", NULL);
-#endif
-  {
-   unsigned int tolua_ret = (unsigned int)  self->getIndexOfObject(pObject);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getIndexOfObject'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: containsObject of class  CCMutableArray<CCSpriteFrame*> */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMutableArray_CCSpriteFrame___containsObject00
 static int tolua_Cocos2d_CCMutableArray_CCSpriteFrame___containsObject00(lua_State* tolua_S)
@@ -16321,40 +16253,6 @@ static int tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___count00(lua_State* 
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'count'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getIndexOfObject of class  CCMutableArray<CCFiniteTimeAction*> */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___getIndexOfObject00
-static int tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___getIndexOfObject00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCMutableArray<CCFiniteTimeAction*>",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCFiniteTimeAction",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCMutableArray<CCFiniteTimeAction*>* self = (CCMutableArray<CCFiniteTimeAction*>*)  tolua_tousertype(tolua_S,1,0);
-  CCFiniteTimeAction* pObject = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getIndexOfObject'", NULL);
-#endif
-  {
-   unsigned int tolua_ret = (unsigned int)  self->getIndexOfObject(pObject);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getIndexOfObject'.",&tolua_err);
  return 0;
 #endif
 }
@@ -38827,7 +38725,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCMutableArray_CCObject___new00_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCMutableArray_CCObject___new00_local);
    tolua_function(tolua_S,"count",tolua_Cocos2d_CCMutableArray_CCObject___count00);
-   tolua_function(tolua_S,"getIndexOfObject",tolua_Cocos2d_CCMutableArray_CCObject___getIndexOfObject00);
    tolua_function(tolua_S,"containsObject",tolua_Cocos2d_CCMutableArray_CCObject___containsObject00);
    tolua_function(tolua_S,"getLastObject",tolua_Cocos2d_CCMutableArray_CCObject___getLastObject00);
    tolua_function(tolua_S,"getObjectAtIndex",tolua_Cocos2d_CCMutableArray_CCObject___getObjectAtIndex00);
@@ -38857,7 +38754,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCMutableArray_CCSpriteFrame___new00_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCMutableArray_CCSpriteFrame___new00_local);
    tolua_function(tolua_S,"count",tolua_Cocos2d_CCMutableArray_CCSpriteFrame___count00);
-   tolua_function(tolua_S,"getIndexOfObject",tolua_Cocos2d_CCMutableArray_CCSpriteFrame___getIndexOfObject00);
    tolua_function(tolua_S,"containsObject",tolua_Cocos2d_CCMutableArray_CCSpriteFrame___containsObject00);
    tolua_function(tolua_S,"getLastObject",tolua_Cocos2d_CCMutableArray_CCSpriteFrame___getLastObject00);
    tolua_function(tolua_S,"getObjectAtIndex",tolua_Cocos2d_CCMutableArray_CCSpriteFrame___getObjectAtIndex00);
@@ -38887,7 +38783,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___new00_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___new00_local);
    tolua_function(tolua_S,"count",tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___count00);
-   tolua_function(tolua_S,"getIndexOfObject",tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___getIndexOfObject00);
    tolua_function(tolua_S,"containsObject",tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___containsObject00);
    tolua_function(tolua_S,"getLastObject",tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___getLastObject00);
    tolua_function(tolua_S,"getObjectAtIndex",tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___getObjectAtIndex00);
