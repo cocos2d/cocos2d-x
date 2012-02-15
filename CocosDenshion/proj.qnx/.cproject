@@ -49,7 +49,7 @@
 									<listOptionValue builtIn="false" value="../../include"/>
 									<listOptionValue builtIn="false" value="../../third_party/qnx/include"/>
 								</option>
-								<option id="com.qnx.qcc.option.compiler.qccoptions.1372558930" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList"/>
+								<option id="com.qnx.qcc.option.compiler.qccoptions.1372558930" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1849571146" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
 							<tool id="com.qnx.qcc.tool.assembler.699645133" name="QCC Assembler" superClass="com.qnx.qcc.tool.assembler">
@@ -77,7 +77,7 @@
 								<option id="com.qnx.qcc.option.linker.libraries.1877286895" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="vorbis"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.qccoptions.912514424" name="QCC Options" superClass="com.qnx.qcc.option.linker.qccoptions" valueType="stringList"/>
+								<option id="com.qnx.qcc.option.linker.qccoptions.912514424" name="QCC Options" superClass="com.qnx.qcc.option.linker.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.linker.1016187136" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
