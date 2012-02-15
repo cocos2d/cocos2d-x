@@ -376,6 +376,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/extensions/CCNotificationCenter.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCNotificationCenter.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCNotificationCenter.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCNotificationCenter.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/include/CCAccelerometer.h</key>
 		<dict>
 			<key>Group</key>
@@ -2601,32 +2625,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/support/extensions/CCNotificationCenter.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>support</string>
-				<string>extensions</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/support/extensions/CCNotificationCenter.cpp</string>
-		</dict>
-		<key>libs/cocos2dx/support/extensions/CCNotificationCenter.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>support</string>
-				<string>extensions</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/support/extensions/CCNotificationCenter.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2dx/support/image_support/TGAlib.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -2945,6 +2943,8 @@
 		<string>libs/cocos2dx/effects/CCGrabber.h</string>
 		<string>libs/cocos2dx/effects/CCGrid.cpp</string>
 		<string>libs/cocos2dx/effects/CCGrid.h</string>
+		<string>libs/cocos2dx/extensions/CCNotificationCenter.cpp</string>
+		<string>libs/cocos2dx/extensions/CCNotificationCenter.h</string>
 		<string>libs/cocos2dx/include/CCAccelerometer.h</string>
 		<string>libs/cocos2dx/include/CCAccelerometerDelegate.h</string>
 		<string>libs/cocos2dx/include/CCAction.h</string>
@@ -3121,8 +3121,6 @@
 		<string>libs/cocos2dx/support/data_support/ccCArray.h</string>
 		<string>libs/cocos2dx/support/data_support/uthash.h</string>
 		<string>libs/cocos2dx/support/data_support/utlist.h</string>
-		<string>libs/cocos2dx/support/extensions/CCNotificationCenter.cpp</string>
-		<string>libs/cocos2dx/support/extensions/CCNotificationCenter.h</string>
 		<string>libs/cocos2dx/support/image_support/TGAlib.cpp</string>
 		<string>libs/cocos2dx/support/image_support/TGAlib.h</string>
 		<string>libs/cocos2dx/support/TransformUtils.cpp</string>

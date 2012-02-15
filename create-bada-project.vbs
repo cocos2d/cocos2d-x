@@ -56,11 +56,11 @@ function ConfigureProject()
     
     szSrcClass = "HelloWorld\Classes"
     szSrcBada = "HelloWorld\bada"
-    szSrcResource = "HelloWorld\Resource"
+    szSrcResource = "HelloWorld\Resources"
     
     szDesClass = szProjectName+"\Classes"
     szDesBada = szProjectName+"\bada"
-    szDesResource = szProjectName+"\Resource"
+    szDesResource = szProjectName+"\Resources"
     
     call CopyFolder(szSrcClass, szDesClass)
     call CopyFolder(szSrcBada, szDesBada)

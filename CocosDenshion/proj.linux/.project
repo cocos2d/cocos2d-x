@@ -82,19 +82,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Linux</name>
+			<name>linux</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Linux</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/linux</locationURI>
 		</link>
 		<link>
 			<name>include</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
-		</link>
-		<link>
-			<name>third_party</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/third_party</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

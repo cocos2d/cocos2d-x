@@ -9,11 +9,11 @@ LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
 INCLUDES = -I.. \
 		-I../include \
-		-I../third_party/fmod/lib64/api/inc 
+		-I../third_party/linux/fmod/lib64/api/inc 
 else
 INCLUDES = -I.. \
 		-I../include \
-		-I../third_party/fmod/api/inc 
+		-I../third_party/linux/fmod/api/inc 
 endif
 
 
@@ -25,10 +25,10 @@ OBJECTS =   ../Linux/FmodAudioPlayer.o \
 STATICLIBS = 
 
 ifeq ($(LBITS),64)
-SHAREDLIBS_DIR = ../third_party/fmod/lib64/api/lib
+SHAREDLIBS_DIR = ../third_party/linux/fmod/lib64/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex64
 else
-SHAREDLIBS_DIR = ../third_party/fmod/api/lib
+SHAREDLIBS_DIR = ../third_party/linux/fmod/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 

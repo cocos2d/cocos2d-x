@@ -33,7 +33,7 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.886209200" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1002280254" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/fmod/api/inc"/>
+									<listOptionValue builtIn="false" value="../../third_party/linux/fmod/api/inc"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1604049990" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -42,7 +42,7 @@
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.828037565" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.985313341" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/fmod/api/inc"/>
+									<listOptionValue builtIn="false" value="../../third_party/linux/fmod/api/inc"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.370598124" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -55,7 +55,7 @@
 								</option>
 								<option defaultValue="true" id="gnu.cpp.link.option.shared.430688089" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.paths.1630974641" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="../../third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../third_party/linux/fmod/api/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1207468004" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -68,9 +68,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Linux"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="third_party"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="include"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="linux"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -107,7 +106,7 @@
 								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.2015755429" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1414683978" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/fmod/api/inc"/>
+									<listOptionValue builtIn="false" value="../../third_party/linux/fmod/api/inc"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1557365568" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -116,7 +115,7 @@
 								<option id="gnu.c.compiler.exe.release.option.debugging.level.1006696632" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.92938039" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/fmod/api/inc"/>
+									<listOptionValue builtIn="false" value="../../third_party/linux/fmod/api/inc"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.757092405" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -129,7 +128,7 @@
 								</option>
 								<option defaultValue="true" id="gnu.cpp.link.option.shared.1840009551" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.paths.1502506408" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="../../third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../third_party/linux/fmod/api/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1952243970" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -142,9 +141,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Linux"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="third_party"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="linux"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

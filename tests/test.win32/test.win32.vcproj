@@ -1164,14 +1164,22 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="NotificationCenterTest"
+					Name="ExtensionsTest"
 					>
 					<File
-						RelativePath="..\tests\NotificationCenterTest\NotificationCenterTest.cpp"
+						RelativePath="..\tests\ExtensionsTest\ExtensionsTest.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\tests\NotificationCenterTest\NotificationCenterTest.h"
+						RelativePath="..\tests\ExtensionsTest\ExtensionsTest.h"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ExtensionsTest\NotificationCenterTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ExtensionsTest\NotificationCenterTest.h"
 						>
 					</File>
 				</Filter>

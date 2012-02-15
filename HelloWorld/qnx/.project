@@ -31,7 +31,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/HelloWorld/Device-Release}</value>
+					<value>${workspace_loc:/HelloWorld/Device-Debug}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>
@@ -85,9 +85,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
 		</link>
 		<link>
-			<name>Resource</name>
+			<name>Resources</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Resource</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Resources</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -385,7 +385,7 @@ NS_CC_END;
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#include "Linux/CCFileUtils_Linux.cpp"
+#include "linux/CCFileUtils_linux.cpp"
 #endif
 
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
