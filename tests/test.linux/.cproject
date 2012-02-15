@@ -48,14 +48,14 @@
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.2041247495" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.1013157776" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.216261172" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.1705967553" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
+								<option id="gnu.c.compiler.option.include.paths.1705967553" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.305684306" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1712401455" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/proj.linux/${ConfigName}" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1840922427" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
-							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/third_party/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.163089056" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/third_party/linux/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.163089056" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.1882458104" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
 									<listOptionValue builtIn="false" value="fmodex"/>
@@ -66,7 +66,7 @@
 								<option id="gnu.cpp.link.option.paths.335055881" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.linux/${ConfigName}"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../CocosDenshion/third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/third_party/linux/fmod/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.1021852674" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="../../../chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
@@ -79,16 +79,7 @@
 								</inputType>
 							</tool>
 							<tool command="as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.assembler.exe.debug.844668943" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
-								<option id="gnu.both.asm.option.include.paths.1555644609" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/dumganhar/project/cocos2d-x/tests/"/>
-									<listOptionValue builtIn="false" value="/home/dumganhar/project/cocos2d-x/"/>
-									<listOptionValue builtIn="false" value="/home/dumganhar/project/cocos2d-x/cocos2dx"/>
-									<listOptionValue builtIn="false" value="/home/dumganhar/project/cocos2d-x/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="/home/dumganhar/project/cocos2d-x/cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="/home/dumganhar/project/cocos2d-x/cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="/home/dumganhar/project/cocos2d-x/CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="/home/dumganhar/project/cocos2d-x/chipmunk/include/chipmunk"/>
-								</option>
+								<option id="gnu.both.asm.option.include.paths.1555644609" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1269039546" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
@@ -142,14 +133,14 @@
 							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1494845250" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
 								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.1213583313" name="Optimization Level" superClass="gnu.c.compiler.exe.release.option.optimization.level" value="gnu.c.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.release.option.debugging.level.222853384" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.1626903439" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
+								<option id="gnu.c.compiler.option.include.paths.1626903439" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.794705780" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.558791653" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/proj.linux/${ConfigName}" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.1799998206" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release"/>
-							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/third_party/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.1783987767" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
+							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/third_party/linux/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.1783987767" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
 								<option id="gnu.cpp.link.option.libs.1581059715" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
 									<listOptionValue builtIn="false" value="fmodex"/>
@@ -160,7 +151,7 @@
 								<option id="gnu.cpp.link.option.paths.2032137429" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.linux/${ConfigName}"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../CocosDenshion/third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../../CocosDenshion/third_party/linux/fmod/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.1558283777" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="../../../chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
