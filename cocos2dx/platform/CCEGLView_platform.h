@@ -38,7 +38,7 @@ THE SOFTWARE.
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 	#include "marmalade/CCEGLView_marmalade.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "Linux/CCEGLView_linux.h"
+	#include "linux/CCEGLView_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCEGLView_bada.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)

@@ -38,141 +38,141 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/CocosDenshion/iphone/CDAudioManager.h</key>
+		<key>libs/CocosDenshion/ios/CDAudioManager.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/CDAudioManager.h</string>
+			<string>libs/CocosDenshion/ios/CDAudioManager.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/CocosDenshion/iphone/CDAudioManager.m</key>
+		<key>libs/CocosDenshion/ios/CDAudioManager.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/CDAudioManager.m</string>
+			<string>libs/CocosDenshion/ios/CDAudioManager.m</string>
 		</dict>
-		<key>libs/CocosDenshion/iphone/CDConfig.h</key>
+		<key>libs/CocosDenshion/ios/CDConfig.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/CDConfig.h</string>
+			<string>libs/CocosDenshion/ios/CDConfig.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/CocosDenshion/iphone/CDOpenALSupport.h</key>
+		<key>libs/CocosDenshion/ios/CDOpenALSupport.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/CDOpenALSupport.h</string>
+			<string>libs/CocosDenshion/ios/CDOpenALSupport.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/CocosDenshion/iphone/CDOpenALSupport.m</key>
+		<key>libs/CocosDenshion/ios/CDOpenALSupport.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/CDOpenALSupport.m</string>
+			<string>libs/CocosDenshion/ios/CDOpenALSupport.m</string>
 		</dict>
-		<key>libs/CocosDenshion/iphone/CocosDenshion.h</key>
+		<key>libs/CocosDenshion/ios/CocosDenshion.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/CocosDenshion.h</string>
+			<string>libs/CocosDenshion/ios/CocosDenshion.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/CocosDenshion/iphone/CocosDenshion.m</key>
+		<key>libs/CocosDenshion/ios/CocosDenshion.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/CocosDenshion.m</string>
+			<string>libs/CocosDenshion/ios/CocosDenshion.m</string>
 		</dict>
-		<key>libs/CocosDenshion/iphone/SimpleAudioEngine.mm</key>
+		<key>libs/CocosDenshion/ios/SimpleAudioEngine.mm</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/SimpleAudioEngine.mm</string>
+			<string>libs/CocosDenshion/ios/SimpleAudioEngine.mm</string>
 		</dict>
-		<key>libs/CocosDenshion/iphone/SimpleAudioEngine_objc.h</key>
+		<key>libs/CocosDenshion/ios/SimpleAudioEngine_objc.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/SimpleAudioEngine_objc.h</string>
+			<string>libs/CocosDenshion/ios/SimpleAudioEngine_objc.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/CocosDenshion/iphone/SimpleAudioEngine_objc.m</key>
+		<key>libs/CocosDenshion/ios/SimpleAudioEngine_objc.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>CocosDenshion</string>
-				<string>iphone</string>
+				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/CocosDenshion/iphone/SimpleAudioEngine_objc.m</string>
+			<string>libs/CocosDenshion/ios/SimpleAudioEngine_objc.m</string>
 		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
 		<string>libs/CocosDenshion/include/Export.h</string>
 		<string>libs/CocosDenshion/include/SimpleAudioEngine.h</string>
-		<string>libs/CocosDenshion/iphone/CDAudioManager.h</string>
-		<string>libs/CocosDenshion/iphone/CDAudioManager.m</string>
-		<string>libs/CocosDenshion/iphone/CDConfig.h</string>
-		<string>libs/CocosDenshion/iphone/CDOpenALSupport.h</string>
-		<string>libs/CocosDenshion/iphone/CDOpenALSupport.m</string>
-		<string>libs/CocosDenshion/iphone/CocosDenshion.h</string>
-		<string>libs/CocosDenshion/iphone/CocosDenshion.m</string>
-		<string>libs/CocosDenshion/iphone/SimpleAudioEngine.mm</string>
-		<string>libs/CocosDenshion/iphone/SimpleAudioEngine_objc.h</string>
-		<string>libs/CocosDenshion/iphone/SimpleAudioEngine_objc.m</string>
+		<string>libs/CocosDenshion/ios/CDAudioManager.h</string>
+		<string>libs/CocosDenshion/ios/CDAudioManager.m</string>
+		<string>libs/CocosDenshion/ios/CDConfig.h</string>
+		<string>libs/CocosDenshion/ios/CDOpenALSupport.h</string>
+		<string>libs/CocosDenshion/ios/CDOpenALSupport.m</string>
+		<string>libs/CocosDenshion/ios/CocosDenshion.h</string>
+		<string>libs/CocosDenshion/ios/CocosDenshion.m</string>
+		<string>libs/CocosDenshion/ios/SimpleAudioEngine.mm</string>
+		<string>libs/CocosDenshion/ios/SimpleAudioEngine_objc.h</string>
+		<string>libs/CocosDenshion/ios/SimpleAudioEngine_objc.m</string>
 	</array>
 </dict>
 </plist>
