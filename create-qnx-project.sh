@@ -38,15 +38,15 @@ copy_cpp_h_from_helloworld(){
 
 # copy resources
 copy_resouces(){
-    if [ -d $PROJECT_DIR/Resource ]; then
-        echo "Resource folder exists, skip copying Resource folder!"
+    if [ -d $PROJECT_DIR/Resources ]; then
+        echo "Resources folder exists, skip copying Resources folder!"
     else
-        mkdir $PROJECT_DIR/Resource
+        mkdir $PROJECT_DIR/Resources
         
-        for file in $HELLOWORLD_ROOT/Resource/*
+        for file in $HELLOWORLD_ROOT/Resources/*
         do
             #echo $file
-            cp $file $PROJECT_DIR/Resource
+            cp $file $PROJECT_DIR/Resources
         done
     fi
 }
