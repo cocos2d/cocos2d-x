@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCEGLView_qnx.h"
 #include "GLES/gl.h"
 
+#include <ctype.h>
 #include <input/screen_helpers.h>
 #include <sys/keycodes.h>
 

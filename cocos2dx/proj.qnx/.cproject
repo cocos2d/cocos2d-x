@@ -41,7 +41,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1683707872" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -87,7 +87,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -95,7 +95,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -139,7 +140,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.686663849" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -183,7 +184,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -191,7 +192,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -236,7 +238,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.60228339" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -283,7 +285,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -291,7 +293,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -336,7 +339,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1193350404" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -383,7 +386,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -391,7 +394,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -434,7 +438,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.353833674" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -482,7 +486,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/|third_party/|win32/|wophone/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -490,7 +494,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -534,7 +539,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1783715221" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -581,7 +586,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -589,7 +594,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -633,7 +639,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.2131157600" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -680,7 +686,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/|qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp|third_party/|win32/|wophone/|marmalade/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -688,7 +694,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
