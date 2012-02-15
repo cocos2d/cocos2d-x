@@ -251,8 +251,8 @@ files
 	"*.h"
 	"*.cpp"
 	
-	[Tests/NotificationCenterTest]
-	("../tests/NotificationCenterTest")
+	[Tests/ExtensionsTest]
+	("../ExtensionsTest")
 	"*.h"
 	"*.cpp"
 }

@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCAccelerometer_bada.h"
 #include "CCIMEDispatcher.h"
 #include <FText.h>
+#include <string>
 
 using namespace std;
 using namespace Osp::Base;

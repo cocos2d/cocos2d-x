@@ -51,7 +51,7 @@
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.1079128222" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.703039623" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.500257262" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
+								<option id="gnu.c.compiler.option.include.paths.500257262" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1531770269" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols"/>
 								<option id="gnu.c.compiler.option.warnings.allwarn.1446204747" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.697502414" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -83,6 +83,22 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.502995704.1902494059" name="/" resourcePath="platform">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.844532532" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug" unusedChildren="">
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1383910074" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base.1953133549"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1094782292" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2063289710">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.175639341" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.170216405" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323">
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1320853437" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1687860901" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1826952880"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1359535001" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1429401820"/>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.201612983" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug.857245124">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.762469663" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="actions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="base_nodes"/>
@@ -95,7 +111,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/CCFileUtils_Linux.cpp|Linux/CCImage_Linux.cpp|marmalade/|qnx/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="linux/CCFileUtils_linux.cpp|linux/CCImage_linux.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -103,7 +119,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -159,7 +176,7 @@
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
 								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.1465078999" name="Optimization Level" superClass="gnu.c.compiler.exe.release.option.optimization.level" value="gnu.c.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.c.compiler.exe.release.option.debugging.level.519142307" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.1095324729" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
+								<option id="gnu.c.compiler.option.include.paths.1095324729" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1479035749" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols"/>
 								<option id="gnu.c.compiler.option.warnings.allwarn.2077117046" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.191330176" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -203,7 +220,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="android/|bada/|ios/|Linux/CCFileUtils_Linux.cpp|Linux/CCImage_Linux.cpp|marmalade/|qnx/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="linux/CCFileUtils_linux.cpp|linux/CCImage_linux.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -211,7 +228,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -227,12 +245,18 @@
 		<resource resourceType="PROJECT" workspacePath="/cocos2dx-base"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+		<buildTargets/>
+	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1336291657;cdt.managedbuild.tool.gnu.cpp.compiler.input.1506297979">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.1902494059;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.170216405;cdt.managedbuild.tool.gnu.c.compiler.input.1320853437">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526;cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1024625311;cdt.managedbuild.tool.gnu.cpp.compiler.input.1920645677">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1336291657;cdt.managedbuild.tool.gnu.cpp.compiler.input.1506297979">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671;cdt.managedbuild.tool.gnu.c.compiler.input.191330176">
@@ -241,20 +265,20 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.232480047;cdt.managedbuild.config.gnu.exe.release.1270689208.232480047.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.518312421;cdt.managedbuild.tool.gnu.c.compiler.input.1602098267">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323;cdt.managedbuild.tool.gnu.c.compiler.input.697502414">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2063289710;cdt.managedbuild.tool.gnu.cpp.compiler.input.966305124">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323;cdt.managedbuild.tool.gnu.c.compiler.input.697502414">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.232480047;cdt.managedbuild.config.gnu.exe.release.1270689208.232480047.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1742516529;cdt.managedbuild.tool.gnu.cpp.compiler.input.1036435822">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.1902494059;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1094782292;cdt.managedbuild.tool.gnu.cpp.compiler.input.175639341">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526;cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.870071077;cdt.managedbuild.tool.gnu.c.compiler.input.132105612">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-		<buildTargets/>
 	</storageModule>
 </cproject>

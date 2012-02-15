@@ -1,5 +1,5 @@
 /*
- * CCFileUtils_Linux.cpp
+ * CCFileUtils_linux.cpp
  *
  *  Created on: Aug 9, 2011
  *      Author: laschweinski

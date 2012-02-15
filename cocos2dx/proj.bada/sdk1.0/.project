@@ -135,6 +135,11 @@
 			<locationURI>cocos2dx_root/cocos2dx/effects</locationURI>
 		</link>
 		<link>
+			<name>extensions</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/cocos2dx/extensions</locationURI>
+		</link>
+		<link>
 			<name>include</name>
 			<type>2</type>
 			<locationURI>cocos2dx_root/cocos2dx/include</locationURI>
@@ -170,9 +175,49 @@
 			<locationURI>cocos2dx_root/cocos2dx/particle_nodes</locationURI>
 		</link>
 		<link>
-			<name>platform</name>
+			<name>platform/bada</name>
 			<type>2</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform</locationURI>
+			<locationURI>cocos2dx_root/cocos2dx/platform/bada</locationURI>
+		</link>
+		<link>
+			<name>platform/CCCommon.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCCommon.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform/CCFileUtils.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCFileUtils.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform/CCGL.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCGL.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform/CCImage.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCImage.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform/CCSAXParser.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCSAXParser.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform/CCStdC.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCStdC.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform/CCThread.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCThread.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform/platform.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/platform.cpp</locationURI>
 		</link>
 		<link>
 			<name>script_support</name>
