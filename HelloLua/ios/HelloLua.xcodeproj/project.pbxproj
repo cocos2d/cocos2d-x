@@ -9,23 +9,32 @@
 /* Begin PBXBuildFile section */
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
-		655118CD13FAC63F00A8A20B /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 655118CB13FAC63F00A8A20B /* effect1.wav */; };
-		655118CE13FAC63F00A8A20B /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 655118CC13FAC63F00A8A20B /* background.mp3 */; };
-		BF82F40F13A8647B00616D55 /* hello.lua in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40713A8647B00616D55 /* hello.lua */; };
-		BF82F41113A8647B00616D55 /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40913A8647B00616D55 /* menu1.png */; };
-		BF82F41213A8647B00616D55 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40A13A8647B00616D55 /* menu2.png */; };
-		BF82F41313A8647B00616D55 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40B13A8647B00616D55 /* Default.png */; };
+		78947C6C14EBB9B100DBD5A6 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 78947C5D14EBB9B000DBD5A6 /* app.icf */; };
+		78947C6D14EBB9B100DBD5A6 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78947C5E14EBB9B000DBD5A6 /* background.mp3 */; };
+		78947C6E14EBB9B100DBD5A6 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C5F14EBB9B000DBD5A6 /* crop.png */; };
+		78947C7014EBB9B100DBD5A6 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6114EBB9B000DBD5A6 /* dog.png */; };
+		78947C7114EBB9B100DBD5A6 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6214EBB9B000DBD5A6 /* effect1.wav */; };
+		78947C7214EBB9B100DBD5A6 /* farm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6314EBB9B000DBD5A6 /* farm.jpg */; };
+		78947C7414EBB9B100DBD5A6 /* hello.lua in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6614EBB9B000DBD5A6 /* hello.lua */; };
+		78947C7514EBB9B100DBD5A6 /* hello2.lua in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6714EBB9B000DBD5A6 /* hello2.lua */; };
+		78947C7714EBB9B100DBD5A6 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6914EBB9B000DBD5A6 /* land.png */; };
+		78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6A14EBB9B000DBD5A6 /* menu1.png */; };
+		78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6B14EBB9B000DBD5A6 /* menu2.png */; };
+		78947C7B14EBB9CD00DBD5A6 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 78947C7A14EBB9CD00DBD5A6 /* fonts */; };
+		78947C7F14EBBA4700DBD5A6 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78947C7D14EBBA4700DBD5A6 /* CCNotificationCenter.cpp */; };
+		78947C8B14EBBB0300DBD5A6 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78947C8214EBBB0300DBD5A6 /* CDAudioManager.m */; };
+		78947C8C14EBBB0300DBD5A6 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 78947C8514EBBB0300DBD5A6 /* CDOpenALSupport.m */; };
+		78947C8D14EBBB0300DBD5A6 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 78947C8714EBBB0300DBD5A6 /* CocosDenshion.m */; };
+		78947C8E14EBBB0300DBD5A6 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78947C8814EBBB0300DBD5A6 /* SimpleAudioEngine.mm */; };
+		78947C8F14EBBB0300DBD5A6 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 78947C8A14EBBB0300DBD5A6 /* SimpleAudioEngine_objc.m */; };
+		78947C9114EBBCD800DBD5A6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C9014EBBCD800DBD5A6 /* Icon.png */; };
+		78947C9314EBBCDD00DBD5A6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C9214EBBCDD00DBD5A6 /* Icon@2x.png */; };
+		78947C9514EBBCE800DBD5A6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C9414EBBCE800DBD5A6 /* Default.png */; };
 		BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41513A864D700616D55 /* AppDelegate.cpp */; };
 		BF82F42113A8652A00616D55 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* AppController.mm */; };
 		BF82F42213A8652A00616D55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42013A8652A00616D55 /* main.m */; };
-		BF87A2A21414CCF60025E979 /* hello2.lua in Resources */ = {isa = PBXBuildFile; fileRef = BF87A2A11414CCF60025E979 /* hello2.lua */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4CEAD7713B4634300780515 /* RootViewController.mm */; };
-		D4CEAD9713B4770400780515 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9313B4770300780515 /* land.png */; };
-		D4CEAD9813B4770400780515 /* farm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9413B4770300780515 /* farm.jpg */; };
-		D4CEAD9913B4770400780515 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9513B4770400780515 /* dog.png */; };
-		D4CEAD9A13B4770400780515 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9613B4770400780515 /* crop.png */; };
-		D4E4FF7F13B321D900A3F698 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E4FF7E13B321D900A3F698 /* Icon.png */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -133,11 +142,6 @@
 		F4808BA314E3CB6C0021A5F8 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F480871714E3CB6A0021A5F8 /* CCTMXXMLParser.cpp */; };
 		F4808BA414E3CB6C0021A5F8 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F480871914E3CB6A0021A5F8 /* CCTouchDispatcher.cpp */; };
 		F4808BA514E3CB6C0021A5F8 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F480871A14E3CB6A0021A5F8 /* CCTouchHandler.cpp */; };
-		F4808BC414E3CB6C0021A5F8 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F480877B14E3CB6A0021A5F8 /* CDAudioManager.m */; };
-		F4808BC514E3CB6C0021A5F8 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = F480877E14E3CB6A0021A5F8 /* CDOpenALSupport.m */; };
-		F4808BC614E3CB6C0021A5F8 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = F480878014E3CB6A0021A5F8 /* CocosDenshion.m */; };
-		F4808BC714E3CB6C0021A5F8 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = F480878114E3CB6A0021A5F8 /* SimpleAudioEngine.mm */; };
-		F4808BC814E3CB6C0021A5F8 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = F480878314E3CB6A0021A5F8 /* SimpleAudioEngine_objc.m */; };
 		F4808BF414E3CB6C0021A5F8 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F48087E114E3CB6A0021A5F8 /* CCLuaEngine.cpp */; };
 		F4808BF514E3CB6C0021A5F8 /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F48087E314E3CB6A0021A5F8 /* Cocos2dxLuaLoader.cpp */; };
 		F4808BF614E3CB6C0021A5F8 /* LuaCocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F48087E514E3CB6A0021A5F8 /* LuaCocos2d.cpp */; };
@@ -185,27 +189,42 @@
 		1D6058910D05DD3D006BFB54 /* HelloLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		655118CB13FAC63F00A8A20B /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
-		655118CC13FAC63F00A8A20B /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
-		BF82F40713A8647B00616D55 /* hello.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello.lua; sourceTree = "<group>"; };
-		BF82F40913A8647B00616D55 /* menu1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu1.png; sourceTree = "<group>"; };
-		BF82F40A13A8647B00616D55 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
-		BF82F40B13A8647B00616D55 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		78947C5D14EBB9B000DBD5A6 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
+		78947C5E14EBB9B000DBD5A6 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
+		78947C5F14EBB9B000DBD5A6 /* crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop.png; sourceTree = "<group>"; };
+		78947C6114EBB9B000DBD5A6 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
+		78947C6214EBB9B000DBD5A6 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
+		78947C6314EBB9B000DBD5A6 /* farm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = farm.jpg; sourceTree = "<group>"; };
+		78947C6614EBB9B000DBD5A6 /* hello.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello.lua; sourceTree = "<group>"; };
+		78947C6714EBB9B000DBD5A6 /* hello2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello2.lua; sourceTree = "<group>"; };
+		78947C6914EBB9B000DBD5A6 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
+		78947C6A14EBB9B000DBD5A6 /* menu1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu1.png; sourceTree = "<group>"; };
+		78947C6B14EBB9B000DBD5A6 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
+		78947C7A14EBB9CD00DBD5A6 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		78947C7D14EBBA4700DBD5A6 /* CCNotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNotificationCenter.cpp; sourceTree = "<group>"; };
+		78947C7E14EBBA4700DBD5A6 /* CCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotificationCenter.h; sourceTree = "<group>"; };
+		78947C8114EBBB0300DBD5A6 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
+		78947C8214EBBB0300DBD5A6 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
+		78947C8314EBBB0300DBD5A6 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
+		78947C8414EBBB0300DBD5A6 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
+		78947C8514EBBB0300DBD5A6 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
+		78947C8614EBBB0300DBD5A6 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
+		78947C8714EBBB0300DBD5A6 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
+		78947C8814EBBB0300DBD5A6 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
+		78947C8914EBBB0300DBD5A6 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
+		78947C8A14EBBB0300DBD5A6 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		78947C9014EBBCD800DBD5A6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		78947C9214EBBCDD00DBD5A6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		78947C9414EBBCE800DBD5A6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		BF82F41513A864D700616D55 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
 		BF82F41613A864D700616D55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		BF82F41E13A8652A00616D55 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		BF82F41F13A8652A00616D55 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		BF82F42013A8652A00616D55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BF82F42313A8654600616D55 /* HelloLua_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloLua_Prefix.pch; sourceTree = "<group>"; };
-		BF87A2A11414CCF60025E979 /* hello2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello2.lua; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D4CEAD7713B4634300780515 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		D4CEAD7813B4634300780515 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		D4CEAD9313B4770300780515 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
-		D4CEAD9413B4770300780515 /* farm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = farm.jpg; sourceTree = "<group>"; };
-		D4CEAD9513B4770400780515 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
-		D4CEAD9613B4770400780515 /* crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop.png; sourceTree = "<group>"; };
-		D4E4FF7E13B321D900A3F698 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -455,16 +474,6 @@
 		F480871A14E3CB6A0021A5F8 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		F480877714E3CB6A0021A5F8 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		F480877814E3CB6A0021A5F8 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
-		F480877A14E3CB6A0021A5F8 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
-		F480877B14E3CB6A0021A5F8 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
-		F480877C14E3CB6A0021A5F8 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
-		F480877D14E3CB6A0021A5F8 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
-		F480877E14E3CB6A0021A5F8 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
-		F480877F14E3CB6A0021A5F8 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
-		F480878014E3CB6A0021A5F8 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
-		F480878114E3CB6A0021A5F8 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
-		F480878214E3CB6A0021A5F8 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
-		F480878314E3CB6A0021A5F8 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		F48087E114E3CB6A0021A5F8 /* CCLuaEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaEngine.cpp; sourceTree = "<group>"; };
 		F48087E214E3CB6A0021A5F8 /* CCLuaEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaEngine.h; sourceTree = "<group>"; };
 		F48087E314E3CB6A0021A5F8 /* Cocos2dxLuaLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cocos2dxLuaLoader.cpp; sourceTree = "<group>"; };
@@ -569,8 +578,11 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				78947C9414EBBCE800DBD5A6 /* Default.png */,
+				78947C9214EBBCDD00DBD5A6 /* Icon@2x.png */,
+				78947C9014EBBCD800DBD5A6 /* Icon.png */,
+				78947C5C14EBB9B000DBD5A6 /* Resources */,
 				BF82F41413A864B000616D55 /* Classes */,
-				BF82F40313A8647B00616D55 /* Resource */,
 				506EDAA3102F461B00A389B3 /* libs */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -619,25 +631,51 @@
 			name = libs;
 			sourceTree = "<group>";
 		};
-		BF82F40313A8647B00616D55 /* Resource */ = {
+		78947C5C14EBB9B000DBD5A6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				655118CC13FAC63F00A8A20B /* background.mp3 */,
-				D4CEAD9613B4770400780515 /* crop.png */,
-				BF82F40B13A8647B00616D55 /* Default.png */,
-				D4CEAD9513B4770400780515 /* dog.png */,
-				655118CB13FAC63F00A8A20B /* effect1.wav */,
-				D4CEAD9413B4770300780515 /* farm.jpg */,
-				BF82F40713A8647B00616D55 /* hello.lua */,
-				BF87A2A11414CCF60025E979 /* hello2.lua */,
-				D4E4FF7E13B321D900A3F698 /* Icon.png */,
-				D4CEAD9313B4770300780515 /* land.png */,
-				BF82F40913A8647B00616D55 /* menu1.png */,
-				BF82F40A13A8647B00616D55 /* menu2.png */,
+				78947C7A14EBB9CD00DBD5A6 /* fonts */,
+				78947C5D14EBB9B000DBD5A6 /* app.icf */,
+				78947C5E14EBB9B000DBD5A6 /* background.mp3 */,
+				78947C5F14EBB9B000DBD5A6 /* crop.png */,
+				78947C6114EBB9B000DBD5A6 /* dog.png */,
+				78947C6214EBB9B000DBD5A6 /* effect1.wav */,
+				78947C6314EBB9B000DBD5A6 /* farm.jpg */,
+				78947C6614EBB9B000DBD5A6 /* hello.lua */,
+				78947C6714EBB9B000DBD5A6 /* hello2.lua */,
+				78947C6914EBB9B000DBD5A6 /* land.png */,
+				78947C6A14EBB9B000DBD5A6 /* menu1.png */,
+				78947C6B14EBB9B000DBD5A6 /* menu2.png */,
 			);
-			name = Resource;
-			path = ../Resource;
-			sourceTree = SOURCE_ROOT;
+			name = Resources;
+			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		78947C7C14EBBA4700DBD5A6 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				78947C7D14EBBA4700DBD5A6 /* CCNotificationCenter.cpp */,
+				78947C7E14EBBA4700DBD5A6 /* CCNotificationCenter.h */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		78947C8014EBBB0300DBD5A6 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				78947C8114EBBB0300DBD5A6 /* CDAudioManager.h */,
+				78947C8214EBBB0300DBD5A6 /* CDAudioManager.m */,
+				78947C8314EBBB0300DBD5A6 /* CDConfig.h */,
+				78947C8414EBBB0300DBD5A6 /* CDOpenALSupport.h */,
+				78947C8514EBBB0300DBD5A6 /* CDOpenALSupport.m */,
+				78947C8614EBBB0300DBD5A6 /* CocosDenshion.h */,
+				78947C8714EBBB0300DBD5A6 /* CocosDenshion.m */,
+				78947C8814EBBB0300DBD5A6 /* SimpleAudioEngine.mm */,
+				78947C8914EBBB0300DBD5A6 /* SimpleAudioEngine_objc.h */,
+				78947C8A14EBBB0300DBD5A6 /* SimpleAudioEngine_objc.m */,
+			);
+			path = ios;
+			sourceTree = "<group>";
 		};
 		BF82F41413A864B000616D55 /* Classes */ = {
 			isa = PBXGroup;
@@ -651,6 +689,7 @@
 		F4807DE014E3CB660021A5F8 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				78947C7C14EBBA4700DBD5A6 /* extensions */,
 				F4807DE314E3CB660021A5F8 /* actions */,
 				F4807DF014E3CB660021A5F8 /* base_nodes */,
 				F4807DF314E3CB660021A5F8 /* CCCamera.cpp */,
@@ -1116,8 +1155,8 @@
 		F480871B14E3CB6A0021A5F8 /* CocosDenshion */ = {
 			isa = PBXGroup;
 			children = (
+				78947C8014EBBB0300DBD5A6 /* ios */,
 				F480877614E3CB6A0021A5F8 /* include */,
-				F480877914E3CB6A0021A5F8 /* iphone */,
 			);
 			name = CocosDenshion;
 			path = ../../CocosDenshion;
@@ -1130,23 +1169,6 @@
 				F480877814E3CB6A0021A5F8 /* SimpleAudioEngine.h */,
 			);
 			path = include;
-			sourceTree = "<group>";
-		};
-		F480877914E3CB6A0021A5F8 /* iphone */ = {
-			isa = PBXGroup;
-			children = (
-				F480877A14E3CB6A0021A5F8 /* CDAudioManager.h */,
-				F480877B14E3CB6A0021A5F8 /* CDAudioManager.m */,
-				F480877C14E3CB6A0021A5F8 /* CDConfig.h */,
-				F480877D14E3CB6A0021A5F8 /* CDOpenALSupport.h */,
-				F480877E14E3CB6A0021A5F8 /* CDOpenALSupport.m */,
-				F480877F14E3CB6A0021A5F8 /* CocosDenshion.h */,
-				F480878014E3CB6A0021A5F8 /* CocosDenshion.m */,
-				F480878114E3CB6A0021A5F8 /* SimpleAudioEngine.mm */,
-				F480878214E3CB6A0021A5F8 /* SimpleAudioEngine_objc.h */,
-				F480878314E3CB6A0021A5F8 /* SimpleAudioEngine_objc.m */,
-			);
-			path = iphone;
 			sourceTree = "<group>";
 		};
 		F48087DF14E3CB6A0021A5F8 /* lua */ = {
@@ -1299,18 +1321,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF82F40F13A8647B00616D55 /* hello.lua in Resources */,
-				BF82F41113A8647B00616D55 /* menu1.png in Resources */,
-				BF82F41213A8647B00616D55 /* menu2.png in Resources */,
-				BF82F41313A8647B00616D55 /* Default.png in Resources */,
-				D4E4FF7F13B321D900A3F698 /* Icon.png in Resources */,
-				D4CEAD9713B4770400780515 /* land.png in Resources */,
-				D4CEAD9813B4770400780515 /* farm.jpg in Resources */,
-				D4CEAD9913B4770400780515 /* dog.png in Resources */,
-				D4CEAD9A13B4770400780515 /* crop.png in Resources */,
-				655118CD13FAC63F00A8A20B /* effect1.wav in Resources */,
-				655118CE13FAC63F00A8A20B /* background.mp3 in Resources */,
-				BF87A2A21414CCF60025E979 /* hello2.lua in Resources */,
+				78947C6C14EBB9B100DBD5A6 /* app.icf in Resources */,
+				78947C6D14EBB9B100DBD5A6 /* background.mp3 in Resources */,
+				78947C6E14EBB9B100DBD5A6 /* crop.png in Resources */,
+				78947C7014EBB9B100DBD5A6 /* dog.png in Resources */,
+				78947C7114EBB9B100DBD5A6 /* effect1.wav in Resources */,
+				78947C7214EBB9B100DBD5A6 /* farm.jpg in Resources */,
+				78947C7414EBB9B100DBD5A6 /* hello.lua in Resources */,
+				78947C7514EBB9B100DBD5A6 /* hello2.lua in Resources */,
+				78947C7714EBB9B100DBD5A6 /* land.png in Resources */,
+				78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */,
+				78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */,
+				78947C7B14EBB9CD00DBD5A6 /* fonts in Resources */,
+				78947C9114EBBCD800DBD5A6 /* Icon.png in Resources */,
+				78947C9314EBBCDD00DBD5A6 /* Icon@2x.png in Resources */,
+				78947C9514EBBCE800DBD5A6 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1425,11 +1450,6 @@
 				F4808BA314E3CB6C0021A5F8 /* CCTMXXMLParser.cpp in Sources */,
 				F4808BA414E3CB6C0021A5F8 /* CCTouchDispatcher.cpp in Sources */,
 				F4808BA514E3CB6C0021A5F8 /* CCTouchHandler.cpp in Sources */,
-				F4808BC414E3CB6C0021A5F8 /* CDAudioManager.m in Sources */,
-				F4808BC514E3CB6C0021A5F8 /* CDOpenALSupport.m in Sources */,
-				F4808BC614E3CB6C0021A5F8 /* CocosDenshion.m in Sources */,
-				F4808BC714E3CB6C0021A5F8 /* SimpleAudioEngine.mm in Sources */,
-				F4808BC814E3CB6C0021A5F8 /* SimpleAudioEngine_objc.m in Sources */,
 				F4808BF414E3CB6C0021A5F8 /* CCLuaEngine.cpp in Sources */,
 				F4808BF514E3CB6C0021A5F8 /* Cocos2dxLuaLoader.cpp in Sources */,
 				F4808BF614E3CB6C0021A5F8 /* LuaCocos2d.cpp in Sources */,
@@ -1471,6 +1491,12 @@
 				F4808C2014E3CB6C0021A5F8 /* tolua_push.c in Sources */,
 				F4808C2114E3CB6C0021A5F8 /* tolua_to.c in Sources */,
 				F4808C2314E3CCE60021A5F8 /* CCGL.cpp in Sources */,
+				78947C7F14EBBA4700DBD5A6 /* CCNotificationCenter.cpp in Sources */,
+				78947C8B14EBBB0300DBD5A6 /* CDAudioManager.m in Sources */,
+				78947C8C14EBBB0300DBD5A6 /* CDOpenALSupport.m in Sources */,
+				78947C8D14EBBB0300DBD5A6 /* CocosDenshion.m in Sources */,
+				78947C8E14EBBB0300DBD5A6 /* SimpleAudioEngine.mm in Sources */,
+				78947C8F14EBBB0300DBD5A6 /* SimpleAudioEngine_objc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1508,7 +1534,7 @@
 					"$(SRCROOT)/../../lua/CocosDenshion_support",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libraries\"",
@@ -1522,7 +1548,7 @@
 				PRODUCT_NAME = HelloLua;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
 				WARNING_CFLAGS = "";
 			};
@@ -1556,7 +1582,7 @@
 					"$(SRCROOT)/../../lua/cocos2dx_support",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libraries\"",
@@ -1570,7 +1596,7 @@
 				PRODUCT_NAME = HelloLua;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
 				WARNING_CFLAGS = "";
 			};
