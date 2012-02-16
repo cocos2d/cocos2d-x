@@ -13,15 +13,12 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		78891AAE14EA1DAE0072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AAD14EA1DAE0072482D /* Icon.png */; };
-		78891AB014EA1DBC0072482D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AAF14EA1DBC0072482D /* Icon@2x.png */; };
 		78891AB214EA1DC30072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB114EA1DC30072482D /* Default.png */; };
 		789B545214EBA942008E7E29 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 789B545114EBA942008E7E29 /* animations */; };
 		789B545414EBA94B008E7E29 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 789B545314EBA94B008E7E29 /* fonts */; };
 		789B545614EBA952008E7E29 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 789B545514EBA952008E7E29 /* Images */; };
 		789B545814EBA95A008E7E29 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 789B545714EBA95A008E7E29 /* TileMaps */; };
 		789B545A14EBA961008E7E29 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 789B545914EBA960008E7E29 /* zwoptex */; };
-		78C7DEF914EBA5060085D0C2 /* app.config.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDBC14EBA5050085D0C2 /* app.config.txt */; };
-		78C7DEFA14EBA5060085D0C2 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDBD14EBA5050085D0C2 /* app.icf */; };
 		78C7DEFB14EBA5060085D0C2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDBE14EBA5050085D0C2 /* background.mp3 */; };
 		78C7DEFC14EBA5060085D0C2 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDBF14EBA5050085D0C2 /* background.ogg */; };
 		78C7DEFD14EBA5060085D0C2 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDC014EBA5050085D0C2 /* effect1.raw */; };
@@ -573,16 +570,13 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
-		78891AAD14EA1DAE0072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		78891AAF14EA1DBC0072482D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		78891AB114EA1DC30072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		78891AAD14EA1DAE0072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../test.ios/Icon.png; sourceTree = "<group>"; };
+		78891AB114EA1DC30072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../test.ios/Default.png; sourceTree = "<group>"; };
 		789B545114EBA942008E7E29 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
 		789B545314EBA94B008E7E29 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		789B545514EBA952008E7E29 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		789B545714EBA95A008E7E29 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
 		789B545914EBA960008E7E29 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
-		78C7DDBC14EBA5050085D0C2 /* app.config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.config.txt; sourceTree = "<group>"; };
-		78C7DDBD14EBA5050085D0C2 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		78C7DDBE14EBA5050085D0C2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		78C7DDBF14EBA5050085D0C2 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.ogg; sourceTree = "<group>"; };
 		78C7DDC014EBA5050085D0C2 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = effect1.raw; sourceTree = "<group>"; };
@@ -1286,9 +1280,6 @@
 			isa = PBXGroup;
 			children = (
 				78C7DDAA14EBA5050085D0C2 /* Resources */,
-				78891AB114EA1DC30072482D /* Default.png */,
-				78891AAF14EA1DBC0072482D /* Icon@2x.png */,
-				78891AAD14EA1DAE0072482D /* Icon.png */,
 				ADDD85F81484BB37005306E7 /* Box2D */,
 				BF83588813276C7700F3C033 /* cocos2dx */,
 				080E96DDFE201D6D7F000001 /* ios */,
@@ -1322,13 +1313,13 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				78891AB114EA1DC30072482D /* Default.png */,
+				78891AAD14EA1DAE0072482D /* Icon.png */,
 				789B545914EBA960008E7E29 /* zwoptex */,
 				789B545714EBA95A008E7E29 /* TileMaps */,
 				789B545514EBA952008E7E29 /* Images */,
 				789B545314EBA94B008E7E29 /* fonts */,
 				789B545114EBA942008E7E29 /* animations */,
-				78C7DDBC14EBA5050085D0C2 /* app.config.txt */,
-				78C7DDBD14EBA5050085D0C2 /* app.icf */,
 				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
 				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
 				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
@@ -3023,10 +3014,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78891AAE14EA1DAE0072482D /* Icon.png in Resources */,
-				78891AB014EA1DBC0072482D /* Icon@2x.png in Resources */,
 				78891AB214EA1DC30072482D /* Default.png in Resources */,
-				78C7DEF914EBA5060085D0C2 /* app.config.txt in Resources */,
-				78C7DEFA14EBA5060085D0C2 /* app.icf in Resources */,
 				78C7DEFB14EBA5060085D0C2 /* background.mp3 in Resources */,
 				78C7DEFC14EBA5060085D0C2 /* background.ogg in Resources */,
 				78C7DEFD14EBA5060085D0C2 /* effect1.raw in Resources */,
