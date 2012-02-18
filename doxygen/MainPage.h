@@ -1,7 +1,7 @@
 /*! 
 @mainpage cocos2d-x
 
-@image html Official-cocos2d-Icon-Happy.png
+@image html cocos2dx_portrait.png
 
 @section sec1 About cocos2d-x
 cocos2d-x open source project is designed to be a cross-platform 2D game engine for building 2D games, demos and other graphical/interactive mobile applications.
@@ -22,7 +22,7 @@ This project is based on the famous <A HREF="http://www.cocos2d-iphone.org">"coc
 \n
 
 @section sec2 License
-Copyright (c) 2010 cocos2d-x.org \n
+Copyright (c) 2010-2012 cocos2d-x.org \n
 \n
 Permission is hereby granted, free of charge, to any person obtaining a copy \n
 of this software and associated documentation files (the "Software"), to deal \n
