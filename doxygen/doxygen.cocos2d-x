@@ -31,7 +31,7 @@ PROJECT_NAME           = cocos2d-x
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 1.0.1-x-0.10.0
+PROJECT_NUMBER         = 1.0.1-x-0.11.0
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description 
 # for a project that appears at the top of each page and should give viewer 
@@ -44,7 +44,7 @@ PROJECT_BRIEF          =
 # exceed 55 pixels and the maximum width should not exceed 200 pixels. 
 # Doxygen will copy the logo to the output directory.
 
-PROJECT_LOGO           = 
+PROJECT_LOGO           =
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
@@ -1456,10 +1456,15 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator 
 # instead of the = operator.
 
-PREDEFINED             = "CC_PROPERTY_READONLY(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual varType get##funName(void);" \
-                         "CC_PROPERTY_READONLY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual const varType& get##funName(void);" \
-                         "CC_PROPERTY(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual varType get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(varType var);" \
-                         "CC_PROPERTY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual const varType& get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(const varType& var);" 
+PREDEFINED             = "CC_PROPERTY_READONLY(varType, varName, funName)=protected: varType varName;\n /** get##funName*/\n public: virtual varType get##funName(void);" \
+                         "CC_PROPERTY_READONLY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n /** get##funName*/\n public: virtual const varType& get##funName(void);" \
+                         "CC_PROPERTY(varType, varName, funName)=protected: varType varName;\n /** get##funName*/\n public: virtual varType get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(varType var);" \
+                         "CC_PROPERTY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n /** get##funName*/\n public: virtual const varType& get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(const varType& var);" \
+                         "CC_SYNTHESIZE(varType, varName, funName)=protected: varType varName;\n /** get##funName */\n public: virtual varType get##funName(void)\n /** set##funName */ \n public: virtual void set##funName(varType var);" \
+                         "CC_SYNTHESIZE_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n /** get##funName */\n public: virtual const varType& get##funName(void);\n /** set#funName */\n public: virtual void set##funName(const varType& var);" \
+                         "CC_SYNTHESIZE_RETAIN(varType, varName, funName)=protected: varType varName;\n /** get##funName */\n public: virtual varType get##funName(void);\n /** set##funName */\n public: virtual void set##funName(varType var);" \
+                         "CC_SYNTHESIZE_READONLY(varType, varName, funName)=protected: varType varName;\n /** get##funName */\n public: virtual varType get##funName(void);" \
+                         "CC_SYNTHESIZE_READONLY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n /** get##funName */ \n public: virtual const varType& get##funName(void);"
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 
