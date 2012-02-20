@@ -49,6 +49,13 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
     arr <= end && ((__object__ = *arr) != NULL/* || true*/);										\
     arr++)
 
+// Used in CCMenu::itemForTouch -- by Dmitry Matyukhin
+#define CCARRAY_FOREACH_REVERSE(__array__, __object__)                        \
+if (__array__ && __array__->data->num > 0)                          \
+for(CCObject** arr = __array__->data->arr + __array__->data->num-1, **end = __array__->data->arr;  \
+arr >= end && ((__object__ = *arr) != NULL/* || true*/);                    \
+arr--)
+
 namespace cocos2d
 {
 
