@@ -54,6 +54,9 @@ public:
          @param  the pointer of the application
          */
         virtual void applicationDidEnterBackground() = 0;
+    
+    
+        virtual void applicationWillTerminate() = 0;
         
         /**
          @brief  The function be called when the application enter foreground
