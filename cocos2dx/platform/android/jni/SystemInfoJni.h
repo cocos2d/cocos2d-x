@@ -30,6 +30,7 @@ extern "C"
 
 {
     extern const char* getCurrentLanguageJNI();
+    extern const char* getCurrentLocaleJNI();
     extern const char* getPackageNameJNI();
 }
 
