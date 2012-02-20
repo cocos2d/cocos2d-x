@@ -86,4 +86,30 @@ extern "C"
 
         return 0;
     }
+
+
+	//////////////////////////////////////////////////////////////////////////
+    // handle get current locale
+    //////////////////////////////////////////////////////////////////////////
+    const char* getCurrentLocaleJNI()
+    {
+        JniMethodInfo t;
+
+        if (JniHelper::getStaticMethodInfo(t
+            , "org/cocos2dx/lib/Cocos2dxActivity"
+            , "getCurrentLocale"
+            , "()Ljava/lang/String;"))
+        {
+            jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+			t.env->DeleteLocalRef(t.classID);
+	        CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
+			ret->autorelease();
+
+	        LOGD("locale name %s", ret.c_str());
+
+			return ret->m_sString.c_str();
+        }
+
+        return 0;
+    }
 }
