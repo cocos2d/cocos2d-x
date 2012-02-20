@@ -15,7 +15,7 @@ fi
 
 GAME_ROOT=$COCOS2DX_ROOT_LOCAL/HelloLua
 GAME_ANDROID_ROOT=$GAME_ROOT/android
-GAME_RESOURCE_ROOT=$GAME_ROOT/Resource
+GAME_RESOURCE_ROOT=$GAME_ROOT/Resources
 
 # make sure assets is exist
 if [ -d $GAME_ANDROID_ROOT/assets ]; then
@@ -37,7 +37,7 @@ do
 done
 
 # build
-pushd $ANDROID_NDK_ROOT_LOCAL
+pushd $NDK_ROOT_LOCAL
 ./ndk-build -C $GAME_ANDROID_ROOT $*
 popd
 

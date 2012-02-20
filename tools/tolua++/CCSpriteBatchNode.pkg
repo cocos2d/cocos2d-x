@@ -1,55 +1,27 @@
-namespace cocos2d
+
+class CCSpriteBatchNode : public CCNode
 {
+    CCTextureAtlas* getTextureAtlas(void);
+    void setTextureAtlas(CCTextureAtlas* textureAtlas);
+    CCArray* getDescendants(void);
 
-	class CCSpriteBatchNode : public CCNode, public CCTextureProtocol
-	{
-	
-		~CCSpriteBatchNode();
+    void increaseAtlasCapacity();
+    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void insertChild(CCSprite *child, unsigned int index);
+    void removeSpriteFromAtlas(CCSprite *sprite);
 
-	
-		CCTextureAtlas* getTextureAtlas(void);
-		void setTextureAtlas(CCTextureAtlas* textureAtlas);
-		CCArray* getDescendants(void);
+    unsigned int rebuildIndexInOrder(CCSprite *parent, unsigned int index);
+    unsigned int highestAtlasIndexInChild(CCSprite *sprite);
+    unsigned int lowestAtlasIndexInChild(CCSprite *sprite);
+    unsigned int atlasIndexForChild(CCSprite *sprite, int z);
 
-		static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D *tex);
-		static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);	
-		static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage);
-		static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
-		bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
-		
-		bool initWithFile(const char* fileImage, unsigned int capacity);
+    void setTexture(CCTexture2D *texture);
+    CCTexture2D* getTexture(void);
+    void setBlendFunc(ccBlendFunc blendFunc);
+    ccBlendFunc getBlendFunc(void);
 
-		void increaseAtlasCapacity();
-
-		void removeChildAtIndex(unsigned int index, bool doCleanup);
-
-		void insertChild(CCSprite *child, unsigned int index);
-		void removeSpriteFromAtlas(CCSprite *sprite);
-
-		unsigned int rebuildIndexInOrder(CCSprite *parent, unsigned int index);
-		unsigned int highestAtlasIndexInChild(CCSprite *sprite);
-		unsigned int lowestAtlasIndexInChild(CCSprite *sprite);
-		unsigned int atlasIndexForChild(CCSprite *sprite, int z);
-		
-		// CCTextureProtocol
-	      CCTexture2D* getTexture(void);
-	      void setTexture(CCTexture2D *texture);
-	      void setBlendFunc(ccBlendFunc blendFunc);
-	      ccBlendFunc getBlendFunc(void);
-
-	      void visit(void);
-	      void addChild(CCNode * child);
-	      void addChild(CCNode * child, int zOrder);
-	      void addChild(CCNode * child, int zOrder, int tag);
-	      void reorderChild(CCNode * child, int zOrder);
-	        
-	      void removeChild(CCNode* child, bool cleanup);
-	      void removeAllChildrenWithCleanup(bool cleanup);
-	      void draw(void);
-
-     
-       
-
-	};
-}
-
+    static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D *tex);
+    static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);
+    static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage);
+    static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
+};

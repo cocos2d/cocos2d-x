@@ -22,9 +22,9 @@
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
 // havn't implement on marmalade
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "TextInputTest/TextInputTest.h"
-#endif
+//#endif
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
@@ -55,6 +55,8 @@
 #endif
 #endif
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+
+#include "ExtensionsTest/ExtensionsTest.h"
 
 enum
 {
@@ -100,7 +102,7 @@ enum
 	TEST_FONTS,
 	TEST_CURRENT_LANGUAGE,
 	TEST_TEXTURECACHE,
-
+    TEST_EXTENSIONS,
     TESTS_COUNT,
 };
 
@@ -146,7 +148,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "BugsTest",
 	"FontTest",
 	"CurrentLanguageTest",
-	"TextureCacheTest"
+	"TextureCacheTest",
+    "ExtensionsTest"
 };
 
 #endif

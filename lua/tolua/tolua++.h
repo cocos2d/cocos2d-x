@@ -20,20 +20,20 @@
 #define TOLUA_API extern
 #endif
 
-#define TOLUA_VERSION "tolua++-1.0.92"
+#define TOLUA_VERSION "tolua++-1.0.93"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define tolua_pushcppstring(x,y)	tolua_pushstring(x,y.c_str())
-#define tolua_iscppstring	tolua_isstring
+#define tolua_pushcppstring(x,y)                tolua_pushstring(x,y.c_str())
+#define tolua_iscppstring                       tolua_isstring
 
-#define tolua_iscppstringarray tolua_isstringarray
-#define tolua_pushfieldcppstring(L,lo,idx,s) tolua_pushfieldstring(L, lo, idx, s.c_str())
+#define tolua_iscppstringarray                  tolua_isstringarray
+#define tolua_pushfieldcppstring(L,lo,idx,s)    tolua_pushfieldstring(L, lo, idx, s.c_str())
 
 #ifndef TEMPLATE_BIND
- #define TEMPLATE_BIND(p)
+#define TEMPLATE_BIND(p)
 #endif
 
 #define TOLUA_TEMPLATE_BIND(p)
@@ -48,9 +48,9 @@ typedef int lua_Object;
 
 struct tolua_Error
 {
-	int index;
-	int array;
-	const char* type;
+    int index;
+    int array;
+    const char* type;
 };
 typedef struct tolua_Error tolua_Error;
 
@@ -69,19 +69,19 @@ TOLUA_API int tolua_isusertable (lua_State* L, int lo, const char* type, int def
 TOLUA_API int tolua_isuserdata (lua_State* L, int lo, int def, tolua_Error* err);
 TOLUA_API int tolua_isusertype (lua_State* L, int lo, const char* type, int def, tolua_Error* err);
 TOLUA_API int tolua_isvaluearray
- (lua_State* L, int lo, int dim, int def, tolua_Error* err);
+(lua_State* L, int lo, int dim, int def, tolua_Error* err);
 TOLUA_API int tolua_isbooleanarray
- (lua_State* L, int lo, int dim, int def, tolua_Error* err);
+(lua_State* L, int lo, int dim, int def, tolua_Error* err);
 TOLUA_API int tolua_isnumberarray
- (lua_State* L, int lo, int dim, int def, tolua_Error* err);
+(lua_State* L, int lo, int dim, int def, tolua_Error* err);
 TOLUA_API int tolua_isstringarray
- (lua_State* L, int lo, int dim, int def, tolua_Error* err);
+(lua_State* L, int lo, int dim, int def, tolua_Error* err);
 TOLUA_API int tolua_istablearray
- (lua_State* L, int lo, int dim, int def, tolua_Error* err);
+(lua_State* L, int lo, int dim, int def, tolua_Error* err);
 TOLUA_API int tolua_isuserdataarray
- (lua_State* L, int lo, int dim, int def, tolua_Error* err);
+(lua_State* L, int lo, int dim, int def, tolua_Error* err);
 TOLUA_API int tolua_isusertypearray
- (lua_State* L, int lo, const char* type, int dim, int def, tolua_Error* err);
+(lua_State* L, int lo, const char* type, int dim, int def, tolua_Error* err);
 
 TOLUA_API void tolua_open (lua_State* L);
 
@@ -101,7 +101,7 @@ TOLUA_API void tolua_variable (lua_State* L, const char* name, lua_CFunction get
 TOLUA_API void tolua_array (lua_State* L,const char* name, lua_CFunction get, lua_CFunction set);
 
 /* TOLUA_API void tolua_set_call_event(lua_State* L, lua_CFunction func, char* type); */
- TOLUA_API void tolua_addbase(lua_State* L, char* name, char* base); 
+TOLUA_API void tolua_addbase(lua_State* L, char* name, char* base);
 
 TOLUA_API void tolua_pushvalue (lua_State* L, int lo);
 TOLUA_API void tolua_pushboolean (lua_State* L, int value);
@@ -138,14 +138,14 @@ TOLUA_API int class_gc_event (lua_State* L);
 #ifdef __cplusplus
 static inline const char* tolua_tocppstring (lua_State* L, int narg, const char* def) {
 
-	const char* s = tolua_tostring(L, narg, def);
-	return s?s:"";
+    const char* s = tolua_tostring(L, narg, def);
+    return s?s:"";
 };
 
 static inline const char* tolua_tofieldcppstring (lua_State* L, int lo, int index, const char* def) {
 
-	const char* s = tolua_tofieldstring(L, lo, index, def);
-	return s?s:"";
+    const char* s = tolua_tofieldstring(L, lo, index, def);
+    return s?s:"";
 };
 
 #else

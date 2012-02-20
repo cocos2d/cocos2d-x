@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCEGLView_qnx.h"
 #include "GLES/gl.h"
 
+#include <ctype.h>
 #include <input/screen_helpers.h>
 #include <sys/keycodes.h>
 
@@ -37,6 +38,7 @@ THE SOFTWARE.
 
 #include "CCSet.h"
 #include "CCDirector.h"
+#include "CCApplication.h"
 #include "ccMacros.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
@@ -84,7 +86,8 @@ static CCEGLView* s_pInstance = NULL;
 CCEGLView::CCEGLView()
 : m_pDelegate(NULL),
   m_fScreenScaleFactor(1.0),
-  m_bNotHVGA(false)
+  m_bNotHVGA(false),
+  m_isWindowActive(false)
 {
 	s_pInstance = this;
 	m_eglDisplay = EGL_NO_DISPLAY;
@@ -549,7 +552,6 @@ bool CCEGLView::createNativeWindow(const EGLConfig &config)
     int 	usage = SCREEN_USAGE_OPENGL_ES1;
 	int 	transp = SCREEN_TRANSPARENCY_NONE;
 	int 	pos[2] = { 0, 0 };
-	int 	screen_size[2];
 	int 	nbuffers = 2;
 	EGLint 	interval = 1;
 	int 	format;
@@ -608,61 +610,69 @@ bool CCEGLView::createNativeWindow(const EGLConfig &config)
 		return false;
 	}
 
-	err = screen_get_window_property_iv(m_screenWindow, SCREEN_PROPERTY_SIZE, screen_size);
-    if (err)
+	screen_display_t screen_disp;
+    int rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&screen_disp);
+    if (rc)
     {
-        perror("screen_get_window_property_iv(SCREEN_PROPERTY_SIZE)");
+    	fprintf(stderr, "screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
         return false;
     }
 
-    switch (CCDirector::sharedDirector()->getDeviceOrientation())
-    {
-    	case CCDeviceOrientationPortrait:
-    	case CCDeviceOrientationPortraitUpsideDown:
-    		orientation = PORTRAIT;
-    		break;
-
-    	case CCDeviceOrientationLandscapeLeft:
-    	case CCDeviceOrientationLandscapeRight:
-    		orientation = LANDSCAPE;
-    		break;
-    }
-
-	// handle the orientation
-//	if (orientation != AUTO)
+	screen_display_mode_t screen_mode;
+	rc = screen_get_display_property_pv(screen_disp, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
+	if (rc)
 	{
-		int angle = atoi(getenv("ORIENTATION"));
-		int buffer_size[2] = { screen_size[0], screen_size[1] };
-		bool flip = false;
+		fprintf(stderr, "screen_get_display_property_pv(SCREEN_PROPERTY_MODE)");
+	    return false;
+	}
 
-		if (((orientation == LANDSCAPE) && (angle == 0  || angle == 180) && (buffer_size[0] < buffer_size[1])) ||
-			((orientation == LANDSCAPE) && (angle == 90 || angle == 270) && (buffer_size[0] > buffer_size[1])) ||
-			((orientation ==  PORTRAIT) && (angle == 90 || angle == 270) && (buffer_size[0] > buffer_size[1])) ||
-			((orientation ==  PORTRAIT) && (angle == 0  || angle == 180) && (buffer_size[0] < buffer_size[1])))
+    int size[2];
+	rc = screen_get_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, size);
+	if (rc)
+	{
+		fprintf(stderr, "screen_get_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
+		return false;
+	}
+
+	int angle = atoi(getenv("ORIENTATION"));
+	int buffer_size[2] = { size[0], size[1] };
+
+	if ((angle == 0) || (angle == 180))
+	{
+		if (((screen_mode.width > screen_mode.height) && (size[0] < size[1])) ||
+			((screen_mode.width < screen_mode.height) && (size[0] > size[1])))
 		{
-
-			buffer_size[0] = screen_size[1];
-			buffer_size[1] = screen_size[0];
-
-			flip = true;
+			buffer_size[1] = size[0];
+			buffer_size[0] = size[1];
 		}
-
-		if (flip)
+	}
+	else if ((angle == 90) || (angle == 270))
+	{
+		if (((screen_mode.width > screen_mode.height) && (size[0] > size[1])) ||
+			((screen_mode.width < screen_mode.height && size[0] < size[1])))
 		{
-			err = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_ROTATION, &angle);
-			if (err)
-			{
-				perror("screen_set_window_property_iv(SCREEN_PROPERTY_ROTATION)");
-				return false;
-			}
-
-			err = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, buffer_size);
-			if (err)
-			{
-				perror("screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
-				return false;
-			}
+			buffer_size[1] = size[0];
+			buffer_size[0] = size[1];
 		}
+	}
+	else
+	{
+		fprintf(stderr, "Navigator returned an unexpected orientation angle of %d.\n", angle);
+		return false;
+	}
+
+	rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, buffer_size);
+	if (rc)
+	{
+		fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
+		return false;
+	}
+
+	rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_ROTATION, &angle);
+	if (rc)
+	{
+		fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_ROTATION)");
+		return false;
 	}
 
 	err = screen_create_window_buffers(m_screenWindow, nbuffers);
@@ -818,25 +828,91 @@ bool CCEGLView::HandleEvents()
 	int 			domain = 0;
 	char 			buf[4] = {0};
 
-#ifdef BPS_EVENTS
 	for (;;)
 	{
 		rc = bps_get_event(&event, 1);
 		assert(rc == BPS_SUCCESS);
 
+#ifdef BPS_EVENTS
 		// break if no more events
 		if (event == NULL)
 			break;
+#else
+		if (event != NULL)
+		{
+#endif
 
 		domain = bps_event_get_domain(event);
 
-		if (domain == screen_get_domain())
+		if (domain == navigator_get_domain())
+		{
+			switch (bps_event_get_code(event))
+			{
+				case NAVIGATOR_SWIPE_DOWN:
+					CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+					break;
+
+				case NAVIGATOR_EXIT:
+					// exit the application
+				//	release();
+					break;
+
+				case NAVIGATOR_WINDOW_INACTIVE:
+					if(m_isWindowActive)
+					{
+						CCApplication::sharedApplication().applicationDidEnterBackground();
+						m_isWindowActive = false;
+					}
+					break;
+
+				case NAVIGATOR_WINDOW_ACTIVE:
+					if(!m_isWindowActive)
+					{
+						CCApplication::sharedApplication().applicationWillEnterForeground();
+						m_isWindowActive = true;
+					}
+					break;
+
+				case NAVIGATOR_WINDOW_STATE:
+				{
+					switch(navigator_event_get_window_state(event))
+					{
+						case NAVIGATOR_WINDOW_FULLSCREEN:
+							if(!m_isWindowActive)
+							{
+								CCApplication::sharedApplication().applicationWillEnterForeground();
+								m_isWindowActive = true;
+							}
+							break;
+						case NAVIGATOR_WINDOW_THUMBNAIL:
+							if(m_isWindowActive)
+							{
+								CCApplication::sharedApplication().applicationDidEnterBackground();
+								m_isWindowActive = false;
+							}
+							break;
+					}
+					break;
+				}
+
+				default:
+					break;
+			}
+		}
+		}
+#ifndef BPS_EVENTS
+		// for now handle screen events separately from BPS events
+		if (screen_get_event(m_screenContext, m_screenEvent, 0) < 0)
+		{
+			// we have an error condition in the screen event
+			break;
+		}
+		else
+		{
+#else
+		else if (domain == screen_get_domain())
 		{
 			m_screenEvent = screen_event_get_event(event);
-
-#else
-		while (!screen_get_event(m_screenContext, m_screenEvent, 0))
-		{
 #endif
 			rc = screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_TYPE, &val);
 			if (rc || val == SCREEN_EVENT_NONE)
@@ -859,7 +935,7 @@ bool CCEGLView::HandleEvents()
 						{
 							CCSet set;
 							touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-									((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+												   ((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 							set.addObject(touch);
 							m_pDelegate->touchesEnded(&set, NULL);
 
@@ -891,7 +967,7 @@ bool CCEGLView::HandleEvents()
 							touch = new CCTouch;
 
 						touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-								((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+											   ((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 						s_pTouches[touch_id] = touch;
 
 						CCSet set;
@@ -912,11 +988,8 @@ bool CCEGLView::HandleEvents()
 						{
 							CCSet set;
 							touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-									((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+												   ((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 							set.addObject(touch);
-
-							// we can likely optimize this call and move it outside of the while loop and just call at the end if we
-							// have a bunch of move touches all in a row
 							m_pDelegate->touchesMoved(&set, NULL);
 						}
 					}
@@ -928,15 +1001,16 @@ bool CCEGLView::HandleEvents()
 						int buttons;
 						int pair[2];
 						static bool mouse_pressed = false;
-						//This is a mouse move event, it is applicable to a device with a usb mouse or simulator
-						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_BUTTONS,
-								&buttons);
-						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_SOURCE_POSITION,
-								pair);
-						if (buttons == SCREEN_LEFT_MOUSE_BUTTON) {
 
-							if (mouse_pressed) {
-								//Left mouse button was released, add a cube
+						// this is a mouse move event, it is applicable to a device with a usb mouse or simulator
+						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_BUTTONS, &buttons);
+						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_SOURCE_POSITION, pair);
+
+						if (buttons & SCREEN_LEFT_MOUSE_BUTTON)
+						{
+							if (mouse_pressed)
+							{
+								// Left mouse button was released
 								if (m_pDelegate && touch_id < MAX_TOUCHES)
 								{
 									CCTouch* touch = s_pTouches[touch_id];
@@ -944,18 +1018,15 @@ bool CCEGLView::HandleEvents()
 									{
 										CCSet set;
 										touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-												((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+															   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 										set.addObject(touch);
-
-										// we can likely optimize this call and move it outside of the while loop and just call at the end if we
-										// have a bunch of move touches all in a row
 										m_pDelegate->touchesMoved(&set, NULL);
 									}
 								}
 							}
 							else
 							{
-								//Left mouse button is pressed
+								// Left mouse button is pressed
 								mouse_pressed = true;
 								if (m_pDelegate && touch_id < MAX_TOUCHES)
 								{
@@ -964,7 +1035,7 @@ bool CCEGLView::HandleEvents()
 										touch = new CCTouch;
 
 									touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-											((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+														   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 									s_pTouches[touch_id] = touch;
 
 									CCSet set;
@@ -973,7 +1044,8 @@ bool CCEGLView::HandleEvents()
 								}
 							}
 						}
-						else {
+						else
+						{
 							if (mouse_pressed)
 							{
 								if (m_pDelegate && touch_id < MAX_TOUCHES)
@@ -985,7 +1057,7 @@ bool CCEGLView::HandleEvents()
 									{
 										CCSet set;
 										touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-												((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+															   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 										set.addObject(touch);
 										m_pDelegate->touchesEnded(&set, NULL);
 
@@ -1046,25 +1118,7 @@ bool CCEGLView::HandleEvents()
 					break;
 			}
 		}
-#ifdef BPS_EVENTS
-		else if (domain == navigator_get_domain())
-		{
-			switch (bps_event_get_code(event))
-			{
-				case NAVIGATOR_SWIPE_DOWN:
-					CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
-					break;
-
-				case NAVIGATOR_EXIT:
-					fprintf(stderr, "navigator exit\n");
-
-					// exit the application
-					release();
-					break;
-			}
-		}
 	}
-#endif
 
 	return true;
 }
@@ -1179,8 +1233,11 @@ void CCEGLView::showKeyboard()
 
 	virtualkeyboard_get_height(&height);
 
-	CCRect rect_begin(0, 0 - height, m_sSizeInPixel.width, height);
-	CCRect rect_end(0, 0, m_sSizeInPixel.width, height);
+	float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+	height = (float)height / factor;
+
+	CCRect rect_begin(0, 0 - height, m_sSizeInPixel.width / factor, height);
+	CCRect rect_end(0, 0, m_sSizeInPixel.width / factor, height);
 
     CCIMEKeyboardNotificationInfo info;
     info.begin = rect_begin;

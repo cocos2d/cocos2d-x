@@ -1,76 +1,17 @@
-namespace   cocos2d {
 
 class CCTextureCache : public CCObject
 {
+    CCTexture2D* addImage(const char* fileimage);
+    CCTexture2D* addUIImage(CCImage *image, const char *key);
+    CCTexture2D* textureForKey(const char* key);
 
-	CCTextureCache();
-	~CCTextureCache();
+    void removeAllTextures();
+    void removeUnusedTextures();
+    void removeTexture(CCTexture2D* texture);
+    void removeTextureForKey(const char *textureKeyName);
+    void dumpCachedTextureInfo();
 
-	char * description(void);
-
-	/** Retruns ths shared instance of the cache */
-	static CCTextureCache * sharedTextureCache();
-
-	static void purgeSharedTextureCache();
-
-	CCTexture2D* addImage(const char* fileimage);
-
-	
-	CCTexture2D* addUIImage(CCImage *image, const char *key);
-
-	
-	CCTexture2D* textureForKey(const char* key);
-
-	void removeAllTextures();
-
-	
-	void removeUnusedTextures();
-
-	void removeTexture(CCTexture2D* texture);
-
-	void removeTextureForKey(const char *textureKeyName);
-	
-	void dumpCachedTextureInfo();
-
-  static void reloadAllTextures();
-};
-/*
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
-
-class VolatileTexture
-{
-public:
-    VolatileTexture(CCTexture2D *t);
-    ~VolatileTexture();
-
-    static void addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format);
-    static void addStringTexture(CCTexture2D *tt, const char* text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-
-    static void removeTexture(CCTexture2D *t);
+    static CCTextureCache * sharedTextureCache();
     static void reloadAllTextures();
-
-public:
-    static std::list<VolatileTexture*> textures;
-    static bool isReloading;
-
-protected:
-    CCTexture2D *texture;
-
-    bool m_bIsString;
-
-    std::string m_strFileName;
-    CCImage::EImageFormat m_FmtImage;
-
-    CCSize          m_size;
-    CCTextAlignment m_alignment;
-    std::string     m_strFontName;
-    std::string     m_strText;
-    float           m_fFontSize;
+    static void purgeSharedTextureCache();
 };
-
-#endif
-*/
-
-}//namespace   cocos2d 
-
-

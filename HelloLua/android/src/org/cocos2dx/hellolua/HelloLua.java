@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -57,10 +57,8 @@ public class HelloLua extends Cocos2dxActivity{
 	 private GLSurfaceView mGLView;
 	
      static {
-         System.loadLibrary("cocos2d");
          System.loadLibrary("cocosdenshion");
          System.loadLibrary("lua");
-         System.loadLibrary("game_logic");
          System.loadLibrary("game");
      }
 }

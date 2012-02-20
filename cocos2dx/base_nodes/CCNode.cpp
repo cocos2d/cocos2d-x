@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "CCTouch.h"
 #include "CCActionManager.h"
+#include "CCScriptSupport.h"
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -75,10 +76,11 @@ CCNode::CCNode(void)
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 , m_bIsTransformGLDirty(true)
 #endif
+, m_nScriptHandler(0)
 {
     // nothing
 }
-CCNode::~CCNode()
+CCNode::~CCNode(void)
 {
 	CCLOGINFO( "cocos2d: deallocing" );
 
@@ -292,10 +294,56 @@ const CCPoint& CCNode::getPositionInPixels()
 	return m_tPositionInPixels;
 }
 
+const CCPoint& CCNode::getPositionLua(void)
+{
+    return m_tPosition;
+}
+
+void CCNode::getPosition(float* x, float* y)
+{
+    *x = m_tPosition.x;
+    *y = m_tPosition.y;
+}
+
+float CCNode::getPositionX(void)
+{
+    return m_tPosition.x;
+}
+
+float CCNode::getPositionY(void)
+{
+    return  m_tPosition.y;
+}
+
+void CCNode::setPositionX(float x)
+{
+    setPosition(ccp(x, m_tPosition.y));
+}
+
+void CCNode::setPositionY(float y)
+{
+    setPosition(ccp(m_tPosition.x, y));
+}
+
+void CCNode::setPosition(float x, float y)
+{
+    setPosition(ccp(x, y));
+}
+
+void CCNode::setPositionInPixels(float x, float y)
+{
+    setPositionInPixels(ccp(x, y));
+}
+
 /// children getter
 CCArray* CCNode::getChildren()
 {
 	return m_pChildren;
+}
+
+unsigned int CCNode::getChildrenCount(void)
+{
+    return m_pChildren ? m_pChildren->count() : 0;
 }
 
 /// camera getter: lazy alloc
@@ -886,6 +934,11 @@ void CCNode::onEnter()
 	this->resumeSchedulerAndActions();
 
 	m_bIsRunning = true;
+
+    if (m_nScriptHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter);
+    }
 }
 
 void CCNode::onEnterTransitionDidFinish()
@@ -899,8 +952,31 @@ void CCNode::onExit()
 
 	m_bIsRunning = false;
 
+    if (m_nScriptHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit);
+    }
+
 	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::onExit);
 }
+
+void CCNode::registerScriptHandler(int nHandler)
+{
+    unregisterScriptHandler();
+    m_nScriptHandler = nHandler;
+    LUALOG("[LUA] Add CCNode event handler: %d", m_nScriptHandler);
+}
+
+void CCNode::unregisterScriptHandler(void)
+{
+    if (m_nScriptHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nScriptHandler);
+        LUALOG("[LUA] Remove CCNode event handler: %d", m_nScriptHandler);
+        m_nScriptHandler = 0;
+    }
+}
+
 CCAction * CCNode::runAction(CCAction* action)
 {
 	CCAssert( action != NULL, "Argument must be non-nil");

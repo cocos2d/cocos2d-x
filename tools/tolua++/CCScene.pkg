@@ -1,16 +1,5 @@
-namespace   cocos2d {
-
 
 class CCScene : public CCNode
 {
-
-	CCScene();
-	virtual ~CCScene();
-	bool init();
-	static CCScene *node(void);
-
-
+    static CCScene *node(void);
 };
-}//namespace   cocos2d 
-
-

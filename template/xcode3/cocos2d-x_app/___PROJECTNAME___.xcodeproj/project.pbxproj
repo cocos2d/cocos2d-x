@@ -171,7 +171,6 @@
 		BF8360D21328687F00F3C033 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E381328687E00F3C033 /* ccTypes.h */; };
 		BF8360D31328687F00F3C033 /* CCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E391328687E00F3C033 /* CCZone.h */; };
 		BF8360D41328687F00F3C033 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E3A1328687E00F3C033 /* cocos2d.h */; };
-		BF8360D61328687F00F3C033 /* selector_protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E3C1328687E00F3C033 /* selector_protocol.h */; };
 		BF8360D71328687F00F3C033 /* CCKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835E3E1328687E00F3C033 /* CCKeypadDelegate.cpp */; };
 		BF8360D81328687F00F3C033 /* CCKeypadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835E3F1328687E00F3C033 /* CCKeypadDispatcher.cpp */; };
 		BF8360D91328687F00F3C033 /* CCLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835E411328687E00F3C033 /* CCLabelAtlas.cpp */; };
@@ -459,7 +458,6 @@
 		BF835E381328687E00F3C033 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		BF835E391328687E00F3C033 /* CCZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCZone.h; sourceTree = "<group>"; };
 		BF835E3A1328687E00F3C033 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
-		BF835E3C1328687E00F3C033 /* selector_protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = selector_protocol.h; sourceTree = "<group>"; };
 		BF835E3E1328687E00F3C033 /* CCKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDelegate.cpp; sourceTree = "<group>"; };
 		BF835E3F1328687E00F3C033 /* CCKeypadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDispatcher.cpp; sourceTree = "<group>"; };
 		BF835E411328687E00F3C033 /* CCLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelAtlas.cpp; sourceTree = "<group>"; };
@@ -936,7 +934,6 @@
 				BF835E381328687E00F3C033 /* ccTypes.h */,
 				BF835E391328687E00F3C033 /* CCZone.h */,
 				BF835E3A1328687E00F3C033 /* cocos2d.h */,
-				BF835E3C1328687E00F3C033 /* selector_protocol.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1270,7 +1267,6 @@
 				BF8360D21328687F00F3C033 /* ccTypes.h in Headers */,
 				BF8360D31328687F00F3C033 /* CCZone.h in Headers */,
 				BF8360D41328687F00F3C033 /* cocos2d.h in Headers */,
-				BF8360D61328687F00F3C033 /* selector_protocol.h in Headers */,
 				BF8360F41328687F00F3C033 /* CCAccelerometer_platform.h in Headers */,
 				BF8360F51328687F00F3C033 /* CCApplication_platform.h in Headers */,
 				BF8360F61328687F00F3C033 /* CCArchOptimalParticleSystem.h in Headers */,

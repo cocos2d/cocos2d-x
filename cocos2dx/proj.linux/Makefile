@@ -38,6 +38,7 @@ OBJECTS = ../actions/CCAction.o \
 					../cocoa/CCZone.o \
 					../effects/CCGrabber.o \
 					../effects/CCGrid.o \
+					../extensions/CCNotificationCenter.o \
 					../keypad_dispatcher/CCKeypadDelegate.o \
 					../keypad_dispatcher/CCKeypadDispatcher.o \
 					../label_nodes/CCLabelAtlas.o \
@@ -67,8 +68,6 @@ OBJECTS = ../actions/CCAction.o \
 					../platform/platform.o \
 					../platform/Linux/CCAplication_linux.o \
 					../platform/Linux/CCEGLView_linux.o \
-					../platform/Linux/CCFileUtils_Linux.o \
-					../platform/Linux/CCImage_Linux.o \
 					../script_support/CCScriptSupport.o \
 					../sprite_nodes/CCAnimation.o \
 					../sprite_nodes/CCAnimationCache.o \

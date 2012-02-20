@@ -21,42 +21,127 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #include "CCScriptSupport.h"
+#include "CCScheduler.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
-CCScriptEngineProtocol::CCScriptEngineProtocol() {}
+CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::entryWithHandler(int nHandler, ccTime fInterval, bool bPaused)
+{
+    CCSchedulerScriptHandlerEntry* pEntry = new CCSchedulerScriptHandlerEntry();
+    pEntry->initWithHandler(nHandler, fInterval, bPaused);
+    pEntry->autorelease();
+    return pEntry;
+}
 
-CCScriptEngineManager::CCScriptEngineManager() 
-:m_pScriptEngine(NULL) 
+bool CCSchedulerScriptHandlerEntry::initWithHandler(int nHandler, ccTime fInterval, bool bPaused)
+{
+    m_pTimer = new CCTimer();
+    m_pTimer->initWithScriptHandler(nHandler, fInterval);
+    m_pTimer->autorelease();
+    m_pTimer->retain();
+    m_nHandler = nHandler;
+    m_bPaused = bPaused;
+    LUALOG("[LUA] ADD script schedule: %d, entryID: %d", m_nHandler, m_entryID);
+    return true;
+}
+
+CCSchedulerScriptHandlerEntry::CCSchedulerScriptHandlerEntry(void)
+: m_pTimer(NULL)
+, m_nHandler(0)
+, m_bPaused(true)
+, m_bMarkedForDeletion(false)
+{
+    static int nEntryCount = 0;
+    m_nEntryID = ++nEntryCount;
+}
+
+CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
+{
+    m_pTimer->release();
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nHandler);
+    LUALOG("[LUA] DEL script schedule %d, entryID: %d", m_nHandler, m_entryID);
+}
+
+// ----------------------------
+
+
+CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::entryWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+{
+    CCTouchScriptHandlerEntry* pEntry = new CCTouchScriptHandlerEntry();
+    pEntry->initWithHandler(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
+    pEntry->autorelease();
+    return pEntry;
+}
+
+CCTouchScriptHandlerEntry::CCTouchScriptHandlerEntry(void)
+: m_nHandler(0)
+, m_bIsMultiTouches(false)
+, m_nPriority(0)
+, m_bSwallowsTouches(false)
 {
 }
 
-CCScriptEngineManager::~CCScriptEngineManager() 
+CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
 {
-    m_pScriptEngine = NULL;
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nHandler);
+    LUALOG("[LUA] Remove touch event handler: %d", m_nHandler);
+}
+
+bool CCTouchScriptHandlerEntry::initWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+{
+    m_nHandler = nHandler;
+    m_bIsMultiTouches = bIsMultiTouches;
+    m_nPriority = nPriority;
+    m_bSwallowsTouches = bSwallowsTouches;
+    
+    return true;
+}
+
+// ----------------------------
+
+
+static CCScriptEngineManager* s_pSharedScriptEngineManager = NULL;
+
+
+CCScriptEngineManager::~CCScriptEngineManager(void)
+{
+    removeScriptEngine();
 }
 
 void CCScriptEngineManager::setScriptEngine(CCScriptEngineProtocol *pScriptEngine)
 {
-	this->m_pScriptEngine = pScriptEngine;
+    removeScriptEngine();
+	m_pScriptEngine = pScriptEngine;
+    m_pScriptEngine->retain();
 }
 
-CCScriptEngineProtocol* CCScriptEngineManager::getScriptEngine()
+void CCScriptEngineManager::removeScriptEngine(void)
 {
-	return m_pScriptEngine;
+    if (m_pScriptEngine)
+    {
+        m_pScriptEngine->release();
+        m_pScriptEngine = NULL;
+    }
 }
 
-void CCScriptEngineManager::removeScriptEngine()
+CCScriptEngineManager* CCScriptEngineManager::sharedManager(void)
 {
-    this->m_pScriptEngine = NULL;
+    if (!s_pSharedScriptEngineManager)
+    {
+        s_pSharedScriptEngineManager = new CCScriptEngineManager();
+    }
+    return s_pSharedScriptEngineManager;
 }
 
-CCScriptEngineManager* CCScriptEngineManager::sharedScriptEngineManager()
+void CCScriptEngineManager::purgeSharedManager(void)
 {
-	static CCScriptEngineManager scriptEngineManager;
-
-	return &scriptEngineManager;
+    if (s_pSharedScriptEngineManager)
+    {
+        delete s_pSharedScriptEngineManager;
+        s_pSharedScriptEngineManager = NULL;
+    }
 }
 
 NS_CC_END;

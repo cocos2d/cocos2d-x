@@ -9,14 +9,14 @@
 			Name="Debug|Win32"
 			>
 			<DebugSettings
-				WorkingDirectory="$(ProjectDir)..\Resource\"
+				WorkingDirectory="$(ProjectDir)..\Resources"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			>
 			<DebugSettings
-				WorkingDirectory="$(ProjectDir)..\Resource\"
+				WorkingDirectory="$(ProjectDir)..\Resources"
 			/>
 		</Configuration>
     </Configurations>

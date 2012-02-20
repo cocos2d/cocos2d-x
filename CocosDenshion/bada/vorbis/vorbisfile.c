@@ -881,14 +881,14 @@ static int _ov_open1(void *f,OggVorbis_File *vf,const char *initial,
   long *serialno_list=NULL;
   int serialno_list_size=0;
   int ret;
-  //AppLog("enter");
+  
   memset(vf,0,sizeof(*vf));
   vf->datasource=f;
   vf->callbacks = callbacks;
-  //AppLog("enter");
+  
   /* init the framing state */
   ogg_sync_init(&vf->oy);
-  //AppLog("enter");
+  
   /* perhaps some data was previously read into a buffer for testing
      against other stream types.  Allow initialization from this
      previously read data (especially as we may be reading from a
@@ -898,7 +898,7 @@ static int _ov_open1(void *f,OggVorbis_File *vf,const char *initial,
     memcpy(buffer,initial,ibytes);
     ogg_sync_wrote(&vf->oy,ibytes);
   }
-  //AppLog("enter");
+  
   /* can we seek? Stevens suggests the seek test was portable */
   if(offsettest!=-1)vf->seekable=1;
 
@@ -908,15 +908,15 @@ static int _ov_open1(void *f,OggVorbis_File *vf,const char *initial,
   vf->vi=_ogg_calloc(vf->links,sizeof(*vf->vi));
   vf->vc=_ogg_calloc(vf->links,sizeof(*vf->vc));
   ogg_stream_init(&vf->os,-1); /* fill in the serialno later */
-  //AppLog("enter");
+  
   /* Fetch all BOS pages, store the vorbis header and all seen serial
      numbers, load subsequent vorbis setup headers */
   if((ret=_fetch_headers(vf,vf->vi,vf->vc,&serialno_list,&serialno_list_size,NULL))<0){
-	  //AppLog("enter");
+	  
     vf->datasource=NULL;
     ov_clear(vf);
   }else{
-	  //AppLog("enter");
+	  
     /* serial number list for first link needs to be held somewhere
        for second stage of seekable stream open; this saves having to
        seek/reread first link's serialnumber data then. */
@@ -933,12 +933,12 @@ static int _ov_open1(void *f,OggVorbis_File *vf,const char *initial,
     vf->ready_state=PARTOPEN;
   }
   if(serialno_list)_ogg_free(serialno_list);
-  //AppLog("enter");
+  
   return(ret);
 }
 
 static int _ov_open2(OggVorbis_File *vf){
-	//AppLog("enter");
+	
   if(vf->ready_state != PARTOPEN) return OV_EINVAL;
   vf->ready_state=OPENED;
   if(vf->seekable){
@@ -950,7 +950,7 @@ static int _ov_open2(OggVorbis_File *vf){
     return(ret);
   }else
     vf->ready_state=STREAMSET;
-  //AppLog("enter");
+  
   return 0;
 }
 
@@ -1008,7 +1008,7 @@ int ov_open(FILE *f,OggVorbis_File *vf,const char *initial,long ibytes){
     (int (*)(void *))                             fclose,
     (long (*)(void *))                            ftell
   };
-  //AppLog("enter");
+  
   return ov_open_callbacks((void *)f, vf, initial, ibytes, callbacks);
 }
 

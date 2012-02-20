@@ -1,26 +1,9 @@
-namespace   cocos2d {
 
-class  CCCopying
+class CCObject
 {
-
-	CCObject* copyWithZone(CCZone* pZone);
+    void release(void);
+    void retain(void);
+    bool isSingleRefrence(void);
+    unsigned int retainCount(void);
+    bool isEqual(const CCObject* pObject);
 };
-
-class  CCObject : public CCCopying
-{
-
-	CCObject(void);
-	~CCObject(void);
-    
-	void release(void);
-	void retain(void);
-	CCObject* autorelease(void);
-	CCObject* copy(void);
-	bool isSingleRefrence(void);
-	unsigned int retainCount(void);
-	bool isEqual(const CCObject* pObject);
-
-};
-}//namespace   cocos2d 
-
-

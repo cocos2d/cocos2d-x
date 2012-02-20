@@ -70,6 +70,9 @@
     <Filter Include="script_support">
       <UniqueIdentifier>{e20bbd88-a111-40c3-9d5d-387a4c9cd4d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extensions">
+      <UniqueIdentifier>{35a45df9-e7ee-4fba-b38c-7b1369c3385c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -333,6 +336,12 @@
     <ClCompile Include="..\textures\CCTexturePVR.cpp">
       <Filter>textures</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\win32\CCAccelerometer_win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extensions\CCNotificationCenter.cpp">
+      <Filter>extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -593,9 +602,6 @@
     <ClInclude Include="..\include\cocos2d.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\selector_protocol.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCAccelerometer_platform.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -689,6 +695,9 @@
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\include\CCTexturePVR.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extensions\CCNotificationCenter.h">
+      <Filter>extensions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

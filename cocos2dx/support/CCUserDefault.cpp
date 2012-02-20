@@ -42,12 +42,14 @@ using namespace std;
 
 NS_CC_BEGIN;
 
+static xmlDocPtr g_sharedDoc = NULL;
+
 /**
  * define the functions here because we don't want to
  * export xmlNodePtr and other types in "CCUserDefault.h"
  */
 
-static xmlNodePtr getXMLNodeForKey(const char* pKey, xmlNodePtr *rootNode, xmlDocPtr *doc)
+static xmlNodePtr getXMLNodeForKey(const char* pKey, xmlNodePtr *rootNode)
 {
 	xmlNodePtr curNode = NULL;
 
@@ -59,16 +61,8 @@ static xmlNodePtr getXMLNodeForKey(const char* pKey, xmlNodePtr *rootNode, xmlDo
 
 	do 
 	{
-		// read doc
-		*doc = xmlReadFile(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "utf-8", XML_PARSE_RECOVER);
-		if (NULL == *doc)
-		{
-			CCLOG("can not read xml file");
-			break;
-		}
-
 		// get root node
-		*rootNode = xmlDocGetRootElement(*doc);
+		*rootNode = xmlDocGetRootElement(g_sharedDoc);
 		if (NULL == *rootNode)
 		{
 			CCLOG("read root node error");
@@ -95,19 +89,12 @@ static inline const char* getValueForKey(const char* pKey)
 {
 	const char* ret = NULL;
 	xmlNodePtr rootNode;
-	xmlDocPtr doc;
-	xmlNodePtr node = getXMLNodeForKey(pKey, &rootNode, &doc);
+	xmlNodePtr node = getXMLNodeForKey(pKey, &rootNode);
 
 	// find the node
 	if (node)
 	{
 		ret = (const char*)xmlNodeGetContent(node);
-	}
-
-	// free doc
-	if (doc)
-	{
-		xmlFreeDoc(doc);
 	}
 
 	return ret;
@@ -116,7 +103,6 @@ static inline const char* getValueForKey(const char* pKey)
 static void setValueForKey(const char* pKey, const char* pValue)
 {
 	xmlNodePtr rootNode;
-	xmlDocPtr doc;
 	xmlNodePtr node;
 
 	// check the params
@@ -126,7 +112,7 @@ static void setValueForKey(const char* pKey, const char* pValue)
 	}
 
 	// find the node
-	node = getXMLNodeForKey(pKey, &rootNode, &doc);
+	node = getXMLNodeForKey(pKey, &rootNode);
 
 	// if node exist, change the content
 	if (node)
@@ -145,13 +131,6 @@ static void setValueForKey(const char* pKey, const char* pValue)
 			xmlAddChild(tmpNode, content);
 		}	
 	}
-
-	// save file and free doc
-	if (doc)
-	{
-		xmlSaveFile(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str(),doc);
-		xmlFreeDoc(doc);
-	}
 }
 
 /**
@@ -168,7 +147,19 @@ bool CCUserDefault::m_sbIsFilePathInitialized = false;
  */
 CCUserDefault::~CCUserDefault()
 {
+	flush();
+	if (g_sharedDoc)
+	{
+		xmlFreeDoc(g_sharedDoc);
+		g_sharedDoc = NULL;
+	}
+
 	m_spUserDefault = NULL;
+}
+
+CCUserDefault::CCUserDefault()
+{
+	g_sharedDoc = xmlReadFile(getXMLFilePath().c_str(), "utf-8", XML_PARSE_RECOVER);
 }
 
 void CCUserDefault::purgeSharedUserDefault()
@@ -348,7 +339,7 @@ void CCUserDefault::initXMLFilePath()
 bool CCUserDefault::createXMLFile()
 {
 	bool bRet = false;
-    xmlDocPtr doc = NULL;
+	xmlDocPtr doc = NULL;
 
 	do 
 	{
@@ -389,6 +380,15 @@ bool CCUserDefault::createXMLFile()
 const string& CCUserDefault::getXMLFilePath()
 {
 	return m_sFilePath;
+}
+
+void CCUserDefault::flush()
+{
+	// save to file
+	if (g_sharedDoc)
+	{
+		xmlSaveFile(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), g_sharedDoc);
+	}
 }
 
 NS_CC_END;

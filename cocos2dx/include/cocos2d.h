@@ -89,8 +89,8 @@ THE SOFTWARE.
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
 
-// havn't implement on wophone and marmalade
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+// havn't implement on wophone
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE)
 #include "CCTextFieldTTF.h"
 #endif
 
@@ -104,7 +104,6 @@ THE SOFTWARE.
 #include "CCZone.h"
 #include "CCGeometry.h"
 #include "CCAffineTransform.h"
-#include "selector_protocol.h"
 #include "CCTouch.h"
 #include "CCPointExtension.h"
 
@@ -116,7 +115,10 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "CCFileUtils.h"
 #include "CCAccelerometer.h"
- 
+
+// extensions
+#include "extensions/CCNotificationCenter.h"
+
 //
 // cocos2d macros
 //

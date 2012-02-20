@@ -1,15 +1,14 @@
-namespace   cocos2d {
 
 struct CCAffineTransform {
-  CGFloat a, b, c, d;
-  CGFloat tx, ty;
+    CGFloat a, b, c, d;
+    CGFloat tx, ty;
 };
+
 CCAffineTransform __CCAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
 CCAffineTransform CCAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
 
 CCPoint __CCPointApplyAffineTransform(CCPoint point, CCAffineTransform t);
 CCPoint CCPointApplyAffineTransform(CCPoint point, CCAffineTransform t);
-
 
 CCSize CCSizeApplyAffineTransform(CCSize size, CCAffineTransform t);
 CCSize __CCSizeApplyAffineTransform(CCSize size, CCAffineTransform t);
@@ -23,8 +22,3 @@ CCAffineTransform CCAffineTransformScale(CCAffineTransform t, CGFloat sx, CGFloa
 CCAffineTransform CCAffineTransformConcat(CCAffineTransform t1,CCAffineTransform t2);
 bool CCAffineTransformEqualToTransform(CCAffineTransform t1,CCAffineTransform t2);
 CCAffineTransform CCAffineTransformInvert(CCAffineTransform t);
-
-//extern const CCAffineTransform CCAffineTransformIdentity;
-}//namespace   cocos2d 
-
-

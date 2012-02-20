@@ -10,6 +10,13 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		784521C014EBA389009D533B /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 784521BE14EBA389009D533B /* CCNotificationCenter.cpp */; };
+		784521C114EBA389009D533B /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 784521BF14EBA389009D533B /* CCNotificationCenter.h */; };
+		784521CE14EBA449009D533B /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521C514EBA449009D533B /* CloseNormal.png */; };
+		784521CF14EBA449009D533B /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521C614EBA449009D533B /* CloseSelected.png */; };
+		784521D214EBA449009D533B /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521CA14EBA449009D533B /* HelloWorld.png */; };
+		78891AB714EA205A0072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB614EA205A0072482D /* Default.png */; };
+		78891AB914EA20C70072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB814EA20C70072482D /* Icon.png */; };
 		AD7C5EC514751287008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EC414751287008E5647 /* CCThread_ios.mm */; };
 		AD7C5ED2147512AD008E5647 /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7C5EC7147512AD008E5647 /* FontLabel.h */; };
 		AD7C5ED3147512AD008E5647 /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EC8147512AD008E5647 /* FontLabel.m */; };
@@ -57,9 +64,6 @@
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF492D4C1289302400A09262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4DE6AC138BB89600CF907D /* RootViewController.mm */; };
-		BF755FB012A1015E00450234 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAD12A1015E00450234 /* CloseNormal.png */; };
-		BF755FB112A1015E00450234 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAE12A1015E00450234 /* CloseSelected.png */; };
-		BF755FB212A1015E00450234 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAF12A1015E00450234 /* HelloWorld.png */; };
 		BF7A45A113F2219E0035C563 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7A45A013F2219E0035C563 /* CCTouchHandler.h */; };
 		BF7B975C13B18860004222DD /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF7B975B13B18860004222DD /* CCScriptSupport.cpp */; };
 		BF7B975E13B1886E004222DD /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7B975D13B1886E004222DD /* CCScriptSupport.h */; };
@@ -167,7 +171,6 @@
 		BF83548713275F5600F3C033 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351ED13275F5600F3C033 /* ccTypes.h */; };
 		BF83548813275F5600F3C033 /* CCZone.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351EE13275F5600F3C033 /* CCZone.h */; };
 		BF83548913275F5600F3C033 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351EF13275F5600F3C033 /* cocos2d.h */; };
-		BF83548B13275F5600F3C033 /* selector_protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351F113275F5600F3C033 /* selector_protocol.h */; };
 		BF83548C13275F5600F3C033 /* CCKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8351F313275F5600F3C033 /* CCKeypadDelegate.cpp */; };
 		BF83548D13275F5600F3C033 /* CCKeypadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8351F413275F5600F3C033 /* CCKeypadDispatcher.cpp */; };
 		BF83548E13275F5600F3C033 /* CCLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8351F613275F5600F3C033 /* CCLabelAtlas.cpp */; };
@@ -275,7 +278,6 @@
 		BFEE2E4013E16D2D005C0577 /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3513E16D2D005C0577 /* ZFont.h */; };
 		BFEE2E4113E16D2D005C0577 /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E3613E16D2D005C0577 /* ZFont.m */; };
 		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
-		D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F25D12E53386005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +295,13 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		784521BE14EBA389009D533B /* CCNotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNotificationCenter.cpp; sourceTree = "<group>"; };
+		784521BF14EBA389009D533B /* CCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotificationCenter.h; sourceTree = "<group>"; };
+		784521C514EBA449009D533B /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
+		784521C614EBA449009D533B /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
+		784521CA14EBA449009D533B /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
+		78891AB614EA205A0072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../ios/Default.png; sourceTree = "<group>"; };
+		78891AB814EA20C70072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../ios/Icon.png; sourceTree = "<group>"; };
 		AD7C5EC414751287008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCThread_ios.mm; path = ios/CCThread_ios.mm; sourceTree = "<group>"; };
 		AD7C5EC7147512AD008E5647 /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
 		AD7C5EC8147512AD008E5647 /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
@@ -339,9 +348,6 @@
 		BF492D4B1289302400A09262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF4DE6AB138BB89600CF907D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF4DE6AC138BB89600CF907D /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
-		BF755FAD12A1015E00450234 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
-		BF755FAE12A1015E00450234 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
-		BF755FAF12A1015E00450234 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		BF7A45A013F2219E0035C563 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BF7B975B13B18860004222DD /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		BF7B975D13B1886E004222DD /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
@@ -449,7 +455,6 @@
 		BF8351ED13275F5600F3C033 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		BF8351EE13275F5600F3C033 /* CCZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCZone.h; sourceTree = "<group>"; };
 		BF8351EF13275F5600F3C033 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
-		BF8351F113275F5600F3C033 /* selector_protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = selector_protocol.h; sourceTree = "<group>"; };
 		BF8351F313275F5600F3C033 /* CCKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDelegate.cpp; sourceTree = "<group>"; };
 		BF8351F413275F5600F3C033 /* CCKeypadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDispatcher.cpp; sourceTree = "<group>"; };
 		BF8351F613275F5600F3C033 /* CCLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelAtlas.cpp; sourceTree = "<group>"; };
@@ -555,8 +560,6 @@
 		BFEE2E3513E16D2D005C0577 /* ZFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFont.h; sourceTree = "<group>"; };
 		BFEE2E3613E16D2D005C0577 /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloWorld-Info.plist"; sourceTree = SOURCE_ROOT; };
-		D4F9F25D12E53386005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -603,11 +606,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				784521C214EBA449009D533B /* Resources */,
 				BF23D4E2143315EB00657E08 /* Classes */,
 				BF5681CC1313A84D0055EEAC /* ios */,
 				BF83517613275F5500F3C033 /* cocos2dx */,
-				BF755FAC12A1015E00450234 /* Resource */,
-				BF163FB9128E671C0010DC04 /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -628,6 +630,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		784521BD14EBA389009D533B /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				784521BE14EBA389009D533B /* CCNotificationCenter.cpp */,
+				784521BF14EBA389009D533B /* CCNotificationCenter.h */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		784521C214EBA449009D533B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				78891AB814EA20C70072482D /* Icon.png */,
+				78891AB614EA205A0072482D /* Default.png */,
+				784521C514EBA449009D533B /* CloseNormal.png */,
+				784521C614EBA449009D533B /* CloseSelected.png */,
+				784521CA14EBA449009D533B /* HelloWorld.png */,
+			);
+			name = Resources;
+			path = ../Resources;
+			sourceTree = "<group>";
+		};
 		AD7C5EC6147512AD008E5647 /* FontLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -645,13 +669,6 @@
 			);
 			name = FontLabel;
 			path = ios/FontLabel;
-			sourceTree = "<group>";
-		};
-		BF163FB9128E671C0010DC04 /* Resources-iPad */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
 		BF1E5331135D23A100FD0934 /* text_input_node */ = {
@@ -687,19 +704,6 @@
 			name = ios;
 			sourceTree = "<group>";
 		};
-		BF755FAC12A1015E00450234 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				D4F9F25D12E53386005CA6D2 /* Icon.png */,
-				D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */,
-				BF755FAD12A1015E00450234 /* CloseNormal.png */,
-				BF755FAE12A1015E00450234 /* CloseSelected.png */,
-				BF755FAF12A1015E00450234 /* HelloWorld.png */,
-			);
-			name = Resource;
-			path = ../Resource;
-			sourceTree = SOURCE_ROOT;
-		};
 		BF7B975A13B18860004222DD /* script_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -711,6 +715,7 @@
 		BF83517613275F5500F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				784521BD14EBA389009D533B /* extensions */,
 				BF7B975A13B18860004222DD /* script_support */,
 				BF1E5331135D23A100FD0934 /* text_input_node */,
 				BF1FAE951352F52F007553D9 /* CCDirector.cpp */,
@@ -883,7 +888,6 @@
 				BF8351ED13275F5600F3C033 /* ccTypes.h */,
 				BF8351EE13275F5600F3C033 /* CCZone.h */,
 				BF8351EF13275F5600F3C033 /* cocos2d.h */,
-				BF8351F113275F5600F3C033 /* selector_protocol.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1212,7 +1216,6 @@
 				BF83548713275F5600F3C033 /* ccTypes.h in Headers */,
 				BF83548813275F5600F3C033 /* CCZone.h in Headers */,
 				BF83548913275F5600F3C033 /* cocos2d.h in Headers */,
-				BF83548B13275F5600F3C033 /* selector_protocol.h in Headers */,
 				BF8354A913275F5600F3C033 /* CCAccelerometer_platform.h in Headers */,
 				BF8354AA13275F5600F3C033 /* CCApplication_platform.h in Headers */,
 				BF8354AB13275F5600F3C033 /* CCArchOptimalParticleSystem.h in Headers */,
@@ -1270,6 +1273,7 @@
 				AD7C5ED8147512AD008E5647 /* ZAttributedString.h in Headers */,
 				AD7C5EDA147512AD008E5647 /* ZAttributedStringPrivate.h in Headers */,
 				AD7C5EDB147512AD008E5647 /* ZFont.h in Headers */,
+				784521C114EBA389009D533B /* CCNotificationCenter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1341,10 +1345,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF755FB012A1015E00450234 /* CloseNormal.png in Resources */,
-				BF755FB112A1015E00450234 /* CloseSelected.png in Resources */,
-				BF755FB212A1015E00450234 /* HelloWorld.png in Resources */,
-				D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */,
+				78891AB714EA205A0072482D /* Default.png in Resources */,
+				78891AB914EA20C70072482D /* Icon.png in Resources */,
+				784521CE14EBA449009D533B /* CloseNormal.png in Resources */,
+				784521CF14EBA449009D533B /* CloseSelected.png in Resources */,
+				784521D214EBA449009D533B /* HelloWorld.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1476,6 +1481,7 @@
 				AD7C5ED7147512AD008E5647 /* FontManager.m in Sources */,
 				AD7C5ED9147512AD008E5647 /* ZAttributedString.m in Sources */,
 				AD7C5EDC147512AD008E5647 /* ZFont.m in Sources */,
+				784521C014EBA389009D533B /* CCNotificationCenter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

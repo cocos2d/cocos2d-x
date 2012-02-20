@@ -58,28 +58,6 @@ public:
 		return (unsigned int)m_array.size();
 	}
 
-	unsigned int getIndexOfObject(T pObject)
-	{
-                if (m_array.empty() || (pObject == 0))
-		{
-			return 0;
-		}
-
-		CCMutableArrayIterator iter;
-		unsigned int uRet = 0;
-		unsigned int i;
-		for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
-		{
-			if (*iter == pObject)
-			{
-				uRet = i;
-				break;
-			}
-		}
-
-		return uRet;
-	}
-
 	bool containsObject(T pObject)
 	{
 		if (m_array.empty() || (! pObject))

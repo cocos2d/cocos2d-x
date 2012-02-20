@@ -197,9 +197,9 @@ public:
 	*/
 	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect);
 public:
-	virtual bool init(void);
+    CCSprite(void);
 	virtual ~CCSprite(void);
-	CCSprite();
+	virtual bool init(void);
 
 	virtual void removeChild(CCNode* pChild, bool bCleanup);
 	virtual void removeAllChildrenWithCleanup(bool bCleanup);
@@ -245,8 +245,6 @@ public:
 	/** opacity: conforms to CCRGBAProtocol protocol */
 	virtual void setIsOpacityModifyRGB(bool bValue);
 	virtual bool getIsOpacityModifyRGB(void);
-
-	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol *)this; }
 
 	// CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);
