@@ -585,8 +585,7 @@ namespace cocos2d{
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{
-            CCObject* pObject = NULL;
-            CCARRAY_FOREACH(m_pChildren, pObject)
+            CCARRAY_FOREACH_REVERSE(m_pChildren, pObject)
             {
                 CCNode* pChild = dynamic_cast<CCNode*>(pObject);
                 if (pChild && pChild->getIsVisible() && ((CCMenuItem*)pChild)->getIsEnabled())
