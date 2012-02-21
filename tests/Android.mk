@@ -53,6 +53,8 @@ tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 tests/EaseActionsTest/EaseActionsTest.cpp \
 tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 tests/EffectsTest/EffectsTest.cpp \
+tests/ExtensionsTest/ExtensionsTest.cpp \
+tests/ExtensionsTest/NotificationCenterTest.cpp \
 tests/FontTest/FontTest.cpp \
 tests/HiResTest/HiResTest.cpp \
 tests/IntervalTest/IntervalTest.cpp \

@@ -131,6 +131,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/effects</locationURI>
 		</link>
 		<link>
+			<name>extensions</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/extensions</locationURI>
+		</link>
+		<link>
 			<name>include</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
@@ -206,4 +211,33 @@
 			<locationURI>PARENT-1-PROJECT_LOC/touch_dispatcher</locationURI>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1329277849637</id>
+			<name>platform</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-qnx</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1329277849640</id>
+			<name>platform</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-third_party</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1329277892891</id>
+			<name>platform/third_party</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-qnx</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

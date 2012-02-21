@@ -1151,6 +1151,38 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="AccelerometerTest"
+					>
+					<File
+						RelativePath="..\tests\AccelerometerTest\AccelerometerTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\AccelerometerTest\AccelerometerTest.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ExtensionsTest"
+					>
+					<File
+						RelativePath="..\tests\ExtensionsTest\ExtensionsTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ExtensionsTest\ExtensionsTest.h"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ExtensionsTest\NotificationCenterTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ExtensionsTest\NotificationCenterTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

@@ -37,7 +37,7 @@ THE SOFTWARE.
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 	#include "marmalade/CCAccelerometer_marmalade.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "Linux/CCAccelerometer_linux.h"
+	#include "linux/CCAccelerometer_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCAccelerometer_bada.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)

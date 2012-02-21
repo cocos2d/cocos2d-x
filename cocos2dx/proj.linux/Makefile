@@ -38,6 +38,7 @@ OBJECTS = ../actions/CCAction.o \
 					../cocoa/CCZone.o \
 					../effects/CCGrabber.o \
 					../effects/CCGrid.o \
+					../extensions/CCNotificationCenter.o \
 					../keypad_dispatcher/CCKeypadDelegate.o \
 					../keypad_dispatcher/CCKeypadDispatcher.o \
 					../label_nodes/CCLabelAtlas.o \

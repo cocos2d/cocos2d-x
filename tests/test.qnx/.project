@@ -90,9 +90,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/AppDelegate.h</locationURI>
 		</link>
 		<link>
-			<name>Res</name>
+			<name>Resources</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Res</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Resources</locationURI>
 		</link>
 		<link>
 			<name>tests</name>

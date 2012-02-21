@@ -55,6 +55,11 @@ files
 	"*.h"
 	"*.cpp"
 	
+	("../extensions")
+	[extensions]
+	"CCNotificationCenter.cpp"
+	"CCNotificationCenter.h"
+	
 	("../include")
 	[include]
 	"*.h"
@@ -123,7 +128,7 @@ files
 	"ccUtils.h"
 	"TransformUtils.cpp"
 	"TransformUtils.h"
-	
+
 	("../support/data_support")
 	[support/data_support]
 	"*.h"

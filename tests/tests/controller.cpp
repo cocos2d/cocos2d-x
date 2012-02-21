@@ -117,7 +117,11 @@ static TestScene* CreateTestScene(int nIdx)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 	case TEST_TEXTURECACHE: pScene = new TextureCacheTestScene(); break;
 #endif
-	
+    case TEST_EXTENSIONS:
+        {
+            pScene = new ExtensionsTestScene();
+        }
+        break;
     default:
         break;
     }

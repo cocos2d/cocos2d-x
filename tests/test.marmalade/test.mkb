@@ -250,6 +250,11 @@ files
 	("../tests/DirectorTest")
 	"*.h"
 	"*.cpp"
+	
+	[Tests/ExtensionsTest]
+	("../ExtensionsTest")
+	"*.h"
+	"*.cpp"
 }
 
 if {{ defined MARMALADEUSECHIPMUNK}}

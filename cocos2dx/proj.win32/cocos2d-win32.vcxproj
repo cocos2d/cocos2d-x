@@ -150,6 +150,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\actions\CCActionPageTurn3D.cpp" />
     <ClCompile Include="..\actions\CCActionProgressTimer.cpp" />
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
+    <ClCompile Include="..\extensions\CCNotificationCenter.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
@@ -223,6 +224,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\cocoa\CCNS.h" />
     <ClInclude Include="..\effects\CCGrabber.h" />
     <ClInclude Include="..\effects\CCGrid.h" />
+    <ClInclude Include="..\extensions\CCNotificationCenter.h" />
     <ClInclude Include="..\include\CCAccelerometer.h" />
     <ClInclude Include="..\include\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\include\CCAction.h" />
