@@ -90,9 +90,6 @@
     <ClCompile Include="..\lua\lua.c">
       <Filter>lua</Filter>
     </ClCompile>
-    <ClCompile Include="..\lua\luac.c">
-      <Filter>lua</Filter>
-    </ClCompile>
     <ClCompile Include="..\lua\lundump.c">
       <Filter>lua</Filter>
     </ClCompile>

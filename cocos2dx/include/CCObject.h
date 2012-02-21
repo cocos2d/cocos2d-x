@@ -44,7 +44,7 @@ public:
 class CC_DLL CCObject : public CCCopying
 {
 public:
-    // object id, CCLuaEngine need public m_uID
+    // object id, CCScriptSupport need public m_uID
     unsigned int		m_uID;
     // Lua reference id
     int                 m_nLuaID;

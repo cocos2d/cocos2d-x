@@ -95,7 +95,7 @@ public:
 	void setSwallowsTouches(bool bSwallowsTouches);
 
 	/** MutableSet that contains the claimed touches */
-	NSMutableSet* getClaimedTouches(void);
+	CCSet* getClaimedTouches(void);
 
 	/** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
 	bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);
@@ -106,7 +106,7 @@ public:
 
 protected:
 	bool m_bSwallowsTouches;
-	NSMutableSet *m_pClaimedTouches;
+	CCSet *m_pClaimedTouches;
 };
 }//namespace   cocos2d 
 

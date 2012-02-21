@@ -30,12 +30,8 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabelTTF.h"
-
+#include "CCScriptSupport.h"
 #include <stdarg.h>
-
-#if CC_LUA_ENGINE_ENABLED
-#include "CCLuaEngine.h"
-#endif
 
 namespace cocos2d{
     
@@ -71,9 +67,7 @@ namespace cocos2d{
     
     CCMenuItem::~CCMenuItem()
     {
-#if CC_LUA_ENGINE_ENABLED
         unregisterScriptHandler();
-#endif
     }
     
     void CCMenuItem::selected()
@@ -86,24 +80,22 @@ namespace cocos2d{
         m_bIsSelected = false;
     }
     
-#if CC_LUA_ENGINE_ENABLED
-    void CCMenuItem::registerScriptHandler(unsigned int uFuncID)
+    void CCMenuItem::registerScriptHandler(int nHandler)
     {
         unregisterScriptHandler();
-        m_uScriptHandlerFuncID = uFuncID;
-        LUALOG("[LUA] Add CCMenuItem script handler: %u", m_uScriptHandlerFuncID);
+        m_nScriptHandler = nHandler;
+        LUALOG("[LUA] Add CCMenuItem script handler: %d", m_nScriptHandler);
     }
     
     void CCMenuItem::unregisterScriptHandler(void)
     {
-        if (m_uScriptHandlerFuncID)
+        if (m_nScriptHandler)
         {
-            CCLuaEngine::sharedEngine()->removeLuaFuncID(m_uScriptHandlerFuncID);
-            LUALOG("[LUA] Remove CCMenuItem script handler: %u", m_uScriptHandlerFuncID);
-            m_uScriptHandlerFuncID = 0;
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nScriptHandler);
+            LUALOG("[LUA] Remove CCMenuItem script handler: %d", m_nScriptHandler);
+            m_nScriptHandler = 0;
         }
     }
-#endif
     
     void CCMenuItem::activate()
     {
@@ -114,12 +106,10 @@ namespace cocos2d{
                 (m_pListener->*m_pfnSelector)(this);
             }
             
-#if CC_LUA_ENGINE_ENABLED
-            if (m_uScriptHandlerFuncID)
+            if (m_nScriptHandler)
             {
-                CCLuaEngine::sharedEngine()->executeFunctionWithIntegerData(m_uScriptHandlerFuncID, getTag());
+                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, getTag());
             }
-#endif
         }
     }
     

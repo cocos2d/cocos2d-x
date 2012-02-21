@@ -43,12 +43,6 @@ extern "C"
     // java vm helper function
     //////////////////////////////////////////////////////////////////////////
 
-    jint JNI_OnLoad(JavaVM *vm, void *reserved)
-    {
-		cocos2d::JniHelper::setJavaVM(vm);
-        return JNI_VERSION_1_4;
-    }
-
 	static bool getEnv(JNIEnv **env)
 	{
 		bool bRet = false;

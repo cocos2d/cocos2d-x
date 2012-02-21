@@ -62,8 +62,6 @@ public class TestsDemo extends Cocos2dxActivity{
     	 System.loadLibrary("cocosdenshion");
     	 System.loadLibrary("chipmunk");
     	 System.loadLibrary("box2d");
-    	 System.loadLibrary("cocos2d");
-    	 System.loadLibrary("game_logic");
          System.loadLibrary("tests");
      }     
 }

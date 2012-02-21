@@ -36,6 +36,8 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
+class CCTouchScriptHandlerEntry;
+
 //
 // CCLayer
 //
@@ -83,15 +85,10 @@ public:
 	*/
 	virtual void registerWithTouchDispatcher(void);
     
-#if CC_LUA_ENGINE_ENABLED
     /** Register script touch events handler */
-    void registerScriptTouchHandler(unsigned int uFuncID, bool isMultiTouches, int nPriority, bool bSwallowsTouches);
+    void registerScriptTouchHandler(int nHandler, bool bIsMultiTouches = false, int nPriority = INT_MIN, bool bSwallowsTouches = false);
     /** Unregister script touch events handler */
     void unregisterScriptTouchHandler(void);
-#endif
-
-	virtual void touchDelegateRetain();
-	virtual void touchDelegateRelease();
 
 	/** whether or not it will receive Touch events.
 	You can enable / disable touch events with this property.
@@ -110,13 +107,11 @@ public:
     */
     CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
     
-#if CC_LUA_ENGINE_ENABLED
 private:
-    // Script touch events handler function reference ID
-    unsigned int m_uScriptHandlerFuncID;
-    int excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
-    int excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
-#endif
+    // Script touch events handler
+    CCTouchScriptHandlerEntry* m_pScriptHandlerEntry;
+    int  excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
+    int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
 };
     
 // for the subclass of CCLayer, each has to implement the static "node" method 
