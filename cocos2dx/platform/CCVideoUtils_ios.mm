@@ -9,7 +9,7 @@
 
 using namespace cocos2d;
 
-void CCVideoUtils::playVideo(char const* filename, bool showControls, bool skipByTap, SelectorProtocol* pSelectorTarget,
+void CCVideoUtils::playVideo(char const* filename, bool showControls, bool skipByTap, CCObject* pSelectorTarget,
                              SEL_CallFuncN selector, cocos2d::CCNode* withObject) {
     [[CCVideoUtils_iOS shared] playVideo:[NSString stringWithUTF8String:filename] showControls:showControls skipByTap:skipByTap target:pSelectorTarget selector:selector withObject:withObject];
 }
