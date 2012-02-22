@@ -12,6 +12,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		7ECAE73914F52FB100A57185 /* AccelerometerSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECAE73814F52FB100A57185 /* AccelerometerSimulation.m */; };
 		AD7C5EB614750E2E008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EB514750E2E008E5647 /* CCThread_ios.mm */; };
 		ADDD87E51484BB53005306E7 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = ADDD85FA1484BB37005306E7 /* Box2D.h */; };
 		ADDD87E61484BB53005306E7 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADDD85FC1484BB37005306E7 /* b2BroadPhase.cpp */; };
@@ -588,6 +589,8 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		7ECAE73714F52FB100A57185 /* AccelerometerSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerSimulation.h; sourceTree = "<group>"; };
+		7ECAE73814F52FB100A57185 /* AccelerometerSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerometerSimulation.m; sourceTree = "<group>"; };
 		AD7C5EB514750E2E008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread_ios.mm; sourceTree = "<group>"; };
 		ADDD85FA1484BB37005306E7 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		ADDD85FC1484BB37005306E7 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -1342,6 +1345,15 @@
 				D44C620F132DFF4E0009C878 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7ECAE73614F52FB100A57185 /* Simulation */ = {
+			isa = PBXGroup;
+			children = (
+				7ECAE73714F52FB100A57185 /* AccelerometerSimulation.h */,
+				7ECAE73814F52FB100A57185 /* AccelerometerSimulation.m */,
+			);
+			path = Simulation;
 			sourceTree = "<group>";
 		};
 		ADDD85F81484BB37005306E7 /* Box2D */ = {
@@ -2522,6 +2534,7 @@
 		BF83594513276C7700F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				7ECAE73614F52FB100A57185 /* Simulation */,
 				AD7C5EB514750E2E008E5647 /* CCThread_ios.mm */,
 				BF1E7A4813E2637200C2D68B /* FontLabel */,
 				BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */,
@@ -3182,6 +3195,7 @@
 				BF1E7BC513E273DF00C2D68B /* FontTest.cpp in Sources */,
 				BF1B49F013FE04C300838E41 /* CurrentLanguageTest.cpp in Sources */,
 				ADF1707D1474F632004E9212 /* TextureCacheTest.cpp in Sources */,
+				7ECAE73914F52FB100A57185 /* AccelerometerSimulation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
