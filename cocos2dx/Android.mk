@@ -67,6 +67,7 @@ platform/CCCommon.cpp \
 platform/platform.cpp \
 platform/android/CCEGLView_android.cpp \
 platform/android/CCAccelerometer_android.cpp \
+platform/android/jni/CCVideoUtilsJni.cpp \
 platform/android/CCApplication_android.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \

@@ -28,9 +28,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,16 +43,19 @@ public class Cocos2dxActivity extends Activity{
     private static Cocos2dxMusic backgroundMusicPlayer;
     private static Cocos2dxSound soundPlayer;
     private static Cocos2dxAccelerometer accelerometer;
+    private static Cocos2dxVideo videoPlayer;
     private static boolean accelerometerEnabled = false;
     private static Handler handler;
     private final static int HANDLER_SHOW_DIALOG = 1;
     private static String packageName;
-
-    private static native void nativeSetPaths(String apkPath);
+    private static Cocos2dxActivity mContext;
+    
+	private static native void nativeSetPaths(String apkPath);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         
         // get frame size
         DisplayMetrics dm = new DisplayMetrics();
@@ -60,6 +65,8 @@ public class Cocos2dxActivity extends Activity{
         // init media player and sound player
         backgroundMusicPlayer = new Cocos2dxMusic(this);
         soundPlayer = new Cocos2dxSound(this);
+        
+        videoPlayer = new Cocos2dxVideo(this);
         
         // init bitmap context
         Cocos2dxBitmap.setContext(this);
@@ -77,6 +84,11 @@ public class Cocos2dxActivity extends Activity{
     
     public static String getCurrentLanguage() {
     	String languageName = java.util.Locale.getDefault().getLanguage();
+    	return languageName;
+    }
+    
+    public static String getCurrentLocale() {
+    	String languageName = java.util.Locale.getDefault().toString();
     	return languageName;
     }
     
@@ -183,6 +195,10 @@ public class Cocos2dxActivity extends Activity{
     	soundPlayer.end();
     }
     
+    public static void openURL(String url) {
+    	mContext.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)));
+    }
+    
     public static String getCocos2dxPackageName(){
     	return packageName;
     }
@@ -194,6 +210,9 @@ public class Cocos2dxActivity extends Activity{
     @Override
     protected void onResume() {
     	super.onResume();
+    	
+    	videoPlayer.onResume();
+
     	if (accelerometerEnabled) {
     	    accelerometer.enable();
     	}
@@ -202,6 +221,9 @@ public class Cocos2dxActivity extends Activity{
     @Override
     protected void onPause() {
     	super.onPause();
+    	
+    	videoPlayer.onPause();
+    	
     	if (accelerometerEnabled) {
     	    accelerometer.disable();
     	}
@@ -240,6 +262,10 @@ public class Cocos2dxActivity extends Activity{
 
 	    dialog.show();
     }
+
+	public void setGLView(Cocos2dxGLSurfaceView mGLView) {
+		videoPlayer.setGLView(mGLView);
+	}
 }
 
 class DialogMessage {
