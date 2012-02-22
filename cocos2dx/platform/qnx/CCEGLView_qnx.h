@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <EGL/egl.h>
 #include <screen/screen.h>
 
+#include <bps/event.h>
 namespace   cocos2d {
 class CCSet;
 class CCTouch;
@@ -38,6 +39,14 @@ class EGLTouchDelegate;
 
 class CC_DLL CCEGLView
 {
+public:
+class CC_DLL EventHandler
+	{
+	public:
+		virtual bool HandleBPSEvent(bps_event_t* event) = 0;
+
+	    virtual ~EventHandler() {}
+	};
 public:
     CCEGLView();
     virtual ~CCEGLView();
@@ -55,6 +64,7 @@ public:
 	bool    Create(int width, int height);
     EGLTouchDelegate* getDelegate(void);
     
+	void    setEventHandler(EventHandler* pHandler);
     // keep compatible
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
@@ -102,6 +112,7 @@ private:
 	bool    			m_bNotHVGA;
 	bool				m_isGLInitialized;
 	
+	EventHandler*		m_pEventHandler;
 	EGLTouchDelegate   *m_pDelegate;
 	float  				m_fScreenScaleFactor;
 

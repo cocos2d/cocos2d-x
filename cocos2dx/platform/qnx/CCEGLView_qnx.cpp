@@ -84,7 +84,7 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 static CCEGLView* s_pInstance = NULL;
 
 CCEGLView::CCEGLView()
-: m_pDelegate(NULL),
+: m_pDelegate(NULL), m_pEventHandler(NULL),
   m_fScreenScaleFactor(1.0),
   m_bNotHVGA(false),
   m_isWindowActive(false)
@@ -808,6 +808,11 @@ void CCEGLView::release()
 	exit(0);
 }
 
+void CCEGLView::setEventHandler(EventHandler* pHandler)
+{
+	m_pEventHandler = pHandler;
+}
+
 void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
 	m_pDelegate = pDelegate;
@@ -841,6 +846,8 @@ bool CCEGLView::HandleEvents()
 		if (event != NULL)
 		{
 #endif
+		if (m_pEventHandler && m_pEventHandler->HandleBPSEvent(event))
+			continue;
 
 		domain = bps_event_get_domain(event);
 
