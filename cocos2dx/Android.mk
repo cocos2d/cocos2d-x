@@ -1,8 +1,10 @@
 LOCAL_PATH := $(call my-dir)
 
-# compile cocos2d.so
 include $(CLEAR_VARS)
-LOCAL_MODULE := libcocos2d
+
+LOCAL_MODULE := cocos2dx_static
+
+LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
@@ -34,6 +36,7 @@ cocos2d.cpp \
 CCDirector.cpp \
 effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
+extensions/CCNotificationCenter.cpp \
 keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
 label_nodes/CCLabelAtlas.cpp \
@@ -104,21 +107,33 @@ tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
 touch_dispatcher/CCTouchHandler.cpp 
 
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
+                           $(LOCAL_PATH)/include \
+                           $(LOCAL_PATH)/platform
+                           
+LOCAL_EXPORT_LDLIBS := -llog\
+                       -lz \
+                       -lGLESv1_CM
+                    
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
-                    $(LOCAL_PATH)/platform \
-                    $(LOCAL_PATH)/platform/third_party/android/iconv \
-                    $(LOCAL_PATH)/platform/third_party/android/libpng \
-                    $(LOCAL_PATH)/platform/third_party/android/libxml2 \
-                    $(LOCAL_PATH)/platform/third_party/android/libjpeg           
+                    $(LOCAL_PATH)/platform
 
-LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries/$(TARGET_ARCH_ABI)) \
-                 -lGLESv1_CM -llog -lz \
-                 -lpng \
-                 -lxml2 \
-                 -ljpeg
+LOCAL_LDLIBS := -lGLESv1_CM \
+                -llog \
+                -lz 
+                
+LOCAL_STATIC_LIBRARIES := png_static_prebuilt
+LOCAL_STATIC_LIBRARIES += xml2_static_prebuilt
+LOCAL_STATIC_LIBRARIES += jpeg_static_prebuilt
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
-                                 
-include $(BUILD_SHARED_LIBRARY)
+
+include $(BUILD_STATIC_LIBRARY)
+
+$(call import-add-path,$(LOCAL_PATH)/..)
+$(call import-module,cocos2dx/platform/third_party/android/modules/libpng)
+$(call import-module,cocos2dx/platform/third_party/android/modules/libxml2)
+$(call import-module,cocos2dx/platform/third_party/android/modules/libjpeg)
+

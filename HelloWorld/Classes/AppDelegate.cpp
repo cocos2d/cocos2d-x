@@ -64,9 +64,9 @@ bool AppDelegate::initInstance() {
 		// The HelloWorld is designed as HVGA.
 		CCEGLView * pMainWnd = new CCEGLView();
 		CC_BREAK_IF(! pMainWnd
-				|| ! pMainWnd->Create("cocos2d: Hello World", 800, 480,480, 320));
+				|| ! pMainWnd->Create("cocos2d: Hello World", 480, 320 ,480, 320));
 
-		CCFileUtils::setResourcePath("../Resource/");
+		CCFileUtils::setResourcePath("../Resources/");
 
 #endif  // CC_PLATFORM_LINUX
 
@@ -81,8 +81,8 @@ bool AppDelegate::initInstance() {
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
 		CCEGLView * pMainWnd = new CCEGLView();
-		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(480, 320));
-		CCFileUtils::setResourcePath("./app/native/Resource");
+		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(1024, 600));
+		CCFileUtils::setResourcePath("app/native/Resources");
 #endif // CC_PLATFORM_QNX
 		bRet = true;
 	} while (0);

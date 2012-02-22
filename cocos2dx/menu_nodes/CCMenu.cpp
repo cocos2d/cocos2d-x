@@ -48,13 +48,7 @@ namespace cocos2d{
 
         CCMenu* CCMenu::node()
         {
-            CCMenu *menu = new CCMenu();
-            if (menu && menu->init()) {
-                menu->autorelease();
-                return menu;
-            }
-            CC_SAFE_DELETE(menu)
-            return 0;
+            return menuWithItem(NULL);
         }
 
 	CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
@@ -77,12 +71,6 @@ namespace cocos2d{
 	{
 		return menuWithItems(item, NULL);
 	}
-
-    bool CCMenu::init()
-    {
-        va_list args;
-        return initWithItems(NULL, args);
-    }
 
 	bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
 	{

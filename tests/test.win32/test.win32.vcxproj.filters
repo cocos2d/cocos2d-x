@@ -139,6 +139,12 @@
     <Filter Include="classes\tests\TextureCacheTest">
       <UniqueIdentifier>{17b9b23c-1ef6-466e-a2ab-c558f4015698}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\AccelerometerTest">
+      <UniqueIdentifier>{b4dcf28e-44a5-44b0-8e52-8a83b24df912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest">
+      <UniqueIdentifier>{cfa9177f-33ea-481d-a0a9-fbcf5463a37a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -395,6 +401,15 @@
     </ClCompile>
     <ClCompile Include="..\tests\TextureCacheTest\TextureCacheTest.cpp">
       <Filter>classes\tests\TextureCacheTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\AccelerometerTest\AccelerometerTest.cpp">
+      <Filter>classes\tests\AccelerometerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\ExtensionsTest.cpp">
+      <Filter>classes\tests\ExtensionsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest.cpp">
+      <Filter>classes\tests\ExtensionsTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -712,6 +727,15 @@
     </ClInclude>
     <ClInclude Include="..\tests\TextureCacheTest\TextureCacheTest.h">
       <Filter>classes\tests\TextureCacheTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\AccelerometerTest\AccelerometerTest.h">
+      <Filter>classes\tests\AccelerometerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\ExtensionsTest.h">
+      <Filter>classes\tests\ExtensionsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest.h">
+      <Filter>classes\tests\ExtensionsTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -58,13 +58,15 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 	// It works like this: if the relative path already includes the resource path
 	// it will be returned as it is
 	const std::string relPath = pszRelativePath;
-	if (relPath.find(s_strResourcePath) == std::string::npos) {
+	if (relPath.find(s_strResourcePath) == std::string::npos) 
+    {
 		CCString *pRet = new CCString();
 		pRet->autorelease();
 		pRet->m_sString = s_strResourcePath + pszRelativePath;
 		return pRet->m_sString.c_str();
 	}
-	else {
+	else 
+    {
 		return pszRelativePath;
 	}
 }
@@ -86,7 +88,8 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 	std::string full_path = pszFileName;
 
 	// If it is not inside resource path
-	if (full_path.find(s_strResourcePath) == std::string::npos) {
+	if (full_path.find(s_strResourcePath) == std::string::npos) 
+    {
 			full_path = s_strResourcePath + pszFileName;
 	}
 
@@ -147,7 +150,7 @@ std::string CCFileUtils::getWriteablePath()
 	char cwd[FILENAME_MAX];
 
 	getcwd(cwd, FILENAME_MAX - 1);
-	cwd[FILENAME_MAX] = '\0';
+	cwd[FILENAME_MAX-1] = '\0';
 
 	std::string path = cwd;
 	path += "/data/";

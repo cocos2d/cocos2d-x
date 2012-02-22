@@ -80,7 +80,6 @@ private:
     std::set<CCObject *> *m_pSet;
 };
 
-typedef CCSet NSMutableSet;
 }//namespace   cocos2d 
 
 #endif // __NS_SET_H__

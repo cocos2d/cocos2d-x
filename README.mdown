@@ -1,37 +1,34 @@
-cocos2d-x multiplatform
+cocos2d-x 
 ==================
 
 [cocos2d-x][1] is a multi-platform 2D game engine in C++, based on [cocos2d-iphone][2] and licensed under MIT.
-Now this engine has been ported to WOPhone, iOS 4.1, Android 2.1 and higher, WindowsXP & Windows7. 
+Now this engine has been expended to iOS, Android, Bada, BlackBerry Playbook, Marmalade and desktop operating systems like Linux, WindowsXP & Windows7. 
 
 Multi Platform
 -------------
-   * [cocos2d-iphone-cpp][3]:  tested on iPhone 3.2, 4.1 & 4.2 SDK
-   * [cocos2d-android-ndk][4]: based on ndk-r4(crystax.net version) & ndk-r5, tested on Android 2.1, 2.2, 2.3 emulator, HTC G2, G3, G6, G7 device
-   * [cocos2d-wophone][5]: well tested on WOPhone of ChinaUnicom, both emulator & device.
-   * [cocos2d-win32][6]: well tested on WindowsXP & Windows7. It depends on PowerVR OpenGL ES 1.1 libraries for win32 system
-
-
+   * iOS:  stable, well tested on iOS 4.0 ~ 5.0 SDK.
+   * Android: stable, well tested on 2.0~3.1, based on ndk r5 ~ r7.
+   * Bada: stable on Bada SDK 1.0 & 2.0
+   * BlackBerry Playbook: stable, contribued by engineers working at RIM
+   * Marmalade: stable since cocos2d-x-0.11.0
+   * Windows: stable, tested on WinXP, Vista, Win7. Please upgrde the drive of your video card if you meet problems on OpenGL functions
+   * Linux: usable.
 
 Document
 ------------------
-   * Website: [www.cocos2d-x.org][7]
-   * [Online API References][8] 
+   * Website: [www.cocos2d-x.org][3]
+   * [Online API References][4] 
 	
 Contact us
 ------------------
-   * Forum: [http://forum.cocos2d-x.org][9]
-   * Twitter: [http://www.twitter.com/cocos2dx][10]
-   * Sina mini-blog: [http://t.sina.com.cn/cocos2dx][11]
+   * Forum: [http://forum.cocos2d-x.org][5]
+   * Twitter: [http://www.twitter.com/cocos2dx][6]
+   * Sina mini-blog: [http://t.sina.com.cn/cocos2dx][7]
    
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
-[3]: http://www.cocos2d-x.org/wiki/cocos2d-x/Cocos2d-iphone-cpp "cocos2d-iphone-cpp"
-[4]: http://www.cocos2d-x.org/wiki/cocos2d-x/Cocos2d-android-ndk "cocos2d-android-ndk"
-[5]: http://www.cocos2d-x.org/wiki/cocos2d-x/Cocos2d-wophone "cocos2d-wophone"
-[6]: http://www.cocos2d-x.org/wiki/cocos2d-x/Cocos2d-win32 "cocos2d-win32"
-[7]: http://www.cocos2d-x.org "www.cocos2d-x.org"
-[8]: http://www.cocos2d-x.org/embedded/cocos2d-x/classes.html "API References"
-[9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
-[10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
-[11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
+[3]: http://www.cocos2d-x.org "www.cocos2d-x.org"
+[4]: http://www.cocos2d-x.org/embedded/cocos2d-x/classes.html "API References"
+[5]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
+[6]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
+[7]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"

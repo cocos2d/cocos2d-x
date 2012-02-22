@@ -213,16 +213,17 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     private final static int HANDLER_CLOSE_IME_KEYBOARD = 3;
     private static Handler handler;
     private static TextInputWraper textInputWraper;
-    private TextView mTextField;
+    private Cocos2dxEditText mTextField;
     
     public TextView getTextField() {
     	return mTextField;
     }
     
-    public void setTextField(TextView view) {
+    public void setTextField(Cocos2dxEditText view) {
     	mTextField = view;
     	if (null != mTextField && null != textInputWraper) {
     		mTextField.setOnEditorActionListener(textInputWraper);
+    		mTextField.setMainView(this);
     		this.requestFocus();
     	}
     }
@@ -282,9 +283,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
         case MotionEvent.ACTION_POINTER_DOWN:
-        	final int idPointerDown = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
-            final float xPointerDown = event.getX(idPointerDown);
-            final float yPointerDown = event.getY(idPointerDown);
+        	final int indexPointerDown = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+        	final int idPointerDown = event.getPointerId(indexPointerDown);
+            final float xPointerDown = event.getX(indexPointerDown);
+            final float yPointerDown = event.getY(indexPointerDown);
 
             queueEvent(new Runnable() {
                 @Override
@@ -318,9 +320,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             break;
 
         case MotionEvent.ACTION_POINTER_UP:
-        	final int idPointerUp = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
-            final float xPointerUp = event.getX(idPointerUp);
-            final float yPointerUp = event.getY(idPointerUp);
+        	final int indexPointUp = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+        	final int idPointerUp = event.getPointerId(indexPointUp);
+            final float xPointerUp = event.getX(indexPointUp);
+            final float yPointerUp = event.getY(indexPointUp);
             
             queueEvent(new Runnable() {
                 @Override

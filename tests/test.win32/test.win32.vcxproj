@@ -64,7 +64,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -109,6 +109,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\tests\AccelerometerTest\AccelerometerTest.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-1159.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-1174.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-350.cpp" />
@@ -122,6 +123,8 @@
     <ClCompile Include="..\tests\BugsTest\BugsTest.cpp" />
     <ClCompile Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\ExtensionsTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest.cpp" />
     <ClCompile Include="..\tests\FontTest\FontTest.cpp" />
     <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp" />
     <ClCompile Include="..\tests\TextureCacheTest\TextureCacheTest.cpp" />
@@ -196,6 +199,7 @@
     <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\tests\AccelerometerTest\AccelerometerTest.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-1159.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-1174.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-350.h" />
@@ -209,6 +213,8 @@
     <ClInclude Include="..\tests\BugsTest\BugsTest.h" />
     <ClInclude Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\ExtensionsTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest.h" />
     <ClInclude Include="..\tests\FontTest\FontTest.h" />
     <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h" />
     <ClInclude Include="..\tests\TextureCacheTest\TextureCacheTest.h" />

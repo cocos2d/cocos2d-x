@@ -1,32 +1,15 @@
 
-#include "CCAction.h"
-#include "CCMutableArray.h"
-#include "CCObject.h"
-#include "selector_protocol.h"
-
-namespace cocos2d {
-
-struct _hashElement;
-
-class  CCActionManager : public CCObject, public SelectorProtocol
+class CCActionManager : public CCObject
 {
-public:
-	CCActionManager(void);	
-	bool init(void);  
-	void addAction(CCAction *pAction, CCNode *pTarget, bool paused);
-	void removeAllActions(void);
-	void removeAllActionsFromTarget(CCObject *pTarget);
-	void removeAction(CCAction *pAction);
-	void removeActionByTag(int tag, CCObject *pTarget);
-	CCAction* getActionByTag(int tag, CCObject *pTarget);
-	int numberOfRunningActionsInTarget(CCObject *pTarget);
-	void pauseTarget(CCObject *pTarget);
-	void resumeTarget(CCObject *pTarget);
-	void purgeSharedManager(void);
-	static CCActionManager* sharedManager(void);
+    void removeAllActions(void);
+    void removeAllActionsFromTarget(CCObject *pTarget);
+    void removeAction(CCAction *pAction);
+    void removeActionByTag(int tag, CCObject *pTarget);
 
+    int numberOfRunningActionsInTarget(CCObject *pTarget);
+
+    void pauseTarget(CCObject *pTarget);
+    void resumeTarget(CCObject *pTarget);
+
+    static CCActionManager* sharedManager(void);
 };
-
-}
-
-

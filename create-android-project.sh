@@ -34,7 +34,7 @@ KERNEL_NAME=`uname -s | grep "CYGWIN*"`
 if [ $KERNEL_NAME"hi" != "hi" ]; then
     echo "Error!!!"
     echo "Don't run in cygwin. You should run corresponding bat."
-    exit 
+    exit
 fi
 
 # ok, it was run under linux
@@ -44,14 +44,14 @@ check_path(){
     if [ ! -f create-android-project.sh ];then
         echo Error!!!
         echo Please run in cocos2dx root
-        exit 
+        exit
     fi
 }
 
 create_android_project(){
     echo "Input package path. For example: org.cocos2dx.example"
     read PACKAGE_PATH
-    echo "Now cocos2d-x suppurts Android 2.1-update1, 2.2, 2.3 & 3.0"
+    echo "Now cocos2d-x supports Android 2.1-update1, 2.2, 2.3 & 3.0"
     echo "Other versions have not tested."
     $ANDROID_SDK_ROOT_LOCAL/tools/android list targets
     echo "input target id:"

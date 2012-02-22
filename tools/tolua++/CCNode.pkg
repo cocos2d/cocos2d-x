@@ -1,106 +1,122 @@
-namespace   cocos2d {
+
 enum {
-	kCCNodeTagInvalid = -1,
+    kCCNodeOnEnter,
+    kCCNodeOnExit
 };
 
-class CCNode : public CCObject, public SelectorProtocol
+class CCNode : public CCObject
 {
-        CCNode();
-	int	getZOrder();
-	float	getVertexZ();
-	void	setVertexZ(float var);
-	float	getRotation();
-	void	setRotation(float newRotation);
-	float	getScale();
-	void	setScale(float scale);
-	float	getScaleX();
-	void	setScaleX(float newScaleX);
-	float	getScaleY();
-	void	setScaleY(float newScaleY);
-	CCPoint getPosition();
-	void	setPosition(CCPoint newPosition);
-	
-	float getSkewX();
-	void	setSkewX(float skewX);
-	float getSkewY();
-	void	setSkewY(float skewY);
-	
-	CCMutableArray<CCNode*> *  getChildren();
-	CCCamera*  getCamera();
-	CCGridBase*  getGrid();
-	void	setGrid(CCGridBase* pGrid);
-	bool	getIsVisible();
-	void	setIsVisible(bool var);
-	CCPoint getAnchorPoint();
-	void	setAnchorPoint(CCPoint point);
-	CCPoint getAnchorPointInPixels();
-	CCSize  getContentSizeInPixels();
-	void    setContentSizeInPixels(CCSize sz);
-	CCSize  getContentSize();
-	void	setContentSize(CCSize size);
-	bool	getIsRunning();
-	CCNode* getParent();
-	void	setParent(CCNode * var);
-	bool	getIsRelativeAnchorPoint();
-	void	setIsRelativeAnchorPoint(bool newValue);
-	int	getTag();
-	void	setTag(int var);
-	void*	getUserData();
-	void	setUserData(void *var);
-	void	onEnter();
-	void	onEnterTransitionDidFinish();
-	void	onExit();
-	void    addChild(CCNode * child);
-	void    addChild(CCNode * child, int zOrder);
-	void    addChild(CCNode * child, int zOrder, int tag);
-	void	removeChild(CCNode* child, bool cleanup);
-	void	removeAllChildrenWithCleanup(bool cleanup);
-	void	reorderChild(CCNode * child, int zOrder);
-	void	cleanup(void);
-	void	draw(void);
-	void	visit(void);
-	void	transform(void);
-	void	transformAncestors(void);
-	CCRect	boundingBox(void);
-	CCAction* runAction(CCAction* action);
-	void	stopAllActions(void);
-	void	stopAction(CCAction* action);
-	void	stopActionByTag(int tag);
-	CCAction* getActionByTag(int tag);
-	char *	description(void);
-	CCNode* getChildByTag(int tag);
-	unsigned int	numberOfRunningActions(void);
-	//bool	isScheduled(SEL_SCHEDULE selector);
-	void	scheduleUpdate(void);
-	void	scheduleUpdateWithPriority(int priority);
-	void	unscheduleUpdate(void);
-	//void	schedule(SEL_SCHEDULE selector);
-	//void	schedule(SEL_SCHEDULE selector, ccTime interval);
-	//void	unschedule(SEL_SCHEDULE selector);
-	
-	void	unscheduleAllSelectors(void);
-	void	resumeSchedulerAndActions(void);
-	void	pauseSchedulerAndActions(void);
-	CCAffineTransform nodeToParentTransform(void);
-	CCAffineTransform parentToNodeTransform(void);
-	CCAffineTransform nodeToWorldTransform(void);
-	CCAffineTransform worldToNodeTransform(void);
-	CCPoint convertToNodeSpace(CCPoint worldPoint);
-	CCPoint convertToWorldSpace(CCPoint nodePoint);
-	CCPoint convertToNodeSpaceAR(CCPoint worldPoint);
-	CCPoint convertToWorldSpaceAR(CCPoint nodePoint);
-	CCPoint convertTouchToNodeSpace(CCTouch * touch);
-	CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
-	void	removeFromParentAndCleanup(bool cleanup);
-	void	removeChildByTag(int tag, bool cleanup);
+    int     getZOrder();
+    float   getVertexZ();
+    void    setVertexZ(float var);
+    float   getRotation();
+    void    setRotation(float newRotation);
+    float   getScale();
+    void    setScale(float scale);
+    float   getScaleX();
+    void    setScaleX(float newScaleX);
+    float   getScaleY();
+    void    setScaleY(float newScaleY);
+    CCPoint getPositionLua();
+    void    getPosition(float* x = 0, float* y = 0);
+    float   getPositionX();
+    float   getPositionY();
+    void    setPosition(CCPoint newPosition);
+    void    setPosition(float x, float y);
+    void    setPositionX(float x);
+    void    setPositionY(float y);
+    float   getSkewX();
+    void    setSkewX(float skewX);
+    float   getSkewY();
+    void    setSkewY(float skewY);
+    bool    getIsVisible();
+    void    setIsVisible(bool var);
+    CCPoint getAnchorPoint();
+    void    setAnchorPoint(CCPoint point);
+    CCSize  getContentSize();
+    void    setContentSize(CCSize size);
+    int     getTag();
+    void    setTag(int var);
 
-	static CCNode * node(void);
-	
+    tolua_readonly tolua_property__CCZOrder int zOrder;
+    tolua_property__CCVertexZ       float vertexZ;
+    tolua_property__CCRotation      float rotation;
+    tolua_property__CCScale         float scale;
+    tolua_property__CCScaleX        float scaleX;
+    tolua_property__CCScaleY        float scaleY;
+    tolua_property__CCPositionX     float x;
+    tolua_property__CCPositionY     float y;
+    tolua_property__CCSkewX         float skewX;
+    tolua_property__CCSkewY         float skewY;
+    tolua_property__CCIsVisible     bool  isVisible;
+    tolua_property__CCAnchorPoint   CCPoint anchorPoint;
+    tolua_property__CCContentSize   CCSize contentSize;
+    tolua_property__CCTag           int tag;
 
+    CCMutableArray<CCNode*>* getChildren();
+    unsigned int getChildrenCount(void);
 
+    CCCamera*   getCamera();
+    CCGridBase* getGrid();
+    void    setGrid(CCGridBase* pGrid);
+    CCPoint getAnchorPointInPixels();
+    CCSize  getContentSizeInPixels();
+    void    setContentSizeInPixels(CCSize sz);
+    bool    getIsRunning();
+    CCNode* getParent();
+    void    setParent(CCNode * var);
+    bool    getIsRelativeAnchorPoint();
+    void    setIsRelativeAnchorPoint(bool newValue);
+    void*   getUserData();
+    void    setUserData(void *var);
+    void    addChild(CCNode * child);
+    void    addChild(CCNode * child, int zOrder);
+    void    addChild(CCNode * child, int zOrder, int tag);
+    void    removeChild(CCNode* child, bool cleanup);
+    void    removeAllChildrenWithCleanup(bool cleanup);
+    void    reorderChild(CCNode * child, int zOrder);
+    void    cleanup(void);
+    void    draw(void);
+    void    visit(void);
+    void    transform(void);
+    void    transformAncestors(void);
+    CCRect  boundingBox(void);
+
+    void    runAction(CCAction* action);
+    void    stopAllActions(void);
+    void    stopAction(CCAction* action);
+
+    void    stopActionByTag(int tag);
+    CCAction*   getActionByTag(int tag);
+    char *      description(void);
+    CCNode* getChildByTag(int tag);
+
+    unsigned int numberOfRunningActions(void);
+
+    void    scheduleUpdate(void);
+    void    scheduleUpdateWithPriority(int priority);
+    void    unscheduleUpdate(void);
+    void    unscheduleAllSelectors(void);
+    void    resumeSchedulerAndActions(void);
+    void    pauseSchedulerAndActions(void);
+
+    CCAffineTransform nodeToParentTransform(void);
+    CCAffineTransform parentToNodeTransform(void);
+    CCAffineTransform nodeToWorldTransform(void);
+    CCAffineTransform worldToNodeTransform(void);
+
+    CCPoint convertToNodeSpace(CCPoint worldPoint);
+    CCPoint convertToWorldSpace(CCPoint nodePoint);
+    CCPoint convertToNodeSpaceAR(CCPoint worldPoint);
+    CCPoint convertToWorldSpaceAR(CCPoint nodePoint);
+    CCPoint convertTouchToNodeSpace(CCTouch * touch);
+    CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
+
+    void removeFromParentAndCleanup(bool cleanup);
+    void removeChildByTag(int tag, bool cleanup);
+
+    void registerScriptHandler(LUA_FUNCTION funcID);
+    void unregisterScriptHandler(void);
+
+    static CCNode * node(void);
 };
-}//namespace   cocos2d 
-
-
-
- 

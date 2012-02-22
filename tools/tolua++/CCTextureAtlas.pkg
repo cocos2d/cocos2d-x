@@ -1,59 +1,26 @@
-namespace   cocos2d {
 
-class CCTextureAtlas : public CCObject 
+class CCTextureAtlas : public CCObject
 {
-	unsigned int getTotalQuads();
-	unsigned int getCapacity();
+    unsigned int getTotalQuads();
+    unsigned int getCapacity();
 
-	CCTexture2D* getTexture();
-	void setTexture(CCTexture2D* val);
-	/** Quads that are going to be rendered */
+    void setTexture(CCTexture2D* val);
+    CCTexture2D* getTexture();
 
-	void setQuads(ccV3F_C4B_T2F_Quad* val);
-	ccV3F_C4B_T2F_Quad* getQuads();
+    void setQuads(ccV3F_C4B_T2F_Quad* val);
+    ccV3F_C4B_T2F_Quad* getQuads();
 
-	CCTextureAtlas();
-	~CCTextureAtlas();
+    void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
+    void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
+    void insertQuadFromIndex(unsigned int fromIndex, unsigned int newIndex);
+    void removeQuadAtIndex(unsigned int index);
+    void removeAllQuads();
+    bool resizeCapacity(unsigned int n);
+    void drawNumberOfQuads(unsigned int n);
+    void drawNumberOfQuads(unsigned int n, unsigned int start);
 
-	char * description();
+    void drawQuads();
 
-	static CCTextureAtlas * textureAtlasWithFile(const char* file , unsigned int capacity);
-
-	bool initWithFile(const char* file, unsigned int capacity);
-
-	static CCTextureAtlas * textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity);
-
-	
-	bool initWithTexture(CCTexture2D *texture, unsigned int capacity);
-
-	
-	void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
-
-	
-	void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
-
-	
-	void insertQuadFromIndex(unsigned int fromIndex, unsigned int newIndex);
-
-	void removeQuadAtIndex(unsigned int index);
-
-
-	void removeAllQuads();
-
-	bool resizeCapacity(unsigned int n);
-
-
-	void drawNumberOfQuads(unsigned int n);
-	
-	void drawNumberOfQuads(unsigned int n, unsigned int start);
-
-	/** draws all the Atlas's Quads
-	*/
-	void drawQuads();
-
+    static CCTextureAtlas* textureAtlasWithFile(const char* file , unsigned int capacity);
+    static CCTextureAtlas* textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity);
 };
-}//namespace   cocos2d 
-
-
-
-

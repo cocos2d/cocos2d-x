@@ -1,75 +1,29 @@
-namespace   cocos2d {
 
 class CCTimer : public CCObject
 {
-
-	CCTimer(void);
-
-	
-	ccTime getInterval(void);
-
-	void setInterval(ccTime fInterval);
-
-	//bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
-
-    //bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-
-	void update(ccTime dt);
-
-	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
-
-	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-	
-	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
-	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
-
-	//SEL_SCHEDULE m_pfnSelector;
-	ccTime m_fInterval;
-	std::string m_scriptFunc;
-
+    ccTime getInterval(void);
+    void setInterval(ccTime fInterval);
+    void update(ccTime dt);
 };
-
 
 class CCScheduler : public CCObject
 {
-    ~CCScheduler(void);
-	
-	ccTime getTimeScale(void);
-
-	void setTimeScale(ccTime fTimeScale);
+    ccTime getTimeScale(void);
+    void setTimeScale(ccTime fTimeScale);
 
 
-	void tick(ccTime dt);
+    unsigned int scheduleScriptFunc(LUA_FUNCTION funcID, ccTime fInterval, bool bPaused);
+    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
 
-	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
-	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
-	void unscheduleScriptFunc(const char *pszFuncName);
-	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
+    void scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused);
+    void unscheduleUpdateForTarget(CCObject *pTarget);
 
-	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
+    void unscheduleAllSelectorsForTarget(CCObject *pTarget);
+    void unscheduleAllSelectors(void);
 
-	void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
+    void pauseTarget(CCObject *pTarget);
+    void resumeTarget(CCObject *pTarget);
+    bool isTargetPaused(CCObject *pTarget);
 
-	void unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget);
-	
-	void unscheduleAllSelectors(void);
-
-
-	void pauseTarget(SelectorProtocol *pTarget);
-
-	void resumeTarget(SelectorProtocol *pTarget);
-
-	bool isTargetPaused(SelectorProtocol *pTarget);
-
-	static CCScheduler* sharedScheduler(void);
-
-	/** purges the shared scheduler. It releases the retained instance.
-	 @since v0.99.0
-	 */
-	static void purgeSharedScheduler(void);
-
-
+    static CCScheduler* sharedScheduler(void);
 };
-}//namespace   cocos2d 
-
-

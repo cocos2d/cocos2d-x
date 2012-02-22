@@ -1,85 +1,36 @@
-namespace cocos2d {
-	class  CCTMXLayer : public CCSpriteBatchNode
-	{
-		/** size of the layer in tiles */
-		CCSize getLayerSize();
-		void setLayerSize(CCSize val);
-		/** size of the map's tile (could be differnt from the tile's size) */
-		CCSize getMapTileSize();
-		void setMapTileSize(CCSize val);
-		/** pointer to the map of tiles */		
-		unsigned int* getTiles();
-		void setTiles(unsigned int* pval);
-		
-		/** Tilset information for the layer */
-		CCTMXTilesetInfo* getTileSet();
-		void setTileSet(CCTMXTilesetInfo* pval);
-		
-		/** Layer orientation, which is the same as the map orientation */
-		void setLayerOrientation(unsigned int val);
-		unsigned int getLayerOrientation();
-		/** properties from the layer. They can be added using Tiled */
-		CCStringToStringDictionary* getProperties();
-		void setProperties(CCStringToStringDictionary* pval);
-		
-		CCTMXLayer();
-		~CCTMXLayer();
-		/** creates a CCTMXLayer with an tileset info, a layer info and a map info */
-		static CCTMXLayer * layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
-		/** initializes a CCTMXLayer with a tileset info, a layer info and a map info */
-		bool initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
 
-		/** dealloc the map that contains the tile position from memory.
-		Unless you want to know at runtime the tiles positions, you can safely call this method.
-		If you are going to call layer->tileGIDAt() then, don't release the map
-		*/
-		void releaseMap();
+class CCTMXLayer : public CCSpriteBatchNode
+{
+    void setLayerSize(CCSize val);
+    CCSize getLayerSize();
 
-		/** returns the tile (CCSprite) at a given a tile coordinate.
-		The returned CCSprite will be already added to the CCTMXLayer. Don't add it again.
-		The CCSprite can be treated like any other CCSprite: rotated, scaled, translated, opacity, color, etc.
-		You can remove either by calling:
-		- layer->removeChild(sprite, cleanup);
-		- or layer->removeTileAt(ccp(x,y));
-		*/
-		CCSprite* tileAt(CCPoint tileCoordinate);
+    void setMapTileSize(CCSize val);
+    CCSize getMapTileSize();
 
-		/** returns the tile gid at a given tile coordinate.
-		if it returns 0, it means that the tile is empty.
-		This method requires the the tile map has not been previously released (eg. don't call layer->releaseMap())
-		*/
-		unsigned int  tileGIDAt(CCPoint tileCoordinate);
+    void setTiles(unsigned int* pval);
+    unsigned int* getTiles();
 
-		/** sets the tile gid (gid = tile global id) at a given tile coordinate.
-		The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
-		If a tile is already placed at that position, then it will be removed.
-		*/
-		void setTileGID(unsigned int gid, CCPoint tileCoordinate);
+    void setTileSet(CCTMXTilesetInfo* pval);
+    CCTMXTilesetInfo* getTileSet();
 
-		/** removes a tile at given tile coordinate */
-		void removeTileAt(CCPoint tileCoordinate);
+    void setLayerOrientation(unsigned int val);
+    unsigned int getLayerOrientation();
 
-		/** returns the position in pixels of a given tile coordinate */
-		CCPoint positionAt(CCPoint tileCoordinate);
+    void setProperties(CCStringToStringDictionary* pval);
+    CCStringToStringDictionary* getProperties();
 
-		/** return the value for the specific property name */
-		CCString *propertyNamed(const char *propertyName);
+    void releaseMap();
 
-		/** Creates the tiles */
-		void setupTiles();
+    CCSprite* tileAt(CCPoint tileCoordinate);
+    unsigned int  tileGIDAt(CCPoint tileCoordinate);
+    void setTileGID(unsigned int gid, CCPoint tileCoordinate);
+    void removeTileAt(CCPoint tileCoordinate);
+    CCPoint positionAt(CCPoint tileCoordinate);
+    CCString *propertyNamed(const char *propertyName);
+    void setupTiles();
 
-		/** CCTMXLayer doesn't support adding a CCSprite manually.
-		@warning addchild(z, tag); is not supported on CCTMXLayer. Instead of setTileGID.
-		*/
-		virtual void addChild(CCNode * child, int zOrder, int tag);
-		// super method
-		void removeChild(CCNode* child, bool cleanup);
-		void draw();
+    void setLayerName(const char *layerName);
+    const char* getLayerName();
 
-		const char* getLayerName();
-		void setLayerName(const char *layerName);
-	};
-
-}// namespace cocos2d
-
-
+    static CCTMXLayer * layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+};

@@ -38,7 +38,7 @@ import getopt
 import glob
 
 class Xcode4Template(object):
-    def __init__( self, directory, group=0, identifier="XXX", prefix="libs", exclude=[] ):  
+    def __init__( self, directory, group=0, identifier="XXX", prefix="libs", exclude=[], append="" ):
         self.directory = directory
         self.files_to_include = []
         self.wildcard = '*'
@@ -56,7 +56,7 @@ class Xcode4Template(object):
                 if currentFile.find(exclude_keyword) >= 0:
                     bExclude = True
                     break
-            
+
             if bExclude is False:
                 if os.path.isdir(currentFile):
                     self.scandirs(currentFile)
@@ -67,10 +67,10 @@ class Xcode4Template(object):
     # append the definitions
     #
     def append_definition( self, output_body, path, group, dont_index ):
-        #add 'libs/' 
+        #add 'libs/'
         path = self.prefix + '/' + path
         group = [ self.prefix ] + group;
-        
+
         output_body.append("\t\t<key>%s</key>" % path )
 
         output_body.append("\t\t<dict>")
@@ -122,7 +122,7 @@ class Xcode4Template(object):
         self.output.append( "\n".join( output_body ) )
         self.output.append( output_dict_close )
 
-    # 
+    #
     # Generates the "Nodes" section
     #
     def generate_nodes( self ):
@@ -139,12 +139,14 @@ class Xcode4Template(object):
         self.output.append( output_open )
         self.output.append( "\n".join( output_body ) )
         self.output.append( output_close )
-      
+
     #
     # Generates the plist. Send it to to stdout
     #
     def generate_xml( self ):
         self.output.append( _template_open_body % self.identifier )
+        if append != "":
+            self.output.append( "".join(open(append, "r").readlines()) )
         self.generate_definitions()
         self.generate_nodes()
         self.output.append( _template_close_body )
@@ -174,10 +176,11 @@ if __name__ == "__main__":
     identifier = None
     prefix = ""
     exclude = []
+    append = ""
 
     argv = sys.argv[1:]
-    try:                                
-        opts, args = getopt.getopt(argv, "d:g:i:p:e:", ["directory=","group=","identifier=","prefix=", "exclude="])
+    try:
+        opts, args = getopt.getopt(argv, "d:g:i:p:e:a:", ["directory=","group=","identifier=","prefix=", "exclude=", "append="])
         for opt, arg in opts:
             if opt in ("-d","--directory"):
                 directory = arg
@@ -189,6 +192,8 @@ if __name__ == "__main__":
                 prefix = arg
             if opt in ("-e","--exclude"):
                 exclude = arg.split()
+            if opt in ("-a","--append"):
+                append = arg
     except getopt.GetoptError,e:
         print e
 
@@ -196,5 +201,5 @@ if __name__ == "__main__":
         help()
 
     #generate libs/cocos2dx
-    gen = Xcode4Template( directory=directory, group=group, identifier=identifier, prefix=prefix, exclude=exclude )
+    gen = Xcode4Template( directory=directory, group=group, identifier=identifier, prefix=prefix, exclude=exclude, append=append )
     gen.generate()

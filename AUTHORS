@@ -9,6 +9,7 @@ Core Developers:
     Bin Zhang
     RongHong Huang
     JianHua Chen (Dumganhar)
+    Shun Lin
 
 Developers:
     dducharme
@@ -55,6 +56,11 @@ Developers:
     JianHua Chen (Dumganhar)
         author of Bada port
 
+    Erawppa
+        implement CCNotificationCenter
+        
+    YuLei Liao(dualface)
+        contribute the factor of lua binding
 
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, dicuss the engine usage in forum & QQ groups!

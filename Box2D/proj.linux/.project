@@ -82,24 +82,29 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Box2D.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Box2D.h</locationURI>
+		</link>
+		<link>
 			<name>Collision</name>
 			<type>2</type>
-			<location>/home/xm/workspace/cocos2d-x/Box2D/Collision</location>
+			<locationURI>PARENT-1-PROJECT_LOC/Collision</locationURI>
 		</link>
 		<link>
 			<name>Common</name>
 			<type>2</type>
-			<location>/home/xm/workspace/cocos2d-x/Box2D/Common</location>
+			<locationURI>PARENT-1-PROJECT_LOC/Common</locationURI>
 		</link>
 		<link>
 			<name>Dynamics</name>
 			<type>2</type>
-			<location>/home/xm/workspace/cocos2d-x/Box2D/Dynamics</location>
+			<locationURI>PARENT-1-PROJECT_LOC/Dynamics</locationURI>
 		</link>
 		<link>
 			<name>Rope</name>
 			<type>2</type>
-			<location>/home/xm/workspace/cocos2d-x/Box2D/Rope</location>
+			<locationURI>PARENT-1-PROJECT_LOC/Rope</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

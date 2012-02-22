@@ -24,10 +24,10 @@ THE SOFTWARE.
 package org.cocos2dx.tests;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
+import org.cocos2dx.lib.Cocos2dxEditText;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.os.Bundle;
-import android.widget.EditText;
 
 public class TestsDemo extends Cocos2dxActivity{
 	private Cocos2dxGLSurfaceView mGLView;
@@ -41,7 +41,7 @@ public class TestsDemo extends Cocos2dxActivity{
 
         setContentView(R.layout.test_demo);
         mGLView = (Cocos2dxGLSurfaceView) findViewById(R.id.test_demo_gl_surfaceview);
-        mGLView.setTextField((EditText)findViewById(R.id.textField));
+        mGLView.setTextField((Cocos2dxEditText)findViewById(R.id.textField));      
 	}
 
 	 @Override
@@ -62,8 +62,6 @@ public class TestsDemo extends Cocos2dxActivity{
     	 System.loadLibrary("cocosdenshion");
     	 System.loadLibrary("chipmunk");
     	 System.loadLibrary("box2d");
-    	 System.loadLibrary("cocos2d");
-    	 System.loadLibrary("game_logic");
          System.loadLibrary("tests");
      }     
 }
