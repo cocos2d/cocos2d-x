@@ -986,7 +986,10 @@ CCAction * CCNode::runAction(CCAction* action)
 
 void CCNode::stopAllActions()
 {
-	CCActionManager::sharedManager()->removeAllActionsFromTarget(this);
+	if ( this->numberOfRunningActions()>0 )
+	{
+		CCActionManager::sharedManager()->removeAllActionsFromTarget(this);
+	}
 }
 
 void CCNode::stopAction(CCAction* action)
