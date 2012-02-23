@@ -56,41 +56,72 @@ class CC_DLL CCArray : public CCObject
 {
 public:
     ~CCArray();
+	/** Create an array */
     static CCArray* array();
+	/** Create an array with capacity */
     static CCArray* arrayWithCapacity(unsigned int capacity);
+	/** Create an array with an existing array */
     static CCArray* arrayWithArray(CCArray* otherArray);
 
+	/** Initializes an array */
     bool init();
+	/** Initializes an array with capacity */
     bool initWithCapacity(unsigned int capacity);
+	/** Initializes an array with an existing array */
     bool initWithArray(CCArray* otherArray);
 
     // Querying an Array
+
+	/** Returns element count of the array */
     unsigned int count();
+	/** Returns capacity of the array */
     unsigned int capacity();
+	/** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
     unsigned int indexOfObject(CCObject* object);
+	/** Returns an element with a certain index */
     CCObject* objectAtIndex(unsigned int index);
+	/** Returns last element */
     CCObject* lastObject();
+	/** Returns a random element */
     CCObject* randomObject();
+	/** Returns a Boolean value that indicates whether object is present in array. */
     bool containsObject(CCObject* object);
 
     // Adding Objects
+
+	/** Add a certain object */
     void addObject(CCObject* object);
+	/** Add all elements of an existing array */
     void addObjectsFromArray(CCArray* otherArray);
+	/** Insert a certain object at a certain index */
     void insertObject(CCObject* object, unsigned int index);
 
     // Removing Objects
+
+	/** Remove last object */
     void removeLastObject();
+	/** Remove a certain object */
     void removeObject(CCObject* object);
+	/** Remove an element with a certain index */
     void removeObjectAtIndex(unsigned int index);
+	/** Remove all elements */
     void removeObjectsInArray(CCArray* otherArray);
+	/** Remove all objects */
     void removeAllObjects();
+	/** Fast way to remove a certain object */
     void fastRemoveObject(CCObject* object);
+	/** Fast way to remove an element with a certain index */
     void fastRemoveObjectAtIndex(unsigned int index);
 
     // Rearranging Content
+
+	/** Swap two elements */
     void exchangeObject(CCObject* object1, CCObject* object2);
+	/** Swap two elements with certain indexes */
     void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
+	/** Revers the array */
     void reverseObjects();
+	/* Shrinks the array so the memory footprint corresponds with the number of items */
     void reduceMemoryFootprint();
 
 public:
