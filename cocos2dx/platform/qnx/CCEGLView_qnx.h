@@ -65,6 +65,7 @@ public:
     EGLTouchDelegate* getDelegate(void);
     
 	void    setEventHandler(EventHandler* pHandler);
+    const char* getWindowGroupId() const;
     // keep compatible
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
@@ -127,6 +128,7 @@ private:
     screen_event_t 	 m_screenEvent;
     screen_window_t  m_screenWindow;
     screen_context_t m_screenContext;
+    char 			 m_window_group_id[16];
 };
 
 }   // end of namespace   cocos2d
