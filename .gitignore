@@ -30,6 +30,7 @@ _ReSharper*/
 
 # Ignore files build by Qt Creator
 *.pro.user
+Makefile*
 
 # Ignore files build by ndk and eclipse
 libs/
