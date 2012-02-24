@@ -96,6 +96,8 @@ CCEGLView::CCEGLView()
     m_screenEvent = 0;
     m_screenWindow = 0;
 
+    strcpy(m_window_group_id, "");
+    snprintf(m_window_group_id, sizeof(m_window_group_id), "%d", getpid());
     bps_initialize();
     navigator_request_events(0);
 
@@ -571,6 +573,12 @@ bool CCEGLView::createNativeWindow(const EGLConfig &config)
 		return false;
 	}
 
+err = screen_create_window_group(m_screenWindow, m_window_group_id);
+	if (err)
+	{
+		fprintf(stderr, "screen_create_window_group");
+		return false;
+	}
 	format = chooseFormat(m_eglDisplay, config);
 	err = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_FORMAT, &format);
 	if (err)
@@ -813,6 +821,10 @@ void CCEGLView::setEventHandler(EventHandler* pHandler)
 	m_pEventHandler = pHandler;
 }
 
+const char* CCEGLView::getWindowGroupId() const
+{
+	return m_window_group_id;
+}
 void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
 	m_pDelegate = pDelegate;
