@@ -77,6 +77,6 @@ if [ $# -eq 1 ]; then
     sh `pwd`/template/linux/mycopy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH 
 else
     # invoke template/android/copy_files.sh
-    sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH
+    sh `pwd`/template/android/copy_files_with_box2d.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH
 fi
 
