@@ -54,8 +54,7 @@ bool CCEGLView::isOpenGLReady()
     
     bool CCEGLView::canSetContentScaleFactor()
     {
-       return [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)]
-               && [[UIScreen mainScreen] scale] != 1.0;
+       return [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)];
     }
     
     void CCEGLView::setContentScaleFactor(float contentScaleFactor)
@@ -137,6 +136,11 @@ CCEGLView& CCEGLView::sharedOpenGLView()
 {
     static CCEGLView instance;
     return instance;
+}
+
+float CCEGLView::getMainScreenScale()
+{
+    return [[UIScreen mainScreen] scale];
 }
 
 } // end of namespace cocos2d;
