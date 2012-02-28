@@ -778,6 +778,12 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
 		return false;
 	}
 
+	// SD device
+	if (m_pobOpenGLView->getMainScreenScale() == 1.0)
+	{
+		return false;
+	}
+
 	float newScale = (float)(enabled ? 2 : 1);
 	setContentScaleFactor(newScale);
 
