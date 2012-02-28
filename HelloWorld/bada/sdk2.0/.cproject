@@ -23,18 +23,18 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.exe.debug" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk2.0\.Target-Debug\libcocos2dx.so lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Debug\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp;  (xcopy /y /s  ..\..\Resources\*.* Res)">
+				<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.exe.debug" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Debug\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp;  (xcopy /y /s  ..\..\Resources\*.* Res)">
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682." name="/" resourcePath="">
-						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug.2127488964" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug">
+						<toolChain errorParsers="" id="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug.2127488964" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug.1117105675" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug"/>
-							<builder buildPath="${workspace_loc:/HelloWorld/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug.104820112" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug">
+							<builder buildPath="${workspace_loc:/HelloWorld/.Target-Debug}" command="cs-make" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug.104820112" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.exe.debug">
 								<outputEntries>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
 								</outputEntries>
 							</builder>
 							<tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.base.1421650513" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.base"/>
-							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug.1042444633" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug">
+							<tool command="arm-samsung-nucleuseabi-g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="" id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug.1042444633" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug">
 								<option id="osp.gnu.target.cpp.compiler.debug.exe.option.include.paths.1118027441" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.exe.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../"/>
@@ -52,7 +52,7 @@
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1707579424" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
-							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug.194057110" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug">
+							<tool command="arm-samsung-nucleuseabi-gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="" id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug.194057110" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug">
 								<option id="osp.gnu.target.c.compiler.debug.exe.option.include.paths.2145359838" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.debug.exe.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
@@ -65,9 +65,8 @@
 								<inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.870115635" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.debug.1406585521" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.debug"/>
-							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug.1747969474" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug">
+							<tool command="arm-samsung-nucleuseabi-g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug.1747969474" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug">
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.2056672880" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.paths.1078498225" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs.paths" valueType="libPaths">
@@ -78,6 +77,7 @@
 								</option>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.userobjs.807623096" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.exe.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/.Target-Debug/libcocos2dx.a}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk2.0/.Target-Debug/libBox2D.a"/>
 									<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk2.0/.Target-Debug/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
@@ -91,7 +91,7 @@
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								</inputType>
 							</tool>
-							<tool id="cdt.managedbuild.tool.osp.gnu.target.assembler.exe.debug.1283864175" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.exe.debug">
+							<tool command="arm-samsung-nucleuseabi-as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.osp.gnu.target.assembler.exe.debug.1283864175" name="bada Assembler" superClass="cdt.managedbuild.tool.osp.gnu.target.assembler.exe.debug">
 								<option id="osp.gnu.both.asm.option.include.paths.852182002" name="Include paths (-I)" superClass="osp.gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.assembler.input.1894266994" superClass="cdt.managedbuild.tool.osp.gnu.assembler.input"/>
 							</tool>
@@ -709,7 +709,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.release.882869284" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.exe.release" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk2.0\.Target-Release\libcocos2dx.so lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Release\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (xcopy /y /s ..\..\Resources\*.* Res)">
+				<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.release.882869284" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.exe.release" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Release\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (xcopy /y /s ..\..\Resources\*.* Res)">
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.release.882869284." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.target.exe.release.641425882" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.target.exe.release">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.release.1305983074" name="Release Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.release"/>
@@ -738,7 +738,6 @@
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.release.1697020415" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.release"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.release.1446379106" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.release">
 								<option id="osp.gnu.target.cpp.link.release.exe.option.libs.902896095" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.exe.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.release.exe.option.libs.paths.1336107112" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.exe.option.libs.paths" valueType="libPaths">
@@ -749,6 +748,7 @@
 								</option>
 								<option id="osp.gnu.target.cpp.link.release.exe.option.userobjs.2051939147" name="Other objects" superClass="osp.gnu.target.cpp.link.release.exe.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/.Target-Release/libcocos2dx.a}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk2.0/.Target-Release/libBox2D.a"/>
 									<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk2.0/.Target-Release/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
