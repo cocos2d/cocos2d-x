@@ -3,9 +3,6 @@
 	<name>cocos2dx</name>
 	<comment></comment>
 	<projects>
-		<project>libjpeg</project>
-		<project>png</project>
-		<project>zlib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -175,51 +172,6 @@
 			<locationURI>cocos2dx_root/cocos2dx/particle_nodes</locationURI>
 		</link>
 		<link>
-			<name>platform/bada</name>
-			<type>2</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/bada</locationURI>
-		</link>
-		<link>
-			<name>platform/CCCommon.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/CCCommon.cpp</locationURI>
-		</link>
-		<link>
-			<name>platform/CCFileUtils.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/CCFileUtils.cpp</locationURI>
-		</link>
-		<link>
-			<name>platform/CCGL.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/CCGL.cpp</locationURI>
-		</link>
-		<link>
-			<name>platform/CCImage.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/CCImage.cpp</locationURI>
-		</link>
-		<link>
-			<name>platform/CCSAXParser.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/CCSAXParser.cpp</locationURI>
-		</link>
-		<link>
-			<name>platform/CCStdC.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/CCStdC.cpp</locationURI>
-		</link>
-		<link>
-			<name>platform/CCThread.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/CCThread.cpp</locationURI>
-		</link>
-		<link>
-			<name>platform/platform.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/platform/platform.cpp</locationURI>
-		</link>
-		<link>
 			<name>script_support</name>
 			<type>2</type>
 			<locationURI>cocos2dx_root/cocos2dx/script_support</locationURI>
@@ -253,6 +205,66 @@
 			<name>touch_dispatcher</name>
 			<type>2</type>
 			<locationURI>cocos2dx_root/cocos2dx/touch_dispatcher</locationURI>
+		</link>
+		<link>
+			<name>libjpeg</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/third_party/bada/libjpeg</locationURI>
+		</link>
+		<link>
+			<name>libpng</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/third_party/bada/libpng</locationURI>
+		</link>
+		<link>
+			<name>libz</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/third_party/bada/libz</locationURI>
+		</link>
+		<link>
+			<name>platform-bada/CCCommon.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCCommon.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform-bada/CCFileUtils.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCFileUtils.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform-bada/CCGL.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCGL.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform-bada/CCImage.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCImage.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform-bada/CCSAXParser.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCSAXParser.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform-bada/CCStdC.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCStdC.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform-bada/CCThread.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/CCThread.cpp</locationURI>
+		</link>
+		<link>
+			<name>platform-bada</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/bada</locationURI>
+		</link>
+		<link>
+			<name>platform-bada/platform.cpp</name>
+			<type>1</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/platform.cpp</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
