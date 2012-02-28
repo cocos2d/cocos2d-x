@@ -57,7 +57,6 @@ public class ApplicationDemo extends Cocos2dxActivity{
 	 }
 	
      static {
-    	 System.loadLibrary("cocosdenshion");
          System.loadLibrary("helloworld");
      }
 }
