@@ -2,7 +2,7 @@
 
 echo 'cocos2d-x template installer'
 
-COCOS2D_VER='cocos2d-1.0.1-x-0.11.0'
+COCOS2D_VER='cocos2d-1.0.1-x-0.12.0'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
 
@@ -329,27 +329,4 @@ copy_xcode4_project_templates(){
 
 }
 
-select_template_version(){
-        echo "select the template version to install"
-        echo "3 for xcode3"
-        echo "4 for xcode4"
-        echo "input nothing for all"
-
-        read select
-
-        if [[ "$select" == 3 ]]; then
-            copy_xcode3_project_templates
-        fi
-
-        if [[ "$select" == 4 ]]; then
-            copy_xcode4_project_templates
-        fi
-
-        if [[ "$select""aaaa" == "aaaa" ]]; then
-            copy_xcode3_project_templates
-            copy_xcode4_project_templates
-        fi
-
-}
-
-select_template_version
+copy_xcode4_project_templates
