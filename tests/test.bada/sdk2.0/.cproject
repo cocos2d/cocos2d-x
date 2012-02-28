@@ -23,7 +23,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="exe" artifactName="TestCocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.debug.1659310185" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.exe.debug" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk2.0\.Target-Debug\libcocos2dx.so lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Debug\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (xcopy /s /y ..\..\Resources\*.* Res)">
+				<configuration artifactExtension="exe" artifactName="TestCocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.debug.1659310185" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.exe.debug" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Debug\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (xcopy /s /y ..\..\Resources\*.* Res)">
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.debug.1659310185." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug.209599858" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug.1675194339" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug"/>
@@ -68,6 +68,7 @@
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug.788505068" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug">
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.userobjs.2114182631" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.exe.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/.Target-Debug/libcocos2dx.a}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk2.0/.Target-Debug/libBox2D.a"/>
 									<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk2.0/.Target-Debug/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
@@ -78,7 +79,6 @@
 								</option>
 								<option id="osp.gnu.cpp.link.option.other.689865278" name="Other options (-Xlinker [option])" superClass="osp.gnu.cpp.link.option.other"/>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.851145674" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.paths.1425715273" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs.paths" valueType="libPaths">
@@ -709,7 +709,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="exe" artifactName="TestCocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.release.666585786" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.exe.release" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk2.0\.Target-Release\libcocos2dx.so lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Release\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (xcopy /s /y ..\..\Resources\*.* Res)">
+				<configuration artifactExtension="exe" artifactName="TestCocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.release.666585786" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.exe.release" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Release\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (xcopy /s /y ..\..\Resources\*.* Res)">
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.release.666585786." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.target.exe.release.1544248483" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.target.exe.release">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.release.1439910644" name="Release Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.release"/>
@@ -738,7 +738,6 @@
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.release.215100682" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.release"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.release.339646705" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.release">
 								<option id="osp.gnu.target.cpp.link.release.exe.option.libs.863233485" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.exe.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.release.exe.option.libs.paths.1436390182" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.exe.option.libs.paths" valueType="libPaths">
@@ -747,6 +746,7 @@
 								</option>
 								<option id="osp.gnu.target.cpp.link.release.exe.option.userobjs.888121246" name="Other objects" superClass="osp.gnu.target.cpp.link.release.exe.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/.Target-Release/libcocos2dx.a}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk2.0/.Target-Release/libBox2D.a"/>
 									<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk2.0/.Target-Release/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>

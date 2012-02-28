@@ -23,7 +23,7 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="dll" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.arm.so.simul.270693823" name="Simulator-Debug" parent="cdt.managedbuild.config.osp.gnu.arm.so.simul" postbuildStep="copy ${BuildArtifactFileName} ${target_home}\..\Model\Wave_LP2\Simulator">
+<configuration artifactExtension="a" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.arm.so.simul.270693823" name="Simulator-Debug" parent="cdt.managedbuild.config.osp.gnu.arm.so.simul" postbuildStep="">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.arm.so.simul.270693823." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.arm.so.simul.1687326601" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.arm.so.simul">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.simul.platform.so.simul.553684472" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.simul.platform.so.simul"/>
@@ -39,11 +39,17 @@
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libz"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1712318022" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.c.compiler.so.simul.1349044647" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.simul.c.compiler.so.simul">
+<option id="osp.gnu.simul.c.compiler.simual.so.option.include.paths.474483264" name="Include paths (-I)" superClass="osp.gnu.simul.c.compiler.simual.so.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libz"/>
+</option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.1942685082" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.c.linker.so.simul.2135189641" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.simul.c.linker.so.simul"/>
@@ -60,11 +66,7 @@
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/Lib&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 </option>
-<option id="osp.gnu.cpp.link.option.userobjs.560052621" name="Other objects" superClass="osp.gnu.cpp.link.option.userobjs" valueType="userObjs">
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.0/.Simulator-Debug/libjpeg.a"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk1.0/.Simulator-Debug/libpng.a"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk1.0/.Simulator-Debug/libzlib.a"/>
-</option>
+<option id="osp.gnu.cpp.link.option.userobjs.560052621" name="Other objects" superClass="osp.gnu.cpp.link.option.userobjs"/>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.1985930839" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 <additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -87,7 +89,6 @@
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="menu_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="misc_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="particle_nodes"/>
-<entry excluding="bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="script_support"/>
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="sprite_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="support"/>
@@ -96,7 +97,11 @@
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="tileMap_parallax_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="touch_dispatcher"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
-<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry excluding="libjpeg|libpng|libz|platform-bada|actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry excluding="CCFileUtils_bada.cpp|CCImage_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform-bada"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libjpeg"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libpng"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libz"/>
 </sourceEntries>
 </configuration>
 </storageModule>
@@ -705,12 +710,12 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="so" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.so.debug.1119942620" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.so.debug">
+<configuration artifactExtension="a" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.so.debug.1119942620" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.so.debug">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.target.so.debug.1119942620." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.so.debug.1168869069" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.so.debug">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.so.debug.1899205853" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.so.debug"/>
 <builder buildPath="${workspace_loc:/cocos2dx/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.so.debug.2029363720" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.so.debug"/>
-<tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.base.1751500928" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.base"/>
+<tool command="arm-samsung-nucleuseabi-ar" id="cdt.managedbuild.tool.osp.gnu.arm.archiver.base.1751500928" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.base"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.so.debug.701902758" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.so.debug">
 <option id="osp.gnu.target.cpp.compiler.debug.so.option.include.paths.537931464" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.so.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
@@ -721,11 +726,17 @@
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libz"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.802852259" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.debug.871912230" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.debug">
+<option id="osp.gnu.target.c.compiler.debug.so.option.include.paths.674315620" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.debug.so.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libz"/>
+</option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.897612787" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug.1530594670" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug"/>
@@ -765,7 +776,6 @@
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-<entry excluding="bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -774,7 +784,11 @@
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
-<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry excluding="libjpeg|libpng|libz|platform-bada|actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry excluding="CCFileUtils_bada.cpp|CCImage_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform-bada"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libjpeg"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libpng"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libz"/>
 </sourceEntries>
 </configuration>
 </storageModule>
@@ -1383,12 +1397,12 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="so" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.so.release.157900877" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.so.release">
+<configuration artifactExtension="a" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.so.release.157900877" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.so.release">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.target.so.release.157900877." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.so.release.8793865" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.so.release">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.so.release.894552302" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.so.release"/>
 <builder buildPath="${workspace_loc:/cocos2dx/.Target-Release}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.so.release.609488857" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.so.release"/>
-<tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.base.110374400" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.base"/>
+<tool command="arm-samsung-nucleuseabi-ar" id="cdt.managedbuild.tool.osp.gnu.arm.archiver.base.110374400" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.base"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.so.release.553349769" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.so.release">
 <option id="osp.gnu.target.cpp.compiler.release.so.option.include.paths.1958099760" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.release.so.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
@@ -1399,11 +1413,17 @@
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libz"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1146129724" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.release.1935116404" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.release">
+<option id="osp.gnu.target.c.compiler.release.so.option.include.paths.497096772" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.release.so.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libz"/>
+</option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.532754087" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.release.609968871" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.release"/>
@@ -1442,7 +1462,6 @@
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-<entry excluding="bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -1451,7 +1470,11 @@
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
-<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry excluding="libjpeg|libpng|libz|platform-bada|actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry excluding="CCFileUtils_bada.cpp|CCImage_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform-bada"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libjpeg"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libpng"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="libz"/>
 </sourceEntries>
 </configuration>
 </storageModule>
