@@ -1,17 +1,19 @@
+#!/bin/bash
+
 FILE=$1
 NEED_BOX2D=$2
 NEED_CHIPMUNK=$3
 NEED_LUA=$4
 
-if [ $NEED_BOX2D == "true" ];then
+if [ $NEED_BOX2D = "true" ];then
     BOX2D="Box2D"
 fi
 
-if [ $NEED_CHIPMUNK == "true" ]; then
+if [ $NEED_CHIPMUNK = "true" ]; then
     CHIPMUNK="chipmunk"
 fi
 
-if [ $NEED_LUA == "true" ]; then
+if [ $NEED_LUA = "true" ]; then
     LUA="lua/proj.android/jni"
 fi
 
