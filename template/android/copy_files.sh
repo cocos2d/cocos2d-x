@@ -1,3 +1,4 @@
+#!/bin/bash
 # check the args
 # $1: root of cocos2dx $2: app name $3: ndk root $4:pakcage path
 
@@ -90,16 +91,16 @@ modify_applicationdemo(){
     
     # load need .so
     CONTENT=
-    if [ $NEED_BOX2D == "true" ];then
-        CONTENT+='System.loadLibrary("box2d");'
+    if [ $NEED_BOX2D = "true" ];then
+        CONTENT=$CONTENT'System.loadLibrary("box2d");'
     fi
 
-    if [ $NEED_CHIPMUNK == "true" ]; then
-        CONTENT+='System.loadLibrary("chipmunk");'
+    if [ $NEED_CHIPMUNK = "true" ]; then
+        CONTENT=$CONTENT'System.loadLibrary("chipmunk");'
     fi
 
-    if [ $NEED_LUA == "true" ]; then
-        CONTENT+='System.loadLibrary("lua");'
+    if [ $NEED_LUA = "true" ]; then
+        CONTENT=$CONTENT'System.loadLibrary("lua");'
     fi
     
     sed -i "/cocosdenshion/ i\ $CONTENT" $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java

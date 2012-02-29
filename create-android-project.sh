@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This script should be called by create-android-project.bat
 # or should be runned in linux shell. It can not be runned under
 # cygwin.
@@ -57,8 +57,8 @@ check_param(){
         esac
     done
     
-    if [ $NEED_BOX2D == "true" ]; then
-        if [ $NEED_CHIPMUNK == "true" ]; then 
+    if [ $NEED_BOX2D = "true" ]; then
+        if [ $NEED_CHIPMUNK = "true" ]; then 
             echo Warning!!!
             echo Use box2d and chipmunk together????
         fi
@@ -122,7 +122,7 @@ PARAMS=$@
 check_param
 create_android_project
 
-if [ $0 == "linux" ]; then
+if [ $0 = "linux" ]; then
     # invoked by create-linux-android-project.sh
     sh `pwd`/template/linux/mycopy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 else
