@@ -6,4 +6,4 @@
 
 # set environment paramters
 
-sh `pwd`/create-android-project.sh linux
+sh `pwd`/create-android-project.sh linux $@
