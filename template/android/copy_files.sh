@@ -7,6 +7,9 @@ APP_DIR=$COCOS2DX_ROOT/$APP_NAME
 HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloWorld
 NDK_ROOT=$3
 PACKAGE_PATH=$4
+NEED_BOX2D=$5
+NEED_CHIPMUNK=$6
+NEED_LUA=$7
 
 # xxx.yyy.zzz -> xxx/yyy/zzz
 convert_package_path_to_dir(){
@@ -57,8 +60,10 @@ copy_src_and_jni(){
     cp -rf $HELLOWORLD_ROOT/android/src $APP_DIR/android
     
     # repalce Android.mk and Application.mk
-    cat $COCOS2DX_ROOT/template/android/AndroidTemplate1.mk > $APP_DIR/android/jni/helloworld/Android.mk
-    cat $COCOS2DX_ROOT/template/android/Application.mk > $APP_DIR/android/jni/Application.mk
+    sh $COCOS2DX_ROOT/template/android/classesmk.sh $APP_DIR/Classes/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
+    sh $COCOS2DX_ROOT/template/android/gamestaticmk.sh $APP_DIR/android/jni/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
+    sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/android/jni/helloworld/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
+    sh $COCOS2DX_ROOT/template/android/application.sh $APP_DIR/android/jni/Application.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 }
 
 # copy build_native.sh and replace something
@@ -80,11 +85,24 @@ modify_applicationdemo(){
     
     # rename APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java to 
     # APP_DIR/android/src/org/cocos2dx/application/$APP_NAME.java, change helloworld to game
-    sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/android/src/$PACKAGE_PATH_DIR/tempfile.java    
+    sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java    
     rm -fr $APP_DIR/android/src/org/cocos2dx/application
-    mv $APP_DIR/android/src/$PACKAGE_PATH_DIR/tempfile.java $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java
     
+    # load need .so
+    CONTENT=
+    if [ $NEED_BOX2D == "true" ];then
+        CONTENT+='System.loadLibrary("box2d");'
+    fi
+
+    if [ $NEED_CHIPMUNK == "true" ]; then
+        CONTENT+='System.loadLibrary("chipmunk");'
+    fi
+
+    if [ $NEED_LUA == "true" ]; then
+        CONTENT+='System.loadLibrary("lua");'
+    fi
     
+    sed -i "/cocosdenshion/ i\ $CONTENT" $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java
 }
 
 modify_layout(){
