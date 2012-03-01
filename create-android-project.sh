@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This script should be called by create-android-project.bat
 # or should be runned in linux shell. It can not be runned under
 # cygwin.
@@ -7,6 +7,10 @@
 # set environment paramters
 NDK_ROOT_LOCAL="/home/laschweinski/android/android-ndk-r5"
 ANDROID_SDK_ROOT_LOCAL="/home/laschweinski/android/android-sdk-linux_86"
+
+NEED_BOX2D=false
+NEED_CHIPMUNK=false
+NEED_LUA=false
 
 # try to get global variable
 if [ $NDK_ROOT"aaa" != "aaa" ]; then
@@ -19,15 +23,59 @@ if [ $ANDROID_SDK_ROOT"aaa" != "aaa" ]; then
     ANDROID_SDK_ROOT_LOCAL=$ANDROID_SDK_ROOT
 fi
 
+# parameters passed to .bat or .sh
+PARAMS=
+
+print_usage(){
+    echo ERROR!!!
+    echo usage
+    echo "$0(or corresponding bat file on windows) [-b|--box2d] [-c|--chipmunk] [-l|--lua]"
+}
+
+check_param(){
+    for param in ${PARAMS[@]} 
+    do
+        case $param in
+            -b | --box2d)
+                echo using box2d
+                NEED_BOX2D=true
+                ;;
+            -c | --chipmunk)
+                echo using chipmunk
+                NEED_CHIPMUNK=true
+                ;;
+            -l | --lua)
+                echo using lua
+                NEED_LUA=true
+                ;;
+            -linux)
+                // skip it
+                ;;
+            *)
+                print_usage
+                exit 1
+        esac
+    done
+    
+    if [ $NEED_BOX2D = "true" ]; then
+        if [ $NEED_CHIPMUNK = "true" ]; then 
+            echo Warning!!!
+            echo Use box2d and chipmunk together????
+        fi
+    fi
+}
+
 # check if it was called by .bat file
-if [ $# -eq 5 ];then
+if [ $# -ge 5 ];then
     if [ $5 = "windows" ];then
         # called by .bat file
-        sh $1/template/android/copy_files.sh $1 $2 $3 $4
+        length=`expr $# - 5`
+        PARAMS=${@:6:$length}
+        check_param
+        sh $1/template/android/copy_files.sh $1 $2 $3 $4 $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
         exit
     fi
 fi
-
 
 # the bash file should not be called by cygwin
 KERNEL_NAME=`uname -s | grep "CYGWIN*"`
@@ -70,13 +118,15 @@ create_android_project(){
 }
 
 check_path
+PARAMS=$@
+check_param
 create_android_project
 
-if [ $# -eq 1 ]; then
+if [ $0 = "linux" ]; then
     # invoked by create-linux-android-project.sh
-    sh `pwd`/template/linux/mycopy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH 
+    sh `pwd`/template/linux/mycopy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 else
     # invoke template/android/copy_files.sh
-    sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH
+    sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT_LOCAL $PACKAGE_PATH $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 fi
 
