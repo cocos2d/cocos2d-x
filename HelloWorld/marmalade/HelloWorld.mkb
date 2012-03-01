@@ -1,6 +1,6 @@
 options
 {
-	s3e-data-dir="../Resource"
+	s3e-data-dir="../Resources"
 
 	module_path="../../cocos2dx/proj.marmalade/"
 
