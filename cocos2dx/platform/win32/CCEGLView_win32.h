@@ -53,7 +53,7 @@ public:
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor);
     
-    float getMainScreenScale() { return -1.0; }
+    float getMainScreenScale() { return 1.0f; }
 
 	virtual bool Create(LPCTSTR pTitle, int w, int h);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);

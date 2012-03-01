@@ -68,7 +68,7 @@ public:
 	CCRect	getViewPort();
 	float	getScreenScaleFactor();
 	
-	float getMainScreenScale() { return -1.0; }
+	float getMainScreenScale() { return 1.0f; }
 
 	// static function
 	/**
