@@ -72,7 +72,7 @@ public:
 	*/
 	static CCEGLView& sharedOpenGLView();
 	
-	float getMainScreenScale() { return -1.0; }
+	float getMainScreenScale() { return -1.0f; }
 
 	/*
 	 * param
