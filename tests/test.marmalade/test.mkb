@@ -7,7 +7,7 @@ defines
 
 options
 {
-	s3e-data-dir="../Res"
+	s3e-data-dir="../Resources"
 	
 	module_path="../../cocos2dx/proj.marmalade/"
 	module_path="../../Box2D/proj.marmalade/"
@@ -252,7 +252,7 @@ files
 	"*.cpp"
 	
 	[Tests/ExtensionsTest]
-	("../ExtensionsTest")
+	("../tests/ExtensionsTest")
 	"*.h"
 	"*.cpp"
 }
