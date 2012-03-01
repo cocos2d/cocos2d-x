@@ -67,7 +67,7 @@ public:
 	float   getScreenScaleFactor();
     void    setIMEKeyboardState(bool bOpen);
     
-    float getMainScreenScale() { return 1.0 };
+    float   getMainScreenScale() { return 1.0f; }
 
     bool 	HandleEvents();
 
