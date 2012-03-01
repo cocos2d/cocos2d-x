@@ -51,7 +51,7 @@ copy_resouces(){
     
     for file in $HELLOWORLD_ROOT/Resources/*
     do
-        cp $file $APP_DIR/Resources
+        cp -rf $file $APP_DIR/Resources
     done
 }
 
@@ -103,7 +103,7 @@ modify_applicationdemo(){
         CONTENT=$CONTENT'System.loadLibrary("lua");'
     fi
     
-    sed -i "/cocosdenshion/ i\ $CONTENT" $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java
+    sed -i -e "s/System.loadLibrary(\"cocosdenshion\")\;/System.loadLibrary(\"cocosdenshion\")\;$CONTENT/" $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java
 }
 
 modify_layout(){
