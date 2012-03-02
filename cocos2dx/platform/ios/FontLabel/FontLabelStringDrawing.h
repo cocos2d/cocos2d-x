@@ -75,6 +75,7 @@
 @interface FontLabelStringDrawingHelper : NSObject {
 }
 + (CGSize)sizeWithZFont:(NSString*)string zfont:(ZFont *)font;
++ (CGSize)sizeWithZFont:(NSString *)string zfont:(ZFont *)font constrainedToSize:(CGSize)size;
 + (CGSize)drawInRect:(NSString*)string rect:(CGRect)rect withZFont:(ZFont *)font 
        lineBreakMode:(UILineBreakMode)lineBreakMode 
            alignment:(UITextAlignment)alignment;

@@ -332,17 +332,23 @@ static CGSize _caculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize 
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
     CGSize dim = CGSizeZero;
+    CGSize textRect = CGSizeZero;
+    textRect.width = constrainSize->width > 0 ? constrainSize->width
+                                              : 0x7fffffff;
+    textRect.height = constrainSize->height > 0 ? constrainSize->height
+                                              : 0x7fffffff;
+    
     
     for (NSString *s in listItems)
     {
         CGSize tmp;
         if (isZfont)
         {
-            tmp = [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font];
+            tmp = [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font constrainedToSize:textRect];
         }
         else
         {
-           tmp = [s sizeWithFont:font]; 
+           tmp = [s sizeWithFont:font constrainedToSize:textRect]; 
         }
         
         if (tmp.width > dim.width)
@@ -350,28 +356,7 @@ static CGSize _caculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize 
            dim.width = tmp.width; 
         }
         
-        // Should break the string into more lines, so should add the height
-        if (constrainSize->width > 0 && constrainSize->width < tmp.width)
-        {
-            int lines = ceil(tmp.width / constrainSize->width);
-            dim.height += tmp.height * lines;
-        }
-        else
-        {
-            dim.height += tmp.height;
-        }
-    }
-    
-    // Should not exceed the height
-    if (constrainSize->height > 0)
-    {
-        dim.height = constrainSize->height;
-    }
-    
-    // Should not exceed the width;
-    if (constrainSize->width > 0)
-    {
-        dim.width = constrainSize->width;
+        dim.height += tmp.height;
     }
     
     return dim;
