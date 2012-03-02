@@ -899,6 +899,13 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, U
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
++ (CGSize)sizeWithZFont:(NSString *)string zfont:(ZFont *)font constrainedToSize:(CGSize)size {
+    CGSize s = drawOrSizeTextConstrainedToSize(NO, string, attributeRunForFont(font), size, 0, UILineBreakModeWordWrap, UITextAlignmentLeft, YES);
+	return CGSizeMake(ceilf(s.width), ceilf(s.height));
+}
+
+
+
 + (CGSize)drawInRect:(NSString*)string rect:(CGRect)rect withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode 
            alignment:(UITextAlignment)alignment {
        return [string drawInRect:rect withZFont:font lineBreakMode:lineBreakMode alignment:alignment];
