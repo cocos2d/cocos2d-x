@@ -413,6 +413,23 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 
         CC_BREAK_IF(! font);
         
+        // compute start point
+        int startH = 0;
+        if (constrainSize.height > dim.height)
+        {
+            startH = (constrainSize.height - dim.height) / 2;
+        }
+        
+        // adjust text rect
+        if (constrainSize.width > 0 && constrainSize.width > dim.width)
+        {
+            dim.width = constrainSize.width;
+        }
+        if (constrainSize.height > 0 && constrainSize.height > dim.height)
+        {
+            dim.height = constrainSize.height;
+        }         
+        
         unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
         memset(data, 0, (int)(dim.width * dim.height * 4));
         
@@ -441,7 +458,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         // normal fonts
 	if( [font isKindOfClass:[UIFont class] ] )
 	{
-		[str drawInRect:CGRectMake(0, 0, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		[str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 	
 #if CC_FONT_LABEL_SUPPORT
