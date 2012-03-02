@@ -464,7 +464,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 #if CC_FONT_LABEL_SUPPORT
 	else // ZFont class 
 	{
-		[FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, 0, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		[FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 #endif
         
