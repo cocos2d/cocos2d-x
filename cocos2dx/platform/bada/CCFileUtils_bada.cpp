@@ -96,7 +96,8 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         fseek(fp,0,SEEK_END);
         size = ftell(fp);
         fseek(fp,0,SEEK_SET);
-        pData = new unsigned char[size];
+        pData = new unsigned char[size+1];
+        pData[size] = '\0';
         size = fread(pData,sizeof(unsigned char), size,fp);
         fclose(fp);
 
