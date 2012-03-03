@@ -92,8 +92,8 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 	static int32* pDataToBeReadBinary;
 
-	pDataToBeReadBinary = (int32*)s3eMallocBase(fileSize);
-	memset(pDataToBeReadBinary, 0, fileSize);
+	pDataToBeReadBinary = (int32*)s3eMallocBase(fileSize+1);
+	memset(pDataToBeReadBinary, 0, fileSize+1);
 	s3eFileRead(pDataToBeReadBinary, fileSize, 1, pFile);
 	s3eFileClose(pFile);
 	

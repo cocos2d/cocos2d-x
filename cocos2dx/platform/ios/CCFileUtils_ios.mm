@@ -328,7 +328,8 @@ namespace cocos2d {
             fseek(fp,0,SEEK_END);
             *pSize = ftell(fp);
             fseek(fp,0,SEEK_SET);
-            pBuffer = new unsigned char[*pSize];
+            pBuffer = new unsigned char[*pSize+1];
+            pBuffer[*pSize] = '\0';
             *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
             fclose(fp);
         } while (0);
