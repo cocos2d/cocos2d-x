@@ -109,7 +109,8 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 			fseek(fp, 0, SEEK_END);
 			*pSize = ftell(fp);
 			fseek(fp, 0, SEEK_SET);
-			buffer = new unsigned char[*pSize];
+			buffer = new unsigned char[*pSize+1];
+            buffer[*pSize] = '\0';
 			*pSize = fread(buffer, sizeof(unsigned char), *pSize, fp);
 			fclose(fp);
 		}
