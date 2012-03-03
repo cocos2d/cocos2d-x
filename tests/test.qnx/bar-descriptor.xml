@@ -48,58 +48,64 @@
     <!--  The category where the application appears. Either core.games or core.media. -->
     <category>core.games</category>
     <asset path="icon.png">icon.png</asset>
-    <asset path="${workspace_loc:/TestCocos2dx/Resources}">Resources</asset>
-    <asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libbps.so" type="Qnx/Elf">lib/libbps.so.1</asset>
-    <asset path="${QNX_TARGET}\..\target-override\${CPUVARDIR}/usr/lib/libOpenAL.so" type="Qnx/Elf">lib/libOpenAL.so.1</asset>
-    <asset path="${QNX_TARGET}\..\target-override\${CPUVARDIR}/usr/lib/libalut.so" type="Qnx/Elf">lib/libalut.so.1</asset>
+    
+    <!-- the variable 'worksparce_loc' is not supported in bbndk2.0, so we create an empty folder to make the relative path work. -->
+    <asset path="empty/../../../tests/Resources">Resources</asset>
+    
+    <!-- the path of the three shared libraries as follows in bbndk2.0 is different from bbndk1.0, so if the version of bbndk you use is 1.0, just uncomment the next three lines and comment the following three lines-->
+    
+    <!-- used for bbndk1.0 -->
+    
+    <!--<asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libbps.so" type="Qnx/Elf">lib/libbps.so.1</asset>-->
+    <!--<asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libOpenAL.so" type="Qnx/Elf">lib/libOpenAL.so.1</asset>-->
+    <!--<asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libalut.so" type="Qnx/Elf">lib/libalut.so.1</asset>-->
+    
+    <!-- used for bbndk2.0 -->
+    <asset path="${QNX_TARGET}/${CPUVARDIR}/usr/lib/libbps.so" type="Qnx/Elf">lib/libbps.so.1</asset>
+    <asset path="${QNX_TARGET}/${CPUVARDIR}/usr/lib/libOpenAL.so" type="Qnx/Elf">lib/libOpenAL.so.1</asset>
+    <asset path="${QNX_TARGET}/${CPUVARDIR}/usr/lib/libalut.so" type="Qnx/Elf">lib/libalut.so.1</asset>
+    
     <configuration id="com.qnx.qcc.configuration.exe.debug.2142540956" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
-       <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/armle-v7/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="${workspace_loc:/cocos2dx/Device-Debug/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
-       <asset path="${workspace_loc:/CocosDenshion/Device-Debug/libCocosDenshion.so}" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../cocos2dx/platform/third_party/qnx/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
+       <asset path="empty/../../../CocosDenshion/proj.qnx/Device-Debug/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.release.1185536621" name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Release/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
-       <asset path="${workspace_loc:/cocos2dx/Device-Release/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
-       <asset path="${workspace_loc:/CocosDenshion/Device-Release/libCocosDenshion.so}" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-       <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/armle-v7/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
+       <asset path="empty/../../../CocosDenshion/proj.qnx/Device-Release/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../cocos2dx/platform/third_party/qnx/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1563929245" name="Device-Profile">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Profile/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
-       <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/armle-v7/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="${workspace_loc:/cocos2dx/Device-Profile/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
-       <asset path="${workspace_loc:/CocosDenshion/Device-Profile/libCocosDenshion.so}" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../cocos2dx/platform/third_party/qnx/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
+       <asset path="empty/../../../CocosDenshion/proj.qnx/Device-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.2091050949" name="Device-Coverage">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Coverage/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
-       <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/armle-v7/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="${workspace_loc:/cocos2dx/Device-Coverage/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
-       <asset path="${workspace_loc:/CocosDenshion/Device-Coverage/libCocosDenshion.so}" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../cocos2dx/platform/third_party/qnx/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
+       <asset path="empty/../../../CocosDenshion/proj.qnx/Device-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.debug.538064218" name="Simulator">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="Simulator/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
-       <asset path="${workspace_loc:/cocos2dx/Simulator/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
-	   <asset path="${workspace_loc:/CocosDenshion/Simulator/libCocosDenshion.so}" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-	   <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/x86/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
+       <asset path="empty/../../../CocosDenshion/proj.qnx/Simulator/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../cocos2dx/platform/third_party/qnx/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.808507225" name="Simulator-Profile">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="Simulator-Profile/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
-       <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/x86/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="${workspace_loc:/cocos2dx/Simulator-Profile/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
-       <asset path="${workspace_loc:/CocosDenshion/Simulator-Profile/libCocosDenshion.so}" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../cocos2dx/platform/third_party/qnx/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
+       <asset path="empty/../../../CocosDenshion/proj.qnx/Simulator-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.78763272" name="Simulator-Coverage">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="Simulator-Coverage/TestCocos2dx" entry="true" type="Qnx/Elf">TestCocos2dx</asset>
-       <asset path="${workspace_loc:/cocos2dx/platform/third_party/qnx/libraries/x86/libgrskia.so}" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="${workspace_loc:/cocos2dx/Simulator-Coverage/libcocos2dx.so}" type="Qnx/Elf">lib/libcocos2dx.so</asset>
-       <asset path="${workspace_loc:/CocosDenshion/Simulator-Coverage/libCocosDenshion.so}" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../cocos2dx/platform/third_party/qnx/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
+       <asset path="empty/../../../CocosDenshion/proj.qnx/Simulator-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     
     <!--  The icon for the application, which should be 86x86. -->

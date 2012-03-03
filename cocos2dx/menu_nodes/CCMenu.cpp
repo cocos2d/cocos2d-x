@@ -72,35 +72,46 @@ namespace cocos2d{
 		return menuWithItems(item, NULL);
 	}
 
+    bool CCMenu::init()
+    {
+        if (CCLayer::init())
+        {
+            this->m_bIsTouchEnabled = true;
+
+            // menu in the center of the screen
+            CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+            this->m_bIsRelativeAnchorPoint = false;
+            setAnchorPoint(ccp(0.5f, 0.5f));
+            this->setContentSize(s);
+
+            // XXX: in v0.7, winSize should return the visible size
+            // XXX: so the bar calculation should be done there
+            CCRect r;
+            CCApplication::sharedApplication().statusBarFrame(&r);
+            ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
+            if (orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight)
+            {
+                s.height -= r.size.width;
+            }
+            else
+            {
+                s.height -= r.size.height;
+            }
+            setPosition(ccp(s.width/2, s.height/2));
+            //	[self alignItemsVertically];
+            m_pSelectedItem = NULL;
+            m_eState = kCCMenuStateWaiting;
+            return true;
+        }
+        return false;
+    }
+
 	bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
 	{
-		if (CCLayer::init())
-		{
-			this->m_bIsTouchEnabled = true;
-
-			// menu in the center of the screen
-			CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-			this->m_bIsRelativeAnchorPoint = false;
-			setAnchorPoint(ccp(0.5f, 0.5f));
-			this->setContentSize(s);
-
-			// XXX: in v0.7, winSize should return the visible size
-			// XXX: so the bar calculation should be done there
-			CCRect r;
-            CCApplication::sharedApplication().statusBarFrame(&r);
-			ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
-			if (orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight)
-			{
-				s.height -= r.size.width;
-			}
-			else
-			{
-				s.height -= r.size.height;
-			}
-			setPosition(ccp(s.width/2, s.height/2));
-
-			int z=0;
+        if (init())
+        {
+            int z=0;
 
 			if (item)
 			{
@@ -113,14 +124,10 @@ namespace cocos2d{
 					i = va_arg(args, CCMenuItem*);
 				}
 			}
-			//	[self alignItemsVertically];
 
-			m_pSelectedItem = NULL;
-			m_eState = kCCMenuStateWaiting;
 			return true;
-		}
-
-		return false;
+        }
+        return false;
 	}
 
 	/*

@@ -56,6 +56,8 @@ public:
     void touchesEnded(CCSet *set);
     void touchesCancelled(CCSet *set);
     
+    float getMainScreenScale();
+    
     void setIMEKeyboardState(bool bOpen);
     
     static CCEGLView& sharedOpenGLView();

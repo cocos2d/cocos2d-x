@@ -67,6 +67,8 @@ public:
     void	setIMEKeyboardState(bool bOpen);
 	CCRect	getViewPort();
 	float	getScreenScaleFactor();
+	
+	float getMainScreenScale() { return 1.0f; }
 
 	// static function
 	/**
