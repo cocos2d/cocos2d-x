@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 namespace CocosDenshion
 {
-	static SimpleAudioEngine *s_pEngine;
+	static SimpleAudioEngine *s_pEngine = 0;
 
 	SimpleAudioEngine::SimpleAudioEngine()
 	{
@@ -111,7 +111,7 @@ namespace CocosDenshion
 
 	float SimpleAudioEngine::getEffectsVolume()
 	{
-		getEffectsVolumeJNI();
+		return getEffectsVolumeJNI();
 	}
 
 	void SimpleAudioEngine::setEffectsVolume(float volume)
