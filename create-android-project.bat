@@ -45,6 +45,6 @@ for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%cd%"') do set _CURRENTDIR=%%A
 for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%_NDKROOT%"') do set _NDKROOT=%%A
 	 
 :: Throw away temporary env vars and invoke script, passing any args that were passed to us
-endlocal & %_CYGBIN%\bash --login "%_CYGSCRIPT%" %_CURRENTDIR% %_PROJECTNAME% %_NDKROOT% %_PACKAGEPATH% "windows" 
+endlocal & %_CYGBIN%\bash --login "%_CYGSCRIPT%" %_CURRENTDIR% %_PROJECTNAME% %_NDKROOT% %_PACKAGEPATH% "windows"
 
 pause

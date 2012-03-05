@@ -3,9 +3,6 @@
 	<name>cocos2dx</name>
 	<comment></comment>
 	<projects>
-		<project>libjpeg</project>
-		<project>png</project>
-		<project>zlib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -164,6 +161,21 @@
 			<name>layers_scenes_transitions_nodes</name>
 			<type>2</type>
 			<locationURI>PARENT-2-PROJECT_LOC/layers_scenes_transitions_nodes</locationURI>
+		</link>
+		<link>
+			<name>libjpeg</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/platform/third_party/bada/libjpeg</locationURI>
+		</link>
+		<link>
+			<name>libpng</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/platform/third_party/bada/libpng</locationURI>
+		</link>
+		<link>
+			<name>libz</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/platform/third_party/bada/libz</locationURI>
 		</link>
 		<link>
 			<name>menu_nodes</name>
