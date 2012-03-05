@@ -2,7 +2,7 @@
  * jpeglib.h
  *
  * Copyright (C) 1991-1998, Thomas G. Lane.
- * Modified 2002-2009 by Guido Vollbeding.
+ * Modified 2002-2011 by Guido Vollbeding.
  * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
@@ -33,11 +33,13 @@ extern "C" {
 #endif
 #endif
 
-/* Version ID for the JPEG library.
+/* Version IDs for the JPEG library.
  * Might be useful for tests like "#if JPEG_LIB_VERSION >= 80".
  */
 
-#define JPEG_LIB_VERSION  80	/* Version 8.0 */
+#define JPEG_LIB_VERSION        80	/* Compatibility version 8.0 */
+#define JPEG_LIB_VERSION_MAJOR  8
+#define JPEG_LIB_VERSION_MINOR  4
 
 
 /* Various constants determining the sizes of things.
@@ -45,7 +47,7 @@ extern "C" {
  * if you want to be compatible.
  */
 
-#define DCTSIZE		    8	/* The basic DCT block is 8x8 samples */
+#define DCTSIZE		    8	/* The basic DCT block is 8x8 coefficients */
 #define DCTSIZE2	    64	/* DCTSIZE squared; # of elements in a block */
 #define NUM_QUANT_TBLS      4	/* Quantization tables are numbered 0..3 */
 #define NUM_HUFF_TBLS       4	/* Huffman tables are numbered 0..3 */
