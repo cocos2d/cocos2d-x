@@ -15,19 +15,20 @@ cocos2d-1.0.1-x-0.12.0 @ Mar.5 2012
  [iOS]
      Bug      #946: fix a bug that can not load HD image for both Retina and Normal correctly
      Bug      #762: fix a bug that CCLabelTTF is in different position (higher) than in previous version on iphone
-     Refactor #985: Remove template for xcode3
+     Refactor #985: remove template for xcode3
  [android]
-     Bug      #947: fix a bug that long chinese string causes closed loop on android
-     Bug      #950: fix a crash when touching the screen because of RTTI
-     Bug      #954: fix a bug that accelerometer axes inverted on android tablet when setting orientation to portrait
-     Bug      #957: fix a bug that when running textInputTest, application enters background after input character and click back key on android devices
-     Bug      #959: fix a bug that get wrong multitouch id
-     Bug      #964: fix a bug that can not show whole charactor
-     Bug      #971: fix dynamic_cast error on android
-     Feature  #982: make android template supports box2d, chipmunk and lua
-     Refactor #970: use modules in the Android NDK build
+     Bug      #947:  fix a bug that long chinese string causes closed loop on android
+     Bug      #950:  fix a crash when touching the screen because of RTTI
+     Bug      #954:  fix a bug that accelerometer axes inverted on android tablet when setting orientation to portrait
+     Bug      #957:  fix a bug that when running textInputTest, application enters background after input character and click back key on android devices
+     Bug      #959:  fix a bug that get wrong multitouch id
+     Bug      #964:  fix a bug that can not show whole charactor
+     Bug      #971:  fix dynamic_cast error on android
+     Feature  #982:  make android template supports box2d, chipmunk and lua
+     Refactor #970:  use modules in the Android NDK build
+     Bug      #1008: fix a bug that missing "return" in SimpleAudioEngine::getEffectsVolume() method on android platform
  [bada]
-     Bug      #984: sse static library for cocos2dx project on bada and qnx platform
+     Bug      #984: use static library for cocos2dx project on bada and qnx platform
  [blackberry]
      Bug      #960: detect when the application goes and return from background in QNX (Black Berry Playbook)
      Bug      #962: fix some bugs on qnx port
@@ -41,7 +42,7 @@ cocos2d-1.0.1-x-0.12.0 @ Mar.5 2012
  [lua]
      Bug      #942: fix a crash when invoking CCScheduler:sharedScheduler():scheduleScriptFunc in lua
      Bug      #953: add tolua++ for Mac
-     Refactor #973: Refactor lua support
+     Refactor #973: refactor lua support
 
 cocos2d-1.0.1-x-0.11.0 @ Jan.13 2012
  [blackberry] 
