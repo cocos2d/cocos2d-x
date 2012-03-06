@@ -203,14 +203,18 @@ public class Cocos2dxMusic {
 	 * @return 
 	 */
 	private MediaPlayer createMediaplayerFromAssets(String path){
-		MediaPlayer mediaPlayer = null;
+		MediaPlayer mediaPlayer = new MediaPlayer();
 		
-		try{			
-			AssetFileDescriptor assetFileDescritor = mContext.getAssets().openFd(path);
+		try{
+			if (path.startsWith("/")) {
+				mediaPlayer.setDataSource(path);
+			}
+			else {
+				AssetFileDescriptor assetFileDescritor = mContext.getAssets().openFd(path);			
+		        mediaPlayer.setDataSource(assetFileDescritor.getFileDescriptor(), 
+		        		assetFileDescritor.getStartOffset(), assetFileDescritor.getLength());				
+			}
 			
-			mediaPlayer = new MediaPlayer();
-	        mediaPlayer.setDataSource(assetFileDescritor.getFileDescriptor(), 
-	        		assetFileDescritor.getStartOffset(), assetFileDescritor.getLength());
 	        mediaPlayer.prepare();
 	        
 	        mediaPlayer.setVolume(mLeftVolume, mRightVolume);
