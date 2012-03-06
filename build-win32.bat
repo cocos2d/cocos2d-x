@@ -43,9 +43,9 @@ cd ".\Release.win32\"
 
 set CC_TEST_BIN=tests.exe
 
-set CC_TEST_RES=..\tests\Res\*.*
-set CC_HELLOWORLD_RES=..\HelloWorld\Resource\*.*
-set CC_HELLOLUA_RES=..\HelloLua\Resource\*.*
+set CC_TEST_RES=..\tests\Resources\*.*
+set CC_HELLOWORLD_RES=..\HelloWorld\Resources\*.*
+set CC_HELLOLUA_RES=..\HelloLua\Resources\*.*
 
 if not exist "%CC_TEST_BIN%" (
     echo Can't find the binary "tests.exe", is there build error?
