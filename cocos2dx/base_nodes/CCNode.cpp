@@ -140,16 +140,16 @@ void CCNode::setSkewX(float newSkewX)
 float CCNode::getSkewY()
 {
 	return m_fSkewY;
-	m_bIsTransformDirty = m_bIsInverseDirty = true;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	m_bIsTransformGLDirty = true;
-#endif
 }
 
 void CCNode::setSkewY(float newSkewY)
 {
 	m_fSkewY = newSkewY;
 
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
 }
 
 /// zOrder getter
