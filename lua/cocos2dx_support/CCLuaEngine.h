@@ -97,10 +97,15 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    virtual int executeFunctionByRefID(int nHandler, int numArgs = 0);
+    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0);
     virtual int executeFunctionWithIntegerData(int nHandler, int data);
     virtual int executeFunctionWithFloatData(int nHandler, float data);
     virtual int executeFunctionWithBooleanData(int nHandler, bool data);
+    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);    
+    virtual int pushIntegerToLuaStack(int data);
+    virtual int pushFloatToLuaStack(int data);
+    virtual int pushBooleanToLuaStack(int data);
+    virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName);
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, cocos2d::CCTouch *pTouch);
@@ -121,6 +126,7 @@ private:
     }
     
     bool init(void);
+    bool pushFunctionByHandler(int nHandler);
     
     lua_State* m_state;
 };
