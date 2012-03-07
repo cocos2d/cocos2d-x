@@ -80,6 +80,9 @@ namespace cocos2d {
             return bRet;
         }
 
+        /** @brief: Get string from a file.
+        *   @return: a pointer which needs be deleted manually by 'delete[]' .
+        */
         static char* stringWithContentsOfFile(const char* pszFileName)
         {
             unsigned long size = 0;
