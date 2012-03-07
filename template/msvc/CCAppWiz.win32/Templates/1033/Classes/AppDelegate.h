@@ -2,9 +2,6 @@
 #define __APP_DELEGATE_H__
 
 #include "CCApplication.h"
-[! if CC_USE_LUA]
-#include "LuaEngine.h"
-[! endif]
 
 /**
 @brief	The cocos2d Application.
@@ -40,11 +37,6 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
-[! if CC_USE_LUA]
-
-private:
-    LuaEngine* m_pLuaEngine;
-[! endif]
 };
 
 #endif  // __APP_DELEGATE_H__
