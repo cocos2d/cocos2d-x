@@ -10,11 +10,13 @@ Classes/AppDelegate.cpp
 
 [! if CC_USE_LUA]
 ../../../../../lua/cocos2dx_support/LuaCocos2d.cpp
-../../../../../lua/cocos2dx_support/LuaEngine.cpp
-../../../../../lua/cocos2dx_support/LuaEngineImpl.cpp
 ../../../../../lua/cocos2dx_support/LuaCocos2d.h
-../../../../../lua/cocos2dx_support/LuaEngine.h
-../../../../../lua/cocos2dx_support/LuaEngineImpl.h
+../../../../../lua/cocos2dx_support/CCLuaEngine.cpp
+../../../../../lua/cocos2dx_support/CCLuaEngine.h
+../../../../../lua/cocos2dx_support/Cocos2dxLuaLoader.h
+../../../../../lua/cocos2dx_support/Cocos2dxLuaLoader.cpp
+../../../../../lua/cocos2dx_support/tolua_fix.c
+../../../../../lua/cocos2dx_support/tolua_fix.h
 [! else]
 Classes/HelloWorldScene.h
 Classes/HelloWorldScene.cpp
@@ -29,6 +31,7 @@ Resources/menu2.png
 Resources/Icon.png
 Resources/dog.png
 Resources/hello.lua
+Resources/hello2.lua
 Resources/menu1.png
 [! else]
 Resources/CloseSelected.png
