@@ -6,15 +6,8 @@
 using namespace CocosDenshion;
 
 [! endif]
-[! if !CC_USE_LUA]
-
-#include "HelloWorldScene.h"
-[! else]
-
-#if CC_LUA_ENGINE_ENABLED
+[! if CC_USE_LUA]
 #include "CCLuaEngine.h"
-#endif
-
 [! endif]
 
 #include "CCEGLView.h"
@@ -29,11 +22,6 @@ AppDelegate::~AppDelegate()
 {
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
     SimpleAudioEngine::end();
-[! endif]
-[! if CC_USE_LUA]
-#if CC_LUA_ENGINE_ENABLED
-    CCLuaEngine::purgeSharedEngine();
-#endif
 [! endif]
 }
 
@@ -133,8 +121,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
 [! if CC_USE_LUA]
-    // init lua engine
-    CCLuaEngine* pEngine = CCLuaEngine::sharedEngine();
+    // register lua engine
+    CCScriptEngineProtocol* pEngine = CCLuaEngine::engine();
+    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     unsigned long size;
@@ -153,8 +142,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
     string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+    pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif
 [! else]
