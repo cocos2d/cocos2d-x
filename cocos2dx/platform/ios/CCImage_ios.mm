@@ -332,17 +332,23 @@ static CGSize _caculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize 
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
     CGSize dim = CGSizeZero;
+    CGSize textRect = CGSizeZero;
+    textRect.width = constrainSize->width > 0 ? constrainSize->width
+                                              : 0x7fffffff;
+    textRect.height = constrainSize->height > 0 ? constrainSize->height
+                                              : 0x7fffffff;
+    
     
     for (NSString *s in listItems)
     {
         CGSize tmp;
         if (isZfont)
         {
-            tmp = [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font];
+            tmp = [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font constrainedToSize:textRect];
         }
         else
         {
-           tmp = [s sizeWithFont:font]; 
+           tmp = [s sizeWithFont:font constrainedToSize:textRect]; 
         }
         
         if (tmp.width > dim.width)
@@ -350,28 +356,7 @@ static CGSize _caculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize 
            dim.width = tmp.width; 
         }
         
-        // Should break the string into more lines, so should add the height
-        if (constrainSize->width > 0 && constrainSize->width < tmp.width)
-        {
-            int lines = ceil(tmp.width / constrainSize->width);
-            dim.height += tmp.height * lines;
-        }
-        else
-        {
-            dim.height += tmp.height;
-        }
-    }
-    
-    // Should not exceed the height
-    if (constrainSize->height > 0)
-    {
-        dim.height = constrainSize->height;
-    }
-    
-    // Should not exceed the width;
-    if (constrainSize->width > 0)
-    {
-        dim.width = constrainSize->width;
+        dim.height += tmp.height;
     }
     
     return dim;
@@ -428,6 +413,23 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 
         CC_BREAK_IF(! font);
         
+        // compute start point
+        int startH = 0;
+        if (constrainSize.height > dim.height)
+        {
+            startH = (constrainSize.height - dim.height) / 2;
+        }
+        
+        // adjust text rect
+        if (constrainSize.width > 0 && constrainSize.width > dim.width)
+        {
+            dim.width = constrainSize.width;
+        }
+        if (constrainSize.height > 0 && constrainSize.height > dim.height)
+        {
+            dim.height = constrainSize.height;
+        }         
+        
         unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
         memset(data, 0, (int)(dim.width * dim.height * 4));
         
@@ -456,13 +458,13 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         // normal fonts
 	if( [font isKindOfClass:[UIFont class] ] )
 	{
-		[str drawInRect:CGRectMake(0, 0, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		[str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 	
 #if CC_FONT_LABEL_SUPPORT
 	else // ZFont class 
 	{
-		[FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, 0, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		[FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 #endif
         

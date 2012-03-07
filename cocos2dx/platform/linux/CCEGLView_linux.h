@@ -47,6 +47,8 @@ public:
 	int setDeviceOrientation(int eOritation);
 	void setViewPortInPoints(float x, float y, float w, float h);
 	void setScissorInPoints(float x, float y, float w, float h);
+	
+	float getMainScreenScale() { return 1.0f; }
 
 	void setIMEKeyboardState(bool bOpen);
 

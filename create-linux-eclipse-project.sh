@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This script should be called by create-android-project.bat
 # or should be runned in linux shell. It can not be runned under
 # cygwin.
@@ -6,4 +6,4 @@
 
 # set environment paramters
 
-sh `pwd`/create-android-project.sh linux
+bash `pwd`/create-android-project.sh -linux $@

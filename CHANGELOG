@@ -1,3 +1,49 @@
+cocos2d-1.0.1-x-0.12.0 @ Mar.5 2012
+ [all platforms]
+     Bug      #925: rename HelloWorld/Resource to HelloWorld/Resources
+     Bug      #948: fix a bug that CCMutableArray::getIndexOfObject returns 0 on both "index 0" and "not existing"
+     Bug      #951: remove definition of NSMutableSet
+     Bug      #961: fix mad behaviour in second stage of CCEaseBackInOut
+     Bug      #965: remove some dynamic_cast calling since selector_protocol.h was removed
+     Bug      #967: fix a bug that PVR Textures cannot be reloaded after GL context lost
+     Bug      #986: add init() funciton in CCMenu class
+     Feature  #952: make CCLabelBMFont supports other languages, include Chinese, Korean, Janpanese and so on.
+     Feature  #972: add Support for CCNotificationCenter
+     Refactor #933: refactor CCUserDefault
+     Refactor #958: move the implement of SelectorProtocol to CCObject
+     Document #975: add comment for CCTMXTiledMap::getMapSize and more methods
+ [iOS]
+     Bug      #946: fix a bug that can not load HD image for both Retina and Normal correctly
+     Bug      #762: fix a bug that CCLabelTTF is in different position (higher) than in previous version on iphone
+     Refactor #985: remove template for xcode3
+ [android]
+     Bug      #947:  fix a bug that long chinese string causes closed loop on android
+     Bug      #950:  fix a crash when touching the screen because of RTTI
+     Bug      #954:  fix a bug that accelerometer axes inverted on android tablet when setting orientation to portrait
+     Bug      #957:  fix a bug that when running textInputTest, application enters background after input character and click back key on android devices
+     Bug      #959:  fix a bug that get wrong multitouch id
+     Bug      #964:  fix a bug that can not show whole charactor
+     Bug      #971:  fix dynamic_cast error on android
+     Feature  #982:  make android template supports box2d, chipmunk and lua
+     Refactor #970:  use modules in the Android NDK build
+     Bug      #1008: fix a bug that missing "return" in SimpleAudioEngine::getEffectsVolume() method on android platform
+ [bada]
+     Bug      #984: use static library for cocos2dx project on bada and qnx platform
+ [blackberry]
+     Bug      #960: detect when the application goes and return from background in QNX (Black Berry Playbook)
+     Bug      #962: fix some bugs on qnx port
+     Bug      #963: fix a bug that applicationWillEnterForeground will be invoked twice when application is launched
+     Bug      #968: fix a bug about "Out of bound" in CCFileUtils::getWriteablePath() for BlackBerry
+     Feature  #994: add support for bbndk2.0
+ [marmalade]
+     Bug      #995: modify project configure for marmalade port after adding extension support and refactor resource folder
+ [win32]
+     Feature  #969: implement Accelerometer Simulation for Win32.
+ [lua]
+     Bug      #942: fix a crash when invoking CCScheduler:sharedScheduler():scheduleScriptFunc in lua
+     Bug      #953: add tolua++ for Mac
+     Refactor #973: refactor lua support
+
 cocos2d-1.0.1-x-0.11.0 @ Jan.13 2012
  [blackberry] 
      Feature  #907: support blackberry playbook
