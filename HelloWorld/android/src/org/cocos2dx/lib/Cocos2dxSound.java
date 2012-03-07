@@ -219,8 +219,14 @@ public class Cocos2dxSound {
 		int soundId = INVALID_SOUND_ID;
 		
 		try {
-			soundId = mSoundPool.load(mContext.getAssets().openFd(path), 0);
+			if (path.startsWith("/")){
+				soundId = mSoundPool.load(path, 0);
+			}
+			else {
+				soundId = mSoundPool.load(mContext.getAssets().openFd(path), 0);
+			}			
 		} catch(Exception e){
+			soundId = INVALID_SOUND_ID;
 			 Log.e(TAG, "error: " + e.getMessage(), e);
 		}
 		
