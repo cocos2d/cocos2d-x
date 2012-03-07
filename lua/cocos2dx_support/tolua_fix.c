@@ -11,10 +11,6 @@ TOLUA_API void tolua_prepare_ccobject_table(lua_State* L)
     lua_pushstring(L, TOLUA_REFID_TYPE_MAPPING);
     lua_newtable(L);
     lua_rawset(L, LUA_REGISTRYINDEX);
-    
-    lua_pushstring(L, TOLUA_REFID_FUNC_MAPPING);
-    lua_newtable(L);
-    lua_rawset(L, LUA_REGISTRYINDEX);
 }
 
 TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
@@ -149,30 +145,15 @@ TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
 }
 
 TOLUA_API int tolua_ref_function(lua_State* L, int lo, int def)
-{
-    static int functionRefIDCount = 0;
-    if (lua_gettop(L) < abs(lo) || !lua_isfunction(L, lo)) return 0;
-    
-    ++functionRefIDCount;
-                                                                    /* stack: ... func ... */
-    lua_pushstring(L, TOLUA_REFID_FUNC_MAPPING);
-    lua_rawget(L, LUA_REGISTRYINDEX);                               /* stack: ... func ... refid_func */
-    lua_pushinteger(L, functionRefIDCount);                         /* stack: ... func ... refid_func refid */
-    lua_pushvalue(L, lo);                                           /* stack: ... func ... refid_func refid func */
-    lua_rawset(L, -3);                    /* refid_func[refid] = func, stack: ... func ... refid_func */
-    lua_pop(L, 1);                                                  /* stack: ... func ... */
-
-    return functionRefIDCount;
+{    
+    if (!lua_isfunction(L, lo)) return 0;
+    lua_pushvalue(L, lo);                                           /* stack: ... func */
+    return luaL_ref(L, LUA_REGISTRYINDEX);
 }
 
 TOLUA_API void tolua_remove_function_by_refid(lua_State* L, int refid)
 {
-    lua_pushstring(L, TOLUA_REFID_FUNC_MAPPING);
-    lua_rawget(L, LUA_REGISTRYINDEX);                               /* stack: refid_func */
-    lua_pushinteger(L, refid);                                      /* stack: refid_func refid */
-    lua_pushnil(L);                                                 /* stack: refid_func refid nil */
-    lua_rawget(L, -2);                    /* delete refid_func[refid], stack: refid_func */
-    lua_pop(L, 1);                                                  /* stack: - */
+    luaL_unref(L, LUA_REGISTRYINDEX, refid);
 }
 
 // check lua value is funciton

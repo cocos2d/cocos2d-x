@@ -125,7 +125,7 @@ public:
     virtual void removeCCObjectByID(int nLuaID) = 0;
     
     /**
-     @brief Remove Lua function reference
+     @brief Remove Lua function handler
      */
     virtual void removeLuaHandler(int nHandler) = 0;
     
@@ -158,15 +158,20 @@ public:
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
     /**
-     @brief Execute a function by ref id
-     @param The function ref id
+     @brief Execute a function by handler
+     @param The function handler
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    virtual int executeFunctionByRefID(int nHandler, int numArgs = 0) = 0;
+    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) = 0;
     virtual int executeFunctionWithIntegerData(int nHandler, int data) = 0;
     virtual int executeFunctionWithFloatData(int nHandler, float data) = 0;
     virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
+    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;    
+    virtual int pushIntegerToLuaStack(int data) = 0;
+    virtual int pushFloatToLuaStack(int data) = 0;
+    virtual int pushBooleanToLuaStack(int data) = 0;
+    virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName) = 0;
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;
