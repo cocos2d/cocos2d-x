@@ -81,7 +81,7 @@ namespace cocos2d {
         }
 
         /** @brief: Get string from a file.
-        *   @return: a pointer which needs be deleted manually by 'delete[]' .
+        *   @return: a pointer which needs to be deleted manually by 'delete[]' .
         */
         static char* stringWithContentsOfFile(const char* pszFileName)
         {
