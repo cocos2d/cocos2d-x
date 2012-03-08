@@ -953,7 +953,7 @@ bool CCEGLView::HandleEvents()
 						if (touch)
 						{
 							CCSet set;
-							touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+							touch->SetTouchInfo(((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
 												   ((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 							set.addObject(touch);
 							m_pDelegate->touchesEnded(&set, NULL);
@@ -985,7 +985,7 @@ bool CCEGLView::HandleEvents()
 						if (!touch)
 							touch = new CCTouch;
 
-						touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+						touch->SetTouchInfo(((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
 											   ((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 						s_pTouches[touch_id] = touch;
 
@@ -1006,7 +1006,7 @@ bool CCEGLView::HandleEvents()
 						if (touch)
 						{
 							CCSet set;
-							touch->SetTouchInfo(0, ((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+							touch->SetTouchInfo(((float)(mtouch_event.x) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
 												   ((float)(mtouch_event.y) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 							set.addObject(touch);
 							m_pDelegate->touchesMoved(&set, NULL);
@@ -1036,7 +1036,7 @@ bool CCEGLView::HandleEvents()
 									if (touch)
 									{
 										CCSet set;
-										touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+										touch->SetTouchInfo(((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
 															   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 										set.addObject(touch);
 										m_pDelegate->touchesMoved(&set, NULL);
@@ -1053,7 +1053,7 @@ bool CCEGLView::HandleEvents()
 									if (!touch)
 										touch = new CCTouch;
 
-									touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+									touch->SetTouchInfo(((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
 														   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 									s_pTouches[touch_id] = touch;
 
@@ -1075,7 +1075,7 @@ bool CCEGLView::HandleEvents()
 									if (touch)
 									{
 										CCSet set;
-										touch->SetTouchInfo(0, ((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+										touch->SetTouchInfo(((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
 															   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 										set.addObject(touch);
 										m_pDelegate->touchesEnded(&set, NULL);
