@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2011 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -92,7 +92,7 @@ int CCLuaEngine::executeString(const char *codes)
 {
 	int nRet =	luaL_dostring(m_state, codes);
 	lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
+
     if (nRet != 0)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
@@ -106,7 +106,7 @@ int CCLuaEngine::executeScriptFile(const char* filename)
 {
     int nRet = luaL_dofile(m_state, filename);
 //    lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
+
     if (nRet != 0)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
@@ -125,24 +125,24 @@ int	CCLuaEngine::executeGlobalFunction(const char* functionName)
         lua_pop(m_state, 1);
         return 0;
     }
-    
+
     int error = lua_pcall(m_state, 0, 1, 0);         /* call function, stack: ret */
 //    lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
+
     if (error)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
         lua_pop(m_state, 1); // clean error message
         return 0;
     }
-    
+
     // get return value
     if (!lua_isnumber(m_state, -1))
     {
         lua_pop(m_state, 1);
         return 0;
     }
-    
+
     int ret = lua_tointeger(m_state, -1);
     lua_pop(m_state, 1);                                            /* stack: - */
     return ret;
@@ -156,31 +156,31 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
         {
             lua_insert(m_state, -(numArgs + 1));                        /* stack: ... func arg1 arg2 ... */
         }
-            
+
         int error = 0;
-        try
-        {
+        // try
+        // {
             error = lua_pcall(m_state, numArgs, 1, 0);                  /* stack: ... ret */
-        }
-        catch (exception& e)
-        {
-            CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", nHandler, e.what());
-            lua_settop(m_state, 0);
-            return 0;
-        }
-        catch (...)
-        {
-            CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", nHandler);
-            lua_settop(m_state, 0);
-            return 0;
-        }
+        // }
+        // catch (exception& e)
+        // {
+        //     CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", nHandler, e.what());
+        //     lua_settop(m_state, 0);
+        //     return 0;
+        // }
+        // catch (...)
+        // {
+        //     CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", nHandler);
+        //     lua_settop(m_state, 0);
+        //     return 0;
+        // }
         if (error)
         {
             CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
             lua_settop(m_state, 0);
             return 0;
         }
-        
+
         // get return value
         int ret = 0;
         if (lua_isnumber(m_state, -1))
@@ -191,7 +191,7 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
         {
             ret = lua_toboolean(m_state, -1);
         }
-        
+
         lua_pop(m_state, 1);
         return ret;
     }
@@ -263,7 +263,7 @@ int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouche
 {
     lua_pushinteger(m_state, eventType);
     lua_newtable(m_state);
-    
+
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCSetIterator it = pTouches->begin();
     CCTouch* pTouch;
@@ -278,7 +278,7 @@ int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouche
         lua_rawseti(m_state, -2, n++);
         ++it;
     }
-    
+
     return executeFunctionByHandler(nHandler, 2);
 }
 
@@ -286,7 +286,7 @@ int CCLuaEngine::executeSchedule(int nHandler, ccTime dt)
 {
     return executeFunctionWithFloatData(nHandler, dt);
 }
-    
+
 void CCLuaEngine::addLuaLoader(lua_CFunction func)
 {
     if (!func) return;
@@ -295,7 +295,7 @@ void CCLuaEngine::addLuaLoader(lua_CFunction func)
     // get loader table
     lua_getglobal(m_state, "package");                     // package
     lua_getfield(m_state, -1, "loaders");                  // package, loaders
-    
+
     // insert loader into index 2
     lua_pushcfunction(m_state, func);                      // package, loaders, func
     for (int i = lua_objlen(m_state, -2) + 1; i > 2; --i)
@@ -305,10 +305,10 @@ void CCLuaEngine::addLuaLoader(lua_CFunction func)
         lua_rawseti(m_state, -3, i);                       // package, loaders, func
     }
     lua_rawseti(m_state, -2, 2);                           // package, loaders
-    
+
     // set loaders into package
     lua_setfield(m_state, -2, "loaders");                  // package
-    
+
     lua_pop(m_state, 1);
 }
 
