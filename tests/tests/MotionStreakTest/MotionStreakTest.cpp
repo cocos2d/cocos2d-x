@@ -77,7 +77,7 @@ void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
     CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-	CCPoint touchLocation = touch->locationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView();	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	
 	m_streak->setPosition( touchLocation );

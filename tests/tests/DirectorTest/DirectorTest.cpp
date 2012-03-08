@@ -187,7 +187,7 @@ void Director1::ccTouchesEnded(CCSet * touches, CCEvent* event)
 
         if(!touch)
             break;
-		CCPoint a = touch->locationInView(touch->view());
+		CCPoint a = touch->locationInView();
 
         CCDirector *director = CCDirector::sharedDirector();
 		CCPoint b = director->convertToUI(director->convertToGL(a));

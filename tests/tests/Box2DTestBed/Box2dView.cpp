@@ -137,8 +137,8 @@ bool MenuLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void MenuLayer::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView( touch->view() );	
-	CCPoint prevLocation = touch->previousLocationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView();	
+	CCPoint prevLocation = touch->previousLocationInView();	
 	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
@@ -223,7 +223,7 @@ void Box2DView::registerWithTouchDispatcher()
 
 bool Box2DView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView();	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 
 	CCPoint nodePosition = convertToNodeSpace( touchLocation );
@@ -234,7 +234,7 @@ bool Box2DView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void Box2DView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView();	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	CCPoint nodePosition = convertToNodeSpace( touchLocation );
 	
@@ -243,7 +243,7 @@ void Box2DView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
 void Box2DView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView();	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	CCPoint nodePosition = convertToNodeSpace( touchLocation );
 	
