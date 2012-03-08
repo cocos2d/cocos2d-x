@@ -168,9 +168,9 @@ void RenderTextureTest::ccTouchesMoved(CCSet* touches, CCEvent* event)
 {
     CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);
-    CCPoint start = touch->locationInView( touch->view() );	
+    CCPoint start = touch->locationInView();	
     start = CCDirector::sharedDirector()->convertToGL( start );
-    CCPoint end = touch->previousLocationInView( touch->view() );
+    CCPoint end = touch->previousLocationInView();
     end = CCDirector::sharedDirector()->convertToGL(end);
 
     // begin drawing to the render texture
@@ -296,9 +296,9 @@ RenderTextureSave::~RenderTextureSave()
 void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
 {
 	CCTouch *touch = (CCTouch *)touches->anyObject();
-	CCPoint start = touch->locationInView(touch->view());
+	CCPoint start = touch->locationInView();
 	start = CCDirector::sharedDirector()->convertToGL(start);
-	CCPoint end = touch->previousLocationInView(touch->view());
+	CCPoint end = touch->previousLocationInView();
 
 	// begin drawing to the render texture
 	m_pTarget->begin();
@@ -484,7 +484,7 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEv
 	for (iter = touches->begin(); iter != touches->end(); ++iter)
 	{
 		touch = (CCTouch *)(*iter);
-		CCPoint location = touch->locationInView(touch->view());
+		CCPoint location = touch->locationInView();
 
 		location = CCDirector::sharedDirector()->convertToGL(location);
 		sp1->setPosition(location);
@@ -506,7 +506,7 @@ void RenderTextureZbuffer::ccTouchesMoved(CCSet* touches, CCEvent* event)
 	for (iter = touches->begin(); iter != touches->end(); ++iter)
 	{
 		touch = (CCTouch *)(*iter);
-		CCPoint location = touch->locationInView(touch->view());
+		CCPoint location = touch->locationInView();
 
 		location = CCDirector::sharedDirector()->convertToGL(location);
 		sp1->setPosition(location);

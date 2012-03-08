@@ -42,7 +42,7 @@ void MainLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
 	CCTouch* touch = (CCTouch*)(*it);
 	
-	CCPoint location = touch->locationInView( touch->view() );
+	CCPoint location = touch->locationInView();
 	CCPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
 
 	CCNode* s = getChildByTag(kTagSprite);

@@ -166,7 +166,7 @@ void LayerTest1::registerWithTouchDispatcher()
 
 void LayerTest1::updateSize(CCTouch*touch)
 {
-	CCPoint touchLocation = touch->locationInView(touch->view());
+	CCPoint touchLocation = touch->locationInView();
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -324,7 +324,7 @@ void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)
 
     CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);
-    CCPoint start = touch->locationInView(touch->view());	
+    CCPoint start = touch->locationInView();	
     start = CCDirector::sharedDirector()->convertToGL(start);
 
     CCPoint diff = ccpSub( ccp(s.width/2,s.height/2), start);	
