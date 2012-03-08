@@ -1,12 +1,12 @@
 /*
- * CCAplication_linux.h
+ * CCApplication_linux.h
  *
  *  Created on: Aug 8, 2011
  *      Author: laschweinski
  */
 
-#ifndef CCAPLICATION_LINUX_H_
-#define CCAPLICATION_LINUX_H_
+#ifndef CCAPPLICATION_LINUX_H_
+#define CCAPPLICATION_LINUX_H_
 
 #include "CCCommon.h"
 
@@ -96,4 +96,4 @@ protected:
 
 NS_CC_END;
 
-#endif /* CCAPLICATION_LINUX_H_ */
+#endif /* CCAPPLICATION_LINUX_H_ */
