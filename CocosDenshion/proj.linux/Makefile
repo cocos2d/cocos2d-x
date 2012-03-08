@@ -19,8 +19,8 @@ endif
 
 DEFINES = -DLINUX
 
-OBJECTS =   ../Linux/FmodAudioPlayer.o \
-            ../Linux/SimpleAudioEngine.o \
+OBJECTS =   ../linux/FmodAudioPlayer.o \
+            ../linux/SimpleAudioEngine.o \
 
 STATICLIBS = 
 
