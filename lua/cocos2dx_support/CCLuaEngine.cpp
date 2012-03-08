@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2011 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,11 +24,11 @@
 
 #include "CCLuaEngine.h"
 #include "tolua++.h"
-#include "tolua_fix.h"
 
 extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
+#include "tolua_fix.h"
 }
 
 #include "cocos2d.h"
@@ -92,7 +92,7 @@ int CCLuaEngine::executeString(const char *codes)
 {
 	int nRet =	luaL_dostring(m_state, codes);
 	lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
+
     if (nRet != 0)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
@@ -106,7 +106,7 @@ int CCLuaEngine::executeScriptFile(const char* filename)
 {
     int nRet = luaL_dofile(m_state, filename);
 //    lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
+
     if (nRet != 0)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
@@ -125,111 +125,128 @@ int	CCLuaEngine::executeGlobalFunction(const char* functionName)
         lua_pop(m_state, 1);
         return 0;
     }
-    
+
     int error = lua_pcall(m_state, 0, 1, 0);         /* call function, stack: ret */
 //    lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
+
     if (error)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
         lua_pop(m_state, 1); // clean error message
         return 0;
     }
-    
+
     // get return value
     if (!lua_isnumber(m_state, -1))
     {
         lua_pop(m_state, 1);
         return 0;
     }
-    
+
     int ret = lua_tointeger(m_state, -1);
     lua_pop(m_state, 1);                                            /* stack: - */
     return ret;
 }
 
-int CCLuaEngine::executeFunctionByRefID(int nHandler, int numArgs)
+int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
 {
-    lua_pushstring(m_state, TOLUA_REFID_FUNC_MAPPING);
-    lua_rawget(m_state, LUA_REGISTRYINDEX);                         /* stack: ... refid_func */
-    lua_pushinteger(m_state, nHandler);                        /* stack: ... refid_func refid */
-    lua_rawget(m_state, -2);                                        /* stack: ... refid_func func */
-    
-    if (!lua_isfunction(m_state, -1))
+    if (pushFunctionByHandler(nHandler))
     {
-        CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", nHandler);
-        lua_pop(m_state, 2 + numArgs);
-        return 0;
-    }
-    
-    if (numArgs > 0)
-    {
-        // [a1] [a2] refid_func func
-        //  -4   -3     -2       -1
-        // [a1] [a2] refid_func func [a1]
-        //  -5   -4     -3       -2   -1
-        int lo = -2 - numArgs;
-        for (int i = 0; i < numArgs; i++)
+        if (numArgs > 0)
         {
-            tolua_pushvalue(m_state, lo);                           /* stack: ... refid_func func (...) */
+            lua_insert(m_state, -(numArgs + 1));                        /* stack: ... func arg1 arg2 ... */
         }
+
+        int error = 0;
+        // try
+        // {
+            error = lua_pcall(m_state, numArgs, 1, 0);                  /* stack: ... ret */
+        // }
+        // catch (exception& e)
+        // {
+        //     CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", nHandler, e.what());
+        //     lua_settop(m_state, 0);
+        //     return 0;
+        // }
+        // catch (...)
+        // {
+        //     CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", nHandler);
+        //     lua_settop(m_state, 0);
+        //     return 0;
+        // }
+        if (error)
+        {
+            CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
+            lua_settop(m_state, 0);
+            return 0;
+        }
+
+        // get return value
+        int ret = 0;
+        if (lua_isnumber(m_state, -1))
+        {
+            ret = lua_tointeger(m_state, -1);
+        }
+        else if (lua_isboolean(m_state, -1))
+        {
+            ret = lua_toboolean(m_state, -1);
+        }
+
+        lua_pop(m_state, 1);
+        return ret;
     }
-    
-    int error = 0;
-    try
+    else
     {
-        error = lua_pcall(m_state, numArgs, 1, 0);                  /* stack: ... refid_func ret */
-    }
-    catch (exception& e)
-    {
-        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", nHandler, e.what());
-        lua_settop(m_state, 0);
         return 0;
     }
-    catch (...)
-    {
-        CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", nHandler);
-        lua_settop(m_state, 0);
-        return 0;
-    }
-    if (error)
-    {
-        CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
-        lua_pop(m_state, 2 + numArgs); // clean error message
-        return 0;
-    }
-    
-    // get return value
-    int ret = 0;
-    if (lua_isnumber(m_state, -1))
-    {
-        ret = lua_tointeger(m_state, -1);
-    }
-    else if (lua_isboolean(m_state, -1))
-    {
-        ret = lua_toboolean(m_state, -1);
-    }
-    
-    lua_pop(m_state, 2 + numArgs);
-    return ret;
 }
 
 int CCLuaEngine::executeFunctionWithIntegerData(int nHandler, int data)
 {
     lua_pushinteger(m_state, data);
-    return executeFunctionByRefID(nHandler, 1);
+    return executeFunctionByHandler(nHandler, 1);
 }
 
 int CCLuaEngine::executeFunctionWithFloatData(int nHandler, float data)
 {
     lua_pushnumber(m_state, data);
-    return executeFunctionByRefID(nHandler, 1);
+    return executeFunctionByHandler(nHandler, 1);
 }
 
 int CCLuaEngine::executeFunctionWithBooleanData(int nHandler, bool data)
 {
     lua_pushboolean(m_state, data);
-    return executeFunctionByRefID(nHandler, 1);
+    return executeFunctionByHandler(nHandler, 1);
+}
+
+int CCLuaEngine::executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName)
+{
+    tolua_pushusertype_ccobject(m_state, pObject->m_uID, &pObject->m_nLuaID, pObject, typeName);
+    return executeFunctionByHandler(nHandler, 1);
+}
+
+int CCLuaEngine::pushIntegerToLuaStack(int data)
+{
+    lua_pushinteger(m_state, data);
+    return lua_gettop(m_state);
+}
+
+int CCLuaEngine::pushFloatToLuaStack(int data)
+{
+    lua_pushnumber(m_state, data);
+    return lua_gettop(m_state);
+}
+
+int CCLuaEngine::pushBooleanToLuaStack(int data)
+{
+    lua_pushboolean(m_state, data);
+    return lua_gettop(m_state);
+}
+
+int CCLuaEngine::pushCCObjectToLuaStack(CCObject* pObject, const char* typeName)
+{
+    tolua_pushusertype_ccobject(m_state, pObject->m_uID, &pObject->m_nLuaID, pObject, typeName);
+    return lua_gettop(m_state);
 }
 
 // functions for excute touch event
@@ -239,14 +256,14 @@ int CCLuaEngine::executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch)
     lua_pushinteger(m_state, eventType);
     lua_pushnumber(m_state, pt.x);
     lua_pushnumber(m_state, pt.y);
-    return executeFunctionByRefID(nHandler, 3);
+    return executeFunctionByHandler(nHandler, 3);
 }
 
 int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches)
 {
     lua_pushinteger(m_state, eventType);
     lua_newtable(m_state);
-    
+
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCSetIterator it = pTouches->begin();
     CCTouch* pTouch;
@@ -261,15 +278,15 @@ int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouche
         lua_rawseti(m_state, -2, n++);
         ++it;
     }
-    
-    return executeFunctionByRefID(nHandler, 2);
+
+    return executeFunctionByHandler(nHandler, 2);
 }
 
 int CCLuaEngine::executeSchedule(int nHandler, ccTime dt)
 {
     return executeFunctionWithFloatData(nHandler, dt);
 }
-    
+
 void CCLuaEngine::addLuaLoader(lua_CFunction func)
 {
     if (!func) return;
@@ -278,7 +295,7 @@ void CCLuaEngine::addLuaLoader(lua_CFunction func)
     // get loader table
     lua_getglobal(m_state, "package");                     // package
     lua_getfield(m_state, -1, "loaders");                  // package, loaders
-    
+
     // insert loader into index 2
     lua_pushcfunction(m_state, func);                      // package, loaders, func
     for (int i = lua_objlen(m_state, -2) + 1; i > 2; --i)
@@ -288,11 +305,23 @@ void CCLuaEngine::addLuaLoader(lua_CFunction func)
         lua_rawseti(m_state, -3, i);                       // package, loaders, func
     }
     lua_rawseti(m_state, -2, 2);                           // package, loaders
-    
+
     // set loaders into package
     lua_setfield(m_state, -2, "loaders");                  // package
-    
+
     lua_pop(m_state, 1);
+}
+
+bool CCLuaEngine::pushFunctionByHandler(int nHandler)
+{
+    lua_rawgeti(m_state, LUA_REGISTRYINDEX, nHandler);  /* stack: ... func */
+    if (!lua_isfunction(m_state, -1))
+    {
+        CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", nHandler);
+        lua_pop(m_state, 1);
+        return false;
+    }
+    return true;
 }
 
 NS_CC_END

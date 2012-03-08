@@ -11,7 +11,6 @@ extern "C"
     
 #define TOLUA_REFID_PTR_MAPPING "tolua_refid_ptr_mapping"
 #define TOLUA_REFID_TYPE_MAPPING "tolua_refid_type_mapping"
-#define TOLUA_REFID_FUNC_MAPPING "tolua_refid_func_mapping"
 
 TOLUA_API void tolua_prepare_ccobject_table(lua_State* L);
 TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
