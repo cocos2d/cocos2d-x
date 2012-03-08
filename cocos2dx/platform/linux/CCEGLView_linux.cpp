@@ -135,7 +135,7 @@ void mouseButtonEventHandle(int iMouseID,int iMouseState) {
 			return;
 		}
 
-		s_pMainWindow->m_pTouch->SetTouchInfo(0, (float)(oPoint.x - s_pMainWindow->m_rcViewPort.origin.x) / s_pMainWindow->m_fScreenScaleFactor,
+		s_pMainWindow->m_pTouch->SetTouchInfo((float)(oPoint.x - s_pMainWindow->m_rcViewPort.origin.x) / s_pMainWindow->m_fScreenScaleFactor,
 				(float)(oPoint.y - s_pMainWindow->m_rcViewPort.origin.y) / s_pMainWindow->m_fScreenScaleFactor);
 		s_pMainWindow->m_pSet->addObject(s_pMainWindow->m_pTouch);
 		s_pMainWindow->m_mousePoint = oPoint;

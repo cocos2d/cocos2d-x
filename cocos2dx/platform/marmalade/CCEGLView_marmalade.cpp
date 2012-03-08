@@ -150,7 +150,7 @@ void CCEGLView::setTouch(void* systemData)
 	{
 	case S3E_POINTER_STATE_DOWN :
 		m_bCaptured = true;
-		m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
+		m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
 		m_pSet->addObject(m_pTouch);
 		m_pDelegate->touchesBegan(m_pSet, NULL);
 		break;
@@ -158,7 +158,7 @@ void CCEGLView::setTouch(void* systemData)
 	case S3E_POINTER_STATE_UP :
 		if (m_bCaptured)
 		{
-			m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
+			m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
 			m_pDelegate->touchesEnded(m_pSet, NULL);
 			m_pSet->removeObject(m_pTouch);
 			m_bCaptured = false;
@@ -193,14 +193,14 @@ void CCEGLView::setMultiTouch(void* systemData)
 	switch (event->m_Pressed)
 	{
         case S3E_POINTER_STATE_DOWN :
-            m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
+            m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
             m_pSet->addObject(m_pTouch);
             m_pDelegate->touchesBegan(m_pSet, NULL);
             break;
             
         case S3E_POINTER_STATE_UP :
             {
-                m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
+                m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
                 m_pDelegate->touchesEnded(m_pSet, NULL);
                 m_pSet->removeObject(m_pTouch);
                 touchSet[event->m_TouchID] = NULL;

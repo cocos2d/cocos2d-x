@@ -111,7 +111,7 @@ void BugsTestMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    m_tBeginPos = touch->locationInView( touch->view() );	
+    m_tBeginPos = touch->locationInView();	
     m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
 }
 
@@ -120,7 +120,7 @@ void BugsTestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    CCPoint touchLocation = touch->locationInView( touch->view() );	
+    CCPoint touchLocation = touch->locationInView();	
     touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
     float nMoveY = touchLocation.y - m_tBeginPos.y;
 
