@@ -1140,7 +1140,7 @@ void ParticleDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
 void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-	CCPoint location = touch->locationInView( touch->view() );
+	CCPoint location = touch->locationInView();
 	CCPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
 
     CCPoint pos = CCPointZero;

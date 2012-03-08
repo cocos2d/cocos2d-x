@@ -1363,8 +1363,8 @@ void TileDemo::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 
 void TileDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView( touch->view() );	
-	CCPoint prevLocation = touch->previousLocationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView();	
+	CCPoint prevLocation = touch->previousLocationInView();	
 	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
