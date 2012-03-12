@@ -1,0 +1,147 @@
+//
+//  ZClasses.h
+//  TestCocos2dX
+//
+//  Created by Rolando Abarca on 12/6/11.
+//  Copyright (c) 2011 Zynga Inc. All rights reserved.
+//
+
+#ifndef TestCocos2dX_ZClasses_h
+#define TestCocos2dX_ZClasses_h
+
+#include <JavaScriptCore/JavaScriptCore.h>
+
+extern JSClassRef __jsCCPoint_class;
+extern JSClassRef __jsCCColor_class;
+
+extern JSClassRef js_S_CCDirector_class;
+extern JSClassRef js_S_CCScheduler_class;
+extern JSClassRef js_S_CCSpriteFrameCache_class;
+extern JSClassRef js_S_CCNode_class;
+extern JSClassRef js_S_CCScene_class;
+extern JSClassRef js_S_CCSprite_class;
+extern JSClassRef js_S_CCSpriteBatchNode_class;
+extern JSClassRef js_S_CCMenu_class;
+extern JSClassRef js_S_CCMenuItem_class;
+extern JSClassRef js_S_CCMenuItemLabel_class;
+extern JSClassRef js_S_CCMenuItemSprite_class;
+extern JSClassRef js_S_CCLabelTTF_class;
+extern JSClassRef js_S_CCParticleSystem_class;
+extern JSClassRef js_S_CCSpriteFrame_class;
+extern JSClassRef js_S_CCAnimation_class;
+
+extern JSClassRef js_S_CCAction_class;
+extern JSClassRef js_S_CCSequence_class;
+extern JSClassRef js_S_CCRepeat_class;
+extern JSClassRef js_S_CCRepeatForever_class;
+extern JSClassRef js_S_CCSpawn_class;
+extern JSClassRef js_S_CCRotateTo_class;
+extern JSClassRef js_S_CCRotateBy_class;
+extern JSClassRef js_S_CCMoveTo_class;
+extern JSClassRef js_S_CCMoveBy_class;
+extern JSClassRef js_S_CCSkewTo_class;
+extern JSClassRef js_S_CCSkewBy_class;
+extern JSClassRef js_S_CCJumpBy_class;
+extern JSClassRef js_S_CCJumpTo_class;
+extern JSClassRef js_S_CCBezierBy_class;
+extern JSClassRef js_S_CCBezierTo_class;
+extern JSClassRef js_S_CCScaleTo_class;
+extern JSClassRef js_S_CCScaleBy_class;
+extern JSClassRef js_S_CCBlink_class;
+extern JSClassRef js_S_CCFadeIn_class;
+extern JSClassRef js_S_CCFadeOut_class;
+extern JSClassRef js_S_CCFadeTo_class;
+extern JSClassRef js_S_CCTintTo_class;
+extern JSClassRef js_S_CCTintBy_class;
+extern JSClassRef js_S_CCDelayTime_class;
+extern JSClassRef js_S_CCReverseTime_class;
+extern JSClassRef js_S_CCAnimate_class;
+extern JSClassRef js_S_CCCallFunc_class;
+extern JSClassRef js_S_CCActionCamera_class;
+extern JSClassRef js_S_CCOrbitCamera_class;
+extern JSClassRef js_S_CCActionEase_class;
+extern JSClassRef js_S_CCEaseRateAction_class;
+extern JSClassRef js_S_CCEaseIn_class;
+extern JSClassRef js_S_CCEaseOut_class;
+extern JSClassRef js_S_CCEaseInOut_class;
+extern JSClassRef js_S_CCEaseExponentialIn_class;
+extern JSClassRef js_S_CCEaseExponentialOut_class;
+extern JSClassRef js_S_CCEaseExponentialInOut_class;
+extern JSClassRef js_S_CCEaseSineIn_class;
+extern JSClassRef js_S_CCEaseSineOut_class;
+extern JSClassRef js_S_CCEaseSineInOut_class;
+extern JSClassRef js_S_CCEaseElastic_class;
+extern JSClassRef js_S_CCEaseElasticIn_class;
+extern JSClassRef js_S_CCEaseElasticOut_class;
+extern JSClassRef js_S_CCEaseElasticInOut_class;
+extern JSClassRef js_S_CCEaseBounce_class;
+extern JSClassRef js_S_CCEaseBounceIn_class;
+extern JSClassRef js_S_CCEaseBounceOut_class;
+extern JSClassRef js_S_CCEaseBounceInOut_class;
+extern JSClassRef js_S_CCEaseBackIn_class;
+extern JSClassRef js_S_CCEaseBackOut_class;
+extern JSClassRef js_S_CCEaseBackInOut_class;
+extern JSClassRef js_S_CCGridAction_class;
+extern JSClassRef js_S_CCGrid3DAction_class;
+extern JSClassRef js_S_CCTiledGrid3DAction_class;
+extern JSClassRef js_S_CCAccelDeccelAmplitude_class;
+extern JSClassRef js_S_CCAccelAmplitude_class;
+extern JSClassRef js_S_CCDeccelAmplitude_class;
+extern JSClassRef js_S_CCWaves3D_class;
+extern JSClassRef js_S_CCFlipX3D_class;
+extern JSClassRef js_S_CCFlipY3D_class;
+extern JSClassRef js_S_CCLens3D_class;
+extern JSClassRef js_S_CCRipple3D_class;
+extern JSClassRef js_S_CCShaky3D_class;
+extern JSClassRef js_S_CCLiquid_class;
+extern JSClassRef js_S_CCWaves_class;
+extern JSClassRef js_S_CCTwirl_class;
+extern JSClassRef js_S_CCPageTurn3D_class;
+extern JSClassRef js_S_CCProgressTo_class;
+extern JSClassRef js_S_CCProgressFromTo_class;
+extern JSClassRef js_S_CCShakyTiles3D_class;
+extern JSClassRef js_S_CCShatteredTiles3D_class;
+extern JSClassRef js_S_CCShuffleTiles_class;
+extern JSClassRef js_S_CCFadeOutTRTiles_class;
+extern JSClassRef js_S_CCFadeOutBLTiles_class;
+extern JSClassRef js_S_CCFadeOutUpTiles_class;
+extern JSClassRef js_S_CCFadeOutDownTiles_class;
+extern JSClassRef js_S_CCTurnOffTiles_class;
+extern JSClassRef js_S_CCWavesTiles3D_class;
+extern JSClassRef js_S_CCJumpTiles3D_class;
+extern JSClassRef js_S_CCSplitRows_class;
+extern JSClassRef js_S_CCSplitCols_class;
+
+extern JSClassRef js_S_CCAudioManager_class;
+extern JSClassRef js_S_CCScheduler_class;
+
+extern JSClassRef js_S_CCTransitionScene_class;
+extern JSClassRef js_S_CCTransitionSceneOriented_class;
+extern JSClassRef js_S_CCTransitionRotoZoom_class;
+extern JSClassRef js_S_CCTransitionJumpZoom_class;
+extern JSClassRef js_S_CCTransitionMoveInL_class;
+extern JSClassRef js_S_CCTransitionMoveInR_class;
+extern JSClassRef js_S_CCTransitionMoveInT_class;
+extern JSClassRef js_S_CCTransitionMoveInB_class;
+extern JSClassRef js_S_CCTransitionSlideInL_class;
+extern JSClassRef js_S_CCTransitionSlideInR_class;
+extern JSClassRef js_S_CCTransitionSlideInB_class;
+extern JSClassRef js_S_CCTransitionSlideInT_class;
+extern JSClassRef js_S_CCTransitionShrinkGrow_class;
+extern JSClassRef js_S_CCTransitionFlipX_class;
+extern JSClassRef js_S_CCTransitionFlipY_class;
+extern JSClassRef js_S_CCTransitionFlipAngular_class;
+extern JSClassRef js_S_CCTransitionZoomFlipX_class;
+extern JSClassRef js_S_CCTransitionZoomFlipY_class;
+extern JSClassRef js_S_CCTransitionZoomFlipAngular_class;
+extern JSClassRef js_S_CCTransitionFade_class;
+extern JSClassRef js_S_CCTransitionCrossFade_class;
+extern JSClassRef js_S_CCTransitionTurnOffTiles_class;
+extern JSClassRef js_S_CCTransitionSplitCols_class;
+extern JSClassRef js_S_CCTransitionSplitRows_class;
+extern JSClassRef js_S_CCTransitionFadeTR_class;
+extern JSClassRef js_S_CCTransitionFadeBL_class;
+extern JSClassRef js_S_CCTransitionFadeUp_class;
+extern JSClassRef js_S_CCTransitionFadeDown_class;
+
+#endif
