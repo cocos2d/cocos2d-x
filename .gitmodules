@@ -1,0 +1,3 @@
+[submodule "js/SpiderMonkey"]
+	path = js/SpiderMonkey
+	url = git://github.com/funkaster/SpiderMonkey.git
