@@ -1,5 +1,5 @@
 /*
- * CCAplication_linux.cpp
+ * CCApplication_linux.cpp
  *
  *  Created on: Aug 8, 2011
  *      Author: laschweinski
