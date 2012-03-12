@@ -43,7 +43,7 @@ bool CCSchedulerScriptHandlerEntry::initWithHandler(int nHandler, ccTime fInterv
     m_pTimer->retain();
     m_nHandler = nHandler;
     m_bPaused = bPaused;
-    LUALOG("[LUA] ADD script schedule: %d, entryID: %d", m_nHandler, m_entryID);
+    LUALOG("[LUA] ADD script schedule: %d, entryID: %d", m_nHandler, m_nEntryID);
     return true;
 }
 
@@ -61,7 +61,7 @@ CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
 {
     m_pTimer->release();
     CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nHandler);
-    LUALOG("[LUA] DEL script schedule %d, entryID: %d", m_nHandler, m_entryID);
+    LUALOG("[LUA] DEL script schedule %d, entryID: %d", m_nHandler, m_nEntryID);
 }
 
 // ----------------------------
