@@ -421,7 +421,7 @@ void CCEGLView::onTouchesBegin(int id[], float x[], float y[], int pointerNumber
 		{
 			pTouch = new CCTouch();
 			pTouch->SetTouchInfo((x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-					             (y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor, id[i]);
+					             (y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 			s_mapTouches.Add(id[i], pTouch);
 			set.addObject(pTouch);
 			m_pDelegate->touchesBegan(&set, NULL);
@@ -445,7 +445,7 @@ void CCEGLView::onTouchesMove(int id[], float x[], float y[], int pointerNumber)
 		if (E_SUCCESS == r && pTouch != NULL)
 		{
 			pTouch->SetTouchInfo((x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-								(y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor, id[i]);
+								(y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 			set.addObject(pTouch);
 		}
 		else
@@ -469,7 +469,7 @@ void CCEGLView::onTouchesEnd(int id[], float x[], float y[], int pointerNumber)
 		if (E_SUCCESS == r && pTouch != NULL)
 		{
 			pTouch->SetTouchInfo((x[i] - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-		                        (y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor, id[i]);
+		                        (y[i] - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 			set.addObject(pTouch);
 			s_mapTouches.Remove(id[i]);
 			pTouch->release();
