@@ -4,7 +4,7 @@
  *  Created on: Aug 8, 2011
  *      Author: laschweinski
  */
-#include "CCApplication.h"
+#include "CCApplication_linux.h"
 #include <unistd.h>
 #include <sys/time.h>
 
