@@ -38,7 +38,7 @@ THE SOFTWARE.
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 	#include "marmalade/CCApplication_marmalade.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "linux/CCAplication_linux.h"
+	#include "linux/CCApplication_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCApplication_bada.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
