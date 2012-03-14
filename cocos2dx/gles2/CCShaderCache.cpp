@@ -35,7 +35,6 @@ CCShaderCache* CCShaderCache::sharedShaderCache()
 {
 	if (!_sharedShaderCache) {
 		_sharedShaderCache = new CCShaderCache();
-		CCAssert(_sharedShaderCache == 0, "Attempted to allocate a second instance of a singleton.");
 		if (!_sharedShaderCache->init())
 		{
 			CC_SAFE_DELETE(_sharedShaderCache);

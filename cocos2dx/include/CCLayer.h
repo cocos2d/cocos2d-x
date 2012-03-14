@@ -164,7 +164,7 @@ class CC_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBle
 {
 protected:
 	ccVertex2F m_pSquareVertices[4];
-	ccColor4B  m_pSquareColors[4];
+	ccColor4F  m_pSquareColors[4];
 
 public:
 
@@ -175,12 +175,13 @@ public:
 	virtual void setContentSize(const CCSize& var);
 
 	/** creates a CCLayer with color, width and height in Points */
-	static CCLayerColor * layerWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height);
+	static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
 	/** creates a CCLayer with color. Width and height are the window size. */
 	static CCLayerColor * layerWithColor(const ccColor4B& color);
 
+	virtual bool init();
 	/** initializes a CCLayer with color, width and height in Points */
-	virtual bool initWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height);
+	virtual bool initWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
 	/** initializes a CCLayer with color. Width and height are the window size. */
 	virtual bool initWithColor(const ccColor4B& color);
 

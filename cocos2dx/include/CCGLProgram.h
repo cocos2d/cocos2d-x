@@ -74,7 +74,7 @@ typedef void (*GLLogFunction) (GLuint program,
 /** CCGLProgram
  Class that implements a glProgram
  */
-class CCGLProgram : public CCObject
+class CC_DLL CCGLProgram : public CCObject
 {
 public:
 	CCGLProgram();

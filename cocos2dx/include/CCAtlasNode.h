@@ -69,7 +69,8 @@ protected:
 
 	// quads to draw
 	CC_PROPERTY(unsigned int, m_uQuadsToDraw, QuadsToDraw);
-
+	// color uniform
+	GLint	m_nUniformColor;
 public:
 	CCAtlasNode();
 	virtual ~CCAtlasNode();

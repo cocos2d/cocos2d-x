@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "CCScheduler.h"
 #include "ccMacros.h"
+#include "CCDirector.h"
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
 #include "CCArray.h"
@@ -75,6 +76,11 @@ CCTimer::CCTimer()
 , m_fInterval(0.0f)
 , m_pTarget(NULL)
 , m_fElapsed(0.0f)
+, m_bRunForever(false)
+, m_bUseDelay(false)
+, m_nTimesExecuted(0)
+, m_nRepeat(0)
+, m_fDelay(0.0f)
 , m_nScriptHandler(0)
 {
 
@@ -84,7 +90,7 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
 	CCTimer *pTimer = new CCTimer();
 
-	pTimer->initWithTarget(pTarget, pfnSelector);
+	pTimer->initWithTarget(pTarget, pfnSelector, 0.0f, kCCRepeatForever, 0.0f);
 	pTimer->autorelease();
 
 	return pTimer;
@@ -94,7 +100,7 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, c
 {
 	CCTimer *pTimer = new CCTimer();
 
-	pTimer->initWithTarget(pTarget, pfnSelector, fSeconds);
+	pTimer->initWithTarget(pTarget, pfnSelector, fSeconds, kCCRepeatForever, 0.0f);
 	pTimer->autorelease();
 
 	return pTimer;
@@ -121,16 +127,19 @@ bool CCTimer::initWithScriptHandler(int nHandler, ccTime fSeconds)
 
 bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
-    return initWithTarget(pTarget, pfnSelector, 0);
+    return initWithTarget(pTarget, pfnSelector, 0, kCCRepeatForever, 0.0f);
 }
 
-bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
+bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds, unsigned int nRepeat, ccTime fDelay)
 {
 	m_pTarget = pTarget;
 	m_pfnSelector = pfnSelector;
 	m_fElapsed = -1;
 	m_fInterval = fSeconds;
-
+	m_fDelay = fDelay;
+	m_bUseDelay = (fDelay > 0.0f) ? true : false;
+	m_nRepeat = nRepeat;
+	m_bRunForever = (nRepeat == kCCRepeatForever) ? true : false;
 	return true;
 }
 
@@ -139,24 +148,64 @@ void CCTimer::update(ccTime dt)
 	if (m_fElapsed == -1)
 	{
 		m_fElapsed = 0;
+		m_nTimesExecuted = 0;
 	}
 	else
 	{
-		m_fElapsed += dt;
+		if (m_bRunForever && !m_bUseDelay)
+		{//standard timer usage
+			m_fElapsed += dt;
+			if (m_fElapsed >= m_fInterval)
+			{
+				if (m_pTarget != NULL && m_pfnSelector != NULL)
+				{
+					(m_pTarget->*m_pfnSelector)(m_fElapsed);
+				}
+				if (m_nScriptHandler)
+				{
+					CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
+				}
+				m_fElapsed = 0;
+			}
+		}	
+		else
+		{//advanced usage
+			m_fElapsed += dt;
+			if (m_bUseDelay)
+			{
+				if( m_fElapsed >= m_fDelay )
+				{
+					if (m_pTarget != NULL && m_pfnSelector != NULL)
+					{
+						(m_pTarget->*m_pfnSelector)(m_fElapsed);
+					}
+					m_fElapsed = m_fElapsed - m_fDelay;
+					m_nTimesExecuted+=1;
+					m_bUseDelay = false;
+				}
+			}
+			else
+			{
+				if (m_fElapsed >= m_fInterval)
+				{
+					if (m_pTarget != NULL && m_pfnSelector != NULL)
+					{
+						(m_pTarget->*m_pfnSelector)(m_fElapsed);
+					}
+					m_fElapsed = 0;
+					m_nTimesExecuted += 1;
+
+				}
+			}
+
+			if (m_nTimesExecuted > m_nRepeat)
+			{	//unschedule timer
+				CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(m_pfnSelector, m_pTarget);
+			}
+		}
 	}
 
-	if (m_fElapsed >= m_fInterval)
-	{
-        if (0 != m_pfnSelector)
-		{
-			(m_pTarget->*m_pfnSelector)(m_fElapsed);
-		}
-        if (m_nScriptHandler)
-		{
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
-		}
-        m_fElapsed = 0;
-	}
+
 }
 
 
@@ -165,7 +214,7 @@ void CCTimer::update(ccTime dt)
 static CCScheduler *pSharedScheduler;
 
 CCScheduler::CCScheduler(void)
-: m_fTimeScale(0.0)
+: m_fTimeScale(0.0f)
 , m_pUpdatesNegList(NULL)
 , m_pUpdates0List(NULL)
 , m_pUpdatesPosList(NULL)
@@ -186,16 +235,6 @@ CCScheduler::~CCScheduler(void)
     CC_SAFE_RELEASE(m_pScriptHandlerEntries);
 }
 
-CCScheduler* CCScheduler::sharedScheduler(void)
-{
-	if (! pSharedScheduler)
-	{
-		pSharedScheduler = new CCScheduler();
-		pSharedScheduler->init();
-	}
-
-	return pSharedScheduler;
-}
 
 bool CCScheduler::init(void)
 {
@@ -230,6 +269,11 @@ void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 }
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused)
+{
+	this->scheduleSelector(pfnSelector, pTarget, fInterval, bPaused, kCCRepeatForever, 0.0f);
+}
+
+void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, ccTime fInterval, bool bPaused, unsigned int repeat, ccTime delay)
 {
 	CCAssert(pfnSelector, "");
 	CCAssert(pTarget, "");
@@ -276,7 +320,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
 	}
 
 	CCTimer *pTimer = new CCTimer();
-	pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
+	pTimer->initWithTarget(pTarget, pfnSelector, fInterval, repeat, delay);
 	ccArrayAppendObject(pElement->timers, pTimer);
 	pTimer->release();	
 }
@@ -639,7 +683,7 @@ bool CCScheduler::isTargetPaused(CCObject *pTarget)
 }
 
 // main loop
-void CCScheduler::tick(ccTime dt)
+void CCScheduler::update(ccTime dt)
 {
 	m_bUpdateHashLocked = true;
 
@@ -765,11 +809,7 @@ void CCScheduler::tick(ccTime dt)
 	m_bUpdateHashLocked = false;
 
 	m_pCurrentTarget = NULL;
-		}
-
-void CCScheduler::purgeSharedScheduler(void)
-{
-	pSharedScheduler->release();
-	pSharedScheduler = NULL;
 }
+
+
 }//namespace   cocos2d 

@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCEGLView.h"
 #include "CCGL.h"
+#include "kazmath/mat4.h"
 
 namespace   cocos2d {
 
@@ -137,9 +138,10 @@ typedef enum {
 class CCLabelTTF;
 class CCScene;
 class CCEGLView;
-class CCProjectionProtocol;
+class CCDirectorDelegate;
 class CCNode;
-
+class CCScheduler;
+class CCActionManager;
 /**
 @brief Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
@@ -381,6 +383,16 @@ public:
 	static bool setDirectorType(ccDirectorType obDirectorType);
 
 public:
+	/** CCScheduler associated with this director
+	 @since v2.0
+	 */
+	CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
+
+	/** CCActionManager associated with this director
+	 @since v2.0
+	 */
+	CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
+
 	/** returns a shared instance of the director */
 	static CCDirector* sharedDirector(void);
 	void resetDirector();
@@ -466,7 +478,7 @@ protected:
 	CCNode *m_pNotificationNode;
 
 	/* Projection protocol delegate */
-	CCProjectionProtocol *m_pProjectionDelegate;
+	CCDirectorDelegate *m_pProjectionDelegate;
 
 	/* The device orientation */
 	ccDeviceOrientation	m_eDeviceOrientation;

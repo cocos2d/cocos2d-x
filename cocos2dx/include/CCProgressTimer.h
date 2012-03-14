@@ -33,18 +33,10 @@ namespace cocos2d
  @since v0.99.1
  */
 typedef enum {
-	/// Radial Counter-Clockwise 
-	kCCProgressTimerTypeRadialCCW,
-	/// Radial ClockWise
-	kCCProgressTimerTypeRadialCW,
-	/// Horizontal Left-Right
-	kCCProgressTimerTypeHorizontalBarLR,
-	/// Horizontal Right-Left
-	kCCProgressTimerTypeHorizontalBarRL,
-	/// Vertical Bottom-top
-	kCCProgressTimerTypeVerticalBarBT,
-	/// Vertical Top-Bottom
-	kCCProgressTimerTypeVerticalBarTB,
+	/// Radial Counter-Clockwise
+	kCCProgressTimerTypeRadial,
+	/// Bar
+	kCCProgressTimerTypeBar,
 } CCProgressTimerType;
 
 /**
@@ -53,7 +45,7 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL CCProgressTimer : public CCNode
+class CC_DLL CCProgressTimer : public CCNode, public CCRGBAProtocol
 {
 public:
 	~CCProgressTimer(void);
@@ -67,21 +59,31 @@ public:
 	/** The image to show the progress percentage, retain */
 	inline CCSprite* getSprite(void) { return m_pSprite; }
 
-	bool initWithFile(const char *pszFileName);
-	bool initWithTexture(CCTexture2D *pTexture);
+	/** Initializes a progress timer with the sprite as the shape the timer goes through */
+	bool initWithSprite(CCSprite* sp);
 
 	void setPercentage(float fPercentage);
 	void setSprite(CCSprite *pSprite);
 	void setType(CCProgressTimerType type);
+	void setReverseProgress(bool reverse);
 
 	virtual void draw(void);
+	void setAnchorPoint(CCPoint anchorPoint);
+
+	virtual void setColor(const ccColor3B& color);
+	virtual const ccColor3B& getColor(void);
+    virtual GLubyte getOpacity(void);
+	virtual void setOpacity(GLubyte opacity);
+	virtual void setIsOpacityModifyRGB(bool bValue);
+	virtual bool getIsOpacityModifyRGB(void);
 
 public:
-	static CCProgressTimer* progressWithFile(const char *pszFileName);
-	static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
+	/** Creates a progress timer with the sprite as the shape the timer goes through */
+	static CCProgressTimer* progressWithSprite(CCSprite* sp);
 
 protected:
-	ccVertex2F vertexFromTexCoord(const CCPoint& texCoord);
+	ccTex2F textureCoordFromAlphaPoint(CCPoint alpha);
+	ccVertex2F vertexFromAlphaPoint(CCPoint alpha);
 	void updateProgress(void);
 	void updateBar(void);
 	void updateRadial(void);
@@ -94,6 +96,29 @@ protected:
 	CCSprite *m_pSprite;
 	int m_nVertexDataCount;
 	ccV2F_C4B_T2F *m_pVertexData;
+
+	/**
+	 *	Midpoint is used to modify the progress start position.
+	 *	If you're using radials type then the midpoint changes the center point
+	 *	If you're using bar type the the midpoint changes the bar growth
+	 *		it expands from the center but clamps to the sprites edge so:
+	 *		you want a left to right then set the midpoint all the way to ccp(0,y)
+	 *		you want a right to left then set the midpoint all the way to ccp(1,y)
+	 *		you want a bottom to top then set the midpoint all the way to ccp(x,0)
+	 *		you want a top to bottom then set the midpoint all the way to ccp(x,1)
+	 */
+	CC_PROPERTY(CCPoint, m_tMidpoint, Midpoint);
+
+	/**
+	 *	This allows the bar type to move the component at a specific rate
+	 *	Set the component to 0 to make sure it stays at 100%.
+	 *	For example you want a left to right bar but not have the height stay 100%
+	 *	Set the rate to be ccp(0,1); and set the midpoint to = ccp(0,.5f);
+	 */
+	CC_SYNTHESIZE(CCPoint, m_tBarChangeRate, BarChangeRate);
+
+	bool				m_bReverseDirection;
+
 };
 
 }

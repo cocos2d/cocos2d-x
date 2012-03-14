@@ -169,22 +169,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
 #endif
 
-/** @def CC_USES_VBO
-If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
-
-To enable set it to 1.
-Enabled by default on iPhone with ARMv7 processors, iPhone Simulator and Mac
-Disabled by default on iPhone with ARMv6 processors.
-
-@since v0.99.5
-*/
-#ifndef CC_USES_VBO
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-#define CC_USES_VBO 0
-#else
-#define CC_USES_VBO 1
-#endif
-#endif
 
 /** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
  If enabled, CCNode will transform the nodes using a cached Affine matrix.

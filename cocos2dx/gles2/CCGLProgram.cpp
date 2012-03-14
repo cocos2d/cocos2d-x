@@ -30,7 +30,6 @@
 
 NS_CC_BEGIN
 
-#define DEBUG 1
 
 CCGLProgram::CCGLProgram()
 {
