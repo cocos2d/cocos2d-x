@@ -34,27 +34,18 @@ THE SOFTWARE.
 #define CC_GLVIEW                   cocos2d::CCEGLView
 #define ccglOrtho					glOrthof
 #define	ccglClearDepth				glClearDepthf
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX) || defined(CC_BADA_2_0)
-#define ccglGenerateMipmap			CCEGLView::glGenerateMipmapOES
-#define ccglGenFramebuffers			CCEGLView::glGenFramebuffersOES
-#define ccglBindFramebuffer			CCEGLView::glBindFramebufferOES
-#define ccglFramebufferTexture2D	CCEGLView::glFramebufferTexture2DOES
-#define ccglDeleteFramebuffers		CCEGLView::glDeleteFramebuffersOES
-#define ccglCheckFramebufferStatus	CCEGLView::glCheckFramebufferStatusOES
-#else
-#define ccglGenerateMipmap			glGenerateMipmapOES
-#define ccglGenFramebuffers			glGenFramebuffersOES
-#define ccglBindFramebuffer			glBindFramebufferOES
-#define ccglFramebufferTexture2D	glFramebufferTexture2DOES
-#define ccglDeleteFramebuffers		glDeleteFramebuffersOES
-#define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
-#endif
+
 #define ccglTranslate				glTranslatef
 
-#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
-#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
-#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0_OES
-#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
+#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
+#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
+#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
+#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
+
+#define	glClearDepth				glClearDepthf
+#define glDeleteVertexArrays		glDeleteVertexArraysOES
+#define glGenVertexArrays			glGenVertexArraysOES
+#define glBindVertexArray			glBindVertexArrayOES
 
 #include "CCCommon.h"
 
@@ -81,8 +72,8 @@ THE SOFTWARE.
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)

@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "ccMacros.h"
 #include <string>
+#include "kazmath/mat4.h"
 namespace   cocos2d {
 	/** 
 	A CCCamera is used in every CCNode.
@@ -69,6 +70,7 @@ namespace   cocos2d {
 		float m_fUpZ;
 
 		bool m_bDirty;
+		kmMat4	m_lookupMatrix;
 	public:
 		CCCamera(void);
 		~CCCamera(void);

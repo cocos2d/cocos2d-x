@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;.."
+				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..;..\kazmath\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="libEGL.lib libGLESv2.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -420,6 +420,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCGLProgram.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\ccGLState.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCIMEDelegate.h"
 				>
 			</File>
@@ -488,15 +496,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCParticleBatchNode.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCParticleExamples.h"
 				>
 			</File>
 			<File
 				RelativePath="..\include\CCParticleSystem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCParticleSystemPoint.h"
 				>
 			</File>
 			<File
@@ -520,10 +528,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCRibbon.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCScene.h"
 				>
 			</File>
@@ -537,6 +541,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCSet.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCShaderCache.h"
 				>
 			</File>
 			<File
@@ -624,10 +632,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCTransitionRadial.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\ccTypes.h"
 				>
 			</File>
@@ -679,10 +683,6 @@
 				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="menu_nodes"
@@ -711,24 +711,20 @@
 				RelativePath="..\misc_nodes\CCRenderTexture.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\misc_nodes\CCRibbon.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="particle_nodes"
 			>
+			<File
+				RelativePath="..\particle_nodes\CCParticleBatchNode.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\particle_nodes\CCParticleExamples.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\particle_nodes\CCParticleSystem.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\particle_nodes\CCParticleSystemPoint.cpp"
 				>
 			</File>
 			<File
@@ -1095,6 +1091,154 @@
 				RelativePath="..\extensions\CCNotificationCenter.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="gles2"
+			>
+			<File
+				RelativePath="..\gles2\CCGLProgram.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\gles2\ccGLState.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\gles2\CCShaderCache.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="kazmath"
+			>
+			<Filter
+				Name="include"
+				>
+				<Filter
+					Name="kazmath"
+					>
+					<File
+						RelativePath="..\kazmath\include\kazmath\aabb.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\kazmath.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\mat3.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\mat4.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\neon_matrix_impl.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\plane.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\quaternion.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\ray2.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\utility.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\vec2.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\vec3.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\vec4.h"
+						>
+					</File>
+					<Filter
+						Name="GL"
+						>
+						<File
+							RelativePath="..\kazmath\include\kazmath\GL\mat4stack.h"
+							>
+						</File>
+						<File
+							RelativePath="..\kazmath\include\kazmath\GL\matrix.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="src"
+				>
+				<File
+					RelativePath="..\kazmath\src\aabb.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\mat3.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\mat4.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\neon_matrix_impl.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\plane.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\quaternion.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\ray2.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\utility.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\vec2.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\vec3.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\vec4.c"
+					>
+				</File>
+				<Filter
+					Name="GL"
+					>
+					<File
+						RelativePath="..\kazmath\src\GL\mat4stack.c"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\src\GL\matrix.c"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\CCCamera.cpp"

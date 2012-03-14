@@ -696,14 +696,14 @@ namespace cocos2d{
 			if( ! fontChar )
 			{
 				fontChar = new CCSprite();
-				fontChar->initWithBatchNodeRectInPixels(this, rect);
+				fontChar->initWithBatchNode(this, rect);
 				this->addChild(fontChar, 0, i);
 				fontChar->release();
 			}
 			else
 			{
 				// reusing fonts
-				fontChar->setTextureRectInPixels(rect, false, rect.size);
+				fontChar->setTextureRect(rect, false, rect.size);
 
 				// restore to default in case they were modified
 				fontChar->setIsVisible(true);
@@ -711,8 +711,8 @@ namespace cocos2d{
 			}
 
             float yOffset = (float)(m_pConfiguration->m_uCommonHeight) - fontDef.yOffset;
-			fontChar->setPositionInPixels( ccp( nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width / 2.0f + kerningAmount,
-				                                (float) nextFontPositionY + yOffset - rect.size.height/2.0f ) );		
+			CCPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount, (float)nextFontPositionY + yOffset - rect.size.height*0.5f );
+			fontChar->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));
 
 			//		NSLog(@"position.y: %f", fontChar.position.y);
 
@@ -741,7 +741,7 @@ namespace cocos2d{
         tmpSize.width  = (float) longestLine;
         tmpSize.height = (float) totalHeight;
 
-		this->setContentSizeInPixels(tmpSize);
+		this->setContentSize(tmpSize);
 
         CC_SAFE_DELETE_ARRAY(pUniStr);
 	}

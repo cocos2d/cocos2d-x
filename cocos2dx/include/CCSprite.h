@@ -47,26 +47,6 @@ struct transformValues_;
 
 #define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
 
-/**
- Whether or not an CCSprite will rotate, scale or translate with it's parent.
- Useful in health bars, when you want that the health bar translates with it's parent but you don't
- want it to rotate with its parent.
- @since v0.99.0
- */
-typedef enum {
-	//! Translate with it's parent
-	CC_HONOR_PARENT_TRANSFORM_TRANSLATE =  1 << 0,
-	//! Rotate with it's parent
-	CC_HONOR_PARENT_TRANSFORM_ROTATE	=  1 << 1,
-	//! Scale with it's parent
-	CC_HONOR_PARENT_TRANSFORM_SCALE		=  1 << 2,
-    //! Skew with it's parent
-    CC_HONOR_PARENT_TRANSFORM_SKEW		=  1 << 3,
-
-	//! All possible transformation enabled. Default value.
-	CC_HONOR_PARENT_TRANSFORM_ALL		=  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_SKEW,
-
-} ccHonorParentTransform;
 
 /** CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
 *
@@ -123,34 +103,16 @@ public:
 	/** returns the rect of the CCSprite in points */
 	inline const CCRect& getTextureRect(void) { return m_obRect; }
 
-	/** whether or not the Sprite is rendered using a CCSpriteBatchNode */
-	inline bool isUsesBatchNode(void) { return m_bUsesBatchNode; }
-	/** make the Sprite been rendered using a CCSpriteBatchNode */
-	inline void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode) { m_bUsesBatchNode = bUsesSpriteBatchNode; }
-
 	inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
 	inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) { m_pobTextureAtlas = pobTextureAtlas; }
 
-	inline CCSpriteBatchNode* getSpriteBatchNode(void) { return m_pobBatchNode; }
-	inline void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode) { m_pobBatchNode = pobSpriteBatchNode; }
-
-	/** whether or not to transform according to its parent transformations.
-	 Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
-	 IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
-	 @since v0.99.0
-	 */
-	inline ccHonorParentTransform getHonorParentTransform(void) { return m_eHonorParentTransform; }
-	/** whether or not to transform according to its parent transformations.
-	Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
-	IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
-	@since v0.99.0
-	*/
-	inline void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform) { m_eHonorParentTransform = eHonorParentTransform; }
+	CCSpriteBatchNode* getSpriteBatchNode(void);
+	void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
 
 	/** Get offset position of the sprite. Calculated automatically by editors like Zwoptex.
 	 @since v0.99.0
 	 */
-	inline const CCPoint& getOffsetPositionInPixels(void) { return m_obOffsetPositionInPixels; }
+	inline const CCPoint& getOffsetPosition(void) { return m_obOffsetPosition; }
 
 	/** conforms to CCTextureProtocol protocol */
 	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
@@ -207,10 +169,10 @@ public:
 	virtual void addChild(CCNode *pChild);
 	virtual void addChild(CCNode *pChild, int zOrder);
 	virtual void addChild(CCNode *pChild, int zOrder, int tag);
+	virtual void sortAllChildren();
 
 	virtual void setDirtyRecursively(bool bValue);
 	virtual void setPosition(const CCPoint& pos);
-	virtual void setPositionInPixels(const CCPoint& pos);
 	virtual void setRotation(float fRotation);
     virtual void setSkewX(float sx);
     virtual void setSkewY(float sy);
@@ -261,6 +223,12 @@ public:
 	 */
     bool initWithTexture(CCTexture2D *pTexture, const CCRect& rect);
 
+	/** Initializes an sprite with a texture and a rect in points, optionally rotated.
+	 The offset will be (0,0).
+	 IMPORTANT: This is the designated initializer.
+	 */
+	bool initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated);
+
 	// Initializes an sprite with an sprite frame.
     bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
@@ -285,32 +253,31 @@ public:
 	/** Initializes an sprite with an CCSpriteBatchNode and a rect in points */
 	bool initWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect);
 
-	/** Initializes an sprite with an CCSpriteBatchNode and a rect in pixels
+	/** Initializes an sprite with an CCSpriteBatchNode and a rect in points, optionally rotated.
 	@since v0.99.5
 	*/
-	bool initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, const CCRect& rect);
+	bool initWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect, bool rotated);
 
 	// BatchNode methods
 
 	/** updates the quad according the the rotation, position, scale values. */
 	void updateTransform(void);
 
-	/** tell the sprite to use self-render.
-	 @since v0.99.0
-	 */
-	void useSelfRender(void);
-
-	/** updates the texture rect of the CCSprite in points. */
+	/** updates the texture rect of the CCSprite in points. 
+	It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+	*/
      void setTextureRect(const CCRect& rect);
 
-	 /** updates the texture rect, rectRotated and untrimmed size of the CCSprite in pixels
+	 /** set the texture rect, rectRotated and untrimmed size of the CCSprite in points.
+	 It will update the texture coordinates and the vertex rectangle.
 	 */
-	 void setTextureRectInPixels(const CCRect& rect, bool rotated, const CCSize& size);
+	 void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
 
-	/** tell the sprite to use batch node render.
-	 @since v0.99.0
+	/** set the vertex rect.
+	 It will be called internally by setTextureRect. Useful if you want to create 2x images from SD images in Retina Display.
+	 Do not call it manually. Use setTextureRect instead.
 	 */
-	 void useBatchNode(CCSpriteBatchNode *batchNode);
+	 void setVertexRect(const CCRect& rect);
 
 	// Frames
 
@@ -323,6 +290,9 @@ public:
 	/** returns the current displayed frame. */
 	CCSpriteFrame* displayedFrame(void);
 
+	CCSpriteBatchNode* getBatchNode(void);
+	void setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
+
 	// Animation
 
 	/** changes the display frame with animation name and index.
@@ -332,9 +302,9 @@ public:
 	void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
 protected:
-	void updateTextureCoords(const CCRect& rect);
-	void updateBlendFunc(void);
-    void getTransformValues(struct transformValues_ *tv); // optimization
+	virtual void setTextureCoords(CCRect rect);
+	virtual void updateBlendFunc(void);
+    virtual void setReorderChildDirtyRecursively(void);
 
 protected:
 	//
@@ -343,11 +313,13 @@ protected:
 	CCTextureAtlas			*m_pobTextureAtlas;		// Sprite Sheet texture atlas (weak reference)
 	unsigned int			m_uAtlasIndex;			// Absolute (real) Index on the SpriteSheet
 	CCSpriteBatchNode       *m_pobBatchNode;        // Used batch node (weak reference)
-	ccHonorParentTransform	m_eHonorParentTransform;// whether or not to transform according to its parent transformations
+	
 	bool					m_bDirty;				// Sprite needs to be updated
 	bool					m_bRecursiveDirty;		// Subchildren needs to be updated
 	bool					m_bHasChildren;			// optimization to check if it contain children
-
+	bool					m_bShouldBeHidden;		// should not be drawn because one of the ancestors is not visible
+	CCAffineTransform		m_transformToBatch;		//
+	
 	//
 	// Data used when the sprite is self-rendered
 	//
@@ -358,16 +330,12 @@ protected:
 	// Shared data
 	//
 
-	// whether or not it's parent is a CCSpriteBatchNode
-	bool m_bUsesBatchNode;
-
 	// texture
 	CCRect m_obRect;
-	CCRect m_obRectInPixels;
 	bool   m_bRectRotated;
 
 	// Offset Position (used by Zwoptex)
-	CCPoint m_obOffsetPositionInPixels; // absolute
+	CCPoint m_obOffsetPosition;
 	CCPoint m_obUnflippedOffsetPositionFromCenter;
 
 	// vertex coords, texture coords and color info

@@ -42,6 +42,9 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "CCTexturePVR.h"
 #include "CCDirector.h"
+#include "CCGLProgram.h"
+#include "ccGLState.h"
+#include "CCShaderCache.h"
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
     #include "CCTextureCache.h"
@@ -70,6 +73,7 @@ CCTexture2D::CCTexture2D()
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
 , m_bPVRHaveAlphaPremultiplied(true)
+, m_pShaderProgram(NULL)
 {
 }
 
@@ -80,9 +84,11 @@ CCTexture2D::~CCTexture2D()
 #endif
 
 	CCLOGINFO("cocos2d: deallocing CCTexture2D %u.", m_uName);
+	CC_SAFE_RELEASE(m_pShaderProgram);
+
 	if(m_uName)
 	{
-		glDeleteTextures(1, &m_uName);
+		ccGLDeleteTexture(m_uName);
 	}
 }
 
@@ -106,18 +112,14 @@ GLuint CCTexture2D::getName()
 	return m_uName;
 }
 
-const CCSize& CCTexture2D::getContentSizeInPixels()
+const CCSize& CCTexture2D::getContentSize()
 {
 	return m_tContentSize;
 }
 
-CCSize CCTexture2D::getContentSize()
+const CCSize& CCTexture2D::getContentSizeInPixels()
 {
-	CCSize ret;
-	ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
-	ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
-
-	return ret;
+	return m_tContentSize;
 }
 
 GLfloat CCTexture2D::getMaxS()
@@ -138,6 +140,18 @@ GLfloat CCTexture2D::getMaxT()
 void CCTexture2D::setMaxT(GLfloat maxT)
 {
 	m_fMaxT = maxT;
+}
+
+CCGLProgram* CCTexture2D::getShaderProgram(void)
+{
+	return m_pShaderProgram;
+}
+
+void CCTexture2D::setShaderProgram(CCGLProgram* pShaderProgram)
+{
+	CC_SAFE_RETAIN(pShaderProgram);
+	CC_SAFE_RELEASE(m_pShaderProgram);
+	m_pShaderProgram = pShaderProgram;
 }
 
 void CCTexture2D::releaseData(void *data)
@@ -161,7 +175,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 {
 	glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 	glGenTextures(1, &m_uName);
-	glBindTexture(GL_TEXTURE_2D, m_uName);
+	ccGLBindTexture2D(m_uName);
 
 	this->setAntiAliasTexParameters();
 
@@ -204,6 +218,11 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 
 	m_bHasPremultipliedAlpha = false;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	m_resolutionType_ = kCCResolutionUnknown;
+#endif
+	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
+
 	return true;
 }
 
@@ -216,8 +235,11 @@ char * CCTexture2D::description(void)
 }
 
 // implementation CCTexture2D (Image)
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
+#else
 bool CCTexture2D::initWithImage(CCImage * uiImage)
+#endif
 {
 	unsigned int POTWide, POTHigh;
 
@@ -250,6 +272,10 @@ bool CCTexture2D::initWithImage(CCImage * uiImage)
 		this->release();
 		return NULL;
 	}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	m_resolutionType = resolution;
+#endif
 
 	// always load premultiplied images
 	return initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
@@ -478,14 +504,21 @@ void CCTexture2D::drawAtPoint(const CCPoint& point)
 		height = (GLfloat)m_uPixelsHigh * m_fMaxT;
 
 	GLfloat		vertices[] = {	
-		point.x,			point.y,	0.0f,
-		width + point.x,	point.y,	0.0f,
-		point.x,			height  + point.y,	0.0f,
-		width + point.x,	height  + point.y,	0.0f };
+		point.x,			point.y,
+		width + point.x,	point.y,
+		point.x,			height  + point.y,
+		width + point.x,	height  + point.y };
 
-	glBindTexture(GL_TEXTURE_2D, m_uName);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+	ccGLUseProgram( m_pShaderProgram->program_ );
+	ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );
+
+	ccGLBindTexture2D( m_uName );
+
+
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
@@ -502,9 +535,14 @@ void CCTexture2D::drawInRect(const CCRect& rect)
 		rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
 		rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
 
-	glBindTexture(GL_TEXTURE_2D, m_uName);
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+	ccGLUseProgram( m_pShaderProgram->program_ );
+	ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );
+
+	ccGLBindTexture2D( m_uName );
+
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
@@ -594,8 +632,8 @@ void CCTexture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 void CCTexture2D::generateMipmap()
 {
 	CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
-	glBindTexture( GL_TEXTURE_2D, this->m_uName );
-	ccglGenerateMipmap(GL_TEXTURE_2D);
+	ccGLBindTexture2D( m_uName );
+	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void CCTexture2D::setTexParameters(ccTexParams *texParams)
@@ -603,11 +641,11 @@ void CCTexture2D::setTexParameters(ccTexParams *texParams)
 	CCAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh)) ||
 		(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 		"GL_CLAMP_TO_EDGE should be used in NPOT textures");
-	glBindTexture( GL_TEXTURE_2D, this->m_uName );
+	ccGLBindTexture2D( m_uName );
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
 }
 
 void CCTexture2D::setAliasTexParameters()

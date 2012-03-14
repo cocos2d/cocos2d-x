@@ -68,7 +68,7 @@ class CC_DLL CCConfiguration : public CCObject
 {
 protected:
 	GLint			m_nMaxTextureSize;
-	GLint			m_nMaxModelviewStackDepth;
+	GLint			m_nMaxTextureUnits;
 	bool			m_bSupportsPVRTC;
 	bool			m_bSupportsNPOT;
 	bool			m_bSupportsBGRA8888;
@@ -92,10 +92,10 @@ public:
 		return m_nMaxTextureSize;
 	}
 
-	/** OpenGL Max Modelview Stack Depth */
-	inline int getMaxModelviewStackDepth(void)
+	/** returns the maximum texture units */
+	inline int getMaxTextureUnits(void)
 	{
-		return m_nMaxModelviewStackDepth;
+		return m_nMaxTextureUnits;
 	}
 
 	/** Whether or not the GPU supports NPOT (Non Power Of Two) textures.

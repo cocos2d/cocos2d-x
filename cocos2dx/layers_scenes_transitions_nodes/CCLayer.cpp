@@ -32,6 +32,12 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCPointExtension.h"
 #include "CCScriptSupport.h"
+#include "CCShaderCache.h"
+#include "CCGLProgram.h"
+#include "ccGLState.h"
+#include "support/TransformUtils.h"
+// extern
+#include "kazmath/GL/matrix.h"
 
 namespace   cocos2d {
 
@@ -409,10 +415,10 @@ void CCLayerColor::setBlendFunc(ccBlendFunc var)
 }
 
 
-CCLayerColor * CCLayerColor::layerWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height)
+CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height)
 {
 	CCLayerColor * pLayer = new CCLayerColor();
-	if( pLayer && pLayer->initWithColorWidthHeight(color,width,height))
+	if( pLayer && pLayer->initWithColor(color,width,height))
 	{
 		pLayer->autorelease();
 		return pLayer;
@@ -432,42 +438,51 @@ CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color)
 	return NULL;
 }
 
-bool CCLayerColor::initWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height)
+bool CCLayerColor::init()
 {
-	// default blend function
-	m_tBlendFunc.src = CC_BLEND_SRC;
-	m_tBlendFunc.dst = CC_BLEND_DST;
+	return initWithColor(ccc4(0,0,0,0), 0, 0);
+}
 
-	m_tColor.r = color.r;
-	m_tColor.g = color.g;
-	m_tColor.b = color.b;
-	m_cOpacity = color.a;
+bool CCLayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
+{
+	if( CCLayer::init() ) {
 
-	for (unsigned int i=0; i<sizeof(m_pSquareVertices) / sizeof(m_pSquareVertices[0]); i++ )
-	{
-		m_pSquareVertices[i].x = 0.0f;
-        m_pSquareVertices[i].y = 0.0f;
+		// default blend function
+		m_tBlendFunc.src = GL_SRC_ALPHA;
+		m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+
+		m_tColor.r = color.r;
+		m_tColor.g = color.g;
+		m_tColor.b = color.b;
+		m_cOpacity = color.a;
+
+		for (int i = 0; i<sizeof(m_pSquareVertices) / sizeof( m_pSquareVertices[0]); i++ ) {
+			m_pSquareVertices[i].x = 0.0f;
+			m_pSquareVertices[i].y = 0.0f;
+		}
+
+		updateColor();
+		setContentSize(CCSizeMake(w, h));
+
+		setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
 	}
-
-	this->updateColor();
-	this->setContentSize(CCSizeMake(width,height));
 	return true;
 }
 
 bool CCLayerColor::initWithColor(const ccColor4B& color)
 {
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
-	this->initWithColorWidthHeight(color, s.width, s.height);
+	this->initWithColor(color, s.width, s.height);
 	return true;
 }
 
 /// override contentSize
 void CCLayerColor::setContentSize(const CCSize& size)
 {
-	m_pSquareVertices[1].x = size.width * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[2].y = size.height * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[3].x = size.width * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[3].y = size.height * CC_CONTENT_SCALE_FACTOR();
+	m_pSquareVertices[1].x = size.width;
+	m_pSquareVertices[2].y = size.height;
+	m_pSquareVertices[3].x = size.width;
+	m_pSquareVertices[3].y = size.height;
 
 	CCLayer::setContentSize(size);
 }
@@ -491,44 +506,28 @@ void CCLayerColor::updateColor()
 {
 	for( unsigned int i=0; i < 4; i++ )
 	{
-		m_pSquareColors[i].r = m_tColor.r;
-		m_pSquareColors[i].g = m_tColor.g;
-		m_pSquareColors[i].b = m_tColor.b;
-		m_pSquareColors[i].a = m_cOpacity;
+		m_pSquareColors[i].r = m_tColor.r / 255.0f;
+		m_pSquareColors[i].g = m_tColor.g / 255.0f;
+		m_pSquareColors[i].b = m_tColor.b / 255.0f;
+		m_pSquareColors[i].a = m_cOpacity / 255.0f;
 	}
 }
 
 void CCLayerColor::draw()
 {
-	CCLayer::draw();
+	CC_NODE_DRAW_SETUP();
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, GL_COLOR_ARRAY
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_2D);
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
 
-	glVertexPointer(2, GL_FLOAT, 0, m_pSquareVertices);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, m_pSquareColors);
+	//
+	// Attributes
+	//
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, m_pSquareVertices);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, m_pSquareColors);
 
-	bool newBlend = false;
-	if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) {
-		newBlend = true;
-		glBlendFunc(m_tBlendFunc.src, m_tBlendFunc.dst);
-	}
-	else if( m_cOpacity != 255 ) {
-		newBlend = true;
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
+	ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-
-	// restore default GL state
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);
 }
 
 //
@@ -586,7 +585,7 @@ void CCLayerGradient::updateColor()
     if (h == 0)
         return;
 
-    double c = sqrt(2.0);
+    float c = sqrtf(2.0f);
     CCPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
 
     // Compressed Interpolation mode
@@ -598,18 +597,18 @@ void CCLayerGradient::updateColor()
 
     float opacityf = (float)m_cOpacity / 255.0f;
 
-    ccColor4B S = {
-        (unsigned char) m_tColor.r,
-        (unsigned char) m_tColor.g,
-        (unsigned char) m_tColor.b,
-        (unsigned char) (m_cStartOpacity * opacityf)
+    ccColor4F S = {
+        m_tColor.r / 255.0f,
+        m_tColor.g / 255.0f,
+        m_tColor.b / 255.0f,
+        m_cStartOpacity * opacityf / 255.0f
     };
 
-    ccColor4B E = {
-        (unsigned char) m_endColor.r,
-        (unsigned char) m_endColor.g,
-        (unsigned char) m_endColor.b,
-        (unsigned char) (m_cEndOpacity * opacityf)
+    ccColor4F E = {
+        m_endColor.r / 255.0f,
+        m_endColor.g / 255.0f,
+        m_endColor.b / 255.0f,
+        m_cEndOpacity * opacityf / 255.0f
     };
 
     // (-1, -1)

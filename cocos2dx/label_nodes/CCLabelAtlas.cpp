@@ -28,6 +28,13 @@ THE SOFTWARE.
 #include "CCPointExtension.h"
 #include "CCDrawingPrimitives.h"
 #include "ccConfig.h"
+#include "CCShaderCache.h"
+#include "CCGLProgram.h"
+#include "ccGLState.h"
+#include "CCDirector.h"
+#include "support/TransformUtils.h"
+// external
+#include "kazmath/GL/matrix.h"
 
 namespace cocos2d{
 
@@ -68,6 +75,8 @@ namespace cocos2d{
         CCTexture2D *texture = m_pTextureAtlas->getTexture();
         float textureWide = (float) texture->getPixelsWide();
         float textureHigh = (float) texture->getPixelsHigh();
+		float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
+		float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
 
 		for(unsigned int i = 0; i < n; i++) {
 			unsigned char a = s[i] - m_cMapStartChar;
@@ -76,15 +85,15 @@ namespace cocos2d{
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
             // Issue #938. Don't use texStepX & texStepY
-            float left		= (2 * row * m_uItemWidth + 1) / (2 * textureWide);
-            float right		= left + (m_uItemWidth * 2 - 2) / (2 * textureWide);
-            float top		= (2 * col * m_uItemHeight + 1) / (2 * textureHigh);
-            float bottom	= top + (m_uItemHeight * 2 - 2) / (2 * textureHigh);
+            float left		= (2 * row * itemWidthInPixels + 1) / (2 * textureWide);
+            float right		= left + (itemWidthInPixels * 2 - 2) / (2 * textureWide);
+            float top		= (2 * col * itemHeightInPixels + 1) / (2 * textureHigh);
+            float bottom	= top + (itemHeightInPixels * 2 - 2) / (2 * textureHigh);
 #else
-            float left		= row * m_uItemWidth / textureWide;
-            float right		= left + m_uItemWidth / textureWide;
-            float top		= col * m_uItemHeight / textureHigh;
-            float bottom	= top + m_uItemHeight / textureHigh;
+            float left		= row * itemWidthInPixels / textureWide;
+            float right		= left + itemWidthInPixels / textureWide;
+            float top		= col * itemHeightInPixels / textureHigh;
+            float bottom	= top + itemHeightInPixels / textureHigh;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
             quad.tl.texCoords.u = left;
@@ -108,7 +117,11 @@ namespace cocos2d{
 			quad.tr.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
 			quad.tr.vertices.y = (float)(m_uItemHeight);
 			quad.tr.vertices.z = 0.0f;
-
+			ccColor4B c = { m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity };
+			quad.tl.colors = c;
+			quad.tr.colors = c;
+			quad.bl.colors = c;
+			quad.br.colors = c;
 			m_pTextureAtlas->updateQuad(&quad, i);
 		}
 	}
@@ -125,10 +138,9 @@ namespace cocos2d{
 		m_sString = label;
 		this->updateAtlasValues();
 
-		CCSize s;
-		s.width = (float)(len * m_uItemWidth);
-		s.height = (float)(m_uItemHeight);
-		this->setContentSizeInPixels(s);
+		CCSize s = CCSizeMake(len * m_uItemWidth, m_uItemHeight);;
+
+		this->setContentSize(s);
 
 		m_uQuadsToDraw = len;
 	}
