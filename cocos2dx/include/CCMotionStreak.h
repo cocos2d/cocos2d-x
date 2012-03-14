@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2011  cocos2d-x.org
-Copyright (c) 2008, 2009 Jason Booth
+Copyright (c) 2011 ForzeField Studios S.L.
 
 http://www.cocos2d-x.org
 
@@ -25,10 +25,80 @@ THE SOFTWARE.
 #ifndef __CCMOTION_STREAK_H__
 #define __CCMOTION_STREAK_H__
 
-#include "CCNode.h"
 #include "CCProtocols.h"
+#include "CCTexture2D.h"
+#include "ccTypes.h"
+#include "CCNode.h"
 
 NS_CC_BEGIN
+
+
+/** MotionStreak.
+ Creates a trailing path.
+ */
+class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
+{
+public:
+	CCMotionStreak();
+	virtual ~CCMotionStreak();
+	/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
+	static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+	/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
+	static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+
+	/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+	bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+	/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
+	bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+
+	/** color used for the tint */
+	void tintWithColor(ccColor3B colors);
+
+	/** Remove all living segments of the ribbon */
+	void reset();
+
+	/** Override super methods */
+	virtual void setPosition(const CCPoint& position);
+	virtual void draw();
+	virtual void update(ccTime delta);
+
+	/* Implement interfaces */
+	virtual CCTexture2D* getTexture(void);
+	virtual void setTexture(CCTexture2D *texture);
+	virtual void setBlendFunc(ccBlendFunc blendFunc);
+	virtual ccBlendFunc getBlendFunc(void);
+    virtual void setColor(const ccColor3B& color);
+	virtual const ccColor3B& getColor(void);
+    virtual GLubyte getOpacity(void);
+	virtual void setOpacity(GLubyte opacity);
+	virtual void setIsOpacityModifyRGB(bool bValue);
+	virtual bool getIsOpacityModifyRGB(void);
+
+	/** When fast mode is enbled, new points are added faster but with lower precision */
+	CC_SYNTHESIZE(bool, m_bFastMode, IsFastMode);
+private:
+	/** texture used for the motion streak */
+	CCTexture2D* m_pTexture;
+	ccBlendFunc m_tBlendFunc;
+    CCPoint m_tPositionR;
+    ccColor3B m_tColor;
+
+    float m_fStroke;
+    float m_fFadeDelta;
+    float m_fMinSeg;
+
+    unsigned int m_uMaxPoints;
+    unsigned int m_uNuPoints;
+
+    /** Pointers */
+    CCPoint* m_pPointVertexes;
+    float* m_pPointState;
+
+    // Opengl
+    ccVertex2F* m_pVertices;
+    GLubyte* m_pColorPointer;
+    ccTex2F* m_pTexCoords;
+};
 
 NS_CC_END
 

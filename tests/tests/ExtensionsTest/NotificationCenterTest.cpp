@@ -82,7 +82,7 @@ NotificationCenterTest::NotificationCenterTest()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCMenuItemFont* pBackItem = CCMenuItemFont::itemFromString("Back", this,
+    CCMenuItemFont* pBackItem = CCMenuItemFont::itemWithString("Back", this,
         menu_selector(NotificationCenterTest::toExtensionsMainLayer));
     pBackItem->setPosition(ccp(s.width - 50, 25));
     CCMenu* pBackMenu = CCMenu::menuWithItems(pBackItem, NULL);
