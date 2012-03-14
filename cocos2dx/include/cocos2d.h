@@ -55,7 +55,6 @@ THE SOFTWARE.
 #include "CCMenu.h"
 #include "CCMenuItem.h"
 #include "CCParticleSystem.h"
-#include "CCParticleSystemPoint.h"
 #include "CCParticleSystemQuad.h"
 #include "CCParticleExamples.h"
 #include "CCScene.h"
@@ -82,7 +81,6 @@ THE SOFTWARE.
 #include "CCTransitionPageTurn.h"
 #include "CCTexture2D.h"
 #include "CCTexturePVR.h"
-#include "CCTransitionRadial.h"
 #include "CCActionProgressTimer.h"
 #include "CCTouchHandler.h"
 #include "CCTouchDispatcher.h"
@@ -118,12 +116,21 @@ THE SOFTWARE.
 
 // extensions
 #include "extensions/CCNotificationCenter.h"
-
+// Shaders
+#include "CCGLProgram.h"
+#include "ccGLState.h"
+#include "CCShaderCache.h"
 //
 // cocos2d macros
 //
 #include "ccTypes.h"
 #include "ccMacros.h"
+
+//
+// external
+//
+#include "kazmath/kazmath.h"
+#include "kazmath/GL/matrix.h"
 
 namespace   cocos2d {
 

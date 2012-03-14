@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="libEGL.lib libGLESv2.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -496,15 +496,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCParticleBatchNode.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCParticleExamples.h"
 				>
 			</File>
 			<File
 				RelativePath="..\include\CCParticleSystem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCParticleSystemPoint.h"
 				>
 			</File>
 			<File
@@ -525,10 +525,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCRenderTexture.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCRibbon.h"
 				>
 			</File>
 			<File
@@ -636,10 +632,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCTransitionRadial.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\ccTypes.h"
 				>
 			</File>
@@ -691,10 +683,6 @@
 				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="menu_nodes"
@@ -723,24 +711,20 @@
 				RelativePath="..\misc_nodes\CCRenderTexture.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\misc_nodes\CCRibbon.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="particle_nodes"
 			>
+			<File
+				RelativePath="..\particle_nodes\CCParticleBatchNode.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\particle_nodes\CCParticleExamples.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\particle_nodes\CCParticleSystem.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\particle_nodes\CCParticleSystemPoint.cpp"
 				>
 			</File>
 			<File

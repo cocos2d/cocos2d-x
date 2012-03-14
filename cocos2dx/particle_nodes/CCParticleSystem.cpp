@@ -42,8 +42,10 @@ THE SOFTWARE.
 //
 
 #include "CCParticleSystem.h"
+#include "CCParticleBatchNode.h"
 #include "ccTypes.h"
 #include "CCTextureCache.h"
+#include "CCTextureAtlas.h"
 #include "support/base64.h"
 #include "CCPointExtension.h"
 #include "CCFileUtils.h"
@@ -51,13 +53,10 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
 #include "CCDirector.h"
-
+#include "support/CCProfiling.h"
 // opengl
 #include "platform/CCGL.h"
 
-#if CC_ENABLE_PROFILERS
-#include "Support/CCProfiling.h"
-#endif
 
 namespace cocos2d {
 
@@ -84,9 +83,6 @@ CCParticleSystem::CCParticleSystem()
 	,m_pParticles(NULL)
 	,m_fEmitCounter(0)
 	,m_uParticleIdx(0)
-#if CC_ENABLE_PROFILERS
-	,m_pProfilingTimer(NULL)
-#endif
 	,m_bIsActive(true)
 	,m_uParticleCount(0)
 	,m_fDuration(0)
@@ -111,6 +107,9 @@ CCParticleSystem::CCParticleSystem()
 	,m_ePositionType(kCCPositionTypeFree)
 	,m_bIsAutoRemoveOnFinish(false)
 	,m_nEmitterMode(kCCParticleModeGravity)
+	,m_pBatchNode(NULL)
+	,m_uAtlasIndex(0)
+	,m_bTransformSystemDirty(false)
 {
 	modeA.gravity = CCPointZero;
 	modeA.speed = 0;
@@ -267,6 +266,9 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 			// emission Rate
 			m_fEmissionRate = m_uTotalParticles / m_fLife;
 
+			//don't get the internal texture if a batchNode is used
+			if (!m_pBatchNode)
+			{
 			// texture		
 			// Try to get the texture from the cache
 			char *textureName = (char *)valueForKey("textureFileName", dictionary);
@@ -287,7 +289,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 
 			if (tex)
 			{
-				this->m_pTexture = tex;
+				setTexture(tex);
 			}
 			else
 			{						
@@ -311,13 +313,14 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 						CCAssert(isOK, "CCParticleSystem: error init image with Data");
 						CC_BREAK_IF(!isOK);
 						
-						m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str());
+						setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str()));
 				}
 			}
 			CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
 			
 			CC_BREAK_IF(!m_pTexture);
 			this->m_pTexture->retain();
+			}
 			bRet = true;
 		}
 	} while (0);
@@ -340,7 +343,13 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 		this->release();
 		return false;
 	}
-
+	if (m_pBatchNode)
+	{
+		for (int i = 0; i < m_uTotalParticles; i++)
+		{
+			m_pParticles[i].atlasIndex=i;
+		}
+	}
 	// default, active
 	m_bIsActive = true;
 
@@ -360,15 +369,11 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
 	m_bIsAutoRemoveOnFinish = false;
 
-	// profiling
-#if CC_ENABLE_PROFILERS
-	/// @todo _profilingTimer = [[CCProfiler timerWithName:@"particle system" andInstance:self] retain];
-#endif
-
 	// Optimization: compile udpateParticle method
 	//updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
 	//updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
-
+	//for batchNode
+	m_bTransformSystemDirty = false;
 	// udpate after action in run!
 	this->scheduleUpdateWithPriority(1);
 
@@ -379,11 +384,8 @@ CCParticleSystem::~CCParticleSystem()
 {
     CC_SAFE_DELETE_ARRAY(m_pParticles);
 	CC_SAFE_RELEASE(m_pTexture)
-	// profiling
-#if CC_ENABLE_PROFILERS
-	/// @todo [CCProfiler releaseTimer:_profilingTimer];
-#endif
 }
+
 bool CCParticleSystem::addParticle()
 {
 	if (this->isFull())
@@ -406,9 +408,9 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 
 	// position
 	particle->pos.x = m_tSourcePosition.x + m_tPosVar.x * CCRANDOM_MINUS1_1();
-    particle->pos.x *= CC_CONTENT_SCALE_FACTOR();
+
 	particle->pos.y = m_tSourcePosition.y + m_tPosVar.y * CCRANDOM_MINUS1_1();
-    particle->pos.y *= CC_CONTENT_SCALE_FACTOR();
+
 
 	// Color
 	ccColor4F start;
@@ -432,7 +434,6 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	// size
 	float startS = m_fStartSize + m_fStartSizeVar * CCRANDOM_MINUS1_1();
 	startS = MAX(0, startS); // No negative value
-    startS *= CC_CONTENT_SCALE_FACTOR();
 
 	particle->size = startS;
 
@@ -444,7 +445,6 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	{
 		float endS = m_fEndSize + m_fEndSizeVar * CCRANDOM_MINUS1_1();
 		endS = MAX(0, endS); // No negative values
-        endS *= CC_CONTENT_SCALE_FACTOR();
 		particle->deltaSize = (endS - startS) / particle->timeToLive;
 	}
 
@@ -457,12 +457,11 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	// position
 	if( m_ePositionType == kCCPositionTypeFree )
 	{
-        CCPoint p = this->convertToWorldSpace(CCPointZero);
-		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
+		particle->startPos = this->convertToWorldSpace(CCPointZero);
 	}
     else if ( m_ePositionType == kCCPositionTypeRelative )
     {
-        particle->startPos = ccpMult( m_tPosition, CC_CONTENT_SCALE_FACTOR() );
+        particle->startPos = m_tPosition;
     }
 
 	// direction
@@ -473,18 +472,17 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	{
 		CCPoint v(cosf( a ), sinf( a ));
 		float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
-        s *= CC_CONTENT_SCALE_FACTOR();
 
 		// direction
 		particle->modeA.dir = ccpMult( v, s );
 
 		// radial accel
 		particle->modeA.radialAccel = modeA.radialAccel + modeA.radialAccelVar * CCRANDOM_MINUS1_1();
-        particle->modeA.radialAccel *= CC_CONTENT_SCALE_FACTOR();
+ 
 
 		// tangential accel
 		particle->modeA.tangentialAccel = modeA.tangentialAccel + modeA.tangentialAccelVar * CCRANDOM_MINUS1_1();
-        particle->modeA.tangentialAccel *= CC_CONTENT_SCALE_FACTOR();
+
     }
 
 	// Mode Radius: B
@@ -492,8 +490,6 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 		// Set the default diameter of the particle from the source position
 		float startRadius = modeB.startRadius + modeB.startRadiusVar * CCRANDOM_MINUS1_1();
 		float endRadius = modeB.endRadius + modeB.endRadiusVar * CCRANDOM_MINUS1_1();
-        startRadius *= CC_CONTENT_SCALE_FACTOR();
-        endRadius *= CC_CONTENT_SCALE_FACTOR();
 
 		particle->modeB.radius = startRadius;
 
@@ -530,6 +526,8 @@ bool CCParticleSystem::isFull()
 // ParticleSystem - MainLoop
 void CCParticleSystem::update(ccTime dt)
 {
+	// TODO: CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
+
 	if( m_bIsActive && m_fEmissionRate )
 	{
 		float rate = 1.0f / m_fEmissionRate;
@@ -549,133 +547,148 @@ void CCParticleSystem::update(ccTime dt)
 
 	m_uParticleIdx = 0;
 
-
-#if CC_ENABLE_PROFILERS
-	/// @todo CCProfilingBeginTimingBlock(_profilingTimer);
-#endif
-
-
 	CCPoint currentPosition = CCPointZero;
 	if( m_ePositionType == kCCPositionTypeFree )
 	{
 		currentPosition = this->convertToWorldSpace(CCPointZero);
-        currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
-        currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
 	}
     else if ( m_ePositionType == kCCPositionTypeRelative )
     {
         currentPosition = m_tPosition;
-        currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
-        currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
     }
 
-	while( m_uParticleIdx < m_uParticleCount )
+	if (m_bIsVisible)
 	{
-		tCCParticle *p = &m_pParticles[m_uParticleIdx];
-
-		// life
-		p->timeToLive -= dt;
-
-		if( p->timeToLive > 0 ) 
+		while( m_uParticleIdx < m_uParticleCount )
 		{
-			// Mode A: gravity, direction, tangential accel & radial accel
-			if( m_nEmitterMode == kCCParticleModeGravity ) 
+			tCCParticle *p = &m_pParticles[m_uParticleIdx];
+
+			// life
+			p->timeToLive -= dt;
+
+			if( p->timeToLive > 0 ) 
 			{
-				CCPoint tmp, radial, tangential;
+				// Mode A: gravity, direction, tangential accel & radial accel
+				if( m_nEmitterMode == kCCParticleModeGravity ) 
+				{
+					CCPoint tmp, radial, tangential;
 
-				radial = CCPointZero;
-				// radial acceleration
-				if(p->pos.x || p->pos.y)
-					radial = ccpNormalize(p->pos);
-				tangential = radial;
-				radial = ccpMult(radial, p->modeA.radialAccel);
+					radial = CCPointZero;
+					// radial acceleration
+					if(p->pos.x || p->pos.y)
+						radial = ccpNormalize(p->pos);
+					tangential = radial;
+					radial = ccpMult(radial, p->modeA.radialAccel);
 
-				// tangential acceleration
-				float newy = tangential.x;
-				tangential.x = -tangential.y;
-				tangential.y = newy;
-				tangential = ccpMult(tangential, p->modeA.tangentialAccel);
+					// tangential acceleration
+					float newy = tangential.x;
+					tangential.x = -tangential.y;
+					tangential.y = newy;
+					tangential = ccpMult(tangential, p->modeA.tangentialAccel);
 
-				// (gravity + radial + tangential) * dt
-				tmp = ccpAdd( ccpAdd( radial, tangential), modeA.gravity);
-				tmp = ccpMult( tmp, dt);
-				p->modeA.dir = ccpAdd( p->modeA.dir, tmp);
-				tmp = ccpMult(p->modeA.dir, dt);
-				p->pos = ccpAdd( p->pos, tmp );
-			}
+					// (gravity + radial + tangential) * dt
+					tmp = ccpAdd( ccpAdd( radial, tangential), modeA.gravity);
+					tmp = ccpMult( tmp, dt);
+					p->modeA.dir = ccpAdd( p->modeA.dir, tmp);
+					tmp = ccpMult(p->modeA.dir, dt);
+					p->pos = ccpAdd( p->pos, tmp );
+				}
 
-			// Mode B: radius movement
-			else {				
-				// Update the angle and radius of the particle.
-				p->modeB.angle += p->modeB.degreesPerSecond * dt;
-				p->modeB.radius += p->modeB.deltaRadius * dt;
+				// Mode B: radius movement
+				else {				
+					// Update the angle and radius of the particle.
+					p->modeB.angle += p->modeB.degreesPerSecond * dt;
+					p->modeB.radius += p->modeB.deltaRadius * dt;
 
-				p->pos.x = - cosf(p->modeB.angle) * p->modeB.radius;
-				p->pos.y = - sinf(p->modeB.angle) * p->modeB.radius;
-			}
+					p->pos.x = - cosf(p->modeB.angle) * p->modeB.radius;
+					p->pos.y = - sinf(p->modeB.angle) * p->modeB.radius;
+				}
 
-			// color
-			p->color.r += (p->deltaColor.r * dt);
-			p->color.g += (p->deltaColor.g * dt);
-			p->color.b += (p->deltaColor.b * dt);
-			p->color.a += (p->deltaColor.a * dt);
+				// color
+				p->color.r += (p->deltaColor.r * dt);
+				p->color.g += (p->deltaColor.g * dt);
+				p->color.b += (p->deltaColor.b * dt);
+				p->color.a += (p->deltaColor.a * dt);
 
-			// size
-			p->size += (p->deltaSize * dt);
-			p->size = MAX( 0, p->size );
+				// size
+				p->size += (p->deltaSize * dt);
+				p->size = MAX( 0, p->size );
 
-			// angle
-			p->rotation += (p->deltaRotation * dt);
+				// angle
+				p->rotation += (p->deltaRotation * dt);
 
-			//
-			// update values in quad
-			//
+				//
+				// update values in quad
+				//
 
-			CCPoint	newPos;
+				CCPoint	newPos;
 
-			if( m_ePositionType == kCCPositionTypeFree || m_ePositionType == kCCPositionTypeRelative ) 
-			{
-				CCPoint diff = ccpSub( currentPosition, p->startPos );
-				newPos = ccpSub(p->pos, diff);
+				if( m_ePositionType == kCCPositionTypeFree || m_ePositionType == kCCPositionTypeRelative ) 
+				{
+					CCPoint diff = ccpSub( currentPosition, p->startPos );
+					newPos = ccpSub(p->pos, diff);
+				} 
+				else
+				{
+					newPos = p->pos;
+				}
+
+				// translate newPos to correct position, since matrix transform isn't performed in batchnode
+				// don't update the particle with the new position information, it will interfere with the radius and tangential calculations
+				if (m_pBatchNode)
+				{
+					newPos.x+=m_tPosition.x;
+					newPos.y+=m_tPosition.y;
+				}
+
+				updateQuadWithParticle(p, newPos);
+				//updateParticleImp(self, updateParticleSel, p, newPos);
+
+				// update particle counter
+				++m_uParticleIdx;
+
 			} 
-			else
+			else 
 			{
-				newPos = p->pos;
+				// life < 0
+				int currentIndex = p->atlasIndex;
+				if( m_uParticleIdx != m_uParticleCount-1 )
+				{
+					m_pParticles[m_uParticleIdx] = m_pParticles[m_uParticleCount-1];
+				}
+				if (m_pBatchNode)
+				{
+					//disable the switched particle
+					m_pBatchNode->disableParticle(m_uAtlasIndex+currentIndex);
+
+					//switch indexes
+					m_pParticles[m_uParticleCount-1].atlasIndex = currentIndex;
+				}
+
+
+				--m_uParticleCount;
+
+				if( m_uParticleCount == 0 && m_bIsAutoRemoveOnFinish )
+				{
+					this->unscheduleUpdate();
+					m_pParent->removeChild(this, true);
+					return;
+				}
 			}
-
-			updateQuadWithParticle(p, newPos);
-			//updateParticleImp(self, updateParticleSel, p, newPos);
-
-			// update particle counter
-			++m_uParticleIdx;
-
-		} 
-		else 
-		{
-			// life < 0
-			if( m_uParticleIdx != m_uParticleCount-1 )
-			{
-				m_pParticles[m_uParticleIdx] = m_pParticles[m_uParticleCount-1];
-			}
-			--m_uParticleCount;
-
-			if( m_uParticleCount == 0 && m_bIsAutoRemoveOnFinish )
-			{
-				this->unscheduleUpdate();
-				m_pParent->removeChild(this, true);
-				return;
-			}
-		}
+		} //while
+		m_bTransformSystemDirty = false;
 	}
+	if (!m_pBatchNode)
+		postStep();
 
-#if CC_ENABLE_PROFILERS
-	/// @todo CCProfilingEndTimingBlock(_profilingTimer);
-#endif
-
-//#ifdef CC_USES_VBO
-	this->postStep();
-//#endif
+	//TODO: CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 }
+
+void CCParticleSystem::updateWithNoTime(void)
+{
+	this->update(0.0f);
+}
+
 void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition)
 {
     CC_UNUSED_PARAM(particle);
@@ -1075,6 +1088,60 @@ void CCParticleSystem::setEmitterMode(int var)
 {
 	m_nEmitterMode = var;
 }
+
+void CCParticleSystem::setZOrder(int z)
+{
+	m_nZOrder = z;
+}
+
+// ParticleSystem - methods for batchNode rendering
+
+CCParticleBatchNode* CCParticleSystem::getBatchNode(void)
+{
+	return m_pBatchNode;
+}
+
+void CCParticleSystem::setBatchNode(CCParticleBatchNode* batchNode)
+{
+	if( m_pBatchNode != batchNode ) {
+
+		m_pBatchNode = batchNode; // weak reference
+
+		if( batchNode ) {
+			//each particle needs a unique index
+			for (int i = 0; i < m_uTotalParticles; i++)
+			{
+				m_pParticles[i].atlasIndex=i;
+			}
+		}
+	}
+}
+
+//don't use a transform matrix, this is faster
+void CCParticleSystem::setScale(float s)
+{
+	m_bTransformSystemDirty = true;
+	CCNode::setScale(s);
+}
+
+void CCParticleSystem::setRotation(float newRotation)
+{
+	m_bTransformSystemDirty = true;
+	CCNode::setRotation(newRotation);
+}
+
+void CCParticleSystem::setScaleX(float newScaleX)
+{
+	m_bTransformSystemDirty = true;
+	CCNode::setScaleX(newScaleX);
+}
+
+void CCParticleSystem::setScaleY(float newScaleY)
+{
+	m_bTransformSystemDirty = true;
+	CCNode::setScaleY(newScaleY);
+}
+
 
 }// namespace cocos2d
 

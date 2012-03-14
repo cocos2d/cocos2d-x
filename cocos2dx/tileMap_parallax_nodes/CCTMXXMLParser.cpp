@@ -112,6 +112,7 @@ namespace cocos2d {
 	{
 		CCRect rect;
 		rect.size = m_tTileSize;
+		gid &= kCCFlippedMask;
 		gid = gid - m_uFirstGid;
 		int max_x = (int)((m_tImageSize.width - m_uMargin*2 + m_uSpacing) / (m_tTileSize.width + m_uSpacing));
 		//	int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
@@ -133,11 +134,25 @@ namespace cocos2d {
 		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
-	bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
+
+	CCTMXMapInfo * CCTMXMapInfo::formatWithXML(const char* tmxString, const char* resourcePath)
+	{
+		CCTMXMapInfo *pRet = new CCTMXMapInfo();
+		if(pRet->initWithXML(tmxString, resourcePath))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CC_SAFE_DELETE(pRet);
+		return NULL;
+	}
+
+	void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
 	{
 		m_pTilesets = new CCMutableArray<CCTMXTilesetInfo*>();
 		m_pLayers = new CCMutableArray<CCTMXLayerInfo*>();
-		m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFile);
+		m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFileName);
+		m_sResources = resourcePath;
 		m_pObjectGroups = new CCMutableArray<CCTMXObjectGroup*>();
 		m_pProperties = new CCStringToStringDictionary();
 		m_pTileProperties = new CCDictionary<int, CCStringToStringDictionary*>();
@@ -147,9 +162,19 @@ namespace cocos2d {
 		m_bStoringCharacters = false;
 		m_nLayerAttribs = TMXLayerAttribNone;
 		m_nParentElement = TMXPropertyNone;
+	}
+	bool CCTMXMapInfo::initWithXML(const char* tmxString, const char* resourcePath)
+	{
+		internalInit(NULL, resourcePath);
+		return parseXMLString(tmxString);
+	}
 
+	bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
+	{
+		internalInit(tmxFile, NULL);
 		return parseXMLFile(m_sTMXFileName.c_str());
 	}
+
 	CCTMXMapInfo::CCTMXMapInfo()
         :m_tMapSize(CCSizeZero)	
         ,m_tTileSize(CCSizeZero)
@@ -220,6 +245,18 @@ namespace cocos2d {
 		CC_SAFE_RETAIN(tileProperties);
 		CC_SAFE_RELEASE(m_pTileProperties);
 		m_pTileProperties = tileProperties;
+	}
+
+	bool CCTMXMapInfo::parseXMLString(const char *xmlString)
+	{
+		// TODO:
+		return false;
+	}
+
+	bool CCTMXMapInfo::parseXMLData(const char* data)
+	{
+		// TODO:
+		return false;
 	}
 
 	bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)

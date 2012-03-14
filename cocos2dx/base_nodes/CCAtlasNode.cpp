@@ -27,6 +27,14 @@ THE SOFTWARE.
 #include "CCAtlasNode.h"
 #include "CCTextureAtlas.h"
 #include "CCDirector.h"
+#include "CCGLProgram.h"
+#include "CCShaderCache.h"
+#include "ccGLState.h"
+#include "CCDirector.h"
+#include "support/TransformUtils.h"
+
+// external
+#include "kazmath/GL/matrix.h"
 
 namespace   cocos2d {
 
@@ -43,6 +51,7 @@ CCAtlasNode::CCAtlasNode()
 , m_bIsOpacityModifyRGB(false)
 , m_cOpacity(0)
 , m_uQuadsToDraw(0)
+, m_nUniformColor(0)
 {
 }
 
@@ -68,8 +77,8 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
 								   unsigned int itemsToRender)
 {
 	CCAssert(tile != NULL, "title should not be null");
-	m_uItemWidth  = (int) (tileWidth * CC_CONTENT_SCALE_FACTOR());
-	m_uItemHeight = (int) (tileHeight * CC_CONTENT_SCALE_FACTOR());
+	m_uItemWidth  = tileWidth;
+	m_uItemHeight = tileHeight;
 
 	m_cOpacity = 255;
 	m_tColor = m_tColorUnmodified = ccWHITE;
@@ -97,6 +106,10 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
 
 	m_uQuadsToDraw = itemsToRender;
 
+	// shader stuff
+	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture_uColor));
+	m_nUniformColor = glGetUniformLocation( m_pShaderProgram->program_, "u_color");
+
 	return true;
 }
 
@@ -105,7 +118,7 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
 
 void CCAtlasNode::calculateMaxItems()
 {
-	const CCSize& s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
+	const CCSize& s = m_pTextureAtlas->getTexture()->getContentSize();
 	m_uItemsPerColumn = (int)(s.height / m_uItemHeight);
 	m_uItemsPerRow = (int)(s.width / m_uItemWidth);
 }
@@ -119,35 +132,13 @@ void CCAtlasNode::updateAtlasValues()
 // CCAtlasNode - draw
 void CCAtlasNode::draw()
 {
-	CCNode::draw();
+	CC_NODE_DRAW_SETUP();
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);
+	ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
-    // glColor4ub isn't implement on some android devices
-	// glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity); 
-    glColor4f(((GLfloat)m_tColor.r) / 255, ((GLfloat)m_tColor.g) / 255, ((GLfloat)m_tColor.b) / 255, ((GLfloat)m_cOpacity) / 255);
-	bool newBlend = m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST;
-	if(newBlend) 
-	{
-		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
-	}
+	glUniform4f( m_nUniformColor, m_tColor.r / 255.0f, m_tColor.g / 255.0f, m_tColor.b / 255.0f, m_cOpacity / 255.0f );
 
 	m_pTextureAtlas->drawNumberOfQuads(m_uQuadsToDraw, 0);
-
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-
-	// is this chepear than saving/restoring color state ?
-	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
-	// XXX: that they need
-	//	glColor4ub( 255, 255, 255, 255);
-
-	// restore default GL state
-	glEnableClientState(GL_COLOR_ARRAY);
-
 }
 
 // CCAtlasNode - RGBA protocol

@@ -43,7 +43,8 @@ THE SOFTWARE.
  
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
-
+#include "ccTypes.h"
+#include "ccMacros.h"
 #include "CCGeometry.h"	// for CCPoint
 namespace   cocos2d {
 
@@ -80,6 +81,22 @@ void CC_DLL ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, cons
  @since v0.8
  */
 void CC_DLL ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments);
+
+/** set the drawing color with 4 unsigned bytes
+ @since v2.0
+ */
+void CC_DLL ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
+
+/** set the drawing color with 4 floats
+ @since v2.0
+ */
+void CC_DLL ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
+
+/** set the point size in points. Default 1.
+ @since v2.0
+ */
+void CC_DLL ccPointSize( GLfloat pointSize );
+
 }//namespace   cocos2d 
 
 #endif // __CCDRAWING_PRIMITIVES__

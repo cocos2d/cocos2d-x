@@ -63,35 +63,35 @@ typedef enum {
  If CC_ENABLE_GL_STATE_CACHE it will reset the GL state cache.
  @since v2.0.0
  */
-void ccGLInvalidateStateCache( void );
+void CC_DLL ccGLInvalidateStateCache( void );
 
 /** Uses the GL program in case program is different than the current one.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glUseProgram() directly.
  @since v2.0.0
  */
-void ccGLUseProgram( GLuint program );
+void CC_DLL ccGLUseProgram( GLuint program );
 
 /** Deletes the GL program. If it is the one that is being used, it invalidates it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glDeleteProgram() directly.
  @since v2.0.0
  */
-void ccGLDeleteProgram( GLuint program );
+void CC_DLL ccGLDeleteProgram( GLuint program );
 
 /** Uses a blending function in case it not already used.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glBlendFunc() directly.
  @since v2.0.0
  */
-void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
+void CC_DLL ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
 
 /** sets the ModelViewProjection Matrix in the GL program
  @since v2.0.0
  */
-void ccGLUniformModelViewProjectionMatrix( CCGLProgram *shaderProgram );
+void CC_DLL ccGLUniformModelViewProjectionMatrix( CCGLProgram *shaderProgram );
 
 /** sets the projection matrix as dirty
  @since v2.0.0
  */
-void ccSetProjectionMatrixDirty( void );
+void CC_DLL ccSetProjectionMatrixDirty( void );
 
 /** Will enable the vertex attribs that are passed as flags.
  Possible flags:
@@ -104,38 +104,38 @@ void ccSetProjectionMatrixDirty( void );
 
  @since v2.0.0
  */
-void ccGLEnableVertexAttribs( unsigned int flags );
+void CC_DLL ccGLEnableVertexAttribs( unsigned int flags );
 
 /** If the active texture is not textureEnum, then it will active it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
  @since v2.0.0
  */
-void ccGLActiveTexture(GLenum textureEnum );
+void CC_DLL ccGLActiveTexture(GLenum textureEnum );
 
 /** Returns the active texture.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glGetIntegerv(GL_ACTIVE_TEXTURE);
  @since v2.0.0
  */
-GLenum ccGLGetActiveTexture( void );
+GLenum CC_DLL ccGLGetActiveTexture( void );
 
 
 /** If the texture is not already bound, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
  @since v2.0.0
  */
-void ccGLBindTexture2D(GLuint textureId );
+void CC_DLL ccGLBindTexture2D(GLuint textureId );
 
 /** It will delete a given texture. If the texture was bound, it will invalidate the cached.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
  @since v2.0.0
  */
-void ccGLDeleteTexture(GLuint textureId);
+void CC_DLL ccGLDeleteTexture(GLuint textureId);
 
 /** It will enable / disable the server side GL states.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glEnable() directly.
  @since v2.0.0
  */
-void ccGLEnable( ccGLServerState flags );
+void CC_DLL ccGLEnable( ccGLServerState flags );
 
 NS_CC_END
 

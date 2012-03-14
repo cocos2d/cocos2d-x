@@ -36,7 +36,7 @@ class CCGLProgram;
  Singleton that stores manages GL shaders
  @since v2.0
  */
-class CCShaderCache : public CCObject 
+class CC_DLL CCShaderCache : public CCObject 
 {
 public:
 	CCShaderCache();
