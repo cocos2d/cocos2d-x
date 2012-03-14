@@ -211,10 +211,8 @@ void CCTimer::update(ccTime dt)
 
 // implementation of CCScheduler
 
-static CCScheduler *pSharedScheduler;
-
 CCScheduler::CCScheduler(void)
-: m_fTimeScale(0.0f)
+: m_fTimeScale(1.0f)
 , m_pUpdatesNegList(NULL)
 , m_pUpdates0List(NULL)
 , m_pUpdatesPosList(NULL)
@@ -223,40 +221,15 @@ CCScheduler::CCScheduler(void)
 , m_pCurrentTarget(NULL)
 , m_bCurrentTargetSalvaged(false)
 , m_pScriptHandlerEntries(NULL)
+, m_bUpdateHashLocked(false)
 {
-	CCAssert(pSharedScheduler == NULL, "");
+
 }
 
 CCScheduler::~CCScheduler(void)
 {
 	unscheduleAllSelectors();
-
-	pSharedScheduler = NULL;
     CC_SAFE_RELEASE(m_pScriptHandlerEntries);
-}
-
-
-bool CCScheduler::init(void)
-{
-	m_fTimeScale = 1.0f;
-
-	// used to trigger CCTimer#update
-	// m_pfnUpdateSelector = &CCScheduler::update;
-	// impMethod = (TICK_IMP) [CCTimer instanceMethodForSelector:updateSelector];
-
-	// updates with priority
-	m_pUpdates0List = NULL;
-	m_pUpdatesNegList = NULL;
-	m_pUpdatesPosList = NULL;
-	m_pHashForUpdates = NULL;
-
-	// selectors with interval
-	m_pCurrentTarget = NULL;
-    m_bCurrentTargetSalvaged = false;
-	m_pHashForSelectors = NULL;
-	m_bUpdateHashLocked = false;
-
-	return true;
 }
 
 void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)

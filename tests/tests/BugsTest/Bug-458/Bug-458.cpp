@@ -21,13 +21,13 @@ bool Bug458Layer::init()
 //		[question setContentSize:CGSizeMake(50,50)];
 //		[question2 setContentSize:CGSizeMake(50,50)];
 		
-        CCMenuItemSprite* sprite = CCMenuItemSprite::itemFromNormalSprite(question2, question, this, menu_selector(Bug458Layer::selectAnswer));
-        CCLayerColor* layer = CCLayerColor::layerWithColorWidthHeight(ccc4(0,0,255,255), 100, 100);
+        CCMenuItemSprite* sprite = CCMenuItemSprite::itemWithNormalSprite(question2, question, this, menu_selector(Bug458Layer::selectAnswer));
+        CCLayerColor* layer = CCLayerColor::layerWithColor(ccc4(0,0,255,255), 100, 100);
 		question->release();
 		question2->release();
 
-        CCLayerColor* layer2 = CCLayerColor::layerWithColorWidthHeight(ccc4(255,0,0,255), 100, 100);
-        CCMenuItemSprite* sprite2 = CCMenuItemSprite::itemFromNormalSprite(layer, layer2, this, menu_selector(Bug458Layer::selectAnswer));        
+        CCLayerColor* layer2 = CCLayerColor::layerWithColor(ccc4(255,0,0,255), 100, 100);
+        CCMenuItemSprite* sprite2 = CCMenuItemSprite::itemWithNormalSprite(layer, layer2, this, menu_selector(Bug458Layer::selectAnswer));        
         CCMenu* menu = CCMenu::menuWithItems(sprite, sprite2, NULL);
         menu->alignItemsVerticallyWithPadding(100);
         menu->setPosition(ccp(size.width / 2, size.height / 2));

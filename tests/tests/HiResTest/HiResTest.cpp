@@ -75,9 +75,9 @@ void HiResDemo::onEnter()
         addChild(subLabel, 1);
     }
     
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(HiResDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(HiResDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(HiResDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(HiResDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(HiResDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(HiResDemo::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 

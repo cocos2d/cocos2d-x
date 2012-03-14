@@ -249,6 +249,7 @@ void CCTextureAtlas::initVAO()
 void CCTextureAtlas::mapBuffers()
 {
 	initIndices();
+	initVAO();
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);

@@ -816,11 +816,11 @@ TMXIsoZorder::TMXIsoZorder()
 	map->addChild(m_tamara, map->getChildren()->count() );
 	m_tamara->retain();
 	int mapWidth = map->getMapSize().width * map->getTileSize().width;
-	m_tamara->setPositionInPixels(ccp( mapWidth/2,0));
+	m_tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(ccp( mapWidth/2,0)));
 	m_tamara->setAnchorPoint(ccp(0.5f,0));
 
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccpMult(ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR()));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
 	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
 	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*) seq) );
@@ -841,7 +841,8 @@ void TMXIsoZorder::onExit()
 
 void TMXIsoZorder::repositionSprite(ccTime dt)
 {
-	CCPoint p = m_tamara->getPositionInPixels();
+	CCPoint p = m_tamara->getPosition();
+	p = CC_POINT_POINTS_TO_PIXELS(p);
 	CCNode *map = getChildByTag(kTagTileMap);
 	
 	// there are only 4 layers. (grass and 3 trees layers)
@@ -885,7 +886,7 @@ TMXOrthoZorder::TMXOrthoZorder()
 	m_tamara->setAnchorPoint(ccp(0.5f,0));
 
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccpMult(ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR() ));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
 	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
 	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq));
@@ -900,7 +901,8 @@ TMXOrthoZorder::~TMXOrthoZorder()
 
 void TMXOrthoZorder::repositionSprite(ccTime dt)
 {
-	CCPoint p = m_tamara->getPositionInPixels();
+	CCPoint p = m_tamara->getPosition();
+	p = CC_POINT_POINTS_TO_PIXELS(p);
 	CCNode* map = getChildByTag(kTagTileMap);
 	
 	// there are only 4 layers. (grass and 3 trees layers)
@@ -964,8 +966,10 @@ void TMXIsoVertexZ::repositionSprite(ccTime dt)
 {
 	// tile height is 64x32
 	// map size: 30x30
-	CCPoint p = m_tamara->getPositionInPixels();
-	m_tamara->setVertexZ( -( (p.y+32) /16) );
+	CCPoint p = m_tamara->getPosition();
+	p = CC_POINT_POINTS_TO_PIXELS(p);
+	float newZ = -(p.y+32) /16;
+	m_tamara->setVertexZ( newZ );
 }
 
 void TMXIsoVertexZ::onEnter()
@@ -1032,7 +1036,8 @@ void TMXOrthoVertexZ::repositionSprite(ccTime dt)
 {
 	// tile height is 101x81
 	// map size: 12x12
-	CCPoint p = m_tamara->getPositionInPixels();
+	CCPoint p = m_tamara->getPosition();
+	p = CC_POINT_POINTS_TO_PIXELS(p);
 	m_tamara->setVertexZ( -( (p.y+81) /81) );
 }
 
@@ -1280,9 +1285,9 @@ TileDemo::TileDemo(void)
 		m_subtitle->retain();
 	}	
 
-	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TileDemo::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TileDemo::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TileDemo::nextCallback) );
+	CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TileDemo::backCallback) );
+	CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TileDemo::restartCallback) );
+	CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TileDemo::nextCallback) );
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 

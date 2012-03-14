@@ -18,9 +18,9 @@ enum
 
 SceneTestLayer1::SceneTestLayer1()
 {
-	CCMenuItemFont* item1 = CCMenuItemFont::itemFromString( "Test pushScene", this, menu_selector(SceneTestLayer1::onPushScene) );
-	CCMenuItemFont* item2 = CCMenuItemFont::itemFromString( "Test pushScene w/transition", this, menu_selector(SceneTestLayer1::onPushSceneTran) );
-	CCMenuItemFont* item3 = CCMenuItemFont::itemFromString( "Quit", this, menu_selector(SceneTestLayer1::onQuit) );
+	CCMenuItemFont* item1 = CCMenuItemFont::itemWithString( "Test pushScene", this, menu_selector(SceneTestLayer1::onPushScene) );
+	CCMenuItemFont* item2 = CCMenuItemFont::itemWithString( "Test pushScene w/transition", this, menu_selector(SceneTestLayer1::onPushSceneTran) );
+	CCMenuItemFont* item3 = CCMenuItemFont::itemWithString( "Quit", this, menu_selector(SceneTestLayer1::onQuit) );
 	
 	CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, NULL );
 	menu->alignItemsVertically();
@@ -103,9 +103,9 @@ SceneTestLayer2::SceneTestLayer2()
 {
 	m_timeCounter = 0;
 
-	CCMenuItemFont* item1 = CCMenuItemFont::itemFromString( "replaceScene", this,  menu_selector(SceneTestLayer2::onReplaceScene) );
-	CCMenuItemFont* item2 = CCMenuItemFont::itemFromString( "replaceScene w/transition", this, menu_selector(SceneTestLayer2::onReplaceSceneTran) );
-	CCMenuItemFont* item3 = CCMenuItemFont::itemFromString( "Go Back", this, menu_selector(SceneTestLayer2::onGoBack) );
+	CCMenuItemFont* item1 = CCMenuItemFont::itemWithString( "replaceScene", this,  menu_selector(SceneTestLayer2::onReplaceScene) );
+	CCMenuItemFont* item2 = CCMenuItemFont::itemWithString( "replaceScene w/transition", this, menu_selector(SceneTestLayer2::onReplaceSceneTran) );
+	CCMenuItemFont* item3 = CCMenuItemFont::itemWithString( "Go Back", this, menu_selector(SceneTestLayer2::onGoBack) );
 	
 	CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, NULL );
 	menu->alignItemsVertically();

@@ -138,9 +138,9 @@ void TextureDemo::onEnter()
         l->setPosition(ccp(s.width/2, s.height-80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TextureDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TextureDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TextureDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TextureDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TextureDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TextureDemo::nextCallback) );
 	
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 	menu->setPosition(CCPointZero);
@@ -941,7 +941,7 @@ void TexturePixelFormat::onEnter()
 	
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLayerColor *background = CCLayerColor::layerWithColorWidthHeight(ccc4(128,128,128,255), s.width, s.height);
+    CCLayerColor *background = CCLayerColor::layerWithColor(ccc4(128,128,128,255), s.width, s.height);
 	addChild(background, -1);
 	
 	// RGBA 8888 image (32-bit)

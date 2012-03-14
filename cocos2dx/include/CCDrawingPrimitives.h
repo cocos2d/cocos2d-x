@@ -46,7 +46,8 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "ccMacros.h"
 #include "CCGeometry.h"	// for CCPoint
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 /** draws a point given x and y coordinate measured in points */
 void CC_DLL ccDrawPoint( const CCPoint& point );
@@ -62,12 +63,7 @@ void CC_DLL ccDrawLine( const CCPoint& origin, const CCPoint& destination );
 /** draws a poligon given a pointer to CCPoint coordiantes and the number of vertices measured in points.
 The polygon can be closed or open
 */
-void CC_DLL ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon );
-
-/** draws a poligon given a pointer to CCPoint coordiantes and the number of vertices measured in points.
-The polygon can be closed or open and optionally filled with current GL color
-*/
-void CC_DLL ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon , bool fill);
+void CC_DLL ccDrawPoly( const CCPoint *vertices, unsigned int numOfVertices, bool closePolygon );
 
 /** draws a circle given the center, radius and number of segments. */
 void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, int segments, bool drawLineToCenter);
@@ -97,6 +93,6 @@ void CC_DLL ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
  */
 void CC_DLL ccPointSize( GLfloat pointSize );
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __CCDRAWING_PRIMITIVES__
