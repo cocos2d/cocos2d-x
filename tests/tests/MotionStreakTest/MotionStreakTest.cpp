@@ -28,7 +28,7 @@ void MotionStreakTest1::onEnter()
 	m_target->setPosition( CCPointMake(100,0) );
 
 	// create the streak object and add it to the scene
-	m_streak = CCMotionStreak::streakWithFade(2, 3, s_streak, 32, 32, ccc4(0,255,0,255) );
+	m_streak = CCMotionStreak::streakWithFade(2, 3, 32, ccGREEN, s_streak);
 	addChild( m_streak );
 	// schedule an update on each frame so we can syncronize the streak with the target
 	schedule(schedule_selector(MotionStreakTest1::onUpdate));
@@ -66,7 +66,7 @@ void MotionStreakTest2::onEnter()
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
 		
 	// create the streak object and add it to the scene
-	m_streak = CCMotionStreak::streakWithFade(3, 3, s_streak, 64, 32, ccc4(255,255,255,255) );
+	m_streak = CCMotionStreak::streakWithFade(3, 3, 64, ccWHITE, s_streak );
 	addChild( m_streak );
 	
 	m_streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 
@@ -172,9 +172,9 @@ void MotionStreakTest::onEnter()
 	addChild(label, 1);
 	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
-	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(MotionStreakTest::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(MotionStreakTest::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(MotionStreakTest::nextCallback) );
+	CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(MotionStreakTest::backCallback) );
+	CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(MotionStreakTest::restartCallback) );
+	CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(MotionStreakTest::nextCallback) );
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 

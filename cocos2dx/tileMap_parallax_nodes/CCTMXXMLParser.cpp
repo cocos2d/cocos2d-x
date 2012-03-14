@@ -165,13 +165,13 @@ namespace cocos2d {
 	}
 	bool CCTMXMapInfo::initWithXML(const char* tmxString, const char* resourcePath)
 	{
-		internalInit(NULL, resourcePath);
+		internalInit("", resourcePath);
 		return parseXMLString(tmxString);
 	}
 
 	bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
 	{
-		internalInit(tmxFile, NULL);
+		internalInit(tmxFile, "");
 		return parseXMLFile(m_sTMXFileName.c_str());
 	}
 

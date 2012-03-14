@@ -79,9 +79,9 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     quantityParticles = particles;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::itemFromString(" - ", this, menu_selector(ParticleMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::itemWithString(" - ", this, menu_selector(ParticleMainScene::onDecrease));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::itemFromString(" + ", this, menu_selector(ParticleMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::itemWithString(" + ", this, menu_selector(ParticleMainScene::onIncrease));
     increase->setColor(ccc3(0,200,20));
 
     CCMenu *menu = CCMenu::menuWithItems(decrease, increase, NULL);
@@ -111,7 +111,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::itemFromString(str, this, menu_selector(ParticleMainScene::testNCallback));
+        CCMenuItemFont* itemFont = CCMenuItemFont::itemWithString(str, this, menu_selector(ParticleMainScene::testNCallback));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
@@ -176,11 +176,11 @@ void ParticleMainScene::createParticleSystem()
     CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage("Images/fire.png");
     CCTextureCache::sharedTextureCache()->removeTexture(texture);
 
-    if (subtestNumber <= 3)
-    {
-        particleSystem = new CCParticleSystemPoint();
-    }
-    else
+//TODO:     if (subtestNumber <= 3)
+//     {
+//         particleSystem = new CCParticleSystemPoint();
+//     }
+//     else
     {
         particleSystem = new CCParticleSystemQuad();
     }

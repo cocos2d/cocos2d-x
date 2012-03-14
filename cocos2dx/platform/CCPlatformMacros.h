@@ -132,9 +132,12 @@ protected: varType varName; \
 public: virtual varType get##funName(void) const { return varName; } \
 public: virtual void set##funName(varType var)   \
 { \
-    CC_SAFE_RETAIN(var); \
-    CC_SAFE_RELEASE(varName); \
-    varName = var; \
+	if (varName != var) \
+	{ \
+		CC_SAFE_RETAIN(var); \
+		CC_SAFE_RELEASE(varName); \
+		varName = var; \
+	} \
 } 
 
 #define CC_SAFE_DELETE(p)			if(p) { delete (p); (p) = 0; }

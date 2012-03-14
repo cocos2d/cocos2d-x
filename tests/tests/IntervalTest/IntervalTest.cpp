@@ -60,7 +60,7 @@ IntervalLayer::IntervalLayer()
 														)
 					 );
 	// pause button
-	CCMenuItem* item1 = CCMenuItemFont::itemFromString("Pause", this, menu_selector(IntervalLayer::onPause) );
+	CCMenuItem* item1 = CCMenuItemFont::itemWithString("Pause", this, menu_selector(IntervalLayer::onPause) );
 	CCMenu* menu = CCMenu::menuWithItems(item1, NULL);
 	menu->setPosition( CCPointMake(s.width/2, s.height-50) );
 

@@ -140,11 +140,11 @@ namespace cocos2d{
         CCMenuItemAtlasFont(){}
         virtual ~CCMenuItemAtlasFont(){}
         /** creates a menu item from a string and atlas with a target/selector */
-        static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
+        static CCMenuItemAtlasFont* itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
         /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-        static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
+        static CCMenuItemAtlasFont* itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
         /** initializes a menu item from a string and atlas with a target/selector */
-        bool initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
+        bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
     };
     
     /** @brief A CCMenuItemFont
@@ -164,11 +164,11 @@ namespace cocos2d{
         /** get the default font name */
         static const char *fontName();
         /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
-        static CCMenuItemFont * itemFromString(const char *value);
+        static CCMenuItemFont * itemWithString(const char *value);
         /** creates a menu item from a string with a target/selector */
-        static CCMenuItemFont * itemFromString(const char *value, CCObject* target, SEL_MenuHandler selector);
+        static CCMenuItemFont * itemWithString(const char *value, CCObject* target, SEL_MenuHandler selector);
         /** initializes a menu item from a string with a target/selector */
-        bool initFromString(const char *value, CCObject* target, SEL_MenuHandler selector);
+        bool initWithString(const char *value, CCObject* target, SEL_MenuHandler selector);
         
         /** set font size
          * c++ can not overload static and non-static member functions with the same parameter types
@@ -217,13 +217,13 @@ namespace cocos2d{
         ,m_pDisabledImage(NULL)
         {}
         /** creates a menu item with a normal, selected and disabled image*/
-        static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
+        static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
         /** creates a menu item with a normal and selected image with target/selector */
-        static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
+        static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
         /** creates a menu item with a normal,selected  and disabled image with target/selector */
-        static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
+        static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
         /** initializes a menu item with a normal, selected  and disabled image with target/selector */
-        bool initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
+        bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
         // super methods
         virtual void setColor(const ccColor3B& color);
         virtual const ccColor3B& getColor();
@@ -255,15 +255,15 @@ namespace cocos2d{
         CCMenuItemImage(){}
         virtual ~CCMenuItemImage(){}
         /** creates a menu item with a normal and selected image*/
-        static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage);
+        static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage);
         /** creates a menu item with a normal,selected  and disabled image*/
-        static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
+        static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
         /** creates a menu item with a normal and selected image with target/selector */
-        static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
+        static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
         /** creates a menu item with a normal,selected  and disabled image with target/selector */
-        static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
+        static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
         /** initializes a menu item with a normal, selected  and disabled image with target/selector */
-        bool initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
+        bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
     };
     
     /** @brief A CCMenuItemToggle

@@ -98,7 +98,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 {
 	// If the gles version is lower than GLES_VER_2_0, 
 	// some extended gles functions can't be implemented, so return false directly.
-	if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_2_0)
+	if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
 	{
 		return false;
 	}

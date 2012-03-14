@@ -126,8 +126,10 @@ bool CCDirector::init(void)
 
 	// scheduler
 	m_pScheduler = new CCScheduler();
+	m_pScheduler->retain();
 	// action manager
 	m_pActionManager = new CCActionManager();
+	m_pActionManager->retain();
 	m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCActionManagerPriority, false);
 
 	// create autorelease pool
@@ -895,9 +897,12 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 
 void CCDirector::setScheduler(CCScheduler* pScheduler)
 {
-	CC_SAFE_RETAIN(pScheduler);
-	CC_SAFE_RELEASE(m_pScheduler);
-	m_pScheduler = pScheduler;
+	if (m_pScheduler != pScheduler)
+	{
+		CC_SAFE_RETAIN(pScheduler);
+		CC_SAFE_RELEASE(m_pScheduler);
+		m_pScheduler = pScheduler;
+	}
 }
 
 CCScheduler* CCDirector::getScheduler()

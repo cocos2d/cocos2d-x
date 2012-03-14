@@ -73,9 +73,9 @@ bool DirectorTest::init()
             l->setPosition(ccp(s.width/2, s.height-80));
         }
 
-        CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(DirectorTest::backCallback));
-        CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(DirectorTest::restartCallback));
-        CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(DirectorTest::nextCallback));
+        CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(DirectorTest::backCallback));
+        CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(DirectorTest::restartCallback));
+        CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(DirectorTest::nextCallback));
 
         CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
         menu->setPosition(CCPointZero);
@@ -139,7 +139,7 @@ bool Director1::init()
 		setIsTouchEnabled(true);
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        CCMenuItem *item = CCMenuItemFont::itemFromString("Rotate Device", this, menu_selector(Director1::rotateDevice));
+        CCMenuItem *item = CCMenuItemFont::itemWithString("Rotate Device", this, menu_selector(Director1::rotateDevice));
         CCMenu *menu = CCMenu::menuWithItems(item, NULL);
 		menu->setPosition(ccp( s.width/2, s.height/2));
 		addChild(menu);
