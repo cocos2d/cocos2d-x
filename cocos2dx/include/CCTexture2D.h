@@ -77,6 +77,8 @@ typedef enum {
 
 } CCTexture2DPixelFormat;
 
+class CCGLProgram;
+
 /**
 Extension to set the Min / Mag filter
 */
@@ -97,25 +99,6 @@ typedef struct _ccTexParams {
 */
 class CC_DLL CCTexture2D : public CCObject
 {
-	/** pixel format of the texture */
-	CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
-	/** width in pixels */
-	CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
-	/** hight in pixels */
-	CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
-
-	/** texture name */
-	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
-
-	/** content size */
-	CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSizeInPixels)
-	/** texture max S */
-	CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
-	/** texture max T */
-	CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
-	/** whether or not the texture has their Alpha premultiplied */
-	CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
-
 public:
 	CCTexture2D();
 	virtual ~CCTexture2D();
@@ -153,9 +136,6 @@ public:
 	bool initWithString(const char *text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 	/** Initializes a texture from a string with font name and font size */
 	bool initWithString(const char *text, const char *fontName, float fontSize);
-
-	/** returns the content size of the texture in points */
-	CCSize getContentSize(void);
 
 #ifdef CC_SUPPORT_PVRTC	
 	/**
@@ -235,11 +215,48 @@ public:
 	 */
 	static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
+	/** content size */
+	const CCSize& getContentSizeInPixels();
 private:
 	bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
     // By default PVR images are treated as if they don't have the alpha channel premultiplied
     bool m_bPVRHaveAlphaPremultiplied;
+
+	/** pixel format of the texture */
+	CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
+	/** width in pixels */
+	CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
+	/** hight in pixels */
+	CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
+
+	/** texture name */
+	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
+
+	/** texture max S */
+	CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
+	/** texture max T */
+	CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
+	/** content size */
+	CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
+
+	/** whether or not the texture has their Alpha premultiplied */
+	CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
+
+	/** shader program used by drawAtPoint and drawInRect */
+	CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
+
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	/** Returns the resolution type of the texture.
+	 Is it a RetinaDisplay texture, an iPad texture or an standard texture ?
+	 Only valid on iOS. Not valid on OS X.
+
+	 Should be a readonly property. It is readwrite as a hack.
+
+	 @since v1.1
+	 */
+	CC_SYNTHESIZE(ccResolutionType, m_resolutionType, ResolutionType);
+	#endif
 
 };
 }//namespace   cocos2d 

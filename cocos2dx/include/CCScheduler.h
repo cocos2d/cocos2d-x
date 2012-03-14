@@ -49,8 +49,8 @@ public:
     /** Initializes a timer with a target and a selector. */
 	bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
 
-	/** Initializes a timer with a target, a selector and an interval in seconds. */
-    bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+	/** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
+    bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds, unsigned int nRepeat, ccTime fDelay);
 
     /** Initializes a timer with a script callback function and an interval in seconds. */
     bool initWithScriptHandler(int nHandler, ccTime fSeconds);
@@ -75,6 +75,12 @@ public:
 protected:
 	CCObject *m_pTarget;
 	ccTime m_fElapsed;
+	bool m_bRunForever;
+	bool m_bUseDelay;
+	unsigned int m_nTimesExecuted;
+	unsigned int m_nRepeat; //0 = once, 1 is 2 x executed
+	ccTime m_fDelay;
+
     int m_nScriptHandler;
 };
 
@@ -101,6 +107,7 @@ The 'custom selectors' should be avoided when possible. It is faster, and consum
 class CC_DLL CCScheduler : public CCObject
 {
 public:
+	CCScheduler();
     ~CCScheduler(void);
 
 	inline ccTime getTimeScale(void) { return m_fTimeScale; }
@@ -113,18 +120,23 @@ public:
 	*/
 	inline void setTimeScale(ccTime fTimeScale) { m_fTimeScale = fTimeScale; }
 
-	/** 'tick' the scheduler.
+	/** 'update' the scheduler.
 	 You should NEVER call this method, unless you know what you are doing.
 	 */
-	void tick(ccTime dt);
+	void update(ccTime dt);
 
 	/** The scheduled method will be called every 'interval' seconds.
 	 If paused is YES, then it won't be called until it is resumed.
 	 If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
 	 If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
+	 repeat let the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously
+	 delay is the amount of time the action will wait before it'll start
 
-	 @since v0.99.3
+	 @since v0.99.3, repeat and delay added in v1.1
 	 */
+	void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, ccTime fInterval, bool bPaused, unsigned int repeat, ccTime delay);
+
+	/** calls scheduleSelector with kCCRepeatForever and a 0 delay */
 	void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, ccTime fInterval, bool bPaused);
 	/** Schedules the 'update' selector for a given target with a given priority.
 	 The 'update' selector will be called every frame.
@@ -198,7 +210,7 @@ public:
 private:
 	void removeHashElement(struct _hashSelectorEntry *pElement);
 	void removeUpdateFromHash(struct _listEntry *entry);
-	CCScheduler();
+	
 	bool init(void);
 
 	// update specific

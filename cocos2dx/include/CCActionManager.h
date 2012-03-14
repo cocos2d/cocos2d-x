@@ -34,6 +34,8 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
+#define kCCActionManagerPriority 0
+
 struct _hashElement;
 /** 
  @brief CCActionManager is a singleton that manages all the actions.
@@ -97,16 +99,6 @@ public:
     /** Resumes the target. All queued actions will be resumed.
 	*/
 	void resumeTarget(CCObject *pTarget);
-
-	/** purges the shared action manager. It releases the retained instance.
-	 * because it uses this, so it can not be static
-	 @since v0.99.0
-	 */
-	void purgeSharedManager(void);
- 
-public:
-	/** returns a shared instance of the CCActionManager */
-	static CCActionManager* sharedManager(void);
 
 protected:
 	// declared in CCActionManager.m

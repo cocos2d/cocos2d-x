@@ -61,6 +61,12 @@ namespace cocos2d {
 		TMXPropertyTile
 	};
 
+	// Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
+#define kCCFlippedHorizontallyFlag		0x80000000
+#define kCCFlippedVerticallyFlag		0x40000000
+#define kCCFlippedAntiDiagonallyFlag	0x20000000
+#define kCCFlippedMask				~(kCCFlippedHorizontallyFlag|kCCFlippedVerticallyFlag|kCCFlippedAntiDiagonallyFlag)
+
 	/** @brief CCTMXLayerInfo contains the information about the layers like:
 	- Layer name
 	- Layer size
@@ -158,11 +164,19 @@ namespace cocos2d {
 		virtual ~CCTMXMapInfo();
 		/** creates a TMX Format with a tmx file */
 		static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
+		/** creates a TMX Format with an XML string and a TMX resource path */
+		static CCTMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath);
 		/** initializes a TMX format witha  tmx file */
 		bool initWithTMXFile(const char *tmxFile);
+		/** initializes a TMX format with an XML string and a TMX resource path */
+		bool initWithXML(const char* tmxString, const char* resourcePath);
 		/** initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
-		
+		/* initalises parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
+		bool parseXMLString(const char *xmlString);
+		/* handles the work of parsing for parseXMLFile: and parseXMLString: */
+		bool parseXMLData(const char* data);
+
 		CCDictionary<int, CCStringToStringDictionary*> * getTileProperties();
 		void setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties);
 
@@ -175,10 +189,13 @@ namespace cocos2d {
 		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
 		inline const char* getTMXFileName(){ return m_sTMXFileName.c_str(); }
 		inline void setTMXFileName(const char *fileName){ m_sTMXFileName = fileName; }
-
+	private:
+		void internalInit(const char* tmxFileName, const char* resourcePath);
 	protected:
 		//! tmx filename
 		std::string m_sTMXFileName;
+		// tmx resource path
+		std::string m_sResources;
 		//! current string
 		std::string m_sCurrentString;
 		//! tile properties

@@ -32,6 +32,8 @@
 #include "CCAffineTransform.h"
 #include "CCArray.h"
 #include "CCGL.h"
+#include "ccGLState.h"
+#include "kazmath/kazmath.h"
 
 namespace   cocos2d {
 	class CCCamera;
@@ -41,6 +43,9 @@ namespace   cocos2d {
 	class CCAction;
 	class CCRGBAProtocol;
 	class CCLabelProtocol;
+	class CCGLProgram;
+	class CCScheduler;
+	class CCActionManager;
 
 	enum {
 		kCCNodeTagInvalid = -1,
@@ -50,6 +55,24 @@ namespace   cocos2d {
         kCCNodeOnEnter,
         kCCNodeOnExit
     };
+
+#define arrayMakeObjectsPerformSelectorWithType(pArray, func, type) \
+do { \
+	if(pArray && pArray->count() > 0) \
+	{ \
+		CCObject* child; \
+		CCARRAY_FOREACH(pArray, child) \
+		{ \
+			type* pNode = (type*) child; \
+			if(pNode && (0 != func)) \
+			{ \
+				(pNode->*func)(); \
+			} \
+		} \
+	} \
+} \
+while(false)
+
 
 	/** @brief CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
      The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
@@ -142,7 +165,6 @@ namespace   cocos2d {
 
         /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
         CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPosition, Position)
-        CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPositionInPixels, PositionInPixels)
 
         /** get/set Position for Lua (pass number faster than CCPoint object)
 
@@ -163,7 +185,6 @@ namespace   cocos2d {
         void setPositionX(float x);
         void setPositionY(float y);
         void setPosition(float x, float y);
-        void setPositionInPixels(float x, float y);
 
         /** The X skew angle of the node in degrees.
          This angle describes the shear distortion in the X direction.
@@ -206,7 +227,7 @@ namespace   cocos2d {
         /** The anchorPoint in absolute pixels.
          Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
          */
-        CC_PROPERTY_READONLY_PASS_BY_REF(CCPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
+        CC_PROPERTY_READONLY_PASS_BY_REF(CCPoint, m_tAnchorPointInPoints, AnchorPointInPoints)
 
         /** The untransformed size of the node.
          The contentSize remains the same no matter the node is scaled or rotated.
@@ -214,13 +235,6 @@ namespace   cocos2d {
          @since v0.8
          */
         CC_PROPERTY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
-
-        /** The untransformed size of the node in Pixels
-         The contentSize remains the same no matter the node is scaled or rotated.
-         All nodes has a size. Layer and Scene has the same size of the screen.
-         @since v0.8
-         */
-        CC_PROPERTY_PASS_BY_REF(CCSize, m_tContentSizeInPixels, ContentSizeInPixels)
 
         /** whether or not the node is running */
         CC_PROPERTY_READONLY(bool, m_bIsRunning, IsRunning)
@@ -240,6 +254,31 @@ namespace   cocos2d {
         /** A custom user data pointer */
         CC_PROPERTY(void *, m_pUserData, UserData)
 
+		/** Shader Program
+		 @since v2.0
+		 */
+		CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
+
+		/** used internally for zOrder sorting, don't change this manually */
+		CC_SYNTHESIZE(int, m_nOrderOfArrival, OrderOfArrival);
+
+		/** GL server side state
+		 @since v2.0
+		*/
+		CC_SYNTHESIZE(ccGLServerState, m_glServerState, GLServerState);
+
+		/** CCActionManager used by all the actions.
+		 IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
+		 @since v2.0
+		 */
+		CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
+
+		/** CCScheduler used to schedule all "updates" and timers.
+		 IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
+		 @since v2.0
+		 */
+		CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
+
 	protected:
 
 		// transform
@@ -251,11 +290,7 @@ namespace   cocos2d {
 		// To reduce memory, place bools that are not properties here:
 		bool m_bIsTransformDirty;
 		bool m_bIsInverseDirty;
-
-#ifdef	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		bool m_bIsTransformGLDirty;
-#endif
-
+		bool m_bReorderChildDirty;
         int m_nScriptHandler;
 
 	private:
@@ -309,6 +344,11 @@ namespace   cocos2d {
          During onExit you can't access a sibling node.
          */
 		virtual void onExit();
+
+		/** callback that is called every time the CCNode leaves the 'stage'.
+		 If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
+		 */
+		virtual void onExitTransitionDidStart();
 
         /** Register onEnter/onExit handler script function
          
@@ -372,6 +412,10 @@ namespace   cocos2d {
          */
 		virtual void reorderChild(CCNode * child, int zOrder);
 
+		/** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
+		 don't call this manually unless a child added needs to be removed in the same frame */
+		virtual void sortAllChildren();
+
 		/** Stops all running actions and schedulers
          @since v0.8
          */
@@ -413,14 +457,6 @@ namespace   cocos2d {
          @since v0.8.2
          */
 		CCRect boundingBox(void);
-
-		/** returns a "local" axis aligned bounding box of the node in pixels.
-         The returned box is relative only to its parent.
-         The returned box is in Points.
-
-         @since v0.99.5
-         */
-		CCRect boundingBoxInPixels(void);
 
 		// actions
 
@@ -497,6 +533,17 @@ namespace   cocos2d {
          will be updated without scheduling it again.
          */
 		void schedule(SEL_SCHEDULE selector, ccTime interval);
+
+		/**
+		 repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
+		 delay is the amount of time the action will wait before execution
+		 */
+		void schedule(SEL_SCHEDULE selector, ccTime interval, unsigned int repeat, ccTime delay);
+
+		/**
+		 Schedules a selector that runs only once, with a delay of 0 or larger
+		*/
+		void scheduleOnce(SEL_SCHEDULE selector, ccTime delay);
 
 		/** unschedules a custom selector.*/
 		void unschedule(SEL_SCHEDULE selector);

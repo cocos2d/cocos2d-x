@@ -28,12 +28,17 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "platform/platform.h"
 #include "CCImage.h"
+#include "CCGLProgram.h"
+#include "ccGLState.h"
+#include "CCConfiguration.h"
 #include "support/ccUtils.h"
 #include "CCTextureCache.h"
 #include "CCFileUtils.h"
 #include "CCGL.h"
+// extern
+#include "kazmath/GL/matrix.h"
 
-namespace cocos2d { 
+NS_CC_BEGIN
 
 // implementation CCRenderTexture
 CCRenderTexture::CCRenderTexture()
@@ -48,8 +53,8 @@ CCRenderTexture::CCRenderTexture()
 
 CCRenderTexture::~CCRenderTexture()
 {
-    removeAllChildrenWithCleanup(true);
-    ccglDeleteFramebuffers(1, &m_uFBO);
+//TODO: 2.0 remove this line.    removeAllChildrenWithCleanup(true);
+    glDeleteFramebuffers(1, &m_uFBO);
 
 	CC_SAFE_DELETE(m_pUITextureImage);
 }
@@ -91,9 +96,9 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
 
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
 {
-	// If the gles version is lower than GLES_VER_1_0, 
+	// If the gles version is lower than GLES_VER_2_0, 
 	// some extended gles functions can't be implemented, so return false directly.
-	if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+	if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_2_0)
 	{
 		return false;
 	}
@@ -107,8 +112,16 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
         // textures must be power of two squared
-        unsigned int powW = ccNextPOT(w);
-        unsigned int powH = ccNextPOT(h);
+        unsigned int powW = 0;
+        unsigned int powH = 0;
+
+		if( CCConfiguration::sharedConfiguration()->isSupportsNPOT() ) {
+			powW = w;
+			powH = h;
+		} else {
+			powW = ccNextPOT(w);
+			powH = ccNextPOT(h);
+		}
 
         void *data = malloc((int)(powW * powH * 4));
         CC_BREAK_IF(! data);
@@ -123,14 +136,14 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         free( data );
 
         // generate FBO
-        ccglGenFramebuffers(1, &m_uFBO);
-        ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);
+        glGenFramebuffers(1, &m_uFBO);
+        glBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);
 
         // associate texture with FBO
-        ccglFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
+        glFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
 
         // check if it worked (probably worth doing :) )
-        GLuint status = ccglCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
+        GLuint status = glCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
         if (status != CC_GL_FRAMEBUFFER_COMPLETE)
         {
             CCAssert(0, "Render Texture : Could not attach texture to framebuffer");
@@ -149,7 +162,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
         m_pSprite->setBlendFunc(tBlendFunc);
 
-        ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
+        glBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
         bRet = true;
     } while (0);
     return bRet;
@@ -159,34 +172,30 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 void CCRenderTexture::begin()
 {
 	// Save the current matrix
-	glPushMatrix();
+	kmGLPushMatrix();
 
 	const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+	CCDirector *director = CCDirector::sharedDirector();
+	CCSize size = director->getWinSizeInPixels();
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 
-	// Adjust the orthographic propjection and viewport
-	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
-    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
-//     CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, texSize.width, texSize.height);
+	// Adjust the orthographic projection and viewport
+	glViewport(0, 0, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
+
+	// special viewport for 3d projection + retina display
+	if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
+		glViewport(-texSize.width/2, -texSize.height/2, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
+
+	kmMat4 orthoMatrix;
+	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+		(float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+	kmGLMultMatrix(&orthoMatrix);
 
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);//Will direct drawing to the frame buffer created above
-
-	// Issue #1145
-	// There is no need to enable the default GL states here
-	// but since CCRenderTexture is mostly used outside the "render" loop
-	// these states needs to be enabled.
-	// Since this bug was discovered in API-freeze (very close of 1.0 release)
-	// This bug won't be fixed to prevent incompatibilities with code.
-	// 
-	// If you understand the above mentioned message, then you can comment the following line
-	// and enable the gl states manually, in case you need them.
-
-	CC_ENABLE_DEFAULT_GL_STATES();	
+	glBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);
 }
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
@@ -206,12 +215,21 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 
 void CCRenderTexture::end(bool bIsTOCacheTexture)
 {
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
-	// Restore the original matrix and viewport
-	glPopMatrix();
-	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
-	//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
-	CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+	glBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
+	kmGLPopMatrix();
+
+	CCDirector *director = CCDirector::sharedDirector();
+
+	CCSize size = director->getWinSizeInPixels();
+
+	// restore viewport
+	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+
+	// special viewport for 3d projection + retina display
+	if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
+		glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+
+//TODO: Does this line take effect?	director->setProjection(director->getProjection());
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
 	if (bIsTOCacheTexture)
@@ -450,4 +468,4 @@ CCData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 	return pData;
 }
 
-} // namespace cocos2d
+NS_CC_END

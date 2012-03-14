@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "CCSprite.h"
 #include "CCTextureCache.h"
+#include "CCShaderCache.h"
+#include "CCGLProgram.h"
 #include "CCPointExtension.h"
 #include "support/data_support/ccCArray.h"
 #include "CCDirector.h"
@@ -63,7 +65,7 @@ namespace cocos2d {
 		{
 			// layerInfo
 			m_sLayerName = layerInfo->m_sName;
-			m_tLayerSize = layerInfo->m_tLayerSize;
+			m_tLayerSize = size;
 			m_pTiles = layerInfo->m_pTiles;
 			m_uMinGID = layerInfo->m_uMinGID;
 			m_uMaxGID = layerInfo->m_uMaxGID;
@@ -81,17 +83,16 @@ namespace cocos2d {
 
 			// offset (after layer orientation is set);
 			CCPoint offset = this->calculateLayerOffset(layerInfo->m_tOffset);
-			this->setPosition(offset);
+			this->setPosition(CC_POINT_PIXELS_TO_POINTS(offset));
 
 			m_pAtlasIndexArray = ccCArrayNew((unsigned int)totalNumberOfTiles);
 
-			this->setContentSizeInPixels(CCSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height));
+			this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(CCSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height)));
                         m_tMapTileSize.width /= m_fContentScaleFactor;
                         m_tMapTileSize.height /= m_fContentScaleFactor;
 
 			m_bUseAutomaticVertexZ = false;
 			m_nVertexZvalue = 0;
-			m_fAlphaFuncValue = 0;
 			return true;
 		}
 		return false;
@@ -204,20 +205,24 @@ namespace cocos2d {
 		CCString *vertexz = propertyNamed("cc_vertexz");
 		if( vertexz ) 
 		{
+			// If "automatic" is on, then parse the "cc_alpha_func" too
 			if( vertexz->m_sString == "automatic" )
 			{
 				m_bUseAutomaticVertexZ = true;
+				CCString *alphaFuncVal = propertyNamed("cc_alpha_func");
+				float alphaFuncValue = alphaFuncVal->toFloat();
+
+				setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest));
+
+				GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->program_, kCCUniformAlphaTestValue);
+
+				// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+				glUniform1f(alphaValueLocation, alphaFuncValue);
 			}
 			else
 			{
 				m_nVertexZvalue = vertexz->toInt();
 			}
-		}
-
-		CCString *alphaFuncVal = propertyNamed("cc_alpha_func");
-		if (alphaFuncVal)
-		{
-			m_fAlphaFuncValue = alphaFuncVal->toFloat();
 		}
 	}
 
@@ -240,7 +245,7 @@ namespace cocos2d {
 			if( ! tile ) 
 			{
 				CCRect rect = m_pTileSet->rectForGID(gid);
-                                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
 				tile = new CCSprite();
 				tile->initWithBatchNode(this, rect);
@@ -262,14 +267,30 @@ namespace cocos2d {
 		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
 
 		int idx = (int)(pos.x + pos.y * m_tLayerSize.width);
-		return m_pTiles[ idx ];
+		// Bits on the far end of the 32-bit global tile ID are used for tile flags
+		return (m_pTiles[ idx ] & kCCFlippedMask);
+	}
+
+	void CCTMXLayer::setupReusedTile(CCPoint pos, unsigned int gid)
+	{
+		m_pReusedTile->setPosition(positionAt(pos));
+		m_pReusedTile->setVertexZ(vertexZForPos(pos));
+		m_pReusedTile->setAnchorPoint(CCPointZero);
+		m_pReusedTile->setOpacity(m_cOpacity);
+
+		if (gid & kCCFlippedHorizontallyFlag)
+			m_pReusedTile->setFlipX(true);
+		if (gid & kCCFlippedVerticallyFlag)
+			m_pReusedTile->setFlipY(true);
+		if( gid & kCCFlippedAntiDiagonallyFlag )
+			CCAssert(false, "Tiled Anti-Diagonally Flip not supported yet");
 	}
 
 	// CCTMXLayer - adding helper methods
 	CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
 	{
 		CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+        rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
 		int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
@@ -282,10 +303,7 @@ namespace cocos2d {
 		{
 			m_pReusedTile->initWithBatchNode(this, rect);
 		}
-		m_pReusedTile->setPositionInPixels(positionAt(pos));
-		m_pReusedTile->setVertexZ((float)vertexZForPos(pos));
-		m_pReusedTile->setAnchorPoint(CCPointZero);
-		m_pReusedTile->setOpacity(m_cOpacity);
+		setupReusedTile(pos, gid);
 
 		// get atlas index
 		unsigned int indexForZ = atlasIndexForNewZ(z);
@@ -332,10 +350,7 @@ namespace cocos2d {
 			m_pReusedTile->initWithBatchNode(this, rect);
 		}
 		
-		m_pReusedTile->setPositionInPixels(positionAt(pos));
-		m_pReusedTile->setVertexZ((float)vertexZForPos(pos));
-		m_pReusedTile->setAnchorPoint(CCPointZero);
-		m_pReusedTile->setOpacity(m_cOpacity);
+		setupReusedTile(pos, gid);
 
 		// get atlas index
 		unsigned int indexForZ = atlasIndexForExistantZ(z);
@@ -352,7 +367,7 @@ namespace cocos2d {
 	CCSprite * CCTMXLayer::appendTileForGID(unsigned int gid, const CCPoint& pos)
 	{
 		CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+        rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
 		int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
@@ -366,10 +381,7 @@ namespace cocos2d {
 			m_pReusedTile->initWithBatchNode(this, rect);
 		}
 		
-		m_pReusedTile->setPosition(positionAt(pos));
-		m_pReusedTile->setVertexZ((float)vertexZForPos(pos));
-		m_pReusedTile->setAnchorPoint(CCPointZero);
-		m_pReusedTile->setOpacity(m_cOpacity);
+		setupReusedTile(pos, gid);
 
 		// optimization:
 		// The difference between appendTileForGID and insertTileforGID is that append is faster, since
@@ -444,9 +456,9 @@ namespace cocos2d {
 				if( sprite )
 				{
 					CCRect rect = m_pTileSet->rectForGID(gid);
-                                        rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                    rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
-					sprite->setTextureRectInPixels(rect, false, rect.size);
+					sprite->setTextureRect(rect, false, rect.size);
 					m_pTiles[z] = gid;
 				} 
 				else 
@@ -561,6 +573,7 @@ namespace cocos2d {
 			ret = positionForHexAt(pos);
 			break;
 		}
+		ret = CC_POINT_PIXELS_TO_POINTS( ret );
 		return ret;
 	}
 	CCPoint CCTMXLayer::positionForOrthoAt(const CCPoint& pos)
@@ -615,23 +628,6 @@ namespace cocos2d {
 			ret = m_nVertexZvalue;
 		}
 		return ret;
-	}
-
-	// CCTMXLayer - draw
-	void CCTMXLayer::draw()
-	{
-		if( m_bUseAutomaticVertexZ )
-		{
-			glEnable(GL_ALPHA_TEST);
-			glAlphaFunc(GL_GREATER, m_fAlphaFuncValue);
-		}
-
-		CCSpriteBatchNode::draw();
-
-		if( m_bUseAutomaticVertexZ )
-		{
-			glDisable(GL_ALPHA_TEST);
-		}
 	}
 
 	CCStringToStringDictionary * CCTMXLayer::getProperties()

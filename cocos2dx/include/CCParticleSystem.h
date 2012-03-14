@@ -33,9 +33,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-#if CC_ENABLE_PROFILERS
-	class CCProfilingTimer;
-#endif
+class CCParticleBatchNode;
 
 //* @enum
 enum {
@@ -102,6 +100,8 @@ typedef struct sCCParticle {
 	float		deltaRotation;
 
 	ccTime		timeToLive;
+
+	unsigned int	atlasIndex;
 
 	//! Mode A: gravity, direction, radial accel, tangential accel
 	struct {
@@ -225,10 +225,14 @@ protected:
 	//CC_UPDATE_PARTICLE_IMP	updateParticleImp;
 	//SEL						updateParticleSel;
 
-	// profiling
-#if CC_ENABLE_PROFILERS
-	CCProfilingTimer* m_pProfilingTimer;
-#endif
+	/** weak reference to the CCSpriteBatchNode that renders the CCSprite */
+	CC_PROPERTY(CCParticleBatchNode*, m_pBatchNode, BatchNode);
+
+	// index of system in batch node array
+	CC_SYNTHESIZE(unsigned int, m_uAtlasIndex, AtlasIndex);
+
+	//true if scaled or rotated
+	bool m_bTransformSystemDirty;
 
 	/** Is the emitter active */
 	CC_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
@@ -279,6 +283,12 @@ public:
 	virtual void setRotatePerSecond(float degrees);
 	virtual float getRotatePerSecondVar();
 	virtual void setRotatePerSecondVar(float degrees);
+
+	void setZOrder(int z);
+	virtual void setScale(float s);
+	virtual void setRotation(float newRotation);
+	virtual void setScaleX(float newScaleX);
+	virtual void setScaleY(float newScaleY);
 //////////////////////////////////////////////////////////////////////////
 	
 	/** start size in pixels of each particle */
@@ -377,6 +387,7 @@ public:
 	virtual void postStep();
 
 	virtual void update(ccTime dt);
+	virtual void updateWithNoTime(void);
 private:
 	/** Private method, return the string found by key in dict.
 	@return "" if not found; return the string if found.

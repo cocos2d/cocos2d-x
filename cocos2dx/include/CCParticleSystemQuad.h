@@ -50,16 +50,14 @@ Special features and Limitations:
 class CC_DLL CCParticleSystemQuad : public CCParticleSystem
 {
 protected:
-	ccV2F_C4B_T2F_Quad	*m_pQuads;		// quads to be rendered
+	ccV3F_C4B_T2F_Quad	*m_pQuads;		// quads to be rendered
 	GLushort			*m_pIndices;	// indices
-#if CC_USES_VBO
-	GLuint				m_uQuadsID;	// VBO id
-#endif
+
+	GLuint				m_uVAOname;
+	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
+
 public:
-	CCParticleSystemQuad()
-		:m_pQuads(NULL)
-		,m_pIndices(NULL)
-	{}
+	CCParticleSystemQuad();
 	virtual ~CCParticleSystemQuad();
 
     /** creates an initializes a CCParticleSystemQuad from a plist file.
@@ -89,6 +87,11 @@ public:
 	virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
 	virtual void postStep();
 	virtual void draw();
+	virtual void setBatchNode(CCParticleBatchNode* batchNode);
+
+private:
+	void initVAO();
+	bool allocMemory();
 };
 
 }// namespace cocos2d
