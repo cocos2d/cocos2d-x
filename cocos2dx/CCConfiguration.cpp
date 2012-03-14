@@ -33,7 +33,7 @@ namespace   cocos2d {
 
 CCConfiguration::CCConfiguration(void)
 :m_nMaxTextureSize(0) 
-, m_nMaxModelviewStackDepth(0)
+, m_nMaxTextureUnits(0)
 , m_bSupportsPVRTC(false)
 , m_bSupportsNPOT(false)
 , m_bSupportsBGRA8888(false)
@@ -54,7 +54,7 @@ bool CCConfiguration::init(void)
 	m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
 
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
-	glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &m_nMaxModelviewStackDepth);
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &m_nMaxTextureUnits);
 
 	m_bSupportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
 	m_bSupportsNPOT = checkForGLExtension("GL_APPLE_texture_2D_limited_npot");
@@ -62,7 +62,7 @@ bool CCConfiguration::init(void)
 	m_bSupportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
 
 	CCLOG("cocos2d: GL_MAX_TEXTURE_SIZE: %d", m_nMaxTextureSize);
-	CCLOG("cocos2d: GL_MAX_MODELVIEW_STACK_DEPTH: %d",m_nMaxModelviewStackDepth);
+	CCLOG("cocos2d: GL_MAX_TEXTURE_UNITS: %d",m_nMaxTextureUnits);
 	CCLOG("cocos2d: GL supports PVRTC: %s", (m_bSupportsPVRTC ? "YES" : "NO"));
 	CCLOG("cocos2d: GL supports BGRA8888 textures: %s", (m_bSupportsBGRA8888 ? "YES" : "NO"));
 	CCLOG("cocos2d: GL supports NPOT textures: %s", (m_bSupportsNPOT ? "YES" : "NO"));

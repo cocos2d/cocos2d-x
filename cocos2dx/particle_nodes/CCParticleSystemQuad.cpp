@@ -31,6 +31,17 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCDirector.h"
 
+#include "CCParticleBatchNode.h"
+#include "CCTextureAtlas.h"
+#include "CCDirector.h"
+#include "CCShaderCache.h"
+#include "ccGLState.h"
+#include "CCGLProgram.h"
+#include "support/TransformUtils.h"
+
+// extern
+#include "kazmath/GL/matrix.h"
+
 namespace cocos2d {
 
 //implementation CCParticleSystemQuad
@@ -41,54 +52,34 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
 	if( CCParticleSystem::initWithTotalParticles(numberOfParticles) ) 
 	{
 		// allocating data space
-		m_pQuads = new ccV2F_C4B_T2F_Quad[m_uTotalParticles];
-		m_pIndices = new GLushort[m_uTotalParticles * 6];
-
-		if( !m_pQuads || !m_pIndices) 
-		{
-			CCLOG("cocos2d: Particle system: not enough memory");
-			if( m_pQuads )
-				delete [] m_pQuads;
-			if(m_pIndices)
-				delete [] m_pIndices;
+		if( ! this->allocMemory() ) {
 			this->release();
-			return NULL;
+			return false;
 		}
 
-		// initialize only once the texCoords and the indices
-        if (m_pTexture)
-        {
-            this->initTexCoordsWithRect(CCRectMake((float)0, (float)0, (float)m_pTexture->getPixelsWide(), (float)m_pTexture->getPixelsHigh()));
-        }
-        else
-        {
-            this->initTexCoordsWithRect(CCRectMake((float)0, (float)0, (float)1, (float)1));
-        }
+		initIndices();
+		initVAO();
 
-		this->initIndices();
-
-#if CC_USES_VBO
-		glEnable(GL_VERTEX_ARRAY);
-
-		// create the VBO buffer
-		glGenBuffers(1, &m_uQuadsID);
-
-		// initial binding
-		glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-#endif
+		setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 		return true;
 	}
 	return false;
 }
+
+CCParticleSystemQuad::CCParticleSystemQuad()
+:m_pQuads(NULL)
+,m_pIndices(NULL)
+,m_uVAOname(0)
+{
+	memset(m_pBuffersVBO, 0, sizeof(m_pBuffersVBO));
+}
+
 CCParticleSystemQuad::~CCParticleSystemQuad()
 {
 	CC_SAFE_DELETE_ARRAY(m_pQuads);
 	CC_SAFE_DELETE_ARRAY(m_pIndices);
-#if CC_USES_VBO
-    glDeleteBuffers(1, &m_uQuadsID);
-#endif
+	glDeleteBuffers(2, &m_pBuffersVBO[0]);
+	glDeleteVertexArrays(1, &m_uVAOname);
 }
 
 // implementation CCParticleSystemQuad
@@ -107,7 +98,7 @@ CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistF
 // pointRect should be in Texture coordinates, not pixel coordinates
 void CCParticleSystemQuad::initTexCoordsWithRect(const CCRect& pointRect)
 {
-    // convert to pixels coords
+    // convert to Tex coords
 
     CCRect rect = CCRectMake(
         pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
@@ -139,7 +130,22 @@ void CCParticleSystemQuad::initTexCoordsWithRect(const CCRect& pointRect)
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
 	CC_SWAP( top, bottom, float);
 
-	for(unsigned int i=0; i<m_uTotalParticles; i++) 
+	ccV3F_C4B_T2F_Quad *quads = NULL;
+	unsigned int start = 0, end = 0;
+	if (m_pBatchNode)
+	{
+		quads = m_pBatchNode->getTextureAtlas()->getQuads();
+		start = m_uAtlasIndex;
+		end = m_uAtlasIndex + m_uTotalParticles;
+	}
+	else
+	{
+		quads = m_pQuads;
+		start = 0;
+		end = m_uTotalParticles;
+	}
+
+	for(unsigned int i=start; i<end; i++) 
 	{
 		// bottom-left vertex:
 		m_pQuads[i].bl.texCoords.u = left;
@@ -197,9 +203,17 @@ void CCParticleSystemQuad::initIndices()
 }
 void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition)
 {
-	// colors
-    ccV2F_C4B_T2F_Quad *quad = &(m_pQuads[m_uParticleIdx]);
+	ccV3F_C4B_T2F_Quad *quad;
 
+	if (m_pBatchNode)
+	{
+		ccV3F_C4B_T2F_Quad *batchQuads = m_pBatchNode->getTextureAtlas()->getQuads();
+		quad = &(batchQuads[m_uAtlasIndex+particle->atlasIndex]);
+	}
+	else
+	{
+		quad = &(m_pQuads[m_uParticleIdx]);
+	}
 	ccColor4B color = {(GLubyte)(particle->color.r * 255), (GLubyte)(particle->color.g * 255), (GLubyte)(particle->color.b * 255), 
 		(GLubyte)(particle->color.a * 255)};
 	quad->bl.colors = color;
@@ -266,74 +280,120 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const C
 }
 void CCParticleSystemQuad::postStep()
 {
-#if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0] );
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0])*m_uParticleCount, m_pQuads);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-#endif
+
+	// TODO: CHECK_GL_ERROR_DEBUG();
 }
 
 // overriding draw method
 void CCParticleSystemQuad::draw()
-{	CCParticleSystem::draw();
+{	
+	CCAssert(!m_pBatchNode,"draw should not be called when added to a particleBatchNode");
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: -
-	glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
+	CC_NODE_DRAW_SETUP();
+
+	ccGLBindTexture2D( m_pTexture->getName() );
+	ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
+
+	CCAssert( m_uParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
+
+	glBindVertexArray( m_uVAOname );
+
+	glDrawElements(GL_TRIANGLES, (GLsizei) m_uParticleIdx*6, GL_UNSIGNED_SHORT, 0);
+
+	glBindVertexArray( 0 );
+
+	// TODO: CHECK_GL_ERROR_DEBUG();
+}
+
+void CCParticleSystemQuad::initVAO()
+{
+	glGenVertexArrays(1, &m_uVAOname);
+	glBindVertexArray(m_uVAOname);
 
 #define kQuadSize sizeof(m_pQuads[0].bl)
 
-#if CC_USES_VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
+	glGenBuffers(2, &m_pBuffersVBO[0]);
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
-    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
-#endif
+	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);
 
-	glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
+	// vertices
+	glEnableVertexAttribArray(kCCVertexAttrib_Position);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
 
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,colors) );
+	// colors
+	glEnableVertexAttribArray(kCCVertexAttrib_Color);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
 
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,texCoords) );
-#else   // vertex array list
+	// tex coords
+	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
-    int offset = (int) m_pQuads;
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uTotalParticles * 6, m_pIndices, GL_STATIC_DRAW);
 
-    // vertex
-    int diff = offsetof( ccV2F_C4B_T2F, vertices);
-    glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
-
-    // color
-    diff = offsetof( ccV2F_C4B_T2F, colors);
-    glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
-
-    // tex coords
-    diff = offsetof( ccV2F_C4B_T2F, texCoords);
-    glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
-
-#endif // ! CC_USES_VBO
-
-    bool newBlend = (m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST) ? true : false;
-	if( newBlend ) 
-	{
-		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
-	}
-
-    CCAssert( m_uParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
-
-	glDrawElements(GL_TRIANGLES, (GLsizei)(m_uParticleIdx*6), GL_UNSIGNED_SHORT, m_pIndices);	
-
-	// restore blend state
-	if( newBlend )
-		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
-
-#if CC_USES_VBO
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-#endif
 
-	// restore GL default state
-	// -
+	//TODO:CHECK_GL_ERROR_DEBUG();
+}
+
+bool CCParticleSystemQuad::allocMemory()
+{
+	CCAssert( ( !m_pQuads && !m_pIndices), "Memory already alloced");
+	CCAssert( !m_pBatchNode, "Memory should not be alloced when not using batchNode");
+
+	m_pQuads = new ccV3F_C4B_T2F_Quad[m_uTotalParticles];
+	m_pIndices = new GLushort[m_uTotalParticles * 6];
+
+	if( !m_pQuads || !m_pIndices) 
+	{
+		CCLOG("cocos2d: Particle system: not enough memory");
+		if( m_pQuads )
+			delete [] m_pQuads;
+		if(m_pIndices)
+			delete [] m_pIndices;
+		
+		return false;
+	}
+	return true;
+}
+
+void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
+{
+	if( m_pBatchNode != batchNode ) {
+
+		CCParticleBatchNode *oldBatch = m_pBatchNode;
+
+		CCParticleSystem::setBatchNode(batchNode);
+
+		// NEW: is self render ?
+		if( ! batchNode ) {
+			allocMemory();
+			initIndices();
+			setTexture(oldBatch->getTexture());
+			initVAO();
+		}
+
+		// OLD: was it self render ? cleanup
+		else if( ! oldBatch )
+		{
+			// copy current state to batch
+			ccV3F_C4B_T2F_Quad *batchQuads = m_pBatchNode->getTextureAtlas()->getQuads();
+			ccV3F_C4B_T2F_Quad *quad = &(batchQuads[m_uAtlasIndex] );
+			memcpy( quad, m_pQuads, m_uTotalParticles * sizeof(m_pQuads[0]) );
+
+			CC_SAFE_DELETE_ARRAY(m_pQuads);
+			CC_SAFE_DELETE_ARRAY(m_pIndices);
+
+			glDeleteBuffers(2, &m_pBuffersVBO[0]);
+			glDeleteVertexArrays(1, &m_uVAOname);
+		}
+	}
 }
 
 }// namespace cocos2d

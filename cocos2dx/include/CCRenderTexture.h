@@ -28,8 +28,9 @@ THE SOFTWARE.
 #include "CCData.h"
 #include "CCNode.h"
 #include "CCSprite.h"
+#include "kazmath/mat4.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 typedef enum eImageFormat
 {
@@ -119,6 +120,6 @@ protected:
     GLenum				m_ePixelFormat;
 };
 
-} // namespace cocos2d
+NS_CC_END
 
 #endif //__CCRENDER_TEXTURE_H__

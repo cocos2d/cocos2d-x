@@ -30,11 +30,14 @@ THE SOFTWARE.
 #include "CCCamera.h"
 #include "ccTypes.h"
 #include "CCTexture2D.h"
+#include "CCDirector.h"
+#include "kazmath/mat4.h"
 
 namespace cocos2d
 {
 	class CCTexture2D;
 	class CCGrabber;
+	class CCGLProgram;
 
 	/** Base class for other
 	*/
@@ -76,11 +79,7 @@ namespace cocos2d
 		static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
 		static CCGridBase* gridWithSize(const ccGridSize& gridSize);
 		void set2DProjection(void);
-		void set3DProjection(void);
 
-	protected:
-		void applyLandscape(void);
-		
 	protected:
 		bool m_bActive;
 		int  m_nReuseGrid;
@@ -89,6 +88,8 @@ namespace cocos2d
 		CCPoint m_obStep;
 		CCGrabber *m_pGrabber;
 		bool m_bIsTextureFlipped;
+		CCGLProgram* m_pShaderProgram;
+		ccDirectorProjection m_directorProjection;
 	};
 
 	/**

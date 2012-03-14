@@ -30,11 +30,10 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "CCObject.h"
+#include "CCGeometry.h"
 
 namespace   cocos2d {
-class CCRect;
-class CCPoint;
-class CCSize;
+
 class CCTexture2D;
 class CCZone;
 
@@ -65,24 +64,27 @@ public:
 	void setRect(const CCRect& rect);
 
 	/** get offset of the frame */
-	inline const CCPoint& getOffsetInPixels(void) { return m_obOffsetInPixels; }
+	const CCPoint& getOffsetInPixels(void);
 	/** set offset of the frame */
-	inline void setOffsetInPixels(const CCPoint& offsetInPixels) { m_obOffsetInPixels = offsetInPixels; }
+	void setOffsetInPixels(const CCPoint& offsetInPixels);
 
 	/** get original size of the trimmed image */
 	inline const CCSize& getOriginalSizeInPixels(void) { return m_obOriginalSizeInPixels; }
 	/** set original size of the trimmed image */
 	inline void setOriginalSizeInPixels(const CCSize& sizeInPixels) { m_obOriginalSizeInPixels = sizeInPixels; }
 
+	/** get original size of the trimmed image */
+	inline const CCSize& getOriginalSize(void) { return m_obOriginalSize; }
+	/** set original size of the trimmed image */
+	inline void setOriginalSize(const CCSize& sizeInPixels) { m_obOriginalSize = sizeInPixels; }
+
 	/** get texture of the frame */
-	inline CCTexture2D* getTexture(void) { return m_pobTexture; }
+	CCTexture2D* getTexture(void);
 	/** set texture of the frame, the texture is retained */
-	inline void setTexture(CCTexture2D* pobTexture)
-	{
-		CC_SAFE_RETAIN(pobTexture);
-		CC_SAFE_RELEASE(m_pobTexture);
-		m_pobTexture = pobTexture;
-	}
+	void setTexture(CCTexture2D* pobTexture);
+
+	const CCPoint& getOffset(void);
+	void setOffset(const CCPoint& offsets);
 
 public:
 	~CCSpriteFrame(void);
@@ -93,28 +95,54 @@ public:
 	 */
 	static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
 
+	/** Create a CCSpriteFrame with a texture filename, rect in points.
+	 It is assumed that the frame was not trimmed.
+	 */
+	static CCSpriteFrame* frameWithTextureFilename(const char* filename, const CCRect& rect);
+
 	/** Create a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
 	 The originalSize is the size in points of the frame before being trimmed.
 	 */
     static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
 
+	/** Create a CCSpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
+	 The originalSize is the size in pixels of the frame before being trimmed.
+	 */
+	static CCSpriteFrame* frameWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
 public:
 	/** Initializes a CCSpriteFrame with a texture, rect in points.
 	 It is assumed that the frame was not trimmed.
 	 */
 	bool initWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
 
+	/** Initializes a CCSpriteFrame with a texture filename, rect in points;
+	 It is assumed that the frame was not trimmed.
+	 */
+	bool initWithTextureFilename(const char* filename, const CCRect& rect);
+
 	/** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
 	The originalSize is the size in points of the frame before being trimmed.
 	*/
 	bool initWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+
+	/** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+	 The originalSize is the size in pixels of the frame before being trimmed.
+
+	 @since v1.1
+	 */
+	bool initWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+
+
 protected:
+	CCPoint m_obOffset;
+	CCSize m_obOriginalSize;
 	CCRect m_obRectInPixels;
 	bool   m_bRotated;
 	CCRect m_obRect;
 	CCPoint m_obOffsetInPixels;
 	CCSize m_obOriginalSizeInPixels;
 	CCTexture2D *m_pobTexture;
+	std::string  m_strTextureFilename;
 };
 
 }//namespace   cocos2d 
