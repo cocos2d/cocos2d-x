@@ -98,6 +98,7 @@ namespace cocos2d
 	class CCGrid3D : public CCGridBase
 	{
 	public:
+		CCGrid3D();
         ~CCGrid3D(void);
 
 		/** returns the vertex at a given position */
@@ -129,6 +130,7 @@ namespace cocos2d
 	class CCTiledGrid3D : public CCGridBase
 	{
 	public:
+		CCTiledGrid3D();
 		~CCTiledGrid3D(void);
 
 		/** returns the tile at the given position */

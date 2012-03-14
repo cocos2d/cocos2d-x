@@ -35,8 +35,6 @@ namespace cocos2d {
 //
 // singleton stuff
 //
-static CCActionManager *gSharedManager = NULL;
-
 typedef struct _hashElement
 {
 	struct _ccArray             *actions;
@@ -53,7 +51,7 @@ CCActionManager::CCActionManager(void)
   m_pCurrentTarget(NULL),
   m_bCurrentTargetSalvaged(false)
 {
-	CCAssert(gSharedManager == NULL, "");
+
 }
 
 CCActionManager::~CCActionManager(void)
@@ -61,16 +59,6 @@ CCActionManager::~CCActionManager(void)
 	CCLOGINFO("cocos2d: deallocing %p", this);
 
 	removeAllActions();
-
-	// ?? do not delete , is it because purgeSharedManager() delete it? 
-	gSharedManager = NULL;
-}
-
-bool CCActionManager::init(void)
-{
-	m_pTargets = NULL;
-
-	return true;
 }
 
 // private

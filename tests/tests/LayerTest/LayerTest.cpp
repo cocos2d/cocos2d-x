@@ -101,9 +101,9 @@ void LayerTest::onEnter()
 		l->setPosition(ccp(s.width / 2, s.height - 80));
 	}
 
-	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(LayerTest::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(LayerTest::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(LayerTest::nextCallback) );
+	CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(LayerTest::backCallback) );
+	CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(LayerTest::restartCallback) );
+	CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(LayerTest::nextCallback) );
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
@@ -152,7 +152,7 @@ void LayerTest1::onEnter()
 	setIsTouchEnabled(true);
 	
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLayerColor* layer = CCLayerColor::layerWithColorWidthHeight( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
+	CCLayerColor* layer = CCLayerColor::layerWithColor( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
 	
 	layer->setIsRelativeAnchorPoint(true);
 	layer->setPosition( CCPointMake(s.width/2, s.height/2) );
@@ -210,12 +210,12 @@ void LayerTest2::onEnter()
 	LayerTest::onEnter();
 
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLayerColor* layer1 = CCLayerColor::layerWithColorWidthHeight( ccc4(255, 255, 0, 80), 100, 300);
+	CCLayerColor* layer1 = CCLayerColor::layerWithColor( ccc4(255, 255, 0, 80), 100, 300);
 	layer1->setPosition(CCPointMake(s.width/3, s.height/2));
 	layer1->setIsRelativeAnchorPoint(true);
 	addChild(layer1, 1);
 	
-	CCLayerColor* layer2 = CCLayerColor::layerWithColorWidthHeight( ccc4(0, 0, 255, 255), 100, 300);
+	CCLayerColor* layer2 = CCLayerColor::layerWithColor( ccc4(0, 0, 255, 255), 100, 300);
 	layer2->setPosition(CCPointMake((s.width/3)*2, s.height/2));
 	layer2->setIsRelativeAnchorPoint(true);
 	addChild(layer2, 1);

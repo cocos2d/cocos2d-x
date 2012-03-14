@@ -27,7 +27,7 @@ bool Bug1159Layer::init()
         CCLayerColor *background = CCLayerColor::layerWithColor(ccc4(255, 0, 255, 255));
 		addChild(background);
 
-        CCLayerColor *sprite_a = CCLayerColor::layerWithColorWidthHeight(ccc4(255, 0, 0, 255), 700, 700);
+        CCLayerColor *sprite_a = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 700, 700);
 		sprite_a->setAnchorPoint(ccp(0.5f, 0.5f));
 		sprite_a->setIsRelativeAnchorPoint(true);
 		sprite_a->setPosition(ccp(0.0f, s.height/2));
@@ -38,7 +38,7 @@ bool Bug1159Layer::init()
                                                                CCMoveTo::actionWithDuration(1.0f, ccp(0.0f, 384.0f)),
 															   NULL)));
 
-        CCLayerColor *sprite_b = CCLayerColor::layerWithColorWidthHeight(ccc4(0, 0, 255, 255), 400, 400);
+        CCLayerColor *sprite_b = CCLayerColor::layerWithColor(ccc4(0, 0, 255, 255), 400, 400);
 		sprite_b->setAnchorPoint(ccp(0.5f, 0.5f));
 		sprite_b->setIsRelativeAnchorPoint(true);
 		sprite_b->setPosition(ccp(s.width/2, s.height/2));

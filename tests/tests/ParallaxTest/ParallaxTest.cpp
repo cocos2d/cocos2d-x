@@ -247,9 +247,9 @@ void ParallaxDemo::onEnter()
 	addChild(label, 1);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 
-	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ParallaxDemo::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ParallaxDemo::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ParallaxDemo::nextCallback) );
+	CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ParallaxDemo::backCallback) );
+	CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ParallaxDemo::restartCallback) );
+	CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ParallaxDemo::nextCallback) );
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 

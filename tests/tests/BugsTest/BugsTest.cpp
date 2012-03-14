@@ -56,7 +56,7 @@ void BugsTestMainLayer::onEnter()
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < MAX_COUNT; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::itemFromString(testsName[i].c_str(), this,
+        CCMenuItemFont* pItem = CCMenuItemFont::itemWithString(testsName[i].c_str(), this,
                                                     menu_selector(BugsTestMainLayer::menuCallback));
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         m_pItmeMenu->addChild(pItem, kItemTagBasic + i);
@@ -157,7 +157,7 @@ void BugsTestBaseLayer::onEnter()
 
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    CCMenuItemFont* pMainItem = CCMenuItemFont::itemFromString("Back", this,
+    CCMenuItemFont* pMainItem = CCMenuItemFont::itemWithString("Back", this,
         menu_selector(BugsTestBaseLayer::backCallback));
     pMainItem->setPosition(ccp(s.width - 50, 25));
     CCMenu* pMenu = CCMenu::menuWithItems(pMainItem, NULL);

@@ -198,20 +198,9 @@ public:
     */
     bool isTargetPaused(CCObject *pTarget);
 
-public:
-    /** returns a shared instance of the Scheduler */
-	static CCScheduler* sharedScheduler(void);
-
-	/** purges the shared scheduler. It releases the retained instance.
-	 @since v0.99.0
-	 */
-	static void purgeSharedScheduler(void);
-
 private:
 	void removeHashElement(struct _hashSelectorEntry *pElement);
 	void removeUpdateFromHash(struct _listEntry *entry);
-	
-	bool init(void);
 
 	// update specific
 

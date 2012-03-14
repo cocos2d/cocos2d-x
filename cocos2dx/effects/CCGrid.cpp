@@ -296,6 +296,16 @@ namespace cocos2d
 		return pRet;
 	}
 
+
+	CCGrid3D::CCGrid3D()
+		: m_pTexCoordinates(NULL)
+		, m_pVertices(NULL)
+		, m_pOriginalVertices(NULL)
+		, m_pIndices(NULL)
+	{
+
+	}
+
 	CCGrid3D::~CCGrid3D(void)
 	{
 		CC_SAFE_FREE(m_pTexCoordinates);
@@ -440,6 +450,15 @@ namespace cocos2d
 	}
 
 	// implementation of CCTiledGrid3D
+
+	CCTiledGrid3D::CCTiledGrid3D()
+		: m_pTexCoordinates(NULL)
+		, m_pVertices(NULL)
+		, m_pOriginalVertices(NULL)
+		, m_pIndices(NULL)
+	{
+
+	}
 
 	CCTiledGrid3D::~CCTiledGrid3D(void)
 	{

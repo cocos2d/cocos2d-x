@@ -86,8 +86,11 @@ CCNode::CCNode(void)
 	// set default scheduler and actionManager
 	CCDirector *director = CCDirector::sharedDirector();
 	m_pActionManager = director->getActionManager();
+	m_pActionManager->retain();
 	m_pScheduler = director->getScheduler();
+	m_pScheduler->retain();
 }
+
 CCNode::~CCNode(void)
 {
 	CCLOGINFO( "cocos2d: deallocing" );
@@ -889,9 +892,12 @@ unsigned int CCNode::numberOfRunningActions()
 
 void CCNode::setShaderProgram(CCGLProgram* pShaderProgram)
 {
-	CC_SAFE_RETAIN(pShaderProgram);
-	CC_SAFE_RELEASE(m_pShaderProgram);
-	m_pShaderProgram = pShaderProgram;
+	if (m_pShaderProgram != pShaderProgram)
+	{
+		CC_SAFE_RETAIN(pShaderProgram);
+		CC_SAFE_RELEASE(m_pShaderProgram);
+		m_pShaderProgram = pShaderProgram;
+	}
 }
 
 CCGLProgram* CCNode::getShaderProgram(void)
