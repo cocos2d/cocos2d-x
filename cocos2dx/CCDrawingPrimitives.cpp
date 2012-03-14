@@ -35,11 +35,10 @@ THE SOFTWARE.
 #include <string.h>
 #include <cmath>
 
+NS_CC_BEGIN
 #ifndef M_PI
 	#define M_PI       3.14159265358979323846
 #endif
-
-namespace   cocos2d {
 
 static bool initialized = false;
 static CCGLProgram *shader_ = NULL;
@@ -72,7 +71,7 @@ static void lazy_init( void )
 
 }
 
-void ccDrawPoint( CCPoint point )
+void ccDrawPoint( const CCPoint& point )
 {
 	lazy_init();
 
@@ -126,7 +125,7 @@ void ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints )
 }
 
 
-void ccDrawLine( CCPoint origin, CCPoint destination )
+void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
 {
 	lazy_init();
 
@@ -182,7 +181,7 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
 	CC_SAFE_DELETE_ARRAY(newPoli);
 }
 
-void ccDrawCircle( CCPoint center, float r, float a, unsigned int segs, bool drawLineToCenter)
+void ccDrawCircle( const CCPoint& center, float radius, float angle, int segments, bool drawLineToCenter)
 {
 	lazy_init();
 
@@ -190,22 +189,22 @@ void ccDrawCircle( CCPoint center, float r, float a, unsigned int segs, bool dra
 	if (drawLineToCenter)
 		additionalSegment++;
 
-	const float coef = 2.0f * (float)M_PI/segs;
+	const float coef = 2.0f * (float)M_PI/segments;
 
-	GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segs+2), 1);
+	GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
 	if( ! vertices )
 		return;
 
-	for(unsigned int i = 0;i <= segs; i++) {
+	for(unsigned int i = 0;i <= segments; i++) {
 		float rads = i*coef;
-		GLfloat j = r * cosf(rads + a) + center.x;
-		GLfloat k = r * sinf(rads + a) + center.y;
+		GLfloat j = radius * cosf(rads + angle) + center.x;
+		GLfloat k = radius * sinf(rads + angle) + center.y;
 
 		vertices[i*2] = j;
 		vertices[i*2+1] = k;
 	}
-	vertices[(segs+1)*2] = center.x;
-	vertices[(segs+1)*2+1] = center.y;
+	vertices[(segments+1)*2] = center.x;
+	vertices[(segments+1)*2+1] = center.y;
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
@@ -214,12 +213,12 @@ void ccDrawCircle( CCPoint center, float r, float a, unsigned int segs, bool dra
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);
+	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments+additionalSegment);
 
 	free( vertices );
 }
 
-void ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, unsigned int segments)
+void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, int segments)
 {
 	lazy_init();
 
@@ -246,7 +245,7 @@ void ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, unsi
 	CC_SAFE_DELETE_ARRAY(vertices);
 }
 
-void ccDrawCubicBezier(CCPoint origin, CCPoint control1, CCPoint control2, CCPoint destination, unsigned int segments)
+void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments)
 {
 	lazy_init();
 
@@ -298,4 +297,4 @@ void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 	color_.a = a/255.0f;
 }
 
-}//namespace   cocos2d 
+NS_CC_END

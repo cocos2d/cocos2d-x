@@ -220,9 +220,9 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     case 24: return CCTransitionSlideInB::transitionWithDuration(t, s);
     case 25: 
 		{
-			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
 			{
-				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionCrossFade may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				CCMessageBox("The Opengl ES version is lower than 2.0, and TransitionCrossFade may not run correctly, it is ignored.", "Cocos2d-x Hint");
 				return NULL;
 			}
 			else
@@ -233,27 +233,27 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
 		break;
     case 26: 
 		{
-			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
 			{
-				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionRadialCCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				CCMessageBox("The Opengl ES version is lower than 2.0, and TransitionRadialCCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
 				return NULL;
 			}
 			else
 			{
-				return CCTransitionRadialCCW::transitionWithDuration(t,s);
+				return NULL;// TODO: CCTransitionRadialCCW::transitionWithDuration(t,s);
 			}
 		}
 		break;
     case 27: 
 		{
-			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
 			{
-				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionRadialCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				CCMessageBox("The Opengl ES version is lower than 2.0, and TransitionRadialCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
 				return NULL;
 			}
 			else
 			{
-				return CCTransitionRadialCW::transitionWithDuration(t,s);
+				return NULL;// TODO: CCTransitionRadialCW::transitionWithDuration(t,s);
 			}
 		}
 		break;
@@ -305,9 +305,9 @@ TestLayer1::TestLayer1(void)
     addChild( label);
 
     // menu
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TestLayer1::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TestLayer1::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TestLayer1::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TestLayer1::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TestLayer1::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TestLayer1::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
@@ -410,9 +410,9 @@ TestLayer2::TestLayer2()
     addChild( label);
 
     // menu
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TestLayer2::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TestLayer2::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TestLayer2::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TestLayer2::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TestLayer2::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TestLayer2::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 

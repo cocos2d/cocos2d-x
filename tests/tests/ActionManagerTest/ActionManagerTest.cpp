@@ -92,9 +92,9 @@ void ActionManagerTest::onEnter()
 	addChild(label, 1);
 	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
-	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionManagerTest::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ActionManagerTest::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ActionManagerTest::nextCallback));
+	CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionManagerTest::backCallback) );
+	CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ActionManagerTest::restartCallback) );
+	CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ActionManagerTest::nextCallback));
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
@@ -234,7 +234,8 @@ void PauseTest::onEnter()
 	
 	CCAction* action = CCMoveBy::actionWithDuration(1, CCPointMake(150,0));
 
-	CCActionManager::sharedManager()->addAction(action, grossini, true);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	pDirector->getActionManager()->addAction(action, grossini, true);
 
 	schedule( schedule_selector(PauseTest::unpause), 3); 
 }
@@ -243,7 +244,8 @@ void PauseTest::unpause(ccTime dt)
 {
 	unschedule( schedule_selector(PauseTest::unpause) );
 	CCNode* node = getChildByTag( kTagGrossini );
-	CCActionManager::sharedManager()->resumeTarget(node);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	pDirector->getActionManager()->resumeTarget(node);
 }
 
 std::string PauseTest::title()
@@ -315,7 +317,8 @@ void ResumeTest::onEnter()
 
     pGrossini->runAction(CCScaleBy::actionWithDuration(2, 2));
 
-    CCActionManager::sharedManager()->pauseTarget(pGrossini);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	pDirector->getActionManager()->pauseTarget(pGrossini);
     pGrossini->runAction(CCRotateBy::actionWithDuration(2, 360));
 
     this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
@@ -326,7 +329,8 @@ void ResumeTest::resumeGrossini(ccTime time)
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 
     CCNode* pGrossini = getChildByTag(kTagGrossini);
-    CCActionManager::sharedManager()->resumeTarget(pGrossini);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	pDirector->getActionManager()->resumeTarget(pGrossini);
 }
 
 //------------------------------------------------------------------

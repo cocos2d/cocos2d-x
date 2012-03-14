@@ -924,6 +924,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\support\CCVertex.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\support\CCVertex.h"
+				>
+			</File>
+			<File
 				RelativePath="..\support\TransformUtils.cpp"
 				>
 			</File>

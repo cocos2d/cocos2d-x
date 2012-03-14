@@ -88,9 +88,9 @@ void SchedulerTestLayer::onEnter()
         l->setPosition(ccp(s.width/2, s.height-80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(SchedulerTestLayer::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(SchedulerTestLayer::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(SchedulerTestLayer::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(SchedulerTestLayer::backCallback));
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(SchedulerTestLayer::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(SchedulerTestLayer::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
@@ -208,7 +208,7 @@ void SchedulerPauseResume::tick2(ccTime dt)
 
 void SchedulerPauseResume::pause(ccTime dt)
 {
-    CCScheduler::sharedScheduler()->pauseTarget(this);
+	CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
 }
 
 std::string SchedulerPauseResume::title()
@@ -310,7 +310,7 @@ void SchedulerUnscheduleAllHard::tick4(ccTime dt)
 
 void SchedulerUnscheduleAllHard::unscheduleAll(ccTime dt)
 {
-    CCScheduler::sharedScheduler()->unscheduleAllSelectors();
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectors();
 }
 
 std::string SchedulerUnscheduleAllHard::title()

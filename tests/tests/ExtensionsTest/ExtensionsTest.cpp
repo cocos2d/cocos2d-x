@@ -32,7 +32,7 @@ void ExtensionsMainLayer::onEnter()
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < MAX_COUNT; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::itemFromString(testsName[i].c_str(), this,
+        CCMenuItemFont* pItem = CCMenuItemFont::itemWithString(testsName[i].c_str(), this,
                                                     menu_selector(ExtensionsMainLayer::menuCallback));
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         pMenu->addChild(pItem, kItemTagBasic + i);

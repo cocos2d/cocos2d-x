@@ -302,6 +302,10 @@ namespace cocos2d
 	void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 	{
 		CCArray *array = sprite->getChildren();
+		if (array == NULL)
+		{
+			return;
+		}
 		unsigned int count = array->count();
 		int oldIndex = 0;
 

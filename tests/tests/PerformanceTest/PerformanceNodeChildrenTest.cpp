@@ -92,9 +92,9 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     quantityOfNodes = nNodes;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::itemFromString(" - ", this, menu_selector(NodeChildrenMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::itemWithString(" - ", this, menu_selector(NodeChildrenMainScene::onDecrease));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::itemFromString(" + ", this, menu_selector(NodeChildrenMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::itemWithString(" + ", this, menu_selector(NodeChildrenMainScene::onIncrease));
     increase->setColor(ccc3(0,200,20));
 
     CCMenu *menu = CCMenu::menuWithItems(decrease, increase, NULL);

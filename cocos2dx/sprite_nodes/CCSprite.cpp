@@ -557,8 +557,11 @@ void CCSprite::draw(void)
 
 	ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
 
-	ccGLBindTexture2D( m_pobTexture->getName() );
-
+	if (m_pobTexture != NULL)
+	{
+		ccGLBindTexture2D( m_pobTexture->getName() );
+	}
+	
 	//
 	// Attributes
 	//
@@ -1063,20 +1066,16 @@ void CCSprite::setTexture(CCTexture2D *texture)
 {
 	// CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteSheet
 	CCAssert(! m_pobBatchNode, "setTexture doesn't work when the sprite is rendered using a CCSpriteSheet");
-
-	// we can not use RTTI, so we do not known the type of object
 	// accept texture==nil as argument
-	/*CCAssert((! texture) || dynamic_cast<CCTexture2D*>(texture));*/
+	CCAssert((! texture) || dynamic_cast<CCTexture2D*>(texture));
 
-	CC_SAFE_RELEASE(m_pobTexture);
-
-	m_pobTexture = texture;
-	if (texture)
+	if (m_pobTexture != texture)
 	{
-	    texture->retain();
+		CC_SAFE_RETAIN(texture);
+		CC_SAFE_RELEASE(m_pobTexture);
+		m_pobTexture = texture;
+		updateBlendFunc();
 	}
-
-	updateBlendFunc();
 }
 
 CCTexture2D* CCSprite::getTexture(void)
