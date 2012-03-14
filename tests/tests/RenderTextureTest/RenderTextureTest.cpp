@@ -213,7 +213,7 @@ void RenderTextureTest::ccTouchesEnded(CCSet* touches, CCEvent* event)
 		if(!touch)
 			break;
 
-		CCPoint location = touch->locationInView(touch->view());
+		CCPoint location = touch->locationInView();
 
 		location = CCDirector::sharedDirector()->convertToGL(location);
 
