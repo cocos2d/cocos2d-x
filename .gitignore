@@ -63,3 +63,6 @@ build/
 Simulator/
 Device-Debug/
 Device-Release/
+
+# Ignore vim swaps
+*.swp
