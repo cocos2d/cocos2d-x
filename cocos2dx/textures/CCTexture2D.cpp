@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "CCTexturePVR.h"
 #include "CCDirector.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA

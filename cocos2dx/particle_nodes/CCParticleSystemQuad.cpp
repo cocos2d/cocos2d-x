@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "CCDirector.h"
 #include "CCShaderCache.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCGLProgram.h"
 #include "support/TransformUtils.h"
 

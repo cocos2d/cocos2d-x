@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCImage.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCConfiguration.h"
 #include "support/ccUtils.h"
 #include "CCTextureCache.h"

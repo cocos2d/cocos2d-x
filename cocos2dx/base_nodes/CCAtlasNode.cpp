@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
 
