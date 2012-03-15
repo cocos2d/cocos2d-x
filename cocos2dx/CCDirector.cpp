@@ -49,7 +49,10 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCUserDefault.h"
 #include "extensions/CCNotificationCenter.h"
-
+#include "ccGLState.h"
+#include "CCShaderCache.h"
+#include "kazmath/kazmath.h"
+#include "kazmath/GL/matrix.h"
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
 #endif // CC_ENABLE_PROFILERS
@@ -121,6 +124,14 @@ bool CCDirector::init(void)
     m_fContentScaleFactor = 1;	
 	m_bIsContentScaleSupported = false;
 
+	// scheduler
+	m_pScheduler = new CCScheduler();
+	m_pScheduler->retain();
+	// action manager
+	m_pActionManager = new CCActionManager();
+	m_pActionManager->retain();
+	m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCActionManagerPriority, false);
+
 	// create autorelease pool
 	CCPoolManager::getInstance()->push();
 
@@ -138,6 +149,8 @@ CCDirector::~CCDirector(void)
 	CC_SAFE_RELEASE(m_pRunningScene);
 	CC_SAFE_RELEASE(m_pNotificationNode);
 	CC_SAFE_RELEASE(m_pobScenesStack);
+	CC_SAFE_RELEASE(m_pScheduler);
+	CC_SAFE_RELEASE(m_pActionManager);
 
 	// pop the autorelease pool
 	CCPoolManager::getInstance()->pop();
@@ -181,7 +194,7 @@ void CCDirector::drawScene(void)
 	//tick before glClear: issue #533
 	if (! m_bPaused)
 	{
-		CCScheduler::sharedScheduler()->tick(m_fDeltaTime);
+		m_pScheduler->update(m_fDeltaTime);
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -193,12 +206,7 @@ void CCDirector::drawScene(void)
 		setNextScene();
 	}
 
-	glPushMatrix();
-
-	applyOrientation();
-
-	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
-	CC_ENABLE_DEFAULT_GL_STATES();
+	kmGLPushMatrix();
 
 	// draw the scene
     if (m_pRunningScene)
@@ -221,9 +229,8 @@ void CCDirector::drawScene(void)
 	showProfilers();
 #endif
 
-	CC_DISABLE_DEFAULT_GL_STATES();
 
-	glPopMatrix();
+	kmGLPopMatrix();
 
 	m_uTotalFrames++;
 
@@ -305,36 +312,48 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
 	CCSize size = m_obWinSizeInPixels;
-	float zeye = this->getZEye();
+	CCSize sizePoint = m_obWinSizeInPoints;
+
+	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+
 	switch (kProjection)
 	{
 	case kCCDirectorProjection2D:
-        if (m_pobOpenGLView) 
-        {
-            m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
-        }
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		ccglOrtho(0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 
-			1024 * CC_CONTENT_SCALE_FACTOR());
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+		{
+			kmGLMatrixMode(KM_GL_PROJECTION);
+			kmGLLoadIdentity();
+			kmMat4 orthoMatrix;
+			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
+			kmGLMatrixMode(KM_GL_MODELVIEW);
+			kmGLLoadIdentity();
+		}
 		break;
 
-	case kCCDirectorProjection3D:		
-        if (m_pobOpenGLView) 
-        {
-            m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
-        }
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
-			
-		glMatrixMode(GL_MODELVIEW);	
-		glLoadIdentity();
-		gluLookAt( size.width/2, size.height/2, zeye,
-				 size.width/2, size.height/2, 0,
-				 0.0f, 1.0f, 0.0f);				
+	case kCCDirectorProjection3D:
+		{
+			// reset the viewport if 3d proj & retina display
+			if( CC_CONTENT_SCALE_FACTOR() != 1 )
+				glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+
+			float zeye = this->getZEye();
+
+			kmMat4 matrixPerspective, matrixLookup;
+
+			kmGLMatrixMode(KM_GL_PROJECTION);
+			kmGLLoadIdentity();
+
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.5f, 1500.0f );
+			kmGLMultMatrix(&matrixPerspective);
+
+			kmGLMatrixMode(KM_GL_MODELVIEW);
+			kmGLLoadIdentity();
+			kmVec3 eye, center, up;
+			kmVec3Fill( &eye, sizePoint.width/2, sizePoint.height/2, zeye );
+			kmVec3Fill( &center, sizePoint.width/2, sizePoint.height/2, 0 );
+			kmVec3Fill( &up, 0, 1, 0);
+			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
+			kmGLMultMatrix(&matrixLookup);
+		}
 		break;
 			
 	case kCCDirectorProjectionCustom:
@@ -350,6 +369,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 	}
 
 	m_eProjection = kProjection;
+	ccSetProjectionMatrixDirty();
 }
 
 void CCDirector::purgeCachedData(void)
@@ -367,13 +387,15 @@ void CCDirector::setAlphaBlending(bool bOn)
 {
 	if (bOn)
 	{
-		glEnable(GL_BLEND);
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		ccGLEnable(CC_GL_BLEND);
+		ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	}
 	else
 	{
 		glDisable(GL_BLEND);
 	}
+	// TODO: 
+	//CHECK_GL_ERROR_DEBUG();
 }
 
 void CCDirector::setDepthTest(bool bOn)
@@ -389,6 +411,8 @@ void CCDirector::setDepthTest(bool bOn)
 	{
 		glDisable(GL_DEPTH_TEST);
 	}
+	//TODO: 
+	//CHECK_GL_ERROR_DEBUG();
 }
 
 CCPoint CCDirector::convertToGL(const CCPoint& obPoint)
@@ -576,9 +600,8 @@ void CCDirector::resetDirector()
 	// purge all managers
 	CCAnimationCache::purgeSharedAnimationCache();
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-	CCActionManager::sharedManager()->purgeSharedManager();
-	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
+	CCShaderCache::purgeSharedShaderCache();
 }
 
 
@@ -617,9 +640,9 @@ void CCDirector::purgeDirector()
 	// purge all managers
 	CCAnimationCache::purgeSharedAnimationCache();
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-	CCActionManager::sharedManager()->purgeSharedManager();
-	CCScheduler::purgeSharedScheduler();
+
 	CCTextureCache::purgeSharedTextureCache();
+	CCShaderCache::purgeSharedShaderCache();
 	CCUserDefault::purgeSharedUserDefault();
     CCNotificationCenter::purgeNotifCenter();
 	// OpenGL view
@@ -845,38 +868,6 @@ void CCDirector::setNotificationNode(CCNode *node)
 	CC_SAFE_RETAIN(m_pNotificationNode);
 }
 
-void CCDirector::applyOrientation(void)
-{
-	CCSize s = m_obWinSizeInPixels;
-	float w = s.width / 2;
-	float h = s.height / 2;
-
-	// XXX it's using hardcoded values.
-	// What if the the screen size changes in the future?
-	switch (m_eDeviceOrientation)
-	{
-	case CCDeviceOrientationPortrait:
-		// nothing
-		break;
-	case CCDeviceOrientationPortraitUpsideDown:
-		// upside down
-		glTranslatef(w,h,0);
-		glRotatef(180,0,0,1);
-		glTranslatef(-w,-h,0);
-		break;
-	case CCDeviceOrientationLandscapeRight:
-		glTranslatef(w,h,0);
-		glRotatef(90,0,0,1);
-		glTranslatef(-h,-w,0);
-		break;
-	case CCDeviceOrientationLandscapeLeft:
-		glTranslatef(w,h,0);
-		glRotatef(-90,0,0,1);
-		glTranslatef(-h,-w,0);
-		break;
-	}
-}
-
 ccDeviceOrientation CCDirector::getDeviceOrientation(void)
 {
 	return m_eDeviceOrientation;
@@ -904,6 +895,32 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
     }
 }
 
+void CCDirector::setScheduler(CCScheduler* pScheduler)
+{
+	if (m_pScheduler != pScheduler)
+	{
+		CC_SAFE_RETAIN(pScheduler);
+		CC_SAFE_RELEASE(m_pScheduler);
+		m_pScheduler = pScheduler;
+	}
+}
+
+CCScheduler* CCDirector::getScheduler()
+{
+	return m_pScheduler;
+}
+
+void CCDirector::setActionManager(CCActionManager* pActionManager)
+{
+	CC_SAFE_RETAIN(pActionManager);
+	CC_SAFE_RELEASE(m_pActionManager);
+	m_pActionManager = pActionManager;
+}
+
+CCActionManager* CCDirector::getActionManager()
+{
+	return m_pActionManager;
+}
 
 /***************************************************
 * implementation of DisplayLinkDirector

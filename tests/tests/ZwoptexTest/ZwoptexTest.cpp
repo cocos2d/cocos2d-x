@@ -74,9 +74,9 @@ void ZwoptexTest::onEnter()
 		l->setPosition(ccp(s.width/2, s.height-80));
 	}
 	
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ZwoptexTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ZwoptexTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ZwoptexTest::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ZwoptexTest::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ZwoptexTest::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ZwoptexTest::nextCallback) );
 	
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 	
@@ -132,7 +132,7 @@ void ZwoptexGenericTest::onEnter()
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini.plist");
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
 	
-    CCLayerColor *layer1 = CCLayerColor::layerWithColorWidthHeight(ccc4(255, 0, 0, 255), 85, 121);
+    CCLayerColor *layer1 = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 85, 121);
 	layer1->setPosition(ccp(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
 	addChild(layer1);
 
@@ -143,7 +143,7 @@ void ZwoptexGenericTest::onEnter()
 	sprite1->setFlipX(false);
 	sprite1->setFlipY(false);
 
-    CCLayerColor *layer2 = CCLayerColor::layerWithColorWidthHeight(ccc4(255, 0, 0, 255), 85, 121);
+    CCLayerColor *layer2 = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 85, 121);
 	layer2->setPosition(ccp(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
 	addChild(layer2);
 	

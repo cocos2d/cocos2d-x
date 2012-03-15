@@ -73,24 +73,23 @@ CCLayer* createSpriteTestLayer(int nIndex)
         case 27: return new SpriteBatchNodeNewTexture();
         case 28: return new SpriteHybrid();
         case 29: return new SpriteBatchNodeChildren();
-        case 30: return new SpriteBatchNodeChildren2();
-        case 31: return new SpriteBatchNodeChildrenZ();
-        case 32: return new SpriteChildrenVisibility();
-        case 33: return new SpriteChildrenVisibilityIssue665();
-        case 34: return new SpriteChildrenAnchorPoint();
-        case 35: return new SpriteBatchNodeChildrenAnchorPoint();
-        case 36: return new SpriteBatchNodeChildrenScale();
-        case 37: return new SpriteChildrenChildren();
-        case 38: return new SpriteBatchNodeChildrenChildren();
-        case 39: return new SpriteNilTexture();
-        case 40: return new SpriteSubclass();
-        case 41: return new AnimationCache();
-		case 42: return new SpriteOffsetAnchorSkew();
-		case 43: return new SpriteBatchNodeOffsetAnchorSkew();
-		case 44: return new SpriteOffsetAnchorSkewScale();
-		case 45: return new SpriteBatchNodeOffsetAnchorSkewScale();
-		case 46: return new SpriteOffsetAnchorFlip();
-		case 47: return new SpriteBatchNodeOffsetAnchorFlip();
+        case 30: return new SpriteBatchNodeChildrenZ();
+        case 31: return new SpriteChildrenVisibility();
+        case 32: return new SpriteChildrenVisibilityIssue665();
+        case 33: return new SpriteChildrenAnchorPoint();
+        case 34: return new SpriteBatchNodeChildrenAnchorPoint();
+        case 35: return new SpriteBatchNodeChildrenScale();
+        case 36: return new SpriteChildrenChildren();
+        case 37: return new SpriteBatchNodeChildrenChildren();
+        case 38: return new SpriteNilTexture();
+        case 39: return new SpriteSubclass();
+        case 40: return new AnimationCache();
+		case 41: return new SpriteOffsetAnchorSkew();
+		case 42: return new SpriteBatchNodeOffsetAnchorSkew();
+		case 43: return new SpriteOffsetAnchorSkewScale();
+		case 44: return new SpriteBatchNodeOffsetAnchorSkewScale();
+		case 45: return new SpriteOffsetAnchorFlip();
+		case 46: return new SpriteBatchNodeOffsetAnchorFlip();
     }
 
     return NULL;
@@ -170,9 +169,9 @@ void SpriteTestDemo::onEnter()
         l->setPosition( ccp(s.width/2, s.height-80) );
     }    
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(SpriteTestDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(SpriteTestDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(SpriteTestDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(SpriteTestDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(SpriteTestDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(SpriteTestDemo::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
@@ -911,29 +910,35 @@ void SpriteZVertex::onEnter()
 {
     SpriteTestDemo::onEnter();
     
-    // TIP: don't forget to enable Alpha test
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, 0.0f);
     CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void SpriteZVertex::onExit()
 {
-    glDisable(GL_ALPHA_TEST);
     CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
     SpriteTestDemo::onExit();
 }
 
 SpriteZVertex::SpriteZVertex()
 {
-    //
-    // This test tests z-order
-    // If you are going to use it is better to use a 3D projection
-    //
-    // WARNING:
-    // The developer is resposible for ordering it's sprites according to it's Z if the sprite has
-    // transparent parts.
-    //
+	//
+	// This test tests z-order
+	// If you are going to use it is better to use a 3D projection
+	//
+	// WARNING:
+	// The developer is resposible for ordering its sprites according to its Z if the sprite has
+	// transparent parts.
+	//
+
+	//
+	// Configure shader to mimic glAlphaTest
+	//
+	CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
+	GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->program_, kCCUniformAlphaTestValue);
+
+	// set alpha test value
+	// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+	glUniform1f(alphaValueLocation, 0.0f);
     
     m_dir = 1;
     m_time = 0;
@@ -954,6 +959,7 @@ SpriteZVertex::SpriteZVertex()
         CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
         sprite->setPosition( ccp((i+1)*step, s.height/2) );
         sprite->setVertexZ( 10 + i*40 );
+		sprite->setShaderProgram(alphaTestShader);
         node->addChild(sprite, 0);
         
     }
@@ -963,6 +969,7 @@ SpriteZVertex::SpriteZVertex()
         CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*0, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
         sprite->setVertexZ( 10 + (10-i)*40 );
+		sprite->setShaderProgram(alphaTestShader);
         node->addChild(sprite, 0);
     }
 
@@ -984,30 +991,35 @@ void SpriteBatchNodeZVertex::onEnter()
 {
     SpriteTestDemo::onEnter();
 
-    // TIP: don't forget to enable Alpha test
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, 0.0f);
-    
     CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void SpriteBatchNodeZVertex::onExit()
 {
-    glDisable(GL_ALPHA_TEST);
     CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
     SpriteTestDemo::onExit();
 }
 
 SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
 {
-    //
-    // This test tests z-order
-    // If you are going to use it is better to use a 3D projection
-    //
-    // WARNING:
-    // The developer is resposible for ordering it's sprites according to it's Z if the sprite has
-    // transparent parts.
-    //
+	//
+	// This test tests z-order
+	// If you are going to use it is better to use a 3D projection
+	//
+	// WARNING:
+	// The developer is resposible for ordering its sprites according to its Z if the sprite has
+	// transparent parts.
+	//
+
+	//
+	// Configure shader to mimic glAlphaTest
+	//
+	CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
+	GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->program_, kCCUniformAlphaTestValue);
+
+	// set alpha test value
+	// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+	glUniform1f(alphaValueLocation, 0.0f);
     
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1021,7 +1033,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     batch->setAnchorPoint( ccp(0.5f, 0.5f));
     batch->setPosition( ccp(s.width/2, s.height/2));
     
-
+	batch->setShaderProgram(alphaTestShader);
     addChild(batch, 0, kTagSpriteBatchNode);        
     
     for(int i=0;i<5;i++) 
@@ -2345,97 +2357,6 @@ void SpriteBatchNodeChildren::onExit()
 std::string SpriteBatchNodeChildren::title()
 {
     return "SpriteBatchNode Grand Children";
-}
-
-
-//------------------------------------------------------------------
-//
-// SpriteBatchNodeChildren2
-//
-//------------------------------------------------------------------
-
-SpriteBatchNodeChildren2::SpriteBatchNodeChildren2()
-{
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    
-    // parents
-    CCSpriteBatchNode* batch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png", 50);
-    batch->getTexture()->generateMipmap();
-    
-    addChild(batch, 0, kTagSpriteBatchNode);
-    
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
-    
-    
-    CCSprite* sprite11 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-    sprite11->setPosition(ccp( s.width/3, s.height/2));
-
-    CCSprite* sprite12 = CCSprite::spriteWithSpriteFrameName("grossini_dance_02.png");
-    sprite12->setPosition(ccp(20,30));
-    sprite12->setScale( 0.2f );
-
-    CCSprite* sprite13 = CCSprite::spriteWithSpriteFrameName("grossini_dance_03.png");
-    sprite13->setPosition(ccp(-20,30));
-    sprite13->setScale( 0.2f );
-    
-    batch->addChild(sprite11);
-    sprite11->addChild(sprite12, -2);
-    sprite11->addChild(sprite13, 2);
-
-    // don't rotate with it's parent
-    sprite12->setHonorParentTransform((ccHonorParentTransform) (sprite12->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_ROTATE));
-
-    // don't scale and rotate with it's parent
-    sprite13->setHonorParentTransform((ccHonorParentTransform) (sprite13->getHonorParentTransform() & ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE) ));
-    
-    CCActionInterval* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
-    CCActionInterval* action_back = action->reverse();
-    CCActionInterval* action_rot = CCRotateBy::actionWithDuration(2, 360);
-    CCActionInterval* action_s = CCScaleBy::actionWithDuration(2, 2);
-    CCActionInterval* action_s_back = action_s->reverse();
-
-    sprite11->runAction( CCRepeatForever::actionWithAction(action_rot));
-    sprite11->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action, action_back,NULL))));
-    sprite11->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action_s, action_s_back,NULL))));
-    
-    //
-    // another set of parent / children
-    //
-    
-    CCSprite* sprite21 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-    sprite21->setPosition(ccp( 2*s.width/3, s.height/2-50));
-    
-    CCSprite* sprite22 = CCSprite::spriteWithSpriteFrameName("grossini_dance_02.png");
-    sprite22->setPosition(ccp(20,30));
-    sprite22->setScale( 0.8f );
-    
-    CCSprite* sprite23 = CCSprite::spriteWithSpriteFrameName("grossini_dance_03.png");
-    sprite23->setPosition(ccp(-20,30));
-    sprite23->setScale( 0.8f );
-    
-    batch->addChild(sprite21);
-    sprite21->addChild(sprite22, -2);
-    sprite21->addChild(sprite23, 2);
-    
-    // don't rotate with it's parent
-    sprite22->setHonorParentTransform((ccHonorParentTransform) (sprite22->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_TRANSLATE));
-    
-    // don't scale and rotate with it's parent
-    sprite23->setHonorParentTransform((ccHonorParentTransform) (sprite23->getHonorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_SCALE));
-    
-    sprite21->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(1, 360) ));
-    sprite21->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions( CCScaleTo::actionWithDuration(0.5f, 5.0f), CCScaleTo::actionWithDuration(0.5f, 1), NULL ) )) );
-}
-
-void SpriteBatchNodeChildren2::onExit()
-{
-    SpriteTestDemo::onExit();
-    CCSpriteFrameCache::sharedSpriteFrameCache()->removeUnusedSpriteFrames();
-}
-
-std::string SpriteBatchNodeChildren2::title()
-{
-    return "SpriteBatchNode HonorTransform";
 }
 
 //------------------------------------------------------------------

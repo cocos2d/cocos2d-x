@@ -51,9 +51,9 @@ static const char* restartAction(void)
 FontTest::FontTest()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
-	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(FontTest::backCallback));
-	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(FontTest::restartCallback));
-	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(FontTest::nextCallback));
+	CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(FontTest::backCallback));
+	CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(FontTest::restartCallback));
+	CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(FontTest::nextCallback));
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 	menu->setPosition(CCPointZero);

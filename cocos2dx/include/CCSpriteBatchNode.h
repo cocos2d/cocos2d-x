@@ -114,13 +114,15 @@ namespace cocos2d
 		void removeChildAtIndex(unsigned int index, bool doCleanup);
 
 		void insertChild(CCSprite *child, unsigned int index);
+		void appendChild(CCSprite* sprite);
 		void removeSpriteFromAtlas(CCSprite *sprite);
 
 		unsigned int rebuildIndexInOrder(CCSprite *parent, unsigned int index);
 		unsigned int highestAtlasIndexInChild(CCSprite *sprite);
 		unsigned int lowestAtlasIndexInChild(CCSprite *sprite);
 		unsigned int atlasIndexForChild(CCSprite *sprite, int z);
-		
+		/* Sprites use this to start sortChildren, don't call this manually */
+		void reorderBatch(bool reorder);
 		// CCTextureProtocol
 	    virtual CCTexture2D* getTexture(void);
 	    virtual void setTexture(CCTexture2D *texture);
@@ -135,6 +137,7 @@ namespace cocos2d
 	        
 	    virtual void removeChild(CCNode* child, bool cleanup);
 	    virtual void removeAllChildrenWithCleanup(bool cleanup);
+		virtual void sortAllChildren();
 	    virtual void draw(void);
 
     protected:
@@ -153,6 +156,8 @@ namespace cocos2d
         CCSpriteBatchNode * addSpriteWithoutQuad(CCSprite*child, unsigned int z, int aTag);
 
 	private:
+		void updateAtlasIndex(CCSprite* sprite, int* curIndex);
+		void swap(int oldIndex, int newIndex);
 		void updateBlendFunc();
 
 	protected:

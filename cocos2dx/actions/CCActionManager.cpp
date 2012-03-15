@@ -35,8 +35,6 @@ namespace cocos2d {
 //
 // singleton stuff
 //
-static CCActionManager *gSharedManager = NULL;
-
 typedef struct _hashElement
 {
 	struct _ccArray             *actions;
@@ -48,38 +46,12 @@ typedef struct _hashElement
 	UT_hash_handle				hh;
 } tHashElement;
 
-CCActionManager* CCActionManager::sharedManager(void)
-{
-	CCActionManager *pRet = gSharedManager;
-
-	if (! gSharedManager)
-	{
-		pRet = gSharedManager = new CCActionManager();
-
-		if (! gSharedManager->init())
-		{
-			// delete CCActionManager if init error
-			delete gSharedManager;
-			gSharedManager = NULL;
-			pRet = NULL;
-		}
-	}
-
-	return pRet;
-}
-
-void CCActionManager::purgeSharedManager(void)
-{
-	CCScheduler::sharedScheduler()->unscheduleUpdateForTarget(this);
-	CC_SAFE_RELEASE(gSharedManager);
-}
-
 CCActionManager::CCActionManager(void)
 : m_pTargets(NULL), 
   m_pCurrentTarget(NULL),
   m_bCurrentTargetSalvaged(false)
 {
-	CCAssert(gSharedManager == NULL, "");
+
 }
 
 CCActionManager::~CCActionManager(void)
@@ -87,17 +59,6 @@ CCActionManager::~CCActionManager(void)
 	CCLOGINFO("cocos2d: deallocing %p", this);
 
 	removeAllActions();
-
-	// ?? do not delete , is it because purgeSharedManager() delete it? 
-	gSharedManager = NULL;
-}
-
-bool CCActionManager::init(void)
-{
-	CCScheduler::sharedScheduler()->scheduleUpdateForTarget(this, 0, false);
-	m_pTargets = NULL;
-
-	return true;
 }
 
 // private

@@ -282,19 +282,19 @@ namespace cocos2d{
     //
     //CCMenuItemAtlasFont
     //
-    CCMenuItemAtlasFont * CCMenuItemAtlasFont::itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+    CCMenuItemAtlasFont * CCMenuItemAtlasFont::itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
     {
-        return CCMenuItemAtlasFont::itemFromString(value, charMapFile, itemWidth, itemHeight, startCharMap, NULL, NULL);
+        return CCMenuItemAtlasFont::itemWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, NULL, NULL);
     }
     
-    CCMenuItemAtlasFont * CCMenuItemAtlasFont::itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector)
+    CCMenuItemAtlasFont * CCMenuItemAtlasFont::itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector)
     {
         CCMenuItemAtlasFont *pRet = new CCMenuItemAtlasFont();
-        pRet->initFromString(value, charMapFile, itemWidth, itemHeight, startCharMap, target, selector);
+        pRet->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, target, selector);
         pRet->autorelease();
         return pRet;
     }
-    bool CCMenuItemAtlasFont::initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector)
+    bool CCMenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector)
     {
         CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
         CCLabelAtlas *label = new CCLabelAtlas();
@@ -330,21 +330,21 @@ namespace cocos2d{
     {
         return _fontName.c_str();
     }
-    CCMenuItemFont * CCMenuItemFont::itemFromString(const char *value, CCObject* target, SEL_MenuHandler selector)
+    CCMenuItemFont * CCMenuItemFont::itemWithString(const char *value, CCObject* target, SEL_MenuHandler selector)
     {
         CCMenuItemFont *pRet = new CCMenuItemFont();
-        pRet->initFromString(value, target, selector);
+        pRet->initWithString(value, target, selector);
         pRet->autorelease();
         return pRet;
     }
-    CCMenuItemFont * CCMenuItemFont::itemFromString(const char *value)
+    CCMenuItemFont * CCMenuItemFont::itemWithString(const char *value)
     {
         CCMenuItemFont *pRet = new CCMenuItemFont();
-        pRet->initFromString(value, NULL, NULL);
+        pRet->initWithString(value, NULL, NULL);
         pRet->autorelease();
         return pRet;
     }
-    bool CCMenuItemFont::initFromString(const char *value, CCObject* target, SEL_MenuHandler selector)
+    bool CCMenuItemFont::initWithString(const char *value, CCObject* target, SEL_MenuHandler selector)
     {
         CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
         
@@ -490,22 +490,22 @@ namespace cocos2d{
     {
         return dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->getColor();
     }
-    CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
+    CCMenuItemSprite * CCMenuItemSprite::itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
     {
-        return CCMenuItemSprite::itemFromNormalSprite(normalSprite, selectedSprite, disabledSprite, NULL, NULL);
+        return CCMenuItemSprite::itemWithNormalSprite(normalSprite, selectedSprite, disabledSprite, NULL, NULL);
     }
-    CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector)
+    CCMenuItemSprite * CCMenuItemSprite::itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector)
     {
-        return CCMenuItemSprite::itemFromNormalSprite(normalSprite, selectedSprite, NULL, target, selector);
+        return CCMenuItemSprite::itemWithNormalSprite(normalSprite, selectedSprite, NULL, target, selector);
     }
-    CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode *normalSprite, CCNode *selectedSprite, CCNode *disabledSprite, CCObject *target, SEL_MenuHandler selector)
+    CCMenuItemSprite * CCMenuItemSprite::itemWithNormalSprite(CCNode *normalSprite, CCNode *selectedSprite, CCNode *disabledSprite, CCObject *target, SEL_MenuHandler selector)
     {
         CCMenuItemSprite *pRet = new CCMenuItemSprite();
-        pRet->initFromNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector); 
+        pRet->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector); 
         pRet->autorelease();
         return pRet;
     }
-    bool CCMenuItemSprite::initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector)
+    bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector)
     {
         CCAssert(normalSprite != NULL, "");
         CCMenuItem::initWithTarget(target, selector); 
@@ -589,18 +589,18 @@ namespace cocos2d{
         }
     }
     
-    CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage)
+    CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, const char *selectedImage)
     {
-        return CCMenuItemImage::itemFromNormalImage(normalImage, selectedImage, NULL, NULL, NULL);
+        return CCMenuItemImage::itemWithNormalImage(normalImage, selectedImage, NULL, NULL, NULL);
     }
-    CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector)
+    CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector)
     {
-        return CCMenuItemImage::itemFromNormalImage(normalImage, selectedImage, NULL, target, selector);
+        return CCMenuItemImage::itemWithNormalImage(normalImage, selectedImage, NULL, target, selector);
     }
-    CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
+    CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
     {
         CCMenuItemImage *pRet = new CCMenuItemImage();
-        if (pRet && pRet->initFromNormalImage(normalImage, selectedImage, disabledImage, target, selector))
+        if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, target, selector))
         {
             pRet->autorelease();
             return pRet;
@@ -608,10 +608,10 @@ namespace cocos2d{
         CC_SAFE_DELETE(pRet);
         return NULL;
     }
-    CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage)
+    CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage)
     {
         CCMenuItemImage *pRet = new CCMenuItemImage();
-        if (pRet && pRet->initFromNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL))
+        if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL))
         {
             pRet->autorelease();
             return pRet;
@@ -619,7 +619,7 @@ namespace cocos2d{
         CC_SAFE_DELETE(pRet);
         return NULL;
     }
-    bool CCMenuItemImage::initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
+    bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
     {
         CCNode *normalSprite = CCSprite::spriteWithFile(normalImage);
         CCNode *selectedSprite = NULL;
@@ -634,7 +634,7 @@ namespace cocos2d{
         {
             disabledSprite = CCSprite::spriteWithFile(disabledImage);
         }
-        return initFromNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector);
+        return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector);
     }
     //
     // MenuItemToggle

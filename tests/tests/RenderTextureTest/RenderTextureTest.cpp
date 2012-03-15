@@ -71,9 +71,9 @@ void RenderTextureTestDemo::onEnter()
         l->setPosition( ccp(s.width/2, s.height-80) );
     }    
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(RenderTextureTestDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(RenderTextureTestDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(RenderTextureTestDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(RenderTextureTestDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(RenderTextureTestDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(RenderTextureTestDemo::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
@@ -123,9 +123,9 @@ std::string RenderTextureTestDemo::subtitle()
 RenderTextureTest::RenderTextureTest()
 : m_brush(NULL)
 {
-	if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+	if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
 	{
-		CCMessageBox("The Opengl ES version is lower than 1.1, and the test may not run correctly.", "Cocos2d-x Hint");
+		CCMessageBox("The Opengl ES version is lower than 2.0, and the test may not run correctly.", "Cocos2d-x Hint");
 		return;
 	}
 
@@ -251,8 +251,8 @@ RenderTextureSave::RenderTextureSave()
 
 	// Save Image menu
 	CCMenuItemFont::setFontSize(16);
-	CCMenuItem *item1 = CCMenuItemFont::itemFromString("Save Image", this, menu_selector(RenderTextureSave::saveImage));
-	CCMenuItem *item2 = CCMenuItemFont::itemFromString("Clear", this, menu_selector(RenderTextureSave::clearImage));
+	CCMenuItem *item1 = CCMenuItemFont::itemWithString("Save Image", this, menu_selector(RenderTextureSave::saveImage));
+	CCMenuItem *item2 = CCMenuItemFont::itemWithString("Clear", this, menu_selector(RenderTextureSave::clearImage));
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, NULL);
 	this->addChild(menu);
 	menu->alignItemsVertically();

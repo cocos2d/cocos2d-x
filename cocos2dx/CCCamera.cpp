@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include "CCDrawingPrimitives.h"
 #include "CCDirector.h"
+#include "kazmath/GL/matrix.h"
 
 using namespace std;
 namespace   cocos2d {
@@ -65,6 +66,8 @@ void CCCamera::restore(void)
 	m_fUpY = 1.0f;
 	m_fUpZ = 0.0f;
 
+	kmMat4Identity( &m_lookupMatrix );
+
 	m_bDirty = false;
 }
 
@@ -72,10 +75,17 @@ void CCCamera::locate(void)
 {
 	if (m_bDirty)
 	{
-		gluLookAt(m_fEyeX, m_fEyeY, m_fEyeZ,
-			m_fCenterX, m_fCenterY, m_fCenterZ,
-			m_fUpX, m_fUpY, m_fUpZ);
+		kmVec3 eye, center, up;
+
+		kmVec3Fill( &eye, m_fEyeX, m_fEyeY , m_fEyeZ );
+		kmVec3Fill( &center, m_fCenterX, m_fCenterY, m_fCenterZ );
+
+		kmVec3Fill( &up, m_fUpX, m_fUpY, m_fUpZ);
+		kmMat4LookAt( &m_lookupMatrix, &eye, &center, &up);
+
+		m_bDirty = false;
 	}
+	kmGLMultMatrix( &m_lookupMatrix );
 }
 
 float CCCamera::getZEye(void)
@@ -85,18 +95,18 @@ float CCCamera::getZEye(void)
 
 void CCCamera::setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ)
 {
-	m_fEyeX = fEyeX * CC_CONTENT_SCALE_FACTOR();
-	m_fEyeY = fEyeY * CC_CONTENT_SCALE_FACTOR();
-	m_fEyeZ = fEyeZ * CC_CONTENT_SCALE_FACTOR();
+	m_fEyeX = fEyeX;
+	m_fEyeY = fEyeY;
+	m_fEyeZ = fEyeZ;
 
 	m_bDirty = true;
 }
 
 void CCCamera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
 {
-	m_fCenterX = fCenterX * CC_CONTENT_SCALE_FACTOR();
-	m_fCenterY = fCenterY * CC_CONTENT_SCALE_FACTOR();
-	m_fCenterZ = fCenterZ * CC_CONTENT_SCALE_FACTOR();
+	m_fCenterX = fCenterX;
+	m_fCenterY = fCenterY;
+	m_fCenterZ = fCenterZ;
 
 	m_bDirty = true;
 }
@@ -112,16 +122,16 @@ void CCCamera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
 
 void CCCamera::getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ)
 {
-	*pEyeX = m_fEyeX / CC_CONTENT_SCALE_FACTOR();
-	*pEyeY = m_fEyeY / CC_CONTENT_SCALE_FACTOR();
-	*pEyeZ = m_fEyeZ / CC_CONTENT_SCALE_FACTOR();
+	*pEyeX = m_fEyeX;
+	*pEyeY = m_fEyeY;
+	*pEyeZ = m_fEyeZ;
 }
 
 void CCCamera::getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ)
 {
-	*pCenterX = m_fCenterX / CC_CONTENT_SCALE_FACTOR();
-	*pCenterY = m_fCenterY / CC_CONTENT_SCALE_FACTOR();
-	*pCenterZ = m_fCenterZ / CC_CONTENT_SCALE_FACTOR();
+	*pCenterX = m_fCenterX;
+	*pCenterY = m_fCenterY;
+	*pCenterZ = m_fCenterZ;
 }
 
 void CCCamera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)

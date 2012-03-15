@@ -353,14 +353,6 @@ public:
 	virtual std::string title();
 };
 
-class SpriteBatchNodeChildren2: public SpriteTestDemo
-{
-public:
-	SpriteBatchNodeChildren2();
-	virtual void onExit();
-	virtual std::string title();
-};
-
 class SpriteBatchNodeChildrenZ : public SpriteTestDemo
 {
 public:
