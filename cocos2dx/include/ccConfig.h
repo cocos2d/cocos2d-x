@@ -29,6 +29,29 @@ THE SOFTWARE.
 
 #include "CCPlatformConfig.h"
 
+/**
+ @file
+ cocos2d (cc) configuration file
+*/
+
+/** @def CC_ENABLE_GL_STATE_CACHE
+ If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
+ In order to use them, you have to use the following functions, insead of the the GL ones:
+	- ccGLUseProgram() instead of glUseProgram()
+	- ccGLDeleteProgram() instead of glDeleteProgram()
+	- ccGLBlendFunc() instead of glBlendFunc()
+
+ If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
+
+ It is recommened to enable whenever possible to improve speed.
+ If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
+
+ @since v2.0.0
+ */
+#ifndef CC_ENABLE_GL_STATE_CACHE
+#define CC_ENABLE_GL_STATE_CACHE 0
+#endif
+
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 If enabled, the texture coordinates will be calculated by using this formula:
 - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
@@ -88,6 +111,15 @@ To enabled set it to 1. Disabled by default.
 #define CC_DIRECTOR_FPS_INTERVAL (0.5f)
 #endif
 
+/** @def CC_DIRECTOR_FPS_POSITION
+ Position of the FPS
+
+ Default: 0,0 (bottom-left corner)
+ */
+#ifndef CC_DIRECTOR_FPS_POSITION
+#define CC_DIRECTOR_FPS_POSITION ccp(0,0)
+#endif
+
 /** @def CC_DIRECTOR_DISPATCH_FAST_EVENTS
  If enabled, and only when it is used with CCFastDirector, the main loop will wait 0.04 seconds to
  dispatch all the events, even if there are not events to dispatch.
@@ -137,22 +169,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
 #endif
 
-/** @def CC_USES_VBO
-If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
-
-To enable set it to 1.
-Enabled by default on iPhone with ARMv7 processors, iPhone Simulator and Mac
-Disabled by default on iPhone with ARMv6 processors.
-
-@since v0.99.5
-*/
-#ifndef CC_USES_VBO
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-#define CC_USES_VBO 0
-#else
-#define CC_USES_VBO 1
-#endif
-#endif
 
 /** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
  If enabled, CCNode will transform the nodes using a cached Affine matrix.

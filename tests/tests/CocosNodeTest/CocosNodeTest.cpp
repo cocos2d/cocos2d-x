@@ -114,9 +114,9 @@ void TestCocosNodeDemo::onEnter()
 		l->setPosition( CCPointMake(s.width/2, s.height-80) );
 	}	
 
-	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TestCocosNodeDemo::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1,s_pPathR2, this, menu_selector(TestCocosNodeDemo::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TestCocosNodeDemo::nextCallback) );
+	CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TestCocosNodeDemo::backCallback) );
+	CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1,s_pPathR2, this, menu_selector(TestCocosNodeDemo::restartCallback) );
+	CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TestCocosNodeDemo::nextCallback) );
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
@@ -513,7 +513,7 @@ NodeToWorld::NodeToWorld()
 	back->setAnchorPoint( CCPointMake(0,0) );
 	CCSize backSize = back->getContentSize();
 	
-	CCMenuItem *item = CCMenuItemImage::itemFromNormalImage(s_PlayNormal, s_PlaySelect);
+	CCMenuItem *item = CCMenuItemImage::itemWithNormalImage(s_PlayNormal, s_PlaySelect);
 	CCMenu *menu = CCMenu::menuWithItems(item, NULL);
 	menu->alignItemsVertically();
 	menu->setPosition( CCPointMake(backSize.width/2, backSize.height/2));

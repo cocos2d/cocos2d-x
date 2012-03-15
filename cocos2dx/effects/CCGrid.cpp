@@ -27,9 +27,14 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "effects/CCGrabber.h"
 #include "support/ccUtils.h"
-
+#include "CCGLProgram.h"
+#include "CCShaderCache.h"
+#include "ccGLState.h"
 #include "CCGL.h"
 #include "CCPointExtension.h"
+#include "support/TransformUtils.h"
+#include "kazmath/kazmath.h"
+#include "kazmath/GL/matrix.h"
 
 namespace cocos2d
 {
@@ -99,7 +104,7 @@ namespace cocos2d
             bRet = false;
 		}
 		
-
+		m_pShaderProgram = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture);
 		calculateVertexPoints();
 
 		return bRet;
@@ -147,7 +152,7 @@ namespace cocos2d
 	{
 		CCLOGINFO("cocos2d: deallocing %p", this);
 
-		setActive(false);
+//TODO: ? why 2.0 comments this line		setActive(false);
 		CC_SAFE_RELEASE(m_pTexture);
 		CC_SAFE_RELEASE(m_pGrabber);
 	}
@@ -173,74 +178,35 @@ namespace cocos2d
 		}
 	}
 
-	// This routine can be merged with Director
-	void CCGridBase::applyLandscape(void)
-	{
-		CCDirector *pDirector = CCDirector::sharedDirector();
-
-		CCSize winSize = pDirector->getDisplaySizeInPixels();
-		float w = winSize.width / 2;
-		float h = winSize.height / 2;
-
-		ccDeviceOrientation orientation = pDirector->getDeviceOrientation();
-
-		switch (orientation)
-		{
-		case CCDeviceOrientationLandscapeLeft:
- 			glTranslatef(w,h,0);
- 			glRotatef(-90,0,0,1);
- 			glTranslatef(-h,-w,0);
-            break;
-		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(w,h,0);
-			glRotatef(90,0,0,1);
-			glTranslatef(-h,-w,0);
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			glTranslatef(w,h,0);
-			glRotatef(180,0,0,1);
-			glTranslatef(-w,-h,0);
-			break;
-		default:
-			break;
-		}
-	}
-
 	void CCGridBase::set2DProjection()
 	{
-		CCSize winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
+		CCDirector *director = CCDirector::sharedDirector();
 
-		glLoadIdentity();
+		CCSize	size = director->getWinSizeInPixels();
 
-        // set view port for user FBO, fixed bug #543 #544
-		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
-		glMatrixMode(GL_MODELVIEW);
-	}
+		glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+		kmGLMatrixMode(KM_GL_PROJECTION);
+		kmGLLoadIdentity();
 
-	// This routine can be merged with Director
-	void CCGridBase::set3DProjection()
-	{
-		CCSize	winSize = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+		kmMat4 orthoMatrix;
+		kmMat4OrthographicProjection(&orthoMatrix, 0, size.width * CC_CONTENT_SCALE_FACTOR(), 0, size.height * CC_CONTENT_SCALE_FACTOR(), -1, 1);
+		kmGLMultMatrix( &orthoMatrix );
 
-        // set view port for user FBO, fixed bug #543 #544
-		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
+		kmGLMatrixMode(KM_GL_MODELVIEW);
+		kmGLLoadIdentity();
 
-		glMatrixMode(GL_MODELVIEW);	
-		glLoadIdentity();
-		gluLookAt( winSize.width/2, winSize.height/2, CCDirector::sharedDirector()->getZEye(),
-			winSize.width/2, winSize.height/2, 0,
-			0.0f, 1.0f, 0.0f
-			);
+
+		ccSetProjectionMatrixDirty();
 	}
 
 	void CCGridBase::beforeDraw(void)
 	{
+		// save projection
+		CCDirector *director = CCDirector::sharedDirector();
+		m_directorProjection = director->getProjection();
+
+		// 2d projection
+		//	[director setProjection:kCCDirectorProjection2D];
 		set2DProjection();
 		m_pGrabber->beforeRender(m_pTexture);
 	}
@@ -249,26 +215,27 @@ namespace cocos2d
 	{
 		m_pGrabber->afterRender(m_pTexture);
 
-		set3DProjection();
-		applyLandscape();
+		// restore projection
+		CCDirector *director = CCDirector::sharedDirector();
+		director->setProjection(m_directorProjection);
 
 		if (pTarget->getCamera()->getDirty())
 		{
-			const CCPoint& offset = pTarget->getAnchorPointInPixels();
+			const CCPoint& offset = pTarget->getAnchorPointInPoints();
 
 			//
 			// XXX: Camera should be applied in the AnchorPoint
 			//
-			ccglTranslate(offset.x, offset.y, 0);
+			kmGLTranslatef(offset.x, offset.y, 0);
 			pTarget->getCamera()->locate();
-			ccglTranslate(-offset.x, -offset.y, 0);
+			kmGLTranslatef(-offset.x, -offset.y, 0);
 		}
 
-		glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
+		ccGLBindTexture2D(m_pTexture->getName());
 
         // restore projection for default FBO .fixed bug #543 #544
-        CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
-        CCDirector::sharedDirector()->applyOrientation();
+//TODO:         CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+//TODO:         CCDirector::sharedDirector()->applyOrientation();
 		blit();
 	}
 
@@ -329,6 +296,16 @@ namespace cocos2d
 		return pRet;
 	}
 
+
+	CCGrid3D::CCGrid3D()
+		: m_pTexCoordinates(NULL)
+		, m_pVertices(NULL)
+		, m_pOriginalVertices(NULL)
+		, m_pIndices(NULL)
+	{
+
+	}
+
 	CCGrid3D::~CCGrid3D(void)
 	{
 		CC_SAFE_FREE(m_pTexCoordinates);
@@ -341,17 +318,21 @@ namespace cocos2d
 	{
 		int n = m_sGridSize.x * m_sGridSize.y;
 
-		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Unneeded states: GL_COLOR_ARRAY
-		glDisableClientState(GL_COLOR_ARRAY);
+		ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+		ccGLUseProgram( m_pShaderProgram->program_ );
+		ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );
 
-		glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
-		glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
-		glDrawElements(GL_TRIANGLES, (GLsizei)n * 6, GL_UNSIGNED_SHORT, m_pIndices);
+		//
+		// Attributes
+		//
 
-		// restore GL default state
-		glEnableClientState(GL_COLOR_ARRAY);
+		// position
+		glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, m_pVertices);
+
+		// texCoods
+		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, m_pTexCoordinates);
+
+		glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, m_pIndices);
 	}
 
 	void CCGrid3D::calculateVertexPoints(void)
@@ -361,14 +342,20 @@ namespace cocos2d
 		float imageH = m_pTexture->getContentSizeInPixels().height;
 
 		int x, y, i;
+		CC_SAFE_FREE(m_pVertices);
+		CC_SAFE_FREE(m_pOriginalVertices);
+		CC_SAFE_FREE(m_pTexCoordinates);
+		CC_SAFE_FREE(m_pIndices);
 
-		m_pVertices = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
-		m_pOriginalVertices = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
-		m_pTexCoordinates = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(CCPoint));
+		unsigned int numOfPoints = (m_sGridSize.x+1) * (m_sGridSize.y+1);
+
+		m_pVertices = malloc(numOfPoints * sizeof(ccVertex3F));
+		m_pOriginalVertices = malloc(numOfPoints * sizeof(ccVertex3F));
+		m_pTexCoordinates = malloc(numOfPoints * sizeof(ccVertex2F));
 		m_pIndices = (GLushort*)malloc(m_sGridSize.x * m_sGridSize.y * sizeof(GLushort) * 6);
 
-		float *vertArray = (float*)m_pVertices;
-		float *texArray = (float*)m_pTexCoordinates;
+		GLfloat *vertArray = (GLfloat*)m_pVertices;
+		GLfloat *texArray = (GLfloat*)m_pTexCoordinates;
 		GLushort *idxArray = m_pIndices;
 
 		for (x = 0; x < m_sGridSize.x; ++x)
@@ -377,10 +364,10 @@ namespace cocos2d
 			{
 				int idx = (y * m_sGridSize.x) + x;
 
-				float x1 = x * m_obStep.x;
-				float x2 = x1 + m_obStep.x;
-				float y1 = y * m_obStep.y;
-				float y2= y1 + m_obStep.y;
+				GLfloat x1 = x * m_obStep.x;
+				GLfloat x2 = x1 + m_obStep.x;
+				GLfloat y1 = y * m_obStep.y;
+				GLfloat y2= y1 + m_obStep.y;
 
 				GLushort a = (GLushort)(x * (m_sGridSize.y + 1) + y);
 				GLushort b = (GLushort)((x + 1) * (m_sGridSize.y + 1) + y);
@@ -464,6 +451,15 @@ namespace cocos2d
 
 	// implementation of CCTiledGrid3D
 
+	CCTiledGrid3D::CCTiledGrid3D()
+		: m_pTexCoordinates(NULL)
+		, m_pVertices(NULL)
+		, m_pOriginalVertices(NULL)
+		, m_pIndices(NULL)
+	{
+
+	}
+
 	CCTiledGrid3D::~CCTiledGrid3D(void)
 	{
 		CC_SAFE_FREE(m_pTexCoordinates);
@@ -516,17 +512,21 @@ namespace cocos2d
 	{
 		int n = m_sGridSize.x * m_sGridSize.y;
 
-		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Unneeded states: GL_COLOR_ARRAY
-		glDisableClientState(GL_COLOR_ARRAY);
+		ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+		ccGLUseProgram( m_pShaderProgram->program_ );
+		ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );
 
-		glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
-		glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
+		//
+		// Attributes
+		//
+
+		// position
+		glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, m_pVertices);
+
+		// texCoods
+		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, m_pTexCoordinates);
+
 		glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, m_pIndices);
-
-		// restore default GL state
-		glEnableClientState(GL_COLOR_ARRAY);
 	}
 
 	void CCTiledGrid3D::calculateVertexPoints(void)
@@ -536,14 +536,18 @@ namespace cocos2d
 		float imageH = m_pTexture->getContentSizeInPixels().height;
 		
 		int numQuads = m_sGridSize.x * m_sGridSize.y;
-		
-		m_pVertices = malloc(numQuads * 12 * sizeof(GLfloat));
-		m_pOriginalVertices = malloc(numQuads * 12 * sizeof(GLfloat));
-		m_pTexCoordinates = malloc(numQuads * 8 * sizeof(GLfloat));
-		m_pIndices = (GLushort *)malloc(numQuads * 6 * sizeof(GLushort));
-		
-		float *vertArray = (float*)m_pVertices;
-		float *texArray = (float*)m_pTexCoordinates;
+		CC_SAFE_FREE(m_pVertices);
+		CC_SAFE_FREE(m_pOriginalVertices);
+		CC_SAFE_FREE(m_pTexCoordinates);
+		CC_SAFE_FREE(m_pIndices);
+
+		m_pVertices = malloc(numQuads*4*sizeof(ccVertex3F));
+		m_pOriginalVertices = malloc(numQuads*4*sizeof(ccVertex3F));
+		m_pTexCoordinates = malloc(numQuads*4*sizeof(ccVertex2F));
+		m_pIndices = (GLushort*)malloc(numQuads*6*sizeof(GLushort));
+	
+		GLfloat *vertArray = (GLfloat*)m_pVertices;
+		GLfloat *texArray = (GLfloat*)m_pTexCoordinates;
 		GLushort *idxArray = m_pIndices;
 		
 		int x, y;

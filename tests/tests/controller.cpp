@@ -18,8 +18,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ActionsTestScene(); break;
     case TEST_TRANSITIONS:
         pScene = new TransitionsTestScene(); break;
-    case TEST_PROGRESS_ACTIONS:
-        pScene = new ProgressActionsTestScene(); break;
+//TODO:     case TEST_PROGRESS_ACTIONS:
+//         pScene = new ProgressActionsTestScene(); break;
     case TEST_EFFECTS:
         pScene = new EffectTestScene(); break;
     case TEST_CLICK_AND_MOVE:
@@ -53,16 +53,17 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-        pScene = new ChipmunkTestScene(); break;
-#else
-#ifdef MARMALADEUSECHIPMUNK
-#if	(MARMALADEUSECHIPMUNK == 1)
-        pScene = new ChipmunkTestScene(); 
-#endif
-		break;
-#endif
-#endif
+// TODO:
+// #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+//         pScene = new ChipmunkTestScene(); break;
+// #else
+// #ifdef MARMALADEUSECHIPMUNK
+// #if	(MARMALADEUSECHIPMUNK == 1)
+//         pScene = new ChipmunkTestScene(); 
+// #endif
+// 		break;
+// #endif
+// #endif
     case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
     case TEST_TEXT_INPUT:
@@ -76,9 +77,9 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_TEXTURE2D:
         pScene = new TextureTestScene(); break;
     case TEST_BOX2D:
-        pScene = new Box2DTestScene(); break;
+ //TODO:       pScene = new Box2DTestScene(); break;
     case TEST_BOX2DBED:
-        pScene = new Box2dTestBedScene(); break;
+   //TODO:       pScene = new Box2dTestBedScene(); break;
     case TEST_EFFECT_ADVANCE:
         pScene = new EffectAdvanceScene(); break;
     case TEST_HIRES:
@@ -131,7 +132,7 @@ TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
     // add close menu
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
+    CCMenuItemImage *pCloseItem = CCMenuItemImage::itemWithNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

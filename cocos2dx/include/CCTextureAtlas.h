@@ -50,11 +50,11 @@ To render the quads using an interleaved vertex array list, you should modify th
 class CC_DLL CCTextureAtlas : public CCObject 
 {
 protected:
-	GLushort			*m_pIndices;
-#if CC_USES_VBO
+	GLushort*           m_pIndices;
+	GLuint				m_uVAOname;
 	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
 	bool				m_bDirty; //indicates whether or not the array buffer of the VBO needs to be updated
-#endif // CC_USES_VBO
+
 
 	/** quantity of quads that are going to be drawn */
 	CC_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
@@ -110,6 +110,13 @@ public:
 	*/
 	void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
 
+	/** Inserts a c array of quads at a given index
+	 index must be between 0 and the atlas capacity - 1
+	 this method doesn't enlarge the array when amount + index > totalQuads
+	 @since v1.1
+	*/
+	void insertQuads(ccV3F_C4B_T2F_Quad* quads, unsigned int index, unsigned int amount);
+
 	/** Removes the quad that is located at a certain index and inserts it at a new index
 	This operation is faster than removing and inserting in a quad in 2 different steps
 	@since v0.7.2
@@ -122,6 +129,10 @@ public:
 	*/
 	void removeQuadAtIndex(unsigned int index);
 
+	/** removes a amount of quads starting from index
+		@since 1.1
+	 */
+	void removeQuadsAtIndex(unsigned int index, unsigned int amount);
 	/** removes all Quads.
 	The TextureAtlas capacity remains untouched. No memory is freed.
 	The total number of quads to be drawn will be 0
@@ -137,6 +148,32 @@ public:
 	*/
 	bool resizeCapacity(unsigned int n);
 
+	/**
+	 Used internally by CCParticleBatchNode
+	 don't use this unless you know what you're doing
+	 @since 1.1
+	*/
+	void increaseTotalQuadsWith(unsigned int amount);
+
+	/** Moves an amount of quads from oldIndex at newIndex
+	 @since v1.1
+	 */
+	void moveQuadsFromIndex(unsigned int oldIndex, unsigned int amount, unsigned int newIndex);
+
+	/**
+	 Moves quads from index till totalQuads to the newIndex
+	 Used internally by CCParticleBatchNode
+	 This method doesn't enlarge the array if newIndex + quads to be moved > capacity
+	 @since 1.1
+	*/
+	void moveQuadsFromIndex(unsigned int index, unsigned int newIndex);
+
+	/**
+	 Ensures that after a realloc quads are still empty
+	 Used internally by CCParticleBatchNode
+	 @since 1.1
+	*/
+	void fillWithEmptyQuadsFromIndex(unsigned int index, unsigned int amount);
 
 	/** draws n quads
 	* n can't be greater than the capacity of the Atlas
@@ -155,6 +192,8 @@ public:
 	void drawQuads();
 private:
 	void initIndices();
+	void initVAO();
+	void mapBuffers();
 };
 }//namespace   cocos2d 
 

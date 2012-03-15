@@ -112,7 +112,7 @@ namespace cocos2d {
 		/** removes a tile at given tile coordinate */
 		void removeTileAt(const CCPoint& tileCoordinate);
 
-		/** returns the position in pixels of a given tile coordinate */
+		/** returns the position in points of a given tile coordinate */
 		CCPoint positionAt(const CCPoint& tileCoordinate);
 
 		/** return the value for the specific property name */
@@ -127,7 +127,6 @@ namespace cocos2d {
 		virtual void addChild(CCNode * child, int zOrder, int tag);
 		// super method
 		void removeChild(CCNode* child, bool cleanup);
-		void draw();
 
 		inline const char* getLayerName(){ return m_sLayerName.c_str(); }
 		inline void setLayerName(const char *layerName){ m_sLayerName = layerName; }
@@ -140,6 +139,7 @@ namespace cocos2d {
 	
 		/* optimization methos */
 		CCSprite* appendTileForGID(unsigned int gid, const CCPoint& pos);
+		void      setupReusedTile(CCPoint pos, unsigned int gid);
 		CCSprite* insertTileForGID(unsigned int gid, const CCPoint& pos);
 		CCSprite* updateTileForGID(unsigned int gid, const CCPoint& pos);
 
@@ -162,7 +162,6 @@ namespace cocos2d {
 		//! Only used when vertexZ is used
 		int					m_nVertexZvalue;
 		bool				m_bUseAutomaticVertexZ;
-		float				m_fAlphaFuncValue;
 
 		//! used for optimization
 		CCSprite			*m_pReusedTile;
