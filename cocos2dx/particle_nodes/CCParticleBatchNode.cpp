@@ -38,7 +38,7 @@
 #include "CCParticleSystem.h"
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 
 #include "support/base64.h"
 #include "support/zip_support/ZipUtils.h"

@@ -32,7 +32,7 @@
 #include "CCAffineTransform.h"
 #include "CCArray.h"
 #include "CCGL.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "kazmath/kazmath.h"
 
 namespace   cocos2d {

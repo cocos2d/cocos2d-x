@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "CCScriptSupport.h"
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"

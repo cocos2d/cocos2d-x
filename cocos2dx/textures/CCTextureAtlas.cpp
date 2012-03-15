@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "ccMacros.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 // support
 #include "CCTexture2D.h"
 

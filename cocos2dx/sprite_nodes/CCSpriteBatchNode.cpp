@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "CCPointExtension.h"
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"

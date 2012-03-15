@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "CCDrawingPrimitives.h"
 #include "CCShaderCache.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCGLProgram.h"
 #include "CCDirector.h"
 #include "CCPointExtension.h"
@@ -560,6 +560,10 @@ void CCSprite::draw(void)
 	if (m_pobTexture != NULL)
 	{
 		ccGLBindTexture2D( m_pobTexture->getName() );
+	}
+	else
+	{
+		ccGLBindTexture2D(0);
 	}
 	
 	//

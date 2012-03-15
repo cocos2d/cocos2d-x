@@ -424,7 +424,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\ccGLState.h"
+				RelativePath="..\include\ccGLStateCache.h"
 				>
 			</File>
 			<File
@@ -1108,7 +1108,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\gles2\ccGLState.cpp"
+				RelativePath="..\gles2\ccGLStateCache.cpp"
 				>
 			</File>
 			<File

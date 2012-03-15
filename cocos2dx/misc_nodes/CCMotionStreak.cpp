@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCMotionStreak.h"
 #include "CCTextureCache.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
 #include "ccMacros.h"
