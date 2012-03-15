@@ -68,13 +68,8 @@ enum {
 
 struct _hashUniformEntry;
 
-typedef void (*GLInfoFunction)(GLuint program,
-							   GLenum pname,
-							   GLint* params);
-typedef void (*GLLogFunction) (GLuint program,
-							   GLsizei bufsize,
-							   GLsizei* length,
-							   GLchar* infolog);
+typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
+typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
 /** CCGLProgram
  Class that implements a glProgram
@@ -85,6 +80,8 @@ typedef void (*GLLogFunction) (GLuint program,
 class CC_DLL CCGLProgram : public CCObject
 {
 public:
+
+
 	CCGLProgram();
 	virtual ~CCGLProgram();
 	/** Initializes the CCGLProgram with a vertex and fragment with bytes array */
@@ -142,6 +139,7 @@ public:
 	const char* fragmentShaderLog();
 	/** returns the program error log */
 	const char* programLog();
+	
 
 private:
 	bool updateUniformLocation(unsigned int location, GLvoid* data, unsigned int bytes);
@@ -149,13 +147,13 @@ private:
 	bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
 	const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc);
 
-public:
-	GLuint          program_;
-	GLuint			vertShader_;
-	GLuint			fragShader_;
-	GLint			uniforms_[kCCUniform_MAX];
+	CC_SYNTHESIZE_READONLY(GLuint, m_uProgram, Program);
+
 private:
-	struct _hashUniformEntry* hashForUniforms_;
+	GLuint			m_uVertShader;
+	GLuint			m_uFragShader;
+	GLint			m_uUniforms[kCCUniform_MAX];
+	struct _hashUniformEntry* m_pHashForUniforms;
 };
 
 NS_CC_END
