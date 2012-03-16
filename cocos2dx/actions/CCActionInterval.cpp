@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCPointExtension.h"
 #include "CCStdC.h"
-
+#include "CCActionInstant.h"
 #include <stdarg.h>
 
 namespace cocos2d {
@@ -252,56 +252,56 @@ void CCSequence::startWithTarget(CCNode *pTarget)
 
 void CCSequence::stop(void)
 {
-	m_pActions[0]->stop();
-	m_pActions[1]->stop();
+	// Issue #1305
+	if( m_last != - 1)
+	{
+		m_pActions[m_last]->stop();
+	}
+
 	CCActionInterval::stop();
 }
 
-void CCSequence::update(ccTime time)
+void CCSequence::update(ccTime t)
 {
 	int found = 0;
 	ccTime new_t = 0.0f;
 
-	if (time >= m_split)
-	{
-		found = 1;
-		if (m_split == 1)
-		{
-			new_t = 1;
-		}
-		else
-		{
-			new_t = (time - m_split) / (1 - m_split);
-		}
-	}
-	else
-	{
+	if( t < m_split ) {
+		// action[0]
 		found = 0;
-		if (m_split != 0)
-		{
-			new_t = time / m_split;
-		}
+		if( m_split != 0 )
+			new_t = t / m_split;
 		else
-		{
 			new_t = 1;
+
+	} else {
+		// action[1]
+		found = 1;
+		if ( m_split == 1 )
+			new_t = 1;
+		else
+			new_t = (t-m_split) / (1 - m_split );
+	}
+
+	if ( found==1 ) {
+
+		if( m_last == -1 ) {
+			// action[0] was skipped, execute it.
+			m_pActions[0]->startWithTarget(m_pTarget);
+			m_pActions[0]->update(1.0f);
+			m_pActions[0]->stop();
 		}
-	}
-
-	if (m_last == -1 && found == 1)
-	{
-		m_pActions[0]->startWithTarget(m_pTarget);
-		m_pActions[0]->update(1.0f);
-		m_pActions[0]->stop();
-	}
-
-	if (m_last != found)
-	{
-		if (m_last != -1)
+		else if( m_last == 0 )
 		{
-			m_pActions[m_last]->update(1.0f);
-			m_pActions[m_last]->stop();
+			// switching to action 1. stop action 0.
+			m_pActions[0]->update(1.0f);
+			m_pActions[0]->stop();
 		}
+	}
 
+	// New action. Start it.
+	if( found != m_last )
+	{
 		m_pActions[found]->startWithTarget(m_pTarget);
 	}
 
@@ -336,6 +336,12 @@ bool CCRepeat::initWithAction(CCFiniteTimeAction *pAction, unsigned int times)
 		m_pInnerAction = pAction;
 		pAction->retain();
 
+		m_bActionInstant = dynamic_cast<CCActionInstant*>(pAction) ? true : false;
+		//a instant action needs to be executed one time less in the update method since it uses startWithTarget to execute the action
+		if (m_bActionInstant) 
+		{
+			m_uTimes -=1;
+		}
 		m_uTotal = 0;
 
 		return true;
@@ -376,6 +382,7 @@ CCRepeat::~CCRepeat(void)
 void CCRepeat::startWithTarget(CCNode *pTarget)
 {
 	m_uTotal = 0;
+	m_fNextDt = m_pInnerAction->getDuration()/m_fDuration;
 	CCActionInterval::startWithTarget(pTarget);
 	m_pInnerAction->startWithTarget(pTarget);
 }
@@ -387,44 +394,46 @@ void CCRepeat::stop(void)
 }
 
 // issue #80. Instead of hooking step:, hook update: since it can be called by any 
-// container action like Repeat, Sequence, AccelDeccel, etc..
-void CCRepeat::update(ccTime time)
+// container action like CCRepeat, CCSequence, CCEase, etc..
+void CCRepeat::update(ccTime dt)
 {
-	ccTime t = time * m_uTimes;
-	if (t > m_uTotal + 1)
+	if (dt >= m_fNextDt)
 	{
-		m_pInnerAction->update(1.0f);
-		m_uTotal++;
-		m_pInnerAction->stop();
-		m_pInnerAction->startWithTarget(m_pTarget);
+		while (dt > m_fNextDt && m_uTotal < m_uTimes)
+		{
 
-		// repeat is over?
-		if (m_uTotal == m_uTimes)
-		{
-			// so, set it in the original position
-			m_pInnerAction->update(0);
+			m_pInnerAction->update(1.0f);
+			m_uTotal++;
+
+			m_pInnerAction->stop();
+			m_pInnerAction->startWithTarget(m_pTarget);
+			m_fNextDt += m_pInnerAction->getDuration()/m_fDuration;
 		}
-		else
+
+		// fix for issue #1288, incorrect end value of repeat
+		if(dt >= 1.0f && m_uTotal < m_uTimes) 
 		{
-			// no ? start next repeat with the right update
-			// to prevent jerk (issue #390)
-			m_pInnerAction->update(t - m_uTotal);
+			m_uTotal++;
+		}
+
+		// don't set a instantaction back or update it, it has no use because it has no duration
+		if (!m_bActionInstant)
+		{
+			if (m_uTotal == m_uTimes)
+			{
+				m_pInnerAction->update(1);
+				m_pInnerAction->stop();
+			}
+			else
+			{
+				// issue #390 prevent jerk, use right update
+				m_pInnerAction->update(dt - (m_fNextDt - m_pInnerAction->getDuration()/m_fDuration));
+			}
 		}
 	}
 	else
 	{
-		float r = fmodf(t, 1.0f);
-
-		// fix last repeat position
-		// else it could be 0.
-		if (time == 1.0f)
-		{
-			r = 1.0f;
-			m_uTotal++; // this is the added line
-		}
-
-//		m_pOther->update(min(r, 1));
-		m_pInnerAction->update(r > 1 ? 1 : r);
+		m_pInnerAction->update(fmodf(dt * m_uTimes,1.0f));
 	}
 }
 
@@ -2022,7 +2031,7 @@ CCActionInterval* CCReverseTime::reverse(void)
 CCAnimate* CCAnimate::actionWithAnimation(CCAnimation *pAnimation)
 {
 	CCAnimate *pAnimate = new CCAnimate();
-	pAnimate->initWithAnimation(pAnimation, true);
+	pAnimate->initWithAnimation(pAnimation);
 	pAnimate->autorelease();
 
 	return pAnimate;
@@ -2030,60 +2039,32 @@ CCAnimate* CCAnimate::actionWithAnimation(CCAnimation *pAnimation)
 
 bool CCAnimate::initWithAnimation(CCAnimation *pAnimation)
 {
-	CCAssert(pAnimation != NULL, "");
+	CCAssert( pAnimation!=NULL, "Animate: argument Animation must be non-NULL");
 
-	return initWithAnimation(pAnimation, true);
-}
+	float singleDuration = pAnimation->getDuration();
 
-CCAnimate* CCAnimate::actionWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame)
-{
-	CCAnimate *pAnimate = new CCAnimate();
-	pAnimate->initWithAnimation(pAnimation, bRestoreOriginalFrame);
-	pAnimate->autorelease();
-
-	return pAnimate;
-}
-
-bool CCAnimate::initWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame)
-{
-	CCAssert(pAnimation, "");
-
-	if (CCActionInterval::initWithDuration(pAnimation->getFrames()->count() * pAnimation->getDelay()))
+	if ( CCActionInterval::initWithDuration(singleDuration * pAnimation->getLoops() ) ) 
 	{
-		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
-       m_pAnimation = pAnimation;
-		CC_SAFE_RETAIN(m_pAnimation);
-		m_pOrigFrame = NULL;
-
-		return true;
-	}
-
-	return false;
-}
-
-CCAnimate* CCAnimate::actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame)
-{
-	CCAnimate *pAnimate = new CCAnimate();
-	pAnimate->initWithDuration(duration, pAnimation, bRestoreOriginalFrame);
-	pAnimate->autorelease();
-
-	return pAnimate;
-}
-
-bool CCAnimate::initWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame)
-{
-	CCAssert(pAnimation != NULL, "");
-
-	if (CCActionInterval::initWithDuration(duration))
-	{
-		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
+		nextFrame_ = 0;
 		m_pAnimation = pAnimation;
-		CC_SAFE_RETAIN(m_pAnimation);
 		m_pOrigFrame = NULL;
+		executedLoops_ = 0;
 
+		splitTimes_->reserve(pAnimation->getFrames()->count());
+
+		float accumUnitsOfTime = 0;
+		float newUnitOfTimeValue = singleDuration / pAnimation->getTotalDelayUnits();
+
+		CCMutableArray<CCAnimationFrame*>* pFrames = pAnimation->getFrames();
+		for (CCMutableArray<CCAnimationFrame*>::CCMutableArrayIterator iterFrame = pFrames->begin(); iterFrame != pFrames->end(); ++iterFrame)
+		{
+			CCAnimationFrame *frame = *iterFrame;
+			float value = (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration;
+			accumUnitsOfTime += frame->getDelayUnits();
+			splitTimes_->push_back(value);
+		}	
 		return true;
 	}
-
 	return false;
 }
 
@@ -2104,16 +2085,27 @@ CCObject* CCAnimate::copyWithZone(CCZone *pZone)
 
 	CCActionInterval::copyWithZone(pZone);
 
-	pCopy->initWithDuration(m_fDuration, m_pAnimation, m_bRestoreOriginalFrame);
+	pCopy->initWithAnimation((CCAnimation*)m_pAnimation->copy()->autorelease());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
-CCAnimate::~CCAnimate(void)
+CCAnimate::CCAnimate()
+: m_pAnimation(NULL)
+, splitTimes_(new std::vector<float>)
+, nextFrame_(0)
+, m_pOrigFrame(NULL)
+, executedLoops_(0)
+{
+
+}
+
+CCAnimate::~CCAnimate()
 {
 	CC_SAFE_RELEASE(m_pAnimation);
     CC_SAFE_RELEASE(m_pOrigFrame);
+	CC_SAFE_DELETE(splitTimes_);
 }
 
 void CCAnimate::startWithTarget(CCNode *pTarget)
@@ -2123,16 +2115,18 @@ void CCAnimate::startWithTarget(CCNode *pTarget)
 
 	CC_SAFE_RELEASE(m_pOrigFrame);
 
-	if (m_bRestoreOriginalFrame)
+	if (m_pAnimation->getRestoreOriginalFrame())
 	{
-		m_pOrigFrame = pSprite->displayedFrame();
+		m_pOrigFrame = pSprite->displayFrame();
 		m_pOrigFrame->retain();
 	}
+	nextFrame_ = 0;
+	executedLoops_ = 0;
 }
 
 void CCAnimate::stop(void)
 {
-	if (m_bRestoreOriginalFrame && m_pTarget)
+	if (m_pAnimation->getRestoreOriginalFrame() && m_pTarget)
 	{
 		((CCSprite*)(m_pTarget))->setDisplayFrame(m_pOrigFrame);
 	}
@@ -2140,34 +2134,56 @@ void CCAnimate::stop(void)
 	CCActionInterval::stop();
 }
 
-void CCAnimate::update(ccTime time)
+void CCAnimate::update(ccTime t)
 {
-	CCMutableArray<CCSpriteFrame*> *pFrames = m_pAnimation->getFrames();
-	unsigned int numberOfFrames = pFrames->count();
+	// if t==1, ignore. Animation should finish with t==1
+	if( t < 1.0f ) {
+		t *= m_pAnimation->getLoops();
 
-	unsigned int idx = (unsigned int)(time * numberOfFrames);
+		// new loop?  If so, reset frame counter
+		unsigned int loopNumber = (unsigned int)t;
+		if( loopNumber > executedLoops_ ) {
+			nextFrame_ = 0;
+			executedLoops_++;
+		}
 
-	if (idx >= numberOfFrames)
-	{
-		idx = numberOfFrames - 1;
+		// new t for animations
+		t = fmodf(t, 1.0f);
 	}
 
-	CCSprite *pSprite = (CCSprite*)(m_pTarget);
-	if (! pSprite->isFrameDisplayed(pFrames->getObjectAtIndex(idx)))
-	{
-		pSprite->setDisplayFrame(pFrames->getObjectAtIndex(idx));
+	CCMutableArray<CCAnimationFrame*>* frames = m_pAnimation->getFrames();
+	unsigned int numberOfFrames = frames->count();
+	CCSpriteFrame *frameToDisplay = NULL;
+
+	for( unsigned int i=nextFrame_; i < numberOfFrames; i++ ) {
+		float splitTime = splitTimes_->at(i);
+
+		if( splitTime <= t ) {
+			CCAnimationFrame *frame = frames->getObjectAtIndex(i);
+			frameToDisplay = frame->getSpriteFrame();
+			((CCSprite*)m_pTarget)->setDisplayFrame(frameToDisplay);
+
+			CCObjectDictionary* dict = frame->getUserInfo();
+			if( dict )
+			{
+				//TODO: [[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
+			}
+			nextFrame_ = i+1;
+
+			break;
+		}
 	}
 }
 
 CCActionInterval* CCAnimate::reverse(void)
 {
-	CCMutableArray<CCSpriteFrame*> *pOldArray = m_pAnimation->getFrames();
-	CCMutableArray<CCSpriteFrame*> *pNewArray = new CCMutableArray<CCSpriteFrame*>(pOldArray->count());
+	CCMutableArray<CCAnimationFrame*>* pOldArray = m_pAnimation->getFrames();
+	CCMutableArray<CCAnimationFrame*>* pNewArray = new CCMutableArray<CCAnimationFrame*>(pOldArray->count());
    
 	if (pOldArray->count() > 0)
 	{
-		CCSpriteFrame *pElement;
-		CCMutableArray<CCSpriteFrame*>::CCMutableArrayRevIterator iter;
+		CCAnimationFrame *pElement;
+		CCMutableArray<CCAnimationFrame*>::CCMutableArrayRevIterator iter;
 		for (iter = pOldArray->rbegin(); iter != pOldArray->rend(); iter++)
 		{
 			pElement = *iter;
@@ -2176,15 +2192,85 @@ CCActionInterval* CCAnimate::reverse(void)
 				break;
 			}
 
-			pNewArray->addObject((CCSpriteFrame*)(pElement->copy()->autorelease()));
+			pNewArray->addObject((CCAnimationFrame*)(pElement->copy()->autorelease()));
 		}
 	}
 
-	CCAnimation *pNewAnim = CCAnimation::animationWithFrames(pNewArray, m_pAnimation->getDelay());
+	CCAnimation *newAnim = CCAnimation::animationWithAnimationFrames(pNewArray, m_pAnimation->getDelayPerUnit(), m_pAnimation->getLoops());
+	newAnim->setRestoreOriginalFrame(m_pAnimation->getRestoreOriginalFrame());
+	return actionWithAnimation(newAnim);
+}
 
-	pNewArray->release();
+// CCTargetedAction
 
-	return CCAnimate::actionWithDuration(m_fDuration, pNewAnim, m_bRestoreOriginalFrame);
+CCTargetedAction::CCTargetedAction()
+: m_pForcedTarget(NULL)
+, m_pAction(NULL)
+{
+
+}
+
+CCTargetedAction::~CCTargetedAction()
+{
+	CC_SAFE_RELEASE(m_pForcedTarget);
+	CC_SAFE_RELEASE(m_pAction);
+}
+
+CCTargetedAction* CCTargetedAction::actionWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction)
+{
+	CCTargetedAction* p = new CCTargetedAction();
+	p->initWithTarget(pTarget, pAction);
+	p->autorelease();
+	return p;
+}
+
+bool CCTargetedAction::initWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction)
+{
+	if(CCActionInterval::initWithDuration(pAction->getDuration()))
+	{
+		CC_SAFE_RETAIN(pTarget);
+		m_pForcedTarget = pTarget;
+		CC_SAFE_RETAIN(pAction);
+		m_pAction = pAction;
+		return true;
+	}
+	return false;
+}
+
+CCObject* CCTargetedAction::copyWithZone(CCZone* pZone)
+{
+	CCZone* pNewZone = NULL;
+	CCTargetedAction* pRet = NULL;
+	if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
+	{
+		pRet = (CCTargetedAction*)(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pRet = new CCTargetedAction();
+		pZone = pNewZone = new CCZone(pRet);
+	}
+	CCActionInterval::copyWithZone(pZone);
+	// win32 : use the m_pOther's copy object.
+	pRet->initWithTarget(m_pTarget, (CCFiniteTimeAction*)m_pAction->copy()->autorelease()); 
+	CC_SAFE_DELETE(pNewZone);
+	return pRet;
+}
+
+void CCTargetedAction::startWithTarget(CCNode *pTarget)
+{
+	CCActionInterval::startWithTarget(m_pForcedTarget);
+	m_pAction->startWithTarget(m_pForcedTarget);
+}
+
+void CCTargetedAction::stop(void)
+{
+	m_pAction->stop();
+}
+
+void CCTargetedAction::update(ccTime time)
+{
+	m_pAction->update(time);
 }
 
 }

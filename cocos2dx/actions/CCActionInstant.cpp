@@ -62,7 +62,7 @@ void CCActionInstant::step(ccTime dt) {
 
 void CCActionInstant::update(ccTime time) {
 	CC_UNUSED_PARAM(time);
-	// ignore
+	// nothing
 }
 
 CCFiniteTimeAction * CCActionInstant::reverse() {
@@ -82,9 +82,9 @@ CCShow* CCShow::action() {
 	return pRet;
 }
 
-void CCShow::startWithTarget(CCNode *pTarget) {
-	CCActionInstant::startWithTarget(pTarget);
-	pTarget->setIsVisible(true);
+void CCShow::update(ccTime time) {
+	CC_UNUSED_PARAM(time);
+	m_pTarget->setIsVisible(true);
 }
 
 CCFiniteTimeAction* CCShow::reverse() {
@@ -120,9 +120,9 @@ CCHide * CCHide::action() {
 	return pRet;
 }
 
-void CCHide::startWithTarget(CCNode *pTarget) {
-	CCActionInstant::startWithTarget(pTarget);
-	pTarget->setIsVisible(false);
+void CCHide::update(ccTime time) {
+	CC_UNUSED_PARAM(time);
+	m_pTarget->setIsVisible(false);
 }
 
 CCFiniteTimeAction *CCHide::reverse() {
@@ -158,9 +158,9 @@ CCToggleVisibility * CCToggleVisibility::action() {
 	return pRet;
 }
 
-void CCToggleVisibility::startWithTarget(CCNode *pTarget) {
-	CCActionInstant::startWithTarget(pTarget);
-	pTarget->setIsVisible(!pTarget->getIsVisible());
+void CCToggleVisibility::update(ccTime time) {
+	CC_UNUSED_PARAM(time);
+	m_pTarget->setIsVisible(!m_pTarget->getIsVisible());
 }
 
 //
@@ -174,7 +174,7 @@ CCFlipX *CCFlipX::actionWithFlipX(bool x) {
 		return pRet;
 	}
 
-	CC_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 
@@ -183,9 +183,9 @@ bool CCFlipX::initWithFlipX(bool x) {
 	return true;
 }
 
-void CCFlipX::startWithTarget(CCNode *pTarget) {
-	CCActionInstant::startWithTarget(pTarget);
-	((CCSprite*) (pTarget))->setFlipX(m_bFlipX);
+void CCFlipX::update(ccTime time) {
+	CC_UNUSED_PARAM(time);
+	((CCSprite*) (m_pTarget))->setFlipX(m_bFlipX);
 }
 
 CCFiniteTimeAction* CCFlipX::reverse() {
@@ -229,9 +229,9 @@ bool CCFlipY::initWithFlipY(bool y) {
 	return true;
 }
 
-void CCFlipY::startWithTarget(CCNode *pTarget) {
-	CCActionInstant::startWithTarget(pTarget);
-	((CCSprite*) (pTarget))->setFlipY(m_bFlipY);
+void CCFlipY::update(ccTime time) {
+	CC_UNUSED_PARAM(time);
+	((CCSprite*) (m_pTarget))->setFlipY(m_bFlipY);
 }
 
 CCFiniteTimeAction* CCFlipY::reverse() {
@@ -292,8 +292,8 @@ CCObject * CCPlace::copyWithZone(CCZone *pZone) {
 	return pRet;
 }
 
-void CCPlace::startWithTarget(CCNode *pTarget) {
-	CCActionInstant::startWithTarget(pTarget);
+void CCPlace::update(ccTime time) {
+	CC_UNUSED_PARAM(time);
 	m_pTarget->setPosition(m_tPosition);
 }
 
@@ -349,8 +349,8 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
 	return pRet;
 }
 
-void CCCallFunc::startWithTarget(CCNode *pTarget) {
-	CCActionInstant::startWithTarget(pTarget);
+void CCCallFunc::update(ccTime time) {
+	CC_UNUSED_PARAM(time);
 	this->execute();
 }
 
@@ -495,7 +495,7 @@ bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
 		SEL_CallFuncO selector, CCObject* pObject) {
 	if (CCCallFunc::initWithTarget(pSelectorTarget)) {
 		m_pObject = pObject;
-		CC_SAFE_RETAIN(m_pObject)
+		CC_SAFE_RETAIN(m_pObject);
 
 		m_pCallFuncO = selector;
 		return true;

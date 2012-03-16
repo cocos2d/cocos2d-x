@@ -88,7 +88,7 @@ public:
 	virtual void postStep();
 	virtual void draw();
 	virtual void setBatchNode(CCParticleBatchNode* batchNode);
-
+	virtual void setTotalParticles(unsigned int tp);
 private:
 	void initVAO();
 	bool allocMemory();

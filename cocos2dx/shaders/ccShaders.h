@@ -1,6 +1,5 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
@@ -23,48 +22,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __CCSHADER_H__
+#define __CCSHADER_H__
 
-#ifndef __CCSHADERCACHE_H__
-#define __CCSHADERCACHE_H__
-
-#include "CCMutableDictionary.h"
+#include "CCGL.h"
 
 NS_CC_BEGIN
 
-class CCGLProgram;
+extern const GLchar * ccPosition_uColor_frag;
+extern const GLchar * ccPosition_uColor_vert;
 
-/** CCShaderCache
- Singleton that stores manages GL shaders
- @since v2.0
- */
-class CC_DLL CCShaderCache : public CCObject 
-{
-public:
-	CCShaderCache();
+extern const GLchar * ccPositionColor_frag;
+extern const GLchar * ccPositionColor_vert;
 
-	virtual ~CCShaderCache();
-	/** returns the shared instance */
-	static CCShaderCache* sharedShaderCache();
+extern const GLchar * ccPositionTexture_frag;
+extern const GLchar * ccPositionTexture_vert;
 
-	/** purges the cache. It releases the retained instance. */
-	static void purgeSharedShaderCache();
+extern const GLchar * ccPositionTextureA8Color_frag;
+extern const GLchar * ccPositionTextureA8Color_vert;
 
-	/** loads the default shaders */
-	void loadDefaultShaders();
+extern const GLchar * ccPositionTextureColor_frag;
+extern const GLchar * ccPositionTextureColor_vert;
 
-	/** returns a GL program for a given key */
-	CCGLProgram * programForKey(const char* key);
+extern const GLchar * ccPositionTextureColorAlphaTest_frag;
 
-	/** adds a CCGLProgram to the cache for a given name */
-	void addProgram(CCGLProgram* program, const char* key);
-
-private:
-	bool init();
-
-	CCMutableDictionary<std::string, CCGLProgram*>* programs_;
-
-};
+extern const GLchar * ccPositionTexture_uColor_frag;
+extern const GLchar * ccPositionTexture_uColor_vert;
 
 NS_CC_END
 
-#endif /* __CCSHADERCACHE_H__ */
+#endif /* __CCSHADER_H__ */

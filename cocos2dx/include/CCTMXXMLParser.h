@@ -61,11 +61,15 @@ namespace cocos2d {
 		TMXPropertyTile
 	};
 
+	typedef enum ccTMXTileFlags_ {
+		kCCTMXTileHorizontalFlag		= 0x80000000,
+		kCCTMXTileVerticalFlag			= 0x40000000,
+		kCCTMXTileDiagonalFlag			= 0x20000000,
+		kCCFlipedAll					= (kCCTMXTileHorizontalFlag|kCCTMXTileVerticalFlag|kCCTMXTileDiagonalFlag),
+		kCCFlippedMask					= ~(kCCFlipedAll)
+	} ccTMXTileFlags;
+
 	// Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
-#define kCCFlippedHorizontallyFlag		0x80000000
-#define kCCFlippedVerticallyFlag		0x40000000
-#define kCCFlippedAntiDiagonallyFlag	0x20000000
-#define kCCFlippedMask				~(kCCFlippedHorizontallyFlag|kCCFlippedVerticallyFlag|kCCFlippedAntiDiagonallyFlag)
 
 	/** @brief CCTMXLayerInfo contains the information about the layers like:
 	- Layer name

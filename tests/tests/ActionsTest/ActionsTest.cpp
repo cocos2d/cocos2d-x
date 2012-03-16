@@ -607,20 +607,55 @@ void ActionAnimate::onEnter()
 {
     ActionsDemo::onEnter();
 
-    centerSprites(1);
+    centerSprites(3);
 
-    CCAnimation* animation = CCAnimation::animation();
-    char frameName[100] = {0};
-    for( int i=1;i<15;i++)
-    {
-        sprintf(frameName, "Images/grossini_dance_%02d.png", i);
-        animation->addFrameWithFileName(frameName);
-    }
+	//
+	// Manual animation
+	//
+	CCAnimation* animation = CCAnimation::animation();
+	for( int i=1;i<15;i++)
+	{
+		char szName[100] = {0};
+		sprintf(szName, "Images/grossini_dance_%02d.png", i);
+		animation->addSpriteFrameWithFileName(szName);
+	}
+	// should last 2.8 seconds. And there are 14 frames.
+	animation->setDelayPerUnit(2.8f / 14.0f);
+	animation->setRestoreOriginalFrame(true);
 
-    CCActionInterval*  action = CCAnimate::actionWithDuration(3, animation, false);
-    CCActionInterval*  action_back = action->reverse();
+	CCAnimate* action = CCAnimate::actionWithAnimation(animation);
+	m_grossini->runAction(CCSequence::actions(action, action->reverse(), NULL));
 
-    m_grossini->runAction( CCSequence::actions( action, action_back, NULL));
+
+	//
+	// File animation
+	//
+	// With 2 loops and reverse
+	CCAnimationCache *cache = CCAnimationCache::sharedAnimationCache();
+	cache->addAnimationsWithFile("animations/animations-2.plist");
+	CCAnimation *animation2 = cache->animationByName("dance_1");
+
+	CCAnimate* action2 = CCAnimate::actionWithAnimation(animation2);
+	m_tamara->runAction(CCSequence::actions(action2, action2->reverse(), NULL));
+
+// TODO:
+// 	observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:CCAnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
+// 
+// 		NSDictionary *userInfo = [notification userInfo];
+// 		NSLog(@"object %@ with data %@", [notification object], userInfo );
+// 	}];
+
+
+	//
+	// File animation
+	//
+	// with 4 loops
+	CCAnimation *animation3 = (CCAnimation *)animation2->copy()->autorelease();
+	animation3->setLoops(4);
+
+
+	CCAnimate* action3 = CCAnimate::actionWithAnimation(animation3);
+	m_kathia->runAction(action3);
 }
 
 std::string ActionAnimate::subtitle()

@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "CCScriptSupport.h"
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"
@@ -83,7 +83,7 @@ CCLayer *CCLayer::node()
 	}
     else
     {
-	    CC_SAFE_DELETE(pRet)
+	    CC_SAFE_DELETE(pRet);
 	    return NULL;
     }
 }
@@ -440,7 +440,8 @@ CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color)
 
 bool CCLayerColor::init()
 {
-	return initWithColor(ccc4(0,0,0,0), 0, 0);
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+	return initWithColor(ccc4(0,0,0,0), s.width, s.height);
 }
 
 bool CCLayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
@@ -528,6 +529,8 @@ void CCLayerColor::draw()
 	ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 //

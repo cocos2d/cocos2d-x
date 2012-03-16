@@ -128,7 +128,7 @@ public: virtual const varType& get##funName(void) const { return varName; }\
 public: virtual void set##funName(const varType& var){ varName = var; }
 
 #define CC_SYNTHESIZE_RETAIN(varType, varName, funName)    \
-protected: varType varName; \
+private: varType varName; \
 public: virtual varType get##funName(void) const { return varName; } \
 public: virtual void set##funName(varType var)   \
 { \
@@ -140,13 +140,13 @@ public: virtual void set##funName(varType var)   \
 	} \
 } 
 
-#define CC_SAFE_DELETE(p)			if(p) { delete (p); (p) = 0; }
-#define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] (p); (p) = 0; }
-#define CC_SAFE_FREE(p)			if(p) { free(p); (p) = 0; }
-#define CC_SAFE_RELEASE(p)			if(p) { (p)->release(); }
-#define CC_SAFE_RELEASE_NULL(p)	if(p) { (p)->release(); (p) = 0; }
-#define CC_SAFE_RETAIN(p)			if(p) { (p)->retain(); }
-#define CC_BREAK_IF(cond)			if(cond) break;
+#define CC_SAFE_DELETE(p)			do { if(p) { delete (p); (p) = 0; } } while(0)
+#define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
+#define CC_SAFE_FREE(p)			    do { if(p) { free(p); (p) = 0; } } while(0)
+#define CC_SAFE_RELEASE(p)			do { if(p) { (p)->release(); } } while(0)
+#define CC_SAFE_RELEASE_NULL(p)	    do { if(p) { (p)->release(); (p) = 0; } } while(0)
+#define CC_SAFE_RETAIN(p)			do { if(p) { (p)->retain(); } } while(0)
+#define CC_BREAK_IF(cond)			if(cond) break
 
 
 // cocos2d debug

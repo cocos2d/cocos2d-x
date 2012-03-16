@@ -32,7 +32,7 @@ bool HelloWorld::init()
 	//    you may modify it.
 
 	// add a "close" icon to exit the progress. it's an autorelease object
-	CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
+	CCMenuItemImage *pCloseItem = CCMenuItemImage::itemWithNormalImage(
 										"CloseNormal.png",
 										"CloseSelected.png",
 										this,

@@ -1,6 +1,5 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
@@ -24,47 +23,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCSHADERCACHE_H__
-#define __CCSHADERCACHE_H__
-
-#include "CCMutableDictionary.h"
+#include "ccShaders.h"
 
 NS_CC_BEGIN
+//
+const GLchar * ccPosition_uColor_frag = 
+#include "ccShader_Position_uColor_frag.h"
+const GLchar * ccPosition_uColor_vert =
+#include "ccShader_Position_uColor_vert.h"
 
-class CCGLProgram;
+//
+const GLchar * ccPositionColor_frag =
+#include "ccShader_PositionColor_frag.h"
+const GLchar * ccPositionColor_vert =
+#include "ccShader_PositionColor_vert.h"
 
-/** CCShaderCache
- Singleton that stores manages GL shaders
- @since v2.0
- */
-class CC_DLL CCShaderCache : public CCObject 
-{
-public:
-	CCShaderCache();
+//
+const GLchar * ccPositionTexture_frag =
+#include "ccShader_PositionTexture_frag.h"
+const GLchar * ccPositionTexture_vert =
+#include "ccShader_PositionTexture_vert.h"
 
-	virtual ~CCShaderCache();
-	/** returns the shared instance */
-	static CCShaderCache* sharedShaderCache();
+//
+const GLchar * ccPositionTextureA8Color_frag =
+#include "ccShader_PositionTextureA8Color_frag.h"
+const GLchar * ccPositionTextureA8Color_vert =
+#include "ccShader_PositionTextureA8Color_vert.h"
 
-	/** purges the cache. It releases the retained instance. */
-	static void purgeSharedShaderCache();
+//
+const GLchar * ccPositionTextureColor_frag =
+#include "ccShader_PositionTextureColor_frag.h"
+const GLchar * ccPositionTextureColor_vert =
+#include "ccShader_PositionTextureColor_vert.h"
 
-	/** loads the default shaders */
-	void loadDefaultShaders();
+//
+const GLchar * ccPositionTextureColorAlphaTest_frag = 
+#include "ccShader_PositionTextureColorAlphaTest_frag.h"
 
-	/** returns a GL program for a given key */
-	CCGLProgram * programForKey(const char* key);
-
-	/** adds a CCGLProgram to the cache for a given name */
-	void addProgram(CCGLProgram* program, const char* key);
-
-private:
-	bool init();
-
-	CCMutableDictionary<std::string, CCGLProgram*>* programs_;
-
-};
+//
+const GLchar * ccPositionTexture_uColor_frag = 
+#include "ccShader_PositionTexture_uColor_frag.h"
+const GLchar * ccPositionTexture_uColor_vert = 
+#include "ccShader_PositionTexture_uColor_vert.h"
 
 NS_CC_END
-
-#endif /* __CCSHADERCACHE_H__ */
