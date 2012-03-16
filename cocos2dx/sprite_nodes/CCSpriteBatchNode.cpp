@@ -125,7 +125,7 @@ CCSpriteBatchNode::~CCSpriteBatchNode()
 // don't call visit on it's children
 void CCSpriteBatchNode::visit(void)
 {
-	// TODO: CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
+	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
 	CCAssert(m_pParent != NULL, "CCSpriteBatchNode should NOT be root node");
 
@@ -162,7 +162,7 @@ void CCSpriteBatchNode::visit(void)
 	kmGLPopMatrix();
 	m_nOrderOfArrival = 0;
 
-	// TODO: CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
+	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
 }
 
@@ -395,7 +395,7 @@ void CCSpriteBatchNode::reorderBatch(bool reorder)
 // draw
 void CCSpriteBatchNode::draw(void)
 {
-	// TODO: CC_PROFILER_START("CCSpriteBatchNode - draw");
+	CC_PROFILER_START("CCSpriteBatchNode - draw");
 
 	// Optimization: Fast Dispatch
 	if( m_pobTextureAtlas->getTotalQuads() == 0 )
@@ -409,7 +409,7 @@ void CCSpriteBatchNode::draw(void)
 
 	m_pobTextureAtlas->drawQuads();
 
-	// TODO: CC_PROFILER_STOP("CCSpriteBatchNode - draw");
+	CC_PROFILER_STOP("CCSpriteBatchNode - draw");
 }
 
 void CCSpriteBatchNode::increaseAtlasCapacity(void)

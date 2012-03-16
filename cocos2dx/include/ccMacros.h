@@ -91,11 +91,14 @@ default gl blend src function. Compatible with premultiplied alpha images.
  Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
  @since v2.0
  */
-#define CC_NODE_DRAW_SETUP()																	\
-do {																							\
-	ccGLEnable( m_glServerState );																\
-	m_pShaderProgram->use();																	\
-	m_pShaderProgram->setUniformForModelViewProjectionMatrix();									\
+#define CC_NODE_DRAW_SETUP() \
+do { \
+	ccGLEnable( m_glServerState ); \
+	if (getShaderProgram() != NULL) \
+	{ \
+		getShaderProgram()->use(); \
+		getShaderProgram()->setUniformForModelViewProjectionMatrix(); \
+	} \
 } while(0)
 
 
@@ -246,7 +249,13 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define CHECK_GL_ERROR_DEBUG()
 #else
-#define CHECK_GL_ERROR_DEBUG() ({ GLenum __error = glGetError(); if(__error) CCLog("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); })
+#define CHECK_GL_ERROR_DEBUG() \
+	do { \
+		GLenum __error = glGetError(); \
+		if(__error) { \
+			CCLog("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); \
+		} \
+	} while (false)
 #endif
 
 /** @def CC_INCREMENT_GL_DRAWS_BY_ONE

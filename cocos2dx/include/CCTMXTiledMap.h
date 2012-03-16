@@ -117,10 +117,16 @@ namespace cocos2d {
 		virtual ~CCTMXTiledMap();
 
 		/** creates a TMX Tiled Map with a TMX file.*/
-		static CCTMXTiledMap * tiledMapWithTMXFile(const char *tmxFile);
+		static CCTMXTiledMap* tiledMapWithTMXFile(const char *tmxFile);
+
+		/** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
+		static CCTMXTiledMap* tiledMapWithXML(const char* tmxString, const char* resourcePath);
 
 		/** initializes a TMX Tiled Map with a TMX file */
 		bool initWithTMXFile(const char *tmxFile);
+
+		/** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
+		bool initWithXML(const char* tmxString, const char* resourcePath);
 
 		/** return the TMXLayer for the specific layer */
 		CCTMXLayer* layerNamed(const char *layerName);
@@ -137,11 +143,10 @@ namespace cocos2d {
 	private:
  		CCTMXLayer * parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
  		CCTMXTilesetInfo * tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
-
+		void buildWithMapInfo(CCTMXMapInfo* mapInfo);
 	protected:
 		//! tile properties
         CCDictionary<int, CCStringToStringDictionary*> *m_pTileProperties;
-        CCDictionary<std::string, CCTMXLayer*> *m_pTMXLayers;
 
 	};
 

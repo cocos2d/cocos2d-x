@@ -108,7 +108,7 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
 
 	// shader stuff
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture_uColor));
-	m_nUniformColor = glGetUniformLocation( m_pShaderProgram->getProgram(), "u_color");
+	m_nUniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
 
 	return true;
 }
@@ -137,7 +137,7 @@ void CCAtlasNode::draw()
 	ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
 	GLfloat colors[4] = {m_tColor.r / 255.0f, m_tColor.g / 255.0f, m_tColor.b / 255.0f, m_cOpacity / 255.0f};
-	m_pShaderProgram->setUniformLocationWith4fv(m_nUniformColor, colors, 1);
+	getShaderProgram()->setUniformLocationWith4fv(m_nUniformColor, colors, 1);
 
 	m_pTextureAtlas->drawNumberOfQuads(m_uQuadsToDraw, 0);
 }

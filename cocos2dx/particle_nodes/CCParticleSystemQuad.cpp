@@ -284,7 +284,7 @@ void CCParticleSystemQuad::postStep()
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0])*m_uParticleCount, m_pQuads);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	// TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 }
 
 // overriding draw method
@@ -400,7 +400,7 @@ void CCParticleSystemQuad::initVAO()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	//TODO:CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 }
 
 bool CCParticleSystemQuad::allocMemory()

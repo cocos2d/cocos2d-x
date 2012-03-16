@@ -379,7 +379,8 @@ void CCParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 
 void CCParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-	//TODO: arrayMakeObjectsPerformSelector(m_pChildren, &CCParticleBatchNode::useSelfRender);
+	//TODO: useSelfRender is undefined.
+	//arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCParticleBatchNode::useSelfRender, CCParticleSystem);
 
 	CCNode::removeAllChildrenWithCleanup(doCleanup);
 

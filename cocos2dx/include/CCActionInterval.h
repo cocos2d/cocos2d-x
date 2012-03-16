@@ -686,10 +686,10 @@ public:
 
 	CC_SYNTHESIZE_RETAIN(CCAnimation*, m_pAnimation, Animation)
 protected:
-	std::vector<float>* splitTimes_;
-	int			    nextFrame_;
+	std::vector<float>* m_pSplitTimes;
+	int			    m_nNextFrame;
 	CCSpriteFrame*  m_pOrigFrame;
-   	unsigned int	executedLoops_;
+   	unsigned int	m_uExecutedLoops;
 };
 
 /** Overrides the target of an action so that it always runs on the target
