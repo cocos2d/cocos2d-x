@@ -140,6 +140,7 @@ public:
 	/** returns the program error log */
 	const char* programLog();
 	
+	inline const GLuint& getProgram() { return m_uProgram; }
 
 private:
 	bool updateUniformLocation(unsigned int location, GLvoid* data, unsigned int bytes);
@@ -147,9 +148,8 @@ private:
 	bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
 	const char* logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc);
 
-	CC_SYNTHESIZE_READONLY(GLuint, m_uProgram, Program);
-
 private:
+	GLuint			m_uProgram;
 	GLuint			m_uVertShader;
 	GLuint			m_uFragShader;
 	GLint			m_uUniforms[kCCUniform_MAX];

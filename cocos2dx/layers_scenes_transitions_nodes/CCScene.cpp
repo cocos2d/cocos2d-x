@@ -64,7 +64,7 @@ CCScene *CCScene::node()
 	}
     else
     {
-	    CC_SAFE_DELETE(pRet)
+	    CC_SAFE_DELETE(pRet);
 	    return NULL;
     }
 }

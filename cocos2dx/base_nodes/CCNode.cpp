@@ -75,6 +75,7 @@ CCNode::CCNode(void)
 , m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
 , m_pUserData(NULL)
+, m_pUserObject(NULL)
 , m_bIsTransformDirty(true)
 , m_bIsInverseDirty(true)
 , m_nScriptHandler(0)
@@ -102,7 +103,7 @@ CCNode::~CCNode(void)
 
 	CC_SAFE_RELEASE(m_pGrid);
 	CC_SAFE_RELEASE(m_pShaderProgram);
-
+	CC_SAFE_RELEASE(m_pUserObject);
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
@@ -169,9 +170,18 @@ int CCNode::getZOrder()
 
 /// zOrder setter : private method
 /// used internally to alter the zOrder variable. DON'T call this method manually 
-void CCNode::setZOrder(int z)
+void CCNode::_setZOrder(int z)
 {
 	m_nZOrder = z;
+}
+
+void CCNode::setZOrder(int z)
+{
+	_setZOrder(z);
+	if (m_pParent)
+	{
+		m_pParent->reorderChild(this, z);
+	}
 }
 
 /// ertexZ getter

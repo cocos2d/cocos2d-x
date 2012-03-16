@@ -47,7 +47,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CC_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 
@@ -138,7 +138,7 @@ namespace cocos2d{
 		m_sString = label;
 		this->updateAtlasValues();
 
-		CCSize s = CCSizeMake(len * m_uItemWidth, m_uItemHeight);;
+		CCSize s = CCSizeMake(len * m_uItemWidth, m_uItemHeight);
 
 		this->setContentSize(s);
 

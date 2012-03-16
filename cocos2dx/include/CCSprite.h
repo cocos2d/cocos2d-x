@@ -155,9 +155,6 @@ public:
 	 */
 	static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
     
-	/** Creates an sprite with an CCBatchNode and a rect
-	*/
-	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect);
 public:
     CCSprite(void);
 	virtual ~CCSprite(void);
@@ -250,14 +247,6 @@ public:
 	 */
     bool initWithFile(const char *pszFilename, const CCRect& rect);
 
-	/** Initializes an sprite with an CCSpriteBatchNode and a rect in points */
-	bool initWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect);
-
-	/** Initializes an sprite with an CCSpriteBatchNode and a rect in points, optionally rotated.
-	@since v0.99.5
-	*/
-	bool initWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect, bool rotated);
-
 	// BatchNode methods
 
 	/** updates the quad according the the rotation, position, scale values. */
@@ -288,7 +277,7 @@ public:
 	bool isFrameDisplayed(CCSpriteFrame *pFrame);
 
 	/** returns the current displayed frame. */
-	CCSpriteFrame* displayedFrame(void);
+	CCSpriteFrame* displayFrame(void);
 
 	CCSpriteBatchNode* getBatchNode(void);
 	void setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);

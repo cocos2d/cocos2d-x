@@ -38,7 +38,7 @@ THE SOFTWARE.
 
 #include <float.h>
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 #define kProgressTextureCoordsCount 4
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
@@ -62,7 +62,6 @@ CCProgressTimer* CCProgressTimer::progressWithSprite(CCSprite* sp)
 
 bool CCProgressTimer::initWithSprite(CCSprite* sp)
 {
-	setSprite(sp);
 	setPercentage(0.0f);
 	m_pVertexData = NULL;
 	m_nVertexDataCount = 0;
@@ -72,7 +71,7 @@ bool CCProgressTimer::initWithSprite(CCSprite* sp)
 	m_bReverseDirection = false;
 	setMidpoint(ccp(0.5f, 0.5f));
 	setBarChangeRate(ccp(1,1));
-
+	setSprite(sp);
 	// shader program
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 	return true;
@@ -80,7 +79,7 @@ bool CCProgressTimer::initWithSprite(CCSprite* sp)
 
 CCProgressTimer::~CCProgressTimer(void)
 {
-	CC_SAFE_DELETE_ARRAY(m_pVertexData);
+	CC_SAFE_FREE(m_pVertexData);
 	CC_SAFE_RELEASE(m_pSprite);
 }
 
@@ -105,8 +104,7 @@ void CCProgressTimer::setSprite(CCSprite *pSprite)
 		//	Everytime we set a new sprite, we free the current vertex data
 		if (m_pVertexData)
 		{
-			delete[] m_pVertexData;
-			m_pVertexData = NULL;
+			CC_SAFE_FREE(m_pVertexData);
 			m_nVertexDataCount = 0;
 		}
 	}		
@@ -119,7 +117,7 @@ void CCProgressTimer::setType(CCProgressTimerType type)
 		//	release all previous information
 		if (m_pVertexData)
 		{
-			delete[] m_pVertexData;
+			CC_SAFE_FREE(m_pVertexData);
 			m_pVertexData = NULL;
 			m_nVertexDataCount = 0;
 		}
@@ -185,9 +183,11 @@ ccTex2F CCProgressTimer::textureCoordFromAlphaPoint(CCPoint alpha)
 	ccV3F_C4B_T2F_Quad quad = m_pSprite->getQuad();
 	CCPoint min = ccp(quad.bl.texCoords.u,quad.bl.texCoords.v);
 	CCPoint max = ccp(quad.tr.texCoords.u,quad.tr.texCoords.v);
-	ret.u = min.x * (1.f - alpha.x) + max.x * alpha.x;
-	ret.v = min.y * (1.f - alpha.y) + max.y * alpha.y;
-	return ret;
+	//  Fix bug #1303 so that progress timer handles sprite frame texture rotation
+	if (m_pSprite->isTextureRectRotated()) {
+		CC_SWAP(alpha.x, alpha.y, float);
+	}
+	return tex2(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
 ccVertex2F CCProgressTimer::vertexFromAlphaPoint(CCPoint alpha)
@@ -304,9 +304,9 @@ void CCProgressTimer::updateRadial(void)
 			//	Remember that the top edge is split in half for the 12 o'clock position
 			//	Let's deal with that here by finding the correct endpoints
 			if(i == 0){
-				edgePtB = ccpLerp(edgePtA, edgePtB, .5f);
+				edgePtB = ccpLerp(edgePtA, edgePtB, 1-m_tMidpoint.x);
 			} else if(i == 4){
-				edgePtA = ccpLerp(edgePtA, edgePtB, .5f);
+				edgePtA = ccpLerp(edgePtA, edgePtB, 1-m_tMidpoint.x);
 			}
 
 			//	s and t are returned by ccpLineIntersect
@@ -513,16 +513,25 @@ void CCProgressTimer::draw(void)
 	glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(m_pVertexData[0]), &m_pVertexData[0].texCoords);
 	glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(m_pVertexData[0]), &m_pVertexData[0].colors);
 
-	if(m_eType == kCCProgressTimerTypeRadial){
+	if(m_eType == kCCProgressTimerTypeRadial)
+	{
 		glDrawArrays(GL_TRIANGLE_FAN, 0, m_nVertexDataCount);
-	} else if (m_eType == kCCProgressTimerTypeBar) {
-		if (!m_bReverseDirection) {
+	} 
+	else if (m_eType == kCCProgressTimerTypeBar)
+	{
+		if (!m_bReverseDirection) 
+		{
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, m_nVertexDataCount);
-		} else {
+		} 
+		else 
+		{
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, m_nVertexDataCount/2);
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, m_nVertexDataCount/2);
+			// 2 draw calls
+			CC_INCREMENT_GL_DRAWS(1);
 		}
 	}
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
-} // namespace cocos2d
+NS_CC_END

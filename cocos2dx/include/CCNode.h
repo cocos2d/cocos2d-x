@@ -185,7 +185,7 @@ while(false)
         void setPositionX(float x);
         void setPositionY(float y);
         void setPosition(float x, float y);
-
+		void _setZOrder(int z);
         /** The X skew angle of the node in degrees.
          This angle describes the shear distortion in the X direction.
          Thus, it is the angle between the Y axis and the left edge of the shape
@@ -253,6 +253,8 @@ while(false)
 
         /** A custom user data pointer */
         CC_PROPERTY(void *, m_pUserData, UserData)
+		/** Similar to userData, but instead of holding a void* it holds an id */
+		CC_SYNTHESIZE_RETAIN(CCObject*, m_pUserObject, UserObject);
 
 		/** Shader Program
 		 @since v2.0
@@ -303,7 +305,8 @@ while(false)
 
 		//! used internally to alter the zOrder variable. DON'T call this method manually
 		void setZOrder(int z);
-
+		
+		
 		void detachChild(CCNode *child, bool doCleanup);
 
 		typedef void (CCNode::*callbackFunc)(void);

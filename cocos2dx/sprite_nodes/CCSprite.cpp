@@ -57,34 +57,6 @@ namespace   cocos2d {
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
-
-CCSprite* CCSprite::spriteWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect)
-{
-	CCSprite *pobSprite = new CCSprite();
-	if (pobSprite && pobSprite->initWithBatchNode(batchNode, rect))
-	{
-        pobSprite->autorelease();
-        return pobSprite;
-    }
-    CC_SAFE_DELETE(pobSprite);
-	return NULL;
-}
-
-bool CCSprite::initWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect)
-{
-	return initWithBatchNode(batchNode, rect, false);
-}
-
-bool CCSprite::initWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect, bool rotated)
-{
-	if (initWithTexture(batchNode->getTexture(), rect, rotated))
-    {
-	    setBatchNode(batchNode);
-        return true;
-    }
-	return false;
-}
-
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
 {
 	CCSprite *pobSprite = new CCSprite();
@@ -466,7 +438,7 @@ void CCSprite::setTextureCoords(CCRect rect)
 
 void CCSprite::updateTransform(void)
 {
-	CCAssert(m_pobBatchNode, "updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
+	CCAssert(m_pobBatchNode, "updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
 
 	// recaculate matrix only if it is dirty
 	if( m_bDirty ) {
@@ -613,6 +585,7 @@ void CCSprite::draw(void)
 	ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITE_DEBUG_DRAW
 
+	CC_INCREMENT_GL_DRAWS(1);
 
 	// TODO: CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CCSprite - draw");
 }
@@ -745,7 +718,7 @@ void CCSprite::setReorderChildDirtyRecursively(void)
 	{
 		m_bReorderChildDirty = true;
 		CCNode* node = (CCNode*) m_pParent;
-		while (node != m_pobBatchNode)
+		while (node && node != m_pobBatchNode)
 		{
 			((CCSprite*)node)->setReorderChildDirtyRecursively();
 			node=node->getParent();
@@ -987,11 +960,11 @@ void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int f
 
 	CCAssert(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-	CCSpriteFrame *frame = a->getFrames()->getObjectAtIndex(frameIndex);
+	CCAnimationFrame *frame = a->getFrames()->getObjectAtIndex(frameIndex);
 
 	CCAssert(frame, "CCSprite#setDisplayFrame. Invalid frame");
 
-	setDisplayFrame(frame);
+	setDisplayFrame(frame->getSpriteFrame());
 }
 
 bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
@@ -1004,7 +977,7 @@ bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
 		);
 }
 
-CCSpriteFrame* CCSprite::displayedFrame(void)
+CCSpriteFrame* CCSprite::displayFrame(void)
 {
 	return CCSpriteFrame::frameWithTexture(m_pobTexture,
                                            CC_RECT_POINTS_TO_PIXELS(m_obRect),
@@ -1068,10 +1041,9 @@ void CCSprite::updateBlendFunc(void)
 
 void CCSprite::setTexture(CCTexture2D *texture)
 {
-	// CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteSheet
-	CCAssert(! m_pobBatchNode, "setTexture doesn't work when the sprite is rendered using a CCSpriteSheet");
+	CCAssert(! m_pobBatchNode, "setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 	// accept texture==nil as argument
-	CCAssert((! texture) || dynamic_cast<CCTexture2D*>(texture));
+	CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
 
 	if (m_pobTexture != texture)
 	{

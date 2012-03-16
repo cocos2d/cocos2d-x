@@ -233,6 +233,8 @@ protected:
 
 	//true if scaled or rotated
 	bool m_bTransformSystemDirty;
+	// Number of allocated particles
+	unsigned int m_uAllocatedParticles;
 
 	/** Is the emitter active */
 	CC_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
@@ -356,6 +358,8 @@ public:
 	*/
 	static CCParticleSystem * particleWithFile(const char *plistFile);
 
+	/** initializes a CCParticleSystem*/
+	bool init();
 	/** initializes a CCParticleSystem from a plist file.
 	This plist files can be creted manually or with Particle Designer:
 	http://particledesigner.71squared.com/

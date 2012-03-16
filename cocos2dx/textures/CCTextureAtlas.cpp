@@ -52,8 +52,8 @@ CCTextureAtlas::~CCTextureAtlas()
 {
 //	CCLOGINFO("cocos2d: deallocing CCTextureAtlas.");
 
-	CC_SAFE_FREE(m_pQuads)
-	CC_SAFE_FREE(m_pIndices)
+	CC_SAFE_FREE(m_pQuads);
+	CC_SAFE_FREE(m_pIndices);
 
 	glDeleteBuffers(2, m_pBuffersVBO);
 	glDeleteVertexArrays(1, &m_uVAOname);
@@ -157,8 +157,8 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
 	if( ! ( m_pQuads && m_pIndices) && m_uCapacity > 0) {
 		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
-		CC_SAFE_FREE(m_pQuads)
-		CC_SAFE_FREE(m_pIndices)
+		CC_SAFE_FREE(m_pQuads);
+		CC_SAFE_FREE(m_pIndices);
 
 		// release texture, should set it to null, because the destruction will
 		// release it too. see cocos2d-x issue #484
