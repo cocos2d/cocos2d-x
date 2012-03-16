@@ -51,7 +51,7 @@ void CCShaderCache::purgeSharedShaderCache()
 }
 
 CCShaderCache::CCShaderCache()
-: programs_(0)
+: m_pPrograms(0)
 {
 
 }
@@ -59,12 +59,12 @@ CCShaderCache::CCShaderCache()
 CCShaderCache::~CCShaderCache()
 {
 	CCLOGINFO("cocos2d deallocing 0x%X", this);
-	programs_->release();
+	m_pPrograms->release();
 }
 
 bool CCShaderCache::init()
 {
-	programs_ = new CCMutableDictionary<std::string, CCGLProgram*>();
+	m_pPrograms = new CCMutableDictionary<std::string, CCGLProgram*>();
 	loadDefaultShaders();
 	return true;
 }
@@ -82,7 +82,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionTextureColor);
+	m_pPrograms->setObject(p, kCCShader_PositionTextureColor);
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
@@ -98,7 +98,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionTextureColorAlphaTest);
+	m_pPrograms->setObject(p, kCCShader_PositionTextureColorAlphaTest);
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
@@ -115,7 +115,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionColor);
+	m_pPrograms->setObject(p, kCCShader_PositionColor);
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
@@ -131,7 +131,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionTexture);
+	m_pPrograms->setObject(p, kCCShader_PositionTexture);
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
@@ -148,7 +148,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p ,kCCShader_PositionTexture_uColor);
+	m_pPrograms->setObject(p ,kCCShader_PositionTexture_uColor);
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
@@ -166,7 +166,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionTextureA8Color);
+	m_pPrograms->setObject(p, kCCShader_PositionTextureA8Color);
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
@@ -182,7 +182,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();	
 	p->updateUniforms();	
 
-	programs_->setObject(p, kCCShader_Position_uColor);	
+	m_pPrograms->setObject(p, kCCShader_Position_uColor);	
 	p->release();	
 
 	CHECK_GL_ERROR_DEBUG();
@@ -190,12 +190,12 @@ void CCShaderCache::loadDefaultShaders()
 
 CCGLProgram* CCShaderCache::programForKey(const char* key)
 {
-	return programs_->objectForKey(key);
+	return m_pPrograms->objectForKey(key);
 }
 
 void CCShaderCache::addProgram(CCGLProgram* program, const char* key)
 {
-    programs_->setObject(program, key);
+    m_pPrograms->setObject(program, key);
 }
 
 NS_CC_END

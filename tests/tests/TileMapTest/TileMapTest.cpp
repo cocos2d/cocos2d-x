@@ -940,7 +940,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
 	
 	CCSize s = map->getContentSize();
     map->setPosition( ccp(-s.width/2,0) );
-	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
+	CCLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	// because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
 	// can use any CCSprite and it will work OK.
