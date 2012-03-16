@@ -521,7 +521,7 @@ void CCSprite::updateTransform(void)
 
 void CCSprite::draw(void)
 {
-	// TODO: CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, "CCSprite - draw");
+	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, "CCSprite - draw");
 
 	CCAssert(!m_pobBatchNode, "If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
@@ -562,7 +562,7 @@ void CCSprite::draw(void)
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-	// TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 
 #if CC_SPRITE_DEBUG_DRAW == 1
@@ -587,7 +587,7 @@ void CCSprite::draw(void)
 
 	CC_INCREMENT_GL_DRAWS(1);
 
-	// TODO: CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CCSprite - draw");
+	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CCSprite - draw");
 }
 
 // CCNode overrides

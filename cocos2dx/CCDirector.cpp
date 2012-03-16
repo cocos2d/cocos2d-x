@@ -345,7 +345,9 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.5f, 1500.0f );
+			// issue #1334
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
+//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 			kmGLMultMatrix(&matrixPerspective);
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -367,7 +369,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 		break;
 			
 	default:
-		CCLOG("cocos2d: Director: unrecognized projecgtion");
+		CCLOG("cocos2d: Director: unrecognized projection");
 		break;
 	}
 
@@ -397,8 +399,8 @@ void CCDirector::setAlphaBlending(bool bOn)
 	{
 		glDisable(GL_BLEND);
 	}
-	// TODO: 
-	//CHECK_GL_ERROR_DEBUG();
+
+	CHECK_GL_ERROR_DEBUG();
 }
 
 void CCDirector::setDepthTest(bool bOn)

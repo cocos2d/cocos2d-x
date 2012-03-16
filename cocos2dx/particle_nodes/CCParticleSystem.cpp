@@ -535,7 +535,7 @@ bool CCParticleSystem::isFull()
 // ParticleSystem - MainLoop
 void CCParticleSystem::update(ccTime dt)
 {
-	// TODO: CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
+	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 
 	if( m_bIsActive && m_fEmissionRate )
 	{
@@ -695,7 +695,7 @@ void CCParticleSystem::update(ccTime dt)
 	if (!m_pBatchNode)
 		postStep();
 
-	//TODO: CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
+	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 }
 
 void CCParticleSystem::updateWithNoTime(void)

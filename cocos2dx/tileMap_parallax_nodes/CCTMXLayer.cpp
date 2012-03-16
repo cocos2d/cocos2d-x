@@ -210,8 +210,11 @@ void CCTMXLayer::parseInternalProperties()
 		{
 			m_bUseAutomaticVertexZ = true;
 			CCString *alphaFuncVal = propertyNamed("cc_alpha_func");
-			float alphaFuncValue = alphaFuncVal->toFloat();
-
+			float alphaFuncValue = 0.0f;
+			if (alphaFuncVal != NULL)
+			{
+				alphaFuncValue = alphaFuncVal->toFloat();
+			}
 			setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest));
 
 			GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), kCCUniformAlphaTestValue);

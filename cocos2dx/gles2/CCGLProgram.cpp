@@ -272,8 +272,10 @@ void CCGLProgram::setUniformLocationWith1i(unsigned int location, GLint i1)
 {
 	bool updated =  updateUniformLocation(location, &i1, sizeof(i1)*1);
 
-	if( updated )
+	if( updated ) 
+	{
 		glUniform1i( (GLint)location, i1);
+	}
 }
 
 void CCGLProgram::setUniformLocationWith1f(unsigned int location, GLfloat f1)
@@ -281,7 +283,9 @@ void CCGLProgram::setUniformLocationWith1f(unsigned int location, GLfloat f1)
 	bool updated =  updateUniformLocation(location, &f1, sizeof(f1)*1);
 
 	if( updated )
+	{
 		glUniform1f( (GLint)location, f1);
+	}
 }
 
 void CCGLProgram::setUniformLocationWith2f(unsigned int location, GLfloat f1, GLfloat f2)
@@ -290,7 +294,9 @@ void CCGLProgram::setUniformLocationWith2f(unsigned int location, GLfloat f1, GL
 	bool updated =  updateUniformLocation(location, floats, sizeof(floats));
 
 	if( updated )
+	{
 		glUniform2f( (GLint)location, f1, f2);
+	}
 }
 
 void CCGLProgram::setUniformLocationWith3f(unsigned int location, GLfloat f1, GLfloat f2, GLfloat f3)
@@ -299,7 +305,9 @@ void CCGLProgram::setUniformLocationWith3f(unsigned int location, GLfloat f1, GL
 	bool updated =  updateUniformLocation(location, floats, sizeof(floats));
 
 	if( updated )
+	{
 		glUniform3f( (GLint)location, f1, f2, f3);
+	}
 }
 
 void CCGLProgram::setUniformLocationWith4f(unsigned int location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4)
@@ -308,7 +316,9 @@ void CCGLProgram::setUniformLocationWith4f(unsigned int location, GLfloat f1, GL
 	bool updated =  updateUniformLocation(location, floats, sizeof(floats));
 
 	if( updated )
+	{
 		glUniform4f( (GLint)location, f1, f2, f3,f4);
+	}
 }
 
 void CCGLProgram::setUniformLocationWith2fv(unsigned int location, GLfloat* floats, unsigned int numberOfArrays)
@@ -316,7 +326,9 @@ void CCGLProgram::setUniformLocationWith2fv(unsigned int location, GLfloat* floa
 	bool updated =  updateUniformLocation(location, floats, sizeof(float)*2*numberOfArrays);
 
 	if( updated )
+	{
 		glUniform2fv( (GLint)location, (GLsizei)numberOfArrays, floats );
+	}
 }
 
 void CCGLProgram::setUniformLocationWith3fv(unsigned int location, GLfloat* floats, unsigned int numberOfArrays)
@@ -324,7 +336,9 @@ void CCGLProgram::setUniformLocationWith3fv(unsigned int location, GLfloat* floa
 	bool updated =  updateUniformLocation(location, floats, sizeof(float)*3*numberOfArrays);
 
 	if( updated )
+	{
 		glUniform3fv( (GLint)location, (GLsizei)numberOfArrays, floats );
+	}
 }
 
 void CCGLProgram::setUniformLocationWith4fv(unsigned int location, GLfloat* floats, unsigned int numberOfArrays)
@@ -332,7 +346,9 @@ void CCGLProgram::setUniformLocationWith4fv(unsigned int location, GLfloat* floa
 	bool updated =  updateUniformLocation(location, floats, sizeof(float)*4*numberOfArrays);
 
 	if( updated )
+	{
 		glUniform4fv( (GLint)location, (GLsizei)numberOfArrays, floats );
+	}
 }
 
 
@@ -341,7 +357,9 @@ void CCGLProgram::setUniformLocationwithMatrix4fv(unsigned int location, GLfloat
 	bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*16*numberOfMatrices);
 
 	if( updated )
+	{
 		glUniformMatrix4fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
+	}
 }
 
 void CCGLProgram::setUniformForModelViewProjectionMatrix()

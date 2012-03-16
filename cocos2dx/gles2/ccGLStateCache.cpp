@@ -35,46 +35,52 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static GLuint	_ccCurrentProjectionMatrix = -1;
-static bool		_vertexAttribPosition = false;
-static bool		_vertexAttribColor = false;
-static bool		_vertexAttribTexCoords = false;
+static GLuint	s_uCurrentProjectionMatrix = -1;
+static bool		s_bVertexAttribPosition = false;
+static bool		s_bVertexAttribColor = false;
+static bool		s_bVertexAttribTexCoords = false;
+
 
 #if CC_ENABLE_GL_STATE_CACHE
+
 #define kCCMaxActiveTexture 16
-static GLuint	_ccCurrentShaderProgram = -1;
-static GLuint	_ccCurrentBoundTexture[kCCMaxActiveTexture] =  {-1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, };
-static GLenum	_ccCurrentActiveTexture = (GL_TEXTURE0 - GL_TEXTURE0);
-static GLenum	_ccBlendingSource = -1;
-static GLenum	_ccBlendingDest = -1;
-static int      _ccGLServerState = 0;
+
+static GLuint	s_uCurrentShaderProgram = -1;
+static GLuint	s_uCurrentBoundTexture[kCCMaxActiveTexture] =  {-1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, };
+static GLenum	s_eCurrentActiveTexture = (GL_TEXTURE0 - GL_TEXTURE0);
+static GLenum	s_eBlendingSource = -1;
+static GLenum	s_eBlendingDest = -1;
+static int      s_eGLServerState = 0;
+
 #endif // CC_ENABLE_GL_STATE_CACHE
 
-//#pragma mark - GL State Cache functions
+// GL State Cache functions
 
 void ccGLInvalidateStateCache( void )
 {
 	kmGLFreeAll();
-	_ccCurrentProjectionMatrix = -1;
-	_vertexAttribPosition = false;
-	_vertexAttribColor = false;
-	_vertexAttribTexCoords = false;
+	s_uCurrentProjectionMatrix = -1;
+	s_bVertexAttribPosition = false;
+	s_bVertexAttribColor = false;
+	s_bVertexAttribTexCoords = false;
 #if CC_ENABLE_GL_STATE_CACHE
-	_ccCurrentShaderProgram = -1;
+	s_uCurrentShaderProgram = -1;
 	for( int i=0; i < kCCMaxActiveTexture; i++ )
-		_ccCurrentBoundTexture[i] = -1;
-	_ccCurrentActiveTexture = (GL_TEXTURE0 - GL_TEXTURE0);
-	_ccBlendingSource = -1;
-	_ccBlendingDest = -1;
-	_ccGLServerState = 0;
+	{
+		s_uCurrentBoundTexture[i] = -1;
+	}
+	s_eCurrentActiveTexture = (GL_TEXTURE0 - GL_TEXTURE0);
+	s_eBlendingSource = -1;
+	s_eBlendingDest = -1;
+	s_eGLServerState = 0;
 #endif
 }
 
 void ccGLDeleteProgram( GLuint program )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( program == _ccCurrentShaderProgram )
-		_ccCurrentShaderProgram = -1;
+	if( program == s_uCurrentShaderProgram )
+		s_uCurrentShaderProgram = -1;
 #endif // CC_ENABLE_GL_STATE_CACHE
 
 	glDeleteProgram( program );
@@ -83,8 +89,8 @@ void ccGLDeleteProgram( GLuint program )
 void ccGLUseProgram( GLuint program )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( program != _ccCurrentShaderProgram ) {
-		_ccCurrentShaderProgram = program;
+	if( program != s_uCurrentShaderProgram ) {
+		s_uCurrentShaderProgram = program;
 		glUseProgram(program);
 	}
 #else
@@ -96,9 +102,9 @@ void ccGLUseProgram( GLuint program )
 void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( sfactor != _ccBlendingSource || dfactor != _ccBlendingDest ) {
-		_ccBlendingSource = sfactor;
-		_ccBlendingDest = dfactor;
+	if( sfactor != s_eBlendingSource || dfactor != s_eBlendingDest ) {
+		s_eBlendingSource = sfactor;
+		s_eBlendingDest = dfactor;
 		glBlendFunc( sfactor, dfactor );
 	}
 #else
@@ -109,7 +115,7 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 GLenum ccGLGetActiveTexture( void )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	return _ccCurrentActiveTexture + GL_TEXTURE0;
+	return s_eCurrentActiveTexture + GL_TEXTURE0;
 #else
 	GLenum activeTexture;
 	glGetIntegerv(GL_ACTIVE_TEXTURE, (GLint*)&activeTexture);
@@ -120,9 +126,9 @@ GLenum ccGLGetActiveTexture( void )
 void ccGLActiveTexture( GLenum textureEnum )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	CCAssert( (textureEnum - GL_TEXTURE0) < kCCMaxActiveTexture, "cocos2d ERROR: Increase kCCMaxActiveTexture to %d!", (textureEnum-GL_TEXTURE0) );
-	if( (textureEnum - GL_TEXTURE0) != _ccCurrentActiveTexture ) {
-		_ccCurrentActiveTexture = (textureEnum - GL_TEXTURE0);
+	CCAssert( (textureEnum - GL_TEXTURE0) < kCCMaxActiveTexture, "cocos2d ERROR: Increase kCCMaxActiveTexture to kCCMaxActiveTexture!");
+	if( (textureEnum - GL_TEXTURE0) != s_eCurrentActiveTexture ) {
+		s_eCurrentActiveTexture = (textureEnum - GL_TEXTURE0);
 		glActiveTexture( textureEnum );
 	}
 #else
@@ -133,9 +139,9 @@ void ccGLActiveTexture( GLenum textureEnum )
 void ccGLBindTexture2D( GLuint textureId )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] != textureId )
+	if( s_uCurrentBoundTexture[ s_eCurrentActiveTexture ] != textureId )
 	{
-		_ccCurrentBoundTexture[ _ccCurrentActiveTexture ] = textureId;
+		s_uCurrentBoundTexture[ s_eCurrentActiveTexture ] = textureId;
 		glBindTexture(GL_TEXTURE_2D, textureId );
 	}
 #else
@@ -147,8 +153,8 @@ void ccGLBindTexture2D( GLuint textureId )
 void ccGLDeleteTexture( GLuint textureId )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( textureId == _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] )
-	   _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] = -1;
+	if( textureId == s_uCurrentBoundTexture[ s_eCurrentActiveTexture ] )
+	   s_uCurrentBoundTexture[ s_eCurrentActiveTexture ] = -1;
 #endif
 	glDeleteTextures(1, &textureId );
 }
@@ -160,13 +166,13 @@ void ccGLEnable( ccGLServerState flags )
 	bool enabled = false;
 
 	/* GL_BLEND */
-	if( (enabled=(flags & CC_GL_BLEND)) != (_ccGLServerState & CC_GL_BLEND) ) {
+	if( (enabled=(flags & CC_GL_BLEND)) != (s_eGLServerState & CC_GL_BLEND) ) {
 		if( enabled ) {
 			glEnable( GL_BLEND );
-			_ccGLServerState |= CC_GL_BLEND;
+			s_eGLServerState |= CC_GL_BLEND;
 		} else {
 			glDisable( GL_BLEND );
-			_ccGLServerState &=  ~CC_GL_BLEND;
+			s_eGLServerState &=  ~CC_GL_BLEND;
 		}
 	}
 
@@ -185,37 +191,37 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 	/* Position */
 	bool enablePosition = flags & kCCVertexAttribFlag_Position;
 
-	if( enablePosition != _vertexAttribPosition ) {
+	if( enablePosition != s_bVertexAttribPosition ) {
 		if( enablePosition )
 			glEnableVertexAttribArray( kCCVertexAttrib_Position );
 		else
 			glDisableVertexAttribArray( kCCVertexAttrib_Position );
 
-		_vertexAttribPosition = enablePosition;
+		s_bVertexAttribPosition = enablePosition;
 	}
 
 	/* Color */
 	bool enableColor = (flags & kCCVertexAttribFlag_Color) != 0 ? true : false;
 
-	if( enableColor != _vertexAttribColor ) {
+	if( enableColor != s_bVertexAttribColor ) {
 		if( enableColor )
 			glEnableVertexAttribArray( kCCVertexAttrib_Color );
 		else
 			glDisableVertexAttribArray( kCCVertexAttrib_Color );
 
-		_vertexAttribColor = enableColor;
+		s_bVertexAttribColor = enableColor;
 	}
 
 	/* Tex Coords */
 	bool enableTexCoords = (flags & kCCVertexAttribFlag_TexCoords) != 0 ? true : false;
 
-	if( enableTexCoords != _vertexAttribTexCoords ) {
+	if( enableTexCoords != s_bVertexAttribTexCoords ) {
 		if( enableTexCoords )
 			glEnableVertexAttribArray( kCCVertexAttrib_TexCoords );
 		else
 			glDisableVertexAttribArray( kCCVertexAttrib_TexCoords );
 
-		_vertexAttribTexCoords = enableTexCoords;
+		s_bVertexAttribTexCoords = enableTexCoords;
 	}
 }
 
@@ -223,7 +229,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
 void ccSetProjectionMatrixDirty( void )
 {
-	_ccCurrentProjectionMatrix = -1;
+	s_uCurrentProjectionMatrix = -1;
 }
 
 NS_CC_END
