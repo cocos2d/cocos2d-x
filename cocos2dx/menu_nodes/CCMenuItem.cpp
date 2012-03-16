@@ -410,6 +410,7 @@ namespace cocos2d{
         }
         
         m_pNormalImage = var;
+		this->setContentSize(m_pNormalImage->getContentSize());
     }
     CCNode * CCMenuItemSprite::getSelectedImage()
     {
@@ -636,6 +637,24 @@ namespace cocos2d{
         }
         return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector);
     }
+	//
+	// Setter of sprite frames
+	//
+	void CCMenuItemImage::setNormalSpriteFrame(CCSpriteFrame * frame)
+	{
+		setNormalImage(CCSprite::spriteWithSpriteFrame(frame));
+	}
+
+	void CCMenuItemImage::setSelectedSpriteFrame(CCSpriteFrame * frame)
+	{
+		setSelectedImage(CCSprite::spriteWithSpriteFrame(frame));
+	}
+
+	void CCMenuItemImage::setDisabledSpriteFrame(CCSpriteFrame * frame)
+	{
+		setDisabledImage(CCSprite::spriteWithSpriteFrame(frame));
+	}
+
     //
     // MenuItemToggle
     //
@@ -708,7 +727,12 @@ namespace cocos2d{
         if( index != m_uSelectedIndex )
         {
             m_uSelectedIndex = index;
-            this->removeChildByTag(kCurrentItem, false);
+			CCMenuItem *currentItem = (CCMenuItem*)getChildByTag(kCurrentItem);
+			if( currentItem )
+			{
+				currentItem->removeFromParentAndCleanup(false);
+			}
+
             CCMenuItem *item = m_pSubItems->getObjectAtIndex(m_uSelectedIndex);
             this->addChild(item, 0, kCurrentItem);
             const CCSize& s = item->getContentSize();

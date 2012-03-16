@@ -110,7 +110,6 @@ public:
 		return it->second;
 	}
 
-
 	bool setObject(_ValueT pObject, const _KeyT& key)
 	{
 		pair<CCObjectMapIter, bool > pr;
@@ -234,6 +233,8 @@ public:
 
 #define CCDictionary	CCMutableDictionary
 typedef CCDictionary<std::string, CCString*> CCStringToStringDictionary;
+typedef CCDictionary<std::string, CCObject*> CCObjectDictionary;
+
 }//namespace   cocos2d 
 
 

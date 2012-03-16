@@ -94,8 +94,8 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_NODE_DRAW_SETUP()																	\
 do {																							\
 	ccGLEnable( m_glServerState );																\
-	ccGLUseProgram( m_pShaderProgram->program_ );												\
-	ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );									\
+	m_pShaderProgram->use();																	\
+	m_pShaderProgram->setUniformForModelViewProjectionMatrix();									\
 } while(0)
 
 
@@ -243,5 +243,25 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 
 #endif
 
+#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
+#define CHECK_GL_ERROR_DEBUG()
+#else
+#define CHECK_GL_ERROR_DEBUG() ({ GLenum __error = glGetError(); if(__error) CCLog("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); })
+#endif
+
+/** @def CC_INCREMENT_GL_DRAWS_BY_ONE
+ Increments the GL Draws counts by one.
+ The number of calls per frame are displayed on the screen when the CCDirector's stats are enabled.
+ */
+extern unsigned int g_uNumberOfDraws;
+#define CC_INCREMENT_GL_DRAWS(__n__) g_uNumberOfDraws += __n__
+
+/*******************/
+/** Notifications **/
+/*******************/
+/** @def CCAnimationFrameDisplayedNotification
+ Notification name when a CCSpriteFrame is displayed
+ */
+#define CCAnimationFrameDisplayedNotification @"CCAnimationFrameDisplayedNotification"
 
 #endif // __CCMACROS_H__

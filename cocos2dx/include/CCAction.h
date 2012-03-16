@@ -159,7 +159,7 @@ public:
 	inline void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
 
 	/** initializes the action */
-	bool initWithAction(CCActionInterval *pAction, float fRate);
+	bool initWithAction(CCActionInterval *pAction, float fSpeed);
 
 	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
@@ -177,7 +177,7 @@ public:
 
 public:
 	/** creates the action */
-	static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);
+	static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
     
 protected:
 	float m_fSpeed;
