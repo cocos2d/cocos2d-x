@@ -63,7 +63,7 @@ namespace cocos2d{
 			return pRet;
 		}
 		va_end(args);
-		CC_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 

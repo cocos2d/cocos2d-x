@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "CCTexturePVR.h"
 #include "CCDirector.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
@@ -510,8 +510,8 @@ void CCTexture2D::drawAtPoint(const CCPoint& point)
 		width + point.x,	height  + point.y };
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	ccGLUseProgram( m_pShaderProgram->program_ );
-	ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );
+	m_pShaderProgram->use();
+	m_pShaderProgram->setUniformForModelViewProjectionMatrix();
 
 	ccGLBindTexture2D( m_uName );
 
@@ -536,8 +536,8 @@ void CCTexture2D::drawInRect(const CCRect& rect)
 		rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	ccGLUseProgram( m_pShaderProgram->program_ );
-	ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );
+	m_pShaderProgram->use();
+	m_pShaderProgram->setUniformForModelViewProjectionMatrix();
 
 	ccGLBindTexture2D( m_uName );
 

@@ -123,24 +123,24 @@ CCSpeed::~CCSpeed()
 	CC_SAFE_RELEASE(m_pInnerAction);
 }
 
-CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fRate)
+CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fSpeed)
 {
 	CCSpeed *pRet = new CCSpeed();
-	if (pRet && pRet->initWithAction(pAction, fRate))
+	if (pRet && pRet->initWithAction(pAction, fSpeed))
 	{
 		pRet->autorelease();
 		return pRet;
 	}
-	CC_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 
-bool CCSpeed::initWithAction(CCActionInterval *pAction, float fRate)
+bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
 {
 	CCAssert(pAction != NULL, "");
 	pAction->retain();
 	m_pInnerAction = pAction;
-	m_fSpeed = fRate;	
+	m_fSpeed = fSpeed;	
 	return true;
 }
 
@@ -218,7 +218,7 @@ CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode)
 		pRet->autorelease();
 		return pRet;
 	}
-	CC_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, const CCRect& rect)
@@ -229,7 +229,7 @@ CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, const CCRect& rect)
 		pRet->autorelease();
 		return pRet;
 	}
-	CC_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 

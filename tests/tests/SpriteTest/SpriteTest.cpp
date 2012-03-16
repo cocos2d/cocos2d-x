@@ -663,7 +663,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     
     for(int i=0; i<10; i++)
     {
-        CCSprite* s1 = CCSprite::spriteWithBatchNode(asmtest, CCRectMake(0, 0, 50, 50));
+        CCSprite* s1 = CCSprite::spriteWithTexture(asmtest->getTexture(), CCRectMake(0, 0, 50, 50));
         a->addObject(s1);
         asmtest->addChild(s1, 10);
     }
@@ -735,7 +735,7 @@ SpriteBatchNodeReorderIssue744::SpriteBatchNodeReorderIssue744()
     CCSpriteBatchNode* batch = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 15);
     addChild(batch, 0, kTagSpriteBatchNode);        
 
-    CCSprite* sprite = CCSprite::spriteWithBatchNode(batch,CCRectMake(0, 0, 85, 121));
+    CCSprite* sprite = CCSprite::spriteWithTexture(batch->getTexture(),CCRectMake(0, 0, 85, 121));
     sprite->setPosition( ccp(s.width/2, s.height/2) );
     batch->addChild(sprite, 3);
     batch->reorderChild(sprite, 1);
@@ -759,15 +759,15 @@ std::string SpriteBatchNodeReorderIssue744::subtitle()
 
 CCSprite* SpriteBatchNodeReorderIssue766::makeSpriteZ(int aZ)
 {
-    CCSprite *sprite = CCSprite::spriteWithBatchNode(batchNode, CCRectMake(128,0,64,64));
+    CCSprite *sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(128,0,64,64));
     batchNode->addChild(sprite, aZ+1, 0);
 
     //children
-    CCSprite *spriteShadow = CCSprite::spriteWithBatchNode(batchNode, CCRectMake(0,0,64,64));
+    CCSprite *spriteShadow = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0,0,64,64));
     spriteShadow->setOpacity(128);
     sprite->addChild(spriteShadow, aZ, 3);
 
-    CCSprite *spriteTop = CCSprite::spriteWithBatchNode(batchNode, CCRectMake(64,0,64,64));
+    CCSprite *spriteTop = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(64,0,64,64));
     sprite->addChild(spriteTop, aZ+2, 3);
 
     return sprite;
@@ -934,11 +934,11 @@ SpriteZVertex::SpriteZVertex()
 	// Configure shader to mimic glAlphaTest
 	//
 	CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-	GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->program_, kCCUniformAlphaTestValue);
+	GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformAlphaTestValue);
 
 	// set alpha test value
 	// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-	glUniform1f(alphaValueLocation, 0.0f);
+	getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
     
     m_dir = 1;
     m_time = 0;
@@ -1015,11 +1015,11 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
 	// Configure shader to mimic glAlphaTest
 	//
 	CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-	GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->program_, kCCUniformAlphaTestValue);
+	GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformAlphaTestValue);
 
 	// set alpha test value
 	// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-	glUniform1f(alphaValueLocation, 0.0f);
+	getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
     
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1636,8 +1636,8 @@ void SpriteFrameTest::onEnter()
         animFrames->addObject(frame);
     }
 
-    CCAnimation* animation = CCAnimation::animationWithFrames(animFrames);
-    m_pSprite1->runAction( CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
+    CCAnimation* animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+    m_pSprite1->runAction( CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation) ) );
 
     // to test issue #732, uncomment the following line
     m_pSprite1->setFlipX(false);
@@ -1668,10 +1668,10 @@ void SpriteFrameTest::onEnter()
 
     // append frames from another batch
     moreFrames->addObjectsFromArray(animFrames);
-    CCAnimation *animMixed = CCAnimation::animationWithFrames(moreFrames);
+    CCAnimation *animMixed = CCAnimation::animationWithSpriteFrames(moreFrames, 0.3f);
 
 
-    m_pSprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed, false) ) );
+    m_pSprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed) ) );
 
     animFrames->release();
     moreFrames->release(); 
@@ -1794,9 +1794,9 @@ void SpriteFrameAliasNameTest::onEnter()
         animFrames->addObject(frame);
     }
 
-    CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+    CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
     // 14 frames * 1sec = 14 seconds
-    sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(14.0f, animation, false)));
+    sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 }
 
 void SpriteFrameAliasNameTest::onExit()
@@ -1864,8 +1864,8 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
             animFrames->addObject(frame);
         }
 
-        CCAnimation* animation = CCAnimation::animationWithFrames(animFrames);
-        sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );            
+        CCAnimation* animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation) ) );            
         sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(10, 360) ) );
 
         addChild(sprite, 0);
@@ -1942,8 +1942,8 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-        sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ));
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation) ));
         sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(10, 360) ));
         
         spritebatch->addChild(sprite, i);
@@ -2019,8 +2019,8 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-        sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ));            
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation) ));            
         
         CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 2);
         CCActionInterval* scale_back = scale->reverse();
@@ -2098,8 +2098,8 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-        sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation) ) );
 
         CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 2);
         CCActionInterval* scale_back = scale->reverse();
@@ -2161,8 +2161,8 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     animFrames->addObject(frame4);
     animFrames->addObject(frame5);
             
-    CCAnimation *animation = CCAnimation::animationWithFrames(animFrames, 0.2f);
-    CCAnimate *animate = CCAnimate::actionWithAnimation(animation, false);
+    CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.2f);
+    CCAnimate *animate = CCAnimate::actionWithAnimation(animation);
     CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( animate,
                        CCFlipX::actionWithFlipX(true),
                        animate->copy()->autorelease(),
@@ -2327,8 +2327,8 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
         animFrames->addObject(frame);
     }
     
-    CCAnimation* animation = CCAnimation::animationWithFrames(animFrames, 0.2f);
-    sprite1->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
+    CCAnimation* animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.2f);
+    sprite1->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation) ) );
     // END NEW CODE
     
     CCActionInterval* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
@@ -3229,7 +3229,7 @@ AnimationCache::AnimationCache()
         animFrames->addObject(frame);
     }
 
-    CCAnimation *animation = CCAnimation::animationWithFrames(animFrames, 0.2f);
+    CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.2f);
 
     // Add an animation to the Cache
     CCAnimationCache::sharedAnimationCache()->addAnimation(animation, "dance");
@@ -3246,7 +3246,7 @@ AnimationCache::AnimationCache()
         animFrames->addObject(frame);
     }
 
-    animation = CCAnimation::animationWithFrames(animFrames, 0.2f);
+    animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.2f);
 
     // Add an animation to the Cache
     CCAnimationCache::sharedAnimationCache()->addAnimation(animation, "dance_gray");
@@ -3263,7 +3263,7 @@ AnimationCache::AnimationCache()
         animFrames->addObject(frame);
     }
 
-    animation = CCAnimation::animationWithFrames(animFrames, 0.2f);
+    animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.2f);
 
     // Add an animation to the Cache
     CCAnimationCache::sharedAnimationCache()->addAnimation(animation, "dance_blue");
@@ -3360,8 +3360,8 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 			animFrames->addObject(frame);
 		}
 
-		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
 		delete animFrames;
 
@@ -3440,8 +3440,8 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 			animFrames->addObject(frame);
 		}
 
-		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
 		delete animFrames;
 
@@ -3517,8 +3517,8 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 			animFrames->addObject(frame);
 		}
 
-		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
 		delete animFrames;
 
@@ -3601,8 +3601,8 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 			animFrames->addObject(frame);
 		}
 
-		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
 		delete animFrames;
 
@@ -3685,8 +3685,8 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
 			animFrames->addObject(frame);
 		}
 
-		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
 		delete animFrames;
 
@@ -3769,8 +3769,8 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 			animFrames->addObject(frame);
 		}
 
-		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
 		delete animFrames;
 
