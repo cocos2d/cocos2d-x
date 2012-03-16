@@ -61,7 +61,7 @@ public:
 private:
 	bool init();
 
-	CCMutableDictionary<std::string, CCGLProgram*>* programs_;
+	CCMutableDictionary<std::string, CCGLProgram*>* m_pPrograms;
 
 };
 

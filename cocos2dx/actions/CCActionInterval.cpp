@@ -2045,12 +2045,12 @@ bool CCAnimate::initWithAnimation(CCAnimation *pAnimation)
 
 	if ( CCActionInterval::initWithDuration(singleDuration * pAnimation->getLoops() ) ) 
 	{
-		nextFrame_ = 0;
-		m_pAnimation = pAnimation;
+		m_nNextFrame = 0;
+		setAnimation(pAnimation);
 		m_pOrigFrame = NULL;
-		executedLoops_ = 0;
+		m_uExecutedLoops = 0;
 
-		splitTimes_->reserve(pAnimation->getFrames()->count());
+		m_pSplitTimes->reserve(pAnimation->getFrames()->count());
 
 		float accumUnitsOfTime = 0;
 		float newUnitOfTimeValue = singleDuration / pAnimation->getTotalDelayUnits();
@@ -2061,7 +2061,7 @@ bool CCAnimate::initWithAnimation(CCAnimation *pAnimation)
 			CCAnimationFrame *frame = *iterFrame;
 			float value = (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration;
 			accumUnitsOfTime += frame->getDelayUnits();
-			splitTimes_->push_back(value);
+			m_pSplitTimes->push_back(value);
 		}	
 		return true;
 	}
@@ -2093,10 +2093,10 @@ CCObject* CCAnimate::copyWithZone(CCZone *pZone)
 
 CCAnimate::CCAnimate()
 : m_pAnimation(NULL)
-, splitTimes_(new std::vector<float>)
-, nextFrame_(0)
+, m_pSplitTimes(new std::vector<float>)
+, m_nNextFrame(0)
 , m_pOrigFrame(NULL)
-, executedLoops_(0)
+, m_uExecutedLoops(0)
 {
 
 }
@@ -2105,7 +2105,7 @@ CCAnimate::~CCAnimate()
 {
 	CC_SAFE_RELEASE(m_pAnimation);
     CC_SAFE_RELEASE(m_pOrigFrame);
-	CC_SAFE_DELETE(splitTimes_);
+	CC_SAFE_DELETE(m_pSplitTimes);
 }
 
 void CCAnimate::startWithTarget(CCNode *pTarget)
@@ -2120,8 +2120,8 @@ void CCAnimate::startWithTarget(CCNode *pTarget)
 		m_pOrigFrame = pSprite->displayFrame();
 		m_pOrigFrame->retain();
 	}
-	nextFrame_ = 0;
-	executedLoops_ = 0;
+	m_nNextFrame = 0;
+	m_uExecutedLoops = 0;
 }
 
 void CCAnimate::stop(void)
@@ -2142,9 +2142,9 @@ void CCAnimate::update(ccTime t)
 
 		// new loop?  If so, reset frame counter
 		unsigned int loopNumber = (unsigned int)t;
-		if( loopNumber > executedLoops_ ) {
-			nextFrame_ = 0;
-			executedLoops_++;
+		if( loopNumber > m_uExecutedLoops ) {
+			m_nNextFrame = 0;
+			m_uExecutedLoops++;
 		}
 
 		// new t for animations
@@ -2155,8 +2155,8 @@ void CCAnimate::update(ccTime t)
 	unsigned int numberOfFrames = frames->count();
 	CCSpriteFrame *frameToDisplay = NULL;
 
-	for( unsigned int i=nextFrame_; i < numberOfFrames; i++ ) {
-		float splitTime = splitTimes_->at(i);
+	for( unsigned int i=m_nNextFrame; i < numberOfFrames; i++ ) {
+		float splitTime = m_pSplitTimes->at(i);
 
 		if( splitTime <= t ) {
 			CCAnimationFrame *frame = frames->getObjectAtIndex(i);
@@ -2168,7 +2168,7 @@ void CCAnimate::update(ccTime t)
 			{
 				//TODO: [[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
 			}
-			nextFrame_ = i+1;
+			m_nNextFrame = i+1;
 
 			break;
 		}
