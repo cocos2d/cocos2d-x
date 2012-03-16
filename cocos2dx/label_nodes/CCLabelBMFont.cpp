@@ -399,7 +399,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CC_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 
@@ -696,7 +696,7 @@ namespace cocos2d{
 			if( ! fontChar )
 			{
 				fontChar = new CCSprite();
-				fontChar->initWithBatchNode(this, rect);
+				fontChar->initWithTexture(m_pobTextureAtlas->getTexture(), rect);
 				this->addChild(fontChar, 0, i);
 				fontChar->release();
 			}

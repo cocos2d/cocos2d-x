@@ -118,7 +118,7 @@ THE SOFTWARE.
 #include "extensions/CCNotificationCenter.h"
 // Shaders
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 //
 // cocos2d macros

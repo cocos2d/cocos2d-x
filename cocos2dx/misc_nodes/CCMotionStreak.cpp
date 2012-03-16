@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCMotionStreak.h"
 #include "CCTextureCache.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
 #include "ccMacros.h"
@@ -73,7 +73,7 @@ CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float s
 		return pRet;
 	}
 
-	CC_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 
@@ -86,7 +86,7 @@ CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float s
 		return pRet;
 	}
 
-	CC_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 
@@ -323,6 +323,8 @@ void CCMotionStreak::draw()
 	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, m_pColorPointer);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)m_uNuPoints*2);
+
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 NS_CC_END

@@ -32,16 +32,6 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 
 #define CC_GLVIEW                   cocos2d::CCEGLView
-#define ccglOrtho					glOrthof
-#define	ccglClearDepth				glClearDepthf
-
-#define ccglTranslate				glTranslatef
-
-#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
-#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
-#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
-#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
-
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
 #define glGenVertexArrays			glGenVertexArraysOES
