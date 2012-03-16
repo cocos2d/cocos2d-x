@@ -642,7 +642,7 @@ void CCNode::insertChild(CCNode* child, int z)
 {
 	m_bReorderChildDirty = true;
 	ccArrayAppendObjectWithResize(m_pChildren->data, child);
-    child->setZOrder(z);
+    child->_setZOrder(z);
 }
 
 void CCNode::reorderChild(CCNode *child, int zOrder)
@@ -650,7 +650,7 @@ void CCNode::reorderChild(CCNode *child, int zOrder)
 	CCAssert( child != NULL, "Child must be non-nil");
 	m_bReorderChildDirty = true;
 	child->setOrderOfArrival(s_globalOrderOfArrival++);
-	child->setZOrder(zOrder);
+	child->_setZOrder(zOrder);
 }
 
 void CCNode::sortAllChildren()
@@ -898,21 +898,6 @@ CCAction * CCNode::getActionByTag(int tag)
 unsigned int CCNode::numberOfRunningActions()
 {
 	return m_pActionManager->numberOfRunningActionsInTarget(this);
-}
-
-void CCNode::setShaderProgram(CCGLProgram* pShaderProgram)
-{
-	if (m_pShaderProgram != pShaderProgram)
-	{
-		CC_SAFE_RETAIN(pShaderProgram);
-		CC_SAFE_RELEASE(m_pShaderProgram);
-		m_pShaderProgram = pShaderProgram;
-	}
-}
-
-CCGLProgram* CCNode::getShaderProgram(void)
-{
-	return m_pShaderProgram;
 }
 
 // CCNode - Callbacks

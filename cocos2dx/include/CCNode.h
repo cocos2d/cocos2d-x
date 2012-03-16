@@ -33,6 +33,7 @@
 #include "CCArray.h"
 #include "CCGL.h"
 #include "ccGLStateCache.h"
+#include "CCGLProgram.h"
 #include "kazmath/kazmath.h"
 
 namespace   cocos2d {
@@ -43,7 +44,6 @@ namespace   cocos2d {
 	class CCAction;
 	class CCRGBAProtocol;
 	class CCLabelProtocol;
-	class CCGLProgram;
 	class CCScheduler;
 	class CCActionManager;
 
@@ -259,7 +259,7 @@ while(false)
 		/** Shader Program
 		 @since v2.0
 		 */
-		CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
+		CC_SYNTHESIZE_RETAIN(CCGLProgram*, m_pShaderProgram, ShaderProgram);
 
 		/** used internally for zOrder sorting, don't change this manually */
 		CC_SYNTHESIZE(int, m_nOrderOfArrival, OrderOfArrival);
