@@ -157,11 +157,13 @@ namespace cocos2d{
 		CCBMFontConfiguration *m_pConfiguration;
 		CCTextAlignment m_pAlignment;
 		float m_fWidth;
+		bool m_bLineBreakWithoutSpaces;
 	public:
 		CCLabelBMFont()
 			: m_cOpacity(0)           
 			, m_bIsOpacityModifyRGB(false)
-             , m_pConfiguration(NULL)
+            , m_pConfiguration(NULL)
+			, m_bLineBreakWithoutSpaces(false)
 		{}
 		virtual ~CCLabelBMFont();
 		/** Purges the cached data.
@@ -180,14 +182,15 @@ namespace cocos2d{
 		void createFontChars();
 		// super method
 		virtual void setString(const char *label);
-		virtual void setString(const char *label, bool from_update);
-		virtual void updateString(bool from_update);
+		virtual void setString(const char *label, bool fromUpdate);
+		virtual void updateString(bool fromUpdate);
 		virtual const char* getString(void);
         virtual void setCString(const char *label);
 		virtual void setAnchorPoint(const CCPoint& var);
 		virtual void updateLabel();
 		virtual void setAlignment(CCTextAlignment alignment);
 		virtual void setWidth(float width);
+		virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
 
 #if CC_LABELBMFONT_DEBUG_DRAW
 		virtual void draw();

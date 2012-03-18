@@ -207,6 +207,10 @@ namespace cocos2d{
 	{
 		using namespace std;
 		int len = str->size();
+
+		if ( len <= 0 )
+			return;
+
 		int last_index = len - 1;
 
 		// Only start trimming if the last character is whitespace..
@@ -880,9 +884,9 @@ namespace cocos2d{
 		this->setString(newString, false);
 	}
 
-	void CCLabelBMFont::setString(const char *newString, bool from_update)
+	void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
 	{
-		if (from_update)
+		if (fromUpdate)
 		{
 			m_sString = cc_utf8_from_cstr(newString);
 		}
@@ -891,10 +895,10 @@ namespace cocos2d{
 			m_sString_initial = std::string(newString);
 		}
 
-		updateString(from_update);
+		updateString(fromUpdate);
 	}
 
-	void CCLabelBMFont::updateString(bool from_update)
+	void CCLabelBMFont::updateString(bool fromUpdate)
 	{
 
 		if (m_pChildren && m_pChildren->count() != 0)
@@ -911,7 +915,7 @@ namespace cocos2d{
 		}
 		this->createFontChars();
 
-		if (!from_update)
+		if (!fromUpdate)
 			updateLabel();
 	}
 
@@ -1100,22 +1104,56 @@ namespace cocos2d{
 
 				// Out of bounds.
 				if (characterSprite->getPosition().x + characterSprite->getContentSize().width / 2.0f - startOfLine 
-					> m_fWidth)
+					> m_fWidth )
 				{
-					last_word.push_back(character);
+					if (!m_bLineBreakWithoutSpaces)
+					{
+						last_word.push_back(character);
 
-					int found = cc_utf8_find_last_not_char(multiline_string, ' ');
-					if (found != -1)
-						cc_utf8_trim_ws(&multiline_string);
+						int found = cc_utf8_find_last_not_char(multiline_string, ' ');
+						if (found != -1)
+							cc_utf8_trim_ws(&multiline_string);
+						else
+							multiline_string.clear();
+
+						if (multiline_string.size() > 0)
+							multiline_string.push_back('\n');
+
+						line++;
+						start_line = false;
+						startOfLine = -1;
+						i++;
+					}
 					else
-						multiline_string.clear();
+					{
+						cc_utf8_trim_ws(&last_word);
 
-					if (multiline_string.size() > 0)
-						multiline_string.push_back('\n');
-					line++;
-					start_line = false;
-					startOfLine = -1;
-					i++;
+						last_word.push_back('\n');
+						multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+						last_word.clear();
+						start_word = false;
+						start_line = false;
+						startOfWord = -1;
+						startOfLine = -1;
+						line++;
+
+						if (i >= stringLength || i < 0)
+							break;
+
+						if (!startOfWord)
+						{
+							startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
+							start_word = true;
+						}
+						if (!startOfLine)
+						{
+							startOfLine  = startOfWord;
+							start_line = true;
+						}
+
+						j--;
+					}
+
 					continue;
 				}
 				else
@@ -1213,6 +1251,12 @@ namespace cocos2d{
 		updateLabel();
 	}
 
+	void CCLabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
+	{
+		m_bLineBreakWithoutSpaces = breakWithoutSpace;
+		updateLabel();
+	}
+
 	//LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW
 	void CCLabelBMFont::draw()
@@ -1225,6 +1269,7 @@ namespace cocos2d{
 		};
 		ccDrawPoly(vertices, 4, true);
 	}
+
 #endif // CC_LABELBMFONT_DEBUG_DRAW
 
 }
