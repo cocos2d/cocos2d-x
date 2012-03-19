@@ -11,6 +11,9 @@
 #include "ft2build.h"
 #include "CCStdC.h"
 #include FT_FREETYPE_H
+#ifdef USE_FONTCONFIG
+	#include <fontconfig/fontconfig.h>
+#endif
 
 #define szFont_kenning 2
 
@@ -32,6 +35,10 @@ public:
 		iInterval = szFont_kenning;
 		m_pData = NULL;
 		reset();
+
+#ifdef USE_FONTCONFIG
+		libError |= ! FcInit();
+#endif
 	}
 
 	~BitmapDC() {
@@ -40,6 +47,9 @@ public:
 //		if (m_pData) {
 //			delete m_pData;
 //		}
+#ifdef USE_FONTCONFIG
+		FcFini();
+#endif
 
 	}
 
@@ -311,6 +321,10 @@ bool CCImage::initWithString(
 		const char * pFontName/* = nil*/,
 		int nSize/* = 0*/)
 {
+#ifdef USE_FONTCONFIG
+	FcPattern *pat = NULL, *match = NULL;
+#endif
+
 	bool bRet = false;
 	do
 	{
@@ -318,7 +332,28 @@ bool CCImage::initWithString(
 
 		BitmapDC &dc = sharedBitmapDC();
 
+#ifdef USE_FONTCONFIG
+		// convert pFontName into a fontconfig pattern
+		pat = FcNameParse( (FcChar8 *) pFontName );
+		CC_BREAK_IF( ! pat );
+
+		// set pattern substitution
+		FcConfigSubstitute( 0, pat, FcMatchPattern );
+		FcDefaultSubstitute( pat );
+
+		// look for a match
+		FcResult result;
+		match = FcFontMatch( 0, pat, &result );
+		CC_BREAK_IF( ! match );
+
+		// gett result file name
+		FcValue v;
+		FcPatternGet( match, "file", 0, &v );
+		const char* pFullFontName = (const char*) v.u.s;
+		CC_BREAK_IF(! pFullFontName);
+#else
 		const char* pFullFontName = CCFileUtils::fullPathFromRelativePath(pFontName);
+#endif
 
 		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFullFontName, nSize));
 
@@ -336,6 +371,11 @@ bool CCImage::initWithString(
 
 		dc.reset();
 	}while (0);
+
+#ifdef USE_FONTCONFIG
+	if( pat ) FcPatternDestroy( pat );
+	if( match ) FcPatternDestroy( match );
+#endif
 
 	//do nothing
 	return bRet;

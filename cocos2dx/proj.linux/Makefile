@@ -12,8 +12,9 @@ INCLUDES = -I.. \
 					-I../platform/third_party/linux/libpng \
 					-I../platform/third_party/linux/libxml2 \
 					-I../platform/third_party/linux/libjpeg 
-
-DEFINES = -DLINUX
+					
+# add -DUSE_FONTCONFIG if you want to use libfontconfig 					
+DEFINES = -DLINUX 
 
 OBJECTS = ../actions/CCAction.o \
 					../actions/CCActionCamera.o \
@@ -119,6 +120,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 						$(STATICLIBS_DIR)/libpng.a \
 						$(STATICLIBS_DIR)/libjpeg.a
 
+# add -lfontconfig if you want to use libfontconfig
 SHAREDLIBS = -lglfw -lGL
 
 ####### Build rules
