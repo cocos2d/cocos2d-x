@@ -8,7 +8,7 @@ void DrawPrimitivesTest::draw()
 {
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// draw a simple line
 	// The default state is:
@@ -18,7 +18,7 @@ void DrawPrimitivesTest::draw()
 	//	glEnable(GL_LINE_SMOOTH);
 	ccDrawLine( ccp(0, 0), ccp(s.width, s.height) );
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// line: color, width, aliased
 	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
@@ -28,7 +28,7 @@ void DrawPrimitivesTest::draw()
 	ccDrawColor4B(255,0,0,255);
 	ccDrawLine( ccp(0, s.height), ccp(s.width, 0) );
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// TIP:
 	// If you are going to use always the same color or width, you don't
@@ -41,7 +41,7 @@ void DrawPrimitivesTest::draw()
 	ccDrawColor4B(0,0,255,128);
 	ccDrawPoint( ccp(s.width / 2, s.height / 2) );
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// draw 4 small points
 	CCPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
@@ -49,21 +49,21 @@ void DrawPrimitivesTest::draw()
 	ccDrawColor4B(0,255,255,255);
 	ccDrawPoints( points, 4);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// draw a green circle with 10 segments
 	glLineWidth(16);
 	ccDrawColor4B(0, 255, 0, 255);
 	ccDrawCircle( ccp(s.width/2,  s.height/2), 100, 0, 10, false);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// draw a green circle with 50 segments with line to center
 	glLineWidth(2);
 	ccDrawColor4B(0, 255, 255, 255);
 	ccDrawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, true);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// open yellow poly
 	ccDrawColor4B(255, 255, 0, 255);
@@ -71,7 +71,7 @@ void DrawPrimitivesTest::draw()
 	CCPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
 	ccDrawPoly( vertices, 5, false);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// closed purble poly
 	ccDrawColor4B(255, 0, 255, 255);
@@ -79,24 +79,24 @@ void DrawPrimitivesTest::draw()
 	CCPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
 	ccDrawPoly( vertices2, 3, true);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// draw quad bezier path
 	ccDrawQuadBezier(ccp(0,s.height), ccp(s.width/2,s.height/2), ccp(s.width,s.height), 50);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// draw cubic bezier path
 	ccDrawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 
 	// restore original values
 	glLineWidth(1);
 	ccDrawColor4B(255,255,255,255);
 	ccPointSize(1);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 }
 
 void DrawPrimitivesTestScene::runThisTest()

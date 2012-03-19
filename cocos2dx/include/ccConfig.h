@@ -209,6 +209,18 @@ To enable set it to a value different than 0. Enabled by default.
 #define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
 #endif
 
+/** @def CC_TEXTURE_ATLAS_USE_VAO
+ By default, CCTextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).
+ Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.
+ So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.
+ 
+ To disable it set it to 0. Enabled by default.
+ 
+ */
+#ifndef CC_TEXTURE_ATLAS_USE_VAO
+#define CC_TEXTURE_ATLAS_USE_VAO 1
+#endif
+
 /** @def CC_TEXTURE_NPOT_SUPPORT
  If enabled, NPOT textures will be used where available. Only 3rd gen (and newer) devices support NPOT textures.
  NPOT textures have the following limitations:
@@ -259,19 +271,17 @@ Platforms: Only used on Retina Display devices like iPhone 4.
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
 #endif
 
-/** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
-If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
-If it is disabled, or if it is used on another architecture it will use A8 (8-bit textures).
-On Neon devices, LA88 textures are 6% faster than A8 textures, but then will consume 2x memory.
+/** @def CC_USE_LA88_LABELS
+ If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.
+ If it is disabled, it will use A8 (Alpha 8-bit textures).
+ LA88 textures are 6% faster than A8 textures, but they will consume 2x memory.
 
-This feature is disabled by default.
+ This feature is enabled by default.
 
-Platforms: Only used on ARM Neon architectures like iPhone 3GS or newer and iPad.
-
-@since v0.99.5
-*/
-#ifndef CC_USE_LA88_LABELS_ON_NEON_ARCH
-#define CC_USE_LA88_LABELS_ON_NEON_ARCH 0
+ @since v0.99.5
+ */
+#ifndef CC_USE_LA88_LABELS
+#define CC_USE_LA88_LABELS 1
 #endif
 
 /** @def CC_SPRITE_DEBUG_DRAW

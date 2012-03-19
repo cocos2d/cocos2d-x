@@ -38,7 +38,7 @@ namespace cocos2d
 
 		// If the gles version is lower than GLES_VER_2_0, 
 		// all the functions in CCGrabber return directly.
-		if (m_eGlesVersion <= GLES_VER_2_0)
+		if (m_eGlesVersion < GLES_VER_2_0)
 		{
 			return ;
 		}
@@ -51,27 +51,27 @@ namespace cocos2d
 	{
 		// If the gles version is lower than GLES_VER_2_0, 
 		// all the functions in CCGrabber return directly.
-		if (m_eGlesVersion <= GLES_VER_2_0)
+		if (m_eGlesVersion < GLES_VER_2_0)
 		{
 			return ;
 		}
 
-		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
 		// bind
-		glBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
 		// associate texture with FBO
-		glFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pTexture->getName(), 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pTexture->getName(), 0);
 
 		// check if it worked (probably worth doing :) )
-		GLuint status = glCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
-		if (status != CC_GL_FRAMEBUFFER_COMPLETE)
+		GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+		if (status != GL_FRAMEBUFFER_COMPLETE)
 		{
 			CCLOG("Frame Grabber: could not attach texture to frmaebuffer");
 		}
 
-		glBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
 	}
 	
 	void CCGrabber::beforeRender(CCTexture2D *pTexture)
@@ -79,13 +79,13 @@ namespace cocos2d
         CC_UNUSED_PARAM(pTexture);
 		// If the gles version is lower than GLES_VER_2_0, 
 		// all the functions in CCGrabber return directly.
-		if (m_eGlesVersion <= GLES_VER_2_0)
+		if (m_eGlesVersion < GLES_VER_2_0)
 		{
 			return ;
 		}
 
-		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
-		glBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 		// save clear color
 		glGetFloatv(GL_COLOR_CLEAR_VALUE, m_oldClearColor);
 		// BUG XXX: doesn't work with RGB565.
@@ -106,12 +106,12 @@ namespace cocos2d
         CC_UNUSED_PARAM(pTexture);
 		// If the gles version is lower than GLES_VER_2_0, 
 		// all the functions in CCGrabber return directly.
-		if (m_eGlesVersion <= GLES_VER_2_0)
+		if (m_eGlesVersion < GLES_VER_2_0)
 		{
 			return ;
 		}
 
-		glBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
 		glColorMask(true, true, true, true);	// #631
 		// Restore clear color
 		glClearColor( m_oldClearColor[0], m_oldClearColor[1], m_oldClearColor[2], m_oldClearColor[3] );
@@ -121,7 +121,7 @@ namespace cocos2d
 	{
 		// If the gles version is lower than GLES_VER_2_0, 
 		// all the functions in CCGrabber return directly.
-		if (m_eGlesVersion <= GLES_VER_2_0)
+		if (m_eGlesVersion < GLES_VER_2_0)
 		{
 			return ;
 		}

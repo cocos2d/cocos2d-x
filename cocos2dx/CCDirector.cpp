@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCUserDefault.h"
 #include "extensions/CCNotificationCenter.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
@@ -61,8 +61,11 @@ THE SOFTWARE.
 
 using namespace std;
 using namespace cocos2d;
-namespace  cocos2d 
-{
+
+unsigned int g_uNumberOfDraws = 0;
+
+NS_CC_BEGIN
+// XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
 static CCDisplayLinkDirector s_sharedDirector;
@@ -342,7 +345,9 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.5f, 1500.0f );
+			// issue #1334
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
+//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 			kmGLMultMatrix(&matrixPerspective);
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -364,7 +369,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 		break;
 			
 	default:
-		CCLOG("cocos2d: Director: unrecognized projecgtion");
+		CCLOG("cocos2d: Director: unrecognized projection");
 		break;
 	}
 
@@ -394,15 +399,15 @@ void CCDirector::setAlphaBlending(bool bOn)
 	{
 		glDisable(GL_BLEND);
 	}
-	// TODO: 
-	//CHECK_GL_ERROR_DEBUG();
+
+	CHECK_GL_ERROR_DEBUG();
 }
 
 void CCDirector::setDepthTest(bool bOn)
 {
 	if (bOn)
 	{
-		ccglClearDepth(1.0f);
+		glClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 //		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -411,8 +416,7 @@ void CCDirector::setDepthTest(bool bOn)
 	{
 		glDisable(GL_DEPTH_TEST);
 	}
-	//TODO: 
-	//CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 }
 
 CCPoint CCDirector::convertToGL(const CCPoint& obPoint)
@@ -971,4 +975,5 @@ void CCDisplayLinkDirector::setAnimationInterval(double dValue)
 	}	
 }
 
-} //namespace   cocos2d 
+NS_CC_END
+

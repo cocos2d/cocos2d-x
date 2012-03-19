@@ -58,7 +58,7 @@ namespace cocos2d {
 		CCShow(){}
 		virtual ~CCShow(){}
 		//super methods
-		virtual void startWithTarget(CCNode *pTarget);
+		virtual void update(ccTime time);
 		virtual CCFiniteTimeAction * reverse(void);
 		virtual CCObject* copyWithZone(CCZone *pZone);
 	public:
@@ -78,7 +78,7 @@ namespace cocos2d {
 		CCHide(){}
 		virtual ~CCHide(){}
 		//super methods
-		virtual void startWithTarget(CCNode *pTarget);
+		virtual void update(ccTime time);
 		virtual CCFiniteTimeAction * reverse(void);
 		virtual CCObject* copyWithZone(CCZone *pZone);
 	public:
@@ -95,7 +95,7 @@ namespace cocos2d {
 		CCToggleVisibility(){}
 		virtual ~CCToggleVisibility(){}
 		//super method
-		virtual void startWithTarget(CCNode *pTarget);
+		virtual void update(ccTime time);
 	public:
 		//override static method
 		/** Allocates and initializes the action */
@@ -119,7 +119,7 @@ namespace cocos2d {
 		/** init the action */
 		bool initWithFlipX(bool x);
 		//super methods
-		virtual void startWithTarget(CCNode *pTarget);
+		virtual void update(ccTime time);
 		virtual CCFiniteTimeAction * reverse(void);
 		virtual CCObject* copyWithZone(CCZone *pZone);
 
@@ -144,7 +144,7 @@ namespace cocos2d {
 		/** init the action */
 		bool initWithFlipY(bool y);
 		//super methods
-		virtual void startWithTarget(CCNode *pTarget);
+		virtual void update(ccTime time);
 		virtual CCFiniteTimeAction * reverse(void);
 		virtual CCObject* copyWithZone(CCZone *pZone);
 
@@ -164,7 +164,7 @@ namespace cocos2d {
 		/** Initializes a Place action with a position */
 		bool initWithPosition(const CCPoint& pos);
 		//super methods
-		virtual void startWithTarget(CCNode *pTarget);
+		virtual void update(ccTime time);
 		virtual CCObject* copyWithZone(CCZone *pZone);
 	protected:
 		CCPoint m_tPosition;
@@ -201,7 +201,7 @@ namespace cocos2d {
 		/** executes the callback */
 		virtual void execute();
 		//super methods
-		virtual void startWithTarget(CCNode *pTarget);
+		virtual void update(ccTime time);
 		CCObject * copyWithZone(CCZone *pZone);
 
 		inline CCObject* getTargetCallback()
