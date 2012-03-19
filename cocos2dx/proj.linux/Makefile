@@ -13,7 +13,7 @@ INCLUDES = -I.. \
 					-I../platform/third_party/linux/libxml2 \
 					-I../platform/third_party/linux/libjpeg 
 
-DEFINES = -DLINUX
+DEFINES = -DLINUX -DUSE_FONTCONFIG
 
 OBJECTS = ../actions/CCAction.o \
 					../actions/CCActionCamera.o \
@@ -119,7 +119,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 						$(STATICLIBS_DIR)/libpng.a \
 						$(STATICLIBS_DIR)/libjpeg.a
 
-SHAREDLIBS = -lglfw -lGL
+SHAREDLIBS = -lglfw -lGL -lfontconfig
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 
