@@ -851,6 +851,18 @@
 					Name="NodeTest"
 					>
 				</Filter>
+				<Filter
+					Name="ActionsProgressTest"
+					>
+					<File
+						RelativePath="..\tests\ActionsProgressTest\ActionsProgressTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ActionsProgressTest\ActionsProgressTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
