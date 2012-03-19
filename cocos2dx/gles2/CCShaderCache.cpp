@@ -1,31 +1,33 @@
-/*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
- *
- * Copyright (c) 2011 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+/****************************************************************************
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2011      Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
 #include "ccMacros.h"
+#include "ccShaders.h"
 
 NS_CC_BEGIN
 
@@ -49,7 +51,7 @@ void CCShaderCache::purgeSharedShaderCache()
 }
 
 CCShaderCache::CCShaderCache()
-: programs_(0)
+: m_pPrograms(0)
 {
 
 }
@@ -57,12 +59,12 @@ CCShaderCache::CCShaderCache()
 CCShaderCache::~CCShaderCache()
 {
 	CCLOGINFO("cocos2d deallocing 0x%X", this);
-	programs_->release();
+	m_pPrograms->release();
 }
 
 bool CCShaderCache::init()
 {
-	programs_ = new CCMutableDictionary<std::string, CCGLProgram*>();
+	m_pPrograms = new CCMutableDictionary<std::string, CCGLProgram*>();
 	loadDefaultShaders();
 	return true;
 }
@@ -71,7 +73,7 @@ void CCShaderCache::loadDefaultShaders()
 {
 	// Position Texture Color shader
 	CCGLProgram *p = new CCGLProgram();
-	p->initWithVertexShaderFilename("PositionTextureColor.vsh", "PositionTextureColor.fsh");
+	p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColor_frag);
 
 	p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
 	p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
@@ -80,12 +82,14 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionTextureColor);
+	m_pPrograms->setObject(p, kCCShader_PositionTextureColor);
 	p->release();
+
+	CHECK_GL_ERROR_DEBUG();
 
 	// Position Texture Color alpha test
 	p = new CCGLProgram();
-	p->initWithVertexShaderFilename("PositionTextureColor.vsh", "PositionTextureColorAlphaTest.fsh");
+	p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
 
 	p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
 	p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
@@ -94,14 +98,16 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionTextureColorAlphaTest);
+	m_pPrograms->setObject(p, kCCShader_PositionTextureColorAlphaTest);
 	p->release();
+
+	CHECK_GL_ERROR_DEBUG();
 
 	//
 	// Position, Color shader
 	//
 	p = new CCGLProgram();
-	p->initWithVertexShaderFilename("PositionColor.vsh" ,"PositionColor.fsh");
+	p->initWithVertexShaderByteArray(ccPositionColor_vert ,ccPositionColor_frag);
 
 	p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
 	p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
@@ -109,14 +115,15 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionColor);
+	m_pPrograms->setObject(p, kCCShader_PositionColor);
 	p->release();
 
+	CHECK_GL_ERROR_DEBUG();
 	//
 	// Position Texture shader
 	//
 	p = new CCGLProgram();
-	p->initWithVertexShaderFilename("PositionTexture.vsh" ,"PositionTexture.fsh");
+	p->initWithVertexShaderByteArray(ccPositionTexture_vert ,ccPositionTexture_frag);
 
 	p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
 	p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
@@ -124,14 +131,16 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionTexture);
+	m_pPrograms->setObject(p, kCCShader_PositionTexture);
 	p->release();
+
+	CHECK_GL_ERROR_DEBUG();
 
 	//
 	// Position, Texture attribs, 1 Color as uniform shader
 	//
 	p = new CCGLProgram();
-	p->initWithVertexShaderFilename("PositionTexture_uColor.vsh", "PositionTexture_uColor.fsh");
+	p->initWithVertexShaderByteArray(ccPositionTexture_uColor_vert, ccPositionTexture_uColor_frag);
 
 	p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
 	p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
@@ -139,14 +148,16 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p ,kCCShader_PositionTexture_uColor);
+	m_pPrograms->setObject(p ,kCCShader_PositionTexture_uColor);
 	p->release();
+
+	CHECK_GL_ERROR_DEBUG();
 
 	//
 	// Position Texture A8 Color shader
 	//
 	p = new CCGLProgram();
-	p->initWithVertexShaderFilename("PositionTextureA8Color.vsh", "PositionTextureA8Color.fsh");
+	p->initWithVertexShaderByteArray(ccPositionTextureA8Color_vert, ccPositionTextureA8Color_frag);
 
 	p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
 	p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
@@ -155,20 +166,36 @@ void CCShaderCache::loadDefaultShaders()
 	p->link();
 	p->updateUniforms();
 
-	programs_->setObject(p, kCCShader_PositionTextureA8Color);
+	m_pPrograms->setObject(p, kCCShader_PositionTextureA8Color);
 	p->release();
 
-//TODO:	CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
+
+	//
+	// Position and 1 color passed as a uniform (to similate glColor4ub )
+	//
+	p = new CCGLProgram();
+	p->initWithVertexShaderByteArray(ccPosition_uColor_vert, ccPosition_uColor_frag);	
+
+	p->addAttribute("aVertex", kCCVertexAttrib_Position);	
+
+	p->link();	
+	p->updateUniforms();	
+
+	m_pPrograms->setObject(p, kCCShader_Position_uColor);	
+	p->release();	
+
+	CHECK_GL_ERROR_DEBUG();
 }
 
 CCGLProgram* CCShaderCache::programForKey(const char* key)
 {
-	return programs_->objectForKey(key);
+	return m_pPrograms->objectForKey(key);
 }
 
 void CCShaderCache::addProgram(CCGLProgram* program, const char* key)
 {
-    programs_->setObject(program, key);
+    m_pPrograms->setObject(program, key);
 }
 
 NS_CC_END

@@ -24,112 +24,152 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCProfiling.h"
 
-#if CC_ENABLE_PROFILERS
+using namespace std;
 
-namespace cocos2d
+NS_CC_BEGIN
+
+//#pragma mark - Profiling Categories
+/* set to NO the categories that you don't want to profile */
+bool kCCProfilerCategorySprite = false;
+bool kCCProfilerCategoryBatchSprite = false;
+bool kCCProfilerCategoryParticles = false;
+
+
+static CCProfiler* g_sSharedProfiler = NULL;
+
+CCProfiler* CCProfiler::sharedProfiler(void)
 {
-	using namespace std;
-	static CCProfiler *g_sSharedProfiler;
-
-	CCProfiler* CCProfiler::sharedProfiler(void)
+    if (! g_sSharedProfiler)
 	{
-        if (! g_sSharedProfiler)
-		{
-			g_sSharedProfiler = new CCProfiler();
-			g_sSharedProfiler->init();
-		}
-
-		return g_sSharedProfiler;
+		g_sSharedProfiler = new CCProfiler();
+		g_sSharedProfiler->init();
 	}
 
-	CCProfilingTimer* CCProfiler::timerWithName(const char *pszTimerName, CCObject *pInstance)
-	{
-		CCProfiler *p = CCProfiler::sharedProfiler();
-		CCProfilingTimer *t = new CCProfilingTimer();
-		t->initWithName(pszTimerName, pInstance);
-		p->m_pActiveTimers->addObject(t);
-		t->release();
+	return g_sSharedProfiler;
+}
 
-		return t;
+CCProfilingTimer* CCProfiler::createAndAddTimerWithName(const char* timerName)
+{
+	CCProfiler *p = CCProfiler::sharedProfiler();
+	CCProfilingTimer *t = new CCProfilingTimer();
+	t->initWithName(timerName);
+	m_pActiveTimers->setObject(t, timerName);
+	t->release();
+
+	return t;
+}
+
+void CCProfiler::releaseTimer(const char* timerName)
+{
+	m_pActiveTimers->removeObjectForKey(timerName);
+}
+
+void CCProfiler::releaseAllTimers()
+{
+	m_pActiveTimers->removeAllObjects();
+}
+
+bool CCProfiler::init()
+{
+    m_pActiveTimers = new CCMutableDictionary<std::string, CCProfilingTimer*>();
+	return true;
+}
+
+CCProfiler::~CCProfiler(void)
+{
+	CC_SAFE_RELEASE(m_pActiveTimers);
+}
+
+void CCProfiler::displayTimers()
+{
+	vector<string> allKeys = m_pActiveTimers->allKeys();
+	for (vector<string>::iterator it = allKeys.begin(); it != allKeys.end(); ++it)
+	{
+		CCProfilingTimer* timer = m_pActiveTimers->objectForKey(*it);
+		CCLog(timer->description());
+	}
+}
+
+// implementation of CCProfilingTimer
+
+bool CCProfilingTimer::initWithName(const char* timerName)
+{
+	m_NameStr = timerName;
+	numberOfCalls = 0;
+	m_dAverageTime = 0.0;
+	totalTime = 0.0;
+	minTime = 10000.0;
+	maxTime = 0.0;
+	gettimeofday((struct timeval *)&m_sStartTime, NULL);
+
+	return true;
+}
+
+CCProfilingTimer::~CCProfilingTimer(void)
+{
+	
+}
+
+const char* CCProfilingTimer::description()
+{
+	static char s_szDesciption[256] = {0};
+	sprintf(s_szDesciption, "%s: avg time, %fms", m_NameStr.c_str(), m_dAverageTime);
+	return s_szDesciption;
+}
+
+void CCProfilingTimer::reset()
+{
+	numberOfCalls = 0;
+	m_dAverageTime = 0;
+	totalTime = 0;
+	minTime = 10000;
+	maxTime = 0;
+	gettimeofday((struct timeval *)&m_sStartTime, NULL);
+}
+
+void CCProfilingBeginTimingBlock(const char *timerName)
+{
+	CCProfiler* p = CCProfiler::sharedProfiler();
+	CCProfilingTimer *timer = p->m_pActiveTimers->objectForKey(timerName);
+	if( ! timer )
+	{
+		timer = p->createAndAddTimerWithName(timerName);
 	}
 
-	void CCProfiler::releaseTimer(CCProfilingTimer *pTimer)
-	{
-		CCProfiler *p = CCProfiler::sharedProfiler();
-		p->m_pActiveTimers->removeObject(pTimer);
+	gettimeofday((struct timeval *)&timer->m_sStartTime, NULL);
 
-        if (0 == (p->m_pActiveTimers->count()))
-        {
-            CC_SAFE_DELETE(g_sSharedProfiler);
-        }
-	}
+	timer->numberOfCalls++;
+}
 
-	bool CCProfiler::init()
-	{
-        m_pActiveTimers = CCArray::array();
-        m_pActiveTimers->retain();
+void CCProfilingEndTimingBlock(const char *timerName)
+{
+	CCProfiler* p = CCProfiler::sharedProfiler();
+	CCProfilingTimer *timer = p->m_pActiveTimers->objectForKey(timerName);
 
-		return true;
-	}
+	CCAssert(timer, "CCProfilingTimer  not found");
 
-	CCProfiler::~CCProfiler(void)
-	{
-		CC_SAFE_RELEASE(m_pActiveTimers);
-	}
+	struct timeval currentTime;
+	gettimeofday(&currentTime, NULL);
 
-	void CCProfiler::displayTimers()
-	{
-        CCObject* pObject = NULL;
-        CCProfilingTimer* pTimer = NULL;
-        CCARRAY_FOREACH(m_pActiveTimers, pObject)
-		{
-            pTimer = (CCProfilingTimer*) pObject;
-			char *pszDescription = pTimer->description();
-			CCLog(pszDescription);
-			delete pszDescription;
-		}
-	}
+	double duration = CCTime::timersubCocos2d((struct cc_timeval *)&timer->m_sStartTime, (struct cc_timeval *)&currentTime);
 
-	// implementation of CCProfilingTimer
+	// milliseconds
+	timer->m_dAverageTime = (timer->m_dAverageTime + duration) / 2.0f;
+	timer->totalTime += duration;
+	timer->maxTime = MAX( timer->maxTime, duration);
+	timer->minTime = MIN( timer->minTime, duration);
 
-	bool CCProfilingTimer::initWithName(const char* pszTimerName, CCObject *pInstance)
-	{
-		char tmp[160];
-		sprintf(tmp, "%s (0x%.8x)", pszTimerName, (unsigned int)pInstance);
-		m_NameStr = string(tmp);
-        m_dAverageTime = 0.0;
+}
 
-		return true;
-	}
+void CCProfilingResetTimingBlock(const char *timerName)
+{
+	CCProfiler* p = CCProfiler::sharedProfiler();
+	CCProfilingTimer *timer = p->m_pActiveTimers->objectForKey(timerName);
 
-	CCProfilingTimer::~CCProfilingTimer(void)
-	{
-		
-	}
+	CCAssert(timer, "CCProfilingTimer not found");
 
-	char* CCProfilingTimer::description()
-	{
-        char *pszDes = new char[m_NameStr.length() + sizeof(double) + 32];
-		sprintf(pszDes, "%s: avg time, %fms", m_NameStr.c_str(), m_dAverageTime);
-		return pszDes;
-	}
+	timer->reset();
+}
 
-	void CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer)
-	{
-		CCTime::gettimeofdayCocos2d(pTimer->getStartTime(), NULL);
-	}
+NS_CC_END
 
-	void CCProfilingEndTimingBlock(CCProfilingTimer *pTimer)
-	{
-        struct cc_timeval currentTime;
-		CCTime::gettimeofdayCocos2d(&currentTime, NULL);
-		CCTime::timersubCocos2d(&currentTime, pTimer->getStartTime(), &currentTime);
-		double duration = currentTime.tv_sec * 1000.0 + currentTime.tv_usec / 1000.0;
-
-		// return in milliseconds
-		pTimer->setAverageTime((pTimer->getAverageTime() + duration) / 2.0f);
-	}
-
-} // end of namespace cocos2d
-
-#endif // CC_ENABLE_PROFILERS

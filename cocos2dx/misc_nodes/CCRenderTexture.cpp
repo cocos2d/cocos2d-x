@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCImage.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCConfiguration.h"
 #include "support/ccUtils.h"
 #include "CCTextureCache.h"
@@ -90,7 +90,7 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
 		pRet->autorelease();
 		return pRet;
 	}
-	CC_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 
@@ -109,7 +109,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         w *= (int)CC_CONTENT_SCALE_FACTOR();
         h *= (int)CC_CONTENT_SCALE_FACTOR();
 
-        glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
         // textures must be power of two squared
         unsigned int powW = 0;
@@ -137,14 +137,14 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 
         // generate FBO
         glGenFramebuffers(1, &m_uFBO);
-        glBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
 
         // associate texture with FBO
-        glFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
 
         // check if it worked (probably worth doing :) )
-        GLuint status = glCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
-        if (status != CC_GL_FRAMEBUFFER_COMPLETE)
+        GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        if (status != GL_FRAMEBUFFER_COMPLETE)
         {
             CCAssert(0, "Render Texture : Could not attach texture to framebuffer");
             CC_SAFE_DELETE(m_pTexture);
@@ -162,7 +162,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
         m_pSprite->setBlendFunc(tBlendFunc);
 
-        glBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
         bRet = true;
     } while (0);
     return bRet;
@@ -194,8 +194,8 @@ void CCRenderTexture::begin()
 		(float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
 	kmGLMultMatrix(&orthoMatrix);
 
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
 }
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
@@ -215,7 +215,7 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 
 void CCRenderTexture::end(bool bIsTOCacheTexture)
 {
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
 	kmGLPopMatrix();
 
 	CCDirector *director = CCDirector::sharedDirector();

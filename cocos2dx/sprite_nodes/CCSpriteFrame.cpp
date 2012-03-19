@@ -124,8 +124,8 @@ CCObject* CCSpriteFrame::copyWithZone(CCZone *pZone)
     CC_UNUSED_PARAM(pZone);
 	CCSpriteFrame *pCopy = new CCSpriteFrame();
 	
-	pCopy->initWithTexture(m_pobTexture, m_obRectInPixels, m_bRotated, m_obOffsetInPixels, m_obOriginalSizeInPixels);
-	
+	pCopy->initWithTextureFilename(m_strTextureFilename.c_str(), m_obRectInPixels, m_bRotated, m_obOffsetInPixels, m_obOriginalSizeInPixels);
+	pCopy->setTexture(m_pobTexture);
 	return pCopy;
 }
 

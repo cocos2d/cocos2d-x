@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "ccMacros.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 // support
 #include "CCTexture2D.h"
 
@@ -52,8 +52,8 @@ CCTextureAtlas::~CCTextureAtlas()
 {
 //	CCLOGINFO("cocos2d: deallocing CCTextureAtlas.");
 
-	CC_SAFE_FREE(m_pQuads)
-	CC_SAFE_FREE(m_pIndices)
+	CC_SAFE_FREE(m_pQuads);
+	CC_SAFE_FREE(m_pIndices);
 
 	glDeleteBuffers(2, m_pBuffersVBO);
 	glDeleteVertexArrays(1, &m_uVAOname);
@@ -157,8 +157,8 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
 	if( ! ( m_pQuads && m_pIndices) && m_uCapacity > 0) {
 		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
-		CC_SAFE_FREE(m_pQuads)
-		CC_SAFE_FREE(m_pIndices)
+		CC_SAFE_FREE(m_pQuads);
+		CC_SAFE_FREE(m_pIndices);
 
 		// release texture, should set it to null, because the destruction will
 		// release it too. see cocos2d-x issue #484
@@ -243,7 +243,7 @@ void CCTextureAtlas::initVAO()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	//TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 }
 
 void CCTextureAtlas::mapBuffers()
@@ -259,7 +259,7 @@ void CCTextureAtlas::mapBuffers()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	// TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 }
 
 // TextureAtlas - Update, Insert, Move & Remove
@@ -547,7 +547,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 
 	glBindVertexArray(0);
 
-	// TODO: CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR_DEBUG();
 }
 
 

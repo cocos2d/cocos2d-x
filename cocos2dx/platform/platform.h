@@ -40,7 +40,7 @@ class CC_DLL CCTime
 {
 public:
     static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
+    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
 };
 
 NS_CC_END;

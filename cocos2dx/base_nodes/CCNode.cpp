@@ -75,6 +75,7 @@ CCNode::CCNode(void)
 , m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
 , m_pUserData(NULL)
+, m_pUserObject(NULL)
 , m_bIsTransformDirty(true)
 , m_bIsInverseDirty(true)
 , m_nScriptHandler(0)
@@ -102,7 +103,7 @@ CCNode::~CCNode(void)
 
 	CC_SAFE_RELEASE(m_pGrid);
 	CC_SAFE_RELEASE(m_pShaderProgram);
-
+	CC_SAFE_RELEASE(m_pUserObject);
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
@@ -169,9 +170,18 @@ int CCNode::getZOrder()
 
 /// zOrder setter : private method
 /// used internally to alter the zOrder variable. DON'T call this method manually 
-void CCNode::setZOrder(int z)
+void CCNode::_setZOrder(int z)
 {
 	m_nZOrder = z;
+}
+
+void CCNode::setZOrder(int z)
+{
+	_setZOrder(z);
+	if (m_pParent)
+	{
+		m_pParent->reorderChild(this, z);
+	}
 }
 
 /// ertexZ getter
@@ -632,7 +642,7 @@ void CCNode::insertChild(CCNode* child, int z)
 {
 	m_bReorderChildDirty = true;
 	ccArrayAppendObjectWithResize(m_pChildren->data, child);
-    child->setZOrder(z);
+    child->_setZOrder(z);
 }
 
 void CCNode::reorderChild(CCNode *child, int zOrder)
@@ -640,7 +650,7 @@ void CCNode::reorderChild(CCNode *child, int zOrder)
 	CCAssert( child != NULL, "Child must be non-nil");
 	m_bReorderChildDirty = true;
 	child->setOrderOfArrival(s_globalOrderOfArrival++);
-	child->setZOrder(zOrder);
+	child->_setZOrder(zOrder);
 }
 
 void CCNode::sortAllChildren()
@@ -888,21 +898,6 @@ CCAction * CCNode::getActionByTag(int tag)
 unsigned int CCNode::numberOfRunningActions()
 {
 	return m_pActionManager->numberOfRunningActionsInTarget(this);
-}
-
-void CCNode::setShaderProgram(CCGLProgram* pShaderProgram)
-{
-	if (m_pShaderProgram != pShaderProgram)
-	{
-		CC_SAFE_RETAIN(pShaderProgram);
-		CC_SAFE_RELEASE(m_pShaderProgram);
-		m_pShaderProgram = pShaderProgram;
-	}
-}
-
-CCGLProgram* CCNode::getShaderProgram(void)
-{
-	return m_pShaderProgram;
 }
 
 // CCNode - Callbacks

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
 
@@ -108,7 +108,7 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
 
 	// shader stuff
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture_uColor));
-	m_nUniformColor = glGetUniformLocation( m_pShaderProgram->program_, "u_color");
+	m_nUniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
 
 	return true;
 }
@@ -136,7 +136,8 @@ void CCAtlasNode::draw()
 
 	ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
-	glUniform4f( m_nUniformColor, m_tColor.r / 255.0f, m_tColor.g / 255.0f, m_tColor.b / 255.0f, m_cOpacity / 255.0f );
+	GLfloat colors[4] = {m_tColor.r / 255.0f, m_tColor.g / 255.0f, m_tColor.b / 255.0f, m_cOpacity / 255.0f};
+	getShaderProgram()->setUniformLocationWith4fv(m_nUniformColor, colors, 1);
 
 	m_pTextureAtlas->drawNumberOfQuads(m_uQuadsToDraw, 0);
 }

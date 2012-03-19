@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "support/ccUtils.h"
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 #include "CCGL.h"
 #include "CCPointExtension.h"
 #include "support/TransformUtils.h"
@@ -319,8 +319,8 @@ namespace cocos2d
 		int n = m_sGridSize.x * m_sGridSize.y;
 
 		ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-		ccGLUseProgram( m_pShaderProgram->program_ );
-		ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );
+		m_pShaderProgram->use();
+		m_pShaderProgram->setUniformForModelViewProjectionMatrix();;
 
 		//
 		// Attributes
@@ -333,6 +333,7 @@ namespace cocos2d
 		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, m_pTexCoordinates);
 
 		glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, m_pIndices);
+		CC_INCREMENT_GL_DRAWS(1);
 	}
 
 	void CCGrid3D::calculateVertexPoints(void)
@@ -512,14 +513,14 @@ namespace cocos2d
 	{
 		int n = m_sGridSize.x * m_sGridSize.y;
 
-		ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-		ccGLUseProgram( m_pShaderProgram->program_ );
-		ccGLUniformModelViewProjectionMatrix( m_pShaderProgram );
+		
+		m_pShaderProgram->use();
+		m_pShaderProgram->setUniformForModelViewProjectionMatrix();
 
 		//
 		// Attributes
 		//
-
+		ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 		// position
 		glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, m_pVertices);
 
@@ -527,6 +528,8 @@ namespace cocos2d
 		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, m_pTexCoordinates);
 
 		glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, m_pIndices);
+
+		CC_INCREMENT_GL_DRAWS(1);
 	}
 
 	void CCTiledGrid3D::calculateVertexPoints(void)

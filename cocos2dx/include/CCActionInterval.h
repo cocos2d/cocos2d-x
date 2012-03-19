@@ -97,7 +97,7 @@ public:
 	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
-	virtual void update(ccTime time);
+	virtual void update(ccTime t);
 	virtual CCActionInterval* reverse(void);
 
 public:
@@ -128,7 +128,7 @@ public:
 	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
-	virtual void update(ccTime time);
+	virtual void update(ccTime dt);
 	virtual bool isDone(void);
 	virtual CCActionInterval* reverse(void);
 
@@ -136,9 +136,9 @@ public:
 	{
 		if (m_pInnerAction != pAction)
 		{
+			CC_SAFE_RETAIN(pAction);
 			CC_SAFE_RELEASE(m_pInnerAction);
 			m_pInnerAction = pAction;
-			CC_SAFE_RETAIN(m_pInnerAction);
 		}
 	}
 
@@ -154,6 +154,8 @@ public:
 protected:
 	unsigned int m_uTimes;
 	unsigned int m_uTotal;
+	ccTime m_fNextDt;
+	bool m_bActionInstant;
 	/** Inner action */
 	CCFiniteTimeAction *m_pInnerAction;
 };
@@ -665,53 +667,57 @@ class CCTexture2D;
 class CC_DLL CCAnimate : public CCActionInterval
 {
 public:
-	~CCAnimate(void);
-
-	/** Get animation used for the animate */
-	inline CCAnimation* getAnimation(void) { return m_pAnimation; }
-	/** Set animation used for the animate, the object is retained */
-	inline void setAnimation(CCAnimation *pAnimation) 
-	{
-		CC_SAFE_RETAIN(pAnimation);
-		CC_SAFE_RELEASE(m_pAnimation);
-		m_pAnimation = pAnimation;
-	}
+	CCAnimate();
+	~CCAnimate();
 
 	/** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(CCAnimation *pAnimation);
 
-	/** initializes the action with an Animation */
-	bool initWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
-
-	/** initializes an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
-	 The 'delay' parameter of the animation will be overridden by the duration parameter.
-	 @since v0.99.0
-	 */
-	bool initWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 
 	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
-	virtual void update(ccTime time);
+	virtual void update(ccTime t);
 	virtual CCActionInterval* reverse(void);
 
 public:
 	/** creates the action with an Animation and will restore the original frame when the animation is over */
 	static CCAnimate* actionWithAnimation(CCAnimation *pAnimation);
 
-	/** creates the action with an Animation */
-	static CCAnimate* actionWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
-
-	/** creates an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
-	 The 'delay' parameter of the animation will be overridden by the duration parameter.
-	 @since v0.99.0
-	 */	
-     static CCAnimate* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+	CC_SYNTHESIZE_RETAIN(CCAnimation*, m_pAnimation, Animation)
 protected:
-	CCAnimation *m_pAnimation;
-	CCSpriteFrame *m_pOrigFrame;
-    bool m_bRestoreOriginalFrame;
+	std::vector<float>* m_pSplitTimes;
+	int			    m_nNextFrame;
+	CCSpriteFrame*  m_pOrigFrame;
+   	unsigned int	m_uExecutedLoops;
 };
+
+/** Overrides the target of an action so that it always runs on the target
+ * specified at action creation rather than the one specified by runAction.
+ */
+class CC_DLL CCTargetedAction : public CCActionInterval
+{
+public:
+	CCTargetedAction();
+	virtual ~CCTargetedAction();
+	/** Create an action with the specified action and forced target */
+	static CCTargetedAction* actionWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction);
+
+	/** Init an action with the specified action and forced target */
+	bool initWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction);
+
+	virtual CCObject* copyWithZone(CCZone* pZone);
+	virtual void startWithTarget(CCNode *pTarget);
+	virtual void stop(void);
+	virtual void update(ccTime time);
+
+	/** This is the target that the action will be forced to run with */
+	CC_SYNTHESIZE_RETAIN(CCNode*, m_pForcedTarget, ForcedTarget);
+private:
+	CCFiniteTimeAction* m_pAction;
+};
+
+
 
 }
 

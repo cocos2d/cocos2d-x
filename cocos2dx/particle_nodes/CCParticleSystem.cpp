@@ -110,6 +110,7 @@ CCParticleSystem::CCParticleSystem()
 	,m_pBatchNode(NULL)
 	,m_uAtlasIndex(0)
 	,m_bTransformSystemDirty(false)
+	,m_uAllocatedParticles(0)
 {
 	modeA.gravity = CCPointZero;
 	modeA.speed = 0;
@@ -136,9 +137,15 @@ CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
 		pRet->autorelease();
 		return pRet;
 	}
-	CC_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet);
 	return pRet;
 }
+
+bool CCParticleSystem::init()
+{
+	return initWithTotalParticles(150);
+}
+
 bool CCParticleSystem::initWithFile(const char *plistFile)
 {
 	bool bRet = false;
@@ -333,9 +340,9 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	m_uTotalParticles = numberOfParticles;
 
-    CC_SAFE_DELETE_ARRAY(m_pParticles);
+    CC_SAFE_FREE(m_pParticles);
 	
-	m_pParticles = new tCCParticle[m_uTotalParticles];
+	m_pParticles = (tCCParticle*)calloc(m_uTotalParticles, sizeof(tCCParticle));
 
 	if( ! m_pParticles )
 	{
@@ -343,6 +350,8 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 		this->release();
 		return false;
 	}
+	m_uAllocatedParticles = numberOfParticles;
+
 	if (m_pBatchNode)
 	{
 		for (int i = 0; i < m_uTotalParticles; i++)
@@ -382,8 +391,8 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
 CCParticleSystem::~CCParticleSystem()
 {
-    CC_SAFE_DELETE_ARRAY(m_pParticles);
-	CC_SAFE_RELEASE(m_pTexture)
+    CC_SAFE_FREE(m_pParticles);
+	CC_SAFE_RELEASE(m_pTexture);
 }
 
 bool CCParticleSystem::addParticle()
@@ -526,12 +535,17 @@ bool CCParticleSystem::isFull()
 // ParticleSystem - MainLoop
 void CCParticleSystem::update(ccTime dt)
 {
-	// TODO: CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
+	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 
 	if( m_bIsActive && m_fEmissionRate )
 	{
 		float rate = 1.0f / m_fEmissionRate;
-		m_fEmitCounter += dt;
+		//issue #1201, prevent bursts of particles, due to too high emitCounter
+		if (m_uParticleCount < m_uTotalParticles)
+		{
+			m_fEmitCounter += dt;
+		}
+		
 		while( m_uParticleCount < m_uTotalParticles && m_fEmitCounter > rate ) 
 		{
 			this->addParticle();
@@ -681,7 +695,7 @@ void CCParticleSystem::update(ccTime dt)
 	if (!m_pBatchNode)
 		postStep();
 
-	//TODO: CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
+	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 }
 
 void CCParticleSystem::updateWithNoTime(void)
@@ -704,7 +718,7 @@ void CCParticleSystem::postStep()
 void CCParticleSystem::setTexture(CCTexture2D* var)
 {
 	CC_SAFE_RETAIN(var);
-	CC_SAFE_RELEASE(m_pTexture)
+	CC_SAFE_RELEASE(m_pTexture);
 	m_pTexture = var;
 
 	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
@@ -1054,6 +1068,7 @@ unsigned int CCParticleSystem::getTotalParticles()
 }
 void CCParticleSystem::setTotalParticles(unsigned int var)
 {
+	CCAssert( var <= m_uAllocatedParticles, "Particle: resizing particle array only supported for quads");
 	m_uTotalParticles = var;
 }
 ccBlendFunc CCParticleSystem::getBlendFunc()

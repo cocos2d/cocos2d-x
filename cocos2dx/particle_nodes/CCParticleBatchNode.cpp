@@ -38,7 +38,7 @@
 #include "CCParticleSystem.h"
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
-#include "ccGLState.h"
+#include "ccGLStateCache.h"
 
 #include "support/base64.h"
 #include "support/zip_support/ZipUtils.h"
@@ -231,7 +231,7 @@ unsigned int CCParticleBatchNode::addChildHelper(CCParticleSystem* child, int z,
 	m_pChildren->insertObject(child, pos);
 
 	child->setTag(aTag);
-	child->setZOrder(z);
+	child->_setZOrder(z);
 
 	child->setParent(this);
 
@@ -291,7 +291,7 @@ void CCParticleBatchNode::reorderChild(CCNode * child, int zOrder)
 		}
 	}
 
-	pChild->setZOrder(zOrder);
+	pChild->_setZOrder(zOrder);
 }
 
 void CCParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, CCNode* child, int z)
@@ -379,7 +379,8 @@ void CCParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 
 void CCParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-	//TODO: arrayMakeObjectsPerformSelector(m_pChildren, &CCParticleBatchNode::useSelfRender);
+	//TODO: useSelfRender is undefined.
+	//arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCParticleBatchNode::useSelfRender, CCParticleSystem);
 
 	CCNode::removeAllChildrenWithCleanup(doCleanup);
 

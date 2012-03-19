@@ -42,8 +42,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..;..\kazmath\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
+				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\shaders;..\include;..;..\kazmath\include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -424,7 +424,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\ccGLState.h"
+				RelativePath="..\include\ccGLStateCache.h"
 				>
 			</File>
 			<File
@@ -1108,7 +1108,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\gles2\ccGLState.cpp"
+				RelativePath="..\gles2\ccGLStateCache.cpp"
 				>
 			</File>
 			<File
@@ -1247,6 +1247,18 @@
 					</File>
 				</Filter>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="shaders"
+			>
+			<File
+				RelativePath="..\shaders\ccShaders.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShaders.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\CCCamera.cpp"
