@@ -18,8 +18,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ActionsTestScene(); break;
     case TEST_TRANSITIONS:
         pScene = new TransitionsTestScene(); break;
-//TODO:     case TEST_PROGRESS_ACTIONS:
-//         pScene = new ProgressActionsTestScene(); break;
+     case TEST_PROGRESS_ACTIONS:
+         pScene = new ProgressActionsTestScene(); break;
     case TEST_EFFECTS:
         pScene = new EffectTestScene(); break;
     case TEST_CLICK_AND_MOVE:
