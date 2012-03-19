@@ -28,7 +28,7 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 
-# Ignore files build by ndk and eclipse
+# Ignore Android SDK, NDK, Eclipse plugin and ANT files
 libs/
 bin/
 obj/
@@ -36,6 +36,7 @@ assets/
 .classpath
 .project
 .cproject
+local.properties
 
 # Ignore files build by linux
 *.o
