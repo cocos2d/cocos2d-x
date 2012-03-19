@@ -119,6 +119,8 @@ protected:
 
 	bool				m_bReverseDirection;
 
+private:
+	CCProgressTimer();
 };
 
 }

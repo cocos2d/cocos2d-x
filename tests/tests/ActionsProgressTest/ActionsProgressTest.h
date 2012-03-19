@@ -1,5 +1,5 @@
-#ifndef _PROGRESS_ACTIONS_TEST_H_
-#define _PROGRESS_ACTIONS_TEST_H_
+#ifndef _ACTIONS__PROGRESS_TEST_H_
+#define _ACTIONS_PROGRESS_TEST_H_
 
 #include "../testBasic.h"
 
@@ -33,6 +33,34 @@ public:
 };
 
 class SpriteProgressToVertical : public SpriteDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string subtitle();
+};
+
+class SpriteProgressToRadialMidpointChanged : public SpriteDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string subtitle();
+};
+
+class SpriteProgressBarVarious : public SpriteDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string subtitle();
+};
+
+class SpriteProgressBarTintAndFade : public SpriteDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string subtitle();
+};
+
+class SpriteProgressWithSpriteFrame : public SpriteDemo
 {
 public:
 	virtual void onEnter();

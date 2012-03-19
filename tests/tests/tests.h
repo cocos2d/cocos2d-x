@@ -3,7 +3,7 @@
 
 #include "ActionsTest/ActionsTest.h"
 #include "TransitionsTest/TransitionsTest.h"
-#include "ProgressActionsTest/ProgressActionsTest.h"
+#include "ActionsProgressTest/ActionsProgressTest.h"
 #include "EffectsTest/EffectsTest.h"
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
 #include "RotateWorldTest/RotateWorldTest.h"
@@ -109,7 +109,7 @@ enum
 const std::string g_aTestNames[TESTS_COUNT] = {
     "ActionsTest",
     "TransitionsTest",
-    "ProgressActionsTest",
+    "ActionsProgressTest",
     "EffectsTest",
     "ClickAndMoveTest",
     "RotateWorldTest",

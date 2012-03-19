@@ -44,6 +44,18 @@ NS_CC_BEGIN
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
 const char kCCProgressTextureCoords = 0x4b;
 
+
+CCProgressTimer::CCProgressTimer()
+:m_eType(kCCProgressTimerTypeRadial)
+,m_fPercentage(0.0f)
+,m_pSprite(NULL)
+,m_nVertexDataCount(0)
+,m_pVertexData(NULL)
+,m_tMidpoint(0,0)
+,m_tBarChangeRate(0,0)
+,m_bReverseDirection(false)
+{}
+
 CCProgressTimer* CCProgressTimer::progressWithSprite(CCSprite* sp)
 {
 	CCProgressTimer *pProgressTimer = new CCProgressTimer();
