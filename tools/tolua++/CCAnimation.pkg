@@ -7,14 +7,9 @@ class CCAnimation : public CCObject
     float getDelay(void);
     void setDelay(float fDelay);
 
-    CCMutableArray<CCSpriteFrame*>* getFrames(void);
-    void setFrames(CCMutableArray<CCSpriteFrame*> *pFrames);
-
     void addFrame(CCSpriteFrame *pFrame);
     void addFrameWithFileName(const char *pszFileName);
-    void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
+    void addFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
 
     static CCAnimation* animation(void);
-    static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames);
-    static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay);
 };

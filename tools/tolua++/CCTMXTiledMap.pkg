@@ -1,4 +1,5 @@
 
+/** Possible oritentations of the TMX map */
 enum
 {
     /** Orthogonal orientation */
@@ -11,25 +12,17 @@ enum
 
 class CCTMXTiledMap : public CCNode
 {
-    void setMapSize(CCSize sz);
-    CCSize getMapSize();
+    CCSize getMapSize(void);
+    void setMapSize(CCSize size);
 
-    void setTileSize(CCSize sz);
-    CCSize getTileSize();
+    CCSize getTileSize(void);
+    void setTileSize(CCSize size);
 
-    void setMapOrientation(int val);
-    int getMapOrientation();
-
-    void  setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* pval);
-    CCMutableArray<CCTMXObjectGroup*>* getObjectGroups();
-
-    void setProperties(CCStringToStringDictionary* pval);
-    CCStringToStringDictionary* getProperties();
-
-    CCTMXLayer* layerNamed(const char *layerName);
-    CCTMXObjectGroup* objectGroupNamed(const char *groupName);
-    CCString *propertyNamed(const char *propertyName);
-    CCDictionary<std::string, CCString*> *propertiesForGID(int GID);
+    int getMapOrientation(void);
+    void setMapOrientation(int orientation);
 
     static CCTMXTiledMap * tiledMapWithTMXFile(const char *tmxFile);
+
+    CCTMXLayer* layerNamed(const char *layerName);
+    CCString* propertyNamed(const char *propertyName);
 };

@@ -1,62 +1,105 @@
 
 $#include "LuaCocos2d.h"
 
+// !!! DON'T CHANGE THE ORDER !!!
+
+// types
+$pfile "ccTypes.pkg"
+$pfile "CCCommon.pkg"
+
+// cocoa
+$pfile "CCAffineTransform.pkg"
+$pfile "CCGeometry.pkg"
+$pfile "CCObject.pkg"
+$pfile "CCString.pkg"
+$pfile "CCArray.pkg"
+$pfile "CCMutableArray.pkg"
+$pfile "CCMutableDictionary.pkg"
+
+// core
+$pfile "CCCamera.pkg"
+$pfile "CCConfiguration.pkg"
+$pfile "CCDirector.pkg"
+$pfile "CCScheduler.pkg"
+
+// actions
+$pfile "CCActionManager.pkg"
 $pfile "CCAction.pkg"
+$pfile "CCActionInterval.pkg"
+$pfile "CCActionInstant.pkg"
 $pfile "CCActionCamera.pkg"
 $pfile "CCActionEase.pkg"
 $pfile "CCActionGrid.pkg"
 $pfile "CCActionGrid3D.pkg"
-$pfile "CCActionManager.pkg"
 $pfile "CCActionPageTurn3D.pkg"
+$pfile "CCActionProgressTimer.pkg"
 $pfile "CCActionTiledGrid.pkg"
-$pfile "CCAffineTransform.pkg"
-$pfile "CCAnimation.pkg"
-$pfile "CCAnimationCache.pkg"
-$pfile "CCApplication.pkg"
-$pfile "CCArray.pkg"
+
+// base_nodes
+$pfile "CCNode.pkg"
 $pfile "CCAtlasNode.pkg"
-$pfile "CCCamera.pkg"
-$pfile "CCCommon.pkg"
-$pfile "CCDirector.pkg"
-$pfile "CCDrawingPrimitives.pkg"
-$pfile "CCFileUtils.pkg"
-$pfile "CCGeometry.pkg"
+
+// label nodes
 $pfile "CCLabelAtlas.pkg"
 $pfile "CCLabelBMFont.pkg"
 $pfile "CCLabelTTF.pkg"
+
+// layers scenes transitions nodes
 $pfile "CCLayer.pkg"
+$pfile "CCScene.pkg"
+$pfile "CCTransition.pkg"
+$pfile "CCTransitionPageTurn.pkg"
+$pfile "CCTransitionRadial.pkg"
+
+// menu nodes
 $pfile "CCMenu.pkg"
 $pfile "CCMenuItem.pkg"
+
+// misc nodes
 $pfile "CCMotionStreak.pkg"
-$pfile "CCMutableArray.pkg"
-$pfile "CCMutableDictionary.pkg"
-$pfile "CCNode.pkg"
-$pfile "CCObject.pkg"
-$pfile "CCParallaxNode.pkg"
-$pfile "CCParticleSystem.pkg"
-$pfile "CCPointExtension.pkg"
 $pfile "CCProgressTimer.pkg"
 $pfile "CCRenderTexture.pkg"
 $pfile "CCRibbon.pkg"
-$pfile "CCScene.pkg"
-$pfile "CCScheduler.pkg"
-$pfile "CCSprite.pkg"
-$pfile "CCSpriteBatchNode.pkg"
-$pfile "CCSpriteFrame.pkg"
-$pfile "CCSpriteFrameCache.pkg"
-$pfile "CCString.pkg"
-$pfile "CCTextFieldTTF.pkg"
+
+// particle nodes
+$pfile "CCParticleExamples.pkg"
+$pfile "CCParticleSystem.pkg"
+$pfile "CCParticleSystemPoint.pkg"
+$pfile "CCParticleSystemQuad.pkg"
+
+// textures
 $pfile "CCTexture2D.pkg"
 $pfile "CCTextureAtlas.pkg"
 $pfile "CCTextureCache.pkg"
+$pfile "CCTexturePVR.pkg"
+
+// sprite nodes
+$pfile "CCSprite.pkg"
+$pfile "CCSpriteFrame.pkg"
+$pfile "CCSpriteFrameCache.pkg"
+$pfile "CCSpriteBatchNode.pkg"
+$pfile "CCAnimation.pkg"
+$pfile "CCAnimationCache.pkg"
+
+// platform
+$pfile "CCApplication.pkg"
+$pfile "CCFileUtils.pkg"
+$pfile "CCImage.pkg"
+$pfile "CCTouch.pkg"
+$pfile "CCPointExtension.pkg"
+
+// tileMap parallax nodes
+$pfile "CCParallaxNode.pkg"
 $pfile "CCTileMapAtlas.pkg"
 $pfile "CCTMXLayer.pkg"
-$pfile "CCTMXObjectGroup.pkg"
 $pfile "CCTMXTiledMap.pkg"
-$pfile "CCTMXXMLParser.pkg"
-$pfile "CCTouch.pkg"
-$pfile "CCTransition.pkg"
-$pfile "ccTypes.pkg"
+
+// support
+$pfile "CCTextFieldTTF.pkg"
 $pfile "CCUserDefault.pkg"
 
+// extensions
+$pfile "CCNotificationCenter.pkg"
+
+// CocosDenshion
 $pfile "SimpleAudioEngine.pkg"

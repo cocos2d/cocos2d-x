@@ -12,6 +12,5 @@ typedef enum LanguageType
 
 class CCApplication
 {
-    static CCApplication& sharedApplication();
     static ccLanguageType getCurrentLanguage();
 };
