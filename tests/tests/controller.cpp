@@ -29,7 +29,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_PARTICLE:
         pScene = new ParticleTestScene(); break;
     case TEST_EASE_ACTIONS:
-        pScene = new EaseActionsTestScene(); break;
+        pScene = new ActionsEaseTestScene(); break;
     case TEST_MOTION_STREAK:
         pScene = new MotionStreakTestScene(); break;
     case TEST_DRAW_PRIMITIVES:
