@@ -85,8 +85,8 @@ bool CCTouchDispatcher::init(void)
 	m_pTargetedHandlers->retain();
  	m_pStandardHandlers = CCArray::arrayWithCapacity(4);
 	m_pStandardHandlers->retain();
-
 	m_pHandlersToAdd = CCArray::arrayWithCapacity(8);
+    m_pHandlersToAdd->retain();
     m_pHandlersToRemove = ccCArrayNew(8);
 
 	m_bToRemove = false;
@@ -104,11 +104,11 @@ bool CCTouchDispatcher::init(void)
 
 CCTouchDispatcher::~CCTouchDispatcher(void)
 {
-	CC_SAFE_RELEASE(m_pTargetedHandlers);
-	CC_SAFE_RELEASE(m_pStandardHandlers);
-	CC_SAFE_RELEASE(m_pHandlersToAdd);
-
-	ccCArrayFree(m_pHandlersToRemove);
+ 	CC_SAFE_RELEASE(m_pTargetedHandlers);
+ 	CC_SAFE_RELEASE(m_pStandardHandlers);
+ 	CC_SAFE_RELEASE(m_pHandlersToAdd);
+ 
+ 	ccCArrayFree(m_pHandlersToRemove);
 	m_pHandlersToRemove = NULL;	
 }
 
