@@ -971,8 +971,9 @@ string LabelTTFChinese::title()
 LabelBMFontChinese::LabelBMFontChinese()
 {
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCLabelBMFont* pLable = CCLabelBMFont::labelWithString("中国", "fonts/bitmapFontChinese.fnt");
-    pLable->setPosition(ccp(size.width / 2, size.height /2));
+    CCLabelBMFont* pLable = CCLabelBMFont::labelWithString("abc中国中国efghi中国中国JKLMn中国", "fonts/bitmapFontChinese.fnt", CCTextAlignmentRight, 300);
+    pLable->setLineBreakWithoutSpace(true);
+	pLable->setPosition(ccp(size.width / 2, size.height /2));
     this->addChild(pLable);
 }
 
