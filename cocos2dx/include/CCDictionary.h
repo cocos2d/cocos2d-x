@@ -52,11 +52,13 @@ public:
 
 	inline const char* getStrKey() const
 	{
+        CCAssert(m_szKey[0] != '\0', "Should not call this function for integer dictionary");
 		return m_szKey;
 	}
 
 	inline int getIntKey() const 
 	{
+        CCAssert(m_szKey[0] == '\0', "Should not call this function for string dictionary");
 		return m_iKey;
 	}
 
@@ -75,9 +77,9 @@ private:
 	}
 
 private:
-	char m_szKey[256]; /* hash key of string type*/
-	int  m_iKey;      /* hash key of integer type */
-	CCObject* m_pObject;/* hash value */
+	char m_szKey[256];  /** hash key of string type*/
+	int  m_iKey;        /** hash key of integer type */
+	CCObject* m_pObject;/** hash value */
 public:
 	UT_hash_handle hh; /* makes this class hashable */
 	friend class CCDictionary;
