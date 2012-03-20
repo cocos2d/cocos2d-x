@@ -176,8 +176,8 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
         // }
         if (error)
         {
-            CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
-            lua_settop(m_state, 0);
+            CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));        /* stack: ... error */
+            lua_pop(m_state, 1); // remove error message from stack
             return 0;
         }
 
@@ -192,11 +192,12 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
             ret = lua_toboolean(m_state, -1);
         }
 
-        lua_pop(m_state, 1);
+        lua_pop(m_state, 1); // remove return value from stack
         return ret;
     }
     else
     {
+        lua_pop(m_state, numArgs); // remove args from stack
         return 0;
     }
 }
