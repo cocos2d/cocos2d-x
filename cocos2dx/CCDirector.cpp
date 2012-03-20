@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "cocoa/CCNS.h"
 #include "CCDirector.h"
 #include "CCScene.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "CCTouchDispatcher.h"
@@ -96,7 +96,8 @@ bool CCDirector::init(void)
 	m_pNotificationNode = NULL;
 
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;	
-	m_pobScenesStack = new CCMutableArray<CCScene*>();
+	m_pobScenesStack = CCArray::array();
+	m_pobScenesStack->retain();
 
 	// Set default projection (3D)
 	m_eProjection = kCCDirectorProjectionDefault;
@@ -336,8 +337,9 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 		{
 			// reset the viewport if 3d proj & retina display
 			if( CC_CONTENT_SCALE_FACTOR() != 1 )
+			{
 				glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
-
+			}
 			float zeye = this->getZEye();
 
 			kmMat4 matrixPerspective, matrixLookup;
@@ -563,7 +565,7 @@ void CCDirector::popScene(void)
 	else
 	{
 		m_bSendCleanupToScene = true;
-		m_pNextScene = m_pobScenesStack->getObjectAtIndex(c - 1);
+		m_pNextScene = (CCScene*)m_pobScenesStack->objectAtIndex(c - 1);
 	}
 }
 

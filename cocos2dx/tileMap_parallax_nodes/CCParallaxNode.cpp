@@ -98,7 +98,7 @@ namespace cocos2d {
 			CCPointObject *point = (CCPointObject*)m_pParallaxArray->arr[i];
 			if( point->getChild()->isEqual(child)) 
 			{
-				ccArrayRemoveObjectAtIndex(m_pParallaxArray, i);
+				ccArrayRemoveObjectAtIndex(m_pParallaxArray, i, true);
 				break;
 			}
 		}

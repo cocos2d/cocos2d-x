@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "CCGL.h"
 #include "CCObject.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 
 namespace   cocos2d {
 

@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
 #include "CCObject.h"
-#include "CCMutableDictionary.h"
+#include "CCDictionary.h"
 
 namespace   cocos2d {
 class CCSprite;
@@ -55,7 +55,7 @@ public:
 
 	/*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
 	 */
-	void addSpriteFramesWithDictionary(CCDictionary<std::string, CCObject*> *pobDictionary, CCTexture2D *pobTexture);
+	void addSpriteFramesWithDictionary(CCDictionary* pobDictionary, CCTexture2D *pobTexture);
 
 	/** Adds multiple Sprite Frames from a plist file.
 	 * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
@@ -103,7 +103,7 @@ public:
 	/** Removes multiple Sprite Frames from CCDictionary.
 	* @since v0.99.5
 	*/
-	void removeSpriteFramesFromDictionary(CCDictionary<std::string, CCSpriteFrame*> *dictionary);
+	void removeSpriteFramesFromDictionary(CCDictionary* dictionary);
 
 	/** Removes all Sprite Frames associated with the specified textures.
 	* It is convinient to call this method when a specific texture needs to be removed.
@@ -126,11 +126,11 @@ public:
 
 private:
 	CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
-	const char * valueForKey(const char *key, CCDictionary<std::string, CCObject*> *dict);
+	const char * valueForKey(const char* key, CCDictionary* dict);
 	
 protected:
-	CCDictionary<std::string, CCSpriteFrame*> *m_pSpriteFrames;
-	CCDictionary<std::string, CCString*> *m_pSpriteFramesAliases;
+	CCDictionary* m_pSpriteFrames;
+	CCDictionary* m_pSpriteFramesAliases;
 };
 }//namespace   cocos2d 
 

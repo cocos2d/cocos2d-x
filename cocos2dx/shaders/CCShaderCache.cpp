@@ -64,7 +64,7 @@ CCShaderCache::~CCShaderCache()
 
 bool CCShaderCache::init()
 {
-	m_pPrograms = new CCMutableDictionary<std::string, CCGLProgram*>();
+	m_pPrograms = new CCDictionary();
 	loadDefaultShaders();
 	return true;
 }
@@ -190,7 +190,7 @@ void CCShaderCache::loadDefaultShaders()
 
 CCGLProgram* CCShaderCache::programForKey(const char* key)
 {
-	return m_pPrograms->objectForKey(key);
+	return (CCGLProgram*)m_pPrograms->objectForKey(key);
 }
 
 void CCShaderCache::addProgram(CCGLProgram* program, const char* key)
