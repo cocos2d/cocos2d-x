@@ -268,7 +268,7 @@ void CCTextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 {
 	CCAssert( index >= 0 && index < m_uCapacity, "updateQuadWithTexture: Invalid index");
 
-	m_uTotalQuads = max( index+1, m_uTotalQuads);
+	m_uTotalQuads = MAX( index+1, m_uTotalQuads);
 
 	m_pQuads[index] = *quad;	
 
@@ -404,7 +404,7 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 		return true;
 
 	// update capacity and totolQuads
-	m_uTotalQuads = min(m_uTotalQuads, newCapacity);
+	m_uTotalQuads = MIN(m_uTotalQuads, newCapacity);
 	m_uCapacity = newCapacity;
 
 	void * tmpQuads = NULL;

@@ -27,6 +27,8 @@ NS_CC_BEGIN;
 #include "CCCommon.h"
 #include "jni/SystemInfoJni.h"
 
+using namespace std;
+
 // record the resource path
 static string s_strResourcePath = "";
 	
