@@ -1,24 +1,19 @@
 
 class CCSpriteFrame : public CCObject
 {
-    CCRect getRectInPixels(void);
-    void setRectInPixels(CCRect rectInPixels);
-
+    const CCRect& getRectInPixels(void);
+    void setRectInPixels(const CCRect& rectInPixels);
     bool isRotated(void);
     void setRotated(bool bRotated);
-
-    CCRect getRect(void);
-    void setRect(CCRect rect);
-
-    CCPoint getOffsetInPixels(void);
-    void setOffsetInPixels(CCPoint offsetInPixels);
-
-    CCSize getOriginalSizeInPixels(void);
-    void setOriginalSizeInPixels(CCSize sizeInPixels);
-
+    const CCRect& getRect(void);
+    void setRect(const CCRect& rect);
+    const CCPoint& getOffsetInPixels(void);
+    void setOffsetInPixels(const CCPoint& offsetInPixels);
+    const CCSize& getOriginalSizeInPixels(void);
+    void setOriginalSizeInPixels(const CCSize& sizeInPixels);
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D* pobTexture);
 
-    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect);
-    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
+    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
 };

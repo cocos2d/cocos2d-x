@@ -1,19 +1,15 @@
 
 class CCSpriteFrameCache : public CCObject
 {
-    void addSpriteFramesWithDictionary(CCDictionary<std::string, CCObject*> *pobDictionary, CCTexture2D *pobTexture);
     void addSpriteFramesWithFile(const char *pszPlist);
     void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
     void addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture);
     void addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName);
-
     void removeSpriteFrames(void);
     void removeUnusedSpriteFrames(void);
     void removeSpriteFrameByName(const char *pszName);
     void removeSpriteFramesFromFile(const char* plist);
-    void removeSpriteFramesFromDictionary(CCDictionary<std::string, CCSpriteFrame*> *dictionary);
     void removeSpriteFramesFromTexture(CCTexture2D* texture);
-
     CCSpriteFrame* spriteFrameByName(const char *pszName);
 
     static CCSpriteFrameCache* sharedSpriteFrameCache(void);

@@ -24,6 +24,6 @@ class CCProgressTimer : public CCNode
     void setSprite(CCSprite *pSprite);
     void setType(CCProgressTimerType type);
 
-    static CCProgressTimer* progressWithFile(const char *pszFileName);
-    static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
+    static CCProgressTimer* progressWithFile(const char* pszFileName);
+    static CCProgressTimer* progressWithTexture(CCTexture2D* pTexture);
 };

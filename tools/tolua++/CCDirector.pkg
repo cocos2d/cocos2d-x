@@ -1,43 +1,38 @@
 
 typedef enum {
-    /// Device oriented vertically, home button on the bottom
-    kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,
-    /// Device oriented vertically, home button on the top
-    kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
-    /// Device oriented horizontally, home button on the right
-    kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
-    /// Device oriented horizontally, home button on the left
-    kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
+    kCCDeviceOrientationPortrait = 0,
+    kCCDeviceOrientationPortraitUpsideDown = 1,
+    kCCDeviceOrientationLandscapeLeft = 2,
+    kCCDeviceOrientationLandscapeRight = 3,
 } ccDeviceOrientation;
 
 class CCDirector : public CCObject
 {
     CCScene* getRunningScene(void);
-
     double getAnimationInterval(void);
-
+    void setAnimationInterval(double dValue);
     bool isDisplayFPS(void);
     void setDisplayFPS(bool bDisplayFPS);
-
-    bool isRetinaDisplay();
     bool isPaused(void);
     unsigned int getFrames(void);
-
+    bool isSendCleanupToScene(void);
+    CCNode* getNotificationNode();
+    void setNotificationNode(CCNode *node);
     CCSize getWinSize(void);
     CCSize getWinSizeInPixels(void);
     CCSize getDisplaySizeInPixels(void);
-
     CCPoint convertToGL(CCPoint obPoint);
     CCPoint convertToUI(CCPoint obPoint);
-
+    float getZEye(void);
     void runWithScene(CCScene *pScene);
     void pushScene(CCScene *pScene);
     void popScene(void);
     void replaceScene(CCScene *pScene);
-
+    void showProfilers(void);
+    void applyOrientation(void);
+    ccDeviceOrientation getDeviceOrientation(void);
+    void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
     CGFloat getContentScaleFactor(void);
-
-    int getDeviceOrientation();
-
+    bool isRetinaDisplay();
     static CCDirector* sharedDirector(void);
 };
