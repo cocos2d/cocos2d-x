@@ -10,6 +10,7 @@ LOCAL_SRC_FILES := \
 tests/AccelerometerTest/AccelerometerTest.cpp \
 tests/ActionManagerTest/ActionManagerTest.cpp \
 tests/ActionsTest/ActionsTest.cpp \
+tests/ActionsEaseTest/ActionsEaseTest.cpp \
 tests/ActionsProgressTest/ActionsProgressTest.cpp \
 tests/BugsTest/Bug-1159.cpp \
 tests/BugsTest/Bug-1174.cpp \
@@ -29,7 +30,6 @@ tests/CurlTest/CurlTest.cpp \
 tests/CurrentLanguageTest/CurrentLanguageTest.cpp \
 tests/DirectorTest/DirectorTest.cpp \
 tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
-tests/EaseActionsTest/EaseActionsTest.cpp \
 tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 tests/EffectsTest/EffectsTest.cpp \
 tests/ExtensionsTest/ExtensionsTest.cpp \
