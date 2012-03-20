@@ -615,13 +615,13 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 	
 	////----UXLOG("----> Iterating over all the group objets");
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
-	CCMutableArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCArray* objects = group->getObjects();
 
-	CCStringToStringDictionary* dict;
-	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
-	for( it = objects->begin(); it != objects->end(); it++) 
+	CCDictionary* dict = NULL;
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(objects, pObj)
 	{
-		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
+		dict = (CCDictionary*)pObj;//dynamic_cast<CCStringToStringDictionary*>(*it);
 
 		if(!dict)
 			break;
@@ -639,24 +639,23 @@ void TMXOrthoObjectsTest::draw()
 	CCTMXTiledMap* map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
-	CCMutableArray<CCStringToStringDictionary*> * objects = group->getObjects();
-	CCStringToStringDictionary* dict;
-	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
-
-	for( it = objects->begin(); it != objects->end(); it++) 
+	CCArray* objects = group->getObjects();
+	CCDictionary* dict = NULL;
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(objects, pObj)
 	{
-		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
+		dict = (CCDictionary*)pObj;//dynamic_cast<CCStringToStringDictionary*>(*it);
 		
 		if(!dict)
 			break;
-		std::string key = "x";
-		int x = dict->objectForKey(key)->toInt();
+		const char* key = "x";
+		int x = ((CCString*)dict->objectForKey(key))->toInt();
 		key = "y";
-		int y = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
+		int y = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
 		key = "width";
-		int width = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
+		int width = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
 		key = "height";
-		int height = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+		int height = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
 		
 		glLineWidth(3);
 		
@@ -697,15 +696,13 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
     //UxMutableArray* objects = group->objects();
-	CCMutableArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCArray* objects = group->getObjects();
 	//UxMutableDictionary<std::string>* dict;
-    CCStringToStringDictionary* dict;
-	//CCMutableArray<CCObject*>::CCMutableArrayIterator it;
-    CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
-
-	for( it = objects->begin(); it != objects->end(); it++) 
+    CCDictionary* dict;
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(objects, pObj)
 	{
-		dict = (*it);
+		dict = (CCDictionary*)pObj;
 
 		if(!dict)
 			break;
@@ -719,24 +716,23 @@ void TMXIsoObjectsTest::draw()
 	CCTMXTiledMap *map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
 
-	CCMutableArray<CCStringToStringDictionary*> * objects = group->getObjects();
-	CCStringToStringDictionary* dict;
-	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
-
-	for( it = objects->begin(); it != objects->end(); it++) 
+	CCArray* objects = group->getObjects();
+	CCDictionary* dict;
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(objects, pObj)
 	{
-		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
+		dict = (CCDictionary*)pObj;//dynamic_cast<CCStringToStringDictionary*>(*it);
 
 		if(!dict)
 			break;
-		std::string key = "x";
-		int x = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("x"))->getNumber();
+		const char* key = "x";
+		int x = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("x"))->getNumber();
 		key = "y";
-		int y = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
+		int y = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
 		key = "width";
-		int width = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
+		int width = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
 		key = "height";
-		int height = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+		int height = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
 		
 		glLineWidth(3);
 		
@@ -1412,26 +1408,25 @@ void TMXGIDObjectsTest::draw()
 	CCTMXTiledMap *map = (CCTMXTiledMap*)getChildByTag(kTagTileMap);
 	CCTMXObjectGroup *group = map->objectGroupNamed("Object Layer 1");
 
-	CCMutableArray<CCStringToStringDictionary*> *array = group->getObjects();
-	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator iter;
-	CCStringToStringDictionary *dict;
-
-	for (iter = array->begin(); iter != array->end(); ++iter)
+	CCArray *array = group->getObjects();
+	CCDictionary* dict;
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(array, pObj)
 	{
-		dict = *iter;
+		dict = (CCDictionary*)pObj;
 		if(!dict)
 		{
 			break;
 		}
 
-		std::string key = "x";
-		int x = dict->objectForKey(key)->toInt();
+		const char* key = "x";
+		int x = ((CCString*)dict->objectForKey(key))->toInt();
 		key = "y";
-		int y = dict->objectForKey(key)->toInt();
+		int y = ((CCString*)dict->objectForKey(key))->toInt();
 		key = "width";
-		int width = dict->objectForKey(key)->toInt();
+		int width = ((CCString*)dict->objectForKey(key))->toInt();
 		key = "height";
-		int height = dict->objectForKey(key)->toInt();
+		int height = ((CCString*)dict->objectForKey(key))->toInt();
 
 		glLineWidth(3);
 

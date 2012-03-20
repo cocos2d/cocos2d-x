@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCTouchDelegateProtocol.h"
 #include "CCAccelerometerDelegate.h"
 #include "CCKeypadDelegate.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 
 namespace   cocos2d {
 
@@ -272,7 +272,7 @@ class CC_DLL CCLayerMultiplex : public CCLayer
 {
 protected:
 	unsigned int m_nEnabledLayer;
-	CCMutableArray<CCLayer *> * m_pLayers;
+	CCArray*     m_pLayers;
 public:
 
 	CCLayerMultiplex();

@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCNotificationCenter.h"
+#include <string>
+using namespace std;
 
 NS_CC_BEGIN;
 

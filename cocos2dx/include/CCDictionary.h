@@ -31,24 +31,73 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef struct _dictElement
-{
-	char szKey[20]; /* hash key of string type*/
-	int  iKey;      /* hash key of integer type */
-	CCObject* object;/* hash value */
-	UT_hash_handle hh; /* makes this class hashable */  
-}tDictElement;
+class CCDictionary;
 
-#define CCDICT_FOREACH(__dict__, __object__)	                   \
-for (tDictElement* pElement = __dict__->m_pElements;               \
-	pElement != NULL && (__object__ = pElement->object) != NULL;   \
-	pElement = (tDictElement*)pElement->hh.next)
-
-class CC_DLL CCDictionary2 : public CCObject
+class CC_DLL CCDictElement
 {
 public:
-	CCDictionary2();
-	~CCDictionary2();
+	CCDictElement(const char* pszKey, CCObject* pObject)
+	{
+		init();
+		strncpy(m_szKey, pszKey, sizeof(m_szKey));
+		m_pObject = pObject;
+	}
+
+	CCDictElement(int iKey, CCObject* pObject)
+	{
+		init();
+		m_iKey = iKey;
+		m_pObject = pObject;
+	}
+
+	inline const char* getStrKey() const
+	{
+		return m_szKey;
+	}
+
+	inline int getIntKey() const 
+	{
+		return m_iKey;
+	}
+
+	inline CCObject* getObject() const
+	{
+		return m_pObject;
+	}
+
+private:
+	inline void init()
+	{
+		m_iKey = 0;
+		m_pObject = NULL;
+		memset(m_szKey, 0, sizeof(m_szKey));
+		memset(&hh, 0, sizeof(hh));
+	}
+
+private:
+	char m_szKey[256]; /* hash key of string type*/
+	int  m_iKey;      /* hash key of integer type */
+	CCObject* m_pObject;/* hash value */
+public:
+	UT_hash_handle hh; /* makes this class hashable */
+	friend class CCDictionary;
+};
+
+
+// #define CCDICT_FOREACH(__dict__, pElement)	                       \
+// for (pElement = __dict__->m_pElements; pElement != NULL; \
+// 	pElement = (CCDictElement*)pElement->hh.next)
+
+#define CCDICT_FOREACH(__dict__, __el__) \
+	CCDictElement* ##__dict__##__el__##tmp = NULL; \
+	HASH_ITER(hh, (__dict__)->m_pElements, __el__, ##__dict__##__el__##tmp)
+
+
+class CC_DLL CCDictionary : public CCObject
+{
+public:
+	CCDictionary();
+	~CCDictionary();
 
 	/// return the number of items
 	unsigned int count();
@@ -70,10 +119,11 @@ public:
 
 	void removeAllObjects();
 
-	static CCDictionary2* dictionaryWithDictionary(CCDictionary2* srcDict);
+	virtual CCObject* copyWithZone(CCZone* pZone);
+	static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
 
 public:
-	tDictElement* m_pElements;
+	CCDictElement* m_pElements;
 private:
 	enum CCDictType
 	{

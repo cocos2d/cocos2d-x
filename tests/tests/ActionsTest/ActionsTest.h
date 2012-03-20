@@ -6,6 +6,7 @@
 
 using namespace cocos2d;
 
+
 enum
 {
     ACTION_MANUAL_LAYER = 0,

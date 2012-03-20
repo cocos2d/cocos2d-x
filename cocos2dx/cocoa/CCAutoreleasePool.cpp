@@ -24,14 +24,14 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 
-namespace cocos2d 
-{
+NS_CC_BEGIN
 
 CCPoolManager	g_PoolManager;
 
 CCAutoreleasePool::CCAutoreleasePool(void)
 {
-	m_pManagedObjectArray = new CCMutableArray<CCObject*>();
+	m_pManagedObjectArray = new CCArray();
+	m_pManagedObjectArray->init();
 }
 
 CCAutoreleasePool::~CCAutoreleasePool(void)
@@ -61,13 +61,14 @@ void CCAutoreleasePool::clear()
 #ifdef _DEBUG
 		int nIndex = m_pManagedObjectArray->count() - 1;
 #endif
-		CCMutableArray<CCObject*>::CCMutableArrayRevIterator it;
-		for(it = m_pManagedObjectArray->rbegin(); it != m_pManagedObjectArray->rend(); ++it)
+
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH_REVERSE(m_pManagedObjectArray, pObj)
 		{
-			if(!*it)
+			if(!pObj)
 				break;
 
-			(*it)->m_bManaged = false;
+			pObj->m_bManaged = false;
 			//(*it)->release();
 			//delete (*it);
 #ifdef _DEBUG
@@ -93,8 +94,9 @@ CCPoolManager* CCPoolManager::getInstance()
 
 CCPoolManager::CCPoolManager()
 {
-	m_pReleasePoolStack = new CCMutableArray<CCAutoreleasePool*>();	
-        m_pCurReleasePool = 0;
+	m_pReleasePoolStack = new CCArray();	
+	m_pReleasePoolStack->init();
+    m_pCurReleasePool = 0;
 }
 
 CCPoolManager::~CCPoolManager()
@@ -103,7 +105,7 @@ CCPoolManager::~CCPoolManager()
 	finalize();
 
 	// we only release the last autorelease pool here 
-        m_pCurReleasePool = 0;
+    m_pCurReleasePool = 0;
 	m_pReleasePoolStack->removeObjectAtIndex(0);
 
 	CC_SAFE_DELETE(m_pReleasePoolStack);
@@ -114,13 +116,13 @@ void CCPoolManager::finalize()
 	if(m_pReleasePoolStack->count() > 0)
 	{
 		//CCAutoreleasePool* pReleasePool;
-		CCMutableArray<CCAutoreleasePool*>::CCMutableArrayIterator it;
-		for(it = m_pReleasePoolStack->begin(); it != m_pReleasePoolStack->end(); ++it)
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH(m_pReleasePoolStack, pObj)
 		{
-			if(!*it)
+			if(!pObj)
 				break;
-
-			(*it)->clear();
+			CCAutoreleasePool* pPool = (CCAutoreleasePool*)pObj;
+			pPool->clear();
 		}
 	}
 }
@@ -152,10 +154,10 @@ void CCPoolManager::pop()
 
 // 		if(nCount > 1)
 // 		{
-// 			m_pCurReleasePool = m_pReleasePoolStack->getObjectAtIndex(nCount - 2);
+// 			m_pCurReleasePool = m_pReleasePoolStack->objectAtIndex(nCount - 2);
 // 			return;
 // 		}
-		m_pCurReleasePool = m_pReleasePoolStack->getObjectAtIndex(nCount - 2);
+		m_pCurReleasePool = (CCAutoreleasePool*)m_pReleasePoolStack->objectAtIndex(nCount - 2);
 	}
 
 	/*m_pCurReleasePool = NULL;*/
@@ -186,4 +188,4 @@ CCAutoreleasePool* CCPoolManager::getCurReleasePool()
 	return m_pCurReleasePool;
 }
 
-}
+NS_CC_END
