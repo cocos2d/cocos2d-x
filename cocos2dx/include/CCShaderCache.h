@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCSHADERCACHE_H__
 #define __CCSHADERCACHE_H__
 
-#include "CCMutableDictionary.h"
+#include "CCDictionary.h"
 
 NS_CC_BEGIN
 
@@ -61,7 +61,7 @@ public:
 private:
 	bool init();
 
-	CCMutableDictionary<std::string, CCGLProgram*>* m_pPrograms;
+	CCDictionary* m_pPrograms;
 
 };
 

@@ -40,7 +40,7 @@ CCAnimationFrame::CCAnimationFrame()
 
 }
 
-bool CCAnimationFrame::initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCObjectDictionary* userInfo)
+bool CCAnimationFrame::initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo)
 {
 	setSpriteFrame(spriteFrame);
 	setDelayUnits(delayUnits);
@@ -73,7 +73,7 @@ CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
 	}
 
 	pCopy->initWithSpriteFrame((CCSpriteFrame*)m_pSpriteFrame->copy()->autorelease(),
-		m_fDelayUnits, (CCObjectDictionary*)m_pUserInfo->copy()->autorelease());
+		m_fDelayUnits, m_pUserInfo != NULL ? (CCDictionary*)m_pUserInfo->copy()->autorelease() : NULL);
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -90,7 +90,7 @@ CCAnimation* CCAnimation::animation(void)
 	return pAnimation;
 } 
 
-CCAnimation* CCAnimation::animationWithSpriteFrames(CCMutableArray<CCSpriteFrame*> *frames)
+CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames)
 {
 	CCAnimation *pAnimation = new CCAnimation();
 	pAnimation->initWithSpriteFrames(frames);
@@ -99,7 +99,7 @@ CCAnimation* CCAnimation::animationWithSpriteFrames(CCMutableArray<CCSpriteFrame
 	return pAnimation;
 }
 
-CCAnimation* CCAnimation::animationWithSpriteFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay)
+CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames, float delay)
 {
 	CCAnimation *pAnimation = new CCAnimation();
 	pAnimation->initWithSpriteFrames(frames, delay);
@@ -108,7 +108,7 @@ CCAnimation* CCAnimation::animationWithSpriteFrames(CCMutableArray<CCSpriteFrame
 	return pAnimation;
 }
 
-CCAnimation* CCAnimation::animationWithAnimationFrames(CCMutableArray<CCAnimationFrame*>* arrayOfSpriteFrameNames, float delayPerUnit, unsigned int loops)
+CCAnimation* CCAnimation::animationWithAnimationFrames(CCArray* arrayOfSpriteFrameNames, float delayPerUnit, unsigned int loops)
 {
 	CCAnimation *pAnimation = new CCAnimation();
 	pAnimation->initWithAnimationFrames(arrayOfSpriteFrameNames, delayPerUnit, loops);
@@ -121,24 +121,26 @@ bool CCAnimation::init()
 	return initWithSpriteFrames(NULL, 0.0f);
 }
 
-bool CCAnimation::initWithSpriteFrames(CCMutableArray<CCSpriteFrame*>* pFrames)
+bool CCAnimation::initWithSpriteFrames(CCArray* pFrames)
 {
 	return initWithSpriteFrames(pFrames, 0.0f);
 }
 
-bool CCAnimation::initWithSpriteFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay)
+bool CCAnimation::initWithSpriteFrames(CCArray *pFrames, float delay)
 {
+	CCARRAY_VERIFY_TYPE(pFrames, CCSpriteFrame*);
+
 	m_uLoops = 1;
 	m_fDelayPerUnit = delay;
-	CCMutableArray<CCAnimationFrame*>* pTmpFrames = new CCMutableArray<CCAnimationFrame*>();
-	pTmpFrames->autorelease();
+	CCArray* pTmpFrames = CCArray::array();
 	setFrames(pTmpFrames);
 
 	if (pFrames != NULL)
 	{
-		for(CCMutableArray<CCSpriteFrame*>::CCMutableArrayIterator it = pFrames->begin(); it != pFrames->end(); ++it)
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH(pFrames, pObj)
 		{
-			CCSpriteFrame* frame = *it;
+			CCSpriteFrame* frame = (CCSpriteFrame*)pObj;
 			CCAnimationFrame *animFrame = new CCAnimationFrame();
 			animFrame->initWithSpriteFrame(frame, 1, NULL);
 			m_pFrames->addObject(animFrame);
@@ -151,16 +153,19 @@ bool CCAnimation::initWithSpriteFrames(CCMutableArray<CCSpriteFrame*> *pFrames, 
 	return true;
 }
 
-bool CCAnimation::initWithAnimationFrames(CCMutableArray<CCAnimationFrame*>* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops)
+bool CCAnimation::initWithAnimationFrames(CCArray* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops)
 {
+	CCARRAY_VERIFY_TYPE(arrayOfAnimationFrames, CCAnimationFrame*);
+
 	m_fDelayPerUnit = delayPerUnit;
 	m_uLoops = loops;
 
-	setFrames(CCMutableArray<CCAnimationFrame*>::arrayWithArray(arrayOfAnimationFrames));
+	setFrames(CCArray::arrayWithArray(arrayOfAnimationFrames));
 
-	for( CCMutableArray<CCAnimationFrame*>::CCMutableArrayIterator it = m_pFrames->begin(); it != m_pFrames->end(); ++it )
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(m_pFrames, pObj)
 	{
-		CCAnimationFrame *animFrame = *it;
+		CCAnimationFrame* animFrame = (CCAnimationFrame*)pObj;
 		m_fTotalDelayUnits += animFrame->getDelayUnits();
 	}
 	return true;

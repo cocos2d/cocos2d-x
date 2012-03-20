@@ -1,6 +1,7 @@
 #include "SpriteTest.h"
 #include "../testResource.h"
 
+
 enum 
 {
     kTagTileMap = 1,
@@ -658,7 +659,7 @@ std::string SpriteBatchNodeZOrder::title()
 
 SpriteBatchNodeReorder::SpriteBatchNodeReorder()
 {
-    CCMutableArray<CCObject*>* a = new CCMutableArray<CCObject*>(10);
+	CCArray* a = CCArray::arrayWithCapacity(10);
     CCSpriteBatchNode* asmtest = CCSpriteBatchNode::batchNodeWithFile("animations/ghosts.png");
     
     for(int i=0; i<10; i++)
@@ -671,11 +672,11 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     for(int i=0; i<10; i++)
     {
         if(i!=5)
-            asmtest->reorderChild( (CCNode*)(a->getObjectAtIndex(i)), 9 );
+		{
+            asmtest->reorderChild( (CCNode*)(a->objectAtIndex(i)), 9 );
+		}
     }
     
-    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-
     int prev = -1;
     CCArray* children = asmtest->getChildren();
     CCSprite* child;
@@ -705,8 +706,6 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
         ////----UXLOG("descendant %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
     }
-
-    a->release();       //memory leak : 2010-0415
 }
 
 std::string SpriteBatchNodeReorder::title()
@@ -938,7 +937,11 @@ SpriteZVertex::SpriteZVertex()
 
 	// set alpha test value
 	// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-	getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+	if (getShaderProgram())
+	{
+		getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+	}
+	
     
     m_dir = 1;
     m_time = 0;
@@ -1019,8 +1022,10 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
 
 	// set alpha test value
 	// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-	getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
-    
+	if (getShaderProgram())
+	{
+		getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+	}
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     float step = s.width/12;
@@ -1626,7 +1631,7 @@ void SpriteFrameTest::onEnter()
     spritebatch->addChild(m_pSprite1);
     addChild(spritebatch);
 
-    CCMutableArray<CCSpriteFrame*>* animFrames = new CCMutableArray<CCSpriteFrame*>(15);
+	CCArray* animFrames = CCArray::arrayWithCapacity(15);
 
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
@@ -1651,7 +1656,7 @@ void SpriteFrameTest::onEnter()
     addChild(m_pSprite2);
 
 
-    CCMutableArray<CCSpriteFrame*>* moreFrames = new CCMutableArray<CCSpriteFrame*>(20);
+	CCArray* moreFrames = CCArray::arrayWithCapacity(20);
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
@@ -1673,8 +1678,6 @@ void SpriteFrameTest::onEnter()
 
     m_pSprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed) ) );
 
-    animFrames->release();
-    moreFrames->release(); 
 
     // to test issue #732, uncomment the following line
     m_pSprite2->setFlipX(false);
@@ -1784,7 +1787,7 @@ void SpriteFrameAliasNameTest::onEnter()
     spriteBatch->addChild(sprite);
     addChild(spriteBatch);
 
-    CCMutableArray<CCSpriteFrame*>* animFrames = new CCMutableArray<CCSpriteFrame*>(15);
+	CCArray* animFrames = CCArray::arrayWithCapacity(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
@@ -1855,7 +1858,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         
         point->setPosition( sprite->getPosition() );
         
-        CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(14);
+		CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
@@ -1870,7 +1873,6 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
 
         addChild(sprite, 0);
 
-        animFrames->release();    // win32 : memory leak    2010-0415
     }        
 }
 
@@ -1933,7 +1935,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
         addChild(spritebatch);
         
-        CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(14);
+		CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
@@ -1947,8 +1949,6 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(10, 360) ));
         
         spritebatch->addChild(sprite, i);
-
-        animFrames->release();    // win32 : memory leak    2010-0415
     }        
 }
 
@@ -2010,7 +2010,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         
         point->setPosition( sprite->getPosition() );
         
-        CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(14);
+		CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
@@ -2028,8 +2028,6 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         sprite->runAction(CCRepeatForever::actionWithAction(seq_scale));
         
         addChild(sprite, 0);
-
-        animFrames->release();    // win32 : memory leak    2010-0415
     }        
 }
 
@@ -2089,7 +2087,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
         addChild(spritesheet);
         
-        CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(14);
+		CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
@@ -2107,8 +2105,6 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         sprite->runAction(CCRepeatForever::actionWithAction(seq_scale) );
         
         spritesheet->addChild(sprite, i);
-
-        animFrames->release();    // win32 : memory leak    2010-0415
     }        
 }
 
@@ -2153,7 +2149,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     sprite->setPosition( ccp( s.width/2-80, s.height/2) );
     addChild(sprite);
             
-    CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(6);
+	CCArray* animFrames = CCArray::arrayWithCapacity(6);
     animFrames->addObject(frame0);
     animFrames->addObject(frame1);
     animFrames->addObject(frame2);
@@ -2170,7 +2166,6 @@ SpriteAnimationSplit::SpriteAnimationSplit()
                        NULL) );
     
     sprite->runAction(CCRepeatForever::actionWithAction( seq ) );
-    animFrames->release();    // win32 : memory leak    2010-0415
 }
 
 void SpriteAnimationSplit::onExit()
@@ -2318,7 +2313,7 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite1->addChild(sprite3);
     
     // BEGIN NEW CODE
-    CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+	CCArray *animFrames = CCArray::array();
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
     {
@@ -2344,8 +2339,6 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action, action_back,NULL)) )));
     sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action_s, action_s_back,NULL)))) );
 
-    animFrames->release();
-        
 }
 
 void SpriteBatchNodeChildren::onExit()
@@ -3220,7 +3213,7 @@ AnimationCache::AnimationCache()
     //
     // create animation "dance"
     //
-    CCMutableArray<CCSpriteFrame*>* animFrames = new CCMutableArray<CCSpriteFrame*>(15);
+	CCArray* animFrames = CCArray::arrayWithCapacity(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
@@ -3351,7 +3344,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 
 		point->setPosition(sprite->getPosition());
 
-		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		CCArray *animFrames = CCArray::array();
 		char tmp[50];
 		for (int j = 0; j < 14; j++)
 		{			
@@ -3362,8 +3355,6 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 
 		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
-
-		delete animFrames;
 
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
 		CCActionInterval *skewX_back = skewX->reverse();
@@ -3431,7 +3422,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
 		addChild(spritebatch);
 
-		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		CCArray* animFrames = CCArray::array();
 		char tmp[50];
 		for (int j = 0; j < 14; j++)
 		{			
@@ -3442,8 +3433,6 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 
 		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
-
-		delete animFrames;
 
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
 		CCActionInterval *skewX_back = skewX->reverse();
@@ -3508,7 +3497,7 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 
 		point->setPosition(sprite->getPosition());
 
-		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		CCArray *animFrames = CCArray::array();
 		char tmp[50];
 		for (int j = 0; j < 14; j++)
 		{			
@@ -3519,8 +3508,6 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 
 		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
-
-		delete animFrames;
 
 		// Skew
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
@@ -3592,7 +3579,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
 		addChild(spritebatch);
 
-		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		CCArray *animFrames = CCArray::array();
 		char tmp[50];
 		for (int j = 0; j < 14; j++)
 		{			
@@ -3603,8 +3590,6 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 
 		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
-
-		delete animFrames;
 
 		// skew
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
@@ -3676,7 +3661,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
 
 		point->setPosition(sprite->getPosition());
 
-		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		CCArray* animFrames = CCArray::array();
 		char tmp[50];
 		for (int j = 0; j < 14; j++)
 		{			
@@ -3687,8 +3672,6 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
 
 		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
-
-		delete animFrames;
 
 		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
 		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
@@ -3760,7 +3743,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
 		addChild(spritebatch);
 
-		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		CCArray *animFrames = CCArray::array();
 		char tmp[50];
 		for (int j = 0; j < 14; j++)
 		{			
@@ -3771,8 +3754,6 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 
 		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
-
-		delete animFrames;
 
 		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
 		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);

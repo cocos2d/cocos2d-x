@@ -96,8 +96,8 @@ THE SOFTWARE.
 // cocoa includes
 //
 #include "CCSet.h"
-#include "CCMutableArray.h"
-#include "CCMutableDictionary.h"
+#include "CCArray.h"
+#include "CCDictionary.h"
 #include "CCObject.h"
 #include "CCZone.h"
 #include "CCGeometry.h"

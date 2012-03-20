@@ -49,8 +49,25 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
     arr <= end && ((__object__ = *arr) != NULL/* || true*/);										\
     arr++)
 
-namespace cocos2d
-{
+#define CCARRAY_FOREACH_REVERSE(__array__, __object__) \
+	if (__array__ && __array__->data->num > 0) \
+	for(CCObject** arr = __array__->data->arr + __array__->data->num-1, **end = __array__->data->arr; \
+	arr >= end && ((__object__ = *arr) != NULL/* || true*/); \
+	arr--)
+
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+#define CCARRAY_VERIFY_TYPE(__array__, __type__) \
+	do { \
+	if (__array__ && __array__->data->num > 0)													\
+		for(CCObject** arr = __array__->data->arr, **end = __array__->data->arr + __array__->data->num-1; arr <= end; arr++) \
+		    CCAssert(dynamic_cast<__type__>(*arr), "element type is wrong!"); \
+	} while(false)
+#else
+#define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
+#endif
+
+
+NS_CC_BEGIN
 
 class CC_DLL CCArray : public CCObject
 {
@@ -99,11 +116,11 @@ public:
     // Removing Objects
 
 	/** Remove last object */
-    void removeLastObject();
+    void removeLastObject(bool bReleaseObj = true);
 	/** Remove a certain object */
-    void removeObject(CCObject* object);
+    void removeObject(CCObject* object, bool bReleaseObj = true);
 	/** Remove an element with a certain index */
-    void removeObjectAtIndex(unsigned int index);
+    void removeObjectAtIndex(unsigned int index, bool bReleaseObj = true);
 	/** Remove all elements */
     void removeObjectsInArray(CCArray* otherArray);
 	/** Remove all objects */
@@ -124,13 +141,15 @@ public:
 	/* Shrinks the array so the memory footprint corresponds with the number of items */
     void reduceMemoryFootprint();
 
+	void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
+
+	/** TODO: deep copy array. */
+	virtual CCObject* copyWithZone(CCZone* pZone) {CCAssert(false, "");return NULL;}
 public:
     ccArray* data;
-
-private:
 	CCArray() : data(NULL) {};
 };
 
-}
+NS_CC_END
 
 #endif // __CCARRAY_H__

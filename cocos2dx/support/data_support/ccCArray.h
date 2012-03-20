@@ -45,7 +45,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "ccMacros.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 	// Easy integration	
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
@@ -86,9 +86,7 @@ static inline void ccArrayFree(ccArray *arr)
 	
 	ccArrayRemoveAllObjects(arr);
 	
-	//delete arr->m_pObjectArray; 
 	free(arr->arr);
-	
 	free(arr);
 }
 
@@ -225,15 +223,19 @@ static inline void ccArrayRemoveAllObjects(ccArray *arr)
 
 /** Removes object at specified index and pushes back all subsequent objects.
  Behaviour undefined if index outside [0, num-1]. */
-static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index)
+static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index, bool bReleaseObj)
 {
-	arr->arr[index]->release(); 
+	if (bReleaseObj)
+	{
+		arr->arr[index]->release(); 
+	}
+	
 	arr->num--;
 
 	unsigned int remaining = arr->num - index;
 	if (remaining > 0)
 	{
-			memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(void*));
+		memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(void*));
 	}
 }
 
@@ -252,18 +254,20 @@ static inline void ccArrayFastRemoveObject(ccArray *arr, CCObject* object)
 {
     unsigned int index = ccArrayGetIndexOfObject(arr, object);
     if (index != UINT_MAX)
+	{
         ccArrayFastRemoveObjectAtIndex(arr, index);
+	}
 }
 
 /** Searches for the first occurance of object and removes it. If object is not
  found the function has no effect. */
-static inline void ccArrayRemoveObject(ccArray *arr, CCObject* object)
+static inline void ccArrayRemoveObject(ccArray *arr, CCObject* object, bool bReleaseObj)
 {
 	unsigned int index = ccArrayGetIndexOfObject(arr, object);
 
 	if (index != UINT_MAX)
 	{
-		ccArrayRemoveObjectAtIndex(arr, index);
+		ccArrayRemoveObjectAtIndex(arr, index, bReleaseObj);
 	}
 }
 
@@ -273,7 +277,7 @@ static inline void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr)
 {
 	for( unsigned int i = 0; i < minusArr->num; i++)
 	{
-		ccArrayRemoveObject(arr, minusArr->arr[i]);
+		ccArrayRemoveObject(arr, minusArr->arr[i], true);
 	}
 }
 
@@ -287,7 +291,7 @@ static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	{
 		if( ccArrayContainsObject(minusArr, arr->arr[i]) ) 
 		{
-			delete arr->arr[i]; 
+			arr->arr[i]->release(); 
 			back++;
 		}
 		else
@@ -496,6 +500,6 @@ static inline void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr)
 	arr->num -= back;
 } 
 
-}
+NS_CC_END
 
 #endif // CC_ARRAY_H

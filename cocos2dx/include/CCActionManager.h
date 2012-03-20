@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __ACTION_CCACTION_MANAGER_H__
 
 #include "CCAction.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 #include "CCObject.h"
 
 namespace cocos2d {

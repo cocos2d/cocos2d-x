@@ -79,7 +79,7 @@ class CC_DLL CCTMXLayer : public CCSpriteBatchNode
 	/** Layer orientation, which is the same as the map orientation */
 	CC_SYNTHESIZE(unsigned int, m_uLayerOrientation, LayerOrientation);
 	/** properties from the layer. They can be added using Tiled */
-	CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
+	CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
 	CCTMXLayer();
 	virtual ~CCTMXLayer();
