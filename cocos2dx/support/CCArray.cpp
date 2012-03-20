@@ -61,17 +61,8 @@ CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
 
 CCArray* CCArray::arrayWithArray(CCArray* otherArray)
 {
-    CCArray* pArray = new CCArray();
-
-    if (pArray && pArray->initWithArray(otherArray))
-    {
-        pArray->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pArray);
-    }
-
+    CCArray* pArray = (CCArray*)otherArray->copyWithZone(NULL);
+    pArray->autorelease();
     return pArray;
 }
 
@@ -255,6 +246,17 @@ void CCArray::replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool 
 	{
 		pObject->retain();
 	}
+}
+
+CCObject* CCArray::copyWithZone(CCZone* pZone)
+{
+    CCArray* pArray = new CCArray();
+
+    if (!(pArray && pArray->initWithArray(this)))
+    {
+        CC_SAFE_DELETE(pArray);
+    }
+    return pArray;
 }
 
 NS_CC_END
