@@ -1,4 +1,4 @@
 
 class CCParticleSystemPoint : public CCParticleSystem {
-    static CCParticleSystemPoint* particleWithFile(const char *plistFile);
+    static CCParticleSystemPoint* particleWithFile(char *plistFile);
 };

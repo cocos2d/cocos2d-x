@@ -37,12 +37,12 @@ class CCRotateBy : public CCActionInterval
 
 class CCMoveTo : public CCActionInterval
 {
-    static CCMoveTo* actionWithDuration(ccTime duration, const CCPoint& position);
+    static CCMoveTo* actionWithDuration(ccTime duration, CCPoint position);
 };
 
 class CCMoveBy : public CCMoveTo
 {
-    static CCMoveBy* actionWithDuration(ccTime duration, const CCPoint& position);
+    static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
 };
 
 class CCSkewTo : public CCActionInterval
@@ -57,12 +57,12 @@ class CCSkewBy : public CCSkewTo
 
 class CCJumpBy : public CCActionInterval
 {
-    static CCJumpBy* actionWithDuration(ccTime duration, const CCPoint& position, ccTime height, unsigned int jumps);
+    static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, unsigned int jumps);
 };
 
 class CCJumpTo : public CCJumpBy
 {
-    static CCJumpTo* actionWithDuration(ccTime duration, const CCPoint& position, ccTime height, int jumps);
+    static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
 };
 
 typedef struct _ccBezierConfig {
@@ -73,12 +73,12 @@ typedef struct _ccBezierConfig {
 
 class CCBezierBy : public CCActionInterval
 {
-    static CCBezierBy* actionWithDuration(ccTime t, const ccBezierConfig& c);
+    static CCBezierBy* actionWithDuration(ccTime t, ccBezierConfig c);
 };
 
 class CCBezierTo : public CCBezierBy
 {
-    static CCBezierTo* actionWithDuration(ccTime t, const ccBezierConfig& c);
+    static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
 };
 
 class CCScaleTo : public CCActionInterval

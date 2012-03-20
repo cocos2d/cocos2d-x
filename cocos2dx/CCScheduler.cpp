@@ -555,7 +555,7 @@ void CCScheduler::unscheduleAllSelectorsForTarget(CCObject *pTarget)
 	unscheduleUpdateForTarget(pTarget);
 }
 
-unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, ccTime fInterval, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(int nHandler, ccTime fInterval, bool bPaused)
 {
     CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::entryWithHandler(nHandler, fInterval, bPaused);
     if (!m_pScriptHandlerEntries)

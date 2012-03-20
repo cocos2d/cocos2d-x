@@ -10,7 +10,7 @@ class CCTextureAtlas : public CCObject
     // ccV3F_C4B_T2F_Quad getQuads(void);
     // void setQuads(ccV3F_C4B_T2F_Quad quads);
 
-    static CCTextureAtlas * textureAtlasWithFile(const char* file , unsigned int capacity);
+    static CCTextureAtlas * textureAtlasWithFile(char* file , unsigned int capacity);
     static CCTextureAtlas * textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity);
 
     // void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);

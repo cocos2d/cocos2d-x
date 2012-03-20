@@ -30,7 +30,7 @@
 
     <replace file="LuaCocos2d.cpp">
       <replacetoken><![CDATA[ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&(const ccColor3B)ccBLACK));]]></replacetoken>
-      <replacevalue><![CDATA[const ccColor3B clr = ccBLACK;
+      <replacevalue><![CDATA[ccColor3B clr = ccBLACK;
   ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));]]></replacevalue>
     </replace>
 

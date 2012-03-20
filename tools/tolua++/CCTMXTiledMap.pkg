@@ -21,8 +21,8 @@ class CCTMXTiledMap : public CCNode
     int getMapOrientation(void);
     void setMapOrientation(int orientation);
 
-    static CCTMXTiledMap * tiledMapWithTMXFile(const char *tmxFile);
+    static CCTMXTiledMap * tiledMapWithTMXFile(char *tmxFile);
 
-    CCTMXLayer* layerNamed(const char *layerName);
-    CCString* propertyNamed(const char *propertyName);
+    CCTMXLayer* layerNamed(char *layerName);
+    CCString* propertyNamed(char *propertyName);
 };

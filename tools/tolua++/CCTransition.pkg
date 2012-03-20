@@ -108,7 +108,7 @@ class CCTransitionZoomFlipAngular : public CCTransitionSceneOriented
 
 class CCTransitionFade : public CCTransitionScene
 {
-    static CCTransitionFade* transitionWithDuration(ccTime duration,CCScene* scene, const ccColor3B& color = ccBLACK);
+    static CCTransitionFade* transitionWithDuration(ccTime duration,CCScene* scene, ccColor3B color = ccBLACK);
 };
 
 class CCTransitionCrossFade : public CCTransitionScene

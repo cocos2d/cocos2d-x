@@ -23,6 +23,6 @@ class CCSpriteBatchNode : public CCNode
 
     static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D *tex);
     static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);
-    static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage);
-    static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
+    static CCSpriteBatchNode* batchNodeWithFile(char* fileImage);
+    static CCSpriteBatchNode* batchNodeWithFile(char* fileImage, unsigned int capacity);
 };

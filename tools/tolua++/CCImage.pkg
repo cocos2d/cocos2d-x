@@ -4,7 +4,7 @@ class CCImage
     int getDataLen();
     bool hasAlpha();
     bool isPremultipliedAlpha();
-    bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
+    bool saveToFile(char *pszFilePath, bool bIsToRGB = true);
 
     short getWidth(void);
     short getHeight(void);

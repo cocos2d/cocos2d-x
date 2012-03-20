@@ -1,8 +1,8 @@
 
 class CCTextFieldTTF : public CCLabelTTF
 {
-    static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-    static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
+    static CCTextFieldTTF * textFieldWithPlaceHolder(char *placeholder, CCSize dimensions, CCTextAlignment alignment, char *fontName, float fontSize);
+    static CCTextFieldTTF * textFieldWithPlaceHolder(char *placeholder, char *fontName, float fontSize);
 
     bool attachWithIME();
     bool detachWithIME();
@@ -11,8 +11,8 @@ class CCTextFieldTTF : public CCLabelTTF
     ccColor3B getColorSpaceHolder(void);
     void setColorSpaceHolder(ccColor3B color);
 
-    const char* getString(void);
-    void setString(const char *text);
-    const char* getPlaceHolder(void);
-    void setPlaceHolder(const char * text);
+    char* getString(void);
+    void setString(char *text);
+    char* getPlaceHolder(void);
+    void setPlaceHolder(char * text);
 };

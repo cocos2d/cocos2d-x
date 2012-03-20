@@ -18,8 +18,8 @@ class CCSprite : public CCNode
 {
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
-    void setColor(const ccColor3B& color);
-    const ccColor3B& getColor();
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
 
     bool isDirty(void);
     void setDirty(bool bDirty);
@@ -27,7 +27,7 @@ class CCSprite : public CCNode
     bool isTextureRectRotated(void);
     unsigned int getAtlasIndex(void);
     void setAtlasIndex(unsigned int uAtlasIndex);
-    const CCRect& getTextureRect(void);
+    CCRect getTextureRect(void);
     bool isUsesBatchNode(void);
     void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode);
     CCTextureAtlas* getTextureAtlas(void);
@@ -36,18 +36,18 @@ class CCSprite : public CCNode
     void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
     ccHonorParentTransform getHonorParentTransform(void);
     void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform);
-    const CCPoint& getOffsetPositionInPixels(void);
+    CCPoint getOffsetPositionInPixels(void);
     ccBlendFunc getBlendFunc(void);
     void setBlendFunc(ccBlendFunc blendFunc);
 
     static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
-    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect);
-    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect, const CCPoint& offset);
+    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect);
+    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset);
     static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
-    static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
-    static CCSprite* spriteWithFile(const char *pszFileName);
-    static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
-    static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect);
+    static CCSprite* spriteWithSpriteFrameName(char *pszSpriteFrameName);
+    static CCSprite* spriteWithFile(char *pszFileName);
+    static CCSprite* spriteWithFile(char *pszFileName, CCRect rect);
+    static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
 
     void setDirtyRecursively(bool bValue);
     void setFlipX(bool bFlipX);
@@ -60,11 +60,11 @@ class CCSprite : public CCNode
 
     void updateTransform(void);
     void useSelfRender(void);
-    void setTextureRect(const CCRect& rect);
-    void setTextureRectInPixels(const CCRect& rect, bool rotated, const CCSize& size);
+    void setTextureRect(CCRect rect);
+    void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
     void useBatchNode(CCSpriteBatchNode *batchNode);
     void setDisplayFrame(CCSpriteFrame *pNewFrame);
     bool isFrameDisplayed(CCSpriteFrame *pFrame);
     CCSpriteFrame* displayedFrame(void);
-    void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
+    void setDisplayFrameWithAnimationName(char *animationName, int frameIndex);
 };

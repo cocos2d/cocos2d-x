@@ -1,15 +1,15 @@
 
 class CCAnimation : public CCObject
 {
-    const char* getName(void);
-    void setName(const char *pszName);
+    char* getName(void);
+    void setName(char *pszName);
 
     float getDelay(void);
     void setDelay(float fDelay);
 
     void addFrame(CCSpriteFrame *pFrame);
-    void addFrameWithFileName(const char *pszFileName);
-    void addFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+    void addFrameWithFileName(char *pszFileName);
+    void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
     static CCAnimation* animation(void);
 };

@@ -30,6 +30,6 @@ class CCFlipY : public CCActionInstant
 
 class CCPlace : public CCActionInstant
 {
-    static CCPlace * actionWithPosition(const CCPoint& pos);
+    static CCPlace * actionWithPosition(CCPoint pos);
 };
 
