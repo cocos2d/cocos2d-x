@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CC_ANIMATION_CACHE_H__
 
 #include "CCObject.h"
-#include "CCMutableDictionary.h"
+#include "CCDictionary.h"
 
 #include <string>
 
@@ -72,7 +72,7 @@ public:
 	 Make sure that the frames were previously loaded in the CCSpriteFrameCache.
 	 @since v1.1
 	 */
-	void addAnimationsWithDictionary(CCObjectDictionary* dictionary);
+	void addAnimationsWithDictionary(CCDictionary* dictionary);
 
 	/** Adds an animation from a plist file.
 	 Make sure that the frames were previously loaded in the CCSpriteFrameCache.
@@ -83,11 +83,11 @@ public:
 	bool init(void);
 
 private:
-	void parseVersion1(CCObjectDictionary* animations);
-	void parseVersion2(CCObjectDictionary* animations);
-	const char * valueForKey(const char *key, CCObjectDictionary* dict);
+	void parseVersion1(CCDictionary* animations);
+	void parseVersion2(CCDictionary* animations);
+	const char * valueForKey(const char *key, CCDictionary* dict);
 private:
-	CCMutableDictionary<std::string, CCAnimation*>* m_pAnimations;
+	CCDictionary* m_pAnimations;
 	static CCAnimationCache* s_pSharedAnimationCache;
 };
 

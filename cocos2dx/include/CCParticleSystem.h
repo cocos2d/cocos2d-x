@@ -28,10 +28,10 @@ THE SOFTWARE.
 
 #include "CCProtocols.h"
 #include "CCNode.h"
-#include "CCMutableDictionary.h"
+#include "CCDictionary.h"
 #include "CCString.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 class CCParticleBatchNode;
 
@@ -370,7 +370,7 @@ public:
 	/** initializes a CCQuadParticleSystem from a CCDictionary.
 	@since v0.99.3
 	*/
-	bool initWithDictionary(CCDictionary<std::string, CCObject*> *dictionary);
+	bool initWithDictionary(CCDictionary *dictionary);
 
 	//! Initializes a system with a fixed number of particles
 	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -396,17 +396,17 @@ private:
 	/** Private method, return the string found by key in dict.
 	@return "" if not found; return the string if found.
 	*/
-	inline const char * valueForKey(const char *key, CCDictionary<std::string, CCObject*> *dict)
+	inline const char * valueForKey(const char *key, CCDictionary *dict)
 	{
 		if (dict)
 		{
-			CCString *pString = (CCString*)dict->objectForKey(std::string(key));
+			CCString *pString = (CCString*)dict->objectForKey(key);
 			return pString ? pString->m_sString.c_str() : "";
 		}
 		return "";
 	}
 };
 
-}// namespace cocos2d
+NS_CC_END
 
 #endif //__CCPARTICLE_SYSTEM_H__

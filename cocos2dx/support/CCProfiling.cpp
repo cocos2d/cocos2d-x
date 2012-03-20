@@ -71,7 +71,7 @@ void CCProfiler::releaseAllTimers()
 
 bool CCProfiler::init()
 {
-    m_pActiveTimers = new CCMutableDictionary<std::string, CCProfilingTimer*>();
+    m_pActiveTimers = new CCDictionary();
 	return true;
 }
 
@@ -82,10 +82,10 @@ CCProfiler::~CCProfiler(void)
 
 void CCProfiler::displayTimers()
 {
-	vector<string> allKeys = m_pActiveTimers->allKeys();
-	for (vector<string>::iterator it = allKeys.begin(); it != allKeys.end(); ++it)
+	CCDictElement* pElement = NULL;
+	CCDICT_FOREACH(m_pActiveTimers, pElement)
 	{
-		CCProfilingTimer* timer = m_pActiveTimers->objectForKey(*it);
+		CCProfilingTimer* timer = (CCProfilingTimer*)pElement->getObject();
 		CCLog(timer->description());
 	}
 }
@@ -130,7 +130,7 @@ void CCProfilingTimer::reset()
 void CCProfilingBeginTimingBlock(const char *timerName)
 {
 	CCProfiler* p = CCProfiler::sharedProfiler();
-	CCProfilingTimer *timer = p->m_pActiveTimers->objectForKey(timerName);
+	CCProfilingTimer* timer = (CCProfilingTimer*)p->m_pActiveTimers->objectForKey(timerName);
 	if( ! timer )
 	{
 		timer = p->createAndAddTimerWithName(timerName);
@@ -144,7 +144,7 @@ void CCProfilingBeginTimingBlock(const char *timerName)
 void CCProfilingEndTimingBlock(const char *timerName)
 {
 	CCProfiler* p = CCProfiler::sharedProfiler();
-	CCProfilingTimer *timer = p->m_pActiveTimers->objectForKey(timerName);
+	CCProfilingTimer* timer = (CCProfilingTimer*)p->m_pActiveTimers->objectForKey(timerName);
 
 	CCAssert(timer, "CCProfilingTimer  not found");
 
@@ -164,7 +164,7 @@ void CCProfilingEndTimingBlock(const char *timerName)
 void CCProfilingResetTimingBlock(const char *timerName)
 {
 	CCProfiler* p = CCProfiler::sharedProfiler();
-	CCProfilingTimer *timer = p->m_pActiveTimers->objectForKey(timerName);
+	CCProfilingTimer *timer = (CCProfilingTimer*)p->m_pActiveTimers->objectForKey(timerName);
 
 	CCAssert(timer, "CCProfilingTimer not found");
 

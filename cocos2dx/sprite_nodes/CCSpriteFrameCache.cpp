@@ -35,8 +35,12 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 #include "CCFileUtils.h"
 #include "CCString.h"
+#include "CCArray.h"
+#include <vector>
 
-namespace   cocos2d {
+using namespace std;
+
+NS_CC_BEGIN
 
 static CCSpriteFrameCache *pSharedSpriteFrameCache = NULL;
 
@@ -58,8 +62,8 @@ void CCSpriteFrameCache::purgeSharedSpriteFrameCache(void)
 
 bool CCSpriteFrameCache::init(void)
 {
-	m_pSpriteFrames= new CCDictionary<std::string, CCSpriteFrame*>();
-	m_pSpriteFramesAliases = new CCDictionary<std::string, CCString*>();
+	m_pSpriteFrames= new CCDictionary();
+	m_pSpriteFramesAliases = new CCDictionary();
 	return true;
 }
 
@@ -69,7 +73,7 @@ CCSpriteFrameCache::~CCSpriteFrameCache(void)
 	CC_SAFE_RELEASE(m_pSpriteFramesAliases);
 }
 
-void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string, CCObject*> *dictionary, CCTexture2D *pobTexture)
+void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, CCTexture2D *pobTexture)
 {
 	/*
 	Supported Zwoptex Formats:
@@ -80,8 +84,8 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 	ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
 	*/
 
-	CCDictionary<std::string, CCObject*> *metadataDict = (CCDictionary<std::string, CCObject*>*)dictionary->objectForKey(std::string("metadata"));
-	CCDictionary<std::string, CCObject*> *framesDict = (CCDictionary<std::string, CCObject*>*)dictionary->objectForKey(std::string("frames"));
+	CCDictionary *metadataDict = (CCDictionary*)dictionary->objectForKey("metadata");
+	CCDictionary *framesDict = (CCDictionary*)dictionary->objectForKey("frames");
 	int format = 0;
 
 	// get the format
@@ -93,12 +97,11 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 	// check the format
 	CCAssert(format >=0 && format <= 3, "");
 
-	framesDict->begin();
-	std::string key = "";
-	CCDictionary<std::string, CCObject*> *frameDict = NULL;
-	while( (frameDict = (CCDictionary<std::string, CCObject*>*)framesDict->next(&key)) )
+	CCDictElement* pElement = NULL;
+	CCDICT_FOREACH(framesDict, pElement)
 	{
-		CCSpriteFrame *spriteFrame = m_pSpriteFrames->objectForKey(key);
+		CCDictionary* frameDict = (CCDictionary*)pElement->getObject();
+		CCSpriteFrame* spriteFrame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(pElement->getStrKey());
 		if (spriteFrame)
 		{
 			continue;
@@ -164,19 +167,19 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
             bool textureRotated = atoi(valueForKey("textureRotated", frameDict)) == 0 ? false : true;
 
 			// get aliases
-			CCMutableArray<CCString*> *aliases = (CCMutableArray<CCString*> *) (frameDict->objectForKey(std::string("aliases")));
-            CCMutableArray<CCString*>::CCMutableArrayIterator iter;
+			CCArray* aliases = (CCArray*) (frameDict->objectForKey("aliases"));
+            CCString * frameKey = new CCString(pElement->getStrKey());
 
-            CCString * frameKey = new CCString(key.c_str());
-            for (iter = aliases->begin(); iter != aliases->end(); ++iter)
+			CCObject* pObj = NULL;
+			CCARRAY_FOREACH(aliases, pObj)
             {
-                std::string oneAlias = ((CCString*) (*iter))->m_sString;
-                if (m_pSpriteFramesAliases->objectForKey(oneAlias))
+                std::string oneAlias = ((CCString*)pObj)->m_sString;
+                if (m_pSpriteFramesAliases->objectForKey(oneAlias.c_str()))
                 {
                     CCLOG("cocos2d: WARNING: an alias with name %s already exists", oneAlias.c_str());
                 }
 
-                m_pSpriteFramesAliases->setObject(frameKey, oneAlias);
+                m_pSpriteFramesAliases->setObject(frameKey, oneAlias.c_str());
             }
             frameKey->release();
             // create frame
@@ -189,7 +192,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 		}
 
 		// add sprite frame
-		m_pSpriteFrames->setObject(spriteFrame, key);
+		m_pSpriteFrames->setObject(spriteFrame, pElement->getStrKey());
 		spriteFrame->release();
 	}
 }
@@ -197,7 +200,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
 {
 	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
-	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(pszPath);
+	CCDictionary *dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(pszPath);
 
 	addSpriteFramesWithDictionary(dict, pobTexture);
 
@@ -222,11 +225,11 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
 	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
-	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(pszPath);
+	CCDictionary *dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(pszPath);
 	
 	string texturePath("");
 
-	CCDictionary<std::string, CCObject*>* metadataDict = (CCDictionary<std::string, CCObject*>*)dict->objectForKey(string("metadata"));
+	CCDictionary* metadataDict = (CCDictionary*)dict->objectForKey("metadata");
     if (metadataDict)
 	{
 		// try to read  texture file name from meta data
@@ -269,7 +272,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 
 void CCSpriteFrameCache::addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName)
 {
-	m_pSpriteFrames->setObject(pobFrame, std::string(pszFrameName));
+	m_pSpriteFrames->setObject(pobFrame, pszFrameName);
 }
 
 void CCSpriteFrameCache::removeSpriteFrames(void)
@@ -280,18 +283,16 @@ void CCSpriteFrameCache::removeSpriteFrames(void)
 
 void CCSpriteFrameCache::removeUnusedSpriteFrames(void)
 {
-	m_pSpriteFrames->begin();
-	std::string key = "";
-	CCSpriteFrame *spriteFrame = NULL;
-	while( (spriteFrame = m_pSpriteFrames->next(&key)) )
+	CCDictElement* pElement = NULL;
+	CCDICT_FOREACH(m_pSpriteFrames, pElement)
 	{
+		CCSpriteFrame* spriteFrame = (CCSpriteFrame*)pElement->getObject();
 		if( spriteFrame->retainCount() == 1 ) 
 		{
-			CCLOG("cocos2d: CCSpriteFrameCache: removing unused frame: %s", key.c_str());
-			m_pSpriteFrames->removeObjectForKey(key);
+			CCLOG("cocos2d: CCSpriteFrameCache: removing unused frame: %s", pElement->getStrKey());
+			m_pSpriteFrames->removeObjectForKey(pElement->getStrKey());
 		}
 	}
-	m_pSpriteFrames->end();
 }
 
 
@@ -304,50 +305,47 @@ void CCSpriteFrameCache::removeSpriteFrameByName(const char *pszName)
 	}
 
 	// Is this an alias ?
-	CCString *key = (CCString*)m_pSpriteFramesAliases->objectForKey(string(pszName));
+	CCString *key = (CCString*)m_pSpriteFramesAliases->objectForKey(pszName);
 
 	if (key)
 	{
-        m_pSpriteFrames->removeObjectForKey(key->m_sString);
-		m_pSpriteFramesAliases->removeObjectForKey(key->m_sString);
+        m_pSpriteFrames->removeObjectForKey(key->c_str());
+		m_pSpriteFramesAliases->removeObjectForKey(key->c_str());
 	}
 	else
 	{
-        m_pSpriteFrames->removeObjectForKey(std::string(pszName));
+        m_pSpriteFrames->removeObjectForKey(pszName);
 	}
 }
 
 void CCSpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 {
 	const char* path = CCFileUtils::fullPathFromRelativePath(plist);
-	CCDictionary<std::string, CCObject*>* dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(path);
+	CCDictionary* dict = CCFileUtils::dictionaryWithContentsOfFileThreadSafe(path);
 
-	removeSpriteFramesFromDictionary((CCDictionary<std::string, CCSpriteFrame*>*)dict);
+	removeSpriteFramesFromDictionary((CCDictionary*)dict);
 
 	dict->release();
 }
 
-void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary<std::string, CCSpriteFrame*> *dictionary)
+void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictionary)
 {
-	CCDictionary<std::string, CCObject*>* framesDict = (CCDictionary<std::string, CCObject*>*)dictionary->objectForKey(string("frames"));
+	CCDictionary* framesDict = (CCDictionary*)dictionary->objectForKey("frames");
 	vector<string> keysToRemove;
 
-	framesDict->begin();
-	std::string key = "";
-	CCDictionary<std::string, CCObject*> *frameDict = NULL;
-	while( (frameDict = (CCDictionary<std::string, CCObject*>*)framesDict->next(&key)) )
+	CCDictElement* pElement = NULL;
+	CCDICT_FOREACH(framesDict, pElement)
 	{
-		if (m_pSpriteFrames->objectForKey(key))
+		if (m_pSpriteFrames->objectForKey(pElement->getStrKey()))
 		{
-			keysToRemove.push_back(key);
+			keysToRemove.push_back(pElement->getStrKey());
 		}
 	}
-	framesDict->end();
 
 	vector<string>::iterator iter;
 	for (iter = keysToRemove.begin(); iter != keysToRemove.end(); ++iter)
 	{
-		m_pSpriteFrames->removeObjectForKey(*iter);
+		m_pSpriteFrames->removeObjectForKey((*iter).c_str());
 	}
 }
 
@@ -355,36 +353,34 @@ void CCSpriteFrameCache::removeSpriteFramesFromTexture(CCTexture2D* texture)
 {
 	vector<string> keysToRemove;
 
-	m_pSpriteFrames->begin();
-	std::string key = "";
-	CCDictionary<std::string, CCObject*> *frameDict = NULL;
-	while( (frameDict = (CCDictionary<std::string, CCObject*>*)m_pSpriteFrames->next(&key)) )
+	CCDictElement* pElement = NULL;
+	CCDICT_FOREACH(m_pSpriteFrames, pElement)
 	{
-		CCSpriteFrame *frame = m_pSpriteFrames->objectForKey(key);
+		string key = pElement->getStrKey();
+		CCSpriteFrame* frame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(key.c_str());
 		if (frame && (frame->getTexture() == texture))
 		{
 			keysToRemove.push_back(key);
 		}
 	}
-	m_pSpriteFrames->end();
 
 	vector<string>::iterator iter;
 	for (iter = keysToRemove.begin(); iter != keysToRemove.end(); ++iter)
 	{
-		m_pSpriteFrames->removeObjectForKey(*iter);
+		m_pSpriteFrames->removeObjectForKey((*iter).c_str());
 	}
 }
 
 CCSpriteFrame* CCSpriteFrameCache::spriteFrameByName(const char *pszName)
 {
-	CCSpriteFrame *frame = m_pSpriteFrames->objectForKey(std::string(pszName));
-	if (! frame)
+	CCSpriteFrame* frame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(pszName);
+	if (!frame)
 	{
 		// try alias dictionary
-		CCString *key = (CCString*)m_pSpriteFramesAliases->objectForKey(string(pszName));  
+		CCString *key = (CCString*)m_pSpriteFramesAliases->objectForKey(pszName);  
 		if (key)
 		{
-			frame = m_pSpriteFrames->objectForKey(key->m_sString);
+			frame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(key->c_str());
 			if (! frame)
 			{
 				CCLOG("cocos2d: CCSpriteFrameCahce: Frame '%s' not found", pszName);
@@ -394,13 +390,14 @@ CCSpriteFrame* CCSpriteFrameCache::spriteFrameByName(const char *pszName)
 	return frame;
 }
 
-const char * CCSpriteFrameCache::valueForKey(const char *key, CCDictionary<std::string, CCObject*> *dict)
+const char * CCSpriteFrameCache::valueForKey(const char *key, CCDictionary *dict)
 {
 	if (dict)
 	{
-		CCString *pString = (CCString*)dict->objectForKey(std::string(key));
+		CCString *pString = (CCString*)dict->objectForKey(key);
 		return pString ? pString->m_sString.c_str() : "";
 	}
 	return "";
 }
-}//namespace   cocos2d 
+
+NS_CC_END

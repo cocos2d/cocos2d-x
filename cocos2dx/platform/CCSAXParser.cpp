@@ -22,7 +22,7 @@
  ****************************************************************************/
 
 #include "CCSAXParser.h"
-#include "CCMutableDictionary.h"
+#include "CCDictionary.h"
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>

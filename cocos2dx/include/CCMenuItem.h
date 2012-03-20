@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 
 namespace cocos2d{
     
@@ -287,7 +287,7 @@ namespace cocos2d{
         /** CCMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
          @since v0.7.2
          */
-        CC_PROPERTY(CCMutableArray<CCMenuItem*>*, m_pSubItems, SubItems);
+        CC_PROPERTY(CCArray*, m_pSubItems, SubItems);
     public:
         CCMenuItemToggle()
         : m_cOpacity(0)

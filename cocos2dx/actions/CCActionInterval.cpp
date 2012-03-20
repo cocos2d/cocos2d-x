@@ -2055,10 +2055,13 @@ bool CCAnimate::initWithAnimation(CCAnimation *pAnimation)
 		float accumUnitsOfTime = 0;
 		float newUnitOfTimeValue = singleDuration / pAnimation->getTotalDelayUnits();
 
-		CCMutableArray<CCAnimationFrame*>* pFrames = pAnimation->getFrames();
-		for (CCMutableArray<CCAnimationFrame*>::CCMutableArrayIterator iterFrame = pFrames->begin(); iterFrame != pFrames->end(); ++iterFrame)
+		CCArray* pFrames = pAnimation->getFrames();
+		CCARRAY_VERIFY_TYPE(pFrames, CCAnimationFrame*);
+
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH(pFrames, pObj)
 		{
-			CCAnimationFrame *frame = *iterFrame;
+			CCAnimationFrame* frame = (CCAnimationFrame*)pObj;
 			float value = (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration;
 			accumUnitsOfTime += frame->getDelayUnits();
 			m_pSplitTimes->push_back(value);
@@ -2151,7 +2154,7 @@ void CCAnimate::update(ccTime t)
 		t = fmodf(t, 1.0f);
 	}
 
-	CCMutableArray<CCAnimationFrame*>* frames = m_pAnimation->getFrames();
+	CCArray* frames = m_pAnimation->getFrames();
 	unsigned int numberOfFrames = frames->count();
 	CCSpriteFrame *frameToDisplay = NULL;
 
@@ -2159,11 +2162,11 @@ void CCAnimate::update(ccTime t)
 		float splitTime = m_pSplitTimes->at(i);
 
 		if( splitTime <= t ) {
-			CCAnimationFrame *frame = frames->getObjectAtIndex(i);
+			CCAnimationFrame* frame = (CCAnimationFrame*)frames->objectAtIndex(i);
 			frameToDisplay = frame->getSpriteFrame();
 			((CCSprite*)m_pTarget)->setDisplayFrame(frameToDisplay);
 
-			CCObjectDictionary* dict = frame->getUserInfo();
+			CCDictionary* dict = frame->getUserInfo();
 			if( dict )
 			{
 				//TODO: [[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
@@ -2177,16 +2180,17 @@ void CCAnimate::update(ccTime t)
 
 CCActionInterval* CCAnimate::reverse(void)
 {
-	CCMutableArray<CCAnimationFrame*>* pOldArray = m_pAnimation->getFrames();
-	CCMutableArray<CCAnimationFrame*>* pNewArray = new CCMutableArray<CCAnimationFrame*>(pOldArray->count());
+	CCArray* pOldArray = m_pAnimation->getFrames();
+	CCArray* pNewArray = CCArray::arrayWithCapacity(pOldArray->count());
    
+	CCARRAY_VERIFY_TYPE(pOldArray, CCAnimationFrame*);
+
 	if (pOldArray->count() > 0)
 	{
-		CCAnimationFrame *pElement;
-		CCMutableArray<CCAnimationFrame*>::CCMutableArrayRevIterator iter;
-		for (iter = pOldArray->rbegin(); iter != pOldArray->rend(); iter++)
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH_REVERSE(pOldArray, pObj)
 		{
-			pElement = *iter;
+			CCAnimationFrame* pElement = (CCAnimationFrame*)pObj;
 			if (! pElement)
 			{
 				break;
