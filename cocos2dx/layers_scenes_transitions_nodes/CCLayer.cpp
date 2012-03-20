@@ -745,7 +745,8 @@ void CCLayerMultiplex::addLayer(CCLayer* layer)
 
 bool CCLayerMultiplex::initWithLayer(CCLayer* layer)
 {
-	m_pLayers = new CCMutableArray<CCLayer*>(1);
+	m_pLayers = CCArray::array();
+	m_pLayers->retain();
 	m_pLayers->addObject(layer);
 	m_nEnabledLayer = 0;
 	this->addChild(layer);
@@ -754,8 +755,8 @@ bool CCLayerMultiplex::initWithLayer(CCLayer* layer)
 
 bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 {
-	m_pLayers = new CCMutableArray<CCLayer*>(5);
-	//m_pLayers->retain();
+	m_pLayers = CCArray::arrayWithCapacity(5);
+	m_pLayers->retain();
 
 	m_pLayers->addObject(layer);
 
@@ -766,7 +767,7 @@ bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 	}
 
 	m_nEnabledLayer = 0;
-	this->addChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer));
+	this->addChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer));
 
 	return true;
 }
@@ -776,24 +777,24 @@ void CCLayerMultiplex::switchTo(unsigned int n)
 {
 	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
+	this->removeChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer), true);
 
 	m_nEnabledLayer = n;
 
-	this->addChild(m_pLayers->getObjectAtIndex(n));
+	this->addChild((CCNode*)m_pLayers->objectAtIndex(n));
 }
 
 void CCLayerMultiplex::switchToAndReleaseMe(unsigned int n)
 {
 	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
+	this->removeChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer), true);
 
 	//[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
 	m_pLayers->replaceObjectAtIndex(m_nEnabledLayer, NULL);
 
 	m_nEnabledLayer = n;
 
-	this->addChild(m_pLayers->getObjectAtIndex(n));
+	this->addChild((CCNode*)m_pLayers->objectAtIndex(n));
 }
 }//namespace   cocos2d 

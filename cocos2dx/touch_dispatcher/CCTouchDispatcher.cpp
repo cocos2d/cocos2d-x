@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #include "CCTouchDispatcher.h"
 #include "CCTouchHandler.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 #include "CCSet.h"
 #include "CCTouch.h"
 #include "CCTexture2D.h"
@@ -36,9 +36,9 @@ THE SOFTWARE.
 /**
  * Used for sort
  */
-static bool less(const cocos2d::CCTouchHandler *p1, const cocos2d::CCTouchHandler *p2)
+static int less(const void* p1, const void* p2)
 {
-	return ((cocos2d::CCTouchHandler*)p1)->getPriority() < ((cocos2d::CCTouchHandler*)p2)->getPriority();
+	return ((cocos2d::CCTouchHandler*)p1)->getPriority() < ((cocos2d::CCTouchHandler*)p2)->getPriority() ? 1 : -1;
 }
 
 namespace   cocos2d {
@@ -81,10 +81,12 @@ CCTouchDispatcher* CCTouchDispatcher::sharedDispatcher(void)
 bool CCTouchDispatcher::init(void)
 {
 	m_bDispatchEvents = true;
- 	m_pTargetedHandlers = new CCMutableArray<CCTouchHandler*>(8);
- 	m_pStandardHandlers = new CCMutableArray<CCTouchHandler*>(4);
+	m_pTargetedHandlers = CCArray::arrayWithCapacity(8);
+	m_pTargetedHandlers->retain();
+ 	m_pStandardHandlers = CCArray::arrayWithCapacity(4);
+	m_pStandardHandlers->retain();
 
- 	m_pHandlersToAdd = new CCMutableArray<CCTouchHandler*>(8);
+	m_pHandlersToAdd = CCArray::arrayWithCapacity(8);
     m_pHandlersToRemove = ccCArrayNew(8);
 
 	m_bToRemove = false;
@@ -113,14 +115,14 @@ CCTouchDispatcher::~CCTouchDispatcher(void)
 //
 // handlers management
 //
-void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, CCMutableArray<CCTouchHandler*> *pArray)
+void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, CCArray *pArray)
 {
 	unsigned int u = 0;
 
- 	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
- 	for (iter = pArray->begin(); iter != pArray->end(); ++iter)
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(pArray, pObj)
  	{
- 		CCTouchHandler *h = *iter;
+ 		CCTouchHandler *h = (CCTouchHandler *)pObj;
          if (h)
          {
  		    if (h->getPriority() < pHandler->getPriority())
@@ -136,7 +138,7 @@ void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, CCMutableArray
          }
  	}
 
-	pArray->insertObjectAtIndex(pHandler, u);
+	pArray->insertObject(pHandler, u);
 }
 
 void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPriority)
@@ -188,14 +190,14 @@ void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPri
 void CCTouchDispatcher::forceRemoveDelegate(CCTouchDelegate *pDelegate)
 {
 	CCTouchHandler *pHandler;
-	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator  iter;
 
 	// XXX: remove it from both handlers ???
 	
 	// remove handler from m_pStandardHandlers
-	for (iter = m_pStandardHandlers->begin(); iter != m_pStandardHandlers->end(); ++iter)
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(m_pStandardHandlers, pObj)
 	{
-		pHandler = *iter;
+		pHandler = (CCTouchHandler*)pObj;
 		if (pHandler && pHandler->getDelegate() == pDelegate)
 		{
 			m_pStandardHandlers->removeObject(pHandler);
@@ -204,9 +206,9 @@ void CCTouchDispatcher::forceRemoveDelegate(CCTouchDelegate *pDelegate)
 	}
 
     // remove handler from m_pTargetedHandlers
-	for (iter = m_pTargetedHandlers->begin(); iter != m_pTargetedHandlers->end(); ++iter)
+	CCARRAY_FOREACH(m_pTargetedHandlers, pObj)
 	{
-		pHandler = *iter;
+		pHandler = (CCTouchHandler*)pObj;
 		if (pHandler && pHandler->getDelegate() == pDelegate)
 		{
 			m_pTargetedHandlers->removeObject(pHandler);
@@ -263,47 +265,49 @@ void CCTouchDispatcher::removeAllDelegates(void)
 
 CCTouchHandler* CCTouchDispatcher::findHandler(CCTouchDelegate *pDelegate)
 {
-	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
-
-	for (iter = m_pTargetedHandlers->begin(); iter != m_pTargetedHandlers->end(); ++iter)
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(m_pTargetedHandlers, pObj)
 	{
-		if ((*iter)->getDelegate() == pDelegate)
+		CCTouchHandler* pHandler = (CCTouchHandler*)pObj;
+		if (pHandler->getDelegate() == pDelegate)
 		{
-			return *iter;
+			return pHandler;
 		}
 	}
 
-	for (iter = m_pStandardHandlers->begin(); iter != m_pStandardHandlers->end(); ++iter)
+	CCARRAY_FOREACH(m_pStandardHandlers, pObj)
 	{
-		if ((*iter)->getDelegate() == pDelegate)
+		CCTouchHandler* pHandler = (CCTouchHandler*)pObj;
+		if (pHandler->getDelegate() == pDelegate)
 		{
-			return *iter;
+			return pHandler;
 		}
 	} 
 
 	return NULL;
 }
 
-CCTouchHandler* CCTouchDispatcher::findHandler(CCMutableArray<CCTouchHandler*> *pArray, CCTouchDelegate *pDelegate)
+CCTouchHandler* CCTouchDispatcher::findHandler(CCArray* pArray, CCTouchDelegate *pDelegate)
 {
 	CCAssert(pArray != NULL && pDelegate != NULL, "");
 
-	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
-
-	for (iter = pArray->begin(); iter != pArray->end(); ++iter)
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(pArray, pObj)
 	{
-		if ((*iter)->getDelegate() == pDelegate)
+		CCTouchHandler* pHandle = (CCTouchHandler*)pObj;
+		if (pHandle->getDelegate() == pDelegate)
 		{
-			return *iter;
+			return pHandle;
 		}
 	}
 
 	return NULL;
 }
 
-void CCTouchDispatcher::rearrangeHandlers(CCMutableArray<CCTouchHandler*> *pArray)
+void CCTouchDispatcher::rearrangeHandlers(CCArray *pArray)
 {
-	std::sort(pArray->begin(), pArray->end(), less);
+	// FIXME: qsort is not supported in bada1.0, so we must implement it ourselves.
+	qsort(pArray->data->arr, pArray->data->num, sizeof(pArray->data->arr[0]), less);
 }
 
 void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
@@ -350,12 +354,12 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 		for (setIter = pTouches->begin(); setIter != pTouches->end(); ++setIter)
 		{
 			pTouch = (CCTouch *)(*setIter);
-			CCTargetedTouchHandler *pHandler;
-			CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator arrayIter;
-			for (arrayIter = m_pTargetedHandlers->begin(); arrayIter != m_pTargetedHandlers->end(); ++arrayIter)
-			/*for (unsigned int i = 0; i < m_pTargetedHandlers->num; ++i)*/
+
+			CCTargetedTouchHandler *pHandler = NULL;
+			CCObject* pObj = NULL;
+			CCARRAY_FOREACH(m_pTargetedHandlers, pObj)
 			{
-                pHandler = (CCTargetedTouchHandler *)(*arrayIter);
+                pHandler = (CCTargetedTouchHandler *)(pObj);
 
                 if (! pHandler)
                 {
@@ -411,11 +415,11 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 	//
 	if (uStandardHandlersCount > 0 && pMutableTouches->count() > 0)
 	{
-		CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
-		CCStandardTouchHandler *pHandler;
-		for (iter = m_pStandardHandlers->begin(); iter != m_pStandardHandlers->end(); ++iter)
+		CCStandardTouchHandler *pHandler = NULL;
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH(m_pStandardHandlers, pObj)
 		{
-			pHandler = (CCStandardTouchHandler*)(*iter);
+			pHandler = (CCStandardTouchHandler*)(pObj);
 
             if (! pHandler)
             {
@@ -463,11 +467,11 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 	if (m_bToAdd)
 	{
 		m_bToAdd = false;
- 		CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
-         CCTouchHandler *pHandler;
- 		for (iter = m_pHandlersToAdd->begin(); iter != m_pHandlersToAdd->end(); ++iter)
+        CCTouchHandler* pHandler = NULL;
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH(m_pHandlersToAdd, pObj)
  		{
- 			pHandler = *iter;
+ 			pHandler = (CCTouchHandler*)pObj;
             if (! pHandler)
             {
                 break;

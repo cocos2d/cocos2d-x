@@ -32,8 +32,9 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCSpriteFrame.h"
 #include "CCAnimation.h"
+#include <vector>
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 /** 
 @brief An interval action is an action that takes place within a certain period of time.
@@ -717,8 +718,6 @@ private:
 	CCFiniteTimeAction* m_pAction;
 };
 
-
-
-}
+NS_CC_END
 
 #endif //__ACTION_CCINTERVAL_ACTION_H__

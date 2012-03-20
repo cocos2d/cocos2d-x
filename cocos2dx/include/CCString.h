@@ -61,6 +61,11 @@ namespace cocos2d {
 			return m_sString;
 		}
 
+		const char* c_str()
+		{
+			return m_sString.c_str();
+		}
+
 		bool isEmpty()
 		{
 			return m_sString.empty();

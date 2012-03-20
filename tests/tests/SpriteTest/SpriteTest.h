@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include <string>
 
 class SpriteTestDemo : public CCLayer
 {

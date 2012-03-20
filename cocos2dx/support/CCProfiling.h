@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <string>
 #include "CCObject.h"
 #include "platform/platform.h"
-#include "CCMutableDictionary.h"
+#include "CCDictionary.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +58,7 @@ public:
 	/** releases all timers */
 	void releaseAllTimers();
 
-	CCMutableDictionary<std::string, CCProfilingTimer*>* m_pActiveTimers;
+	CCDictionary* m_pActiveTimers;
 };
 
 class CCProfilingTimer : public CCObject

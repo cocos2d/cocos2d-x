@@ -212,6 +212,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCDictionary.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCGeometry.cpp"
 				>
 			</File>
@@ -400,6 +404,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCDictionary.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCDirector.h"
 				>
 			</File>
@@ -433,6 +441,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCIMEDispatcher.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCInteger.h"
 				>
 			</File>
 			<File
@@ -1101,22 +1113,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="gles2"
-			>
-			<File
-				RelativePath="..\gles2\CCGLProgram.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\gles2\ccGLStateCache.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\gles2\CCShaderCache.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="kazmath"
 			>
 			<Filter
@@ -1251,6 +1247,18 @@
 		<Filter
 			Name="shaders"
 			>
+			<File
+				RelativePath="..\shaders\CCGLProgram.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccGLStateCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\CCShaderCache.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\shaders\ccShaders.cpp"
 				>
