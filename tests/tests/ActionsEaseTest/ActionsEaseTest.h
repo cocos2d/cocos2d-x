@@ -1,5 +1,5 @@
-#ifndef _EASE_ACTIONS_TEST_H_
-#define _EASE_ACTIONS_TEST_H_
+#ifndef _ACTIONS__EASE_TEST_H_
+#define _ACTIONS__EASE_TEST_H_
 
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
@@ -124,15 +124,7 @@ public:
 	void altertime(ccTime dt);
 };
 
-
-class SchedulerTest : public EaseSpriteDemo
-{
-public:
-	void onEnter();
-	virtual std::string title();
-};
-
-class EaseActionsTestScene : public TestScene
+class ActionsEaseTestScene : public TestScene
 {
 public:
     virtual void runThisTest();

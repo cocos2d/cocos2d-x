@@ -8,7 +8,7 @@
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
 #include "RotateWorldTest/RotateWorldTest.h"
 #include "ParticleTest/ParticleTest.h"
-#include "EaseActionsTest/EaseActionsTest.h"
+#include "ActionsEaseTest/ActionsEaseTest.h"
 #include "MotionStreakTest/MotionStreakTest.h"
 #include "DrawPrimitivesTest/DrawPrimitivesTest.h"
 #include "CocosNodeTest/CocosNodeTest.h"
@@ -114,7 +114,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ClickAndMoveTest",
     "RotateWorldTest",
     "ParticleTest",
-    "EaseActionsTest",
+    "ActionsEaseTest",
     "MotionStreakTest",
     "DrawPrimitivesTest",
     "CocosNodeTest",
