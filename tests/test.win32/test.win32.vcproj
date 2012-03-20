@@ -300,14 +300,14 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="EaseActionsTest"
+					Name="ActionsEaseTest"
 					>
 					<File
-						RelativePath="..\tests\EaseActionsTest\EaseActionsTest.cpp"
+						RelativePath="..\tests\ActionsEaseTest\ActionsEaseTest.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\tests\EaseActionsTest\EaseActionsTest.h"
+						RelativePath="..\tests\ActionsEaseTest\ActionsEaseTest.h"
 						>
 					</File>
 				</Filter>

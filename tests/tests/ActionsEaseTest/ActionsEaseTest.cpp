@@ -1,4 +1,4 @@
-#include "EaseActionsTest.h"
+#include "ActionsEaseTest.h"
 #include "../testResource.h"
 
 enum {
@@ -24,10 +24,10 @@ void SpriteEase::onEnter()
 	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0) );
 	CCActionInterval* move_back = move->reverse();
 	
-	CCActionInterval* move_ease_in = (CCActionInterval*)CCEaseIn::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 3.0f);
+	CCActionInterval* move_ease_in = (CCActionInterval*)CCEaseIn::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 2.5f);
 	CCActionInterval* move_ease_in_back = move_ease_in->reverse();
 	
-	CCActionInterval* move_ease_out = CCEaseOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 3.0f);
+	CCActionInterval* move_ease_out = CCEaseOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 2.5f);
 	CCActionInterval* move_ease_out_back = move_ease_out->reverse();
 	
 	
@@ -75,13 +75,13 @@ void SpriteEaseInOut::onEnter()
 	CCActionInterval*  move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 //	id move_back = move->reverse();
 	
-	CCActionInterval*  move_ease_inout1 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 2.0f);
+	CCActionInterval*  move_ease_inout1 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 0.65f);
 	CCActionInterval*  move_ease_inout_back1 = move_ease_inout1->reverse();
 	
-	CCActionInterval*  move_ease_inout2 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 3.0f);
+	CCActionInterval*  move_ease_inout2 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 1.35f);
 	CCActionInterval*  move_ease_inout_back2 = move_ease_inout2->reverse();
 
-	CCActionInterval*  move_ease_inout3 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 4.0f);
+	CCActionInterval*  move_ease_inout3 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 1.0f);
 	CCActionInterval*  move_ease_inout_back3 = move_ease_inout3->reverse();
 
 	
@@ -484,48 +484,6 @@ std::string SpeedTest::title()
 
 //------------------------------------------------------------------
 //
-// SchedulerTest
-//
-//------------------------------------------------------------------
-void SchedulerTest::onEnter()
-{
-	EaseSpriteDemo::onEnter();
-	
-	// rotate and jump
-	CCActionInterval* jump1 = CCJumpBy::actionWithDuration(4, CCPointMake(-400,0), 100, 4);
-	CCActionInterval* jump2 = jump1->reverse();
-	CCActionInterval* rot1 = CCRotateBy::actionWithDuration(4, 360*2);
-	CCActionInterval* rot2 = rot1->reverse();
-	
-	CCFiniteTimeAction* seq3_1 = CCSequence::actions(jump2, jump1, NULL);
-	CCFiniteTimeAction* seq3_2 = CCSequence::actions( rot1, rot2, NULL);
-	CCFiniteTimeAction* spawn = CCSpawn::actions(seq3_1, seq3_2, NULL);
-	CCFiniteTimeAction* action = CCRepeatForever::actionWithAction((CCActionInterval*)spawn);
-	
-	CCRepeatForever* action2 = (CCRepeatForever*)(action->copy()->autorelease());
-	CCRepeatForever* action3 = (CCRepeatForever*)(action->copy()->autorelease());
-	
-	
-	m_grossini->runAction( CCSpeed::actionWithAction((CCActionInterval*)action, 0.5f) );
-	m_tamara->runAction( CCSpeed::actionWithAction((CCActionInterval*)action2, 1.5f) );
-	m_kathia->runAction( CCSpeed::actionWithAction((CCActionInterval*)action3, 1.0f) );
-	
-	CCParticleSystem* emitter = CCParticleFireworks::node();
-    emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-	addChild(emitter);
-	
-	//sliderCtl = [self sliderCtl];
-	//[[[[Director sharedDirector] openGLView] window] addSubview: sliderCtl]; 
-}
-
-
-std::string SchedulerTest::title()
-{
-	return "Scheduler scaleTime Test";
-}
-
-//------------------------------------------------------------------
-//
 // EaseSpriteDemo
 //
 //------------------------------------------------------------------
@@ -539,7 +497,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	14
+#define MAX_LAYER	13
 
 CCLayer* createEaseLayer(int nIndex)
 {
@@ -558,7 +516,6 @@ CCLayer* createEaseLayer(int nIndex)
 		case 10: return new SpriteEaseBack();
 		case 11: return new SpriteEaseBackInOut();
 		case 12: return new SpeedTest();
-		case 13: return new SchedulerTest();
 	}
 
 
@@ -661,7 +618,7 @@ void EaseSpriteDemo::onEnter()
 
 void EaseSpriteDemo::restartCallback(CCObject* pSender)
 {
-	CCScene* s = new EaseActionsTestScene();//CCScene::node();
+	CCScene* s = new ActionsEaseTestScene();//CCScene::node();
 	s->addChild(restartEaseAction()); 
 
 	CCDirector::sharedDirector()->replaceScene(s);
@@ -670,7 +627,7 @@ void EaseSpriteDemo::restartCallback(CCObject* pSender)
 
 void EaseSpriteDemo::nextCallback(CCObject* pSender)
 {
-	CCScene* s = new EaseActionsTestScene();//CCScene::node();
+	CCScene* s = new ActionsEaseTestScene();//CCScene::node();
 	s->addChild( nextEaseAction() );
 	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
@@ -678,13 +635,13 @@ void EaseSpriteDemo::nextCallback(CCObject* pSender)
 
 void EaseSpriteDemo::backCallback(CCObject* pSender)
 {
-	CCScene* s = new EaseActionsTestScene();//CCScene::node();
+	CCScene* s = new ActionsEaseTestScene();//CCScene::node();
 	s->addChild( backEaseAction() );
 	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
-void EaseActionsTestScene::runThisTest()
+void ActionsEaseTestScene::runThisTest()
 {
     CCLayer* pLayer = nextEaseAction();
     addChild(pLayer);
