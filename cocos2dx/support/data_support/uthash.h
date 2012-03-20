@@ -45,6 +45,12 @@ namespace   cocos2d {
 #define DECLTYPE(x) (__typeof(x))
 #endif
 
+#ifdef ANDROID
+#define NO_DECLTYPE
+#undef  DECLTYPE
+#define DECLTYPE(x)
+#endif
+
 #ifdef NO_DECLTYPE
 #define DECLTYPE_ASSIGN(dst,src)                                                 \
 do {                                                                             \

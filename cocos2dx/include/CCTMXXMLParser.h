@@ -33,6 +33,8 @@ THE SOFTWARE.
 
 #include "../platform/CCSAXParser.h"
 
+#include <string>
+
 NS_CC_BEGIN
 
 class CCTMXObjectGroup;
