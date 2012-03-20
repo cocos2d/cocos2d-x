@@ -114,6 +114,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "CCFileUtils.h"
 #include "CCAccelerometer.h"
+#include "CCGL.h"
 
 // extensions
 #include "extensions/CCNotificationCenter.h"

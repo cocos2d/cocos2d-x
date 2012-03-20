@@ -89,8 +89,8 @@ public:
 // 	pElement = (CCDictElement*)pElement->hh.next)
 
 #define CCDICT_FOREACH(__dict__, __el__) \
-	CCDictElement* ##__dict__##__el__##tmp = NULL; \
-	HASH_ITER(hh, (__dict__)->m_pElements, __el__, ##__dict__##__el__##tmp)
+	CCDictElement* tmp##__dict____el__ = NULL; \
+	HASH_ITER(hh, (__dict__)->m_pElements, __el__, tmp##__dict____el__)
 
 
 class CC_DLL CCDictionary : public CCObject

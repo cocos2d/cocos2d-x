@@ -40,12 +40,11 @@ build for which target platform
 #define CC_PLATFORM_UNKNOWN            0
 #define CC_PLATFORM_IOS                1
 #define CC_PLATFORM_ANDROID            2
-#define CC_PLATFORM_WOPHONE            3
-#define CC_PLATFORM_WIN32              4
-#define CC_PLATFORM_MARMALADE          5
-#define CC_PLATFORM_LINUX              6
-#define CC_PLATFORM_BADA               7
-#define CC_PLATFORM_QNX				   8
+#define CC_PLATFORM_WIN32              3
+#define CC_PLATFORM_MARMALADE          4
+#define CC_PLATFORM_LINUX              5
+#define CC_PLATFORM_BADA               6
+#define CC_PLATFORM_QNX				   7
 
 // Determine tartet platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -63,12 +62,6 @@ build for which target platform
 #if ! CC_TARGET_PLATFORM && defined(ANDROID)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
-#endif
-
-// wophone
-#if ! CC_TARGET_PLATFORM && defined(_TRANZDA_VM_)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_WOPHONE
 #endif
 
 // win32
@@ -120,11 +113,6 @@ build for which target platform
 #if defined(CC_UNDER_ANDROID)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
-#endif
-
-#if defined(CC_UNDER_WOPHONE)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_WOPHONE
 #endif
 
 #if defined(CC_UNDER_WIN32)
