@@ -130,10 +130,8 @@ bool CCDirector::init(void)
 
 	// scheduler
 	m_pScheduler = new CCScheduler();
-	m_pScheduler->retain();
 	// action manager
 	m_pActionManager = new CCActionManager();
-	m_pActionManager->retain();
 	m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCActionManagerPriority, false);
 
 	// create autorelease pool
@@ -651,6 +649,7 @@ void CCDirector::purgeDirector()
 	CCShaderCache::purgeSharedShaderCache();
 	CCUserDefault::purgeSharedUserDefault();
     CCNotificationCenter::purgeNotifCenter();
+    ccGLInvalidateStateCache();
 	// OpenGL view
 	m_pobOpenGLView->release();
 	m_pobOpenGLView = NULL;
