@@ -28,6 +28,7 @@ cocoa/CCAffineTransform.cpp \
 cocoa/CCGeometry.cpp \
 cocoa/CCAutoreleasePool.cpp \
 cocoa/CCData.cpp \
+cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCObject.cpp \
 cocoa/CCSet.cpp \
@@ -37,9 +38,6 @@ CCDirector.cpp \
 effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
 extensions/CCNotificationCenter.cpp \
-gles2/CCGLProgram.cpp \
-gles2/ccGLStateCache.cpp \
-gles2/CCShaderCache.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -90,6 +88,9 @@ platform/android/jni/SystemInfoJni.cpp \
 platform/android/jni/TouchesJni.cpp \
 script_support/CCScriptSupport.cpp \
 shaders/ccShaders.cpp \
+shaders/CCGLProgram.cpp \
+shaders/ccGLStateCache.cpp \
+shaders/CCShaderCache.cpp \
 sprite_nodes/CCAnimation.cpp \
 sprite_nodes/CCAnimationCache.cpp \
 sprite_nodes/CCSprite.cpp \
