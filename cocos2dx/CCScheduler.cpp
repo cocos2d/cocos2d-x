@@ -326,7 +326,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget
 					pElement->currentTimerSalvaged = true;
 				}
 
-				ccArrayRemoveObjectAtIndex(pElement->timers, i );
+				ccArrayRemoveObjectAtIndex(pElement->timers, i, true);
 
 				// update timerIndex in case we are in tick:, looping over the actions
 				if (pElement->timerIndex >= i)

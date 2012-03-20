@@ -38,7 +38,8 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 , m_bToAdd(false)
 , m_bToRemove(false)
 {
-    m_pDelegates = new KeypadDelegateArray;
+	m_pDelegates = CCArray::array();
+	m_pDelegates->retain();
 
     m_pHandlersToAdd    = ccCArrayNew(8);
     m_pHandlersToRemove = ccCArrayNew(8);
@@ -124,12 +125,11 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
 
 void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 {
-    CCKeypadHandler  *pHandler;
-    CCMutableArray<CCKeypadHandler*>::CCMutableArrayIterator  iter;
-
-    for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
+    CCKeypadHandler* pHandler = NULL;
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(m_pDelegates, pObj)
     {
-        pHandler = *iter;
+        pHandler = (CCKeypadHandler*)pObj;
         if (pHandler && pHandler->getDelegate() == pDelegate)
         {
             m_pDelegates->removeObject(pHandler);
@@ -140,19 +140,19 @@ void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 
 bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
-    CCKeypadHandler  *pHandler;
-    CCKeypadDelegate *pDelegate;
-    CCMutableArray<CCKeypadHandler*>::CCMutableArrayIterator  iter;
+    CCKeypadHandler*  pHandler = NULL;
+    CCKeypadDelegate* pDelegate = NULL;
 
     m_bLocked = true;
 
     if (m_pDelegates->count() > 0)
     {
-        for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH(m_pDelegates, pObj)
         {
-            CC_BREAK_IF(!(*iter));
+            CC_BREAK_IF(!pObj);
 
-            pHandler = *iter;
+            pHandler = (CCKeypadHandler*)pObj;
             pDelegate = pHandler->getDelegate();
 
             switch (nMsgType)

@@ -20,7 +20,7 @@ class Ball;
 class PongLayer : public CCLayer
 {
 	Ball*		m_ball;
-	CCMutableArray<CCObject *> *m_paddles;
+	CCArray*    m_paddles;
 	CCPoint		m_ballStartingVelocity; 
 public:
 	PongLayer();

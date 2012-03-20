@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccMacros.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 
 namespace cocos2d
 {

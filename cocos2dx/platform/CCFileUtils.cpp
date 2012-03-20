@@ -52,14 +52,14 @@ typedef enum
 class CCDictMaker : public CCSAXDelegator
 {
 public:
-    CCDictionary<std::string, CCObject*> *m_pRootDict;
-    CCDictionary<std::string, CCObject*> *m_pCurDict;
-    std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
+    CCDictionary *m_pRootDict;
+    CCDictionary *m_pCurDict;
+    std::stack<CCDictionary*> m_tDictStack;
     std::string m_sCurKey;///< parsed key
     CCSAXState m_tState;
-    CCMutableArray<CCObject*> *m_pArray;
+    CCArray* m_pArray;
 
-    std::stack<CCMutableArray<CCObject*>*> m_tArrayStack;
+    std::stack<CCArray*> m_tArrayStack;
     std::stack<CCSAXState>  m_tStateStack;
 
 public:
@@ -75,7 +75,7 @@ public:
     {
     }
 
-    CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
+    CCDictionary* dictionaryWithContentsOfFile(const char *pFileName)
     {
         CCSAXParser parser;
 
@@ -96,7 +96,7 @@ public:
         std::string sName((char*)name);
         if( sName == "dict" )
         {
-            m_pCurDict = new CCDictionary<std::string, CCObject*>();
+            m_pCurDict = new CCDictionary();
             if(! m_pRootDict)
             {
 				// Because it will call m_pCurDict->release() later, so retain here.
@@ -120,8 +120,8 @@ public:
             {
                 // add the dictionary into the pre dictionary
                 CCAssert(! m_tDictStack.empty(), "The state is wrong!");
-                CCDictionary<std::string, CCObject*>* pPreDict = m_tDictStack.top();
-                pPreDict->setObject(m_pCurDict, m_sCurKey);
+                CCDictionary* pPreDict = m_tDictStack.top();
+                pPreDict->setObject(m_pCurDict, m_sCurKey.c_str());
             }
 
 			m_pCurDict->release();
@@ -149,17 +149,18 @@ public:
         else if (sName == "array")
         {
             m_tState = SAX_ARRAY;
-            m_pArray = new CCMutableArray<CCObject*>();
+			m_pArray = CCArray::array();
+			m_pArray->retain();
 
             CCSAXState preState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
             if (preState == SAX_DICT)
             {
-                m_pCurDict->setObject(m_pArray, m_sCurKey);
+                m_pCurDict->setObject(m_pArray, m_sCurKey.c_str());
             }
             else if (preState == SAX_ARRAY)
             {
                 CCAssert(! m_tArrayStack.empty(), "The state is worng!");
-                CCMutableArray<CCObject*>* pPreArray = m_tArrayStack.top();
+                CCArray* pPreArray = m_tArrayStack.top();
                 pPreArray->addObject(m_pArray);
             }
             m_pArray->release();
@@ -205,7 +206,7 @@ public:
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(str, m_sCurKey);
+                m_pCurDict->setObject(str, m_sCurKey.c_str());
             }
             str->release();
         }
@@ -218,7 +219,7 @@ public:
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(str, m_sCurKey);
+                m_pCurDict->setObject(str, m_sCurKey.c_str());
             }
             str->release();
         }
@@ -254,7 +255,7 @@ public:
                 }
                 else if (SAX_DICT == curState)
                 {
-                    m_pCurDict->setObject(pText, m_sCurKey);
+                    m_pCurDict->setObject(pText, m_sCurKey.c_str());
                 }
                 break;
             }
@@ -287,15 +288,15 @@ std::string& CCFileUtils::ccRemoveHDSuffixFromFile(std::string& path)
     return path;
 }
 
-CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+CCDictionary* CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
-	CCDictionary<std::string, CCObject*> *ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
+	CCDictionary* ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
 	ret->autorelease();
 
 	return ret;
 }
 
-CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+CCDictionary* CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
 	CCDictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(pFileName);

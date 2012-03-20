@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCKEYPAD_DISPATCHER_H__
 
 #include "CCKeypadDelegate.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 
 namespace   cocos2d {
 
@@ -84,9 +84,7 @@ public:
 
 protected:
 
-    typedef CCMutableArray<CCKeypadHandler*> KeypadDelegateArray;
-
-    KeypadDelegateArray* m_pDelegates;
+    CCArray* m_pDelegates;
     bool m_bLocked;
     bool m_bToAdd;
     bool m_bToRemove;

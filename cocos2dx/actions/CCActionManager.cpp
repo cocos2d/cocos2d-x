@@ -95,7 +95,7 @@ void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pEl
 		pElement->currentActionSalvaged = true;
 	}
 
-	ccArrayRemoveObjectAtIndex(pElement->actions, uIndex);
+	ccArrayRemoveObjectAtIndex(pElement->actions, uIndex, true);
 
 	// update actionIndex in case we are in tick. looping over the actions
 	if (pElement->actionIndex >= uIndex)

@@ -25,8 +25,7 @@ THE SOFTWARE.
 
 #include "CCArray.h"
 
-namespace cocos2d
-{
+NS_CC_BEGIN
 
 CCArray* CCArray::array()
 {
@@ -158,20 +157,20 @@ void CCArray::insertObject(CCObject* object, unsigned int index)
     ccArrayInsertObjectAtIndex(data, object, index);
 }
 
-void CCArray::removeLastObject()
+void CCArray::removeLastObject(bool bReleaseObj)
 {
     CCAssert(data->num, "no objects added");
-    ccArrayRemoveObjectAtIndex(data, data->num-1);
+    ccArrayRemoveObjectAtIndex(data, data->num-1, bReleaseObj);
 }
 
-void CCArray::removeObject(CCObject* object)
+void CCArray::removeObject(CCObject* object, bool bReleaseObj/* = true*/)
 {
-    ccArrayRemoveObject(data, object);
+    ccArrayRemoveObject(data, object, bReleaseObj);
 }
 
-void CCArray::removeObjectAtIndex(unsigned int index)
+void CCArray::removeObjectAtIndex(unsigned int index, bool bReleaseObj)
 {
-    ccArrayRemoveObjectAtIndex(data, index);
+    ccArrayRemoveObjectAtIndex(data, index, bReleaseObj);
 }
 
 void CCArray::removeObjectsInArray(CCArray* otherArray)
@@ -242,4 +241,20 @@ CCArray::~CCArray()
     ccArrayFree(data);
 }
 
+void CCArray::replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject/* = true*/)
+{
+	if (bReleaseObject && uIndex < data->num && data->arr[uIndex] != NULL)
+	{
+		data->arr[uIndex]->release();
+	}
+
+	data->arr[uIndex] = pObject;
+
+	// add the ref
+	if (pObject)
+	{
+		pObject->retain();
+	}
 }
+
+NS_CC_END

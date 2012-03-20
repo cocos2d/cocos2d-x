@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "ccTypes.h"
 #include "CCGeometry.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 #include "CCGeometry.h"
 #include "CCEGLView.h"
 #include "CCGL.h"
@@ -448,7 +448,7 @@ protected:
 	bool	m_bSendCleanupToScene;
 
 	/* scheduled scenes */
-	CCMutableArray<CCScene*> *m_pobScenesStack;
+	CCArray* m_pobScenesStack;
 	
 	/* last time the main loop was updated */
 	struct cc_timeval *m_pLastUpdate;

@@ -25,12 +25,13 @@ THE SOFTWARE.
 #define __AUTORELEASEPOOL_H__
 
 #include "CCObject.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
+
 class CC_DLL CCAutoreleasePool : public CCObject
 {
-	CCMutableArray<CCObject*>*	m_pManagedObjectArray;	
+	CCArray*	m_pManagedObjectArray;	
 public:
 	CCAutoreleasePool(void);
 	~CCAutoreleasePool(void);
@@ -43,7 +44,7 @@ public:
 
 class CC_DLL CCPoolManager
 {
-	CCMutableArray<CCAutoreleasePool*>*	m_pReleasePoolStack;	
+	CCArray*	m_pReleasePoolStack;	
 	CCAutoreleasePool*					m_pCurReleasePool;
 
 	CCAutoreleasePool* getCurReleasePool();
@@ -62,6 +63,6 @@ public:
 	friend class CCAutoreleasePool;
 };
 
-}
+NS_CC_END
 
 #endif //__AUTORELEASEPOOL_H__

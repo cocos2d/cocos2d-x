@@ -960,7 +960,7 @@ void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int f
 
 	CCAssert(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-	CCAnimationFrame *frame = a->getFrames()->getObjectAtIndex(frameIndex);
+	CCAnimationFrame* frame = (CCAnimationFrame*)a->getFrames()->objectAtIndex(frameIndex);
 
 	CCAssert(frame, "CCSprite#setDisplayFrame. Invalid frame");
 
