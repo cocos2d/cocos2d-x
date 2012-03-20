@@ -1255,10 +1255,6 @@
 				RelativePath="..\shaders\ccShaders.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\shaders\ccShaders.h"
-				>
-			</File>
 		</Filter>
 		<File
 			RelativePath="..\CCCamera.cpp"

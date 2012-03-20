@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCEGLView_android.h"
-#include "GLES/gl.h"
 #include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
@@ -31,6 +30,20 @@ THE SOFTWARE.
 #include "jni/MessageJni.h"
 
 #include <stdlib.h>
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#include <EGL/egl.h>
+#include <android/log.h>
+
+PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT = 0;
+PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOESEXT = 0;
+PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT = 0;
+
+void initExtensions() {
+     glGenVertexArraysOESEXT = (PFNGLGENVERTEXARRAYSOESPROC)eglGetProcAddress("glGenVertexArraysOES");
+     glBindVertexArrayOESEXT = (PFNGLBINDVERTEXARRAYOESPROC)eglGetProcAddress("glBindVertexArrayOES");
+     glDeleteVertexArraysOESEXT = (PFNGLDELETEVERTEXARRAYSOESPROC)eglGetProcAddress("glDeleteVertexArraysOES");
+}
 
 namespace cocos2d {
 
@@ -39,6 +52,7 @@ CCEGLView::CCEGLView()
       m_pDelegate(NULL),
       m_fScreenScaleFactor(1.0)  
 {
+    initExtensions();
 }
 
 void CCEGLView::setFrameWidthAndHeight(int width, int height)
