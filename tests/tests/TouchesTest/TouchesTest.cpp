@@ -54,7 +54,7 @@ PongLayer::PongLayer()
 	
 	CCTexture2D* paddleTexture = CCTextureCache::sharedTextureCache()->addImage(s_Paddle);
 	
-	CCMutableArray<CCObject *> *paddlesM = new CCMutableArray<CCObject *>(4);
+	CCArray *paddlesM = CCArray::arrayWithCapacity(4);
 	
 	Paddle* paddle = Paddle::paddleWithTexture(paddleTexture);
 	paddle->setPosition( CCPointMake(160, 15) );
@@ -72,20 +72,18 @@ PongLayer::PongLayer()
 	paddle->setPosition( CCPointMake(160, 480 - kStatusBarHeight - 100) );
 	paddlesM->addObject( paddle );
 	
-	m_paddles = paddlesM->copy();
+	m_paddles = (CCArray*)paddlesM->copy();
 	
-    CCMutableArray<CCObject *>::CCMutableArrayIterator it;
-	for(it = m_paddles->begin(); it != m_paddles->end(); it++)
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(m_paddles, pObj)
 	{
-		paddle = (Paddle*)(*it);
+		paddle = (Paddle*)(pObj);
 
 		if(!paddle)
 			break;
 
 		addChild(paddle);
 	}
-
-	paddlesM->release();
 
 	schedule( schedule_selector(PongLayer::doStep) );
 }
@@ -109,11 +107,11 @@ void PongLayer::doStep(ccTime delta)
 {
 	m_ball->move(delta);
 
-	Paddle* paddle;
-    CCMutableArray<CCObject *>::CCMutableArrayIterator it;
-	for(it = m_paddles->begin(); it != m_paddles->end(); it++)
+	Paddle* paddle = NULL;
+	CCObject* pObj = NULL;
+	CCARRAY_FOREACH(m_paddles, pObj)
 	{
-		paddle = (Paddle*)(*it);
+		paddle = (Paddle*)(pObj);
 
 		if(!paddle)
 			break;

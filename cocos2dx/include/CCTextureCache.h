@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "CCObject.h"
-#include "CCMutableDictionary.h"
+#include "CCDictionary.h"
 #include "CCTexture2D.h"
 
 
@@ -49,7 +49,7 @@ class CCImage;
 class CC_DLL CCTextureCache : public CCObject
 {
 protected:
-	CCMutableDictionary<std::string, CCTexture2D*> * m_pTextures;
+	CCDictionary* m_pTextures;
 	//pthread_mutex_t				*m_pDictLock;
 
 
