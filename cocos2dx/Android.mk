@@ -37,6 +37,22 @@ CCDirector.cpp \
 effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
 extensions/CCNotificationCenter.cpp \
+gles2/CCGLProgram.cpp \
+gles2/ccGLStateCache.cpp \
+gles2/CCShaderCache.cpp \
+kazmath/src/aabb.c \
+kazmath/src/mat3.c \
+kazmath/src/mat4.c \
+kazmath/src/neon_matrix_impl.c \
+kazmath/src/plane.c \
+kazmath/src/quaternion.c \
+kazmath/src/ray2.c \
+kazmath/src/utility.c \
+kazmath/src/vec2.c \
+kazmath/src/vec3.c \
+kazmath/src/vec4.c \
+kazmath/src/GL/mat4stack.c \
+kazmath/src/GL/matrix.c \
 keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
 label_nodes/CCLabelAtlas.cpp \
@@ -45,17 +61,15 @@ label_nodes/CCLabelTTF.cpp \
 layers_scenes_transitions_nodes/CCLayer.cpp \
 layers_scenes_transitions_nodes/CCScene.cpp \
 layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp \
-layers_scenes_transitions_nodes/CCTransitionRadial.cpp \
 layers_scenes_transitions_nodes/CCTransition.cpp \
 menu_nodes/CCMenu.cpp \
 menu_nodes/CCMenuItem.cpp \
 misc_nodes/CCMotionStreak.cpp \
 misc_nodes/CCProgressTimer.cpp \
 misc_nodes/CCRenderTexture.cpp \
-misc_nodes/CCRibbon.cpp \
 particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
-particle_nodes/CCParticleSystemPoint.cpp \
+particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
 platform/CCFileUtils.cpp \
 platform/CCGL.cpp \
@@ -75,6 +89,7 @@ platform/android/jni/SensorJni.cpp \
 platform/android/jni/SystemInfoJni.cpp \
 platform/android/jni/TouchesJni.cpp \
 script_support/CCScriptSupport.cpp \
+shaders/ccShaders.cpp \
 sprite_nodes/CCAnimation.cpp \
 sprite_nodes/CCAnimationCache.cpp \
 sprite_nodes/CCSprite.cpp \
@@ -88,6 +103,7 @@ support/TransformUtils.cpp \
 support/CCUserDefault.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
+support/CCVertex.cpp \
 support/image_support/TGAlib.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
@@ -109,17 +125,21 @@ touch_dispatcher/CCTouchHandler.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
                            $(LOCAL_PATH)/include \
-                           $(LOCAL_PATH)/platform
+                           $(LOCAL_PATH)/platform \
+                           $(LOCAL_PATH)/kazmath/include
                            
 LOCAL_EXPORT_LDLIBS := -llog\
                        -lz \
-                       -lGLESv1_CM
+                       -lGLESv2 \
+                       -lEGL
                     
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
-                    $(LOCAL_PATH)/platform
+                    $(LOCAL_PATH)/platform \
+                    $(LOCAL_PATH)/kazmath/include
 
-LOCAL_LDLIBS := -lGLESv1_CM \
+LOCAL_LDLIBS := -lGLESv2 \
+                -lEGL \
                 -llog \
                 -lz 
                 

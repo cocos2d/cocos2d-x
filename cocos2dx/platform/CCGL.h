@@ -47,18 +47,26 @@ THE SOFTWARE.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 // GL_GLEXT_PROTOTYPES isn't defined in glplatform.h on android ndk r7 
 // we manually define it here
-#include <GLES/glplatform.h>
+#include <GLES2/gl2platform.h>
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif
-// normal process
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
+// normal process
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+// gl2.h don't define GLchar on Android
+typedef char GLchar;
+
+//declare here while define in CCEGLView_android.cpp
+extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT;
+extern PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOESEXT;
+extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
+
+#define glGenVertexArraysOES glGenVertexArraysOESEXT
+#define glBindVertexArrayOES glBindVertexArrayOESEXT
+#define glDeleteVertexArraysOES glDeleteVertexArraysOESEXT
+
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
