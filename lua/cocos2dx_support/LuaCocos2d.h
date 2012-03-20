@@ -30,6 +30,7 @@
 #pragma warning (disable:4800)
 #endif
 
+// avoid tolua_isusertype() bugs
 #define TOLUA_RELEASE
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0

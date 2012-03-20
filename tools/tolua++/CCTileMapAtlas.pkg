@@ -1,8 +1,8 @@
 class CCTileMapAtlas : public CCAtlasNode
 {
-    static CCTileMapAtlas* tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+    static CCTileMapAtlas* tileMapAtlasWithTileFile(char *tile, char *mapFile, int tileWidth, int tileHeight);
 
-    ccColor3B tileAt(const ccGridSize& position);
-    void setTile(const ccColor3B& tile, const ccGridSize& position);
+    ccColor3B tileAt(ccGridSize position);
+    void setTile(ccColor3B tile, ccGridSize position);
     void releaseMap();
 };

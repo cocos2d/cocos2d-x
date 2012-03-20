@@ -14,7 +14,7 @@ typedef struct _ccColor3B
     GLubyte	g;
     GLubyte b;
 } ccColor3B;
-ccColor3B ccc3(const GLubyte r, const GLubyte g, const GLubyte b);
+ccColor3B ccc3(GLubyte r, GLubyte g, GLubyte b);
 
 typedef struct _ccColor4B
 {
@@ -23,7 +23,7 @@ typedef struct _ccColor4B
     GLubyte b;
     GLubyte a;
 } ccColor4B;
-ccColor4B ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o);
+ccColor4B ccc4(GLubyte r, GLubyte g, GLubyte b, GLubyte o);
 
 typedef struct _ccColor4F {
     GLfloat r;
@@ -40,7 +40,7 @@ typedef struct _ccGridSize
     int	x;
     int	y;
 } ccGridSize;
-ccGridSize ccg(const int x, const int y);
+ccGridSize ccg(int x, int y);
 
 typedef struct _ccBlendFunc
 {

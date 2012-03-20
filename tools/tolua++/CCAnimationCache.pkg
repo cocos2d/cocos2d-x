@@ -1,9 +1,9 @@
 
 class CCAnimationCache : public CCObject
 {
-    void addAnimation(CCAnimation* animation, const char * name);
-    void removeAnimationByName(const char* name);
-    CCAnimation* animationByName(const char* name);
+    void addAnimation(CCAnimation* animation, char * name);
+    void removeAnimationByName(char* name);
+    CCAnimation* animationByName(char* name);
 
     static CCAnimationCache* sharedAnimationCache(void);
     static void purgeSharedAnimationCache(void);

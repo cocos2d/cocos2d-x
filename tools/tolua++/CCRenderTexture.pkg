@@ -16,8 +16,8 @@ class CCRenderTexture : public CCNode
     void endToLua();
 
     void clear(float r, float g, float b, float a);
-    bool saveBuffer(const char *szFilePath, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
-    bool saveBuffer(int format, const char *name, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
+    bool saveBuffer(char *szFilePath, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
+    bool saveBuffer(int format, char *name, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
     bool getUIImageFromBuffer(CCImage *pImage, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
 
     static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);

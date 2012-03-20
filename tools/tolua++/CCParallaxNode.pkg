@@ -3,5 +3,5 @@ class CCParallaxNode : public CCNode
 {
     static CCParallaxNode* node();
 
-    void addChild(CCNode * child, int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
+    void addChild(CCNode * child, int z, CCPoint parallaxRatio, CCPoint positionOffset);
 };

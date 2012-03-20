@@ -1,53 +1,53 @@
 
 class CCShakyTiles3D : public CCTiledGrid3DAction
 {
-    static CCShakyTiles3D* actionWithRange(int nRange, bool bShakeZ, const ccGridSize& gridSize,
+    static CCShakyTiles3D* actionWithRange(int nRange, bool bShakeZ, ccGridSize gridSize,
         ccTime duration);
 };
 
 class CCShatteredTiles3D : public CCTiledGrid3DAction
 {
-    static CCShatteredTiles3D* actionWithRange(int nRange, bool bShatterZ, const ccGridSize& gridSize,
+    static CCShatteredTiles3D* actionWithRange(int nRange, bool bShatterZ, ccGridSize gridSize,
         ccTime duration);
 };
 
 class CCShuffleTiles : public CCTiledGrid3DAction
 {
     void shuffle(int *pArray, unsigned int nLen);
-    ccGridSize getDelta(const ccGridSize& pos);
-    void placeTile(const ccGridSize& pos, Tile *t);
-    static CCShuffleTiles* actionWithSeed(int s, const ccGridSize& gridSize, ccTime duration);
+    ccGridSize getDelta(ccGridSize pos);
+    void placeTile(ccGridSize pos, Tile *t);
+    static CCShuffleTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
 };
 
 class CCFadeOutTRTiles : public CCTiledGrid3DAction
 {
-    void turnOnTile(const ccGridSize& pos);
-    void turnOffTile(const ccGridSize& pos);
-    static CCFadeOutTRTiles* actionWithSize(const ccGridSize& gridSize, ccTime time);
+    void turnOnTile(ccGridSize pos);
+    void turnOffTile(ccGridSize pos);
+    static CCFadeOutTRTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 };
 
 class CCFadeOutBLTiles : public CCFadeOutTRTiles
 {
-    static CCFadeOutBLTiles* actionWithSize(const ccGridSize& gridSize, ccTime time);
+    static CCFadeOutBLTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 };
 
 class CCFadeOutUpTiles : public CCFadeOutTRTiles
 {
-    static CCFadeOutUpTiles* actionWithSize(const ccGridSize& gridSize, ccTime time);
+    static CCFadeOutUpTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 };
 
 class CCFadeOutDownTiles : public CCFadeOutUpTiles
 {
-    static CCFadeOutDownTiles* actionWithSize(const ccGridSize& gridSize, ccTime time);
+    static CCFadeOutDownTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 };
 
 class CCTurnOffTiles : public CCTiledGrid3DAction
 {
     void shuffle(int *pArray, unsigned int nLen);
-    void turnOnTile(const ccGridSize& pos);
-    void turnOffTile(const ccGridSize& pos);
-    static CCTurnOffTiles* actionWithSize(const ccGridSize& size, ccTime d);
-    static CCTurnOffTiles* actionWithSeed(int s, const ccGridSize& gridSize, ccTime duration);
+    void turnOnTile(ccGridSize pos);
+    void turnOffTile(ccGridSize pos);
+    static CCTurnOffTiles* actionWithSize(ccGridSize size, ccTime d);
+    static CCTurnOffTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
 };
 
 class CCWavesTiles3D : public CCTiledGrid3DAction
@@ -56,7 +56,7 @@ class CCWavesTiles3D : public CCTiledGrid3DAction
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
-    static CCWavesTiles3D* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
+    static CCWavesTiles3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 };
 
 class CCJumpTiles3D : public CCTiledGrid3DAction
@@ -65,7 +65,7 @@ class CCJumpTiles3D : public CCTiledGrid3DAction
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
-    static CCJumpTiles3D* actionWithJumps(int j, float amp, const ccGridSize& gridSize, ccTime duration);
+    static CCJumpTiles3D* actionWithJumps(int j, float amp, ccGridSize gridSize, ccTime duration);
 };
 
 class CCSplitRows : public CCTiledGrid3DAction

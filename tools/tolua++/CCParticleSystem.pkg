@@ -11,5 +11,5 @@ class CCParticleSystem : public CCNode
     ccBlendFunc getBlendFunc(void);
     void setBlendFunc(ccBlendFunc var);
 
-    static CCParticleSystem* particleWithFile(const char *plistFile);
+    static CCParticleSystem* particleWithFile(char *plistFile);
 };

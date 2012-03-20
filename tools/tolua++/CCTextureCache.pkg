@@ -4,13 +4,13 @@ class CCTextureCache : public CCObject
     static CCTextureCache * sharedTextureCache();
     static void purgeSharedTextureCache();
 
-    CCTexture2D* addImage(const char* fileimage);
-    CCTexture2D* addUIImage(CCImage *image, const char *key);
-    CCTexture2D* textureForKey(const char* key);
+    CCTexture2D* addImage(char* fileimage);
+    CCTexture2D* addUIImage(CCImage *image, char *key);
+    CCTexture2D* textureForKey(char* key);
     void removeAllTextures();
     void removeUnusedTextures();
     void removeTexture(CCTexture2D* texture);
-    void removeTextureForKey(const char *textureKeyName);
+    void removeTextureForKey(char *textureKeyName);
     void dumpCachedTextureInfo();
-    CCTexture2D* addPVRImage(const char* filename);
+    CCTexture2D* addPVRImage(char* filename);
 };

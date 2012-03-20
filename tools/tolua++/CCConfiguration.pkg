@@ -35,6 +35,6 @@ class CCConfiguration : public CCObject
     bool isSupportsBGRA8888(void);
     bool isSupportsDiscardFramebuffer(void);
     unsigned int getOSVersion();
-    bool checkForGLExtension(const std::string &searchName);
+    bool checkForGLExtension(std::string &searchName);
     static CCConfiguration *sharedConfiguration(void);
 };

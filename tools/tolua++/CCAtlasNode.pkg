@@ -1,7 +1,7 @@
 
 class CCAtlasNode : public CCNode
 {
-    static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth,
+    static CCAtlasNode * atlasWithTileFile(char* tile,unsigned int tileWidth,
                                            unsigned int tileHeight, unsigned int itemsToRender);
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D *texture);

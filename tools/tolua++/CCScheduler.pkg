@@ -9,7 +9,7 @@ class CCScheduler : public CCObject
     ccTime getTimeScale(void);
     void setTimeScale(ccTime fTimeScale);
     // void scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused);
-    void unscheduleUpdateForTarget(const CCObject *pTarget);
+    void unscheduleUpdateForTarget(CCObject *pTarget);
     void unscheduleAllSelectorsForTarget(CCObject *pTarget);
     void unscheduleAllSelectors(void);
     unsigned int scheduleScriptFunc(LUA_FUNCTION nHandler, ccTime fInterval, bool bPaused);
