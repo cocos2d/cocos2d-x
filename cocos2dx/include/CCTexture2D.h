@@ -126,7 +126,11 @@ public:
 	Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a UIImage object */
-	bool initWithImage(CCImage * uiImage);
+#if 0// TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    bool initWithImage(CCImage * uiImage, ccResolutionType resolution);
+#else
+    bool initWithImage(CCImage * uiImage);
+#endif
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a string of text.
