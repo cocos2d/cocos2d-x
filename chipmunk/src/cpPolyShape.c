@@ -30,14 +30,26 @@ cpPolyShapeAlloc(void)
 	return (cpPolyShape *)cpcalloc(1, sizeof(cpPolyShape));
 }
 
-static void
+static cpBB
 cpPolyShapeTransformVerts(cpPolyShape *poly, cpVect p, cpVect rot)
 {
 	cpVect *src = poly->verts;
 	cpVect *dst = poly->tVerts;
 	
-	for(int i=0; i<poly->numVerts; i++)
-		dst[i] = cpvadd(p, cpvrotate(src[i], rot));
+	cpFloat l = (cpFloat)INFINITY, r = -(cpFloat)INFINITY;
+	cpFloat b = (cpFloat)INFINITY, t = -(cpFloat)INFINITY;
+	
+	for(int i=0; i<poly->numVerts; i++){
+		cpVect v = cpvadd(p, cpvrotate(src[i], rot));
+		
+		dst[i] = v;
+		l = cpfmin(l, v.x);
+		r = cpfmax(r, v.x);
+		b = cpfmin(b, v.y);
+		t = cpfmax(t, v.y);
+	}
+	
+	return cpBBNew(l, b, r, t);
 }
 
 static void
@@ -54,38 +66,17 @@ cpPolyShapeTransformAxes(cpPolyShape *poly, cpVect p, cpVect rot)
 }
 
 static cpBB
-cpPolyShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
+cpPolyShapeCacheData(cpPolyShape *poly, cpVect p, cpVect rot)
 {
-	cpPolyShape *poly = (cpPolyShape *)shape;
-	
-	cpFloat l, b, r, t;
-	
 	cpPolyShapeTransformAxes(poly, p, rot);
-	cpPolyShapeTransformVerts(poly, p, rot);
+	cpBB bb = poly->shape.bb = cpPolyShapeTransformVerts(poly, p, rot);
 	
-	cpVect *verts = poly->tVerts;
-	l = r = verts[0].x;
-	b = t = verts[0].y;
-	
-	// TODO do as part of cpPolyShapeTransformVerts?
-	for(int i=1; i<poly->numVerts; i++){
-		cpVect v = verts[i];
-		
-		l = cpfmin(l, v.x);
-		r = cpfmax(r, v.x);
-		
-		b = cpfmin(b, v.y);
-		t = cpfmax(t, v.y);
-	}
-	
-	return cpBBNew(l, b, r, t);
+	return bb;
 }
 
 static void
-cpPolyShapeDestroy(cpShape *shape)
+cpPolyShapeDestroy(cpPolyShape *poly)
 {
-	cpPolyShape *poly = (cpPolyShape *)shape;
-	
 	cpfree(poly->verts);
 	cpfree(poly->tVerts);
 	
@@ -94,14 +85,13 @@ cpPolyShapeDestroy(cpShape *shape)
 }
 
 static cpBool
-cpPolyShapePointQuery(cpShape *shape, cpVect p){
-	return cpBBcontainsVect(shape->bb, p) && cpPolyShapeContainsVert((cpPolyShape *)shape, p);
+cpPolyShapePointQuery(cpPolyShape *poly, cpVect p){
+	return cpBBContainsVect(poly->shape.bb, p) && cpPolyShapeContainsVert(poly, p);
 }
 
 static void
-cpPolyShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info)
+cpPolyShapeSegmentQuery(cpPolyShape *poly, cpVect a, cpVect b, cpSegmentQueryInfo *info)
 {
-	cpPolyShape *poly = (cpPolyShape *)shape;
 	cpPolyShapeAxis *axes = poly->tAxes;
 	cpVect *verts = poly->tVerts;
 	int numVerts = poly->numVerts;
@@ -121,7 +111,7 @@ cpPolyShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *
 		cpFloat dtMax = -cpvcross(n, verts[(i+1)%numVerts]);
 		
 		if(dtMin <= dt && dt <= dtMax){
-			info->shape = shape;
+			info->shape = (cpShape *)poly;
 			info->t = t;
 			info->n = n;
 		}
@@ -130,10 +120,10 @@ cpPolyShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *
 
 static const cpShapeClass polyClass = {
 	CP_POLY_SHAPE,
-	cpPolyShapeCacheData,
-	cpPolyShapeDestroy,
-	cpPolyShapePointQuery,
-	cpPolyShapeSegmentQuery,
+	(cpShapeCacheDataImpl)cpPolyShapeCacheData,
+	(cpShapeDestroyImpl)cpPolyShapeDestroy,
+	(cpShapePointQueryImpl)cpPolyShapePointQuery,
+	(cpShapeSegmentQueryImpl)cpPolyShapeSegmentQuery,
 };
 
 cpBool
@@ -154,15 +144,15 @@ cpPolyValidate(const cpVect *verts, const int numVerts)
 int
 cpPolyShapeGetNumVerts(cpShape *shape)
 {
-	cpAssert(shape->klass == &polyClass, "Shape is not a poly shape.");
+	cpAssertHard(shape->klass == &polyClass, "Shape is not a poly shape.");
 	return ((cpPolyShape *)shape)->numVerts;
 }
 
 cpVect
 cpPolyShapeGetVert(cpShape *shape, int idx)
 {
-	cpAssert(shape->klass == &polyClass, "Shape is not a poly shape.");
-	cpAssert(0 <= idx && idx < cpPolyShapeGetNumVerts(shape), "Index out of range.");
+	cpAssertHard(shape->klass == &polyClass, "Shape is not a poly shape.");
+	cpAssertHard(0 <= idx && idx < cpPolyShapeGetNumVerts(shape), "Index out of range.");
 	
 	return ((cpPolyShape *)shape)->verts[idx];
 }
@@ -193,7 +183,7 @@ cpPolyShape *
 cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cpVect offset)
 {
 	// Fail if the user attempts to pass a concave poly, or a bad winding.
-	cpAssert(cpPolyValidate(verts, numVerts), "Polygon is concave or has a reversed winding.");
+	cpAssertHard(cpPolyValidate(verts, numVerts), "Polygon is concave or has a reversed winding.");
 	
 	setUpVerts(poly, numVerts, verts, offset);
 	cpShapeInit((cpShape *)poly, &polyClass, body);
@@ -213,11 +203,17 @@ cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height)
 	cpFloat hw = width/2.0f;
 	cpFloat hh = height/2.0f;
 	
+	return cpBoxShapeInit2(poly, body, cpBBNew(-hw, -hh, hw, hh));
+}
+
+cpPolyShape *
+cpBoxShapeInit2(cpPolyShape *poly, cpBody *body, cpBB box)
+{
 	cpVect verts[] = {
-		cpv(-hw,-hh),
-		cpv(-hw, hh),
-		cpv( hw, hh),
-		cpv( hw,-hh),
+		cpv(box.l, box.b),
+		cpv(box.l, box.t),
+		cpv(box.r, box.t),
+		cpv(box.r, box.b),
 	};
 	
 	return cpPolyShapeInit(poly, body, 4, verts, cpvzero);
@@ -229,12 +225,18 @@ cpBoxShapeNew(cpBody *body, cpFloat width, cpFloat height)
 	return (cpShape *)cpBoxShapeInit(cpPolyShapeAlloc(), body, width, height);
 }
 
+cpShape *
+cpBoxShapeNew2(cpBody *body, cpBB box)
+{
+	return (cpShape *)cpBoxShapeInit2(cpPolyShapeAlloc(), body, box);
+}
+
 // Unsafe API (chipmunk_unsafe.h)
 
 void
 cpPolyShapeSetVerts(cpShape *shape, int numVerts, cpVect *verts, cpVect offset)
 {
-	cpAssert(shape->klass == &polyClass, "Shape is not a poly shape.");
-	cpPolyShapeDestroy(shape);
+	cpAssertHard(shape->klass == &polyClass, "Shape is not a poly shape.");
+	cpPolyShapeDestroy((cpPolyShape *)shape);
 	setUpVerts((cpPolyShape *)shape, numVerts, verts, offset);
 }

@@ -22,7 +22,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 cpVect
 cpBBClampVect(const cpBB bb, const cpVect v)
