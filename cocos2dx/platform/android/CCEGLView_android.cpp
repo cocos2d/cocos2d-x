@@ -87,7 +87,7 @@ void CCEGLView::create(int width, int height)
 
 CCEGLView::~CCEGLView()
 {
-	CC_SAFE_DELETE(m_pDelegate);
+
 }
 
 CCSize  CCEGLView::getSize()
