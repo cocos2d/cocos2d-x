@@ -196,7 +196,7 @@ void ShaderNode::update(ccTime dt)
 	m_time += dt;
 }
 
-void ShaderNode::setPosition(CCPoint &newPosition)
+void ShaderNode::setPosition(const CCPoint &newPosition)
 {
 	CCNode::setPosition(newPosition);
 	CCPoint position = getPosition();
