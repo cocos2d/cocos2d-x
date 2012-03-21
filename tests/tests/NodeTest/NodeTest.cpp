@@ -1,4 +1,4 @@
-#include "CocosNodeTest.h"
+#include "NodeTest.h"
 #include "../testResource.h"
 
 enum 
@@ -22,7 +22,7 @@ CCLayer* restartCocosNodeAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	12
+#define MAX_LAYER	14
 
 CCLayer* createCocosNodeLayer(int nIndex)
 {
@@ -40,6 +40,8 @@ CCLayer* createCocosNodeLayer(int nIndex)
 		case 9: return new CameraOrbitTest();
 		case 10: return new CameraZoomTest();
 		case 11: return new ConvertToNode();
+		case 12: return new NodeOpaqueTest();
+		case 13: return new NodeNonOpaqueTest();
 	}
 
 	return NULL;
@@ -103,7 +105,7 @@ void TestCocosNodeDemo::onEnter()
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
-	addChild(label, 1);
+	addChild(label, 10);
 	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
 	std::string strSubtitle = subtitle();
@@ -125,7 +127,7 @@ void TestCocosNodeDemo::onEnter()
 	item2->setPosition( CCPointMake( s.width/2, 30) );
 	item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 	
-	addChild(menu, 1);	
+	addChild(menu, 11);	
 }
 
 void TestCocosNodeDemo::restartCallback(CCObject* pSender)
@@ -638,22 +640,18 @@ CameraZoomTest::CameraZoomTest()
 	addChild( sprite, 0);		
 	sprite->setPosition( CCPointMake(s.width/4*1, s.height/2) );
 	cam = sprite->getCamera();
-	cam->setEyeXYZ(0, 0, 415);
+	cam->setEyeXYZ(0, 0, 415/2);
+	cam->setCenterXYZ(0, 0, 0);
 	
 	// CENTER
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild( sprite, 0, 40);
 	sprite->setPosition(CCPointMake(s.width/4*2, s.height/2));
-//		cam = [sprite camera);
-//		[cam setEyeX:0 eyeY:0 eyeZ:415/2);
 	
 	// RIGHT
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild( sprite, 0, 20);
 	sprite->setPosition(CCPointMake(s.width/4*3, s.height/2));
-//		cam = [sprite camera);
-//		[cam setEyeX:0 eyeY:0 eyeZ:-485);
-//		[cam setCenterX:0 centerY:0 centerZ:0);
 
 	m_z = 0;
 	scheduleUpdate();
@@ -672,7 +670,7 @@ void CameraZoomTest::update(ccTime dt)
 	
 	sprite = getChildByTag(40);
 	cam = sprite->getCamera();
-	cam->setEyeXYZ(0, 0, m_z);	
+	cam->setEyeXYZ(0, 0, -m_z);	
 }
 
 std::string CameraZoomTest::title()
@@ -693,68 +691,54 @@ CameraCenterTest::CameraCenterTest()
 	CCOrbitCamera *orbit;
 	
 	// LEFT-TOP
-	sprite = new CCSprite();//::node();
-    sprite->init();
+	sprite = CCSprite::spriteWithFile("Images/white-512x512.png");
 	addChild( sprite, 0);
 	sprite->setPosition(CCPointMake(s.width/5*1, s.height/5*1));
 	sprite->setColor(ccRED);
 	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ));
-    sprite->release();
 //		[sprite setAnchorPoint: CCPointMake(0,1));
 
 	
 	
 	// LEFT-BOTTOM
-	sprite = new CCSprite();//::node();
-    sprite->init();
+	sprite = CCSprite::spriteWithFile("Images/white-512x512.png");
 	addChild( sprite, 0, 40);
 	sprite->setPosition(CCPointMake(s.width/5*1, s.height/5*4));
 	sprite->setColor(ccBLUE);
 	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ));
-    sprite->release();
-    //		[sprite setAnchorPoint: CCPointMake(0,0));
 
 
 	// RIGHT-TOP
-	sprite = new CCSprite();//::node();
-    sprite->init();
+	sprite = CCSprite::spriteWithFile("Images/white-512x512.png");
 	addChild( sprite, 0);	
 	sprite->setPosition(CCPointMake(s.width/5*4, s.height/5*1));
 	sprite->setColor(ccYELLOW);
 	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit) );
-    sprite->release();
-//		[sprite setAnchorPoint: CCPointMake(1,1));
 
 	
 	// RIGHT-BOTTOM
-	sprite = new CCSprite();//::node();
-    sprite->init();
+	sprite = CCSprite::spriteWithFile("Images/white-512x512.png");
 	addChild( sprite, 0, 40);
 	sprite->setPosition(CCPointMake(s.width/5*4, s.height/5*4));
 	sprite->setColor(ccGREEN);
 	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction( CCRepeatForever::actionWithAction( orbit ) );
-    sprite->release();
-//		[sprite setAnchorPoint: CCPointMake(1,0));
 
 	// CENTER
-	sprite = new CCSprite();
-    sprite->init();
+	sprite = CCSprite::spriteWithFile("Images/white-512x512.png");
 	addChild( sprite, 0, 40);
 	sprite->setPosition(CCPointMake(s.width/2, s.height/2));
 	sprite->setColor(ccWHITE);
 	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ) );
-    sprite->release();
-//		[sprite setAnchorPoint: CCPointMake(0.5f, 0.5f));
 }
 
 std::string CameraCenterTest::title()
@@ -841,6 +825,56 @@ std::string ConvertToNode::title()
 std::string ConvertToNode::subtitle()
 {
     return "testing convertToNodeSpace / AR. Touch and see console";
+}
+
+/// NodeOpaqueTest
+
+NodeOpaqueTest::NodeOpaqueTest()
+{
+	CCSprite *background = NULL;
+
+	for (int i = 0; i < 50; i++)
+	{
+		background = CCSprite::spriteWithFile("Images/background1.png");
+		background->setGLServerState((ccGLServerState)(background->getGLServerState() & (~CC_GL_BLEND)));
+		background->setAnchorPoint(CCPointZero);
+		addChild(background);
+	}
+}
+
+std::string NodeOpaqueTest::title()
+{
+	return "Node Opaque Test";
+}
+
+std::string NodeOpaqueTest::subtitle()
+{
+	return "Node rendered with GL_BLEND disabled";
+}
+
+/// NodeNonOpaqueTest
+
+NodeNonOpaqueTest::NodeNonOpaqueTest()
+{
+	CCSprite *background = NULL;
+
+	for (int i = 0; i < 50; i++)
+	{
+		background = CCSprite::spriteWithFile("Images/background1.jpg");
+		background->setGLServerState((ccGLServerState)(background->getGLServerState() | CC_GL_BLEND));
+		background->setAnchorPoint(CCPointZero);
+		addChild(background);
+	}
+}
+
+std::string NodeNonOpaqueTest::title()
+{
+	return "Node Non Opaque Test";
+}
+
+std::string NodeNonOpaqueTest::subtitle()
+{
+	return "Node rendered with GL_BLEND enabled";
 }
 
 void CocosNodeTestScene::runThisTest()
