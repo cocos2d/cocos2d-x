@@ -140,7 +140,7 @@ public:
 	/** returns the program error log */
 	const char* programLog();
 	
-	inline const GLuint& getProgram() { return m_uProgram; }
+	inline const GLuint getProgram() { return m_uProgram; }
 
 private:
 	bool updateUniformLocation(unsigned int location, GLvoid* data, unsigned int bytes);
