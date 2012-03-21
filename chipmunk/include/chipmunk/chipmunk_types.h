@@ -1,5 +1,5 @@
 #include <math.h>
-#include <stdint.h>
+//#include <stdint.h>
 
 #ifdef __APPLE__
    #import "TargetConditionals.h"

@@ -52,18 +52,17 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new TileMapTestScene(); break;
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
-    case TEST_CHIPMUNK:
-// TODO:
-// #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-//         pScene = new ChipmunkTestScene(); break;
-// #else
-// #ifdef MARMALADEUSECHIPMUNK
-// #if	(MARMALADEUSECHIPMUNK == 1)
-//         pScene = new ChipmunkTestScene(); 
-// #endif
-// 		break;
-// #endif
-// #endif
+    case TEST_CHIPMUNKACCELTOUCH:
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+        pScene = new ChipmunkAccelTouchTestScene(); break;
+#else
+#ifdef MARMALADEUSECHIPMUNK
+#if	(MARMALADEUSECHIPMUNK == 1)
+        pScene = new ChipmunkAccelTouchTestScene(); 
+#endif
+		break;
+#endif
+#endif
     case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
     case TEST_TEXT_INPUT:
@@ -77,9 +76,9 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_TEXTURE2D:
         pScene = new TextureTestScene(); break;
     case TEST_BOX2D:
- //TODO:       pScene = new Box2DTestScene(); break;
+        pScene = new Box2DTestScene(); break;
     case TEST_BOX2DBED:
-   //TODO:       pScene = new Box2dTestBedScene(); break;
+        pScene = new Box2dTestBedScene(); break;
     case TEST_EFFECT_ADVANCE:
         pScene = new EffectAdvanceScene(); break;
     case TEST_HIRES:
