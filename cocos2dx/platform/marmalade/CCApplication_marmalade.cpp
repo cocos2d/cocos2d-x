@@ -126,7 +126,8 @@ void CCApplication::ccAccelerationUpdate()
 {
 // Accelerometer doesn't work on Marmalade X86 MacOS-X simulator
 #if !(defined(__APPLE__) && defined(I3D_ARCH_X86))
-	CCAccelerometer::sharedAccelerometer()->update(s3eAccelerometerGetX(),s3eAccelerometerGetY(),s3eAccelerometerGetZ(),s3eTimerGetMs());
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	pDirector->getAccelerometer()->update(s3eAccelerometerGetX(),s3eAccelerometerGetY(),s3eAccelerometerGetZ(),s3eTimerGetMs());
 #endif
 }
 

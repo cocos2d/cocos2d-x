@@ -60,8 +60,9 @@ int CCApplication::run()
 		{
 			update_time = current_time;
 
-			CCAccelerometer::sharedAccelerometer()->update(current_time);
-			CCDirector::sharedDirector()->mainLoop();
+			CCDirector* pDirector = CCDirector::sharedDirector();
+			pDirector->getAccelerometer()->update(current_time);
+			pDirector->mainLoop();
 		}
 		else
 		{

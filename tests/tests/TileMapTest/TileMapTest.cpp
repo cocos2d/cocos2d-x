@@ -1346,7 +1346,8 @@ void TileDemo::backCallback(CCObject* pSender)
 
 void TileDemo::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 bool TileDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)

@@ -224,8 +224,6 @@ void ChipmunkAccelTouchTestLayer::addNewSpriteAtPosition(CCPoint pos)
 void ChipmunkAccelTouchTestLayer::onEnter()
 {
 	CCLayer::onEnter();
-
-//	CCAccelerometer::sharedAccelerometer()->setUpdateInterval:(1.0 / 60)];
 }
 
 void ChipmunkAccelTouchTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)

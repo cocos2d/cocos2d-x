@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "CCLabelTTF.h"
 #include "CCConfiguration.h"
 #include "CCKeypadDispatcher.h"
+#include "CCAccelerometer.h"
 #include "CCGL.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
@@ -83,6 +84,11 @@ CCDirector* CCDirector::sharedDirector(void)
 	}
 
 	return &s_sharedDirector;
+}
+
+CCDirector::CCDirector(void)
+{
+
 }
 
 bool CCDirector::init(void)
@@ -133,6 +139,15 @@ bool CCDirector::init(void)
 	// action manager
 	m_pActionManager = new CCActionManager();
 	m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCActionManagerPriority, false);
+	// touchDispatcher
+	m_pTouchDispatcher = new CCTouchDispatcher();
+	m_pTouchDispatcher->init();
+
+	// KeypadDispatcher
+	m_pKeypadDispatcher = new CCKeypadDispatcher();
+
+	// Accelerometer
+	m_pAccelerometer = new CCAccelerometer();
 
 	// create autorelease pool
 	CCPoolManager::getInstance()->push();
@@ -153,15 +168,14 @@ CCDirector::~CCDirector(void)
 	CC_SAFE_RELEASE(m_pobScenesStack);
 	CC_SAFE_RELEASE(m_pScheduler);
 	CC_SAFE_RELEASE(m_pActionManager);
-
+	CC_SAFE_RELEASE(m_pTouchDispatcher);
+	CC_SAFE_RELEASE(m_pKeypadDispatcher);
+	CC_SAFE_DELETE(m_pAccelerometer);
 	// pop the autorelease pool
 	CCPoolManager::getInstance()->pop();
 
 	// delete m_pLastUpdate
 	CC_SAFE_DELETE(m_pLastUpdate);
-
-    CCKeypadDispatcher::purgeSharedDispatcher();
-
 	// delete fps string
 	delete []m_pszFPS;
 }
@@ -300,9 +314,8 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 			updateContentScaleFactor();
 		}
 
- 		CCTouchDispatcher *pTouchDispatcher = CCTouchDispatcher::sharedDispatcher();
- 		m_pobOpenGLView->setTouchDelegate(pTouchDispatcher);
-        pTouchDispatcher->setDispatchEvents(true);
+ 		m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
+        m_pTouchDispatcher->setDispatchEvents(true);
 	}
 }
 
@@ -577,7 +590,7 @@ void CCDirector::resetDirector()
 {
 	// don't release the event handlers
 	// They are needed in case the director is run again
-	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
+	m_pTouchDispatcher->removeAllDelegates();
 
     if (m_pRunningScene)
     {
@@ -613,7 +626,7 @@ void CCDirector::purgeDirector()
 {
 	// don't release the event handlers
 	// They are needed in case the director is run again
-	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
+	m_pTouchDispatcher->removeAllDelegates();
 
     if (m_pRunningScene)
     {
@@ -925,6 +938,44 @@ void CCDirector::setActionManager(CCActionManager* pActionManager)
 CCActionManager* CCDirector::getActionManager()
 {
 	return m_pActionManager;
+}
+
+void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
+{
+	CC_SAFE_RETAIN(pTouchDispatcher);
+	CC_SAFE_RELEASE(m_pTouchDispatcher);
+	m_pTouchDispatcher = pTouchDispatcher;
+}
+
+CCTouchDispatcher* CCDirector::getTouchDispatcher()
+{
+	return m_pTouchDispatcher;
+}
+
+void CCDirector::setKeypadDispatcher(CCKeypadDispatcher* pKeypadDispatcher)
+{
+	CC_SAFE_RETAIN(pKeypadDispatcher);
+	CC_SAFE_RELEASE(m_pKeypadDispatcher);
+	m_pKeypadDispatcher = pKeypadDispatcher;
+}
+
+CCKeypadDispatcher* CCDirector::getKeypadDispatcher()
+{
+	return m_pKeypadDispatcher;
+}
+
+void CCDirector::setAccelerometer(CCAccelerometer* pAccelerometer)
+{
+	if (m_pAccelerometer != pAccelerometer)
+	{
+		CC_SAFE_DELETE(m_pAccelerometer);
+		m_pAccelerometer = pAccelerometer;
+	}
+}
+
+CCAccelerometer* CCDirector::getAccelerometer()
+{
+	return m_pAccelerometer;
 }
 
 /***************************************************
