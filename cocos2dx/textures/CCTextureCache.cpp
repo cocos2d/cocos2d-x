@@ -283,7 +283,11 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 
 		// generate texture in render thread
 		CCTexture2D *texture = new CCTexture2D();
-		texture->initWithImage(pImage);
+#if 0 //TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		texture->initWithImage(pImage, kCCResolutioniPhone);
+#else
+        texture->initWithImage(pImage);
+#endif
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
         // cache the texture file name
@@ -421,7 +425,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 	std::string temp(path);
     CCFileUtils::ccRemoveHDSuffixFromFile(temp);
     
-	if ( (texture = m_pTextures->objectForKey(temp)) )
+	if ( (texture = (CCTexture2D*)m_pTextures->objectForKey(temp.c_str())) )
 	{
 		return texture;
 	}
@@ -435,7 +439,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 	if( texture->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width,
                                    (bpp==2 ? kCCTexture2DPixelFormat_PVRTC2 : kCCTexture2DPixelFormat_PVRTC4)))
 	{
-		m_pTextures->setObject(texture, temp);
+		m_pTextures->setObject(texture, temp.c_str());
 		texture->autorelease();
 	}
 	else
