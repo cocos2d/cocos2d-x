@@ -219,7 +219,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 	m_bHasPremultipliedAlpha = false;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	m_resolutionType_ = kCCResolutionUnknown;
+	m_resolutionType = kCCResolutionUnknown;
 #endif
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 

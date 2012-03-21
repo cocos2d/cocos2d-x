@@ -702,12 +702,12 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				784521C214EBA449009D533B /* Resources */,
 				BF23D4E2143315EB00657E08 /* Classes */,
-				BF5681CC1313A84D0055EEAC /* ios */,
 				BF83517613275F5500F3C033 /* cocos2dx */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				BF5681CC1313A84D0055EEAC /* ios */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				784521C214EBA449009D533B /* Resources */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -851,7 +851,6 @@
 		78E69549151885710085D6AC /* include */ = {
 			isa = PBXGroup;
 			children = (
-				789B55FB151974B20038CD1E /* ccShaders.h */,
 				78E6954A151885710085D6AC /* CCAccelerometer.h */,
 				78E6954B151885710085D6AC /* CCAccelerometerDelegate.h */,
 				78E6954C151885710085D6AC /* CCAction.h */,
@@ -912,6 +911,7 @@
 				78E69583151885710085D6AC /* CCScriptSupport.h */,
 				78E69584151885710085D6AC /* CCSet.h */,
 				78E69585151885710085D6AC /* CCShaderCache.h */,
+				789B55FB151974B20038CD1E /* ccShaders.h */,
 				78E69586151885710085D6AC /* CCSprite.h */,
 				78E69587151885710085D6AC /* CCSpriteBatchNode.h */,
 				78E69588151885710085D6AC /* CCSpriteFrame.h */,
@@ -1004,23 +1004,20 @@
 		BF83517613275F5500F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
-				78E69549151885710085D6AC /* include */,
-				78E69524151884590085D6AC /* shaders */,
-				78E694E5151884170085D6AC /* kazmath */,
-				784521BD14EBA389009D533B /* extensions */,
-				BF7B975A13B18860004222DD /* script_support */,
-				BF1E5331135D23A100FD0934 /* text_input_node */,
-				BF1FAE951352F52F007553D9 /* CCDirector.cpp */,
-				BF83517713275F5500F3C033 /* actions */,
-				BF83518413275F5500F3C033 /* base_nodes */,
 				BF83518613275F5500F3C033 /* CCCamera.cpp */,
 				BF83518713275F5500F3C033 /* CCConfiguration.cpp */,
-				BF83518813275F5500F3C033 /* CCConfiguration.h */,
+				BF1FAE951352F52F007553D9 /* CCDirector.cpp */,
 				BF83518913275F5500F3C033 /* CCDrawingPrimitives.cpp */,
 				BF83518A13275F5500F3C033 /* CCScheduler.cpp */,
-				BF83518B13275F5500F3C033 /* cocoa */,
 				BF83519313275F5500F3C033 /* cocos2d.cpp */,
+				BF83518813275F5500F3C033 /* CCConfiguration.h */,
+				BF83517713275F5500F3C033 /* actions */,
+				BF83518413275F5500F3C033 /* base_nodes */,
+				BF83518B13275F5500F3C033 /* cocoa */,
 				BF83519413275F5500F3C033 /* effects */,
+				784521BD14EBA389009D533B /* extensions */,
+				78E69549151885710085D6AC /* include */,
+				78E694E5151884170085D6AC /* kazmath */,
 				BF8351F213275F5600F3C033 /* keypad_dispatcher */,
 				BF8351F513275F5600F3C033 /* label_nodes */,
 				BF8351F913275F5600F3C033 /* layers_scenes_transitions_nodes */,
@@ -1028,8 +1025,11 @@
 				BF8351FF13275F5600F3C033 /* misc_nodes */,
 				BF83520413275F5600F3C033 /* particle_nodes */,
 				BF83520813275F5600F3C033 /* platform */,
+				BF7B975A13B18860004222DD /* script_support */,
+				78E69524151884590085D6AC /* shaders */,
 				BF8353E513275F5600F3C033 /* sprite_nodes */,
 				BF8353ED13275F5600F3C033 /* support */,
+				BF1E5331135D23A100FD0934 /* text_input_node */,
 				BF83540813275F5600F3C033 /* textures */,
 				BF83540D13275F5600F3C033 /* tileMap_parallax_nodes */,
 				BF83541413275F5600F3C033 /* touch_dispatcher */,

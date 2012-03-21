@@ -14,11 +14,29 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		78891AAE14EA1DAE0072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AAD14EA1DAE0072482D /* Icon.png */; };
 		78891AB214EA1DC30072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB114EA1DC30072482D /* Default.png */; };
-		789B545214EBA942008E7E29 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 789B545114EBA942008E7E29 /* animations */; };
-		789B545414EBA94B008E7E29 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 789B545314EBA94B008E7E29 /* fonts */; };
-		789B545614EBA952008E7E29 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 789B545514EBA952008E7E29 /* Images */; };
-		789B545814EBA95A008E7E29 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 789B545714EBA95A008E7E29 /* TileMaps */; };
-		789B545A14EBA961008E7E29 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 789B545914EBA960008E7E29 /* zwoptex */; };
+		789B5603151978C80038CD1E /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 789B5602151978C80038CD1E /* ccShaders.h */; };
+		789B5607151979E80038CD1E /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 789B5605151979E80038CD1E /* ActionsEaseTest.cpp */; };
+		789B560B15197B010038CD1E /* ActionsProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 789B560915197B010038CD1E /* ActionsProgressTest.cpp */; };
+		789B560D15197BE00038CD1E /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 789B560C15197BE00038CD1E /* animations */; };
+		789B560F15197BF30038CD1E /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 789B560E15197BF30038CD1E /* fonts */; };
+		789B561115197BFB0038CD1E /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 789B561015197BFB0038CD1E /* Images */; };
+		789B561415197C040038CD1E /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 789B561215197C040038CD1E /* TileMaps */; };
+		789B561515197C040038CD1E /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 789B561315197C040038CD1E /* zwoptex */; };
+		789B562B15197C790038CD1E /* example_Blur.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B561C15197C790038CD1E /* example_Blur.fsh */; };
+		789B562C15197C790038CD1E /* example_Flower.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B561D15197C790038CD1E /* example_Flower.fsh */; };
+		789B562D15197C790038CD1E /* example_Flower.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B561E15197C790038CD1E /* example_Flower.vsh */; };
+		789B562E15197C790038CD1E /* example_Heart.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B561F15197C790038CD1E /* example_Heart.fsh */; };
+		789B562F15197C790038CD1E /* example_Heart.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562015197C790038CD1E /* example_Heart.vsh */; };
+		789B563015197C790038CD1E /* example_Julia.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562115197C790038CD1E /* example_Julia.fsh */; };
+		789B563115197C790038CD1E /* example_Julia.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562215197C790038CD1E /* example_Julia.vsh */; };
+		789B563215197C790038CD1E /* example_Mandelbrot.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562315197C790038CD1E /* example_Mandelbrot.fsh */; };
+		789B563315197C790038CD1E /* example_Mandelbrot.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562415197C790038CD1E /* example_Mandelbrot.vsh */; };
+		789B563415197C790038CD1E /* example_Monjori.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562515197C790038CD1E /* example_Monjori.fsh */; };
+		789B563515197C790038CD1E /* example_Monjori.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562615197C790038CD1E /* example_Monjori.vsh */; };
+		789B563615197C790038CD1E /* example_Plasma.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562715197C790038CD1E /* example_Plasma.fsh */; };
+		789B563715197C790038CD1E /* example_Plasma.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562815197C790038CD1E /* example_Plasma.vsh */; };
+		789B563815197C790038CD1E /* example_Twist.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562915197C790038CD1E /* example_Twist.fsh */; };
+		789B563915197C790038CD1E /* example_Twist.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562A15197C790038CD1E /* example_Twist.vsh */; };
 		78C7DEFB14EBA5060085D0C2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDBE14EBA5050085D0C2 /* background.mp3 */; };
 		78C7DEFC14EBA5060085D0C2 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDBF14EBA5050085D0C2 /* background.ogg */; };
 		78C7DEFD14EBA5060085D0C2 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDC014EBA5050085D0C2 /* effect1.raw */; };
@@ -169,7 +187,6 @@
 		78E6974515189A220085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6973315189A220085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h */; };
 		78E6974615189A220085D6AC /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E6973415189A220085D6AC /* CCShaderCache.cpp */; };
 		78E6974715189A220085D6AC /* ccShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E6973515189A220085D6AC /* ccShaders.cpp */; };
-		78E6974815189A220085D6AC /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6973615189A220085D6AC /* ccShaders.h */; };
 		78E6974B15189A3C0085D6AC /* CCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E6974A15189A3C0085D6AC /* CCDictionary.cpp */; };
 		78E6975115189A8B0085D6AC /* CCParticleBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E6975015189A8B0085D6AC /* CCParticleBatchNode.cpp */; };
 		78E6975515189AAE0085D6AC /* CCES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6975215189AAE0085D6AC /* CCES2Renderer.h */; };
@@ -386,7 +403,6 @@
 		BF31E3AB12E979A200D4F513 /* CocosNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17512E979A100D4F513 /* CocosNodeTest.cpp */; };
 		BF31E3AC12E979A200D4F513 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17712E979A100D4F513 /* controller.cpp */; };
 		BF31E3AD12E979A200D4F513 /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17A12E979A100D4F513 /* DrawPrimitivesTest.cpp */; };
-		BF31E3AE12E979A200D4F513 /* EaseActionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17D12E979A100D4F513 /* EaseActionsTest.cpp */; };
 		BF31E3AF12E979A200D4F513 /* EffectsAdvancedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18012E979A100D4F513 /* EffectsAdvancedTest.cpp */; };
 		BF31E3B012E979A200D4F513 /* EffectsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18312E979A100D4F513 /* EffectsTest.cpp */; };
 		BF31E3B112E979A200D4F513 /* HiResTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18612E979A100D4F513 /* HiResTest.cpp */; };
@@ -593,11 +609,31 @@
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
 		78891AAD14EA1DAE0072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../test.ios/Icon.png; sourceTree = "<group>"; };
 		78891AB114EA1DC30072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../test.ios/Default.png; sourceTree = "<group>"; };
-		789B545114EBA942008E7E29 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
-		789B545314EBA94B008E7E29 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
-		789B545514EBA952008E7E29 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
-		789B545714EBA95A008E7E29 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
-		789B545914EBA960008E7E29 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
+		789B5602151978C80038CD1E /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
+		789B5605151979E80038CD1E /* ActionsEaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionsEaseTest.cpp; sourceTree = "<group>"; };
+		789B5606151979E80038CD1E /* ActionsEaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionsEaseTest.h; sourceTree = "<group>"; };
+		789B560915197B010038CD1E /* ActionsProgressTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionsProgressTest.cpp; sourceTree = "<group>"; };
+		789B560A15197B010038CD1E /* ActionsProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionsProgressTest.h; sourceTree = "<group>"; };
+		789B560C15197BE00038CD1E /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
+		789B560E15197BF30038CD1E /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		789B561015197BFB0038CD1E /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		789B561215197C040038CD1E /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
+		789B561315197C040038CD1E /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
+		789B561C15197C790038CD1E /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
+		789B561D15197C790038CD1E /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
+		789B561E15197C790038CD1E /* example_Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.vsh; sourceTree = "<group>"; };
+		789B561F15197C790038CD1E /* example_Heart.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.fsh; sourceTree = "<group>"; };
+		789B562015197C790038CD1E /* example_Heart.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.vsh; sourceTree = "<group>"; };
+		789B562115197C790038CD1E /* example_Julia.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.fsh; sourceTree = "<group>"; };
+		789B562215197C790038CD1E /* example_Julia.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.vsh; sourceTree = "<group>"; };
+		789B562315197C790038CD1E /* example_Mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.fsh; sourceTree = "<group>"; };
+		789B562415197C790038CD1E /* example_Mandelbrot.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.vsh; sourceTree = "<group>"; };
+		789B562515197C790038CD1E /* example_Monjori.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.fsh; sourceTree = "<group>"; };
+		789B562615197C790038CD1E /* example_Monjori.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.vsh; sourceTree = "<group>"; };
+		789B562715197C790038CD1E /* example_Plasma.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.fsh; sourceTree = "<group>"; };
+		789B562815197C790038CD1E /* example_Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.vsh; sourceTree = "<group>"; };
+		789B562915197C790038CD1E /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
+		789B562A15197C790038CD1E /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
 		78C7DDBE14EBA5050085D0C2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		78C7DDBF14EBA5050085D0C2 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.ogg; sourceTree = "<group>"; };
 		78C7DDC014EBA5050085D0C2 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = effect1.raw; sourceTree = "<group>"; };
@@ -752,7 +788,6 @@
 		78E6973315189A220085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColorAlphaTest_frag.h; sourceTree = "<group>"; };
 		78E6973415189A220085D6AC /* CCShaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaderCache.cpp; sourceTree = "<group>"; };
 		78E6973515189A220085D6AC /* ccShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccShaders.cpp; sourceTree = "<group>"; };
-		78E6973615189A220085D6AC /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		78E6974A15189A3C0085D6AC /* CCDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDictionary.cpp; sourceTree = "<group>"; };
 		78E6975015189A8B0085D6AC /* CCParticleBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParticleBatchNode.cpp; sourceTree = "<group>"; };
 		78E6975215189AAE0085D6AC /* CCES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCES2Renderer.h; sourceTree = "<group>"; };
@@ -992,8 +1027,6 @@
 		BF31E17812E979A100D4F513 /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controller.h; path = tests/controller.h; sourceTree = "<group>"; };
 		BF31E17A12E979A100D4F513 /* DrawPrimitivesTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawPrimitivesTest.cpp; sourceTree = "<group>"; };
 		BF31E17B12E979A100D4F513 /* DrawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPrimitivesTest.h; sourceTree = "<group>"; };
-		BF31E17D12E979A100D4F513 /* EaseActionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EaseActionsTest.cpp; sourceTree = "<group>"; };
-		BF31E17E12E979A100D4F513 /* EaseActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseActionsTest.h; sourceTree = "<group>"; };
 		BF31E18012E979A100D4F513 /* EffectsAdvancedTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectsAdvancedTest.cpp; sourceTree = "<group>"; };
 		BF31E18112E979A100D4F513 /* EffectsAdvancedTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsAdvancedTest.h; sourceTree = "<group>"; };
 		BF31E18312E979A100D4F513 /* EffectsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectsTest.cpp; sourceTree = "<group>"; };
@@ -1279,15 +1312,15 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				78C7DDAA14EBA5050085D0C2 /* Resources */,
 				ADDD85F81484BB37005306E7 /* Box2D */,
-				BF83588813276C7700F3C033 /* cocos2dx */,
-				080E96DDFE201D6D7F000001 /* ios */,
-				BF31DF1312E979A100D4F513 /* tests */,
-				BF31DEB212E9782200D4F513 /* CocosDenshion */,
 				BF1712661292933300B8313A /* chipmunk */,
+				BF83588813276C7700F3C033 /* cocos2dx */,
+				BF31DEB212E9782200D4F513 /* CocosDenshion */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				080E96DDFE201D6D7F000001 /* ios */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				78C7DDAA14EBA5050085D0C2 /* Resources */,
+				BF31DF1312E979A100D4F513 /* tests */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1310,23 +1343,56 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		789B5604151979E80038CD1E /* ActionsEaseTest */ = {
+			isa = PBXGroup;
+			children = (
+				789B5605151979E80038CD1E /* ActionsEaseTest.cpp */,
+				789B5606151979E80038CD1E /* ActionsEaseTest.h */,
+			);
+			path = ActionsEaseTest;
+			sourceTree = "<group>";
+		};
+		789B560815197B010038CD1E /* ActionsProgressTest */ = {
+			isa = PBXGroup;
+			children = (
+				789B560915197B010038CD1E /* ActionsProgressTest.cpp */,
+				789B560A15197B010038CD1E /* ActionsProgressTest.h */,
+			);
+			path = ActionsProgressTest;
+			sourceTree = "<group>";
+		};
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				78891AB114EA1DC30072482D /* Default.png */,
-				78891AAD14EA1DAE0072482D /* Icon.png */,
-				789B545914EBA960008E7E29 /* zwoptex */,
-				789B545714EBA95A008E7E29 /* TileMaps */,
-				789B545514EBA952008E7E29 /* Images */,
-				789B545314EBA94B008E7E29 /* fonts */,
-				789B545114EBA942008E7E29 /* animations */,
+				789B560C15197BE00038CD1E /* animations */,
+				789B560E15197BF30038CD1E /* fonts */,
+				789B561015197BFB0038CD1E /* Images */,
+				789B561215197C040038CD1E /* TileMaps */,
+				789B561315197C040038CD1E /* zwoptex */,
+				789B561C15197C790038CD1E /* example_Blur.fsh */,
+				789B561D15197C790038CD1E /* example_Flower.fsh */,
+				789B561F15197C790038CD1E /* example_Heart.fsh */,
+				789B562115197C790038CD1E /* example_Julia.fsh */,
+				789B562315197C790038CD1E /* example_Mandelbrot.fsh */,
+				789B562515197C790038CD1E /* example_Monjori.fsh */,
+				789B562715197C790038CD1E /* example_Plasma.fsh */,
+				789B562915197C790038CD1E /* example_Twist.fsh */,
+				78C7DEBD14EBA5060085D0C2 /* music.mid */,
 				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
 				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
-				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
-				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
 				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
+				78891AB114EA1DC30072482D /* Default.png */,
 				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
-				78C7DEBD14EBA5060085D0C2 /* music.mid */,
+				78891AAD14EA1DAE0072482D /* Icon.png */,
+				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
+				789B561E15197C790038CD1E /* example_Flower.vsh */,
+				789B562015197C790038CD1E /* example_Heart.vsh */,
+				789B562215197C790038CD1E /* example_Julia.vsh */,
+				789B562415197C790038CD1E /* example_Mandelbrot.vsh */,
+				789B562615197C790038CD1E /* example_Monjori.vsh */,
+				789B562815197C790038CD1E /* example_Plasma.vsh */,
+				789B562A15197C790038CD1E /* example_Twist.vsh */,
+				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -1372,6 +1438,7 @@
 		78E69637151899BD0085D6AC /* include */ = {
 			isa = PBXGroup;
 			children = (
+				789B5602151978C80038CD1E /* ccShaders.h */,
 				78E69638151899BD0085D6AC /* CCAccelerometer.h */,
 				78E69639151899BD0085D6AC /* CCAccelerometerDelegate.h */,
 				78E6963A151899BD0085D6AC /* CCAction.h */,
@@ -1557,7 +1624,6 @@
 				78E6973315189A220085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h */,
 				78E6973415189A220085D6AC /* CCShaderCache.cpp */,
 				78E6973515189A220085D6AC /* ccShaders.cpp */,
-				78E6973615189A220085D6AC /* ccShaders.h */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -1980,14 +2046,14 @@
 		BF31DF1312E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF31DF1412E979A100D4F513 /* AppDelegate.cpp */,
+				BF31E17712E979A100D4F513 /* controller.cpp */,
 				BF31E1AF12E979A200D4F513 /* testBasic.cpp */,
+				BF31DF1512E979A100D4F513 /* AppDelegate.h */,
+				BF31E17812E979A100D4F513 /* controller.h */,
 				BF31E1B012E979A200D4F513 /* testBasic.h */,
 				BF31E1B112E979A200D4F513 /* testResource.h */,
 				BF31E1B212E979A200D4F513 /* tests.h */,
-				BF31E17812E979A100D4F513 /* controller.h */,
-				BF31E17712E979A100D4F513 /* controller.cpp */,
-				BF31DF1412E979A100D4F513 /* AppDelegate.cpp */,
-				BF31DF1512E979A100D4F513 /* AppDelegate.h */,
 				BF31E11812E979A100D4F513 /* tests */,
 			);
 			name = tests;
@@ -1997,24 +2063,23 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				78C7E02514EBA5580085D0C2 /* ExtensionsTest */,
-				BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */,
-				ADF1707A1474F632004E9212 /* TextureCacheTest */,
-				BF1E7A4213E2629800C2D68B /* FontTest */,
-				BF1EB66513D6B915008D2559 /* Texture2dTest */,
-				BF1B263F13C7108F009769C6 /* BugsTest */,
-				BF1B265713C7108F009769C6 /* DirectorTest */,
 				BF31E11912E979A100D4F513 /* AccelerometerTest */,
 				BF31E11C12E979A100D4F513 /* ActionManagerTest */,
+				789B5604151979E80038CD1E /* ActionsEaseTest */,
+				789B560815197B010038CD1E /* ActionsProgressTest */,
 				BF31E11F12E979A100D4F513 /* ActionsTest */,
-				BF3E8C74135C0B39001AE294 /* CurlTest */,
+				BF1B263F13C7108F009769C6 /* BugsTest */,
 				BF31E16E12E979A100D4F513 /* ClickAndMoveTest */,
 				BF31E17112E979A100D4F513 /* CocosDenshionTest */,
 				BF31E17412E979A100D4F513 /* CocosNodeTest */,
+				BF3E8C74135C0B39001AE294 /* CurlTest */,
+				BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */,
+				BF1B265713C7108F009769C6 /* DirectorTest */,
 				BF31E17912E979A100D4F513 /* DrawPrimitivesTest */,
-				BF31E17C12E979A100D4F513 /* EaseActionsTest */,
 				BF31E17F12E979A100D4F513 /* EffectsAdvancedTest */,
 				BF31E18212E979A100D4F513 /* EffectsTest */,
+				78C7E02514EBA5580085D0C2 /* ExtensionsTest */,
+				BF1E7A4213E2629800C2D68B /* FontTest */,
 				BF31E18512E979A100D4F513 /* HiResTest */,
 				BF31E18812E979A100D4F513 /* IntervalTest */,
 				BF31E18B12E979A100D4F513 /* KeypadTest */,
@@ -2030,10 +2095,12 @@
 				BF31E1A612E979A100D4F513 /* SceneTest */,
 				BF31E1A912E979A100D4F513 /* SchedulerTest */,
 				BF31E1AC12E979A200D4F513 /* SpriteTest */,
+				BF2CE32E13666A78006DCA18 /* TextInputTest */,
+				BF1EB66513D6B915008D2559 /* Texture2dTest */,
+				ADF1707A1474F632004E9212 /* TextureCacheTest */,
 				BF31E1B312E979A200D4F513 /* TileMapTest */,
 				BF31E1B612E979A200D4F513 /* TouchesTest */,
 				BF31E1BD12E979A200D4F513 /* TransitionsTest */,
-				BF2CE32E13666A78006DCA18 /* TextInputTest */,
 				BF9935D81373EBF500197D1B /* UserDefaultTest */,
 				D4E39D2F1342E22F00EBA039 /* ZwoptexTest */,
 			);
@@ -2101,15 +2168,6 @@
 				BF31E17B12E979A100D4F513 /* DrawPrimitivesTest.h */,
 			);
 			path = DrawPrimitivesTest;
-			sourceTree = "<group>";
-		};
-		BF31E17C12E979A100D4F513 /* EaseActionsTest */ = {
-			isa = PBXGroup;
-			children = (
-				BF31E17D12E979A100D4F513 /* EaseActionsTest.cpp */,
-				BF31E17E12E979A100D4F513 /* EaseActionsTest.h */,
-			);
-			path = EaseActionsTest;
 			sourceTree = "<group>";
 		};
 		BF31E17F12E979A100D4F513 /* EffectsAdvancedTest */ = {
@@ -2309,22 +2367,20 @@
 		BF83588813276C7700F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
-				78E6972415189A220085D6AC /* shaders */,
-				78E696E2151899CC0085D6AC /* kazmath */,
-				78E69637151899BD0085D6AC /* include */,
-				78C7E02014EBA5350085D0C2 /* extensions */,
-				D429012713B1D0CA00A3772F /* script_support */,
-				BF1FAFC81352F6F1007553D9 /* CCDirector.cpp */,
-				BF83588913276C7700F3C033 /* actions */,
-				BF83589613276C7700F3C033 /* base_nodes */,
 				BF83589813276C7700F3C033 /* CCCamera.cpp */,
 				BF83589913276C7700F3C033 /* CCConfiguration.cpp */,
-				BF83589A13276C7700F3C033 /* CCConfiguration.h */,
+				BF1FAFC81352F6F1007553D9 /* CCDirector.cpp */,
 				BF83589B13276C7700F3C033 /* CCDrawingPrimitives.cpp */,
 				BF83589C13276C7700F3C033 /* CCScheduler.cpp */,
-				BF83589D13276C7700F3C033 /* cocoa */,
 				BF8358A513276C7700F3C033 /* cocos2d.cpp */,
+				BF83589A13276C7700F3C033 /* CCConfiguration.h */,
+				BF83588913276C7700F3C033 /* actions */,
+				BF83589613276C7700F3C033 /* base_nodes */,
+				BF83589D13276C7700F3C033 /* cocoa */,
 				BF8358A613276C7700F3C033 /* effects */,
+				78C7E02014EBA5350085D0C2 /* extensions */,
+				78E69637151899BD0085D6AC /* include */,
+				78E696E2151899CC0085D6AC /* kazmath */,
 				BF83590413276C7700F3C033 /* keypad_dispatcher */,
 				BF83590713276C7700F3C033 /* label_nodes */,
 				BF83590B13276C7700F3C033 /* layers_scenes_transitions_nodes */,
@@ -2332,6 +2388,8 @@
 				BF83591113276C7700F3C033 /* misc_nodes */,
 				BF83591613276C7700F3C033 /* particle_nodes */,
 				BF83591A13276C7700F3C033 /* platform */,
+				D429012713B1D0CA00A3772F /* script_support */,
+				78E6972415189A220085D6AC /* shaders */,
 				BF835AF713276C7900F3C033 /* sprite_nodes */,
 				BF835AFF13276C7900F3C033 /* support */,
 				BF2CE34413666B0D006DCA18 /* text_input_node */,
@@ -2810,10 +2868,10 @@
 				78E6974315189A220085D6AC /* ccShader_PositionTextureColor_frag.h in Headers */,
 				78E6974415189A220085D6AC /* ccShader_PositionTextureColor_vert.h in Headers */,
 				78E6974515189A220085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
-				78E6974815189A220085D6AC /* ccShaders.h in Headers */,
 				78E6975515189AAE0085D6AC /* CCES2Renderer.h in Headers */,
 				78E6975715189AAE0085D6AC /* CCESRenderer.h in Headers */,
 				78E6975B15189BEA0085D6AC /* CCVertex.h in Headers */,
+				789B5603151978C80038CD1E /* ccShaders.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3055,11 +3113,11 @@
 				78C7DEFF14EBA5060085D0C2 /* effect2.ogg in Resources */,
 				78C7DF2714EBA5060085D0C2 /* Hello.png in Resources */,
 				78C7DFF614EBA5060085D0C2 /* music.mid in Resources */,
-				789B545214EBA942008E7E29 /* animations in Resources */,
-				789B545414EBA94B008E7E29 /* fonts in Resources */,
-				789B545614EBA952008E7E29 /* Images in Resources */,
-				789B545814EBA95A008E7E29 /* TileMaps in Resources */,
-				789B545A14EBA961008E7E29 /* zwoptex in Resources */,
+				789B560D15197BE00038CD1E /* animations in Resources */,
+				789B560F15197BF30038CD1E /* fonts in Resources */,
+				789B561115197BFB0038CD1E /* Images in Resources */,
+				789B561415197C040038CD1E /* TileMaps in Resources */,
+				789B561515197C040038CD1E /* zwoptex in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3081,7 +3139,6 @@
 				BF31E3AB12E979A200D4F513 /* CocosNodeTest.cpp in Sources */,
 				BF31E3AC12E979A200D4F513 /* controller.cpp in Sources */,
 				BF31E3AD12E979A200D4F513 /* DrawPrimitivesTest.cpp in Sources */,
-				BF31E3AE12E979A200D4F513 /* EaseActionsTest.cpp in Sources */,
 				BF31E3AF12E979A200D4F513 /* EffectsAdvancedTest.cpp in Sources */,
 				BF31E3B012E979A200D4F513 /* EffectsTest.cpp in Sources */,
 				BF31E3B112E979A200D4F513 /* HiResTest.cpp in Sources */,
@@ -3137,6 +3194,23 @@
 				7ECAE73914F52FB100A57185 /* AccelerometerSimulation.m in Sources */,
 				78C7E02A14EBA5580085D0C2 /* ExtensionsTest.cpp in Sources */,
 				78C7E02B14EBA5580085D0C2 /* NotificationCenterTest.cpp in Sources */,
+				789B5607151979E80038CD1E /* ActionsEaseTest.cpp in Sources */,
+				789B560B15197B010038CD1E /* ActionsProgressTest.cpp in Sources */,
+				789B562B15197C790038CD1E /* example_Blur.fsh in Sources */,
+				789B562C15197C790038CD1E /* example_Flower.fsh in Sources */,
+				789B562D15197C790038CD1E /* example_Flower.vsh in Sources */,
+				789B562E15197C790038CD1E /* example_Heart.fsh in Sources */,
+				789B562F15197C790038CD1E /* example_Heart.vsh in Sources */,
+				789B563015197C790038CD1E /* example_Julia.fsh in Sources */,
+				789B563115197C790038CD1E /* example_Julia.vsh in Sources */,
+				789B563215197C790038CD1E /* example_Mandelbrot.fsh in Sources */,
+				789B563315197C790038CD1E /* example_Mandelbrot.vsh in Sources */,
+				789B563415197C790038CD1E /* example_Monjori.fsh in Sources */,
+				789B563515197C790038CD1E /* example_Monjori.vsh in Sources */,
+				789B563615197C790038CD1E /* example_Plasma.fsh in Sources */,
+				789B563715197C790038CD1E /* example_Plasma.vsh in Sources */,
+				789B563815197C790038CD1E /* example_Twist.fsh in Sources */,
+				789B563915197C790038CD1E /* example_Twist.vsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
