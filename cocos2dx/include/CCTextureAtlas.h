@@ -70,7 +70,7 @@ public:
 	CCTextureAtlas();
 	virtual ~CCTextureAtlas();
 
-	char * description();
+	const char* description();
 
 	/** creates a TextureAtlas with an filename and with an initial capacity for Quads.
 	* The TextureAtlas capacity can be increased in runtime.

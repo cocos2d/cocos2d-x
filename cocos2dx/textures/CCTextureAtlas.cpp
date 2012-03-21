@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 // support
 #include "CCTexture2D.h"
-
+#include "CCString.h"
 #include <stdlib.h>
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
@@ -152,8 +152,8 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 	// Re-initialization is not allowed
 	CCAssert(m_pQuads == NULL && m_pIndices == NULL, "");
 
-	m_pQuads = (ccV3F_C4B_T2F_Quad*)calloc( sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity, 1 );
-	m_pIndices = (GLushort *)calloc( sizeof(GLushort) * m_uCapacity * 6, 1 );
+	m_pQuads = (ccV3F_C4B_T2F_Quad*)malloc( m_uCapacity * sizeof(ccV3F_C4B_T2F_Quad) );
+	m_pIndices = (GLushort *)malloc( m_uCapacity * 6 * sizeof(GLushort) );
 
 	if( ! ( m_pQuads && m_pIndices) && m_uCapacity > 0) {
 		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
@@ -174,11 +174,14 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 	return true;
 }
 
-char * CCTextureAtlas::description()
+const char* CCTextureAtlas::description()
 {
-	char *ret = new char[100];
-	sprintf(ret, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
-	return ret;
+	char* pszDescription = (char*)malloc(100*sizeof(char));
+	sprintf(pszDescription, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
+    CCString* pRet = new CCString(pszDescription);
+    pRet->autorelease();
+    CC_SAFE_FREE(pszDescription);
+	return pRet->c_str();
 }
 
 
@@ -413,29 +416,29 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 	// when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return NULL,
 	// so here must judge whether m_pQuads and m_pIndices is NULL.
 	if (m_pQuads == NULL)
-		tmpQuads = calloc(sizeof(m_pQuads[0]) * m_uCapacity, 1);
-	else
+    {
+		tmpQuads = malloc(m_uCapacity * sizeof(m_pQuads[0]));
+    }
+    else
+    {
 		tmpQuads = realloc( m_pQuads, sizeof(m_pQuads[0]) * m_uCapacity );
+    }
 
 	if (m_pIndices == NULL)
-		tmpIndices = calloc(sizeof(m_pIndices[0]) * m_uCapacity * 6, 1);
-	else
+    {	
+        tmpIndices = malloc( m_uCapacity * 6 * sizeof(m_pIndices[0]));
+    }
+    else
+    {
 		tmpIndices = realloc( m_pIndices, sizeof(m_pIndices[0]) * m_uCapacity * 6 );
+    }
 
 	if( ! ( tmpQuads && tmpIndices) ) {
-		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
-		if( tmpQuads )
-			free(tmpQuads);
-		else
-			free(m_pQuads);
-
-		if( tmpIndices )
-			free(tmpIndices);
-		else
-			free(m_pIndices);
-
-		m_pQuads = NULL;
-		m_pIndices = NULL;
+		CCLOG("cocos2d: CCTextureAtlas: not enough memory");
+        CC_SAFE_FREE(tmpQuads);
+        CC_SAFE_FREE(tmpIndices);
+        CC_SAFE_FREE(m_pQuads);
+        CC_SAFE_FREE(m_pIndices);
 		m_uCapacity = m_uTotalQuads = 0;
 		return false;
 	}
@@ -539,10 +542,13 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 
 	glBindVertexArray( m_uVAOname );
 
+/* FIXME: Because start always is zero, the result of (start*6*sizeof(m_pIndices[0])) will always be zero too. And crash will appear on some devices.
+          I'm not familiar with opengles, but my change works. --By James Chen.
+*/
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
+	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (m_pIndices)/*(start*6*sizeof(m_pIndices[0]))*/ );
 #else
-	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
+	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (m_pIndices)/*(start*6*sizeof(m_pIndices[0]))*/ );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
 
