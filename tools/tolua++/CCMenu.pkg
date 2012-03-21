@@ -20,7 +20,7 @@ class CCMenu : public CCLayer
     void alignItemsVerticallyWithPadding(float padding);
     void alignItemsHorizontally();
     void alignItemsHorizontallyWithPadding(float padding);
-    void addChild(CCNode * child, int zOrder);
+    void addChild(CCNode * child, int zOrder = kCCMenuTouchPriority);
     void addChild(CCNode * child, int zOrder, int tag);
     void setIsOpacityModifyRGB(bool bValue);
     bool getIsOpacityModifyRGB(void);

@@ -39,6 +39,14 @@ $pfile "CCActionTiledGrid.pkg"
 $pfile "CCNode.pkg"
 $pfile "CCAtlasNode.pkg"
 
+// sprite nodes
+$pfile "CCSprite.pkg"
+$pfile "CCSpriteFrame.pkg"
+$pfile "CCSpriteFrameCache.pkg"
+$pfile "CCSpriteBatchNode.pkg"
+$pfile "CCAnimation.pkg"
+$pfile "CCAnimationCache.pkg"
+
 // label nodes
 $pfile "CCLabelAtlas.pkg"
 $pfile "CCLabelBMFont.pkg"
@@ -72,14 +80,6 @@ $pfile "CCTexture2D.pkg"
 $pfile "CCTextureAtlas.pkg"
 $pfile "CCTextureCache.pkg"
 $pfile "CCTexturePVR.pkg"
-
-// sprite nodes
-$pfile "CCSprite.pkg"
-$pfile "CCSpriteFrame.pkg"
-$pfile "CCSpriteFrameCache.pkg"
-$pfile "CCSpriteBatchNode.pkg"
-$pfile "CCAnimation.pkg"
-$pfile "CCAnimationCache.pkg"
 
 // platform
 $pfile "CCApplication.pkg"
