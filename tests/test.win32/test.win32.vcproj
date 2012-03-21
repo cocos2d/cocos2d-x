@@ -336,18 +336,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="CocosNodeTest"
-					>
-					<File
-						RelativePath="..\tests\CocosNodeTest\CocosNodeTest.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\tests\CocosNodeTest\CocosNodeTest.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="TouchesTest"
 					>
 					<File
@@ -850,6 +838,14 @@
 				<Filter
 					Name="NodeTest"
 					>
+					<File
+						RelativePath="..\tests\NodeTest\NodeTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\NodeTest\NodeTest.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="ActionsProgressTest"

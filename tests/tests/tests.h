@@ -11,7 +11,6 @@
 #include "ActionsEaseTest/ActionsEaseTest.h"
 #include "MotionStreakTest/MotionStreakTest.h"
 #include "DrawPrimitivesTest/DrawPrimitivesTest.h"
-#include "CocosNodeTest/CocosNodeTest.h"
 #include "TouchesTest/TouchesTest.h"
 #include "MenuTest/MenuTest.h"
 #include "ActionManagerTest/ActionManagerTest.h"
@@ -42,6 +41,7 @@
 #include "FontTest/FontTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
 #include "TextureCacheTest/TextureCacheTest.h"
+#include "NodeTest/NodeTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 	#include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
@@ -114,7 +114,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ActionsEaseTest",
     "MotionStreakTest",
     "DrawPrimitivesTest",
-    "CocosNodeTest",
+    "NodeTest",
     "TouchesTest",
     "MenuTest",
     "ActionManagerTest",
