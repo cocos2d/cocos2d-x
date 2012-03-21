@@ -91,7 +91,7 @@ public:
 	void loadShaderVertex(const char *vert, const char *frag);
 
 	virtual void update(ccTime dt);
-	virtual void setPosition(CCPoint &newPosition);
+	virtual void setPosition(const CCPoint &newPosition);
 	virtual void draw();
 
 	static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
