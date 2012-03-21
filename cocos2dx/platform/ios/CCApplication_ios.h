@@ -112,7 +112,7 @@ public:
         @brief Get current language code
         @return Current language code
         */
-		static std::string getCurrentLanguageCode();
+	static std::string getCurrentLanguageCode();
 
 protected:
         static CCApplication * sm_pSharedApplication;
