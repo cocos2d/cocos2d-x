@@ -5,7 +5,7 @@ class CCActionInterval : public CCFiniteTimeAction
 
 class CCSequence : public CCActionInterval
 {
-    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+    static CCSequence* actionsWithArrayLua(CCArray *actions);
     static CCSequence* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 };
 
@@ -21,7 +21,7 @@ class CCRepeatForever : public CCActionInterval
 
 class CCSpawn : public CCActionInterval
 {
-    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+    static CCSpawn* actionsWithArrayLua(CCArray *actions);
     static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 };
 
@@ -140,5 +140,5 @@ class CCAnimate : public CCActionInterval
     void setAnimation(CCAnimation *pAnimation);
     static CCAnimate* actionWithAnimation(CCAnimation *pAnimation);
     static CCAnimate* actionWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
-     static CCAnimate* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+    static CCAnimate* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 };
