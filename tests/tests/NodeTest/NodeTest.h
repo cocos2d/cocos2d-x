@@ -1,5 +1,5 @@
-#ifndef _COCOSNODE_TEST_H_
-#define _COCOSNODE_TEST_H_
+#ifndef _NODE_TEST_H_
+#define _NODE_TEST_H_
 
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
@@ -125,6 +125,22 @@ class ConvertToNode : public TestCocosNodeDemo
 public:
     ConvertToNode();
     virtual void ccTouchesEnded(CCSet* touches, CCEvent *event);
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NodeOpaqueTest : public TestCocosNodeDemo
+{
+public:
+	NodeOpaqueTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NodeNonOpaqueTest : public TestCocosNodeDemo
+{
+public:
+	NodeNonOpaqueTest();
     virtual std::string title();
     virtual std::string subtitle();
 };

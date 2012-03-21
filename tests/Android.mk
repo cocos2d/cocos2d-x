@@ -25,7 +25,6 @@ tests/BugsTest/Bug-458/Bug-458.cpp \
 tests/BugsTest/Bug-458/QuestionContainerSprite.cpp \
 tests/ClickAndMoveTest/ClickAndMoveTest.cpp \
 tests/CocosDenshionTest/CocosDenshionTest.cpp \
-tests/CocosNodeTest/CocosNodeTest.cpp \
 tests/CurlTest/CurlTest.cpp \
 tests/CurrentLanguageTest/CurrentLanguageTest.cpp \
 tests/DirectorTest/DirectorTest.cpp \
@@ -40,6 +39,7 @@ tests/IntervalTest/IntervalTest.cpp \
 tests/KeypadTest/KeypadTest.cpp \
 tests/LabelTest/LabelTest.cpp \
 tests/LayerTest/LayerTest.cpp \
+tests/NodeTest/NodeTest.cpp \
 tests/TextInputTest/TextInputTest.cpp \
 tests/MenuTest/MenuTest.cpp \
 tests/MotionStreakTest/MotionStreakTest.cpp \
