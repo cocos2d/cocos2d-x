@@ -26,6 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef KM_GL_MATRIX_H_INCLUDED
 #define KM_GL_MATRIX_H_INCLUDED
 
+#include "CCPlatformMacros.h"
+
 #define KM_GL_MODELVIEW 0x1700
 #define KM_GL_PROJECTION 0x1701
 #define KM_GL_TEXTURE 0x1702
@@ -39,17 +41,17 @@ typedef unsigned int kmGLEnum;
 extern "C" {
 #endif
 
-void kmGLFreeAll(void);
-void kmGLPushMatrix(void);
-void kmGLPopMatrix(void);
-void kmGLMatrixMode(kmGLEnum mode);
-void kmGLLoadIdentity(void);
-void kmGLLoadMatrix(const kmMat4* pIn);
-void kmGLMultMatrix(const kmMat4* pIn);
-void kmGLTranslatef(float x, float y, float z);
-void kmGLRotatef(float angle, float x, float y, float z);
-void kmGLScalef(float x, float y, float z);
-void kmGLGetMatrix(kmGLEnum mode, kmMat4* pOut);
+void CC_DLL kmGLFreeAll(void);
+void CC_DLL kmGLPushMatrix(void);
+void CC_DLL kmGLPopMatrix(void);
+void CC_DLL kmGLMatrixMode(kmGLEnum mode);
+void CC_DLL kmGLLoadIdentity(void);
+void CC_DLL kmGLLoadMatrix(const kmMat4* pIn);
+void CC_DLL kmGLMultMatrix(const kmMat4* pIn);
+void CC_DLL kmGLTranslatef(float x, float y, float z);
+void CC_DLL kmGLRotatef(float angle, float x, float y, float z);
+void CC_DLL kmGLScalef(float x, float y, float z);
+void CC_DLL kmGLGetMatrix(kmGLEnum mode, kmMat4* pOut);
 
 #ifdef __cplusplus
 }

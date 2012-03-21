@@ -19,188 +19,209 @@
  * SOFTWARE.
  */
 
-struct cpBody;
-struct cpShape;
-struct cpSpace;
+/// @defgroup cpBody cpBody
+/// Chipmunk's rigid body type. Rigid bodies hold the physical properties of an object like
+/// it's mass, and position and velocity of it's center of gravity. They don't have an shape on their own.
+/// They are given a shape by creating collision shapes (cpShape) that point to the body.
+/// @{
 
-typedef void (*cpBodyVelocityFunc)(struct cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt);
-typedef void (*cpBodyPositionFunc)(struct cpBody *body, cpFloat dt);
+/// Rigid body velocity update function type.
+typedef void (*cpBodyVelocityFunc)(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt);
+/// Rigid body position update function type.
+typedef void (*cpBodyPositionFunc)(cpBody *body, cpFloat dt);
 
-extern cpBodyVelocityFunc cpBodyUpdateVelocityDefault;
-extern cpBodyPositionFunc cpBodyUpdatePositionDefault;
-
-// Structure to hold information about the contact graph components
-// when putting groups of objects to sleep.
-// No interesting user accessible fields.
+/// Used internally to track information on the collision graph.
+/// @private
 typedef struct cpComponentNode {
-	struct cpBody *parent;
-	struct cpBody *next;
-	int rank;
+	cpBody *root;
+	cpBody *next;
 	cpFloat idleTime;
 } cpComponentNode;
 
-typedef struct cpBody{
-	// *** Integration Functions.
-
-	// Function that is called to integrate the body's velocity. (Defaults to cpBodyUpdateVelocity)
+/// Chipmunk's rigid body struct.
+struct cpBody {
+	/// Function that is called to integrate the body's velocity. (Defaults to cpBodyUpdateVelocity)
 	cpBodyVelocityFunc velocity_func;
 	
-	// Function that is called to integrate the body's position. (Defaults to cpBodyUpdatePosition)
+	/// Function that is called to integrate the body's position. (Defaults to cpBodyUpdatePosition)
 	cpBodyPositionFunc position_func;
 	
-	// *** Mass Properties
+	/// Mass of the body.
+	/// Must agree with cpBody.m_inv! Use cpBodySetMass() when changing the mass for this reason.
+	cpFloat m;
+	/// Mass inverse.
+	cpFloat m_inv;
 	
-	// Mass and it's inverse.
-	// Always use cpBodySetMass() whenever changing the mass as these values must agree.
-	cpFloat m, m_inv;
+	/// Moment of inertia of the body.
+	/// Must agree with cpBody.i_inv! Use cpBodySetMoment() when changing the moment for this reason.
+	cpFloat i;
+	/// Moment of inertia inverse.
+	cpFloat i_inv;
 	
-	// Moment of inertia and it's inverse.
-	// Always use cpBodySetMoment() whenever changing the moment as these values must agree.
-	cpFloat i, i_inv;
+	/// Position of the rigid body's center of gravity.
+	cpVect p;
+	/// Velocity of the rigid body's center of gravity.
+	cpVect v;
+	/// Force acting on the rigid body's center of gravity.
+	cpVect f;
 	
-	// *** Positional Properties
+	/// Rotation of the body around it's center of gravity in radians.
+	/// Must agree with cpBody.rot! Use cpBodySetAngle() when changing the angle for this reason.
+	cpFloat a;
+	/// Angular velocity of the body around it's center of gravity in radians/second.
+	cpFloat w;
+	/// Torque applied to the body around it's center of gravity.
+	cpFloat t;
 	
-	// Linear components of motion (position, velocity, and force)
-	cpVect p, v, f;
-	
-	// Angular components of motion (angle, angular velocity, and torque)
-	// Always use cpBodySetAngle() to set the angle of the body as a and rot must agree.
-	cpFloat a, w, t;
-	
-	// Cached unit length vector representing the angle of the body.
-	// Used for fast vector rotation using cpvrotate().
+	/// Cached unit length vector representing the angle of the body.
+	/// Used for fast rotations using cpvrotate().
 	cpVect rot;
 	
-	// *** User Definable Fields
-	
-	// User defined data pointer.
+	/// User definable data pointer.
+	/// Generally this points to your the game object class so you can access it
+	/// when given a cpBody reference in a callback.
 	cpDataPointer data;
 	
-	// *** Other Fields
+	/// Maximum velocity allowed when updating the velocity.
+	cpFloat v_limit;
+	/// Maximum rotational rate (in radians/second) allowed when updating the angular velocity.
+	cpFloat w_limit;
 	
-	// Maximum velocities this body can move at after integrating velocity
-	cpFloat v_limit, w_limit;
-	
-	// *** Internally Used Fields
-	
-	// Velocity bias values used when solving penetrations and correcting constraints.
 	CP_PRIVATE(cpVect v_bias);
 	CP_PRIVATE(cpFloat w_bias);
 	
-	// Space this body has been added to
-	CP_PRIVATE(struct cpSpace *space);
+	CP_PRIVATE(cpSpace *space);
 	
-	// Pointer to the shape list.
-	// Shapes form a linked list using cpShape.next when added to a space.
-	CP_PRIVATE(struct cpShape *shapesList);
+	CP_PRIVATE(cpShape *shapeList);
+	CP_PRIVATE(cpArbiter *arbiterList);
+	CP_PRIVATE(cpConstraint *constraintList);
 	
-	// Used by cpSpaceStep() to store contact graph information.
 	CP_PRIVATE(cpComponentNode node);
-} cpBody;
+};
 
-// Basic allocation/destruction functions
-cpBody *cpBodyAlloc(void);
-cpBody *cpBodyInit(cpBody *body, cpFloat m, cpFloat i);
-cpBody *cpBodyNew(cpFloat m, cpFloat i);
+/// Allocate a cpBody.
+cpBody* cpBodyAlloc(void);
+/// Initialize a cpBody.
+cpBody* cpBodyInit(cpBody *body, cpFloat m, cpFloat i);
+/// Allocate and initialize a cpBody.
+cpBody* cpBodyNew(cpFloat m, cpFloat i);
 
-cpBody *cpBodyInitStatic(cpBody *body);
-cpBody *cpBodyNewStatic();
+/// Initialize a static cpBody.
+cpBody* cpBodyInitStatic(cpBody *body);
+/// Allocate and initialize a static cpBody.
+cpBody* cpBodyNewStatic(void);
 
+/// Destroy a cpBody.
 void cpBodyDestroy(cpBody *body);
+/// Destroy and free a cpBody.
 void cpBodyFree(cpBody *body);
 
-// Wake up a sleeping or idle body. (defined in cpSpace.c)
-void cpBodyActivate(cpBody *body);
+/// Check that the properties of a body is sane. (Only in debug mode)
+#ifdef NDEBUG
+	#define	cpBodyAssertSane(body)
+#else
+	void cpBodySanityCheck(cpBody *body);
+	#define	cpBodyAssertSane(body) cpBodySanityCheck(body)
+#endif
 
-// Force a body to sleep;
-// defined in cpSpaceComponent.c
+// Defined in cpSpace.c
+/// Wake up a sleeping or idle body.
+void cpBodyActivate(cpBody *body);
+/// Wake up any sleeping or idle bodies touching a static body.
+void cpBodyActivateStatic(cpBody *body, cpShape *filter);
+
+/// Force a body to fall asleep immediately.
 void cpBodySleep(cpBody *body);
+/// Force a body to fall asleep immediately along with other bodies in a group.
 void cpBodySleepWithGroup(cpBody *body, cpBody *group);
 
-static inline cpBool
-cpBodyIsSleeping(const cpBody *body)
+/// Returns true if the body is sleeping.
+static inline cpBool cpBodyIsSleeping(const cpBody *body)
 {
-	return (CP_PRIVATE(body->node).next != ((cpBody*)0));
+	return (CP_PRIVATE(body->node).root != ((cpBody*)0));
 }
 
-static inline cpBool
-cpBodyIsStatic(const cpBody *body)
+/// Returns true if the body is static.
+static inline cpBool cpBodyIsStatic(const cpBody *body)
 {
 	return CP_PRIVATE(body->node).idleTime == INFINITY;
 }
 
-static inline cpBool
-cpBodyIsRogue(const cpBody *body)
+/// Returns true if the body has not been added to a space.
+static inline cpBool cpBodyIsRogue(const cpBody *body)
 {
-	return (body->CP_PRIVATE(space) == ((struct cpSpace*)0));
+	return (body->CP_PRIVATE(space) == ((cpSpace*)0));
 }
 
 
-#define CP_DefineBodyGetter(type, member, name) \
+#define CP_DefineBodyStructGetter(type, member, name) \
 static inline type cpBodyGet##name(const cpBody *body){return body->member;}
 
-#define CP_DefineBodySetter(type, member, name) \
-static inline void \
-cpBodySet##name(cpBody *body, const type value){ \
+#define CP_DefineBodyStructSetter(type, member, name) \
+static inline void cpBodySet##name(cpBody *body, const type value){ \
 	cpBodyActivate(body); \
+	cpBodyAssertSane(body); \
 	body->member = value; \
-} \
+}
 
-#define CP_DefineBodyProperty(type, member, name) \
-CP_DefineBodyGetter(type, member, name) \
-CP_DefineBodySetter(type, member, name)
+#define CP_DefineBodyStructProperty(type, member, name) \
+CP_DefineBodyStructGetter(type, member, name) \
+CP_DefineBodyStructSetter(type, member, name)
 
-
-// Accessors for cpBody struct members
-CP_DefineBodyGetter(cpFloat, m, Mass);
+CP_DefineBodyStructGetter(cpFloat, m, Mass);
+/// Set the mass of a body.
 void cpBodySetMass(cpBody *body, cpFloat m);
 
-CP_DefineBodyGetter(cpFloat, i, Moment);
+CP_DefineBodyStructGetter(cpFloat, i, Moment);
+/// Set the moment of a body.
 void cpBodySetMoment(cpBody *body, cpFloat i);
 
-
-CP_DefineBodyProperty(cpVect, p, Pos);
-CP_DefineBodyProperty(cpVect, v, Vel);
-CP_DefineBodyProperty(cpVect, f, Force);
-CP_DefineBodyGetter(cpFloat, a, Angle);
+CP_DefineBodyStructGetter(cpVect, p, Pos);
+/// Set the position of a body.
+void cpBodySetPos(cpBody *body, cpVect pos);
+CP_DefineBodyStructProperty(cpVect, v, Vel);
+CP_DefineBodyStructProperty(cpVect, f, Force);
+CP_DefineBodyStructGetter(cpFloat, a, Angle);
+/// Set the angle of a body.
 void cpBodySetAngle(cpBody *body, cpFloat a);
-CP_DefineBodyProperty(cpFloat, w, AngVel);
-CP_DefineBodyProperty(cpFloat, t, Torque);
-CP_DefineBodyGetter(cpVect, rot, Rot);
-CP_DefineBodyProperty(cpFloat, v_limit, VelLimit);
-CP_DefineBodyProperty(cpFloat, w_limit, AngVelLimit);
+CP_DefineBodyStructProperty(cpFloat, w, AngVel);
+CP_DefineBodyStructProperty(cpFloat, t, Torque);
+CP_DefineBodyStructGetter(cpVect, rot, Rot);
+CP_DefineBodyStructProperty(cpFloat, v_limit, VelLimit);
+CP_DefineBodyStructProperty(cpFloat, w_limit, AngVelLimit);
+CP_DefineBodyStructProperty(cpDataPointer, data, UserData);
 
-//  Modify the velocity of the body so that it will move to the specified absolute coordinates in the next timestep.
-// Intended for objects that are moved manually with a custom velocity integration function.
-void cpBodySlew(cpBody *body, cpVect pos, cpFloat dt);
-
-// Default Integration functions.
+/// Default Integration functions.
 void cpBodyUpdateVelocity(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt);
 void cpBodyUpdatePosition(cpBody *body, cpFloat dt);
 
-// Convert body local to world coordinates
-static inline cpVect
-cpBodyLocal2World(const cpBody *body, const cpVect v)
+/// Convert body relative/local coordinates to absolute/world coordinates.
+static inline cpVect cpBodyLocal2World(const cpBody *body, const cpVect v)
 {
 	return cpvadd(body->p, cpvrotate(v, body->rot));
 }
 
-// Convert world to body local coordinates
-static inline cpVect
-cpBodyWorld2Local(const cpBody *body, const cpVect v)
+/// Convert body absolute/world coordinates to  relative/local coordinates.
+static inline cpVect cpBodyWorld2Local(const cpBody *body, const cpVect v)
 {
 	return cpvunrotate(cpvsub(v, body->p), body->rot);
 }
 
-// Zero the forces on a body.
+/// Set the forces and torque or a body to zero.
 void cpBodyResetForces(cpBody *body);
-// Apply a force (in world coordinates) to a body at a point relative to the center of gravity (also in world coordinates).
+/// Apply an force (in world coordinates) to the body at a point relative to the center of gravity (also in world coordinates).
 void cpBodyApplyForce(cpBody *body, const cpVect f, const cpVect r);
-// Apply an impulse (in world coordinates) to the body at a point relative to the center of gravity (also in world coordinates).
+/// Apply an impulse (in world coordinates) to the body at a point relative to the center of gravity (also in world coordinates).
 void cpBodyApplyImpulse(cpBody *body, const cpVect j, const cpVect r);
 
-static inline cpFloat
-cpBodyKineticEnergy(const cpBody *body)
+/// Get the velocity on a body (in world units) at a point on the body in world coordinates.
+cpVect cpBodyGetVelAtWorldPoint(cpBody *body, cpVect point);
+/// Get the velocity on a body (in world units) at a point on the body in local coordinates.
+cpVect cpBodyGetVelAtLocalPoint(cpBody *body, cpVect point);
+
+
+/// Get the kinetic energy of a body.
+static inline cpFloat cpBodyKineticEnergy(const cpBody *body)
 {
 	// Need to do some fudging to avoid NaNs
 	cpFloat vsq = cpvdot(body->v, body->v);
@@ -208,6 +229,19 @@ cpBodyKineticEnergy(const cpBody *body)
 	return (vsq ? vsq*body->m : 0.0f) + (wsq ? wsq*body->i : 0.0f);
 }
 
-// Apply a damped spring force between two bodies.
-// Warning: Large damping values can be unstable. Use a cpDampedSpring constraint for this instead.
-void cpApplyDampedSpring(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2, cpFloat rlen, cpFloat k, cpFloat dmp, cpFloat dt);
+/// Body/shape iterator callback function type. 
+typedef void (*cpBodyShapeIteratorFunc)(cpBody *body, cpShape *shape, void *data);
+/// Call @c func once for each shape attached to @c body and added to the space.
+void cpBodyEachShape(cpBody *body, cpBodyShapeIteratorFunc func, void *data);
+
+/// Body/constraint iterator callback function type. 
+typedef void (*cpBodyConstraintIteratorFunc)(cpBody *body, cpConstraint *constraint, void *data);
+/// Call @c func once for each constraint attached to @c body and added to the space.
+void cpBodyEachConstraint(cpBody *body, cpBodyConstraintIteratorFunc func, void *data);
+
+/// Body/arbiter iterator callback function type. 
+typedef void (*cpBodyArbiterIteratorFunc)(cpBody *body, cpArbiter *arbiter, void *data);
+/// Call @c func once for each arbiter that is currently active on the body.
+void cpBodyEachArbiter(cpBody *body, cpBodyArbiterIteratorFunc func, void *data);
+
+///@}

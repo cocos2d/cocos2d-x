@@ -31,9 +31,10 @@ defaultSpringForce(cpDampedSpring *spring, cpFloat dist){
 }
 
 static void
-preStep(cpDampedSpring *spring, cpFloat dt, cpFloat dt_inv)
+preStep(cpDampedSpring *spring, cpFloat dt)
 {
-	CONSTRAINT_BEGIN(spring, a, b);
+	cpBody *a = spring->constraint.a;
+	cpBody *b = spring->constraint.b;
 	
 	spring->r1 = cpvrotate(spring->anchr1, a->rot);
 	spring->r2 = cpvrotate(spring->anchr2, b->rot);
@@ -43,6 +44,7 @@ preStep(cpDampedSpring *spring, cpFloat dt, cpFloat dt_inv)
 	spring->n = cpvmult(delta, 1.0f/(dist ? dist : INFINITY));
 	
 	cpFloat k = k_scalar(a, b, spring->r1, spring->r2, spring->n);
+	cpAssertSoft(k != 0.0, "Unsolvable spring.");
 	spring->nMass = 1.0f/k;
 	
 	spring->target_vrn = 0.0f;
@@ -53,21 +55,23 @@ preStep(cpDampedSpring *spring, cpFloat dt, cpFloat dt_inv)
 	apply_impulses(a, b, spring->r1, spring->r2, cpvmult(spring->n, f_spring*dt));
 }
 
+static void applyCachedImpulse(cpDampedSpring *spring, cpFloat dt_coef){}
+
 static void
 applyImpulse(cpDampedSpring *spring)
 {
-	CONSTRAINT_BEGIN(spring, a, b);
+	cpBody *a = spring->constraint.a;
+	cpBody *b = spring->constraint.b;
 	
 	cpVect n = spring->n;
 	cpVect r1 = spring->r1;
 	cpVect r2 = spring->r2;
 
 	// compute relative velocity
-	cpFloat vrn = normal_relative_velocity(a, b, r1, r2, n) - spring->target_vrn;
+	cpFloat vrn = normal_relative_velocity(a, b, r1, r2, n);
 	
 	// compute velocity loss from drag
-	// not 100% certain this is derived correctly, though it makes sense
-	cpFloat v_damp = -vrn*spring->v_coef;
+	cpFloat v_damp = (spring->target_vrn - vrn)*spring->v_coef;
 	spring->target_vrn = vrn + v_damp;
 	
 	apply_impulses(a, b, spring->r1, spring->r2, cpvmult(spring->n, v_damp*spring->nMass));
@@ -80,9 +84,10 @@ getImpulse(cpConstraint *constraint)
 }
 
 static const cpConstraintClass klass = {
-	(cpConstraintPreStepFunction)preStep,
-	(cpConstraintApplyImpulseFunction)applyImpulse,
-	(cpConstraintGetImpulseFunction)getImpulse,
+	(cpConstraintPreStepImpl)preStep,
+	(cpConstraintApplyCachedImpulseImpl)applyCachedImpulse,
+	(cpConstraintApplyImpulseImpl)applyImpulse,
+	(cpConstraintGetImpulseImpl)getImpulse,
 };
 CP_DefineClassGetter(cpDampedSpring)
 

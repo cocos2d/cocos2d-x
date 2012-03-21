@@ -31,11 +31,13 @@ defaultSpringTorque(cpDampedRotarySpring *spring, cpFloat relativeAngle){
 }
 
 static void
-preStep(cpDampedRotarySpring *spring, cpFloat dt, cpFloat dt_inv)
+preStep(cpDampedRotarySpring *spring, cpFloat dt)
 {
-	CONSTRAINT_BEGIN(spring, a, b);
+	cpBody *a = spring->constraint.a;
+	cpBody *b = spring->constraint.b;
 	
 	cpFloat moment = a->i_inv + b->i_inv;
+	cpAssertSoft(moment != 0.0, "Unsolvable spring.");
 	spring->iSum = 1.0f/moment;
 
 	spring->w_coef = 1.0f - cpfexp(-spring->damping*dt*moment);
@@ -47,23 +49,26 @@ preStep(cpDampedRotarySpring *spring, cpFloat dt, cpFloat dt_inv)
 	b->w += j_spring*b->i_inv;
 }
 
+static void applyCachedImpulse(cpDampedRotarySpring *spring, cpFloat dt_coef){}
+
 static void
 applyImpulse(cpDampedRotarySpring *spring)
 {
-	CONSTRAINT_BEGIN(spring, a, b);
+	cpBody *a = spring->constraint.a;
+	cpBody *b = spring->constraint.b;
 	
 	// compute relative velocity
 	cpFloat wrn = a->w - b->w;//normal_relative_velocity(a, b, r1, r2, n) - spring->target_vrn;
 	
 	// compute velocity loss from drag
 	// not 100% certain this is derived correctly, though it makes sense
-	cpFloat w_damp = wrn*spring->w_coef;
-	spring->target_wrn = wrn - w_damp;
+	cpFloat w_damp = (spring->target_wrn - wrn)*spring->w_coef;
+	spring->target_wrn = wrn + w_damp;
 	
 	//apply_impulses(a, b, spring->r1, spring->r2, cpvmult(spring->n, v_damp*spring->nMass));
 	cpFloat j_damp = w_damp*spring->iSum;
-	a->w -= j_damp*a->i_inv;
-	b->w += j_damp*b->i_inv;
+	a->w += j_damp*a->i_inv;
+	b->w -= j_damp*b->i_inv;
 }
 
 static cpFloat
@@ -72,11 +77,11 @@ getImpulse(cpConstraint *constraint)
 	return 0.0f;
 }
 
-const cpConstraintClass * cpDampedRotarySpringGetClass();
 static const cpConstraintClass klass = {
-	(cpConstraintPreStepFunction)preStep,
-	(cpConstraintApplyImpulseFunction)applyImpulse,
-	(cpConstraintGetImpulseFunction)getImpulse,
+	(cpConstraintPreStepImpl)preStep,
+	(cpConstraintApplyCachedImpulseImpl)applyCachedImpulse,
+	(cpConstraintApplyImpulseImpl)applyImpulse,
+	(cpConstraintGetImpulseImpl)getImpulse,
 };
 CP_DefineClassGetter(cpDampedRotarySpring)
 
