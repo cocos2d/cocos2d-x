@@ -20,14 +20,16 @@
  */
 
 #include <stdlib.h>
+#include <math.h>
 
 #include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
-preStep(cpPivotJoint *joint, cpFloat dt, cpFloat dt_inv)
+preStep(cpPivotJoint *joint, cpFloat dt)
 {
-	CONSTRAINT_BEGIN(joint, a, b);
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
 	
 	joint->r1 = cpvrotate(joint->anchr1, a->rot);
 	joint->r2 = cpvrotate(joint->anchr2, b->rot);
@@ -40,16 +42,23 @@ preStep(cpPivotJoint *joint, cpFloat dt, cpFloat dt_inv)
 	
 	// calculate bias velocity
 	cpVect delta = cpvsub(cpvadd(b->p, joint->r2), cpvadd(a->p, joint->r1));
-	joint->bias = cpvclamp(cpvmult(delta, -joint->constraint.biasCoef*dt_inv), joint->constraint.maxBias);
+	joint->bias = cpvclamp(cpvmult(delta, -bias_coef(joint->constraint.errorBias, dt)/dt), joint->constraint.maxBias);
+}
+
+static void
+applyCachedImpulse(cpPivotJoint *joint, cpFloat dt_coef)
+{
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
 	
-	// apply accumulated impulse
-	apply_impulses(a, b, joint->r1, joint->r2, joint->jAcc);
+	apply_impulses(a, b, joint->r1, joint->r2, cpvmult(joint->jAcc, dt_coef));
 }
 
 static void
 applyImpulse(cpPivotJoint *joint)
 {
-	CONSTRAINT_BEGIN(joint, a, b);
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
 	
 	cpVect r1 = joint->r1;
 	cpVect r2 = joint->r2;
@@ -74,9 +83,10 @@ getImpulse(cpConstraint *joint)
 }
 
 static const cpConstraintClass klass = {
-	(cpConstraintPreStepFunction)preStep,
-	(cpConstraintApplyImpulseFunction)applyImpulse,
-	(cpConstraintGetImpulseFunction)getImpulse,
+	(cpConstraintPreStepImpl)preStep,
+	(cpConstraintApplyCachedImpulseImpl)applyCachedImpulse,
+	(cpConstraintApplyImpulseImpl)applyImpulse,
+	(cpConstraintGetImpulseImpl)getImpulse,
 };
 CP_DefineClassGetter(cpPivotJoint)
 
