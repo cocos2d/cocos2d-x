@@ -120,6 +120,9 @@ static TestScene* CreateTestScene(int nIdx)
             pScene = new ExtensionsTestScene();
         }
         break;
+	case TEST_SHADER:
+		pScene = new ShaderTestScene();
+		break;
     default:
         break;
     }
