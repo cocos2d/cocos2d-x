@@ -17,6 +17,7 @@
 		784521D214EBA449009D533B /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521CA14EBA449009D533B /* HelloWorld.png */; };
 		78891AB714EA205A0072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB614EA205A0072482D /* Default.png */; };
 		78891AB914EA20C70072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB814EA20C70072482D /* Icon.png */; };
+		789B55FC151974B20038CD1E /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 789B55FB151974B20038CD1E /* ccShaders.h */; };
 		78E69508151884170085D6AC /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E694E8151884170085D6AC /* aabb.h */; };
 		78E69509151884170085D6AC /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E694EA151884170085D6AC /* mat4stack.h */; };
 		78E6950A151884170085D6AC /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E694EB151884170085D6AC /* matrix.h */; };
@@ -61,7 +62,6 @@
 		78E69545151884590085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E69533151884590085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h */; };
 		78E69546151884590085D6AC /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E69534151884590085D6AC /* CCShaderCache.cpp */; };
 		78E69547151884590085D6AC /* ccShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E69535151884590085D6AC /* ccShaders.cpp */; };
-		78E69548151884590085D6AC /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E69536151884590085D6AC /* ccShaders.h */; };
 		78E6959F151885710085D6AC /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6954A151885710085D6AC /* CCAccelerometer.h */; };
 		78E695A0151885710085D6AC /* CCAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6954B151885710085D6AC /* CCAccelerometerDelegate.h */; };
 		78E695A1151885710085D6AC /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6954C151885710085D6AC /* CCAction.h */; };
@@ -349,6 +349,7 @@
 		784521CA14EBA449009D533B /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		78891AB614EA205A0072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../ios/Default.png; sourceTree = "<group>"; };
 		78891AB814EA20C70072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../ios/Icon.png; sourceTree = "<group>"; };
+		789B55FB151974B20038CD1E /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		78E694E8151884170085D6AC /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		78E694EA151884170085D6AC /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
 		78E694EB151884170085D6AC /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
@@ -395,7 +396,6 @@
 		78E69533151884590085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColorAlphaTest_frag.h; sourceTree = "<group>"; };
 		78E69534151884590085D6AC /* CCShaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaderCache.cpp; sourceTree = "<group>"; };
 		78E69535151884590085D6AC /* ccShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccShaders.cpp; sourceTree = "<group>"; };
-		78E69536151884590085D6AC /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		78E6954A151885710085D6AC /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		78E6954B151885710085D6AC /* CCAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometerDelegate.h; sourceTree = "<group>"; };
 		78E6954C151885710085D6AC /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
@@ -844,7 +844,6 @@
 				78E69533151884590085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h */,
 				78E69534151884590085D6AC /* CCShaderCache.cpp */,
 				78E69535151884590085D6AC /* ccShaders.cpp */,
-				78E69536151884590085D6AC /* ccShaders.h */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -852,6 +851,7 @@
 		78E69549151885710085D6AC /* include */ = {
 			isa = PBXGroup;
 			children = (
+				789B55FB151974B20038CD1E /* ccShaders.h */,
 				78E6954A151885710085D6AC /* CCAccelerometer.h */,
 				78E6954B151885710085D6AC /* CCAccelerometerDelegate.h */,
 				78E6954C151885710085D6AC /* CCAction.h */,
@@ -1415,7 +1415,6 @@
 				78E69543151884590085D6AC /* ccShader_PositionTextureColor_frag.h in Headers */,
 				78E69544151884590085D6AC /* ccShader_PositionTextureColor_vert.h in Headers */,
 				78E69545151884590085D6AC /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
-				78E69548151884590085D6AC /* ccShaders.h in Headers */,
 				78E6959F151885710085D6AC /* CCAccelerometer.h in Headers */,
 				78E695A0151885710085D6AC /* CCAccelerometerDelegate.h in Headers */,
 				78E695A1151885710085D6AC /* CCAction.h in Headers */,
@@ -1505,6 +1504,7 @@
 				78E6962F15188F870085D6AC /* CCESRenderer.h in Headers */,
 				78E69631151894E30085D6AC /* OpenGL_Internal.h in Headers */,
 				78E6976315189C1D0085D6AC /* CCVertex.h in Headers */,
+				789B55FC151974B20038CD1E /* ccShaders.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
