@@ -76,8 +76,8 @@ CCParticleSystemQuad::CCParticleSystemQuad()
 
 CCParticleSystemQuad::~CCParticleSystemQuad()
 {
-	CC_SAFE_DELETE_ARRAY(m_pQuads);
-	CC_SAFE_DELETE_ARRAY(m_pIndices);
+	CC_SAFE_FREE(m_pQuads);
+	CC_SAFE_FREE(m_pIndices);
 	glDeleteBuffers(2, &m_pBuffersVBO[0]);
 	glDeleteVertexArrays(1, &m_uVAOname);
 }
@@ -301,7 +301,10 @@ void CCParticleSystemQuad::draw()
 
 	glBindVertexArray( m_uVAOname );
 
-	glDrawElements(GL_TRIANGLES, (GLsizei) m_uParticleIdx*6, GL_UNSIGNED_SHORT, 0);
+    /* FIXME: It will cause crash on some devices if the last parameter is zero.
+          I'm not familiar with opengles, but my change works. --By James Chen.
+    */
+	glDrawElements(GL_TRIANGLES, (GLsizei) m_uParticleIdx*6, GL_UNSIGNED_SHORT, m_pIndices /*0*/);
 
 	glBindVertexArray( 0 );
 
@@ -408,17 +411,15 @@ bool CCParticleSystemQuad::allocMemory()
 	CCAssert( ( !m_pQuads && !m_pIndices), "Memory already alloced");
 	CCAssert( !m_pBatchNode, "Memory should not be alloced when not using batchNode");
 
-	m_pQuads = new ccV3F_C4B_T2F_Quad[m_uTotalParticles];
-	m_pIndices = new GLushort[m_uTotalParticles * 6];
+	m_pQuads = (ccV3F_C4B_T2F_Quad*)malloc(m_uTotalParticles * sizeof(ccV3F_C4B_T2F_Quad));
+	m_pIndices = (GLushort*)malloc(m_uTotalParticles * 6 * sizeof(GLushort));
 
 	if( !m_pQuads || !m_pIndices) 
 	{
 		CCLOG("cocos2d: Particle system: not enough memory");
-		if( m_pQuads )
-			delete [] m_pQuads;
-		if(m_pIndices)
-			delete [] m_pIndices;
-		
+        CC_SAFE_FREE(m_pQuads);
+        CC_SAFE_FREE(m_pIndices);
+
 		return false;
 	}
 	return true;
@@ -448,8 +449,8 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
 			ccV3F_C4B_T2F_Quad *quad = &(batchQuads[m_uAtlasIndex] );
 			memcpy( quad, m_pQuads, m_uTotalParticles * sizeof(m_pQuads[0]) );
 
-			CC_SAFE_DELETE_ARRAY(m_pQuads);
-			CC_SAFE_DELETE_ARRAY(m_pIndices);
+			CC_SAFE_FREE(m_pQuads);
+			CC_SAFE_FREE(m_pIndices);
 
 			glDeleteBuffers(2, &m_pBuffersVBO[0]);
 			glDeleteVertexArrays(1, &m_uVAOname);
