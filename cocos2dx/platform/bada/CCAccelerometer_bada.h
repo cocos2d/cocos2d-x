@@ -40,7 +40,6 @@ class CC_DLL CCAccelerometer :
 public:
     CCAccelerometer();
     ~CCAccelerometer();
-    static CCAccelerometer* sharedAccelerometer();
 
     void setDelegate(CCAccelerometerDelegate* pDelegate);
     virtual void OnDataReceived(Osp::Uix::SensorType sensorType, Osp::Uix::SensorData& sensorData , result r);

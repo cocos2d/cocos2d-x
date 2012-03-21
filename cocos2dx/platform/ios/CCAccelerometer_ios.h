@@ -35,12 +35,7 @@ public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-    static CCAccelerometer* sharedAccelerometer();
-
     void setDelegate(CCAccelerometerDelegate* pDelegate);
-    
-private:
-    static CCAccelerometer* m_spUIAccelerometer;
 };
 
 }//namespace   cocos2d 

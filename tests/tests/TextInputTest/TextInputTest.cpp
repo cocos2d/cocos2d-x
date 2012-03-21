@@ -157,7 +157,8 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, false);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
 void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)

@@ -134,7 +134,8 @@ Parallax2::Parallax2()
 
 void Parallax2::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 bool Parallax2::ccTouchBegan(CCTouch* touch, CCEvent* event)
