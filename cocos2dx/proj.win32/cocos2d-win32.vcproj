@@ -488,14 +488,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCMutableArray.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCMutableDictionary.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCNode.h"
 				>
 			</File>

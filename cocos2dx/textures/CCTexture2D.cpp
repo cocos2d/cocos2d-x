@@ -219,7 +219,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 	m_bHasPremultipliedAlpha = false;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	m_resolutionType_ = kCCResolutionUnknown;
+	m_resolutionType = kCCResolutionUnknown;
 #endif
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 
@@ -235,7 +235,7 @@ char * CCTexture2D::description(void)
 }
 
 // implementation CCTexture2D (Image)
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if 0// TODO: #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
 #else
 bool CCTexture2D::initWithImage(CCImage * uiImage)
@@ -273,7 +273,7 @@ bool CCTexture2D::initWithImage(CCImage * uiImage)
 		return NULL;
 	}
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if 0//TODO (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	m_resolutionType = resolution;
 #endif
 
@@ -486,7 +486,11 @@ bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCT
     {
         return false;
     }
+#if 0// TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    return initWithImage(&image, m_resolutionType);
+#else
     return initWithImage(&image);
+#endif
 }
 
 

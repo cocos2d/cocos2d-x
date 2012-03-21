@@ -144,7 +144,7 @@ public:
 	void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
 
 	/** TODO: deep copy array. */
-	virtual CCObject* copyWithZone(CCZone* pZone) {CCAssert(false, "");return NULL;}
+	virtual CCObject* copyWithZone(CCZone* pZone);
 public:
     ccArray* data;
 	CCArray() : data(NULL) {};
