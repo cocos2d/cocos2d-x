@@ -171,11 +171,12 @@ void Box2DTestLayer::createResetButton()
 
 void Box2DTestLayer::reset(CCObject* sender)
 {
-	CCScene* s = CCScene::node();
+	CCScene* s = new Box2DTestScene();
 	Box2DTestLayer* child = new Box2DTestLayer();
 	s->addChild(child);
 	child->release();
 	CCDirector::sharedDirector()->replaceScene(s);
+	s->release();
 }
 
 void Box2DTestLayer::draw()
