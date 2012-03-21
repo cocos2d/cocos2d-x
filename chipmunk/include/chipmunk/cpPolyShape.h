@@ -19,85 +19,48 @@
  * SOFTWARE.
  */
 
-// Axis structure used by cpPolyShape.
-typedef struct cpPolyShapeAxis{
-	// normal
+/// @defgroup cpPolyShape cpPolyShape
+/// @{
+
+/// @private
+typedef struct cpPolyShapeAxis {
 	cpVect n;
-	// distance from origin
 	cpFloat d;
 } cpPolyShapeAxis;
 
-// Convex polygon shape structure.
-typedef struct cpPolyShape{
+/// @private
+typedef struct cpPolyShape {
 	cpShape shape;
 	
-	// Vertex and axis lists.
-	CP_PRIVATE(int numVerts);
-	CP_PRIVATE(cpVect *verts);
-	CP_PRIVATE(cpPolyShapeAxis *axes);
-
-	// Transformed vertex and axis lists.
-	CP_PRIVATE(cpVect *tVerts);
-	CP_PRIVATE(cpPolyShapeAxis *tAxes);
+	int numVerts;
+	cpVect *verts, *tVerts;
+	cpPolyShapeAxis *axes, *tAxes;
 } cpPolyShape;
 
-// Basic allocation functions.
-cpPolyShape *cpPolyShapeAlloc(void);
-cpPolyShape *cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cpVect offset);
-cpShape *cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset);
+/// Allocate a polygon shape.
+cpPolyShape* cpPolyShapeAlloc(void);
+/// Initialize a polygon shape.
+/// The vertexes must be convex and have a clockwise winding.
+cpPolyShape* cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cpVect offset);
+/// Allocate and initialize a polygon shape.
+/// The vertexes must be convex and have a clockwise winding.
+cpShape* cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset);
 
-cpPolyShape *cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height);
-cpShape *cpBoxShapeNew(cpBody *body, cpFloat width, cpFloat height);
+/// Initialize a box shaped polygon shape.
+cpPolyShape* cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height);
+/// Initialize an offset box shaped polygon shape.
+cpPolyShape* cpBoxShapeInit2(cpPolyShape *poly, cpBody *body, cpBB box);
+/// Allocate and initialize a box shaped polygon shape.
+cpShape* cpBoxShapeNew(cpBody *body, cpFloat width, cpFloat height);
+/// Allocate and initialize an offset box shaped polygon shape.
+cpShape* cpBoxShapeNew2(cpBody *body, cpBB box);
 
-// Check that a set of vertexes has a correct winding and that they are convex
+/// Check that a set of vertexes is convex and has a clockwise winding.
 cpBool cpPolyValidate(const cpVect *verts, const int numVerts);
 
+/// Get the number of verts in a polygon shape.
 int cpPolyShapeGetNumVerts(cpShape *shape);
+/// Get the @c ith vertex of a polygon shape.
 cpVect cpPolyShapeGetVert(cpShape *shape, int idx);
 
-// *** inlined utility functions
-
-// Returns the minimum distance of the polygon to the axis.
-static inline cpFloat
-cpPolyShapeValueOnAxis(const cpPolyShape *poly, const cpVect n, const cpFloat d)
-{
-	cpVect *verts = poly->CP_PRIVATE(tVerts);
-	cpFloat min = cpvdot(n, verts[0]);
-	
-	int i;
-	for(i=1; i<poly->CP_PRIVATE(numVerts); i++)
-		min = cpfmin(min, cpvdot(n, verts[i]));
-	
-	return min - d;
-}
-
-// Returns true if the polygon contains the vertex.
-static inline cpBool
-cpPolyShapeContainsVert(const cpPolyShape *poly, const cpVect v)
-{
-	cpPolyShapeAxis *axes = poly->CP_PRIVATE(tAxes);
-	
-	int i;
-	for(i=0; i<poly->CP_PRIVATE(numVerts); i++){
-		cpFloat dist = cpvdot(axes[i].n, v) - axes[i].d;
-		if(dist > 0.0f) return cpFalse;
-	}
-	
-	return cpTrue;
-}
-
-// Same as cpPolyShapeContainsVert() but ignores faces pointing away from the normal.
-static inline cpBool
-cpPolyShapeContainsVertPartial(const cpPolyShape *poly, const cpVect v, const cpVect n)
-{
-	cpPolyShapeAxis *axes = poly->CP_PRIVATE(tAxes);
-	
-	int i;
-	for(i=0; i<poly->CP_PRIVATE(numVerts); i++){
-		if(cpvdot(axes[i].n, n) < 0.0f) continue;
-		cpFloat dist = cpvdot(axes[i].n, v) - axes[i].d;
-		if(dist > 0.0f) return cpFalse;
-	}
-	
-	return cpTrue;
-}
+/// @}

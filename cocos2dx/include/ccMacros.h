@@ -271,6 +271,6 @@ extern unsigned int CC_DLL g_uNumberOfDraws;
 /** @def CCAnimationFrameDisplayedNotification
  Notification name when a CCSpriteFrame is displayed
  */
-#define CCAnimationFrameDisplayedNotification @"CCAnimationFrameDisplayedNotification"
+#define CCAnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
 
 #endif // __CCMACROS_H__

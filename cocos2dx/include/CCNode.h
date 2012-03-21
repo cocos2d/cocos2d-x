@@ -572,23 +572,23 @@ while(false)
          The matrix is in Pixels.
          @since v0.7.1
          */
-		CCAffineTransform nodeToParentTransform(void);
+		virtual CCAffineTransform nodeToParentTransform(void);
 
 		/** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
          The matrix is in Pixels.
          @since v0.7.1
          */
-		CCAffineTransform parentToNodeTransform(void);
+		virtual CCAffineTransform parentToNodeTransform(void);
 
 		/** Retrusn the world affine transform matrix. The matrix is in Pixels.
          @since v0.7.1
          */
-		CCAffineTransform nodeToWorldTransform(void);
+		virtual CCAffineTransform nodeToWorldTransform(void);
 
 		/** Returns the inverse world affine transform matrix. The matrix is in Pixels.
          @since v0.7.1
          */
-		CCAffineTransform worldToNodeTransform(void);
+		virtual CCAffineTransform worldToNodeTransform(void);
 
 		/** Converts a Point to node (local) space coordinates. The result is in Points.
          @since v0.7.1

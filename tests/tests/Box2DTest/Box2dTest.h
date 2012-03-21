@@ -5,18 +5,33 @@
 #include "Box2D/Box2D.h"
 #include "../testBasic.h"
 
+class PhysicsSprite : public CCSprite
+{
+public:
+	PhysicsSprite();
+	void setPhysicsBody(b2Body * body);
+	virtual bool isDirty(void);
+	virtual CCAffineTransform nodeToParentTransform(void);
+private:
+	b2Body* m_pBody;	// strong ref
+};
+
 class Box2DTestLayer : public CCLayer
 {
+	CCTexture2D* m_pSpriteTexture;	// weak ref
 	b2World* world;
-	//GLESDebugDraw *m_debugDraw;
+//	GLESDebugDraw* m_debugDraw;
 
 public:
 	Box2DTestLayer();
 	~Box2DTestLayer();
 
+	void initPhysics();
+	void createResetButton();
+	void reset(CCObject* sender);
 	virtual void draw();
 
-	void addNewSpriteWithCoords(CCPoint p);
+	void addNewSpriteAtPosition(CCPoint p);
 	void update(ccTime dt);
 	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 
