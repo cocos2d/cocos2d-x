@@ -53,20 +53,6 @@ void CCTouchDispatcher::setDispatchEvents(bool bDispatchEvents)
 	m_bDispatchEvents = bDispatchEvents;
 }
 
-static CCTouchDispatcher *pSharedDispatcher = NULL;
-
-CCTouchDispatcher* CCTouchDispatcher::sharedDispatcher(void)
-{
-	// synchronized ??
-	if (pSharedDispatcher == NULL)
-	{
-		pSharedDispatcher = new CCTouchDispatcher();
-		pSharedDispatcher->init();
-	}
-
-	return pSharedDispatcher;
-}
-
 /*
 +(id) allocWithZone:(CCZone *)zone
 {

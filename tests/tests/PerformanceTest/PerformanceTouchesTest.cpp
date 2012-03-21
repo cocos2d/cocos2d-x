@@ -99,7 +99,8 @@ std::string TouchesPerformTest1::title()
 
 void TouchesPerformTest1::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 bool TouchesPerformTest1::ccTouchBegan(CCTouch* touch, CCEvent* event)
@@ -141,7 +142,8 @@ std::string TouchesPerformTest2::title()
 
 void TouchesPerformTest2::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this, 0);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
 void TouchesPerformTest2::ccTouchesBegan(CCSet* touches, CCEvent* event)
