@@ -35,14 +35,14 @@ int CCApplication::run()
         {
                 return 0;
         }
-	
+
 	return -1;
 }
 
 void CCApplication::setAnimationInterval(double interval)
 {
 	JniMethodInfo methodInfo;
-	if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval", 
+	if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval",
 		"(D)V"))
 	{
 		CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
@@ -109,8 +109,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageRussian;
     }
-    
+
     return ret;
+}
+
+std::string CCApplication::getCurrentLanguageCode()
+{
+	const char *pLanguageName = getCurrentLanguageJNI();
+	return std::string(pLanguageName);
 }
 
 NS_CC_END;

@@ -41,7 +41,7 @@ public:
 
     /**
     @brief	Callback by CCDirector for limit FPS.
-    @interval       The time, which expressed in second in second, between current frame and next. 
+    @interval       The time, which expressed in second in second, between current frame and next.
     */
     void setAnimationInterval(double interval);
 
@@ -85,6 +85,12 @@ public:
     @return Current language config
     */
     static ccLanguageType getCurrentLanguage();
+
+    /**
+    @brief Get current language code
+    @return Current language code
+    */
+	static std::string getCurrentLanguageCode();
 
 protected:
     static CCApplication * sm_pSharedApplication;
