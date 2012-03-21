@@ -22,12 +22,12 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 cpFloat
 cpvlength(const cpVect v)
 {
-	return cpfsqrt( cpvdot(v, v) );
+	return cpfsqrt(cpvdot(v, v));
 }
 
 inline cpVect
@@ -61,10 +61,6 @@ cpvtoangle(const cpVect v)
 {
 	return cpfatan2(v.y, v.x);
 }
-
-#if defined(SHP) && !defined(CC_BADA_2_0)
-int sprintf(char* buf, const char *format, ...);
-#endif
 
 char*
 cpvstr(const cpVect v)

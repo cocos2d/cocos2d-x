@@ -180,10 +180,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\chipmunk\cpArray.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\chipmunk\cpBB.h"
 				>
 			</File>
@@ -192,51 +188,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\chipmunk\cpCollision.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpConstraint.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpDampedRotarySpring.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpDampedSpring.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpGearJoint.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpGrooveJoint.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\cpHashSet.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpPinJoint.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpPivotJoint.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\chipmunk\cpPolyShape.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpRatchetJoint.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpRotaryLimitJoint.h"
 				>
 			</File>
 			<File
@@ -244,33 +196,69 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\chipmunk\constraints\cpSimpleMotor.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\cpSlideJoint.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\chipmunk\cpSpace.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\chipmunk\cpSpaceHash.h"
+				RelativePath="..\include\chipmunk\cpSpatialIndex.h"
 				>
 			</File>
 			<File
 				RelativePath="..\include\chipmunk\cpVect.h"
 				>
 			</File>
-			<File
-				RelativePath="..\src\prime.h"
+			<Filter
+				Name="constraints"
 				>
-			</File>
-			<File
-				RelativePath="..\include\chipmunk\constraints\util.h"
-				>
-			</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpConstraint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpDampedRotarySpring.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpDampedSpring.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpGearJoint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpGrooveJoint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpPinJoint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpPivotJoint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpRatchetJoint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpRotaryLimitJoint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpSimpleMotor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\cpSlideJoint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\chipmunk\constraints\util.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="src"
@@ -294,6 +282,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\cpBBTree.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\cpBody.c"
 				>
 			</File>
@@ -302,35 +294,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\constraints\cpConstraint.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpDampedRotarySpring.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpDampedSpring.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpGearJoint.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpGrooveJoint.c"
-				>
-			</File>
-			<File
 				RelativePath="..\src\cpHashSet.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpPinJoint.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpPivotJoint.c"
 				>
 			</File>
 			<File
@@ -338,23 +302,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\constraints\cpRatchetJoint.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpRotaryLimitJoint.c"
-				>
-			</File>
-			<File
 				RelativePath="..\src\cpShape.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpSimpleMotor.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\constraints\cpSlideJoint.c"
 				>
 			</File>
 			<File
@@ -378,9 +326,69 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\cpSpatialIndex.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\cpSweep1D.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\cpVect.c"
 				>
 			</File>
+			<File
+				RelativePath="..\src\prime.h"
+				>
+			</File>
+			<Filter
+				Name="constraints"
+				>
+				<File
+					RelativePath="..\src\constraints\cpConstraint.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpDampedRotarySpring.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpDampedSpring.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpGearJoint.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpGrooveJoint.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpPinJoint.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpPivotJoint.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpRatchetJoint.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpRotaryLimitJoint.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpSimpleMotor.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\constraints\cpSlideJoint.c"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

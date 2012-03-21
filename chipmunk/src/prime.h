@@ -61,7 +61,7 @@ next_prime(int n)
 	int i = 0;
 	while(n > primes[i]){
 		i++;
-		cpAssert(primes[i], "Tried to resize a hash table to a size greater than 1610612741 O_o"); // realistically this should never happen
+		cpAssertHard(primes[i], "Tried to resize a hash table to a size greater than 1610612741 O_o"); // realistically this should never happen
 	}
 	
 	return primes[i];

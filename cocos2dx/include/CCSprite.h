@@ -83,9 +83,9 @@ public:
 	// attributes
 
 	/** whether or not the Sprite needs to be updated in the Atlas */
-	inline bool isDirty(void) { return m_bDirty; }
+	inline virtual bool isDirty(void) { return m_bDirty; }
 	/** make the Sprite to be updated in the Atlas. */
-	inline void setDirty(bool bDirty) { m_bDirty = bDirty; }
+	inline virtual void setDirty(bool bDirty) { m_bDirty = bDirty; }
 
 	/** get the quad (tex coords, vertex coords and color) information */
 	inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }

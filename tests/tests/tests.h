@@ -20,10 +20,7 @@
 #include "TileMapTest/TileMapTest.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
-// havn't implement on marmalade
-//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "TextInputTest/TextInputTest.h"
-//#endif
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
@@ -48,11 +45,11 @@
 #include "ShaderTest/ShaderTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
+	#include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
 #else
 #ifdef MARMALADEUSECHIPMUNK
 #if	(MARMALADEUSECHIPMUNK == 1)
-	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
+	#include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
 #endif
 #endif
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
@@ -80,7 +77,7 @@ enum
     TEST_PARALLAX,
     TEST_TILE_MAP,
     TEST_INTERVAL,
-    TEST_CHIPMUNK,
+    TEST_CHIPMUNKACCELTOUCH,
     TEST_LABEL,
     TEST_TEXT_INPUT,
     TEST_SPRITE,
@@ -128,7 +125,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ParallaxTest",
     "TileMapTest",
     "IntervalTest",
-    "ChipmunkTest",
+    "ChipmunkAccelTouchTest",
     "LabelTest",
     "TextInputTest",
     "SpriteTest",
