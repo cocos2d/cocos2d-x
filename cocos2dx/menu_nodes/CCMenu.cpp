@@ -160,7 +160,8 @@ namespace cocos2d{
 	//Menu - Events
 	void CCMenu::registerWithTouchDispatcher()
 	{
-		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority, true);
+		CCDirector* pDirector = CCDirector::sharedDirector();
+		pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority, true);
 	}
 
 	bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)

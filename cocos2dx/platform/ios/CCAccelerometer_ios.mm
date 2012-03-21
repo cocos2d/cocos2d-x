@@ -27,23 +27,12 @@
 
 namespace cocos2d {
     
-    CCAccelerometer* CCAccelerometer::m_spUIAccelerometer = NULL;
-    
     CCAccelerometer::CCAccelerometer()
     {
     }
     
     CCAccelerometer::~CCAccelerometer()
     {
-    }
-    
-    CCAccelerometer* CCAccelerometer::sharedAccelerometer()
-    {
-        if (m_spUIAccelerometer == NULL) {
-            m_spUIAccelerometer = new CCAccelerometer();
-        }
-        
-        return m_spUIAccelerometer;
     }
     
     void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)

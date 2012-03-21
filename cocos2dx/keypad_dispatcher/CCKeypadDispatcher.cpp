@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-static CCKeypadDispatcher* s_KeypadDispatcher = NULL;
 //------------------------------------------------------------------
 //
 // CCKeypadDispatcher
@@ -57,25 +56,6 @@ CCKeypadDispatcher::~CCKeypadDispatcher()
 	{
 		ccCArrayFree(m_pHandlersToRemove);
 	}    
-}
-
-CCKeypadDispatcher* CCKeypadDispatcher::sharedDispatcher()
-{
-    if (! s_KeypadDispatcher)
-    {
-        s_KeypadDispatcher = new CCKeypadDispatcher;
-    }
-
-    return s_KeypadDispatcher;
-}
-
-void CCKeypadDispatcher::purgeSharedDispatcher()
-{
-    if (s_KeypadDispatcher)
-    {
-        s_KeypadDispatcher->release();
-        s_KeypadDispatcher = NULL;
-    }
 }
 
 void CCKeypadDispatcher::removeDelegate(CCKeypadDelegate* pDelegate)

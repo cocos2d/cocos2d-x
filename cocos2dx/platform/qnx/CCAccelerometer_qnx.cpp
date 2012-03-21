@@ -33,7 +33,6 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-	CCAccelerometer* CCAccelerometer::m_spCCAccelerometer = NULL;
 	int	CCAccelerometer::m_initialOrientationAngle = 0;
 
 	CCAccelerometer::CCAccelerometer()
@@ -47,14 +46,6 @@ namespace cocos2d
     CCAccelerometer::~CCAccelerometer()
     {
 
-    }
-
-    CCAccelerometer* CCAccelerometer::sharedAccelerometer()
-    {
-    	if (m_spCCAccelerometer == NULL)
-    		m_spCCAccelerometer = new CCAccelerometer();
-    	
-    	return m_spCCAccelerometer;
     }
 
     void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)

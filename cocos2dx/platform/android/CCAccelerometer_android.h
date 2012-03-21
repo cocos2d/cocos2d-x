@@ -36,13 +36,10 @@ public:
 	CCAccelerometer();
     ~CCAccelerometer();
 
-    static CCAccelerometer* sharedAccelerometer();
-
     void setDelegate(CCAccelerometerDelegate* pDelegate);
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:
-	static CCAccelerometer* m_spCCAccelerometer;
 	CCAccelerometerDelegate* m_pAccelDelegate;
 	CCAcceleration m_obAccelerationValue;
 };

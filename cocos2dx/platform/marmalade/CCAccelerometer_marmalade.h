@@ -42,16 +42,11 @@ public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-    /**
-    @brief Returns the shared accelerometer object for the system.
-    */
-    static CCAccelerometer* sharedAccelerometer();
-
 	void setDelegate(CCAccelerometerDelegate* pDelegate);
 	void update(float x, float y, float z, uint64 sensorTimeStamp);
 
 private:
-	static CCAccelerometer* m_spCCAccelerometer;
+
 	CCAccelerometerDelegate* m_pAccelDelegate;
 	CCAcceleration m_obAccelerationValue;
 };
