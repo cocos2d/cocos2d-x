@@ -45,12 +45,6 @@ CCAccelerometer::~CCAccelerometer()
 	CC_SAFE_DELETE(m_pSensor);
 }
 
-CCAccelerometer* CCAccelerometer::sharedAccelerometer() 
-{
-	static CCAccelerometer s_CCAccelerometer;
-	return &s_CCAccelerometer;
-}
-
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 {
 	m_pAccelDelegate = pDelegate;

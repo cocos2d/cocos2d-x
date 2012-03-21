@@ -140,10 +140,7 @@ public:
 	virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent);
 
 public:
-	/** singleton of the CCTouchDispatcher */
-	static CCTouchDispatcher* sharedDispatcher();
 	CCTouchHandler* findHandler(CCTouchDelegate *pDelegate);
-
 protected:
 	void forceRemoveDelegate(CCTouchDelegate *pDelegate);
 	void forceAddHandler(CCTouchHandler *pHandler, CCArray* pArray);

@@ -35,11 +35,9 @@ public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-    static CCAccelerometer* sharedAccelerometer();
     void setDelegate(CCAccelerometerDelegate* pDelegate);
 	void update( double x,double y,double z,double timestamp );
 private:
-	static CCAccelerometer* m_spCCAccelerometer;
 	CCAccelerometerDelegate* m_pAccelDelegate;
 	CCAcceleration m_obAccelerationValue;
 };

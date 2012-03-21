@@ -35,13 +35,15 @@ bool Paddle::initWithTexture(CCTexture2D* aTexture)
 
 void Paddle::onEnter()
 {
-    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 	CCSprite::onEnter();
 }
 
 void Paddle::onExit()
 {
-	CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	pDirector->getTouchDispatcher()->removeDelegate(this);
 	CCSprite::onExit();
 }	
 
