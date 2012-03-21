@@ -39,8 +39,8 @@ THE SOFTWARE.
 
 using namespace cocos2d;
 
-static void static_addValueToCCDict(id key, id value, CCDictionary<std::string, CCObject*>* pDict);
-static void static_addItemToCCArray(id item, CCMutableArray<CCObject*> *pArray);
+static void static_addValueToCCDict(id key, id value, CCDictionary* pDict);
+static void static_addItemToCCArray(id item, CCArray* pArray);
 
 static const char *static_ccRemoveHDSuffixFromFile( const char *pszPath)
 {
@@ -142,7 +142,7 @@ static const char* static_fullPathFromRelativePath(const char *pszRelativePath)
 	return [fullpath UTF8String];	
 }
 
-static void static_addItemToCCArray(id item, CCMutableArray<CCObject*> *pArray)
+static void static_addItemToCCArray(id item, CCArray *pArray)
 {
 	// add string value into array
     if ([item isKindOfClass:[NSString class]]) {
@@ -165,7 +165,7 @@ static void static_addItemToCCArray(id item, CCMutableArray<CCObject*> *pArray)
     
     // add dictionary value into array
     if ([item isKindOfClass:[NSDictionary class]]) {
-        CCDictionary<std::string, CCObject*>* pDictItem = new CCDictionary<std::string, CCObject*>();
+        CCDictionary* pDictItem = new CCDictionary();
         for (id subKey in [item allKeys]) {
             id subValue = [item objectForKey:subKey];
             static_addValueToCCDict(subKey, subValue, pDictItem);
@@ -177,7 +177,8 @@ static void static_addItemToCCArray(id item, CCMutableArray<CCObject*> *pArray)
     
     // add array value into array
     if ([item isKindOfClass:[NSArray class]]) {
-        CCMutableArray<CCObject*> *pArrayItem = new CCMutableArray<CCObject*>();
+        CCArray *pArrayItem = new CCArray();
+        pArrayItem->init();
         for (id subItem in item) {
             static_addItemToCCArray(subItem, pArrayItem);
         }
@@ -187,7 +188,7 @@ static void static_addItemToCCArray(id item, CCMutableArray<CCObject*> *pArray)
     }
 }
 
-static void static_addValueToCCDict(id key, id value, CCDictionary<std::string, CCObject*>* pDict)
+static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
 {
 	// the key must be a string
     CCAssert([key isKindOfClass:[NSString class]], "The key should be a string!");
@@ -195,12 +196,12 @@ static void static_addValueToCCDict(id key, id value, CCDictionary<std::string, 
 
 	// the value is a new dictionary
     if ([value isKindOfClass:[NSDictionary class]]) {
-        CCDictionary<std::string, CCObject*>* pSubDict = new CCDictionary<std::string, CCObject*>();
+        CCDictionary* pSubDict = new CCDictionary();
         for (id subKey in [value allKeys]) {
             id subValue = [value objectForKey:subKey];
             static_addValueToCCDict(subKey, subValue, pSubDict);
         }
-        pDict->setObject(pSubDict, pKey);
+        pDict->setObject(pSubDict, pKey.c_str());
         pSubDict->release();
         return;
     }
@@ -209,7 +210,7 @@ static void static_addValueToCCDict(id key, id value, CCDictionary<std::string, 
     if ([value isKindOfClass:[NSString class]]) {
         CCString* pValue = new CCString([value UTF8String]);
 
-        pDict->setObject(pValue, pKey);
+        pDict->setObject(pValue, pKey.c_str());
         pValue->release();
         return;
     }
@@ -219,18 +220,19 @@ static void static_addValueToCCDict(id key, id value, CCDictionary<std::string, 
         NSString* pStr = [value stringValue];
         CCString* pValue = new CCString([pStr UTF8String]);
         
-        pDict->setObject(pValue, pKey);
+        pDict->setObject(pValue, pKey.c_str());
         pValue->release();
         return;
     }
 
 	// the value is a array
     if ([value isKindOfClass:[NSArray class]]) {
-        CCMutableArray<CCObject*> *pArray = new CCMutableArray<CCObject*>();
+        CCArray *pArray = new CCArray();
+        pArray->init();
         for (id item in value) {
             static_addItemToCCArray(item, pArray);
         }
-        pDict->setObject(pArray, pKey);
+        pDict->setObject(pArray, pKey.c_str());
         pArray->release();
         return;
     }
@@ -293,20 +295,20 @@ namespace cocos2d {
         return pRet->m_sString.c_str();
     }
     
-    CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+    CCDictionary *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
     {
-        CCDictionary<std::string, CCObject*> *ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
+        CCDictionary *ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
 	      ret->autorelease();
 	      
 	      return ret;
     }
     
-    CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+    CCDictionary *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
     {
         NSString* pPath = [NSString stringWithUTF8String:pFileName];
         NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
         
-        CCDictionary<std::string, CCObject*>* pRet = new CCDictionary<std::string, CCObject*>();
+        CCDictionary* pRet = new CCDictionary();
         for (id key in [pDict allKeys]) {
             id value = [pDict objectForKey:key];
             static_addValueToCCDict(key, value, pRet);

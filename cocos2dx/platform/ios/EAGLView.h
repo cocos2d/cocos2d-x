@@ -64,11 +64,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
 #import <CoreFoundation/CoreFoundation.h>
 
-#import "ESRenderer.h"
+#import "CCESRenderer.h"
 
 //CLASS INTERFACE:
 
@@ -79,7 +79,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface EAGLView : UIView <UIKeyInput, UITextInput>
 {
-    id						<ESRenderer> renderer_;	
+    id						<CCESRenderer> renderer_;	
 	EAGLContext				*context_; // weak ref
 
 	NSString				*pixelformat_;
