@@ -336,6 +336,18 @@
 					</File>
 				</Filter>
 				<Filter
+					Name="ShaderTest"
+					>
+					<File
+						RelativePath="..\tests\ShaderTest\ShaderTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ShaderTest\ShaderTest.h"
+						>
+					</File>
+				</Filter>
+				<Filter
 					Name="TouchesTest"
 					>
 					<File
@@ -830,10 +842,6 @@
 						RelativePath="..\tests\ExtensionsTest\NotificationCenterTest.h"
 						>
 					</File>
-				</Filter>
-				<Filter
-					Name="ShaderTest"
-					>
 				</Filter>
 				<Filter
 					Name="NodeTest"
