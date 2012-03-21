@@ -173,11 +173,12 @@ void ChipmunkAccelTouchTestLayer::createResetButton()
 
 void ChipmunkAccelTouchTestLayer::reset(CCObject* sender)
 {
-	CCScene* s = CCScene::node();
+	CCScene* s = new ChipmunkAccelTouchTestScene();
 	ChipmunkAccelTouchTestLayer* child = new ChipmunkAccelTouchTestLayer();
 	s->addChild(child);
 	child->release();
 	CCDirector::sharedDirector()->replaceScene(s);
+	s->release();
 }
 
 void ChipmunkAccelTouchTestLayer::addNewSpriteAtPosition(CCPoint pos)
