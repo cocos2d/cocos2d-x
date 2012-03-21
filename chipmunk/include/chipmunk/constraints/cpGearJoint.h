@@ -19,8 +19,12 @@
  * SOFTWARE.
  */
 
-const cpConstraintClass *cpGearJointGetClass();
+/// @defgroup cpGearJoint cpGearJoint
+/// @{
 
+const cpConstraintClass *cpGearJointGetClass(void);
+
+/// @private
 typedef struct cpGearJoint {
 	cpConstraint constraint;
 	cpFloat phase, ratio;
@@ -32,10 +36,16 @@ typedef struct cpGearJoint {
 	cpFloat jAcc, jMax;
 } cpGearJoint;
 
-cpGearJoint *cpGearJointAlloc(void);
-cpGearJoint *cpGearJointInit(cpGearJoint *joint, cpBody *a, cpBody *b, cpFloat phase, cpFloat ratio);
-cpConstraint *cpGearJointNew(cpBody *a, cpBody *b, cpFloat phase, cpFloat ratio);
+/// Allocate a gear joint.
+cpGearJoint* cpGearJointAlloc(void);
+/// Initialize a gear joint.
+cpGearJoint* cpGearJointInit(cpGearJoint *joint, cpBody *a, cpBody *b, cpFloat phase, cpFloat ratio);
+/// Allocate and initialize a gear joint.
+cpConstraint* cpGearJointNew(cpBody *a, cpBody *b, cpFloat phase, cpFloat ratio);
 
 CP_DefineConstraintProperty(cpGearJoint, cpFloat, phase, Phase);
 CP_DefineConstraintGetter(cpGearJoint, cpFloat, ratio, Ratio);
+/// Set the ratio of a gear joint.
 void cpGearJointSetRatio(cpConstraint *constraint, cpFloat value);
+
+/// @}

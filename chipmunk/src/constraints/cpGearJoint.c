@@ -20,27 +20,35 @@
  */
 
 #include <stdlib.h>
+#include <math.h>
 
 #include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
-preStep(cpGearJoint *joint, cpFloat dt, cpFloat dt_inv)
+preStep(cpGearJoint *joint, cpFloat dt)
 {
-	CONSTRAINT_BEGIN(joint, a, b);
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
 	
 	// calculate moment of inertia coefficient.
 	joint->iSum = 1.0f/(a->i_inv*joint->ratio_inv + joint->ratio*b->i_inv);
 	
 	// calculate bias velocity
 	cpFloat maxBias = joint->constraint.maxBias;
-	joint->bias = cpfclamp(-joint->constraint.biasCoef*dt_inv*(b->a*joint->ratio - a->a - joint->phase), -maxBias, maxBias);
+	joint->bias = cpfclamp(-bias_coef(joint->constraint.errorBias, dt)*(b->a*joint->ratio - a->a - joint->phase)/dt, -maxBias, maxBias);
 	
 	// compute max impulse
 	joint->jMax = J_MAX(joint, dt);
+}
 
-	// apply joint torque
-	cpFloat j = joint->jAcc;
+static void
+applyCachedImpulse(cpGearJoint *joint, cpFloat dt_coef)
+{
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
+	
+	cpFloat j = joint->jAcc*dt_coef;
 	a->w -= j*a->i_inv*joint->ratio_inv;
 	b->w += j*b->i_inv;
 }
@@ -48,7 +56,8 @@ preStep(cpGearJoint *joint, cpFloat dt, cpFloat dt_inv)
 static void
 applyImpulse(cpGearJoint *joint)
 {
-	CONSTRAINT_BEGIN(joint, a, b);
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
 	
 	// compute relative rotational velocity
 	cpFloat wr = b->w*joint->ratio - a->w;
@@ -71,9 +80,10 @@ getImpulse(cpGearJoint *joint)
 }
 
 static const cpConstraintClass klass = {
-	(cpConstraintPreStepFunction)preStep,
-	(cpConstraintApplyImpulseFunction)applyImpulse,
-	(cpConstraintGetImpulseFunction)getImpulse,
+	(cpConstraintPreStepImpl)preStep,
+	(cpConstraintApplyCachedImpulseImpl)applyCachedImpulse,
+	(cpConstraintApplyImpulseImpl)applyImpulse,
+	(cpConstraintGetImpulseImpl)getImpulse,
 };
 CP_DefineClassGetter(cpGearJoint)
 

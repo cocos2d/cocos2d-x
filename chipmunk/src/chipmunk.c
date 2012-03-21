@@ -21,43 +21,50 @@
  
 #include <stdlib.h>
 #include <stdio.h>
-#define _USE_MATH_DEFINES
 #include <math.h>
+#include <stdarg.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-	void cpInitCollisionFuncs(void);
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//extern "C" {
+//#endif
+//	void cpInitCollisionFuncs(void);
+//#ifdef __cplusplus
+//}
+//#endif
 
 void
-cpMessage(const char *message, const char *condition, const char *file, int line, int isError)
+cpMessage(const char *condition, const char *file, int line, cpBool isError, cpBool isHardError, const char *message, ...)
 {
-#ifndef SHP
-	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: %s\n" : "Chipmunk warning: %s\n"), message);
+	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: " : "Chipmunk warning: "));
+	
+	va_list vargs;
+	va_start(vargs, message); {
+		vfprintf(stderr, message, vargs);
+		fprintf(stderr, "\n");
+	} va_end(vargs);
+	
 	fprintf(stderr, "\tFailed condition: %s\n", condition);
 	fprintf(stderr, "\tSource:%s:%d\n", file, line);
-#endif
-	if(isError) abort();
+	
+	if(isHardError) abort();
 }
 
+#define STR(s) #s
+#define XSTR(s) STR(s)
 
-const char *cpVersionString = "5.3.5";
+const char *cpVersionString = XSTR(CP_VERSION_MAJOR)"."XSTR(CP_VERSION_MINOR)"."XSTR(CP_VERSION_RELEASE);
 
 void
 cpInitChipmunk(void)
 {
-#ifndef NDEBUG
-#ifndef SHP
-	printf("Initializing Chipmunk v%s (Debug Enabled)\n", cpVersionString);
-	printf("Compile with -DNDEBUG defined to disable debug mode and runtime assertion checks\n");
-#endif
-#endif
-	cpInitCollisionFuncs();
+//#ifndef NDEBUG
+//	printf("Initializing Chipmunk v%s (Debug Enabled)\n", cpVersionString);
+//	printf("Compile with -DNDEBUG defined to disable debug mode and runtime assertion checks\n");
+//#endif
+//	
+//	cpInitCollisionFuncs();
 }
 
 cpFloat
@@ -69,7 +76,7 @@ cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, cpVect offset)
 cpFloat
 cpAreaForCircle(cpFloat r1, cpFloat r2)
 {
-	return 2.0f*(cpFloat)M_PI*cpfabs(r1*r1 - r2*r2);
+	return (cpFloat)M_PI*cpfabs(r1*r1 - r2*r2);
 }
 
 cpFloat
@@ -84,7 +91,7 @@ cpMomentForSegment(cpFloat m, cpVect a, cpVect b)
 cpFloat
 cpAreaForSegment(cpVect a, cpVect b, cpFloat r)
 {
-	return 2.0f*r*((cpFloat)M_PI*r + cpvdist(a, b));
+	return r*((cpFloat)M_PI*r + 2.0f*cpvdist(a, b));
 }
 
 cpFloat
@@ -114,7 +121,7 @@ cpAreaForPoly(const int numVerts, const cpVect *verts)
 		area += cpvcross(verts[i], verts[(i+1)%numVerts]);
 	}
 	
-	return area/2.0f;
+	return -area/2.0f;
 }
 
 cpVect
@@ -148,6 +155,16 @@ cpFloat
 cpMomentForBox(cpFloat m, cpFloat width, cpFloat height)
 {
 	return m*(width*width + height*height)/12.0f;
+}
+
+cpFloat
+cpMomentForBox2(cpFloat m, cpBB box)
+{
+	cpFloat width = box.r - box.l;
+	cpFloat height = box.t - box.b;
+	cpVect offset = cpvmult(cpv(box.l + box.r, box.b + box.t), 0.5f);
+	
+	return cpMomentForBox(m, width, height) + m*cpvlengthsq(offset);
 }
 
 #include "chipmunk_ffi.h"

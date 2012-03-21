@@ -195,19 +195,15 @@ void Box2DView::draw()
 {
 	CCLayer::draw();
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states:  GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+
+	kmGLPushMatrix();
+
 	m_test->m_world->DrawDebugData();
-	
-	// restore default GL states
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	kmGLPopMatrix();
+
+	CHECK_GL_ERROR_DEBUG();
 }
 
 Box2DView::~Box2DView()

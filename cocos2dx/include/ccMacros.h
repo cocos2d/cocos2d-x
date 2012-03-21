@@ -262,7 +262,7 @@ It should work same as apples CFSwapInt32LittleToHost(..)
  Increments the GL Draws counts by one.
  The number of calls per frame are displayed on the screen when the CCDirector's stats are enabled.
  */
-extern unsigned int g_uNumberOfDraws;
+extern CC_DLL unsigned int g_uNumberOfDraws;
 #define CC_INCREMENT_GL_DRAWS(__n__) g_uNumberOfDraws += __n__
 
 /*******************/
@@ -271,6 +271,6 @@ extern unsigned int g_uNumberOfDraws;
 /** @def CCAnimationFrameDisplayedNotification
  Notification name when a CCSpriteFrame is displayed
  */
-#define CCAnimationFrameDisplayedNotification @"CCAnimationFrameDisplayedNotification"
+#define CCAnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
 
 #endif // __CCMACROS_H__
