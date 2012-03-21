@@ -148,7 +148,8 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
 	// shader program
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 
-	m_bDirty = m_bRecursiveDirty = false;
+	m_bRecursiveDirty = false;
+	setDirty(false);
 
 	m_bOpacityModifyRGB = true;
 	m_nOpacity = 255;
@@ -327,7 +328,7 @@ void CCSprite::setTextureRect(const CCRect& rect, bool rotated, const CCSize& un
 	if (m_pobBatchNode)
 	{
 		// update dirty_, don't update recursiveDirty_
-		m_bDirty = true;
+		setDirty(true);
 	}
 	else
 	{
@@ -441,7 +442,7 @@ void CCSprite::updateTransform(void)
 	CCAssert(m_pobBatchNode, "updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
 
 	// recaculate matrix only if it is dirty
-	if( m_bDirty ) {
+	if( isDirty() ) {
 
 		// If it is not visible, or one of its ancestors is not visible, then do nothing:
 		if( !m_bIsVisible || ( m_pParent && m_pParent != m_pobBatchNode && ((CCSprite*)m_pParent)->m_bShouldBeHidden) ) {
@@ -498,7 +499,8 @@ void CCSprite::updateTransform(void)
 		}
 
 		m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
-		m_bDirty = m_bRecursiveDirty = false;
+		m_bRecursiveDirty = false;
+		setDirty(false);
 	}
 
 	// recursively iterate over children
@@ -729,7 +731,8 @@ void CCSprite::setReorderChildDirtyRecursively(void)
 
 void CCSprite::setDirtyRecursively(bool bValue)
 {
-	m_bDirty = m_bRecursiveDirty = bValue;
+	m_bRecursiveDirty = bValue;
+	setDirty(bValue);
 	// recursively set dirty
 	if (m_bHasChildren)
 	{
@@ -748,9 +751,10 @@ void CCSprite::setDirtyRecursively(bool bValue)
 // XXX HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {									\
 					if (m_pobBatchNode && ! m_bRecursiveDirty) {	\
-						m_bDirty = m_bRecursiveDirty = true;				\
-						if ( m_bHasChildren)							\
-							setDirtyRecursively(true);			\
+						m_bRecursiveDirty = true;				    \
+						setDirty(true);                              \
+						if ( m_bHasChildren)						\
+							setDirtyRecursively(true);			    \
 						}											\
 					}
 
@@ -872,7 +876,7 @@ void CCSprite::updateColor(void)
 		{
 			// no need to set it recursively
 			// update dirty_, don't update recursiveDirty_
-			m_bDirty = true;
+			setDirty(true);
 		}
 	}
 
@@ -999,7 +1003,8 @@ void CCSprite::setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode)
 	if( ! m_pobBatchNode ) {
 		m_uAtlasIndex = CCSpriteIndexNotInitialized;
 		setTextureAtlas(NULL);
-		m_bDirty = m_bRecursiveDirty = false;
+		m_bRecursiveDirty = false;
+		setDirty(false);
 
 		float x1 = m_obOffsetPosition.x;
 		float y1 = m_obOffsetPosition.y;
