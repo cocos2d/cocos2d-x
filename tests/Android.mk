@@ -55,6 +55,7 @@ tests/RenderTextureTest/RenderTextureTest.cpp \
 tests/RotateWorldTest/RotateWorldTest.cpp \
 tests/SceneTest/SceneTest.cpp \
 tests/SchedulerTest/SchedulerTest.cpp \
+tests/ShaderTest/ShaderTest.cpp \
 tests/SpriteTest/SpriteTest.cpp \
 tests/TextureCacheTest/TextureCacheTest.cpp \
 tests/Texture2dTest/Texture2dTest.cpp \
