@@ -45,6 +45,7 @@
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
 #include "TextureCacheTest/TextureCacheTest.h"
 #include "NodeTest/NodeTest.h"
+#include "ShaderTest/ShaderTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -103,7 +104,8 @@ enum
 	TEST_CURRENT_LANGUAGE,
 	TEST_TEXTURECACHE,
     TEST_EXTENSIONS,
-    TESTS_COUNT,
+	TEST_SHADER,
+    TESTS_COUNT,	
 };
 
 const std::string g_aTestNames[TESTS_COUNT] = {
@@ -149,7 +151,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"FontTest",
 	"CurrentLanguageTest",
 	"TextureCacheTest",
-    "ExtensionsTest"
+    "ExtensionsTest",
+	"ShaderTest"
 };
 
 #endif
