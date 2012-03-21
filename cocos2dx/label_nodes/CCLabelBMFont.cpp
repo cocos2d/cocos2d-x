@@ -31,7 +31,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
 #include "CCLabelBMFont.h"
-
+#include "CCDirector.h"
 #include "platform/platform.h"
 #include "CCDictionary.h"
 #include "CCConfiguration.h"

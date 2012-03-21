@@ -87,7 +87,7 @@ public:
 	*/
 	virtual void updateAtlasValues();
 
-	virtual void draw();
+	virtual void draw(void);
 
 	// CC Texture protocol
 

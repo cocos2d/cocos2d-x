@@ -523,6 +523,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 
 void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 {	
+    if (0 == n) return;
 	ccGLBindTexture2D( m_pTexture->getName() );
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
