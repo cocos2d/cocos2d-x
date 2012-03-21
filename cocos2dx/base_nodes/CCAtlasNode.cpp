@@ -130,7 +130,7 @@ void CCAtlasNode::updateAtlasValues()
 }
 
 // CCAtlasNode - draw
-void CCAtlasNode::draw()
+void CCAtlasNode::draw(void)
 {
 	CC_NODE_DRAW_SETUP();
 

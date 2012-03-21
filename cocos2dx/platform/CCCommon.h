@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 /// The max length of CCLog message.
 static const int kMaxLogLen = 16*1024;
@@ -65,6 +65,6 @@ typedef enum LanguageType
     kLanguageRussian
 } ccLanguageType;
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// __CC_COMMON_H__
