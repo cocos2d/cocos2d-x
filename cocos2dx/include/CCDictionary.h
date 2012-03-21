@@ -52,11 +52,13 @@ public:
 
 	inline const char* getStrKey() const
 	{
+        CCAssert(m_szKey[0] != '\0', "Should not call this function for integer dictionary");
 		return m_szKey;
 	}
 
 	inline int getIntKey() const 
 	{
+        CCAssert(m_szKey[0] == '\0', "Should not call this function for string dictionary");
 		return m_iKey;
 	}
 
@@ -75,22 +77,18 @@ private:
 	}
 
 private:
-	char m_szKey[256]; /* hash key of string type*/
-	int  m_iKey;      /* hash key of integer type */
-	CCObject* m_pObject;/* hash value */
+	char m_szKey[256];  /** hash key of string type*/
+	int  m_iKey;        /** hash key of integer type */
+	CCObject* m_pObject;/** hash value */
 public:
 	UT_hash_handle hh; /* makes this class hashable */
 	friend class CCDictionary;
 };
 
 
-// #define CCDICT_FOREACH(__dict__, pElement)	                       \
-// for (pElement = __dict__->m_pElements; pElement != NULL; \
-// 	pElement = (CCDictElement*)pElement->hh.next)
-
 #define CCDICT_FOREACH(__dict__, __el__) \
-	CCDictElement* tmp##__dict____el__ = NULL; \
-	HASH_ITER(hh, (__dict__)->m_pElements, __el__, tmp##__dict____el__)
+    CCDictElement* pTmp##__dict__##__el__ = NULL; \
+	HASH_ITER(hh, (__dict__)->m_pElements, __el__, pTmp##__dict__##__el__)
 
 
 class CC_DLL CCDictionary : public CCObject

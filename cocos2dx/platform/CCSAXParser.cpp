@@ -21,11 +21,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCSAXParser.h"
-#include "CCDictionary.h"
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
+#include "CCSAXParser.h"
+#include "CCDictionary.h"
 #include "CCLibxml2.h"
 #include "CCFileUtils.h"
 
@@ -34,7 +34,6 @@ NS_CC_BEGIN;
 CCSAXParser::CCSAXParser()
 {
 	m_pDelegator = NULL;
-
 }
 
 CCSAXParser::~CCSAXParser(void)
