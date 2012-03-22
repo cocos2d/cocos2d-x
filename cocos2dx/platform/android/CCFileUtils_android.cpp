@@ -49,6 +49,51 @@ void CCFileUtils::setResourcePath(const char* pszResourcePath)
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
+#if (CC_IS_RETINA_DISPLAY_SUPPORTED)
+    if (CC_CONTENT_SCALE_FACTOR() > 1.0f)
+    {
+        std::string hiRes = pszRelativePath;
+        std::string::size_type pos = hiRes.find_last_of("/");
+        std::string::size_type dotPos = hiRes.find_last_of(".");
+		bool available = false;
+        
+        if (std::string::npos != dotPos && (dotPos > pos || pos == std::string::npos))
+        {
+            hiRes.insert(dotPos, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        }
+        else
+        {
+            hiRes.append(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        }
+
+		bool isApkResourcePath = (hiRes[0] != '/');
+		if (isApkResourcePath) {
+			// when the resources are within the APK file, open the zip to check if the HD image is available
+			unzFile pFile = unzOpen(s_strResourcePath.c_str());
+
+			if (pFile) {
+				available = (UNZ_OK == unzLocateFile(pFile, (string("assets/") + hiRes).c_str(), 1));
+				unzClose(pFile);
+			}
+		}
+		else {
+			FILE *fp = fopen(hiRes.c_str(), "rb");
+			if (fp) {
+				available = true;
+				fclose(fp);
+			}
+		}
+
+		// a HD version of this file is available, so return the new name
+		if (available) {
+			CCString *pRet = new CCString();
+			pRet->autorelease();
+			pRet->m_sString.swap(hiRes);
+			return pRet->m_sString.c_str();
+		}
+    }
+#endif
+        
 	return pszRelativePath;
 }
 
@@ -59,6 +104,48 @@ const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 	pRet->autorelease();
 	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
 	pRet->m_sString += pszFilename;
+
+#if (CC_IS_RETINA_DISPLAY_SUPPORTED)
+    if (CC_CONTENT_SCALE_FACTOR() > 1.0f)
+    {
+        std::string hiRes = pRet->m_sString.c_str();
+        std::string::size_type pos = hiRes.find_last_of("/");
+        std::string::size_type dotPos = hiRes.find_last_of(".");
+		bool available = false;
+        
+        if (std::string::npos != dotPos && (dotPos > pos || pos == std::string::npos))
+        {
+            hiRes.insert(dotPos, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        }
+        else
+        {
+            hiRes.append(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        }
+
+		bool isApkResourcePath = (hiRes[0] != '/');
+		if (isApkResourcePath) {
+			// when the resources are within the APK file, open the zip to check if the HD image is available
+			unzFile pFile = unzOpen(s_strResourcePath.c_str());
+
+			if (pFile) {
+				available = (UNZ_OK == unzLocateFile(pFile, (string("assets/") + hiRes).c_str(), 1));
+				unzClose(pFile);
+			}
+		}
+		else {
+			FILE *fp = fopen(hiRes.c_str(), "rb");
+			if (fp) {
+				available = true;
+				fclose(fp);
+			}
+		}
+
+		if (available) {
+			pRet->m_sString.swap(hiRes);
+		}
+    }
+#endif
+    
 	return pRet->m_sString.c_str();
 }
 

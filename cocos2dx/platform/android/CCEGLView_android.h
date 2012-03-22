@@ -47,8 +47,10 @@ public:
 	/**
 	 * create a drawing rect, 
 	 * the width and heiht is the resource size match best
+	 * @param auto_adjust	when enabled, the selected resolution will be automatically increased
+	 *						to fit the screen aspect ratio of the current android device.
 	 */
-	void    create(int width, int height);
+	void    create(int width, int height, bool auto_adjust=true);
     EGLTouchDelegate* getDelegate(void);
     
     // keep compatible

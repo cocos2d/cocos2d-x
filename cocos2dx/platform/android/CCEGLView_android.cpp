@@ -47,7 +47,7 @@ void CCEGLView::setFrameWidthAndHeight(int width, int height)
 	m_sSizeInPixel.height = height;
 }
 
-void CCEGLView::create(int width, int height)
+void CCEGLView::create(int width, int height, bool auto_adjust)
 {
 	if (width == 0 || height == 0)
 	{
@@ -62,6 +62,17 @@ void CCEGLView::create(int width, int height)
 		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
 	int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
 	int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
+
+	if (auto_adjust) {
+		// use the real display size
+		viewPortW = m_sSizeInPixel.width;
+		viewPortH = m_sSizeInPixel.height;
+
+		// increase the "size in points" values to fit the display aspect ratio
+		m_sSizeInPoint.width  = m_sSizeInPixel.width  / m_fScreenScaleFactor;
+		m_sSizeInPoint.height = m_sSizeInPixel.height / m_fScreenScaleFactor;
+	}
+
 	m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
 	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
 	m_rcViewPort.size.width = viewPortW;
@@ -118,12 +129,12 @@ void CCEGLView::swapBuffers()
 bool CCEGLView::canSetContentScaleFactor()
 {
     // can scale content?
-    return false;
+    return true;
 }
 
 void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
-	m_fScreenScaleFactor = contentScaleFactor;
+	//m_fScreenScaleFactor = contentScaleFactor;
 } 
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
