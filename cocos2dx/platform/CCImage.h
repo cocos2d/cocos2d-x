@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_IMAGE_H_YANGWS_20110115__
-#define __CC_IMAGE_H_YANGWS_20110115__
+#ifndef __CC_IMAGE_H__
+#define __CC_IMAGE__
 
 #include "CCCommon.h"
 
@@ -147,4 +147,4 @@ private:
 
 NS_CC_END;
 
-#endif	// __CC_IMAGE_H_YANGWS_20110115__
+#endif	// __CC_IMAGE_H__

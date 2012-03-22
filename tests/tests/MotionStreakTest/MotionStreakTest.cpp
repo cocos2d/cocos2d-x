@@ -39,6 +39,21 @@ void MotionStreakTest1::onEnter()
 	CCActionInterval* motion = CCMoveBy::actionWithDuration(2, CCPointMake(100,0) );
 	m_root->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(motion, motion->reverse(), NULL)) ) );
 	m_root->runAction( action1 );
+
+	CCActionInterval *colorAction = CCRepeatForever::actionWithAction((CCActionInterval *)CCSequence::actions(
+		CCTintTo::actionWithDuration(0.2f, 255, 0, 0),
+		CCTintTo::actionWithDuration(0.2f, 0, 255, 0),
+		CCTintTo::actionWithDuration(0.2f, 0, 0, 255),
+		CCTintTo::actionWithDuration(0.2f, 0, 255, 255),
+		CCTintTo::actionWithDuration(0.2f, 255, 255, 0),
+		CCTintTo::actionWithDuration(0.2f, 255, 0, 255),
+		CCTintTo::actionWithDuration(0.2f, 255, 255, 255),
+		NULL));
+
+	m_streak->runAction(colorAction);
+
+	// weak ref
+	streak = m_streak;
 }
 
 void MotionStreakTest1::onUpdate(ccTime delta)
@@ -70,6 +85,9 @@ void MotionStreakTest2::onEnter()
 	addChild( m_streak );
 	
 	m_streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 
+
+	// weak ref
+	streak = m_streak;
 }
 
 void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
@@ -184,6 +202,22 @@ void MotionStreakTest::onEnter()
 	item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 	
 	addChild(menu, 1);	
+
+	CCMenuItemToggle *itemMode = CCMenuItemToggle::itemWithTarget(this, menu_selector(MotionStreakTest::modeCallback),
+		CCMenuItemFont::itemWithString("Fast"),
+		CCMenuItemFont::itemWithString("Slow"),
+		NULL);
+
+	CCMenu *menuMode = CCMenu::menuWithItems(itemMode, NULL);
+	addChild(menuMode);
+
+	menuMode->setPosition(ccp(30, 65));
+}
+
+void MotionStreakTest::modeCallback(CCObject *pSender)
+{
+	bool fastMode = streak->getIsFastMode();
+	streak->setIsFastMode(! fastMode);
 }
 
 void MotionStreakTest::restartCallback(CCObject* pSender)

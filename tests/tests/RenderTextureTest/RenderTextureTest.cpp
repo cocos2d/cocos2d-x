@@ -235,7 +235,7 @@ RenderTextureSave::RenderTextureSave()
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	// create a render texture, this is what we are going to draw into
-	m_pTarget = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height);
+	m_pTarget = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
 	m_pTarget->retain();
 	m_pTarget->setPosition(ccp(s.width / 2, s.height / 2));
 
@@ -246,6 +246,7 @@ RenderTextureSave::RenderTextureSave()
 	// create a brush image to draw into the texture with
 	m_pBrush = CCSprite::spriteWithFile("Images/fire.png");
 	m_pBrush->retain();
+	m_pBrush->setColor(ccRED);
 	m_pBrush->setOpacity(20);
 	this->setIsTouchEnabled(true);
 
@@ -278,10 +279,29 @@ void RenderTextureSave::saveImage(cocos2d::CCObject *pSender)
 {
 	static int counter = 0;
 
-	char str[20];
-	sprintf(str, "image-%d.png", counter);
-	m_pTarget->saveBuffer(kCCImageFormatPNG, str);
-	CCLOG("Image saved %s", str);
+	char png[20];
+	sprintf(png, "image-%d.png", counter);
+	char jpg[20];
+	sprintf(jpg, "image-%d.jpg", counter);
+
+	m_pTarget->saveToFile(png, kCCImageFormatPNG);
+	m_pTarget->saveToFile(jpg, kCCImageFormatJPEG);
+	
+
+	CCImage *pImage = m_pTarget->newCCImage();
+
+	CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addUIImage(pImage, png);
+
+	CC_SAFE_DELETE(pImage);
+
+	CCSprite *sprite = CCSprite::spriteWithTexture(tex);
+
+	sprite->setScale(0.3f);
+	addChild(sprite);
+	sprite->setPosition(ccp(40, 40));
+	sprite->setRotation(counter * 3);
+
+	CCLOG("Image saved %s and %s", png, jpg);
 
 	counter++;
 }
@@ -359,7 +379,7 @@ RenderTextureIssue937::RenderTextureIssue937()
 
 
     /* A2 & B2 setup */
-    CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(32, 64);
+    CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(32, 64, kCCTexture2DPixelFormat_RGBA4444);
 
 	if (NULL == rend)
 	{
