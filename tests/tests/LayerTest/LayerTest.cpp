@@ -162,7 +162,7 @@ void LayerTest1::onEnter()
 void LayerTest1::registerWithTouchDispatcher()
 {
 	CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority + 1, true);
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
 }
 
 void LayerTest1::updateSize(CCTouch*touch)
