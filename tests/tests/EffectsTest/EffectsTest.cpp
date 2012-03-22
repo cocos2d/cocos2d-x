@@ -41,7 +41,7 @@ class Shaky3DDemo : public CCShaky3D
 public:
 	static CCActionInterval* actionWithDuration(ccTime t)
 	{
-		return CCShaky3D::actionWithRange(5, true, ccg(15,10), t);
+		return CCShaky3D::actionWithRange(5, false, ccg(15,10), t);
 	}
 };
 
@@ -138,7 +138,7 @@ class ShakyTiles3DDemo : public CCShakyTiles3D
 public:
 	static CCActionInterval* actionWithDuration(ccTime t)
 	{
-		return CCShakyTiles3D::actionWithRange(5, true, ccg(16,12), t) ;
+		return CCShakyTiles3D::actionWithRange(5, false, ccg(16,12), t) ;
 	}
 };
 
@@ -148,7 +148,7 @@ class ShatteredTiles3DDemo : public CCShatteredTiles3D
 public:
 	static CCActionInterval* actionWithDuration(ccTime t)
 	{
-		return CCShatteredTiles3D::actionWithRange(5, true, ccg(16,12), t); 
+		return CCShatteredTiles3D::actionWithRange(5, false, ccg(16,12), t); 
 	}
 };
 
@@ -339,7 +339,7 @@ void EffectTestScene::runThisTest()
 
 TextLayer::TextLayer(void)
 {
-	initWithColor( ccc4(32,32,32,255) );
+	initWithColor( ccc4(32,128,32,255) );
 		
 	float x,y;
 	
@@ -418,28 +418,6 @@ void TextLayer::onEnter()
 	CCLayer::onEnter();
 }
 
-void TextLayer::newOrientation()
-{
-	ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
-	switch (orientation) 
-	{
-		case CCDeviceOrientationLandscapeLeft:
-			orientation = CCDeviceOrientationPortrait;
-			break;
-		case CCDeviceOrientationPortrait:
-			orientation = CCDeviceOrientationLandscapeRight;
-			break;						
-		case CCDeviceOrientationLandscapeRight:
-			orientation = CCDeviceOrientationPortraitUpsideDown;
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			orientation = CCDeviceOrientationLandscapeLeft;
-			break;
-	}
-
-	CCDirector::sharedDirector()->setDeviceOrientation(orientation);
-}
-
 void TextLayer::newScene()
 {
 	CCScene* s = new EffectTestScene();
@@ -451,7 +429,6 @@ void TextLayer::newScene()
 
 void TextLayer::restartCallback(CCObject* pSender)
 {
-	/*newOrientation();*/
 	newScene();
 }
 
@@ -461,7 +438,6 @@ void TextLayer::nextCallback(CCObject* pSender)
     actionIdx++;
     actionIdx = actionIdx % MAX_LAYER;
 
-	/*newOrientation();*/
 	newScene();
 }
 
@@ -473,6 +449,5 @@ void TextLayer::backCallback(CCObject* pSender)
     if( actionIdx < 0 )
         actionIdx += total;	
 
-	/*newOrientation();*/
 	newScene();
 } 
