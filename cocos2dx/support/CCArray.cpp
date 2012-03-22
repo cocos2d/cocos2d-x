@@ -43,6 +43,22 @@ CCArray* CCArray::array()
     return pArray;
 }
 
+CCArray* CCArray::arrayWithObject(CCObject* pObject)
+{
+	CCArray* pArray = new CCArray();
+
+	if (pArray && pArray->initWithObject(pObject))
+	{
+		pArray->autorelease();
+	}
+	else
+	{
+		CC_SAFE_DELETE(pArray);
+	}
+
+	return pArray;
+}
+
 CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
 {
     CCArray* pArray = new CCArray();
@@ -69,6 +85,16 @@ CCArray* CCArray::arrayWithArray(CCArray* otherArray)
 bool CCArray::init()
 {
     return initWithCapacity(1);
+}
+
+bool CCArray::initWithObject(CCObject* pObject)
+{
+	bool bRet = initWithCapacity(1);
+	if (bRet)
+	{
+		addObject(pObject);
+	}
+	return bRet;
 }
 
 bool CCArray::initWithCapacity(unsigned int capacity)

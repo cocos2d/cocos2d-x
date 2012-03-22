@@ -20,10 +20,10 @@ enum {
 
 //------------------------------------------------------------------
 //
-// MenuLayer1
+// MenuLayerMainMenu
 //
 //------------------------------------------------------------------
-MenuLayer1::MenuLayer1()
+MenuLayerMainMenu::MenuLayerMainMenu()
 {
 	CCMenuItemFont::setFontSize( 30 );
 	CCMenuItemFont::setFontName("Courier New");
@@ -38,39 +38,43 @@ MenuLayer1::MenuLayer1()
 	//dynamic_cast<CCNode*>(mgr)->addChild(spriteSelected);
 	//dynamic_cast<CCNode*>(mgr)->addChild(spriteDisabled);
 
-	CCMenuItemSprite* item1 = CCMenuItemSprite::itemWithNormalSprite(spriteNormal, spriteSelected, spriteDisabled, this, menu_selector(MenuLayer1::menuCallback) );
+	CCMenuItemSprite* item1 = CCMenuItemSprite::itemWithNormalSprite(spriteNormal, spriteSelected, spriteDisabled, this, menu_selector(MenuLayerMainMenu::menuCallback) );
 	
 	// Image Item
-	CCMenuItem* item2 = CCMenuItemImage::itemWithNormalImage(s_SendScore, s_PressSendScore, this, menu_selector(MenuLayer1::menuCallback2) );
+	CCMenuItem* item2 = CCMenuItemImage::itemWithNormalImage(s_SendScore, s_PressSendScore, this, menu_selector(MenuLayerMainMenu::menuCallback2) );
 
 	// Label Item (LabelAtlas)
 	CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0123456789", "fonts/fps_images.png", 16, 24, '.');
-	CCMenuItemLabel* item3 = CCMenuItemLabel::itemWithLabel(labelAtlas, this, menu_selector(MenuLayer1::menuCallbackDisabled) );
+	CCMenuItemLabel* item3 = CCMenuItemLabel::itemWithLabel(labelAtlas, this, menu_selector(MenuLayerMainMenu::menuCallbackDisabled) );
 	item3->setDisabledColor( ccc3(32,32,64) );
 	item3->setColor( ccc3(200,200,255) );
 	
 	// Font Item
-	CCMenuItemFont *item4 = CCMenuItemFont::itemWithString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
+	CCMenuItemFont *item4 = CCMenuItemFont::itemWithString("I toggle enable items", this, menu_selector(MenuLayerMainMenu::menuCallbackEnable) );
 
 	item4->setFontSizeObj(20);
 	item4->setFontName("Marker Felt");
 	
 	// Label Item (CCLabelBMFont)
 	CCLabelBMFont* label = CCLabelBMFont::labelWithString("configuration", "fonts/bitmapFontTest3.fnt");
-	CCMenuItemLabel* item5 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer1::menuCallbackConfig));
+	CCMenuItemLabel* item5 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayerMainMenu::menuCallbackConfig));
 
 	// Testing issue #500
 	item5->setScale( 0.8f );
 
+	// Events
+	CCMenuItemFont::setFontName("Marker Felt");
+	CCMenuItemFont *item6 = CCMenuItemFont::itemWithString("Priority Test", this, menu_selector(MenuLayerMainMenu::menuCallbackPriorityTest));
+
 	// Font Item
-	CCMenuItemFont* item6 = CCMenuItemFont::itemWithString("Quit", this, menu_selector(MenuLayer1::onQuit));
+	CCMenuItemFont* item7 = CCMenuItemFont::itemWithString("Quit", this, menu_selector(MenuLayerMainMenu::onQuit));
 	
 	CCActionInterval* color_action = CCTintBy::actionWithDuration(0.5f, 0, -255, -255);
 	CCActionInterval* color_back = color_action->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(color_action, color_back, NULL);
-	item6->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
+	item7->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 
-	CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, item4, item5, item6, NULL);
+	CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, item4, item5, item6, item7, NULL);
 	menu->alignItemsVertically();
 	
 	
@@ -106,75 +110,80 @@ MenuLayer1::MenuLayer1()
 	m_disabledItem->setIsEnabled( false );
 
 	addChild(menu);
-
+	menu->setPosition(ccp(s.width/2, s.height/2));
 }
 
-void MenuLayer1::registerWithTouchDispatcher()
+void MenuLayerMainMenu::registerWithTouchDispatcher()
 {
 	CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority+1, true);
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority+1, true);
 }
 
-bool MenuLayer1::ccTouchBegan(CCTouch *touch, CCEvent * pEvent)
+bool MenuLayerMainMenu::ccTouchBegan(CCTouch *touch, CCEvent * pEvent)
 {
     return true;
 }
 
-void MenuLayer1::ccTouchEnded(CCTouch *touch, CCEvent * pEvent)
+void MenuLayerMainMenu::ccTouchEnded(CCTouch *touch, CCEvent * pEvent)
 {
 }
 
-void MenuLayer1::ccTouchCancelled(CCTouch *touch, CCEvent * pEvent)
+void MenuLayerMainMenu::ccTouchCancelled(CCTouch *touch, CCEvent * pEvent)
 {
 }
 
-void MenuLayer1::ccTouchMoved(CCTouch *touch, CCEvent * pEvent)
+void MenuLayerMainMenu::ccTouchMoved(CCTouch *touch, CCEvent * pEvent)
 {
 }
 
-MenuLayer1::~MenuLayer1()
+MenuLayerMainMenu::~MenuLayerMainMenu()
 {
 	m_disabledItem->release();
 }
 
-void MenuLayer1::menuCallback(CCObject* sender)
+void MenuLayerMainMenu::menuCallback(CCObject* sender)
 {
 	((CCLayerMultiplex*)m_pParent)->switchTo(1);
 }
 
-void MenuLayer1::menuCallbackConfig(CCObject* sender)
+void MenuLayerMainMenu::menuCallbackConfig(CCObject* sender)
 {
 	((CCLayerMultiplex*)m_pParent)->switchTo(3);
 }
 
-void MenuLayer1::allowTouches(ccTime dt)
+void MenuLayerMainMenu::allowTouches(ccTime dt)
 {
 	CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->setPriority(kCCMenuTouchPriority+1, this);
+    pDirector->getTouchDispatcher()->setPriority(kCCMenuHandlerPriority+1, this);
     unscheduleAllSelectors();
     CCLog("TOUCHES ALLOWED AGAIN");
 }
 
-void MenuLayer1::menuCallbackDisabled(CCObject* sender) 
+void MenuLayerMainMenu::menuCallbackDisabled(CCObject* sender) 
 {
     // hijack all touch events for 5 seconds
 	CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->setPriority(kCCMenuTouchPriority-1, this);
-    schedule(schedule_selector(MenuLayer1::allowTouches), 5.0f);
+    pDirector->getTouchDispatcher()->setPriority(kCCMenuHandlerPriority-1, this);
+    schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     CCLog("TOUCHES DISABLED FOR 5 SECONDS");
 }
 
-void MenuLayer1::menuCallbackEnable(CCObject* sender) 
+void MenuLayerMainMenu::menuCallbackEnable(CCObject* sender) 
 {
 	m_disabledItem->setIsEnabled(! m_disabledItem->getIsEnabled() );
 }
 
-void MenuLayer1::menuCallback2(CCObject* sender)
+void MenuLayerMainMenu::menuCallback2(CCObject* sender)
 {
 	((CCLayerMultiplex*)m_pParent)->switchTo(2);
 }
 
-void MenuLayer1::onQuit(CCObject* sender)
+void MenuLayerMainMenu::menuCallbackPriorityTest(CCObject* pSender)
+{
+	((CCLayerMultiplex*)m_pParent)->switchTo(4);
+}
+
+void MenuLayerMainMenu::onQuit(CCObject* sender)
 {
 	//[[Director sharedDirector] end];
 	//getCocosApp()->exit();
@@ -199,6 +208,9 @@ MenuLayer2::MenuLayer2()
 		
 		CCMenu* menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 		
+		CCSize s = CCDirector::sharedDirector()->getWinSize();
+		menu->setPosition(ccp(s.width/2, s.height/2));
+
 		menu->setTag( kTagMenu );
 		
 		addChild(menu, 0, 100+i);
@@ -332,6 +344,8 @@ MenuLayer3::MenuLayer3()
 	item3->runAction( CCRepeatForever::actionWithAction(spin3) );
 	
 	addChild( menu ); 
+
+	menu->setPosition(ccp(0,0));
 }
 
 MenuLayer3::~MenuLayer3()
@@ -439,6 +453,9 @@ MenuLayer4::MenuLayer4()
 	menu->alignItemsInColumns(2, 2, 2, 2, 1, NULL);
     
 	addChild( menu );
+
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+	menu->setPosition(ccp(s.width/2, s.height/2));
 }
 
 MenuLayer4::~MenuLayer4()
@@ -455,20 +472,89 @@ void MenuLayer4::backCallback(CCObject* sender)
 	((CCLayerMultiplex*)m_pParent)->switchTo(0);
 }
 
+MenuLayerPriorityTest::MenuLayerPriorityTest()
+{
+	// Testing empty menu
+	m_pMenu1 = CCMenu::node();
+	m_pMenu2 = CCMenu::node();
+
+
+	// Menu 1
+	CCMenuItemFont::setFontName("Marker Felt");
+	CCMenuItemFont::setFontSize(18);
+	CCMenuItemFont *item1 = CCMenuItemFont::itemWithString("Return to Main Menu", this, menu_selector(MenuLayerPriorityTest::menuCallback));
+	CCMenuItemFont *item2 = CCMenuItemFont::itemWithString("Disable menu for 5 seconds", this, menu_selector(MenuLayerPriorityTest::disableMenuCallback));
+
+
+	m_pMenu1->addChild(item1);
+	m_pMenu1->addChild(item2);
+
+	m_pMenu1->alignItemsVerticallyWithPadding(2);
+
+	addChild(m_pMenu1);
+
+	// Menu 2
+	m_bPriority = true;
+	CCMenuItemFont::setFontSize(48);
+	item1 = CCMenuItemFont::itemWithString("Toggle priority", this, menu_selector(MenuLayerPriorityTest::togglePriorityCallback));
+	item1->setColor(ccc3(0,0,255));
+	m_pMenu2->addChild(item1);
+	addChild(m_pMenu2);
+}
+
+MenuLayerPriorityTest::~MenuLayerPriorityTest()
+{
+
+}
+
+void MenuLayerPriorityTest::menuCallback(CCObject* pSender)
+{
+	((CCLayerMultiplex*)m_pParent)->switchTo(0);
+//	[[CCDirector sharedDirector] popScene];
+}
+
+void MenuLayerPriorityTest::disableMenuCallback(CCObject* pSender)
+{
+	m_pMenu1->setEnabled(false);
+	CCDelayTime *wait = CCDelayTime::actionWithDuration(5);
+	CCCallFunc *enable = CCCallFunc::actionWithTarget(this, callfunc_selector(MenuLayerPriorityTest::enableMenuCallback));
+
+	CCFiniteTimeAction* seq = CCSequence::actions(wait, enable, NULL);
+	m_pMenu1->runAction(seq);
+}
+
+void MenuLayerPriorityTest::enableMenuCallback()
+{
+	m_pMenu1->setEnabled(true);
+}
+
+void MenuLayerPriorityTest::togglePriorityCallback(CCObject* pSender)
+{
+	if( m_bPriority) {
+		m_pMenu2->setHandlerPriority(kCCMenuHandlerPriority + 20);
+		m_bPriority = false;
+	} else {
+		m_pMenu2->setHandlerPriority(kCCMenuHandlerPriority - 20);
+		m_bPriority = true;
+	}
+}
+
 void MenuTestScene::runThisTest()
 {
-    CCLayer* pLayer1 = new MenuLayer1();
+    CCLayer* pLayer1 = new MenuLayerMainMenu();
     CCLayer* pLayer2 = new MenuLayer2();
     CCLayer* pLayer3 = new MenuLayer3();
     CCLayer* pLayer4 = new MenuLayer4();
+	CCLayer* pLayer5 = new MenuLayerPriorityTest();
 
-    CCLayerMultiplex* layer = CCLayerMultiplex::layerWithLayers(pLayer1, pLayer2, pLayer3, pLayer4, NULL);
+    CCLayerMultiplex* layer = CCLayerMultiplex::layerWithLayers(pLayer1, pLayer2, pLayer3, pLayer4, pLayer5, NULL);
     addChild(layer, 0); 
 
     pLayer1->release();
     pLayer2->release();
     pLayer3->release();
     pLayer4->release();
+	pLayer5->release();
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
