@@ -210,8 +210,35 @@ public:
 	CCLabelBMFont *m_pLabelShouldRetain;
 	CCSprite *m_pArrowsBarShouldRetain;
 	CCSprite *m_pArrowsShouldRetain;
-	CCMenuItemFont *m_pLastSentenceItem, m_pLastAlignmentItem;
+	CCMenuItemFont *m_pLastSentenceItem, *m_pLastAlignmentItem;
 	bool m_drag;
+};
+
+class LabelTTFA8Test : public AtlasDemo
+{
+public:
+	LabelTTFA8Test();
+
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class BMFontOneAtlas : public AtlasDemo
+{
+public:
+	BMFontOneAtlas();
+
+    virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class BMFontUnicode : public AtlasDemo
+{
+public:
+	BMFontUnicode();
+
+	virtual std::string title();
+	virtual std::string subtitle();
 };
 
 // we don't support linebreak mode

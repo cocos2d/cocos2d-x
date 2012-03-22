@@ -40,7 +40,7 @@ CCLayer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	19
+#define MAX_LAYER	22
 
 CCLayer* createAtlasLayer(int nIndex)
 {
@@ -67,6 +67,9 @@ CCLayer* createAtlasLayer(int nIndex)
 		case 16: return new LabelTTFChinese();
         case 17: return new LabelBMFontChinese();
 		case 18: return new BitmapFontMultiLineAlignment();
+		case 19: return new LabelTTFA8Test();
+		case 20: return new BMFontOneAtlas();
+		case 21: return new BMFontUnicode();
 	}
 
 	return NULL;
@@ -1007,7 +1010,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// create and initialize a Label
-	this->m_pLabelShouldRetain = CCLabelBMFont::labelWithString(LongSentencesExample, "Fonts/markerFelt.fnt", size.width/1.5, CCTextAlignmentCenter);
+	this->m_pLabelShouldRetain = CCLabelBMFont::labelWithString(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, CCTextAlignmentCenter);
 	this->m_pLabelShouldRetain->retain();
 
 	this->m_pArrowsBarShouldRetain = CCSprite::spriteWithFile("Images/arrowsBar.png");
@@ -1034,7 +1037,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 	CCMenuItemFont *center = CCMenuItemFont::itemWithString("Center", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
 	CCMenuItemFont *right = CCMenuItemFont::itemWithString("Right", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
 	CCMenu *alignmentMenu = CCMenu::menuWithItems(left, center, right, NULL);
-	alignmentMenu->alignItemsHorizontallyWithPadding();
+	alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
 	center->setColor(ccRED);
 	m_pLastAlignmentItem = center;
@@ -1134,13 +1137,13 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
 
 void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
 {
-	CCTouch *touch = pTouches->anyObject();
+	CCTouch *touch = (CCTouch *)pTouches->anyObject();
 	CCPoint location = touch->locationInView();
 
-	if (CCRectContainPoint(this->m_pArrowsShouldRetain->getBoundingBox(), location)
+	if (CCRect::CCRectContainsPoint(this->m_pArrowsShouldRetain->boundingBox(), location))
 	{
 		m_drag = true;
-		this->m_pArrowsBarShouldRetain->setVisible(true);
+		this->m_pArrowsBarShouldRetain->setIsVisible(true);
 	}
 }
 
@@ -1149,7 +1152,7 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::CCSet *pTouches, coco
 	m_drag = false;
 	this->snapArrowsToEdge();
 
-	this->m_pArrowsBarShouldRetain->setVisible(false);
+	this->m_pArrowsBarShouldRetain->setIsVisible(false);
 }
 
 void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
@@ -1165,16 +1168,104 @@ void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, coco
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 	this->m_pArrowsShouldRetain->setPosition(ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
-		this>m_pArrowsShouldRetain->getPosition().y);
+		this->m_pArrowsShouldRetain->getPosition().y));
 
-	float labelWidh = abs(this->m_pArrowsShouldRetain->getPosition().x - this->m_pLabelShouldRetain->getPosition().x) * 2;
+	float labelWidth = abs(this->m_pArrowsShouldRetain->getPosition().x - this->m_pLabelShouldRetain->getPosition().x) * 2;
 
 	this->m_pLabelShouldRetain->setWidth(labelWidth);
-);
 }
 
 void BitmapFontMultiLineAlignment::snapArrowsToEdge()
 {
 	this->m_pArrowsShouldRetain->setPosition(ccp(this->m_pLabelShouldRetain->getPosition().x + this->m_pLabelShouldRetain->getContentSize().width/2,
 		this->m_pLabelShouldRetain->getPosition().y));
+}
+
+/// LabelTTFA8Test
+LabelTTFA8Test::LabelTTFA8Test()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	CCLayerColor *layer = CCLayerColor::layerWithColor(ccc4(128, 128, 128, 255));
+	addChild(layer, -10);
+
+	// CCLabelBMFont
+	CCLabelTTF *label1 = CCLabelTTF::labelWithString("Testing A8 Format", "Marker Felt", 48);
+	addChild(label1);
+	label1->setColor(ccRED);
+	label1->setPosition(ccp(s.width/2, s.height/2));
+
+	CCFadeOut *fadeOut = CCFadeOut::actionWithDuration(2);
+	CCFadeIn *fadeIn = CCFadeIn::actionWithDuration(2);
+	CCFiniteTimeAction *seq = CCSequence::actions(fadeOut, fadeIn, NULL);
+	CCRepeatForever *forever = CCRepeatForever::actionWithAction((CCActionInterval *)seq);
+	label1->runAction(forever);
+}
+
+std::string LabelTTFA8Test::title()
+{
+	return "Testing A8 Format";
+}
+
+std::string LabelTTFA8Test::subtitle()
+{
+	return "RED label, fading In and Out in the center of the screen";
+}
+
+/// BMFontOneAtlas
+BMFontOneAtlas::BMFontOneAtlas()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	CCLabelBMFont *label1 = CCLabelBMFont::labelWithString("This is Helvetica", "fonts/helvetica-32.fnt", kCCLabelAutomaticWidth, CCTextAlignmentLeft, CCPointZero);
+    addChild(label1);
+	label1->setPosition(ccp(s.width/2, s.height/3*2));
+
+	CCLabelBMFont *label2 = CCLabelBMFont::labelWithString("And this is Geneva", "fonts/geneva-32.fnt", kCCLabelAutomaticWidth, CCTextAlignmentLeft, ccp(0, 128));
+	addChild(label2);
+	label2->setPosition(ccp(s.width/2, s.height/3*1));
+}
+
+std::string BMFontOneAtlas::title()
+{
+	return "CCLabelBMFont with one texture";
+}
+
+std::string BMFontOneAtlas::subtitle()
+{
+	return "Using 2 .fnt definitions that share the same texture atlas.";
+}
+
+/// BMFontUnicode
+BMFontUnicode::BMFontUnicode()
+{
+	CCDictionary *strings = CCFileUtils::dictionaryWithContentsOfFile("fonts/strings.xml");
+	const char *chinese = ((CCString*)strings->objectForKey("chinese1"))->m_sString.c_str();
+	const char *japanese = ((CCString*)strings->objectForKey("japanese"))->m_sString.c_str();
+	const char *spanish = ((CCString*)strings->objectForKey("spanish"))->m_sString.c_str();
+
+
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	CCLabelBMFont *label1 = CCLabelBMFont::labelWithString(spanish, "fonts/arial-unicode-26.fnt", 200, CCTextAlignmentLeft);
+    addChild(label1);
+	label1->setPosition(ccp(s.width/2, s.height/4*3));
+
+	CCLabelBMFont *label2 = CCLabelBMFont::labelWithString(chinese, "fonts/arial-unicode-26.fnt");
+	addChild(label2);
+	label2->setPosition(ccp(s.width/2, s.height/4*2));
+
+	CCLabelBMFont *label3 = CCLabelBMFont::labelWithString(japanese, "fonts/arial-unicode-26.fnt");
+	addChild(label3);
+	label3->setPosition(ccp(s.width/2, s.height/4*1));
+}
+
+std::string BMFontUnicode::title()
+{
+	return "CCLabelBMFont with Unicode support";
+}
+
+std::string BMFontUnicode::subtitle()
+{
+	return "You should see 3 differnt labels: In Spanish, Chinese and Korean";
 }
