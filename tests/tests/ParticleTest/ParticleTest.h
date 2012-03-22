@@ -36,7 +36,7 @@ public:
 	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
 	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
 
-	void step(ccTime dt);
+	virtual void update(ccTime dt);
 	void setEmitterPosition();
 };
 
@@ -199,6 +199,89 @@ public:
 
 private:
     int m_nIndex;
+};
+
+class Issue1201 : public ParticleDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class ParticleBatchHybrid : public ParticleDemo
+{
+public:
+	virtual void onEnter();
+	void switchRender(ccTime dt);
+	virtual std::string title();
+	virtual std::string subtitle();
+private:
+	CCNode* m_pParent1;
+	CCNode* m_pParent2;
+};
+
+class ParticleBatchMultipleEmitters : public ParticleDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class ParticleReorder : public ParticleDemo
+{
+public:
+	virtual void onEnter();
+	void reorderParticles(ccTime dt);
+	virtual std::string title();
+	virtual std::string subtitle();
+private:
+	unsigned int m_nOrder;
+};
+
+class MultipleParticleSystems : public ParticleDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string title();
+	virtual std::string subtitle();
+	virtual void update(ccTime dt);
+};
+
+class MultipleParticleSystemsBatched : public ParticleDemo
+{
+public:
+	virtual void onEnter();
+	virtual void update(ccTime dt);
+	virtual std::string title();
+	virtual std::string subtitle();
+private:
+	CCParticleBatchNode* m_pBatchNode;
+};
+
+class AddAndDeleteParticleSystems : public ParticleDemo
+{
+public:
+	virtual void onEnter();
+	virtual void update(ccTime dt);
+	void removeSystem(ccTime dt);
+	virtual std::string title();
+	virtual std::string subtitle();
+private:
+	CCParticleBatchNode* m_pBatchNode;
+};
+
+class ReorderParticleSystems : public ParticleDemo
+{
+public:
+	virtual void onEnter();
+	void reorderSystem(ccTime time);
+	virtual void update(ccTime dt);
+	virtual std::string title();
+	virtual std::string subtitle();
+private:
+	CCParticleBatchNode* m_pBatchNode;
 };
 
 #endif

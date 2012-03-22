@@ -55,6 +55,7 @@ THE SOFTWARE.
 #include "CCMenu.h"
 #include "CCMenuItem.h"
 #include "CCParticleSystem.h"
+#include "CCParticleBatchNode.h"
 #include "CCParticleSystemQuad.h"
 #include "CCParticleExamples.h"
 #include "CCScene.h"
