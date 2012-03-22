@@ -29,7 +29,7 @@ public:
 	virtual std::string title();
 
 	void registerWithTouchDispatcher();
-	void updateSize(CCTouch*touch);
+	void updateSize(CCPoint &touchLocation);
 
 	virtual bool ccTouchBegan(CCTouch* touche, CCEvent* event);
 	virtual void ccTouchMoved(CCTouch* touche, CCEvent* event);
