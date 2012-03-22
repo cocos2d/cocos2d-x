@@ -1,5 +1,8 @@
 
 class CCFileUtils
 {
+    static std::string ccRemoveHDSuffixFromFile(std::string path);
+    static char* fullPathFromRelativePath(char *pszRelativePath);
+    static char* fullPathFromRelativeFile(char *pszFilename, char *pszRelativeFile);
     static std::string getWriteablePath();
 };

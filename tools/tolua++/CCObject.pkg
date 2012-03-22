@@ -5,5 +5,5 @@ class CCObject
     void retain(void);
     bool isSingleRefrence(void);
     unsigned int retainCount(void);
-    bool isEqual(const CCObject* pObject);
+    bool isEqual(CCObject* pObject);
 };

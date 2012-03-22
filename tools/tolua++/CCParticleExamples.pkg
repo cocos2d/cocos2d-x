@@ -1,0 +1,55 @@
+
+class CCParticleFire : public CCParticleSystemQuad
+{
+    static CCParticleFire* node();
+};
+
+class CCParticleFireworks : public CCParticleSystemQuad
+{
+    static CCParticleFireworks* node();
+};
+
+class CCParticleSun : public CCParticleSystemQuad
+{
+    static CCParticleSun* node();
+};
+
+class CCParticleGalaxy : public CCParticleSystemQuad
+{
+    static CCParticleGalaxy* node();
+};
+
+class CCParticleFlower : public CCParticleSystemQuad
+{
+    static CCParticleFlower* node();
+};
+
+class CCParticleMeteor : public CCParticleSystemQuad
+{
+    static CCParticleMeteor* node();
+};
+
+class CCParticleSpiral : public CCParticleSystemQuad
+{
+    static CCParticleSpiral* node();
+};
+
+class CCParticleExplosion : public CCParticleSystemQuad
+{
+    static CCParticleExplosion* node();
+};
+
+class CCParticleSmoke : public CCParticleSystemQuad
+{
+    static CCParticleSmoke* node();
+};
+
+class CCParticleSnow : public CCParticleSystemQuad
+{
+    static CCParticleSnow* node();
+};
+
+class CCParticleRain : public CCParticleSystemQuad
+{
+    static CCParticleRain* node();
+};

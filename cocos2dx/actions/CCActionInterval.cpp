@@ -196,6 +196,20 @@ CCFiniteTimeAction* CCSequence::actionsWithArray(CCArray *actions)
 	return prev;
 }
 
+CCSequence* CCSequence::actionsWithArrayLua(CCArray *actions)
+{
+    if (actions->count() >= 2)
+    {
+        CCFiniteTimeAction* prev = (CCFiniteTimeAction*)actions->objectAtIndex(0);
+        for (unsigned int i = 1; i < actions->count(); ++i)
+        {
+            prev = actionOneTwo(prev, (CCFiniteTimeAction*)actions->objectAtIndex(i));
+        }
+        return (CCSequence*)prev;
+    }
+    return NULL;
+}
+
 bool CCSequence::initOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo)
 {
 	CCAssert(pActionOne != NULL, "");
@@ -550,6 +564,22 @@ CCFiniteTimeAction* CCSpawn::actionsWithArray(CCArray *actions)
 	}
 
 	return prev;
+}
+
+CCSpawn* CCSpawn::actionsWithArrayLua(CCArray *actions)
+{
+    if (actions->count() >= 2)
+    {
+        CCFiniteTimeAction* prev = (CCFiniteTimeAction*)actions->objectAtIndex(0);
+        
+        for (unsigned int i = 1; i < actions->count(); ++i)
+        {
+            prev = actionOneTwo(prev, (CCFiniteTimeAction*)actions->objectAtIndex(i));
+        }
+        
+        return (CCSpawn*)prev;
+    }
+    return NULL;
 }
 
 CCSpawn* CCSpawn::actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2)
