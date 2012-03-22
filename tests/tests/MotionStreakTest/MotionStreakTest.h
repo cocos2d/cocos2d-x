@@ -18,6 +18,9 @@ public:
 	void restartCallback(CCObject* pSender);
 	void nextCallback(CCObject* pSender);
 	void backCallback(CCObject* pSender);
+	void modeCallback(CCObject* pSender);
+protected:
+	CCMotionStreak *streak;
 };
 
 class MotionStreakTest1 : public MotionStreakTest
