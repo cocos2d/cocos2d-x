@@ -37,14 +37,10 @@ public:
 	CCAccelerometer();
     ~CCAccelerometer();
 
-    static CCAccelerometer* sharedAccelerometer();
-
     void setDelegate(CCAccelerometerDelegate* pDelegate);
     void update(long sensorTimeStamp);
 
 private:
-
-	static CCAccelerometer*  m_spCCAccelerometer;
 	CCAccelerometerDelegate* m_pAccelDelegate;
 	CCAcceleration 			 m_accelerationValue;
     static int				 m_initialOrientationAngle;

@@ -142,6 +142,10 @@ class CCDirectorDelegate;
 class CCNode;
 class CCScheduler;
 class CCActionManager;
+class CCTouchDispatcher;
+class CCKeypadDispatcher;
+class CCAccelerometer;
+
 /**
 @brief Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
@@ -164,10 +168,10 @@ and when to execute the Scenes.
 */
 class CC_DLL CCDirector : public CCObject
 {
-public: 
-	virtual bool init(void);
+public:
+	CCDirector(void);
 	virtual ~CCDirector(void);
-	CCDirector(void) {}
+	virtual bool init(void);
 
 	// attribute
 
@@ -392,6 +396,21 @@ public:
 	 @since v2.0
 	 */
 	CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
+
+	/** CCTouchDispatcher associated with this director
+	 @since v2.0
+	 */
+	CC_PROPERTY(CCTouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
+
+	/** CCKeypadDispatcher associated with this director
+	 @since v2.0
+	 */
+	CC_PROPERTY(CCKeypadDispatcher*, m_pKeypadDispatcher, KeypadDispatcher);
+
+	/** CCAccelerometer associated with this director
+	 @since v2.0
+	 */
+	CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
 
 	/** returns a shared instance of the director */
 	static CCDirector* sharedDirector(void);

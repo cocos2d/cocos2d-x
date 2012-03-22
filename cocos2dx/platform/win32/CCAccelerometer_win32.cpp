@@ -109,7 +109,7 @@ namespace
 
 	void myAccelerometerKeyHook( UINT message,WPARAM wParam,LPARAM lParam )
 	{
-		cocos2d::CCAccelerometer	*pAccelerometer=cocos2d::CCAccelerometer::sharedAccelerometer();
+		cocos2d::CCAccelerometer	*pAccelerometer = cocos2d::CCDirector::sharedDirector()->getAccelerometer();
 		bool						sendUpdate=false;
 		switch( message )
 		{
@@ -148,9 +148,6 @@ namespace
 namespace cocos2d
 {
 
-// static members
-CCAccelerometer* CCAccelerometer::m_spCCAccelerometer = NULL;
-
 CCAccelerometer::CCAccelerometer() : 
 	m_pAccelDelegate(NULL)
 {
@@ -158,21 +155,7 @@ CCAccelerometer::CCAccelerometer() :
 
 CCAccelerometer::~CCAccelerometer() 
 {
-	if( m_spCCAccelerometer ) 
-	{
-		delete m_spCCAccelerometer ;
-		m_spCCAccelerometer = NULL;
-	}
-}
 
-// static
-CCAccelerometer* CCAccelerometer::sharedAccelerometer() 
-{
-	if (m_spCCAccelerometer == NULL)
-	{
-		m_spCCAccelerometer = new CCAccelerometer();
-	}
-	return m_spCCAccelerometer;
 }
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
