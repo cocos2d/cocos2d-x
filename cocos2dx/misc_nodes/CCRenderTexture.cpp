@@ -103,6 +103,8 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 		return false;
 	}
 
+	CCAssert(m_ePixelFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
+
     bool bRet = false;
     do 
     {
@@ -143,13 +145,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
 
         // check if it worked (probably worth doing :) )
-        GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-        if (status != GL_FRAMEBUFFER_COMPLETE)
-        {
-            CCAssert(0, "Render Texture : Could not attach texture to framebuffer");
-            CC_SAFE_DELETE(m_pTexture);
-            break;
-        }
+        CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
 
         m_pTexture->setAliasTexParameters();
 
@@ -183,11 +179,13 @@ void CCRenderTexture::begin()
 	float heightRatio = size.height / texSize.height;
 
 	// Adjust the orthographic projection and viewport
-	glViewport(0, 0, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
+	glViewport(0, 0, (GLsizei)(texSize.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(texSize.height * CC_CONTENT_SCALE_FACTOR()));
 
 	// special viewport for 3d projection + retina display
 	if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
-		glViewport(-texSize.width/2, -texSize.height/2, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
+	{
+		glViewport((GLsizei)(-texSize.width/2), (GLsizei)(-texSize.height/2), (GLsizei)(texSize.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(texSize.height * CC_CONTENT_SCALE_FACTOR()));
+	}
 
 	kmMat4 orthoMatrix;
 	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
@@ -223,11 +221,13 @@ void CCRenderTexture::end(bool bIsTOCacheTexture)
 	CCSize size = director->getWinSizeInPixels();
 
 	// restore viewport
-	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	glViewport(0, 0, GLsizei(size.width * CC_CONTENT_SCALE_FACTOR()), GLsizei(size.height * CC_CONTENT_SCALE_FACTOR()));
 
 	// special viewport for 3d projection + retina display
 	if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
-		glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	{
+		glViewport((GLsizei)(-size.width/2), (GLsizei)(-size.height/2), (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()));
+	}
 
 //TODO: Does this line take effect?	director->setProjection(director->getProjection());
 
@@ -241,7 +241,7 @@ void CCRenderTexture::end(bool bIsTOCacheTexture)
 		int tx = (int)s.width;
 		int ty = (int)s.height;
 		m_pUITextureImage = new CCImage;
-		if (true == getUIImageFromBuffer(m_pUITextureImage, 0, 0, tx, ty))
+		if (m_pUITextureImage == newCCImage())
 		{
 			VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
 		} 
@@ -259,31 +259,31 @@ void CCRenderTexture::clear(float r, float g, float b, float a)
 	this->end();
 }
 
-bool CCRenderTexture::saveBuffer(const char *szFilePath, int x, int y, int nWidth, int nHeight)
+bool CCRenderTexture::saveToFile(const char *szFilePath)
 {
 	bool bRet = false;
 
-	CCImage *pImage = new CCImage();
-	if (pImage != NULL && getUIImageFromBuffer(pImage, x, y, nWidth, nHeight))
+	CCImage *pImage = newCCImage();
+	if (pImage)
 	{
-		bRet = pImage->saveToFile(szFilePath);
+		bRet = pImage->saveToFile(szFilePath, kCCImageFormatJPEG);
 	}
 
 	CC_SAFE_DELETE(pImage);
 	return bRet;
 }
-bool CCRenderTexture::saveBuffer(int format, const char *fileName, int x, int y, int nWidth, int nHeight)
+bool CCRenderTexture::saveToFile(const char *fileName, tCCImageFormat format)
 {
 	bool bRet = false;
-	CCAssert(format == kCCImageFormatJPG || format == kCCImageFormatPNG,
+	CCAssert(format == kCCImageFormatJPEG || format == kCCImageFormatPNG,
 			 "the image can only be saved as JPG or PNG format");
 
-	CCImage *pImage = new CCImage();
-	if (pImage != NULL && getUIImageFromBuffer(pImage, x, y, nWidth, nHeight))
+	CCImage *pImage = newCCImage();
+	if (pImage)
 	{
 		std::string fullpath = CCFileUtils::getWriteablePath() + fileName;
 		
-		bRet = pImage->saveToFile(fullpath.c_str());
+		bRet = pImage->saveToFile(fullpath.c_str(), true);
 	}
 
 	CC_SAFE_DELETE(pImage);
@@ -291,75 +291,43 @@ bool CCRenderTexture::saveBuffer(int format, const char *fileName, int x, int y,
 	return bRet;
 }
 
-/* get buffer as UIImage */
-bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nWidth, int nHeight)
+/* get buffer as CCImage */
+CCImage* CCRenderTexture::newCCImage()
 {
-	if (NULL == pImage || NULL == m_pTexture)
+	CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
+
+	if (NULL == m_pTexture)
 	{
-		return false;
+		return NULL;
 	}
 
 	const CCSize& s = m_pTexture->getContentSizeInPixels();
-	int tx = (int)s.width;
-	int ty = (int)s.height;
 
-	if (x < 0 || x >= tx || y < 0 || y >= ty)
-	{
-		return false;
-	}
-
-	if (nWidth < 0 
-		|| nHeight < 0
-		|| (0 == nWidth && 0 != nHeight)
-		|| (0 == nHeight && 0 != nWidth))
-	{
-		return false;
-	}
-	
 	// to get the image size to save
 	//		if the saving image domain exeeds the buffer texture domain,
 	//		it should be cut
-	int nSavedBufferWidth = nWidth;
-	int nSavedBufferHeight = nHeight;
-	if (0 == nWidth)
-	{
-		nSavedBufferWidth = tx;
-	}
-	if (0 == nHeight)
-	{
-		nSavedBufferHeight = ty;
-	}
-	nSavedBufferWidth = x + nSavedBufferWidth > tx ? (tx - x): nSavedBufferWidth;
-	nSavedBufferHeight = y + nSavedBufferHeight > ty ? (ty - y): nSavedBufferHeight;
+	int nSavedBufferWidth = (int)s.width;
+	int nSavedBufferHeight = (int)s.height;
 
 	GLubyte *pBuffer = NULL;
 	GLubyte *pTempData = NULL;
-	bool bRet = false;
+	CCImage *pImage = new CCImage();
 
 	do
 	{
-		CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
-
 		CC_BREAK_IF(! (pBuffer = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]));
 
-		// On some machines, like Samsung i9000, Motorola Defy,
-		// the dimension need to be a power of 2
-		int nReadBufferWidth = 0;
-		int nReadBufferHeight = 0;
-		int nMaxTextureSize = 0;
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nMaxTextureSize);
 
-		nReadBufferWidth = ccNextPOT(tx);
-		nReadBufferHeight = ccNextPOT(ty);
-
-		CC_BREAK_IF(0 == nReadBufferWidth || 0 == nReadBufferHeight);
-		CC_BREAK_IF(nReadBufferWidth > nMaxTextureSize || nReadBufferHeight > nMaxTextureSize);
-
-		CC_BREAK_IF(! (pTempData = new GLubyte[nReadBufferWidth * nReadBufferHeight * 4]));
+		if(! (pTempData = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]))
+		{
+			delete[] pBuffer;
+			pBuffer = NULL;
+			break;
+		}
 
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
-		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
+		glReadPixels(0,0,nSavedBufferWidth, nSavedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
 		this->end(false);
 
 		// to get the actual texture data 
@@ -367,105 +335,17 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		for (int i = 0; i < nSavedBufferHeight; ++i)
 		{
 			memcpy(&pBuffer[i * nSavedBufferWidth * 4], 
-				&pTempData[(y + nSavedBufferHeight - i - 1) * nReadBufferWidth * 4 + x * 4], 
+				&pTempData[(nSavedBufferHeight - i - 1) * nSavedBufferWidth * 4], 
 				nSavedBufferWidth * 4);
 		}
 
-		bRet = pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
+		pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
 	} while (0);
 
 	CC_SAFE_DELETE_ARRAY(pBuffer);
 	CC_SAFE_DELETE_ARRAY(pTempData);
 
-	return bRet;
-}
-
-
-CCData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
-{
-    CC_UNUSED_PARAM(format);
-    CCData *  pData     = NULL;
-//@ todo CCRenderTexture::getUIImageAsDataFromBuffer
-
-// #include "Availability.h"
-// #include "UIKit.h"
-
-//     GLubyte * pBuffer   = NULL;
-//     GLubyte * pPixels   = NULL;
-//     do 
-//     {
-//         CC_BREAK_IF(! m_pTexture);
-// 
-//         CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
-// 
-//         const CCSize& s = m_pTexture->getContentSizeInPixels();
-//         int tx = s.width;
-//         int ty = s.height;
-// 
-//         int bitsPerComponent = 8;
-//         int bitsPerPixel = 32;
-// 
-//         int bytesPerRow = (bitsPerPixel / 8) * tx;
-//         int myDataLength = bytesPerRow * ty;
-// 
-//         CC_BREAK_IF(! (pBuffer = new GLubyte[tx * ty * 4]));
-//         CC_BREAK_IF(! (pPixels = new GLubyte[tx * ty * 4]));
-// 
-//         this->begin();
-//         glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
-//         this->end();
-// 
-//         int x,y;
-// 
-//         for(y = 0; y <ty; y++) {
-//             for(x = 0; x <tx * 4; x++) {
-//                 pPixels[((ty - 1 - y) * tx * 4 + x)] = pBuffer[(y * 4 * tx + x)];
-//             }
-//         }
-// 
-//         if (format == kCCImageFormatRawData)
-//         {
-//             pData = CCData::dataWithBytesNoCopy(pPixels, myDataLength);
-//             break;
-//         }
-
-        //@ todo impliment save to jpg or png
-        /*
-        CGImageCreate(size_t width, size_t height,
-        size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
-        CGColorSpaceRef space, CGBitmapInfo bitmapInfo, CGDataProviderRef provider,
-        const CGFloat decode[], bool shouldInterpolate,
-        CGColorRenderingIntent intent)
-        */
-        // make data provider with data.
-//         CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
-//         CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
-//         CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
-//         CGImageRef iref					= CGImageCreate(tx, ty,
-//             bitsPerComponent, bitsPerPixel, bytesPerRow,
-//             colorSpaceRef, bitmapInfo, provider,
-//             NULL, false,
-//             kCGRenderingIntentDefault);
-// 
-//         UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
-// 
-//         CGImageRelease(iref);	
-//         CGColorSpaceRelease(colorSpaceRef);
-//         CGDataProviderRelease(provider);
-// 
-// 
-// 
-//         if (format == kCCImageFormatPNG)
-//             data = UIImagePNGRepresentation(image);
-//         else
-//             data = UIImageJPEGRepresentation(image, 1.0f);
-// 
-//         [image release];
-//     } while (0);
-//     
-//     CC_SAFE_DELETE_ARRAY(pBuffer);
-//     CC_SAFE_DELETE_ARRAY(pPixels);
-	return pData;
+	return pImage;
 }
 
 NS_CC_END

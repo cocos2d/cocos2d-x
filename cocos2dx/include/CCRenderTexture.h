@@ -34,10 +34,9 @@ NS_CC_BEGIN
 
 typedef enum eImageFormat
 {
-	kCCImageFormatJPG       = 0,
+	kCCImageFormatJPEG      = 0,
 	kCCImageFormatPNG       = 1,
-    kCCImageFormatRawData   = 2
-} tImageFormat;
+} tCCImageFormat;
 /**
 @brief CCRenderTexture is a generic rendering target. To render things into it,
 simply construct a render target, call begin on it, call visit on any cocos
@@ -86,31 +85,20 @@ public:
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
 
-	/** saves the texture into a file */
-	// para szFilePath      the absolute path to save
-	// para x,y         the lower left corner coordinates of the buffer to save
-	// pare nWidth,nHeight    the size of the buffer to save
-	//                        when nWidth = 0 and nHeight = 0, the image size to save equals to buffer texture size
-	bool saveBuffer(const char *szFilePath, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
+	/* creates a new CCImage from with the texture's data.
+       Caller is responsible for releasing it by calling delete.
+     */
+    CCImage* newCCImage();
 
-	/** saves the texture into a file. put format at the first argument, or ti will be overloaded with
-	 * saveBuffer(const char *szFilePath, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0) */
-	// para name        the file name to save
-	// para format      the image format to save, here it supports kCCImageFormatPNG and kCCImageFormatJPG */
-	// para x,y         the lower left corner coordinates of the buffer to save
-	// pare nWidth,nHeight    the size of the buffer to save
-	//                        when nWidth = 0 and nHeight = 0, the image size to save equals to buffer texture size
-	bool saveBuffer(int format, const char *name, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
+	/** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
+        Returns YES if the operation is successful.
+     */
+	bool saveToFile(const char *szFilePath);
 
-    /* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
-    CCData *getUIImageAsDataFromBuffer(int format);
-
-	/** save the buffer data to a CCImage */
-	// para pImage      the CCImage to save
-	// para x,y         the lower left corner coordinates of the buffer to save
-	// pare nWidth,nHeight    the size of the buffer to save
-	//                        when nWidth = 0 and nHeight = 0, the image size to save equals to buffer texture size
-	bool getUIImageFromBuffer(CCImage *pImage, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
+	/** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
+        Returns YES if the operation is successful.
+     */
+	bool saveToFile(const char *name, tCCImageFormat format);
 
 protected:
 	GLuint				m_uFBO;
