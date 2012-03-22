@@ -36,6 +36,9 @@ enum
     ACTION_REVERSESEQUENCE2_LAYER,
     ACTION_ORBIT_LAYER,
     ACTION_FLLOW_LAYER,
+	ACTION_TARGETED_LAYER,
+	ACTION_ISSUE1288_LAYER,
+	ACTION_ISSUE1288_2_LAYER,
     ACTION_LAYER_COUNT,
 };
 
@@ -147,6 +150,8 @@ class ActionAnimate : public ActionsDemo
 {
 public:
     virtual void onEnter();
+	virtual void onExit();
+	virtual std::string title();
     virtual std::string subtitle();
 };
 
@@ -264,6 +269,30 @@ class ActionFollow : public ActionsDemo
 public:
     virtual void onEnter();
     virtual std::string subtitle();
+};
+
+class ActionTargeted : public ActionsDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class Issue1288 : public ActionsDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class Issue1288_2 : public ActionsDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string title();
+	virtual std::string subtitle();
 };
 
 #endif
