@@ -99,6 +99,13 @@ typedef struct _ccColor4F {
 	GLfloat a;
 } ccColor4F;
 
+static inline ccColor4F
+ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
+{
+	ccColor4F c = {r, g, b, a};
+	return c;
+}
+
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
  @since v0.99.1
  */

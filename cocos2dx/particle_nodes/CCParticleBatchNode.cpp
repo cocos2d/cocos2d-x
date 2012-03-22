@@ -176,6 +176,16 @@ void CCParticleBatchNode::visit()
 }
 
 // override addChild:
+void CCParticleBatchNode::addChild(CCNode * child)
+{
+	CCNode::addChild(child);
+}
+
+void CCParticleBatchNode::addChild(CCNode * child, int zOrder)
+{
+	CCNode::addChild(child, zOrder);
+}
+
 void CCParticleBatchNode::addChild(CCNode * child, int zOrder, int tag)
 {
 	CCAssert( child != NULL, "Argument must be non-NULL");

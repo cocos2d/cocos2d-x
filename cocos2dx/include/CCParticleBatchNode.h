@@ -81,6 +81,8 @@ public:
 	bool initWithFile(const char* fileImage, unsigned int capacity);
 
 	/** Add a child into the CCParticleBatchNode */
+	virtual void addChild(CCNode * child);
+	virtual void addChild(CCNode * child, int zOrder);
 	virtual void addChild(CCNode * child, int zOrder, int tag);
 
 	/** Inserts a child into the CCParticleBatchNode */
