@@ -67,6 +67,12 @@ CCLayer* CreateLayer(int nIndex)
         pLayer = new ActionOrbit(); break;
     case ACTION_FLLOW_LAYER:
         pLayer = new ActionFollow(); break;
+	case ACTION_TARGETED_LAYER:
+		pLayer = new ActionTargeted(); break;
+	case ACTION_ISSUE1288_LAYER:
+		pLayer = new Issue1288(); break;
+	case ACTION_ISSUE1288_2_LAYER:
+		pLayer = new Issue1288_2(); break;
     default:
         break;
     }
@@ -216,7 +222,13 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    if( numberOfSprites == 1 ) 
+	if( numberOfSprites == 0 )
+	{
+		m_tamara->setIsVisible(false);
+		m_kathia->setIsVisible(false);
+		m_grossini->setIsVisible(false);
+	} 
+	else if ( numberOfSprites == 1 ) 
     {
         m_tamara->setIsVisible(false);
         m_kathia->setIsVisible(false);
@@ -327,13 +339,13 @@ void ActionScale::onEnter()
 
     centerSprites(3);
 
-    CCActionInterval*  actionTo = CCScaleTo::actionWithDuration( 2, 0.5f);
-    CCActionInterval*  actionBy = CCScaleBy::actionWithDuration(2 ,  2);
-    CCActionInterval*  actionBy2 = CCScaleBy::actionWithDuration(2, 0.25f, 4.5f);
+    CCActionInterval*  actionTo = CCScaleTo::actionWithDuration( 2.0f, 0.5f);
+    CCActionInterval*  actionBy = CCScaleBy::actionWithDuration(2.0f , 1.0f, 10.0f);
+    CCActionInterval*  actionBy2 = CCScaleBy::actionWithDuration(2.0f, 5.0f, 1.0f);
     CCActionInterval*  actionByBack = actionBy->reverse();
 
-    m_tamara->runAction( actionTo);
-    m_grossini->runAction( CCSequence::actions(actionBy, actionByBack, NULL));
+    m_grossini->runAction( actionTo);
+    m_tamara->runAction( CCSequence::actions(actionBy, actionByBack->reverse(), NULL));
     m_kathia->runAction( CCSequence::actions(actionBy2, actionBy2->reverse(), NULL));
 }
 
@@ -658,9 +670,20 @@ void ActionAnimate::onEnter()
 	m_kathia->runAction(action3);
 }
 
+void ActionAnimate::onExit()
+{
+	ActionsDemo::onExit();
+	//TODO:[[NSNotificationCenter defaultCenter] removeObserver:observer_];
+}
+
+std::string ActionAnimate::title()
+{
+	return "Animation";
+}
+
 std::string ActionAnimate::subtitle()
 {
-    return "Animation";
+    return "Center: Manual animation. Border: using file format animation";
 }
 
 //------------------------------------------------------------------
@@ -1167,3 +1190,85 @@ std::string ActionFollow::subtitle()
 {
     return "Follow action";
 }
+
+void ActionTargeted::onEnter()
+{
+	ActionsDemo::onEnter();
+	centerSprites(2);
+
+
+	CCJumpBy* jump1 = CCJumpBy::actionWithDuration(2,CCPointZero,100,3);
+	CCJumpBy* jump2 = (CCJumpBy*)jump1->copy()->autorelease();
+	CCRotateBy* rot1 =  CCRotateBy::actionWithDuration(1, 360);
+	CCRotateBy* rot2 = (CCRotateBy*)rot1->copy()->autorelease();
+
+	CCTargetedAction *t1 = CCTargetedAction::actionWithTarget(m_kathia, jump2);
+	CCTargetedAction *t2 = CCTargetedAction::actionWithTarget(m_kathia, rot2);
+
+
+	CCSequence* seq = (CCSequence*)CCSequence::actions(jump1, t1, rot1, t2, NULL);
+	CCRepeatForever *always = CCRepeatForever::actionWithAction(seq);
+
+	m_tamara->runAction(always);
+}
+
+std::string ActionTargeted::title()
+{
+	return "ActionTargeted";
+}
+
+std::string ActionTargeted::subtitle()
+{
+	return "Action that runs on another target. Useful for sequences";
+}
+
+void Issue1288::onEnter()
+{
+	ActionsDemo::onEnter();
+	centerSprites(0);
+
+	CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
+	spr->setPosition(ccp(100, 100));
+	addChild(spr);
+
+	CCMoveBy* act1 = CCMoveBy::actionWithDuration(0.5, ccp(100, 0));
+	CCMoveBy* act2 = (CCMoveBy*)act1->reverse();
+	CCFiniteTimeAction* act3 = CCSequence::actions(act1, act2, NULL);
+	CCRepeat* act4 = CCRepeat::actionWithAction(act3, 2);
+
+	spr->runAction(act4);
+}
+
+std::string Issue1288::title()
+{
+	return "Issue 1288";
+}
+
+std::string Issue1288::subtitle()
+{
+	return "Sprite should end at the position where it started.";
+}
+
+void Issue1288_2::onEnter()
+{
+	ActionsDemo::onEnter();
+	centerSprites(0);
+
+	CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
+	spr->setPosition(ccp(100, 100));
+	addChild(spr);
+
+	CCMoveBy* act1 = CCMoveBy::actionWithDuration(0.5, ccp(100, 0));
+	spr->runAction(CCRepeat::actionWithAction(act1, 1));
+}
+
+std::string Issue1288_2::title()
+{
+	return "Issue 1288 #2";
+}
+
+std::string Issue1288_2::subtitle()
+{
+	return "Sprite should move 100 pixels, and stay there";
+}
+
