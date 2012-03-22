@@ -37,8 +37,11 @@ enum
     ACTION_ORBIT_LAYER,
     ACTION_FLLOW_LAYER,
 	ACTION_TARGETED_LAYER,
+	ACTION_ISSUE1305_LAYER,
+	ACTION_ISSUE1305_2_LAYER,
 	ACTION_ISSUE1288_LAYER,
 	ACTION_ISSUE1288_2_LAYER,
+	ACTION_ISSUE1327_LAYER,
     ACTION_LAYER_COUNT,
 };
 
@@ -279,6 +282,31 @@ public:
 	virtual std::string subtitle();
 };
 
+class Issue1305 : public ActionsDemo
+{
+public:
+	virtual void onEnter();
+	virtual void onExit();
+	void log(CCNode* pSender);
+	void addSprite(ccTime dt);
+	virtual std::string title();
+	virtual std::string subtitle();
+private:
+	CCSprite* m_pSpriteTmp;
+};
+
+class Issue1305_2 : public ActionsDemo
+{
+public:
+	virtual void onEnter();
+	void log1();
+	void log2();
+	void log3();
+	void log4();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
 class Issue1288 : public ActionsDemo
 {
 public:
@@ -293,6 +321,15 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
+};
+
+class Issue1327 : public ActionsDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string subtitle();
+	virtual std::string title();
+	void logSprRotation(CCNode* pSender);
 };
 
 #endif
