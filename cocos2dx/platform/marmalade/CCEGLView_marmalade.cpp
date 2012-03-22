@@ -121,7 +121,6 @@ CCEGLView::~CCEGLView()
 {
 	IW_CALLSTACK("CCEGLView::~CCEGLView");
 
-	CC_SAFE_DELETE(m_pDelegate);
     CC_SAFE_DELETE(m_pSet);
 	CC_SAFE_DELETE(m_pTouch);
 

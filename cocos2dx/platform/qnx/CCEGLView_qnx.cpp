@@ -120,8 +120,6 @@ CCEGLView::CCEGLView()
 CCEGLView::~CCEGLView()
 {
 	release();
-
-	CC_SAFE_DELETE(m_pDelegate);
 }
 
 void CCEGLView::initEGLFunctions()

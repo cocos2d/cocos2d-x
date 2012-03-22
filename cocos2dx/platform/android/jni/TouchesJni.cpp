@@ -166,14 +166,15 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 
 	jboolean Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeKeyDown(JNIEnv*  env, jobject thiz, jint keyCode)
 	{
+		CCDirector* pDirector = CCDirector::sharedDirector();
 		switch (keyCode)
 		{
 		case KEYCODE_BACK:
-			if (CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked))
+			if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked))
 				return JNI_TRUE;
 			break;
 		case KEYCODE_MENU:
-			if (CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked))
+			if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked))
 				return JNI_TRUE;
 			break;
 		default:

@@ -12,6 +12,11 @@ tests/ActionManagerTest/ActionManagerTest.cpp \
 tests/ActionsTest/ActionsTest.cpp \
 tests/ActionsEaseTest/ActionsEaseTest.cpp \
 tests/ActionsProgressTest/ActionsProgressTest.cpp \
+tests/Box2dTest/Box2dTest.cpp \
+tests/Box2DTestBed/Box2dView.cpp \
+tests/Box2DTestBed/GLES-Render.cpp \
+tests/Box2DTestBed/Test.cpp \
+tests/Box2DTestBed/TestEntries.cpp \
 tests/BugsTest/Bug-1159.cpp \
 tests/BugsTest/Bug-1174.cpp \
 tests/BugsTest/Bug-350.cpp \
@@ -23,6 +28,7 @@ tests/BugsTest/Bug-914.cpp \
 tests/BugsTest/BugsTest.cpp \
 tests/BugsTest/Bug-458/Bug-458.cpp \
 tests/BugsTest/Bug-458/QuestionContainerSprite.cpp \
+tests/ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.cpp \
 tests/ClickAndMoveTest/ClickAndMoveTest.cpp \
 tests/CocosDenshionTest/CocosDenshionTest.cpp \
 tests/CurlTest/CurlTest.cpp \
