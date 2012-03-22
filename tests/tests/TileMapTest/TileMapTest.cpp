@@ -1011,7 +1011,7 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
 	// can use any CCSprite and it will work OK.
 	CCTMXLayer* layer = map->layerNamed("trees");
 	m_tamara = layer->tileAt(ccp(0,11));
-    CCLOG("%@ vertexZ: %f", m_tamara, m_tamara->getVertexZ());
+    CCLOG("%p vertexZ: %f", m_tamara, m_tamara->getVertexZ());
 	m_tamara->retain();
 
 	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccpMult( ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR()));
