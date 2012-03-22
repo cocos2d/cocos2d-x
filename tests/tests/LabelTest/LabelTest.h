@@ -192,6 +192,28 @@ public:
     virtual std::string title();
 };
 
+class BitmapFontMultiLineAlignment : public AtlasDemo
+{
+public:
+	BitmapFontMultiLineAlignment();
+	~BitmapFontMultiLineAlignment();
+    void snapArrowsToEdge();
+	virtual std::string title();
+	virtual std::string subtitle();
+	void stringChanged(CCObject *sender);
+	void alignmentChanged(CCObject *sender);
+	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+
+public:
+	CCLabelBMFont *m_pLabelShouldRetain;
+	CCSprite *m_pArrowsBarShouldRetain;
+	CCSprite *m_pArrowsShouldRetain;
+	CCMenuItemFont *m_pLastSentenceItem, m_pLastAlignmentItem;
+	bool m_drag;
+};
+
 // we don't support linebreak mode
 
 #endif
