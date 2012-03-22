@@ -48,16 +48,6 @@ public:
     ~CCKeypadDispatcher();
 
     /**
-    @brief Returns the shared CCKeypadDispatcher object for the system.
-    */
-    static CCKeypadDispatcher* sharedDispatcher();
-
-    /**
-    @brief Release the shared CCKeypadDispatcher object from the system.
-    */
-    static void purgeSharedDispatcher();
-
-    /**
     @brief add delegate to concern keypad msg
     */
     void addDelegate(CCKeypadDelegate* pDelegate);

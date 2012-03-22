@@ -111,7 +111,8 @@ MenuLayer1::MenuLayer1()
 
 void MenuLayer1::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority+1, true);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority+1, true);
 }
 
 bool MenuLayer1::ccTouchBegan(CCTouch *touch, CCEvent * pEvent)
@@ -148,7 +149,8 @@ void MenuLayer1::menuCallbackConfig(CCObject* sender)
 
 void MenuLayer1::allowTouches(ccTime dt)
 {
-    CCTouchDispatcher::sharedDispatcher()->setPriority(kCCMenuTouchPriority+1, this);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->setPriority(kCCMenuTouchPriority+1, this);
     unscheduleAllSelectors();
     CCLog("TOUCHES ALLOWED AGAIN");
 }
@@ -156,7 +158,8 @@ void MenuLayer1::allowTouches(ccTime dt)
 void MenuLayer1::menuCallbackDisabled(CCObject* sender) 
 {
     // hijack all touch events for 5 seconds
-    CCTouchDispatcher::sharedDispatcher()->setPriority(kCCMenuTouchPriority-1, this);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->setPriority(kCCMenuTouchPriority-1, this);
     schedule(schedule_selector(MenuLayer1::allowTouches), 5.0f);
     CCLog("TOUCHES DISABLED FOR 5 SECONDS");
 }

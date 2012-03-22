@@ -22,6 +22,7 @@ src/constraints/cpSlideJoint.c \
 src/cpArbiter.c \
 src/cpArray.c \
 src/cpBB.c \
+src/cpBBTree.c \
 src/cpBody.c \
 src/cpCollision.c \
 src/cpHashSet.c \
@@ -32,6 +33,8 @@ src/cpSpaceComponent.c \
 src/cpSpaceHash.c \
 src/cpSpaceQuery.c \
 src/cpSpaceStep.c \
+src/cpSpatialIndex.c \
+src/cpSweep1D.c \
 src/cpVect.c
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/include/chipmunk

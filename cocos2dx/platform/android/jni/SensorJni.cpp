@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "JniHelper.h"
 #include <android/log.h>
 #include <jni.h>
-
+#include "CCDirector.h"
 
 #if 0
 #define  LOG_TAG    "SensorJni"
@@ -56,7 +56,8 @@ extern "C"
 //             (y - rcRect.origin.y) / fScreenScaleFactor, 
 //             z, 
 //             timeStamp);
-		cocos2d::CCAccelerometer::sharedAccelerometer()->update(x, y, z, timeStamp);
+		CCDirector* pDirector = CCDirector::sharedDirector();
+		pDirector->getAccelerometer()->update(x, y, z, timeStamp);
     }	
 
 	void enableAccelerometerJNI()
