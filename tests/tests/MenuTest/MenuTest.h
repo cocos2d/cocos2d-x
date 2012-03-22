@@ -4,14 +4,14 @@
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
 
-class MenuLayer1 : public CCLayer
+class MenuLayerMainMenu : public CCLayer
 {
 protected:
 	CCMenuItem*	m_disabledItem;
 
 public:
-	MenuLayer1(void);
-	~MenuLayer1();
+	MenuLayerMainMenu(void);
+	~MenuLayerMainMenu();
 
 public:
     virtual void registerWithTouchDispatcher();
@@ -26,6 +26,7 @@ public:
 	void menuCallbackDisabled(CCObject* pSender);
 	void menuCallbackEnable(CCObject* pSender);
 	void menuCallback2(CCObject* pSender);
+	void menuCallbackPriorityTest(CCObject* pSender);
 	void onQuit(CCObject* pSender);
 
 	//CREATE_NODE(MenuLayer1);
@@ -81,6 +82,23 @@ public:
 
 	//CREATE_NODE(MenuLayer4);
 };
+
+class MenuLayerPriorityTest : public CCLayer
+{
+public:
+	MenuLayerPriorityTest();
+	~MenuLayerPriorityTest();
+
+	void menuCallback(CCObject* pSender);
+	void disableMenuCallback(CCObject* pSender);
+	void enableMenuCallback();
+	void togglePriorityCallback(CCObject* pSender);
+private:
+	CCMenu* m_pMenu1;
+	CCMenu* m_pMenu2;
+	bool m_bPriority;
+};
+
 
 class MenuTestScene : public TestScene
 {
