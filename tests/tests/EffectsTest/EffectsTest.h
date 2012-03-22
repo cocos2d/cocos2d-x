@@ -26,7 +26,6 @@ public:
 	void nextCallback(CCObject* pSender);
 	void backCallback(CCObject* pSender);
 
-	void newOrientation();
 	void newScene();
 
 	static TextLayer* node();

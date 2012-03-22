@@ -165,11 +165,8 @@ void LayerTest1::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
 }
 
-void LayerTest1::updateSize(CCTouch*touch)
-{
-	CCPoint touchLocation = touch->locationInView();
-	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
-	
+void LayerTest1::updateSize(CCPoint &touchLocation)
+{	
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCSize newSize = CCSizeMake( fabs(touchLocation.x - s.width/2)*2, fabs(touchLocation.y - s.height/2)*2);
@@ -181,19 +178,28 @@ void LayerTest1::updateSize(CCTouch*touch)
 
 bool LayerTest1::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-	updateSize(touch);
+	CCPoint touchLocation = touch->locationInView();
+	touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
+
+	updateSize(touchLocation);
 
 	return true;
 }
 
 void LayerTest1::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-	updateSize(touch);
+	CCPoint touchLocation = touch->locationInView();
+	touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
+
+	updateSize(touchLocation);
 }
 
 void LayerTest1::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-	updateSize(touch);
+	CCPoint touchLocation = touch->locationInView();
+	touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
+
+	updateSize(touchLocation);
 }
 
 std::string LayerTest1::title()
@@ -270,8 +276,8 @@ void LayerTestBlend::newBlend(ccTime dt)
 
 	if( layer->getBlendFunc().dst == GL_ZERO )
     {
-        src = CC_BLEND_SRC;
-        dst = CC_BLEND_DST;
+        src = GL_SRC_ALPHA;
+        dst = GL_ONE_MINUS_SRC_ALPHA;
     }
 	else
     {
