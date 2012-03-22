@@ -209,7 +209,6 @@ CCEGLView::~CCEGLView()
 	release();
     CC_SAFE_DELETE(m_pSet);
     CC_SAFE_DELETE(m_pTouch);
-    CC_SAFE_DELETE(m_pDelegate);
 	CC_SAFE_DELETE(m_pEGL);
 	CC_SAFE_DELETE(m_pKeypad);
 }
