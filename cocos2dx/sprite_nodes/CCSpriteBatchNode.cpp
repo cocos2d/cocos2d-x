@@ -98,10 +98,12 @@ bool CCSpriteBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacity)
 	updateBlendFunc();
 
 	// no lazy alloc in this node
-    m_pChildren = CCArray::array();
-	m_pobDescendants = CCArray::array();
-    m_pChildren->retain();
-    m_pobDescendants->retain();
+    m_pChildren = new CCArray();
+    m_pChildren->initWithCapacity(capacity);
+
+	m_pobDescendants = new CCArray();
+    m_pobDescendants->initWithCapacity(capacity);
+
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 	return true;
 }
@@ -169,10 +171,10 @@ void CCSpriteBatchNode::visit(void)
 void CCSpriteBatchNode::addChild(CCNode *child, int zOrder, int tag)
 {
 	CCAssert(child != NULL, "child should not be null");
-
+    CCAssert(dynamic_cast<CCSprite*>(child) != NULL, "CCSpriteBatchNode only supports CCSprites as children");
 	CCSprite *pSprite = (CCSprite*)(child);
 	// check CCSprite is using the same texture id
-	CCAssert(pSprite->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName(), "");
+	CCAssert(pSprite->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
 
 	CCNode::addChild(child, zOrder, tag);
 
@@ -231,18 +233,7 @@ void CCSpriteBatchNode::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
 void CCSpriteBatchNode::removeAllChildrenWithCleanup(bool bCleanup)
 {
 	// Invalidate atlas index. issue #569
-	if (m_pChildren && m_pChildren->count() > 0)
-	{
-        CCObject* pObject = NULL;
-        CCARRAY_FOREACH(m_pChildren, pObject)
-        {
-            CCSprite* pChild = (CCSprite*) pObject;
-            if (pChild)
-            {
-                removeSpriteFromAtlas(pChild);
-            }
-        }
-	}
+    arrayMakeObjectsPerformSelectorWithObject(m_pobDescendants, &CCSprite::setBatchNode, NULL, CCSprite*);
 
 	CCNode::removeAllChildrenWithCleanup(bCleanup);
 
@@ -280,7 +271,7 @@ void CCSpriteBatchNode::sortAllChildren()
 		if (m_pChildren->count() > 0)
 		{
 			//first sort all children recursively based on zOrder
-			arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCSprite::sortAllChildren, CCSprite);
+			arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCSprite::sortAllChildren, CCSprite*);
 
 			int index=0;
 
@@ -403,7 +394,7 @@ void CCSpriteBatchNode::draw(void)
 
 	CC_NODE_DRAW_SETUP();
 
-	arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCSprite::updateTransform, CCSprite);
+	arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCSprite::updateTransform, CCSprite*);
 
 	ccGLBlendFunc( m_blendFunc.src, m_blendFunc.dst );
 
@@ -561,57 +552,41 @@ unsigned int CCSpriteBatchNode::atlasIndexForChild(CCSprite *pobSprite, int nZ)
 
 // add child helper
 
-void CCSpriteBatchNode::insertChild(CCSprite *pobSprite, unsigned int uIndex)
+void CCSpriteBatchNode::insertChild(CCSprite *pSprite, unsigned int uIndex)
 {
-	pobSprite->setBatchNode(this);
-	pobSprite->setAtlasIndex(uIndex);
-	pobSprite->setDirty(true);
+    pSprite->setBatchNode(this);
+    pSprite->setAtlasIndex(uIndex);
+    pSprite->setDirty(true);
 
-	if (m_pobTextureAtlas->getTotalQuads() == m_pobTextureAtlas->getCapacity())
-	{
-		increaseAtlasCapacity();
-	}
+    if(m_pobTextureAtlas->getTotalQuads() == m_pobTextureAtlas->getCapacity())
+    {
+        increaseAtlasCapacity();
+    }
 
-	ccV3F_C4B_T2F_Quad quad = pobSprite->getQuad();
-	m_pobTextureAtlas->insertQuad(&quad, uIndex);
+    ccV3F_C4B_T2F_Quad quad = pSprite->getQuad();
+    m_pobTextureAtlas->insertQuad(&quad, uIndex);
 
-	m_pobDescendants->insertObject(pobSprite, uIndex);
+    ccArray *descendantsData = m_pobDescendants->data;
 
-	// update indices
-	unsigned int i = 0;
-	if (m_pobDescendants && m_pobDescendants->count() > 0)
-	{
-        CCObject* pObject = NULL;
-        CCARRAY_FOREACH(m_pobDescendants, pObject)
-        {
-            CCSprite* pChild = (CCSprite*) pObject;
-            if (pChild)
-            {
-                if (i > uIndex)
-                {
-                    pChild->setAtlasIndex(pChild->getAtlasIndex() + 1);
-                }
+    ccArrayInsertObjectAtIndex(descendantsData, pSprite, uIndex);
 
-                ++i;
-            }
-        }
-	}	
+    // update indices
+    unsigned int i = uIndex+1;
+    
+    CCSprite* pChild = NULL;
+    for(; i<descendantsData->num; i++){
+        pChild = (CCSprite*)descendantsData->arr[i];
+        pChild->setAtlasIndex(pChild->getAtlasIndex() + 1);
+    }
 
-	// add children recursively
-	CCArray *pChildren = pobSprite->getChildren();
-	if (pChildren && pChildren->count() > 0)
-	{
-        CCObject* pObject = NULL;
-        CCARRAY_FOREACH(pChildren, pObject)
-        {
-            CCSprite* pChild = (CCSprite*) pObject;
-            if (pChild)
-            {
-                unsigned int uIndex = atlasIndexForChild(pChild, pChild->getZOrder());
-                insertChild(pChild, uIndex);
-            }
-        }
-	}
+    // add children recursively
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(pSprite->getChildren(), pObj)
+    {
+        pChild = (CCSprite*)pObj;
+        unsigned int idx = atlasIndexForChild(pChild, pChild->getZOrder());
+        insertChild(pChild, idx);
+    }
 }
 
 // addChild helper, faster than insertChild
@@ -754,18 +729,17 @@ CCSpriteBatchNode * CCSpriteBatchNode::addSpriteWithoutQuad(CCSprite*child, unsi
 
     // XXX: optimize with a binary search
     int i=0;
-    if (m_pobDescendants && m_pobDescendants->count() > 0)
+ 
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(m_pobDescendants, pObject)
     {
-        CCObject* pObject = NULL;
-        CCARRAY_FOREACH(m_pobDescendants, pObject)
+        CCSprite* pChild = (CCSprite*) pObject;
+        if (pChild && (pChild->getAtlasIndex() >= z))
         {
-            CCSprite* pChild = (CCSprite*) pObject;
-            if (pChild && (pChild->getAtlasIndex() >= z))
-            {
-                ++i;
-            }
+            ++i;
         }
     }
+    
     m_pobDescendants->insertObject(child, i);
 
     // IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array

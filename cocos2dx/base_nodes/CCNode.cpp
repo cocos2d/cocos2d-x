@@ -39,7 +39,7 @@ THE SOFTWARE.
 // externals
 #include "kazmath/GL/matrix.h"
 
-#if CC_COCOSNODE_RENDER_SUBPIXEL
+#if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
 #define RENDER_IN_SUBPIXEL (int)
