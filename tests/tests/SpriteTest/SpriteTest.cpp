@@ -3781,3 +3781,210 @@ string SpriteBatchNodeOffsetAnchorFlip::subtitle()
 {
 	return "issue #1078";
 }
+
+
+/// NodeSort
+
+NodeSort::NodeSort()
+{
+	m_pNode = CCNode::node();
+	addChild(m_pNode, 0, 0);
+
+	m_pSprite1 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
+	m_pSprite1->setPosition(CCPointMake(100, 160));
+	m_pNode->addChild(m_pSprite1, -6, 1);
+
+    m_pSprite2 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
+	m_pSprite2->setPosition(CCPointMake(164, 160));
+	m_pNode->addChild(m_pSprite2, -6, 2);
+
+	m_pSprite4 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
+	m_pSprite4->setPosition(CCPointMake(292, 160));
+	m_pNode->addChild(m_pSprite4, -3, 4);
+
+    m_pSprite3 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
+	m_pSprite3->setPosition(CCPointMake(228, 160));
+	m_pNode->addChild(m_pSprite3, -4, 3);
+
+	m_pSprite5 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
+	m_pSprite5->setPosition(CCPointMake(356, 160));
+	m_pNode->addChild(m_pSprite5, -3, 5);
+
+	schedule(schedule_selector(NodeSort::reorderSprite));
+}
+
+std::string NodeSort::title()
+{
+	return "node sort same index";
+}
+
+std::string NodeSort::subtitle()
+{
+	return "tag order in console should be 2,1,3,4,5";
+}
+
+void NodeSort::reorderSprite(ccTime dt)
+{
+	unschedule(schedule_selector(NodeSort::reorderSprite));
+
+	CCLog("Before reorder--");
+
+	//z-4
+	m_pNode->reorderChild((CCNode *)m_pNode->getChildren()->objectAtIndex(0), -6);
+
+	m_pNode->sortAllChildren();
+}
+
+/// SpriteBatchNodeReorderSameIndex
+SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
+{
+}
+
+std::string SpriteBatchNodeReorderSameIndex::title()
+{
+	return "";
+}
+
+std::string SpriteBatchNodeReorderSameIndex::subtitle()
+{
+	return "";
+}
+
+void SpriteBatchNodeReorderSameIndex::reorderSprite(ccTime dt)
+{
+	unschedule(schedule_selector(SpriteBatchNodeReorderSameIndex::reorderSprite));
+
+	m_pBatchNode->reorderChild(m_pSprite4, 4);
+	m_pBatchNode->reorderChild(m_pSprite5, 4);
+	m_pBatchNode->reorderChild(m_pSprite1, 4);
+
+	m_pBatchNode->sortAllChildren();
+	CCObject *child;
+	CCARRAY_FOREACH(m_pBatchNode->getDescendants(), child)
+	{
+		CCLog("tag %i", (int)((CCSprite *)child)->getTag());
+	}	
+}
+
+/// SpriteBatchNodeReorderOneChild
+SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
+{
+	/*
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/ghosts.plist");
+
+	CCSpriteBtachNode *aParent;
+	CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
+
+    //
+	// SpriteBatchNode: 3 levels of children
+	//
+	aParent = CCSpriteBatchNode::batchNodeWithFile("animations/ghosts.png");
+
+	m_pBatchNode = aParent;
+	addChild(aParent);
+
+	// parent
+	l1 = CCSprite::spriteWithSpriteFrameName();
+	*/
+}
+
+std::string SpriteBatchNodeReorderOneChild::title()
+{
+	return "";
+}
+
+std::string SpriteBatchNodeReorderOneChild::subtitle()
+{
+	return "";
+}
+
+void SpriteBatchNodeReorderOneChild::reorderSprite(ccTime dt)
+{
+}
+
+/// SpriteBatchNodeSkewNegativeScaleChildren
+SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildren()
+{
+}
+
+SpriteBatchNodeSkewNegativeScaleChildren::~SpriteBatchNodeSkewNegativeScaleChildren()
+{
+}
+
+std::string SpriteBatchNodeSkewNegativeScaleChildren::title()
+{
+	return "";
+}
+
+std::string SpriteBatchNodeSkewNegativeScaleChildren::subtitle()
+{
+	return "";
+}
+
+/// SpriteSkewNegativeScaleChildren
+SpriteSkewNegativeScaleChildren::SpriteSkewNegativeScaleChildren()
+{
+}
+
+SpriteSkewNegativeScaleChildren::~SpriteSkewNegativeScaleChildren()
+{
+}
+
+std::string SpriteSkewNegativeScaleChildren::title()
+{
+	return "";
+}
+
+std::string SpriteSkewNegativeScaleChildren::subtitle()
+{
+	return "";
+}
+
+/// SpriteDoubleResolution
+SpriteDoubleResolution::SpriteDoubleResolution()
+{
+}
+
+std::string SpriteDoubleResolution::title()
+{
+	return "";
+}
+
+std::string SpriteDoubleResolution::subtitle()
+{
+	return "";
+}
+
+
+/// AnimationCacheFile
+AnimationCacheFile::AnimationCacheFile()
+{
+}
+
+std::string AnimationCacheFile::title()
+{
+	return "";
+}
+
+std::string AnimationCacheFile::subtitle()
+{
+	return "";
+}
+
+
+/// SpriteBatchBug1217
+SpriteBatchBug1217::SpriteBatchBug1217()
+{
+}
+
+std::string SpriteBatchBug1217::title()
+{
+	return "";
+}
+
+std::string SpriteBatchBug1217::subtitle()
+{
+	return "";
+}
