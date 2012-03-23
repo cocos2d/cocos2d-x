@@ -8,7 +8,7 @@ enum {
 	kTagSprite2 = 3,
 };
 
-#define TEST_CASE_COUNT     30
+#define TEST_CASE_COUNT     32
 
 static int sceneIdx=-1;
 CCLayer* createTextureTest(int index)
@@ -77,6 +77,10 @@ CCLayer* createTextureTest(int index)
         pLayer = new TextureSizeTest(); break;
     case 29:
         pLayer = new TextureCache1(); break;
+    case 30:
+        pLayer = new TexturePVRRGB888(); break;
+    case 31:
+        pLayer = new TextureAsync(); break;
     default:
         break;
     }
@@ -681,6 +685,25 @@ std::string TexturePVRRGB565::title()
 	return "PVR + RGB 565 Test";
 }
 
+// TexturePVR RGB888
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+void TexturePVRRGB888::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgb888.pvr");
+    img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
+    addChild(img);
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+
+}
+std::string TexturePVRRGB888::title()
+{
+    return "PVR + RGB 888 Test";
+}
+
 //------------------------------------------------------------------
 //
 // TexturePVRA8
@@ -947,7 +970,7 @@ void TexturePixelFormat::onEnter()
 	// RGBA 8888 image (32-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
     CCSprite *sprite1 = CCSprite::spriteWithFile("Images/test-rgba1.png");
-	sprite1->setPosition(ccp(1*s.width/6, s.height/2+32));
+	sprite1->setPosition(ccp(1*s.width/7, s.height/2+32));
 	addChild(sprite1, 0);
 
 	// remove texture from texture manager	
@@ -956,7 +979,7 @@ void TexturePixelFormat::onEnter()
 	// RGBA 4444 image (16-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     CCSprite *sprite2 = CCSprite::spriteWithFile("Images/test-rgba1.png");
-	sprite2->setPosition(ccp(2*s.width/6, s.height/2-32));
+	sprite2->setPosition(ccp(2*s.width/7, s.height/2-32));
 	addChild(sprite2, 0);
 
 	// remove texture from texture manager	
@@ -965,29 +988,38 @@ void TexturePixelFormat::onEnter()
 	// RGB5A1 image (16-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
     CCSprite *sprite3 = CCSprite::spriteWithFile("Images/test-rgba1.png");
-	sprite3->setPosition(ccp(3*s.width/6, s.height/2+32));
+	sprite3->setPosition(ccp(3*s.width/7, s.height/2+32));
 	addChild(sprite3, 0);
 
-	// remove texture from texture manager	
-	CCTextureCache::sharedTextureCache()->removeTexture(sprite3->getTexture());
+    // remove texture from texture manager	
+    CCTextureCache::sharedTextureCache()->removeTexture(sprite3->getTexture());
 
-	// RGB565 image (16-bit)
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565);
+    // RGB888 image
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB888);
     CCSprite *sprite4 = CCSprite::spriteWithFile("Images/test-rgba1.png");
-	sprite4->setPosition(ccp(4*s.width/6, s.height/2-32));
-	addChild(sprite4, 0);
+    sprite4->setPosition(ccp(4*s.width/7, s.height/2-32));
+    addChild(sprite4, 0);
 
 	// remove texture from texture manager	
 	CCTextureCache::sharedTextureCache()->removeTexture(sprite4->getTexture());
 
-	// A8 image (8-bit)
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
+	// RGB565 image (16-bit)
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565);
     CCSprite *sprite5 = CCSprite::spriteWithFile("Images/test-rgba1.png");
-	sprite5->setPosition(ccp(5*s.width/6, s.height/2+32));
+	sprite5->setPosition(ccp(4*s.width/7, s.height/2+32));
 	addChild(sprite5, 0);
-	
+
 	// remove texture from texture manager	
 	CCTextureCache::sharedTextureCache()->removeTexture(sprite5->getTexture());
+
+	// A8 image (8-bit)
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
+    CCSprite *sprite6 = CCSprite::spriteWithFile("Images/test-rgba1.png");
+	sprite6->setPosition(ccp(5*s.width/7, s.height/2+32));
+	addChild(sprite6, 0);
+	
+	// remove texture from texture manager	
+	CCTextureCache::sharedTextureCache()->removeTexture(sprite6->getTexture());
 
     CCFadeOut* fadeout = CCFadeOut::actionWithDuration(2);
     CCFadeIn*  fadein  = CCFadeIn::actionWithDuration(2);
@@ -1016,7 +1048,7 @@ std::string TexturePixelFormat::title()
 
 std::string TexturePixelFormat::subtitle()
 {
-	return "Textures: RGBA8888, RGBA4444, RGB5A1, RGB565, A8";
+	return "Textures: RGBA8888, RGBA4444, RGB5A1, RGB888, RGB565, A8";
 }
 
 //------------------------------------------------------------------
@@ -1065,6 +1097,91 @@ std::string TextureBlend::subtitle()
 {
 	return "Testing 3 different blending modes";
 }
+
+
+//------------------------------------------------------------------
+//
+// TextureAsync
+//
+//------------------------------------------------------------------
+
+void TextureAsync::onEnter()
+{
+    TextureDemo::onEnter();
+
+    m_nImageOffset = 0;
+
+    CCSize size =CCDirector::sharedDirector()->getWinSize();
+
+    CCLabelTTF *label = CCLabelTTF::labelWithString("Loading...", "Marker Felt", 32);
+    label->setPosition(ccp( size.width/2, size.height/2));
+    addChild(label, 10);
+
+    CCScaleBy* scale = CCScaleBy::actionWithDuration(0.3f, 2);
+    CCScaleBy* scale_back = (CCScaleBy*)scale->reverse();
+    CCSequence* seq = (CCSequence*)CCSequence::actions(scale, scale_back, NULL);
+    label->runAction(CCRepeatForever::actionWithAction(seq));
+
+    scheduleOnce(schedule_selector(TextureAsync::loadImages), 1.0f);
+}
+
+TextureAsync::~TextureAsync()
+{
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+}
+
+void TextureAsync::loadImages(ccTime dt)
+{
+    for( int i=0;i < 8;i++) {
+        for( int j=0;j < 8; j++) {
+            char szSpriteName[100] = {0};
+            sprintf(szSpriteName, "Images/sprites_test/sprite-%d-%d.png", i, j);
+            CCTextureCache::sharedTextureCache()->addImageAsync(szSpriteName,this, callfuncO_selector(TextureAsync::imageLoaded));
+        }
+    }
+
+    CCTextureCache::sharedTextureCache()->addImageAsync("Images/background1.jpg",this, callfuncO_selector(TextureAsync::imageLoaded));
+    CCTextureCache::sharedTextureCache()->addImageAsync("Images/background2.jpg",this, callfuncO_selector(TextureAsync::imageLoaded));
+    CCTextureCache::sharedTextureCache()->addImageAsync("Images/background.png",this, callfuncO_selector(TextureAsync::imageLoaded));
+    CCTextureCache::sharedTextureCache()->addImageAsync("Images/atlastest.png",this, callfuncO_selector(TextureAsync::imageLoaded));
+    CCTextureCache::sharedTextureCache()->addImageAsync("Images/grossini_dance_atlas.png",this, callfuncO_selector(TextureAsync::imageLoaded));
+}
+
+
+void TextureAsync::imageLoaded(CCObject* pObj)
+{
+    CCTexture2D* tex = (CCTexture2D*)pObj;
+    CCDirector *director = CCDirector::sharedDirector();
+
+    //CCAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+
+    // IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
+
+    // This test just creates a sprite based on the Texture
+
+    CCSprite *sprite = CCSprite::spriteWithTexture(tex);
+    sprite->setAnchorPoint(ccp(0,0));
+    addChild(sprite, -1);
+
+    CCSize size = director->getWinSize();
+    int i = m_nImageOffset * 32;
+    sprite->setPosition(ccp( i % (int)size.width, (i / (int)size.width) * 32 ));
+
+    m_nImageOffset++;
+
+    CCLog("Image loaded: %p", tex);
+}
+
+std::string TextureAsync::title()
+{
+    return "Texture Async Load";
+}
+
+std::string TextureAsync::subtitle()
+{
+    return "Textures should load while an animation is being run";
+}
+
 
 //------------------------------------------------------------------
 //
