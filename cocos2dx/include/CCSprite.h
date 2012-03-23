@@ -155,6 +155,9 @@ public:
 	 */
 	static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
     
+	/** Creates an sprite.
+	 */
+	static CCSprite* node();
 public:
     CCSprite(void);
 	virtual ~CCSprite(void);
@@ -213,74 +216,74 @@ public:
 	 The rect used will be the size of the texture.
 	 The offset will be (0,0).
 	 */
-    bool initWithTexture(CCTexture2D *pTexture);
+    virtual bool initWithTexture(CCTexture2D *pTexture);
 
 	/** Initializes an sprite with a texture and a rect.
 	 The offset will be (0,0).
 	 */
-    bool initWithTexture(CCTexture2D *pTexture, const CCRect& rect);
+    virtual bool initWithTexture(CCTexture2D *pTexture, const CCRect& rect);
 
 	/** Initializes an sprite with a texture and a rect in points, optionally rotated.
 	 The offset will be (0,0).
 	 IMPORTANT: This is the designated initializer.
 	 */
-	bool initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated);
+	virtual bool initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated);
 
 	// Initializes an sprite with an sprite frame.
-    bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+    virtual bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
 	/** Initializes an sprite with an sprite frame name.
 	 An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
 	 If the CCSpriteFrame doesn't exist it will raise an exception.
 	 @since v0.9
 	 */
-    bool initWithSpriteFrameName(const char *pszSpriteFrameName);
+    virtual bool initWithSpriteFrameName(const char *pszSpriteFrameName);
 
 	/** Initializes an sprite with an image filename.
 	 The rect used will be the size of the image.
 	 The offset will be (0,0).
 	 */
-    bool initWithFile(const char *pszFilename);
+    virtual bool initWithFile(const char *pszFilename);
 
 	/** Initializes an sprite with an image filename, and a rect.
 	 The offset will be (0,0).
 	 */
-    bool initWithFile(const char *pszFilename, const CCRect& rect);
+    virtual bool initWithFile(const char *pszFilename, const CCRect& rect);
 
 	// BatchNode methods
 
 	/** updates the quad according the the rotation, position, scale values. */
-	void updateTransform(void);
+	virtual void updateTransform(void);
 
 	/** updates the texture rect of the CCSprite in points. 
 	It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
 	*/
-     void setTextureRect(const CCRect& rect);
+     virtual void setTextureRect(const CCRect& rect);
 
 	 /** set the texture rect, rectRotated and untrimmed size of the CCSprite in points.
 	 It will update the texture coordinates and the vertex rectangle.
 	 */
-	 void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
+	 virtual void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
 
 	/** set the vertex rect.
 	 It will be called internally by setTextureRect. Useful if you want to create 2x images from SD images in Retina Display.
 	 Do not call it manually. Use setTextureRect instead.
 	 */
-	 void setVertexRect(const CCRect& rect);
+	 virtual void setVertexRect(const CCRect& rect);
 
 	// Frames
 
 	/** sets a new display frame to the CCSprite. */
-	void setDisplayFrame(CCSpriteFrame *pNewFrame);
+	virtual void setDisplayFrame(CCSpriteFrame *pNewFrame);
 
 	/** returns whether or not a CCSpriteFrame is being displayed */
-	bool isFrameDisplayed(CCSpriteFrame *pFrame);
+	virtual bool isFrameDisplayed(CCSpriteFrame *pFrame);
 
 	/** returns the current displayed frame. */
-	CCSpriteFrame* displayFrame(void);
+	virtual CCSpriteFrame* displayFrame(void);
 
-	CCSpriteBatchNode* getBatchNode(void);
-	void setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
+	virtual CCSpriteBatchNode* getBatchNode(void);
+	virtual void setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
 
 	// Animation
 
@@ -288,7 +291,7 @@ public:
 	The animation name will be get from the CCAnimationCache
 	@since v0.99.5
 	*/
-	void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
+	virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
 protected:
 	virtual void setTextureCoords(CCRect rect);

@@ -483,7 +483,6 @@ public:
 	SpriteBatchNodeReorderOneChild();
 	void reorderSprite(ccTime dt);
 	virtual std::string title();
-    virtual std::string subtitle();
 private:
 	CCSpriteBatchNode *m_pBatchNode;
 	CCSprite *m_pReorderSprite;
