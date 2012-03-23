@@ -216,15 +216,14 @@ void CCAnimationCache::addAnimationsWithDictionary(CCDictionary* dictionary)
 	if( properties )
 	{
 		version = atoi(valueForKey("format", properties));
-	}
+		CCArray* spritesheets = (CCArray*)properties->objectForKey("spritesheets");
 
-	CCArray* spritesheets = (CCArray*)properties->objectForKey("spritesheets");
-
-	CCObject* pObj = NULL;
-	CCARRAY_FOREACH(spritesheets, pObj)
-	{
-		CCString* name = (CCString*)(pObj);
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->c_str());
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH(spritesheets, pObj)
+		{
+			CCString* name = (CCString*)(pObj);
+			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->c_str());
+		}
 	}
 
 	switch (version) {
