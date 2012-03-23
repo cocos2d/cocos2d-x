@@ -441,6 +441,96 @@ public:
     virtual std::string subtitle();
 };
 
+class NodeSort : public SpriteTestDemo
+{
+public:
+	NodeSort();
+
+	virtual std::string title();
+    virtual std::string subtitle();
+	void reorderSprite(ccTime dt);
+
+private:
+	CCNode *m_pNode;
+	CCSprite *m_pSprite1;
+    CCSprite *m_pSprite2;
+	CCSprite *m_pSprite3;
+	CCSprite *m_pSprite4;
+	CCSprite *m_pSprite5;
+};
+
+class SpriteBatchNodeReorderSameIndex : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeReorderSameIndex();
+	
+	virtual std::string title();
+    virtual std::string subtitle();
+	void reorderSprite(ccTime dt);
+
+private:
+	CCSpriteBatchNode *m_pBatchNode;
+	CCSprite *m_pSprite1;
+    CCSprite *m_pSprite2;
+	CCSprite *m_pSprite3;
+	CCSprite *m_pSprite4;
+	CCSprite *m_pSprite5;
+};
+
+class SpriteBatchNodeReorderOneChild : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeReorderOneChild();
+	void reorderSprite(ccTime dt);
+	virtual std::string title();
+    virtual std::string subtitle();
+private:
+	CCSpriteBatchNode *m_pBatchNode;
+	CCSprite *m_pReorderSprite;
+};
+
+class SpriteBatchNodeSkewNegativeScaleChildren : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeSkewNegativeScaleChildren();
+	~SpriteBatchNodeSkewNegativeScaleChildren();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class SpriteSkewNegativeScaleChildren : public SpriteTestDemo
+{
+public:
+	SpriteSkewNegativeScaleChildren();
+	~SpriteSkewNegativeScaleChildren();
+	virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class SpriteDoubleResolution : public SpriteTestDemo
+{
+public:
+	SpriteDoubleResolution();
+	virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class AnimationCacheFile : public SpriteTestDemo
+{
+public:
+	AnimationCacheFile();
+	virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class SpriteBatchBug1217 : public SpriteTestDemo
+{
+public:
+	SpriteBatchBug1217();
+	virtual std::string title();
+    virtual std::string subtitle();
+};
+
 class SpriteTestScene : public TestScene
 {
 public:
