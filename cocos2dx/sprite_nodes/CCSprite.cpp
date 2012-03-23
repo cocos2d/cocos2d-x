@@ -137,6 +137,20 @@ CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 	return spriteWithSpriteFrame(pFrame);
 }
 
+CCSprite* CCSprite::node()
+{
+	CCSprite *pSprite = new CCSprite();
+	if (pSprite && pSprite->init())
+	{
+		pSprite->autorelease();
+	}
+	else
+	{
+		CC_SAFE_DELETE(pSprite);
+	}
+	return pSprite;
+}
+
 bool CCSprite::init(void)
 {
 	return initWithTexture(NULL, CCRectZero);
@@ -505,7 +519,7 @@ void CCSprite::updateTransform(void)
 
 	// recursively iterate over children
 	if( m_bHasChildren ) {
-		arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCSprite::updateTransform, CCSprite);
+		arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCSprite::updateTransform, CCSprite*);
 	}
 #if CC_SPRITE_DEBUG_DRAW
 	// draw bounding box
@@ -701,7 +715,7 @@ void CCSprite::sortAllChildren()
 
 		if ( m_pobBatchNode)
 		{
-			arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCSprite::sortAllChildren, CCSprite);
+			arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCSprite::sortAllChildren, CCSprite*);
 		}
 
 		m_bReorderChildDirty = false;
