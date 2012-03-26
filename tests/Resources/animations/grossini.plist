@@ -2,255 +2,281 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>texture</key>
+	<dict>
+		<key>width</key>
+		<integer>512</integer>
+		<key>height</key>
+		<integer>256</integer>
+	</dict>
 	<key>frames</key>
 	<dict>
 		<key>grossini_dance_01.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{2, 2}, {51, 109}}</string>
-			<key>offset</key>
-			<string>{0, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {51, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_15.png</string>
-			</array>
+			<key>x</key>
+			<integer>347</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>51</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_02.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{55, 2}, {63, 109}}</string>
-			<key>offset</key>
-			<string>{-6, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {63, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_16.png</string>
-			</array>
+			<key>x</key>
+			<integer>215</integer>
+			<key>y</key>
+			<integer>111</integer>
+			<key>width</key>
+			<integer>63</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>-6</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_03.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{120, 2}, {63, 109}}</string>
-			<key>offset</key>
-			<string>{-6, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {63, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_17.png</string>
-			</array>
+			<key>x</key>
+			<integer>151</integer>
+			<key>y</key>
+			<integer>111</integer>
+			<key>width</key>
+			<integer>63</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>-6</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_04.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{185, 2}, {74, 109}}</string>
-			<key>offset</key>
-			<string>{-0.5, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {74, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_18.png</string>
-			</array>
+			<key>x</key>
+			<integer>1</integer>
+			<key>y</key>
+			<integer>111</integer>
+			<key>width</key>
+			<integer>74</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>-0.5</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_05.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{261, 2}, {74, 109}}</string>
-			<key>offset</key>
-			<string>{-0.5, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {74, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_19.png</string>
-			</array>
+			<key>x</key>
+			<integer>76</integer>
+			<key>y</key>
+			<integer>111</integer>
+			<key>width</key>
+			<integer>74</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>-0.5</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_06.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{337, 2}, {63, 109}}</string>
-			<key>offset</key>
-			<string>{-6, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {63, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_20.png</string>
-			</array>
+			<key>x</key>
+			<integer>399</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>63</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>-6</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_07.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{402, 2}, {63, 109}}</string>
-			<key>offset</key>
-			<string>{-6, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {63, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_21.png</string>
-			</array>
+			<key>x</key>
+			<integer>105</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>63</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>-6</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_08.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{2, 113}, {51, 109}}</string>
-			<key>offset</key>
-			<string>{0, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {51, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_22.png</string>
-			</array>
+			<key>x</key>
+			<integer>1</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>51</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_09.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{55, 113}, {51, 109}}</string>
-			<key>offset</key>
-			<string>{0, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {51, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_23.png</string>
-			</array>
+			<key>x</key>
+			<integer>295</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>51</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_10.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{108, 113}, {62, 109}}</string>
-			<key>offset</key>
-			<string>{5.5, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {62, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_24.png</string>
-			</array>
+			<key>x</key>
+			<integer>232</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>62</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>5.5</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_11.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{172, 113}, {62, 109}}</string>
-			<key>offset</key>
-			<string>{5.5, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {62, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_25.png</string>
-			</array>
+			<key>x</key>
+			<integer>169</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>62</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>5.5</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_12.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{236, 113}, {51, 106}}</string>
-			<key>offset</key>
-			<string>{0, -2.5}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 10}, {51, 106}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_26.png</string>
-			</array>
+			<key>x</key>
+			<integer>279</integer>
+			<key>y</key>
+			<integer>111</integer>
+			<key>width</key>
+			<integer>51</integer>
+			<key>height</key>
+			<integer>106</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-2.5</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_13.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{289, 113}, {51, 109}}</string>
-			<key>offset</key>
-			<string>{0, -1}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {51, 109}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_27.png</string>
-			</array>
+			<key>x</key>
+			<integer>53</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>51</integer>
+			<key>height</key>
+			<integer>109</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_14.png</key>
 		<dict>
-			<key>frame</key>
-			<string>{{342, 113}, {51, 106}}</string>
-			<key>offset</key>
-			<string>{0, -2.5}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 10}, {51, 106}}</string>
-			<key>sourceSize</key>
-			<string>{85, 121}</string>
-			<key>aliases</key>
-			<array>
-				<string>grossini_dance_28.png</string>
-			</array>
+			<key>x</key>
+			<integer>331</integer>
+			<key>y</key>
+			<integer>111</integer>
+			<key>width</key>
+			<integer>51</integer>
+			<key>height</key>
+			<integer>106</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-2.5</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
-	</dict>
-	<key>metadata</key>
-	<dict>
-        <key>textureFileName</key>
-        <string>grossini.pvr.gz</string>
-		<key>format</key>
-		<integer>2</integer>
-		<key>size</key>
-		<string>{512, 256}</string>
 	</dict>
 </dict>
 </plist>
