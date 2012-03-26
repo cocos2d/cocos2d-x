@@ -636,6 +636,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCTransitionProgress.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\ccTypes.h"
 				>
 			</File>
@@ -685,6 +689,10 @@
 			</File>
 			<File
 				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp"
 				>
 			</File>
 		</Filter>
