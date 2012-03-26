@@ -59,6 +59,32 @@ CCArray* CCArray::arrayWithObject(CCObject* pObject)
 	return pArray;
 }
 
+CCArray* CCArray::arrayWithObjects(CCObject* pObject, ...)
+{
+    va_list args;
+    va_start(args,pObject);
+    
+    CCArray* pArray = array();
+    if (pArray && pObject)
+    {
+        pArray->addObject(pObject);
+        CCObject *i = va_arg(args, CCObject*);
+        while(i) 
+        {
+            pArray->addObject(i);
+            i = va_arg(args, CCObject*);
+        }
+    }
+    else
+    {
+        CC_SAFE_DELETE(pArray);
+    }
+
+    va_end(args);
+    
+    return pArray;
+}
+
 CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
 {
     CCArray* pArray = new CCArray();
@@ -95,6 +121,40 @@ bool CCArray::initWithObject(CCObject* pObject)
 		addObject(pObject);
 	}
 	return bRet;
+}
+
+/** Initializes an array with some objects */
+bool CCArray::initWithObjects(CCObject* pObject, ...)
+{
+    bool bRet = false;
+    do 
+    {
+        CC_BREAK_IF(pObject != NULL);
+
+        va_list args;
+        va_start(args, pObject);
+
+        CCArray* pArray = new CCArray();
+        if (pArray && pObject)
+        {
+            pArray->addObject(pObject);
+            CCObject* i = va_arg(args, CCObject*);
+            while(i) 
+            {
+                pArray->addObject(i);
+                i = va_arg(args, CCObject*);
+            }
+            bRet = true;
+        }
+        else
+        {
+            CC_SAFE_DELETE(pArray);
+        }
+        va_end(args);
+
+    } while (false);
+
+    return bRet;
 }
 
 bool CCArray::initWithCapacity(unsigned int capacity)

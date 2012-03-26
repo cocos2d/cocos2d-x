@@ -88,6 +88,7 @@ THE SOFTWARE.
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
 #include "CCProgressTimer.h"
+#include "CCTransitionProgress.h"
 
 // havn't implement on wophone
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE)

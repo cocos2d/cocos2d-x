@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <map>
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
+#include "CCData.h"
 #include "ccMacros.h"
 #include "CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
@@ -156,9 +157,17 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
 	m_pLayers = CCArray::array();
 	m_pLayers->retain();
 
-	m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFileName);
-	m_sResources = resourcePath;
-	m_pObjectGroups = CCArray::array();
+    if (tmxFileName != NULL)
+    {
+        m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFileName);
+    }
+	
+    if (resourcePath != NULL)
+    {
+        m_sResources = resourcePath;
+    }
+	
+	m_pObjectGroups = CCArray::arrayWithCapacity(4);
 	m_pObjectGroups->retain();
 
 	m_pProperties = new CCDictionary();
@@ -172,13 +181,13 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
 }
 bool CCTMXMapInfo::initWithXML(const char* tmxString, const char* resourcePath)
 {
-	internalInit("", resourcePath);
+	internalInit(NULL, resourcePath);
 	return parseXMLString(tmxString);
 }
 
 bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
 {
-	internalInit(tmxFile, "");
+	internalInit(tmxFile, NULL);
 	return parseXMLFile(m_sTMXFileName.c_str());
 }
 
@@ -258,14 +267,28 @@ void CCTMXMapInfo::setTileProperties(CCDictionary* tileProperties)
 
 bool CCTMXMapInfo::parseXMLString(const char *xmlString)
 {
-	// TODO:
-	return false;
+    int len = strlen(xmlString);
+    if (xmlString == NULL || len <= 0) 
+    {
+        return false;
+    }
+
+    CCSAXParser parser;
+
+    if (false == parser.init("UTF-8") )
+    {
+        return false;
+    }
+
+    parser.setDelegator(this);
+
+    return parser.parse(xmlString, len);
 }
 
-bool CCTMXMapInfo::parseXMLData(const char* data)
+bool CCTMXMapInfo::parseXMLData(const CCData* data)
 {
-	// TODO:
-	return false;
+    //TODO: implementation.
+    return false;
 }
 
 bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
@@ -279,7 +302,7 @@ bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 	
 	parser.setDelegator(this);
 
-	return parser.parse(xmlFilename);;	
+	return parser.parse(xmlFilename);	
 }
 
 
@@ -334,8 +357,21 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 		std::string externalTilesetFilename = valueForKey("source", attributeDict);
 		if (externalTilesetFilename != "")
 		{
-			externalTilesetFilename = CCFileUtils::fullPathFromRelativeFile(externalTilesetFilename.c_str(), pTMXMapInfo->getTMXFileName());
-			pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
+            if (m_sTMXFileName.length() == 0)
+            {
+                string pszFullPath = CCFileUtils::fullPathFromRelativePath(m_sResources.c_str());
+                if (pszFullPath.find_last_of("/\\") != pszFullPath.length()-1)
+                {
+                    pszFullPath.append("/");
+                }
+                
+                externalTilesetFilename = CCFileUtils::fullPathFromRelativeFile(externalTilesetFilename.c_str(), pszFullPath.c_str()  );
+            }
+            else
+            {
+			    externalTilesetFilename = CCFileUtils::fullPathFromRelativeFile(externalTilesetFilename.c_str(), pTMXMapInfo->getTMXFileName());
+            }
+            pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
 		}
 		else
 		{
@@ -419,9 +455,21 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 		CCTMXTilesetInfo* tileset = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
 
 		// build full path
-		std::string imagename = valueForKey("source", attributeDict);		
-		tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativeFile(imagename.c_str(), pTMXMapInfo->getTMXFileName());
+		std::string imagename = valueForKey("source", attributeDict);
+        if (m_sTMXFileName.length() == 0)
+        {
+            string pszFullPath = CCFileUtils::fullPathFromRelativePath(m_sResources.c_str());
+            if (pszFullPath.find_last_of("/\\") != pszFullPath.length()-1)
+            {
+                pszFullPath.append("/");
+            }
 
+            tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativeFile(imagename.c_str(), pszFullPath.c_str()  );
+        }
+        else
+        {
+            tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativeFile(imagename.c_str(), pTMXMapInfo->getTMXFileName());
+        }
 	} 
 	else if(elementName == "data")
 	{
@@ -457,51 +505,52 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 		// The value for "type" was blank or not a valid class name
 		// Create an instance of TMXObjectInfo to store the object and its properties
 		CCDictionary *dict = new CCDictionary();
+        // Parse everything automatically
+        const char* pArray[] = {"name", "type", "width", "height", "gid"};
+        
+        for( int i = 0; i < sizeof(pArray)/sizeof(pArray[0]); ++i )
+        {
+            const char* key = pArray[i];
+            CCString* obj = new CCString(valueForKey(key, attributeDict));
+            if( obj )
+            {
+                obj->autorelease();
+                dict->setObject(obj, key);
+            }
+        }
 
-		// Set the name of the object to the value for "name"
-		std::string key = "name";
-		CCString *value = new CCString(valueForKey("name", attributeDict));
-		dict->setObject(value, key.c_str());
-		value->release();
+        // But X and Y since they need special treatment
+        // X
 
-		// Assign all the attributes as key/name pairs in the properties dictionary
-		key = "type";
-		value = new CCString(valueForKey("type", attributeDict));
-		dict->setObject(value, key.c_str());
-		value->release();
+        const char* value = valueForKey("x", attributeDict);
+        if( value ) 
+        {
+            int x = atoi(value) + (int)objectGroup->getPositionOffset().x;
+            sprintf(buffer, "%d", x);
+            CCString* pStr = new CCString(buffer);
+            pStr->autorelease();
+            dict->setObject(pStr, "x");
+        }
 
-		int x = atoi(valueForKey("x", attributeDict)) + (int)objectGroup->getPositionOffset().x;
-		key = "x";
-		sprintf(buffer, "%d", x);
-		value = new CCString(buffer);
-		dict->setObject(value, key.c_str());
-		value->release();
+        // Y
+        value = valueForKey("y", attributeDict);
+        if( value )  {
+            int y = atoi(value) + (int)objectGroup->getPositionOffset().y;
 
-		int y = atoi(valueForKey("y", attributeDict)) + (int)objectGroup->getPositionOffset().y;
-		// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
-		y = (int)(pTMXMapInfo->getMapSize().height * pTMXMapInfo->getTileSize().height) - y - atoi(valueForKey("height", attributeDict));
-		key = "y";
-		sprintf(buffer, "%d", y);
-		value = new CCString(buffer);
-		dict->setObject(value, key.c_str());
-		value->release();
+            // Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
+            y = (int)(m_tMapSize.height * m_tTileSize.height) - y - atoi(valueForKey("height", attributeDict));
+            sprintf(buffer, "%d", y);
+            CCString* pStr = new CCString(buffer);
+            pStr->autorelease();
+            dict->setObject(pStr, "y");
+        }
 
-		key = "width";
-		value = new CCString(valueForKey("width", attributeDict));
-		dict->setObject(value, key.c_str());
-		value->release();
+        // Add the object to the objectGroup
+        objectGroup->getObjects()->addObject(dict);
+        dict->release();
 
-		key = "height";
-		value = new CCString(valueForKey("height", attributeDict));
-		dict->setObject(value, key.c_str());
-		value->release();
-
-		// Add the object to the objectGroup
-		objectGroup->getObjects()->addObject(dict);
-		dict->release();
-
-		// The parent element is now "object"
-		pTMXMapInfo->setParentElement(TMXPropertyObject);
+ 		// The parent element is now "object"
+ 		pTMXMapInfo->setParentElement(TMXPropertyObject);
 
 	} 
 	else if(elementName == "property")
@@ -561,7 +610,23 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 			dict->setObject(propertyValue, propertyName);
 			propertyValue->release();
 		}
-	}
+    }
+    else if (elementName == "polygon") 
+    {
+        // find parent object's dict and add polygon-points to it
+        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
+ //TODO:       dict->setObject(attributeDict objectForKey:@"points"] forKey:@"polygonPoints"];
+
+    } 
+    else if (elementName == "polyline")
+    {
+        // find parent object's dict and add polyline-points to it
+        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
+ //TODO:       dict->setObject:[attributeDict objectForKey:@"points"] forKey:@"polylinePoints"];
+    }
+
 	if (attributeDict)
 	{
 		attributeDict->clear();

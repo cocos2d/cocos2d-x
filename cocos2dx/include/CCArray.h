@@ -78,6 +78,8 @@ public:
     static CCArray* array();
 	/** Create an array with one object */
 	static CCArray* arrayWithObject(CCObject* pObject);
+    /** Create an array with some objects */
+    static CCArray* arrayWithObjects(CCObject* pObject, ...);
 	/** Create an array with capacity */
     static CCArray* arrayWithCapacity(unsigned int capacity);
 	/** Create an array with an existing array */
@@ -87,6 +89,8 @@ public:
     bool init();
 	/** Initializes an array with one object */
 	bool initWithObject(CCObject* pObject);
+    /** Initializes an array with some objects */
+    bool initWithObjects(CCObject* pObject, ...);
 	/** Initializes an array with capacity */
     bool initWithCapacity(unsigned int capacity);
 	/** Initializes an array with an existing array */
