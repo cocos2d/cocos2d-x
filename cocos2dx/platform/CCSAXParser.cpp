@@ -47,17 +47,8 @@ bool CCSAXParser::init(const char *pszEncoding)
 	return true;
 }
 
-bool CCSAXParser::parse(const char *pszFile)
+bool CCSAXParser::parse(const char* pXMLData, unsigned int uDataLength)
 {
-	CCFileData data(pszFile, "rt");
-	unsigned long size = data.getSize();
-	char *pBuffer = (char*) data.getBuffer();
-	
-	if (!pBuffer)
-	{
-		return false;
-	}
-		
 	/*
 	 * this initialize the library and check potential ABI mismatches
 	 * between the version it was compiled for and the actual shared
@@ -72,7 +63,7 @@ bool CCSAXParser::parse(const char *pszFile)
 	saxHandler.endElement = &CCSAXParser::endElement;
 	saxHandler.characters = &CCSAXParser::textHandler;
 	
-	int result = xmlSAXUserParseMemory( &saxHandler, this, pBuffer, size );
+	int result = xmlSAXUserParseMemory( &saxHandler, this, pXMLData, uDataLength );
 	if ( result != 0 )
 	{
 		return false;
@@ -89,6 +80,19 @@ bool CCSAXParser::parse(const char *pszFile)
 #endif
 	
 	return true;
+}
+
+bool CCSAXParser::parse(const char *pszFile)
+{
+	CCFileData data(pszFile, "rt");
+	unsigned long size = data.getSize();
+	char *pBuffer = (char*) data.getBuffer();
+	
+	if (!pBuffer)
+	{
+		return false;
+	}
+    return parse(pBuffer, size);
 }
 
 void CCSAXParser::startElement(void *ctx, const CC_XML_CHAR *name, const CC_XML_CHAR **atts)

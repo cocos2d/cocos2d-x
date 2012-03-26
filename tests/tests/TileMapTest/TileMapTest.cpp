@@ -397,7 +397,7 @@ void TMXReadWriteTest::updateCol(ccTime dt)
 
 void TMXReadWriteTest::repaintWithGID(ccTime dt)
 {
-//	[self unschedule:_cmd);
+//	unschedule:_cmd);
 	
 	CCTMXTiledMap* map = (CCTMXTiledMap*)getChildByTag(kTagTileMap);
 	CCTMXLayer *layer = (CCTMXLayer*)map->getChildByTag(0);
@@ -1116,6 +1116,171 @@ std::string TMXOrthoMoveLayer::subtitle()
 
 //------------------------------------------------------------------
 //
+// TMXTilePropertyTest
+//
+//------------------------------------------------------------------
+
+TMXTilePropertyTest::TMXTilePropertyTest()
+{
+    CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/ortho-tile-property.tmx");
+    addChild(map ,0 ,kTagTileMap);
+
+    for(int i=1;i<=20;i++){
+        CCLog("GID:%i, Properties:%p", i, map->propertiesForGID(i));
+    }
+}
+
+std::string TMXTilePropertyTest::title()
+{
+    return "TMX Tile Property Test";
+}
+
+std::string TMXTilePropertyTest::subtitle()
+{
+    return "In the console you should see tile properties";
+}
+
+//------------------------------------------------------------------
+//
+// TMXOrthoFlipTest
+//
+//------------------------------------------------------------------
+
+TMXOrthoFlipTest::TMXOrthoFlipTest()
+{
+    CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/ortho-rotation-test.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    CCSize s = map->getContentSize();
+    CCLog("ContentSize: %f, %f", s.width,s.height);
+
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(map->getChildren(), pObj)
+    {
+        CCSpriteBatchNode* child = (CCSpriteBatchNode*)pObj;
+        child->getTexture()->setAntiAliasTexParameters();
+    }
+
+    CCScaleBy* action = CCScaleBy::actionWithDuration(2, 0.5f);
+    map->runAction(action);
+}
+
+std::string TMXOrthoFlipTest::title()
+{
+    return "TMX tile flip test";
+}
+
+//------------------------------------------------------------------
+//
+// TMXOrthoFlipRunTimeTest
+//
+//------------------------------------------------------------------
+
+TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
+{
+    CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/ortho-rotation-test.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    CCSize s = map->getContentSize();
+    CCLog("ContentSize: %f, %f", s.width,s.height);
+
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(map->getChildren(), pObj)
+    {
+        CCSpriteBatchNode* child = (CCSpriteBatchNode*)pObj;
+        child->getTexture()->setAntiAliasTexParameters();
+    }
+
+    CCScaleBy* action = CCScaleBy::actionWithDuration(2, 0.5f);
+    map->runAction(action);
+
+    schedule(schedule_selector(TMXOrthoFlipRunTimeTest::flipIt), 1.0f);
+}
+
+std::string TMXOrthoFlipRunTimeTest::title()
+{
+    return "TMX tile flip run time test";
+}
+
+std::string TMXOrthoFlipRunTimeTest::subtitle()
+{
+    return "in 2 sec bottom left tiles will flip";
+}
+
+void TMXOrthoFlipRunTimeTest::flipIt(ccTime dt)
+{
+    CCTMXTiledMap *map = (CCTMXTiledMap*) getChildByTag(kTagTileMap); 
+    CCTMXLayer *layer = map->layerNamed("Layer 0"); 
+
+    //blue diamond 
+    CCPoint tileCoord = ccp(1,10);
+    int flags;
+    unsigned int GID = layer->tileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    // Vertical
+    if( flags & kCCTMXTileVerticalFlag )
+        flags &= ~kCCTMXTileVerticalFlag;
+    else
+        flags |= kCCTMXTileVerticalFlag;
+    layer->setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags);
+
+
+    tileCoord = ccp(1,8);	
+    GID = layer->tileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    // Vertical
+    if( flags & kCCTMXTileVerticalFlag )
+        flags &= ~kCCTMXTileVerticalFlag;
+    else
+        flags |= kCCTMXTileVerticalFlag;	
+    layer->setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags);
+
+
+    tileCoord = ccp(2,8);
+    GID = layer->tileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    // Horizontal
+    if( flags & kCCTMXTileHorizontalFlag )
+        flags &= ~kCCTMXTileHorizontalFlag;
+    else
+        flags |= kCCTMXTileHorizontalFlag;	
+    layer->setTileGID(GID, tileCoord, (ccTMXTileFlags)flags);	
+}
+//------------------------------------------------------------------
+//
+// TMXOrthoFromXMLTest
+//
+//------------------------------------------------------------------
+
+TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
+{
+    string resources = "TileMaps";		// partial paths are OK as resource paths.
+    string file = resources + "/orthogonal-test1.tmx";
+
+    char* str = CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(file.c_str()));
+    CCAssert(str != NULL, "Unable to open file");
+
+    CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithXML(str ,resources.c_str());
+    addChild(map, 0, kTagTileMap);
+
+    CCSize s = map->getContentSize();
+    CCLog("ContentSize: %f, %f", s.width,s.height);
+
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(map->getChildren(), pObj)
+    {
+        CCSpriteBatchNode* child = (CCSpriteBatchNode*)pObj;
+        child->getTexture()->setAntiAliasTexParameters();
+    }
+
+    CCScaleBy* action = CCScaleBy::actionWithDuration(2, 0.5f);
+    map->runAction(action);
+}
+
+std::string TMXOrthoFromXMLTest::title()
+{
+	return "TMX created from XML test";
+}
+
+//------------------------------------------------------------------
+//
 // TMXBug987
 //
 //------------------------------------------------------------------
@@ -1190,7 +1355,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	25
+#define MAX_LAYER	28
 
 CCLayer* createTileMapLayer(int nIndex)
 {
@@ -1216,11 +1381,14 @@ CCLayer* createTileMapLayer(int nIndex)
 		case 17: return new TMXResizeTest();
 		case 18: return new TMXIsoMoveLayer();
 		case 19: return new TMXOrthoMoveLayer();
-		case 20: return new TileMapTest();
-		case 21: return new TileMapEditTest();
-        case 22: return new TMXBug987();
-        case 23: return new TMXBug787();
-		case 24: return new TMXGIDObjectsTest();
+        case 20: return new TMXOrthoFlipTest();
+        case 21: return new TMXOrthoFlipRunTimeTest();
+        case 22: return new TMXOrthoFromXMLTest();
+		case 23: return new TileMapTest();
+		case 24: return new TileMapEditTest();
+        case 25: return new TMXBug987();
+        case 26: return new TMXBug787();
+		case 27: return new TMXGIDObjectsTest();
 	}
 
 	return NULL;

@@ -22,6 +22,11 @@ public:
     void backCallback(CCObject* pSender);
 
     void step(ccTime dt);
+
+    virtual void onEnter();
+    virtual void onEnterTransitionDidFinish();
+    virtual void onExitTransitionDidStart();
+    virtual void onExit();
 };
 
 class TestLayer2 : public CCLayer
@@ -35,6 +40,11 @@ public:
     void backCallback(CCObject* pSender);
 
     void step(ccTime dt);
+
+    virtual void onEnter();
+    virtual void onEnterTransitionDidFinish();
+    virtual void onExitTransitionDidStart();
+    virtual void onExit();
 };
 
 #endif

@@ -29,7 +29,7 @@ namespace   cocos2d {
 
 const char* cocos2dVersion()
 {
-	return "cocos2d-1.0.1-x-0.12.0";
+	return "cocos2d-2.0-rc0a-x-0.1.0";
 }
 
 }//namespace   cocos2d 
