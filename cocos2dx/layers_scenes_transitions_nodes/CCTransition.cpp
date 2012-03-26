@@ -41,19 +41,6 @@ namespace   cocos2d {
 
 const unsigned int kSceneFade = 0xFADEFADE;
 
-#define IMPLEMENT_TRANSITIONWITHDURATION(_Type)\
-    _Type* _Type::transitionWithDuration(ccTime t, CCScene* scene)\
-{\
-    _Type* pScene = new _Type();\
-	if(pScene && pScene->initWithDuration(t, scene)){\
-    pScene->autorelease();\
-	return pScene;}\
-	CC_SAFE_DELETE(pScene);\
-	return NULL;\
-}
-
-
-
 CCTransitionScene::CCTransitionScene()
 {
 }

@@ -232,6 +232,37 @@ public:
 	virtual std::string subtitle();
 };
 
+class TMXTilePropertyTest : public TileDemo
+{
+public:
+    TMXTilePropertyTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class TMXOrthoFlipTest : public TileDemo
+{
+public:
+    TMXOrthoFlipTest();
+    virtual std::string title();
+};
+
+class TMXOrthoFlipRunTimeTest : public TileDemo
+{
+public:
+    TMXOrthoFlipRunTimeTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void flipIt(ccTime dt);
+};
+
+class TMXOrthoFromXMLTest : public TileDemo 
+{
+public:
+    TMXOrthoFromXMLTest();
+    virtual std::string title();
+};
+
 class TMXBug987 : public TileDemo
 {
 public:

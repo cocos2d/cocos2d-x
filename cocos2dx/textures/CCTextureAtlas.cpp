@@ -141,7 +141,7 @@ bool CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
 
 bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
-	CCAssert(texture != NULL, "texture should not be null");
+//	CCAssert(texture != NULL, "texture should not be null");
 	m_uCapacity = capacity;
 	m_uTotalQuads = 0;
 
@@ -548,7 +548,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (m_pIndices)/*(start*6*sizeof(m_pIndices[0]))*/ );
 #else
-	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (m_pIndices)/*(start*6*sizeof(m_pIndices[0]))*/ );
+	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) 0/*(m_pIndices)*//*(start*6*sizeof(m_pIndices[0]))*/ );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
 

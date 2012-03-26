@@ -117,7 +117,7 @@ protected:
 	 */
 	CC_SYNTHESIZE(CCPoint, m_tBarChangeRate, BarChangeRate);
 
-	bool				m_bReverseDirection;
+	CC_SYNTHESIZE(bool ,m_bReverseDirection, IsReverseDirection);
 
 private:
 	CCProgressTimer();
