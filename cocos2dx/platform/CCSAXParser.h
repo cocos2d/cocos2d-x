@@ -27,8 +27,7 @@
 #include "CCPlatformConfig.h"
 #include "CCCommon.h"
 
-NS_CC_BEGIN;
-
+NS_CC_BEGIN
 
 typedef unsigned char CC_XML_CHAR;
 
@@ -49,6 +48,7 @@ public:
 	~CCSAXParser(void);
 
 	bool init(const char *pszEncoding);
+    bool parse(const char* pXMLData, unsigned int uDataLength);
 	bool parse(const char *pszFile);
 	void setDelegator(CCSAXDelegator* pDelegator);
 
@@ -56,6 +56,7 @@ public:
 	static void endElement(void *ctx, const CC_XML_CHAR *name);
 	static void textHandler(void *ctx, const CC_XML_CHAR *name, int len);
 };
-NS_CC_END;
+
+NS_CC_END
 
 #endif //__CCSAXPARSER_H__

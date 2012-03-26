@@ -142,47 +142,59 @@ public:
     }
 };
 
-#define MAX_LAYER	37
+#define MAX_LAYER	41
 
 static std::string transitions[MAX_LAYER] = {
-    "JumpZoomTransition",
-    "FadeTransition",
+    "CCTransitionJumpZoom",
+
+    "CCTransitionProgressRadialCCW",
+    "CCTransitionProgressRadialCW",
+    "CCTransitionProgressHorizontal",
+    "CCTransitionProgressVertical",
+    "CCTransitionProgressInOut",
+    "CCTransitionProgressOutIn",
+
+    "CCTransitionCrossFade",
+    "TransitionPageForward",
+    "TransitionPageBackward",
+    "CCTransitionFadeTR",
+    "CCTransitionFadeBL",
+    "CCTransitionFadeUp",
+    "CCTransitionFadeDown",
+    "CCTransitionTurnOffTiles",
+    "CCTransitionSplitRows",
+    "CCTransitionSplitCols",
+
+    "CCTransitionFade",
     "FadeWhiteTransition",
+
     "FlipXLeftOver",
     "FlipXRightOver",
     "FlipYUpOver",
     "FlipYDownOver",
     "FlipAngularLeftOver",
     "FlipAngularRightOver",
+
     "ZoomFlipXLeftOver",
     "ZoomFlipXRightOver",
     "ZoomFlipYUpOver",
     "ZoomFlipYDownOver",
     "ZoomFlipAngularLeftOver",
     "ZoomFlipAngularRightOver",
-    "ShrinkGrowTransition",
-    "RotoZoomTransition",
-    "MoveInLTransition",
-    "MoveInRTransition",
-    "MoveInTTransition",
-    "MoveInBTransition",
-    "SlideInLTransition",
-    "SlideInRTransition",
-    "SlideInTTransition",
-    "SlideInBTransition",
 
-    "CCTransitionCrossFade",
-    "CCTransitionRadialCCW",
-    "CCTransitionRadialCW",
-    "PageTransitionForward",
-    "PageTransitionBackward",
-    "FadeTRTransition",
-    "FadeBLTransition",
-    "FadeUpTransition",
-    "FadeDownTransition",
-    "TurnOffTilesTransition",
-    "SplitRowsTransition",
-    "SplitColsTransition",
+    "CCTransitionShrinkGrow",
+    "CCTransitionRotoZoom",
+
+    "CCTransitionMoveInL",
+    "CCTransitionMoveInR",
+    "CCTransitionMoveInT",
+    "CCTransitionMoveInB",
+    "CCTransitionSlideInL",
+    "CCTransitionSlideInR",
+    "CCTransitionSlideInT",
+    "CCTransitionSlideInB",
+
+
 };
 static int s_nSceneIdx = 0;
 
@@ -194,78 +206,58 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     switch(nIndex)
     {
     case 0: return CCTransitionJumpZoom::transitionWithDuration(t, s);
-    case 1: return CCTransitionFade::transitionWithDuration(t, s);
-    case 2: return FadeWhiteTransition::transitionWithDuration(t, s);
-    case 3: return FlipXLeftOver::transitionWithDuration(t, s);
-    case 4: return FlipXRightOver::transitionWithDuration(t, s);
-    case 5: return FlipYUpOver::transitionWithDuration(t, s);
-    case 6: return FlipYDownOver::transitionWithDuration(t, s);
-    case 7: return FlipAngularLeftOver::transitionWithDuration(t, s);
-    case 8: return FlipAngularRightOver::transitionWithDuration(t, s);
-    case 9: return ZoomFlipXLeftOver::transitionWithDuration(t, s);
-    case 10: return ZoomFlipXRightOver::transitionWithDuration(t, s);
-    case 11: return ZoomFlipYUpOver::transitionWithDuration(t, s);
-    case 12: return ZoomFlipYDownOver::transitionWithDuration(t, s);
-    case 13: return ZoomFlipAngularLeftOver::transitionWithDuration(t, s);
-    case 14: return ZoomFlipAngularRightOver::transitionWithDuration(t, s);
-    case 15: return CCTransitionShrinkGrow::transitionWithDuration(t, s);
-    case 16: return CCTransitionRotoZoom::transitionWithDuration(t, s);
-    case 17: return CCTransitionMoveInL::transitionWithDuration(t, s);
-    case 18: return CCTransitionMoveInR::transitionWithDuration(t, s);
-    case 19: return CCTransitionMoveInT::transitionWithDuration(t, s);
-    case 20: return CCTransitionMoveInB::transitionWithDuration(t, s);
-    case 21: return CCTransitionSlideInL::transitionWithDuration(t, s);
-    case 22: return CCTransitionSlideInR::transitionWithDuration(t, s);
-    case 23: return CCTransitionSlideInT::transitionWithDuration(t, s);
-    case 24: return CCTransitionSlideInB::transitionWithDuration(t, s);
-    case 25: 
-		{
-			if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
-			{
-				CCMessageBox("The Opengl ES version is lower than 2.0, and TransitionCrossFade may not run correctly, it is ignored.", "Cocos2d-x Hint");
-				return NULL;
-			}
-			else
-			{
-				return CCTransitionCrossFade::transitionWithDuration(t,s);
-			}
-		}
-		break;
-    case 26: 
-		{
-			if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
-			{
-				CCMessageBox("The Opengl ES version is lower than 2.0, and TransitionRadialCCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
-				return NULL;
-			}
-			else
-			{
-				return NULL;// TODO: CCTransitionRadialCCW::transitionWithDuration(t,s);
-			}
-		}
-		break;
-    case 27: 
-		{
-			if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
-			{
-				CCMessageBox("The Opengl ES version is lower than 2.0, and TransitionRadialCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
-				return NULL;
-			}
-			else
-			{
-				return NULL;// TODO: CCTransitionRadialCW::transitionWithDuration(t,s);
-			}
-		}
-		break;
-    case 28: return PageTransitionForward::transitionWithDuration(t, s);
-    case 29: return PageTransitionBackward::transitionWithDuration(t, s);
-    case 30: return CCTransitionFadeTR::transitionWithDuration(t, s);
-    case 31: return CCTransitionFadeBL::transitionWithDuration(t, s);
-    case 32: return CCTransitionFadeUp::transitionWithDuration(t, s);
-    case 33: return CCTransitionFadeDown::transitionWithDuration(t, s);
-    case 34: return CCTransitionTurnOffTiles::transitionWithDuration(t, s);
-    case 35: return CCTransitionSplitRows::transitionWithDuration(t, s);
-    case 36: return CCTransitionSplitCols::transitionWithDuration(t, s);
+
+    case 1: return CCTransitionProgressRadialCCW::transitionWithDuration(t, s);
+    case 2: return CCTransitionProgressRadialCW::transitionWithDuration(t, s);
+    case 3: return CCTransitionProgressHorizontal::transitionWithDuration(t, s);
+    case 4: return CCTransitionProgressVertical::transitionWithDuration(t, s);
+    case 5: return CCTransitionProgressInOut::transitionWithDuration(t, s);
+    case 6: return CCTransitionProgressOutIn::transitionWithDuration(t, s);
+
+    case 7: return CCTransitionCrossFade::transitionWithDuration(t,s);
+
+    case 8: return PageTransitionForward::transitionWithDuration(t, s);
+    case 9: return PageTransitionBackward::transitionWithDuration(t, s);
+    case 10: return CCTransitionFadeTR::transitionWithDuration(t, s);
+    case 11: return CCTransitionFadeBL::transitionWithDuration(t, s);
+    case 12: return CCTransitionFadeUp::transitionWithDuration(t, s);
+    case 13: return CCTransitionFadeDown::transitionWithDuration(t, s);
+
+    case 14: return CCTransitionTurnOffTiles::transitionWithDuration(t, s);
+
+    case 15: return CCTransitionSplitRows::transitionWithDuration(t, s);
+    case 16: return CCTransitionSplitCols::transitionWithDuration(t, s);
+
+    case 17: return CCTransitionFade::transitionWithDuration(t, s);
+    case 18: return FadeWhiteTransition::transitionWithDuration(t, s);
+
+    case 19: return FlipXLeftOver::transitionWithDuration(t, s);
+    case 20: return FlipXRightOver::transitionWithDuration(t, s);
+    case 21: return FlipYUpOver::transitionWithDuration(t, s);
+    case 22: return FlipYDownOver::transitionWithDuration(t, s);
+    case 23: return FlipAngularLeftOver::transitionWithDuration(t, s);
+    case 24: return FlipAngularRightOver::transitionWithDuration(t, s);
+
+    case 25: return ZoomFlipXLeftOver::transitionWithDuration(t, s);
+    case 26: return ZoomFlipXRightOver::transitionWithDuration(t, s);
+    case 27: return ZoomFlipYUpOver::transitionWithDuration(t, s);
+    case 28: return ZoomFlipYDownOver::transitionWithDuration(t, s);
+    case 29: return ZoomFlipAngularLeftOver::transitionWithDuration(t, s);
+    case 30: return ZoomFlipAngularRightOver::transitionWithDuration(t, s);
+
+    case 31: return CCTransitionShrinkGrow::transitionWithDuration(t, s);
+    case 32: return CCTransitionRotoZoom::transitionWithDuration(t, s);
+
+    case 33: return CCTransitionMoveInL::transitionWithDuration(t, s);
+    case 34: return CCTransitionMoveInR::transitionWithDuration(t, s);
+    case 35: return CCTransitionMoveInT::transitionWithDuration(t, s);
+    case 36: return CCTransitionMoveInB::transitionWithDuration(t, s);
+
+    case 37: return CCTransitionSlideInL::transitionWithDuration(t, s);
+    case 38: return CCTransitionSlideInR::transitionWithDuration(t, s);
+    case 39: return CCTransitionSlideInT::transitionWithDuration(t, s);
+    case 40: return CCTransitionSlideInB::transitionWithDuration(t, s);
+
     default: break;
     }
 
@@ -387,6 +379,30 @@ void TestLayer1::step(ccTime dt)
 
 }
 
+void TestLayer1::onEnter()
+{
+    CCLayer::onEnter();
+    CCLog("Scene 1 onEnter");
+}
+
+void TestLayer1::onEnterTransitionDidFinish()
+{
+    CCLayer::onEnterTransitionDidFinish();
+    CCLog("Scene 1: onEnterTransitionDidFinish");
+}
+
+void TestLayer1::onExitTransitionDidStart()
+{
+    CCLayer::onExitTransitionDidStart();
+    CCLog("Scene 1: onExitTransitionDidStart");
+}
+
+void TestLayer1::onExit()
+{
+    CCLayer::onExit();
+    CCLog("Scene 1 onExit");
+}
+
 TestLayer2::TestLayer2()
 {
     float x,y;
@@ -490,4 +506,28 @@ void TestLayer2::backCallback(CCObject* pSender)
 void TestLayer2::step(ccTime dt)
 {
 
+}
+
+void TestLayer2::onEnter()
+{
+    CCLayer::onEnter();
+    CCLog("Scene 2 onEnter");
+}
+
+void TestLayer2::onEnterTransitionDidFinish()
+{
+    CCLayer::onEnterTransitionDidFinish();
+    CCLog("Scene 2: onEnterTransitionDidFinish");
+}
+
+void TestLayer2::onExitTransitionDidStart()
+{
+    CCLayer::onExitTransitionDidStart();
+    CCLog("Scene 2: onExitTransitionDidStart");
+}
+
+void TestLayer2::onExit()
+{
+    CCLayer::onExit();
+    CCLog("Scene 2 onExit");
 }
