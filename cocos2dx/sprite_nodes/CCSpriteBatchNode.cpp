@@ -292,12 +292,13 @@ void CCSpriteBatchNode::sortAllChildren()
 
 void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 {
-	CCArray *array = sprite->getChildren();
-	if (array == NULL)
+    unsigned int count = 0;
+	CCArray* pArray = sprite->getChildren();
+	if (pArray != NULL)
 	{
-		return;
+		count = pArray->count();
 	}
-	unsigned int count = array->count();
+	
 	int oldIndex = 0;
 
 	if( count == 0 )
@@ -314,7 +315,7 @@ void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 	{
 		bool needNewIndex=true;
 
-		if (((CCSprite*) (array->data->arr[0]))->getZOrder() >= 0)
+		if (((CCSprite*) (pArray->data->arr[0]))->getZOrder() >= 0)
 		{
 			//all children are in front of the parent
 			oldIndex = sprite->getAtlasIndex();
@@ -330,7 +331,7 @@ void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 		}
 
 		CCObject* pObj = NULL;
-		CCARRAY_FOREACH(array,pObj)
+		CCARRAY_FOREACH(pArray,pObj)
 		{
 			CCSprite* child = (CCSprite*)pObj;
 			if (needNewIndex && child->getZOrder() >= 0)
@@ -355,7 +356,7 @@ void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 			sprite->setAtlasIndex(*curIndex);
 			sprite->setOrderOfArrival(0);
 			if (oldIndex!=*curIndex) {
-				this->swap(oldIndex, *curIndex);
+				swap(oldIndex, *curIndex);
 			}
 			(*curIndex)++;
 		}
@@ -391,7 +392,9 @@ void CCSpriteBatchNode::draw(void)
 
 	// Optimization: Fast Dispatch
 	if( m_pobTextureAtlas->getTotalQuads() == 0 )
+    {
 		return;
+    }
 
 	CC_NODE_DRAW_SETUP();
 
