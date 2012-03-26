@@ -18,7 +18,7 @@ bool QuestionContainerSprite::init()
 
         int width = size.width * 0.9f - (corner->getContentSize().width * 2);
         int height = size.height * 0.15f  - (corner->getContentSize().height * 2);
-        CCLayerColor* layer = CCLayerColor::layerWithColorWidthHeight(ccc4(255, 255, 255, 255 * .75), width, height);
+        CCLayerColor* layer = CCLayerColor::layerWithColorWidthHeight(ccc4f(255, 255, 255, 255 * .75), width, height);
         layer->setPosition(ccp(-width / 2, -height / 2));
 
         //First button is blue,

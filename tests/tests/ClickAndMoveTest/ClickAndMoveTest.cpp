@@ -21,7 +21,7 @@ MainLayer::MainLayer()
 	
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	
-	CCLayer* layer = CCLayerColor::layerWithColor(ccc4(255,255,0,255));
+	CCLayer* layer = CCLayerColor::layerWithColor(ccc4f(255,255,0,255));
 	addChild(layer, -1);
 		
 	addChild(sprite, 0, kTagSprite);

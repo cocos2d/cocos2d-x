@@ -199,14 +199,14 @@ void Issue631::onEnter()
 	removeChild(bg, true);
 
 	// background
-	CCLayerColor* layer = CCLayerColor::layerWithColor( ccc4(255,0,0,255) );
+	CCLayerColor* layer = CCLayerColor::layerWithColor( ccc4f(255,0,0,255) );
 	addChild(layer, -10);
 	CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini.png");
 	sprite->setPosition( ccp(50,80) );
 	layer->addChild(sprite, 10);
 	
 	// foreground
-	CCLayerColor* layer2 = CCLayerColor::layerWithColor(ccc4( 0, 255,0,255 ) );
+	CCLayerColor* layer2 = CCLayerColor::layerWithColor(ccc4f( 0, 255,0,255 ) );
 	CCSprite* fog = CCSprite::spriteWithFile("Images/Fog.png");
 
     ccBlendFunc bf = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
