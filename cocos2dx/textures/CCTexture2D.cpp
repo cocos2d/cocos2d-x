@@ -204,6 +204,8 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 
 	m_bHasPremultipliedAlpha = false;
 
+	m_eResolutionType = kCCResolutionUnknown;
+
 	return true;
 }
 
@@ -217,7 +219,12 @@ char * CCTexture2D::description(void)
 
 // implementation CCTexture2D (Image)
 
-bool CCTexture2D::initWithImage(CCImage * uiImage)
+bool CCTexture2D::initWithImage(CCImage *uiImage)
+{
+	return initWithImage(uiImage, kCCResolutionUnknown);
+}
+
+bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
 {
 	unsigned int POTWide, POTHigh;
 
@@ -250,6 +257,8 @@ bool CCTexture2D::initWithImage(CCImage * uiImage)
 		this->release();
 		return NULL;
 	}
+
+	m_eResolutionType = resolution;
 
 	// always load premultiplied images
 	return initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);

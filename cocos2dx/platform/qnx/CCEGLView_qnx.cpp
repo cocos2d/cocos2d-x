@@ -788,6 +788,11 @@ bool CCEGLView::isOpenGLReady()
 	return (m_isGLInitialized && m_sSizeInPixel.width != 0 && m_sSizeInPixel.height != 0);
 }
 
+bool CCEGLView::isIpad()
+{
+    return false;
+}
+
 void CCEGLView::release()
 {
 	if (!m_eglContext || !m_eglDisplay)
