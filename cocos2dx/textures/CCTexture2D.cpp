@@ -134,6 +134,16 @@ GLfloat CCTexture2D::getMaxT()
 {
 	return m_fMaxT;
 }
+    
+ccResolutionType CCTexture2D::getResolutionType()
+{
+    return m_eResolutionType; 
+}
+
+void CCTexture2D::setResolutionType(ccResolutionType resolution)
+{
+    m_eResolutionType = resolution;
+}
 
 void CCTexture2D::setMaxT(GLfloat maxT)
 {
