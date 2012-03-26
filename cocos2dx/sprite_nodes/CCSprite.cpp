@@ -459,19 +459,21 @@ void CCSprite::updateTransform(void)
 	if( isDirty() ) {
 
 		// If it is not visible, or one of its ancestors is not visible, then do nothing:
-		if( !m_bIsVisible || ( m_pParent && m_pParent != m_pobBatchNode && ((CCSprite*)m_pParent)->m_bShouldBeHidden) ) {
+		if( !m_bIsVisible || ( m_pParent && m_pParent != m_pobBatchNode && ((CCSprite*)m_pParent)->m_bShouldBeHidden) )
+        {
 			m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0,0,0);
 			m_bShouldBeHidden = true;
 		}
-
-		else {
-
+		else 
+        {
 			m_bShouldBeHidden = false;
 
 			if( ! m_pParent || m_pParent == m_pobBatchNode )
+            {
 				m_transformToBatch = nodeToParentTransform();
-
-			else {
+            }
+			else 
+            {
 				CCAssert( dynamic_cast<CCSprite*>(m_pParent), "Logic error in CCSprite. Parent must be a CCSprite");
 				m_transformToBatch = CCAffineTransformConcat( nodeToParentTransform() , ((CCSprite*)m_pParent)->m_transformToBatch );
 			}
