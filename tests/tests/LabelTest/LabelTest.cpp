@@ -1170,7 +1170,7 @@ void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, coco
 	this->m_pArrowsShouldRetain->setPosition(ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
 		this->m_pArrowsShouldRetain->getPosition().y));
 
-	float labelWidth = abs(this->m_pArrowsShouldRetain->getPosition().x - this->m_pLabelShouldRetain->getPosition().x) * 2;
+	float labelWidth = fabs(this->m_pArrowsShouldRetain->getPosition().x - this->m_pLabelShouldRetain->getPosition().x) * 2;
 
 	this->m_pLabelShouldRetain->setWidth(labelWidth);
 }
