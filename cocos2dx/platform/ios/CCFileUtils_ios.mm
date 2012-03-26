@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #import <Foundation/Foundation.h>
+#import <UIKit/UIDevice.h>
 
 #include <string>
 #include <stack>
@@ -34,6 +35,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCSAXParser.h"
 #include "support/zip_support/unzip.h"
+#include "ccTypes.h"
 
 #define MAX_PATH 260
 
@@ -45,6 +47,7 @@ static void static_addItemToCCArray(id item, CCMutableArray<CCObject*> *pArray);
 static NSString *__suffixiPhoneRetinaDisplay =@"-hd";
 static NSString *__suffixiPad =@"-ipad";
 static NSString *__suffixiPadRetinaDisplay =@"-ipadhd";
+static NSFileManager *__localFileManager= [[NSFileManager alloc] init];
 
 // NSString *ccRemoveSuffixFromPath( NSString *suffix, NSString *path);
 
@@ -246,10 +249,8 @@ namespace cocos2d {
 
     std::string& CCFileUtils::removeSuffixFromFile(std::string& cpath )
     {
-        path = static_ccRemoveHDSuffixFromFile(path.c_str());
-        return path;
-        
         NSString *ret = nil;
+        NSString *path = [NSString stringWithUTF8String:cpath.c_str()];
     
 	    if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
 	    {
@@ -266,7 +267,7 @@ namespace cocos2d {
 	    {
 		    if( CC_CONTENT_SCALE_FACTOR() == 2 )
 		    {
-			    ret = removeSuffixFromPath(__suffixiPhoneRetinaDisplay, path);
+			    ret = removeSuffixFromPath(__suffixiPhoneRetinaDisplay, [NSString stringWithUTF8String:cpath.c_str()]);
 			}
 		    else
 		    {
@@ -274,7 +275,8 @@ namespace cocos2d {
 			}
 	    }
 	
-	    return [ret UTF8String];
+	    cpath = [ret UTF8String];
+        return cpath;
     }
     
     void CCFileUtils::setiPhoneRetinaDisplaySuffix(const char *suffix)
@@ -295,11 +297,11 @@ namespace cocos2d {
 	    __suffixiPadRetinaDisplay = [[NSString stringWithUTF8String:suffix] retain];
     }
     
-    bool CCFileUtils::fileExistsAtPath(const char *cpath, const char *csuffix)
+    bool fileExistsAtPath(const char *cpath, const char *csuffix)
     {
         NSString *fullpath = nil;
         NSString *relPath = [NSString stringWithUTF8String:cpath];
-        NSString *suffix = [NSString stringWithUTF8String:csuffix]
+        NSString *suffix = [NSString stringWithUTF8String:csuffix];
     
 	    // only if it is not an absolute path
 	    if( ! [relPath isAbsolutePath] ) {
@@ -376,12 +378,12 @@ namespace cocos2d {
 		    // Retina Display ?
 		    if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
 			    ret = getPathForSuffix(fullpath, __suffixiPadRetinaDisplay);
-			    *resolutionType = kCCResolutioniPadRetinaDisplay;
+			    *pResolutionType = kCCResolutioniPadRetinaDisplay;
 		    }
 		    else
 		    {
 			    ret = getPathForSuffix(fullpath, __suffixiPad);
-			    *resolutionType = kCCResolutioniPad;			
+			    *pResolutionType = kCCResolutioniPad;			
 		    }
 	    }
 	    // iPhone ?
@@ -390,14 +392,14 @@ namespace cocos2d {
 		    // Retina Display ?
 		    if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
 			    ret = getPathForSuffix(fullpath, __suffixiPhoneRetinaDisplay);
-			    *resolutionType = kCCResolutioniPhoneRetinaDisplay;
+			    *pResolutionType = kCCResolutioniPhoneRetinaDisplay;
 		    }
 	    }
 	
 	    // If it is iPhone Non RetinaDisplay, or if the previous "getPath" failed, then use iPhone images.
 	    if( ret == nil )
 	    {
-		    *resolutionType = kCCResolutioniPhone;
+		    *pResolutionType = kCCResolutioniPhone;
 		    ret = fullpath;
 	    }
     

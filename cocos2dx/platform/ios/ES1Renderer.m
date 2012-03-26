@@ -32,8 +32,8 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #import "ES1Renderer.h"
-#import "../../Support/OpenGL_Internal.h"
-#import "../../ccMacros.h"
+#import "OpenGL_Internal.h"
+//#import "ccMacros.h"
 
 
 @interface ES1Renderer (private)
@@ -116,13 +116,13 @@
 
 	if (![context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer])
 	{
-		CCLOG(@"failed to call context");	
+		NSLog(@"failed to call context");	
 	}
 
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth_);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight_);
 
-	CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
+	NSLog(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 
 	if (multiSampling_)
 	{
@@ -144,7 +144,7 @@
 
 		if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 		{
-			CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+			NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 			return NO;
 		}
 	}
@@ -169,7 +169,7 @@
 	
 	if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 	{
-		CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+		NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 		return NO;
 	}
 
@@ -191,7 +191,7 @@
 
 - (void)dealloc
 {
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
+	NSLog(@"cocos2d: deallocing %@", self);
 
     // Tear down GL
     if(defaultFramebuffer_)
