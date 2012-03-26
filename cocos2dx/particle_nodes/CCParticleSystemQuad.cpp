@@ -304,7 +304,7 @@ void CCParticleSystemQuad::draw()
     /* FIXME: It will cause crash on some devices if the last parameter is zero.
           I'm not familiar with opengles, but my change works. --By James Chen.
     */
-	glDrawElements(GL_TRIANGLES, (GLsizei) m_uParticleIdx*6, GL_UNSIGNED_SHORT, 0/*m_pIndices*/ /*0*/);
+	glDrawElements(GL_TRIANGLES, (GLsizei) m_uParticleIdx*6, GL_UNSIGNED_SHORT, m_pIndices /*0*/);
 
 	glBindVertexArray( 0 );
 

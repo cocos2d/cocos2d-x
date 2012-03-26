@@ -303,7 +303,8 @@ void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 	unsigned int remaining = (m_uTotalQuads-1) - index;
 
 	// last object doesn't need to be moved
-	if( remaining > 0) {
+	if( remaining > 0) 
+    {
 		// texture coordinates
 		memmove( &m_pQuads[index+1],&m_pQuads[index], sizeof(m_pQuads[0]) * remaining );		
 	}
@@ -328,9 +329,10 @@ void CCTextureAtlas::insertQuads(ccV3F_C4B_T2F_Quad* quads, unsigned int index, 
 
 	// last object doesn't need to be moved
 	if( remaining > 0)
+    {
 		// tex coordinates
 		memmove( &m_pQuads[index+amount],&m_pQuads[index], sizeof(m_pQuads[0]) * remaining );
-
+    }
 
 
 	unsigned int max = index + amount;
@@ -351,14 +353,16 @@ void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int new
 	CCAssert( oldIndex >= 0 && oldIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
 
 	if( oldIndex == newIndex )
+    {
 		return;
-
+    }
 	// because it is ambigious in iphone, so we implement abs ourself
 	// unsigned int howMany = abs( oldIndex - newIndex);
 	unsigned int howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
 	unsigned int dst = oldIndex;
 	unsigned int src = oldIndex + 1;
-	if( oldIndex > newIndex) {
+	if( oldIndex > newIndex)
+    {
 		dst = newIndex+1;
 		src = newIndex;
 	}
@@ -381,7 +385,8 @@ void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
 
 
 	// last object doesn't need to be moved
-	if( remaining ) {
+	if( remaining ) 
+    {
 		// texture coordinates
 		memmove( &m_pQuads[index],&m_pQuads[index+1], sizeof(m_pQuads[0]) * remaining );
 	}
@@ -402,7 +407,9 @@ void CCTextureAtlas::removeQuadsAtIndex(unsigned int index, unsigned int amount)
 	m_uTotalQuads -= amount;
 
 	if ( remaining )
+    {
 		memmove( &m_pQuads[index], &m_pQuads[index+amount], sizeof(m_pQuads[0]) * remaining );
+    }
 
 	m_bDirty = true;
 }
@@ -416,8 +423,9 @@ void CCTextureAtlas::removeAllQuads()
 bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 {
 	if( newCapacity == m_uCapacity )
+    {
 		return true;
-
+    }
 	// update capacity and totolQuads
 	m_uTotalQuads = MIN(m_uTotalQuads, newCapacity);
 	m_uCapacity = newCapacity;
@@ -562,7 +570,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (m_pIndices)/*(start*6*sizeof(m_pIndices[0]))*/ );
 #else
-	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) 0/*(m_pIndices)*//*(start*6*sizeof(m_pIndices[0]))*/ );
+	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (m_pIndices)/*(start*6*sizeof(m_pIndices[0]))*/ );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
 

@@ -735,11 +735,11 @@ void CCSprite::setReorderChildDirtyRecursively(void)
 	if ( ! m_bReorderChildDirty )
 	{
 		m_bReorderChildDirty = true;
-		CCNode* node = (CCNode*) m_pParent;
-		while (node && node != m_pobBatchNode)
+		CCNode* pNode = (CCNode*)m_pParent;
+		while (pNode && pNode != m_pobBatchNode)
 		{
-			((CCSprite*)node)->setReorderChildDirtyRecursively();
-			node=node->getParent();
+			((CCSprite*)pNode)->setReorderChildDirtyRecursively();
+			pNode=pNode->getParent();
 		}
 	}
 }
