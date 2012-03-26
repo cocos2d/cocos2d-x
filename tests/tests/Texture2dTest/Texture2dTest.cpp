@@ -1447,7 +1447,7 @@ void FileUtilsTest::onEnter()
     }
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if 0 // TODO:(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     // Testint CCFileUtils API
     bool ret = false;
     ret = CCFileUtils::iPhoneRetinaDisplayFileExistsAtPath("Images/bugs/test_issue_1179.png");
