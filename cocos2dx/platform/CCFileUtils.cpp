@@ -350,40 +350,33 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
 /// functions iOS specific
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
-	assert(0);
 	return "";
 }
 
 void CCFileUtils::setiPhoneRetinaDisplaySuffix(const char *suffix)
 {
-	assert(0);
 }
 
 void CCFileUtils::setiPadSuffix(const char *suffix)
 {
-	assert(0);
 }
 
 void CCFileUtils::setiPadRetinaDisplaySuffix(const char *suffix)
 {
-	assert(0);
 }
 
 bool CCFileUtils::iPadFileExistsAtPath(const char *filename)
 {
-	assert(0);
 	return false;
 }
 
 bool CCFileUtils::iPadRetinaDisplayFileExistsAtPath(const char *filename)
 {
-	assert(0);
 	return false;
 }
 
 bool CCFileUtils::iPhoneRetinaDisplayFileExistsAtPath(const char *filename)
 {
-	assert(0);
 	return false;
 }
 
