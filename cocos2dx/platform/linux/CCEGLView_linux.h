@@ -38,6 +38,7 @@ public:
 
 	CCSize getSize();
 	bool isOpenGLReady();
+	bool isIpad();
 	void release();
 	void setTouchDelegate(EGLTouchDelegate * pDelegate);
 	void swapBuffers();

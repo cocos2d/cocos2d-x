@@ -47,6 +47,11 @@ void CCEGLView::setFrameWidthAndHeight(int width, int height)
 	m_sSizeInPixel.height = height;
 }
 
+bool CCEGLView::isIpad()
+{
+    return false;
+}
+
 void CCEGLView::create(int width, int height)
 {
 	if (width == 0 || height == 0)

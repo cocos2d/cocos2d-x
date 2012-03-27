@@ -47,6 +47,11 @@ cocos2d::CCSize  CCEGLView::getSize()
 	return size;
 }
 
+bool CCEGLView::isIpad()
+{
+    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+}
+
 bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;

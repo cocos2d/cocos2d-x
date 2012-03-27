@@ -115,6 +115,7 @@ class CC_DLL CCTexture2D : public CCObject
 	CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
 	/** whether or not the texture has their Alpha premultiplied */
 	CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
+	CC_PROPERTY(ccResolutionType, m_eResolutionType, ResolutionType);
 
 public:
 	CCTexture2D();
@@ -144,6 +145,8 @@ public:
 	*/
 	/** Initializes a texture from a UIImage object */
 	bool initWithImage(CCImage * uiImage);
+
+	bool initWithImage(CCImage *uiImage, ccResolutionType resolution);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a string of text.
