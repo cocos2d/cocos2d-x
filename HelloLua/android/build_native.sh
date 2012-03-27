@@ -1,5 +1,5 @@
 # set params
-NDK_ROOT_LOCAL=/cygdrive/d/programe/android/ndk/android-ndk-r6b
+NDK_ROOT_LOCAL=/cygdrive/d/programe/android/ndk/android-ndk-r7b
 COCOS2DX_ROOT_LOCAL=/cygdrive/e/cocos2d-x
 
 buildexternalsfromsource=

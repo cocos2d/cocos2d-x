@@ -36,7 +36,7 @@ bool Bug914Layer::init()
 		CCLayerColor *layer;
 		for( int i=0;i < 5;i++)
         {
-            layer = CCLayerColor::layerWithColor(ccc4(i*20, i*20, i*20,255));
+            layer = CCLayerColor::layerWithColor(ccc4f(i*20, i*20, i*20,255));
 			layer->setContentSize(CCSizeMake(i*100, i*100));
 			layer->setPosition(ccp(size.width/2, size.height/2));
 			layer->setAnchorPoint(ccp(0.5f, 0.5f));
