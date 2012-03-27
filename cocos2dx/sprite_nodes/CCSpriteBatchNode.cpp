@@ -162,7 +162,7 @@ void CCSpriteBatchNode::visit(void)
 	}
 
 	kmGLPopMatrix();
-	m_nOrderOfArrival = 0;
+	setOrderOfArrival(0);
 
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
@@ -195,7 +195,7 @@ void CCSpriteBatchNode::addChild(CCNode *child, int zOrder)
 void CCSpriteBatchNode::reorderChild(CCNode *child, int zOrder)
 {
 	CCAssert(child != NULL, "the child should not be null");
-	CCAssert(m_pChildren->containsObject(child), "sprite batch node should contain the child");
+	CCAssert(m_pChildren->containsObject(child), "Child doesn't belong to Sprite");
 
 	if (zOrder == child->getZOrder())
 	{
@@ -233,6 +233,7 @@ void CCSpriteBatchNode::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
 void CCSpriteBatchNode::removeAllChildrenWithCleanup(bool bCleanup)
 {
 	// Invalidate atlas index. issue #569
+    // useSelfRender should be performed on all descendants. issue #1216
     arrayMakeObjectsPerformSelectorWithObject(m_pobDescendants, &CCSprite::setBatchNode, NULL, CCSprite*);
 
 	CCNode::removeAllChildrenWithCleanup(bCleanup);
@@ -291,12 +292,13 @@ void CCSpriteBatchNode::sortAllChildren()
 
 void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 {
-	CCArray *array = sprite->getChildren();
-	if (array == NULL)
+    unsigned int count = 0;
+	CCArray* pArray = sprite->getChildren();
+	if (pArray != NULL)
 	{
-		return;
+		count = pArray->count();
 	}
-	unsigned int count = array->count();
+	
 	int oldIndex = 0;
 
 	if( count == 0 )
@@ -313,7 +315,7 @@ void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 	{
 		bool needNewIndex=true;
 
-		if (((CCSprite*) (array->data->arr[0]))->getZOrder() >= 0)
+		if (((CCSprite*) (pArray->data->arr[0]))->getZOrder() >= 0)
 		{
 			//all children are in front of the parent
 			oldIndex = sprite->getAtlasIndex();
@@ -329,7 +331,7 @@ void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 		}
 
 		CCObject* pObj = NULL;
-		CCARRAY_FOREACH(array,pObj)
+		CCARRAY_FOREACH(pArray,pObj)
 		{
 			CCSprite* child = (CCSprite*)pObj;
 			if (needNewIndex && child->getZOrder() >= 0)
@@ -354,7 +356,7 @@ void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 			sprite->setAtlasIndex(*curIndex);
 			sprite->setOrderOfArrival(0);
 			if (oldIndex!=*curIndex) {
-				this->swap(oldIndex, *curIndex);
+				swap(oldIndex, *curIndex);
 			}
 			(*curIndex)++;
 		}
@@ -390,7 +392,9 @@ void CCSpriteBatchNode::draw(void)
 
 	// Optimization: Fast Dispatch
 	if( m_pobTextureAtlas->getTotalQuads() == 0 )
+    {
 		return;
+    }
 
 	CC_NODE_DRAW_SETUP();
 

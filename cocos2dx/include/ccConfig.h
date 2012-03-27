@@ -149,14 +149,14 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 1
 #endif
 
-/** @def CC_COCOSNODE_RENDER_SUBPIXEL
+/** @def CC_NODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
  To enable set it to 1. Enabled by default.
  */
-#ifndef CC_COCOSNODE_RENDER_SUBPIXEL
-#define CC_COCOSNODE_RENDER_SUBPIXEL 1
+#ifndef CC_NODE_RENDER_SUBPIXEL
+#define CC_NODE_RENDER_SUBPIXEL 1
 #endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
@@ -167,35 +167,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
-#endif
-
-
-/** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
- If enabled, CCNode will transform the nodes using a cached Affine matrix.
- If disabled, the node will be transformed using glTranslate,glRotate,glScale.
- Using the affine matrix only requires 2 GL calls.
- Using the translate/rotate/scale requires 5 GL calls.
- But computing the Affine matrix is relative expensive.
- But according to performance tests, Affine matrix performs better.
- This parameter doesn't affect CCSpriteBatchNode nodes.
- 
- To enable set it to a value different than 0. Enabled by default.
-
- */
-#ifndef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-#define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
-#endif
-
-/** @def CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
-If most of your imamges have pre-multiplied alpha, set it to 1 (if you are going to use .PNG/.JPG file images).
-Only set to 0 if ALL your images by-pass Apple UIImage loading system (eg: if you use libpng or PVR images)
-
-To enable set it to a value different than 0. Enabled by default.
-
-@since v0.99.5
-*/
-#ifndef CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
-#define CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA 1
 #endif
 
 /** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
