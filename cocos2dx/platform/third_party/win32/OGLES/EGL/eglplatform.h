@@ -80,12 +80,13 @@ typedef Pixmap   EGLNativePixmapType;
 typedef Window   EGLNativeWindowType;
 
 
-#elif defined(ANDROID)
+#elif defined(__ANDROID__) || defined(ANDROID)
 
-struct android_native_window_t;
+#include <android/native_window.h>
+
 struct egl_native_pixmap_t;
 
-typedef struct android_native_window_t* EGLNativeWindowType;
+typedef struct ANativeWindow*           EGLNativeWindowType;
 typedef struct egl_native_pixmap_t*     EGLNativePixmapType;
 typedef void*                           EGLNativeDisplayType;
 
@@ -115,7 +116,7 @@ typedef EGLNativeWindowType  NativeWindowType;
  * handles are 64 bit types, then EGLint should be defined as a signed 64-bit
  * integer type.
  */
-#if defined(_WIN64) ||  __WORDSIZE == 64
+ #if defined(_WIN64) ||  __WORDSIZE == 64
 typedef khronos_int64_t EGLint;
 #else
 typedef khronos_int32_t EGLint;
