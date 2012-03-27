@@ -32,7 +32,8 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "ccConfig.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
+
 class CCTexture2D;
 
 /** @brief A class that implements a Texture Atlas.
@@ -51,7 +52,9 @@ class CC_DLL CCTextureAtlas : public CCObject
 {
 protected:
 	GLushort*           m_pIndices;
-	GLuint				m_uVAOname;
+#if CC_TEXTURE_ATLAS_USE_VAO
+    GLuint				m_uVAOname;
+#endif
 	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
 	bool				m_bDirty; //indicates whether or not the array buffer of the VBO needs to be updated
 
@@ -191,11 +194,16 @@ public:
 	*/
 	void drawQuads();
 private:
-	void initIndices();
-	void initVAO();
+    void setupIndices();
 	void mapBuffers();
+#if CC_TEXTURE_ATLAS_USE_VAO
+    void setupVBOandVAO();
+#else
+    void setupVBO();
+#endif
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif //__CCTEXTURE_ATLAS_H__
 

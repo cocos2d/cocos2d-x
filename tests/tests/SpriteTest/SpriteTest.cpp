@@ -3111,7 +3111,7 @@ SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildr
 	cache->addSpriteFramesWithFile("animations/grossini.plist");
 	cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-	CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.pvr.gz");
+	CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
 	addChild(spritebatch);
 
 	for(int i=0;i<2;i++) {

@@ -75,11 +75,11 @@ bool CCConfiguration::init(void)
 #endif // CC_TEXTURE_NPOT_SUPPORT 
 
 	
-#if CC_TEXTURE_ATLAS_USES_VBO
-	CCLOG("cocos2d: compiled with VBO support in TextureAtlas : %s", "YES");
+#if CC_TEXTURE_ATLAS_USE_VAO
+	CCLOG("cocos2d: compiled with VAO support in TextureAtlas : %s", "YES");
 #else
-	CCLOG("cocos2d: compiled with VBO support in TextureAtlas : %s", "NO");
-#endif // CC_TEXTURE_ATLAS_USES_VBO
+	CCLOG("cocos2d: compiled with VAO support in TextureAtlas : %s", "NO");
+#endif // CC_TEXTURE_ATLAS_USE_VAO
 
 	return true;
 }
