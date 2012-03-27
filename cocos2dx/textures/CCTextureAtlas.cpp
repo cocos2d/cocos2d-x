@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 // implementation CCTextureAtlas
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCTextureAtlas::CCTextureAtlas()
     :m_pIndices(NULL)
@@ -50,14 +50,16 @@ CCTextureAtlas::CCTextureAtlas()
 
 CCTextureAtlas::~CCTextureAtlas()
 {
-//	CCLOGINFO("cocos2d: deallocing CCTextureAtlas.");
+	CCLOGINFO("cocos2d: CCTextureAtlas deallocing %p."this);
 
 	CC_SAFE_FREE(m_pQuads);
 	CC_SAFE_FREE(m_pIndices);
 
 	glDeleteBuffers(2, m_pBuffersVBO);
-	glDeleteVertexArrays(1, &m_uVAOname);
 
+#if CC_TEXTURE_ATLAS_USE_VAO
+	glDeleteVertexArrays(1, &m_uVAOname);
+#endif
 	CC_SAFE_RELEASE(m_pTexture);
 }
 
@@ -166,8 +168,13 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 		return false;
 	}
 
-	this->initIndices();
-	this->initVAO();
+    this->setupIndices();
+
+#if CC_TEXTURE_ATLAS_USE_VAO
+    setupVBOandVAO();	
+#else	
+    setupVBO();
+#endif
 
 	m_bDirty = true;
 
@@ -185,7 +192,7 @@ const char* CCTextureAtlas::description()
 }
 
 
-void CCTextureAtlas::initIndices()
+void CCTextureAtlas::setupIndices()
 {
 	if (m_uCapacity == 0)
 		return;
@@ -200,60 +207,65 @@ void CCTextureAtlas::initIndices()
 		m_pIndices[i*6+4] = i*4+3;
 		m_pIndices[i*6+5] = i*4+3;
 #else
-		m_pIndices[i*6+0] = (GLushort)(i*4+0);
-		m_pIndices[i*6+1] = (GLushort)(i*4+1);
-		m_pIndices[i*6+2] = (GLushort)(i*4+2);
+		m_pIndices[i*6+0] = i*4+0;
+		m_pIndices[i*6+1] = i*4+1;
+		m_pIndices[i*6+2] = i*4+2;
 
 		// inverted index. issue #179
-		m_pIndices[i*6+3] = (GLushort)(i*4+3);
-		m_pIndices[i*6+4] = (GLushort)(i*4+2);
-		m_pIndices[i*6+5] = (GLushort)(i*4+1);		
-		//		m_pIndices[i*6+3] = i*4+2;
-		//		m_pIndices[i*6+4] = i*4+3;
-		//		m_pIndices[i*6+5] = i*4+1;	
+		m_pIndices[i*6+3] = i*4+3;
+		m_pIndices[i*6+4] = i*4+2;
+		m_pIndices[i*6+5] = i*4+1;		
 #endif	
 	}
 }
 
-void CCTextureAtlas::initVAO()
+//TextureAtlas - VAO / VBO specific
+
+#if CC_TEXTURE_ATLAS_USE_VAO
+void CCTextureAtlas::setupVBOandVAO()
 {
-	glGenVertexArrays(1, &m_uVAOname);
-	glBindVertexArray(m_uVAOname);
+    glGenVertexArrays(1, &m_uVAOname);
+    glBindVertexArray(m_uVAOname);
 
 #define kQuadSize sizeof(m_pQuads[0].bl)
 
-	glGenBuffers(2, &m_pBuffersVBO[0]);
+    glGenBuffers(2, &m_pBuffersVBO[0]);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
 
-	// vertices
-	glEnableVertexAttribArray(kCCVertexAttrib_Position);
-	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+    // vertices
+    glEnableVertexAttribArray(kCCVertexAttrib_Position);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
 
-	// colors
-	glEnableVertexAttribArray(kCCVertexAttrib_Color);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+    // colors
+    glEnableVertexAttribArray(kCCVertexAttrib_Color);
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
 
-	// tex coords
-	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+    // tex coords
+    glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
 
-	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
 }
+#else // CC_TEXTURE_ATLAS_USE_VAO
+void setupVBO()
+{
+    glGenBuffers(2, &m_pBuffersVBO[0]);
+
+    mapBuffers();
+}
+#endif // ! // CC_TEXTURE_ATLAS_USE_VAO
 
 void CCTextureAtlas::mapBuffers()
 {
-	initIndices();
-	initVAO();
-
 	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -291,7 +303,8 @@ void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 	unsigned int remaining = (m_uTotalQuads-1) - index;
 
 	// last object doesn't need to be moved
-	if( remaining > 0) {
+	if( remaining > 0) 
+    {
 		// texture coordinates
 		memmove( &m_pQuads[index+1],&m_pQuads[index], sizeof(m_pQuads[0]) * remaining );		
 	}
@@ -316,9 +329,10 @@ void CCTextureAtlas::insertQuads(ccV3F_C4B_T2F_Quad* quads, unsigned int index, 
 
 	// last object doesn't need to be moved
 	if( remaining > 0)
+    {
 		// tex coordinates
 		memmove( &m_pQuads[index+amount],&m_pQuads[index], sizeof(m_pQuads[0]) * remaining );
-
+    }
 
 
 	unsigned int max = index + amount;
@@ -339,14 +353,16 @@ void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int new
 	CCAssert( oldIndex >= 0 && oldIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
 
 	if( oldIndex == newIndex )
+    {
 		return;
-
+    }
 	// because it is ambigious in iphone, so we implement abs ourself
 	// unsigned int howMany = abs( oldIndex - newIndex);
 	unsigned int howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
 	unsigned int dst = oldIndex;
 	unsigned int src = oldIndex + 1;
-	if( oldIndex > newIndex) {
+	if( oldIndex > newIndex)
+    {
 		dst = newIndex+1;
 		src = newIndex;
 	}
@@ -369,7 +385,8 @@ void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
 
 
 	// last object doesn't need to be moved
-	if( remaining ) {
+	if( remaining ) 
+    {
 		// texture coordinates
 		memmove( &m_pQuads[index],&m_pQuads[index+1], sizeof(m_pQuads[0]) * remaining );
 	}
@@ -390,7 +407,9 @@ void CCTextureAtlas::removeQuadsAtIndex(unsigned int index, unsigned int amount)
 	m_uTotalQuads -= amount;
 
 	if ( remaining )
+    {
 		memmove( &m_pQuads[index], &m_pQuads[index+amount], sizeof(m_pQuads[0]) * remaining );
+    }
 
 	m_bDirty = true;
 }
@@ -404,8 +423,9 @@ void CCTextureAtlas::removeAllQuads()
 bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 {
 	if( newCapacity == m_uCapacity )
+    {
 		return true;
-
+    }
 	// update capacity and totolQuads
 	m_uTotalQuads = MIN(m_uTotalQuads, newCapacity);
 	m_uCapacity = newCapacity;
@@ -447,12 +467,8 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 	m_pIndices = (GLushort *)tmpIndices;
 
 
-	glDeleteBuffers(2, m_pBuffersVBO);
-	glDeleteVertexArrays(1, &m_uVAOname);
-	// initial binding
-	glGenBuffers(2, &m_pBuffersVBO[0]);	
-
-	this->mapBuffers();
+    setupIndices();
+	mapBuffers();
 
 	m_bDirty = true;
 
@@ -529,6 +545,12 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     if (0 == n) return;
 	ccGLBindTexture2D( m_pTexture->getName() );
 
+#if CC_TEXTURE_ATLAS_USE_VAO
+
+    //
+    // Using VBO and VAO
+    //
+
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (m_bDirty) {
 		glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
@@ -542,20 +564,59 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 
 	glBindVertexArray( m_uVAOname );
 
-/* FIXME: Because start always is zero, the result of (start*6*sizeof(m_pIndices[0])) will always be zero too. And crash will appear on some devices.
-          I'm not familiar with opengles, but my change works. --By James Chen.
-*/
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (m_pIndices)/*(start*6*sizeof(m_pIndices[0]))*/ );
+	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #else
-	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) 0/*(m_pIndices)*//*(start*6*sizeof(m_pIndices[0]))*/ );
+	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
 
 	glBindVertexArray(0);
 
+#else // ! CC_TEXTURE_ATLAS_USE_VAO
+
+    //
+    // Using VBO without VAO
+    //
+
+#define kQuadSize sizeof(m_pQuads[0].bl)
+    glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+
+    // XXX: update is done in draw... perhaps it should be done in a timer
+    if (m_bDirty) {
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*start, sizeof(m_pQuads[0]) * n , &m_pQuads[start] );
+        m_bDirty = false;
+    }
+
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+
+    // vertices
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+
+    // colors
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+
+    // tex coords
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+
+#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
+#else
+    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
+#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+#endif // CC_TEXTURE_ATLAS_USE_VAO
+
+    CC_INCREMENT_GL_DRAWS(1);
 	CHECK_GL_ERROR_DEBUG();
 }
 
 
-}//namespace   cocos2d 
+NS_CC_END
+

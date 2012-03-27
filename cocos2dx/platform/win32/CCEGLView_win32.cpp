@@ -23,10 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCEGLView.h"
-
-#include "EGL/egl.h"
-#include "gles/gl.h"
-
 #include "CCSet.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
@@ -35,6 +31,8 @@ THE SOFTWARE.
 #include "CCIMEDispatcher.h"
 #include "CCKeypadDispatcher.h"
 #include "CCApplication.h"
+
+#include "EGL/egl.h"
 
 NS_CC_BEGIN;
 

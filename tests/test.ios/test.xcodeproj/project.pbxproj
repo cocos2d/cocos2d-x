@@ -73,6 +73,10 @@
 		784B77ED1519BF6600FA820F /* GLES-Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 784B77B81519BF6600FA820F /* GLES-Render.cpp */; };
 		784B77EE1519BF6600FA820F /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 784B77BA1519BF6600FA820F /* Test.cpp */; };
 		784B77EF1519BF6600FA820F /* TestEntries.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 784B77BC1519BF6600FA820F /* TestEntries.cpp */; };
+		7871C43015209375007353A3 /* NodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7871C42E15209375007353A3 /* NodeTest.cpp */; };
+		7871C432152093AE007353A3 /* CCTransitionProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7871C431152093AE007353A3 /* CCTransitionProgress.cpp */; };
+		7871C434152093C9007353A3 /* CCTransitionProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 7871C433152093C9007353A3 /* CCTransitionProgress.h */; };
+		7871C43815209506007353A3 /* ShaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7871C43615209506007353A3 /* ShaderTest.cpp */; };
 		78891AAE14EA1DAE0072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AAD14EA1DAE0072482D /* Icon.png */; };
 		78891AB214EA1DC30072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB114EA1DC30072482D /* Default.png */; };
 		789B5603151978C80038CD1E /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 789B5602151978C80038CD1E /* ccShaders.h */; };
@@ -409,7 +413,6 @@
 		BF31E38E12E979A200D4F513 /* ActionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E12012E979A100D4F513 /* ActionsTest.cpp */; };
 		BF31E3A912E979A200D4F513 /* ClickAndMoveTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E16F12E979A100D4F513 /* ClickAndMoveTest.cpp */; };
 		BF31E3AA12E979A200D4F513 /* CocosDenshionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17212E979A100D4F513 /* CocosDenshionTest.cpp */; };
-		BF31E3AB12E979A200D4F513 /* CocosNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17512E979A100D4F513 /* CocosNodeTest.cpp */; };
 		BF31E3AC12E979A200D4F513 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17712E979A100D4F513 /* controller.cpp */; };
 		BF31E3AD12E979A200D4F513 /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17A12E979A100D4F513 /* DrawPrimitivesTest.cpp */; };
 		BF31E3AF12E979A200D4F513 /* EffectsAdvancedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18012E979A100D4F513 /* EffectsAdvancedTest.cpp */; };
@@ -724,6 +727,12 @@
 		784B77E81519BF6600FA820F /* VaryingRestitution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VaryingRestitution.h; sourceTree = "<group>"; };
 		784B77E91519BF6600FA820F /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		784B77EA1519BF6600FA820F /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
+		7871C42E15209375007353A3 /* NodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NodeTest.cpp; sourceTree = "<group>"; };
+		7871C42F15209375007353A3 /* NodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeTest.h; sourceTree = "<group>"; };
+		7871C431152093AE007353A3 /* CCTransitionProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTransitionProgress.cpp; sourceTree = "<group>"; };
+		7871C433152093C9007353A3 /* CCTransitionProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionProgress.h; sourceTree = "<group>"; };
+		7871C43615209506007353A3 /* ShaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderTest.cpp; sourceTree = "<group>"; };
+		7871C43715209506007353A3 /* ShaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTest.h; sourceTree = "<group>"; };
 		78891AAD14EA1DAE0072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../test.ios/Icon.png; sourceTree = "<group>"; };
 		78891AB114EA1DC30072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../test.ios/Default.png; sourceTree = "<group>"; };
 		789B5602151978C80038CD1E /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
@@ -1085,8 +1094,6 @@
 		BF31E17012E979A100D4F513 /* ClickAndMoveTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClickAndMoveTest.h; sourceTree = "<group>"; };
 		BF31E17212E979A100D4F513 /* CocosDenshionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosDenshionTest.cpp; sourceTree = "<group>"; };
 		BF31E17312E979A100D4F513 /* CocosDenshionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshionTest.h; sourceTree = "<group>"; };
-		BF31E17512E979A100D4F513 /* CocosNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosNodeTest.cpp; sourceTree = "<group>"; };
-		BF31E17612E979A100D4F513 /* CocosNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodeTest.h; sourceTree = "<group>"; };
 		BF31E17712E979A100D4F513 /* controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = controller.cpp; path = tests/controller.cpp; sourceTree = "<group>"; };
 		BF31E17812E979A100D4F513 /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controller.h; path = tests/controller.h; sourceTree = "<group>"; };
 		BF31E17A12E979A100D4F513 /* DrawPrimitivesTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawPrimitivesTest.cpp; sourceTree = "<group>"; };
@@ -1582,6 +1589,24 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		7871C42D15209375007353A3 /* NodeTest */ = {
+			isa = PBXGroup;
+			children = (
+				7871C42E15209375007353A3 /* NodeTest.cpp */,
+				7871C42F15209375007353A3 /* NodeTest.h */,
+			);
+			path = NodeTest;
+			sourceTree = "<group>";
+		};
+		7871C43515209506007353A3 /* ShaderTest */ = {
+			isa = PBXGroup;
+			children = (
+				7871C43615209506007353A3 /* ShaderTest.cpp */,
+				7871C43715209506007353A3 /* ShaderTest.h */,
+			);
+			path = ShaderTest;
+			sourceTree = "<group>";
+		};
 		789B5604151979E80038CD1E /* ActionsEaseTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -1677,7 +1702,6 @@
 		78E69637151899BD0085D6AC /* include */ = {
 			isa = PBXGroup;
 			children = (
-				789B5602151978C80038CD1E /* ccShaders.h */,
 				78E69638151899BD0085D6AC /* CCAccelerometer.h */,
 				78E69639151899BD0085D6AC /* CCAccelerometerDelegate.h */,
 				78E6963A151899BD0085D6AC /* CCAction.h */,
@@ -1738,6 +1762,7 @@
 				78E69671151899BD0085D6AC /* CCScriptSupport.h */,
 				78E69672151899BD0085D6AC /* CCSet.h */,
 				78E69673151899BD0085D6AC /* CCShaderCache.h */,
+				789B5602151978C80038CD1E /* ccShaders.h */,
 				78E69674151899BD0085D6AC /* CCSprite.h */,
 				78E69675151899BD0085D6AC /* CCSpriteBatchNode.h */,
 				78E69676151899BD0085D6AC /* CCSpriteFrame.h */,
@@ -1759,6 +1784,7 @@
 				78E69686151899BD0085D6AC /* CCTouchHandler.h */,
 				78E69687151899BD0085D6AC /* CCTransition.h */,
 				78E69688151899BD0085D6AC /* CCTransitionPageTurn.h */,
+				7871C433152093C9007353A3 /* CCTransitionProgress.h */,
 				78E69689151899BD0085D6AC /* ccTypes.h */,
 				78E6968A151899BD0085D6AC /* CCUserDefault.h */,
 				78E6968B151899BD0085D6AC /* CCZone.h */,
@@ -2218,7 +2244,6 @@
 				784B77AE1519BF5D00FA820F /* ChipmunkAccelTouchTest */,
 				BF31E16E12E979A100D4F513 /* ClickAndMoveTest */,
 				BF31E17112E979A100D4F513 /* CocosDenshionTest */,
-				BF31E17412E979A100D4F513 /* CocosNodeTest */,
 				BF3E8C74135C0B39001AE294 /* CurlTest */,
 				BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */,
 				BF1B265713C7108F009769C6 /* DirectorTest */,
@@ -2234,6 +2259,7 @@
 				BF31E18E12E979A100D4F513 /* LayerTest */,
 				BF31E19112E979A100D4F513 /* MenuTest */,
 				BF31E19412E979A100D4F513 /* MotionStreakTest */,
+				7871C42D15209375007353A3 /* NodeTest */,
 				BF31E19712E979A100D4F513 /* ParallaxTest */,
 				BF31E19A12E979A100D4F513 /* ParticleTest */,
 				BF340BDE133B26A70035A4D1 /* PerformanceTest */,
@@ -2241,6 +2267,7 @@
 				BF31E1A312E979A100D4F513 /* RotateWorldTest */,
 				BF31E1A612E979A100D4F513 /* SceneTest */,
 				BF31E1A912E979A100D4F513 /* SchedulerTest */,
+				7871C43515209506007353A3 /* ShaderTest */,
 				BF31E1AC12E979A200D4F513 /* SpriteTest */,
 				BF2CE32E13666A78006DCA18 /* TextInputTest */,
 				BF1EB66513D6B915008D2559 /* Texture2dTest */,
@@ -2297,15 +2324,6 @@
 				BF31E17312E979A100D4F513 /* CocosDenshionTest.h */,
 			);
 			path = CocosDenshionTest;
-			sourceTree = "<group>";
-		};
-		BF31E17412E979A100D4F513 /* CocosNodeTest */ = {
-			isa = PBXGroup;
-			children = (
-				BF31E17512E979A100D4F513 /* CocosNodeTest.cpp */,
-				BF31E17612E979A100D4F513 /* CocosNodeTest.h */,
-			);
-			path = CocosNodeTest;
 			sourceTree = "<group>";
 		};
 		BF31E17912E979A100D4F513 /* DrawPrimitivesTest */ = {
@@ -2626,9 +2644,10 @@
 			isa = PBXGroup;
 			children = (
 				BF1FAFCC1352F72B007553D9 /* CCLayer.cpp */,
-				BF1FAFCD1352F72B007553D9 /* CCTransition.cpp */,
 				BF83590C13276C7700F3C033 /* CCScene.cpp */,
+				BF1FAFCD1352F72B007553D9 /* CCTransition.cpp */,
 				BF83590D13276C7700F3C033 /* CCTransitionPageTurn.cpp */,
+				7871C431152093AE007353A3 /* CCTransitionProgress.cpp */,
 			);
 			path = layers_scenes_transitions_nodes;
 			sourceTree = "<group>";
@@ -3019,6 +3038,7 @@
 				78E6975715189AAE0085D6AC /* CCESRenderer.h in Headers */,
 				78E6975B15189BEA0085D6AC /* CCVertex.h in Headers */,
 				789B5603151978C80038CD1E /* ccShaders.h in Headers */,
+				7871C434152093C9007353A3 /* CCTransitionProgress.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3279,7 +3299,6 @@
 				BF31E38E12E979A200D4F513 /* ActionsTest.cpp in Sources */,
 				BF31E3A912E979A200D4F513 /* ClickAndMoveTest.cpp in Sources */,
 				BF31E3AA12E979A200D4F513 /* CocosDenshionTest.cpp in Sources */,
-				BF31E3AB12E979A200D4F513 /* CocosNodeTest.cpp in Sources */,
 				BF31E3AC12E979A200D4F513 /* controller.cpp in Sources */,
 				BF31E3AD12E979A200D4F513 /* DrawPrimitivesTest.cpp in Sources */,
 				BF31E3AF12E979A200D4F513 /* EffectsAdvancedTest.cpp in Sources */,
@@ -3360,6 +3379,8 @@
 				784B77ED1519BF6600FA820F /* GLES-Render.cpp in Sources */,
 				784B77EE1519BF6600FA820F /* Test.cpp in Sources */,
 				784B77EF1519BF6600FA820F /* TestEntries.cpp in Sources */,
+				7871C43015209375007353A3 /* NodeTest.cpp in Sources */,
+				7871C43815209506007353A3 /* ShaderTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3488,6 +3509,7 @@
 				78E6975115189A8B0085D6AC /* CCParticleBatchNode.cpp in Sources */,
 				78E6975615189AAE0085D6AC /* CCES2Renderer.m in Sources */,
 				78E6975A15189BEA0085D6AC /* CCVertex.cpp in Sources */,
+				7871C432152093AE007353A3 /* CCTransitionProgress.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

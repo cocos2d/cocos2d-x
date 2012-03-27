@@ -303,9 +303,6 @@ protected:
 	// transform
 	CCAffineTransform m_tTransform, m_tInverse;
 
-#ifdef	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	GLfloat	m_pTransformGL[16];
-#endif
 	// To reduce memory, place bools that are not properties here:
 	bool m_bIsTransformDirty;
 	bool m_bIsInverseDirty;
