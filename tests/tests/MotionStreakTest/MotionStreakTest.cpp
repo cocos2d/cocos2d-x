@@ -28,7 +28,7 @@ void MotionStreakTest1::onEnter()
 	m_target->setPosition( CCPointMake(100,0) );
 
 	// create the streak object and add it to the scene
-	m_streak = CCMotionStreak::streakWithFade(2, 3, s_streak, 32, 32, ccc4(0,255,0,255) );
+	m_streak = CCMotionStreak::streakWithFade(2, 3, s_streak, 32, 32, ccc4f(0,255,0,255) );
 	addChild( m_streak );
 	// schedule an update on each frame so we can syncronize the streak with the target
 	schedule(schedule_selector(MotionStreakTest1::onUpdate));
@@ -66,7 +66,7 @@ void MotionStreakTest2::onEnter()
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
 		
 	// create the streak object and add it to the scene
-	m_streak = CCMotionStreak::streakWithFade(3, 3, s_streak, 64, 32, ccc4(255,255,255,255) );
+	m_streak = CCMotionStreak::streakWithFade(3, 3, s_streak, 64, 32, ccc4f(255,255,255,255) );
 	addChild( m_streak );
 	
 	m_streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 

@@ -197,23 +197,23 @@ Atlas1::Atlas1()
 	ccV3F_C4B_T2F_Quad quads[] = 
 	{
 		{
-			{{0,0,0},ccc4(0,0,255,255),{0.0f,1.0f},},				// bottom left
-			{{s.width,0,0},ccc4(0,0,255,0),{1.0f,1.0f},},			// bottom right
-			{{0,s.height,0},ccc4(0,0,255,0),{0.0f,0.0f},},			// top left
+			{{0,0,0},ccc4f(0,0,255,255),{0.0f,1.0f},},				// bottom left
+			{{s.width,0,0},ccc4f(0,0,255,0),{1.0f,1.0f},},			// bottom right
+			{{0,s.height,0},ccc4f(0,0,255,0),{0.0f,0.0f},},			// top left
 			{{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},	// top right
 		},		
 		{
-			{{40,40,0},ccc4(255,255,255,255),{0.0f,0.2f},},			// bottom left
-			{{120,80,0},ccc4(255,0,0,255),{0.5f,0.2f},},			// bottom right
-			{{40,160,0},ccc4(255,255,255,255),{0.0f,0.0f},},		// top left
-			{{160,160,0},ccc4(0,255,0,255),{0.5f,0.0f},},			// top right
+			{{40,40,0},ccc4f(255,255,255,255),{0.0f,0.2f},},			// bottom left
+			{{120,80,0},ccc4f(255,0,0,255),{0.5f,0.2f},},			// bottom right
+			{{40,160,0},ccc4f(255,255,255,255),{0.0f,0.0f},},		// top left
+			{{160,160,0},ccc4f(0,255,0,255),{0.5f,0.0f},},			// top right
 		},
 
 		{
-			{{s.width/2,40,0},ccc4(255,0,0,255),{0.0f,1.0f},},		// bottom left
-			{{s.width,40,0},ccc4(0,255,0,255),{1.0f,1.0f},},		// bottom right
-			{{s.width/2-50,200,0},ccc4(0,0,255,255),{0.0f,0.0f},},		// top left
-			{{s.width,100,0},ccc4(255,255,0,255),{1.0f,0.0f},},		// top right
+			{{s.width/2,40,0},ccc4f(255,0,0,255),{0.0f,1.0f},},		// bottom left
+			{{s.width,40,0},ccc4f(0,255,0,255),{1.0f,1.0f},},		// bottom right
+			{{s.width/2-50,200,0},ccc4f(0,0,255,255),{0.0f,0.0f},},		// top left
+			{{s.width,100,0},ccc4f(255,255,0,255),{1.0f,0.0f},},		// top right
 		},
 		
 	};
@@ -369,7 +369,7 @@ Atlas3::Atlas3()
 {
 	m_time = 0;
 
-	CCLayerColor* col = CCLayerColor::layerWithColor( ccc4(128,128,128,255) );
+	CCLayerColor* col = CCLayerColor::layerWithColor( ccc4f(128,128,128,255) );
 	addChild(col, -10);
 	
 	CCLabelBMFont* label1 = CCLabelBMFont::labelWithString("Test",  "fonts/bitmapFontTest2.fnt");
@@ -873,7 +873,7 @@ LabelGlyphDesigner::LabelGlyphDesigner()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLayerColor *layer = CCLayerColor::layerWithColor(ccc4(128,128,128,255));
+    CCLayerColor *layer = CCLayerColor::layerWithColor(ccc4f(128,128,128,255));
     addChild(layer, -10);
 
     // CCLabelBMFont

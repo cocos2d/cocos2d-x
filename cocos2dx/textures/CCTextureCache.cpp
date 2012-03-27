@@ -202,7 +202,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
 	// optimization
 
 	std::string pathKey = path;
-	CCFileUtils::ccRemoveHDSuffixFromFile(pathKey);
+	CCFileUtils::removeSuffixFromFile(pathKey);
 
 	pathKey = CCFileUtils::fullPathFromRelativePath(pathKey.c_str());
 	texture = m_pTextures->objectForKey(pathKey);
@@ -322,7 +322,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
     std::string pathKey = path;
-	CCFileUtils::ccRemoveHDSuffixFromFile(pathKey);
+	CCFileUtils::removeSuffixFromFile(pathKey);
 
     pathKey = CCFileUtils::fullPathFromRelativePath(pathKey.c_str());
 	texture = m_pTextures->objectForKey(pathKey);
@@ -351,8 +351,10 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 unsigned char* pBuffer = data.getBuffer();
                 CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtJpg));
 
+                ccResolutionType resolution;
+                fullpath = CCFileUtils::fullPathFromRelativePath(fullpath.c_str(), &resolution);
 				texture = new CCTexture2D();
-				texture->initWithImage(&image);
+				texture->initWithImage(&image, resolution);
 
 				if( texture )
 				{
@@ -379,8 +381,10 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 unsigned char* pBuffer = data.getBuffer();
                 CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtPng));
 
+                ccResolutionType resolution;
+                fullpath = CCFileUtils::fullPathFromRelativePath(fullpath.c_str(), &resolution);
 				texture = new CCTexture2D();
-				texture->initWithImage(&image);
+				texture->initWithImage(&image, resolution);
 
 				if( texture )
 				{
@@ -415,7 +419,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 	CCTexture2D * texture;
 
 	std::string temp(path);
-    CCFileUtils::ccRemoveHDSuffixFromFile(temp);
+    CCFileUtils::removeSuffixFromFile(temp);
     
 	if ( (texture = m_pTextures->objectForKey(temp)) )
 	{
@@ -451,7 +455,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 	CCTexture2D * tex;
 	std::string key(path);
     // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-    CCFileUtils::ccRemoveHDSuffixFromFile(key);
+    CCFileUtils::removeSuffixFromFile(key);
     
 	if( (tex = m_pTextures->objectForKey(key)) ) 
 	{
@@ -503,7 +507,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 
 		// prevents overloading the autorelease pool
 		texture = new CCTexture2D();
-		texture->initWithImage(image);
+		texture->initWithImage(image, kCCResolutionUnknown);
 
 		if(key && texture)
 		{

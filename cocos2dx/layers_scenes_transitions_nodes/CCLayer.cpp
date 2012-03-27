@@ -575,7 +575,7 @@ bool CCLayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end
 
     m_bCompressedInterpolation = true;
 
-    return CCLayerColor::initWithColor(ccc4(start.r, start.g, start.b, 255));
+    return CCLayerColor::initWithColor(ccc4f(start.r, start.g, start.b, 255));
 }
 
 void CCLayerGradient::updateColor()
