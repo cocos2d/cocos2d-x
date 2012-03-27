@@ -70,8 +70,8 @@ extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
+#include "GLES2/gl2.h"
+#include "GLES2/gl2ext.h"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -152,23 +152,5 @@ extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #endif
-
-NS_CC_BEGIN;
-
-/*
-OpenGL GLU implementation
-*/
-
-//typedef float GLfloat;
-
-/** OpenGL gluLookAt implementation */
-void CC_DLL gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ,
-               GLfloat fLookAtX, GLfloat fLookAtY, GLfloat fLookAtZ,
-               GLfloat fUpX, GLfloat fUpY, GLfloat fUpZ);
-
-/** OpenGL gluPerspective implementation */
-void CC_DLL gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
-
-NS_CC_END;
 
 #endif // __PLATFOMR_CCGL_H__
