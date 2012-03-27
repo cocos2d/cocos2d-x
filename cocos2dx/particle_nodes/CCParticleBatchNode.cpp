@@ -122,8 +122,8 @@ bool CCParticleBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacit
 	m_pTextureAtlas->initWithTexture(tex, capacity);
 
 	// no lazy alloc in this node
-	m_pChildren = CCArray::arrayWithCapacity(capacity);
-	m_pChildren->retain();
+	m_pChildren = new CCArray();
+	m_pChildren->initWithCapacity(capacity);
 
 	m_tBlendFunc.src = CC_BLEND_SRC;
 	m_tBlendFunc.dst = CC_BLEND_DST;
@@ -189,12 +189,12 @@ void CCParticleBatchNode::addChild(CCNode * child, int zOrder)
 void CCParticleBatchNode::addChild(CCNode * child, int zOrder, int tag)
 {
 	CCAssert( child != NULL, "Argument must be non-NULL");
-	CCParticleSystem* pChild = dynamic_cast<CCParticleSystem*>(child);
-	CCAssert( pChild != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
-	CCAssert( pChild->getTexture()->getName() == m_pTextureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
-
+	CCAssert( dynamic_cast<CCParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
+    CCParticleSystem* pChild = (CCParticleSystem*)child;
+    CCAssert( pChild->getTexture()->getName() == m_pTextureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
 	// If this is the 1st children, then copy blending function
-	if( m_pChildren->count() == 0 ) {
+	if( m_pChildren->count() == 0 ) 
+    {
 		setBlendFunc(pChild->getBlendFunc());
 	}
 
@@ -206,12 +206,14 @@ void CCParticleBatchNode::addChild(CCNode * child, int zOrder, int tag)
 	//get new atlasIndex
 	unsigned int atlasIndex = 0;
 
-	if (pos != 0) {
+	if (pos != 0) 
+    {
 		CCParticleSystem* p = (CCParticleSystem*)m_pChildren->objectAtIndex(pos-1);
 		atlasIndex = p->getAtlasIndex() + p->getTotalParticles();
 
 	}
-	else {
+	else
+    {
 		atlasIndex = 0;
 	}
 

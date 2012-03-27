@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #ifndef __CC_IMAGE_H__
-#define __CC_IMAGE__
+#define __CC_IMAGE_H__
 
 #include "CCCommon.h"
 
