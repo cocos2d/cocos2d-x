@@ -5,6 +5,32 @@ GAME_ROOT=$COCOS2DX_ROOT/__projectname__
 GAME_ANDROID_ROOT=$GAME_ROOT/android
 RESOURCE_ROOT=$GAME_ROOT/Resources
 
+buildexternalsfromsource=
+
+usage(){
+cat << EOF
+usage: $0 [options]
+
+Build C/C++ native code using Android NDK
+
+OPTIONS:
+   -s	Build externals from source
+   -h	this help
+EOF
+}
+
+while getopts "s" OPTION; do
+	case "$OPTION" in
+		s)
+			buildexternalsfromsource=1
+			;;
+		h)
+			usage
+			exit 0
+			;;
+	esac
+done
+
 # make sure assets is exist
 if [ -d $GAME_ANDROID_ROOT/assets ]; then
     rm -rf $GAME_ANDROID_ROOT/assets
@@ -24,6 +50,15 @@ do
     fi
 done
 
-# build
-$NDK_ROOT/ndk-build -C $GAME_ANDROID_ROOT $*
+if [[ $buildexternalsfromsource ]]; then
+    echo "Building external dependencies from source"
+    $NDK_ROOT/ndk-build -C $GAME_ANDROID_ROOT \
+        NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/source
+else
+    echo "Using prebuilt externals"
+    $NDK_ROOT/ndk-build -C $GAME_ANDROID_ROOT \
+        NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt
+fi
+
+
 

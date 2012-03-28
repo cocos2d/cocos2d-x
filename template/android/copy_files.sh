@@ -60,11 +60,8 @@ copy_src_and_jni(){
     cp -rf $HELLOWORLD_ROOT/android/jni $APP_DIR/android
     cp -rf $HELLOWORLD_ROOT/android/src $APP_DIR/android
     
-    # repalce Android.mk and Application.mk
-    sh $COCOS2DX_ROOT/template/android/classesmk.sh $APP_DIR/Classes/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
-    sh $COCOS2DX_ROOT/template/android/gamestaticmk.sh $APP_DIR/android/jni/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
-    sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/android/jni/helloworld/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
-    sh $COCOS2DX_ROOT/template/android/application.sh $APP_DIR/android/jni/Application.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
+    # repalce Android.mk
+    sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/android/jni/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 }
 
 # copy build_native.sh and replace something
@@ -88,22 +85,6 @@ modify_applicationdemo(){
     # APP_DIR/android/src/org/cocos2dx/application/$APP_NAME.java, change helloworld to game
     sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java    
     rm -fr $APP_DIR/android/src/org/cocos2dx/application
-    
-    # load need .so
-    CONTENT=
-    if [ $NEED_BOX2D = "true" ];then
-        CONTENT=$CONTENT'System.loadLibrary("box2d");'
-    fi
-
-    if [ $NEED_CHIPMUNK = "true" ]; then
-        CONTENT=$CONTENT'System.loadLibrary("chipmunk");'
-    fi
-
-    if [ $NEED_LUA = "true" ]; then
-        CONTENT=$CONTENT'System.loadLibrary("lua");'
-    fi
-    
-    sed -i -e "s/System.loadLibrary(\"cocosdenshion\")\;/System.loadLibrary(\"cocosdenshion\")\;$CONTENT/" $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java
 }
 
 modify_layout(){
