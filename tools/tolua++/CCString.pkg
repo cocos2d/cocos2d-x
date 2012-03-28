@@ -1,10 +1,6 @@
 
 class CCString : public CCObject
 {
-    CCString();
-    CCString(const char * str);
-    ~CCString();
-
     int toInt();
     unsigned int toUInt();
     float toFloat();

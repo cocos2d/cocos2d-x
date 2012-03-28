@@ -1,9 +1,9 @@
 
 class CCLabelTTF : public CCSprite
 {
-    void setString(const char *label);
-    const char* getString(void);
+    void setString(char *label);
+    char* getString(void);
 
-    static CCLabelTTF * labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-    static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
+    static CCLabelTTF * labelWithString(char *label, CCSize dimensions, CCTextAlignment alignment, char *fontName, float fontSize);
+    static CCLabelTTF * labelWithString(char *label, char *fontName, float fontSize);
 };

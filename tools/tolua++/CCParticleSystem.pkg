@@ -1,44 +1,9 @@
 
 class CCParticleSystem : public CCNode
 {
-    // mode A
-    const CCPoint& getGravity();
-
-    void setGravity(const CCPoint& g);
-    float getSpeed();
-    void setSpeed(float speed);
-    float getSpeedVar();
-    void setSpeedVar(float speed);
-    float getTangentialAccel();
-    void setTangentialAccel(float t);
-    float getTangentialAccelVar();
-    void setTangentialAccelVar(float t);
-    float getRadialAccel();
-    void setRadialAccel(float t);
-    float getRadialAccelVar();
-    void setRadialAccelVar(float t);
-
-    // mode B
-    float getStartRadius();
-    void setStartRadius(float startRadius);
-    float getStartRadiusVar();
-    void setStartRadiusVar(float startRadiusVar);
-    float getEndRadius();
-    void setEndRadius(float endRadius);
-    float getEndRadiusVar();
-    void setEndRadiusVar(float endRadiusVar);
-    float getRotatePerSecond();
-    void setRotatePerSecond(float degrees);
-    float getRotatePerSecondVar();
-    void setRotatePerSecondVar(float degrees);
-
-    bool addParticle();
-    void initParticle(tCCParticle* particle);
     void stopSystem();
     void resetSystem();
     bool isFull();
-    void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
-    void postStep();
 
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D* var);
@@ -46,13 +11,5 @@ class CCParticleSystem : public CCNode
     ccBlendFunc getBlendFunc(void);
     void setBlendFunc(ccBlendFunc var);
 
-    static CCParticleSystem * particleWithFile(const char *plistFile);
-};
-
-class CCParticleSystemQuad : public CCParticleSystem {
-    static CCParticleSystemQuad * particleWithFile(const char *plistFile);
-};
-
-class CCParticleSystemPoint : public CCParticleSystem {
-    static CCParticleSystemPoint * particleWithFile(const char *plistFile);
+    static CCParticleSystem* particleWithFile(char *plistFile);
 };

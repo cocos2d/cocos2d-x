@@ -1,0 +1,144 @@
+
+class CCActionInterval : public CCFiniteTimeAction
+{
+};
+
+class CCSequence : public CCActionInterval
+{
+    static CCSequence* actionsWithArrayLua(CCArray *actions);
+    static CCSequence* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+};
+
+class CCRepeat : public CCActionInterval
+{
+    static CCRepeat* actionWithAction(CCFiniteTimeAction *pAction, unsigned int times);
+};
+
+class CCRepeatForever : public CCActionInterval
+{
+    static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
+};
+
+class CCSpawn : public CCActionInterval
+{
+    static CCSpawn* actionsWithArrayLua(CCArray *actions);
+    static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+};
+
+class CCRotateTo : public CCActionInterval
+{
+    static CCRotateTo* actionWithDuration(ccTime duration, float fDeltaAngle);
+};
+
+class CCRotateBy : public CCActionInterval
+{
+    static CCRotateBy* actionWithDuration(ccTime duration, float fDeltaAngle);
+};
+
+class CCMoveTo : public CCActionInterval
+{
+    static CCMoveTo* actionWithDuration(ccTime duration, CCPoint position);
+};
+
+class CCMoveBy : public CCMoveTo
+{
+    static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
+};
+
+class CCSkewTo : public CCActionInterval
+{
+    static CCSkewTo* actionWithDuration(ccTime t, float sx, float sy);
+};
+
+class CCSkewBy : public CCSkewTo
+{
+    static CCSkewBy* actionWithDuration(ccTime t, float deltaSkewX, float deltaSkewY);
+};
+
+class CCJumpBy : public CCActionInterval
+{
+    static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, unsigned int jumps);
+};
+
+class CCJumpTo : public CCJumpBy
+{
+    static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+};
+
+typedef struct _ccBezierConfig {
+    CCPoint endPosition;
+    CCPoint controlPoint_1;
+    CCPoint controlPoint_2;
+} ccBezierConfig;
+
+class CCBezierBy : public CCActionInterval
+{
+    static CCBezierBy* actionWithDuration(ccTime t, ccBezierConfig c);
+};
+
+class CCBezierTo : public CCBezierBy
+{
+    static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
+};
+
+class CCScaleTo : public CCActionInterval
+{
+    static CCScaleTo* actionWithDuration(ccTime duration, float s);
+    static CCScaleTo* actionWithDuration(ccTime duration, float sx, float sy);
+};
+
+class CCScaleBy : public CCScaleTo
+{
+    static CCScaleBy* actionWithDuration(ccTime duration, float s);
+    static CCScaleBy* actionWithDuration(ccTime duration, float sx, float sy);
+};
+
+class CCBlink : public CCActionInterval
+{
+    static CCBlink* actionWithDuration(ccTime duration, unsigned int uBlinks);
+};
+
+class CCFadeIn : public CCActionInterval
+{
+    static CCFadeIn* actionWithDuration(ccTime d);
+};
+
+class CCFadeOut : public CCActionInterval
+{
+    static CCFadeOut* actionWithDuration(ccTime d);
+};
+
+class CCFadeTo : public CCActionInterval
+{
+    static CCFadeTo* actionWithDuration(ccTime duration, GLubyte opacity);
+};
+
+class CCTintTo : public CCActionInterval
+{
+    static CCTintTo* actionWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
+};
+
+class CCTintBy : public CCActionInterval
+{
+    static CCTintBy* actionWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+};
+
+class CCDelayTime : public CCActionInterval
+{
+    static CCDelayTime* actionWithDuration(ccTime d);
+};
+
+
+class CCReverseTime : public CCActionInterval
+{
+    static CCReverseTime* actionWithAction(CCFiniteTimeAction *pAction);
+};
+
+class CCAnimate : public CCActionInterval
+{
+    CCAnimation* getAnimation(void);
+    void setAnimation(CCAnimation *pAnimation);
+    static CCAnimate* actionWithAnimation(CCAnimation *pAnimation);
+    static CCAnimate* actionWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+    static CCAnimate* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+};

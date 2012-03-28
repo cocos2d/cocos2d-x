@@ -8,7 +8,7 @@ class CCPoint
     CCPoint();
     CCPoint(float x, float y);
 
-    static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
+    static bool CCPointEqualToPoint(CCPoint point1, CCPoint point2);
 };
 
 class CCSize
@@ -18,7 +18,7 @@ class CCSize
     CCSize();
     CCSize(float width, float height);
 
-    static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
+    static bool CCSizeEqualToSize(CCSize size1, CCSize size2);
 };
 
 class CCRect
@@ -28,15 +28,15 @@ class CCRect
     CCRect();
     CCRect(float x, float y, float width, float height);
 
-    static CGFloat CCRectGetMinX(const CCRect& rect);
-    static CGFloat CCRectGetMaxX(const CCRect& rect);
-    static CGFloat CCRectGetMidX(const CCRect& rect);
-    static CGFloat CCRectGetMinY(const CCRect& rect);
-    static CGFloat CCRectGetMaxY(const CCRect& rect);
-    static CGFloat CCRectGetMidY(const CCRect& rect);
-    static bool CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2);
-    static bool CCRectContainsPoint(const CCRect& rect, const CCPoint& point);
-    static bool CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB);
+    static CGFloat CCRectGetMinX(CCRect rect);
+    static CGFloat CCRectGetMaxX(CCRect rect);
+    static CGFloat CCRectGetMidX(CCRect rect);
+    static CGFloat CCRectGetMinY(CCRect rect);
+    static CGFloat CCRectGetMaxY(CCRect rect);
+    static CGFloat CCRectGetMidY(CCRect rect);
+    static bool CCRectEqualToRect(CCRect rect1, CCRect rect2);
+    static bool CCRectContainsPoint(CCRect rect, CCPoint point);
+    static bool CCRectIntersectsRect(CCRect rectA, CCRect rectB);
 };
 
 CCPoint CCPointMake(float x, float y);
