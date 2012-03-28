@@ -833,10 +833,22 @@ void CCSprite::setPosition(const CCPoint& pos)
     SET_DIRTY_RECURSIVELY();
 }
 
+void CCSprite::setPosition(float x, float y)
+{
+    CCNode::setPosition(ccp(x, y));
+    SET_DIRTY_RECURSIVELY();
+}
+
 void CCSprite::setPositionInPixels(const CCPoint& pos)
 {
 	CCNode::setPositionInPixels(pos);
 	SET_DIRTY_RECURSIVELY();
+}
+
+void CCSprite::setPositionInPixels(float x, float y)
+{
+    CCNode::setPositionInPixels(ccp(x, y));
+    SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setRotation(float fRotation)
