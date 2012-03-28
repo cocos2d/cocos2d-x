@@ -278,6 +278,11 @@ bool CCEGLView::isOpenGLReady()
 	return bIsInit;
 }
 
+bool CCEGLView::isIpad()
+{
+    return false;
+}
+
 void CCEGLView::release()
 {
 	/* Exits from GLFW */

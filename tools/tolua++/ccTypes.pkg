@@ -23,7 +23,7 @@ typedef struct _ccColor4B
     GLubyte b;
     GLubyte a;
 } ccColor4B;
-ccColor4B ccc4(GLubyte r, GLubyte g, GLubyte b, GLubyte o);
+ccColor4B ccc4f(GLubyte r, GLubyte g, GLubyte b, GLubyte o);
 
 typedef struct _ccColor4F {
     GLfloat r;
