@@ -1,36 +1,26 @@
 
 class CCTMXLayer : public CCSpriteBatchNode
 {
-    void setLayerSize(CCSize val);
-    CCSize getLayerSize();
+    CCSize getLayerSize(void);
+    void setLayerSize(CCSize size);
 
-    void setMapTileSize(CCSize val);
-    CCSize getMapTileSize();
+    CCSize getMapTileSize(void);
+    void setMapTileSize(CCSize size);
 
-    void setTiles(unsigned int* pval);
-    unsigned int* getTiles();
-
-    void setTileSet(CCTMXTilesetInfo* pval);
-    CCTMXTilesetInfo* getTileSet();
-
-    void setLayerOrientation(unsigned int val);
-    unsigned int getLayerOrientation();
-
-    void setProperties(CCStringToStringDictionary* pval);
-    CCStringToStringDictionary* getProperties();
+    unsigned int getLayerOrientation(void);
+    void setLayerOrientation(unsigned int orientation);
 
     void releaseMap();
 
     CCSprite* tileAt(CCPoint tileCoordinate);
-    unsigned int  tileGIDAt(CCPoint tileCoordinate);
+    unsigned int tileGIDAt(CCPoint tileCoordinate);
     void setTileGID(unsigned int gid, CCPoint tileCoordinate);
     void removeTileAt(CCPoint tileCoordinate);
     CCPoint positionAt(CCPoint tileCoordinate);
-    CCString *propertyNamed(const char *propertyName);
+
+    CCString* propertyNamed(char *propertyName);
+
     void setupTiles();
-
-    void setLayerName(const char *layerName);
-    const char* getLayerName();
-
-    static CCTMXLayer * layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+    char* getLayerName();
+    inline void setLayerName(char *layerName);
 };

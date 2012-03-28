@@ -162,7 +162,7 @@ public:
 	 If 'interval' is 0, it will be called every frame.
      return schedule script entry ID, used for unscheduleScriptFunc().
      */
-    unsigned int scheduleScriptFunc(unsigned int nHandler, ccTime fInterval, bool bPaused);
+    unsigned int scheduleScriptFunc(int nHandler, ccTime fInterval, bool bPaused);
     
 	/** Unschedule a script entry. */
     void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);

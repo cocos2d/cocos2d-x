@@ -1,0 +1,13 @@
+
+class CCTexturePVR : public CCObject
+{
+    static CCTexturePVR * pvrTextureWithContentsOfFile(const char* path);
+
+    GLuint getName(void);
+    unsigned int getWidth(void);
+    unsigned int getHeight(void);
+    CCTexture2DPixelFormat getFormat(void);
+    bool getHasAlpha(void);
+    bool getRetainName(void);
+    void setRetainName(bool retainName);
+};

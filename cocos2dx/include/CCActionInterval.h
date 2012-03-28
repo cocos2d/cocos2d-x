@@ -105,6 +105,8 @@ public:
 	static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
 	/** helper contructor to create an array of sequenceable actions given an array */
 	static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+    /** for Lua */
+    static CCSequence* actionsWithArrayLua(CCArray *actions);
 
 	/** creates the action */
 	static CCSequence* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
@@ -224,6 +226,7 @@ public:
 
 	/** helper contructor to create an array of spawned actions given an array */
 	static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+	static CCSpawn* actionsWithArrayLua(CCArray *actions);
 
 	/** creates the Spawn action */
 	static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
