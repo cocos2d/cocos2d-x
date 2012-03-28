@@ -65,10 +65,10 @@ done
 # build
 if [[ $buildexternalsfromsource ]]; then
     echo "Building external dependencies from source"
-    $NDK_ROOT_LOCAL/ndk-build -C $GAME_ANDROID_ROOT \
+    $NDK_ROOT_LOCAL/ndk-build -C $GAME_ANDROID_ROOT $* \
         NDK_MODULE_PATH=${COCOS2DX_ROOT_LOCAL}:${COCOS2DX_ROOT_LOCAL}/cocos2dx/platform/third_party/android/source
 else
     echo "Using prebuilt externals"
-    $NDK_ROOT_LOCAL/ndk-build -C $GAME_ANDROID_ROOT \
+    $NDK_ROOT_LOCAL/ndk-build -C $GAME_ANDROID_ROOT $* \
         NDK_MODULE_PATH=${COCOS2DX_ROOT_LOCAL}:${COCOS2DX_ROOT_LOCAL}/cocos2dx/platform/third_party/android/prebuilt
 fi
