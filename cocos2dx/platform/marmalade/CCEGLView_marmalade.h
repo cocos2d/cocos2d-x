@@ -104,7 +104,6 @@ private:
 	void	setKeyTouch(void* systemData);
 	void	setCharTouch(void* systemData);
 
-    CCTouch* findTouch(int id);
     CCTouch* touchSet[S3E_POINTER_TOUCH_MAX];
 
 	static int32 TouchEventHandler(void* systemData, void* userData)
