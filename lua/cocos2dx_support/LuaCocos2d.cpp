@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Wed Mar 21 10:36:34 2012.
+** Generated automatically by tolua++-1.0.92 on 03/28/12 10:12:33.
 */
 
 #include <vector>
@@ -638,9 +638,9 @@ static int tolua_set_ccColor4B_unsigned_a(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccc4 */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccc400
-static int tolua_Cocos2d_ccc400(lua_State* tolua_S)
+/* function: ccc4f */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccc4f00
+static int tolua_Cocos2d_ccc4f00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -660,7 +660,7 @@ static int tolua_Cocos2d_ccc400(lua_State* tolua_S)
   unsigned char b = (( unsigned char)  tolua_tonumber(tolua_S,3,0));
   unsigned char o = (( unsigned char)  tolua_tonumber(tolua_S,4,0));
   {
-   ccColor4B tolua_ret = (ccColor4B)  ccc4(r,g,b,o);
+   ccColor4B tolua_ret = (ccColor4B)  ccc4f(r,g,b,o);
    {
 #ifdef __cplusplus
     void* tolua_obj = Mtolua_new((ccColor4B)(tolua_ret));
@@ -677,7 +677,7 @@ static int tolua_Cocos2d_ccc400(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'ccc4'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'ccc4f'.",&tolua_err);
  return 0;
 #endif
 }
@@ -21052,6 +21052,67 @@ static int tolua_Cocos2d_CCAnimation_animation00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: animationWithFrames of class  CCAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_animationWithFrames00
+static int tolua_Cocos2d_CCAnimation_animationWithFrames00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCAnimation",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCMutableArray<CCSpriteFrame*>",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMutableArray<CCSpriteFrame*>* frames = ((CCMutableArray<CCSpriteFrame*>*)  tolua_tousertype(tolua_S,2,0));
+  {
+   CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::animationWithFrames(frames);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animationWithFrames'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animationWithFrames of class  CCAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_animationWithFrames01
+static int tolua_Cocos2d_CCAnimation_animationWithFrames01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCAnimation",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCMutableArray<CCSpriteFrame*>",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCMutableArray<CCSpriteFrame*>* frames = ((CCMutableArray<CCSpriteFrame*>*)  tolua_tousertype(tolua_S,2,0));
+  float delay = ((float)  tolua_tonumber(tolua_S,3,0));
+  {
+   CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::animationWithFrames(frames,delay);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCAnimation_animationWithFrames00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: addAnimation of class  CCAnimationCache */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimationCache_addAnimation00
 static int tolua_Cocos2d_CCAnimationCache_addAnimation00(lua_State* tolua_S)
@@ -30454,7 +30515,7 @@ static int tolua_Cocos2d_CCTexturePVR_pvrTextureWithContentsOfFile00(lua_State* 
  else
 #endif
  {
-  char* path = ((char*)  tolua_tostring(tolua_S,2,0));
+  const char* path = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
    CCTexturePVR* tolua_ret = (CCTexturePVR*)  CCTexturePVR::pvrTextureWithContentsOfFile(path);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -30724,9 +30785,9 @@ static int tolua_Cocos2d_CCApplication_getCurrentLanguage00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: ccRemoveHDSuffixFromFile of class  CCFileUtils */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_ccRemoveHDSuffixFromFile00
-static int tolua_Cocos2d_CCFileUtils_ccRemoveHDSuffixFromFile00(lua_State* tolua_S)
+/* method: removeSuffixFromFile of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_removeSuffixFromFile00
+static int tolua_Cocos2d_CCFileUtils_removeSuffixFromFile00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -30741,14 +30802,15 @@ static int tolua_Cocos2d_CCFileUtils_ccRemoveHDSuffixFromFile00(lua_State* tolua
  {
   std::string path = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   {
-   std::string tolua_ret = (std::string)  CCFileUtils::ccRemoveHDSuffixFromFile(path);
+   std::string tolua_ret = (std::string)  CCFileUtils::removeSuffixFromFile(path);
    tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+   tolua_pushcppstring(tolua_S,(const char*)path);
   }
  }
- return 1;
+ return 2;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'ccRemoveHDSuffixFromFile'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'removeSuffixFromFile'.",&tolua_err);
  return 0;
 #endif
 }
@@ -30839,6 +30901,132 @@ static int tolua_Cocos2d_CCFileUtils_getWriteablePath00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getWriteablePath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setiPhoneRetinaDisplaySuffix of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_setiPhoneRetinaDisplaySuffix00
+static int tolua_Cocos2d_CCFileUtils_setiPhoneRetinaDisplaySuffix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* suffix = ((const char*)  tolua_tostring(tolua_S,2,0));
+  {
+   CCFileUtils::setiPhoneRetinaDisplaySuffix(suffix);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setiPhoneRetinaDisplaySuffix'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setiPadRetinaDisplaySuffix of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_setiPadRetinaDisplaySuffix00
+static int tolua_Cocos2d_CCFileUtils_setiPadRetinaDisplaySuffix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* suffix = ((const char*)  tolua_tostring(tolua_S,2,0));
+  {
+   CCFileUtils::setiPadRetinaDisplaySuffix(suffix);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setiPadRetinaDisplaySuffix'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: iPadFileExistsAtPath of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_iPadFileExistsAtPath00
+static int tolua_Cocos2d_CCFileUtils_iPadFileExistsAtPath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+  const char* filename = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'iPadFileExistsAtPath'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->iPadFileExistsAtPath(filename);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'iPadFileExistsAtPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: iPadRetinaDisplayFileExistsAtPath of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_iPadRetinaDisplayFileExistsAtPath00
+static int tolua_Cocos2d_CCFileUtils_iPadRetinaDisplayFileExistsAtPath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+  const char* filename = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'iPadRetinaDisplayFileExistsAtPath'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->iPadRetinaDisplayFileExistsAtPath(filename);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'iPadRetinaDisplayFileExistsAtPath'.",&tolua_err);
  return 0;
 #endif
 }
@@ -34940,7 +35128,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"b",tolua_get_ccColor4B_unsigned_b,tolua_set_ccColor4B_unsigned_b);
    tolua_variable(tolua_S,"a",tolua_get_ccColor4B_unsigned_a,tolua_set_ccColor4B_unsigned_a);
   tolua_endmodule(tolua_S);
-  tolua_function(tolua_S,"ccc4",tolua_Cocos2d_ccc400);
+  tolua_function(tolua_S,"ccc4f",tolua_Cocos2d_ccc4f00);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"ccColor4F","ccColor4F","",tolua_collect_ccColor4F);
   #else
@@ -35992,6 +36180,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"addFrameWithFileName",tolua_Cocos2d_CCAnimation_addFrameWithFileName00);
    tolua_function(tolua_S,"addFrameWithTexture",tolua_Cocos2d_CCAnimation_addFrameWithTexture00);
    tolua_function(tolua_S,"animation",tolua_Cocos2d_CCAnimation_animation00);
+   tolua_function(tolua_S,"animationWithFrames",tolua_Cocos2d_CCAnimation_animationWithFrames00);
+   tolua_function(tolua_S,"animationWithFrames",tolua_Cocos2d_CCAnimation_animationWithFrames01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCAnimationCache","CCAnimationCache","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCAnimationCache");
@@ -36550,10 +36740,14 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFileUtils","CCFileUtils","",NULL);
   tolua_beginmodule(tolua_S,"CCFileUtils");
-   tolua_function(tolua_S,"ccRemoveHDSuffixFromFile",tolua_Cocos2d_CCFileUtils_ccRemoveHDSuffixFromFile00);
+   tolua_function(tolua_S,"removeSuffixFromFile",tolua_Cocos2d_CCFileUtils_removeSuffixFromFile00);
    tolua_function(tolua_S,"fullPathFromRelativePath",tolua_Cocos2d_CCFileUtils_fullPathFromRelativePath00);
    tolua_function(tolua_S,"fullPathFromRelativeFile",tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile00);
    tolua_function(tolua_S,"getWriteablePath",tolua_Cocos2d_CCFileUtils_getWriteablePath00);
+   tolua_function(tolua_S,"setiPhoneRetinaDisplaySuffix",tolua_Cocos2d_CCFileUtils_setiPhoneRetinaDisplaySuffix00);
+   tolua_function(tolua_S,"setiPadRetinaDisplaySuffix",tolua_Cocos2d_CCFileUtils_setiPadRetinaDisplaySuffix00);
+   tolua_function(tolua_S,"iPadFileExistsAtPath",tolua_Cocos2d_CCFileUtils_iPadFileExistsAtPath00);
+   tolua_function(tolua_S,"iPadRetinaDisplayFileExistsAtPath",tolua_Cocos2d_CCFileUtils_iPadRetinaDisplayFileExistsAtPath00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCImage","CCImage","",NULL);
   tolua_beginmodule(tolua_S,"CCImage");

@@ -12,4 +12,6 @@ class CCAnimation : public CCObject
     void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
     static CCAnimation* animation(void);
+    static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames);
+    static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay);
 };

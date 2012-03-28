@@ -1,7 +1,7 @@
 
 class CCTexturePVR : public CCObject
 {
-    static CCTexturePVR * pvrTextureWithContentsOfFile(char* path);
+    static CCTexturePVR * pvrTextureWithContentsOfFile(const char* path);
 
     GLuint getName(void);
     unsigned int getWidth(void);
