@@ -180,7 +180,7 @@ void CCTMXLayer::setupTiles()
 			// XXX: gid == 0 --> empty tile
 			if( gid != 0 ) 
 			{
-				this->appendTileForGID(gid, ccp((float)x, (float)y));
+				this->appendTileForGID(gid, ccp(x, y));
 
 				// Optimization: update min and max GID rendered by the layer
 				m_uMinGID = MIN(gid, m_uMinGID);
