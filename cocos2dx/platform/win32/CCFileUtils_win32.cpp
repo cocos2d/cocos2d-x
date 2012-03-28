@@ -25,6 +25,8 @@ THE SOFTWARE.
 #include "windows.h"
 #include "CCDirector.h"
 
+#define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
+
 using namespace std;
 
 NS_CC_BEGIN;
@@ -76,7 +78,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         pRet->m_sString = s_pszResourcePath;
         pRet->m_sString += pszRelativePath;
     }
-#if (CC_IS_RETINA_DISPLAY_SUPPORTED)
+
     if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
     {
         std::string hiRes = pRet->m_sString.c_str();
@@ -98,7 +100,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
             pRet->m_sString.swap(hiRes);
         }
     }
-#endif
+
 	return pRet->m_sString.c_str();
 }
 
