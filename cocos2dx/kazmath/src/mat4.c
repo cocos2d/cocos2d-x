@@ -87,9 +87,9 @@ int gaussj(kmMat4 *a, kmMat4 *b)
 {
     int i, icol = 0, irow = 0, j, k, l, ll, n = 4, m = 4;
     float big, dum, pivinv;
-    int indxc[4];
-    int indxr[4];
-    int ipiv[4];
+    int indxc[4] = {0};
+    int indxr[4] = {0};
+    int ipiv[4] = {0};
 
     for (j = 0; j < n; j++) {
         ipiv[j] = 0;
