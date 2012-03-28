@@ -172,7 +172,7 @@ void CCEGLView::setMotionTouch(void* systemData)
 		s3ePointerMotionEvent* event =(s3ePointerMotionEvent*)systemData;
 		if (m_bCaptured)
 		{
-            m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
+            m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
             m_pDelegate->touchesMoved(m_pSet, NULL);
 
 		}
@@ -215,24 +215,10 @@ void CCEGLView::setMultiMotionTouch(void* systemData)
      m_pTouch = touchSet[event->m_TouchID];
     if (m_pTouch)
     {
-        m_pTouch->SetTouchInfo((int)event, (float)event->m_x, (float)event->m_y);
+        m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
         m_pDelegate->touchesMoved(m_pSet, NULL);
         
     }
-}
-
-CCTouch* CCEGLView::findTouch(int id) 
-{
-    CCSetIterator iter;
-	for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
-	{
-        CCTouch *touch = (CCTouch*)*iter;
-                
-		if(touch->view() == id)
-            return touch;
-	}
-    
-    return NULL;
 }
 
 
