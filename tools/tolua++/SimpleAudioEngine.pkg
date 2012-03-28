@@ -34,20 +34,20 @@ class SimpleAudioEngine
     @brief  Set the zip file name
     @param pszZipFileName The relative path of the .zip file
     */
-    static void setResource(const char* pszZipFileName);
+    static void setResource(char* pszZipFileName);
 
     /**
      @brief Preload background music
      @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
      */
-    void preloadBackgroundMusic(const char* pszFilePath);
+    void preloadBackgroundMusic(char* pszFilePath);
 
     /**
     @brief Play background music
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
     */
-    void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
+    void playBackgroundMusic(char* pszFilePath, bool bLoop = false);
 
     /**
     @brief Stop playing background music
@@ -107,7 +107,7 @@ class SimpleAudioEngine
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
     @bLoop Whether to loop the effect playing, default value is false
     */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
+    unsigned int playEffect(char* pszFilePath, bool bLoop = false);
 
     /**
     @brief Stop playing sound effect
@@ -120,11 +120,11 @@ class SimpleAudioEngine
     @details	    the compressed audio will be decode to wave, then write into an
     internal buffer in SimpleaudioEngine
     */
-    void preloadEffect(const char* pszFilePath);
+    void preloadEffect(char* pszFilePath);
 
     /**
     @brief  		unload the preloaded effect from internal buffer
     @param[in]		pszFilePath		The path of the effect file,or the FileName of T_SoundResInfo
     */
-    void unloadEffect(const char* pszFilePath);
+    void unloadEffect(char* pszFilePath);
 };
