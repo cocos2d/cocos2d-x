@@ -1,0 +1,9 @@
+
+class CCNotificationCenter : public CCObject
+{
+    static CCNotificationCenter* sharedNotifCenter(void);
+    static void purgeNotifCenter(void);
+
+    void postNotification(char *name);
+    void postNotification(char *name, CCObject *object);
+};

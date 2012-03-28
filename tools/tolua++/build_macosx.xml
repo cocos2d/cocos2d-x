@@ -30,7 +30,7 @@
 
     <replace file="LuaCocos2d.cpp">
       <replacetoken><![CDATA[ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&(const ccColor3B)ccBLACK));]]></replacetoken>
-      <replacevalue><![CDATA[const ccColor3B clr = ccBLACK;
+      <replacevalue><![CDATA[ccColor3B clr = ccBLACK;
   ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));]]></replacevalue>
     </replace>
 
@@ -40,8 +40,8 @@
     </replace>
 
     <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[LUA_FUNCTION funcID = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
-      <replacevalue><![CDATA[int funcID = (tolua_ref_function(tolua_S,]]></replacevalue>
+      <replacetoken><![CDATA[LUA_FUNCTION nHandler = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
+      <replacevalue><![CDATA[int nHandler = (tolua_ref_function(tolua_S,]]></replacevalue>
     </replace>
 
     <replace file="LuaCocos2d.cpp">
@@ -57,8 +57,13 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]]></replacetoken>
       <replacevalue><![CDATA[#include <vector>
 #include <map>
 #include "LuaCocos2d.h"
+
+extern "C" {
 #include "tolua_fix.h"
+}
+
 #include "cocos2d.h"
+#include "CCConfiguration.h"
 #include "CCRibbon.h"
 #include "SimpleAudioEngine.h"
 
