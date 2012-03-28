@@ -23,7 +23,8 @@ typedef struct _ccColor4B
     GLubyte b;
     GLubyte a;
 } ccColor4B;
-ccColor4B ccc4f(GLubyte r, GLubyte g, GLubyte b, GLubyte o);
+//! helper macro that creates an ccColor4B type
+static  ccColor4B ccc4f(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o);
 
 typedef struct _ccColor4F {
     GLfloat r;
