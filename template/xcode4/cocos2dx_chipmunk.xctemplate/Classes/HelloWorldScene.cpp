@@ -181,7 +181,7 @@ void HelloWorld::ccTouchesEnded(CCSet *touches, CCEvent *event)
                         break;
                 }
                 
-                CCPoint location = touch->locationInView(touch->view());
+                CCPoint location = touch->locationInView();
                 location = CCDirector::sharedDirector()->convertToGL(location);
                 addNewSpriteX(location.x, location.y);
         }

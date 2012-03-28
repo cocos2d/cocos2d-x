@@ -4,10 +4,12 @@
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
 #include "SimpleAudioEngine.h"
 using namespace CocosDenshion;
-
 [! endif]
+
 [! if CC_USE_LUA]
 #include "CCLuaEngine.h"
+[! else]
+#include "HelloWorldScene.h"
 [! endif]
 
 #include "CCEGLView.h"
