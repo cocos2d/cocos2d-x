@@ -1,15 +1,8 @@
-
-typedef std::map<std::string, int> StringToIntegerDictionary;
-typedef std::pair<std::string, int> StringToIntegerPair;
-struct sImageTGA;
-
 class CCTileMapAtlas : public CCAtlasNode
 {
-    struct sImageTGA* getTGAInfo();
-    void setTGAInfo(struct sImageTGA* val);
+    static CCTileMapAtlas* tileMapAtlasWithTileFile(char *tile, char *mapFile, int tileWidth, int tileHeight);
 
+    ccColor3B tileAt(ccGridSize position);
     void setTile(ccColor3B tile, ccGridSize position);
     void releaseMap();
-
-    static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
 };

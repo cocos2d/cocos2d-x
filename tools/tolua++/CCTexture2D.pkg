@@ -34,39 +34,39 @@ typedef enum {
     kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
     kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
     kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
+
 } CCTexture2DPixelFormat;
+
+typedef struct _ccTexParams {
+    GLuint  minFilter;
+    GLuint  magFilter;
+    GLuint  wrapS;
+    GLuint  wrapT;
+} ccTexParams;
 
 class CCTexture2D : public CCObject
 {
-    CCTexture2DPixelFormat getPixelFormat();
-
-    unsigned int getPixelsWide();
-    unsigned int getPixelsHigh();
-
-    GLuint getName();
-
-    CCSize getContentSizeInPixels();
-
-    void setMaxS(GLfloat val);
-    GLfloat getMaxS();
-
-    GLfloat getMaxT();
-    void setMaxT(GLfloat val);
-
-    bool getHasPremultipliedAlpha();
-
-    void drawAtPoint(CCPoint point);
-    void drawInRect(CCRect rect);
-
+    CCTexture2DPixelFormat getPixelFormat(void);
+    unsigned int getPixelsWide(void);
+    unsigned int getPixelsHigh(void);
+    GLuint getName(void);
+    CCSize getContentSizeInPixels(void);
     CCSize getContentSize(void);
+
+    GLfloat getMaxS(void);
+    void setMaxS(GLfloat maxS);
+    GLfloat getMaxT(void);
+    void setMaxT(GLfloat maxT);
+
+    bool getHasPremultipliedAlpha(void);
 
     void setTexParameters(ccTexParams* texParams);
     void setAntiAliasTexParameters();
     void setAliasTexParameters();
     void generateMipmap();
-
-    int bitsPerPixelForFormat();
+    unsigned int bitsPerPixelForFormat();
 
     static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
     static CCTexture2DPixelFormat defaultAlphaPixelFormat();
+    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 };
