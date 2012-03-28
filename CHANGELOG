@@ -1,3 +1,39 @@
+cocos2d-1.0.1-x-0.13.0-beta @ Mar.30 2012
+ [all platforms]
+     Bug      #1009: fix a typo error in CCNode::setSkewY() and CCNode::getSkewY()
+     Feature  #1022: add a static method named CCString::stringWithContentsOfFile
+     Feature  #1072: make CCLabelBMFont support alignment
+     Refactor #737: Delete CCTouch::m_nViewId
+ [iOS]
+     Bug      #1076: fix wrong logging message in CCFileUtils
+     Feature  #1033: add support files for Accelerometer Simulation for iPhone Simulator
+     Feature  #1089: add support for new ipad
+ [android]
+     Feature  #721:  support putting audio resource not only under Resources
+     Refactor #1061: use JNI Helper in CocosDenshion
+     Refactor #1069: make build dependencies from official repos and from sources
+ [bada]
+     Bug      #984: use static library for cocos2dx project on bada and qnx platform
+ [blackberry]
+     Feature  #1015: add CCEGLView::EventHandler class and window group id for CCEGLView
+
+ [marmalade]
+     Bug      #626: fix a but that application doesn't terminate on exit
+ [win32]
+     Bug      #1014: fix a bug that "Resources" path in build-win32.bat are error
+     Bug      #1020: fix a bug that can not create vs template with lua support
+     Refactor #1017: improve win32 timing accuracy
+ [lua]
+     Bug      #1058: fix a bug that CCLuaEngine to call CCTouch::locationInView () use not exist parameter view id
+     Bug      #1074: executeFunctionByHandler() not remove parameters from stack, after pushFunctionByHandler() failed
+     Bug      #1075: invalid C++ class register order
+     Refactor #1030: rename executeFunctionByRefId() to executeFunctionByHandler() and add some lua support functions
+ [linux]
+     Bug      #1028: fix a bug that linux makefile uses wrong directory name of CocosDenshion
+     Refactor #1051: fix and improve building on linux
+     Refactor #1068: use fontconfig of CCImage::initWithString
+
+
 cocos2d-1.0.1-x-0.12.0 @ Mar.5 2012
  [all platforms]
      Bug      #925: rename HelloWorld/Resource to HelloWorld/Resources
