@@ -76,7 +76,7 @@ enum {
     To use mipmaps with non-square textures, instead call CCTexture2D#generateMipmap on the sheet texture itself
     (and to save space, save the PVR sprite sheet without mip maps included).
 */
-class CCTexturePVR : public CCObject
+class CC_DLL CCTexturePVR : public CCObject
 {
 public:
 
