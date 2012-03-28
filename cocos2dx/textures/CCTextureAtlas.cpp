@@ -256,7 +256,7 @@ void CCTextureAtlas::setupVBOandVAO()
     CHECK_GL_ERROR_DEBUG();
 }
 #else // CC_TEXTURE_ATLAS_USE_VAO
-void setupVBO()
+void CCTextureAtlas::setupVBO()
 {
     glGenBuffers(2, &m_pBuffersVBO[0]);
 
@@ -606,7 +606,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
     glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #else
-    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
+    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) m_pIndices/*(start*6*sizeof(m_pIndices[0]))*/ );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
