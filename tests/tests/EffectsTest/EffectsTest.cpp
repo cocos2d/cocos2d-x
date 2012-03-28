@@ -339,7 +339,7 @@ void EffectTestScene::runThisTest()
 
 TextLayer::TextLayer(void)
 {
-	initWithColor( ccc4(32,32,32,255) );
+	initWithColor( ccc4f(32,32,32,255) );
 		
 	float x,y;
 	

@@ -348,7 +348,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     *  B1: non-premulti sprite
     *  B2: non-premulti render
     */
-    CCLayerColor *background = CCLayerColor::layerWithColor(ccc4(200,200,200,255));
+    CCLayerColor *background = CCLayerColor::layerWithColor(ccc4f(200,200,200,255));
     addChild(background);
 
     CCSprite *spr_premulti = CCSprite::spriteWithFile("Images/fire.png");

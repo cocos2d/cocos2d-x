@@ -1050,7 +1050,7 @@ CCLayer* restartParticleAction()
 
 ParticleDemo::ParticleDemo(void)
 {
-	initWithColor( ccc4(127,127,127,255) );
+	initWithColor( ccc4f(127,127,127,255) );
 
 	m_emitter = NULL;
 

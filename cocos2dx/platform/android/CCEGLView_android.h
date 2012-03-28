@@ -40,6 +40,7 @@ public:
 
     CCSize  getSize();
     bool    isOpenGLReady();
+    bool    isIpad();
 	/**
 	 * the width and height is the real size of phone
 	 */

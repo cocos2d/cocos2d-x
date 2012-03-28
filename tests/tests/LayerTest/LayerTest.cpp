@@ -152,7 +152,7 @@ void LayerTest1::onEnter()
 	setIsTouchEnabled(true);
 	
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLayerColor* layer = CCLayerColor::layerWithColorWidthHeight( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
+	CCLayerColor* layer = CCLayerColor::layerWithColorWidthHeight( ccc4f(0xFF, 0x00, 0x00, 0x80), 200, 200); 
 	
 	layer->setIsRelativeAnchorPoint(true);
 	layer->setPosition( CCPointMake(s.width/2, s.height/2) );
@@ -210,12 +210,12 @@ void LayerTest2::onEnter()
 	LayerTest::onEnter();
 
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLayerColor* layer1 = CCLayerColor::layerWithColorWidthHeight( ccc4(255, 255, 0, 80), 100, 300);
+	CCLayerColor* layer1 = CCLayerColor::layerWithColorWidthHeight( ccc4f(255, 255, 0, 80), 100, 300);
 	layer1->setPosition(CCPointMake(s.width/3, s.height/2));
 	layer1->setIsRelativeAnchorPoint(true);
 	addChild(layer1, 1);
 	
-	CCLayerColor* layer2 = CCLayerColor::layerWithColorWidthHeight( ccc4(0, 0, 255, 255), 100, 300);
+	CCLayerColor* layer2 = CCLayerColor::layerWithColorWidthHeight( ccc4f(0, 0, 255, 255), 100, 300);
 	layer2->setPosition(CCPointMake((s.width/3)*2, s.height/2));
 	layer2->setIsRelativeAnchorPoint(true);
 	addChild(layer2, 1);
@@ -245,7 +245,7 @@ std::string LayerTest2::title()
 LayerTestBlend::LayerTestBlend()
 {
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLayerColor* layer1 = CCLayerColor::layerWithColor( ccc4(255, 255, 255, 80) );
+	CCLayerColor* layer1 = CCLayerColor::layerWithColor( ccc4f(255, 255, 255, 80) );
 	
 	CCSprite* sister1 = CCSprite::spriteWithFile(s_pPathSister1);
 	CCSprite* sister2 = CCSprite::spriteWithFile(s_pPathSister2);
@@ -295,7 +295,7 @@ std::string LayerTestBlend::title()
 //------------------------------------------------------------------
 LayerGradient::LayerGradient()
 {
-    CCLayerGradient* layer1 = CCLayerGradient::layerWithColor(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9f, 0.9f));
+    CCLayerGradient* layer1 = CCLayerGradient::layerWithColor(ccc4f(255,0,0,255), ccc4f(0,255,0,255), ccp(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
 
     setIsTouchEnabled(true);

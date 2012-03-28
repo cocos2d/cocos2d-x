@@ -420,6 +420,11 @@ bool CCEGLView::isOpenGLReady()
     return (NULL != m_pEGL);
 }
 
+bool CCEGLView::isIpad()
+{
+    return false;
+}
+
 void CCEGLView::release()
 {
 	if (m_hWnd)
