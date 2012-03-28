@@ -65,6 +65,9 @@ Developers:
     folecr
         contribute for Android module building
 
+    Irwin Billing
+        contribute for UTF-8 character support of CCLabelBMFont
+
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, dicuss the engine usage in forum & QQ groups!
 Special thanks to Ricardo Quesada for giving us lots of guidances & suggestions.
