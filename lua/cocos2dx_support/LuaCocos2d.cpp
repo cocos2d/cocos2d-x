@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 03/28/12 10:12:33.
+** Generated automatically by tolua++-1.0.92 on 03/28/12 11:05:02.
 */
 
 #include <vector>
@@ -655,10 +655,10 @@ static int tolua_Cocos2d_ccc4f00(lua_State* tolua_S)
  else
 #endif
  {
-  unsigned char r = (( unsigned char)  tolua_tonumber(tolua_S,1,0));
-  unsigned char g = (( unsigned char)  tolua_tonumber(tolua_S,2,0));
-  unsigned char b = (( unsigned char)  tolua_tonumber(tolua_S,3,0));
-  unsigned char o = (( unsigned char)  tolua_tonumber(tolua_S,4,0));
+  unsigned const char r = ((unsigned const char)  tolua_tonumber(tolua_S,1,0));
+  unsigned const char g = ((unsigned const char)  tolua_tonumber(tolua_S,2,0));
+  unsigned const char b = ((unsigned const char)  tolua_tonumber(tolua_S,3,0));
+  unsigned const char o = ((unsigned const char)  tolua_tonumber(tolua_S,4,0));
   {
    ccColor4B tolua_ret = (ccColor4B)  ccc4f(r,g,b,o);
    {
