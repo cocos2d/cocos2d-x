@@ -1104,10 +1104,6 @@ void CCParticleSystem::setEmitterMode(int var)
 	m_nEmitterMode = var;
 }
 
-void CCParticleSystem::setZOrder(int z)
-{
-	m_nZOrder = z;
-}
 
 // ParticleSystem - methods for batchNode rendering
 
