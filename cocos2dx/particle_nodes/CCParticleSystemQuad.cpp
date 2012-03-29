@@ -148,17 +148,17 @@ void CCParticleSystemQuad::initTexCoordsWithRect(const CCRect& pointRect)
 	for(unsigned int i=start; i<end; i++) 
 	{
 		// bottom-left vertex:
-		m_pQuads[i].bl.texCoords.u = left;
-		m_pQuads[i].bl.texCoords.v = bottom;
+		quads[i].bl.texCoords.u = left;
+		quads[i].bl.texCoords.v = bottom;
 		// bottom-right vertex:
-		m_pQuads[i].br.texCoords.u = right;
-		m_pQuads[i].br.texCoords.v = bottom;
+		quads[i].br.texCoords.u = right;
+		quads[i].br.texCoords.v = bottom;
 		// top-left vertex:
-		m_pQuads[i].tl.texCoords.u = left;
-		m_pQuads[i].tl.texCoords.v = top;
+		quads[i].tl.texCoords.u = left;
+		quads[i].tl.texCoords.v = top;
 		// top-right vertex:
-		m_pQuads[i].tr.texCoords.u = right;
-		m_pQuads[i].tr.texCoords.v = top;
+		quads[i].tr.texCoords.u = right;
+		quads[i].tr.texCoords.v = top;
 	}
 }
 void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, const CCRect& rect)
@@ -424,22 +424,22 @@ bool CCParticleSystemQuad::allocMemory()
 
 void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
 {
-	if( m_pBatchNode != batchNode ) {
-
-		CCParticleBatchNode *oldBatch = m_pBatchNode;
+	if( m_pBatchNode != batchNode ) 
+    {
+		CCParticleBatchNode* oldBatch = m_pBatchNode;
 
 		CCParticleSystem::setBatchNode(batchNode);
 
 		// NEW: is self render ?
-		if( ! batchNode ) {
+		if( ! batchNode ) 
+        {
 			allocMemory();
 			initIndices();
 			setTexture(oldBatch->getTexture());
 			initVAO();
 		}
-
 		// OLD: was it self render ? cleanup
-		else if( ! oldBatch )
+		else if( !oldBatch )
 		{
 			// copy current state to batch
 			ccV3F_C4B_T2F_Quad *batchQuads = m_pBatchNode->getTextureAtlas()->getQuads();

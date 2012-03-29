@@ -256,7 +256,7 @@ void CCTextureAtlas::setupVBOandVAO()
     CHECK_GL_ERROR_DEBUG();
 }
 #else // CC_TEXTURE_ATLAS_USE_VAO
-void setupVBO()
+void CCTextureAtlas::setupVBO()
 {
     glGenBuffers(2, &m_pBuffersVBO[0]);
 
