@@ -417,7 +417,7 @@ void CCParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 
 void CCParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-	ccArrayMakeObjectsPerformSelectorWithObject(m_pChildren, setBatchNode, NULL, CCParticleSystem*);
+	arrayMakeObjectsPerformSelectorWithObject(m_pChildren, setBatchNode, NULL, CCParticleSystem*);
 
 	CCNode::removeAllChildrenWithCleanup(doCleanup);
 
