@@ -522,7 +522,7 @@ void CCSprite::updateTransform(void)
 	// recursively iterate over children
 	if( m_bHasChildren ) 
     {
-		ccArrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCSprite*);
+		arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCSprite*);
 	}
 #if CC_SPRITE_DEBUG_DRAW
 	// draw bounding box
@@ -718,7 +718,7 @@ void CCSprite::sortAllChildren()
 
 		if ( m_pobBatchNode)
 		{
-			ccArrayMakeObjectsPerformSelector(m_pChildren, sortAllChildren, CCSprite*);
+			arrayMakeObjectsPerformSelector(m_pChildren, sortAllChildren, CCSprite*);
 		}
 
 		m_bReorderChildDirty = false;

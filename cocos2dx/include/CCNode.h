@@ -57,7 +57,7 @@ enum {
     kCCNodeOnExit
 };
 
-#define ccArrayMakeObjectsPerformSelector(pArray, func, elementType)  \
+#define arrayMakeObjectsPerformSelector(pArray, func, elementType)  \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
@@ -74,7 +74,7 @@ do {                                                                  \
 }                                                                     \
 while(false)
 
-#define ccArrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
+#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
@@ -321,10 +321,6 @@ private:
 	
 	
 	void detachChild(CCNode *child, bool doCleanup);
-
-	typedef void (CCNode::*callbackFunc)(void);
-
-	void arrayMakeObjectsPerformSelector(CCArray* pArray, callbackFunc func);
 
 	CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 

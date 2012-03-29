@@ -234,7 +234,7 @@ void CCSpriteBatchNode::removeAllChildrenWithCleanup(bool bCleanup)
 {
 	// Invalidate atlas index. issue #569
     // useSelfRender should be performed on all descendants. issue #1216
-    ccArrayMakeObjectsPerformSelectorWithObject(m_pobDescendants, setBatchNode, NULL, CCSprite*);
+    arrayMakeObjectsPerformSelectorWithObject(m_pobDescendants, setBatchNode, NULL, CCSprite*);
 
 	CCNode::removeAllChildrenWithCleanup(bCleanup);
 
@@ -272,7 +272,7 @@ void CCSpriteBatchNode::sortAllChildren()
 		if (m_pChildren->count() > 0)
 		{
 			//first sort all children recursively based on zOrder
-			ccArrayMakeObjectsPerformSelector(m_pChildren, sortAllChildren, CCSprite*);
+			arrayMakeObjectsPerformSelector(m_pChildren, sortAllChildren, CCSprite*);
 
 			int index=0;
 
@@ -398,7 +398,7 @@ void CCSpriteBatchNode::draw(void)
 
 	CC_NODE_DRAW_SETUP();
 
-	ccArrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCSprite*);
+	arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCSprite*);
 
 	ccGLBlendFunc( m_blendFunc.src, m_blendFunc.dst );
 
