@@ -1258,7 +1258,7 @@ void ParticleBatchHybrid::switchRender(ccTime dt)
 	CCNode *newParent = (usingBatch ? m_pParent2  : m_pParent1 );
 	newParent->addChild(m_emitter);
 
-	CCLog("Particle: Using new parent: %p", newParent);
+    CCLog("Particle: Using new parent: %s", usingBatch ? "CCNode" : "CCParticleBatchNode");
 }
 
 std::string ParticleBatchHybrid::title()
