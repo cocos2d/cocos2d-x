@@ -286,7 +286,6 @@ public:
 	virtual float getRotatePerSecondVar();
 	virtual void setRotatePerSecondVar(float degrees);
 
-	void setZOrder(int z);
 	virtual void setScale(float s);
 	virtual void setRotation(float newRotation);
 	virtual void setScaleX(float newScaleX);
