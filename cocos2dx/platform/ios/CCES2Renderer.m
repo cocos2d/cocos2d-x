@@ -100,13 +100,13 @@
 
 	if( ! [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer] )
     {
-		CCLOG(@"failed to call context");
+		NSLog(@"failed to call context");
     }
     
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
 
-	CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
+	NSLog(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 
 	if (multiSampling_)
 	{
@@ -132,7 +132,7 @@
 		GLenum error;
 		if ( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
 		{
-			CCLOG(@"Failed to make complete framebuffer object 0x%X", error);
+			NSLog(@"Failed to make complete framebuffer object 0x%X", error);
 			return NO;
 		}
 	}
@@ -164,7 +164,7 @@
 	GLenum error;
 	if( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		CCLOG(@"Failed to make complete framebuffer object 0x%X", error);
+		NSLog(@"Failed to make complete framebuffer object 0x%X", error);
 		return NO;
 	}
 
@@ -203,7 +203,7 @@
 
 - (void)dealloc
 {
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
+	NSLog(@"cocos2d: deallocing %@", self);
 
     // Tear down GL
     if (defaultFramebuffer_) {
