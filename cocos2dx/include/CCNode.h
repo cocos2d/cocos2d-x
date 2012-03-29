@@ -57,7 +57,7 @@ enum {
     kCCNodeOnExit
 };
 
-#define arrayMakeObjectsPerformSelectorWithType(pArray, func, elementType)   \
+#define ccArrayMakeObjectsPerformSelector(pArray, func, elementType)  \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
@@ -65,16 +65,16 @@ do {                                                                  \
 	    CCARRAY_FOREACH(pArray, child)                                \
 	    {                                                             \
 		    elementType pNode = (elementType) child;                  \
-		    if(pNode && (0 != func))                                  \
+		    if(pNode)                                                 \
 		    {                                                         \
-			    (pNode->*func)();                                     \
+			    pNode->func();                                        \
 		    }                                                         \
 	    }                                                             \
     }                                                                 \
 }                                                                     \
 while(false)
 
-#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
+#define ccArrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
@@ -82,9 +82,9 @@ do {                                                                  \
 	    CCARRAY_FOREACH(pArray, child)                                \
 	    {                                                             \
 		    elementType pNode = (elementType) child;                  \
-		    if(pNode && (0 != func))                                  \
+		    if(pNode)                                                 \
 		    {                                                         \
-			    (pNode->*func)(pObject);                              \
+			    pNode->func(pObject);                                 \
 		    }                                                         \
 	    }                                                             \
     }                                                                 \
