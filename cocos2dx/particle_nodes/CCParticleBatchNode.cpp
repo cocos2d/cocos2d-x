@@ -35,16 +35,14 @@
 #include "effects/CCGrid.h"
 #include "CCPointExtension.h"
 #include "CCParticleSystem.h"
-#include "CCParticleSystem.h"
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"
-
 #include "support/base64.h"
 #include "support/zip_support/ZipUtils.h"
 #include "CCFileUtils.h"
-
 #include "kazmath/GL/matrix.h"
+
 NS_CC_BEGIN
 
 #define kCCParticleDefaultCapacity 500
@@ -156,11 +154,14 @@ void CCParticleBatchNode::visit()
 	// although this is less mantainable, is faster
 	//
 	if (!m_bIsVisible)
+    {
 		return;
+    }
 
 	kmGLPushMatrix();
 
-	if ( m_pGrid && m_pGrid->isActive()) {
+	if ( m_pGrid && m_pGrid->isActive())
+    {
 		m_pGrid->beforeDraw();
 		transformAncestors();
 	}
@@ -170,7 +171,9 @@ void CCParticleBatchNode::visit()
 	draw();
 
 	if ( m_pGrid && m_pGrid->isActive())
+    {
 		m_pGrid->afterDraw(this);
+    }
 
 	kmGLPopMatrix();
 }
@@ -232,9 +235,10 @@ unsigned int CCParticleBatchNode::addChildHelper(CCParticleSystem* child, int z,
 	CCAssert( child != NULL, "Argument must be non-nil");
 	CCAssert( child->getParent() == NULL, "child already added. It can't be added again");
 
-	if( ! m_pChildren ) {
-		m_pChildren = CCArray::arrayWithCapacity(4);
-		m_pChildren->retain();
+	if( ! m_pChildren ) 
+    {
+		m_pChildren = new CCArray();
+        m_pChildren->initWithCapacity(4);
 	}
 
 	//don't use a lazy insert
@@ -247,7 +251,8 @@ unsigned int CCParticleBatchNode::addChildHelper(CCParticleSystem* child, int z,
 
 	child->setParent(this);
 
-	if( m_bIsRunning ) {
+	if( m_bIsRunning ) 
+    {
 		child->onEnter();
 		child->onEnterTransitionDidFinish();
 	}
@@ -258,13 +263,16 @@ unsigned int CCParticleBatchNode::addChildHelper(CCParticleSystem* child, int z,
 void CCParticleBatchNode::reorderChild(CCNode * child, int zOrder)
 {
 	CCAssert( child != NULL, "Child must be non-NULL");
-	CCParticleSystem* pChild = dynamic_cast<CCParticleSystem*>(child);
-	CCAssert( pChild != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
+	CCAssert( dynamic_cast<CCParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
 	CCAssert( m_pChildren->containsObject(child), "Child doesn't belong to batch" );
 
-	if( zOrder == child->getZOrder() ) {
+    CCParticleSystem* pChild = (CCParticleSystem*)(child);
+
+	if( zOrder == child->getZOrder() ) 
+    {
 		return;
 	}
+
 	// no reordering if only 1 child
 	if( m_pChildren->count() > 1)
 	{
@@ -272,7 +280,8 @@ void CCParticleBatchNode::reorderChild(CCNode * child, int zOrder)
 
 		getCurrentIndex(&oldIndex, &newIndex, pChild, zOrder);
 
-		if( oldIndex != newIndex ) {
+		if( oldIndex != newIndex )
+        {
 
 			// reorder m_pChildren->array
 			pChild->retain();
@@ -288,9 +297,11 @@ void CCParticleBatchNode::reorderChild(CCNode * child, int zOrder)
 
 			// Find new AtlasIndex
 			unsigned int newAtlasIndex = 0;
-			for( unsigned int i=0;i < m_pChildren->count();i++) {
-				CCParticleSystem *node = (CCParticleSystem*)m_pChildren->objectAtIndex(i);
-				if( node == pChild ) {
+			for( unsigned int i=0;i < m_pChildren->count();i++)
+            {
+				CCParticleSystem* pNode = (CCParticleSystem*)m_pChildren->objectAtIndex(i);
+				if( pNode == pChild ) 
+                {
 					newAtlasIndex = pChild->getAtlasIndex();
 					break;
 				}
@@ -314,36 +325,45 @@ void CCParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* 
 	int  minusOne = 0;
 	unsigned int count = m_pChildren->count();
 
-	for( unsigned int i=0; i < count; i++ ) {
-
-		CCNode *node = (CCNode *)m_pChildren->objectAtIndex(i);
+	for( unsigned int i=0; i < count; i++ ) 
+    {
+		CCNode* pNode = (CCNode *)m_pChildren->objectAtIndex(i);
 
 		// new index
-		if( node->getZOrder() > z &&  ! foundNewIdx ) {
+		if( pNode->getZOrder() > z &&  ! foundNewIdx ) 
+        {
 			*newIndex = i;
 			foundNewIdx = true;
 
 			if( foundCurrentIdx && foundNewIdx )
+            {
 				break;
+            }
 		}
 
 		// current index
-		if( child == node ) {
+		if( child == pNode ) 
+        {
 			*oldIndex = i;
 			foundCurrentIdx = true;
 
 			if( ! foundNewIdx )
+            {
 				minusOne = -1;
+            }
 
 			if( foundCurrentIdx && foundNewIdx )
+            {
 				break;
-
+            }
 		}
 
 	}
 
 	if( ! foundNewIdx )
+    {
 		*newIndex = count;
+    }
 
 	*newIndex += minusOne;
 }
@@ -352,10 +372,13 @@ unsigned int CCParticleBatchNode::searchNewPositionInChildrenForZ(int z)
 {
 	unsigned int count = m_pChildren->count();
 
-	for( unsigned int i=0; i < count; i++ ) {
+	for( unsigned int i=0; i < count; i++ ) 
+    {
 		CCNode *child = (CCNode *)m_pChildren->objectAtIndex(i);
 		if (child->getZOrder() > z)
+        {
 			return i;
+        }
 	}
 	return count;
 }
@@ -365,11 +388,14 @@ void  CCParticleBatchNode::removeChild(CCNode* child, bool cleanup)
 {
 	// explicit nil handling
 	if (child == NULL)
+    {
 		return;
-	CCParticleSystem* pChild = dynamic_cast<CCParticleSystem*>(child);
-	CCAssert( pChild != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
-	CCAssert(m_pChildren->containsObject(pChild), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
+    }
+	
+	CCAssert( dynamic_cast<CCParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
+	CCAssert(m_pChildren->containsObject(child), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
+    CCParticleSystem* pChild = (CCParticleSystem*)child;
 	CCNode::removeChild(pChild, cleanup);
 
 	// remove child helper
@@ -391,8 +417,7 @@ void CCParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 
 void CCParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-	//TODO: useSelfRender is undefined.
-	//arrayMakeObjectsPerformSelectorWithType(m_pChildren, &CCParticleBatchNode::useSelfRender, CCParticleSystem);
+	ccArrayMakeObjectsPerformSelectorWithObject(m_pChildren, setBatchNode, NULL, CCParticleSystem*);
 
 	CCNode::removeAllChildrenWithCleanup(doCleanup);
 
@@ -404,7 +429,9 @@ void CCParticleBatchNode::draw(void)
 	CC_PROFILER_STOP("CCParticleBatchNode - draw");
 
 	if( m_pTextureAtlas->getTotalQuads() == 0 )
+    {
 		return;
+    }
 
 	CC_NODE_DRAW_SETUP();
 
