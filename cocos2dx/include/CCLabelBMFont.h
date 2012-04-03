@@ -32,10 +32,9 @@ Use any of these editors to generate BMFonts:
 ****************************************************************************/
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
+
 #include "CCSpriteBatchNode.h"
 #include <map>
-#include <sstream>
-#include <iostream>
 #include <vector>
 
 namespace cocos2d{

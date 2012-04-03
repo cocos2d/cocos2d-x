@@ -1,6 +1,6 @@
 options
 {
-	s3e-data-dir="../Resource"
+	s3e-data-dir="../Resources"
 
 	module_path="../../cocos2dx/proj.marmalade/"
 	module_path="../../CocosDenshion/proj.marmalade/"
@@ -11,7 +11,6 @@ includepaths
 	../Classes
 	../../lua/tolua
 	../../lua/cocos2dx_support
-	../../lua/CocosDenshion_support
 }
 
 package lua
@@ -40,13 +39,12 @@ files
 	("../../lua/cocos2dx_support")
 	[Classes/cocos2dx_support]
 	"*.cpp"
+	"*.c"
+	"*.h"
 	
-	("../../lua/CocosDenshion_support")
-	[Classes/CocosDenshion_support]
-	"*.cpp"
-
 	(../../lua/tolua)
 	[tolua]
 	"*.c"
+	"*.h"
 }
 
