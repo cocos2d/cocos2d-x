@@ -87,11 +87,11 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
 	m_tBlendFunc.src = CC_BLEND_SRC;
 	m_tBlendFunc.dst = CC_BLEND_DST;
 
-	// double retain to avoid the autorelease pool
-	// also, using: self.textureAtlas supports re-initialization without leaking
-	this->m_pTextureAtlas = new CCTextureAtlas();
-	m_pTextureAtlas->initWithFile(tile, itemsToRender);
-    
+	CCTextureAtlas* pNewAtlas= new CCTextureAtlas();
+	pNewAtlas->initWithFile(tile, itemsToRender);
+    setTextureAtlas(pNewAtlas);
+    pNewAtlas->release();
+
 	if (! m_pTextureAtlas)
 	{
 		CCLOG("cocos2d: Could not initialize CCAtlasNode. Invalid Texture.");
@@ -234,6 +234,7 @@ void CCAtlasNode::setTextureAtlas(CCTextureAtlas* var)
 	CC_SAFE_RELEASE(m_pTextureAtlas);
 	m_pTextureAtlas = var;
 }
+
 CCTextureAtlas * CCAtlasNode::getTextureAtlas()
 {
 	return m_pTextureAtlas;

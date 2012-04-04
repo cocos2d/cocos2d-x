@@ -26,6 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef VEC2_H_INCLUDED
 #define VEC2_H_INCLUDED
 
+#include "CCPlatformMacros.h"
+
 struct kmMat3;
 
 #ifndef kmScalar
@@ -44,17 +46,17 @@ typedef struct kmVec2 {
 #ifdef __cplusplus
 extern "C" {
 #endif
-kmVec2* kmVec2Fill(kmVec2* pOut, kmScalar x, kmScalar y);
-kmScalar kmVec2Length(const kmVec2* pIn); ///< Returns the length of the vector
-kmScalar kmVec2LengthSq(const kmVec2* pIn); ///< Returns the square of the length of the vector
-kmVec2* kmVec2Normalize(kmVec2* pOut, const kmVec2* pIn); ///< Returns the vector passed in set to unit length
-kmVec2* kmVec2Add(kmVec2* pOut, const kmVec2* pV1, const kmVec2* pV2); ///< Adds 2 vectors and returns the result
-kmScalar kmVec2Dot(const kmVec2* pV1, const kmVec2* pV2); /** Returns the Dot product which is the cosine of the angle between the two vectors multiplied by their lengths */
-kmVec2* kmVec2Subtract(kmVec2* pOut, const kmVec2* pV1, const kmVec2* pV2); ///< Subtracts 2 vectors and returns the result
-kmVec2* kmVec2Transform(kmVec2* pOut, const kmVec2* pV1, const struct kmMat3* pM); /** Transform the Vector */
-kmVec2* kmVec2TransformCoord(kmVec2* pOut, const kmVec2* pV, const struct kmMat3* pM); ///<Transforms a 2D vector by a given matrix, projecting the result back into w = 1.
-kmVec2* kmVec2Scale(kmVec2* pOut, const kmVec2* pIn, const kmScalar s); ///< Scales a vector to length s
-int	kmVec2AreEqual(const kmVec2* p1, const kmVec2* p2); ///< Returns 1 if both vectors are equal
+CC_DLL kmVec2* kmVec2Fill(kmVec2* pOut, kmScalar x, kmScalar y);
+CC_DLL kmScalar kmVec2Length(const kmVec2* pIn); ///< Returns the length of the vector
+CC_DLL kmScalar kmVec2LengthSq(const kmVec2* pIn); ///< Returns the square of the length of the vector
+CC_DLL kmVec2* kmVec2Normalize(kmVec2* pOut, const kmVec2* pIn); ///< Returns the vector passed in set to unit length
+CC_DLL kmVec2* kmVec2Add(kmVec2* pOut, const kmVec2* pV1, const kmVec2* pV2); ///< Adds 2 vectors and returns the result
+CC_DLL kmScalar kmVec2Dot(const kmVec2* pV1, const kmVec2* pV2); /** Returns the Dot product which is the cosine of the angle between the two vectors multiplied by their lengths */
+CC_DLL kmVec2* kmVec2Subtract(kmVec2* pOut, const kmVec2* pV1, const kmVec2* pV2); ///< Subtracts 2 vectors and returns the result
+CC_DLL kmVec2* kmVec2Transform(kmVec2* pOut, const kmVec2* pV1, const struct kmMat3* pM); /** Transform the Vector */
+CC_DLL kmVec2* kmVec2TransformCoord(kmVec2* pOut, const kmVec2* pV, const struct kmMat3* pM); ///<Transforms a 2D vector by a given matrix, projecting the result back into w = 1.
+CC_DLL kmVec2* kmVec2Scale(kmVec2* pOut, const kmVec2* pIn, const kmScalar s); ///< Scales a vector to length s
+CC_DLL int kmVec2AreEqual(const kmVec2* p1, const kmVec2* p2); ///< Returns 1 if both vectors are equal
 
 #ifdef __cplusplus
 }
