@@ -301,7 +301,11 @@ void CCParticleSystemQuad::draw()
 
 	glBindVertexArray( m_uVAOname );
 
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+
 	glDrawElements(GL_TRIANGLES, (GLsizei) m_uParticleIdx*6, GL_UNSIGNED_SHORT, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	glBindVertexArray( 0 );
 

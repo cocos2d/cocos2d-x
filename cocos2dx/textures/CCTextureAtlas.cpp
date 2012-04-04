@@ -486,8 +486,9 @@ void CCTextureAtlas::moveQuadsFromIndex(unsigned int oldIndex, unsigned int amou
 	CCAssert(oldIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
 
 	if( oldIndex == newIndex )
+    {
 		return;
-
+    }
 	//create buffer
 	size_t quadSize = sizeof(ccV3F_C4B_T2F_Quad);
 	ccV3F_C4B_T2F_Quad* tempQuads = (ccV3F_C4B_T2F_Quad*)malloc( quadSize * amount);
@@ -519,12 +520,13 @@ void CCTextureAtlas::moveQuadsFromIndex(unsigned int index, unsigned int newInde
 
 void CCTextureAtlas::fillWithEmptyQuadsFromIndex(unsigned int index, unsigned int amount)
 {
-	ccV3F_C4B_T2F_Quad* quad = (ccV3F_C4B_T2F_Quad*)calloc(1,sizeof(ccV3F_C4B_T2F_Quad));
+    ccV3F_C4B_T2F_Quad quad;
+    memset(&quad, 0, sizeof(quad));
 
 	unsigned int to = index + amount;
 	for (int i = index ; i < to ; i++)
 	{
-		m_pQuads[i] = *quad;
+		m_pQuads[i] = quad;
 	}
 }
 
@@ -552,25 +554,25 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     //
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
-	if (m_bDirty) {
+	if (m_bDirty) 
+    {
 		glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
-
 		glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*start, sizeof(m_pQuads[0]) * n , &m_pQuads[start] );
-
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		m_bDirty = false;
 	}
 
 	glBindVertexArray( m_uVAOname );
-
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+    CHECK_GL_ERROR_DEBUG();
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #else
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
-
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
 #else // ! CC_TEXTURE_ATLAS_USE_VAO
