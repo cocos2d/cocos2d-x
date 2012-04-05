@@ -693,8 +693,6 @@ err = screen_create_window_group(m_screenWindow, m_window_group_id);
 	return true;
 }
 
-#define N_BPS_EVENTS 1
-
 bool CCEGLView::initGL()
 {
 	EGLConfig 			config;
@@ -735,10 +733,8 @@ bool CCEGLView::initGL()
 		return false;
 	}
 
-#ifdef BPS_EVENTS
 	// Request screen events
 	screen_request_events(m_screenContext);
-#endif
 
 	m_eglSurface = eglCreateWindowSurface(m_eglDisplay, config, m_screenWindow, NULL);
 	if (m_eglSurface == EGL_NO_SURFACE)
@@ -797,9 +793,9 @@ void CCEGLView::release()
 {
 	if (!m_eglContext || !m_eglDisplay)
 		return;
-#ifdef BPS_EVENTS
+
 	screen_stop_events(m_screenContext);
-#endif
+
 	bps_shutdown();
 
 	screen_destroy_event(m_screenEvent);
@@ -855,14 +851,10 @@ bool CCEGLView::HandleEvents()
 		rc = bps_get_event(&event, 1);
 		assert(rc == BPS_SUCCESS);
 
-#ifdef BPS_EVENTS
 		// break if no more events
 		if (event == NULL)
 			break;
-#else
-		if (event != NULL)
-		{
-#endif
+
 		if (m_pEventHandler && m_pEventHandler->HandleBPSEvent(event))
 			continue;
 
@@ -923,21 +915,10 @@ bool CCEGLView::HandleEvents()
 					break;
 			}
 		}
-		}
-#ifndef BPS_EVENTS
-		// for now handle screen events separately from BPS events
-		if (screen_get_event(m_screenContext, m_screenEvent, 0) < 0)
-		{
-			// we have an error condition in the screen event
-			break;
-		}
-		else
-		{
-#else
 		else if (domain == screen_get_domain())
 		{
 			m_screenEvent = screen_event_get_event(event);
-#endif
+
 			rc = screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_TYPE, &val);
 			if (rc || val == SCREEN_EVENT_NONE)
 				break;
