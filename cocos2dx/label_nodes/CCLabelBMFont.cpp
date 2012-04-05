@@ -198,7 +198,7 @@ namespace cocos2d{
 	 * */
 	static bool isspace_unicode(unsigned short ch)
 	{
-		return  ch >= 0x0009 && ch <= 0x000D || ch == 0x0020 || ch == 0x0085 || ch == 0x00A0 || ch == 0x1680
+		return  (ch >= 0x0009 && ch <= 0x000D) || ch == 0x0020 || ch == 0x0085 || ch == 0x00A0 || ch == 0x1680
 			|| (ch >= 0x2000 && ch <= 0x200A) || ch == 0x2028 || ch == 0x2029 || ch == 0x202F
 			||  ch == 0x205F || ch == 0x3000;
 	}
