@@ -159,6 +159,7 @@ bool CCSprite::init(void)
 // designated initializer
 bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated)
 {
+    m_pobBatchNode = NULL;
 	// shader program
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 
@@ -172,7 +173,6 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
 	m_sBlendFunc.src = CC_BLEND_SRC;
 	m_sBlendFunc.dst = CC_BLEND_DST;
 
-
 	m_bFlipX = m_bFlipY = false;
 
 	// default transform anchor: center
@@ -182,8 +182,7 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
 	m_obOffsetPosition = CCPointZero;
 
 	m_bHasChildren = false;
-	m_pobBatchNode = NULL;
-
+	
 	// clean the Quad
 	memset(&m_sQuad, 0, sizeof(m_sQuad));
 
