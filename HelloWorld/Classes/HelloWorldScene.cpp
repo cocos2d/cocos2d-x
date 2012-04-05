@@ -68,6 +68,16 @@ bool HelloWorld::init()
 	// add the sprite as a child to this layer
 	this->addChild(pSprite, 0);
 	
+    CCParticleSystem* pTmp = CCParticleSystemQuad::particleWithFile("LavaFlow.plist");
+    CCParticleBatchNode* pBatch = CCParticleBatchNode::batchNodeWithTexture(pTmp->getTexture());
+    addChild(pBatch);
+    pTmp->unscheduleUpdate();
+    
+    CCParticleSystem* pSys = CCParticleSystemQuad::particleWithFile("LavaFlow.plist");
+    pBatch->addChild(pSys);
+    pSys->setPosition(ccp(size.width/2, size.height/2));
+    
+    
 	return true;
 }
 
