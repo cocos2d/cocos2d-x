@@ -168,6 +168,9 @@ public:
             }
             m_hFont = NULL;
 
+            // disable Cleartype
+            tNewFont.lfQuality = ANTIALIASED_QUALITY;
+
             // create new font
             m_hFont = CreateFontIndirectA(&tNewFont);
             if (! m_hFont)
