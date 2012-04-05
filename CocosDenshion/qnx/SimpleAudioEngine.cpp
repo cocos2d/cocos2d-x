@@ -313,13 +313,19 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::pauseBackgroundMusic()
 	{
-		alSourcePause(s_backgroundSource);
+		ALint state;
+		alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
+		if (state == AL_PLAYING)
+			alSourcePause(s_backgroundSource);
 		checkALError("pauseBackgroundMusic");
 	}
 
 	void SimpleAudioEngine::resumeBackgroundMusic()
 	{
-		alSourcePlay(s_backgroundSource);
+		ALint state;
+		alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
+		if (state == AL_PAUSED)
+			alSourcePlay(s_backgroundSource);
 		checkALError("resumeBackgroundMusic");
 	} 
 
@@ -485,36 +491,47 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 	{
-		alSourcePause(nSoundId);
+		ALint state;
+		alGetSourcei(nSoundId, AL_SOURCE_STATE, &state);
+		if (state == AL_PLAYING)
+			alSourcePause(nSoundId);
 		checkALError("pauseEffect");
 	}
 
 	void SimpleAudioEngine::pauseAllEffects()
 	{
 		EffectsMap::iterator iter = s_effects.begin();
-
-		if (iter != s_effects.end())
+		ALint state;
+		while (iter != s_effects.end())
 	    {
-			alSourcePause(iter->second->source);
+			alGetSourcei(iter->second->source, AL_SOURCE_STATE, &state);
+			if (state == AL_PLAYING)
+				alSourcePause(iter->second->source);
 			checkALError("pauseAllEffects");
+			++iter;
 	    }
 	}
 
 	void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 	{
-		alSourcePlay(nSoundId);
+		ALint state;
+		alGetSourcei(nSoundId, AL_SOURCE_STATE, &state);
+		if (state == AL_PAUSED)
+			alSourcePlay(nSoundId);
 		checkALError("resumeEffect");
 	}
 
 	void SimpleAudioEngine::resumeAllEffects()
 	{
 		EffectsMap::iterator iter = s_effects.begin();
-
-		if (iter != s_effects.end())
+		ALint state;
+		while (iter != s_effects.end())
 	    {
+			alGetSourcei(iter->second->source, AL_SOURCE_STATE, &state);
+			if (state == AL_PAUSED)
+				alSourcePlay(iter->second->source);
 			checkALError("resumeAllEffects");
-			alSourcePlay(iter->second->source);
-			checkALError("resumeAllEffects");
+			++iter;
 	    }
 	}
 
