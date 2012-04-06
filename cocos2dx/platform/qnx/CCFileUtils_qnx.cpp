@@ -53,7 +53,7 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
 	}
 }
 
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
 	// It works like this: if the relative path already includes the resource path
 	// it will be returned as it is
