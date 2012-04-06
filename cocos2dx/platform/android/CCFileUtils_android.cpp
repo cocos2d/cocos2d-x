@@ -47,7 +47,7 @@ void CCFileUtils::setResourcePath(const char* pszResourcePath)
 	s_strResourcePath = pszResourcePath;
 }
 
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
 	return pszRelativePath;
 }
