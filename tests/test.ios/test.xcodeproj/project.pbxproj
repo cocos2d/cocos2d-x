@@ -87,21 +87,6 @@
 		789B561115197BFB0038CD1E /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 789B561015197BFB0038CD1E /* Images */; };
 		789B561415197C040038CD1E /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 789B561215197C040038CD1E /* TileMaps */; };
 		789B561515197C040038CD1E /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 789B561315197C040038CD1E /* zwoptex */; };
-		789B562B15197C790038CD1E /* example_Blur.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B561C15197C790038CD1E /* example_Blur.fsh */; };
-		789B562C15197C790038CD1E /* example_Flower.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B561D15197C790038CD1E /* example_Flower.fsh */; };
-		789B562D15197C790038CD1E /* example_Flower.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B561E15197C790038CD1E /* example_Flower.vsh */; };
-		789B562E15197C790038CD1E /* example_Heart.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B561F15197C790038CD1E /* example_Heart.fsh */; };
-		789B562F15197C790038CD1E /* example_Heart.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562015197C790038CD1E /* example_Heart.vsh */; };
-		789B563015197C790038CD1E /* example_Julia.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562115197C790038CD1E /* example_Julia.fsh */; };
-		789B563115197C790038CD1E /* example_Julia.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562215197C790038CD1E /* example_Julia.vsh */; };
-		789B563215197C790038CD1E /* example_Mandelbrot.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562315197C790038CD1E /* example_Mandelbrot.fsh */; };
-		789B563315197C790038CD1E /* example_Mandelbrot.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562415197C790038CD1E /* example_Mandelbrot.vsh */; };
-		789B563415197C790038CD1E /* example_Monjori.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562515197C790038CD1E /* example_Monjori.fsh */; };
-		789B563515197C790038CD1E /* example_Monjori.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562615197C790038CD1E /* example_Monjori.vsh */; };
-		789B563615197C790038CD1E /* example_Plasma.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562715197C790038CD1E /* example_Plasma.fsh */; };
-		789B563715197C790038CD1E /* example_Plasma.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562815197C790038CD1E /* example_Plasma.vsh */; };
-		789B563815197C790038CD1E /* example_Twist.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562915197C790038CD1E /* example_Twist.fsh */; };
-		789B563915197C790038CD1E /* example_Twist.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 789B562A15197C790038CD1E /* example_Twist.vsh */; };
 		78C7DEFB14EBA5060085D0C2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDBE14EBA5050085D0C2 /* background.mp3 */; };
 		78C7DEFC14EBA5060085D0C2 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDBF14EBA5050085D0C2 /* background.ogg */; };
 		78C7DEFD14EBA5060085D0C2 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 78C7DDC014EBA5050085D0C2 /* effect1.raw */; };
@@ -565,6 +550,22 @@
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		D40EB54913D0200200BB8B5E /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40EB54813D0200200BB8B5E /* CCTexturePVR.cpp */; };
+		D414CB98152F422A00D20A8F /* example_Blur.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB88152F422A00D20A8F /* example_Blur.fsh */; };
+		D414CB99152F422A00D20A8F /* example_Flower.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB89152F422A00D20A8F /* example_Flower.fsh */; };
+		D414CB9A152F422A00D20A8F /* example_Flower.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8A152F422A00D20A8F /* example_Flower.vsh */; };
+		D414CB9B152F422A00D20A8F /* example_Heart.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8B152F422A00D20A8F /* example_Heart.fsh */; };
+		D414CB9C152F422A00D20A8F /* example_Heart.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8C152F422A00D20A8F /* example_Heart.vsh */; };
+		D414CB9D152F422A00D20A8F /* example_HorizontalColor.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8D152F422A00D20A8F /* example_HorizontalColor.fsh */; };
+		D414CB9E152F422A00D20A8F /* example_Julia.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8E152F422A00D20A8F /* example_Julia.fsh */; };
+		D414CB9F152F422A00D20A8F /* example_Julia.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8F152F422A00D20A8F /* example_Julia.vsh */; };
+		D414CBA0152F422A00D20A8F /* example_Mandelbrot.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB90152F422A00D20A8F /* example_Mandelbrot.fsh */; };
+		D414CBA1152F422A00D20A8F /* example_Mandelbrot.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB91152F422A00D20A8F /* example_Mandelbrot.vsh */; };
+		D414CBA2152F422A00D20A8F /* example_Monjori.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB92152F422A00D20A8F /* example_Monjori.fsh */; };
+		D414CBA3152F422A00D20A8F /* example_Monjori.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB93152F422A00D20A8F /* example_Monjori.vsh */; };
+		D414CBA4152F422A00D20A8F /* example_Plasma.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB94152F422A00D20A8F /* example_Plasma.fsh */; };
+		D414CBA5152F422A00D20A8F /* example_Plasma.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB95152F422A00D20A8F /* example_Plasma.vsh */; };
+		D414CBA6152F422A00D20A8F /* example_Twist.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB96152F422A00D20A8F /* example_Twist.fsh */; };
+		D414CBA7152F422A00D20A8F /* example_Twist.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB97152F422A00D20A8F /* example_Twist.vsh */; };
 		D429012913B1D0CA00A3772F /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D429012813B1D0CA00A3772F /* CCScriptSupport.cpp */; };
 		D429012E13B1D16900A3772F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D429012D13B1D16900A3772F /* libcurl.a */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
@@ -745,21 +746,6 @@
 		789B561015197BFB0038CD1E /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		789B561215197C040038CD1E /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
 		789B561315197C040038CD1E /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
-		789B561C15197C790038CD1E /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
-		789B561D15197C790038CD1E /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
-		789B561E15197C790038CD1E /* example_Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.vsh; sourceTree = "<group>"; };
-		789B561F15197C790038CD1E /* example_Heart.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.fsh; sourceTree = "<group>"; };
-		789B562015197C790038CD1E /* example_Heart.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.vsh; sourceTree = "<group>"; };
-		789B562115197C790038CD1E /* example_Julia.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.fsh; sourceTree = "<group>"; };
-		789B562215197C790038CD1E /* example_Julia.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.vsh; sourceTree = "<group>"; };
-		789B562315197C790038CD1E /* example_Mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.fsh; sourceTree = "<group>"; };
-		789B562415197C790038CD1E /* example_Mandelbrot.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.vsh; sourceTree = "<group>"; };
-		789B562515197C790038CD1E /* example_Monjori.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.fsh; sourceTree = "<group>"; };
-		789B562615197C790038CD1E /* example_Monjori.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.vsh; sourceTree = "<group>"; };
-		789B562715197C790038CD1E /* example_Plasma.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.fsh; sourceTree = "<group>"; };
-		789B562815197C790038CD1E /* example_Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.vsh; sourceTree = "<group>"; };
-		789B562915197C790038CD1E /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
-		789B562A15197C790038CD1E /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
 		78C7DDBE14EBA5050085D0C2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		78C7DDBF14EBA5050085D0C2 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.ogg; sourceTree = "<group>"; };
 		78C7DDC014EBA5050085D0C2 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = effect1.raw; sourceTree = "<group>"; };
@@ -1279,6 +1265,22 @@
 		BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultTest.cpp; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		D40EB54813D0200200BB8B5E /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
+		D414CB88152F422A00D20A8F /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
+		D414CB89152F422A00D20A8F /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
+		D414CB8A152F422A00D20A8F /* example_Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.vsh; sourceTree = "<group>"; };
+		D414CB8B152F422A00D20A8F /* example_Heart.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.fsh; sourceTree = "<group>"; };
+		D414CB8C152F422A00D20A8F /* example_Heart.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.vsh; sourceTree = "<group>"; };
+		D414CB8D152F422A00D20A8F /* example_HorizontalColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_HorizontalColor.fsh; sourceTree = "<group>"; };
+		D414CB8E152F422A00D20A8F /* example_Julia.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.fsh; sourceTree = "<group>"; };
+		D414CB8F152F422A00D20A8F /* example_Julia.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.vsh; sourceTree = "<group>"; };
+		D414CB90152F422A00D20A8F /* example_Mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.fsh; sourceTree = "<group>"; };
+		D414CB91152F422A00D20A8F /* example_Mandelbrot.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.vsh; sourceTree = "<group>"; };
+		D414CB92152F422A00D20A8F /* example_Monjori.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.fsh; sourceTree = "<group>"; };
+		D414CB93152F422A00D20A8F /* example_Monjori.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.vsh; sourceTree = "<group>"; };
+		D414CB94152F422A00D20A8F /* example_Plasma.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.fsh; sourceTree = "<group>"; };
+		D414CB95152F422A00D20A8F /* example_Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.vsh; sourceTree = "<group>"; };
+		D414CB96152F422A00D20A8F /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
+		D414CB97152F422A00D20A8F /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
 		D429012813B1D0CA00A3772F /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		D429012D13B1D16900A3772F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -1628,19 +1630,12 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D414CB87152F422A00D20A8F /* Shaders */,
 				789B560C15197BE00038CD1E /* animations */,
 				789B560E15197BF30038CD1E /* fonts */,
 				789B561015197BFB0038CD1E /* Images */,
 				789B561215197C040038CD1E /* TileMaps */,
 				789B561315197C040038CD1E /* zwoptex */,
-				789B561C15197C790038CD1E /* example_Blur.fsh */,
-				789B561D15197C790038CD1E /* example_Flower.fsh */,
-				789B561F15197C790038CD1E /* example_Heart.fsh */,
-				789B562115197C790038CD1E /* example_Julia.fsh */,
-				789B562315197C790038CD1E /* example_Mandelbrot.fsh */,
-				789B562515197C790038CD1E /* example_Monjori.fsh */,
-				789B562715197C790038CD1E /* example_Plasma.fsh */,
-				789B562915197C790038CD1E /* example_Twist.fsh */,
 				78C7DEBD14EBA5060085D0C2 /* music.mid */,
 				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
 				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
@@ -1649,13 +1644,6 @@
 				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
 				78891AAD14EA1DAE0072482D /* Icon.png */,
 				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
-				789B561E15197C790038CD1E /* example_Flower.vsh */,
-				789B562015197C790038CD1E /* example_Heart.vsh */,
-				789B562215197C790038CD1E /* example_Julia.vsh */,
-				789B562415197C790038CD1E /* example_Mandelbrot.vsh */,
-				789B562615197C790038CD1E /* example_Monjori.vsh */,
-				789B562815197C790038CD1E /* example_Plasma.vsh */,
-				789B562A15197C790038CD1E /* example_Twist.vsh */,
 				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
 			);
 			name = Resources;
@@ -2852,6 +2840,29 @@
 			path = UserDefaultTest;
 			sourceTree = "<group>";
 		};
+		D414CB87152F422A00D20A8F /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				D414CB88152F422A00D20A8F /* example_Blur.fsh */,
+				D414CB89152F422A00D20A8F /* example_Flower.fsh */,
+				D414CB8A152F422A00D20A8F /* example_Flower.vsh */,
+				D414CB8B152F422A00D20A8F /* example_Heart.fsh */,
+				D414CB8C152F422A00D20A8F /* example_Heart.vsh */,
+				D414CB8D152F422A00D20A8F /* example_HorizontalColor.fsh */,
+				D414CB8E152F422A00D20A8F /* example_Julia.fsh */,
+				D414CB8F152F422A00D20A8F /* example_Julia.vsh */,
+				D414CB90152F422A00D20A8F /* example_Mandelbrot.fsh */,
+				D414CB91152F422A00D20A8F /* example_Mandelbrot.vsh */,
+				D414CB92152F422A00D20A8F /* example_Monjori.fsh */,
+				D414CB93152F422A00D20A8F /* example_Monjori.vsh */,
+				D414CB94152F422A00D20A8F /* example_Plasma.fsh */,
+				D414CB95152F422A00D20A8F /* example_Plasma.vsh */,
+				D414CB96152F422A00D20A8F /* example_Twist.fsh */,
+				D414CB97152F422A00D20A8F /* example_Twist.vsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
 		D429012713B1D0CA00A3772F /* script_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -3358,21 +3369,6 @@
 				78C7E02B14EBA5580085D0C2 /* NotificationCenterTest.cpp in Sources */,
 				789B5607151979E80038CD1E /* ActionsEaseTest.cpp in Sources */,
 				789B560B15197B010038CD1E /* ActionsProgressTest.cpp in Sources */,
-				789B562B15197C790038CD1E /* example_Blur.fsh in Sources */,
-				789B562C15197C790038CD1E /* example_Flower.fsh in Sources */,
-				789B562D15197C790038CD1E /* example_Flower.vsh in Sources */,
-				789B562E15197C790038CD1E /* example_Heart.fsh in Sources */,
-				789B562F15197C790038CD1E /* example_Heart.vsh in Sources */,
-				789B563015197C790038CD1E /* example_Julia.fsh in Sources */,
-				789B563115197C790038CD1E /* example_Julia.vsh in Sources */,
-				789B563215197C790038CD1E /* example_Mandelbrot.fsh in Sources */,
-				789B563315197C790038CD1E /* example_Mandelbrot.vsh in Sources */,
-				789B563415197C790038CD1E /* example_Monjori.fsh in Sources */,
-				789B563515197C790038CD1E /* example_Monjori.vsh in Sources */,
-				789B563615197C790038CD1E /* example_Plasma.fsh in Sources */,
-				789B563715197C790038CD1E /* example_Plasma.vsh in Sources */,
-				789B563815197C790038CD1E /* example_Twist.fsh in Sources */,
-				789B563915197C790038CD1E /* example_Twist.vsh in Sources */,
 				784B77B11519BF5D00FA820F /* ChipmunkAccelTouchTest.cpp in Sources */,
 				784B77EB1519BF6600FA820F /* Box2dTest.cpp in Sources */,
 				784B77EC1519BF6600FA820F /* Box2dView.cpp in Sources */,
@@ -3381,6 +3377,22 @@
 				784B77EF1519BF6600FA820F /* TestEntries.cpp in Sources */,
 				7871C43015209375007353A3 /* NodeTest.cpp in Sources */,
 				7871C43815209506007353A3 /* ShaderTest.cpp in Sources */,
+				D414CB98152F422A00D20A8F /* example_Blur.fsh in Sources */,
+				D414CB99152F422A00D20A8F /* example_Flower.fsh in Sources */,
+				D414CB9A152F422A00D20A8F /* example_Flower.vsh in Sources */,
+				D414CB9B152F422A00D20A8F /* example_Heart.fsh in Sources */,
+				D414CB9C152F422A00D20A8F /* example_Heart.vsh in Sources */,
+				D414CB9D152F422A00D20A8F /* example_HorizontalColor.fsh in Sources */,
+				D414CB9E152F422A00D20A8F /* example_Julia.fsh in Sources */,
+				D414CB9F152F422A00D20A8F /* example_Julia.vsh in Sources */,
+				D414CBA0152F422A00D20A8F /* example_Mandelbrot.fsh in Sources */,
+				D414CBA1152F422A00D20A8F /* example_Mandelbrot.vsh in Sources */,
+				D414CBA2152F422A00D20A8F /* example_Monjori.fsh in Sources */,
+				D414CBA3152F422A00D20A8F /* example_Monjori.vsh in Sources */,
+				D414CBA4152F422A00D20A8F /* example_Plasma.fsh in Sources */,
+				D414CBA5152F422A00D20A8F /* example_Plasma.vsh in Sources */,
+				D414CBA6152F422A00D20A8F /* example_Twist.fsh in Sources */,
+				D414CBA7152F422A00D20A8F /* example_Twist.vsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3643,7 +3655,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhe Wang (P3QKHC24KY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -3676,6 +3689,8 @@
 				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = tests;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv6 armv7 i386";
@@ -3686,7 +3701,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhe Wang (P3QKHC24KY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3716,6 +3732,8 @@
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
 				PRODUCT_NAME = tests;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
