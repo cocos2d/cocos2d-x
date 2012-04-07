@@ -301,11 +301,18 @@ void CCParticleSystemQuad::draw()
 
 	glBindVertexArray( m_uVAOname );
 
+    /* Application will crash in glDrawElements function on some win32 computers which use Integrated Graphics.
+       Indices should be bound again to avoid this bug.
+     */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+#endif
 
 	glDrawElements(GL_TRIANGLES, (GLsizei) m_uParticleIdx*6, GL_UNSIGNED_SHORT, 0);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+#endif
 
 	glBindVertexArray( 0 );
 
@@ -414,7 +421,7 @@ bool CCParticleSystemQuad::allocMemory()
 
 	m_pQuads = (ccV3F_C4B_T2F_Quad*)malloc(m_uTotalParticles * sizeof(ccV3F_C4B_T2F_Quad));
 	m_pIndices = (GLushort*)malloc(m_uTotalParticles * 6 * sizeof(GLushort));
-
+    
 	if( !m_pQuads || !m_pIndices) 
 	{
 		CCLOG("cocos2d: Particle system: not enough memory");
@@ -423,6 +430,10 @@ bool CCParticleSystemQuad::allocMemory()
 
 		return false;
 	}
+
+    memset(m_pQuads, 0, m_uTotalParticles * sizeof(ccV3F_C4B_T2F_Quad));
+    memset(m_pIndices, 0, m_uTotalParticles * 6 * sizeof(GLushort));
+
 	return true;
 }
 
