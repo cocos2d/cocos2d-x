@@ -156,8 +156,9 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
 	m_pQuads = (ccV3F_C4B_T2F_Quad*)malloc( m_uCapacity * sizeof(ccV3F_C4B_T2F_Quad) );
 	m_pIndices = (GLushort *)malloc( m_uCapacity * 6 * sizeof(GLushort) );
-
-	if( ! ( m_pQuads && m_pIndices) && m_uCapacity > 0) {
+    
+	if( ! ( m_pQuads && m_pIndices) && m_uCapacity > 0) 
+    {
 		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
 		CC_SAFE_FREE(m_pQuads);
 		CC_SAFE_FREE(m_pIndices);
@@ -167,6 +168,9 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 		CC_SAFE_RELEASE_NULL(m_pTexture);
 		return false;
 	}
+
+    memset( m_pQuads, 0, m_uCapacity * sizeof(ccV3F_C4B_T2F_Quad) );
+    memset( m_pIndices, 0, m_uCapacity * 6 * sizeof(GLushort) );
 
     this->setupIndices();
 
@@ -426,31 +430,49 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
     {
 		return true;
     }
+    unsigned int uOldCapactiy = m_uCapacity; 
 	// update capacity and totolQuads
 	m_uTotalQuads = MIN(m_uTotalQuads, newCapacity);
 	m_uCapacity = newCapacity;
 
-	void * tmpQuads = NULL;
-	void * tmpIndices = NULL;
+	ccV3F_C4B_T2F_Quad* tmpQuads = NULL;
+	GLushort* tmpIndices = NULL;
 	
 	// when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return NULL,
 	// so here must judge whether m_pQuads and m_pIndices is NULL.
 	if (m_pQuads == NULL)
     {
-		tmpQuads = malloc(m_uCapacity * sizeof(m_pQuads[0]));
+		tmpQuads = (ccV3F_C4B_T2F_Quad*)malloc( m_uCapacity * sizeof(m_pQuads[0]) );
+        if (tmpQuads != NULL)
+        {
+            memset(tmpQuads, 0, m_uCapacity * sizeof(m_pQuads[0]) );
+        }
     }
     else
     {
-		tmpQuads = realloc( m_pQuads, sizeof(m_pQuads[0]) * m_uCapacity );
+		tmpQuads = (ccV3F_C4B_T2F_Quad*)realloc( m_pQuads, sizeof(m_pQuads[0]) * m_uCapacity );
+        if (tmpQuads != NULL && m_uCapacity > uOldCapactiy)
+        {
+            memset(tmpQuads+uOldCapactiy, 0, (m_uCapacity - uOldCapactiy)*sizeof(m_pQuads[0]) );
+        }
     }
 
 	if (m_pIndices == NULL)
     {	
-        tmpIndices = malloc( m_uCapacity * 6 * sizeof(m_pIndices[0]));
+        tmpIndices = (GLushort*)malloc( m_uCapacity * 6 * sizeof(m_pIndices[0]) );
+        if (tmpIndices != NULL)
+        {
+            memset( tmpIndices, 0, m_uCapacity * 6 * sizeof(m_pIndices[0]) );
+        }
+        
     }
     else
     {
-		tmpIndices = realloc( m_pIndices, sizeof(m_pIndices[0]) * m_uCapacity * 6 );
+		tmpIndices = (GLushort*)realloc( m_pIndices, sizeof(m_pIndices[0]) * m_uCapacity * 6 );
+        if (tmpIndices != NULL && m_uCapacity > uOldCapactiy)
+        {
+            memset( tmpIndices+uOldCapactiy, 0, (m_uCapacity-uOldCapactiy) * 6 * sizeof(m_pIndices[0]) );
+        }
     }
 
 	if( ! ( tmpQuads && tmpIndices) ) {
@@ -463,8 +485,8 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 		return false;
 	}
 
-	m_pQuads = (ccV3F_C4B_T2F_Quad *)tmpQuads;
-	m_pIndices = (GLushort *)tmpIndices;
+	m_pQuads = tmpQuads;
+	m_pIndices = tmpIndices;
 
 
     setupIndices();
@@ -564,15 +586,24 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 	}
 
 	glBindVertexArray( m_uVAOname );
+
+    /* Application will crash in glDrawElements function on some win32 computers which use Integrated Graphics.
+       Indices should be bound again to avoid this bug.
+     */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
-    CHECK_GL_ERROR_DEBUG();
+#endif
+
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #else
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+#endif
+
 	glBindVertexArray(0);
 
 #else // ! CC_TEXTURE_ATLAS_USE_VAO
@@ -601,8 +632,6 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     // tex coords
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
@@ -611,6 +640,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 #endif // CC_TEXTURE_ATLAS_USE_VAO

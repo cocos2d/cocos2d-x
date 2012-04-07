@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCScriptSupport.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
@@ -111,4 +111,4 @@ bool CCObject::isEqual(const CCObject *pObject)
 	return this == pObject;
 }
 
-}//namespace   cocos2d 
+NS_CC_END

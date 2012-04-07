@@ -336,11 +336,14 @@ void CCArray::replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool 
 
 CCObject* CCArray::copyWithZone(CCZone* pZone)
 {
+    CCAssert(pZone == NULL, "CCArray should not be inherited.");
     CCArray* pArray = new CCArray();
+    pArray->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
-    if (!(pArray && pArray->initWithArray(this)))
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(this, pObj)
     {
-        CC_SAFE_DELETE(pArray);
+        pArray->addObject(pObj->copy());
     }
     return pArray;
 }
