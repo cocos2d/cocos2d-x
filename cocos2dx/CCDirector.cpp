@@ -76,6 +76,12 @@ extern const char* cocos2dVersion(void);
 
 CCDirector* CCDirector::sharedDirector(void)
 {
+//     static bool bFirst = true;
+//     if (bFirst)
+//     {
+//         bFirst = false;
+//         s_pSharedDirector.init();
+//     }
 	if (s_pSharedDirector == NULL)
     {
         s_pSharedDirector = new CCDisplayLinkDirector();
@@ -101,8 +107,8 @@ bool CCDirector::init(void)
 	m_pNotificationNode = NULL;
 
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;	
-	m_pobScenesStack = CCArray::array();
-	m_pobScenesStack->retain();
+	m_pobScenesStack = new CCArray();
+	m_pobScenesStack->init();
 
 	// Set default projection (3D)
 	m_eProjection = kCCDirectorProjectionDefault;
@@ -152,7 +158,7 @@ bool CCDirector::init(void)
 	m_pAccelerometer = new CCAccelerometer();
 
 	// create autorelease pool
-	CCPoolManager::getInstance()->push();
+	CCPoolManager::sharedPoolManager()->push();
 
 	return true;
 }
@@ -175,7 +181,8 @@ CCDirector::~CCDirector(void)
 	CC_SAFE_DELETE(m_pAccelerometer);
 
 	// pop the autorelease pool
-	CCPoolManager::getInstance()->pop();
+	CCPoolManager::sharedPoolManager()->pop();
+    CCPoolManager::purgePoolManager();
 
 	// delete m_pLastUpdate
 	CC_SAFE_DELETE(m_pLastUpdate);
@@ -1015,7 +1022,7 @@ void CCDisplayLinkDirector::mainLoop(void)
  		drawScene();
 	 
  		// release the objects
- 		CCPoolManager::getInstance()->pop();		
+ 		CCPoolManager::sharedPoolManager()->pop();		
  	}
 }
 
