@@ -73,6 +73,12 @@
     <Filter Include="extensions">
       <UniqueIdentifier>{35a45df9-e7ee-4fba-b38c-7b1369c3385c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{39fcf438-a1c0-42d6-ad59-781aeb17e12e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath">
+      <UniqueIdentifier>{4550b0c0-b8f8-4eba-b7f5-77ba5c90808f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -165,9 +171,6 @@
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\menu_nodes\CCMenu.cpp">
       <Filter>menu_nodes</Filter>
     </ClCompile>
@@ -183,16 +186,10 @@
     <ClCompile Include="..\misc_nodes\CCRenderTexture.cpp">
       <Filter>misc_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\misc_nodes\CCRibbon.cpp">
-      <Filter>misc_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\particle_nodes\CCParticleExamples.cpp">
       <Filter>particle_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleSystemPoint.cpp">
       <Filter>particle_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp">
@@ -341,6 +338,69 @@
     </ClCompile>
     <ClCompile Include="..\extensions\CCNotificationCenter.cpp">
       <Filter>extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\CCGLProgram.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\ccGLStateCache.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\CCShaderCache.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\ccShaders.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\CCVertex.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocoa\CCDictionary.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\aabb.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\GL\mat4stack.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\GL\matrix.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\mat3.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\mat4.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\neon_matrix_impl.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\plane.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\quaternion.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\ray2.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\utility.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\vec2.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\vec3.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kazmath\src\vec4.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\particle_nodes\CCParticleBatchNode.cpp">
+      <Filter>particle_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -698,6 +758,48 @@
     </ClInclude>
     <ClInclude Include="..\extensions\CCNotificationCenter.h">
       <Filter>extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionColor_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTextureA8Color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTextureA8Color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTextureColorAlphaTest_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTextureColor_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTextureColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTexture_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTexture_uColor_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTexture_uColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionTexture_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_Position_uColor_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_Position_uColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\CCVertex.h">
+      <Filter>support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

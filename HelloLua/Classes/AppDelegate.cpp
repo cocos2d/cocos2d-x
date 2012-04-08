@@ -125,7 +125,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+	std::string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif 
