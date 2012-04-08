@@ -241,7 +241,7 @@ private:
 	/** texture max T */
 	CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
 	/** content size */
-	CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
+	CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSize)
 
 	/** whether or not the texture has their Alpha premultiplied */
 	CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
