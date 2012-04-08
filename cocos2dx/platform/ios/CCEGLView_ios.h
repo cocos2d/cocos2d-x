@@ -42,6 +42,7 @@ public:
     CCSize  getSize();
     bool    isOpenGLReady();
     bool    canSetContentScaleFactor();
+    bool    isIpad();
     void    setContentScaleFactor(float contentScaleFactor);
     
     // keep compatible
