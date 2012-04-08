@@ -84,8 +84,8 @@ typedef struct _ccColor4B
 static inline ccColor4B
 ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 {
-	ccColor4B c = {r, g, b, o};
-	return c;
+    ccColor4B c = {r, g, b, o};
+    return c;
 }
 
 
@@ -99,12 +99,6 @@ typedef struct _ccColor4F {
 	GLfloat a;
 } ccColor4F;
 
-static inline ccColor4F
-ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
-{
-	ccColor4F c = {r, g, b, a};
-	return c;
-}
 
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
  @since v0.99.1
@@ -113,6 +107,13 @@ static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
 {
 	ccColor4F c4 = {c.r/255.f, c.g/255.f, c.b/255.f, 1.f};
 	return c4;
+}
+
+//! helper that creates a ccColor4f type
+static inline ccColor4F 
+ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
+{
+    return (ccColor4F){r, g, b, a};
 }
 
 /** Returns a ccColor4F from a ccColor4B.
@@ -307,17 +308,17 @@ typedef struct _ccBlendFunc
 //! ccResolutionType
 typedef enum
 {
-	//! Unknonw resolution type
-	kCCResolutionUnknown,
-	//! iPhone resolution type
-	kCCResolutioniPhone,
-	//! RetinaDisplay resolution type
-	kCCResolutioniPhoneRetinaDisplay,
-	//! iPad resolution type
-	kCCResolutioniPad,
-	//! iPad Retina Display resolution type
-	kCCResolutioniPadRetinaDisplay,
-
+    //! Unknonw resolution type
+    kCCResolutionUnknown,
+    //! iPhone resolution type
+    kCCResolutioniPhone,
+    //! RetinaDisplay resolution type
+    kCCResolutioniPhoneRetinaDisplay,
+    //! iPad resolution type
+    kCCResolutioniPad,
+    //! iPad Retina Display resolution type
+    kCCResolutioniPadRetinaDisplay,
+    
 } ccResolutionType;
 
 //! delta time type
@@ -331,6 +332,29 @@ typedef enum
 	CCTextAlignmentCenter,
 	CCTextAlignmentRight,
 } CCTextAlignment;
+
+// types for animation in particle systems
+
+// texture coordinates for a quad
+typedef struct _ccT2F_Quad
+{
+	//! bottom left
+	ccTex2F	bl;
+	//! bottom right
+	ccTex2F	br;
+	//! top left
+	ccTex2F	tl;
+	//! top right
+	ccTex2F	tr;
+} ccT2F_Quad;
+
+// struct that holds the size in pixels, texture coordinates and delays for animated CCParticleSystemQuad
+typedef struct
+{
+	ccT2F_Quad texCoords;
+	ccTime delay;
+	CCSize size; 
+} ccAnimationFrameData;
 
 }//namespace   cocos2d 
 

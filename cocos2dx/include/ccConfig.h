@@ -211,36 +211,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #define CC_TEXTURE_NPOT_SUPPORT 0
 #endif
 
-/** @def CC_RETINA_DISPLAY_SUPPORT
-If enabled, cocos2d supports retina display. 
-For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
-
-To enable set it to 1. Use 0 to disable it. Enabled by default.
-
-This value governs only the PNG, GIF, BMP, images.
-This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.
-
-@deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
-
-@since v0.99.5
-*/
-#ifndef CC_RETINA_DISPLAY_SUPPORT
-#define CC_RETINA_DISPLAY_SUPPORT 1
-#endif
-
-/** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
-It's the suffix that will be appended to the files in order to load "retina display" images.
-
-On an iPhone4 with Retina Display support enabled, the file @"sprite-hd.png" will be loaded instead of @"sprite.png".
-If the file doesn't exist it will use the non-retina display image.
-
-Platforms: Only used on Retina Display devices like iPhone 4.
-
-@since v0.99.5
-*/ 
-#ifndef CC_RETINA_DISPLAY_FILENAME_SUFFIX
-#define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
-#endif
 
 /** @def CC_USE_LA88_LABELS
  If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.
@@ -310,12 +280,6 @@ To enable set it to a value different than 0. Disabled by default.
  */
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
-#endif
-
-#if CC_RETINA_DISPLAY_SUPPORT
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 1
-#else
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
 #endif
 
 /** Enable Lua engine debug log */
