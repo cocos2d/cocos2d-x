@@ -55,7 +55,7 @@ CCObject::~CCObject(void)
 	// from pool manager
 	if (m_bManaged)
 	{
-		CCPoolManager::getInstance()->removeObject(this);
+		CCPoolManager::sharedPoolManager()->removeObject(this);
 	}
 
     // if the object is referenced by Lua engine, remove it
@@ -90,7 +90,7 @@ void CCObject::retain(void)
 
 CCObject* CCObject::autorelease(void)
 {
-	CCPoolManager::getInstance()->addObject(this);
+	CCPoolManager::sharedPoolManager()->addObject(this);
 
 	m_bManaged = true;
 	return this;
