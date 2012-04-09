@@ -330,7 +330,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
     std::string pathKey = path;
-	ccResolutionType resolution;
+	ccResolutionType resolution = kCCResolutionUnknown;
 	CCFileUtils::removeSuffixFromFile(pathKey);
 
     pathKey = CCFileUtils::fullPathFromRelativePath(pathKey.c_str());

@@ -113,7 +113,8 @@ static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
 static inline ccColor4F 
 ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
 {
-    return (ccColor4F){r, g, b, a};
+    ccColor4F c4 = {r, g, b, a};
+    return c4;
 }
 
 /** Returns a ccColor4F from a ccColor4B.
