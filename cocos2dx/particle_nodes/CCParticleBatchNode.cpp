@@ -481,7 +481,9 @@ void CCParticleBatchNode::insertChild(CCParticleSystem* pSystem, unsigned int in
 
 	// make room for quads, not necessary for last child
 	if (pSystem->getAtlasIndex() + pSystem->getTotalParticles() != m_pTextureAtlas->getTotalQuads())
+    {
 		m_pTextureAtlas->moveQuadsFromIndex(index, index+pSystem->getTotalParticles());
+    }
 
 	// increase totalParticles here for new particles, update method of particlesystem will fill the quads
 	m_pTextureAtlas->increaseTotalQuadsWith(pSystem->getTotalParticles());
