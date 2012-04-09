@@ -220,6 +220,7 @@ void CCDictionary::removeAllObjects()
 
 CCObject* CCDictionary::copyWithZone(CCZone* pZone)
 {
+    CCAssert(pZone == NULL, "CCDirctionary should not be inherited.");
 	CCDictionary* pNewDict = new CCDictionary();
 
 	CCDictElement* pElement = NULL;
@@ -227,14 +228,14 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
 	{
 		CCDICT_FOREACH(this, pElement)
 		{
-			pNewDict->setObject(pElement->getObject(), pElement->getIntKey());
+			pNewDict->setObject(pElement->getObject()->copy(), pElement->getIntKey());
 		}
 	}
 	else if (m_eDictType == kCCDictStr)
 	{
 		CCDICT_FOREACH(this, pElement)
 		{
-			pNewDict->setObject(pElement->getObject(), pElement->getStrKey());
+			pNewDict->setObject(pElement->getObject()->copy(), pElement->getStrKey());
 		}
 	}
 

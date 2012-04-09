@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef KAZMATH_AABB_H_INCLUDED
 #define KAZMATH_AABB_H_INCLUDED
 
+#include "CCPlatformMacros.h"
 #include "vec3.h"
 #include "utility.h"
 
@@ -42,9 +43,9 @@ typedef struct kmAABB {
     kmVec3 max; /** The min corner of the box */
 } kmAABB;
 
-const int kmAABBContainsPoint(const kmVec3* pPoint, const kmAABB* pBox);
-kmAABB* const kmAABBAssign(kmAABB* pOut, const kmAABB* pIn);
-kmAABB* const kmAABBScale(kmAABB* pOut, const kmAABB* pIn, kmScalar s);
+CC_DLL const int kmAABBContainsPoint(const kmVec3* pPoint, const kmAABB* pBox);
+CC_DLL kmAABB* const kmAABBAssign(kmAABB* pOut, const kmAABB* pIn);
+CC_DLL kmAABB* const kmAABBScale(kmAABB* pOut, const kmAABB* pIn, kmScalar s);
 
 #ifdef __cplusplus
 }

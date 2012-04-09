@@ -151,6 +151,7 @@ namespace cocos2d
 CCAccelerometer::CCAccelerometer() : 
 	m_pAccelDelegate(NULL)
 {
+    memset(&m_obAccelerationValue, 0, sizeof(m_obAccelerationValue));
 }
 
 CCAccelerometer::~CCAccelerometer() 

@@ -69,21 +69,20 @@ NS_CC_BEGIN
 // XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
-static CCDisplayLinkDirector s_sharedDirector;
-static bool s_bFirstRun = true;
+static CCDisplayLinkDirector* s_pSharedDirector = NULL;
 
 #define kDefaultFPS		60  // 60 frames per second
 extern const char* cocos2dVersion(void);
 
 CCDirector* CCDirector::sharedDirector(void)
 {
-	if (s_bFirstRun)
-	{
-		s_sharedDirector.init();
-        s_bFirstRun = false;
-	}
-
-	return &s_sharedDirector;
+	if (s_pSharedDirector == NULL)
+    {
+        s_pSharedDirector = new CCDisplayLinkDirector();
+        s_pSharedDirector->init();
+    }
+    
+	return s_pSharedDirector;
 }
 
 CCDirector::CCDirector(void)
@@ -102,8 +101,8 @@ bool CCDirector::init(void)
 	m_pNotificationNode = NULL;
 
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;	
-	m_pobScenesStack = CCArray::array();
-	m_pobScenesStack->retain();
+	m_pobScenesStack = new CCArray();
+	m_pobScenesStack->init();
 
 	// Set default projection (3D)
 	m_eProjection = kCCDirectorProjectionDefault;
@@ -112,6 +111,9 @@ bool CCDirector::init(void)
 	m_pProjectionDelegate = NULL;
 
 	// FPS
+    m_fAccumDt = 0.0f;
+    m_fFrameRate = 0.0f;
+    m_pFPSLabel = NULL;
 	m_bDisplayFPS = false;
 	m_uTotalFrames = m_uFrames = 0;
 	m_pszFPS = new char[10];
@@ -150,14 +152,14 @@ bool CCDirector::init(void)
 	m_pAccelerometer = new CCAccelerometer();
 
 	// create autorelease pool
-	CCPoolManager::getInstance()->push();
+	CCPoolManager::sharedPoolManager()->push();
 
 	return true;
 }
 	
 CCDirector::~CCDirector(void)
 {
-	CCLOGINFO("cocos2d: deallocing %p", this);
+	CCLOG("cocos2d: deallocing %p", this);
 
 #if CC_DIRECTOR_FAST_FPS
 	CC_SAFE_RELEASE(m_pFPSLabel);
@@ -171,8 +173,10 @@ CCDirector::~CCDirector(void)
 	CC_SAFE_RELEASE(m_pTouchDispatcher);
 	CC_SAFE_RELEASE(m_pKeypadDispatcher);
 	CC_SAFE_DELETE(m_pAccelerometer);
+
 	// pop the autorelease pool
-	CCPoolManager::getInstance()->pop();
+	CCPoolManager::sharedPoolManager()->pop();
+    CCPoolManager::purgePoolManager();
 
 	// delete m_pLastUpdate
 	CC_SAFE_DELETE(m_pLastUpdate);
@@ -236,10 +240,12 @@ void CCDirector::drawScene(void)
 		m_pNotificationNode->visit();
 	}
 
+#if CC_DIRECTOR_FAST_FPS == 1
 	if (m_bDisplayFPS)
 	{
 		showFPS();
 	}
+#endif
 
 #if CC_ENABLE_PROFILERS
 	showProfilers();
@@ -667,6 +673,7 @@ void CCDirector::purgeDirector()
 	// OpenGL view
 	m_pobOpenGLView->release();
 	m_pobOpenGLView = NULL;
+    CC_SAFE_DELETE(s_pSharedDirector);
 }
 
 void CCDirector::setNextScene(void)
@@ -1009,7 +1016,7 @@ void CCDisplayLinkDirector::mainLoop(void)
  		drawScene();
 	 
  		// release the objects
- 		CCPoolManager::getInstance()->pop();		
+ 		CCPoolManager::sharedPoolManager()->pop();		
  	}
 }
 
