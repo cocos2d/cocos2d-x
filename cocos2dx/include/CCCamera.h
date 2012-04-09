@@ -31,84 +31,86 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include <string>
 #include "kazmath/mat4.h"
-namespace   cocos2d {
-	/** 
-	A CCCamera is used in every CCNode.
-	Useful to look at the object from different views.
-	The OpenGL gluLookAt() function is used to locate the
-	camera.
 
-	If the object is transformed by any of the scale, rotation or
-	position attributes, then they will override the camera.
+NS_CC_BEGIN
 
-	IMPORTANT: Either your use the camera or the rotation/scale/position properties. You can't use both.
-	World coordinates won't work if you use the camera.
+/** 
+A CCCamera is used in every CCNode.
+Useful to look at the object from different views.
+The OpenGL gluLookAt() function is used to locate the
+camera.
 
-	Limitations:
+If the object is transformed by any of the scale, rotation or
+position attributes, then they will override the camera.
 
-	- Some nodes, like CCParallaxNode, CCParticle uses world node coordinates, and they won't work properly if you move them (or any of their ancestors)
-	using the camera.
+IMPORTANT: Either your use the camera or the rotation/scale/position properties. You can't use both.
+World coordinates won't work if you use the camera.
 
-	- It doesn't work on batched nodes like CCSprite objects when they are parented to a CCSpriteBatchNode object.
+Limitations:
 
-	- It is recommended to use it ONLY if you are going to create 3D effects. For 2D effecs, use the action CCFollow or position/scale/rotate.
+- Some nodes, like CCParallaxNode, CCParticle uses world node coordinates, and they won't work properly if you move them (or any of their ancestors)
+using the camera.
 
-	*/
-	class CC_DLL CCCamera : public CCObject
-	{
-	protected:
-		float m_fEyeX;
-		float m_fEyeY;
-		float m_fEyeZ;
+- It doesn't work on batched nodes like CCSprite objects when they are parented to a CCSpriteBatchNode object.
 
-		float m_fCenterX;
-		float m_fCenterY;
-		float m_fCenterZ;
+- It is recommended to use it ONLY if you are going to create 3D effects. For 2D effecs, use the action CCFollow or position/scale/rotate.
 
-		float m_fUpX;
-		float m_fUpY;
-		float m_fUpZ;
+*/
+class CC_DLL CCCamera : public CCObject
+{
+protected:
+	float m_fEyeX;
+	float m_fEyeY;
+	float m_fEyeZ;
 
-		bool m_bDirty;
-		kmMat4	m_lookupMatrix;
-	public:
-		CCCamera(void);
-		~CCCamera(void);
+	float m_fCenterX;
+	float m_fCenterY;
+	float m_fCenterZ;
 
-		void init(void);
+	float m_fUpX;
+	float m_fUpY;
+	float m_fUpZ;
 
-		char * description(void);
+	bool m_bDirty;
+	kmMat4	m_lookupMatrix;
+public:
+	CCCamera(void);
+	~CCCamera(void);
 
-		/** sets the dirty value */
-		inline void setDirty(bool bValue) { m_bDirty = bValue; }
-		/** get the dirty value */
-		inline bool getDirty(void) { return m_bDirty; }
+	void init(void);
 
-		/** sets the camera in the default position */
-		void restore(void);
-		/** Sets the camera using gluLookAt using its eye, center and up_vector */
-		void locate(void);
-		/** sets the eye values in points */
-		void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
-		/** sets the center values in points */
-		void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
-		/** sets the up values */
-		void setUpXYZ(float fUpX, float fUpY, float fUpZ);
+	char * description(void);
 
-		/** get the eye vector values in points */
-		void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
-		/** get the center vector values int points */
-		void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
-		/** get the up vector values */
-		void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
-	public:
-		/** returns the Z eye */
-		static float getZEye();
+	/** sets the dirty value */
+	inline void setDirty(bool bValue) { m_bDirty = bValue; }
+	/** get the dirty value */
+	inline bool getDirty(void) { return m_bDirty; }
 
-	private:
-		DISALLOW_COPY_AND_ASSIGN(CCCamera);
-	};
+	/** sets the camera in the default position */
+	void restore(void);
+	/** Sets the camera using gluLookAt using its eye, center and up_vector */
+	void locate(void);
+	/** sets the eye values in points */
+	void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
+	/** sets the center values in points */
+	void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
+	/** sets the up values */
+	void setUpXYZ(float fUpX, float fUpY, float fUpZ);
 
-}//namespace   cocos2d 
+	/** get the eye vector values in points */
+	void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
+	/** get the center vector values int points */
+	void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
+	/** get the up vector values */
+	void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
+public:
+	/** returns the Z eye */
+	static float getZEye();
+
+private:
+	DISALLOW_COPY_AND_ASSIGN(CCCamera);
+};
+
+NS_CC_END
 
 #endif // __CCCAMERA_H__
