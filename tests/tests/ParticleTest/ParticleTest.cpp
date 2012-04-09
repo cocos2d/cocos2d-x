@@ -1095,13 +1095,13 @@ ParticleDemo::ParticleDemo(void)
 	item4->setPosition( CCPointMake( 0, 100) );
 	item4->setAnchorPoint( CCPointMake(0,0) );
 
-	addChild( menu, 100 );	
-	
+	addChild( menu, 100 );
+    
     CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0000", "fonts/fps_images.png", 16, 24, '.');
     addChild(labelAtlas, 100, kTagParticleCount);
-	labelAtlas->setPosition( CCPointMake(s.width-66,50) );
-	
-	// moving background
+    labelAtlas->setPosition(CCPointMake(s.width-66,50));
+    
+    // moving background
 	m_background = CCSprite::spriteWithFile(s_back3);
 	addChild(m_background, 5);
 	m_background->setPosition( CCPointMake(s.width/2, s.height-180) );
@@ -1170,10 +1170,10 @@ void ParticleDemo::update(ccTime dt)
 {
     if (m_emitter)
     {
-	    CCLabelAtlas* atlas = (CCLabelAtlas*)getChildByTag(kTagParticleCount);
+        CCLabelAtlas* atlas = (CCLabelAtlas*)getChildByTag(kTagParticleCount);
         char str[5] = {0};
         sprintf(str, "%04d", m_emitter->getParticleCount());
-	    atlas->setString(str);
+        atlas->setString(str);
     }
 }
 
@@ -1241,24 +1241,24 @@ void ParticleBatchHybrid::onEnter()
 
 	addChild(batch, 10);
 
-	schedule(schedule_selector(ParticleBatchHybrid::switchRender), 2.0f);
-
-	CCNode *node = CCNode::node();
-	addChild(node);
-
-	m_pParent1 = batch;
-	m_pParent2 = node;
+ 	schedule(schedule_selector(ParticleBatchHybrid::switchRender), 2.0f);
+ 
+ 	CCNode *node = CCNode::node();
+ 	addChild(node);
+ 
+ 	m_pParent1 = batch;
+ 	m_pParent2 = node;
 }
 
 void ParticleBatchHybrid::switchRender(ccTime dt)
 {
-	bool usingBatch = ( m_emitter->getBatchNode() != NULL );
-	m_emitter->removeFromParentAndCleanup(false);
-
-	CCNode *newParent = (usingBatch ? m_pParent2  : m_pParent1 );
-	newParent->addChild(m_emitter);
-
-    CCLog("Particle: Using new parent: %s", usingBatch ? "CCNode" : "CCParticleBatchNode");
+ 	bool usingBatch = ( m_emitter->getBatchNode() != NULL );
+ 	m_emitter->removeFromParentAndCleanup(false);
+ 
+ 	CCNode *newParent = (usingBatch ? m_pParent2  : m_pParent1 );
+ 	newParent->addChild(m_emitter);
+ 
+     CCLog("Particle: Using new parent: %s", usingBatch ? "CCNode" : "CCParticleBatchNode");
 }
 
 std::string ParticleBatchHybrid::title()
@@ -1324,11 +1324,13 @@ void ParticleReorder::onEnter()
 	removeChild(m_background, true);
 	m_background = NULL;
 
-	CCParticleSystem *ignore = CCParticleSystemQuad::particleWithFile("Images/SmallSun.plist");
+	CCParticleSystem* ignore = CCParticleSystemQuad::particleWithFile("Images/SmallSun.plist");
 	CCNode *parent1 = CCNode::node();
 	CCNode *parent2 = CCParticleBatchNode::batchNodeWithTexture(ignore->getTexture());
+    ignore->unscheduleUpdate();
 
-	for( unsigned int i=0; i<2;i++) {
+	for( unsigned int i=0; i<2;i++) 
+    {
 		CCNode *parent = ( i==0 ? parent1 : parent2 );
 
 		CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::particleWithFile("Images/SmallSun.plist");

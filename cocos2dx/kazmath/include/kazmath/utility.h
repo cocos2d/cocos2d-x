@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef UTILITY_H_INCLUDED
 #define UTILITY_H_INCLUDED
 
+#include "CCPlatformMacros.h"
 #include <math.h>
 
 #ifndef kmScalar
@@ -59,13 +60,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
-extern kmScalar kmSQR(kmScalar s);
-extern kmScalar kmDegreesToRadians(kmScalar degrees);
-extern kmScalar kmRadiansToDegrees(kmScalar radians);
+CC_DLL kmScalar kmSQR(kmScalar s);
+CC_DLL kmScalar kmDegreesToRadians(kmScalar degrees);
+CC_DLL kmScalar kmRadiansToDegrees(kmScalar radians);
 
-extern kmScalar kmMin(kmScalar lhs, kmScalar rhs);
-extern kmScalar kmMax(kmScalar lhs, kmScalar rhs);
-extern kmBool kmAlmostEqual(kmScalar lhs, kmScalar rhs);
+CC_DLL kmScalar kmMin(kmScalar lhs, kmScalar rhs);
+CC_DLL kmScalar kmMax(kmScalar lhs, kmScalar rhs);
+CC_DLL kmBool kmAlmostEqual(kmScalar lhs, kmScalar rhs);
 
 #ifdef __cplusplus
 }

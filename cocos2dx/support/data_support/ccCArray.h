@@ -225,18 +225,19 @@ static inline void ccArrayRemoveAllObjects(ccArray *arr)
  Behaviour undefined if index outside [0, num-1]. */
 static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index, bool bReleaseObj)
 {
-	if (bReleaseObj)
-	{
-		arr->arr[index]->release(); 
-	}
-	
-	arr->num--;
+    CCAssert(arr && arr->num > 0 && index < arr->num, "Invalid index. Out of bounds");
+    if (bReleaseObj)
+    {
+        arr->arr[index]->release(); 
+    }
 
-	unsigned int remaining = arr->num - index;
-	if (remaining > 0)
-	{
-		memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(void*));
-	}
+    arr->num--;
+
+    unsigned int remaining = arr->num - index;
+    if (remaining > 0)
+    {
+	    memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(void*));
+    }
 }
 
 /** Removes object at specified index and fills the gap with the last object,
