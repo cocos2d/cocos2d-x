@@ -65,6 +65,15 @@ public:
 		return (float)atof(m_sString.c_str());
 	}
 
+    bool toBool()
+    {
+        if (0 == strcmp(m_sString.c_str(), "0") || 0 == strcmp(m_sString.c_str(), "false"))
+        {
+            return false;
+        }
+        return true;
+    }
+
 	std::string toStdString()
 	{
 		return m_sString;

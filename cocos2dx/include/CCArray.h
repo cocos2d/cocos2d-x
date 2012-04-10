@@ -155,7 +155,8 @@ public:
 	virtual CCObject* copyWithZone(CCZone* pZone);
 public:
     ccArray* data;
-	CCArray() : data(NULL) {};
+	CCArray();
+	CCArray(unsigned int capacity);
 };
 
 NS_CC_END
