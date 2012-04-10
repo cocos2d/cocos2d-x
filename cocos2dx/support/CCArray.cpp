@@ -27,6 +27,19 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+
+CCArray::CCArray()
+: data(NULL)
+{
+	init();
+}
+
+CCArray::CCArray(unsigned int capacity)
+: data(NULL)
+{
+	initWithCapacity(capacity);
+}
+
 CCArray* CCArray::array()
 {
     CCArray* pArray = new CCArray();
@@ -115,6 +128,7 @@ bool CCArray::init()
 
 bool CCArray::initWithObject(CCObject* pObject)
 {
+	ccArrayFree(data);
 	bool bRet = initWithCapacity(1);
 	if (bRet)
 	{
@@ -126,6 +140,7 @@ bool CCArray::initWithObject(CCObject* pObject)
 /** Initializes an array with some objects */
 bool CCArray::initWithObjects(CCObject* pObject, ...)
 {
+	ccArrayFree(data);
     bool bRet = false;
     do 
     {
@@ -159,12 +174,14 @@ bool CCArray::initWithObjects(CCObject* pObject, ...)
 
 bool CCArray::initWithCapacity(unsigned int capacity)
 {
+	ccArrayFree(data);
     data = ccArrayNew(capacity);
     return true;
 }
 
 bool CCArray::initWithArray(CCArray* otherArray)
 {
+	ccArrayFree(data);
     bool bRet = false;
     do 
     {
