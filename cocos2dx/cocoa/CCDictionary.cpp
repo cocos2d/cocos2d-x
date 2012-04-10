@@ -228,14 +228,14 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
 	{
 		CCDICT_FOREACH(this, pElement)
 		{
-			pNewDict->setObject(pElement->getObject()->copy(), pElement->getIntKey());
+			pNewDict->setObject(pElement->getObject()->copy()->autorelease(), pElement->getIntKey());
 		}
 	}
 	else if (m_eDictType == kCCDictStr)
 	{
 		CCDICT_FOREACH(this, pElement)
 		{
-			pNewDict->setObject(pElement->getObject()->copy(), pElement->getStrKey());
+			pNewDict->setObject(pElement->getObject()->copy()->autorelease(), pElement->getStrKey());
 		}
 	}
 
