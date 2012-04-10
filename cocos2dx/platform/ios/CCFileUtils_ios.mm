@@ -425,7 +425,8 @@ namespace cocos2d {
     
     CCDictionary *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
     {
-        NSString* pPath = [NSString stringWithUTF8String:pFileName];
+        const char* pszFullPath = fullPathFromRelativePath(pFileName);
+        NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
         NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
         
         CCDictionary* pRet = new CCDictionary();
