@@ -343,7 +343,7 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(this, pObj)
     {
-        pArray->addObject(pObj->copy());
+        pArray->addObject(pObj->copy()->autorelease());
     }
     return pArray;
 }
