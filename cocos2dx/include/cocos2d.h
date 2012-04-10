@@ -107,7 +107,8 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "CCTouch.h"
 #include "CCPointExtension.h"
-
+#include "CCString.h"
+#include "cocoa/CCNS.h"
 //
 // platform specific
 //

@@ -2,6 +2,8 @@
 #include "CCString.h"
 #include "CCInteger.h"
 
+using namespace std;
+
 NS_CC_BEGIN
 
 CCDictionary::CCDictionary()
@@ -86,14 +88,14 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
 	return pArray;
 }
 
-CCObject* CCDictionary::objectForKey(const char* key)
+CCObject* CCDictionary::objectForKey(const string& key)
 {
 	if (m_eDictType == kCCDictUnknown && m_eDictType == kCCDictUnknown) return NULL;
 	CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as key.");
 
 	CCObject* pRetObject = NULL;
 	CCDictElement *pElement = NULL;
-	HASH_FIND_STR(m_pElements,key, pElement);
+	HASH_FIND_STR(m_pElements,key.c_str(), pElement);
 	if (pElement != NULL)
 	{
 		pRetObject = pElement->m_pObject;
@@ -116,9 +118,9 @@ CCObject* CCDictionary::objectForKey(int key)
 	return pRetObject;
 }
 
-bool CCDictionary::setObject(CCObject* pObject, const char* key)
+bool CCDictionary::setObject(CCObject* pObject, const string& key)
 {
-	CCAssert(key != NULL && strlen(key) > 0 && pObject != NULL, "Invalid Argument!");
+	CCAssert(key.length() > 0 && pObject != NULL, "Invalid Argument!");
 	if (m_eOldDictType == kCCDictUnknown)
 	{
 		m_eOldDictType = kCCDictStr;
@@ -128,11 +130,11 @@ bool CCDictionary::setObject(CCObject* pObject, const char* key)
 
 	bool bRet = false;
 	CCDictElement *pElement = NULL;
-	HASH_FIND_STR(m_pElements, key, pElement);
+	HASH_FIND_STR(m_pElements, key.c_str(), pElement);
 	if (pElement == NULL)
 	{
 		pObject->retain();
-		pElement = new CCDictElement(key, pObject);
+		pElement = new CCDictElement(key.c_str(), pObject);
 		HASH_ADD_STR(m_pElements, m_szKey, pElement);
 		bRet = true;
 	}
@@ -180,12 +182,12 @@ bool CCDictionary::setObject(CCObject* pObject, int key)
 	return bRet;
 }
 
-void CCDictionary::removeObjectForKey(const char* key)
+void CCDictionary::removeObjectForKey(const string& key)
 {
 	CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as its key");
-	CCAssert(key != NULL && strlen(key) > 0, "Invalid Argument!");
+	CCAssert(key.length() > 0, "Invalid Argument!");
 	CCDictElement *pElement = NULL;
-	HASH_FIND_STR(m_pElements, key, pElement);
+	HASH_FIND_STR(m_pElements, key.c_str(), pElement);
 	if (pElement)
 	{
 		HASH_DEL(m_pElements, pElement);
@@ -228,14 +230,14 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
 	{
 		CCDICT_FOREACH(this, pElement)
 		{
-			pNewDict->setObject(pElement->getObject()->copy(), pElement->getIntKey());
+			pNewDict->setObject(pElement->getObject()->copy()->autorelease(), pElement->getIntKey());
 		}
 	}
 	else if (m_eDictType == kCCDictStr)
 	{
 		CCDICT_FOREACH(this, pElement)
 		{
-			pNewDict->setObject(pElement->getObject()->copy(), pElement->getStrKey());
+			pNewDict->setObject(pElement->getObject()->copy()->autorelease(), pElement->getStrKey());
 		}
 	}
 
