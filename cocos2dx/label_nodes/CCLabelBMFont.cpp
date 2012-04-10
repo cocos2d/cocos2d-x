@@ -808,6 +808,7 @@ CCLabelBMFont::CCLabelBMFont()
 : m_cOpacity(0)           
 , m_bIsOpacityModifyRGB(false)
 , m_pConfiguration(NULL)
+, m_sString(NULL)
 , m_bLineBreakWithoutSpaces(false)
 , m_tImageOffset(CCPointZero)
 {
