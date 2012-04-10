@@ -669,8 +669,12 @@ void TexturePVRRGB888::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgb888.pvr");
-    img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
-    addChild(img);
+    if (img != NULL)
+    {
+        img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 
 }
