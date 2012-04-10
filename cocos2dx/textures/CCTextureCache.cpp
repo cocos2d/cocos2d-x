@@ -457,7 +457,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 {
 	CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
 
-	CCTexture2D * tex;
+	CCTexture2D* tex = NULL;
 	std::string key(path);
     // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
     CCFileUtils::removeSuffixFromFile(key);
@@ -470,7 +470,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
     // Split up directory and filename
     std::string fullpath = CCFileUtils::fullPathFromRelativePath(key.c_str());
 	tex = new CCTexture2D();
-	if( tex->initWithPVRFile(fullpath.c_str()) )
+	if(tex != NULL && tex->initWithPVRFile(fullpath.c_str()) )
 	{
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
         // cache the texture file name
@@ -482,6 +482,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 	else
 	{
 		CCLOG("cocos2d: Couldn't add PVRImage:%s in CCTextureCache",key.c_str());
+        CC_SAFE_DELETE(tex);
 	}
 
 	return tex;
