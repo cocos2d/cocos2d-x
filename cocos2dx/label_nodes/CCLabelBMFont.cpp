@@ -42,6 +42,9 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "support/data_support/uthash.h"
 #include "CCDirector.h"
 
+using namespace std;
+
+
 NS_CC_BEGIN
 
 typedef struct _FontDefHashElement
@@ -788,6 +791,7 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 		m_pAlignment = alignment;
 		m_tImageOffset = imageOffset;
 		m_fWidth = width;
+        CC_SAFE_DELETE_ARRAY(m_sString);
 		m_sString = cc_utf8_from_cstr(theString);
 		m_cOpacity = 255;
 		m_tColor = ccWHITE;
@@ -953,11 +957,12 @@ void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
 {
 	if (fromUpdate)
 	{
+        CC_SAFE_DELETE_ARRAY(m_sString);
 		m_sString = cc_utf8_from_cstr(newString);
 	}
 	else
 	{
-		m_sString_initial = std::string(newString);
+		m_sString_initial = newString;
 	}
 
 	updateString(fromUpdate);
@@ -1078,8 +1083,6 @@ void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 // LabelBMFont - Alignment
 void CCLabelBMFont::updateLabel()
 {
-	using namespace std;
-
 	this->setString(m_sString_initial.c_str(), true);
 
 	if (m_fWidth > 0)
@@ -1240,7 +1243,7 @@ void CCLabelBMFont::updateLabel()
 
 		str_new[size] = 0;
 
-		delete[] m_sString;
+		CC_SAFE_DELETE_ARRAY(m_sString);
 		m_sString = str_new;
 		updateString(true);
 	}
