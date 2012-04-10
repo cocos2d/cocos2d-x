@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15DC5D2315340C72009A99D4 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 15DC5D2215340C72009A99D4 /* Shaders */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -550,22 +551,6 @@
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		D40EB54913D0200200BB8B5E /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40EB54813D0200200BB8B5E /* CCTexturePVR.cpp */; };
-		D414CB98152F422A00D20A8F /* example_Blur.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB88152F422A00D20A8F /* example_Blur.fsh */; };
-		D414CB99152F422A00D20A8F /* example_Flower.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB89152F422A00D20A8F /* example_Flower.fsh */; };
-		D414CB9A152F422A00D20A8F /* example_Flower.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8A152F422A00D20A8F /* example_Flower.vsh */; };
-		D414CB9B152F422A00D20A8F /* example_Heart.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8B152F422A00D20A8F /* example_Heart.fsh */; };
-		D414CB9C152F422A00D20A8F /* example_Heart.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8C152F422A00D20A8F /* example_Heart.vsh */; };
-		D414CB9D152F422A00D20A8F /* example_HorizontalColor.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8D152F422A00D20A8F /* example_HorizontalColor.fsh */; };
-		D414CB9E152F422A00D20A8F /* example_Julia.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8E152F422A00D20A8F /* example_Julia.fsh */; };
-		D414CB9F152F422A00D20A8F /* example_Julia.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB8F152F422A00D20A8F /* example_Julia.vsh */; };
-		D414CBA0152F422A00D20A8F /* example_Mandelbrot.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB90152F422A00D20A8F /* example_Mandelbrot.fsh */; };
-		D414CBA1152F422A00D20A8F /* example_Mandelbrot.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB91152F422A00D20A8F /* example_Mandelbrot.vsh */; };
-		D414CBA2152F422A00D20A8F /* example_Monjori.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB92152F422A00D20A8F /* example_Monjori.fsh */; };
-		D414CBA3152F422A00D20A8F /* example_Monjori.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB93152F422A00D20A8F /* example_Monjori.vsh */; };
-		D414CBA4152F422A00D20A8F /* example_Plasma.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB94152F422A00D20A8F /* example_Plasma.fsh */; };
-		D414CBA5152F422A00D20A8F /* example_Plasma.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB95152F422A00D20A8F /* example_Plasma.vsh */; };
-		D414CBA6152F422A00D20A8F /* example_Twist.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB96152F422A00D20A8F /* example_Twist.fsh */; };
-		D414CBA7152F422A00D20A8F /* example_Twist.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D414CB97152F422A00D20A8F /* example_Twist.vsh */; };
 		D429012913B1D0CA00A3772F /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D429012813B1D0CA00A3772F /* CCScriptSupport.cpp */; };
 		D429012E13B1D16900A3772F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D429012D13B1D16900A3772F /* libcurl.a */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
@@ -608,6 +593,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15DC5D2215340C72009A99D4 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = "../../../cocos2d-x/tests/Resources/Shaders"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
@@ -1265,22 +1251,6 @@
 		BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultTest.cpp; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		D40EB54813D0200200BB8B5E /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
-		D414CB88152F422A00D20A8F /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
-		D414CB89152F422A00D20A8F /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
-		D414CB8A152F422A00D20A8F /* example_Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.vsh; sourceTree = "<group>"; };
-		D414CB8B152F422A00D20A8F /* example_Heart.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.fsh; sourceTree = "<group>"; };
-		D414CB8C152F422A00D20A8F /* example_Heart.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.vsh; sourceTree = "<group>"; };
-		D414CB8D152F422A00D20A8F /* example_HorizontalColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_HorizontalColor.fsh; sourceTree = "<group>"; };
-		D414CB8E152F422A00D20A8F /* example_Julia.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.fsh; sourceTree = "<group>"; };
-		D414CB8F152F422A00D20A8F /* example_Julia.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.vsh; sourceTree = "<group>"; };
-		D414CB90152F422A00D20A8F /* example_Mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.fsh; sourceTree = "<group>"; };
-		D414CB91152F422A00D20A8F /* example_Mandelbrot.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.vsh; sourceTree = "<group>"; };
-		D414CB92152F422A00D20A8F /* example_Monjori.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.fsh; sourceTree = "<group>"; };
-		D414CB93152F422A00D20A8F /* example_Monjori.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.vsh; sourceTree = "<group>"; };
-		D414CB94152F422A00D20A8F /* example_Plasma.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.fsh; sourceTree = "<group>"; };
-		D414CB95152F422A00D20A8F /* example_Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.vsh; sourceTree = "<group>"; };
-		D414CB96152F422A00D20A8F /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
-		D414CB97152F422A00D20A8F /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
 		D429012813B1D0CA00A3772F /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		D429012D13B1D16900A3772F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -1630,7 +1600,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D414CB87152F422A00D20A8F /* Shaders */,
+				15DC5D2215340C72009A99D4 /* Shaders */,
 				789B560C15197BE00038CD1E /* animations */,
 				789B560E15197BF30038CD1E /* fonts */,
 				789B561015197BFB0038CD1E /* Images */,
@@ -2840,29 +2810,6 @@
 			path = UserDefaultTest;
 			sourceTree = "<group>";
 		};
-		D414CB87152F422A00D20A8F /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				D414CB88152F422A00D20A8F /* example_Blur.fsh */,
-				D414CB89152F422A00D20A8F /* example_Flower.fsh */,
-				D414CB8A152F422A00D20A8F /* example_Flower.vsh */,
-				D414CB8B152F422A00D20A8F /* example_Heart.fsh */,
-				D414CB8C152F422A00D20A8F /* example_Heart.vsh */,
-				D414CB8D152F422A00D20A8F /* example_HorizontalColor.fsh */,
-				D414CB8E152F422A00D20A8F /* example_Julia.fsh */,
-				D414CB8F152F422A00D20A8F /* example_Julia.vsh */,
-				D414CB90152F422A00D20A8F /* example_Mandelbrot.fsh */,
-				D414CB91152F422A00D20A8F /* example_Mandelbrot.vsh */,
-				D414CB92152F422A00D20A8F /* example_Monjori.fsh */,
-				D414CB93152F422A00D20A8F /* example_Monjori.vsh */,
-				D414CB94152F422A00D20A8F /* example_Plasma.fsh */,
-				D414CB95152F422A00D20A8F /* example_Plasma.vsh */,
-				D414CB96152F422A00D20A8F /* example_Twist.fsh */,
-				D414CB97152F422A00D20A8F /* example_Twist.vsh */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
 		D429012713B1D0CA00A3772F /* script_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -3292,6 +3239,7 @@
 				789B561115197BFB0038CD1E /* Images in Resources */,
 				789B561415197C040038CD1E /* TileMaps in Resources */,
 				789B561515197C040038CD1E /* zwoptex in Resources */,
+				15DC5D2315340C72009A99D4 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3377,22 +3325,6 @@
 				784B77EF1519BF6600FA820F /* TestEntries.cpp in Sources */,
 				7871C43015209375007353A3 /* NodeTest.cpp in Sources */,
 				7871C43815209506007353A3 /* ShaderTest.cpp in Sources */,
-				D414CB98152F422A00D20A8F /* example_Blur.fsh in Sources */,
-				D414CB99152F422A00D20A8F /* example_Flower.fsh in Sources */,
-				D414CB9A152F422A00D20A8F /* example_Flower.vsh in Sources */,
-				D414CB9B152F422A00D20A8F /* example_Heart.fsh in Sources */,
-				D414CB9C152F422A00D20A8F /* example_Heart.vsh in Sources */,
-				D414CB9D152F422A00D20A8F /* example_HorizontalColor.fsh in Sources */,
-				D414CB9E152F422A00D20A8F /* example_Julia.fsh in Sources */,
-				D414CB9F152F422A00D20A8F /* example_Julia.vsh in Sources */,
-				D414CBA0152F422A00D20A8F /* example_Mandelbrot.fsh in Sources */,
-				D414CBA1152F422A00D20A8F /* example_Mandelbrot.vsh in Sources */,
-				D414CBA2152F422A00D20A8F /* example_Monjori.fsh in Sources */,
-				D414CBA3152F422A00D20A8F /* example_Monjori.vsh in Sources */,
-				D414CBA4152F422A00D20A8F /* example_Plasma.fsh in Sources */,
-				D414CBA5152F422A00D20A8F /* example_Plasma.vsh in Sources */,
-				D414CBA6152F422A00D20A8F /* example_Twist.fsh in Sources */,
-				D414CBA7152F422A00D20A8F /* example_Twist.vsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3921,12 +3853,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
@@ -3936,6 +3870,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
@@ -3943,6 +3878,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
+				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
