@@ -77,7 +77,7 @@ static inline ccArray* ccArrayNew(unsigned int capacity)
 static inline void ccArrayRemoveAllObjects(ccArray *arr);
 
 /** Frees array after removing all remaining objects. Silently ignores nil arr. */
-static inline void ccArrayFree(ccArray *arr)
+static inline void ccArrayFree(ccArray*& arr)
 {
 	if( arr == NULL ) 
 	{
@@ -88,6 +88,7 @@ static inline void ccArrayFree(ccArray *arr)
 	
 	free(arr->arr);
 	free(arr);
+    arr = NULL;
 }
 
 /** Doubles array capacity */
