@@ -49,7 +49,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)\lua\cocos2dx_support&quot;;&quot;$(SolutionDir)\lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)\lua\lua&quot;;&quot;$(SolutionDir)\lua\tolua&quot;;&quot;$(SolutionDir)\lua\src&quot;;.;&quot;$(SolutionDir)\cocos2dx&quot;;&quot;$(SolutionDir)\cocos2dx\include&quot;;&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)\CocosDenshion\Include&quot;"
+				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)\lua\cocos2dx_support&quot;;&quot;$(SolutionDir)\lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)\lua\lua&quot;;&quot;$(SolutionDir)\lua\tolua&quot;;&quot;$(SolutionDir)\lua\src&quot;;.;&quot;$(SolutionDir)\cocos2dx&quot;;&quot;$(SolutionDir)\cocos2dx\include&quot;;&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)\CocosDenshion\Include&quot;;&quot;$(SolutionDir)\cocos2dx\kazmath\include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
