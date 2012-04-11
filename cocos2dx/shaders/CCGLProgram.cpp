@@ -114,8 +114,10 @@ bool CCGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, cons
 {
 	const GLchar * vertexSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(vShaderFilename));
 	const GLchar * fragmentSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(fShaderFilename));
-
-	return initWithVertexShaderByteArray(vertexSource, fragmentSource);
+	bool ret = initWithVertexShaderByteArray(vertexSource, fragmentSource);
+	CC_SAFE_DELETE_ARRAY(vertexSource);
+	CC_SAFE_DELETE_ARRAY(fragmentSource);
+	return ret;
 }
 
 const char* CCGLProgram::description()
