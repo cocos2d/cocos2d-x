@@ -111,7 +111,7 @@ On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
 */
 #define CC_CONTENT_SCALE_FACTOR() CCDirector::sharedDirector()->getContentScaleFactor()
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if 1//(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 /****************************/
 /** RETINA DISPLAY ENABLED **/
@@ -154,7 +154,6 @@ CCSizeMake( (__size_in_pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__size_in_p
  */
 #define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)																		\
 CCSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_points__).height * CC_CONTENT_SCALE_FACTOR())
-
 
 #else
 
