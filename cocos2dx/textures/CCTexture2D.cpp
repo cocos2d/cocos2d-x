@@ -112,14 +112,18 @@ GLuint CCTexture2D::getName()
 	return m_uName;
 }
 
-const CCSize& CCTexture2D::getContentSize()
+const CCSize& CCTexture2D::getContentSizeInPixels()
 {
 	return m_tContentSize;
 }
 
-const CCSize& CCTexture2D::getContentSizeInPixels()
+const CCSize& CCTexture2D::getContentSize()
 {
-	return m_tContentSize;
+	CCSize ret;
+	ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
+	ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
+
+	return ret;
 }
 
 GLfloat CCTexture2D::getMaxS()
