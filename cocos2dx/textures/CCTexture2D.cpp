@@ -208,6 +208,9 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 	case kCCTexture2DPixelFormat_A8:
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 		break;
+	case kCCTexture2DPixelFormat_I8:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
+		break;
 	default:
 		CCAssert(0, "NSInternalInconsistencyException");
 
