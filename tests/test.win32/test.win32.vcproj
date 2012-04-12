@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\;.\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\;.\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib"
+				AdditionalDependencies="libcocos2d.lib libGLESv2.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
