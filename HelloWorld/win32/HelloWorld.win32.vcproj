@@ -119,7 +119,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\Classes"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\Classes"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
