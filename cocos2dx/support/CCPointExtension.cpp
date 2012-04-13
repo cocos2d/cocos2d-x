@@ -31,13 +31,13 @@ namespace   cocos2d {
 
 #define kCCPointEpsilon FLT_EPSILON
 
-CGFloat
+CCFloat
 ccpLength(const CCPoint& v)
 {
 	return sqrtf(ccpLengthSQ(v));
 }
 
-CGFloat
+CCFloat
 ccpDistance(const CCPoint& v1, const CCPoint& v2)
 {
 	return ccpLength(ccpSub(v1, v2));
@@ -50,12 +50,12 @@ ccpNormalize(const CCPoint& v)
 }
 
 CCPoint
-ccpForAngle(const CGFloat a)
+ccpForAngle(const CCFloat a)
 {
 	return ccp(cosf(a), sinf(a));
 }
 
-CGFloat
+CCFloat
 ccpToAngle(const CCPoint& v)
 {
 	return atan2f(v.y, v.x);

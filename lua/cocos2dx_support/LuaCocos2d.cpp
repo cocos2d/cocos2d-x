@@ -6114,7 +6114,7 @@ static int tolua_set_CCAffineTransform_a(lua_State* tolua_S)
   if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->a = ((CGFloat)  tolua_tonumber(tolua_S,2,0))
+  self->a = ((CCFloat)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6144,7 +6144,7 @@ static int tolua_set_CCAffineTransform_b(lua_State* tolua_S)
   if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->b = ((CGFloat)  tolua_tonumber(tolua_S,2,0))
+  self->b = ((CCFloat)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6174,7 +6174,7 @@ static int tolua_set_CCAffineTransform_c(lua_State* tolua_S)
   if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->c = ((CGFloat)  tolua_tonumber(tolua_S,2,0))
+  self->c = ((CCFloat)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6204,7 +6204,7 @@ static int tolua_set_CCAffineTransform_d(lua_State* tolua_S)
   if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->d = ((CGFloat)  tolua_tonumber(tolua_S,2,0))
+  self->d = ((CCFloat)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6234,7 +6234,7 @@ static int tolua_set_CCAffineTransform_tx(lua_State* tolua_S)
   if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->tx = ((CGFloat)  tolua_tonumber(tolua_S,2,0))
+  self->tx = ((CCFloat)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6264,7 +6264,7 @@ static int tolua_set_CCAffineTransform_ty(lua_State* tolua_S)
   if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->ty = ((CGFloat)  tolua_tonumber(tolua_S,2,0))
+  self->ty = ((CCFloat)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6289,12 +6289,12 @@ static int tolua_Cocos2d___CCAffineTransformMake00(lua_State* tolua_S)
  else
 #endif
  {
-  CGFloat a = ((CGFloat)  tolua_tonumber(tolua_S,1,0));
-  CGFloat b = ((CGFloat)  tolua_tonumber(tolua_S,2,0));
-  CGFloat c = ((CGFloat)  tolua_tonumber(tolua_S,3,0));
-  CGFloat d = ((CGFloat)  tolua_tonumber(tolua_S,4,0));
-  CGFloat tx = ((CGFloat)  tolua_tonumber(tolua_S,5,0));
-  CGFloat ty = ((CGFloat)  tolua_tonumber(tolua_S,6,0));
+  CCFloat a = ((CCFloat)  tolua_tonumber(tolua_S,1,0));
+  CCFloat b = ((CCFloat)  tolua_tonumber(tolua_S,2,0));
+  CCFloat c = ((CCFloat)  tolua_tonumber(tolua_S,3,0));
+  CCFloat d = ((CCFloat)  tolua_tonumber(tolua_S,4,0));
+  CCFloat tx = ((CCFloat)  tolua_tonumber(tolua_S,5,0));
+  CCFloat ty = ((CCFloat)  tolua_tonumber(tolua_S,6,0));
   {
    CCAffineTransform tolua_ret = (CCAffineTransform)  __CCAffineTransformMake(a,b,c,d,tx,ty);
    {
@@ -6338,12 +6338,12 @@ static int tolua_Cocos2d_CCAffineTransformMake00(lua_State* tolua_S)
  else
 #endif
  {
-  CGFloat a = ((CGFloat)  tolua_tonumber(tolua_S,1,0));
-  CGFloat b = ((CGFloat)  tolua_tonumber(tolua_S,2,0));
-  CGFloat c = ((CGFloat)  tolua_tonumber(tolua_S,3,0));
-  CGFloat d = ((CGFloat)  tolua_tonumber(tolua_S,4,0));
-  CGFloat tx = ((CGFloat)  tolua_tonumber(tolua_S,5,0));
-  CGFloat ty = ((CGFloat)  tolua_tonumber(tolua_S,6,0));
+  CCFloat a = ((CCFloat)  tolua_tonumber(tolua_S,1,0));
+  CCFloat b = ((CCFloat)  tolua_tonumber(tolua_S,2,0));
+  CCFloat c = ((CCFloat)  tolua_tonumber(tolua_S,3,0));
+  CCFloat d = ((CCFloat)  tolua_tonumber(tolua_S,4,0));
+  CCFloat tx = ((CCFloat)  tolua_tonumber(tolua_S,5,0));
+  CCFloat ty = ((CCFloat)  tolua_tonumber(tolua_S,6,0));
   {
    CCAffineTransform tolua_ret = (CCAffineTransform)  CCAffineTransformMake(a,b,c,d,tx,ty);
    {
@@ -6669,7 +6669,7 @@ static int tolua_Cocos2d_CCAffineTransformRotate00(lua_State* tolua_S)
 #endif
  {
   CCAffineTransform aTransform = *((CCAffineTransform*)  tolua_tousertype(tolua_S,1,0));
-  CGFloat anAngle = ((CGFloat)  tolua_tonumber(tolua_S,2,0));
+  CCFloat anAngle = ((CCFloat)  tolua_tonumber(tolua_S,2,0));
   {
    CCAffineTransform tolua_ret = (CCAffineTransform)  CCAffineTransformRotate(aTransform,anAngle);
    {
@@ -6711,8 +6711,8 @@ static int tolua_Cocos2d_CCAffineTransformScale00(lua_State* tolua_S)
 #endif
  {
   CCAffineTransform t = *((CCAffineTransform*)  tolua_tousertype(tolua_S,1,0));
-  CGFloat sx = ((CGFloat)  tolua_tonumber(tolua_S,2,0));
-  CGFloat sy = ((CGFloat)  tolua_tonumber(tolua_S,3,0));
+  CCFloat sx = ((CCFloat)  tolua_tonumber(tolua_S,2,0));
+  CCFloat sy = ((CCFloat)  tolua_tonumber(tolua_S,3,0));
   {
    CCAffineTransform tolua_ret = (CCAffineTransform)  CCAffineTransformScale(t,sx,sy);
    {
@@ -9536,7 +9536,7 @@ static int tolua_Cocos2d_CCDirector_getContentScaleFactor00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getContentScaleFactor'", NULL);
 #endif
   {
-   CGFloat tolua_ret = (CGFloat)  self->getContentScaleFactor();
+   CCFloat tolua_ret = (CCFloat)  self->getContentScaleFactor();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
