@@ -850,7 +850,7 @@ void ActionCallFuncND::onEnter()
     centerSprites(1);
 
     CCFiniteTimeAction* action = CCSequence::actions(CCMoveBy::actionWithDuration(2.0f, ccp(200,0)),
-        //CCCallFuncND::actionWithTarget(m_grossini, callfuncND_selector(ActionCallFuncND::removeFromParentAndCleanup), (void*)true),
+        CCCallFuncND::actionWithTarget(this, callfuncND_selector(ActionCallFuncND::removeFromParentAndCleanup), (void*)true),
         NULL);
 
     m_grossini->runAction(action);
@@ -864,6 +864,12 @@ std::string ActionCallFuncND::title()
 std::string ActionCallFuncND::subtitle()
 {
     return "CallFuncND + removeFromParentAndCleanup. Grossini dissapears in 2s";
+}
+
+void ActionCallFuncND::removeFromParentAndCleanup(CCNode* pSender, void* data)
+{
+    bool bCleanUp = (bool)data;
+    m_grossini->removeFromParentAndCleanup(bCleanUp);
 }
 
 //------------------------------------------------------------------
