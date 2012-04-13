@@ -78,6 +78,12 @@ void Paddle::ccTouchMoved(CCTouch* touch, CCEvent* event)
 	setPosition( CCPointMake(touchPoint.x, getPosition().y) );
 }
 
+CCObject* Paddle::copyWithZone(CCZone *pZone)
+{
+    this->retain();
+    return this;
+}
+
 void Paddle::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 	CCAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");	
