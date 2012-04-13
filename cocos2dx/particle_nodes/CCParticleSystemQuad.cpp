@@ -76,10 +76,13 @@ CCParticleSystemQuad::CCParticleSystemQuad()
 
 CCParticleSystemQuad::~CCParticleSystemQuad()
 {
-	CC_SAFE_FREE(m_pQuads);
-	CC_SAFE_FREE(m_pIndices);
-	glDeleteBuffers(2, &m_pBuffersVBO[0]);
-	glDeleteVertexArrays(1, &m_uVAOname);
+    if (NULL == m_pBatchNode)
+    {
+	    CC_SAFE_FREE(m_pQuads);
+	    CC_SAFE_FREE(m_pIndices);
+	    glDeleteBuffers(2, &m_pBuffersVBO[0]);
+	    glDeleteVertexArrays(1, &m_uVAOname);
+    }
 }
 
 // implementation CCParticleSystemQuad
