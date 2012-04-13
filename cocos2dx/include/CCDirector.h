@@ -358,8 +358,8 @@ public:
 	Only available when compiled using SDK >= 4.0.
 	@since v0.99.4
 	*/
-	void setContentScaleFactor(CGFloat scaleFactor);
-	CGFloat getContentScaleFactor(void);
+	void setContentScaleFactor(CCFloat scaleFactor);
+	CCFloat getContentScaleFactor(void);
 
 	/** Will enable Retina Display on devices that supports it.
 	It will enable Retina Display on iPhone4 and iPod Touch 4.
@@ -488,7 +488,7 @@ protected:
 	CCSize m_obWinSizeInPixels;
 	
 	/* content scale factor */
-	CGFloat	m_fContentScaleFactor;
+	CCFloat	m_fContentScaleFactor;
 
 	/* store the fps string */
 	char *m_pszFPS;
