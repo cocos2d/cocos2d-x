@@ -53,7 +53,10 @@ protected:
 	ccV3F_C4B_T2F_Quad	*m_pQuads;		// quads to be rendered
 	GLushort			*m_pIndices;	// indices
 
+#if CC_TEXTURE_ATLAS_USE_VAO
 	GLuint				m_uVAOname;
+#endif
+
 	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
 
 public:
@@ -66,7 +69,7 @@ public:
     static CCParticleSystemQuad * particleWithFile(const char *plistFile);
 
 	/** initialices the indices for the vertices*/
-	void initIndices();
+	void setupIndices();
 
     /** initilizes the texture with a rectangle measured Points */
 	void initTexCoordsWithRect(const CCRect& rect);
@@ -90,7 +93,11 @@ public:
 	virtual void setBatchNode(CCParticleBatchNode* batchNode);
 	virtual void setTotalParticles(unsigned int tp);
 private:
-	void initVAO();
+#if CC_TEXTURE_ATLAS_USE_VAO
+    void setupVBOandVAO();
+#else
+    void setupVBO();
+#endif
 	bool allocMemory();
 };
 

@@ -587,10 +587,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 
 	glBindVertexArray( m_uVAOname );
 
-    /* Application will crash in glDrawElements function on some win32 computers which use Integrated Graphics.
-       Indices should be bound again to avoid this bug.
-     */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if CC_REBIND_INDICES_BUFFER
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
 #endif
 
@@ -600,7 +597,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if CC_REBIND_INDICES_BUFFER
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
 
