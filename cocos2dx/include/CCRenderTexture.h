@@ -80,7 +80,7 @@ public:
 
 	/** ends grabbing*/
 	// para bIsTOCacheTexture       the parameter is only used for android to cache the texture
-	void end(bool bIsTOCacheTexture = true);
+	void end(bool bIsTOCacheTexture = false);
 
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
