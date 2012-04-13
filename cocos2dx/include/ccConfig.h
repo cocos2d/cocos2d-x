@@ -76,28 +76,14 @@ To enabled set it to 1. Disabled by default.
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
 #endif
 
-/** @def CC_FONT_LABEL_SUPPORT
- If enabled, FontLabel will be used to render .ttf files.
- If the .ttf file is not found, then it will use the standard UIFont class
- If disabled, the standard UIFont class will be used.
- 
- To disable set it to 0. Enabled by default.
 
- Only valid for cocos2d-ios. Not supported on cocos2d-mac
- */
-#ifndef CC_FONT_LABEL_SUPPORT
-#define CC_FONT_LABEL_SUPPORT	1
-#endif
-
-/** @def CC_DIRECTOR_FAST_FPS
- If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
- You will need to add the fps_images.png to your project.
- If disabled, the FPS will be rendered using CCLabel (slow rendering)
+/** @def CC_DIRECTOR_STATS_POSITION
+ Position of the FPS
  
- To enable set it to a value different than 0. Enabled by default.
+ Default: 0,0 (bottom-left corner)
  */
-#ifndef CC_DIRECTOR_FAST_FPS
-#define CC_DIRECTOR_FAST_FPS	1
+#ifndef CC_DIRECTOR_STATS_POSITION
+#define CC_DIRECTOR_STATS_POSITION ccp(0,0)
 #endif
 
 /** @def CC_DIRECTOR_FPS_INTERVAL
@@ -107,8 +93,8 @@ To enabled set it to 1. Disabled by default.
  
  Default value: 0.1f
  */
-#ifndef CC_DIRECTOR_FPS_INTERVAL
-#define CC_DIRECTOR_FPS_INTERVAL (0.5f)
+#ifndef CC_DIRECTOR_STATS_INTERVAL
+#define CC_DIRECTOR_STATS_INTERVAL (0.1f)
 #endif
 
 /** @def CC_DIRECTOR_FPS_POSITION

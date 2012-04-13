@@ -99,7 +99,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 //     pDirector->enableRetinaDisplay(true);
 
 	// turn on display FPS
-	pDirector->setDisplayFPS(true);
+	pDirector->setDisplayStats(true);
 
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
