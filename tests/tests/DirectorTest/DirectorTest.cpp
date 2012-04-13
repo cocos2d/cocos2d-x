@@ -8,7 +8,7 @@ CCLayer* backDirectorTestCase();
 CCLayer* restartDirectorTestCase();
 
 static int sceneIdx=-1;
-static ccDeviceOrientation s_currentOrientation = CCDeviceOrientationPortrait;
+//static ccDeviceOrientation s_currentOrientation = CCDeviceOrientationPortrait;
 
 CCLayer* createTestCaseLayer(int index)
 {
@@ -152,22 +152,7 @@ bool Director1::init()
 
 void Director1::newOrientation()
 {
-	switch (s_currentOrientation)
-    {
-		case CCDeviceOrientationLandscapeLeft:
-			s_currentOrientation = CCDeviceOrientationPortrait;
-			break;
-		case CCDeviceOrientationPortrait:
-			s_currentOrientation = CCDeviceOrientationLandscapeRight;
-			break;						
-		case CCDeviceOrientationLandscapeRight:
-			s_currentOrientation = CCDeviceOrientationPortraitUpsideDown;
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			s_currentOrientation = CCDeviceOrientationLandscapeLeft;
-			break;
-	}
-    CCDirector::sharedDirector()->setDeviceOrientation(s_currentOrientation);
+	
 }
 
 void Director1::rotateDevice(CCObject* pSender)
@@ -212,7 +197,7 @@ std::string Director1::subtitle()
 ///---------------------------------------
 void DirectorTestScene::runThisTest()
 {
-    s_currentOrientation = CCDeviceOrientationPortrait;
+    //s_currentOrientation = CCDeviceOrientationPortrait;
     CCLayer* pLayer = nextDirectorTestCase();
     addChild(pLayer);
 
@@ -221,6 +206,6 @@ void DirectorTestScene::runThisTest()
 
 void DirectorTestScene::MainMenuCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+    //CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
     TestScene::MainMenuCallback(pSender);
 }
