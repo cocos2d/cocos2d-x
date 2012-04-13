@@ -169,6 +169,8 @@ public:
 	 */
 	CCNode* getNotificationNode();
 	void setNotificationNode(CCNode *node);
+    
+    bool enableRetinaDisplay(bool bEnabelRetina);
 
 	// window size
 
@@ -297,16 +299,6 @@ public:
 	void setContentScaleFactor(CGFloat scaleFactor);
 	CGFloat getContentScaleFactor(void);
 
-	/** Will enable Retina Display on devices that supports it.
-	It will enable Retina Display on iPhone4 and iPod Touch 4.
-	It will return YES, if it could enabled it, otherwise it will return NO.
-
-	This is the recommened way to enable Retina Display.
-	@since v0.99.5
-	*/
-	bool enableRetinaDisplay(bool enabled);
-    bool isRetinaDisplay() { return m_bRetinaDisplay; }
-
 public:
 	/** CCScheduler associated with this director
 	 @since v2.0
@@ -424,8 +416,6 @@ protected:
 	ccDeviceOrientation	m_eDeviceOrientation;
 	/* contentScaleFactor could be simulated */
 	bool m_bIsContentScaleSupported;
-
-	bool m_bRetinaDisplay;
 };
 
 /** 
