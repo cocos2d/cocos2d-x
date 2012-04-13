@@ -31,11 +31,11 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 struct CCAffineTransform {
-  CGFloat a, b, c, d;
-  CGFloat tx, ty;
+  CCFloat a, b, c, d;
+  CCFloat tx, ty;
 };
 
-CC_DLL CCAffineTransform __CCAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
+CC_DLL CCAffineTransform __CCAffineTransformMake(CCFloat a, CCFloat b, CCFloat c, CCFloat d, CCFloat tx, CCFloat ty);
 #define CCAffineTransformMake __CCAffineTransformMake
 
 CC_DLL CCPoint __CCPointApplyAffineTransform(const CCPoint& point, const CCAffineTransform& t);
@@ -48,8 +48,8 @@ CC_DLL CCAffineTransform CCAffineTransformMakeIdentity();
 CC_DLL CCRect CCRectApplyAffineTransform(const CCRect& rect, const CCAffineTransform& anAffineTransform);
 
 CC_DLL CCAffineTransform CCAffineTransformTranslate(const CCAffineTransform& t, float tx, float ty);
-CC_DLL CCAffineTransform CCAffineTransformRotate(const CCAffineTransform& aTransform, CGFloat anAngle);
-CC_DLL CCAffineTransform CCAffineTransformScale(const CCAffineTransform& t, CGFloat sx, CGFloat sy);
+CC_DLL CCAffineTransform CCAffineTransformRotate(const CCAffineTransform& aTransform, CCFloat anAngle);
+CC_DLL CCAffineTransform CCAffineTransformScale(const CCAffineTransform& t, CCFloat sx, CCFloat sy);
 CC_DLL CCAffineTransform CCAffineTransformConcat(const CCAffineTransform& t1, const CCAffineTransform& t2);
 CC_DLL bool CCAffineTransformEqualToTransform(const CCAffineTransform& t1, const CCAffineTransform& t2);
 CC_DLL CCAffineTransform CCAffineTransformInvert(const CCAffineTransform& t);
