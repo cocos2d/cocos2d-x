@@ -182,12 +182,9 @@ static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 CCEGLView::CCEGLView()
 : m_bCaptured(false)
-, m_bOrientationReverted(false)
-, m_bOrientationInitVertical(false)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
 , m_hWnd(NULL)
-, m_eInitOrientation(CCDeviceOrientationPortrait)
 , m_fScreenScaleFactor(1.0f)
 , m_lpfnAccelerometerKeyHook(NULL)
 {
@@ -245,9 +242,6 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
 		CC_BREAK_IF(! m_hWnd);
 
-        m_eInitOrientation = CCDirector::sharedDirector()->getDeviceOrientation();
-        m_bOrientationInitVertical = (CCDeviceOrientationPortrait == m_eInitOrientation
-            || kCCDeviceOrientationPortraitUpsideDown == m_eInitOrientation) ? true : false;
         m_tSizeInPoints.cx = w;
         m_tSizeInPoints.cy = h;
         resize(w, h);
@@ -407,10 +401,6 @@ void CCEGLView::setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelero
 
 CCSize CCEGLView::getSize()
 {
-    if (m_bOrientationReverted)
-    {
-        return CCSize((float)(m_tSizeInPoints.cy), (float)(m_tSizeInPoints.cx));
-    }
     return CCSize((float)(m_tSizeInPoints.cx), (float)(m_tSizeInPoints.cy));
 }
 
@@ -451,28 +441,6 @@ void CCEGLView::swapBuffers()
     {
         m_pEGL->swapBuffers();
     }
-}
-
-int CCEGLView::setDeviceOrientation(int eOritation)
-{
-	do 
-	{
-		bool bVertical = (CCDeviceOrientationPortrait == eOritation
-			|| kCCDeviceOrientationPortraitUpsideDown == eOritation) ? true : false;
-
-		CC_BREAK_IF(m_bOrientationReverted && bVertical != m_bOrientationInitVertical);
-		CC_BREAK_IF(! m_bOrientationReverted && bVertical == m_bOrientationInitVertical);
-
-        m_bOrientationReverted = (bVertical == m_bOrientationInitVertical) ? false : true;
-
-        // swap width and height
-		RECT rc;
-		GetClientRect(m_hWnd, &rc);
-        resize(rc.bottom - rc.top, rc.right - rc.left);
-
-	} while (0);
-
-	return m_eInitOrientation;
 }
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
@@ -539,12 +507,7 @@ void CCEGLView::resize(int width, int height)
     // calculate view port in pixels
     int viewPortW = (int)(m_tSizeInPoints.cx * m_fScreenScaleFactor);
     int viewPortH = (int)(m_tSizeInPoints.cy * m_fScreenScaleFactor);
-    if (m_bOrientationReverted)
-    {
-        int tmp = viewPortW;
-        viewPortW = viewPortH;
-        viewPortH = tmp;
-    }
+
     GetClientRect(m_hWnd, &rcClient);
 
     // calculate client new width and height
@@ -603,14 +566,7 @@ bool CCEGLView::canSetContentScaleFactor()
 void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     m_fScreenScaleFactor = contentScaleFactor;
-    if (m_bOrientationReverted)
-    {
-        resize((int)(m_tSizeInPoints.cy * contentScaleFactor), (int)(m_tSizeInPoints.cx * contentScaleFactor));
-    }
-    else
-    {
-        resize((int)(m_tSizeInPoints.cx * contentScaleFactor), (int)(m_tSizeInPoints.cy * contentScaleFactor));
-    }
+    resize((int)(m_tSizeInPoints.cx * contentScaleFactor), (int)(m_tSizeInPoints.cy * contentScaleFactor));
     centerWindow();
 }
 

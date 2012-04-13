@@ -45,6 +45,14 @@ It's new in cocos2d-x since v0.99.5
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       0
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    /* Application will crash in glDrawElements function on some win32 computers and some android devices.
+       Indices should be bound again while drawing to avoid this bug.
+     */
+    #define CC_REBIND_INDICES_BUFFER  1
+#else
+    #define CC_REBIND_INDICES_BUFFER  0
+#endif
 
 // generic macros
 
@@ -219,15 +227,6 @@ public: virtual void set##funName(varType var)   \
 
 #endif  // CC_PLATFORM_WIN32
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_))
 
-    #undef CC_DLL
-    #if defined(SS_MAKEDLL)
-        #define CC_DLL     __declspec(dllexport)
-    #else 		/* use a DLL library */
-        #define CC_DLL     __declspec(dllimport)
-    #endif
-
-#endif  // wophone VM
 
 #endif // __CC_PLATFORM_MACROS_H__
