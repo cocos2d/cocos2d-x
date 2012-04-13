@@ -24,7 +24,6 @@ enum
 //
 //------------------------------------------------------------------
 PongScene::PongScene()
-:TestScene(true)
 {
 	PongLayer *pongLayer = new PongLayer();//PongLayer::node();
 	addChild(pongLayer);
@@ -33,7 +32,6 @@ PongScene::PongScene()
 
 void PongScene::MainMenuCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
     TestScene::MainMenuCallback(pSender);
 }
 
