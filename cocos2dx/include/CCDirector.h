@@ -56,27 +56,6 @@ typedef enum {
 	kCCDirectorProjectionDefault = kCCDirectorProjection3D,
 } ccDirectorProjection;
 
-
-/** @typedef ccDeviceOrientation
- Possible device orientations
- */
-typedef enum {
-	/// Device oriented vertically, home button on the bottom
-	kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,	
-	/// Device oriented vertically, home button on the top
-    kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
-	/// Device oriented horizontally, home button on the right
-    kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
-	/// Device oriented horizontally, home button on the left
-    kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
-
-	// Backward compatibility stuff
-	CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
-	CCDeviceOrientationPortraitUpsideDown = kCCDeviceOrientationPortraitUpsideDown,
-	CCDeviceOrientationLandscapeLeft = kCCDeviceOrientationLandscapeLeft,
-	CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
-} ccDeviceOrientation;
-
 class CCLabelTTF;
 class CCScene;
 class CCEGLView;
@@ -288,9 +267,6 @@ public:
 	/** rotates the screen if an orientation different than Portrait is used */
 	void applyOrientation(void);
 
-	ccDeviceOrientation getDeviceOrientation(void);
-	void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
-
 	/** The size in pixels of the surface. It could be different than the screen size.
 	High-res devices might have a higher surface size than the screen size.
 	Only available when compiled using SDK >= 4.0.
@@ -412,8 +388,6 @@ protected:
 	/* Projection protocol delegate */
 	CCDirectorDelegate *m_pProjectionDelegate;
 
-	/* The device orientation */
-	ccDeviceOrientation	m_eDeviceOrientation;
 	/* contentScaleFactor could be simulated */
 	bool m_bIsContentScaleSupported;
 };

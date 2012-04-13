@@ -207,7 +207,7 @@ bool HiResTestScene::sm_bRitinaDisplay = false;
 
 void HiResTestScene::runThisTest()
 {
-    sm_bRitinaDisplay = CCDirector::sharedDirector()->isRetinaDisplay();
+    //sm_bRitinaDisplay = CCDirector::sharedDirector()->isRetinaDisplay();
 
     CCLayer* pLayer = nextHiResAction();
     addChild(pLayer);
