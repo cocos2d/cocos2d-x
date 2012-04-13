@@ -92,8 +92,8 @@ namespace cocos2d{
 			m_fAngleX = angleX;
 			m_fDeltaAngleX = deltaAngleX;
 
-			m_fRadDeltaZ = (CGFloat)CC_DEGREES_TO_RADIANS(deltaAngleZ);
-			m_fRadDeltaX = (CGFloat)CC_DEGREES_TO_RADIANS(deltaAngleX);
+			m_fRadDeltaZ = (CCFloat)CC_DEGREES_TO_RADIANS(deltaAngleZ);
+			m_fRadDeltaX = (CCFloat)CC_DEGREES_TO_RADIANS(deltaAngleX);
 			return true;
 		}
 		return false;
@@ -107,12 +107,12 @@ namespace cocos2d{
 		if( isnan(m_fRadius) )
 			m_fRadius = r;
 		if( isnan(m_fAngleZ) )
-			m_fAngleZ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
+			m_fAngleZ = (CCFloat)CC_RADIANS_TO_DEGREES(zenith);
 		if( isnan(m_fAngleX) )
-			m_fAngleX = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
+			m_fAngleX = (CCFloat)CC_RADIANS_TO_DEGREES(azimuth);
 
-		m_fRadZ = (CGFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);
-		m_fRadX = (CGFloat)CC_DEGREES_TO_RADIANS(m_fAngleX);
+		m_fRadZ = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);
+		m_fRadX = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleX);
 	}
 
 	void CCOrbitCamera::update(ccTime dt)
@@ -151,7 +151,7 @@ namespace cocos2d{
 
 		*zenith = acosf( z/r);
 		if( x < 0 )
-			*azimuth= (CGFloat)M_PI - asinf(y/s);
+			*azimuth= (CCFloat)M_PI - asinf(y/s);
 		else
 			*azimuth = asinf(y/s);
 

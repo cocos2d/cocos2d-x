@@ -92,32 +92,32 @@ bool CCRect::CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2)
 		&& CCSize::CCSizeEqualToSize(rect1.size, rect2.size));
 }
 
-CGFloat CCRect::CCRectGetMaxX(const CCRect& rect)
+CCFloat CCRect::CCRectGetMaxX(const CCRect& rect)
 {
 	return rect.origin.x + rect.size.width;
 }
 
-CGFloat CCRect::CCRectGetMidX(const CCRect& rect)
+CCFloat CCRect::CCRectGetMidX(const CCRect& rect)
 {
 	return (float)(rect.origin.x + rect.size.width / 2.0);
 }
 
-CGFloat CCRect::CCRectGetMinX(const CCRect& rect)
+CCFloat CCRect::CCRectGetMinX(const CCRect& rect)
 {
 	return rect.origin.x;
 }
 
-CGFloat CCRect::CCRectGetMaxY(const CCRect& rect)
+CCFloat CCRect::CCRectGetMaxY(const CCRect& rect)
 {
 	return rect.origin.y + rect.size.height;
 }
 
-CGFloat CCRect::CCRectGetMidY(const CCRect& rect)
+CCFloat CCRect::CCRectGetMidY(const CCRect& rect)
 {
 	return (float)(rect.origin.y + rect.size.height / 2.0);
 }
 
-CGFloat CCRect::CCRectGetMinY(const CCRect& rect)
+CCFloat CCRect::CCRectGetMinY(const CCRect& rect)
 {
 	return rect.origin.y;
 }
