@@ -113,14 +113,14 @@ void CCActionInterval::step(ccTime dt)
 	update(1 > m_elapsed/m_fDuration ? m_elapsed/m_fDuration : 1);
 }
 
-void CCActionInterval::setAmplitudeRate(CGFloat amp)
+void CCActionInterval::setAmplitudeRate(CCFloat amp)
 {
     CC_UNUSED_PARAM(amp);
 	// Abstract class needs implementation
 	CCAssert(0, "");
 }
 
-CGFloat CCActionInterval::getAmplitudeRate(void)
+CCFloat CCActionInterval::getAmplitudeRate(void)
 {
 	// Abstract class needs implementation
 	CCAssert(0, "");
