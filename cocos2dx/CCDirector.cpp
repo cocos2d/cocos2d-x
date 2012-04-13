@@ -586,43 +586,6 @@ void CCDirector::end()
 	m_bPurgeDirecotorInNextLoop = true;
 }
 
-
-void CCDirector::resetDirector()
-{
-	// don't release the event handlers
-	// They are needed in case the director is run again
-	m_pTouchDispatcher->removeAllDelegates();
-
-    if (m_pRunningScene)
-    {
-    	m_pRunningScene->onExit();
-    	m_pRunningScene->cleanup();
-    	m_pRunningScene->release();
-    }
-    
-	m_pRunningScene = NULL;
-	m_pNextScene = NULL;
-
-	// remove all objects, but don't release it.
-	// runWithScene might be executed after 'end'.
-	m_pobScenesStack->removeAllObjects();
-
-	stopAnimation();
-
-    CCObject* pProjectionDelegate = (CCObject*)m_pProjectionDelegate;
-	CC_SAFE_RELEASE_NULL(pProjectionDelegate);
-
-	// purge bitmap cache
-	CCLabelBMFont::purgeCachedData();
-
-	// purge all managers
-	CCAnimationCache::purgeSharedAnimationCache();
- 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-	CCTextureCache::purgeSharedTextureCache();
-	CCShaderCache::purgeSharedShaderCache();
-}
-
-
 void CCDirector::purgeDirector()
 {
 	// don't release the event handlers
@@ -655,15 +618,20 @@ void CCDirector::purgeDirector()
 	// purge bitmap cache
 	CCLabelBMFont::purgeCachedData();
 
-	// purge all managers
+	// purge all managers ／ caches
 	CCAnimationCache::purgeSharedAnimationCache();
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-
 	CCTextureCache::purgeSharedTextureCache();
 	CCShaderCache::purgeSharedShaderCache();
+    
+    // cocos2d-x specific data structures
 	CCUserDefault::purgeSharedUserDefault();
     CCNotificationCenter::purgeNotifCenter();
+    
     ccGLInvalidateStateCache();
+    
+    CHECK_GL_ERROR_DEBUG();
+    
 	// OpenGL view
 	m_pobOpenGLView->release();
 	m_pobOpenGLView = NULL;
@@ -746,25 +714,28 @@ void CCDirector::showStats(void)
     
     if (m_bDisplayStats)
     {
-        if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL && m_pFPSLabel && m_pSPFLabel && m_pDrawsLabel)
+        if (m_pFPSLabel && m_pSPFLabel && m_pDrawsLabel)
         {
-            sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
-            m_pFPSLabel->setString(m_pszFPS);
+            if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
+            {
+                sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
+                m_pFPSLabel->setString(m_pszFPS);
+                
+                m_fFrameRate = m_uFrames / m_fAccumDt;
+                m_uFrames = 0;
+                m_fAccumDt = 0;
+                
+                sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+                m_pFPSLabel->setString(m_pszFPS);
+                
+                sprintf(m_pszFPS, "%4d", g_uNumberOfDraws);
+                m_pDrawsLabel->setString(m_pszFPS);
+            }
             
-            m_fFrameRate = m_uFrames / m_fAccumDt;
-            m_uFrames = 0;
-            m_fAccumDt = 0;
-            
-            sprintf(m_pszFPS, "%.1f", m_fFrameRate);
-            m_pFPSLabel->setString(m_pszFPS);
-            
-            sprintf(m_pszFPS, "%4d", g_uNumberOfDraws);
-            m_pDrawsLabel->setString(m_pszFPS);
+            m_pDrawsLabel->visit();
+            m_pFPSLabel->visit();
+            m_pSPFLabel->visit();
         }
-        
-        m_pDrawsLabel->draw();
-        m_pFPSLabel->draw();
-        m_pSPFLabel->draw();
     }	
     
     g_uNumberOfDraws = 0;
@@ -780,23 +751,21 @@ void CCDirector::calculateMPF()
 
 void CCDirector::createStatsLabel()
 {
-    if( m_pFPSLabel && m_pSPFLabel ) {
-		CCTexture2D *texture = m_pFPSLabel->getTexture();
-        
-        m_pFPSLabel->release();
-        m_pSPFLabel->release();
-        CCTextureCache::sharedTextureCache()->removeTexture(texture);
-        m_pFPSLabel = NULL;
-        m_pSPFLabel = NULL;
-	}
+    CC_SAFE_RELEASE_NULL(m_pFPSLabel);
+    CC_SAFE_RELEASE_NULL(m_pSPFLabel);
+    CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
     
-    m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 20);
-    m_pSPFLabel = CCLabelTTF::labelWithString("0.000", "Arial", 20);
-    m_pDrawsLabel = CCLabelTTF::labelWithString("000", "Arial", 20);
+    m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 16);
+    m_pSPFLabel = CCLabelTTF::labelWithString("0.000", "Arial", 16);
+    m_pDrawsLabel = CCLabelTTF::labelWithString("000", "Arial", 16);
     
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 34), CC_DIRECTOR_STATS_POSITION));
-    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 17), CC_DIRECTOR_STATS_POSITION));
-    m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
+    m_pFPSLabel->retain();
+    m_pSPFLabel->retain();
+    m_pDrawsLabel->retain();
+    
+    m_pDrawsLabel->setPosition(ccp(20, 50));
+    m_pSPFLabel->setPosition(ccp(25, 30));
+    m_pFPSLabel->setPosition(ccp(20, 10));
 }
 
 
