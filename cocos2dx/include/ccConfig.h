@@ -175,7 +175,12 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
-#define CC_TEXTURE_ATLAS_USE_VAO 0
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        #define CC_TEXTURE_ATLAS_USE_VAO 1
+    #else
+        /* Some android devices cannot support VAO very well, so we disable it by default for android platform. */
+        #define CC_TEXTURE_ATLAS_USE_VAO 0
+    #endif
 #endif
 
 /** @def CC_TEXTURE_NPOT_SUPPORT
