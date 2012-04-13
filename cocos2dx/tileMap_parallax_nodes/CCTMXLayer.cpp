@@ -233,7 +233,7 @@ void CCTMXLayer::parseInternalProperties()
 void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid)
 {
 	sprite->setPosition(positionAt(pos));
-	sprite->setVertexZ(vertexZForPos(pos));
+	sprite->setVertexZ((float)vertexZForPos(pos));
 	sprite->setAnchorPoint(CCPointZero);
 	sprite->setOpacity(m_cOpacity);
 
