@@ -54,9 +54,7 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
-#if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
-#endif // CC_ENABLE_PROFILERS
 
 #include <string>
 
@@ -115,7 +113,9 @@ bool CCDirector::init(void)
     m_fAccumDt = 0.0f;
     m_fFrameRate = 0.0f;
     m_pFPSLabel = NULL;
-	m_bDisplayFPS = false;
+    m_pSPFLabel = NULL;
+    m_pDrawsLabel = NULL;
+	m_bDisplayStats = false;
 	m_uTotalFrames = m_uFrames = 0;
 	m_pszFPS = new char[10];
 	m_pLastUpdate = new struct cc_timeval();
@@ -162,9 +162,9 @@ CCDirector::~CCDirector(void)
 {
 	CCLOG("cocos2d: deallocing %p", this);
 
-#if CC_DIRECTOR_FAST_FPS
 	CC_SAFE_RELEASE(m_pFPSLabel);
-#endif 
+    CC_SAFE_RELEASE(m_pSPFLabel);
+    CC_SAFE_RELEASE(m_pDrawsLabel);
     
 	CC_SAFE_RELEASE(m_pRunningScene);
 	CC_SAFE_RELEASE(m_pNotificationNode);
@@ -196,14 +196,6 @@ void CCDirector::setGLDefaultValues(void)
 
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-#if CC_DIRECTOR_FAST_FPS
-	if (! m_pFPSLabel)
-	{
-        m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 24);
-		m_pFPSLabel->retain();
-	}
-#endif
 }
 
 // Draw the SCene
@@ -240,17 +232,11 @@ void CCDirector::drawScene(void)
 	{
 		m_pNotificationNode->visit();
 	}
-
-#if CC_DIRECTOR_FAST_FPS == 1
-	if (m_bDisplayFPS)
-	{
-		showFPS();
-	}
-#endif
-
-#if CC_ENABLE_PROFILERS
-	showProfilers();
-#endif
+    
+    if (m_bDisplayStats)
+    {
+        showStats();
+    }
 
 
 	kmGLPopMatrix();
@@ -261,6 +247,11 @@ void CCDirector::drawScene(void)
 	if (m_pobOpenGLView)
     {
         m_pobOpenGLView->swapBuffers();
+    }
+    
+    if (m_bDisplayStats)
+    {
+        calculateMPF();
     }
 }
 
@@ -314,7 +305,15 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 		// set size
 		m_obWinSizeInPoints = m_pobOpenGLView->getSize();
 		m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
-        setGLDefaultValues();
+        
+        createStatsLabel();
+        
+        if (m_pobOpenGLView)
+        {
+            setGLDefaultValues();
+        }  
+        
+        CHECK_GL_ERROR_DEBUG();
 
 		if (m_fContentScaleFactor != 1)
 		{
@@ -521,12 +520,6 @@ CCSize CCDirector::getWinSizeInPixels()
 	return s;
 }
 
-// return the current frame size
-CCSize CCDirector::getDisplaySizeInPixels(void)
-{
-	return m_obWinSizeInPixels;
-}
-
 void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 {
     CC_UNUSED_PARAM(newWindowSize);
@@ -652,9 +645,9 @@ void CCDirector::purgeDirector()
 
 	stopAnimation();
 
-#if CC_DIRECTOR_FAST_FPS
 	CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-#endif
+    CC_SAFE_RELEASE_NULL(m_pSPFLabel);
+    CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
 
     CCObject* pProjectionDelegate = (CCObject*)m_pProjectionDelegate;
     CC_SAFE_RELEASE_NULL(pProjectionDelegate);
@@ -744,40 +737,68 @@ void CCDirector::resume(void)
 	m_fDeltaTime = 0;
 }
 
-#if CC_DIRECTOR_FAST_FPS
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
-void CCDirector::showFPS(void)
+void CCDirector::showStats(void)
 {
 	m_uFrames++;
 	m_fAccumDt += m_fDeltaTime;
-
-	if (m_fAccumDt > CC_DIRECTOR_FPS_INTERVAL)
-	{
-		m_fFrameRate = m_uFrames / m_fAccumDt;
-		m_uFrames = 0;
-		m_fAccumDt = 0;
-
-		sprintf(m_pszFPS, "%.1f", m_fFrameRate);
-		m_pFPSLabel->setString(m_pszFPS);
-	}
-
-    m_pFPSLabel->draw();
+    
+    if (m_bDisplayStats)
+    {
+        if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL && m_pFPSLabel && m_pSPFLabel && m_pDrawsLabel)
+        {
+            sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
+            m_pFPSLabel->setString(m_pszFPS);
+            
+            m_fFrameRate = m_uFrames / m_fAccumDt;
+            m_uFrames = 0;
+            m_fAccumDt = 0;
+            
+            sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+            m_pFPSLabel->setString(m_pszFPS);
+            
+            sprintf(m_pszFPS, "%4d", g_uNumberOfDraws);
+            m_pDrawsLabel->setString(m_pszFPS);
+        }
+        
+        m_pDrawsLabel->draw();
+        m_pFPSLabel->draw();
+        m_pSPFLabel->draw();
+    }	
+    
+    g_uNumberOfDraws = 0;
 }
-#endif // CC_DIRECTOR_FAST_FPS
 
-
-void CCDirector::showProfilers()
+void CCDirector::calculateMPF()
 {
-#if CC_ENABLE_PROFILERS
-	m_fAccumDtForProfiler += m_fDeltaTime;
-	if (m_fAccumDtForProfiler > 1.0f)
-	{
-		m_fAccumDtForProfiler = 0;
-		CCProfiler::sharedProfiler()->displayTimers();
-	}
-#endif
+    struct cc_timeval now;
+    CCTime::gettimeofdayCocos2d(&now, NULL);
+    
+	m_fSecondsPerFrame = (now.tv_sec - m_pLastUpdate->tv_sec) + (now.tv_usec - m_pLastUpdate->tv_usec) / 1000000.0f;
 }
+
+void CCDirector::createStatsLabel()
+{
+    if( m_pFPSLabel && m_pSPFLabel ) {
+		CCTexture2D *texture = m_pFPSLabel->getTexture();
+        
+        m_pFPSLabel->release();
+        m_pSPFLabel->release();
+        CCTextureCache::sharedTextureCache()->removeTexture(texture);
+        m_pFPSLabel = NULL;
+        m_pSPFLabel = NULL;
+	}
+    
+    m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 20);
+    m_pSPFLabel = CCLabelTTF::labelWithString("0.000", "Arial", 20);
+    m_pDrawsLabel = CCLabelTTF::labelWithString("000", "Arial", 20);
+    
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 34), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 17), CC_DIRECTOR_STATS_POSITION));
+    m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
+}
+
 
 /***************************************************
 * mobile platforms specific functions
@@ -795,16 +816,6 @@ void CCDirector::updateContentScaleFactor()
 	{
 		CCLOG("cocos2d: setContentScaleFactor:'is not supported on this device");
 	}
-}
-
-
-bool CCDirector::setDirectorType(ccDirectorType obDirectorType)
-{
-    CC_UNUSED_PARAM(obDirectorType);
-	// we only support CCDisplayLinkDirector
-	CCDirector::sharedDirector();
-
-	return true;
 }
 
 bool CCDirector::enableRetinaDisplay(bool enabled)
@@ -838,15 +849,6 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
 
     // release cached texture
     CCTextureCache::purgeSharedTextureCache();
-
-#if CC_DIRECTOR_FAST_FPS
-    if (m_pFPSLabel)
-    {
-        CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-        m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 24);
-        m_pFPSLabel->retain();
-    }
-#endif
 
     if (m_fContentScaleFactor == 2)
     {
