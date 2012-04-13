@@ -126,10 +126,7 @@ bool CCDirector::init(void)
 	// purge ?
 	m_bPurgeDirecotorInNextLoop = false;
 
-	m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;
-
-	// portrait mode default
-	m_eDeviceOrientation = CCDeviceOrientationPortrait;		
+	m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;	
 
 	m_pobOpenGLView = NULL;
 
@@ -438,85 +435,30 @@ void CCDirector::setDepthTest(bool bOn)
 	CHECK_GL_ERROR_DEBUG();
 }
 
-CCPoint CCDirector::convertToGL(const CCPoint& obPoint)
+CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
 {
 	CCSize s = m_obWinSizeInPoints;
-	float newY = s.height - obPoint.y;
-	float newX = s.width - obPoint.x;
-
-	CCPoint ret = CCPointZero;
-	switch (m_eDeviceOrientation)
-	{
-	case CCDeviceOrientationPortrait:
-		ret = ccp(obPoint.x, newY);
-		break;
-	case CCDeviceOrientationPortraitUpsideDown:
-		ret = ccp(newX, obPoint.y);
-		break;
-	case CCDeviceOrientationLandscapeLeft:
-		ret.x = obPoint.y;
-		ret.y = obPoint.x;
-		break;
-	case CCDeviceOrientationLandscapeRight:
-		ret.x = newY;
-		ret.y = newX;
-		break;
-	}
+	float newY = s.height - uiPoint.y;
 	
-	return ret;
+    return ccp(uiPoint.x, newY);
 }
 
-CCPoint CCDirector::convertToUI(const CCPoint& obPoint)
+CCPoint CCDirector::convertToUI(const CCPoint& glPoint)
 {
 	CCSize winSize = m_obWinSizeInPoints;
-	float oppositeX = winSize.width - obPoint.x;
-	float oppositeY = winSize.height - obPoint.y;
-	CCPoint uiPoint = CCPointZero;
-
-	switch (m_eDeviceOrientation)
-	{
-	case CCDeviceOrientationPortrait:
-		uiPoint = ccp(obPoint.x, oppositeY);
-		break;
-	case CCDeviceOrientationPortraitUpsideDown:
-		uiPoint = ccp(oppositeX, obPoint.y);
-		break;
-	case CCDeviceOrientationLandscapeLeft:
-		uiPoint = ccp(obPoint.y, obPoint.x);
-		break;
-	case CCDeviceOrientationLandscapeRight:
-		// Can't use oppositeX/Y because x/y are flipped
-		uiPoint = ccp(winSize.width - obPoint.y, winSize.height - obPoint.x);
-		break;
-	}
-
-	return uiPoint;
+	float oppositeY = winSize.height - glPoint.y;
+    
+    return ccp(glPoint.x, oppositeY);
 }
 
 CCSize CCDirector::getWinSize(void)
 {
-	CCSize s = m_obWinSizeInPoints;
-
-	if (m_eDeviceOrientation == CCDeviceOrientationLandscapeLeft
-		|| m_eDeviceOrientation == CCDeviceOrientationLandscapeRight)
-	{
-		// swap x,y in landspace mode
-		CCSize tmp = s;
-		s.width = tmp.height;
-		s.height = tmp.width;
-	}
-
-	return s;
+    return m_obWinSizeInPoints;
 }
 
 CCSize CCDirector::getWinSizeInPixels()
 {
-	CCSize s = getWinSize();
-
-	s.width *= CC_CONTENT_SCALE_FACTOR();
-	s.height *= CC_CONTENT_SCALE_FACTOR();
-
-	return s;
+	return m_obWinSizeInPixels;
 }
 
 void CCDirector::reshapeProjection(const CCSize& newWindowSize)
@@ -718,7 +660,7 @@ void CCDirector::showStats(void)
             if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
             {
                 sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
-                m_pFPSLabel->setString(m_pszFPS);
+                m_pSPFLabel->setString(m_pszFPS);
                 
                 m_fFrameRate = m_uFrames / m_fAccumDt;
                 m_uFrames = 0;
@@ -854,33 +796,6 @@ void CCDirector::setNotificationNode(CCNode *node)
 	CC_SAFE_RETAIN(m_pNotificationNode);
 }
 
-ccDeviceOrientation CCDirector::getDeviceOrientation(void)
-{
-	return m_eDeviceOrientation;
-}
-
-void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
-{
-	ccDeviceOrientation eNewOrientation;
-
-	eNewOrientation = (ccDeviceOrientation)CCApplication::sharedApplication().setOrientation(
-        (CCApplication::Orientation)kDeviceOrientation);
-
-	if (m_eDeviceOrientation != eNewOrientation)
-	{
-		m_eDeviceOrientation = eNewOrientation;
-	}
-    else
-    {
-        // this logic is only run on win32 now
-        // On win32,the return value of CCApplication::setDeviceOrientation is always kCCDeviceOrientationPortrait
-        // So,we should calculate the Projection and window size again.
-        m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
-        setProjection(m_eProjection);
-    }
-}
-
 void CCDirector::setScheduler(CCScheduler* pScheduler)
 {
 	if (m_pScheduler != pScheduler)
@@ -898,9 +813,12 @@ CCScheduler* CCDirector::getScheduler()
 
 void CCDirector::setActionManager(CCActionManager* pActionManager)
 {
-	CC_SAFE_RETAIN(pActionManager);
-	CC_SAFE_RELEASE(m_pActionManager);
-	m_pActionManager = pActionManager;
+    if (m_pActionManager != pActionManager)
+    {
+        CC_SAFE_RETAIN(pActionManager);
+        CC_SAFE_RELEASE(m_pActionManager);
+        m_pActionManager = pActionManager;
+    }	
 }
 
 CCActionManager* CCDirector::getActionManager()
@@ -910,9 +828,12 @@ CCActionManager* CCDirector::getActionManager()
 
 void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
 {
-	CC_SAFE_RETAIN(pTouchDispatcher);
-	CC_SAFE_RELEASE(m_pTouchDispatcher);
-	m_pTouchDispatcher = pTouchDispatcher;
+    if (m_pTouchDispatcher != pTouchDispatcher)
+    {
+        CC_SAFE_RETAIN(pTouchDispatcher);
+        CC_SAFE_RELEASE(m_pTouchDispatcher);
+        m_pTouchDispatcher = pTouchDispatcher;
+    }	
 }
 
 CCTouchDispatcher* CCDirector::getTouchDispatcher()

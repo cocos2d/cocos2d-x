@@ -127,15 +127,8 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
         // XXX: so the bar calculation should be done there
         CCRect r;
         CCApplication::sharedApplication().statusBarFrame(&r);
-        ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
-        if (orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight)
-        {
-            s.height -= r.size.width;
-        }
-        else
-        {
-            s.height -= r.size.height;
-        }
+        s.height -= r.size.height;
+        
         setPosition(ccp(s.width/2, s.height/2));
 		
 		if (pArrayOfItems != NULL)

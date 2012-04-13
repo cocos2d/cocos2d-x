@@ -16,9 +16,6 @@ public:
 
     // The CallBack for back to the main menu scene
     virtual void MainMenuCallback(CCObject* pSender);
-
-protected:
-    bool m_bPortrait; // indicate if this test case requires portrait mode
 };
 
 #endif
