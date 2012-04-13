@@ -54,9 +54,7 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
-#if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
-#endif // CC_ENABLE_PROFILERS
 
 #include <string>
 
@@ -115,7 +113,9 @@ bool CCDirector::init(void)
     m_fAccumDt = 0.0f;
     m_fFrameRate = 0.0f;
     m_pFPSLabel = NULL;
-	m_bDisplayFPS = false;
+    m_pSPFLabel = NULL;
+    m_pDrawsLabel = NULL;
+	m_bDisplayStats = false;
 	m_uTotalFrames = m_uFrames = 0;
 	m_pszFPS = new char[10];
 	m_pLastUpdate = new struct cc_timeval();
@@ -126,14 +126,10 @@ bool CCDirector::init(void)
 	// purge ?
 	m_bPurgeDirecotorInNextLoop = false;
 
-	m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;
-
-	// portrait mode default
-	m_eDeviceOrientation = CCDeviceOrientationPortrait;		
+	m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;	
 
 	m_pobOpenGLView = NULL;
 
-    m_bRetinaDisplay = false;
     m_fContentScaleFactor = 1;	
 	m_bIsContentScaleSupported = false;
 
@@ -162,9 +158,9 @@ CCDirector::~CCDirector(void)
 {
 	CCLOG("cocos2d: deallocing %p", this);
 
-#if CC_DIRECTOR_FAST_FPS
 	CC_SAFE_RELEASE(m_pFPSLabel);
-#endif 
+    CC_SAFE_RELEASE(m_pSPFLabel);
+    CC_SAFE_RELEASE(m_pDrawsLabel);
     
 	CC_SAFE_RELEASE(m_pRunningScene);
 	CC_SAFE_RELEASE(m_pNotificationNode);
@@ -196,14 +192,6 @@ void CCDirector::setGLDefaultValues(void)
 
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-#if CC_DIRECTOR_FAST_FPS
-	if (! m_pFPSLabel)
-	{
-        m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 24);
-		m_pFPSLabel->retain();
-	}
-#endif
 }
 
 // Draw the SCene
@@ -240,17 +228,11 @@ void CCDirector::drawScene(void)
 	{
 		m_pNotificationNode->visit();
 	}
-
-#if CC_DIRECTOR_FAST_FPS == 1
-	if (m_bDisplayFPS)
-	{
-		showFPS();
-	}
-#endif
-
-#if CC_ENABLE_PROFILERS
-	showProfilers();
-#endif
+    
+    if (m_bDisplayStats)
+    {
+        showStats();
+    }
 
 
 	kmGLPopMatrix();
@@ -261,6 +243,11 @@ void CCDirector::drawScene(void)
 	if (m_pobOpenGLView)
     {
         m_pobOpenGLView->swapBuffers();
+    }
+    
+    if (m_bDisplayStats)
+    {
+        calculateMPF();
     }
 }
 
@@ -314,7 +301,15 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 		// set size
 		m_obWinSizeInPoints = m_pobOpenGLView->getSize();
 		m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
-        setGLDefaultValues();
+        
+        createStatsLabel();
+        
+        if (m_pobOpenGLView)
+        {
+            setGLDefaultValues();
+        }  
+        
+        CHECK_GL_ERROR_DEBUG();
 
 		if (m_fContentScaleFactor != 1)
 		{
@@ -440,89 +435,28 @@ void CCDirector::setDepthTest(bool bOn)
 	CHECK_GL_ERROR_DEBUG();
 }
 
-CCPoint CCDirector::convertToGL(const CCPoint& obPoint)
+CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
 {
 	CCSize s = m_obWinSizeInPoints;
-	float newY = s.height - obPoint.y;
-	float newX = s.width - obPoint.x;
-
-	CCPoint ret = CCPointZero;
-	switch (m_eDeviceOrientation)
-	{
-	case CCDeviceOrientationPortrait:
-		ret = ccp(obPoint.x, newY);
-		break;
-	case CCDeviceOrientationPortraitUpsideDown:
-		ret = ccp(newX, obPoint.y);
-		break;
-	case CCDeviceOrientationLandscapeLeft:
-		ret.x = obPoint.y;
-		ret.y = obPoint.x;
-		break;
-	case CCDeviceOrientationLandscapeRight:
-		ret.x = newY;
-		ret.y = newX;
-		break;
-	}
+	float newY = s.height - uiPoint.y;
 	
-	return ret;
+    return ccp(uiPoint.x, newY);
 }
 
-CCPoint CCDirector::convertToUI(const CCPoint& obPoint)
+CCPoint CCDirector::convertToUI(const CCPoint& glPoint)
 {
 	CCSize winSize = m_obWinSizeInPoints;
-	float oppositeX = winSize.width - obPoint.x;
-	float oppositeY = winSize.height - obPoint.y;
-	CCPoint uiPoint = CCPointZero;
-
-	switch (m_eDeviceOrientation)
-	{
-	case CCDeviceOrientationPortrait:
-		uiPoint = ccp(obPoint.x, oppositeY);
-		break;
-	case CCDeviceOrientationPortraitUpsideDown:
-		uiPoint = ccp(oppositeX, obPoint.y);
-		break;
-	case CCDeviceOrientationLandscapeLeft:
-		uiPoint = ccp(obPoint.y, obPoint.x);
-		break;
-	case CCDeviceOrientationLandscapeRight:
-		// Can't use oppositeX/Y because x/y are flipped
-		uiPoint = ccp(winSize.width - obPoint.y, winSize.height - obPoint.x);
-		break;
-	}
-
-	return uiPoint;
+	float oppositeY = winSize.height - glPoint.y;
+    
+    return ccp(glPoint.x, oppositeY);
 }
 
 CCSize CCDirector::getWinSize(void)
 {
-	CCSize s = m_obWinSizeInPoints;
-
-	if (m_eDeviceOrientation == CCDeviceOrientationLandscapeLeft
-		|| m_eDeviceOrientation == CCDeviceOrientationLandscapeRight)
-	{
-		// swap x,y in landspace mode
-		CCSize tmp = s;
-		s.width = tmp.height;
-		s.height = tmp.width;
-	}
-
-	return s;
+    return m_obWinSizeInPoints;
 }
 
 CCSize CCDirector::getWinSizeInPixels()
-{
-	CCSize s = getWinSize();
-
-	s.width *= CC_CONTENT_SCALE_FACTOR();
-	s.height *= CC_CONTENT_SCALE_FACTOR();
-
-	return s;
-}
-
-// return the current frame size
-CCSize CCDirector::getDisplaySizeInPixels(void)
 {
 	return m_obWinSizeInPixels;
 }
@@ -593,43 +527,6 @@ void CCDirector::end()
 	m_bPurgeDirecotorInNextLoop = true;
 }
 
-
-void CCDirector::resetDirector()
-{
-	// don't release the event handlers
-	// They are needed in case the director is run again
-	m_pTouchDispatcher->removeAllDelegates();
-
-    if (m_pRunningScene)
-    {
-    	m_pRunningScene->onExit();
-    	m_pRunningScene->cleanup();
-    	m_pRunningScene->release();
-    }
-    
-	m_pRunningScene = NULL;
-	m_pNextScene = NULL;
-
-	// remove all objects, but don't release it.
-	// runWithScene might be executed after 'end'.
-	m_pobScenesStack->removeAllObjects();
-
-	stopAnimation();
-
-    CCObject* pProjectionDelegate = (CCObject*)m_pProjectionDelegate;
-	CC_SAFE_RELEASE_NULL(pProjectionDelegate);
-
-	// purge bitmap cache
-	CCLabelBMFont::purgeCachedData();
-
-	// purge all managers
-	CCAnimationCache::purgeSharedAnimationCache();
- 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-	CCTextureCache::purgeSharedTextureCache();
-	CCShaderCache::purgeSharedShaderCache();
-}
-
-
 void CCDirector::purgeDirector()
 {
 	// don't release the event handlers
@@ -652,9 +549,9 @@ void CCDirector::purgeDirector()
 
 	stopAnimation();
 
-#if CC_DIRECTOR_FAST_FPS
 	CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-#endif
+    CC_SAFE_RELEASE_NULL(m_pSPFLabel);
+    CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
 
     CCObject* pProjectionDelegate = (CCObject*)m_pProjectionDelegate;
     CC_SAFE_RELEASE_NULL(pProjectionDelegate);
@@ -662,15 +559,20 @@ void CCDirector::purgeDirector()
 	// purge bitmap cache
 	CCLabelBMFont::purgeCachedData();
 
-	// purge all managers
+	// purge all managers ／ caches
 	CCAnimationCache::purgeSharedAnimationCache();
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-
 	CCTextureCache::purgeSharedTextureCache();
 	CCShaderCache::purgeSharedShaderCache();
+    
+    // cocos2d-x specific data structures
 	CCUserDefault::purgeSharedUserDefault();
     CCNotificationCenter::purgeNotifCenter();
+    
     ccGLInvalidateStateCache();
+    
+    CHECK_GL_ERROR_DEBUG();
+    
 	// OpenGL view
 	m_pobOpenGLView->release();
 	m_pobOpenGLView = NULL;
@@ -744,40 +646,69 @@ void CCDirector::resume(void)
 	m_fDeltaTime = 0;
 }
 
-#if CC_DIRECTOR_FAST_FPS
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
-void CCDirector::showFPS(void)
+void CCDirector::showStats(void)
 {
 	m_uFrames++;
 	m_fAccumDt += m_fDeltaTime;
-
-	if (m_fAccumDt > CC_DIRECTOR_FPS_INTERVAL)
-	{
-		m_fFrameRate = m_uFrames / m_fAccumDt;
-		m_uFrames = 0;
-		m_fAccumDt = 0;
-
-		sprintf(m_pszFPS, "%.1f", m_fFrameRate);
-		m_pFPSLabel->setString(m_pszFPS);
-	}
-
-    m_pFPSLabel->draw();
+    
+    if (m_bDisplayStats)
+    {
+        if (m_pFPSLabel && m_pSPFLabel && m_pDrawsLabel)
+        {
+            if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
+            {
+                sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
+                m_pSPFLabel->setString(m_pszFPS);
+                
+                m_fFrameRate = m_uFrames / m_fAccumDt;
+                m_uFrames = 0;
+                m_fAccumDt = 0;
+                
+                sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+                m_pFPSLabel->setString(m_pszFPS);
+                
+                sprintf(m_pszFPS, "%4d", g_uNumberOfDraws);
+                m_pDrawsLabel->setString(m_pszFPS);
+            }
+            
+            m_pDrawsLabel->visit();
+            m_pFPSLabel->visit();
+            m_pSPFLabel->visit();
+        }
+    }	
+    
+    g_uNumberOfDraws = 0;
 }
-#endif // CC_DIRECTOR_FAST_FPS
 
-
-void CCDirector::showProfilers()
+void CCDirector::calculateMPF()
 {
-#if CC_ENABLE_PROFILERS
-	m_fAccumDtForProfiler += m_fDeltaTime;
-	if (m_fAccumDtForProfiler > 1.0f)
-	{
-		m_fAccumDtForProfiler = 0;
-		CCProfiler::sharedProfiler()->displayTimers();
-	}
-#endif
+    struct cc_timeval now;
+    CCTime::gettimeofdayCocos2d(&now, NULL);
+    
+	m_fSecondsPerFrame = (now.tv_sec - m_pLastUpdate->tv_sec) + (now.tv_usec - m_pLastUpdate->tv_usec) / 1000000.0f;
 }
+
+void CCDirector::createStatsLabel()
+{
+    CC_SAFE_RELEASE_NULL(m_pFPSLabel);
+    CC_SAFE_RELEASE_NULL(m_pSPFLabel);
+    CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
+    
+    m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 16);
+    m_pSPFLabel = CCLabelTTF::labelWithString("0.000", "Arial", 16);
+    m_pDrawsLabel = CCLabelTTF::labelWithString("000", "Arial", 16);
+    
+    m_pFPSLabel->retain();
+    m_pSPFLabel->retain();
+    m_pDrawsLabel->retain();
+    
+    m_pDrawsLabel->setPosition(ccp(20, 50));
+    m_pSPFLabel->setPosition(ccp(25, 30));
+    m_pFPSLabel->setPosition(ccp(20, 10));
+}
+
 
 /***************************************************
 * mobile platforms specific functions
@@ -795,16 +726,6 @@ void CCDirector::updateContentScaleFactor()
 	{
 		CCLOG("cocos2d: setContentScaleFactor:'is not supported on this device");
 	}
-}
-
-
-bool CCDirector::setDirectorType(ccDirectorType obDirectorType)
-{
-    CC_UNUSED_PARAM(obDirectorType);
-	// we only support CCDisplayLinkDirector
-	CCDirector::sharedDirector();
-
-	return true;
 }
 
 bool CCDirector::enableRetinaDisplay(bool enabled)
@@ -836,26 +757,7 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
 	float newScale = (float)(enabled ? 2 : 1);
 	setContentScaleFactor(newScale);
 
-    // release cached texture
-    CCTextureCache::purgeSharedTextureCache();
-
-#if CC_DIRECTOR_FAST_FPS
-    if (m_pFPSLabel)
-    {
-        CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-        m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 24);
-        m_pFPSLabel->retain();
-    }
-#endif
-
-    if (m_fContentScaleFactor == 2)
-    {
-        m_bRetinaDisplay = true;
-    }
-    else
-    {
-        m_bRetinaDisplay = false;
-    }
+    createStatsLabel();
 
 	return true;
 }
@@ -894,33 +796,6 @@ void CCDirector::setNotificationNode(CCNode *node)
 	CC_SAFE_RETAIN(m_pNotificationNode);
 }
 
-ccDeviceOrientation CCDirector::getDeviceOrientation(void)
-{
-	return m_eDeviceOrientation;
-}
-
-void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
-{
-	ccDeviceOrientation eNewOrientation;
-
-	eNewOrientation = (ccDeviceOrientation)CCApplication::sharedApplication().setOrientation(
-        (CCApplication::Orientation)kDeviceOrientation);
-
-	if (m_eDeviceOrientation != eNewOrientation)
-	{
-		m_eDeviceOrientation = eNewOrientation;
-	}
-    else
-    {
-        // this logic is only run on win32 now
-        // On win32,the return value of CCApplication::setDeviceOrientation is always kCCDeviceOrientationPortrait
-        // So,we should calculate the Projection and window size again.
-        m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
-        setProjection(m_eProjection);
-    }
-}
-
 void CCDirector::setScheduler(CCScheduler* pScheduler)
 {
 	if (m_pScheduler != pScheduler)
@@ -938,9 +813,12 @@ CCScheduler* CCDirector::getScheduler()
 
 void CCDirector::setActionManager(CCActionManager* pActionManager)
 {
-	CC_SAFE_RETAIN(pActionManager);
-	CC_SAFE_RELEASE(m_pActionManager);
-	m_pActionManager = pActionManager;
+    if (m_pActionManager != pActionManager)
+    {
+        CC_SAFE_RETAIN(pActionManager);
+        CC_SAFE_RELEASE(m_pActionManager);
+        m_pActionManager = pActionManager;
+    }	
 }
 
 CCActionManager* CCDirector::getActionManager()
@@ -950,9 +828,12 @@ CCActionManager* CCDirector::getActionManager()
 
 void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
 {
-	CC_SAFE_RETAIN(pTouchDispatcher);
-	CC_SAFE_RELEASE(m_pTouchDispatcher);
-	m_pTouchDispatcher = pTouchDispatcher;
+    if (m_pTouchDispatcher != pTouchDispatcher)
+    {
+        CC_SAFE_RETAIN(pTouchDispatcher);
+        CC_SAFE_RELEASE(m_pTouchDispatcher);
+        m_pTouchDispatcher = pTouchDispatcher;
+    }	
 }
 
 CCTouchDispatcher* CCDirector::getTouchDispatcher()

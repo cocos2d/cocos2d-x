@@ -2,12 +2,7 @@
 #include "controller.h"
 
 TestScene::TestScene(bool bPortrait)
-:m_bPortrait(bPortrait)
 {
-    if (m_bPortrait)
-    {
-        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeRight);
-    }
     
     CCScene::init();
 }
