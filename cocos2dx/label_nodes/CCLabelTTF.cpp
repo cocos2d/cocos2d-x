@@ -171,11 +171,9 @@ const char* CCLabelTTF::getString(void)
 	return m_pString->c_str();
 }
 
-char * CCLabelTTF::description()
+const char* CCLabelTTF::description()
 {
-	char *ret = new char[100] ;
-	sprintf(ret, "<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize);
-	return ret;
+	return CCString::stringWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
 }
 
 NS_CC_END

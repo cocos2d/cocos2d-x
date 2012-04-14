@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
 #include "CCString.h"
+#include "CCFileUtils.h"
 
 using namespace std;
 
@@ -98,7 +99,7 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
 	{
 		CCDictionary* animationDict = (CCDictionary*)pElement->getObject();
 		CCArray* frameNames = (CCArray*)animationDict->objectForKey("frames");
-		float delay = (float)atof(valueForKey("delay", animationDict));
+		float delay = animationDict->valueForKey("delay")->floatValue();
 		CCAnimation* animation = NULL;
 
 		if ( frameNames == NULL ) 
@@ -113,7 +114,7 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
 		CCObject* pObj = NULL;
 		CCARRAY_FOREACH(frameNames, pObj)
 		{
-			const char* frameName = ((CCString*)pObj)->c_str();
+			const char* frameName = ((CCString*)pObj)->getCString();
 			CCSpriteFrame* spriteFrame = frameCache->spriteFrameByName(frameName);
 
 			if ( ! spriteFrame ) {
@@ -152,8 +153,8 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
 		const char* name = pElement->getStrKey();
 		CCDictionary* animationDict = (CCDictionary*)pElement->getObject();
 
-		int loops = atoi(valueForKey("loops", animationDict));
-		bool restoreOriginalFrame = atoi(valueForKey("restoreOriginalFrame", animationDict)) == 0 ? false : true;
+		int loops = animationDict->valueForKey("loops")->intValue();
+		bool restoreOriginalFrame = animationDict->valueForKey("restoreOriginalFrame")->boolValue();
 
 		CCArray* frameArray = (CCArray*)animationDict->objectForKey("frames");
 
@@ -171,7 +172,7 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
 		{
 			CCDictionary* entry = (CCDictionary*)(pObj);
 
-			const char* spriteFrameName = valueForKey("spriteframe", entry);
+			const char* spriteFrameName = entry->valueForKey("spriteframe")->getCString();
 			CCSpriteFrame *spriteFrame = frameCache->spriteFrameByName(spriteFrameName);
 
 			if( ! spriteFrame ) {
@@ -180,7 +181,7 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
 				continue;
 			}
 
-			float delayUnits = (float)atof(valueForKey("delayUnits", entry));
+			float delayUnits = entry->valueForKey("delayUnits")->floatValue();
 			CCDictionary* userInfo = (CCDictionary*)entry->objectForKey("notification");
 
 			CCAnimationFrame *animFrame = new CCAnimationFrame();
@@ -190,7 +191,7 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
 			animFrame->release();
 		}
 
-		float delayPerUnit = (float)atof(valueForKey("delayPerUnit", animationDict));
+		float delayPerUnit = animationDict->valueForKey("delayPerUnit")->floatValue();
 		CCAnimation *animation = new CCAnimation();
 		animation->initWithAnimationFrames(array, delayPerUnit, loops);
 		array->release();
@@ -215,14 +216,14 @@ void CCAnimationCache::addAnimationsWithDictionary(CCDictionary* dictionary)
 	CCDictionary* properties = (CCDictionary*)dictionary->objectForKey("properties");
 	if( properties )
 	{
-		version = atoi(valueForKey("format", properties));
+		version = properties->valueForKey("format")->intValue();
 		CCArray* spritesheets = (CCArray*)properties->objectForKey("spritesheets");
 
 		CCObject* pObj = NULL;
 		CCARRAY_FOREACH(spritesheets, pObj)
 		{
 			CCString* name = (CCString*)(pObj);
-			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->c_str());
+			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name->getCString());
 		}
 	}
 
@@ -238,23 +239,13 @@ void CCAnimationCache::addAnimationsWithDictionary(CCDictionary* dictionary)
 	}
 }
 
-const char * CCAnimationCache::valueForKey(const char *key, CCDictionary *dict)
-{
-	if (dict)
-	{
-		CCString *pString = (CCString*)dict->objectForKey(key);
-		return pString ? pString->m_sString.c_str() : "";
-	}
-	return "";
-}
-
 /** Read an NSDictionary from a plist file and parse it automatically for animations */
 void CCAnimationCache::addAnimationsWithFile(const char* plist)
 {
 	CCAssert( plist, "Invalid texture file name");
 
 	const char* path = CCFileUtils::fullPathFromRelativePath(plist);
-	CCDictionary* dict = CCFileUtils::dictionaryWithContentsOfFile(path);
+	CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFile(path);
 
 	CCAssert( dict, "CCAnimationCache: File could not be found");
 

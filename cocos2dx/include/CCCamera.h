@@ -79,7 +79,7 @@ public:
 
 	void init(void);
 
-	char * description(void);
+	const char* description(void);
 
 	/** sets the dirty value */
 	inline void setDirty(bool bValue) { m_bDirty = bValue; }
