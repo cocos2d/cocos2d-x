@@ -220,7 +220,8 @@ public:
 	static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
 	/** content size */
-	const CCSize& getContentSizeInPixels();
+	CCSize getContentSize();
+
 private:
 	bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
@@ -242,7 +243,7 @@ private:
 	/** texture max T */
 	CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
 	/** content size */
-	CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
+	CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSizeInPixels)
 
 	/** whether or not the texture has their Alpha premultiplied */
 	CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);

@@ -95,7 +95,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\pthread;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\pthread;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;..;..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -110,7 +110,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
