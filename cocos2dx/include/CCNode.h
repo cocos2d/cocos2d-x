@@ -330,7 +330,7 @@ public:
 
 	virtual ~CCNode(void);
 
-	char * description(void);
+	const char* description(void);
 
 	/** allocates and initializes a node.
      The node will be created as "autorelease".

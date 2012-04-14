@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "support/data_support/uthash.h"
 #include "CCObject.h"
 #include "CCArray.h"
-#include <string>
+#include "CCString.h"
 
 NS_CC_BEGIN
 
@@ -36,12 +36,23 @@ class CCDictionary;
 
 class CC_DLL CCDictElement
 {
+	#define MAX_KEY_LEN  256
 public:
 	CCDictElement(const char* pszKey, CCObject* pObject)
 	{
 		init();
-		strncpy(m_szKey, pszKey, sizeof(m_szKey));
 		m_pObject = pObject;
+
+		const char* pStart = pszKey;
+		
+		int len = strlen(pszKey);
+		if (len > MAX_KEY_LEN )
+		{
+			char* pEnd = (char*)&pszKey[len-1];
+			pStart = pEnd - (MAX_KEY_LEN-1);
+		}
+
+		strcpy(m_szKey, pStart);
 	}
 
 	CCDictElement(int iKey, CCObject* pObject)
@@ -78,7 +89,7 @@ private:
 	}
 
 private:
-	char m_szKey[256];  /** hash key of string type*/
+	char m_szKey[MAX_KEY_LEN+1];  /** hash key of string type*/
 	int  m_iKey;        /** hash key of integer type */
 	CCObject* m_pObject;/** hash value */
 public:
@@ -107,23 +118,45 @@ public:
 	/** @warning : We use '==' to compare two objects*/
 	CCArray* allKeysForObject(CCObject* object);
 
-	CCObject* objectForKey(const std::string& key);
+	CCObject* objectForKey(const CCString& key);
 	CCObject* objectForKey(int key);
+	const CCString* valueForKey(const CCString& key);
+	const CCString* valueForKey(int key);
 
-	bool setObject(CCObject* pObject, const std::string& key);
-	bool setObject(CCObject* pObject, int key);
 
-	void removeObjectForKey(const std::string& key);
+	void setObject(CCObject* pObject, const CCString& key);
+	void setObject(CCObject* pObject, int key);
+
+	void removeObjectForKey(const CCString& key);
 	void removeObjectForKey(int key);
-
+	void removeObjectsForKeys(CCArray* pKeyArray);
+	void removeObjectForElememt(CCDictElement* pElement);
 	void removeAllObjects();
 
 	virtual CCObject* copyWithZone(CCZone* pZone);
-	static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
 
+	static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
+    /**
+    @brief   Generate a CCDictionary pointer by file
+    @param   pFileName  The file name of *.plist file
+    @return  The CCDictionary pointer generated from the file
+    */
+    static CCDictionary* dictionaryWithContentsOfFile(const char *pFileName);
+
+	/*
+	@brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the
+	       invoker should call release().
+	*/
+	static CCDictionary* dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
+
+private:
+	void setObjectUnSafe(CCObject* pObject, const CCString& key);
+	void setObjectUnSafe(CCObject* pObject, const int key);
+	
 public:
 	CCDictElement* m_pElements;
 private:
+	
 	enum CCDictType
 	{
 		kCCDictUnknown = 0,

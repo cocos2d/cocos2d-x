@@ -62,7 +62,7 @@ public:
 	CCTextureCache();
 	virtual ~CCTextureCache();
 
-	char * description(void);
+	const char* description(void);
 
 	/** Retruns ths shared instance of the cache */
 	static CCTextureCache * sharedTextureCache();

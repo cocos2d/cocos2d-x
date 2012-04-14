@@ -103,7 +103,7 @@ public:
 	CCTexture2D();
 	virtual ~CCTexture2D();
 
-	char * description(void);
+	const char* description(void);
 
 	/** These functions are needed to create mutable textures */
 	void releaseData(void *data);

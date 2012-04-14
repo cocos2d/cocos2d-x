@@ -85,7 +85,6 @@ public:
 private:
 	void parseVersion1(CCDictionary* animations);
 	void parseVersion2(CCDictionary* animations);
-	const char * valueForKey(const char *key, CCDictionary* dict);
 private:
 	CCDictionary* m_pAnimations;
 	static CCAnimationCache* s_pSharedAnimationCache;

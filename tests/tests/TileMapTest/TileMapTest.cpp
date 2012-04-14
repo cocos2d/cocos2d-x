@@ -649,13 +649,13 @@ void TMXOrthoObjectsTest::draw()
 		if(!dict)
 			break;
 		const char* key = "x";
-		int x = ((CCString*)dict->objectForKey(key))->toInt();
+		int x = ((CCString*)dict->objectForKey(key))->intValue();
 		key = "y";
-		int y = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
+		int y = ((CCString*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
 		key = "width";
-		int width = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
+		int width = ((CCString*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
 		key = "height";
-		int height = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+		int height = ((CCString*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
 		
 		glLineWidth(3);
 		
@@ -726,13 +726,13 @@ void TMXIsoObjectsTest::draw()
 		if(!dict)
 			break;
 		const char* key = "x";
-		int x = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("x"))->getNumber();
+		int x = ((CCString*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("x"))->getNumber();
 		key = "y";
-		int y = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
+		int y = ((CCString*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
 		key = "width";
-		int width = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
+		int width = ((CCString*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
 		key = "height";
-		int height = ((CCString*)dict->objectForKey(key))->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+		int height = ((CCString*)dict->objectForKey(key))->intValue();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
 		
 		glLineWidth(3);
 		
@@ -1254,10 +1254,10 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     string resources = "TileMaps";		// partial paths are OK as resource paths.
     string file = resources + "/orthogonal-test1.tmx";
 
-    char* str = CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(file.c_str()));
+    CCString* str = CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(file.c_str()));
     CCAssert(str != NULL, "Unable to open file");
 
-    CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithXML(str ,resources.c_str());
+    CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithXML(str->getCString() ,resources.c_str());
     addChild(map, 0, kTagTileMap);
 
     CCSize s = map->getContentSize();
@@ -1589,13 +1589,13 @@ void TMXGIDObjectsTest::draw()
 		}
 
 		const char* key = "x";
-		int x = ((CCString*)dict->objectForKey(key))->toInt();
+		int x = ((CCString*)dict->objectForKey(key))->intValue();
 		key = "y";
-		int y = ((CCString*)dict->objectForKey(key))->toInt();
+		int y = ((CCString*)dict->objectForKey(key))->intValue();
 		key = "width";
-		int width = ((CCString*)dict->objectForKey(key))->toInt();
+		int width = ((CCString*)dict->objectForKey(key))->intValue();
 		key = "height";
-		int height = ((CCString*)dict->objectForKey(key))->toInt();
+		int height = ((CCString*)dict->objectForKey(key))->intValue();
 
 		glLineWidth(3);
 

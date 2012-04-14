@@ -112,17 +112,15 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
 
 bool CCGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-	const GLchar * vertexSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(vShaderFilename));
-	const GLchar * fragmentSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(fShaderFilename));
+	const GLchar * vertexSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(vShaderFilename))->getCString();
+	const GLchar * fragmentSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(fShaderFilename))->getCString();
 
 	return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }
 
 const char* CCGLProgram::description()
 {
-	static char strDescription[100] = {0};
-	sprintf(strDescription, "<CCGLProgram = %08X | Program = %i, VertexShader = %i, FragmentShader = %i>", this, m_uProgram, m_uVertShader, m_uFragShader);
-	return strDescription;
+	return CCString::stringWithFormat("<CCGLProgram = %08X | Program = %i, VertexShader = %i, FragmentShader = %i>", this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
 }
 
 bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
@@ -214,11 +212,10 @@ const char* CCGLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFu
     char *logBytes = (char*)malloc(logLength);
     logFunc(object, logLength, &charsWritten, logBytes);
 
-	CCString* log = new CCString(logBytes);
-	log->autorelease();
+	CCString* log = CCString::stringWithCString(logBytes);
 
     free(logBytes);
-    return log->toStdString().c_str();
+    return log->getCString();
 }
 
 const char* CCGLProgram::vertexShaderLog()
