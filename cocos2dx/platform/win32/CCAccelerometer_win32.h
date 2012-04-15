@@ -38,8 +38,8 @@ public:
     void setDelegate(CCAccelerometerDelegate* pDelegate);
 	void update( double x,double y,double z,double timestamp );
 private:
+    CCAcceleration m_obAccelerationValue;
 	CCAccelerometerDelegate* m_pAccelDelegate;
-	CCAcceleration m_obAccelerationValue;
 };
 
 }//namespace   cocos2d 

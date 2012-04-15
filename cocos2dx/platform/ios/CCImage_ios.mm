@@ -28,11 +28,9 @@ THE SOFTWARE.
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#if CC_FONT_LABEL_SUPPORT
 // FontLabel support
 #import "FontLabel/FontManager.h"
 #import "FontLabel/FontLabelStringDrawing.h"
-#endif// CC_FONT_LABEL_SUPPORT
 
 typedef struct
 {

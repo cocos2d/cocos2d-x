@@ -180,7 +180,7 @@ void Effect5::onExit()
 {
 	EffectAdvanceTextLayer::onExit();
 
-	CCDirector::sharedDirector()->setProjection(CCDirectorProjection3D);
+	CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 //------------------------------------------------------------------

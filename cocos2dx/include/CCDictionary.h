@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "support/data_support/uthash.h"
 #include "CCObject.h"
 #include "CCArray.h"
+#include <string>
 
 NS_CC_BEGIN
 
@@ -106,13 +107,13 @@ public:
 	/** @warning : We use '==' to compare two objects*/
 	CCArray* allKeysForObject(CCObject* object);
 
-	CCObject* objectForKey(const char* key);
+	CCObject* objectForKey(const std::string& key);
 	CCObject* objectForKey(int key);
 
-	bool setObject(CCObject* pObject, const char* key);
+	bool setObject(CCObject* pObject, const std::string& key);
 	bool setObject(CCObject* pObject, int key);
 
-	void removeObjectForKey(const char* key);
+	void removeObjectForKey(const std::string& key);
 	void removeObjectForKey(int key);
 
 	void removeAllObjects();

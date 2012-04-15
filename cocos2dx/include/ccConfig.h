@@ -76,28 +76,14 @@ To enabled set it to 1. Disabled by default.
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
 #endif
 
-/** @def CC_FONT_LABEL_SUPPORT
- If enabled, FontLabel will be used to render .ttf files.
- If the .ttf file is not found, then it will use the standard UIFont class
- If disabled, the standard UIFont class will be used.
- 
- To disable set it to 0. Enabled by default.
 
- Only valid for cocos2d-ios. Not supported on cocos2d-mac
- */
-#ifndef CC_FONT_LABEL_SUPPORT
-#define CC_FONT_LABEL_SUPPORT	1
-#endif
-
-/** @def CC_DIRECTOR_FAST_FPS
- If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
- You will need to add the fps_images.png to your project.
- If disabled, the FPS will be rendered using CCLabel (slow rendering)
+/** @def CC_DIRECTOR_STATS_POSITION
+ Position of the FPS
  
- To enable set it to a value different than 0. Enabled by default.
+ Default: 0,0 (bottom-left corner)
  */
-#ifndef CC_DIRECTOR_FAST_FPS
-#define CC_DIRECTOR_FAST_FPS	1
+#ifndef CC_DIRECTOR_STATS_POSITION
+#define CC_DIRECTOR_STATS_POSITION ccp(0,0)
 #endif
 
 /** @def CC_DIRECTOR_FPS_INTERVAL
@@ -107,8 +93,8 @@ To enabled set it to 1. Disabled by default.
  
  Default value: 0.1f
  */
-#ifndef CC_DIRECTOR_FPS_INTERVAL
-#define CC_DIRECTOR_FPS_INTERVAL (0.5f)
+#ifndef CC_DIRECTOR_STATS_INTERVAL
+#define CC_DIRECTOR_STATS_INTERVAL (0.1f)
 #endif
 
 /** @def CC_DIRECTOR_FPS_POSITION
@@ -189,7 +175,12 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
-#define CC_TEXTURE_ATLAS_USE_VAO 1
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        #define CC_TEXTURE_ATLAS_USE_VAO 1
+    #else
+        /* Some android devices cannot support VAO very well, so we disable it by default for android platform. */
+        #define CC_TEXTURE_ATLAS_USE_VAO 0
+    #endif
 #endif
 
 /** @def CC_TEXTURE_NPOT_SUPPORT
@@ -211,36 +202,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #define CC_TEXTURE_NPOT_SUPPORT 0
 #endif
 
-/** @def CC_RETINA_DISPLAY_SUPPORT
-If enabled, cocos2d supports retina display. 
-For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
-
-To enable set it to 1. Use 0 to disable it. Enabled by default.
-
-This value governs only the PNG, GIF, BMP, images.
-This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.
-
-@deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
-
-@since v0.99.5
-*/
-#ifndef CC_RETINA_DISPLAY_SUPPORT
-#define CC_RETINA_DISPLAY_SUPPORT 1
-#endif
-
-/** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
-It's the suffix that will be appended to the files in order to load "retina display" images.
-
-On an iPhone4 with Retina Display support enabled, the file @"sprite-hd.png" will be loaded instead of @"sprite.png".
-If the file doesn't exist it will use the non-retina display image.
-
-Platforms: Only used on Retina Display devices like iPhone 4.
-
-@since v0.99.5
-*/ 
-#ifndef CC_RETINA_DISPLAY_FILENAME_SUFFIX
-#define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
-#endif
 
 /** @def CC_USE_LA88_LABELS
  If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.
@@ -310,12 +271,6 @@ To enable set it to a value different than 0. Disabled by default.
  */
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
-#endif
-
-#if CC_RETINA_DISPLAY_SUPPORT
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 1
-#else
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
 #endif
 
 /** Enable Lua engine debug log */

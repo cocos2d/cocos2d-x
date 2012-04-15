@@ -839,8 +839,8 @@ void CCNode::setActionManager(CCActionManager* actionManager)
 {
 	if( actionManager != m_pActionManager ) {
 		this->stopAllActions();
-		CC_SAFE_RELEASE(m_pActionManager);
 		CC_SAFE_RETAIN(actionManager);
+		CC_SAFE_RELEASE(m_pActionManager);
 		m_pActionManager = actionManager;
 	}
 }
@@ -890,8 +890,8 @@ void CCNode::setScheduler(CCScheduler* scheduler)
 {
 	if( scheduler != m_pScheduler ) {
 		this->unscheduleAllSelectors();
-		CC_SAFE_RELEASE(m_pScheduler);
 		CC_SAFE_RETAIN(scheduler);
+		CC_SAFE_RELEASE(m_pScheduler);
 		m_pScheduler = scheduler;
 	}
 }

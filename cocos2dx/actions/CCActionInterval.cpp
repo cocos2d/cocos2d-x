@@ -113,14 +113,14 @@ void CCActionInterval::step(ccTime dt)
 	update(1 > m_elapsed/m_fDuration ? m_elapsed/m_fDuration : 1);
 }
 
-void CCActionInterval::setAmplitudeRate(CGFloat amp)
+void CCActionInterval::setAmplitudeRate(CCFloat amp)
 {
     CC_UNUSED_PARAM(amp);
 	// Abstract class needs implementation
 	CCAssert(0, "");
 }
 
-CGFloat CCActionInterval::getAmplitudeRate(void)
+CCFloat CCActionInterval::getAmplitudeRate(void)
 {
 	// Abstract class needs implementation
 	CCAssert(0, "");
@@ -504,9 +504,10 @@ void CCRepeatForever::step(ccTime dt)
 	m_pInnerAction->step(dt);
 	if (m_pInnerAction->isDone())
 	{
-		ccTime diff = dt + m_pInnerAction->getDuration() - m_pInnerAction->getElapsed();
+		ccTime diff = m_pInnerAction->getElapsed() - m_pInnerAction->getDuration();
 		m_pInnerAction->startWithTarget(m_pTarget);
-		// to prevent jerk. issue #390
+		// to prevent jerk. issue #390, 1247
+		m_pInnerAction->step(0.0f);
 		m_pInnerAction->step(diff);
 	}
 }

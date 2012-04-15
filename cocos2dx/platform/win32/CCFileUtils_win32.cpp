@@ -25,6 +25,10 @@ THE SOFTWARE.
 #include "windows.h"
 #include "CCDirector.h"
 
+#define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
+#define CC_IPAD_FILENAME_SUFFIX "-ipad"
+#define CC_IPAD_DISPLAY_RETINA_SUPPFIX "-ipadhd"
+
 using namespace std;
 
 NS_CC_BEGIN;
@@ -52,7 +56,7 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
     strcpy(s_pszResourcePath, pszResourcePath);
 }
 
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
 	_CheckPath();
 
@@ -76,29 +80,74 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         pRet->m_sString = s_pszResourcePath;
         pRet->m_sString += pszRelativePath;
     }
-#if (CC_IS_RETINA_DISPLAY_SUPPORTED)
-    if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
+
+	// is ipad?
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	bool isIpad = (winSize.width == 1024 || winSize.height == 768);
+
+	std::string hiRes = pRet->m_sString.c_str();
+    std::string::size_type pos = hiRes.find_last_of("/\\");
+    std::string::size_type dotPos = hiRes.find_last_of(".");
+    *pResolutionType = kCCResolutioniPhone;
+
+	if (isIpad)
+	{
+		if (CC_CONTENT_SCALE_FACTOR() == 1.0f)
+		{
+			// ipad
+
+			if (std::string::npos != dotPos && dotPos > pos)
+            {
+                hiRes.insert(dotPos, CC_IPAD_FILENAME_SUFFIX);
+            }
+            else
+            {
+                hiRes.append(CC_IPAD_FILENAME_SUFFIX);
+            }
+            
+            *pResolutionType = kCCResolutioniPad;
+		}
+		else
+		{
+			// ipad retina
+
+			if (std::string::npos != dotPos && dotPos > pos)
+            {
+                hiRes.insert(dotPos, CC_IPAD_DISPLAY_RETINA_SUPPFIX);
+            }
+            else
+            {
+                hiRes.append(CC_IPAD_DISPLAY_RETINA_SUPPFIX);
+            }
+            
+            *pResolutionType = kCCResolutioniPadRetinaDisplay;
+		}
+	}
+	else
+	{	
+		if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
+        {
+			// iphone retina
+
+            if (std::string::npos != dotPos && dotPos > pos)
+            {
+                hiRes.insert(dotPos, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+            }
+            else
+            {
+                hiRes.append(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+            }
+            
+            *pResolutionType = kCCResolutioniPhoneRetinaDisplay;
+        }
+	}  
+
+	DWORD attrib = GetFileAttributesA(hiRes.c_str());
+	if (attrib != INVALID_FILE_ATTRIBUTES && ! (FILE_ATTRIBUTE_DIRECTORY & attrib))
     {
-        std::string hiRes = pRet->m_sString.c_str();
-        std::string::size_type pos = hiRes.find_last_of("/\\");
-        std::string::size_type dotPos = hiRes.find_last_of(".");
-        
-        if (std::string::npos != dotPos && dotPos > pos)
-        {
-            hiRes.insert(dotPos, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
-        }
-        else
-        {
-            hiRes.append(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
-        }
-        DWORD attrib = GetFileAttributesA(hiRes.c_str());
-        
-        if (attrib != INVALID_FILE_ATTRIBUTES && ! (FILE_ATTRIBUTE_DIRECTORY & attrib))
-        {
-            pRet->m_sString.swap(hiRes);
-        }
+        pRet->m_sString.swap(hiRes);
     }
-#endif
+
 	return pRet->m_sString.c_str();
 }
 

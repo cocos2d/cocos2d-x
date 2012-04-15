@@ -47,6 +47,7 @@ public:
 
     CCSize  getSize();
     bool    isOpenGLReady();
+    bool    isIpad();
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
@@ -58,7 +59,6 @@ public:
 	virtual bool Create(LPCTSTR pTitle, int w, int h);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
-    int setDeviceOrientation(int eOritation);
     void setViewPortInPoints(float x, float y, float w, float h);
     void setScissorInPoints(float x, float y, float w, float h);
 
@@ -84,8 +84,7 @@ protected:
 private:
 
     bool                m_bCaptured;
-	bool				m_bOrientationReverted;
-	bool				m_bOrientationInitVertical;
+
     CCSet *             m_pSet;
     CCTouch *           m_pTouch;
     EGLTouchDelegate *  m_pDelegate;
@@ -94,7 +93,6 @@ private:
 
 	HWND				m_hWnd;
 
-	int					m_eInitOrientation;
     SIZE                m_tSizeInPoints;
     float               m_fScreenScaleFactor;
     RECT                m_rcViewPort;

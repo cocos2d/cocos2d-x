@@ -33,7 +33,7 @@ NS_CC_BEGIN;
 
 static char s_pszResourcePath[S3E_FILE_MAX_PATH] = {0};
 
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
 
 	IwAssert(GAME, pszRelativePath);

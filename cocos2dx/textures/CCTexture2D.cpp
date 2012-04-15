@@ -112,17 +112,19 @@ GLuint CCTexture2D::getName()
 	return m_uName;
 }
 
+CCSize CCTexture2D::getContentSize()
+{
+
+	CCSize ret;
+    ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
+    ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
+    
+    return ret;
+}
+
 const CCSize& CCTexture2D::getContentSizeInPixels()
 {
 	return m_tContentSize;
-}
-
-CCSize CCTexture2D::getContentSize()
-{
-	CCSize ret;
-	ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
-	ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
-	return ret;
 }
 
 GLfloat CCTexture2D::getMaxS()
@@ -224,9 +226,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 
 	m_bHasPremultipliedAlpha = false;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	m_resolutionType = kCCResolutionUnknown;
-#endif
+	m_eResolutionType = kCCResolutionUnknown;
 	setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 
 	return true;
@@ -241,11 +241,13 @@ char * CCTexture2D::description(void)
 }
 
 // implementation CCTexture2D (Image)
-#if 0// TODO: #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+bool CCTexture2D::initWithImage(CCImage *uiImage)
+{
+	return initWithImage(uiImage, kCCResolutionUnknown);
+}
+
 bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
-#else
-bool CCTexture2D::initWithImage(CCImage * uiImage)
-#endif
 {
 	unsigned int POTWide, POTHigh;
 
@@ -279,9 +281,7 @@ bool CCTexture2D::initWithImage(CCImage * uiImage)
 		return NULL;
 	}
 
-#if 0//TODO (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	m_resolutionType = resolution;
-#endif
+	m_eResolutionType = resolution;
 
 	// always load premultiplied images
 	return initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
@@ -492,11 +492,8 @@ bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCT
     {
         return false;
     }
-#if 0// TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    return initWithImage(&image, m_resolutionType);
-#else
+
     return initWithImage(&image);
-#endif
 }
 
 

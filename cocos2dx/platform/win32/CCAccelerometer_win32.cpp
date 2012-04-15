@@ -151,6 +151,7 @@ namespace cocos2d
 CCAccelerometer::CCAccelerometer() : 
 	m_pAccelDelegate(NULL)
 {
+    memset(&m_obAccelerationValue, 0, sizeof(m_obAccelerationValue));
 }
 
 CCAccelerometer::~CCAccelerometer() 
@@ -186,31 +187,6 @@ void CCAccelerometer::update( double x,double y,double z,double timestamp )
 		m_obAccelerationValue.y			= y;
 		m_obAccelerationValue.z			= z;
 		m_obAccelerationValue.timestamp = timestamp;
-
-		// Handle orientation changes
-		CCDirector					*pDirector=CCDirector::sharedDirector();
-		const ccDeviceOrientation	orientation=pDirector->getDeviceOrientation();
-		const double				tmp=m_obAccelerationValue.x;
-		switch ( orientation ) 
-		{
-		case kCCDeviceOrientationLandscapeRight:
-			m_obAccelerationValue.x = -m_obAccelerationValue.y;
-			m_obAccelerationValue.y = tmp;
-			break;
-
-		case kCCDeviceOrientationLandscapeLeft:
-			m_obAccelerationValue.x = m_obAccelerationValue.y;
-			m_obAccelerationValue.y = -tmp;
-			break;
-
-		case kCCDeviceOrientationPortraitUpsideDown:
-			m_obAccelerationValue.x = -m_obAccelerationValue.y;
-			m_obAccelerationValue.y = -tmp;
-			break;
-
-		case kCCDeviceOrientationPortrait:
-			break;
-		}
 
 		// Delegate
 		m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
