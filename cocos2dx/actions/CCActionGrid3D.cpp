@@ -97,8 +97,8 @@ namespace cocos2d
 			for (j = 0; j < m_sGridSize.y + 1; ++j)
 			{
 				ccVertex3F v = originalVertex(ccg(i ,j));
-				v.z += (sinf((CGFloat)M_PI * time * m_nWaves * 2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate);
-				CCLog("v.z offset is %f\n", (sinf((CGFloat)M_PI * time * m_nWaves * 2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate));
+				v.z += (sinf((CCFloat)M_PI * time * m_nWaves * 2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate);
+				CCLog("v.z offset is %f\n", (sinf((CCFloat)M_PI * time * m_nWaves * 2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate));
 				setVertex(ccg(i, j), v);
 			}
 		}
@@ -168,19 +168,19 @@ namespace cocos2d
 
 	void CCFlipX3D::update(ccTime time)
 	{
-		CGFloat angle = (CGFloat)M_PI * time; // 180 degrees
-		CGFloat mz = sinf(angle);
+		CCFloat angle = (CCFloat)M_PI * time; // 180 degrees
+		CCFloat mz = sinf(angle);
 		angle = angle / 2.0f; // x calculates degrees from 0 to 90
-		CGFloat mx = cosf(angle);
+		CCFloat mx = cosf(angle);
 
 		ccVertex3F v0, v1, v, diff;
 
 		v0 = originalVertex(ccg(1, 1));
 		v1 = originalVertex(ccg(0, 0));
 
-		CGFloat	x0 = v0.x;
-		CGFloat	x1 = v1.x;
-		CGFloat x;
+		CCFloat	x0 = v0.x;
+		CCFloat	x1 = v1.x;
+		CCFloat x;
 		ccGridSize	a, b, c, d;
 
 		if ( x0 > x1 )
@@ -276,19 +276,19 @@ namespace cocos2d
 
 	void CCFlipY3D::update(ccTime time)
 	{
-		CGFloat angle = (CGFloat)M_PI * time; // 180 degrees
-		CGFloat mz = sinf( angle );
+		CCFloat angle = (CCFloat)M_PI * time; // 180 degrees
+		CCFloat mz = sinf( angle );
 		angle = angle / 2.0f;     // x calculates degrees from 0 to 90
-		CGFloat my = cosf(angle);
+		CCFloat my = cosf(angle);
 		
 		ccVertex3F	v0, v1, v, diff;
 		
 		v0 = originalVertex(ccg(1, 1));
 		v1 = originalVertex(ccg(0, 0));
 		
-		CGFloat	y0 = v0.y;
-		CGFloat	y1 = v1.y;
-		CGFloat y;
+		CCFloat	y0 = v0.y;
+		CCFloat	y1 = v1.y;
+		CCFloat y;
 		ccGridSize	a, b, c, d;
 		
 		if (y0 > y1)
@@ -423,12 +423,12 @@ namespace cocos2d
 				{
 					ccVertex3F v = originalVertex(ccg(i, j));
 					CCPoint vect = ccpSub(m_positionInPixels, ccp(v.x, v.y));
-					CGFloat r = ccpLength(vect);
+					CCFloat r = ccpLength(vect);
 					
 					if (r < m_fRadius)
 					{
 						r = m_fRadius - r;
-						CGFloat pre_log = r / m_fRadius;
+						CCFloat pre_log = r / m_fRadius;
 						if ( pre_log == 0 ) 
 						{
 							pre_log = 0.001f;
@@ -530,13 +530,13 @@ namespace cocos2d
 			{
 				ccVertex3F v = originalVertex(ccg(i, j));
 				CCPoint vect = ccpSub(m_positionInPixels, ccp(v.x,v.y));
-				CGFloat r = ccpLength(vect);
+				CCFloat r = ccpLength(vect);
 				
 				if (r < m_fRadius)
 				{
 					r = m_fRadius - r;
-					CGFloat rate = powf(r / m_fRadius, 2);
-					v.z += (sinf( time*(CGFloat)M_PI * m_nWaves * 2 + r * 0.1f) * m_fAmplitude * m_fAmplitudeRate * rate);
+					CCFloat rate = powf(r / m_fRadius, 2);
+					v.z += (sinf( time*(CCFloat)M_PI * m_nWaves * 2 + r * 0.1f) * m_fAmplitude * m_fAmplitudeRate * rate);
 				}
 				
 				setVertex(ccg(i, j), v);
@@ -690,8 +690,8 @@ namespace cocos2d
 			for (j = 1; j < m_sGridSize.y; ++j)
 			{
 				ccVertex3F v = originalVertex(ccg(i, j));
-				v.x = (v.x + (sinf(time * (CGFloat)M_PI * m_nWaves * 2 + v.x * .01f) * m_fAmplitude * m_fAmplitudeRate));
-				v.y = (v.y + (sinf(time * (CGFloat)M_PI * m_nWaves * 2 + v.y * .01f) * m_fAmplitude * m_fAmplitudeRate));
+				v.x = (v.x + (sinf(time * (CCFloat)M_PI * m_nWaves * 2 + v.x * .01f) * m_fAmplitude * m_fAmplitudeRate));
+				v.y = (v.y + (sinf(time * (CCFloat)M_PI * m_nWaves * 2 + v.y * .01f) * m_fAmplitude * m_fAmplitudeRate));
 				setVertex(ccg(i, j), v);
 			}
 		}
@@ -769,12 +769,12 @@ namespace cocos2d
 
 				if (m_bVertical)
 				{
-					v.x = (v.x + (sinf(time * (CGFloat)M_PI * m_nWaves * 2 + v.y * .01f) * m_fAmplitude * m_fAmplitudeRate));
+					v.x = (v.x + (sinf(time * (CCFloat)M_PI * m_nWaves * 2 + v.y * .01f) * m_fAmplitude * m_fAmplitudeRate));
 				}
 
 				if (m_bHorizontal)
 				{
-                    v.y = (v.y + (sinf(time * (CGFloat)M_PI * m_nWaves * 2 + v.x * .01f) * m_fAmplitude * m_fAmplitudeRate));
+                    v.y = (v.y + (sinf(time * (CCFloat)M_PI * m_nWaves * 2 + v.x * .01f) * m_fAmplitude * m_fAmplitudeRate));
 				}
 
 				setVertex(ccg(i, j), v);
@@ -861,10 +861,10 @@ namespace cocos2d
 				ccVertex3F v = originalVertex(ccg(i ,j));
 				
 				CCPoint	avg = ccp(i-(m_sGridSize.x/2.0f), j-(m_sGridSize.y/2.0f));
-				CGFloat r = ccpLength(avg);
+				CCFloat r = ccpLength(avg);
 				
-				CGFloat amp = 0.1f * m_fAmplitude * m_fAmplitudeRate;
-				CGFloat a = r * cosf( (CGFloat)M_PI/2.0f + time * (CGFloat)M_PI * m_nTwirls * 2 ) * amp;
+				CCFloat amp = 0.1f * m_fAmplitude * m_fAmplitudeRate;
+				CCFloat a = r * cosf( (CCFloat)M_PI/2.0f + time * (CCFloat)M_PI * m_nTwirls * 2 ) * amp;
 				
 				CCPoint	d;
 				

@@ -54,86 +54,7 @@ typedef enum {
 	
 	/// Detault projection is 3D projection
 	kCCDirectorProjectionDefault = kCCDirectorProjection3D,
-
-	// backward compatibility stuff
-	CCDirectorProjection2D = kCCDirectorProjection2D,
-	CCDirectorProjection3D = kCCDirectorProjection3D,
-	CCDirectorProjectionCustom = kCCDirectorProjectionCustom,
 } ccDirectorProjection;
-
-/** @typedef ccDirectorType
- Possible Director Types.
- @since v0.8.2
- */
-typedef enum {
-	/** Will use a Director that triggers the main loop from an NSTimer object
-	 *
-	 * Features and Limitations:
-	 * - Integrates OK with UIKit objects
-	 * - It the slowest director
-	 * - The interval update is customizable from 1 to 60
-	 */
-	kCCDirectorTypeNSTimer,
-	
-	/** will use a Director that triggers the main loop from a custom main loop.
-	 *
-	 * Features and Limitations:
-	 * - Faster than NSTimer Director
-	 * - It doesn't integrate well with UIKit objects
-	 * - The interval update can't be customizable
-	 */
-	kCCDirectorTypeMainLoop,
-	
-	/** Will use a Director that triggers the main loop from a thread, but the main loop will be executed on the main thread.
-	 *
-	 * Features and Limitations:
-	 * - Faster than NSTimer Director
-	 * - It doesn't integrate well with UIKit objects
-	 * - The interval update can't be customizable
-	 */
-	kCCDirectorTypeThreadMainLoop,
-	
-	/** Will use a Director that synchronizes timers with the refresh rate of the display.
-	 *
-	 * Features and Limitations:
-	 * - Faster than NSTimer Director
-	 * - Only available on 3.1+
-	 * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
-	 * - Integrates OK with UIKit objects
-	 * - The interval update can be 1/60, 1/30, 1/15
-	 */	
-	kCCDirectorTypeDisplayLink,
-	
-	/** Default director is the NSTimer directory */
-	kCCDirectorTypeDefault = kCCDirectorTypeNSTimer,
-
-	// backward compatibility stuff
-	CCDirectorTypeNSTimer = kCCDirectorTypeNSTimer,
-	CCDirectorTypeMainLoop = kCCDirectorTypeMainLoop,
-	CCDirectorTypeThreadMainLoop = kCCDirectorTypeThreadMainLoop,
-	CCDirectorTypeDisplayLink = kCCDirectorTypeDisplayLink,
-	CCDirectorTypeDefault =kCCDirectorTypeDefault,
-} ccDirectorType;
-
-/** @typedef ccDeviceOrientation
- Possible device orientations
- */
-typedef enum {
-	/// Device oriented vertically, home button on the bottom
-	kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,	
-	/// Device oriented vertically, home button on the top
-    kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
-	/// Device oriented horizontally, home button on the right
-    kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
-	/// Device oriented horizontally, home button on the left
-    kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
-
-	// Backward compatibility stuff
-	CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
-	CCDeviceOrientationPortraitUpsideDown = kCCDeviceOrientationPortraitUpsideDown,
-	CCDeviceOrientationLandscapeLeft = kCCDeviceOrientationLandscapeLeft,
-	CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
-} ccDeviceOrientation;
 
 class CCLabelTTF;
 class CCScene;
@@ -184,9 +105,12 @@ public:
 	virtual void setAnimationInterval(double dValue) = 0;
 
 	/** Whether or not to display the FPS on the bottom-left corner */
-	inline bool isDisplayFPS(void) { return m_bDisplayFPS; }
+	inline bool isDisplayStats(void) { return m_bDisplayStats; }
 	/** Display the FPS on the bottom-left corner */
-	inline void setDisplayFPS(bool bDisplayFPS) { m_bDisplayFPS = bDisplayFPS; }
+	inline void setDisplayStats(bool bDisplayStats) { m_bDisplayStats = bDisplayStats; }
+    
+    /** seconds per frame */
+    inline float getSecondsPerFrame() { return m_fSecondsPerFrame; }
 
 	/** Get the CCEGLView, where everything is rendered */
 	inline CC_GLVIEW* getOpenGLView(void) { return m_pobOpenGLView; }
@@ -224,24 +148,18 @@ public:
 	 */
 	CCNode* getNotificationNode();
 	void setNotificationNode(CCNode *node);
+    
+    bool enableRetinaDisplay(bool bEnabelRetina);
 
 	// window size
 
 	/** returns the size of the OpenGL view in points.
-	It takes into account any possible rotation (device orientation) of the window
 	*/
 	CCSize getWinSize(void);
 
 	/** returns the size of the OpenGL view in pixels.
-	It takes into account any possible rotation (device orientation) of the window.
-	On Mac winSize and winSizeInPixels return the same value.
 	*/
 	CCSize getWinSizeInPixels(void);
-
-	/** returns the display size of the OpenGL view in pixels.
-	It doesn't take into account any possible rotation of the window.
-	*/
-	CCSize getDisplaySizeInPixels(void);
 
 	/** changes the projection size */
 	void reshapeProjection(const CCSize& newWindowSize);
@@ -264,6 +182,8 @@ public:
 	/**Enters the Director's main loop with the given Scene. 
 	 * Call it to run only your FIRST scene.
 	 * Don't call it if there is already a running scene.
+     *
+     * It will call pushScene: and then it will call startAnimation
 	 */
 	void runWithScene(CCScene *pScene);
 
@@ -344,47 +264,16 @@ public:
 
 	virtual void mainLoop(void) = 0;
 
-	// Profiler
-	void showProfilers(void);
-
 	/** rotates the screen if an orientation different than Portrait is used */
 	void applyOrientation(void);
-
-	ccDeviceOrientation getDeviceOrientation(void);
-	void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
 
 	/** The size in pixels of the surface. It could be different than the screen size.
 	High-res devices might have a higher surface size than the screen size.
 	Only available when compiled using SDK >= 4.0.
 	@since v0.99.4
 	*/
-	void setContentScaleFactor(CGFloat scaleFactor);
-	CGFloat getContentScaleFactor(void);
-
-	/** Will enable Retina Display on devices that supports it.
-	It will enable Retina Display on iPhone4 and iPod Touch 4.
-	It will return YES, if it could enabled it, otherwise it will return NO.
-
-	This is the recommened way to enable Retina Display.
-	@since v0.99.5
-	*/
-	bool enableRetinaDisplay(bool enabled);
-    bool isRetinaDisplay() { return m_bRetinaDisplay; }
-
-	/** There are 4 types of Director.
-	- kCCDirectorTypeNSTimer (default)
-	- kCCDirectorTypeMainLoop
-	- kCCDirectorTypeThreadMainLoop
-	- kCCDirectorTypeDisplayLink
-
-	Each Director has it's own benefits, limitations.
-	Now we only support DisplayLink director, so it has not effect. 
-
-	This method should be called before any other call to the director.
-
-	@since v0.8.2
-	*/
-	static bool setDirectorType(ccDirectorType obDirectorType);
+	void setContentScaleFactor(CCFloat scaleFactor);
+	CCFloat getContentScaleFactor(void);
 
 public:
 	/** CCScheduler associated with this director
@@ -414,7 +303,6 @@ public:
 
 	/** returns a shared instance of the director */
 	static CCDirector* sharedDirector(void);
-	void resetDirector();
 
 protected:
 
@@ -425,14 +313,13 @@ protected:
 
 	void setNextScene(void);
 	
-#if CC_DIRECTOR_FAST_FPS
-	/** shows the FPS in the screen */
-	void showFPS(void);
-#else
-	void showFPS(void) {}
-#endif // CC_DIRECTOR_FAST_FPS
+    void showStats();
+    void createStatsLabel();
+    void calculateMPF();
 
-/** calculates delta time since last time it was called */	void calculateDeltaTime();protected:
+    /** calculates delta time since last time it was called */	
+    void calculateDeltaTime();
+protected:
 	/* The CCEGLView, where everything is rendered */
     CC_GLVIEW	*m_pobOpenGLView;
 
@@ -442,12 +329,13 @@ protected:
 	/* landscape mode ? */
 	bool m_bLandscape;
 	
-	bool m_bDisplayFPS;
+	bool m_bDisplayStats;
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;
-#if	CC_DIRECTOR_FAST_FPS
+    
 	CCLabelTTF *m_pFPSLabel;
-#endif
+    CCLabelTTF *m_pSPFLabel;
+    CCLabelTTF *m_pDrawsLabel;
 	
 	/* is the running scene paused */
 	bool m_bPaused;
@@ -455,6 +343,7 @@ protected:
     /* How many frames were called since the director started */
 	unsigned int m_uTotalFrames;
     unsigned int m_uFrames;
+    ccTime m_fSecondsPerFrame;
      
 	/* The running scene */
 	CCScene *m_pRunningScene;
@@ -488,7 +377,7 @@ protected:
 	CCSize m_obWinSizeInPixels;
 	
 	/* content scale factor */
-	CGFloat	m_fContentScaleFactor;
+	CCFloat	m_fContentScaleFactor;
 
 	/* store the fps string */
 	char *m_pszFPS;
@@ -499,16 +388,8 @@ protected:
 	/* Projection protocol delegate */
 	CCDirectorDelegate *m_pProjectionDelegate;
 
-	/* The device orientation */
-	ccDeviceOrientation	m_eDeviceOrientation;
 	/* contentScaleFactor could be simulated */
 	bool m_bIsContentScaleSupported;
-
-	bool m_bRetinaDisplay;
-	
-#if CC_ENABLE_PROFILERS
-	ccTime m_fAccumDtForProfiler;
-#endif
 };
 
 /** 

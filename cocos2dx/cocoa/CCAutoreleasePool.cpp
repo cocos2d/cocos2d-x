@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCPoolManager	g_PoolManager;
+static CCPoolManager* s_pPoolManager = NULL;
 
 CCAutoreleasePool::CCAutoreleasePool(void)
 {
@@ -87,9 +87,18 @@ void CCAutoreleasePool::clear()
 //
 //--------------------------------------------------------------------
 
-CCPoolManager* CCPoolManager::getInstance()
+CCPoolManager* CCPoolManager::sharedPoolManager()
 {
-	return &g_PoolManager;
+    if (s_pPoolManager == NULL)
+    {
+        s_pPoolManager = new CCPoolManager();
+    }
+	return s_pPoolManager;
+}
+
+void CCPoolManager::purgePoolManager()
+{
+    CC_SAFE_DELETE(s_pPoolManager);
 }
 
 CCPoolManager::CCPoolManager()
@@ -102,13 +111,13 @@ CCPoolManager::CCPoolManager()
 CCPoolManager::~CCPoolManager()
 {
 	
-	finalize();
-
-	// we only release the last autorelease pool here 
+ 	finalize();
+ 
+ 	// we only release the last autorelease pool here 
     m_pCurReleasePool = 0;
-	m_pReleasePoolStack->removeObjectAtIndex(0);
-
-	CC_SAFE_DELETE(m_pReleasePoolStack);
+ 	m_pReleasePoolStack->removeObjectAtIndex(0);
+ 
+ 	CC_SAFE_DELETE(m_pReleasePoolStack);
 }
 
 void CCPoolManager::finalize()

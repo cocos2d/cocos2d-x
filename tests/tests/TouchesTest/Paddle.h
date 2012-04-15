@@ -27,6 +27,7 @@ public:
 	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
 	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
 	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+    virtual CCObject* copyWithZone(CCZone *pZone);
 
 	virtual void touchDelegateRetain();
 	virtual void touchDelegateRelease();

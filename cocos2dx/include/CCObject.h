@@ -28,7 +28,8 @@ THE SOFTWARE.
 #include "CCCommon.h"
 #include "ccTypes.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
+
 class CCZone;
 class CCObject;
 class CCString;
@@ -86,8 +87,7 @@ typedef void (CCObject::*SEL_EventHandler)(CCEvent*);
 #define callfuncO_selector(_SELECTOR) (SEL_CallFuncO)(&_SELECTOR)
 #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
-    
-    
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __COCOA_NSOBJECT_H__

@@ -43,8 +43,8 @@ bool ChipmunkPhysicsSprite::isDirty(void)
 
 CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
 {
-	CGFloat x = body_->p.x;
-	CGFloat y = body_->p.y;
+	CCFloat x = body_->p.x;
+	CCFloat y = body_->p.y;
 
 	if ( !getIsRelativeAnchorPoint() ) {
 		x += m_tAnchorPointInPoints.x;
@@ -52,8 +52,8 @@ CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
 	}
 
 	// Make matrix
-	CGFloat c = body_->rot.x;
-	CGFloat s = body_->rot.y;
+	CCFloat c = body_->rot.x;
+	CCFloat s = body_->rot.y;
 
 	if( ! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPoints, CCPointZero) ){
 		x += c*-m_tAnchorPointInPoints.x + -s*-m_tAnchorPointInPoints.y;
@@ -152,7 +152,7 @@ void ChipmunkAccelTouchTestLayer::update(ccTime delta)
 {
 	// Should use a fixed size step based on the animation interval.
 	int steps = 2;
-	CGFloat dt = CCDirector::sharedDirector()->getAnimationInterval()/(CGFloat)steps;
+	CCFloat dt = CCDirector::sharedDirector()->getAnimationInterval()/(CCFloat)steps;
 
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space_, dt);

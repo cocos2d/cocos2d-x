@@ -241,6 +241,11 @@ CCRect CCEGLView::getFrame()
 	return rc;
 }
 
+bool CCEGLView::isIpad()
+{
+    return false;
+}
+
 bool CCEGLView::isOpenGLReady()
 {
     return (NULL != m_pEGL);

@@ -265,6 +265,11 @@ bool CCEGLView::isOpenGLReady()
     return (IwGLIsInitialised() && m_sSizeInPixel.width != 0 && m_sSizeInPixel.height !=0);
 }
 
+bool CCEGLView::isIpad()
+{
+    return false;
+}
+
 void CCEGLView::release()
 {
 	IW_CALLSTACK("CCEGLView::release");

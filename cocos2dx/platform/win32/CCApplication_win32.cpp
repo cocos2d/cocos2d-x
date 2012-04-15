@@ -96,17 +96,6 @@ void CCApplication::setAnimationInterval(double interval)
     m_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
 }
 
-CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
-{
-    // swap width and height
-    CCEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
-    if (pView)
-    {
-        return (Orientation)pView->setDeviceOrientation(orientation);
-    }
-    return (Orientation)CCDirector::sharedDirector()->getDeviceOrientation();
-}
-
 void CCApplication::statusBarFrame(CCRect * rect)
 {
     if (rect)

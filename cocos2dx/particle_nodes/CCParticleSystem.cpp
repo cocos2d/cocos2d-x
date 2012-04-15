@@ -325,8 +325,6 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
 			}
 			CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
 			
-			CC_BREAK_IF(!m_pTexture);
-			this->m_pTexture->retain();
 			}
 			bRet = true;
 		}
