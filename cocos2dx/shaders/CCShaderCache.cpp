@@ -68,7 +68,7 @@ bool CCShaderCache::init()
 	loadDefaultShaders();
 	return true;
 }
-
+#define ENABLE_ALL_SHADER 1
 void CCShaderCache::loadDefaultShaders()
 {
 	// Position Texture Color shader
@@ -86,7 +86,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
-
+#if ENABLE_ALL_SHADER
 	// Position Texture Color alpha test
 	p = new CCGLProgram();
 	p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
@@ -135,7 +135,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
-
+#endif
 	//
 	// Position, Texture attribs, 1 Color as uniform shader
 	//
@@ -152,7 +152,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->release();
 
 	CHECK_GL_ERROR_DEBUG();
-
+#if ENABLE_ALL_SHADER
 	//
 	// Position Texture A8 Color shader
 	//
@@ -186,6 +186,7 @@ void CCShaderCache::loadDefaultShaders()
 	p->release();	
 
 	CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 CCGLProgram* CCShaderCache::programForKey(const char* key)

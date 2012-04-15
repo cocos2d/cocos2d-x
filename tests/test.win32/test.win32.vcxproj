@@ -55,7 +55,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir);$(SolutionDir)chipmunk\include\chipmunk;$(SolutionDir)CocosDenshion\include;..\tests;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir);$(SolutionDir)chipmunk\include\chipmunk;$(SolutionDir)CocosDenshion\include;..\tests;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;.\;$(SolutionDir)cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -67,7 +67,7 @@
       <DisableSpecificWarnings>4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libGLESv2.lib;libcocos2d.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -110,6 +110,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\tests\AccelerometerTest\AccelerometerTest.cpp" />
+    <ClCompile Include="..\tests\ActionsEaseTest\ActionsEaseTest.cpp" />
+    <ClCompile Include="..\tests\ActionsProgressTest\ActionsProgressTest.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-1159.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-1174.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-350.cpp" />
@@ -121,11 +123,14 @@
     <ClCompile Include="..\tests\BugsTest\Bug-899.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-914.cpp" />
     <ClCompile Include="..\tests\BugsTest\BugsTest.cpp" />
+    <ClCompile Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.cpp" />
     <ClCompile Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
     <ClCompile Include="..\tests\ExtensionsTest\ExtensionsTest.cpp" />
     <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest.cpp" />
     <ClCompile Include="..\tests\FontTest\FontTest.cpp" />
+    <ClCompile Include="..\tests\NodeTest\NodeTest.cpp" />
+    <ClCompile Include="..\tests\ShaderTest\ShaderTest.cpp" />
     <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp" />
     <ClCompile Include="..\tests\TextureCacheTest\TextureCacheTest.cpp" />
     <ClCompile Include="main.cpp" />
@@ -134,15 +139,12 @@
     <ClCompile Include="..\tests\testBasic.cpp" />
     <ClCompile Include="..\tests\ActionsTest\ActionsTest.cpp" />
     <ClCompile Include="..\tests\TransitionsTest\TransitionsTest.cpp" />
-    <ClCompile Include="..\tests\ProgressActionsTest\ProgressActionsTest.cpp" />
     <ClCompile Include="..\tests\EffectsTest\EffectsTest.cpp" />
     <ClCompile Include="..\tests\ClickAndMoveTest\ClickAndMoveTest.cpp" />
     <ClCompile Include="..\tests\RotateWorldTest\RotateWorldTest.cpp" />
     <ClCompile Include="..\tests\ParticleTest\ParticleTest.cpp" />
-    <ClCompile Include="..\tests\EaseActionsTest\EaseActionsTest.cpp" />
     <ClCompile Include="..\tests\MotionStreakTest\MotionStreakTest.cpp" />
     <ClCompile Include="..\tests\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
-    <ClCompile Include="..\tests\CocosNodeTest\CocosNodeTest.cpp" />
     <ClCompile Include="..\tests\TouchesTest\Ball.cpp" />
     <ClCompile Include="..\tests\TouchesTest\Paddle.cpp" />
     <ClCompile Include="..\tests\TouchesTest\TouchesTest.cpp" />
@@ -157,27 +159,6 @@
     <ClCompile Include="..\tests\SpriteTest\SpriteTest.cpp" />
     <ClCompile Include="..\tests\SchedulerTest\SchedulerTest.cpp" />
     <ClCompile Include="..\tests\RenderTextureTest\RenderTextureTest.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Bounce.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\cocos2dChipmunkDemo.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\drawSpace.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Joints.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\LogoSmash.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\MagnetsElectric.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\OneWay.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Planet.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Player.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Plink.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Pump.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\PyramidStack.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\PyramidTopple.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Query.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Sensors.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Simple.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Springies.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Tank.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\TheoJansen.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\Tumble.cpp" />
-    <ClCompile Include="..\tests\ChipmunkTest\UnsafeOps.cpp" />
     <ClCompile Include="..\tests\Box2DTest\Box2dTest.cpp" />
     <ClCompile Include="..\tests\Box2DTestBed\Box2dView.cpp" />
     <ClCompile Include="..\tests\Box2DTestBed\GLES-Render.cpp" />
@@ -200,6 +181,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\tests\AccelerometerTest\AccelerometerTest.h" />
+    <ClInclude Include="..\tests\ActionsEaseTest\ActionsEaseTest.h" />
+    <ClInclude Include="..\tests\ActionsProgressTest\ActionsProgressTest.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-1159.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-1174.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-350.h" />
@@ -211,11 +194,14 @@
     <ClInclude Include="..\tests\BugsTest\Bug-899.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-914.h" />
     <ClInclude Include="..\tests\BugsTest\BugsTest.h" />
+    <ClInclude Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.h" />
     <ClInclude Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
     <ClInclude Include="..\tests\ExtensionsTest\ExtensionsTest.h" />
     <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest.h" />
     <ClInclude Include="..\tests\FontTest\FontTest.h" />
+    <ClInclude Include="..\tests\NodeTest\NodeTest.h" />
+    <ClInclude Include="..\tests\ShaderTest\ShaderTest.h" />
     <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h" />
     <ClInclude Include="..\tests\TextureCacheTest\TextureCacheTest.h" />
     <ClInclude Include="main.h" />
@@ -226,15 +212,12 @@
     <ClInclude Include="..\tests\tests.h" />
     <ClInclude Include="..\tests\ActionsTest\ActionsTest.h" />
     <ClInclude Include="..\tests\TransitionsTest\TransitionsTest.h" />
-    <ClInclude Include="..\tests\ProgressActionsTest\ProgressActionsTest.h" />
     <ClInclude Include="..\tests\EffectsTest\EffectsTest.h" />
     <ClInclude Include="..\tests\ClickAndMoveTest\ClickAndMoveTest.h" />
     <ClInclude Include="..\tests\RotateWorldTest\RotateWorldTest.h" />
     <ClInclude Include="..\tests\ParticleTest\ParticleTest.h" />
-    <ClInclude Include="..\tests\EaseActionsTest\EaseActionsTest.h" />
     <ClInclude Include="..\tests\MotionStreakTest\MotionStreakTest.h" />
     <ClInclude Include="..\tests\DrawPrimitivesTest\DrawPrimitivesTest.h" />
-    <ClInclude Include="..\tests\CocosNodeTest\CocosNodeTest.h" />
     <ClInclude Include="..\tests\TouchesTest\Ball.h" />
     <ClInclude Include="..\tests\TouchesTest\Paddle.h" />
     <ClInclude Include="..\tests\TouchesTest\TouchesTest.h" />
@@ -249,9 +232,6 @@
     <ClInclude Include="..\tests\SpriteTest\SpriteTest.h" />
     <ClInclude Include="..\tests\SchedulerTest\SchedulerTest.h" />
     <ClInclude Include="..\tests\RenderTextureTest\RenderTextureTest.h" />
-    <ClInclude Include="..\tests\ChipmunkTest\ChipmunkDemo.h" />
-    <ClInclude Include="..\tests\ChipmunkTest\cocos2dChipmunkDemo.h" />
-    <ClInclude Include="..\tests\ChipmunkTest\drawSpace.h" />
     <ClInclude Include="..\tests\Box2DTest\Box2dTest.h" />
     <ClInclude Include="..\tests\Box2DTestBed\Box2dView.h" />
     <ClInclude Include="..\tests\Box2DTestBed\GLES-Render.h" />
