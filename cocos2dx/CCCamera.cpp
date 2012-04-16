@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCCamera.h"
-//#include "CCDirector.h"
+#include "CCString.h"
 #include "CCGL.h"
 
 #include "CCDrawingPrimitives.h"
@@ -32,7 +32,8 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 
 using namespace std;
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 CCCamera::CCCamera(void)
 {
@@ -43,11 +44,9 @@ CCCamera::~CCCamera(void)
 {
 }
 
-char * CCCamera::description(void)
+const char* CCCamera::description(void)
 {
-	char *ret = new char[100];
-	sprintf(ret, "<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ);
-	return ret;
+	return CCString::stringWithFormat("<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ)->getCString();
 }
 
 void CCCamera::init(void)
@@ -140,4 +139,6 @@ void CCCamera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)
 	*pUpY = m_fUpY;
 	*pUpZ = m_fUpZ;
 }
-}//namespace   cocos2d 
+
+NS_CC_END
+

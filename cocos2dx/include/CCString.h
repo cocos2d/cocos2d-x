@@ -25,110 +25,84 @@ THE SOFTWARE.
 #define __CCSTRING_H__
 
 #include <string>
-#include <stdlib.h>
 #include "CCObject.h"
-#include "CCFileUtils.h"
 
 NS_CC_BEGIN
 
 class CC_DLL CCString : public CCObject
 {
 public:
-	std::string m_sString;
-public:
-	CCString()
-		:m_sString("")
-	{}
+	CCString();
+	CCString(const char* str);
+	CCString(const std::string& str);
+	CCString(const CCString& str);
 
-	CCString(const char * str)
-	{
-		m_sString = str;
-	}
-
-	virtual ~CCString()
-    { 
-        m_sString.clear();
-    }
+	virtual ~CCString();
 	
-	int toInt()
-	{
-		return atoi(m_sString.c_str());
-	}
+	/* override assignment operator */
+	CCString& operator= (const CCString& other);
 
-	unsigned int toUInt()
-	{
-		return (unsigned int)atoi(m_sString.c_str());
-	}
+	/** init a string with format, it's similar with the c function 'sprintf' */ 
+	bool initWithFormat(const char* format, ...);
 
-	float toFloat()
-	{
-		return (float)atof(m_sString.c_str());
-	}
+	/** convert to int value */
+	int intValue() const;
 
-    bool toBool()
-    {
-        if (0 == strcmp(m_sString.c_str(), "0") || 0 == strcmp(m_sString.c_str(), "false"))
-        {
-            return false;
-        }
-        return true;
-    }
+	/** convert to unsigned int value */
+	unsigned int uintValue() const;
 
-	std::string toStdString()
-	{
-		return m_sString;
-	}
+	/** convert to float value */
+	float floatValue() const;
 
-	const char* c_str()
-	{
-		return m_sString.c_str();
-	}
+	/** convert to double value */
+	double doubleValue() const;
 
-	bool isEmpty()
-	{
-		return m_sString.empty();
-	}
+	/** convert to bool value */
+    bool boolValue() const;
 
-    virtual CCObject* copyWithZone(CCZone* pZone)
-    {
-        CCAssert(pZone == NULL, "CCString should not be inherited.");
-        CCString* pStr = new CCString(m_sString.c_str());
-        return pStr;
-    }
+	/** get the C string */
+	const char* getCString() const;
 
-    virtual bool isEqual(const CCObject* pObject)
-    {
-        bool bRet = false;
-        const CCString* pStr = dynamic_cast<const CCString*>(pObject);
-        if (pStr != NULL)
-        {
-            if (0 == m_sString.compare(pStr->m_sString))
-            {
-                bRet = true;
-            }
-        }
-        return bRet;
-    }
+	/** get the length of string */
+	unsigned int length() const;
 
-    /** @brief: Get string from a file.
-    *   @return: a pointer which needs to be deleted manually by 'delete[]' .
-    */
-    static char* stringWithContentsOfFile(const char* pszFileName)
-    {
-        unsigned long size = 0;
-        unsigned char* pData = 0;
-        char* pszRet = 0;
-        pData = CCFileUtils::getFileData(pszFileName, "rb", &size);
-        do 
-        {
-            CC_BREAK_IF(!pData || size <= 0);
-            pszRet = new char[size+1];
-            pszRet[size] = '\0';
-            memcpy(pszRet, pData, size);
-            CC_SAFE_DELETE_ARRAY(pData);
-        } while (false);
-        return pszRet;
-    }
+	/* override functions */
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual bool isEqual(const CCObject* pObject);
+
+	/* static funcitons */
+	/** create a string with c string 
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
+	static CCString* stringWithCString(const char* pStr);
+
+	/** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
+     *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */ 
+	static CCString* stringWithFormat(const char* format, ...);
+
+	/** create a string with binary data 
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
+	static CCString* stringWithData(unsigned char* pData, unsigned long nLen);
+
+	/** create a string with a file, 
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
+    static CCString* stringWithContentsOfFile(const char* pszFileName);
+
+private:
+
+	/** only for internal use */
+	bool initWithFormatAndValist(const char* format, va_list ap);
+
+public:
+	std::string m_sString;
 };
 
 NS_CC_END

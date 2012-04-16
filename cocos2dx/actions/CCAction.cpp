@@ -53,12 +53,11 @@ CCAction * CCAction::action()
 	return pRet;
 }
 
-char * CCAction::description()
+const char* CCAction::description()
 {
-	char *ret = new char[100] ;
-	sprintf(ret,"<CCAction | Tag = %d>", m_nTag);
-	return ret;
+	return CCString::stringWithFormat("<CCAction | Tag = %d>", m_nTag)->getCString();
 }
+
 CCObject* CCAction::copyWithZone(CCZone *pZone)
 {
 	CCZone *pNewZone = NULL;

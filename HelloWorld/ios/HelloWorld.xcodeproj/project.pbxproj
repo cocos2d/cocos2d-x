@@ -155,6 +155,7 @@
 		78E69631151894E30085D6AC /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E69630151894E30085D6AC /* OpenGL_Internal.h */; };
 		78E6976215189C1D0085D6AC /* CCVertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E6976015189C1D0085D6AC /* CCVertex.cpp */; };
 		78E6976315189C1D0085D6AC /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6976115189C1D0085D6AC /* CCVertex.h */; };
+		78F9BEAA153BB08700C86BD3 /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78F9BEA9153BB08700C86BD3 /* CCString.cpp */; };
 		AD7C5EC514751287008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EC414751287008E5647 /* CCThread_ios.mm */; };
 		AD7C5ED2147512AD008E5647 /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7C5EC7147512AD008E5647 /* FontLabel.h */; };
 		AD7C5ED3147512AD008E5647 /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EC8147512AD008E5647 /* FontLabel.m */; };
@@ -489,6 +490,7 @@
 		78E69630151894E30085D6AC /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		78E6976015189C1D0085D6AC /* CCVertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertex.cpp; sourceTree = "<group>"; };
 		78E6976115189C1D0085D6AC /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
+		78F9BEA9153BB08700C86BD3 /* CCString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCString.cpp; sourceTree = "<group>"; };
 		AD7C5EC414751287008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCThread_ios.mm; path = ios/CCThread_ios.mm; sourceTree = "<group>"; };
 		AD7C5EC7147512AD008E5647 /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
 		AD7C5EC8147512AD008E5647 /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
@@ -1068,15 +1070,16 @@
 		BF83518B13275F5500F3C033 /* cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				78E695F4151885840085D6AC /* CCDictionary.cpp */,
-				BF233C2C1341748900494987 /* CCNS.cpp */,
-				BF233C2D1341748900494987 /* CCNS.h */,
 				BF83518C13275F5500F3C033 /* CCAffineTransform.cpp */,
 				BF83518D13275F5500F3C033 /* CCAutoreleasePool.cpp */,
 				BF83518E13275F5500F3C033 /* CCData.cpp */,
+				78E695F4151885840085D6AC /* CCDictionary.cpp */,
 				BF83518F13275F5500F3C033 /* CCGeometry.cpp */,
+				BF233C2C1341748900494987 /* CCNS.cpp */,
+				BF233C2D1341748900494987 /* CCNS.h */,
 				BF83519013275F5500F3C033 /* CCObject.cpp */,
 				BF83519113275F5500F3C033 /* CCSet.cpp */,
+				78F9BEA9153BB08700C86BD3 /* CCString.cpp */,
 				BF83519213275F5500F3C033 /* CCZone.cpp */,
 			);
 			path = cocoa;
@@ -1730,6 +1733,7 @@
 				78E695F71518861F0085D6AC /* CCParticleBatchNode.cpp in Sources */,
 				78E6962E15188F870085D6AC /* CCES2Renderer.m in Sources */,
 				78E6976215189C1D0085D6AC /* CCVertex.cpp in Sources */,
+				78F9BEAA153BB08700C86BD3 /* CCString.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
