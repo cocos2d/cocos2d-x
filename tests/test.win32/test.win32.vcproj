@@ -868,38 +868,14 @@
 						<Filter
 							Name="CCControlColourPicker"
 							>
-							<File
-								RelativePath="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp"
-								>
-							</File>
-							<File
-								RelativePath="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h"
-								>
-							</File>
 						</Filter>
 						<Filter
 							Name="CCControlSliderTest"
 							>
-							<File
-								RelativePath="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.cpp"
-								>
-							</File>
-							<File
-								RelativePath="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.h"
-								>
-							</File>
 						</Filter>
 						<Filter
 							Name="CCControlSwitchTest"
 							>
-							<File
-								RelativePath="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.cpp"
-								>
-							</File>
-							<File
-								RelativePath="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.h"
-								>
-							</File>
 						</Filter>
 					</Filter>
 					<Filter

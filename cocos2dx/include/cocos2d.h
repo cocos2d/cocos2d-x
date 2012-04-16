@@ -119,10 +119,6 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "CCGL.h"
 
-// extensions
-#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
-#include "extensions/CCControlExtension/CCControlExtensions.h"
-
 // Shaders
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"

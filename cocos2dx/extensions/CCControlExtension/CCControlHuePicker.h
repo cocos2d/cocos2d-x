@@ -38,7 +38,7 @@
 
 USING_NS_CC;
 
-class CCControlHuePicker : public CCControl
+class CC_DLL CCControlHuePicker : public CCControl
 {
 	//maunally put in the setters
 	CC_SYNTHESIZE_READONLY(float, m_hue, Hue);

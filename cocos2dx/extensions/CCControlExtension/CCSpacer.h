@@ -5,7 +5,7 @@
 
 USING_NS_CC;
 
-class CCSpacer: public CCLayer
+class CC_DLL CCSpacer: public CCLayer
 {
 public:
 	static CCSpacer* verticalSpacer(float space);

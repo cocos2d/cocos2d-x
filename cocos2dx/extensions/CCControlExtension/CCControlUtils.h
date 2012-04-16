@@ -52,7 +52,7 @@ typedef struct
 
 
 //helper class to store ccColor3B's in mutable arrays
-class CCColor3bObject : public CCObject
+class CC_DLL CCColor3bObject : public CCObject
 {
 public:
 	ccColor3B value;

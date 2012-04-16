@@ -78,7 +78,7 @@ typedef unsigned int CCControlState;
  *
  * To use the CCControl you have to subclass it.
  */
-class CCControl : public CCLayer, public CCRGBAProtocol
+class CC_DLL CCControl : public CCLayer, public CCRGBAProtocol
 {
 
 	//CCRGBAProtocol
@@ -198,7 +198,7 @@ protected:
 	*/
     //<CCInvocation*>
 	CCArray* dispatchListforControlEvent(CCControlEvent controlEvent);
-
+public:
 	void addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
 	void removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
 

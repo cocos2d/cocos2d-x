@@ -47,31 +47,31 @@ bool CCControlScene::init()
         CCSize screensize = CCDirector::sharedDirector()->getWinSize();
 
         // Add the generated background
-        CCSprite *background = CCSprite spriteWithFile("background.png");
+		CCSprite *background = CCSprite::spriteWithFile("Images/background_ex.png");
         background->setPosition(ccp(screensize.width / 2, screensize.height / 2));
         addChild(background);
         
         // Add the ribbon
-        CCScale9Sprite *ribbon = CCScale9Sprite::spriteWithFile("ribbon.png", CCRectMake(1, 1, 48, 55));
+        CCScale9Sprite *ribbon = CCScale9Sprite::spriteWithFile("Images/ribbon.png", CCRectMake(1, 1, 48, 55));
         ribbon->setContentSize(CCSizeMake(screensize.width, 57));
         ribbon->setPosition(ccp(screensize.width / 2.0f, screensize.height - ribbon->getContentSize().height / 2.0f));
         addChild(ribbon);
         
         // Add the title
         setSceneTitleLabel(CCLabelTTF::labelWithString("Title", "Arial", 12));
-        m_pSceneTitleLabel->setPosition(ccp (screensize.width / 2, screensize.height - m_pSceneTitleLabel->getContentSize().height / 2 - 5)];
+        m_pSceneTitleLabel->setPosition(ccp (screensize.width / 2, screensize.height - m_pSceneTitleLabel->getContentSize().height / 2 - 5));
         addChild(m_pSceneTitleLabel, 1);
         
         // Add the menu
-		CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("b1.png", "b2.png", this, menu_selector(CCControlScene::previousCallback)));
-		CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("r1.png", "r2.png", this, menu_selector(CCControlScene::restartCallback)));
-		CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("f1.png", "f2.png", this, menu_selector(CCControlScene::nextCallback)));
+		CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(CCControlScene::previousCallback));
+		CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(CCControlScene::restartCallback));
+		CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(CCControlScene::nextCallback));
         
         CCMenu *menu = CCMenu::menuWithItems(item1, item3, item2, NULL);
         menu->setPosition(CCPointZero);
-		item1 setPosition(ccp(screensize.width / 2 - 100, 37));
-		item2 setPosition(ccp(screensize.width / 2, 35));
-		item3 setPosition(ccp(screensize.width / 2 + 100, 37));
+		item1->setPosition(ccp(screensize.width / 2 - 100, 37));
+		item2->setPosition(ccp(screensize.width / 2, 35));
+		item3->setPosition(ccp(screensize.width / 2 + 100, 37));
         
 		addChild(menu ,1);
         return true;
@@ -79,18 +79,17 @@ bool CCControlScene::init()
     return false;
 }
 
-void CCControlScene::previousCallback(CCNode* sender)
+void CCControlScene::previousCallback(CCObject* sender)
 {
     CCDirector::sharedDirector()->replaceScene(CCControlSceneManager::sharedControlSceneManager()->previousControlScene());
 }
 
-void CCControlScene::restartCallback(CCNode* sender)
+void CCControlScene::restartCallback(CCObject* sender)
 {
     CCDirector::sharedDirector()->replaceScene(CCControlSceneManager::sharedControlSceneManager()->currentControlScene());
-
 }
 
-void CCControlScene::nextCallback(CCNode* sender)
+void CCControlScene::nextCallback(CCObject* sender)
 {
     CCDirector::sharedDirector()->replaceScene(CCControlSceneManager::sharedControlSceneManager()->nextControlScene());
 }
