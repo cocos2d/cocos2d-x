@@ -402,6 +402,9 @@
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocoa\CCString.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
