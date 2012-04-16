@@ -821,7 +821,7 @@ void CCNode::visit()
         for( ; i < arrayData->num; i++ )
         {
             pNode = (CCNode*) arrayData->arr[i];
-            if (pNode)
+            if (pNode && pNode->m_nZOrder >= 0 ) 
             {
                 pNode->visit();
             }
