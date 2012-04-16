@@ -54,7 +54,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\Classes;$(SolutionDir)cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -81,7 +81,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\Classes;$(SolutionDir)cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

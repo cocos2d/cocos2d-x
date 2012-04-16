@@ -32,7 +32,7 @@ class CCLayerColor : public CCLayer
     void setBlendFunc(ccBlendFunc Value);
     ccBlendFunc getBlendFunc(void);
 
-    static CCLayerColor * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+    static CCLayerColor * layerWithColor(ccColor4B color, GLfloat width, GLfloat height);
     static CCLayerColor * layerWithColor(ccColor4B color);
 };
 

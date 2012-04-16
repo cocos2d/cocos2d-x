@@ -16,9 +16,6 @@
     <Filter Include="classes\tests\TransitionsTest">
       <UniqueIdentifier>{fb9689c5-553f-4346-bef7-a105b2ee5712}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\tests\ProgressActionsTest">
-      <UniqueIdentifier>{4d6cf257-1df2-412e-bad2-a86fc8c8c28c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="classes\tests\EffectsTest">
       <UniqueIdentifier>{4be7789d-78b1-4840-9662-06db2988f727}</UniqueIdentifier>
     </Filter>
@@ -31,17 +28,11 @@
     <Filter Include="classes\tests\ParticleTest">
       <UniqueIdentifier>{905dd2f4-3138-4b3a-84de-63f93ddaa430}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\tests\EaseActionsTest">
-      <UniqueIdentifier>{6f40b1a3-f116-4701-b51f-696e46334da9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="classes\tests\MotionStreakTest">
       <UniqueIdentifier>{2afa708f-716d-47d3-9a5c-69444fa853a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\DrawPrimitivesTest">
       <UniqueIdentifier>{e7d5c185-fd12-4e4d-9313-6deb91b05b8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\tests\CocosNodeTest">
-      <UniqueIdentifier>{5a7a452a-2040-4f4b-a66d-b29d80c943da}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\TouchesTest">
       <UniqueIdentifier>{3a0f96fe-ebb1-411d-bb2d-a42be092ca10}</UniqueIdentifier>
@@ -78,9 +69,6 @@
     </Filter>
     <Filter Include="classes\tests\RenderTextureTest">
       <UniqueIdentifier>{6669409b-79c8-48af-83cc-705b3149807c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\tests\ChipmunkTest">
-      <UniqueIdentifier>{472ffce1-9d1f-4d36-931f-5e15dccf0c2e}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\Box2dTest">
       <UniqueIdentifier>{00685a5b-e6e1-4feb-acbb-2f42842b9ae9}</UniqueIdentifier>
@@ -145,6 +133,21 @@
     <Filter Include="classes\tests\ExtensionsTest">
       <UniqueIdentifier>{cfa9177f-33ea-481d-a0a9-fbcf5463a37a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\ChipmunkAccelTouchTest">
+      <UniqueIdentifier>{5558c17a-06b8-46c9-a4fb-a4c1d0c1da56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\NodeTest">
+      <UniqueIdentifier>{5a7a452a-2040-4f4b-a66d-b29d80c943da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ActionsProgressTest">
+      <UniqueIdentifier>{4d6cf257-1df2-412e-bad2-a86fc8c8c28c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ActionsEaseTest">
+      <UniqueIdentifier>{6f40b1a3-f116-4701-b51f-696e46334da9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ShaderTest">
+      <UniqueIdentifier>{7c1797b3-c350-4e3c-a8ff-ec9352af2008}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -165,9 +168,6 @@
     <ClCompile Include="..\tests\TransitionsTest\TransitionsTest.cpp">
       <Filter>classes\tests\TransitionsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\ProgressActionsTest\ProgressActionsTest.cpp">
-      <Filter>classes\tests\ProgressActionsTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\tests\EffectsTest\EffectsTest.cpp">
       <Filter>classes\tests\EffectsTest</Filter>
     </ClCompile>
@@ -180,17 +180,11 @@
     <ClCompile Include="..\tests\ParticleTest\ParticleTest.cpp">
       <Filter>classes\tests\ParticleTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\EaseActionsTest\EaseActionsTest.cpp">
-      <Filter>classes\tests\EaseActionsTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\tests\MotionStreakTest\MotionStreakTest.cpp">
       <Filter>classes\tests\MotionStreakTest</Filter>
     </ClCompile>
     <ClCompile Include="..\tests\DrawPrimitivesTest\DrawPrimitivesTest.cpp">
       <Filter>classes\tests\DrawPrimitivesTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\CocosNodeTest\CocosNodeTest.cpp">
-      <Filter>classes\tests\CocosNodeTest</Filter>
     </ClCompile>
     <ClCompile Include="..\tests\TouchesTest\Ball.cpp">
       <Filter>classes\tests\TouchesTest</Filter>
@@ -233,69 +227,6 @@
     </ClCompile>
     <ClCompile Include="..\tests\RenderTextureTest\RenderTextureTest.cpp">
       <Filter>classes\tests\RenderTextureTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Bounce.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\cocos2dChipmunkDemo.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\drawSpace.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Joints.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\LogoSmash.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\MagnetsElectric.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\OneWay.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Planet.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Player.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Plink.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Pump.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\PyramidStack.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\PyramidTopple.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Query.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Sensors.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Simple.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Springies.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Tank.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\TheoJansen.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Tumble.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\UnsafeOps.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
     </ClCompile>
     <ClCompile Include="..\tests\Box2DTest\Box2dTest.cpp">
       <Filter>classes\tests\Box2dTest</Filter>
@@ -411,6 +342,21 @@
     <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest.cpp">
       <Filter>classes\tests\ExtensionsTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.cpp">
+      <Filter>classes\tests\ChipmunkAccelTouchTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\NodeTest\NodeTest.cpp">
+      <Filter>classes\tests\NodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ActionsProgressTest\ActionsProgressTest.cpp">
+      <Filter>classes\tests\ActionsProgressTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ActionsEaseTest\ActionsEaseTest.cpp">
+      <Filter>classes\tests\ActionsEaseTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ShaderTest\ShaderTest.cpp">
+      <Filter>classes\tests\ShaderTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -437,9 +383,6 @@
     <ClInclude Include="..\tests\TransitionsTest\TransitionsTest.h">
       <Filter>classes\tests\TransitionsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\tests\ProgressActionsTest\ProgressActionsTest.h">
-      <Filter>classes\tests\ProgressActionsTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\tests\EffectsTest\EffectsTest.h">
       <Filter>classes\tests\EffectsTest</Filter>
     </ClInclude>
@@ -452,17 +395,11 @@
     <ClInclude Include="..\tests\ParticleTest\ParticleTest.h">
       <Filter>classes\tests\ParticleTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\tests\EaseActionsTest\EaseActionsTest.h">
-      <Filter>classes\tests\EaseActionsTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\tests\MotionStreakTest\MotionStreakTest.h">
       <Filter>classes\tests\MotionStreakTest</Filter>
     </ClInclude>
     <ClInclude Include="..\tests\DrawPrimitivesTest\DrawPrimitivesTest.h">
       <Filter>classes\tests\DrawPrimitivesTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tests\CocosNodeTest\CocosNodeTest.h">
-      <Filter>classes\tests\CocosNodeTest</Filter>
     </ClInclude>
     <ClInclude Include="..\tests\TouchesTest\Ball.h">
       <Filter>classes\tests\TouchesTest</Filter>
@@ -505,15 +442,6 @@
     </ClInclude>
     <ClInclude Include="..\tests\RenderTextureTest\RenderTextureTest.h">
       <Filter>classes\tests\RenderTextureTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tests\ChipmunkTest\ChipmunkDemo.h">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tests\ChipmunkTest\cocos2dChipmunkDemo.h">
-      <Filter>classes\tests\ChipmunkTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tests\ChipmunkTest\drawSpace.h">
-      <Filter>classes\tests\ChipmunkTest</Filter>
     </ClInclude>
     <ClInclude Include="..\tests\Box2DTest\Box2dTest.h">
       <Filter>classes\tests\Box2dTest</Filter>
@@ -736,6 +664,21 @@
     </ClInclude>
     <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest.h">
       <Filter>classes\tests\ExtensionsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.h">
+      <Filter>classes\tests\ChipmunkAccelTouchTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\NodeTest\NodeTest.h">
+      <Filter>classes\tests\NodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ActionsProgressTest\ActionsProgressTest.h">
+      <Filter>classes\tests\ActionsProgressTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ActionsEaseTest\ActionsEaseTest.h">
+      <Filter>classes\tests\ActionsEaseTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ShaderTest\ShaderTest.h">
+      <Filter>classes\tests\ShaderTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
