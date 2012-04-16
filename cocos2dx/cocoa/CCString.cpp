@@ -37,11 +37,16 @@ CCString& CCString::operator= (const CCString& other)
 
 bool CCString::initWithFormatAndValist(const char* format, va_list ap)
 {
+	bool bRet = false;
 	char* pBuf = (char*)malloc(kMaxStringLen);
-	vsnprintf(pBuf, kMaxStringLen, format, ap);
-	m_sString = pBuf;
-	free(pBuf);
-	return true;
+	if (pBuf != NULL)
+	{
+		vsnprintf(pBuf, kMaxStringLen, format, ap);
+		m_sString = pBuf;
+		free(pBuf);
+		bRet = true;
+	}
+	return bRet;
 }
 
 bool CCString::initWithFormat(const char* format, ...)
@@ -152,13 +157,12 @@ CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
 	CCString* pRet = NULL;
 	if (pData != NULL && nLen > 0)
 	{
-		pRet = CCString::stringWithCString("");
 		char* pStr = (char*)malloc(nLen+1);
 		if (pStr != NULL)
 		{
 			pStr[nLen] = '\0';
 			memcpy(pStr, pData, nLen);
-			pRet->m_sString = pStr;
+			pRet = CCString::stringWithCString(pStr);
 			free(pStr);
 		}
 	}
