@@ -25,9 +25,10 @@ THE SOFTWARE.
 #define __CC_FILEUTILS_PLATFORM_H__
 
 #include <string>
-#include "CCDictionary.h"
+#include "CCPlatformMacros.h"
+#include "ccTypes.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 //! @brief  Helper class to handle file operations
 class CC_DLL CCFileUtils
@@ -144,19 +145,6 @@ public:
     */
     static void setResourcePath(const char *pszResourcePath);
 
-    /**
-    @brief   Generate a CCDictionary pointer by file
-    @param   pFileName  The file name of *.plist file
-    @return  The CCDictionary pointer generated from the file
-    */
-    static CCDictionary* dictionaryWithContentsOfFile(const char *pFileName);
-
-	/*
-	@brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the
-	       invoker should call release().
-	*/
-	static CCDictionary* dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
-
 	/**
 	@brief   Get the writeable path
 	@return  The path that can write/read file
@@ -210,6 +198,6 @@ public:
     CC_SYNTHESIZE_READONLY(unsigned long ,  m_uSize,   Size);
 };
 
-NS_CC_END;
+NS_CC_END
 
-#endif	// end of __CC_EGLVIEW_PLATFORM_H__
+#endif	// __CC_FILEUTILS_PLATFORM_H__

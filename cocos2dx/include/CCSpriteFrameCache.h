@@ -126,8 +126,6 @@ public:
 
 private:
 	CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
-	const char * valueForKey(const char* key, CCDictionary* dict);
-	
 protected:
 	CCDictionary* m_pSpriteFrames;
 	CCDictionary* m_pSpriteFramesAliases;

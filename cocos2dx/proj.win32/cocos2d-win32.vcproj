@@ -236,6 +236,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCString.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCZone.cpp"
 				>
 			</File>

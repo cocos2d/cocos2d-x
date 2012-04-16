@@ -24,7 +24,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
+#include "CCString.h"
 #include "CCNode.h"
 #include "CCPointExtension.h"
 #include "support/TransformUtils.h"
@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "CCGLProgram.h"
 // externals
 #include "kazmath/GL/matrix.h"
+
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -452,11 +453,9 @@ void CCNode::cleanup()
 }
 
 
-char * CCNode::description()
+const char* CCNode::description()
 {
-	char *ret = new char[100] ;
-	sprintf(ret, "<CCNode | Tag = %d>", m_nTag);
-	return ret;
+	return CCString::stringWithFormat("<CCNode | Tag = %d>", m_nTag)->getCString();
 }
 
 // lazy allocs

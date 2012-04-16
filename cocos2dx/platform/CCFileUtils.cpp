@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCFileUtils.h"
 #include "CCDirector.h"
+#include "CCDictionary.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 
@@ -239,13 +240,12 @@ public:
         }
 
         CCSAXState curState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
-        CCString *pText = new CCString();
-        pText->m_sString = std::string((char*)ch,0,len);
+        CCString *pText = new CCString(std::string((char*)ch,0,len));
 
         switch(m_tState)
         {
         case SAX_KEY:
-            m_sCurKey = pText->m_sString;
+            m_sCurKey = pText->getCString();
             break;
         case SAX_INT:
         case SAX_REAL:
@@ -291,18 +291,10 @@ std::string& CCFileUtils::removeSuffixFromFile(std::string& path)
     return path;
 }
 
-CCDictionary* CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
-{
-	CCDictionary* ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
-	ret->autorelease();
-
-	return ret;
-}
-
-CCDictionary* CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
 	CCDictMaker tMaker;
-    return tMaker.dictionaryWithContentsOfFile(pFileName);
+	return tMaker.dictionaryWithContentsOfFile(pFileName);
 }
 
 unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)

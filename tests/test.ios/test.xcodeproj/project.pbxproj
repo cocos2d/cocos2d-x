@@ -13,6 +13,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		782A3D2F153BB225002386FE /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 782A3D2E153BB225002386FE /* CCString.cpp */; };
 		784B77561519BF0E00FA820F /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 784B773C1519BF0E00FA820F /* chipmunk.h */; };
 		784B77571519BF0E00FA820F /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = 784B773D1519BF0E00FA820F /* chipmunk_ffi.h */; };
 		784B77581519BF0E00FA820F /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 784B773E1519BF0E00FA820F /* chipmunk_private.h */; };
@@ -602,6 +603,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		782A3D2E153BB225002386FE /* CCString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCString.cpp; sourceTree = "<group>"; };
 		784B773C1519BF0E00FA820F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		784B773D1519BF0E00FA820F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
 		784B773E1519BF0E00FA820F /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
@@ -2175,14 +2177,14 @@
 			isa = PBXGroup;
 			children = (
 				BF31DF1412E979A100D4F513 /* AppDelegate.cpp */,
-				BF31E17712E979A100D4F513 /* controller.cpp */,
-				BF31E1AF12E979A200D4F513 /* testBasic.cpp */,
 				BF31DF1512E979A100D4F513 /* AppDelegate.h */,
+				BF31E17712E979A100D4F513 /* controller.cpp */,
 				BF31E17812E979A100D4F513 /* controller.h */,
+				BF31E1AF12E979A200D4F513 /* testBasic.cpp */,
 				BF31E1B012E979A200D4F513 /* testBasic.h */,
 				BF31E1B112E979A200D4F513 /* testResource.h */,
-				BF31E1B212E979A200D4F513 /* tests.h */,
 				BF31E11812E979A100D4F513 /* tests */,
+				BF31E1B212E979A200D4F513 /* tests.h */,
 			);
 			name = tests;
 			path = ..;
@@ -2554,15 +2556,16 @@
 		BF83589D13276C7700F3C033 /* cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				78E6974A15189A3C0085D6AC /* CCDictionary.cpp */,
-				BF340A45133AE3250035A4D1 /* CCNS.cpp */,
-				BF340A46133AE3250035A4D1 /* CCNS.h */,
 				BF83589E13276C7700F3C033 /* CCAffineTransform.cpp */,
 				BF83589F13276C7700F3C033 /* CCAutoreleasePool.cpp */,
 				BF8358A013276C7700F3C033 /* CCData.cpp */,
+				78E6974A15189A3C0085D6AC /* CCDictionary.cpp */,
 				BF8358A113276C7700F3C033 /* CCGeometry.cpp */,
+				BF340A45133AE3250035A4D1 /* CCNS.cpp */,
+				BF340A46133AE3250035A4D1 /* CCNS.h */,
 				BF8358A213276C7700F3C033 /* CCObject.cpp */,
 				BF8358A313276C7700F3C033 /* CCSet.cpp */,
+				782A3D2E153BB225002386FE /* CCString.cpp */,
 				BF8358A413276C7700F3C033 /* CCZone.cpp */,
 			);
 			path = cocoa;
@@ -3454,6 +3457,7 @@
 				78E6975615189AAE0085D6AC /* CCES2Renderer.m in Sources */,
 				78E6975A15189BEA0085D6AC /* CCVertex.cpp in Sources */,
 				7871C432152093AE007353A3 /* CCTransitionProgress.cpp in Sources */,
+				782A3D2F153BB225002386FE /* CCString.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
