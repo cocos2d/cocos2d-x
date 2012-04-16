@@ -54,9 +54,18 @@ typedef enum
     SAX_ARRAY
 }CCSAXState;
 
+typedef enum
+{
+    SAX_RESULT_NONE = 0,
+    SAX_RESULT_DICT,
+    SAX_RESULT_ARRAY
+}CCSAXResult;
+
 class CCDictMaker : public CCSAXDelegator
 {
 public:
+    CCSAXResult m_eResultType;
+    CCArray* m_pRootArray;
     CCDictionary *m_pRootDict;
     CCDictionary *m_pCurDict;
     std::stack<CCDictionary*> m_tDictStack;
@@ -68,8 +77,10 @@ public:
     std::stack<CCSAXState>  m_tStateStack;
 
 public:
-    CCDictMaker()
-		: m_pRootDict(NULL),
+    CCDictMaker()        
+        : m_eResultType(SAX_RESULT_NONE),
+          m_pRootArray(NULL), 
+          m_pRootDict(NULL),
 		  m_pCurDict(NULL),
           m_tState(SAX_NONE),
           m_pArray(NULL)
@@ -82,6 +93,7 @@ public:
 
     CCDictionary* dictionaryWithContentsOfFile(const char *pFileName)
     {
+        m_eResultType = SAX_RESULT_DICT;
         CCSAXParser parser;
 
         if (false == parser.init("UTF-8"))
@@ -92,6 +104,21 @@ public:
 
         parser.parse(pFileName);
         return m_pRootDict;
+    }
+
+    CCArray* arrayWithContentsOfFile(const char* pFileName)
+    {
+        m_eResultType = SAX_RESULT_ARRAY;
+        CCSAXParser parser;
+
+        if (false == parser.init("UTF-8"))
+        {
+            return NULL;
+        }
+        parser.setDelegator(this);
+
+        parser.parse(pFileName);
+        return m_pArray;
     }
 
     void startElement(void *ctx, const char *name, const char **atts)
@@ -154,10 +181,18 @@ public:
         else if (sName == "array")
         {
             m_tState = SAX_ARRAY;
-			m_pArray = CCArray::array();
-			m_pArray->retain();
+			m_pArray = new CCArray();
+            if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray == NULL)
+            {
+                m_pRootArray = m_pArray;
+				m_pRootArray->retain();
+            }
+            CCSAXState preState = SAX_NONE;
+            if (! m_tStateStack.empty())
+            {
+                preState = m_tStateStack.top();
+            }
 
-            CCSAXState preState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
             if (preState == SAX_DICT)
             {
                 m_pCurDict->setObject(m_pArray, m_sCurKey.c_str());
@@ -295,6 +330,12 @@ CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFi
 {
 	CCDictMaker tMaker;
 	return tMaker.dictionaryWithContentsOfFile(pFileName);
+}
+
+CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
+{
+    CCDictMaker tMaker;
+    return tMaker.arrayWithContentsOfFile(pFileName);
 }
 
 unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
