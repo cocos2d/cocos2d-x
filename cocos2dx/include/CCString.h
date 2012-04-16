@@ -105,6 +105,8 @@ public:
 	std::string m_sString;
 };
 
+#define CCStringMake(str) CCString::stringWithCString(str)
+
 NS_CC_END
 
 #endif //__CCSTRING_H__
