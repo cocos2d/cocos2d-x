@@ -39,48 +39,61 @@ public:
 
 	virtual ~CCString();
 	
-	/** override assignment operator */
+	/* override assignment operator */
 	CCString& operator= (const CCString& other);
 
 	/** init a string with format, it's similar with the c function 'sprintf' */ 
 	bool initWithFormat(const char* format, ...);
 
 	/** convert to int value */
-	inline int intValue() const;
+	int intValue() const;
 
 	/** convert to unsigned int value */
-	inline unsigned int uintValue() const;
+	unsigned int uintValue() const;
 
 	/** convert to float value */
-	inline float floatValue() const;
+	float floatValue() const;
 
 	/** convert to double value */
-	inline double doubleValue() const;
+	double doubleValue() const;
 
 	/** convert to bool value */
-    inline bool boolValue() const;
+    bool boolValue() const;
 
 	/** get the C string */
-	inline const char* getCString() const;
+	const char* getCString() const;
 
 	/** get the length of string */
-	inline unsigned int length() const;
+	unsigned int length() const;
 
-	/** override functions */
+	/* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual bool isEqual(const CCObject* pObject);
 
-	/** static funcitons */
-	/** create a string with c string */
+	/* static funcitons */
+	/** create a string with c string 
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
 	static CCString* stringWithCString(const char* pStr);
 
-	/** create a string with format, it's similar with the c function 'sprintf' */ 
+	/** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
+     *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */ 
 	static CCString* stringWithFormat(const char* format, ...);
 
-	/** create a string with binary data */
+	/** create a string with binary data 
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
 	static CCString* stringWithData(unsigned char* pData, unsigned long nLen);
 
-	/** create a string with a file */
+	/** create a string with a file, 
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
     static CCString* stringWithContentsOfFile(const char* pszFileName);
 
 private:

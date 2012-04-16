@@ -293,7 +293,9 @@ CCDictionary* CCDictionary::dictionaryWithContentsOfFileThreadSafe(const char *p
 
 CCDictionary* CCDictionary::dictionaryWithContentsOfFile(const char *pFileName)
 {
-	return dictionaryWithContentsOfFileThreadSafe(pFileName);
+	CCDictionary* pRet = dictionaryWithContentsOfFileThreadSafe(pFileName);
+    pRet->autorelease();
+    return pRet;
 }
 
 NS_CC_END
