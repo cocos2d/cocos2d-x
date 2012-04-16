@@ -571,9 +571,8 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
 
 	bool bRet = false;
 
-	s3eFile* pFile = s3eFileOpenFromMemory(data, nSize);
-
-	IwAssert(GAME, pFile);
+	// s3eFile* pFile = s3eFileOpenFromMemory(data, nSize);
+	// IwAssert(GAME, pFile);
 
     jpeg_decompress_struct cinfo;
     bzero(&cinfo, sizeof(cinfo));
