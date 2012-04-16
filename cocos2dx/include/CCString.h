@@ -106,6 +106,8 @@ public:
 };
 
 #define CCStringMake(str) CCString::stringWithCString(str)
+#define ccs               CCStringMake
+
 
 NS_CC_END
 

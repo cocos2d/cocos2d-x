@@ -9,7 +9,7 @@
 #include "CCControl.h"
 
 
-class CCMenuPassive : public CCLayer, public CCRGBAProtocol
+class CC_DLL CCMenuPassive : public CCLayer, public CCRGBAProtocol
 {
 		/** Color: conforms with CCRGBAProtocol protocol */
 		CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);

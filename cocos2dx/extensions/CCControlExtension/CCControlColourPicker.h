@@ -33,17 +33,18 @@
 
 
 #include "CCControl.h"
+#include "CCControlUtils.h"
 #include "CCControlHuePicker.h"
 #include "CCControlSaturationBrightnessPicker.h"
 
-class CCControlColourPicker: public CCControl
+class CC_DLL CCControlColourPicker: public CCControl
 {
 	CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_colorValue, ColorValue);
 	virtual void setColorValue(const ccColor3B& colorValue);
 
 protected:
 	HSV m_hsv;
-	 CCControlSaturationBrightnessPicker* m_colourPicker;
+	CCControlSaturationBrightnessPicker* m_colourPicker;
     CCControlHuePicker* m_huePicker;
 
 	CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);   

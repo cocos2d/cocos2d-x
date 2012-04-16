@@ -36,11 +36,8 @@
 
 USING_NS_CC;
 
-
-
-
 /** @class CCControlButton Button control for Cocos2D. */
-class CCControlButton : public CCControl
+class CC_DLL CCControlButton : public CCControl
 {		
 public:
 	virtual ~CCControlButton();

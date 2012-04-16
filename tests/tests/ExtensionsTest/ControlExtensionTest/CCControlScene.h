@@ -23,56 +23,50 @@
  *
  */
 
+#ifndef __CCCONTROLSCENE_H__
+#define __CCCONTROLSCENE_H__
+
 #include "cocos2d.h"
+#include "extensions/CCControlExtension/CCControlExtensions.h"
 
-// 'scene' is an autorelease object.
+USING_NS_CC;
 
 
-// 'layer' is an autorelease object.
-CCControlScene *controlLayer = CCControlScene::node();
-controlLayer->getSceneTitleLabel()->setString(title);
-
-// add layer as a child to scene
-scene->addChild(controlLayer);
-
-// return the scene
-return scene;
-
-#define CONTROL_SCENE_NODE_FUNC(scene) \
-static scene* sceneWithTitle(const char * title) \
+#define CONTROL_SCENE_NODE_FUNC(controlScene) \
+public: \
+static CCScene* sceneWithTitle(const char * title) \
 { \
-    scene *pRet = new scene(); \
-    if (pRet && pRet->init()) \
-    { \
-        pRet->autorelease(); \
-    } \
-    else \
-    { \
-        CC_SAFE_DELETE(pRet); \
-    } \
-    return pRet; \
+	CCScene* pScene = CCScene::node(); \
+	controlScene* controlLayer = new controlScene(); \
+	if (controlLayer && controlLayer->init()) \
+	{ \
+		controlLayer->autorelease(); \
+		controlLayer->getSceneTitleLabel()->setString(title); \
+		pScene->addChild(controlLayer); \
+	} \
+	else \
+	{ \
+		CC_SAFE_DELETE(controlLayer); \
+	} \
+	return pScene; \
 }
+
 
 class CCControlScene : public cocos2d::CCLayer
 {
 public:
+	CCControlScene();
     ~CCControlScene();
-    bool init();
-
-    /**
-     * Returns a CCScene that contains the CCControl example layer.
-     *
-     * @param title The title of the scene.
-     */
-    static cocos2d::CCScene* sceneWithTitle(const char * title);
-
+	bool init();
     // Menu Callbacks
-    void previousCallback(cocos2d::CCNode* sender);
-    void restartCallback(cocos2d::CCNode* sender);
-    void nextCallback(cocos2d::CCNode* sender);
+    void previousCallback(cocos2d::CCObject* sender);
+    void restartCallback(cocos2d::CCObject* sender);
+    void nextCallback(cocos2d::CCObject* sender);
 
     /** Title label of the scene. */
     CC_SYNTHESIZE_RETAIN(cocos2d::CCLabelTTF*, m_pSceneTitleLabel, SceneTitleLabel)
 
-    LAYER_NODE_FUNC(CCControlScene);
+    CONTROL_SCENE_NODE_FUNC(CCControlScene);
 };
+
+#endif /* __CCCONTROLSCENE_H__ */

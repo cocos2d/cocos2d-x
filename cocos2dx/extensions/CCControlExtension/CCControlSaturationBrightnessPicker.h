@@ -38,7 +38,7 @@
 
 USING_NS_CC;
 
-class CCControlSaturationBrightnessPicker : public CCControl
+class CC_DLL CCControlSaturationBrightnessPicker : public CCControl
 {
 	CC_SYNTHESIZE_READONLY(float, m_saturation, Saturation);
 	CC_SYNTHESIZE_READONLY(float, m_brightness, Brightness);

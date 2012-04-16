@@ -26,7 +26,7 @@ enum positions
 	pBottomLeft
 };
 
-class CCScale9Sprite : public CCNode, CCRGBAProtocol
+class CC_DLL CCScale9Sprite : public CCNode, CCRGBAProtocol
 {
 public:
 	CCScale9Sprite();

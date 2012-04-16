@@ -37,7 +37,7 @@ USING_NS_CC;
 
 #define SLIDER_MARGIN_H 24
 #define SLIDER_MARGIN_V 8
-class CCControlSlider: public CCControl
+class CC_DLL CCControlSlider: public CCControl
 {
 	//maunally put in the setters
 	CC_SYNTHESIZE_READONLY(float, m_value, Value);
