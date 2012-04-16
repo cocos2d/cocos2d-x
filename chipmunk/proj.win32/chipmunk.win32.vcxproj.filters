@@ -178,5 +178,11 @@
     <ClCompile Include="..\src\cpVect.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpBBTree.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpSpatialIndex.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
