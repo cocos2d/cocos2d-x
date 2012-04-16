@@ -431,6 +431,22 @@ namespace cocos2d {
         return pRet;
     }
     
+   CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
+   {
+        NSString* pPath = [NSString stringWithUTF8String:pFileName];
+        NSString* pathExtension= [pPath pathExtension];
+        pPath = [pPath stringByDeletingPathExtension];
+        pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
+        NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
+        
+        CCArray* pRet = new CCArray();
+        for (id value in pArray) {
+            static_addItemToCCArray(value, pRet);
+        }
+
+        return pRet;
+   }
+    
     unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
     {
         unsigned char * pBuffer = NULL;
