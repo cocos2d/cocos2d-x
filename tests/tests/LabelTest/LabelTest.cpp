@@ -581,7 +581,7 @@ Atlas6::Atlas6()
 	CCLabelBMFont* label = NULL;
 	//中国
 	label = CCLabelBMFont::labelWithString("中国", "fonts/bitmapFontChinese.fnt", 
-		CCTextAlignmentRight, 200);
+		200, CCTextAlignmentRight);
 	addChild(label);
 	label->setPosition( ccp(s.width / 2.0f, s.height / 2.0f + 50) );
 	label->setAnchorPoint( ccp(1.0f, 0.5f) ) ;
@@ -971,7 +971,7 @@ string LabelTTFChinese::title()
 LabelBMFontChinese::LabelBMFontChinese()
 {
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCLabelBMFont* pLable = CCLabelBMFont::labelWithString("abc中国中国efghi中国中国JKLMn中国", "fonts/bitmapFontChinese.fnt", CCTextAlignmentRight, 300);
+    CCLabelBMFont* pLable = CCLabelBMFont::labelWithString("abc中国中国efghi中国中国JKLMn中国", "fonts/bitmapFontChinese.fnt", 300, CCTextAlignmentRight);
     pLable->setLineBreakWithoutSpace(true);
 	pLable->setPosition(ccp(size.width / 2, size.height /2));
     this->addChild(pLable);
