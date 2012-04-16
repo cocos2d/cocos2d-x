@@ -1,4 +1,4 @@
-
+/*
 typedef enum {
 	//! Translate with it's parent
 	CC_HONOR_PARENT_TRANSFORM_TRANSLATE =  1 << 0,
@@ -13,7 +13,7 @@ typedef enum {
 	CC_HONOR_PARENT_TRANSFORM_ALL		=  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_SKEW,
 
 } ccHonorParentTransform;
-
+*/
 class CCSprite : public CCNode
 {
 	void setDirty(bool bDirty);
@@ -22,22 +22,22 @@ class CCSprite : public CCNode
 	ccV3F_C4B_T2F_Quad getQuad(void);
 
 	CCRect getTextureRect(void);
-	bool isUsesBatchNode(void);
+	//bool isUsesBatchNode(void);
 	bool isTextureRectRotated(void);
 
 	void setAtlasIndex(unsigned int uAtlasIndex);
 	unsigned int getAtlasIndex(void);
-	void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode);
+	//void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode);
 	void setTextureAtlas(CCTextureAtlas *pobTextureAtlas);
 	CCTextureAtlas* getTextureAtlas(void);
-	void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
-	CCSpriteBatchNode* getSpriteBatchNode(void);
-	void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform);
-	ccHonorParentTransform getHonorParentTransform(void);
+	//void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
+	//CCSpriteBatchNode* getSpriteBatchNode(void);
+	//void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform);
+	//ccHonorParentTransform getHonorParentTransform(void);
 	void setBlendFunc(ccBlendFunc blendFunc);
 	ccBlendFunc getBlendFunc(void);
 
-	CCPoint getOffsetPositionInPixels(void);
+	//CCPoint getOffsetPositionInPixels(void);
 
 	void setDirtyRecursively(bool bValue);
 	void setIsRelativeAnchorPoint(bool bRelative);
@@ -61,13 +61,13 @@ class CCSprite : public CCNode
 	CCTexture2D* getTexture(void);
 
 	void updateTransform(void);
-	void useSelfRender(void);
+	//void useSelfRender(void);
     void setTextureRect(CCRect rect);
-	void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
-	void useBatchNode(CCSpriteBatchNode *batchNode);
+	//void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
+	//void useBatchNode(CCSpriteBatchNode *batchNode);
 	void setDisplayFrame(CCSpriteFrame *pNewFrame);
 	bool isFrameDisplayed(CCSpriteFrame *pFrame);
-	CCSpriteFrame* displayedFrame(void);
+	//CCSpriteFrame* displayedFrame(void);
 	void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
 	static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
@@ -77,5 +77,5 @@ class CCSprite : public CCNode
 	static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
   	static CCSprite* spriteWithFile(const char *pszFileName);
 	static CCSprite* spriteWithFile(const char *pszFileName, CCRect rect);
-	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
+	//static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
 };

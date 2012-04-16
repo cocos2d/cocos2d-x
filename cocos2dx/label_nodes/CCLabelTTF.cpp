@@ -113,7 +113,7 @@ bool CCLabelTTF::initWithString(const char *label, const char *fontName, float f
 		CC_SAFE_DELETE(m_pFontName);
         m_pFontName = new std::string(fontName);
 
-		m_fFontSize = fontSize;
+		m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
 		this->setString(label);
 		return true;
 	}
