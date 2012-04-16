@@ -29,7 +29,7 @@ class CCMenuItemLabel : public CCMenuItem
 
 class CCMenuItemAtlasFont : public CCMenuItem
 {
-    static CCMenuItemAtlasFont* itemFromString(const char* value,
+    static CCMenuItemAtlasFont* itemWithString(const char* value,
                                                const char* charMapFile,
                                                int itemWidth,
                                                int itemHeight,
@@ -42,7 +42,7 @@ class CCMenuItemFont : public CCMenuItem
     static int fontSize();
     static void setFontName(const char* name);
     static const char* fontName();
-    static CCMenuItemFont * itemFromString(const char* value);
+    static CCMenuItemFont * itemWithString(const char* value);
 };
 
 class CCMenuItemSprite : public CCMenuItem
@@ -52,9 +52,9 @@ class CCMenuItemSprite : public CCMenuItem
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
 
-    static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite,
+    static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite,
                                                    CCNode* selectedSprite);
-    static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite,
+    static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite,
                                                    CCNode* selectedSprite,
                                                    CCNode* disabledSprite);
 };
@@ -66,9 +66,9 @@ class CCMenuItemImage : public CCMenuItem
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
 
-    static CCMenuItemImage* itemFromNormalImage(const char* normalImage,
+    static CCMenuItemImage* itemWithNormalImage(const char* normalImage,
                                                 const char* selectedImage);
-    static CCMenuItemImage* itemFromNormalImage(const char* normalImage,
+    static CCMenuItemImage* itemWithNormalImage(const char* normalImage,
                                                 const char* selectedImage,
                                                 const char* disabledImage);
 };
