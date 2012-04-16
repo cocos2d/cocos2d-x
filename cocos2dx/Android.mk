@@ -32,6 +32,7 @@ cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCObject.cpp \
 cocoa/CCSet.cpp \
+cocoa/CCString.cpp \
 cocoa/CCZone.cpp \
 cocos2d.cpp \
 CCDirector.cpp \
