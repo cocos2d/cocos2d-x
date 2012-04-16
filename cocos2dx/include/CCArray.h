@@ -74,6 +74,8 @@ class CC_DLL CCArray : public CCObject
 {
 public:
     ~CCArray();
+
+    /* static functions */
 	/** Create an array */
     static CCArray* array();
 	/** Create an array with one object */
@@ -84,6 +86,18 @@ public:
     static CCArray* arrayWithCapacity(unsigned int capacity);
 	/** Create an array with an existing array */
     static CCArray* arrayWithArray(CCArray* otherArray);
+    /**
+     @brief   Generate a CCArray pointer by file
+     @param   pFileName  The file name of *.plist file
+     @return  The CCArray pointer generated from the file
+     */
+	static CCArray* arrayWithContentsOfFile(const char* pFileName);
+    
+	/*
+     @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
+     invoker should call release().
+     */
+	static CCArray* arrayWithContentsOfFileThreadSafe(const char* pFileName);
 
 	/** Initializes an array */
     bool init();
@@ -152,7 +166,9 @@ public:
 
 	void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
 
+    /* override functions */
 	virtual CCObject* copyWithZone(CCZone* pZone);
+
 public:
     ccArray* data;
 	CCArray();

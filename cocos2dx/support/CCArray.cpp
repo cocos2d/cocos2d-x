@@ -116,9 +116,26 @@ CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
 
 CCArray* CCArray::arrayWithArray(CCArray* otherArray)
 {
-    CCArray* pArray = (CCArray*)otherArray->copyWithZone(NULL);
-    pArray->autorelease();
-    return pArray;
+    CCArray* pRet = (CCArray*)otherArray->copy();
+    pRet->autorelease();
+    return pRet;
+}
+
+CCArray* CCArray::arrayWithContentsOfFile(const char* pFileName)
+{
+    CCArray* pRet = arrayWithContentsOfFileThreadSafe(pFileName);
+    if (pRet != NULL)
+    {
+        pRet->autorelease();
+    }
+    return pRet;
+}
+
+extern CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName);
+
+CCArray* CCArray::arrayWithContentsOfFileThreadSafe(const char* pFileName)
+{
+    return ccFileUtils_arrayWithContentsOfFileThreadSafe(pFileName);
 }
 
 bool CCArray::init()
