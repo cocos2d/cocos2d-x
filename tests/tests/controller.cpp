@@ -187,6 +187,9 @@ void TestController::menuCallback(CCObject * pSender)
 void TestController::closeCallback(CCObject * pSender)
 {
     CCDirector::sharedDirector()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	exit(0);
+#endif
 }
 
 void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)

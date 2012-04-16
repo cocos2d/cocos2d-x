@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 #include "CCSAXParser.h"
+#include "CCDictionary.h"
 #include "support/zip_support/unzip.h"
 
 #define MAX_PATH 260
@@ -415,17 +416,9 @@ namespace cocos2d {
         return pRet->m_sString.c_str();
     }
     
-    CCDictionary *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+    CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
     {
-        CCDictionary *ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
-	      ret->autorelease();
-	      
-	      return ret;
-    }
-    
-    CCDictionary *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
-    {
-        const char* pszFullPath = fullPathFromRelativePath(pFileName);
+        const char* pszFullPath = CCFileUtils::fullPathFromRelativePath(pFileName);
         NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
         NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
         
@@ -434,7 +427,7 @@ namespace cocos2d {
             id value = [pDict objectForKey:key];
             static_addValueToCCDict(key, value, pRet);
         }
-
+        
         return pRet;
     }
     
