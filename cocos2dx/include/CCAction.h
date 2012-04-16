@@ -48,7 +48,7 @@ public:
     CCAction(void);
 	virtual ~CCAction(void);
 
-	char * description();
+	const char* description();
 
 	virtual CCObject* copyWithZone(CCZone *pZone);
 

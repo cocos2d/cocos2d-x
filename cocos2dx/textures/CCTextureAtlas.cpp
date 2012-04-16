@@ -187,12 +187,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
 const char* CCTextureAtlas::description()
 {
-	char* pszDescription = (char*)malloc(100*sizeof(char));
-	sprintf(pszDescription, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
-    CCString* pRet = new CCString(pszDescription);
-    pRet->autorelease();
-    CC_SAFE_FREE(pszDescription);
-	return pRet->c_str();
+	return CCString::stringWithFormat("<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads)->getCString();
 }
 
 

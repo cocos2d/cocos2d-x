@@ -137,6 +137,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\cocoa\CCNS.cpp" />
     <ClCompile Include="..\cocoa\CCObject.cpp" />
     <ClCompile Include="..\cocoa\CCSet.cpp" />
+    <ClCompile Include="..\cocoa\CCString.cpp" />
     <ClCompile Include="..\cocoa\CCZone.cpp" />
     <ClCompile Include="..\effects\CCGrabber.cpp" />
     <ClCompile Include="..\effects\CCGrid.cpp" />

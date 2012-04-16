@@ -189,11 +189,9 @@ void CCTextureCache::purgeSharedTextureCache()
 }
 
 
-char * CCTextureCache::description()
+const char* CCTextureCache::description()
 {
-	char *ret = new char[100];
-	sprintf(ret, "<CCTextureCache | Number of textures = %u>", m_pTextures->count());
-	return ret;
+	return CCString::stringWithFormat("<CCTextureCache | Number of textures = %u>", m_pTextures->count())->getCString();
 }
 
 void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector)
@@ -547,7 +545,7 @@ void CCTextureCache::removeUnusedTextures()
 		if (value->retainCount() == 1)
 		{
 			CCLOG("cocos2d: CCTextureCache: removing unused texture: %s", pElement->getStrKey());
-			m_pTextures->removeObjectForKey(pElement->getStrKey());
+			m_pTextures->removeObjectForElememt(pElement);
 		}
 	}
 }
@@ -555,15 +553,12 @@ void CCTextureCache::removeUnusedTextures()
 void CCTextureCache::removeTexture(CCTexture2D* texture)
 {
 	if( ! texture )
+	{
 		return;
+	}
 
 	CCArray* keys = m_pTextures->allKeysForObject(texture);
-	CCObject* pObj;
-	CCARRAY_FOREACH(keys, pObj)
-	{
-		CCString* pKey = (CCString*)pObj;
-		m_pTextures->removeObjectForKey(pKey->c_str());
-	}
+	m_pTextures->removeObjectsForKeys(keys);
 }
 
 void CCTextureCache::removeTextureForKey(const char *textureKeyName)

@@ -214,7 +214,7 @@ void CCTMXLayer::parseInternalProperties()
 			float alphaFuncValue = 0.0f;
 			if (alphaFuncVal != NULL)
 			{
-				alphaFuncValue = alphaFuncVal->toFloat();
+				alphaFuncValue = alphaFuncVal->floatValue();
 			}
 			setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest));
 
@@ -225,7 +225,7 @@ void CCTMXLayer::parseInternalProperties()
 		}
 		else
 		{
-			m_nVertexZvalue = vertexz->toInt();
+			m_nVertexZvalue = vertexz->intValue();
 		}
 	}
 }

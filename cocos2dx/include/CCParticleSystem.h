@@ -391,19 +391,6 @@ public:
 
 	virtual void update(ccTime dt);
 	virtual void updateWithNoTime(void);
-private:
-	/** Private method, return the string found by key in dict.
-	@return "" if not found; return the string if found.
-	*/
-	inline const char * valueForKey(const char *key, CCDictionary *dict)
-	{
-		if (dict)
-		{
-			CCString *pString = (CCString*)dict->objectForKey(key);
-			return pString ? pString->m_sString.c_str() : "";
-		}
-		return "";
-	}
 };
 
 NS_CC_END
