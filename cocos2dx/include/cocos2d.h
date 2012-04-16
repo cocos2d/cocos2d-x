@@ -120,7 +120,9 @@ THE SOFTWARE.
 #include "CCGL.h"
 
 // extensions
-#include "extensions/CCNotificationCenter.h"
+#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "extensions/CCControlExtension/CCControlExtensions.h"
+
 // Shaders
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"
