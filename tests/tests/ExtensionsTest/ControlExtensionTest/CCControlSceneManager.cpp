@@ -25,6 +25,7 @@
 
 #include "CCControlSceneManager.h"
 #include "CCControlScene.h"
+#include "CCControlButtonTest/CCControlButtonTest.h"
 
 USING_NS_CC;
 
@@ -95,9 +96,9 @@ CCScene *CCControlSceneManager::currentControlScene()
 //     case kCCControlSliderTest: 
 //     case kCCControlColourPickerTest:
 //     case kCCControlSwitchTest:
-    case kCCControlButtonTest_HelloVariableSize:return CCControlButtonTest_HelloVariableSize::node();
-    case kCCControlButtonTest_Event:return CCControlButtonTest_Event::node();
-    case kCCControlButtonTest_Styling:return CCControlButtonTest_Styling::node();
+    case kCCControlButtonTest_HelloVariableSize:return CCControlButtonTest_HelloVariableSize::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
+    case kCCControlButtonTest_Event:return CCControlButtonTest_Event::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
+    case kCCControlButtonTest_Styling:return CCControlButtonTest_Styling::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     }
     
 //    return nextControlScene::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);

@@ -23,22 +23,26 @@
  *
  */
 
-#include "ExtensionsTest/ControlExtensionTest/CCControlScene.h"
+#ifndef __CCCONTROLBUTTONTEST_H__
+#define __CCCONTROLBUTTONTEST_H__
+
+#include "../CCControlScene.h"
 
 class CCControlButtonTest_HelloVariableSize : public CCControlScene
 {
 public:
-    CCControlButtonTest_HelloVariableSize();
+    bool init();
     /** Creates and return a button with a default background and title color. */
     CCControlButton *standardButtonWithTitle(const char * title);
 
-    SCENE_NODE_FUNC(CCControlButtonTest_HelloVariableSize)
+    CONTROL_SCENE_NODE_FUNC(CCControlButtonTest_HelloVariableSize)
 };
 
 class CCControlButtonTest_Event : public CCControlScene
 {
 public:
-    CCControlButtonTest_Event();
+	~CCControlButtonTest_Event();
+    bool init();
     void touchDownAction(CCObject *sender);
     void touchDragInsideAction(CCObject *sender);
     void touchDragOutsideAction(CCObject *sender);
@@ -50,15 +54,17 @@ public:
 protected:
     CCLabelTTF *displayEvents;
     CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
-    SCENE_NODE_FUNC(CCControlButtonTest_Event)
+    CONTROL_SCENE_NODE_FUNC(CCControlButtonTest_Event)
 };
 
 
 class CCControlButtonTest_Styling : public CCControlScene
 {
 public:
-    CCControlButtonTest_Styling();
+    bool init();
     CCControlButton *standardButtonWithTitle(const char *title);
-    SCENE_NODE_FUNC(CCControlButtonTest_Styling)
+    CONTROL_SCENE_NODE_FUNC(CCControlButtonTest_Styling)
 };
 
+
+#endif /* __CCCONTROLBUTTONTEST_H__ */

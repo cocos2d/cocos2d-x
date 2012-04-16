@@ -22,8 +22,12 @@
  * THE SOFTWARE.
  *
  */
+#ifndef __CCCONTROLSCENEMANAGER_H__
+#define __CCCONTROLSCENEMANAGER_H__
 
 #include "cocos2d.h"
+
+USING_NS_CC;
 
 class CCControlSceneManager : public cocos2d::CCObject
 {
@@ -46,3 +50,4 @@ public:
     CC_SYNTHESIZE(int, m_nCurrentControlSceneId, CurrentControlSceneId)
 };
 
+#endif /* __CCCONTROLSCENEMANAGER_H__ */
