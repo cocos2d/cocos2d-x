@@ -523,7 +523,7 @@ void CCSprite::updateTransform(void)
     {
 		arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCSprite*);
 	}
-#if 0//CC_SPRITE_DEBUG_DRAW
+#if CC_SPRITE_DEBUG_DRAW
 	// draw bounding box
 	CCPoint vertices[4] = {
 		ccp( m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y ),
@@ -594,13 +594,13 @@ void CCSprite::draw(void)
 	ccDrawPoly(vertices, 4, true);
 #elif CC_SPRITE_DEBUG_DRAW == 2
 	// draw texture box
-	CGSize s = self.textureRect.size;
-	CGPoint offsetPix = self.offsetPosition;
-	CGPoint vertices[4] = {
+	CCSize s = this->getTextureRect().size;
+	CCPoint offsetPix = this->getOffsetPosition();
+	CCPoint vertices[4] = {
 		ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
 		ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
 	};
-	ccDrawPoly(vertices, 4, YES);
+	ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
 
 	CC_INCREMENT_GL_DRAWS(1);
