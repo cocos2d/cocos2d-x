@@ -1,0 +1,33 @@
+var director = cocos.Director.sharedDirector();
+var scene = new cocos.Scene();
+scene.init();
+
+// our test sprite
+var sprite = new cocos.Sprite();
+sprite.initWithFile("Icon.png");
+var pt = new cocos.Point();
+pt.x = 240;
+pt.y = 160;
+sprite.position = pt;
+
+// will call "update" every frame if there's an update property
+sprite.scheduleUpdate();
+sprite.speed = new cocos.Point();
+sprite.speed.x = Math.random() * 10 - 5;
+sprite.speed.y = Math.random() * 10 - 5;
+
+// the actual update function
+sprite.update = function () {
+	var curPos = this.position;
+	curPos.x += this.speed.x;
+	curPos.y += this.speed.y;
+	this.position = curPos;
+	if (curPos.x >= 480 || curPos.x <= 0) this.speed.x *= -1;
+	if (curPos.y >= 320 || curPos.y <= 0) this.speed.y *= -1;
+};
+
+// adds the sprite to the scene
+scene.addChild(sprite);
+
+// let the games begin
+director.runWithScene(scene);
