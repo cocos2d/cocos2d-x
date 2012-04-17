@@ -57,11 +57,18 @@ static void lazy_init( void )
 		shader_ = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_Position_uColor);
 
 		colorLocation_ = glGetUniformLocation( shader_->getProgram(), "u_color");
+    CHECK_GL_ERROR_DEBUG();
 		pointSizeLocation_ = glGetUniformLocation( shader_->getProgram(), "u_pointSize");
+    CHECK_GL_ERROR_DEBUG();
 
 		initialized = true;
 	}
+}
 
+// When back to foreground on android, we want to it to inilialize again
+void ccDrawInit()
+{
+    initialized = false;
 }
 
 void ccDrawPoint( const CCPoint& point )
@@ -132,11 +139,16 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
 	};
 
 	shader_->use();
+    CHECK_GL_ERROR_DEBUG();
 	shader_->setUniformForModelViewProjectionMatrix();
+    CHECK_GL_ERROR_DEBUG();
 	shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color_.r, 1);
+    CHECK_GL_ERROR_DEBUG();
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    CHECK_GL_ERROR_DEBUG();
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    CHECK_GL_ERROR_DEBUG();
 	glDrawArrays(GL_LINES, 0, 2);
 
 	CC_INCREMENT_GL_DRAWS(1);
