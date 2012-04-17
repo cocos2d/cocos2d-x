@@ -49,6 +49,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/** initlialize context */
+void CC_DLL ccDrawInit();
+
 /** draws a point given x and y coordinate measured in points */
 void CC_DLL ccDrawPoint( const CCPoint& point );
 
