@@ -139,6 +139,10 @@ public:
 	const char* fragmentShaderLog();
 	/** returns the program error log */
 	const char* programLog();
+    
+    // reload all shaders, this function is designed for android
+    // when opengl context lost, so don't call it.
+    void reset();
 	
 	inline const GLuint getProgram() { return m_uProgram; }
 
