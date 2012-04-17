@@ -69,6 +69,7 @@ THE SOFTWARE.
 #include "CCActionTiledGrid.h"
 #include "CCActionGrid3D.h"
 #include "CCActionGrid.h"
+#include "CCActionTween.h"
 #include "CCLabelBMFont.h"
 #include "CCParallaxNode.h"
 #include "CCTileMapAtlas.h"
@@ -119,8 +120,6 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "CCGL.h"
 
-// extensions
-#include "extensions/CCNotificationCenter.h"
 // Shaders
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"
@@ -136,6 +135,9 @@ THE SOFTWARE.
 //
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
+
+// extensions
+#include "cocos2dExt.h"
 
 namespace   cocos2d {
 
