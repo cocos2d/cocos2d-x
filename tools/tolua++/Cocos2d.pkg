@@ -79,7 +79,6 @@ $pfile "CCParticleSystemQuad.pkg"
 $pfile "CCTexture2D.pkg"
 $pfile "CCTextureAtlas.pkg"
 $pfile "CCTextureCache.pkg"
-$pfile "CCTexturePVR.pkg"
 
 // platform
 $pfile "CCApplication.pkg"

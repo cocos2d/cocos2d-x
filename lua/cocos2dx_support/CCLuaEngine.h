@@ -61,7 +61,7 @@ public:
     /**
      @brief Remove Lua function reference
      */
-    virtual void removeLuaHandler(int nHandler);
+    virtual void removeLuaHandler(LUA_HANDLE nHandler);
     
     /**
      @brief Add a path to find lua files in
@@ -97,22 +97,22 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0);
-    virtual int executeFunctionWithIntegerData(int nHandler, int data);
-    virtual int executeFunctionWithFloatData(int nHandler, float data);
-    virtual int executeFunctionWithBooleanData(int nHandler, bool data);
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);    
+    virtual int executeFunctionByHandler(LUA_HANDLE nHandler, int numArgs = 0);
+    virtual int executeFunctionWithIntegerData(LUA_HANDLE nHandler, int data);
+    virtual int executeFunctionWithFloatData(LUA_HANDLE nHandler, float data);
+    virtual int executeFunctionWithBooleanData(LUA_HANDLE nHandler, bool data);
+    virtual int executeFunctionWithCCObject(LUA_HANDLE nHandler, CCObject* pObject, const char* typeName);    
     virtual int pushIntegerToLuaStack(int data);
     virtual int pushFloatToLuaStack(int data);
     virtual int pushBooleanToLuaStack(int data);
     virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName);
     
     // functions for excute touch event
-    virtual int executeTouchEvent(int nHandler, int eventType, cocos2d::CCTouch *pTouch);
-    virtual int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches);
+    virtual int executeTouchEvent(LUA_HANDLE nHandler, int eventType, cocos2d::CCTouch *pTouch);
+    virtual int executeTouchesEvent(LUA_HANDLE nHandler, int eventType, cocos2d::CCSet *pTouches);
     
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, cocos2d::ccTime dt);
+    virtual int executeSchedule(LUA_HANDLE nHandler, cocos2d::ccTime dt);
     
     // Add lua loader, now it is used on android
     virtual void addLuaLoader(lua_CFunction func);
@@ -126,7 +126,7 @@ private:
     }
     
     bool init(void);
-    bool pushFunctionByHandler(int nHandler);
+    bool pushFunctionByHandler(LUA_HANDLE nHandler);
     
     lua_State* m_state;
 };

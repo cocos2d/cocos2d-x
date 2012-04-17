@@ -156,14 +156,14 @@ namespace   cocos2d {
          node:setPositionY(y)
          node:setPositionInPixels(x, y)     -- pass x, y values to C++
          */
-        const CCPoint& getPositionLua(void);
-        void getPosition(float* x, float* y);
-        float getPositionX(void);
-        float getPositionY(void);
-        void setPositionX(float x);
-        void setPositionY(float y);
-        void setPosition(float x, float y);
-        void setPositionInPixels(float x, float y);
+        virtual const CCPoint& getPositionLua(void);
+        virtual void getPosition(float* x, float* y);
+        virtual float getPositionX(void);
+        virtual float getPositionY(void);
+        virtual void setPositionX(float x);
+        virtual void setPositionY(float y);
+        virtual void setPosition(float x, float y);
+        virtual void setPositionInPixels(float x, float y);
 
         /** The X skew angle of the node in degrees.
          This angle describes the shear distortion in the X direction.
