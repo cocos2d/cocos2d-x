@@ -64,7 +64,13 @@ Developers:
         
     folecr
         contribute for Android module building
-
+        
+	  Yannick Loriot
+	  		author of CCControlExtension of cocos2d-iphone port.
+	  
+	  Angus Comrie
+	  		contributes cocos2d-x port of CCControlExtension
+	  		
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, dicuss the engine usage in forum & QQ groups!
 Special thanks to Ricardo Quesada for giving us lots of guidances & suggestions.
