@@ -1,9 +1,10 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
+#include "ccShaders.h"
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	6
+#define MAX_LAYER	7
 
 static CCLayer* createShaderLayer(int nIndex)
 {
@@ -15,6 +16,7 @@ static CCLayer* createShaderLayer(int nIndex)
 	case 3: return new ShaderHeart();
 	case 4: return new ShaderFlower();
 	case 5: return new ShaderPlasma();
+    case 6: return new ShaderBlur();
 	}
 
 	return NULL;
@@ -428,6 +430,189 @@ std::string ShaderPlasma::title()
 std::string ShaderPlasma::subtitle()
 {
 	return "Plasma";
+}
+
+// ShaderBlur
+
+class SpriteBlur : public CCSprite
+{
+public:
+    void setBlurSize(CCFloat f);
+    bool initWithTexture(CCTexture2D* texture, const CCRect&  rect);
+    void draw();
+
+    static SpriteBlur* spriteWithFile(const char *pszFileName);
+
+    CCPoint blur_;
+    GLfloat	sub_[4];
+
+    GLuint	blurLocation;
+    GLuint	subLocation;
+};
+
+SpriteBlur* SpriteBlur::spriteWithFile(const char *pszFileName)
+{
+    SpriteBlur* pRet = new SpriteBlur();
+    if (pRet && pRet->initWithFile(pszFileName))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    
+    return pRet;
+}
+
+bool SpriteBlur::initWithTexture(CCTexture2D* texture, const CCRect& rect)
+{
+    if( CCSprite::initWithTexture(texture, rect) ) 
+    {
+        CCSize s = getTexture()->getContentSizeInPixels();
+
+        blur_ = ccp(1/s.width, 1/s.height);
+        sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
+
+        GLchar * fragSource = (GLchar*) CCString::stringWithContentsOfFile(
+            CCFileUtils::fullPathFromRelativePath("Shaders/example_Blur.fsh"))->getCString();
+        CCGLProgram* pProgram = new CCGLProgram();
+        pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+        setShaderProgram(pProgram);
+        pProgram->release();
+
+        CHECK_GL_ERROR_DEBUG();
+
+        getShaderProgram()->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+        getShaderProgram()->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+        getShaderProgram()->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+
+        CHECK_GL_ERROR_DEBUG();
+
+        getShaderProgram()->link();
+
+        CHECK_GL_ERROR_DEBUG();
+
+        getShaderProgram()->updateUniforms();
+
+        CHECK_GL_ERROR_DEBUG();
+
+        subLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "substract");
+        blurLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "blurSize");
+
+        CHECK_GL_ERROR_DEBUG();
+        return true;
+    }
+
+    return false;
+}
+
+void SpriteBlur::draw()
+{
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
+    ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
+
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformForModelViewProjectionMatrix();
+    getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
+    getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
+
+    ccGLBindTexture2D(  getTexture()->getName() );
+
+    //
+    // Attributes
+    //
+#define kQuadSize sizeof(m_sQuad.bl)
+    long offset = (long)&m_sQuad;
+
+    // vertex
+    int diff = offsetof( ccV3F_C4B_T2F, vertices);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+
+    // texCoods
+    diff = offsetof( ccV3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+
+    // color
+    diff = offsetof( ccV3F_C4B_T2F, colors);
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    CC_INCREMENT_GL_DRAWS(1);
+}
+
+void SpriteBlur::setBlurSize(CCFloat f)
+{
+    CCSize s = getTexture()->getContentSizeInPixels();
+
+    blur_ = ccp(1/s.width, 1/s.height);
+    blur_ = ccpMult(blur_,f);
+}
+
+// ShaderBlur
+
+ShaderBlur::ShaderBlur()
+{
+    init();
+}
+
+std::string ShaderBlur::title()
+{
+    return "Shader: Frag shader";
+}
+
+std::string ShaderBlur::subtitle()
+{
+     return "Gaussian blur";
+}
+
+CCControlSlider* ShaderBlur::createSliderCtl()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+
+    CCControlSlider *slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+    slider->setAnchorPoint(ccp(0.5f, 1.0f));
+    slider->setMinimumValue(0.0f); // Sets the min value of range
+    slider->setMaximumValue(3.0f); // Sets the max value of range
+    slider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 3.0f));
+
+    // When the value of the slider will change, the given selector will be call
+    slider->addTargetWithActionForControlEvents(this, menu_selector(ShaderBlur::sliderAction), CCControlEventValueChanged);
+
+    return slider;
+ 
+}
+
+bool ShaderBlur::init()
+{
+    if( ShaderTestDemo::init() ) 
+    {
+        blurSprite = SpriteBlur::spriteWithFile("Images/grossini.png");
+
+        CCSprite *sprite = CCSprite::spriteWithFile("Images/grossini.png");
+
+        CCSize s = CCDirector::sharedDirector()->getWinSize();
+        blurSprite->setPosition(ccp(s.width/3, s.height/2));
+        sprite->setPosition(ccp(2*s.width/3, s.height/2));
+
+        addChild(blurSprite);
+        addChild(sprite);
+
+        sliderCtl = createSliderCtl();
+
+        addChild(sliderCtl);
+        return true;
+    }
+
+    return false;
+}
+
+void ShaderBlur::sliderAction(CCObject* sender)
+{
+    CCControlSlider* pSlider = (CCControlSlider*)sender;
+    blurSprite->setBlurSize(pSlider->getValue());
 }
 
 ///---------------------------------------

@@ -80,6 +80,21 @@ public:
 	virtual bool init();
 };
 
+class SpriteBlur;
+class ShaderBlur : public ShaderTestDemo
+{
+public:
+    ShaderBlur();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual bool init();
+    CCControlSlider* createSliderCtl();
+    void sliderAction(CCObject* sender);
+protected:
+    SpriteBlur *blurSprite;
+    CCControlSlider* sliderCtl;
+};
+
 /// can not implement SpriteBlur, because we don't have slider now
 
 class ShaderNode : public CCNode
