@@ -111,8 +111,8 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
  void CCControlSlider::setValue(float value)
  {
 	 //clamp between the two bounds
-	 value=max(value, m_minimumValue);
-	 value=min(value, m_maximumValue);
+	 value=MAX(value, m_minimumValue);
+	 value=MIN(value, m_maximumValue);
 
 	 //if we're snapping
 	 if (m_snappingInterval>=0)

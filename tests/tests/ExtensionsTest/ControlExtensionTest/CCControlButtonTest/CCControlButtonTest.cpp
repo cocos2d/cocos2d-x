@@ -23,7 +23,7 @@
  *
  */
 
-#include "ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.h"
+#include "CCControlButtonTest.h"
 
 bool CCControlButtonTest_HelloVariableSize::init()
 {
