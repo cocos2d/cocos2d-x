@@ -106,6 +106,7 @@ CCParticleSystem::CCParticleSystem()
 	,m_fEndSpinVar(0)
 	,m_fEmissionRate(0)
 	,m_uTotalParticles(0)
+    ,m_fTimeScale(1.0f)
 	,m_pTexture(NULL)
 	,m_bIsBlendAdditive(false)
 	,m_ePositionType(kCCPositionTypeFree)
@@ -530,6 +531,7 @@ bool CCParticleSystem::isFull()
 // ParticleSystem - MainLoop
 void CCParticleSystem::update(ccTime dt)
 {
+    dt *= m_fTimeScale;
 	if( m_bIsActive && m_fEmissionRate )
 	{
 		float rate = 1.0f / m_fEmissionRate;
@@ -1042,6 +1044,14 @@ unsigned int CCParticleSystem::getTotalParticles()
 void CCParticleSystem::setTotalParticles(unsigned int var)
 {
 	m_uTotalParticles = var;
+}
+float CCParticleSystem::getTimeScale()
+{
+    return m_fTimeScale;
+}
+void CCParticleSystem::setTimeScale(float fTimeScale)
+{
+    m_fTimeScale = fTimeScale;
 }
 ccBlendFunc CCParticleSystem::getBlendFunc()
 {
