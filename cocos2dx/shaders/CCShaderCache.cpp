@@ -31,14 +31,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#define kCCShader_PositionTextureColor			"ShaderPositionTextureColor"
-#define kCCShader_PositionTextureColorAlphaTest	"ShaderPositionTextureColorAlphaTest"
-#define kCCShader_PositionColor					"ShaderPositionColor"
-#define kCCShader_PositionTexture				"ShaderPositionTexture"
-#define kCCShader_PositionTexture_uColor		"ShaderPositionTexture_uColor"
-#define kCCShader_PositionTextureA8Color		"ShaderPositionTextureA8Color"
-#define kCCShader_Position_uColor				"ShaderPosition_uColor"
-
 enum {
 	kCCShaderType_PositionTextureColor,
     kCCShaderType_PositionTextureColorAlphaTest,
