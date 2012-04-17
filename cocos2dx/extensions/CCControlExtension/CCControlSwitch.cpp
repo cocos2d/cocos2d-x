@@ -41,7 +41,7 @@ class CCControlSwitchSprite : public CCSprite, public CCActionTweenDelegate
 public:
     CCControlSwitchSprite();
     virtual ~CCControlSwitchSprite();
-    bool CCControlSwitchSprite::initWithMaskSprite(
+    bool initWithMaskSprite(
         CCSprite *maskSprite, 
         CCSprite *onSprite, 
         CCSprite *offSprite,
