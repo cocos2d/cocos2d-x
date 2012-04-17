@@ -32,11 +32,10 @@
 #ifndef __CCCONTROL_SATURATION_PICKER_H__
 #define __CCCONTROL_SATURATION_PICKER_H__
 
-#include "cocos2d.h"
 #include "CCControl.h"
 #include "CCInvocation.h"
 
-USING_NS_CC;
+NS_CC_BEGIN
 
 class CC_DLL CCControlSaturationBrightnessPicker : public CCControl
 {
@@ -68,5 +67,7 @@ protected:
 	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 };
+
+NS_CC_END
 
 #endif

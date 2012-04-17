@@ -1,5 +1,7 @@
 #include "CCInvocation.h"
 
+NS_CC_BEGIN
+
 CCInvocation::CCInvocation(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent)
 {
 	m_target=target;
@@ -14,3 +16,5 @@ void CCInvocation::invoke(CCObject* sender)
 		(m_target->*m_action)(sender);
 	}				
 }
+
+NS_CC_END

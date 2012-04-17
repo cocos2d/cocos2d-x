@@ -659,6 +659,10 @@
 				RelativePath="..\include\cocos2d.h"
 				>
 			</File>
+			<File
+				RelativePath="..\include\cocos2dExt.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="label_nodes"

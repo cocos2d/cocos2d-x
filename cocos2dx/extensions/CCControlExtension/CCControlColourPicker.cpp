@@ -29,6 +29,11 @@
  */
 
 #include "CCControlColourPicker.h"
+#include "CCPointExtension.h"
+#include "CCSpriteFrameCache.h"
+#include "CCSpriteBatchNode.h"
+
+NS_CC_BEGIN
 
 bool CCControlColourPicker::init()
 {
@@ -36,10 +41,10 @@ bool CCControlColourPicker::init()
 	{
 		setIsTouchEnabled(true);
         // Cache the sprites
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("CCControlColourPickerSpriteSheet.plist");
+		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
 		
         // Create the sprite batch node
-		CCSpriteBatchNode *spriteSheet  = CCSpriteBatchNode::batchNodeWithFile("CCControlColourPickerSpriteSheet.png");
+		CCSpriteBatchNode *spriteSheet  = CCSpriteBatchNode::batchNodeWithFile("extensions/CCControlColourPickerSpriteSheet.png");
 		addChild(spriteSheet);
         
         // MIPMAP
@@ -59,8 +64,8 @@ bool CCControlColourPicker::init()
 		CCPoint backgroundPointZero = ccpSub(m_background->getPosition(), ccp (m_background->getContentSize().width / 2, m_background->getContentSize().height / 2));
         
         // Setup panels . currently hard-coded...
-        float hueShift                = 16;
-        float colourShift             = 56;
+        float hueShift                = 8;
+        float colourShift             = 28;
         
 		m_huePicker=CCControlHuePicker::pickerWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
 		m_colourPicker=CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
@@ -152,3 +157,5 @@ bool CCControlColourPicker::ccTouchBegan(CCTouch* touch, CCEvent* pEvent)
 {
 	return false;
 }
+
+NS_CC_END

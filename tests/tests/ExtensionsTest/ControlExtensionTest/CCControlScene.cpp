@@ -47,12 +47,12 @@ bool CCControlScene::init()
         CCSize screensize = CCDirector::sharedDirector()->getWinSize();
 
         // Add the generated background
-		CCSprite *background = CCSprite::spriteWithFile("Images/background_ex.png");
+		CCSprite *background = CCSprite::spriteWithFile("extensions/background.png");
         background->setPosition(ccp(screensize.width / 2, screensize.height / 2));
         addChild(background);
         
         // Add the ribbon
-        CCScale9Sprite *ribbon = CCScale9Sprite::spriteWithFile("Images/ribbon.png", CCRectMake(1, 1, 48, 55));
+        CCScale9Sprite *ribbon = CCScale9Sprite::spriteWithFile("extensions/ribbon.png", CCRectMake(1, 1, 48, 55));
         ribbon->setContentSize(CCSizeMake(screensize.width, 57));
         ribbon->setPosition(ccp(screensize.width / 2.0f, screensize.height - ribbon->getContentSize().height / 2.0f));
         addChild(ribbon);

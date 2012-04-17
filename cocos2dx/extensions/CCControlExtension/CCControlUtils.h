@@ -32,8 +32,9 @@
 #ifndef __CCCONTROL_UTILS_H__
 #define __CCCONTROL_UTILS_H__
 
-#include "cocos2d.h"
-USING_NS_CC;
+#include "CCSprite.h"
+
+NS_CC_BEGIN
 
 typedef struct
 {
@@ -67,5 +68,7 @@ public:
     static RGBA RGBfromHSV(HSV value);
 	static CCRect CCRectUnion(const CCRect& src1, const CCRect& src2);
 };
+
+NS_CC_END
 
 #endif

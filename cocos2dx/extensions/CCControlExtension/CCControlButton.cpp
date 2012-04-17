@@ -26,8 +26,14 @@
 
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
+#include "CCPointExtension.h"
+#include "CCLabelTTF.h"
+#include "CCAction.h"
+#include "CCActionInterval.h"
 
 using namespace std;
+
+NS_CC_BEGIN
 
 enum
 {
@@ -455,3 +461,5 @@ void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 	setIsHighlighted(false);
 	sendActionsForControlEvents(CCControlEventTouchCancel);
 }
+
+NS_CC_END

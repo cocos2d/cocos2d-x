@@ -29,12 +29,11 @@
 #ifndef __CCCONTROL_BUTTON_H__
 #define __CCCONTROL_BUTTON_H__
 
-#include "cocos2d.h"
 #include "CCControl.h"
 #include "CCInvocation.h"
 #include "CCScale9Sprite.h"
 
-USING_NS_CC;
+NS_CC_BEGIN
 
 /** @class CCControlButton Button control for Cocos2D. */
 class CC_DLL CCControlButton : public CCControl
@@ -181,4 +180,7 @@ public:
 	virtual void setBackgroundSpriteForState(CCScale9Sprite* sprite, CCControlState state);
 
 };
+
+NS_CC_END
+
 #endif

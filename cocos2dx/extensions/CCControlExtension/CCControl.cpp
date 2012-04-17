@@ -27,6 +27,12 @@
  */
 
 #include "CCControl.h"
+#include "CCDirector.h"
+#include "CCTouchDispatcher.h"
+#include "CCMenu.h"
+#include "CCTouch.h"
+
+NS_CC_BEGIN
 
 CCControl::CCControl()
 {
@@ -292,3 +298,5 @@ CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
     }    
     return invocationList;
 }
+
+NS_CC_END

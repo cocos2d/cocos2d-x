@@ -135,6 +135,9 @@ THE SOFTWARE.
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 
+// extensions
+#include "cocos2dExt.h"
+
 namespace   cocos2d {
 
 const char* cocos2dVersion();

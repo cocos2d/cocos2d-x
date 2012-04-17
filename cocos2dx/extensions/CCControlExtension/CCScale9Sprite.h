@@ -9,9 +9,15 @@
 #ifndef __CCScale9Sprite_H__
 #define __CCScale9Sprite_H__
 
+#include "CCNode.h"
+#include "CCProtocols.h"
 
-#include "cocos2d.h"
-using namespace cocos2d;
+
+NS_CC_BEGIN
+
+class CCSprite;
+class CCSpriteBatchNode;
+class CCSpriteFrame;
 
 enum positions
 {
@@ -269,5 +275,7 @@ public:
 	virtual bool getIsOpacityModifyRGB(void);
 	
 };
+
+NS_CC_END
 
 #endif // __CCScale9Sprite_H__

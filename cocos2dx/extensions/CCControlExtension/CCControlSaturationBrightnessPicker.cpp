@@ -29,7 +29,9 @@
  */
 
 #include "CCControlSaturationBrightnessPicker.h"
+#include "CCPointExtension.h"
 
+NS_CC_BEGIN
 
 CCControlSaturationBrightnessPicker::~CCControlSaturationBrightnessPicker()
 {
@@ -173,3 +175,5 @@ void CCControlSaturationBrightnessPicker::ccTouchMoved(CCTouch* touch, CCEvent* 
     // Check the touch position on the slider
 	//checkSliderPosition(touchLocation);
 }
+
+NS_CC_END

@@ -5,9 +5,9 @@
 #ifndef __CCMENU_PASSIVE_H__
 #define __CCMENU_PASSIVE_H__
 
-#include "cocos2d.h"
 #include "CCControl.h"
 
+NS_CC_BEGIN
 
 class CC_DLL CCMenuPassive : public CCLayer, public CCRGBAProtocol
 {
@@ -58,5 +58,7 @@ public:
 		virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
 	    virtual bool getIsOpacityModifyRGB(void) { return false;}
 };
+
+NS_CC_END
 
 #endif

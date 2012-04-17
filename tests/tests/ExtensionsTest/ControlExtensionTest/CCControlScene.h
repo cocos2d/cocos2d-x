@@ -27,7 +27,7 @@
 #define __CCCONTROLSCENE_H__
 
 #include "cocos2d.h"
-#include "extensions/CCControlExtension/CCControlExtensions.h"
+#include "cocos2dExt.h"
 
 USING_NS_CC;
 

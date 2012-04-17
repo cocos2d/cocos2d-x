@@ -37,6 +37,8 @@
 #include "CCControlHuePicker.h"
 #include "CCControlSaturationBrightnessPicker.h"
 
+NS_CC_BEGIN
+
 class CC_DLL CCControlColourPicker: public CCControl
 {
 	CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_colorValue, ColorValue);
@@ -62,5 +64,7 @@ protected:
 	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
 	
 };
+
+NS_CC_END
 
 #endif
