@@ -25,9 +25,11 @@ THE SOFTWARE.
 #ifndef __CCNOTIFICATIONCENTER_H__
 #define __CCNOTIFICATIONCENTER_H__
 
-#include "cocos2d.h"
+#include "CCObject.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
+
+class CCArray;
 
 class CC_DLL CCNotificationCenter : public CCObject
 {
@@ -77,6 +79,6 @@ private:
     CC_PROPERTY_READONLY(CCObject *, m_object, Object);
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif//__CCNOTIFICATIONCENTER_H__
