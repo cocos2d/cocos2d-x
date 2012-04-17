@@ -24,65 +24,51 @@
  */
 
 
-#import "CCControlSliderTest.h"
+#include "CCControlSliderTest.h"
 
-@interface CCControlSliderTest ()
-@property (nonatomic, retain) CCLabelTTF *displayValueLabel;
-
-- (void)valueChanged:(CCControlSlider *)sender;
-
-@end
-
-@implementation CCControlSliderTest
-@synthesize displayValueLabel;
-
-- (void)dealloc
+CCControlSliderTest::CCControlSliderTest()
 {
-    [displayValueLabel release], displayValueLabel = nil;
-    
-    [super dealloc];
+ 
 }
 
-- (id)init
+CCControlSliderTest::~CCControlSliderTest()
 {
-	if ((self = [super init]))
+    CC_SAFE_RELEASE_NULL(m_pDisplayValueLabel);
+}
+
+bool CCControlSliderTest::init()
+{
+    if (CCControlScene::init())
     {
-        CGSize screenSize = [[CCDirector sharedDirector] winSize];
-        
-		// Add a label in which the slider value will be displayed
-		self.displayValueLabel = [CCLabelTTF labelWithString:@"Move the slider thumb!" fontName:@"Marker Felt" fontSize:32];
-        displayValueLabel.anchorPoint = ccp(0.5f, -1.0f);
-        displayValueLabel.position = ccp(screenSize.width / 2.0f, screenSize.height / 2.0f);
-		[self addChild:displayValueLabel];
-		
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+
+        // Add a label in which the slider value will be displayed
+        m_pDisplayValueLabel = CCLabelTTF::labelWithString("Move the slider thumb!" ,"Marker Felt", 32);
+        m_pDisplayValueLabel->retain();
+        m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1.0f));
+        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        addChild(m_pDisplayValueLabel);
+
         // Add the slider
-		CCControlSlider *slider = [CCControlSlider sliderWithBackgroundFile:@"sliderTrack.png" 
-                                                               progressFile:@"sliderProgress.png" 
-                                                                  thumbFile:@"sliderThumb.png"];
-        slider.anchorPoint = ccp(0.5f, 1.0f);
-        slider.minimumValue = 0.0f; // Sets the min value of range
-        slider.maximumValue = 5.0f; // Sets the max value of range
-        slider.position = ccp(screenSize.width / 2.0f, screenSize.height / 2.0f);
-        
+        CCControlSlider *slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        slider->setAnchorPoint(ccp(0.5f, 1.0f));
+        slider->setMinimumValue(0.0f); // Sets the min value of range
+        slider->setMaximumValue(5.0f); // Sets the max value of range
+        slider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+
         // When the value of the slider will change, the given selector will be call
-		[slider addTarget:self action:@selector(valueChanged:) forControlEvents:CCControlEventValueChanged];
-        
-		[self addChild:slider];	
-	}
-	return self;
+        slider->addTargetWithActionForControlEvents(this, menu_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
+
+        addChild(slider);	
+        return true;
+    }
+    return false;
 }
 
-#pragma mark -
-#pragma CCSliderTestLayer Public Methods
-
-#pragma CCSliderTestLayer Private Methods
-
-- (void)valueChanged:(CCControlSlider *)sender
+void CCControlSliderTest::valueChanged(CCObject *sender)
 {
+    CCControlSlider* pSlider = (CCControlSlider*)sender;
 	// Change value of label.
-	displayValueLabel.string = [NSString stringWithFormat:@"Slider value = %.02f", sender.value];	
+    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Slider value = %.02f", pSlider->getValue())->getCString());	
 }
-
-@end
-
 

@@ -69,6 +69,7 @@ THE SOFTWARE.
 #include "CCActionTiledGrid.h"
 #include "CCActionGrid3D.h"
 #include "CCActionGrid.h"
+#include "CCActionTween.h"
 #include "CCLabelBMFont.h"
 #include "CCParallaxNode.h"
 #include "CCTileMapAtlas.h"

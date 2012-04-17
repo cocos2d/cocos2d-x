@@ -27,6 +27,8 @@
 #include "CCControlScene.h"
 #include "CCControlButtonTest/CCControlButtonTest.h"
 #include "CCControlColourPicker/CCControlColourPickerTest.h"
+#include "CCControlSliderTest/CCControlSliderTest.h"
+#include "CCControlSwitchTest/CCControlSwitchTest.h"
 
 USING_NS_CC;
 
@@ -55,7 +57,7 @@ static CCControlSceneManager *sharedInstance = NULL;
 
 CCControlSceneManager::CCControlSceneManager()
 {
-    m_nCurrentControlSceneId = kCCControlColourPickerTest;
+    m_nCurrentControlSceneId = kCCControlSliderTest;
 }
 
 CCControlSceneManager::~CCControlSceneManager()
@@ -94,13 +96,12 @@ CCScene *CCControlSceneManager::currentControlScene()
 {
     switch (m_nCurrentControlSceneId)
     {
-//     case kCCControlSliderTest: 
+    case kCCControlSliderTest: return CCControlSliderTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     case kCCControlColourPickerTest:return CCControlColourPickerTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
-//     case kCCControlSwitchTest:
+    case kCCControlSwitchTest:return CCControlSwitchTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     case kCCControlButtonTest_HelloVariableSize:return CCControlButtonTest_HelloVariableSize::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     case kCCControlButtonTest_Event:return CCControlButtonTest_Event::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     case kCCControlButtonTest_Styling:return CCControlButtonTest_Styling::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     }
-    
-//    return nextControlScene::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
+    return NULL;
 }

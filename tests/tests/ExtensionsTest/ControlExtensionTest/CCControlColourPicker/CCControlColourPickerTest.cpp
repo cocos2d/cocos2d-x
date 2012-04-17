@@ -27,48 +27,59 @@
 
 CCControlColourPickerTest::CCControlColourPickerTest()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
-    CCNode *layer  = CCNode::node();
-    layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));
-    addChild(layer, 1);
+}
 
-    double layer_width = 0;
+bool CCControlColourPickerTest::init()
+{
+    if (CCControlScene::init())
+    {
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
-    // Create the colour picker
-    CCControlColourPicker *colourPicker = CCControlColourPicker::colourPicker();
-    colourPicker->setColor(ccc3(37, 46, 252));
-    colourPicker->setPosition(ccp (colourPicker->getContentSize().width / 2, 0));
+        CCNode *layer  = CCNode::node();
+        layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));
+        addChild(layer, 1);
 
-    // Add it to the layer
-    layer->addChild(colourPicker);
+        double layer_width = 0;
 
-    // Add the target-action pair
-    colourPicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPickerTest::colourValueChanged), CCControlEventValueChanged);
+        // Create the colour picker
+        CCControlColourPicker *colourPicker = CCControlColourPicker::colourPicker();
+        colourPicker->setColor(ccc3(37, 46, 252));
+        colourPicker->setPosition(ccp (colourPicker->getContentSize().width / 2, 0));
+
+        // Add it to the layer
+        layer->addChild(colourPicker);
+
+        // Add the target-action pair
+        colourPicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPickerTest::colourValueChanged), CCControlEventValueChanged);
 
 
-    layer_width += colourPicker->getContentSize().width;
+        layer_width += colourPicker->getContentSize().width;
 
-    // Add the black background for the text
-    CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("extensions/buttonBackground.png");
-    background->setContentSize(CCSizeMake(150, 50));
-    background->setPosition(ccp(layer_width + background->getContentSize().width / 2.0f, 0));
-    layer->addChild(background);
+        // Add the black background for the text
+        CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("extensions/buttonBackground.png");
+        background->setContentSize(CCSizeMake(150, 50));
+        background->setPosition(ccp(layer_width + background->getContentSize().width / 2.0f, 0));
+        layer->addChild(background);
 
-    layer_width += background->getContentSize().width;
+        layer_width += background->getContentSize().width;
 
-    m_pColorLabel = CCLabelTTF::labelWithString("#color", "Marker Felt", 30);
-    m_pColorLabel->retain();
+        m_pColorLabel = CCLabelTTF::labelWithString("#color", "Marker Felt", 30);
+        m_pColorLabel->retain();
 
-    m_pColorLabel->setPosition(background->getPosition());
-    layer->addChild(m_pColorLabel);
+        m_pColorLabel->setPosition(background->getPosition());
+        layer->addChild(m_pColorLabel);
 
-    // Set the layer size
-    layer->setContentSize(CCSizeMake(layer_width, 0));
-    layer->setAnchorPoint(ccp (0.5f, 0.5f));
+        // Set the layer size
+        layer->setContentSize(CCSizeMake(layer_width, 0));
+        layer->setAnchorPoint(ccp (0.5f, 0.5f));
 
-    // Update the color text
-    colourValueChanged(colourPicker);
+        // Update the color text
+        colourValueChanged(colourPicker);
+        return true;
+    }
+    return false;
+
 }
 
 CCControlColourPickerTest::~CCControlColourPickerTest()

@@ -24,90 +24,76 @@
  *
  */
 
-#import "CCControlSwitchTest.h"
+#include "CCControlSwitchTest.h"
 
-@interface CCControlSwitchTest ()
-@property (nonatomic, strong) CCLabelTTF *displayValueLabel;
 
-/** Callback for the change value. */
-- (void)valueChanged:(CCControlSwitch *)sender;
-
-@end
-
-@implementation CCControlSwitchTest
-@synthesize displayValueLabel;
-
-- (void)dealloc
+CCControlSwitchTest::~CCControlSwitchTest()
 {
-    [displayValueLabel  release];
-    
-    [super              dealloc];
+    CC_SAFE_RELEASE(m_pDisplayValueLabel);
 }
 
-- (id)init
+bool CCControlSwitchTest::init()
 {
-	if ((self = [super init]))
+    if (CCControlScene::init())
     {
-        CGSize screenSize = [[CCDirector sharedDirector] winSize];
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         
-        CCNode *layer                       = [CCNode node];
-        layer.position                      = ccp (screenSize.width / 2, screenSize.height / 2);
-        [self addChild:layer z:1];
+        CCNode *layer = CCNode::node();
+        layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));
+        addChild(layer, 1);
         
         double layer_width = 0;
         
         // Add the black background for the text
-        CCScale9Sprite *background = [CCScale9Sprite spriteWithFile:@"buttonBackground.png"];
-        [background setContentSize:CGSizeMake(80, 50)];
-        [background setPosition:ccp(layer_width + background.contentSize.width / 2.0f, 0)];
-        [layer addChild:background];
+        CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("extensions/buttonBackground.png");
+        background->setContentSize(CCSizeMake(80, 50));
+        background->setPosition(ccp(layer_width + background->getContentSize().width / 2.0f, 0));
+        layer->addChild(background);
         
-        layer_width += background.contentSize.width;
+        layer_width += background->getContentSize().width;
         
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-        self.displayValueLabel  = [CCLabelTTF labelWithString:@"#color" fontName:@"HelveticaNeue-Bold" fontSize:30];
-#elif __MAC_OS_X_VERSION_MAX_ALLOWED
-        self.displayValueLabel  = [CCLabelTTF labelWithString:@"#color" fontName:@"Marker Felt" fontSize:30];
-#endif
-        displayValueLabel.position = background.position;
-        [layer addChild:displayValueLabel];
+        m_pDisplayValueLabel  = CCLabelTTF::labelWithString("#color" ,"Marker Felt" ,30);
+        m_pDisplayValueLabel->retain();
+
+        m_pDisplayValueLabel->setPosition(background->getPosition());
+        layer->addChild(m_pDisplayValueLabel);
         
         // Create the switch
-        CCControlSwitch *switchControl      = [CCControlSwitch switchWithMaskSprite:[CCSprite spriteWithFile:@"switch-mask.png"] 
-                                                                           onSprite:[CCSprite spriteWithFile:@"switch-on.png"]
-                                                                          offSprite:[CCSprite spriteWithFile:@"switch-off.png"]
-                                                                        thumbSprite:[CCSprite spriteWithFile:@"switch-thumb.png"]
-                                                                            onLabel:[CCLabelTTF labelWithString:@"On" fontName:@"Arial-BoldMT" fontSize:16]
-                                                                           offLabel:[CCLabelTTF labelWithString:@"Off" fontName:@"Arial-BoldMT" fontSize:16]];
-        switchControl.position               = ccp (layer_width + 10 + switchControl.contentSize.width / 2, 0);
-        [layer addChild:switchControl];
+        CCControlSwitch *switchControl = CCControlSwitch::switchWithMaskSprite
+            (
+                CCSprite::spriteWithFile("extensions/switch-mask.png"),
+                CCSprite::spriteWithFile("extensions/switch-on.png"),
+                CCSprite::spriteWithFile("extensions/switch-off.png"),
+                CCSprite::spriteWithFile("extensions/switch-thumb.png"),
+                CCLabelTTF::labelWithString("On", "Arial-BoldMT", 16),
+                CCLabelTTF::labelWithString("Off", "Arial-BoldMT", 16)
+            );
+        switchControl->setPosition(ccp (layer_width + 10 + switchControl->getContentSize().width / 2, 0));
+        layer->addChild(switchControl);
 
-        [switchControl addTarget:self action:@selector(valueChanged:) forControlEvents:CCControlEventValueChanged];
+        switchControl->addTargetWithActionForControlEvents(this, menu_selector(CCControlSwitchTest::valueChanged), CCControlEventValueChanged);
         
         // Set the layer size
-        layer.contentSize                   = CGSizeMake(layer_width, 0);
-        layer.anchorPoint                   = ccp (0.5f, 0.5f);
+        layer->setContentSize(CCSizeMake(layer_width, 0));
+        layer->setAnchorPoint(ccp (0.5f, 0.5f));
         
         // Update the value label
-        [self valueChanged:switchControl];
+        valueChanged(switchControl);
+        return true;
 	}
-	return self;
+	return false;
 }
 
-#pragma mark -
-#pragma mark CCControlSwitchTest Public Methods
-
-#pragma mark CCControlSwitchTest Private Methods
-
-- (void)valueChanged:(CCControlSwitch *)sender
+void CCControlSwitchTest::valueChanged(CCObject* sender)
 {
-    if ([sender isOn])
+    CCControlSwitch* pSwitch = (CCControlSwitch*)sender;
+    if (pSwitch->getIsOn())
     {
-        displayValueLabel.string    = @"On";
-    } else
+        m_pDisplayValueLabel->setString("On");
+    } 
+    else
     {
-        displayValueLabel.string    = @"Off";
+        m_pDisplayValueLabel->setString("Off");
     }
 }
 
-@end

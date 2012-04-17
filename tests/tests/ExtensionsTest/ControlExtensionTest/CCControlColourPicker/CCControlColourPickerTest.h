@@ -30,6 +30,7 @@ class CCControlColourPickerTest : public CCControlScene
 public:
     CCControlColourPickerTest();
     virtual ~CCControlColourPickerTest();
+    bool init();
     /** Callback for the change value. */
     void colourValueChanged(CCObject *sender);
 
