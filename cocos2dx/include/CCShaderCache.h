@@ -51,6 +51,9 @@ public:
 
 	/** loads the default shaders */
 	void loadDefaultShaders();
+    
+    /** reload the default shaders */
+    void reloadDefaultShaders();
 
 	/** returns a GL program for a given key */
 	CCGLProgram * programForKey(const char* key);
@@ -60,6 +63,7 @@ public:
 
 private:
 	bool init();
+    void loadDefaultShader(CCGLProgram *program, int type);
 
 	CCDictionary* m_pPrograms;
 
