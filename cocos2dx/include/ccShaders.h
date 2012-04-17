@@ -29,27 +29,27 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-extern const GLchar * ccPosition_uColor_frag;
-extern const GLchar * ccPosition_uColor_vert;
+extern CC_DLL const GLchar * ccPosition_uColor_frag;
+extern CC_DLL const GLchar * ccPosition_uColor_vert;
 
-extern const GLchar * ccPositionColor_frag;
-extern const GLchar * ccPositionColor_vert;
+extern CC_DLL const GLchar * ccPositionColor_frag;
+extern CC_DLL const GLchar * ccPositionColor_vert;
 
-extern const GLchar * ccPositionTexture_frag;
-extern const GLchar * ccPositionTexture_vert;
+extern CC_DLL const GLchar * ccPositionTexture_frag;
+extern CC_DLL const GLchar * ccPositionTexture_vert;
 
-extern const GLchar * ccPositionTextureA8Color_frag;
-extern const GLchar * ccPositionTextureA8Color_vert;
+extern CC_DLL const GLchar * ccPositionTextureA8Color_frag;
+extern CC_DLL const GLchar * ccPositionTextureA8Color_vert;
 
-extern const GLchar * ccPositionTextureColor_frag;
-extern const GLchar * ccPositionTextureColor_vert;
+extern CC_DLL const GLchar * ccPositionTextureColor_frag;
+extern CC_DLL const GLchar * ccPositionTextureColor_vert;
 
-extern const GLchar * ccPositionTextureColorAlphaTest_frag;
+extern CC_DLL const GLchar * ccPositionTextureColorAlphaTest_frag;
 
-extern const GLchar * ccPositionTexture_uColor_frag;
-extern const GLchar * ccPositionTexture_uColor_vert;
+extern CC_DLL const GLchar * ccPositionTexture_uColor_frag;
+extern CC_DLL const GLchar * ccPositionTexture_uColor_vert;
 
-extern const GLchar * ccExSwitchMask_frag;
+extern CC_DLL const GLchar * ccExSwitchMask_frag;
 
 NS_CC_END
 
