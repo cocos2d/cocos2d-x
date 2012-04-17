@@ -38,7 +38,13 @@ tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 tests/EffectsTest/EffectsTest.cpp \
 tests/ExtensionsTest/ExtensionsTest.cpp \
-tests/ExtensionsTest/NotificationCenterTest.cpp \
+tests/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
+tests/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
+tests/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
+tests/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
+tests/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp \
+tests/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
+tests/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
 tests/FontTest/FontTest.cpp \
 tests/HiResTest/HiResTest.cpp \
 tests/IntervalTest/IntervalTest.cpp \

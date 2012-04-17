@@ -1,5 +1,6 @@
 #include "NotificationCenterTest.h"
-#include "ExtensionsTest.h"
+#include "../ExtensionsTest.h"
+#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
 
 #define kTagLight 100
 #define kTagConnect 200

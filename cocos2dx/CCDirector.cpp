@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
 #include "CCUserDefault.h"
-#include "extensions/CCNotificationCenter.h"
+#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "kazmath/kazmath.h"

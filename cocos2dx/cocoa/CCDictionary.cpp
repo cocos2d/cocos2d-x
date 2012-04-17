@@ -193,6 +193,10 @@ void CCDictionary::setObject(CCObject* pObject, int key)
 
 void CCDictionary::removeObjectForKey(const CCString& key)
 {
+	if (m_eOldDictType == kCCDictUnknown) 
+	{
+		return;
+	}
 	CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as its key");
 	CCAssert(key.length() > 0, "Invalid Argument!");
 	CCDictElement *pElement = NULL;
@@ -202,6 +206,10 @@ void CCDictionary::removeObjectForKey(const CCString& key)
 
 void CCDictionary::removeObjectForKey(int key)
 {
+	if (m_eOldDictType == kCCDictUnknown) 
+	{
+		return;
+	}
 	CCAssert(m_eDictType == kCCDictInt, "this dictionary does not use integer as its key");
 	CCDictElement *pElement = NULL;
 	HASH_FIND_INT(m_pElements, &key, pElement);

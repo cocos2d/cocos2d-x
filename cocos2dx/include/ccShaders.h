@@ -49,6 +49,8 @@ extern const GLchar * ccPositionTextureColorAlphaTest_frag;
 extern const GLchar * ccPositionTexture_uColor_frag;
 extern const GLchar * ccPositionTexture_uColor_vert;
 
+extern const GLchar * ccExSwitchMask_frag;
+
 NS_CC_END
 
 #endif /* __CCSHADER_H__ */

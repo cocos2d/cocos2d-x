@@ -23,10 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCNotificationCenter.h"
+#include "CCArray.h"
 #include <string>
+
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static CCNotificationCenter *s_sharedNotifCenter = NULL;
 
@@ -183,4 +185,4 @@ CCObject *CCNotificationObserver::getObject()
     return m_object;
 }
 
-NS_CC_END;
+NS_CC_END
