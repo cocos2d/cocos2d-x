@@ -1,18 +1,19 @@
 #include "ExtensionsTest.h"
 #include "../testResource.h"
-#include "NotificationCenterTest.h"
-
+#include "NotificationCenterTest/NotificationCenterTest.h"
+#include "ControlExtensionTest/CCControlSceneManager.h"
 
 enum
 {
-    MAX_COUNT = 1,
+    MAX_COUNT = 2,
     LINE_SPACE = 40,
     kItemTagBasic = 1000,
 };
 
 static const std::string testsName[MAX_COUNT] = 
 {
-    "NotificationCenterTest"
+    "NotificationCenterTest",
+	"CCControlButtonTest"
 };
 
 ////////////////////////////////////////////////////////
@@ -51,6 +52,13 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
     case 0:
         runNotificationCenterTest();
         break;
+	case 1:
+		{
+			CCControlSceneManager* pManager = CCControlSceneManager::sharedControlSceneManager();
+			CCScene* pScene = pManager->currentControlScene();
+			CCDirector::sharedDirector()->replaceScene(pScene);
+		}
+		break;
     default:
         break;
     }

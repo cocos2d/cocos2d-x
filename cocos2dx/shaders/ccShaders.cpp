@@ -66,4 +66,7 @@ const GLchar * ccPositionTexture_uColor_frag =
 const GLchar * ccPositionTexture_uColor_vert = 
 #include "ccShader_PositionTexture_uColor_vert.h"
 
+const GLchar * ccExSwitchMask_frag = 
+#include "ccShaderEx_SwitchMask_frag.h"
+
 NS_CC_END

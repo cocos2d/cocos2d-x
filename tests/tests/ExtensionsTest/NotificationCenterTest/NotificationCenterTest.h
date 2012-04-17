@@ -2,7 +2,6 @@
 #define __NOTIFICATIONCENTERTEST_H__
 
 #include "cocos2d.h"
-#include "ExtensionsTest.h"
 
 class NotificationCenterTest : public cocos2d::CCLayer
 {
