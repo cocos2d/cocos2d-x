@@ -69,14 +69,14 @@ public:
 	* @param progressSprite    CCSprite, that is used as a progress bar.
 	* @param thumbItem         CCMenuItem, that is used as a thumb.
 	*/
-	virtual bool initFromSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem);
+	virtual bool initWithSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem);
 
 
 	/** 
 	* Creates slider with a background filename, a progress filename and a 
 	* thumb image filename.
 	*/
-	static CCControlSlider* sliderFromFiles(const char* bgFile, const char* progressFile, const char* thumbFile);
+	static CCControlSlider* sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile);
 
 	/** 
 	* Creates a slider with a given background sprite and a progress bar and a

@@ -7,6 +7,7 @@
 #include "CCControlHuePicker.h"
 #include "CCControlSaturationBrightnessPicker.h"
 #include "CCControlSlider.h"
+#include "CCControlSwitch.h"
 #include "CCMenuPassive.h"
 #include "CCSpacer.h"
 

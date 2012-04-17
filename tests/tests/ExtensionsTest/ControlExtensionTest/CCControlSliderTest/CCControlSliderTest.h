@@ -23,16 +23,17 @@
  *
  */
 
-#import "CCControlScene.h"
+#include "../CCControlScene.h"
 
-@interface CCControlSliderTest : CCControlScene
+class CCControlSliderTest : public CCControlScene
 {
-@protected
-    CCLabelTTF *displayValueLabel;
-}
+public:
+    CCControlSliderTest();
+    virtual ~CCControlSliderTest();
+    bool init();
+    void valueChanged(CCObject *sender);
+protected:
+    CCLabelTTF* m_pDisplayValueLabel;
+    CONTROL_SCENE_NODE_FUNC(CCControlSliderTest)
+};
 
-#pragma mark Constructors - Initializers
-
-#pragma mark Public Methods
-
-@end

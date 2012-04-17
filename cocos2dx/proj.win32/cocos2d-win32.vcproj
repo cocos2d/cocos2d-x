@@ -311,6 +311,10 @@
 				RelativePath="..\actions\CCActionTiledGrid.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\actions\CCActionTween.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="include"
@@ -365,6 +369,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCActionTiledGrid.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionTween.h"
 				>
 			</File>
 			<File
@@ -1164,6 +1172,14 @@
 				</File>
 				<File
 					RelativePath="..\extensions\CCControlExtension\CCControlSlider.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlSwitch.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlSwitch.h"
 					>
 				</File>
 				<File

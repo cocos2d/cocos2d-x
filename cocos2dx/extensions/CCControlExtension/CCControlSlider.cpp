@@ -38,7 +38,7 @@ CCControlSlider::~CCControlSlider()
 
 }
 
-CCControlSlider* CCControlSlider::sliderFromFiles(const char* bgFile, const char* progressFile, const char* thumbFile)
+CCControlSlider* CCControlSlider::sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile)
 {
 	// Prepare background for slider
 	CCSprite *backgroundSprite      = CCSprite::spriteWithFile(bgFile);
@@ -59,12 +59,12 @@ CCControlSlider* CCControlSlider::sliderFromFiles(const char* bgFile, const char
 CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem)
 {
 	CCControlSlider *pRet = new CCControlSlider();
-	pRet->initFromSprites(backgroundSprite, pogressSprite, thumbItem);
+	pRet->initWithSprites(backgroundSprite, pogressSprite, thumbItem);
 	pRet->autorelease();
 	return pRet;
 }
 
- bool CCControlSlider::initFromSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem)
+ bool CCControlSlider::initWithSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem)
  {
 	 if (CCControl::init())
 	 {
@@ -102,7 +102,9 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
 		return true;
 	 }
 	 else
+     {
 		 return false;
+     }
  }
 
 

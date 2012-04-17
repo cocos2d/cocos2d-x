@@ -24,12 +24,16 @@
  *
  */
 
-#import "CCControlScene.h"
+#include "../CCControlScene.h"
 
-@interface CCControlSwitchTest : CCControlScene
+class CCControlSwitchTest : public CCControlScene
 {
-@protected
-    CCLabelTTF *displayValueLabel; 
-}
+public:
+    virtual ~CCControlSwitchTest();
+    bool init();
+    /** Callback for the change value. */
+    void valueChanged(CCObject* sender);
+    CCLabelTTF *m_pDisplayValueLabel;
+    CONTROL_SCENE_NODE_FUNC(CCControlSwitchTest)
+};
 
-@end
