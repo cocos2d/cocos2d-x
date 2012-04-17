@@ -139,7 +139,7 @@ void CCControl::addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHan
 {	
     // Create the invocation object
 	CCInvocation *invocation=new CCInvocation(target, action, controlEvent);
-
+    invocation->autorelease();
     // Add the invocation into the dispatch list for the given control event
 	CCArray* eventInvocationList = dispatchListforControlEvent(controlEvent);
 	eventInvocationList->addObject(invocation);    

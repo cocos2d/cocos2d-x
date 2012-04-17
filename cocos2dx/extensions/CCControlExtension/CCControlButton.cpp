@@ -96,7 +96,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         
         // Initialize the dispatch table
 		
-		CCString* tempString=new CCString(label->getString());
+		CCString* tempString = CCString::stringWithCString(label->getString());
 		//tempString->autorelease();
 		setTitleForState(tempString, CCControlStateNormal);
 		setTitleColorForState(rgbaLabel->getColor(), CCControlStateNormal);
@@ -246,10 +246,10 @@ const ccColor3B CCControlButton::getTitleColorForState(CCControlState state)
 void CCControlButton::setTitleColorForState(ccColor3B color, CCControlState state)
 {
 	//ccColor3B* colorValue=&color;
-	CCColor3bObject* previousObject=(CCColor3bObject*)m_titleColorDispatchTable->objectForKey(state); 
-	CC_SAFE_RELEASE(previousObject);
 	m_titleColorDispatchTable->removeObjectForKey(state); 
-	m_titleColorDispatchTable->setObject(new CCColor3bObject(color), state);
+    CCColor3bObject* pColor3bObject = new CCColor3bObject(color);
+    pColor3bObject->autorelease();
+	m_titleColorDispatchTable->setObject(pColor3bObject, state);
       
     // If the current state if equal to the given state we update the layout
     if (getState() == state)
