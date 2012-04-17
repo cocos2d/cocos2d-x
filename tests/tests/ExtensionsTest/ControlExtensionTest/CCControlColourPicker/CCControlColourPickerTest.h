@@ -23,16 +23,18 @@
  *
  */
 
-#import "CCControlScene.h"
+#include "../CCControlScene.h"
 
-@interface CCControlColourPickerTest : CCControlScene
+class CCControlColourPickerTest : public CCControlScene
 {
-@protected
-    CCLabelTTF *colorLabel;
-}
+public:
+    CCControlColourPickerTest();
+    virtual ~CCControlColourPickerTest();
+    /** Callback for the change value. */
+    void colourValueChanged(CCObject *sender);
 
-#pragma mark Constructors - Initializers
+    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pColorLabel, ColorLabel)
 
-#pragma mark Public Methods
+    CONTROL_SCENE_NODE_FUNC(CCControlColourPickerTest)
+};
 
-@end

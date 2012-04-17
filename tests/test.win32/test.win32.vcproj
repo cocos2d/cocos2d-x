@@ -868,6 +868,14 @@
 						<Filter
 							Name="CCControlColourPicker"
 							>
+							<File
+								RelativePath="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h"
+								>
+							</File>
 						</Filter>
 						<Filter
 							Name="CCControlSliderTest"

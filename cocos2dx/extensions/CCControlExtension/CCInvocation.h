@@ -5,9 +5,9 @@
 #ifndef __CCINVOCATION_H__
 #define __CCINVOCATION_H__
 
-#include "cocos2d.h"
+#include "CCObject.h"
 
-USING_NS_CC;
+NS_CC_BEGIN
 
 typedef unsigned int CCControlEvent;
 
@@ -22,5 +22,7 @@ public:
 
 	void invoke(CCObject* sender);
 };
+
+NS_CC_END
 
 #endif

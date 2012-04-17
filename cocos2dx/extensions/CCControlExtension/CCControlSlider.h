@@ -29,14 +29,16 @@
 #ifndef __CCCONTROL_SLIDER_H__
 #define __CCCONTROL_SLIDER_H__
 
-#include "cocos2d.h"
 #include "CCControl.h"
 #include "CCInvocation.h"
-
-USING_NS_CC;
+#include "CCSprite.h"
+#include "CCMenuItem.h"
 
 #define SLIDER_MARGIN_H 24
 #define SLIDER_MARGIN_V 8
+
+NS_CC_BEGIN
+
 class CC_DLL CCControlSlider: public CCControl
 {
 	//maunally put in the setters
@@ -103,5 +105,7 @@ protected:
 /** Returns the value for the given location. */
 	float valueForLocation(CCPoint location);
 };
+
+NS_CC_END
 
 #endif

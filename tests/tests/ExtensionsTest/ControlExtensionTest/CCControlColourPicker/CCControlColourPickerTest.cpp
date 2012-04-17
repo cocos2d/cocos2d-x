@@ -23,94 +23,63 @@
  *
  */
 
-#import "CCControlColourPickerTest.h"
+#include "CCControlColourPickerTest.h"
 
-@interface CCControlColourPickerTest ()
-@property (nonatomic, retain) CCLabelTTF *colorLabel;
-
-/** Callback for the change value. */
-- (void)colourValueChanged:(CCControlColourPicker *)sender;
-
-@end
-
-@implementation CCControlColourPickerTest
-@synthesize colorLabel;
-
-- (void)dealloc
+CCControlColourPickerTest::CCControlColourPickerTest()
 {
-    [colorLabel release];
-    
-    [super dealloc];
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+
+    CCNode *layer  = CCNode::node();
+    layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));
+    addChild(layer, 1);
+
+    double layer_width = 0;
+
+    // Create the colour picker
+    CCControlColourPicker *colourPicker = CCControlColourPicker::colourPicker();
+    colourPicker->setColor(ccc3(37, 46, 252));
+    colourPicker->setPosition(ccp (colourPicker->getContentSize().width / 2, 0));
+
+    // Add it to the layer
+    layer->addChild(colourPicker);
+
+    // Add the target-action pair
+    colourPicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPickerTest::colourValueChanged), CCControlEventValueChanged);
+
+
+    layer_width += colourPicker->getContentSize().width;
+
+    // Add the black background for the text
+    CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("extensions/buttonBackground.png");
+    background->setContentSize(CCSizeMake(150, 50));
+    background->setPosition(ccp(layer_width + background->getContentSize().width / 2.0f, 0));
+    layer->addChild(background);
+
+    layer_width += background->getContentSize().width;
+
+    m_pColorLabel = CCLabelTTF::labelWithString("#color", "Marker Felt", 30);
+    m_pColorLabel->retain();
+
+    m_pColorLabel->setPosition(background->getPosition());
+    layer->addChild(m_pColorLabel);
+
+    // Set the layer size
+    layer->setContentSize(CCSizeMake(layer_width, 0));
+    layer->setAnchorPoint(ccp (0.5f, 0.5f));
+
+    // Update the color text
+    colourValueChanged(colourPicker);
 }
 
-- (id)init
+CCControlColourPickerTest::~CCControlColourPickerTest()
 {
-	if ((self = [super init]))
-    {
-        CGSize screenSize = [[CCDirector sharedDirector] winSize];
-
-        CCNode *layer                       = [CCNode node];
-        layer.position                      = ccp (screenSize.width / 2, screenSize.height / 2);
-        [self addChild:layer z:1];
-        
-        double layer_width = 0;
-        
-        // Create the colour picker
-        CCControlColourPicker *colourPicker = [CCControlColourPicker colorPicker];
-        colourPicker.color                  = ccc3(37, 46, 252);
-        colourPicker.position               = ccp (colourPicker.contentSize.width / 2, 0);
-        
-        // Add it to the layer
-        [layer addChild:colourPicker];
-        
-#if NS_BLOCKS_AVAILABLE
-        // Add block for value changed event
-        [colourPicker setBlock:^(id sender, CCControlEvent event)
-         {
-             [self colourValueChanged:sender];
-         } 
-              forControlEvents:CCControlEventValueChanged];
-#else
-        // Add the target-action pair
-        [colourPicker addTarget:self action:@selector(colourValueChanged:) forControlEvents:CCControlEventValueChanged];
-#endif
-        
-        layer_width += colourPicker.contentSize.width;
-        
-        // Add the black background for the text
-        CCScale9Sprite *background = [CCScale9Sprite spriteWithFile:@"buttonBackground.png"];
-        [background setContentSize:CGSizeMake(150, 50)];
-        [background setPosition:ccp(layer_width + background.contentSize.width / 2.0f, 0)];
-        [layer addChild:background];
-        
-        layer_width += background.contentSize.width;
-        
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-        colorLabel = [CCLabelTTF labelWithString:@"#color" fontName:@"HelveticaNeue-Bold" fontSize:30];
-#elif __MAC_OS_X_VERSION_MAX_ALLOWED
-        colorLabel = [CCLabelTTF labelWithString:@"#color" fontName:@"Marker Felt" fontSize:30];
-#endif
-        colorLabel.position = background.position;
-        [layer addChild:colorLabel];
-        
-        // Set the layer size
-        layer.contentSize                   = CGSizeMake(layer_width, 0);
-        layer.anchorPoint                   = ccp (0.5f, 0.5f);
-        
-        // Update the color text
-        [self colourValueChanged:colourPicker];
-	}
-	return self;
+    CC_SAFE_RELEASE(m_pColorLabel);
 }
 
-#pragma mark -
-#pragma mark CCControlColourPickerTest Public Methods
-
-#pragma mark CCControlColourPickerTest Private Methods
-
-- (void)colourValueChanged:(CCControlColourPicker *)sender
+void CCControlColourPickerTest::colourValueChanged(CCObject *sender)
 {
-    colorLabel.string = [NSString stringWithFormat:@"#%02X%02X%02X",sender.color.r, sender.color.g, sender.color.b];
+    CCControlColourPicker* pPicker = (CCControlColourPicker*)sender;
+    m_pColorLabel->setString(CCString::stringWithFormat("#%02X%02X%02X",pPicker->getColorValue().r, pPicker->getColorValue().g, pPicker->getColorValue().b)->getCString());
 }
 
-@end
+

@@ -29,11 +29,11 @@
 #ifndef __CCCONTROL_H__
 #define __CCCONTROL_H__
 
-#include "cocos2d.h"
 #include "CCInvocation.h"
 #include "CCControlUtils.h"
-USING_NS_CC;
+#include "CCLayer.h"
 
+NS_CC_BEGIN
 
 class CCInvocation;
 
@@ -205,5 +205,7 @@ public:
 	LAYER_NODE_FUNC(CCControl);
 
 };
+
+NS_CC_END
 
 #endif

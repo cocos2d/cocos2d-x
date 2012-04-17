@@ -7,6 +7,13 @@
 //
 
 #include "CCScale9Sprite.h"
+#include "CCSpriteBatchNode.h"
+#include "CCSpriteFrame.h"
+#include "CCSpriteFrameCache.h"
+#include "CCSprite.h"
+#include "CCPointExtension.h"
+
+NS_CC_BEGIN
 
 CCScale9Sprite::CCScale9Sprite()
 {
@@ -454,3 +461,4 @@ bool CCScale9Sprite::getIsOpacityModifyRGB()
 	return m_bIsOpacityModifyRGB;
 }
 
+NS_CC_END

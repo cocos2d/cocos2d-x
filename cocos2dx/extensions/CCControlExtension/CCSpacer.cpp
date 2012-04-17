@@ -1,5 +1,6 @@
 #include "CCSpacer.h"
 
+NS_CC_BEGIN
 
 CCSpacer* CCSpacer::verticalSpacer(float space)
 {
@@ -18,3 +19,5 @@ CCSpacer* CCSpacer::horizontalSpacer(float space)
 	pRet->autorelease();
 	return pRet;
 }
+
+NS_CC_END

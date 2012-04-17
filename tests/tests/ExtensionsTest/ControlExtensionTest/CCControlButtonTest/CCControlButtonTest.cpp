@@ -64,7 +64,7 @@ bool CCControlButtonTest_HelloVariableSize::init()
 		layer->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
 	    
 		// Add the black background
-		CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("Images/buttonBackground.png");
+		CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("extensions/buttonBackground.png");
 		background->setContentSize(CCSizeMake(total_width + 14, height + 14));
 		background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
 		addChild(background);
@@ -76,8 +76,8 @@ bool CCControlButtonTest_HelloVariableSize::init()
 CCControlButton *CCControlButtonTest_HelloVariableSize::standardButtonWithTitle(const char * title)
 {
     /** Creates and return a button with a default background and title color. */
-    CCScale9Sprite *backgroundButton = CCScale9Sprite::spriteWithFile("Images/button.png");
-    CCScale9Sprite *backgroundHighlightedButton = CCScale9Sprite::spriteWithFile("Images/buttonHighlighted.png");
+    CCScale9Sprite *backgroundButton = CCScale9Sprite::spriteWithFile("extensions/button.png");
+    CCScale9Sprite *backgroundHighlightedButton = CCScale9Sprite::spriteWithFile("extensions/buttonHighlighted.png");
     
     CCLabelTTF *titleButton = CCLabelTTF::labelWithString(title, "Marker Felt", 30);
 
@@ -114,8 +114,8 @@ bool CCControlButtonTest_Event::init()
 		addChild(m_pDisplayValueLabel, 1);
 	    
 		// Add the button
-		CCScale9Sprite *backgroundButton = CCScale9Sprite::spriteWithFile("Images/button.png");
-		CCScale9Sprite *backgroundHighlightedButton = CCScale9Sprite::spriteWithFile("Images/buttonHighlighted.png");
+		CCScale9Sprite *backgroundButton = CCScale9Sprite::spriteWithFile("extensions/button.png");
+		CCScale9Sprite *backgroundHighlightedButton = CCScale9Sprite::spriteWithFile("extensions/buttonHighlighted.png");
 	    
 		CCLabelTTF *titleButton = CCLabelTTF::labelWithString("Touch Me!", "Marker Felt", 30);
 
@@ -130,7 +130,7 @@ bool CCControlButtonTest_Event::init()
 		addChild(controlButton, 1);
 
 		// Add the black background
-		CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("Images/buttonBackground.png");
+		CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("extensions/buttonBackground.png");
 		background->setContentSize(CCSizeMake(300, 170));
 		background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
 		addChild(background);
@@ -226,7 +226,7 @@ bool CCControlButtonTest_Styling::init()
 		layer->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
 	    
 		// Add the black background
-		CCScale9Sprite *backgroundButton = CCScale9Sprite::spriteWithFile("Images/buttonBackground.png");
+		CCScale9Sprite *backgroundButton = CCScale9Sprite::spriteWithFile("extensions/buttonBackground.png");
 		backgroundButton->setContentSize(CCSizeMake(max_w + 14, max_h + 14));
 		backgroundButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
 		addChild(backgroundButton);
@@ -241,9 +241,9 @@ bool CCControlButtonTest_Styling::init()
 CCControlButton *CCControlButtonTest_Styling::standardButtonWithTitle(const char *title)
 {
     /** Creates and return a button with a default background and title color. */
-    CCScale9Sprite *backgroundButton = CCScale9Sprite::spriteWithFile("Images/button.png");
+    CCScale9Sprite *backgroundButton = CCScale9Sprite::spriteWithFile("extensions/button.png");
     backgroundButton->setPreferredSize(CCSizeMake(45, 45));  // Set the prefered size
-    CCScale9Sprite *backgroundHighlightedButton = CCScale9Sprite::spriteWithFile("Images/buttonHighlighted.png");
+    CCScale9Sprite *backgroundHighlightedButton = CCScale9Sprite::spriteWithFile("extensions/buttonHighlighted.png");
     backgroundHighlightedButton->setPreferredSize(CCSizeMake(45, 45));  // Set the prefered size
     
     CCLabelTTF *titleButton = CCLabelTTF::labelWithString(title, "Marker Felt", 30);

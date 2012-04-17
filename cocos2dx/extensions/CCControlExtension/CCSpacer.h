@@ -1,9 +1,9 @@
 #ifndef __CCSPACER_H__
 #define __CCSPACER_H__
 
-#include "cocos2d.h"
+#include "CCLayer.h"
 
-USING_NS_CC;
+NS_CC_BEGIN
 
 class CC_DLL CCSpacer: public CCLayer
 {
@@ -12,5 +12,6 @@ public:
 	static CCSpacer* horizontalSpacer(float space);
 };
 
+NS_CC_END
 
 #endif

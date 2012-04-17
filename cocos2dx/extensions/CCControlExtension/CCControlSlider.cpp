@@ -27,7 +27,11 @@
  */
 
 #include "CCControlSlider.h"
+#include "CCPointExtension.h"
+#include "CCTouch.h"
+#include "CCDirector.h"
 
+NS_CC_BEGIN
 
 CCControlSlider::~CCControlSlider()
 {
@@ -211,3 +215,5 @@ float CCControlSlider::valueForLocation(CCPoint location)
 	float percent = (location.x-SLIDER_MARGIN_H)/ m_backgroundSprite->getContentSize().width;
     return m_minimumValue + percent * (m_maximumValue - m_minimumValue);
 }
+
+NS_CC_END
