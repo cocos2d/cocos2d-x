@@ -4,6 +4,8 @@
 #include <jni.h>
 #include <android/log.h>
 
+#include "HelloWorldScene.h"
+
 #define  LOG_TAG    "main"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
@@ -34,8 +36,11 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
     }
     else
     {
+        ccDrawInit();
+        ccGLInvalidateStateCache();
+        cocos2d::CCDirector::sharedDirector()->setGLDefaultValues();   
+        CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
         cocos2d::CCTextureCache::reloadAllTextures();
-        cocos2d::CCDirector::sharedDirector()->setGLDefaultValues();
     }
 }
 
