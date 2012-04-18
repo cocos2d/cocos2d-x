@@ -59,6 +59,7 @@ public:
     ~CCControlScene();
 	bool init();
     // Menu Callbacks
+    void toExtensionsMainLayer(cocos2d::CCObject* sender);
     void previousCallback(cocos2d::CCObject* sender);
     void restartCallback(cocos2d::CCObject* sender);
     void nextCallback(cocos2d::CCObject* sender);

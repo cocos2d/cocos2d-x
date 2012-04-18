@@ -53,7 +53,6 @@ class CC_DLL CCActionManager : public CCObject
 public:
 	CCActionManager(void);
 	~CCActionManager(void);
-	bool init(void);
 
     // actions
     
