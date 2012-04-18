@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CC_DLL CCKeypadDelegate
 {
@@ -65,6 +65,6 @@ protected:
     CCKeypadDelegate* m_pDelegate;
 };
 
-} //namespace   cocos2d 
+NS_CC_END
 
 #endif // __CCKEYPAD_DELEGATE_H__

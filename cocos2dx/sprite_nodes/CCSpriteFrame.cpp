@@ -27,7 +27,8 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCDirector.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
+
 // implementation of CCSpriteFrame
 
 CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
@@ -185,4 +186,5 @@ CCTexture2D* CCSpriteFrame::getTexture(void)
 	return NULL;
 }
 
-}//namespace   cocos2d 
+NS_CC_END
+

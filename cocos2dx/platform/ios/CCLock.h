@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __PLATFORM_IPHONE_PLATFORM_CCLOCK_H__
 #define __PLATFORM_IPHONE_PLATFORM_CCLOCK_H__
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CCLock
 {
@@ -36,6 +36,7 @@ public:
 	void lock(void);
 	void unlock(void);
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __PLATFORM_IPHONE_PLATFORM_CCLOCK_H__

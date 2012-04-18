@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCAccelerometerDelegate.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CC_DLL CCAccelerometer
 {
@@ -38,6 +38,6 @@ public:
     void setDelegate(CCAccelerometerDelegate* pDelegate);
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif

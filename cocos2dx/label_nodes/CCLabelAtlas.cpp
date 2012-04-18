@@ -36,133 +36,134 @@ THE SOFTWARE.
 // external
 #include "kazmath/GL/matrix.h"
 
-namespace cocos2d{
+NS_CC_BEGIN
 
-	//CCLabelAtlas - Creation & Init
-	CCLabelAtlas * CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned char startCharMap)
+//CCLabelAtlas - Creation & Init
+CCLabelAtlas * CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned char startCharMap)
+{
+	CCLabelAtlas *pRet = new CCLabelAtlas();
+	if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
 	{
-		CCLabelAtlas *pRet = new CCLabelAtlas();
-		if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
-		{
-			pRet->autorelease();
-			return pRet;
-		}
-		CC_SAFE_DELETE(pRet);
-		return NULL;
+		pRet->autorelease();
+		return pRet;
 	}
+	CC_SAFE_DELETE(pRet);
+	return NULL;
+}
 
-	bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap)
+bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap)
+{
+	CCAssert(label != NULL, "");
+	if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
 	{
-		CCAssert(label != NULL, "");
-		if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
-		{
-			m_cMapStartChar = startCharMap;
-			this->setString(label);
-			return true;
-		}
-		return false;
+		m_cMapStartChar = startCharMap;
+		this->setString(label);
+		return true;
 	}
+	return false;
+}
 
-	//CCLabelAtlas - Atlas generation
-	void CCLabelAtlas::updateAtlasValues()
-	{
-		unsigned int n = m_sString.length();
+//CCLabelAtlas - Atlas generation
+void CCLabelAtlas::updateAtlasValues()
+{
+	unsigned int n = m_sString.length();
 
-		ccV3F_C4B_T2F_Quad quad;
+	ccV3F_C4B_T2F_Quad quad;
 
-		const unsigned char *s = (unsigned char*)m_sString.c_str();
+	const unsigned char *s = (unsigned char*)m_sString.c_str();
 
-        CCTexture2D *texture = m_pTextureAtlas->getTexture();
-        float textureWide = (float) texture->getPixelsWide();
-        float textureHigh = (float) texture->getPixelsHigh();
-		float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
-		float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
+    CCTexture2D *texture = m_pTextureAtlas->getTexture();
+    float textureWide = (float) texture->getPixelsWide();
+    float textureHigh = (float) texture->getPixelsHigh();
+	float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
+	float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
 
-		for(unsigned int i = 0; i < n; i++) {
-			unsigned char a = s[i] - m_cMapStartChar;
-			float row = (float) (a % m_uItemsPerRow);
-			float col = (float) (a / m_uItemsPerRow);
+	for(unsigned int i = 0; i < n; i++) {
+		unsigned char a = s[i] - m_cMapStartChar;
+		float row = (float) (a % m_uItemsPerRow);
+		float col = (float) (a / m_uItemsPerRow);
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-            // Issue #938. Don't use texStepX & texStepY
-            float left		= (2 * row * itemWidthInPixels + 1) / (2 * textureWide);
-            float right		= left + (itemWidthInPixels * 2 - 2) / (2 * textureWide);
-            float top		= (2 * col * itemHeightInPixels + 1) / (2 * textureHigh);
-            float bottom	= top + (itemHeightInPixels * 2 - 2) / (2 * textureHigh);
+        // Issue #938. Don't use texStepX & texStepY
+        float left		= (2 * row * itemWidthInPixels + 1) / (2 * textureWide);
+        float right		= left + (itemWidthInPixels * 2 - 2) / (2 * textureWide);
+        float top		= (2 * col * itemHeightInPixels + 1) / (2 * textureHigh);
+        float bottom	= top + (itemHeightInPixels * 2 - 2) / (2 * textureHigh);
 #else
-            float left		= row * itemWidthInPixels / textureWide;
-            float right		= left + itemWidthInPixels / textureWide;
-            float top		= col * itemHeightInPixels / textureHigh;
-            float bottom	= top + itemHeightInPixels / textureHigh;
+        float left		= row * itemWidthInPixels / textureWide;
+        float right		= left + itemWidthInPixels / textureWide;
+        float top		= col * itemHeightInPixels / textureHigh;
+        float bottom	= top + itemHeightInPixels / textureHigh;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
-            quad.tl.texCoords.u = left;
-            quad.tl.texCoords.v = top;
-            quad.tr.texCoords.u = right;
-            quad.tr.texCoords.v = top;
-            quad.bl.texCoords.u = left;
-            quad.bl.texCoords.v = bottom;
-            quad.br.texCoords.u = right;
-            quad.br.texCoords.v = bottom;
+        quad.tl.texCoords.u = left;
+        quad.tl.texCoords.v = top;
+        quad.tr.texCoords.u = right;
+        quad.tr.texCoords.v = top;
+        quad.bl.texCoords.u = left;
+        quad.bl.texCoords.v = bottom;
+        quad.br.texCoords.u = right;
+        quad.br.texCoords.v = bottom;
 
-			quad.bl.vertices.x = (float) (i * m_uItemWidth);
-			quad.bl.vertices.y = 0;
-			quad.bl.vertices.z = 0.0f;
-			quad.br.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
-			quad.br.vertices.y = 0;
-			quad.br.vertices.z = 0.0f;
-			quad.tl.vertices.x = (float)(i * m_uItemWidth);
-			quad.tl.vertices.y = (float)(m_uItemHeight);
-			quad.tl.vertices.z = 0.0f;
-			quad.tr.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
-			quad.tr.vertices.y = (float)(m_uItemHeight);
-			quad.tr.vertices.z = 0.0f;
-			ccColor4B c = { m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity };
-			quad.tl.colors = c;
-			quad.tr.colors = c;
-			quad.bl.colors = c;
-			quad.br.colors = c;
-			m_pTextureAtlas->updateQuad(&quad, i);
-		}
+		quad.bl.vertices.x = (float) (i * m_uItemWidth);
+		quad.bl.vertices.y = 0;
+		quad.bl.vertices.z = 0.0f;
+		quad.br.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
+		quad.br.vertices.y = 0;
+		quad.br.vertices.z = 0.0f;
+		quad.tl.vertices.x = (float)(i * m_uItemWidth);
+		quad.tl.vertices.y = (float)(m_uItemHeight);
+		quad.tl.vertices.z = 0.0f;
+		quad.tr.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
+		quad.tr.vertices.y = (float)(m_uItemHeight);
+		quad.tr.vertices.z = 0.0f;
+		ccColor4B c = { m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity };
+		quad.tl.colors = c;
+		quad.tr.colors = c;
+		quad.bl.colors = c;
+		quad.br.colors = c;
+		m_pTextureAtlas->updateQuad(&quad, i);
 	}
-	
-	//CCLabelAtlas - CCLabelProtocol
-	void CCLabelAtlas::setString(const char *label)
+}
+
+//CCLabelAtlas - CCLabelProtocol
+void CCLabelAtlas::setString(const char *label)
+{
+	unsigned int len = strlen(label);
+	if (len > m_pTextureAtlas->getTotalQuads())
 	{
-		unsigned int len = strlen(label);
-		if (len > m_pTextureAtlas->getTotalQuads())
-		{
-			m_pTextureAtlas->resizeCapacity(len);
-		}
-		m_sString.clear();
-		m_sString = label;
-		this->updateAtlasValues();
-
-		CCSize s = CCSizeMake(len * m_uItemWidth, m_uItemHeight);
-
-		this->setContentSize(s);
-
-		m_uQuadsToDraw = len;
+		m_pTextureAtlas->resizeCapacity(len);
 	}
+	m_sString.clear();
+	m_sString = label;
+	this->updateAtlasValues();
 
-	const char* CCLabelAtlas::getString(void)
-	{
-		return m_sString.c_str();
-	}
+	CCSize s = CCSizeMake(len * m_uItemWidth, m_uItemHeight);
 
-	//CCLabelAtlas - draw
+	this->setContentSize(s);
+
+	m_uQuadsToDraw = len;
+}
+
+const char* CCLabelAtlas::getString(void)
+{
+	return m_sString.c_str();
+}
+
+//CCLabelAtlas - draw
 
 #if CC_LABELATLAS_DEBUG_DRAW	
-	void CCLabelAtlas::draw()
-	{
-		CCAtlasNode::draw();
+void CCLabelAtlas::draw()
+{
+	CCAtlasNode::draw();
 
-		const CCSize& s = this->getContentSize();
-		CCPoint vertices[4]={
-			ccp(0,0),ccp(s.width,0),
-			ccp(s.width,s.height),ccp(0,s.height),
-		};
-		ccDrawPoly(vertices, 4, true);
-	}
+	const CCSize& s = this->getContentSize();
+	CCPoint vertices[4]={
+		ccp(0,0),ccp(s.width,0),
+		ccp(s.width,s.height),ccp(0,s.height),
+	};
+	ccDrawPoly(vertices, 4, true);
+}
 #endif
-} // namespace cocos2d
+
+NS_CC_END

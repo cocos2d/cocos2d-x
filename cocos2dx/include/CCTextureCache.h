@@ -38,7 +38,8 @@ THE SOFTWARE.
     #include <list>
 #endif
 
-namespace   cocos2d {
+NS_CC_BEGIN
+
 class CCLock;
 class CCImage;
 
@@ -212,7 +213,7 @@ protected:
 
 #endif
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif //__CCTEXTURE_CACHE_H__
 

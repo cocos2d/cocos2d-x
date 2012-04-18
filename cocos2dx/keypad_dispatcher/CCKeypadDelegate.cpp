@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCKeypadDelegate.h"
 #include "ccMacros.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 //------------------------------------------------------------------
 //
@@ -88,4 +88,4 @@ CCKeypadHandler* CCKeypadHandler::handlerWithDelegate(CCKeypadDelegate *pDelegat
     return pHandler;
 }
 
-}
+NS_CC_END

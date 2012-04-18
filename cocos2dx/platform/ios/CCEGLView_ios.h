@@ -27,7 +27,8 @@ THE SOFTWARE.
 
 #include "CCCommon.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
+
 class CCSet;
 class CCTouch;
 class EGLTouchDelegate;
@@ -67,6 +68,6 @@ private:
     EGLTouchDelegate *m_pDelegate;
 };
 
-}   // end of namespace   cocos2d
+NS_CC_END
 
 #endif	// end of __CC_EGLVIEW_IPHONE_H__

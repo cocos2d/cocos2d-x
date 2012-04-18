@@ -31,7 +31,8 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "ccTypes.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
+
 class CCImage;
 
 //CONSTANTS:
@@ -260,7 +261,8 @@ private:
 	 */
 	CC_SYNTHESIZE(ccResolutionType, m_eResolutionType, ResolutionType);
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif //__CCTEXTURE2D_H__
 

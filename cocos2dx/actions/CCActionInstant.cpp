@@ -28,7 +28,7 @@
 #include "CCNode.h"
 #include "CCSprite.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 //
 // InstantAction
 //
@@ -521,4 +521,5 @@ CCObject * CCCallFuncO::copyWithZone(CCZone* zone) {
 	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
-}
+
+NS_CC_END

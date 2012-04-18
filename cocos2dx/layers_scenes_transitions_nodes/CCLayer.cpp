@@ -39,7 +39,7 @@ THE SOFTWARE.
 // extern
 #include "kazmath/GL/matrix.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 // CCLayer
 CCLayer::CCLayer()
@@ -804,4 +804,5 @@ void CCLayerMultiplex::switchToAndReleaseMe(unsigned int n)
 
 	this->addChild((CCNode*)m_pLayers->objectAtIndex(n));
 }
-}//namespace   cocos2d 
+
+NS_CC_END

@@ -37,7 +37,8 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 #include "CCRenderTexture.h"
 #include "CCActionTiledGrid.h"
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 const unsigned int kSceneFade = 0xFADEFADE;
 
@@ -1402,4 +1403,4 @@ CCActionInterval* CCTransitionFadeDown::actionWithSize(const ccGridSize& size)
 
 IMPLEMENT_TRANSITIONWITHDURATION(CCTransitionFadeDown)
 
-}//namespace   cocos2d 
+NS_CC_END

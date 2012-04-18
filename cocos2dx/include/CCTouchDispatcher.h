@@ -29,7 +29,8 @@ THE SOFTWARE.
 #include "CCTouchDelegateProtocol.h"
 #include "CCObject.h"
 #include "CCArray.h"
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 typedef enum
 {
@@ -163,6 +164,7 @@ protected:
 	// 4, 1 for each type of event
 	struct ccTouchHandlerHelperData m_sHandlerHelperData[ccTouchMax];
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__

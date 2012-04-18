@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include "CCGL.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 /** RGB color composed of bytes 3 bytes
 @since v0.8
@@ -357,6 +357,6 @@ typedef struct
 	CCSize size; 
 } ccAnimationFrameData;
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif //__CCTYPES_H__

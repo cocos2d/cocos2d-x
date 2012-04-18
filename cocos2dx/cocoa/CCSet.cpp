@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCSet::CCSet(void)
 {
@@ -131,4 +131,4 @@ CCObject* CCSet::anyObject()
     return 0;
 }
 
-}//namespace   cocos2d 
+NS_CC_END

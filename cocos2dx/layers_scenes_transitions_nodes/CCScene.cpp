@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCPointExtension.h"
 #include "CCDirector.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCScene::CCScene()
 {
@@ -68,4 +68,5 @@ CCScene *CCScene::node()
 	    return NULL;
     }
 }
-}//namespace   cocos2d 
+
+NS_CC_END

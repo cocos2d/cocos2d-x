@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "CCKeypadDelegate.h"
 #include "CCArray.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CCTouchScriptHandlerEntry;
 
@@ -134,21 +134,20 @@ return NULL; \
 
 #define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
 	static layer* node(__PARAMTYPE__ __PARAM__) \
-{ \
-	layer *pRet = new layer(); \
-	if (pRet && pRet->init(__PARAM__)) \
-{ \
-	pRet->autorelease(); \
-	return pRet; \
-	} \
-else \
-{ \
-	delete pRet; \
-	pRet = NULL; \
-	return NULL; \
-	} \
-	}; 
-
+    { \
+	    layer *pRet = new layer(); \
+	    if (pRet && pRet->init(__PARAM__)) \
+        { \
+	        pRet->autorelease(); \
+	        return pRet; \
+	    } \
+        else \
+        { \
+	        delete pRet; \
+	        pRet = NULL; \
+	        return NULL; \
+	    } \
+	}
 
 
 //
@@ -303,7 +302,7 @@ public:
     LAYER_NODE_FUNC(CCLayerMultiplex);
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __CCLAYER_H__
 

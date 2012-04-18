@@ -30,11 +30,12 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 #include "CCActionPageTurn3D.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCTransitionPageTurn::CCTransitionPageTurn()
 {
 }
+
 CCTransitionPageTurn::~CCTransitionPageTurn()
 {
 }
@@ -133,4 +134,4 @@ CCActionInterval* CCTransitionPageTurn:: actionWithSize(const ccGridSize& vector
 	}
 }
 
-}//namespace   cocos2d 
+NS_CC_END

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCPlatformMacros.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 struct CCAffineTransform {
   CCFloat a, b, c, d;
@@ -54,7 +54,8 @@ CC_DLL CCAffineTransform CCAffineTransformConcat(const CCAffineTransform& t1, co
 CC_DLL bool CCAffineTransformEqualToTransform(const CCAffineTransform& t1, const CCAffineTransform& t2);
 CC_DLL CCAffineTransform CCAffineTransformInvert(const CCAffineTransform& t);
 
-extern const CCAffineTransform CCAffineTransformIdentity;
-}//namespace   cocos2d 
+extern CC_DLL const CCAffineTransform CCAffineTransformIdentity;
+
+NS_CC_END
 
 #endif // __COCOA_CGAFFINETRANSFORM_H__

@@ -31,7 +31,6 @@ THE SOFTWARE.
 */
 
 #include "CCTexture2D.h"
-
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "CCConfiguration.h"
@@ -50,7 +49,7 @@ THE SOFTWARE.
     #include "CCTextureCache.h"
 #endif
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 #if CC_FONT_LABEL_SUPPORT
 // FontLabel support
@@ -726,4 +725,4 @@ unsigned int CCTexture2D::bitsPerPixelForFormat()
 	return ret;
 }
 
-}//namespace   cocos2d 
+NS_CC_END

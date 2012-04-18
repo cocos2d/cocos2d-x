@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCKeypadDispatcher.h"
 #include "support/data_support/ccCArray.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 //------------------------------------------------------------------
 //
@@ -173,4 +173,4 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
     return true;
 }
 
-}
+NS_CC_END

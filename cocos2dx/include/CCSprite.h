@@ -32,9 +32,9 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "ccTypes.h"
 #include "CCDictionary.h"
-
 #include <string>
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 class CCSpriteBatchNode;
 class CCSpriteFrame;
@@ -341,6 +341,7 @@ protected:
 	bool m_bFlipX;
 	bool m_bFlipY;
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __SPITE_NODE_CCSPRITE_H__

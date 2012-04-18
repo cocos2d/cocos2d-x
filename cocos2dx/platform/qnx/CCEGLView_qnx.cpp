@@ -48,7 +48,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 bool CCEGLView::m_initializedFunctions = false;
 const GLubyte *CCEGLView::m_extensions = 0;
@@ -1284,4 +1284,4 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 		hideKeyboard();
 }
 
-}       // end of namespace cocos2d
+NS_CC_END

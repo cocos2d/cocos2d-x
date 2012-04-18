@@ -139,10 +139,10 @@ THE SOFTWARE.
 // extensions
 #include "cocos2dExt.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 const char* cocos2dVersion();
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __COCOS2D_H__

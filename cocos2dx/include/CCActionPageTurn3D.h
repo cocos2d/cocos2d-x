@@ -27,26 +27,26 @@ THE SOFTWARE.
 
 #include "CCActionGrid3D.h"
 
-namespace cocos2d
+NS_CC_BEGIN
+/**
+ @brief This action simulates a page turn from the bottom right hand corner of the screen.
+ It's not much use by itself but is used by the PageTurnTransition.
+ 
+ Based on an original paper by L Hong et al.
+ http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
+  
+ @since v0.8.2
+ */
+class CC_DLL CCPageTurn3D : public CCGrid3DAction
 {
-	/**
-	 @brief This action simulates a page turn from the bottom right hand corner of the screen.
-	 It's not much use by itself but is used by the PageTurnTransition.
-	 
-	 Based on an original paper by L Hong et al.
-	 http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
-	  
-	 @since v0.8.2
-	 */
-	class CC_DLL CCPageTurn3D : public CCGrid3DAction
-	{
-	public:
-		virtual void update(ccTime time);
+public:
+	virtual void update(ccTime time);
 
-	public:
-		/** create the action */
-		static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, ccTime time);
-	};
-}
+public:
+	/** create the action */
+	static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, ccTime time);
+};
+
+NS_CC_END
 
 #endif // __ACTION_CCPAGETURN3D_ACTION_H__

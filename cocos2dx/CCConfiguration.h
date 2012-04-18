@@ -30,35 +30,35 @@ THE SOFTWARE.
 #include <string>
 #include "CCGL.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
-	/** OS version definitions.
-	*/
-	enum {
-		kCCiOSVersion_3_0   = 0x03000000,
-		kCCiOSVersion_3_1   = 0x03010000,
-		kCCiOSVersion_3_1_1 = 0x03010100,
-		kCCiOSVersion_3_1_2 = 0x03010200,
-		kCCiOSVersion_3_1_3 = 0x03010300,
-		kCCiOSVersion_3_2   = 0x03020000,
-		kCCiOSVersion_3_2_1 = 0x03020100,
-		kCCiOSVersion_4_0   = 0x04000000,
-		kCCiOSVersion_4_0_1 = 0x04000100,
-		kCCiOSVersion_4_1   = 0x04010000,
-		kCCiOSVersion_4_2   = 0x04020000,
-		kCCiOSVersion_4_3   = 0x04030000,
-		kCCiOSVersion_4_3_1 = 0x04030100,
-		kCCiOSVersion_4_3_2 = 0x04030200,
-		kCCiOSVersion_4_3_3 = 0x04030300,
-	};
+/** OS version definitions.
+*/
+enum {
+	kCCiOSVersion_3_0   = 0x03000000,
+	kCCiOSVersion_3_1   = 0x03010000,
+	kCCiOSVersion_3_1_1 = 0x03010100,
+	kCCiOSVersion_3_1_2 = 0x03010200,
+	kCCiOSVersion_3_1_3 = 0x03010300,
+	kCCiOSVersion_3_2   = 0x03020000,
+	kCCiOSVersion_3_2_1 = 0x03020100,
+	kCCiOSVersion_4_0   = 0x04000000,
+	kCCiOSVersion_4_0_1 = 0x04000100,
+	kCCiOSVersion_4_1   = 0x04010000,
+	kCCiOSVersion_4_2   = 0x04020000,
+	kCCiOSVersion_4_3   = 0x04030000,
+	kCCiOSVersion_4_3_1 = 0x04030100,
+	kCCiOSVersion_4_3_2 = 0x04030200,
+	kCCiOSVersion_4_3_3 = 0x04030300,
+};
 
-	typedef enum 
-	{
-		GLES_VER_INVALID,
-		GLES_VER_1_0,
-		GLES_VER_1_1,
-		GLES_VER_2_0,
-	} CCGlesVersion;
+typedef enum 
+{
+	GLES_VER_INVALID,
+	GLES_VER_1_0,
+	GLES_VER_1_1,
+	GLES_VER_2_0,
+} CCGlesVersion;
 
 /**
  @brief CCConfiguration contains some openGL variables
@@ -149,6 +149,7 @@ public:
 	/** returns a shared instance of the CCConfiguration */
 	static CCConfiguration *sharedConfiguration(void);
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __CCCONFIGURATION_H__

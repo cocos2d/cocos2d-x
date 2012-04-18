@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 // data structures
 
@@ -785,4 +785,4 @@ void CCScheduler::update(ccTime dt)
 }
 
 
-}//namespace   cocos2d 
+NS_CC_END

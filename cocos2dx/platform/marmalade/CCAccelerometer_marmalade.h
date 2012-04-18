@@ -29,7 +29,7 @@
 #include "ccCommon.h"
 
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 /**
 @brief 
@@ -51,6 +51,6 @@ private:
 	CCAcceleration m_obAccelerationValue;
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif

@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include <algorithm>
 
+NS_CC_BEGIN
+
 /**
  * Used for sort
  */
@@ -41,7 +43,6 @@ static int less(const void* p1, const void* p2)
 	return ((cocos2d::CCTouchHandler*)p1)->getPriority() < ((cocos2d::CCTouchHandler*)p2)->getPriority() ? 1 : -1;
 }
 
-namespace   cocos2d {
 
 bool CCTouchDispatcher::isDispatchEvents(void)
 {
@@ -514,4 +515,5 @@ void CCTouchDispatcher::touchesCancelled(CCSet *touches, CCEvent *pEvent)
 		this->touches(touches, pEvent, CCTOUCHCANCELLED);
 	}
 }
-}//namespace   cocos2d 
+
+NS_CC_END

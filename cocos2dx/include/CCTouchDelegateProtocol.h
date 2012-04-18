@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "ccConfig.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CCTouch;
 class CCEvent;
@@ -102,6 +102,6 @@ public:
     virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
  };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__

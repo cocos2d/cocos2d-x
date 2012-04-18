@@ -27,8 +27,8 @@ THE SOFTWARE.
 
 #include "CCSprite.h"
 
-namespace cocos2d
-{
+NS_CC_BEGIN
+
 /** Types of progress
  @since v0.99.1
  */
@@ -123,6 +123,6 @@ private:
 	CCProgressTimer();
 };
 
-}
+NS_CC_END
 
 #endif //__MISC_NODE_CCPROGRESS_TIMER_H__

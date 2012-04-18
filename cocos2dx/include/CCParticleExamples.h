@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "platform/CCArchOptimalParticleSystem.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 //! @brief A fire particle system
 class CC_DLL CCParticleFire : public ARCH_OPTIMAL_PARTICLE_SYSTEM
@@ -262,6 +262,6 @@ public:
 	}
 };
 
-}// namespace cocos2d
+NS_CC_END
 
 #endif //__CCPARTICLE_EXAMPLE_H__

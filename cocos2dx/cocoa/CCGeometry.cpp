@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 
 // implementation of CCPoint
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCPoint::CCPoint(void)
 {
@@ -143,4 +143,4 @@ bool CCRect::CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB)
 			CCRectGetMaxY(rectB) < CCRectGetMinY(rectA));
 }
 
-}//namespace   cocos2d {
+NS_CC_END

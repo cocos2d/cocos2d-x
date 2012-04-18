@@ -28,7 +28,8 @@ THE SOFTWARE.
 #define __CCTRANSITION_H__
 
 #include "CCScene.h"
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 //static creation function macro
 //c/c++ don't support object creation of using class name
@@ -558,7 +559,8 @@ public:
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCTransitionFadeDown)
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __CCTRANSITION_H__
 

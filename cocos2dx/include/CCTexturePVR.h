@@ -27,12 +27,11 @@ THE SOFTWARE.
 #define __CCPVRTEXTURE_H__
 
 #include "CCStdC.h"
-
 #include "CCGL.h"
 #include "CCObject.h"
 #include "CCArray.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 //Forward definition for CCData
 class CCData;
@@ -132,7 +131,8 @@ protected:
 	*/
 	struct CCPVRMipmap m_asMipmaps[CC_PVRMIPMAP_MAX];
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 
 #endif //__CCPVRTEXTURE_H__

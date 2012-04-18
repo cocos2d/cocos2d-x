@@ -27,7 +27,8 @@ THE SOFTWARE.
 #include "CCPointExtension.h"
 #include "ccMacros.h" // FLT_EPSILON
 #include <stdio.h>
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 #define kCCPointEpsilon FLT_EPSILON
 
@@ -198,4 +199,5 @@ float ccpAngle(const CCPoint& a, const CCPoint& b)
 	if( fabs(angle) < kCCPointEpsilon ) return 0.f;
 	return angle;
 }
-}//namespace   cocos2d 
+
+NS_CC_END

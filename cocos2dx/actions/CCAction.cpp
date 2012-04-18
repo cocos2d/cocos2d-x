@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCZone.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 //
 // Action Base Class
 //
@@ -42,10 +42,12 @@ CCAction::CCAction()
 ,m_nTag(kCCActionTagInvalid)
 {
 }
+
 CCAction::~CCAction()
 {
 	CCLOGINFO("cocos2d: deallocing");
 }
+
 CCAction * CCAction::action()
 {
 	CCAction * pRet = new CCAction();
@@ -332,6 +334,6 @@ void CCFollow::stop()
 	CCAction::stop();
 }
 
-}//namespace   cocos2d 
+NS_CC_END
 
 
