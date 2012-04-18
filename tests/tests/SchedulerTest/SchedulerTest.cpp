@@ -826,14 +826,6 @@ void TwoSchedulers::onEnter()
     addChild(sliderCtl2);
     sliderCtl2->retain();
     sliderCtl2->setPosition(ccp(s.width / 4.0f*3.0f, s.height-20));
-// #ifdef __CC_PLATFORM_IOS
-//     CGRect frame = [sliderCtl2 frame];
-// #elif defined(__CC_PLATFORM_MAC)
-//     NSRect frame = [sliderCtl2 frame];
-// #endif
-//     frame.origin.x += 300;
-//     [sliderCtl2 setFrame:frame];
-
 }
 
 
