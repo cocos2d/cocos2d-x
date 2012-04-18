@@ -55,7 +55,7 @@ CCGLProgram::CCGLProgram()
 
 CCGLProgram::~CCGLProgram()
 {
-	CCLOGINFO("cocos2d: deallocing 0x%X", this);
+	CCLOGINFO("cocos2d: %s %d deallocing 0x%X", __FUNCTION__, __LINE__, this);
 
 	// there is no need to delete the shaders. They should have been already deleted.
 	CCAssert( m_uVertShader == 0, "Vertex Shaders should have been already deleted");
@@ -79,6 +79,7 @@ CCGLProgram::~CCGLProgram()
 bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
 	m_uProgram = glCreateProgram();
+    CHECK_GL_ERROR_DEBUG();
 
 	m_uVertShader = m_uFragShader = 0;
 
@@ -101,11 +102,14 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
 	if( m_uVertShader ) {
 		glAttachShader(m_uProgram, m_uVertShader);
 	}
+    CHECK_GL_ERROR_DEBUG();
 
 	if( m_uFragShader ) {
 		glAttachShader(m_uProgram, m_uFragShader);
 	}
 	m_pHashForUniforms = NULL;
+    
+    CHECK_GL_ERROR_DEBUG();
 
 	return true;
 }
@@ -132,9 +136,12 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
 
     *shader = glCreateShader(type);
     glShaderSource(*shader, 1, &source, NULL);
+    CHECK_GL_ERROR_DEBUG();
     glCompileShader(*shader);
+    CHECK_GL_ERROR_DEBUG();
 
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
+    CHECK_GL_ERROR_DEBUG();
 
 	if( ! status ) {
 		if( type == GL_VERTEX_SHADER )
@@ -371,6 +378,29 @@ void CCGLProgram::setUniformForModelViewProjectionMatrix()
 	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
 
 	setUniformLocationwithMatrix4fv(m_uUniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
+}
+
+void CCGLProgram::reset()
+{
+    m_uVertShader = m_uFragShader = 0;
+    memset(m_uUniforms, 0, sizeof(m_uUniforms));
+    
+
+    // it is already deallocated by android
+    //ccGLDeleteProgram(m_uProgram);
+    m_uProgram = 0;
+
+    
+	tHashUniformEntry *current_element, *tmp;
+    
+	// Purge uniform hash
+	HASH_ITER(hh, m_pHashForUniforms, current_element, tmp) 
+    {
+		HASH_DEL(m_pHashForUniforms, current_element);
+		free(current_element->value);
+		free(current_element);
+	}
+    m_pHashForUniforms = NULL;
 }
 
 NS_CC_END
