@@ -45,9 +45,9 @@ bool CCActionTween::initWithDuration(ccTime aDuration, const char* key, float fr
 {
     if (CCActionInterval::initWithDuration(aDuration)) 
     {
-		key_	= key;
-		to_		= to;
-		from_	= from;
+		m_strKey    = key;
+		m_fTo       = to;
+		m_fFrom     = from;
         return true;
 	}
 
@@ -58,17 +58,17 @@ void CCActionTween::startWithTarget(CCNode *pTarget)
 {
     CCAssert(dynamic_cast<CCActionTweenDelegate*>(pTarget), "target must implement CCActionTweenDelegate");
     CCActionInterval::startWithTarget(pTarget);
-	delta_ = to_ - from_;
+	m_fDelta = m_fTo - m_fFrom;
 }
 
 void CCActionTween::update(ccTime dt)
 {
-    dynamic_cast<CCActionTweenDelegate*>(m_pTarget)->updateTweenAction(to_  - delta_ * (1 - dt), key_.c_str());
+    dynamic_cast<CCActionTweenDelegate*>(m_pTarget)->updateTweenAction(m_fTo  - m_fDelta * (1 - dt), m_strKey.c_str());
 }
 
 CCActionInterval* CCActionTween::reverse()
 {
-    return CCActionTween::actionWithDuration(m_fDuration, key_.c_str(), to_, from_);
+    return CCActionTween::actionWithDuration(m_fDuration, m_strKey.c_str(), m_fTo, m_fFrom);
 }
 
 

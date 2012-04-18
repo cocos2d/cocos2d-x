@@ -5,7 +5,7 @@ enum {
 	kTagAnimationDance = 1,
 };
 
-#define MAX_TESTS           8
+#define MAX_TESTS           11
 static int sceneIdx = -1;
 
 CCLayer* nextSchedulerTest();
@@ -19,20 +19,26 @@ CCLayer* createSchedulerTest(int nIndex)
     switch (nIndex)
     {
     case 0:
-        pLayer = new SchedulerAutoremove(); break;
+        pLayer = new SchedulerDelayAndRepeat(); break;
     case 1:
-        pLayer = new SchedulerPauseResume(); break;
+        pLayer = new SchedulerTimeScale(); break;
     case 2:
-        pLayer = new SchedulerUnscheduleAll(); break;
+        pLayer = new TwoSchedulers(); break;
     case 3:
-        pLayer = new SchedulerUnscheduleAllHard(); break;
+        pLayer = new SchedulerAutoremove(); break;
     case 4:
-        pLayer = new SchedulerSchedulesAndRemove(); break;
+        pLayer = new SchedulerPauseResume(); break;
     case 5:
-        pLayer = new SchedulerUpdate(); break;
+        pLayer = new SchedulerUnscheduleAll(); break;
     case 6:
-        pLayer = new SchedulerUpdateAndCustom(); break;
+        pLayer = new SchedulerUnscheduleAllHard(); break;
     case 7:
+        pLayer = new SchedulerSchedulesAndRemove(); break;
+    case 8:
+        pLayer = new SchedulerUpdate(); break;
+    case 9:
+        pLayer = new SchedulerUpdateAndCustom(); break;
+    case 10:
         pLayer = new SchedulerUpdateFromCustom(); break;
     default:
         break;
@@ -590,6 +596,265 @@ void RescheduleSelector::schedUpdate(ccTime dt)
         m_nTicks = 0;
     }
 }
+
+// SchedulerDelayAndRepeat
+
+void SchedulerDelayAndRepeat::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    schedule(schedule_selector(SchedulerDelayAndRepeat::update), 0, 4 , 3.f);
+    CCLOG("update is scheduled should begin after 3 seconds");
+}
+
+std::string SchedulerDelayAndRepeat::title()
+{
+    return "Schedule with delay of 3 sec, repeat 4 times";
+}
+
+std::string SchedulerDelayAndRepeat::subtitle()
+{
+    return "After 5 x executed, method unscheduled. See console";
+}
+
+void SchedulerDelayAndRepeat::update(ccTime dt)
+{
+    CCLog("update called:%f", dt);
+}
+
+// SchedulerTimeScale
+
+CCControlSlider* SchedulerTimeScale::sliderCtl()
+{
+    CCControlSlider * slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+
+    slider->addTargetWithActionForControlEvents(this, menu_selector(SchedulerTimeScale::sliderAction), CCControlEventValueChanged);
+
+    slider->setMinimumValue(-3.0f);
+    slider->setMaximumValue(3.0f);
+    slider->setValue(1.0f);
+
+    return slider;
+}
+
+void SchedulerTimeScale::sliderAction(CCObject* pSender)
+{
+    CCControlSlider* pSliderCtl = (CCControlSlider*)pSender;
+    ccTime scale;
+    scale = pSliderCtl->getValue();
+
+    CCDirector::sharedDirector()->getScheduler()->setTimeScale(scale);
+}
+
+void SchedulerTimeScale::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    // rotate and jump
+    CCActionInterval *jump1 = CCJumpBy::actionWithDuration(4, ccp(-s.width+80,0), 100, 4);
+    CCActionInterval *jump2 = jump1->reverse();
+    CCActionInterval *rot1 = CCRotateBy::actionWithDuration(4, 360*2);
+    CCActionInterval *rot2 = rot1->reverse();
+
+    CCFiniteTimeAction* seq3_1 = CCSequence::actions(jump2, jump1, NULL);
+    CCFiniteTimeAction* seq3_2 = CCSequence::actions(rot1, rot2, NULL);
+    CCFiniteTimeAction* spawn = CCSpawn::actions(seq3_1, seq3_2, NULL);
+    CCRepeat* action = CCRepeat::actionWithAction(spawn, 50);
+
+    CCRepeat* action2 = (CCRepeat*)action->copy()->autorelease();
+    CCRepeat* action3 = (CCRepeat*)action->copy()->autorelease();
+
+    CCSprite *grossini = CCSprite::spriteWithFile("Images/grossini.png");
+    CCSprite *tamara = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    CCSprite *kathia = CCSprite::spriteWithFile("Images/grossinis_sister2.png");
+
+    grossini->setPosition(ccp(40,80));
+    tamara->setPosition(ccp(40,80));
+    kathia->setPosition(ccp(40,80));
+
+    addChild(grossini);
+    addChild(tamara);
+    addChild(kathia);
+
+    grossini->runAction(CCSpeed::actionWithAction(action, 0.5f));
+    tamara->runAction(CCSpeed::actionWithAction(action2, 1.5f));
+    kathia->runAction(CCSpeed::actionWithAction(action3, 1.0f));
+
+    CCParticleSystem *emitter = CCParticleFireworks::node();
+    emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
+    addChild(emitter);
+
+    m_pSliderCtl = sliderCtl();
+    m_pSliderCtl->setPosition(ccp(s.width / 2.0f, s.height / 3.0f));
+
+    addChild(m_pSliderCtl);
+}
+
+void SchedulerTimeScale::onExit()
+{
+    // restore scale
+    CCDirector::sharedDirector()->getScheduler()->setTimeScale(1);
+    SchedulerTestLayer::onExit();
+}
+
+std::string SchedulerTimeScale::title()
+{
+    return "Scheduler timeScale Test";
+}
+
+std::string SchedulerTimeScale::subtitle()
+{
+    return "Fast-forward and rewind using scheduler.timeScale";
+}
+
+//TwoSchedulers
+
+CCControlSlider *TwoSchedulers::sliderCtl()
+{
+   // CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
+    CCControlSlider *slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+        //[[UISlider alloc] initWithFrame:frame];
+    slider->addTargetWithActionForControlEvents(this, menu_selector(TwoSchedulers::sliderAction), CCControlEventValueChanged);
+
+    // in case the parent view draws with a custom color or gradient, use a transparent color
+    //slider.backgroundColor = [UIColor clearColor];
+
+    slider->setMinimumValue(0.0f);
+    slider->setMaximumValue(2.0f);
+    //slider.continuous = YES;
+    slider->setValue(1.0f);
+
+    return slider;
+}
+
+void TwoSchedulers::sliderAction(CCObject* sender)
+{
+    ccTime scale;
+
+    CCControlSlider *slider = (CCControlSlider*) sender;
+    scale = slider->getValue();
+
+    if( sender == sliderCtl1 )
+        sched1->setTimeScale(scale);
+    else
+        sched2->setTimeScale(scale);
+}
+
+void TwoSchedulers::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+        // rotate and jump
+    CCActionInterval *jump1 = CCJumpBy::actionWithDuration(4, ccp(0,0), 100, 4);
+    CCActionInterval *jump2 = jump1->reverse();
+
+    CCFiniteTimeAction* seq = CCSequence::actions(jump2, jump1, NULL);
+    CCRepeatForever* action = CCRepeatForever::actionWithAction((CCActionInterval *)seq);
+
+        //
+        // Center
+        //
+    CCSprite *grossini = CCSprite::spriteWithFile("Images/grossini.png");
+    addChild(grossini);
+    grossini->setPosition(ccp(s.width/2,100));
+    grossini->runAction((CCAction*)action->copy()->autorelease());
+
+
+
+    CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
+
+    //
+    // Left:
+    //
+
+    // Create a new scheduler, and link it to the main scheduler
+    sched1 = new CCScheduler();
+
+    defaultScheduler->scheduleUpdateForTarget(sched1, 0, false);
+
+    // Create a new ActionManager, and link it to the new scheudler
+    actionManager1 = new CCActionManager();
+    sched1->scheduleUpdateForTarget(actionManager1, 0, false);
+
+    for( unsigned int i=0; i < 10; i++ ) 
+    {
+        CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+
+        // IMPORTANT: Set the actionManager running any action
+        sprite->setActionManager(actionManager1);
+
+        addChild(sprite);
+        sprite->setPosition(ccp(30+15*i,100));
+
+        sprite->runAction((CCAction*)action->copy()->autorelease());
+    }
+
+
+    //
+    // Right:
+    //
+
+    // Create a new scheduler, and link it to the main scheduler
+    sched2 = new CCScheduler();;
+    defaultScheduler->scheduleUpdateForTarget(sched2, 0, false);
+
+    // Create a new ActionManager, and link it to the new scheudler
+    actionManager2 = new CCActionManager();
+    sched2->scheduleUpdateForTarget(actionManager2, 0, false);
+
+    for( unsigned int i=0; i < 10; i++ ) {
+        CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister2.png");
+
+        // IMPORTANT: Set the actionManager running any action
+        sprite->setActionManager(actionManager2);
+
+        addChild(sprite);
+        sprite->setPosition(ccp(s.width-30-15*i,100));
+
+        sprite->runAction((CCAction*)action->copy()->autorelease());
+    }
+
+    sliderCtl1 = sliderCtl();
+    addChild(sliderCtl1);
+    sliderCtl1->retain();
+    sliderCtl1->setPosition(ccp(s.width / 4.0f, s.height - 20));
+
+    sliderCtl2 = sliderCtl();
+    addChild(sliderCtl2);
+    sliderCtl2->retain();
+    sliderCtl2->setPosition(ccp(s.width / 4.0f*3.0f, s.height-20));
+}
+
+
+TwoSchedulers::~TwoSchedulers()
+{
+    CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
+    defaultScheduler->unscheduleAllSelectorsForTarget(sched1);
+    defaultScheduler->unscheduleAllSelectorsForTarget(sched2);
+
+    sliderCtl1->release();
+    sliderCtl2->release();
+
+    sched1->release();
+    sched2->release();
+
+    actionManager1->release();
+    actionManager2->release();
+}
+
+std::string TwoSchedulers::title()
+{
+    return "Two custom schedulers";
+}
+
+std::string TwoSchedulers::subtitle()
+{
+    return "Three schedulers. 2 custom + 1 default. Two different time scales";
+}
+
 
 //------------------------------------------------------------------
 //

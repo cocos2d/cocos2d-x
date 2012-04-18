@@ -80,7 +80,33 @@ public:
 	virtual bool init();
 };
 
-/// can not implement SpriteBlur, because we don't have slider now
+class SpriteBlur;
+class ShaderBlur : public ShaderTestDemo
+{
+public:
+    ShaderBlur();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual bool init();
+    CCControlSlider* createSliderCtl();
+    void sliderAction(CCObject* sender);
+protected:
+    SpriteBlur* m_pBlurSprite;
+    CCControlSlider* m_pSliderCtl;
+};
+
+class ShaderRetroEffect : public ShaderTestDemo
+{
+public:
+    ShaderRetroEffect();
+    virtual std::string title();
+    virtual std::string subtitle();
+    bool init();
+    void update(ccTime dt);
+protected:
+    CCLabelBMFont* m_pLabel;
+    ccTime		   m_fAccum;
+};
 
 class ShaderNode : public CCNode
 {

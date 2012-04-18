@@ -67,9 +67,9 @@ public:
     void update(ccTime dt);
     CCActionInterval* reverse();
 
-    std::string		key_;
-	float			from_, to_;
-	float			delta_;
+    std::string		m_strKey;
+	float			m_fFrom, m_fTo;
+	float			m_fDelta;
 };
 
 NS_CC_END
