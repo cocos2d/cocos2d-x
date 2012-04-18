@@ -28,23 +28,23 @@ THE SOFTWARE.
 Misc free functions
 */
 
-namespace cocos2d
-{
-	/*
-	ccNextPOT function is licensed under the same license that is used in CCTexture2D.m.
-	*/
+namespace cocos2d {
+/*
+ccNextPOT function is licensed under the same license that is used in CCTexture2D.m.
+*/
 
-	/** returns the Next Power of Two value.
+/** returns the Next Power of Two value.
 
-	Examples:
-	- If "value" is 15, it will return 16.
-	- If "value" is 16, it will return 16.
-	- If "value" is 17, it will return 32.
+Examples:
+- If "value" is 15, it will return 16.
+- If "value" is 16, it will return 16.
+- If "value" is 17, it will return 32.
 
-	@since v0.99.5
-	*/
+@since v0.99.5
+*/
 
-	unsigned long ccNextPOT( unsigned long value );
+unsigned long ccNextPOT( unsigned long value );
+
 }
 
 #endif // __SUPPORT_CC_UTILS_H__
