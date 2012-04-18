@@ -309,6 +309,8 @@ public:
 	CC_PROPERTY(float, m_fEmissionRate, EmissionRate)
 	/** maximum particles of the system */
 	CC_PROPERTY(unsigned int, m_uTotalParticles, TotalParticles)
+    /** time scale */
+    CC_PROPERTY(float, m_fTimeScale, TimeScale);
 	/** conforms to CocosNodeTexture protocol */
 	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
 	/** conforms to CocosNodeTexture protocol */
