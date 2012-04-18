@@ -24,9 +24,8 @@
  */
 
 #include "CCControlScene.h"
-
 #include "CCControlSceneManager.h"
-
+#include "../ExtensionsTest.h"
 
 CCControlScene::CCControlScene()
 : m_pSceneTitleLabel(NULL)
@@ -45,6 +44,13 @@ bool CCControlScene::init()
     {    
         // Get the sceensize
         CCSize screensize = CCDirector::sharedDirector()->getWinSize();
+
+        CCMenuItemFont* pBackItem = CCMenuItemFont::itemWithString("Back", this,
+            menu_selector(CCControlScene::toExtensionsMainLayer));
+        pBackItem->setPosition(ccp(screensize.width - 50, 25));
+        CCMenu* pBackMenu = CCMenu::menuWithItems(pBackItem, NULL);
+        pBackMenu->setPosition( CCPointZero );
+        addChild(pBackMenu, 10);
 
         // Add the generated background
 		CCSprite *background = CCSprite::spriteWithFile("extensions/background.png");
@@ -74,9 +80,17 @@ bool CCControlScene::init()
 		item3->setPosition(ccp(screensize.width / 2 + 100, 37));
         
 		addChild(menu ,1);
+
         return true;
     }
     return false;
+}
+
+void CCControlScene::toExtensionsMainLayer(CCObject* sender)
+{
+    ExtensionsTestScene* pScene = new ExtensionsTestScene();
+    pScene->runThisTest();
+    pScene->release();
 }
 
 void CCControlScene::previousCallback(CCObject* sender)

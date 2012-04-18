@@ -4,7 +4,7 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	7
+#define MAX_LAYER	8
 
 static CCLayer* createShaderLayer(int nIndex)
 {
@@ -17,6 +17,7 @@ static CCLayer* createShaderLayer(int nIndex)
 	case 4: return new ShaderFlower();
 	case 5: return new ShaderPlasma();
     case 6: return new ShaderBlur();
+    case 7: return new ShaderRetroEffect();
 	}
 
 	return NULL;
@@ -576,6 +577,7 @@ CCControlSlider* ShaderBlur::createSliderCtl()
     slider->setAnchorPoint(ccp(0.5f, 1.0f));
     slider->setMinimumValue(0.0f); // Sets the min value of range
     slider->setMaximumValue(3.0f); // Sets the max value of range
+    slider->setValue(1.0f);
     slider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 3.0f));
 
     // When the value of the slider will change, the given selector will be call
@@ -589,20 +591,20 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
-        blurSprite = SpriteBlur::spriteWithFile("Images/grossini.png");
+        m_pBlurSprite = SpriteBlur::spriteWithFile("Images/grossini.png");
 
         CCSprite *sprite = CCSprite::spriteWithFile("Images/grossini.png");
 
         CCSize s = CCDirector::sharedDirector()->getWinSize();
-        blurSprite->setPosition(ccp(s.width/3, s.height/2));
+        m_pBlurSprite->setPosition(ccp(s.width/3, s.height/2));
         sprite->setPosition(ccp(2*s.width/3, s.height/2));
 
-        addChild(blurSprite);
+        addChild(m_pBlurSprite);
         addChild(sprite);
 
-        sliderCtl = createSliderCtl();
+        m_pSliderCtl = createSliderCtl();
 
-        addChild(sliderCtl);
+        addChild(m_pSliderCtl);
         return true;
     }
 
@@ -612,7 +614,84 @@ bool ShaderBlur::init()
 void ShaderBlur::sliderAction(CCObject* sender)
 {
     CCControlSlider* pSlider = (CCControlSlider*)sender;
-    blurSprite->setBlurSize(pSlider->getValue());
+    m_pBlurSprite->setBlurSize(pSlider->getValue());
+}
+
+// ShaderRetroEffect
+
+ShaderRetroEffect::ShaderRetroEffect()
+: m_pLabel(NULL)
+, m_fAccum(0.0f)
+{
+    init();
+}
+
+bool ShaderRetroEffect::init()
+{
+    if( ShaderTestDemo::init() ) {
+
+        GLchar * fragSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath("Shaders/example_HorizontalColor.fsh"))->getCString();
+        CCGLProgram *p = new CCGLProgram();
+        p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
+
+        p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+        p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+
+        p->link();
+        p->updateUniforms();
+
+
+        CCDirector *director = CCDirector::sharedDirector();
+        CCSize s = director->getWinSize();
+
+        m_pLabel = CCLabelBMFont::labelWithString("RETRO EFFECT", "fonts/west_england-64.fnt");
+
+        m_pLabel->setShaderProgram(p);
+
+        p->release();
+
+
+        m_pLabel->setPosition(ccp(s.width/2,s.height/2));
+
+        addChild(m_pLabel);
+
+        scheduleUpdate();
+        return true;
+    }
+
+    return false;
+}
+
+void ShaderRetroEffect::update(ccTime dt)
+{
+    m_fAccum += dt;
+
+    CCArray* pArray = m_pLabel->getChildren();
+
+    int i=0;
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(pArray, pObj)
+    {
+        CCSprite *sprite = (CCSprite*)pObj;
+        i++;
+        CCPoint oldPosition = sprite->getPosition();
+        sprite->setPosition(ccp( oldPosition.x, sinf( m_fAccum * 2 + i/2.0) * 20  ));
+
+        // add fabs() to prevent negative scaling
+        float scaleY = ( sinf( m_fAccum * 2 + i/2.0 + 0.707) );
+
+        sprite->setScaleY(scaleY);
+    }
+}
+
+std::string ShaderRetroEffect::title()
+{
+    return "Shader: Retro test";
+}
+
+std::string ShaderRetroEffect::subtitle()
+{
+    return "sin() effect with moving colors";
 }
 
 ///---------------------------------------

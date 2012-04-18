@@ -91,11 +91,22 @@ public:
     CCControlSlider* createSliderCtl();
     void sliderAction(CCObject* sender);
 protected:
-    SpriteBlur *blurSprite;
-    CCControlSlider* sliderCtl;
+    SpriteBlur* m_pBlurSprite;
+    CCControlSlider* m_pSliderCtl;
 };
 
-/// can not implement SpriteBlur, because we don't have slider now
+class ShaderRetroEffect : public ShaderTestDemo
+{
+public:
+    ShaderRetroEffect();
+    virtual std::string title();
+    virtual std::string subtitle();
+    bool init();
+    void update(ccTime dt);
+protected:
+    CCLabelBMFont* m_pLabel;
+    ccTime		   m_fAccum;
+};
 
 class ShaderNode : public CCNode
 {
