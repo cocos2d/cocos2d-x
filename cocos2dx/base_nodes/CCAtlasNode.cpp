@@ -36,7 +36,7 @@ THE SOFTWARE.
 // external
 #include "kazmath/GL/matrix.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 // implementation CCAtlasNode
 
@@ -250,4 +250,4 @@ void CCAtlasNode::setQuadsToDraw(unsigned int uQuadsToDraw)
 	m_uQuadsToDraw = uQuadsToDraw;
 }
 
-} // namespace   cocos2d
+NS_CC_END

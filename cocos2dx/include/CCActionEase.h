@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "CCActionInterval.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 class CCObject;
 class CCZone;
@@ -419,6 +419,6 @@ public:
 	static CCEaseBackInOut* actionWithAction(CCActionInterval* pAction);
 };
 
-}
+NS_CC_END
 
 #endif // __ACTION_CCEASE_ACTION_H__

@@ -46,7 +46,7 @@ THE SOFTWARE.
 #define RENDER_IN_SUBPIXEL (int)
 #endif
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
@@ -1089,4 +1089,5 @@ CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
 	return this->convertToNodeSpaceAR(point);
 }
 
-}//namespace   cocos2d 
+NS_CC_END
+

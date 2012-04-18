@@ -40,7 +40,8 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCDictionary.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
+
 class CCSprite;
 
 /** @brief Singleton that handles the loading of the sprite frames.
@@ -130,6 +131,7 @@ protected:
 	CCDictionary* m_pSpriteFrames;
 	CCDictionary* m_pSpriteFramesAliases;
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __SPRITE_CCSPRITE_FRAME_CACHE_H__

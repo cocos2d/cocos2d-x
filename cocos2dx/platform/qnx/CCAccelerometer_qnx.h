@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCAccelerometerDelegate.h"
 #include <list>
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CC_DLL CCAccelerometer
 {
@@ -46,6 +46,6 @@ private:
     static int				 m_initialOrientationAngle;
 };
 
-}//namespace cocos2d
+NS_CC_END
 
 #endif

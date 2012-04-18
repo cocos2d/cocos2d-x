@@ -28,9 +28,9 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCTexture2D.h"
-
 #include <string>
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 //! @brief  CC RGBA protocol
 class CC_DLL CCRGBAProtocol
@@ -125,6 +125,6 @@ public:
 	virtual void updateProjection(void) = 0;
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __CCPROTOCOLS_H__

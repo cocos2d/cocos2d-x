@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include <string>
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
-class CCData : public CCObject
+class CC_DLL CCData : public CCObject
 {
 public:
 	CCData(void);
@@ -45,6 +45,7 @@ public:
 private:
 	char *m_pData;
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif //__CCDATA_H__

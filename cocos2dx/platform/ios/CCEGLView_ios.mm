@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
 : m_pDelegate(0)
@@ -148,4 +148,5 @@ float CCEGLView::getMainScreenScale()
     return [[UIScreen mainScreen] scale];
 }
 
-} // end of namespace cocos2d;
+NS_CC_END
+

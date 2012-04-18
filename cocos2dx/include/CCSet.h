@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <set>
 #include "CCObject.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 typedef std::set<CCObject *>::iterator CCSetIterator;
 
@@ -80,7 +80,7 @@ private:
     std::set<CCObject *> *m_pSet;
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __NS_SET_H__
 

@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCActionInstant.h"
 #include <stdarg.h>
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 //
 // IntervalAction
@@ -2278,4 +2278,4 @@ void CCTargetedAction::update(ccTime time)
 	m_pAction->update(time);
 }
 
-}
+NS_CC_END

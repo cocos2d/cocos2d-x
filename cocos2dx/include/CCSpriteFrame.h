@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCGeometry.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CCTexture2D;
 class CCZone;
@@ -145,6 +145,6 @@ protected:
 	std::string  m_strTextureFilename;
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif //__SPRITE_CCSPRITE_FRAME_H__

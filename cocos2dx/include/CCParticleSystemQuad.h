@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include  "CCParticleSystem.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 class CCSpriteFrame;
 
@@ -101,7 +101,7 @@ private:
 	bool allocMemory();
 };
 
-}// namespace cocos2d
+NS_CC_END
 
 #endif //__CC_PARTICLE_SYSTEM_QUAD_H__
 

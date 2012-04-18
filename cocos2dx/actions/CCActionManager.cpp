@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "support/data_support/ccCArray.h"
 #include "support/data_support/uthash.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 //
 // singleton stuff
 //
@@ -367,4 +367,4 @@ void CCActionManager::update(ccTime dt)
 	m_pCurrentTarget = NULL;
 }
 
-}
+NS_CC_END

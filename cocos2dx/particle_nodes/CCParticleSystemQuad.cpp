@@ -42,7 +42,7 @@ THE SOFTWARE.
 // extern
 #include "kazmath/GL/matrix.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 //implementation CCParticleSystemQuad
 // overriding the init method
@@ -542,4 +542,4 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
 	}
 }
 
-}// namespace cocos2d
+NS_CC_END

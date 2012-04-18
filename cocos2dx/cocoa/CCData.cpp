@@ -29,7 +29,8 @@ THE SOFTWARE.
 #include <stdio.h>
 
 using namespace std;
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 CCData::CCData(void)
 : m_pData(NULL)
@@ -71,4 +72,5 @@ CCData* CCData::dataWithBytes(unsigned char *pBytes, int size)
     CC_UNUSED_PARAM(size);
 	return NULL;
 }
-}//namespace   cocos2d 
+
+NS_CC_END

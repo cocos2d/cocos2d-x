@@ -145,8 +145,7 @@ namespace
 
 }
 
-namespace cocos2d
-{
+NS_CC_BEGIN
 
 CCAccelerometer::CCAccelerometer() : 
 	m_pAccelDelegate(NULL)
@@ -193,5 +192,5 @@ void CCAccelerometer::update( double x,double y,double z,double timestamp )
 	}	
 }
 
-} // end of namespace cococs2d
+NS_CC_END
 

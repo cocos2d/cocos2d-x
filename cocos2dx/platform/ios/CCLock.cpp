@@ -22,7 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLock.h"
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 CCLock::CCLock(void)
 {
@@ -42,4 +43,5 @@ void CCLock::unlock(void)
 {
 	
 }
-}//namespace   cocos2d 
+
+NS_CC_END

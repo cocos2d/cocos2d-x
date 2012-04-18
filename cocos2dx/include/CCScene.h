@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 /** @brief CCScene is a subclass of CCNode that is used only as an abstract concept.
 
@@ -49,7 +49,8 @@ public:
 	bool init();
 	static CCScene *node(void);
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 // for the subclass of CCScene, each has to implement the static "node" method 
 #define SCENE_NODE_FUNC(scene) \
@@ -71,19 +72,18 @@ static scene* node() \
 
 #define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
 	static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
-{ \
-	cocos2d::CCScene * scene = NULL; \
-	do  \
-{ \
-	scene = cocos2d::CCScene::node(); \
-	CC_BREAK_IF(! scene); \
-	__TYPE__ *layer = __TYPE__::node(__PARAM__); \
-	CC_BREAK_IF(! layer); \
-	scene->addChild(layer); \
-} while (0); \
-	return scene; \
-};
-
+    { \
+	    cocos2d::CCScene * scene = NULL; \
+	    do  \
+        { \
+	        scene = cocos2d::CCScene::node(); \
+	        CC_BREAK_IF(! scene); \
+	        __TYPE__ *layer = __TYPE__::node(__PARAM__); \
+	        CC_BREAK_IF(! layer); \
+	        scene->addChild(layer); \
+        } while (0); \
+	    return scene; \
+    }
 
 
 #endif // __CCSCENE_H__

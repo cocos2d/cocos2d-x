@@ -25,8 +25,7 @@
 #include "CCAccelerometer_marmalade.h"
 #include "ccMacros.h"
 
-namespace cocos2d
-{
+NS_CC_BEGIN
 
 CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
 {
@@ -66,5 +65,5 @@ void CCAccelerometer::update(float x, float y, float z, uint64 sensorTimeStamp)
 	}	
 }
 
-} // end of namespace cococs2d
+NS_CC_END
 

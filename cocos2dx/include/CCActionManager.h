@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCArray.h"
 #include "CCObject.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 #define kCCActionManagerPriority 0
 
@@ -113,6 +113,6 @@ protected:
 	bool			m_bCurrentTargetSalvaged;
 };
 
-}
+NS_CC_END
 
 #endif // __ACTION_CCACTION_MANAGER_H__

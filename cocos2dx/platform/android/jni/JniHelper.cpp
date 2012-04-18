@@ -178,37 +178,38 @@ extern "C"
 	}
 }
 
-namespace cocos2d {
+NS_CC_BEGIN
 
-	JavaVM* JniHelper::m_psJavaVM = NULL;
+JavaVM* JniHelper::m_psJavaVM = NULL;
 
-	JavaVM* JniHelper::getJavaVM()
-	{
-		return m_psJavaVM;
-	}
-
-	void JniHelper::setJavaVM(JavaVM *javaVM)
-	{
-		m_psJavaVM = javaVM;
-	}
-
-	jclass JniHelper::getClassID(const char *className, JNIEnv *env)
-	{
-		return getClassID_(className, env);
-	}
-
-	bool JniHelper::getStaticMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
-	{
-		return getStaticMethodInfo_(methodinfo, className, methodName, paramCode);
-	}
-
-	bool JniHelper::getMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
-	{
-		return getMethodInfo_(methodinfo, className, methodName, paramCode);
-	}
-
-	string JniHelper::jstring2string(jstring str)
-	{
-		return jstring2string_(str);
-	}
+JavaVM* JniHelper::getJavaVM()
+{
+	return m_psJavaVM;
 }
+
+void JniHelper::setJavaVM(JavaVM *javaVM)
+{
+	m_psJavaVM = javaVM;
+}
+
+jclass JniHelper::getClassID(const char *className, JNIEnv *env)
+{
+	return getClassID_(className, env);
+}
+
+bool JniHelper::getStaticMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
+{
+	return getStaticMethodInfo_(methodinfo, className, methodName, paramCode);
+}
+
+bool JniHelper::getMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
+{
+	return getMethodInfo_(methodinfo, className, methodName, paramCode);
+}
+
+string JniHelper::jstring2string(jstring str)
+{
+	return jstring2string_(str);
+}
+
+NS_CC_END

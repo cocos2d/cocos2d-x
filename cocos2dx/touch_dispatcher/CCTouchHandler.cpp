@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCTouchHandler.h"
 #include "ccMacros.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCTouchDelegate* CCTouchHandler::getDelegate(void)
 {
@@ -193,4 +193,5 @@ CCTargetedTouchHandler::~CCTargetedTouchHandler(void)
 {
 	CC_SAFE_RELEASE(m_pClaimedTouches);
 }
-}//namespace   cocos2d 
+
+NS_CC_END

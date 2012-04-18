@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCKeypadDelegate.h"
 #include "CCArray.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 typedef enum {
     // the back key clicked msg
@@ -83,6 +83,6 @@ protected:
     struct _ccCArray *m_pHandlersToRemove;
 };
 
-} // namespace   cocos2d 
+NS_CC_END
 
 #endif //__CCKEYPAD_DISPATCHER_H__

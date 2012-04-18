@@ -25,142 +25,143 @@ THE SOFTWARE.
 #include "SimpleAudioEngine.h"
 #include "jni/SimpleAudioEngineJni.h"
 
-namespace CocosDenshion
+namespace CocosDenshion {
+
+static SimpleAudioEngine *s_pEngine = 0;
+
+SimpleAudioEngine::SimpleAudioEngine()
 {
-	static SimpleAudioEngine *s_pEngine = 0;
 
-	SimpleAudioEngine::SimpleAudioEngine()
+}
+
+SimpleAudioEngine::~SimpleAudioEngine()
+{
+
+}
+
+SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+{
+	if (! s_pEngine)
 	{
-
+		s_pEngine = new SimpleAudioEngine();
 	}
+    
+	return s_pEngine;
+}
 
-	SimpleAudioEngine::~SimpleAudioEngine()
-	{
+void SimpleAudioEngine::end()
+{
+	endJNI();
+}
 
-	}
+void SimpleAudioEngine::setResource(const char* pszZipFileName)
+{
 
-	SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
-	{
-		if (! s_pEngine)
-		{
-			s_pEngine = new SimpleAudioEngine();
-		}
-        
-		return s_pEngine;
-	}
+}
 
-	void SimpleAudioEngine::end()
-	{
-		endJNI();
-	}
+void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
+{
+    preloadBackgroundMusicJNI(pszFilePath);
+}
 
-	void SimpleAudioEngine::setResource(const char* pszZipFileName)
-	{
+void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
+{
+    playBackgroundMusicJNI(pszFilePath, bLoop);
+}
 
-	}
+void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
+{
+	stopBackgroundMusicJNI();
+}
 
-    void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
-	{
-        preloadBackgroundMusicJNI(pszFilePath);
-	}
+void SimpleAudioEngine::pauseBackgroundMusic()
+{
+	pauseBackgroundMusicJNI();
+}
 
-	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
-	{
-        playBackgroundMusicJNI(pszFilePath, bLoop);
-	}
+void SimpleAudioEngine::resumeBackgroundMusic()
+{
+	resumeBackgroundMusicJNI();
+} 
 
-	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
-	{
-		stopBackgroundMusicJNI();
-	}
+void SimpleAudioEngine::rewindBackgroundMusic()
+{
+	rewindBackgroundMusicJNI();
+}
 
-	void SimpleAudioEngine::pauseBackgroundMusic()
-	{
-		pauseBackgroundMusicJNI();
-	}
+bool SimpleAudioEngine::willPlayBackgroundMusic()
+{
+	return true;
+}
 
-	void SimpleAudioEngine::resumeBackgroundMusic()
-	{
-		resumeBackgroundMusicJNI();
-	} 
+bool SimpleAudioEngine::isBackgroundMusicPlaying()
+{
+	return isBackgroundMusicPlayingJNI();
+}
 
-	void SimpleAudioEngine::rewindBackgroundMusic()
-	{
-		rewindBackgroundMusicJNI();
-	}
+float SimpleAudioEngine::getBackgroundMusicVolume()
+{
+	return getBackgroundMusicVolumeJNI();
+}
 
-	bool SimpleAudioEngine::willPlayBackgroundMusic()
-	{
-		return true;
-	}
+void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
+{
+	setBackgroundMusicVolumeJNI(volume);
+}
 
-	bool SimpleAudioEngine::isBackgroundMusicPlaying()
-	{
-		return isBackgroundMusicPlayingJNI();
-	}
+float SimpleAudioEngine::getEffectsVolume()
+{
+	return getEffectsVolumeJNI();
+}
 
-	float SimpleAudioEngine::getBackgroundMusicVolume()
-	{
-		return getBackgroundMusicVolumeJNI();
-	}
+void SimpleAudioEngine::setEffectsVolume(float volume)
+{
+	setEffectsVolumeJNI(volume);
+}
 
-	void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
-	{
-		setBackgroundMusicVolumeJNI(volume);
-	}
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+{
+	return playEffectJNI(pszFilePath, bLoop);
+}
 
-	float SimpleAudioEngine::getEffectsVolume()
-	{
-		return getEffectsVolumeJNI();
-	}
+void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
+{
+	stopEffectJNI(nSoundId);
+}
 
-	void SimpleAudioEngine::setEffectsVolume(float volume)
-	{
-		setEffectsVolumeJNI(volume);
-	}
+void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
+{
+	preloadEffectJNI(pszFilePath);
+}
 
-	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
-	{
-		return playEffectJNI(pszFilePath, bLoop);
-	}
+void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
+{
+	unloadEffectJNI(pszFilePath);
+}
 
-	void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
-	{
-		stopEffectJNI(nSoundId);
-	}
+void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
+{
+	pauseEffectJNI(nSoundId);
+}
 
-	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
-	{
-		preloadEffectJNI(pszFilePath);
-	}
+void SimpleAudioEngine::pauseAllEffects()
+{
+	pauseAllEffectsJNI();
+}
 
-	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
-	{
-		unloadEffectJNI(pszFilePath);
-	}
+void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
+{
+	resumeEffectJNI(nSoundId);
+}
 
-	void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
-	{
-		pauseEffectJNI(nSoundId);
-	}
+void SimpleAudioEngine::resumeAllEffects()
+{
+	resumeAllEffectsJNI();
+}
 
-	void SimpleAudioEngine::pauseAllEffects()
-	{
-		pauseAllEffectsJNI();
-	}
+void SimpleAudioEngine::stopAllEffects()
+{
+	stopAllEffectsJNI();
+}
 
-	void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
-	{
-		resumeEffectJNI(nSoundId);
-	}
-
-	void SimpleAudioEngine::resumeAllEffects()
-	{
-		resumeAllEffectsJNI();
-	}
-
-	void SimpleAudioEngine::stopAllEffects()
-	{
-		stopAllEffectsJNI();
-	}
 }

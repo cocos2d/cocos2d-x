@@ -58,7 +58,7 @@ THE SOFTWARE.
 #include "platform/CCGL.h"
 
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 // ideas taken from:
 //	 . The ocean spray in your face [Jeff Lander]
@@ -327,6 +327,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
 	CC_SAFE_DELETE(image);
 	return bRet;
 }
+
 bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	m_uTotalParticles = numberOfParticles;
@@ -399,6 +400,7 @@ bool CCParticleSystem::addParticle()
 
 	return true;
 }
+
 void CCParticleSystem::initParticle(tCCParticle* particle)
 {
 	// timeToLive
@@ -502,12 +504,14 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 		particle->modeB.degreesPerSecond = CC_DEGREES_TO_RADIANS(modeB.rotatePerSecond + modeB.rotatePerSecondVar * CCRANDOM_MINUS1_1());
 	}	
 }
+
 void CCParticleSystem::stopSystem()
 {
 	m_bIsActive = false;
 	m_fElapsed = m_fDuration;
 	m_fEmitCounter = 0;
 }
+
 void CCParticleSystem::resetSystem()
 {
 	m_bIsActive = true;
@@ -700,6 +704,7 @@ void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, const CCPoi
     CC_UNUSED_PARAM(newPosition);
 	// should be overriden
 }
+
 void CCParticleSystem::postStep()
 {
 	// should be overriden
@@ -720,6 +725,7 @@ void CCParticleSystem::setTexture(CCTexture2D* var)
 		m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 	}
 }
+
 CCTexture2D * CCParticleSystem::getTexture()
 {
 	return m_pTexture;
@@ -747,6 +753,7 @@ void CCParticleSystem::setIsBlendAdditive(bool additive)
 		}
 	}
 }
+
 bool CCParticleSystem::getIsBlendAdditive()
 {
 	return( m_tBlendFunc.src == GL_SRC_ALPHA && m_tBlendFunc.dst == GL_ONE);
@@ -758,66 +765,79 @@ void CCParticleSystem::setTangentialAccel(float t)
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.tangentialAccel = t;
 }
+
 float CCParticleSystem::getTangentialAccel()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.tangentialAccel;
 }
+
 void CCParticleSystem::setTangentialAccelVar(float t)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.tangentialAccelVar = t;
 }
+
 float CCParticleSystem::getTangentialAccelVar()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.tangentialAccelVar;
 }	
+
 void CCParticleSystem::setRadialAccel(float t)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.radialAccel = t;
 }
+
 float CCParticleSystem::getRadialAccel()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.radialAccel;
 }
+
 void CCParticleSystem::setRadialAccelVar(float t)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.radialAccelVar = t;
 }
+
 float CCParticleSystem::getRadialAccelVar()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.radialAccelVar;
 }
+
 void CCParticleSystem::setGravity(const CCPoint& g)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.gravity = g;
 }
+
 const CCPoint& CCParticleSystem::getGravity()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.gravity;
 }
+
 void CCParticleSystem::setSpeed(float speed)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.speed = speed;
 }
+
 float CCParticleSystem::getSpeed()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.speed;
 }
+
 void CCParticleSystem::setSpeedVar(float speedVar)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.speedVar = speedVar;
 }
+
 float CCParticleSystem::getSpeedVar()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
@@ -830,209 +850,258 @@ void CCParticleSystem::setStartRadius(float startRadius)
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.startRadius = startRadius;
 }
+
 float CCParticleSystem::getStartRadius()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.startRadius;
 }
+
 void CCParticleSystem::setStartRadiusVar(float startRadiusVar)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.startRadiusVar = startRadiusVar;
 }
+
 float CCParticleSystem::getStartRadiusVar()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.startRadiusVar;
 }
+
 void CCParticleSystem::setEndRadius(float endRadius)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.endRadius = endRadius;
 }
+
 float CCParticleSystem::getEndRadius()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.endRadius;
 }
+
 void CCParticleSystem::setEndRadiusVar(float endRadiusVar)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.endRadiusVar = endRadiusVar;
 }
+
 float CCParticleSystem::getEndRadiusVar()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.endRadiusVar;
 }
+
 void CCParticleSystem::setRotatePerSecond(float degrees)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.rotatePerSecond = degrees;
 }
+
 float CCParticleSystem::getRotatePerSecond()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.rotatePerSecond;
 }
+
 void CCParticleSystem::setRotatePerSecondVar(float degrees)
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.rotatePerSecondVar = degrees;
 }
+
 float CCParticleSystem::getRotatePerSecondVar()
 {
 	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.rotatePerSecondVar;
 }
+
 bool CCParticleSystem::getIsActive()
 {
 	return m_bIsActive;
 }
+
 unsigned int CCParticleSystem::getParticleCount()
 {
 	return m_uParticleCount;
 }
+
 float CCParticleSystem::getDuration()
 {
 	return m_fDuration;
 }
+
 void CCParticleSystem::setDuration(float var)
 {
 	m_fDuration = var;
 }
+
 const CCPoint& CCParticleSystem::getSourcePosition()
 {
 	return m_tSourcePosition;
 }
+
 void CCParticleSystem::setSourcePosition(const CCPoint& var)
 {
 	m_tSourcePosition = var;
 }
+
 const CCPoint& CCParticleSystem::getPosVar()
 {
 	return m_tPosVar;
 }
+
 void CCParticleSystem::setPosVar(const CCPoint& var)
 {
 	m_tPosVar = var;
 }
+
 float CCParticleSystem::getLife()
 {
 	return m_fLife;
 }
+
 void CCParticleSystem::setLife(float var)
 {
 	m_fLife = var;
 }
+
 float CCParticleSystem::getLifeVar()
 {
 	return m_fLifeVar;
 }
+
 void CCParticleSystem::setLifeVar(float var)
 {
 	m_fLifeVar = var;
 }
+
 float CCParticleSystem::getAngle()
 {
 	return m_fAngle;
 }
+
 void CCParticleSystem::setAngle(float var)
 {
 	m_fAngle = var;
 }
+
 float CCParticleSystem::getAngleVar()
 {
 	return m_fAngleVar;
 }
+
 void CCParticleSystem::setAngleVar(float var)
 {
 	m_fAngleVar = var;
 }
+
 float CCParticleSystem::getStartSize()
 {
 	return m_fStartSize;
 }
+
 void CCParticleSystem::setStartSize(float var)
 {
 	m_fStartSize = var;
 }
+
 float CCParticleSystem::getStartSizeVar()
 {
 	return m_fStartSizeVar;
 }
+
 void CCParticleSystem::setStartSizeVar(float var)
 {
 	m_fStartSizeVar = var;
 }
+
 float CCParticleSystem::getEndSize()
 {
 	return m_fEndSize;
 }
+
 void CCParticleSystem::setEndSize(float var)
 {
 	m_fEndSize = var;
 }
+
 float CCParticleSystem::getEndSizeVar()
 {
 	return m_fEndSizeVar;
 }
+
 void CCParticleSystem::setEndSizeVar(float var)
 {
 	m_fEndSizeVar = var;
 }
+
 const ccColor4F& CCParticleSystem::getStartColor()
 {
 	return m_tStartColor;
 }
+
 void CCParticleSystem::setStartColor(const ccColor4F& var)
 {
 	m_tStartColor = var;
 }
+
 const ccColor4F& CCParticleSystem::getStartColorVar()
 {
 	return m_tStartColorVar;
 }
+
 void CCParticleSystem::setStartColorVar(const ccColor4F& var)
 {
 	m_tStartColorVar = var;
 }
+
 const ccColor4F& CCParticleSystem::getEndColor()
 {
 	return m_tEndColor;
 }
+
 void CCParticleSystem::setEndColor(const ccColor4F& var)
 {
 	m_tEndColor = var;
 }
+
 const ccColor4F& CCParticleSystem::getEndColorVar()
 {
 	return m_tEndColorVar;
 }
+
 void CCParticleSystem::setEndColorVar(const ccColor4F& var)
 {
 	m_tEndColorVar = var;
 }
+
 float CCParticleSystem::getStartSpin()
 {
 	return m_fStartSpin;
 }
+
 void CCParticleSystem::setStartSpin(float var)
 {
 	m_fStartSpin = var;
 }
+
 float CCParticleSystem::getStartSpinVar()
 {
 	return m_fStartSpinVar;
 }
+
 void CCParticleSystem::setStartSpinVar(float var)
 {
 	m_fStartSpinVar = var;
 }
+
 float CCParticleSystem::getEndSpin()
 {
 	return m_fEndSpin;
 }
+
 void CCParticleSystem::setEndSpin(float var)
 {
 	m_fEndSpin = var;
@@ -1041,55 +1110,68 @@ float CCParticleSystem::getEndSpinVar()
 {
 	return m_fEndSpinVar;
 }
+
 void CCParticleSystem::setEndSpinVar(float var)
 {
 	m_fEndSpinVar = var;
 }
+
 float CCParticleSystem::getEmissionRate()
 {
 	return m_fEmissionRate;
 }
+
 void CCParticleSystem::setEmissionRate(float var)
 {
 	m_fEmissionRate = var;
 }
+
 unsigned int CCParticleSystem::getTotalParticles()
 {
 	return m_uTotalParticles;
 }
+
 void CCParticleSystem::setTotalParticles(unsigned int var)
 {
 	CCAssert( var <= m_uAllocatedParticles, "Particle: resizing particle array only supported for quads");
 	m_uTotalParticles = var;
 }
+
 ccBlendFunc CCParticleSystem::getBlendFunc()
 {
 	return m_tBlendFunc;
 }
+
 void CCParticleSystem::setBlendFunc(ccBlendFunc var)
 {
 	m_tBlendFunc = var;
 }
+
 tCCPositionType CCParticleSystem::getPositionType()
 {
 	return m_ePositionType;
 }
+
 void CCParticleSystem::setPositionType(tCCPositionType var)
 {
 	m_ePositionType = var;
 }
+
 bool CCParticleSystem::getIsAutoRemoveOnFinish()
 {
 	return m_bIsAutoRemoveOnFinish;
 }
+
 void CCParticleSystem::setIsAutoRemoveOnFinish(bool var)
 {
 	m_bIsAutoRemoveOnFinish = var;
 }
+
 int CCParticleSystem::getEmitterMode()
 {
 	return m_nEmitterMode;
 }
+
 void CCParticleSystem::setEmitterMode(int var)
 {
 	m_nEmitterMode = var;
@@ -1145,5 +1227,5 @@ void CCParticleSystem::setScaleY(float newScaleY)
 }
 
 
-}// namespace cocos2d
+NS_CC_END
 

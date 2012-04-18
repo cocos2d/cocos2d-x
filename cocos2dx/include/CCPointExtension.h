@@ -44,9 +44,9 @@ THE SOFTWARE.
  */
 
 #include "CCGeometry.h"
-
 #include <math.h>
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 /** Helper macro that creates a CCPoint
  @return CCPoint
@@ -329,7 +329,7 @@ ccpIntersectPoint returns the intersection point of line A-B, C-D
 */
 CCPoint CC_DLL ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __SUPPORT_CGPOINTEXTENSION_H__
 

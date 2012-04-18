@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "support/data_support/uthash.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 //
 // CCTimer
@@ -226,6 +226,7 @@ protected:
 	bool m_bUpdateHashLocked;
     CCArray* m_pScriptHandlerEntries;
 };
-}//namespace   cocos2d
+
+NS_CC_END
 
 #endif // __CCSCHEDULER_H__

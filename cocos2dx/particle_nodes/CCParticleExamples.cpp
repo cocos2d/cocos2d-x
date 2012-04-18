@@ -27,7 +27,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCTextureCache.h"
 #include "CCPointExtension.h"
-namespace cocos2d {
+
+NS_CC_BEGIN
 //
 // ParticleFire
 //
@@ -822,4 +823,4 @@ bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
 	return false;
 }
 
-}//namespace cocos2d
+NS_CC_END

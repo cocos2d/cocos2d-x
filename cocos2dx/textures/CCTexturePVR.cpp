@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 #include <cctype>
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 #define PVR_TEXTURE_FLAG_FLIPPED_MASK 0x10000
@@ -489,4 +489,5 @@ CCTexturePVR * CCTexturePVR::pvrTextureWithContentsOfFile(const char* path)
     }
 }
 
-}//namespace   cocos2d 
+NS_CC_END
+

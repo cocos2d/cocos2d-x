@@ -27,9 +27,10 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "ccConfig.h"
 #include <string.h>
-using namespace std;
-namespace   cocos2d {
 
+using namespace std;
+
+NS_CC_BEGIN
 
 CCConfiguration::CCConfiguration(void)
 :m_nMaxTextureSize(0) 
@@ -134,4 +135,5 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
 	
 	return bRet;
 }
-}//namespace   cocos2d 
+
+NS_CC_END

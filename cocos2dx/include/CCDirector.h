@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
@@ -417,6 +417,6 @@ protected:
 	bool m_bInvalid;
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __CCDIRECTOR_H__

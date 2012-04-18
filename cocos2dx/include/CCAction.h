@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCZone.h"
 #include "CCNode.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 enum {
 	//! Default tag
@@ -253,6 +253,7 @@ protected:
 	float m_fTopBoundary;
 	float m_fBottomBoundary;
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __ACTIONS_CCACTION_H__

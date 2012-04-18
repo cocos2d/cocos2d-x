@@ -137,148 +137,149 @@ static void static_stopAllEffects()
     [[SimpleAudioEngine sharedEngine] stopAllEffects];
 }
 
-namespace CocosDenshion
+namespace CocosDenshion {
+
+static SimpleAudioEngine *s_pEngine;
+
+SimpleAudioEngine::SimpleAudioEngine()
 {
-	static SimpleAudioEngine *s_pEngine;
 
-	SimpleAudioEngine::SimpleAudioEngine()
+}
+
+SimpleAudioEngine::~SimpleAudioEngine()
+{
+
+}
+
+SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+{
+	if (! s_pEngine)
 	{
-
-	}
-
-	SimpleAudioEngine::~SimpleAudioEngine()
-	{
-
-	}
-
-	SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
-	{
-		if (! s_pEngine)
-		{
-			s_pEngine = new SimpleAudioEngine();
-		}
-        
-		return s_pEngine;
-	}
-
-	void SimpleAudioEngine::end()
-	{
-		if (s_pEngine)
-		{
-			delete s_pEngine;
-			s_pEngine = NULL;
-		}
-        
-                static_end();
-	}
-
-	void SimpleAudioEngine::setResource(const char* pszZipFileName)
-	{
-
+		s_pEngine = new SimpleAudioEngine();
 	}
     
-    void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
-	{
-		static_preloadBackgroundMusic(pszFilePath);
-	}
-
-	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
-	{
-		static_playBackgroundMusic(pszFilePath, bLoop);
-	}
-
-	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
-	{
-                static_stopBackgroundMusic();
-	}
-
-	void SimpleAudioEngine::pauseBackgroundMusic()
-	{
-                static_pauseBackgroundMusic();
-	}
-
-	void SimpleAudioEngine::resumeBackgroundMusic()
-	{
-                static_resumeBackgroundMusic();
-	} 
-
-	void SimpleAudioEngine::rewindBackgroundMusic()
-	{
-                static_rewindBackgroundMusic();
-	}
-
-	bool SimpleAudioEngine::willPlayBackgroundMusic()
-	{
-                return static_willPlayBackgroundMusic();
-	}
-
-	bool SimpleAudioEngine::isBackgroundMusicPlaying()
-	{
-                return static_isBackgroundMusicPlaying();
-	}
-
-	float SimpleAudioEngine::getBackgroundMusicVolume()
-	{
-                return static_getBackgroundMusicVolume();
-	}
-
-	void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
-	{
-                 static_setBackgroundMusicVolume(volume);
-	}
-
-	float SimpleAudioEngine::getEffectsVolume()
-	{
-                return static_getEffectsVolume();
-	}
-
-	void SimpleAudioEngine::setEffectsVolume(float volume)
-	{
-                static_setEffectsVolume(volume);
-	}
-
-	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
-	{
-                return static_playEffect(pszFilePath, bLoop);
-	}
-
-	void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
-	{
-                static_stopEffect(nSoundId);
-	}
-
-	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
-	{
-                static_preloadEffect(pszFilePath);
-	}
-
-	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
-	{
-                static_unloadEffect(pszFilePath);
-	}
-	
-	void SimpleAudioEngine::pauseEffect(unsigned int uSoundId)
-	{
-	    static_pauseEffect(uSoundId);
-	}
-	
-	void SimpleAudioEngine::resumeEffect(unsigned int uSoundId)
-	{
-	    static_resumeEffect(uSoundId);
-	}
-	
-	void SimpleAudioEngine::pauseAllEffects()
-	{
-	    static_pauseAllEffects();
-	}
-	
-	void SimpleAudioEngine::resumeAllEffects()
-	{
-	    static_resumeAllEffects();
-	}
-	
-	void SimpleAudioEngine::stopAllEffects()
-	{
-	    static_stopAllEffects();
-	}
+	return s_pEngine;
 }
+
+void SimpleAudioEngine::end()
+{
+	if (s_pEngine)
+	{
+		delete s_pEngine;
+		s_pEngine = NULL;
+	}
+    
+            static_end();
+}
+
+void SimpleAudioEngine::setResource(const char* pszZipFileName)
+{
+
+}
+
+void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
+{
+	static_preloadBackgroundMusic(pszFilePath);
+}
+
+void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
+{
+	static_playBackgroundMusic(pszFilePath, bLoop);
+}
+
+void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
+{
+            static_stopBackgroundMusic();
+}
+
+void SimpleAudioEngine::pauseBackgroundMusic()
+{
+            static_pauseBackgroundMusic();
+}
+
+void SimpleAudioEngine::resumeBackgroundMusic()
+{
+            static_resumeBackgroundMusic();
+} 
+
+void SimpleAudioEngine::rewindBackgroundMusic()
+{
+            static_rewindBackgroundMusic();
+}
+
+bool SimpleAudioEngine::willPlayBackgroundMusic()
+{
+            return static_willPlayBackgroundMusic();
+}
+
+bool SimpleAudioEngine::isBackgroundMusicPlaying()
+{
+            return static_isBackgroundMusicPlaying();
+}
+
+float SimpleAudioEngine::getBackgroundMusicVolume()
+{
+            return static_getBackgroundMusicVolume();
+}
+
+void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
+{
+             static_setBackgroundMusicVolume(volume);
+}
+
+float SimpleAudioEngine::getEffectsVolume()
+{
+            return static_getEffectsVolume();
+}
+
+void SimpleAudioEngine::setEffectsVolume(float volume)
+{
+            static_setEffectsVolume(volume);
+}
+
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+{
+            return static_playEffect(pszFilePath, bLoop);
+}
+
+void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
+{
+            static_stopEffect(nSoundId);
+}
+
+void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
+{
+            static_preloadEffect(pszFilePath);
+}
+
+void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
+{
+            static_unloadEffect(pszFilePath);
+}
+
+void SimpleAudioEngine::pauseEffect(unsigned int uSoundId)
+{
+    static_pauseEffect(uSoundId);
+}
+
+void SimpleAudioEngine::resumeEffect(unsigned int uSoundId)
+{
+    static_resumeEffect(uSoundId);
+}
+
+void SimpleAudioEngine::pauseAllEffects()
+{
+    static_pauseAllEffects();
+}
+
+void SimpleAudioEngine::resumeAllEffects()
+{
+    static_resumeAllEffects();
+}
+
+void SimpleAudioEngine::stopAllEffects()
+{
+    static_stopAllEffects();
+}
+
+} // endof namespace CocosDenshion {

@@ -28,7 +28,7 @@ THE SOFTWARE.
 using namespace std;
 
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCAffineTransform __CCAffineTransformMake(CCFloat a, CCFloat b, CCFloat c, CCFloat d, CCFloat tx, CCFloat ty)
 {
@@ -128,4 +128,5 @@ CCAffineTransform CCAffineTransformInvert(const CCAffineTransform& t)
     return __CCAffineTransformMake(determinant * t.d, -determinant * t.b, -determinant * t.c, determinant * t.a,
 							determinant * (t.c * t.ty - t.d * t.tx), determinant * (t.b * t.tx - t.a * t.ty) );
 }
-}//namespace   cocos2d 
+
+NS_CC_END

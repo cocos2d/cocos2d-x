@@ -45,7 +45,7 @@ void initExtensions() {
      glDeleteVertexArraysOESEXT = (PFNGLDELETEVERTEXARRAYSOESPROC)eglGetProcAddress("glDeleteVertexArraysOES");
 }
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
     : m_bNotHVGA(false), 
@@ -213,5 +213,5 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     setKeyboardStateJNI((int)bOpen);
 }
 
-}       // end of namespace cocos2d
+NS_CC_END
 

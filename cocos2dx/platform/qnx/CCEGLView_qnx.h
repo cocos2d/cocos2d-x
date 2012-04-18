@@ -30,9 +30,10 @@ THE SOFTWARE.
 #include <GLES/glext.h>
 #include <EGL/egl.h>
 #include <screen/screen.h>
-
 #include <bps/event.h>
-namespace   cocos2d {
+
+NS_CC_BEGIN
+
 class CCSet;
 class CCTouch;
 class EGLTouchDelegate;
@@ -134,6 +135,6 @@ private:
     char 			 m_window_group_id[16];
 };
 
-}   // end of namespace   cocos2d
+NS_CC_END
 
 #endif	// end of __CC_EGLVIEW_QNX_H__
