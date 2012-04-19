@@ -236,20 +236,19 @@ void CCRenderTexture::end(bool bIsTOCacheTexture)
     {
         CC_SAFE_DELETE(m_pUITextureImage);
 
-        // to get the rendered texture data
-        const CCSize& s = m_pTexture->getContentSizeInPixels();
-        int tx = (int)s.width;
-        int ty = (int)s.height;
-        m_pUITextureImage = new CCImage;
-        if (m_pUITextureImage == newCCImage())
-        {
-            VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
-        } 
-        else
-        {
-            CCLOG("Cache rendertexture failed!");
-        }
-    }
+		// to get the rendered texture data
+		const CCSize& s = m_pTexture->getContentSizeInPixels();
+        m_pUITextureImage = newCCImage();
+
+		if (m_pUITextureImage)
+		{
+			VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+		} 
+		else
+		{
+			CCLOG("Cache rendertexture failed!");
+		}
+	}
 #endif
 }
 

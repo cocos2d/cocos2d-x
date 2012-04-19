@@ -378,8 +378,10 @@ RenderTextureIssue937::RenderTextureIssue937()
     spr_nonpremulti->setPosition(ccp(16,16));
 
 
+    
+    
     /* A2 & B2 setup */
-    CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(32, 64, kCCTexture2DPixelFormat_RGBA4444);
+    CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(32, 64, kCCTexture2DPixelFormat_RGBA8888);
 
     if (NULL == rend)
     {
