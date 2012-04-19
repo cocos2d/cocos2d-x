@@ -75,12 +75,12 @@
 		784B77ED1519BF6600FA820F /* GLES-Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 784B77B81519BF6600FA820F /* GLES-Render.cpp */; };
 		784B77EE1519BF6600FA820F /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 784B77BA1519BF6600FA820F /* Test.cpp */; };
 		784B77EF1519BF6600FA820F /* TestEntries.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 784B77BC1519BF6600FA820F /* TestEntries.cpp */; };
+		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
+		7855E0E2153FEF240059DD9A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0E0153FEF240059DD9A /* Icon.png */; };
 		7871C43015209375007353A3 /* NodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7871C42E15209375007353A3 /* NodeTest.cpp */; };
 		7871C432152093AE007353A3 /* CCTransitionProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7871C431152093AE007353A3 /* CCTransitionProgress.cpp */; };
 		7871C434152093C9007353A3 /* CCTransitionProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 7871C433152093C9007353A3 /* CCTransitionProgress.h */; };
 		7871C43815209506007353A3 /* ShaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7871C43615209506007353A3 /* ShaderTest.cpp */; };
-		78891AAE14EA1DAE0072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AAD14EA1DAE0072482D /* Icon.png */; };
-		78891AB214EA1DC30072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB114EA1DC30072482D /* Default.png */; };
 		789B5603151978C80038CD1E /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 789B5602151978C80038CD1E /* ccShaders.h */; };
 		789B5607151979E80038CD1E /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 789B5605151979E80038CD1E /* ActionsEaseTest.cpp */; };
 		789B560B15197B010038CD1E /* ActionsProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 789B560915197B010038CD1E /* ActionsProgressTest.cpp */; };
@@ -752,14 +752,14 @@
 		784B77E81519BF6600FA820F /* VaryingRestitution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VaryingRestitution.h; sourceTree = "<group>"; };
 		784B77E91519BF6600FA820F /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		784B77EA1519BF6600FA820F /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
+		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		7855E0E0153FEF240059DD9A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		7871C42E15209375007353A3 /* NodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NodeTest.cpp; sourceTree = "<group>"; };
 		7871C42F15209375007353A3 /* NodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeTest.h; sourceTree = "<group>"; };
 		7871C431152093AE007353A3 /* CCTransitionProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTransitionProgress.cpp; sourceTree = "<group>"; };
 		7871C433152093C9007353A3 /* CCTransitionProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionProgress.h; sourceTree = "<group>"; };
 		7871C43615209506007353A3 /* ShaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderTest.cpp; sourceTree = "<group>"; };
 		7871C43715209506007353A3 /* ShaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTest.h; sourceTree = "<group>"; };
-		78891AAD14EA1DAE0072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../test.ios/Icon.png; sourceTree = "<group>"; };
-		78891AB114EA1DC30072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../test.ios/Default.png; sourceTree = "<group>"; };
 		789B5602151978C80038CD1E /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		789B5605151979E80038CD1E /* ActionsEaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionsEaseTest.cpp; sourceTree = "<group>"; };
 		789B5606151979E80038CD1E /* ActionsEaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionsEaseTest.h; sourceTree = "<group>"; };
@@ -1691,9 +1691,9 @@
 				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
 				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
 				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
-				78891AB114EA1DC30072482D /* Default.png */,
+				7855E0DF153FEF240059DD9A /* Default.png */,
 				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
-				78891AAD14EA1DAE0072482D /* Icon.png */,
+				7855E0E0153FEF240059DD9A /* Icon.png */,
 				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
 				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
 			);
@@ -3428,8 +3428,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78891AAE14EA1DAE0072482D /* Icon.png in Resources */,
-				78891AB214EA1DC30072482D /* Default.png in Resources */,
 				78C7DEFB14EBA5060085D0C2 /* background.mp3 in Resources */,
 				78C7DEFC14EBA5060085D0C2 /* background.ogg in Resources */,
 				78C7DEFD14EBA5060085D0C2 /* effect1.raw in Resources */,
@@ -3444,6 +3442,8 @@
 				789B561515197C040038CD1E /* zwoptex in Resources */,
 				15DC5D2315340C72009A99D4 /* Shaders in Resources */,
 				78ED2F85153D5BC500330E29 /* extensions in Resources */,
+				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
+				7855E0E2153FEF240059DD9A /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
