@@ -10,11 +10,11 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		782F4619153FEDF0009FC2E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4617153FEDF0009FC2E5 /* Default.png */; };
+		782F461A153FEDF0009FC2E5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4618153FEDF0009FC2E5 /* Icon.png */; };
 		784521CE14EBA449009D533B /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521C514EBA449009D533B /* CloseNormal.png */; };
 		784521CF14EBA449009D533B /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521C614EBA449009D533B /* CloseSelected.png */; };
 		784521D214EBA449009D533B /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521CA14EBA449009D533B /* HelloWorld.png */; };
-		78891AB714EA205A0072482D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB614EA205A0072482D /* Default.png */; };
-		78891AB914EA20C70072482D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78891AB814EA20C70072482D /* Icon.png */; };
 		789B55FC151974B20038CD1E /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 789B55FB151974B20038CD1E /* ccShaders.h */; };
 		78E69508151884170085D6AC /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E694E8151884170085D6AC /* aabb.h */; };
 		78E69509151884170085D6AC /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E694EA151884170085D6AC /* mat4stack.h */; };
@@ -278,7 +278,6 @@
 		BF8354B113275F5600F3C033 /* CCGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83521F13275F5600F3C033 /* CCGL.cpp */; };
 		BF8354B213275F5600F3C033 /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522013275F5600F3C033 /* CCGL.h */; };
 		BF8354B513275F5600F3C033 /* CCImage.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522313275F5600F3C033 /* CCImage.h */; };
-		BF8354B713275F5600F3C033 /* CCLibxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522513275F5600F3C033 /* CCLibxml2.h */; };
 		BF8354BE13275F5600F3C033 /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522C13275F5600F3C033 /* CCPlatformConfig.h */; };
 		BF8354BF13275F5600F3C033 /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522D13275F5600F3C033 /* CCPlatformMacros.h */; };
 		BF8354C013275F5600F3C033 /* CCStdC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83522E13275F5600F3C033 /* CCStdC.cpp */; };
@@ -372,11 +371,11 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		782F4617153FEDF0009FC2E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		782F4618153FEDF0009FC2E5 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		784521C514EBA449009D533B /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		784521C614EBA449009D533B /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		784521CA14EBA449009D533B /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
-		78891AB614EA205A0072482D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../ios/Default.png; sourceTree = "<group>"; };
-		78891AB814EA20C70072482D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../ios/Icon.png; sourceTree = "<group>"; };
 		789B55FB151974B20038CD1E /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		78E694E8151884170085D6AC /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		78E694EA151884170085D6AC /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
@@ -641,7 +640,6 @@
 		BF83521F13275F5600F3C033 /* CCGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGL.cpp; sourceTree = "<group>"; };
 		BF83522013275F5600F3C033 /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		BF83522313275F5600F3C033 /* CCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImage.h; sourceTree = "<group>"; };
-		BF83522513275F5600F3C033 /* CCLibxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLibxml2.h; sourceTree = "<group>"; };
 		BF83522C13275F5600F3C033 /* CCPlatformConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformConfig.h; sourceTree = "<group>"; };
 		BF83522D13275F5600F3C033 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		BF83522E13275F5600F3C033 /* CCStdC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
@@ -798,8 +796,8 @@
 		784521C214EBA449009D533B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				78891AB814EA20C70072482D /* Icon.png */,
-				78891AB614EA205A0072482D /* Default.png */,
+				782F4617153FEDF0009FC2E5 /* Default.png */,
+				782F4618153FEDF0009FC2E5 /* Icon.png */,
 				784521C514EBA449009D533B /* CloseNormal.png */,
 				784521C614EBA449009D533B /* CloseSelected.png */,
 				784521CA14EBA449009D533B /* HelloWorld.png */,
@@ -1277,7 +1275,6 @@
 				BF83521F13275F5600F3C033 /* CCGL.cpp */,
 				BF83522013275F5600F3C033 /* CCGL.h */,
 				BF83522313275F5600F3C033 /* CCImage.h */,
-				BF83522513275F5600F3C033 /* CCLibxml2.h */,
 				BF83522C13275F5600F3C033 /* CCPlatformConfig.h */,
 				BF83522D13275F5600F3C033 /* CCPlatformMacros.h */,
 				BF83522E13275F5600F3C033 /* CCStdC.cpp */,
@@ -1454,7 +1451,6 @@
 				BF8354AF13275F5600F3C033 /* CCEGLView_platform.h in Headers */,
 				BF8354B213275F5600F3C033 /* CCGL.h in Headers */,
 				BF8354B513275F5600F3C033 /* CCImage.h in Headers */,
-				BF8354B713275F5600F3C033 /* CCLibxml2.h in Headers */,
 				BF8354BE13275F5600F3C033 /* CCPlatformConfig.h in Headers */,
 				BF8354BF13275F5600F3C033 /* CCPlatformMacros.h in Headers */,
 				BF8354C113275F5600F3C033 /* CCStdC.h in Headers */,
@@ -1698,11 +1694,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78891AB714EA205A0072482D /* Default.png in Resources */,
-				78891AB914EA20C70072482D /* Icon.png in Resources */,
 				784521CE14EBA449009D533B /* CloseNormal.png in Resources */,
 				784521CF14EBA449009D533B /* CloseSelected.png in Resources */,
 				784521D214EBA449009D533B /* HelloWorld.png in Resources */,
+				782F4619153FEDF0009FC2E5 /* Default.png in Resources */,
+				782F461A153FEDF0009FC2E5 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
