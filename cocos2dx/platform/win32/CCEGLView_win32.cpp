@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 #include "EGL/egl.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
 // impliment CCEGL
@@ -576,4 +576,4 @@ CCEGLView& CCEGLView::sharedOpenGLView()
     return *s_pMainWindow;
 }
 
-NS_CC_END;
+NS_CC_END

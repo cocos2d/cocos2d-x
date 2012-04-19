@@ -31,12 +31,12 @@ THE SOFTWARE.
 
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 // record the resource path
 static char s_pszResourcePath[MAX_PATH] = {0};
 
-void _CheckPath()
+static void _CheckPath()
 {
 	if (! s_pszResourcePath[0])
 	{
@@ -213,4 +213,4 @@ string CCFileUtils::getWriteablePath()
 	return ret;
 }
 
-NS_CC_END;
+NS_CC_END

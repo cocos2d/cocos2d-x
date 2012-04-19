@@ -144,4 +144,4 @@ void CCScriptEngineManager::purgeSharedManager(void)
     }
 }
 
-NS_CC_END;
+NS_CC_END

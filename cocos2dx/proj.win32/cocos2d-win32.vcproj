@@ -812,10 +812,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCLibxml2.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCPlatformConfig.h"
 				>
 			</File>

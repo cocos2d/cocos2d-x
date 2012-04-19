@@ -1,0 +1,279 @@
+defines
+{
+	# chipmunk currently only supported on Mac OS (Xcode).
+	# if you want to use the chipmunk - set MARMALADEUSECHIPMUNK = 1
+	MARMALADEUSECHIPMUNK = 0
+}
+
+options
+{
+	s3e-data-dir="../Resources"
+	
+	module_path="../../cocos2dx/proj.marmalade/"
+	module_path="../../Box2D/proj.marmalade/"
+	module_path="../../chipmunk/proj.marmalade/"
+	module_path="../../CocosDenshion/proj.marmalade/"
+
+}
+
+includepaths
+{
+	..
+}
+subprojects
+{
+	IwGL
+	Box2D
+	cocos2dx
+	chipmunk
+	CocosDenshion
+}
+
+files
+{
+	[Main]
+	
+	Main.h
+	Main.cpp
+	(../)
+	AppDelegate.h
+	AppDelegate.cpp
+
+	[Tests]
+	("../tests")
+
+	controller.h
+	controller.cpp
+	tests.h
+	testResource.h
+	testBasic.h
+	testBasic.cpp
+
+	[Tests/AccelerometerTest]
+	("../tests/AccelerometerTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/ActionManagerTest]
+	("../tests/ActionManagerTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/ActionsTest]
+	("../tests/ActionsTest")
+	"*.h"
+	"*.cpp"
+
+
+	[Tests/LabelTest]
+	("../tests/LabelTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/Box2DTest]
+	("../tests/Box2DTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/Box2DTestBed]
+	("../tests/Box2DTestBed")
+	"*.h"
+	"*.cpp"
+
+	[Tests/ClickAndMoveTest]
+	("../tests/ClickAndMoveTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/CocosDenshionTest]
+	("../tests/CocosDenshionTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/CocosNodeTest]
+	("../tests/CocosNodeTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/DrawPrimitivesTest]
+	("../tests/DrawPrimitivesTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/EaseActionsTest]
+	("../tests/EaseActionsTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/EffectsAdvancedTest]
+	("../tests/EffectsAdvancedTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/EffectsTest]
+	("../tests/EffectsTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/FontTest]
+	("../tests/FontTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/HiResTest]
+	("../tests/HiResTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/IntervalTest]
+	("../tests/IntervalTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/InputTest]
+	("../tests/TextInputTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/KeypadTest]
+	("../tests/KeypadTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/LayerTest]
+	("../tests/LayerTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/CurrentLanguageTest]
+	("../tests/CurrentLanguageTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/MenuTest]
+	("../tests/MenuTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/MotionStreakTest]
+	("../tests/MotionStreakTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/ParallaxTest]
+	("../tests/ParallaxTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/ParticleTest]
+	("../tests/ParticleTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/PerformanceTest]
+	("../tests/PerformanceTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/ProgressActionsTest]
+	("../tests/ProgressActionsTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/RenderTextureTest]
+	("../tests/RenderTextureTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/RotateWorldTest]
+	("../tests/RotateWorldTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/SceneTest]
+	("../tests/SceneTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/SchedulerTest]
+	("../tests/SchedulerTest")
+	"*.h"
+	"*.cpp"
+
+
+	[Tests/SpriteTest]
+	("../tests/SpriteTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/Texture2dTest]
+	("../tests/Texture2dTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/TileMapTest]
+	("../tests/TileMapTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/TouchesTest]
+	("../tests/TouchesTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/TransitionsTest]
+	("../tests/TransitionsTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/UserDefaultTest]
+	("../tests/UserDefaultTest")
+	"*.h"
+	"*.cpp"
+	
+	[Tests/ZwoptexTest]
+	("../tests/ZwoptexTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/BugsTest]
+	("../tests/BugsTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/BugsTest/Bug-458]
+	("../tests/BugsTest/Bug-458")
+	"*.h"
+	"*.cpp"
+
+	[Tests/DirectorTest]
+	("../tests/DirectorTest")
+	"*.h"
+	"*.cpp"
+	
+	[Tests/ExtensionsTest]
+	("../tests/ExtensionsTest")
+	"*.h"
+	"*.cpp"
+}
+
+if {{ defined MARMALADEUSECHIPMUNK}}
+{
+if {{ MARMALADEUSECHIPMUNK == 1 }}
+{
+files
+{
+	[Tests/ChipmunkTest]
+	("../tests/ChipmunkTest")
+	"*.h"
+	"*.cpp"
+
+}
+}
+}
+#### AUTO GENERATED deployment settings from DeployTool.exe. Do not edit below this line ####
+deployments
+{
+	["Default"]
+	caption='TestCocos2d-x'
+}

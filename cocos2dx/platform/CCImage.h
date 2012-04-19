@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCCommon.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CC_DLL CCImage
 {
@@ -145,6 +145,6 @@ private:
     CCImage & operator=(const CCImage&);
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// __CC_IMAGE_H__

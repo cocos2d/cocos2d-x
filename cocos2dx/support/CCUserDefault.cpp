@@ -40,7 +40,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static xmlDocPtr g_sharedDoc = NULL;
 
@@ -391,4 +391,4 @@ void CCUserDefault::flush()
 	}
 }
 
-NS_CC_END;
+NS_CC_END

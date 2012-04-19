@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
@@ -56,7 +56,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
 }
 
-NS_CC_END;
+NS_CC_END
 
 #endif  // CC_PLATFORM_WIN32
 
@@ -81,7 +81,7 @@ NS_CC_END;
 
 #include "android/jni/MessageJni.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
@@ -100,7 +100,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 	showMessageBoxJNI(pszMsg, pszTitle);
 }
 
-NS_CC_END;
+NS_CC_END
 
 #endif // CC_PLATFORM_ANDROID
 /****************************************************
@@ -111,7 +111,7 @@ NS_CC_END;
 #include <stdio.h>
 #include "CCStdC.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
@@ -132,7 +132,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     CCLog("%s: %s", pszTitle, pszMsg);
 }
 
-NS_CC_END;
+NS_CC_END
 #endif
 /****************************************************
  * marmalade
@@ -145,7 +145,7 @@ NS_CC_END;
 #include <IwMemBucketHelpers.h>
 #include <stdio.h>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
@@ -165,7 +165,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     CCLog("%s: %s", pszTitle, pszMsg);
 }
 
-NS_CC_END;
+NS_CC_END
 
 #endif // CC_PLATFORM_MARMALADE
 
@@ -180,7 +180,7 @@ NS_CC_END;
 
 using namespace Osp::Ui::Controls;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
@@ -204,7 +204,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 	}
 }
 
-NS_CC_END;
+NS_CC_END
 
 #endif // CC_PLATFORM_BADA
 
@@ -219,7 +219,7 @@ NS_CC_END;
 #include <stdarg.h>
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
@@ -238,6 +238,6 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 	CCLog("%s: %s", pszTitle, pszMsg);
 }
 
-NS_CC_END;
+NS_CC_END
 
 #endif // CC_PLATFORM_QNX

@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCGeometry.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 typedef struct
 {
@@ -98,6 +98,6 @@ protected:
     CCIMEDelegate();
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// __CC_IME_DELEGATE_H__

@@ -26,10 +26,9 @@
 #include <libxml/xmlmemory.h>
 #include "CCSAXParser.h"
 #include "CCDictionary.h"
-#include "CCLibxml2.h"
 #include "CCFileUtils.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCSAXParser::CCSAXParser()
 {
@@ -113,6 +112,6 @@ void CCSAXParser::setDelegator(CCSAXDelegator* pDelegator)
 	m_pDelegator = pDelegator;
 }
 
-NS_CC_END;
+NS_CC_END
 
 

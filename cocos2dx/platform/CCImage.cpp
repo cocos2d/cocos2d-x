@@ -66,7 +66,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
     }
 }
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
 // Impliment CCImage
@@ -584,7 +584,7 @@ bool CCImage::_saveImageToJPG(const char * pszFilePath)
 	return bRet;
 }
 
-NS_CC_END;
+NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM != TARGET_OS_IPHONE)
 /* ios/CCImage_ios.mm uses "mm" as the extension, 

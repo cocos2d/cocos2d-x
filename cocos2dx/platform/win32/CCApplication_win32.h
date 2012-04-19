@@ -5,7 +5,7 @@
 
 #include "CCCommon.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCRect;
 
@@ -75,6 +75,6 @@ protected:
     static CCApplication * sm_pSharedApplication;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// __CC_APPLICATION_WIN32_H__
