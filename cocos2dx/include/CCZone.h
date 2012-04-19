@@ -24,13 +24,15 @@ THE SOFTWARE.
 
 #ifndef __CC_ZONE_H__
 #define __CC_ZONE_H__
+
 #include <stdio.h>
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
 class CCObject;
 
-class CCZone
+class CC_DLL CCZone
 {
 public:
 	CCZone(CCObject *pObject = NULL);
