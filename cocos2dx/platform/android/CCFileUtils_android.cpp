@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 #include "CCCommon.h"
 #include "jni/SystemInfoJni.h"
@@ -144,4 +144,4 @@ string CCFileUtils::getWriteablePath()
 	}
 }
 
-NS_CC_END;
+NS_CC_END

@@ -23,9 +23,7 @@
  ****************************************************************************/
 
 #include "CCEGLView.h"
-
 #include "IwGL.h"
-
 #include "CCApplication.h"
 #include "CCDirector.h"
 #include "CCSet.h"
@@ -38,7 +36,7 @@
 #include <stdlib.h>
 #include <s3eOSReadString.h>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCEGLView* CCEGLView::m_pInstance = 0 ;
 
@@ -397,4 +395,4 @@ CCRect CCEGLView::getViewPort()
 }
 
 
-NS_CC_END;
+NS_CC_END

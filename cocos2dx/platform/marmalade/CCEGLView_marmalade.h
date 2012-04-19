@@ -30,7 +30,8 @@
 #include "s3ePointer.h"
 #include "IwUtil.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
+
 class CCSet;
 class CCTouch;
 class EGLTouchDelegate;
@@ -144,6 +145,6 @@ private:
 	}
 };
 	
-NS_CC_END;
+NS_CC_END
 
 #endif	// end of __CC_EGLVIEW_MARMALADE_H__

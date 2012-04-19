@@ -14,7 +14,7 @@
 
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static string s_strResourcePath = "";
 
@@ -90,4 +90,4 @@ string CCFileUtils::getWriteablePath() {
 	return s_strResourcePath;
 }
 
-NS_CC_END;
+NS_CC_END

@@ -23,7 +23,8 @@ struct TextLine {
 	int iLineWidth;
 };
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
+
 class BitmapDC
 {
 public:
@@ -341,4 +342,4 @@ bool CCImage::initWithString(
 	return bRet;
 }
 
-NS_CC_END;
+NS_CC_END

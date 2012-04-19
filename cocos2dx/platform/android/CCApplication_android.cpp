@@ -11,7 +11,7 @@
 #define  LOG_TAG    "CCApplication_android Debug"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
@@ -113,4 +113,4 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
-NS_CC_END;
+NS_CC_END

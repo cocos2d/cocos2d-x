@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 /**
 @brief	A memory DC which uses to draw text on bitmap.
@@ -428,4 +428,4 @@ bool CCImage::initWithString(
     return bRet;
 }
 
-NS_CC_END;
+NS_CC_END

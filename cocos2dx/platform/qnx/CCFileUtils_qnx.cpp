@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <string>
 #include <unistd.h>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 #define  MAX_PATH 256
 
@@ -158,4 +158,4 @@ std::string CCFileUtils::getWriteablePath()
 	return path;
 }
 
-NS_CC_END;
+NS_CC_END

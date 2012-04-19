@@ -13,7 +13,7 @@
 
 bool initExtensions();
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCSet;
 class CCTouch;
@@ -92,6 +92,6 @@ private:
 	float m_fScreenScaleFactor;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif /* CCEGLVIEWLINUX_H_ */

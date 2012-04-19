@@ -29,7 +29,7 @@ THE SOFTWARE.
 using namespace Osp::Ui;
 using namespace Osp::Uix;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 
 CCAccelerometer::CCAccelerometer()
@@ -146,4 +146,4 @@ void CCAccelerometer::setEnable(bool bEnable)
 	}
 }
 
-NS_CC_END;
+NS_CC_END

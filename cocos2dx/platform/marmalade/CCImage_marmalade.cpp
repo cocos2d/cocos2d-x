@@ -24,7 +24,6 @@
 #include <vector>
 #include <string>
 #include <sstream> 
-
 #include "CCImage.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
@@ -59,7 +58,7 @@ struct TextLine {
 	int iLineWidth;
 };
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CC_DLL CCImageHelper
 {
@@ -856,4 +855,4 @@ bool CCImage::_saveImageToJPG(const char * pszFilePath)
 	return false;
 }
 
-NS_CC_END;
+NS_CC_END

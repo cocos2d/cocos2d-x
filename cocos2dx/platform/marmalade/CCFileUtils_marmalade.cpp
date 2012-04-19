@@ -26,10 +26,9 @@
 #include "string.h"
 #include "stack"
 #include "CCString.h"
-
 #include "CCApplication.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static char s_pszResourcePath[S3E_FILE_MAX_PATH] = {0};
 
@@ -105,5 +104,5 @@ std::string CCFileUtils::getWriteablePath()
 	return string("ram://");
 }
 
-NS_CC_END; 
+NS_CC_END
 

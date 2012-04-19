@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <FApp.h>
 #include <FSystem.h>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 
 
@@ -120,6 +120,6 @@ protected:
 	Osp::Base::Runtime::Timer* m_pTimer;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// end of __CCX_APPLICATION_WIN32_H__

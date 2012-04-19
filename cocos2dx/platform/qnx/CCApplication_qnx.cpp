@@ -10,7 +10,7 @@
 
 #define  LOGD(...)  fprintf(stderr, __VA_ARGS__)
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
@@ -144,4 +144,4 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret_language;
 }
 
-NS_CC_END;
+NS_CC_END

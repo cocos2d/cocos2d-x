@@ -6,11 +6,8 @@
  */
 
 #include "CCEGLView_linux.h"
-
 #include "CCGL.h"
-
 #include "GL/glfw.h"
-
 #include "CCSet.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
@@ -77,7 +74,8 @@ bool initExtensions() {
 	return bRet;
 }
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
+
 static CCEGLView* s_pMainWindow = NULL;
 
 CCEGLView::CCEGLView()
@@ -361,4 +359,4 @@ CCEGLView& CCEGLView::sharedOpenGLView()
 	return *s_pMainWindow;
 }
 
-NS_CC_END;
+NS_CC_END
