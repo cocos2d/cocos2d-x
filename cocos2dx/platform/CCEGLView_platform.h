@@ -27,9 +27,7 @@ THE SOFTWARE.
 
 #include "CCPlatformConfig.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-    #include "wophone/CCEGLView_wophone.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #include "win32/CCEGLView_win32.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "android/CCEGLView_android.h"

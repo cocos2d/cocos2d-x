@@ -442,10 +442,6 @@ NS_CC_END;
 #include "win32/CCFileUtils_win32.cpp"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include "wophone/CCFileUtils_wophone.cpp"
-#endif
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtils_android.cpp"
 #endif

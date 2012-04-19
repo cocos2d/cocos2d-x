@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "TGAlib.h"
 #include "CCFileUtils.h"
 
-namespace   cocos2d {
+namespace cocos2d {
 
 void tgaLoadRLEImageData(FILE *file, tImageTGA *info);
 void tgaFlipImage( tImageTGA *info );

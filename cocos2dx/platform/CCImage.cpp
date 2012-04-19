@@ -595,10 +595,6 @@ NS_CC_END;
 #include "win32/CCImage_win32.cpp"
 #endif 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include "wophone/CCImage_wophone.cpp"
-#endif
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCImage_android.cpp"
 #endif
