@@ -32,12 +32,11 @@ THE SOFTWARE.
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
-#include "CCLibxml2.h"
 #include "CCString.h"
 #include "CCSAXParser.h"
 #include "support/zip_support/unzip.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static const char *__suffixiPhoneRetinaDisplay = "-hd";
 static const char *__suffixiPad = "-ipad";
@@ -436,7 +435,7 @@ bool CCFileUtils::getIsPopupNotify()
     return s_bPopupNotify;
 }
 
-NS_CC_END;
+NS_CC_END
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "win32/CCFileUtils_win32.cpp"

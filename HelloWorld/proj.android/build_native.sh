@@ -1,6 +1,6 @@
 # set params
-NDK_ROOT_LOCAL=/cygdrive/d/programe/android/ndk/android-ndk-r7b
-COCOS2DX_ROOT_LOCAL=/cygdrive/e/cocos2d-x
+NDK_ROOT_LOCAL=/cygdrive/e/android/android-ndk-r7b
+COCOS2DX_ROOT_LOCAL=/cygdrive/f/Project/dumganhar/cocos2d-x
 
 # try to get global variable
 if [ $NDK_ROOT"aaa" != "aaa" ]; then
@@ -13,7 +13,7 @@ if [ $COCOS2DX_ROOT"aaa" != "aaa" ]; then
     COCOS2DX_ROOT_LOCAL=$COCOS2DX_ROOT
 fi
 
-HELLOWORLD_ROOT=$COCOS2DX_ROOT_LOCAL/HelloWorld/android
+HELLOWORLD_ROOT=$COCOS2DX_ROOT_LOCAL/HelloWorld/proj.android
 
 # make sure assets is exist
 if [ -d $HELLOWORLD_ROOT/assets ]; then

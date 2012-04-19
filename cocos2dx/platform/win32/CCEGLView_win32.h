@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCCommon.h"
 #include "CCGeometry.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCSet;
 class CCTouch;
@@ -99,6 +99,6 @@ private:
 	LPFN_ACCELEROMETER_KEYHOOK	m_lpfnAccelerometerKeyHook;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// end of __CC_EGLVIEW_WIN32_H__

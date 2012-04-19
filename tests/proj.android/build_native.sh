@@ -14,7 +14,7 @@ if [ $COCOS2DX_ROOT"aaa" != "aaa" ]; then
     COCOS2DX_ROOT_LOCAL=$COCOS2DX_ROOT
 fi
 
-TESTS_ROOT=$COCOS2DX_ROOT_LOCAL/tests/test.android
+TESTS_ROOT=$COCOS2DX_ROOT_LOCAL/tests/proj.android
 
 # make sure assets is exist
 if [ -d $TESTS_ROOT/assets ]; then

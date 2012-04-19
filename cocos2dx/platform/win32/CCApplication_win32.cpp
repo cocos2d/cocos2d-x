@@ -8,7 +8,7 @@
 */
 static void PVRFrameEnableControlWindow(bool bEnable);
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
@@ -146,7 +146,7 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
-NS_CC_END;
+NS_CC_END
 
 //////////////////////////////////////////////////////////////////////////
 // Local function

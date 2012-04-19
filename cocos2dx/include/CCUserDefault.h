@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <string>
 
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 /**
  * CCUserDefault acts as a tiny database. You can save and get base type values by it.
@@ -114,6 +114,6 @@ private:
 	static bool m_sbIsFilePathInitialized;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif // __SUPPORT_CCUSERDEFAULT_H__

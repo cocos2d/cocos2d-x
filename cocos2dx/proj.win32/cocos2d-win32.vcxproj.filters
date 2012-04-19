@@ -689,9 +689,6 @@
     <ClInclude Include="..\platform\CCImage.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCLibxml2.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCPlatformConfig.h">
       <Filter>platform</Filter>
     </ClInclude>

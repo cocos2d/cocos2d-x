@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCIMEDelegate.h"
 #include "CCTouchDelegateProtocol.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCTextFieldTTF;
 
@@ -156,6 +156,6 @@ private:
     LengthStack * m_pLens;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// __CC_TEXT_FIELD_H__

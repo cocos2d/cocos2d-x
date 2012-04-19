@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCIMEDelegate.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 /**
 @brief	Input Method Edit Message Dispatcher.
@@ -98,6 +98,6 @@ private:
     Impl * m_pImpl;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// __CC_IME_DISPATCHER_H__

@@ -44,7 +44,6 @@ using namespace std;
 	#include <libxml/parser.h>
 	#include <libxml/tree.h>
 	#include <libxml/xmlmemory.h>
-	#include "CCLibxml2.h"
 #endf
 */
 
