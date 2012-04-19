@@ -278,7 +278,6 @@
 		BF8354B113275F5600F3C033 /* CCGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83521F13275F5600F3C033 /* CCGL.cpp */; };
 		BF8354B213275F5600F3C033 /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522013275F5600F3C033 /* CCGL.h */; };
 		BF8354B513275F5600F3C033 /* CCImage.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522313275F5600F3C033 /* CCImage.h */; };
-		BF8354B713275F5600F3C033 /* CCLibxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522513275F5600F3C033 /* CCLibxml2.h */; };
 		BF8354BE13275F5600F3C033 /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522C13275F5600F3C033 /* CCPlatformConfig.h */; };
 		BF8354BF13275F5600F3C033 /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83522D13275F5600F3C033 /* CCPlatformMacros.h */; };
 		BF8354C013275F5600F3C033 /* CCStdC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83522E13275F5600F3C033 /* CCStdC.cpp */; };
@@ -641,7 +640,6 @@
 		BF83521F13275F5600F3C033 /* CCGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGL.cpp; sourceTree = "<group>"; };
 		BF83522013275F5600F3C033 /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		BF83522313275F5600F3C033 /* CCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImage.h; sourceTree = "<group>"; };
-		BF83522513275F5600F3C033 /* CCLibxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLibxml2.h; sourceTree = "<group>"; };
 		BF83522C13275F5600F3C033 /* CCPlatformConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformConfig.h; sourceTree = "<group>"; };
 		BF83522D13275F5600F3C033 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		BF83522E13275F5600F3C033 /* CCStdC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
@@ -1277,7 +1275,6 @@
 				BF83521F13275F5600F3C033 /* CCGL.cpp */,
 				BF83522013275F5600F3C033 /* CCGL.h */,
 				BF83522313275F5600F3C033 /* CCImage.h */,
-				BF83522513275F5600F3C033 /* CCLibxml2.h */,
 				BF83522C13275F5600F3C033 /* CCPlatformConfig.h */,
 				BF83522D13275F5600F3C033 /* CCPlatformMacros.h */,
 				BF83522E13275F5600F3C033 /* CCStdC.cpp */,
@@ -1454,7 +1451,6 @@
 				BF8354AF13275F5600F3C033 /* CCEGLView_platform.h in Headers */,
 				BF8354B213275F5600F3C033 /* CCGL.h in Headers */,
 				BF8354B513275F5600F3C033 /* CCImage.h in Headers */,
-				BF8354B713275F5600F3C033 /* CCLibxml2.h in Headers */,
 				BF8354BE13275F5600F3C033 /* CCPlatformConfig.h in Headers */,
 				BF8354BF13275F5600F3C033 /* CCPlatformMacros.h in Headers */,
 				BF8354C113275F5600F3C033 /* CCStdC.h in Headers */,
