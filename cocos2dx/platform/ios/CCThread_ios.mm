@@ -24,7 +24,7 @@ THE SOFTWARE.
 #import <UIKit/UIKit.h>
 #include "CCThread.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCThread::~CCThread()
 {
@@ -36,4 +36,4 @@ void CCThread::createAutoreleasePool()
     m_pAutoreasePool = [[NSAutoreleasePool alloc] init];
 }
 
-NS_CC_END;
+NS_CC_END

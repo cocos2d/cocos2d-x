@@ -29,7 +29,7 @@
 #import "CCGeometry.h"
 #import "CCDirectorCaller.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCApplication* CCApplication::sm_pSharedApplication = 0;
 
@@ -145,4 +145,4 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
-NS_CC_END;
+NS_CC_END

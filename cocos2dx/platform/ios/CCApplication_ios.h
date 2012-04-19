@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCCommon.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCRect;
 
@@ -112,6 +112,6 @@ protected:
         static CCApplication * sm_pSharedApplication;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// end of __CC_APPLICATION_IOS_H__

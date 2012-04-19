@@ -483,7 +483,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
     return bRet;
 }
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCImage::CCImage()
 : m_nWidth(0)
@@ -706,5 +706,5 @@ bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 	return true;
 }
 
-NS_CC_END;
+NS_CC_END
 

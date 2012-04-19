@@ -43,7 +43,7 @@ using namespace Osp::Ui;
 using namespace Osp::Ui::Controls;
 using namespace Osp::Graphics;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static CCEGLView * s_pMainWindow;
 static HashMapT<int, CCTouch*> s_mapTouches; // key: pointer id; value: CCTouch*
@@ -674,4 +674,4 @@ CCEGLView& CCEGLView::sharedOpenGLView()
     return *s_pMainWindow;
 }
 
-NS_CC_END;
+NS_CC_END

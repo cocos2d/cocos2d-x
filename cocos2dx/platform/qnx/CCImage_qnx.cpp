@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class BitmapDC
 {
@@ -240,5 +240,5 @@ bool CCImage::initWithString(
     return bRet;
 }
 
-NS_CC_END;
+NS_CC_END
 

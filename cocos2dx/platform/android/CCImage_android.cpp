@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "jni/JniHelper.h"
 
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class BitmapDC
 {
@@ -135,7 +135,7 @@ bool CCImage::initWithString(
     return bRet;
 }
 
-NS_CC_END;
+NS_CC_END
 
 // this method is called by Cocos2dxBitmap
 extern "C"

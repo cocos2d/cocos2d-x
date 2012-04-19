@@ -5,7 +5,7 @@
 
 #include "CCCommon.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCRect;
 
@@ -95,6 +95,6 @@ private:
     static long	m_animationInterval;
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif	// __CCX_APPLICATION_QNX_H__

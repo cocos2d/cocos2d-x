@@ -29,7 +29,7 @@ using namespace Osp::Base::Collection;
 using namespace Osp::Graphics;
 
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 /**
 @brief	A memory DC which uses to draw text on bitmap.
@@ -249,4 +249,4 @@ bool CCImage::initWithString(
     return bRet;
 }
 
-NS_CC_END;
+NS_CC_END

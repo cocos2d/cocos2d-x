@@ -31,7 +31,7 @@ using namespace Osp::Base;
 using namespace Osp::Base::Runtime;
 using namespace Osp::Locales;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static CCApplication * s_pApplication = NULL;
 static long long s_nAnimationInterval = 1000/60;
@@ -179,4 +179,4 @@ void CCApplication::OnTimerExpired(Timer& timer)
 	CCDirector::sharedDirector()->mainLoop();
 }
 
-NS_CC_END;
+NS_CC_END
