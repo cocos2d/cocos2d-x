@@ -27,8 +27,8 @@ THE SOFTWARE.
 extern "C"
 
 {
-	extern void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
-	extern void terminateProcessJNI();
+    extern void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
+    extern void terminateProcessJNI();
 }
 
 #endif // __ANDROID_MESSAGE_JNI_H__

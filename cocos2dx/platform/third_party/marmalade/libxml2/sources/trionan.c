@@ -176,7 +176,7 @@ static TRIO_CONST unsigned char ieee_754_qnan_array[] = {
 TRIO_PRIVATE double
 trio_make_double
 TRIO_ARGS1((values),
-	   TRIO_CONST unsigned char *values)
+       TRIO_CONST unsigned char *values)
 {
   TRIO_VOLATILE double result;
   int i;
@@ -193,8 +193,8 @@ TRIO_ARGS1((values),
 TRIO_PRIVATE int
 trio_is_special_quantity
 TRIO_ARGS2((number, has_mantissa),
-	   double number,
-	   int *has_mantissa)
+       double number,
+       int *has_mantissa)
 {
   unsigned int i;
   unsigned char current;
@@ -217,14 +217,14 @@ TRIO_ARGS2((number, has_mantissa),
 TRIO_PRIVATE int
 trio_is_negative
 TRIO_ARGS1((number),
-	   double number)
+       double number)
 {
   unsigned int i;
   int is_negative = TRIO_FALSE;
 
   for (i = 0; i < (unsigned int)sizeof(double); i++) {
     is_negative |= (((unsigned char *)&number)[TRIO_DOUBLE_INDEX(i)]
-		    & ieee_754_sign_mask[i]);
+            & ieee_754_sign_mask[i]);
   }
   return is_negative;
 }
@@ -370,7 +370,7 @@ trio_nan(TRIO_NOARGS)
 TRIO_PUBLIC int
 trio_isnan
 TRIO_ARGS1((number),
-	   double number)
+       double number)
 {
 #if (defined(TRIO_COMPILER_SUPPORTS_C99) && defined(isnan)) \
  || defined(TRIO_COMPILER_SUPPORTS_UNIX95)
@@ -413,15 +413,15 @@ TRIO_ARGS1((number),
 # endif
   
   status = (/*
-	     * NaN is the only number which does not compare to itself
-	     */
-	    ((TRIO_VOLATILE double)number != (TRIO_VOLATILE double)number) ||
-	    /*
-	     * Fallback solution if NaN compares to NaN
-	     */
-	    ((number != 0.0) &&
-	     (fraction = modf(number, &integral),
-	      integral == fraction)));
+         * NaN is the only number which does not compare to itself
+         */
+        ((TRIO_VOLATILE double)number != (TRIO_VOLATILE double)number) ||
+        /*
+         * Fallback solution if NaN compares to NaN
+         */
+        ((number != 0.0) &&
+         (fraction = modf(number, &integral),
+          integral == fraction)));
   
 # if defined(TRIO_PLATFORM_UNIX)
   signal(SIGFPE, signal_handler);
@@ -441,7 +441,7 @@ TRIO_ARGS1((number),
 TRIO_PUBLIC int
 trio_isinf
 TRIO_ARGS1((number),
-	   double number)
+       double number)
 {
 #if defined(TRIO_COMPILER_DECC) && !defined(__linux__)
   /*
@@ -449,8 +449,8 @@ TRIO_ARGS1((number),
    * of C99, so we use the fp_class() function instead.
    */
   return ((fp_class(number) == FP_POS_INF)
-	  ? 1
-	  : ((fp_class(number) == FP_NEG_INF) ? -1 : 0));
+      ? 1
+      : ((fp_class(number) == FP_NEG_INF) ? -1 : 0));
 
 #elif defined(isinf)
   /*
@@ -466,8 +466,8 @@ TRIO_ARGS1((number),
    * function that can be used to detect infinity.
    */
   return ((_fpclass(number) == _FPCLASS_PINF)
-	  ? 1
-	  : ((_fpclass(number) == _FPCLASS_NINF) ? -1 : 0));
+      ? 1
+      : ((_fpclass(number) == _FPCLASS_NINF) ? -1 : 0));
 
 #elif defined(USE_IEEE_754)
   /*
@@ -496,8 +496,8 @@ TRIO_ARGS1((number),
   double infinity = trio_pinf();
   
   status = ((number == infinity)
-	    ? 1
-	    : ((number == -infinity) ? -1 : 0));
+        ? 1
+        : ((number == -infinity) ? -1 : 0));
   
 # if defined(TRIO_PLATFORM_UNIX)
   signal(SIGFPE, signal_handler);
@@ -509,7 +509,7 @@ TRIO_ARGS1((number),
 }
 
 #if 0
-	/* Temporary fix - this routine is not used anywhere */
+    /* Temporary fix - this routine is not used anywhere */
 /**
    Check for finity.
 
@@ -519,7 +519,7 @@ TRIO_ARGS1((number),
 TRIO_PUBLIC int
 trio_isfinite
 TRIO_ARGS1((number),
-	   double number)
+       double number)
 {
 #if defined(TRIO_COMPILER_SUPPORTS_C99) && defined(isfinite)
   /*
@@ -559,8 +559,8 @@ TRIO_ARGS1((number),
 TRIO_PUBLIC int
 trio_fpclassify_and_signbit
 TRIO_ARGS2((number, is_negative),
-	   double number,
-	   int *is_negative)
+       double number,
+       int *is_negative)
 {
 #if defined(fpclassify) && defined(signbit)
   /*
@@ -731,7 +731,7 @@ TRIO_ARGS2((number, is_negative),
 TRIO_PUBLIC int
 trio_signbit
 TRIO_ARGS1((number),
-	   double number)
+       double number)
 {
   int is_negative;
   
@@ -740,7 +740,7 @@ TRIO_ARGS1((number),
 }
 
 #if 0
-	/* Temporary fix - this routine is not used in libxml */
+    /* Temporary fix - this routine is not used in libxml */
 /**
    Examine the class of a number.
 
@@ -750,7 +750,7 @@ TRIO_ARGS1((number),
 TRIO_PUBLIC int
 trio_fpclassify
 TRIO_ARGS1((number),
-	   double number)
+       double number)
 {
   int dummy;
   
@@ -775,7 +775,7 @@ TRIO_ARGS1((number),
 static TRIO_CONST char *
 getClassification
 TRIO_ARGS1((type),
-	   int type)
+       int type)
 {
   switch (type) {
   case TRIO_FP_INFINITE:
@@ -796,14 +796,14 @@ TRIO_ARGS1((type),
 static void
 print_class
 TRIO_ARGS2((prefix, number),
-	   TRIO_CONST char *prefix,
-	   double number)
+       TRIO_CONST char *prefix,
+       double number)
 {
   printf("%-6s: %s %-15s %g\n",
-	 prefix,
-	 trio_signbit(number) ? "-" : "+",
-	 getClassification(TRIO_FPCLASSIFY(number)),
-	 number);
+     prefix,
+     trio_signbit(number) ? "-" : "+",
+     getClassification(TRIO_FPCLASSIFY(number)),
+     number);
 }
 
 int main(TRIO_NOARGS)
@@ -830,38 +830,38 @@ int main(TRIO_NOARGS)
   print_class("NSub", 1.00e-307 - 1.01e-307);
   
   printf("NaN : %4g 0x%02x%02x%02x%02x%02x%02x%02x%02x (%2d, %2d)\n",
-	 my_nan,
-	 ((unsigned char *)&my_nan)[0],
-	 ((unsigned char *)&my_nan)[1],
-	 ((unsigned char *)&my_nan)[2],
-	 ((unsigned char *)&my_nan)[3],
-	 ((unsigned char *)&my_nan)[4],
-	 ((unsigned char *)&my_nan)[5],
-	 ((unsigned char *)&my_nan)[6],
-	 ((unsigned char *)&my_nan)[7],
-	 trio_isnan(my_nan), trio_isinf(my_nan));
+     my_nan,
+     ((unsigned char *)&my_nan)[0],
+     ((unsigned char *)&my_nan)[1],
+     ((unsigned char *)&my_nan)[2],
+     ((unsigned char *)&my_nan)[3],
+     ((unsigned char *)&my_nan)[4],
+     ((unsigned char *)&my_nan)[5],
+     ((unsigned char *)&my_nan)[6],
+     ((unsigned char *)&my_nan)[7],
+     trio_isnan(my_nan), trio_isinf(my_nan));
   printf("PInf: %4g 0x%02x%02x%02x%02x%02x%02x%02x%02x (%2d, %2d)\n",
-	 my_pinf,
-	 ((unsigned char *)&my_pinf)[0],
-	 ((unsigned char *)&my_pinf)[1],
-	 ((unsigned char *)&my_pinf)[2],
-	 ((unsigned char *)&my_pinf)[3],
-	 ((unsigned char *)&my_pinf)[4],
-	 ((unsigned char *)&my_pinf)[5],
-	 ((unsigned char *)&my_pinf)[6],
-	 ((unsigned char *)&my_pinf)[7],
-	 trio_isnan(my_pinf), trio_isinf(my_pinf));
+     my_pinf,
+     ((unsigned char *)&my_pinf)[0],
+     ((unsigned char *)&my_pinf)[1],
+     ((unsigned char *)&my_pinf)[2],
+     ((unsigned char *)&my_pinf)[3],
+     ((unsigned char *)&my_pinf)[4],
+     ((unsigned char *)&my_pinf)[5],
+     ((unsigned char *)&my_pinf)[6],
+     ((unsigned char *)&my_pinf)[7],
+     trio_isnan(my_pinf), trio_isinf(my_pinf));
   printf("NInf: %4g 0x%02x%02x%02x%02x%02x%02x%02x%02x (%2d, %2d)\n",
-	 my_ninf,
-	 ((unsigned char *)&my_ninf)[0],
-	 ((unsigned char *)&my_ninf)[1],
-	 ((unsigned char *)&my_ninf)[2],
-	 ((unsigned char *)&my_ninf)[3],
-	 ((unsigned char *)&my_ninf)[4],
-	 ((unsigned char *)&my_ninf)[5],
-	 ((unsigned char *)&my_ninf)[6],
-	 ((unsigned char *)&my_ninf)[7],
-	 trio_isnan(my_ninf), trio_isinf(my_ninf));
+     my_ninf,
+     ((unsigned char *)&my_ninf)[0],
+     ((unsigned char *)&my_ninf)[1],
+     ((unsigned char *)&my_ninf)[2],
+     ((unsigned char *)&my_ninf)[3],
+     ((unsigned char *)&my_ninf)[4],
+     ((unsigned char *)&my_ninf)[5],
+     ((unsigned char *)&my_ninf)[6],
+     ((unsigned char *)&my_ninf)[7],
+     trio_isnan(my_ninf), trio_isinf(my_ninf));
   
 # if defined(TRIO_PLATFORM_UNIX)
   signal_handler = signal(SIGFPE, SIG_IGN);
@@ -876,38 +876,38 @@ int main(TRIO_NOARGS)
 # endif
   
   printf("NaN : %4g 0x%02x%02x%02x%02x%02x%02x%02x%02x (%2d, %2d)\n",
-	 my_nan,
-	 ((unsigned char *)&my_nan)[0],
-	 ((unsigned char *)&my_nan)[1],
-	 ((unsigned char *)&my_nan)[2],
-	 ((unsigned char *)&my_nan)[3],
-	 ((unsigned char *)&my_nan)[4],
-	 ((unsigned char *)&my_nan)[5],
-	 ((unsigned char *)&my_nan)[6],
-	 ((unsigned char *)&my_nan)[7],
-	 trio_isnan(my_nan), trio_isinf(my_nan));
+     my_nan,
+     ((unsigned char *)&my_nan)[0],
+     ((unsigned char *)&my_nan)[1],
+     ((unsigned char *)&my_nan)[2],
+     ((unsigned char *)&my_nan)[3],
+     ((unsigned char *)&my_nan)[4],
+     ((unsigned char *)&my_nan)[5],
+     ((unsigned char *)&my_nan)[6],
+     ((unsigned char *)&my_nan)[7],
+     trio_isnan(my_nan), trio_isinf(my_nan));
   printf("PInf: %4g 0x%02x%02x%02x%02x%02x%02x%02x%02x (%2d, %2d)\n",
-	 my_pinf,
-	 ((unsigned char *)&my_pinf)[0],
-	 ((unsigned char *)&my_pinf)[1],
-	 ((unsigned char *)&my_pinf)[2],
-	 ((unsigned char *)&my_pinf)[3],
-	 ((unsigned char *)&my_pinf)[4],
-	 ((unsigned char *)&my_pinf)[5],
-	 ((unsigned char *)&my_pinf)[6],
-	 ((unsigned char *)&my_pinf)[7],
-	 trio_isnan(my_pinf), trio_isinf(my_pinf));
+     my_pinf,
+     ((unsigned char *)&my_pinf)[0],
+     ((unsigned char *)&my_pinf)[1],
+     ((unsigned char *)&my_pinf)[2],
+     ((unsigned char *)&my_pinf)[3],
+     ((unsigned char *)&my_pinf)[4],
+     ((unsigned char *)&my_pinf)[5],
+     ((unsigned char *)&my_pinf)[6],
+     ((unsigned char *)&my_pinf)[7],
+     trio_isnan(my_pinf), trio_isinf(my_pinf));
   printf("NInf: %4g 0x%02x%02x%02x%02x%02x%02x%02x%02x (%2d, %2d)\n",
-	 my_ninf,
-	 ((unsigned char *)&my_ninf)[0],
-	 ((unsigned char *)&my_ninf)[1],
-	 ((unsigned char *)&my_ninf)[2],
-	 ((unsigned char *)&my_ninf)[3],
-	 ((unsigned char *)&my_ninf)[4],
-	 ((unsigned char *)&my_ninf)[5],
-	 ((unsigned char *)&my_ninf)[6],
-	 ((unsigned char *)&my_ninf)[7],
-	 trio_isnan(my_ninf), trio_isinf(my_ninf));
+     my_ninf,
+     ((unsigned char *)&my_ninf)[0],
+     ((unsigned char *)&my_ninf)[1],
+     ((unsigned char *)&my_ninf)[2],
+     ((unsigned char *)&my_ninf)[3],
+     ((unsigned char *)&my_ninf)[4],
+     ((unsigned char *)&my_ninf)[5],
+     ((unsigned char *)&my_ninf)[6],
+     ((unsigned char *)&my_ninf)[7],
+     trio_isnan(my_ninf), trio_isinf(my_ninf));
   
   return 0;
 }

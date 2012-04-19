@@ -25,7 +25,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
-@brief	A memory DC which uses to draw text on bitmap.
+@brief    A memory DC which uses to draw text on bitmap.
 */
 class BitmapDC
 {
@@ -34,9 +34,9 @@ public:
     : m_hDC(NULL)
     , m_hBmp(NULL)
     , m_hFont((HFONT)GetStockObject(DEFAULT_GUI_FONT))
-	, m_hWnd(NULL)
+    , m_hWnd(NULL)
     {
-		m_hWnd = hWnd;
+        m_hWnd = hWnd;
         HDC hdc = GetDC(hWnd);
         m_hDC   = CreateCompatibleDC(hdc);
         ReleaseDC(hWnd, hdc);
@@ -55,67 +55,67 @@ public:
             DeleteObject(m_hFont);
             m_hFont = hDefFont;
         }
-		// release temp font resource	
-		if (m_curFontPath.size() > 0)
-		{
-			wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
-			if (pwszBuffer)
-			{
-				RemoveFontResource(pwszBuffer);
-				SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-				delete [] pwszBuffer;
-				pwszBuffer = NULL;
-			}
-		}
+        // release temp font resource    
+        if (m_curFontPath.size() > 0)
+        {
+            wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+            if (pwszBuffer)
+            {
+                RemoveFontResource(pwszBuffer);
+                SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+                delete [] pwszBuffer;
+                pwszBuffer = NULL;
+            }
+        }
     }
 
-	wchar_t * utf8ToUtf16(std::string nString)
-	{
-		wchar_t * pwszBuffer = NULL;
-		do 
-		{
-			if (nString.size() < 0)
-			{
-				break;
-			}
-			// utf-8 to utf-16
-			int nLen = nString.size();
-			int nBufLen  = nLen + 1;			
-			pwszBuffer = new wchar_t[nBufLen];
-			CC_BREAK_IF(! pwszBuffer);
-			memset(pwszBuffer,0,nBufLen);
-			nLen = MultiByteToWideChar(CP_UTF8, 0, nString.c_str(), nLen, pwszBuffer, nBufLen);		
-			pwszBuffer[nLen] = '\0';
-		} while (0);	
-		return pwszBuffer;
+    wchar_t * utf8ToUtf16(std::string nString)
+    {
+        wchar_t * pwszBuffer = NULL;
+        do 
+        {
+            if (nString.size() < 0)
+            {
+                break;
+            }
+            // utf-8 to utf-16
+            int nLen = nString.size();
+            int nBufLen  = nLen + 1;            
+            pwszBuffer = new wchar_t[nBufLen];
+            CC_BREAK_IF(! pwszBuffer);
+            memset(pwszBuffer,0,nBufLen);
+            nLen = MultiByteToWideChar(CP_UTF8, 0, nString.c_str(), nLen, pwszBuffer, nBufLen);        
+            pwszBuffer[nLen] = '\0';
+        } while (0);    
+        return pwszBuffer;
 
-	}
+    }
 
     bool setFont(const char * pFontName = NULL, int nSize = 0)
     {
         bool bRet = false;
         do 
         {
-			std::string fontName = pFontName;
-			std::string fontPath;
+            std::string fontName = pFontName;
+            std::string fontPath;
             HFONT       hDefFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
             LOGFONTA    tNewFont = {0};
             LOGFONTA    tOldFont = {0};
             GetObjectA(hDefFont, sizeof(tNewFont), &tNewFont);
             if (fontName.c_str())
-            {	
-				// create font from ttf file
-				int nFindttf = fontName.find(".ttf");
-				int nFindTTF = fontName.find(".TTF");
-				if (nFindttf >= 0 || nFindTTF >= 0)
-				{
-					fontPath = CCFileUtils::fullPathFromRelativePath(fontName.c_str());
-					int nFindPos = fontName.rfind("/");
-					fontName = &fontName[nFindPos+1];
-					nFindPos = fontName.rfind(".");
-					fontName = fontName.substr(0,nFindPos);				
-				}
-				tNewFont.lfCharSet = DEFAULT_CHARSET;
+            {    
+                // create font from ttf file
+                int nFindttf = fontName.find(".ttf");
+                int nFindTTF = fontName.find(".TTF");
+                if (nFindttf >= 0 || nFindTTF >= 0)
+                {
+                    fontPath = CCFileUtils::fullPathFromRelativePath(fontName.c_str());
+                    int nFindPos = fontName.rfind("/");
+                    fontName = &fontName[nFindPos+1];
+                    nFindPos = fontName.rfind(".");
+                    fontName = fontName.substr(0,nFindPos);                
+                }
+                tNewFont.lfCharSet = DEFAULT_CHARSET;
                 strcpy_s(tNewFont.lfFaceName, LF_FACESIZE, fontName.c_str());
             }
             if (nSize)
@@ -136,35 +136,35 @@ public:
             if (m_hFont != hDefFont)
             {
                 DeleteObject(m_hFont);
-				// release old font register
-				if (m_curFontPath.size() > 0)
-				{
-					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
-					if (pwszBuffer)
-					{
-						if(RemoveFontResource(pwszBuffer))
-						{
-							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-						}						
-						delete [] pwszBuffer;
-						pwszBuffer = NULL;
-					}
-				}
-				fontPath.size()>0?(m_curFontPath = fontPath):(m_curFontPath.clear());
-				// register temp font
-				if (m_curFontPath.size() > 0)
-				{
-					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
-					if (pwszBuffer)
-					{
-						if(AddFontResource(pwszBuffer))
-						{
-							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-						}						
-						delete [] pwszBuffer;
-						pwszBuffer = NULL;
-					}
-				}
+                // release old font register
+                if (m_curFontPath.size() > 0)
+                {
+                    wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+                    if (pwszBuffer)
+                    {
+                        if(RemoveFontResource(pwszBuffer))
+                        {
+                            SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+                        }                        
+                        delete [] pwszBuffer;
+                        pwszBuffer = NULL;
+                    }
+                }
+                fontPath.size()>0?(m_curFontPath = fontPath):(m_curFontPath.clear());
+                // register temp font
+                if (m_curFontPath.size() > 0)
+                {
+                    wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+                    if (pwszBuffer)
+                    {
+                        if(AddFontResource(pwszBuffer))
+                        {
+                            SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+                        }                        
+                        delete [] pwszBuffer;
+                        pwszBuffer = NULL;
+                    }
+                }
             }
             m_hFont = NULL;
 
@@ -346,8 +346,8 @@ public:
 private:
     friend class CCImage;
     HFONT   m_hFont;
-	HWND	m_hWnd;
-	std::string m_curFontPath;
+    HWND    m_hWnd;
+    std::string m_curFontPath;
 };
 
 static BitmapDC& sharedBitmapDC()

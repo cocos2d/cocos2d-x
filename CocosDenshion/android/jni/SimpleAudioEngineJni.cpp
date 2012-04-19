@@ -6,68 +6,68 @@
 #define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxActivity"
 
 typedef struct JniMethodInfo_
-	{
-		JNIEnv *    env;
-		jclass      classID;
-		jmethodID   methodID;
-	} JniMethodInfo;
+    {
+        JNIEnv *    env;
+        jclass      classID;
+        jmethodID   methodID;
+    } JniMethodInfo;
 
 
 extern "C"
 {
-	static JavaVM *gJavaVM = 0;
+    static JavaVM *gJavaVM = 0;
 
-	jint JNI_OnLoad(JavaVM *vm, void *reserved)
-	{
-		gJavaVM = vm;
-
-		return JNI_VERSION_1_4;
-	}
-
-	// get env and cache it
-	static JNIEnv* getJNIEnv(void)
-	{
-		JNIEnv *env = 0;
-
-		// get jni environment
-		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
-		{
-			LOGD("Failed to get the environment using GetEnv()");
-		}
-
-		if (gJavaVM->AttachCurrentThread(&env, 0) < 0)
-		{
-			LOGD("Failed to get the environment using AttachCurrentThread()");
-		}
-
-		return env;
-	}
-
-	// get class and make it a global reference, release it at endJni().
-	static jclass getClassID(JNIEnv *pEnv)
-	{
-		jclass ret = pEnv->FindClass(CLASS_NAME);
-		if (! ret)
-		{
-			LOGD("Failed to find class of %s", CLASS_NAME);
-		}
-
-		return ret;
-	}
-
-	static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *methodName, const char *paramCode)
+    jint JNI_OnLoad(JavaVM *vm, void *reserved)
     {
-		jmethodID methodID = 0;
-		JNIEnv *pEnv = 0;
-		bool bRet = false;
+        gJavaVM = vm;
+
+        return JNI_VERSION_1_4;
+    }
+
+    // get env and cache it
+    static JNIEnv* getJNIEnv(void)
+    {
+        JNIEnv *env = 0;
+
+        // get jni environment
+        if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
+        {
+            LOGD("Failed to get the environment using GetEnv()");
+        }
+
+        if (gJavaVM->AttachCurrentThread(&env, 0) < 0)
+        {
+            LOGD("Failed to get the environment using AttachCurrentThread()");
+        }
+
+        return env;
+    }
+
+    // get class and make it a global reference, release it at endJni().
+    static jclass getClassID(JNIEnv *pEnv)
+    {
+        jclass ret = pEnv->FindClass(CLASS_NAME);
+        if (! ret)
+        {
+            LOGD("Failed to find class of %s", CLASS_NAME);
+        }
+
+        return ret;
+    }
+
+    static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *methodName, const char *paramCode)
+    {
+        jmethodID methodID = 0;
+        JNIEnv *pEnv = 0;
+        bool bRet = false;
 
         do 
         {
-			pEnv = getJNIEnv();
-			if (! pEnv)
-			{
-				break;
-			}
+            pEnv = getJNIEnv();
+            if (! pEnv)
+            {
+                break;
+            }
 
             jclass classID = getClassID(pEnv);
 
@@ -78,348 +78,348 @@ extern "C"
                 break;
             }
 
-			methodinfo.classID = classID;
-			methodinfo.env = pEnv;
-			methodinfo.methodID = methodID;
+            methodinfo.classID = classID;
+            methodinfo.env = pEnv;
+            methodinfo.methodID = methodID;
 
-			bRet = true;
+            bRet = true;
         } while (0);
 
         return bRet;
     }
 
-	void preloadBackgroundMusicJNI(const char *path)
-	{
-		// void playBackgroundMusic(String,boolean)
-		JniMethodInfo methodInfo;
+    void preloadBackgroundMusicJNI(const char *path)
+    {
+        // void playBackgroundMusic(String,boolean)
+        JniMethodInfo methodInfo;
 
-		if (! getStaticMethodInfo(methodInfo, "preloadBackgroundMusic", "(Ljava/lang/String;)V"))
-		{			
-			return;
-		}
+        if (! getStaticMethodInfo(methodInfo, "preloadBackgroundMusic", "(Ljava/lang/String;)V"))
+        {            
+            return;
+        }
 
-		jstring stringArg = methodInfo.env->NewStringUTF(path);
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
-		methodInfo.env->DeleteLocalRef(stringArg);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
-
-	void playBackgroundMusicJNI(const char *path, bool isLoop)
-	{
-		// void playBackgroundMusic(String,boolean)
-
-		JniMethodInfo methodInfo;
-
-		if (! getStaticMethodInfo(methodInfo, "playBackgroundMusic", "(Ljava/lang/String;Z)V"))
-		{
-			return;
-		}
-
-		jstring stringArg = methodInfo.env->NewStringUTF(path);
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg, isLoop);
-		methodInfo.env->DeleteLocalRef(stringArg);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
-
-	void stopBackgroundMusicJNI()
-	{
-		// void stopBackgroundMusic()
-
-		JniMethodInfo methodInfo;
-
-		if (! getStaticMethodInfo(methodInfo, "stopBackgroundMusic", "()V"))
-		{
-			return;
-		}
-
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
-
-	void pauseBackgroundMusicJNI()
-	{
-		// void pauseBackgroundMusic()
-
-		JniMethodInfo methodInfo;
-
-		if (! getStaticMethodInfo(methodInfo, "pauseBackgroundMusic", "()V"))
-		{
-			return;
-		}
-
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
-
-	void resumeBackgroundMusicJNI()
-	{
-		// void resumeBackgroundMusic()
-
-		JniMethodInfo methodInfo;
-
-		if (! getStaticMethodInfo(methodInfo, "resumeBackgroundMusic", "()V"))
-		{
-			return;
-		}
-
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
-
-	void rewindBackgroundMusicJNI()
-	{
-		// void rewindBackgroundMusic()
-
-		JniMethodInfo methodInfo;
-
-		if (! getStaticMethodInfo(methodInfo, "rewindBackgroundMusic", "()V"))
-		{
-			return;
-		}
-
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
-
-	bool isBackgroundMusicPlayingJNI()
-	{
-		// boolean rewindBackgroundMusic()
-
-		JniMethodInfo methodInfo;
-		jboolean ret = false;
-
-		if (! getStaticMethodInfo(methodInfo, "isBackgroundMusicPlaying", "()Z"))
-		{
-			return ret;
-		}
-
-		ret = methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-
-		return ret;
-	}
-
-	float getBackgroundMusicVolumeJNI()
-	{
-		// float getBackgroundMusicVolume()
-
-		JniMethodInfo methodInfo;
-		jfloat ret = -1.0;
-
-		if (! getStaticMethodInfo(methodInfo, "getBackgroundMusicVolume", "()F"))
-		{
-			return ret;
-		}
-
-		ret = methodInfo.env->CallStaticFloatMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-
-		return ret;
-	}
-
-	void setBackgroundMusicVolumeJNI(float volume)
-	{
-		// void setBackgroundMusicVolume()
-
-		JniMethodInfo methodInfo;
-
-		if (! getStaticMethodInfo(methodInfo, "setBackgroundMusicVolume", "(F)V"))
-		{
-			return ;
-		}
-
-	    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, volume);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
-
-	unsigned int playEffectJNI(const char* path, bool bLoop)
-	{
-		// int playEffect(String)
-
-		JniMethodInfo methodInfo;
-		int ret = 0;
-
-		if (! getStaticMethodInfo(methodInfo, "playEffect", "(Ljava/lang/String;Z)I"))
-		{
-			return ret;
-		}
-
-		jstring stringArg = methodInfo.env->NewStringUTF(path);
-		ret = methodInfo.env->CallStaticIntMethod(methodInfo.classID, methodInfo.methodID, stringArg, bLoop);
+        jstring stringArg = methodInfo.env->NewStringUTF(path);
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
         methodInfo.env->DeleteLocalRef(stringArg);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 
-		return (unsigned int)ret;
-	}
+    void playBackgroundMusicJNI(const char *path, bool isLoop)
+    {
+        // void playBackgroundMusic(String,boolean)
 
-	void stopEffectJNI(unsigned int nSoundId)
-	{
-		// void stopEffect(int)
+        JniMethodInfo methodInfo;
 
-		JniMethodInfo methodInfo;
+        if (! getStaticMethodInfo(methodInfo, "playBackgroundMusic", "(Ljava/lang/String;Z)V"))
+        {
+            return;
+        }
 
-		if (! getStaticMethodInfo(methodInfo, "stopEffect", "(I)V"))
-		{
-			return ;
-		}
+        jstring stringArg = methodInfo.env->NewStringUTF(path);
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg, isLoop);
+        methodInfo.env->DeleteLocalRef(stringArg);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)nSoundId);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+    void stopBackgroundMusicJNI()
+    {
+        // void stopBackgroundMusic()
 
-	void endJNI()
-	{
-		// void end()
+        JniMethodInfo methodInfo;
 
-		JniMethodInfo methodInfo;
+        if (! getStaticMethodInfo(methodInfo, "stopBackgroundMusic", "()V"))
+        {
+            return;
+        }
 
-		if (! getStaticMethodInfo(methodInfo, "end", "()V"))
-		{
-			return ;
-		}
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+    void pauseBackgroundMusicJNI()
+    {
+        // void pauseBackgroundMusic()
 
-	float getEffectsVolumeJNI()
-	{
-		// float getEffectsVolume()
+        JniMethodInfo methodInfo;
 
-		JniMethodInfo methodInfo;
-		jfloat ret = -1.0;
+        if (! getStaticMethodInfo(methodInfo, "pauseBackgroundMusic", "()V"))
+        {
+            return;
+        }
 
-		if (! getStaticMethodInfo(methodInfo, "getEffectsVolume", "()F"))
-		{
-			return ret;
-		}
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 
-		ret = methodInfo.env->CallStaticFloatMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    void resumeBackgroundMusicJNI()
+    {
+        // void resumeBackgroundMusic()
 
-		return ret;
-	}
+        JniMethodInfo methodInfo;
 
-	void setEffectsVolumeJNI(float volume)
-	{
-		// void setEffectsVolume(float)
-		JniMethodInfo methodInfo;
+        if (! getStaticMethodInfo(methodInfo, "resumeBackgroundMusic", "()V"))
+        {
+            return;
+        }
 
-		if (! getStaticMethodInfo(methodInfo, "setEffectsVolume", "(F)V"))
-		{
-			return ;
-		}
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, volume);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+    void rewindBackgroundMusicJNI()
+    {
+        // void rewindBackgroundMusic()
 
-	void preloadEffectJNI(const char *path)
-	{
-		// void preloadEffect(String)
+        JniMethodInfo methodInfo;
 
-		JniMethodInfo methodInfo;
+        if (! getStaticMethodInfo(methodInfo, "rewindBackgroundMusic", "()V"))
+        {
+            return;
+        }
 
-		if (! getStaticMethodInfo(methodInfo, "preloadEffect", "(Ljava/lang/String;)V"))
-		{
-			return ;
-		}
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 
-		jstring stringArg = methodInfo.env->NewStringUTF(path);
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
-		methodInfo.env->DeleteLocalRef(stringArg);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+    bool isBackgroundMusicPlayingJNI()
+    {
+        // boolean rewindBackgroundMusic()
 
-	void unloadEffectJNI(const char* path)
-	{
-		// void unloadEffect(String)
+        JniMethodInfo methodInfo;
+        jboolean ret = false;
 
-		JniMethodInfo methodInfo;
+        if (! getStaticMethodInfo(methodInfo, "isBackgroundMusicPlaying", "()Z"))
+        {
+            return ret;
+        }
 
-		if (! getStaticMethodInfo(methodInfo, "unloadEffect", "(Ljava/lang/String;)V"))
-		{
-			return ;
-		}
+        ret = methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
 
-		jstring stringArg = methodInfo.env->NewStringUTF(path);
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
-		methodInfo.env->DeleteLocalRef(stringArg);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+        return ret;
+    }
 
-	void pauseEffectJNI(unsigned int nSoundId)
-	{
-		// void pauseEffect(int)
+    float getBackgroundMusicVolumeJNI()
+    {
+        // float getBackgroundMusicVolume()
 
-		JniMethodInfo methodInfo;
+        JniMethodInfo methodInfo;
+        jfloat ret = -1.0;
 
-		if (! getStaticMethodInfo(methodInfo, "pauseEffect", "(I)V"))
-		{
-			return ;
-		}
+        if (! getStaticMethodInfo(methodInfo, "getBackgroundMusicVolume", "()F"))
+        {
+            return ret;
+        }
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)nSoundId);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+        ret = methodInfo.env->CallStaticFloatMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
 
-	void pauseAllEffectsJNI()
-	{
-		// void pauseAllEffects()
+        return ret;
+    }
 
-		JniMethodInfo methodInfo;
+    void setBackgroundMusicVolumeJNI(float volume)
+    {
+        // void setBackgroundMusicVolume()
 
-		if (! getStaticMethodInfo(methodInfo, "pauseAllEffects", "()V"))
-		{
-			return ;
-		}
+        JniMethodInfo methodInfo;
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+        if (! getStaticMethodInfo(methodInfo, "setBackgroundMusicVolume", "(F)V"))
+        {
+            return ;
+        }
 
-	void resumeEffectJNI(unsigned int nSoundId)
-	{
-		// void resumeEffect(int)
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, volume);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 
-		JniMethodInfo methodInfo;
+    unsigned int playEffectJNI(const char* path, bool bLoop)
+    {
+        // int playEffect(String)
 
-		if (! getStaticMethodInfo(methodInfo, "resumeEffect", "(I)V"))
-		{
-			return ;
-		}
+        JniMethodInfo methodInfo;
+        int ret = 0;
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)nSoundId);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+        if (! getStaticMethodInfo(methodInfo, "playEffect", "(Ljava/lang/String;Z)I"))
+        {
+            return ret;
+        }
 
-	void resumeAllEffectsJNI()
-	{
-		// void resumeAllEffects()
+        jstring stringArg = methodInfo.env->NewStringUTF(path);
+        ret = methodInfo.env->CallStaticIntMethod(methodInfo.classID, methodInfo.methodID, stringArg, bLoop);
+        methodInfo.env->DeleteLocalRef(stringArg);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
 
-		JniMethodInfo methodInfo;
+        return (unsigned int)ret;
+    }
 
-		if (! getStaticMethodInfo(methodInfo, "resumeAllEffects", "()V"))
-		{
-			return ;
-		}
+    void stopEffectJNI(unsigned int nSoundId)
+    {
+        // void stopEffect(int)
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+        JniMethodInfo methodInfo;
 
-	void stopAllEffectsJNI()
-	{
-		// void stopAllEffects()
+        if (! getStaticMethodInfo(methodInfo, "stopEffect", "(I)V"))
+        {
+            return ;
+        }
 
-		JniMethodInfo methodInfo;
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)nSoundId);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 
-		if (! getStaticMethodInfo(methodInfo, "stopAllEffects", "()V"))
-		{
-			return ;
-		}
+    void endJNI()
+    {
+        // void end()
 
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
-	}
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "end", "()V"))
+        {
+            return ;
+        }
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+
+    float getEffectsVolumeJNI()
+    {
+        // float getEffectsVolume()
+
+        JniMethodInfo methodInfo;
+        jfloat ret = -1.0;
+
+        if (! getStaticMethodInfo(methodInfo, "getEffectsVolume", "()F"))
+        {
+            return ret;
+        }
+
+        ret = methodInfo.env->CallStaticFloatMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+
+        return ret;
+    }
+
+    void setEffectsVolumeJNI(float volume)
+    {
+        // void setEffectsVolume(float)
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "setEffectsVolume", "(F)V"))
+        {
+            return ;
+        }
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, volume);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+
+    void preloadEffectJNI(const char *path)
+    {
+        // void preloadEffect(String)
+
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "preloadEffect", "(Ljava/lang/String;)V"))
+        {
+            return ;
+        }
+
+        jstring stringArg = methodInfo.env->NewStringUTF(path);
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
+        methodInfo.env->DeleteLocalRef(stringArg);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+
+    void unloadEffectJNI(const char* path)
+    {
+        // void unloadEffect(String)
+
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "unloadEffect", "(Ljava/lang/String;)V"))
+        {
+            return ;
+        }
+
+        jstring stringArg = methodInfo.env->NewStringUTF(path);
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
+        methodInfo.env->DeleteLocalRef(stringArg);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+
+    void pauseEffectJNI(unsigned int nSoundId)
+    {
+        // void pauseEffect(int)
+
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "pauseEffect", "(I)V"))
+        {
+            return ;
+        }
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)nSoundId);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+
+    void pauseAllEffectsJNI()
+    {
+        // void pauseAllEffects()
+
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "pauseAllEffects", "()V"))
+        {
+            return ;
+        }
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+
+    void resumeEffectJNI(unsigned int nSoundId)
+    {
+        // void resumeEffect(int)
+
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "resumeEffect", "(I)V"))
+        {
+            return ;
+        }
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)nSoundId);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+
+    void resumeAllEffectsJNI()
+    {
+        // void resumeAllEffects()
+
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "resumeAllEffects", "()V"))
+        {
+            return ;
+        }
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+
+    void stopAllEffectsJNI()
+    {
+        // void stopAllEffects()
+
+        JniMethodInfo methodInfo;
+
+        if (! getStaticMethodInfo(methodInfo, "stopAllEffects", "()V"))
+        {
+            return ;
+        }
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
 }

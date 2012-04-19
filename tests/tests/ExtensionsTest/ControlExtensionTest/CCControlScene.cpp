@@ -53,7 +53,7 @@ bool CCControlScene::init()
         addChild(pBackMenu, 10);
 
         // Add the generated background
-		CCSprite *background = CCSprite::spriteWithFile("extensions/background.png");
+        CCSprite *background = CCSprite::spriteWithFile("extensions/background.png");
         background->setPosition(ccp(screensize.width / 2, screensize.height / 2));
         addChild(background);
         
@@ -69,17 +69,17 @@ bool CCControlScene::init()
         addChild(m_pSceneTitleLabel, 1);
         
         // Add the menu
-		CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(CCControlScene::previousCallback));
-		CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(CCControlScene::restartCallback));
-		CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(CCControlScene::nextCallback));
+        CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(CCControlScene::previousCallback));
+        CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(CCControlScene::restartCallback));
+        CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(CCControlScene::nextCallback));
         
         CCMenu *menu = CCMenu::menuWithItems(item1, item3, item2, NULL);
         menu->setPosition(CCPointZero);
-		item1->setPosition(ccp(screensize.width / 2 - 100, 37));
-		item2->setPosition(ccp(screensize.width / 2, 35));
-		item3->setPosition(ccp(screensize.width / 2 + 100, 37));
+        item1->setPosition(ccp(screensize.width / 2 - 100, 37));
+        item2->setPosition(ccp(screensize.width / 2, 35));
+        item3->setPosition(ccp(screensize.width / 2 + 100, 37));
         
-		addChild(menu ,1);
+        addChild(menu ,1);
 
         return true;
     }

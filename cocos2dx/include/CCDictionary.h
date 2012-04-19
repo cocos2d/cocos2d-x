@@ -36,106 +36,106 @@ class CCDictionary;
 
 class CC_DLL CCDictElement
 {
-	#define MAX_KEY_LEN  256
+    #define MAX_KEY_LEN  256
 public:
-	CCDictElement(const char* pszKey, CCObject* pObject)
-	{
-		init();
-		m_pObject = pObject;
+    CCDictElement(const char* pszKey, CCObject* pObject)
+    {
+        init();
+        m_pObject = pObject;
 
-		const char* pStart = pszKey;
-		
-		int len = strlen(pszKey);
-		if (len > MAX_KEY_LEN )
-		{
-			char* pEnd = (char*)&pszKey[len-1];
-			pStart = pEnd - (MAX_KEY_LEN-1);
-		}
+        const char* pStart = pszKey;
+        
+        int len = strlen(pszKey);
+        if (len > MAX_KEY_LEN )
+        {
+            char* pEnd = (char*)&pszKey[len-1];
+            pStart = pEnd - (MAX_KEY_LEN-1);
+        }
 
-		strcpy(m_szKey, pStart);
-	}
+        strcpy(m_szKey, pStart);
+    }
 
-	CCDictElement(int iKey, CCObject* pObject)
-	{
-		init();
-		m_iKey = iKey;
-		m_pObject = pObject;
-	}
+    CCDictElement(int iKey, CCObject* pObject)
+    {
+        init();
+        m_iKey = iKey;
+        m_pObject = pObject;
+    }
 
-	inline const char* getStrKey() const
-	{
+    inline const char* getStrKey() const
+    {
         CCAssert(m_szKey[0] != '\0', "Should not call this function for integer dictionary");
-		return m_szKey;
-	}
+        return m_szKey;
+    }
 
-	inline int getIntKey() const 
-	{
+    inline int getIntKey() const 
+    {
         CCAssert(m_szKey[0] == '\0', "Should not call this function for string dictionary");
-		return m_iKey;
-	}
+        return m_iKey;
+    }
 
-	inline CCObject* getObject() const
-	{
-		return m_pObject;
-	}
-
-private:
-	inline void init()
-	{
-		m_iKey = 0;
-		m_pObject = NULL;
-		memset(m_szKey, 0, sizeof(m_szKey));
-		memset(&hh, 0, sizeof(hh));
-	}
+    inline CCObject* getObject() const
+    {
+        return m_pObject;
+    }
 
 private:
-	char m_szKey[MAX_KEY_LEN+1];  /** hash key of string type*/
-	int  m_iKey;        /** hash key of integer type */
-	CCObject* m_pObject;/** hash value */
+    inline void init()
+    {
+        m_iKey = 0;
+        m_pObject = NULL;
+        memset(m_szKey, 0, sizeof(m_szKey));
+        memset(&hh, 0, sizeof(hh));
+    }
+
+private:
+    char m_szKey[MAX_KEY_LEN+1];  /** hash key of string type*/
+    int  m_iKey;        /** hash key of integer type */
+    CCObject* m_pObject;/** hash value */
 public:
-	UT_hash_handle hh; /* makes this class hashable */
-	friend class CCDictionary;
+    UT_hash_handle hh; /* makes this class hashable */
+    friend class CCDictionary;
 };
 
 
 #define CCDICT_FOREACH(__dict__, __el__) \
     CCDictElement* pTmp##__dict__##__el__ = NULL; \
-	HASH_ITER(hh, (__dict__)->m_pElements, __el__, pTmp##__dict__##__el__)
+    HASH_ITER(hh, (__dict__)->m_pElements, __el__, pTmp##__dict__##__el__)
 
 
 class CC_DLL CCDictionary : public CCObject
 {
 public:
-	CCDictionary();
-	~CCDictionary();
+    CCDictionary();
+    ~CCDictionary();
 
-	/// return the number of items
-	unsigned int count();
+    /// return the number of items
+    unsigned int count();
 
-	/// return all the keys
-	CCArray* allKeys();
+    /// return all the keys
+    CCArray* allKeys();
 
-	/** @warning : We use '==' to compare two objects*/
-	CCArray* allKeysForObject(CCObject* object);
+    /** @warning : We use '==' to compare two objects*/
+    CCArray* allKeysForObject(CCObject* object);
 
-	CCObject* objectForKey(const CCString& key);
-	CCObject* objectForKey(int key);
-	const CCString* valueForKey(const CCString& key);
-	const CCString* valueForKey(int key);
+    CCObject* objectForKey(const CCString& key);
+    CCObject* objectForKey(int key);
+    const CCString* valueForKey(const CCString& key);
+    const CCString* valueForKey(int key);
 
 
-	void setObject(CCObject* pObject, const CCString& key);
-	void setObject(CCObject* pObject, int key);
+    void setObject(CCObject* pObject, const CCString& key);
+    void setObject(CCObject* pObject, int key);
 
-	void removeObjectForKey(const CCString& key);
-	void removeObjectForKey(int key);
-	void removeObjectsForKeys(CCArray* pKeyArray);
-	void removeObjectForElememt(CCDictElement* pElement);
-	void removeAllObjects();
+    void removeObjectForKey(const CCString& key);
+    void removeObjectForKey(int key);
+    void removeObjectsForKeys(CCArray* pKeyArray);
+    void removeObjectForElememt(CCDictElement* pElement);
+    void removeAllObjects();
 
-	virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual CCObject* copyWithZone(CCZone* pZone);
 
-	static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
+    static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
     /**
     @brief   Generate a CCDictionary pointer by file
     @param   pFileName  The file name of *.plist file
@@ -143,28 +143,28 @@ public:
     */
     static CCDictionary* dictionaryWithContentsOfFile(const char *pFileName);
 
-	/*
-	@brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the
-	       invoker should call release().
-	*/
-	static CCDictionary* dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
+    /*
+    @brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the
+           invoker should call release().
+    */
+    static CCDictionary* dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
 
 private:
-	void setObjectUnSafe(CCObject* pObject, const CCString& key);
-	void setObjectUnSafe(CCObject* pObject, const int key);
-	
+    void setObjectUnSafe(CCObject* pObject, const CCString& key);
+    void setObjectUnSafe(CCObject* pObject, const int key);
+    
 public:
-	CCDictElement* m_pElements;
+    CCDictElement* m_pElements;
 private:
-	
-	enum CCDictType
-	{
-		kCCDictUnknown = 0,
-		kCCDictStr,
-		kCCDictInt
-	};
-	CCDictType m_eDictType;
-	CCDictType m_eOldDictType;
+    
+    enum CCDictType
+    {
+        kCCDictUnknown = 0,
+        kCCDictStr,
+        kCCDictInt
+    };
+    CCDictType m_eDictType;
+    CCDictType m_eOldDictType;
 };
 
 NS_CC_END

@@ -40,32 +40,32 @@ class CCGLProgram;
 class CC_DLL CCShaderCache : public CCObject 
 {
 public:
-	CCShaderCache();
+    CCShaderCache();
 
-	virtual ~CCShaderCache();
-	/** returns the shared instance */
-	static CCShaderCache* sharedShaderCache();
+    virtual ~CCShaderCache();
+    /** returns the shared instance */
+    static CCShaderCache* sharedShaderCache();
 
-	/** purges the cache. It releases the retained instance. */
-	static void purgeSharedShaderCache();
+    /** purges the cache. It releases the retained instance. */
+    static void purgeSharedShaderCache();
 
-	/** loads the default shaders */
-	void loadDefaultShaders();
+    /** loads the default shaders */
+    void loadDefaultShaders();
     
     /** reload the default shaders */
     void reloadDefaultShaders();
 
-	/** returns a GL program for a given key */
-	CCGLProgram * programForKey(const char* key);
+    /** returns a GL program for a given key */
+    CCGLProgram * programForKey(const char* key);
 
-	/** adds a CCGLProgram to the cache for a given name */
-	void addProgram(CCGLProgram* program, const char* key);
+    /** adds a CCGLProgram to the cache for a given name */
+    void addProgram(CCGLProgram* program, const char* key);
 
 private:
-	bool init();
+    bool init();
     void loadDefaultShader(CCGLProgram *program, int type);
 
-	CCDictionary* m_pPrograms;
+    CCDictionary* m_pPrograms;
 
 };
 

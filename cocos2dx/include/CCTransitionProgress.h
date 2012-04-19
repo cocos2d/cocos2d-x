@@ -46,9 +46,9 @@ protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
     virtual void setupTransition();
     virtual void sceneOrder();
-	float to_;
+    float to_;
     float from_;
-	CCScene* sceneToBeModified_;
+    CCScene* sceneToBeModified_;
 };
 
 

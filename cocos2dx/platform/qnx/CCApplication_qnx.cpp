@@ -36,47 +36,47 @@ CCApplication::~CCApplication()
 
 int CCApplication::run()
 {
-	struct timespec time_struct;
-	long current_time, update_time;
+    struct timespec time_struct;
+    long current_time, update_time;
 
-	// Initialize instance and cocos2d.
-	if (!initInstance() || !applicationDidFinishLaunching())
-	{
-		return 0;
-	}
+    // Initialize instance and cocos2d.
+    if (!initInstance() || !applicationDidFinishLaunching())
+    {
+        return 0;
+    }
 
-	clock_gettime(CLOCK_REALTIME, &time_struct);
-	update_time = time2millis(&time_struct);
+    clock_gettime(CLOCK_REALTIME, &time_struct);
+    update_time = time2millis(&time_struct);
 
 
-	while (1) // or device wants to quit
-	{
-		CCEGLView::sharedOpenGLView().HandleEvents();
+    while (1) // or device wants to quit
+    {
+        CCEGLView::sharedOpenGLView().HandleEvents();
 
-		clock_gettime(CLOCK_REALTIME, &time_struct);
-		current_time = time2millis(&time_struct);
+        clock_gettime(CLOCK_REALTIME, &time_struct);
+        current_time = time2millis(&time_struct);
 
-		if ((current_time - update_time) > m_animationInterval)
-		{
-			update_time = current_time;
+        if ((current_time - update_time) > m_animationInterval)
+        {
+            update_time = current_time;
 
-			CCDirector* pDirector = CCDirector::sharedDirector();
-			pDirector->getAccelerometer()->update(current_time);
-			pDirector->mainLoop();
-		}
-		else
-		{
-//			sleep(0);
-		}
-	}
-	
-	return -1;
+            CCDirector* pDirector = CCDirector::sharedDirector();
+            pDirector->getAccelerometer()->update(current_time);
+            pDirector->mainLoop();
+        }
+        else
+        {
+//            sleep(0);
+        }
+    }
+    
+    return -1;
 }
 
 void CCApplication::setAnimationInterval(double interval)
 {
-	// interval in milliseconds
-	m_animationInterval = (long)(interval * 1000);
+    // interval in milliseconds
+    m_animationInterval = (long)(interval * 1000);
 }
 
 CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
@@ -104,42 +104,42 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-	ccLanguageType ret_language = kLanguageEnglish;
-	char *language, *country;
+    ccLanguageType ret_language = kLanguageEnglish;
+    char *language, *country;
 
-	locale_get(&language, &country);
+    locale_get(&language, &country);
 
-	if (strcmp(language, "en") == 0)
-	{
-		ret_language = kLanguageEnglish;
-	}
-	else if (strcmp(language, "fr") == 0)
-	{
-		ret_language = kLanguageFrench;
-	}
-	else if (strcmp(language, "de") == 0)
-	{
-		ret_language = kLanguageGerman;
-	}
-	else if (strcmp(language, "it") == 0)
-	{
-		ret_language = kLanguageItalian;
-	}
-	else if (strcmp(language, "es") == 0)
-	{
-		ret_language = kLanguageSpanish;
-	}
-	else if (strcmp(language, "ch") == 0)
-	{
-		ret_language = kLanguageChinese;
-	}
-	else if (strcmp(language, "ru") == 0)
-	{
-		ret_language = kLanguageRussian;
-	}
+    if (strcmp(language, "en") == 0)
+    {
+        ret_language = kLanguageEnglish;
+    }
+    else if (strcmp(language, "fr") == 0)
+    {
+        ret_language = kLanguageFrench;
+    }
+    else if (strcmp(language, "de") == 0)
+    {
+        ret_language = kLanguageGerman;
+    }
+    else if (strcmp(language, "it") == 0)
+    {
+        ret_language = kLanguageItalian;
+    }
+    else if (strcmp(language, "es") == 0)
+    {
+        ret_language = kLanguageSpanish;
+    }
+    else if (strcmp(language, "ch") == 0)
+    {
+        ret_language = kLanguageChinese;
+    }
+    else if (strcmp(language, "ru") == 0)
+    {
+        ret_language = kLanguageRussian;
+    }
 
-	free(language);
-	free(country);
+    free(language);
+    free(country);
 
     return ret_language;
 }

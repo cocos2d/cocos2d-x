@@ -7,7 +7,7 @@
 class CurrentLanguageTest : public CCLayer
 {
 public:
-	CurrentLanguageTest();
+    CurrentLanguageTest();
 };
 
 class CurrentLanguageTestScene : public TestScene

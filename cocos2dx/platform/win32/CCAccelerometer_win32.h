@@ -36,10 +36,10 @@ public:
     ~CCAccelerometer();
 
     void setDelegate(CCAccelerometerDelegate* pDelegate);
-	void update( double x,double y,double z,double timestamp );
+    void update( double x,double y,double z,double timestamp );
 private:
     CCAcceleration m_obAccelerationValue;
-	CCAccelerometerDelegate* m_pAccelDelegate;
+    CCAccelerometerDelegate* m_pAccelDelegate;
 };
 
 NS_CC_END

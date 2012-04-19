@@ -32,8 +32,8 @@ NS_CC_BEGIN
 
 CCScene::CCScene()
 {
-	m_bIsRelativeAnchorPoint = false;
-	setAnchorPoint(ccp(0.5f, 0.5f));
+    m_bIsRelativeAnchorPoint = false;
+    setAnchorPoint(ccp(0.5f, 0.5f));
 }
 
 CCScene::~CCScene()
@@ -42,30 +42,30 @@ CCScene::~CCScene()
 
 bool CCScene::init()
 {
-	bool bRet = false;
- 	do 
- 	{
- 		CCDirector * pDirector;
- 		CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
- 		this->setContentSize(pDirector->getWinSize());
- 		// success
- 		bRet = true;
- 	} while (0);
- 	return bRet;
+    bool bRet = false;
+     do 
+     {
+         CCDirector * pDirector;
+         CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
+         this->setContentSize(pDirector->getWinSize());
+         // success
+         bRet = true;
+     } while (0);
+     return bRet;
 }
 
 CCScene *CCScene::node()
 {
-	CCScene *pRet = new CCScene();
-	if (pRet && pRet->init())
-	{
-		pRet->autorelease();
-		return pRet;
-	}
+    CCScene *pRet = new CCScene();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
     else
     {
-	    CC_SAFE_DELETE(pRet);
-	    return NULL;
+        CC_SAFE_DELETE(pRet);
+        return NULL;
     }
 }
 

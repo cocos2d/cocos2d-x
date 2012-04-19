@@ -37,7 +37,7 @@ typedef struct
 } CCIMEKeyboardNotificationInfo;
 
 /**
-@brief	Input method editor delegate.
+@brief    Input method editor delegate.
 */
 class CC_DLL CCIMEDelegate
 {
@@ -51,38 +51,38 @@ protected:
     friend class CCIMEDispatcher;
 
     /**
-    @brief	Decide the delegate instance is ready for receive ime message or not.
+    @brief    Decide the delegate instance is ready for receive ime message or not.
 
     Called by CCIMEDispatcher.
     */
     virtual bool canAttachWithIME() { return false; }
     /**
-    @brief	When the delegate detach with IME, this method call by CCIMEDispatcher.
+    @brief    When the delegate detach with IME, this method call by CCIMEDispatcher.
     */
     virtual void didAttachWithIME() {}
 
     /**
-    @brief	Decide the delegate instance can stop receive ime message or not.
+    @brief    Decide the delegate instance can stop receive ime message or not.
     */
     virtual bool canDetachWithIME() { return false; }
 
     /**
-    @brief	When the delegate detach with IME, this method call by CCIMEDispatcher.
+    @brief    When the delegate detach with IME, this method call by CCIMEDispatcher.
     */
     virtual void didDetachWithIME() {}
 
     /**
-    @brief	Called by CCIMEDispatcher when some text input from IME.
+    @brief    Called by CCIMEDispatcher when some text input from IME.
     */
     virtual void insertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
     /**
-    @brief	Called by CCIMEDispatcher when user clicked the backward key.
+    @brief    Called by CCIMEDispatcher when user clicked the backward key.
     */
     virtual void deleteBackward() {}
 
     /**
-    @brief	Called by CCIMEDispatcher for get text which delegate already has.
+    @brief    Called by CCIMEDispatcher for get text which delegate already has.
     */
     virtual const char * getContentText() { return 0; }
 
@@ -100,4 +100,4 @@ protected:
 
 NS_CC_END
 
-#endif	// __CC_IME_DELEGATE_H__
+#endif    // __CC_IME_DELEGATE_H__

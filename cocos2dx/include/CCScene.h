@@ -44,10 +44,10 @@ It is a good practice to use and CCScene as the parent of all your nodes.
 class CC_DLL CCScene : public CCNode
 {
 public:
-	CCScene();
-	virtual ~CCScene();
-	bool init();
-	static CCScene *node(void);
+    CCScene();
+    virtual ~CCScene();
+    bool init();
+    static CCScene *node(void);
 };
 
 NS_CC_END
@@ -56,33 +56,33 @@ NS_CC_END
 #define SCENE_NODE_FUNC(scene) \
 static scene* node() \
 { \
-	scene *pRet = new scene(); \
-	if (pRet && pRet->init()) \
-	{ \
-		pRet->autorelease(); \
-		return pRet; \
-	} \
-	else \
-	{ \
-		delete pRet; \
-		pRet = NULL; \
-		return NULL; \
-	} \
+    scene *pRet = new scene(); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
 }; 
 
 #define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
-	static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
+    static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
     { \
-	    cocos2d::CCScene * scene = NULL; \
-	    do  \
+        cocos2d::CCScene * scene = NULL; \
+        do  \
         { \
-	        scene = cocos2d::CCScene::node(); \
-	        CC_BREAK_IF(! scene); \
-	        __TYPE__ *layer = __TYPE__::node(__PARAM__); \
-	        CC_BREAK_IF(! layer); \
-	        scene->addChild(layer); \
+            scene = cocos2d::CCScene::node(); \
+            CC_BREAK_IF(! scene); \
+            __TYPE__ *layer = __TYPE__::node(__PARAM__); \
+            CC_BREAK_IF(! layer); \
+            scene->addChild(layer); \
         } while (0); \
-	    return scene; \
+        return scene; \
     }
 
 

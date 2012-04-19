@@ -43,8 +43,8 @@ CCEGLView::~CCEGLView()
 
 cocos2d::CCSize  CCEGLView::getSize()
 {
-	cocos2d::CCSize size([[EAGLView sharedEGLView] getWidth], [[EAGLView sharedEGLView] getHeight]);
-	return size;
+    cocos2d::CCSize size([[EAGLView sharedEGLView] getWidth], [[EAGLView sharedEGLView] getHeight]);
+    return size;
 }
 
 bool CCEGLView::isIpad()
@@ -71,10 +71,10 @@ bool CCEGLView::isOpenGLReady()
 
 void CCEGLView::release()
 {
-	[CCDirectorCaller destroy];
-	
-	// destroy EAGLView
-	[[EAGLView sharedEGLView] removeFromSuperview];
+    [CCDirectorCaller destroy];
+    
+    // destroy EAGLView
+    [[EAGLView sharedEGLView] removeFromSuperview];
 }
 
 void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
@@ -84,35 +84,35 @@ void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 
 void CCEGLView::swapBuffers()
 {
-	[[EAGLView sharedEGLView] swapBuffers];
+    [[EAGLView sharedEGLView] swapBuffers];
 }
-	
+    
 void CCEGLView::touchesBegan(CCSet *set)
 {
-	if (m_pDelegate) {
-		m_pDelegate->touchesBegan(set, NULL);
-	}
+    if (m_pDelegate) {
+        m_pDelegate->touchesBegan(set, NULL);
+    }
 }
 
 void CCEGLView::touchesMoved(CCSet *set)
 {
-	if (m_pDelegate) {
-		m_pDelegate->touchesMoved(set, NULL);
-	}
+    if (m_pDelegate) {
+        m_pDelegate->touchesMoved(set, NULL);
+    }
 }
 
 void CCEGLView::touchesEnded(CCSet *set)
 {
-	if (m_pDelegate) {
-		m_pDelegate->touchesEnded(set, NULL);
-	}
+    if (m_pDelegate) {
+        m_pDelegate->touchesEnded(set, NULL);
+    }
 }
 
 void CCEGLView::touchesCancelled(CCSet *set)
 {
-	if (m_pDelegate) {
-		m_pDelegate->touchesCancelled(set, NULL);
-	}
+    if (m_pDelegate) {
+        m_pDelegate->touchesCancelled(set, NULL);
+    }
 }
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)

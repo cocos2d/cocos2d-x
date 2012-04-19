@@ -48,7 +48,7 @@ public:
 
 private:
     CCPoint m_point;
-    CCPoint	m_prevPoint;
+    CCPoint    m_prevPoint;
 };
 
 class CCEvent : public CCObject

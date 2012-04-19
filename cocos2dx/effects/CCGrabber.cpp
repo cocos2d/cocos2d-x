@@ -30,104 +30,104 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 CCGrabber::CCGrabber(void)
-	: m_fbo(0)
-	, m_oldFBO(0)
+    : m_fbo(0)
+    , m_oldFBO(0)
 {
-	memset(m_oldClearColor, 0, sizeof(m_oldClearColor));
-	m_eGlesVersion = CCConfiguration::sharedConfiguration()->getGlesVersion();
+    memset(m_oldClearColor, 0, sizeof(m_oldClearColor));
+    m_eGlesVersion = CCConfiguration::sharedConfiguration()->getGlesVersion();
 
-	// If the gles version is lower than GLES_VER_2_0, 
-	// all the functions in CCGrabber return directly.
-	if (m_eGlesVersion < GLES_VER_2_0)
-	{
-		return ;
-	}
+    // If the gles version is lower than GLES_VER_2_0, 
+    // all the functions in CCGrabber return directly.
+    if (m_eGlesVersion < GLES_VER_2_0)
+    {
+        return ;
+    }
 
-	// generate FBO
-	glGenFramebuffers(1, &m_fbo);
+    // generate FBO
+    glGenFramebuffers(1, &m_fbo);
 }
 
 void CCGrabber::grab(CCTexture2D *pTexture)
 {
-	// If the gles version is lower than GLES_VER_2_0, 
-	// all the functions in CCGrabber return directly.
-	if (m_eGlesVersion < GLES_VER_2_0)
-	{
-		return ;
-	}
+    // If the gles version is lower than GLES_VER_2_0, 
+    // all the functions in CCGrabber return directly.
+    if (m_eGlesVersion < GLES_VER_2_0)
+    {
+        return ;
+    }
 
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
-	// bind
-	glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    // bind
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
-	// associate texture with FBO
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pTexture->getName(), 0);
+    // associate texture with FBO
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pTexture->getName(), 0);
 
-	// check if it worked (probably worth doing :) )
-	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-	if (status != GL_FRAMEBUFFER_COMPLETE)
-	{
-		CCLOG("Frame Grabber: could not attach texture to frmaebuffer");
-	}
+    // check if it worked (probably worth doing :) )
+    GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE)
+    {
+        CCLOG("Frame Grabber: could not attach texture to frmaebuffer");
+    }
 
-	glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
 }
 
 void CCGrabber::beforeRender(CCTexture2D *pTexture)
 {
     CC_UNUSED_PARAM(pTexture);
-	// If the gles version is lower than GLES_VER_2_0, 
-	// all the functions in CCGrabber return directly.
-	if (m_eGlesVersion < GLES_VER_2_0)
-	{
-		return ;
-	}
+    // If the gles version is lower than GLES_VER_2_0, 
+    // all the functions in CCGrabber return directly.
+    if (m_eGlesVersion < GLES_VER_2_0)
+    {
+        return ;
+    }
 
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-	// save clear color
-	glGetFloatv(GL_COLOR_CLEAR_VALUE, m_oldClearColor);
-	// BUG XXX: doesn't work with RGB565.
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    // save clear color
+    glGetFloatv(GL_COLOR_CLEAR_VALUE, m_oldClearColor);
+    // BUG XXX: doesn't work with RGB565.
 
-	/*glClearColor(0, 0, 0, 0);*/
+    /*glClearColor(0, 0, 0, 0);*/
 
-	// BUG #631: To fix #631, uncomment the lines with #631
-	// Warning: But it CCGrabber won't work with 2 effects at the same time
-	glClearColor(0.0f,0.0f,0.0f,1.0f);	// #631
+    // BUG #631: To fix #631, uncomment the lines with #631
+    // Warning: But it CCGrabber won't work with 2 effects at the same time
+    glClearColor(0.0f,0.0f,0.0f,1.0f);    // #631
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glColorMask(true, true, true, false);	// #631
+    glColorMask(true, true, true, false);    // #631
 }
 
 void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
 {
     CC_UNUSED_PARAM(pTexture);
-	// If the gles version is lower than GLES_VER_2_0, 
-	// all the functions in CCGrabber return directly.
-	if (m_eGlesVersion < GLES_VER_2_0)
-	{
-		return ;
-	}
+    // If the gles version is lower than GLES_VER_2_0, 
+    // all the functions in CCGrabber return directly.
+    if (m_eGlesVersion < GLES_VER_2_0)
+    {
+        return ;
+    }
 
-	glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
-	glColorMask(true, true, true, true);	// #631
-	// Restore clear color
-	glClearColor( m_oldClearColor[0], m_oldClearColor[1], m_oldClearColor[2], m_oldClearColor[3] );
+    glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
+    glColorMask(true, true, true, true);    // #631
+    // Restore clear color
+    glClearColor( m_oldClearColor[0], m_oldClearColor[1], m_oldClearColor[2], m_oldClearColor[3] );
 }
 
 CCGrabber::~CCGrabber()
 {
-	// If the gles version is lower than GLES_VER_2_0, 
-	// all the functions in CCGrabber return directly.
-	if (m_eGlesVersion < GLES_VER_2_0)
-	{
-		return ;
-	}
+    // If the gles version is lower than GLES_VER_2_0, 
+    // all the functions in CCGrabber return directly.
+    if (m_eGlesVersion < GLES_VER_2_0)
+    {
+        return ;
+    }
 
-	CCLOGINFO("cocos2d: deallocing %p", this);
-	glDeleteFramebuffers(1, &m_fbo);
+    CCLOGINFO("cocos2d: deallocing %p", this);
+    glDeleteFramebuffers(1, &m_fbo);
 }
 
 NS_CC_END

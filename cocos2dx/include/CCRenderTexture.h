@@ -34,8 +34,8 @@ NS_CC_BEGIN
 
 typedef enum eImageFormat
 {
-	kCCImageFormatJPEG      = 0,
-	kCCImageFormatPNG       = 1,
+    kCCImageFormatJPEG      = 0,
+    kCCImageFormatPNG       = 1,
 } tCCImageFormat;
 /**
 @brief CCRenderTexture is a generic rendering target. To render things into it,
@@ -54,10 +54,10 @@ class CC_DLL CCRenderTexture : public CCNode
     The blending function can be changed in runtime by calling:
     - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
     */
-	CC_PROPERTY(CCSprite*, m_pSprite, Sprite)
+    CC_PROPERTY(CCSprite*, m_pSprite, Sprite)
 public:
-	CCRenderTexture();
-	virtual ~CCRenderTexture();
+    CCRenderTexture();
+    virtual ~CCRenderTexture();
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
     static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
 
@@ -68,7 +68,7 @@ public:
     bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
 
     /** starts grabbing */
-	void begin();
+    void begin();
 
     /** starts rendering to the texture while clearing the texture first.
     This is more efficient then calling -clear first and then -begin */
@@ -76,36 +76,36 @@ public:
 
     
     /** end is key word of lua, use other name to export to lua. */
-	inline void endToLua(){ end();};
+    inline void endToLua(){ end();};
 
-	/** ends grabbing*/
-	// para bIsTOCacheTexture       the parameter is only used for android to cache the texture
-	void end(bool bIsTOCacheTexture = true);
+    /** ends grabbing*/
+    // para bIsTOCacheTexture       the parameter is only used for android to cache the texture
+    void end(bool bIsTOCacheTexture = true);
 
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
 
-	/* creates a new CCImage from with the texture's data.
+    /* creates a new CCImage from with the texture's data.
        Caller is responsible for releasing it by calling delete.
      */
     CCImage* newCCImage();
 
-	/** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
+    /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
-	bool saveToFile(const char *szFilePath);
+    bool saveToFile(const char *szFilePath);
 
-	/** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
+    /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
-	bool saveToFile(const char *name, tCCImageFormat format);
+    bool saveToFile(const char *name, tCCImageFormat format);
 
 protected:
-	GLuint				m_uFBO;
-	GLint				m_nOldFBO;
-	CCTexture2D			*m_pTexture;
-	CCImage				*m_pUITextureImage;
-    GLenum				m_ePixelFormat;
+    GLuint                m_uFBO;
+    GLint                m_nOldFBO;
+    CCTexture2D            *m_pTexture;
+    CCImage                *m_pUITextureImage;
+    GLenum                m_ePixelFormat;
 };
 
 NS_CC_END

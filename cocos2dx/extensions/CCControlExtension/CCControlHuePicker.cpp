@@ -40,49 +40,49 @@ CCControlHuePicker::~CCControlHuePicker()
     
 CCControlHuePicker* CCControlHuePicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
 {
-	CCControlHuePicker *pRet = new CCControlHuePicker();
-	pRet->initWithTargetAndPos(target, pos);
-	pRet->autorelease();
-	return pRet;
+    CCControlHuePicker *pRet = new CCControlHuePicker();
+    pRet->initWithTargetAndPos(target, pos);
+    pRet->autorelease();
+    return pRet;
 }
 
 
 bool CCControlHuePicker::initWithTargetAndPos(CCNode* target, CCPoint pos)
 {
-	if (CCControl::init())
+    if (CCControl::init())
     {
-		setIsTouchEnabled(true);
+        setIsTouchEnabled(true);
         // Add background and slider sprites
-		m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, ccp(0.0f, 0.0f));
-		m_slider=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, ccp(0.5f, 0.5f));
-		
-		m_slider->setPosition(ccp(pos.x, pos.y + m_background->boundingBox().size.height * 0.5f));
-		m_startPos=pos;
+        m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, ccp(0.0f, 0.0f));
+        m_slider=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, ccp(0.5f, 0.5f));
+        
+        m_slider->setPosition(ccp(pos.x, pos.y + m_background->boundingBox().size.height * 0.5f));
+        m_startPos=pos;
 
         // Sets the default value
         m_hue=0.0f;
-		m_huePercentage=0.0f;
-		return true;
+        m_huePercentage=0.0f;
+        return true;
     }
-	else
-		return false;
+    else
+        return false;
 }
 
 void CCControlHuePicker::setHue(float hueValue)
 {
-	m_hue=hueValue;
-	setHuePercentage(m_hue/360.0f);
+    m_hue=hueValue;
+    setHuePercentage(m_hue/360.0f);
 }
 
 void CCControlHuePicker::setHuePercentage(float hueValueInPercent)
 {
-	m_huePercentage=hueValueInPercent;
-	m_hue=m_huePercentage*360.0f;
+    m_huePercentage=hueValueInPercent;
+    m_hue=m_huePercentage*360.0f;
 
     // Clamp the position of the icon within the circle
-	CCRect backgroundBox=m_background->boundingBox();
+    CCRect backgroundBox=m_background->boundingBox();
 
-	// Get the center point of the background image
+    // Get the center point of the background image
     float centerX           = m_startPos.x + backgroundBox.size.width * 0.5f;
     float centerY           = m_startPos.y + backgroundBox.size.height * 0.5f;
     
@@ -96,7 +96,7 @@ void CCControlHuePicker::setHuePercentage(float hueValueInPercent)
     // Set new position of the slider
     float x                 = centerX + limit * cosf(angle);
     float y                 = centerY + limit * sinf(angle);
-	m_slider->setPosition(ccp(x, y));
+    m_slider->setPosition(ccp(x, y));
 
 }
 
@@ -104,7 +104,7 @@ void CCControlHuePicker::updateSliderPosition(CCPoint location)
 {
 
     // Clamp the position of the icon within the circle
-	CCRect backgroundBox=m_background->boundingBox();
+    CCRect backgroundBox=m_background->boundingBox();
     
     // Get the center point of the background image
     float centerX           = m_startPos.x + backgroundBox.size.width * 0.5f;
@@ -121,25 +121,25 @@ void CCControlHuePicker::updateSliderPosition(CCPoint location)
     // use the position / slider width to determin the percentage the dragger is at
     setHue(angleDeg);
     
-	// send CCControl callback
-	sendActionsForControlEvents(CCControlEventValueChanged);
+    // send CCControl callback
+    sendActionsForControlEvents(CCControlEventValueChanged);
 }
 
 bool CCControlHuePicker::checkSliderPosition(CCPoint location)
 {
-	// check that the touch location is within the bounding rectangle before sending updates
-	if (CCRect::CCRectContainsPoint(m_background->boundingBox(), location))
-    {		
-		updateSliderPosition(location);
-		return true;
+    // check that the touch location is within the bounding rectangle before sending updates
+    if (CCRect::CCRectContainsPoint(m_background->boundingBox(), location))
+    {        
+        updateSliderPosition(location);
+        return true;
     }
-	return false;
+    return false;
 }
 
 bool CCControlHuePicker::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-	// Get the touch location
-	CCPoint touchLocation=getTouchLocation(touch);
+    // Get the touch location
+    CCPoint touchLocation=getTouchLocation(touch);
 
     // Check the touch position on the slider
     return checkSliderPosition(touchLocation);
@@ -148,12 +148,12 @@ bool CCControlHuePicker::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void CCControlHuePicker::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-	// Get the touch location
-	CCPoint touchLocation=getTouchLocation(touch);
+    // Get the touch location
+    CCPoint touchLocation=getTouchLocation(touch);
 
-	//small modification: this allows changing of the colour, even if the touch leaves the bounding area
-	updateSliderPosition(touchLocation);
-	sendActionsForControlEvents(CCControlEventValueChanged);
+    //small modification: this allows changing of the colour, even if the touch leaves the bounding area
+    updateSliderPosition(touchLocation);
+    sendActionsForControlEvents(CCControlEventValueChanged);
     // Check the touch position on the slider
     //checkSliderPosition(touchLocation);
 }

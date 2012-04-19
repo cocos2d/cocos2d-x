@@ -5,33 +5,33 @@
 #include "SkTagList.h"
 
 struct Layout_SkTagList : SkTagList {
-	SkView::Layout*	fLayout;
+    SkView::Layout*    fLayout;
 
-	Layout_SkTagList(SkView::Layout* layout)
-		: SkTagList(kViewLayout_SkTagList), fLayout(layout)
-	{
-		SkASSERT(layout);
-		layout->ref();
-	}
-	virtual ~Layout_SkTagList()
-	{
-		fLayout->unref();
-	}
+    Layout_SkTagList(SkView::Layout* layout)
+        : SkTagList(kViewLayout_SkTagList), fLayout(layout)
+    {
+        SkASSERT(layout);
+        layout->ref();
+    }
+    virtual ~Layout_SkTagList()
+    {
+        fLayout->unref();
+    }
 };
 
 struct Artist_SkTagList : SkTagList {
-	SkView::Artist*	fArtist;
+    SkView::Artist*    fArtist;
 
-	Artist_SkTagList(SkView::Artist* artist)
-		: SkTagList(kViewArtist_SkTagList), fArtist(artist)
-	{
-		SkASSERT(artist);
-		artist->ref();
-	}
-	virtual ~Artist_SkTagList()
-	{
-		fArtist->unref();
-	}
+    Artist_SkTagList(SkView::Artist* artist)
+        : SkTagList(kViewArtist_SkTagList), fArtist(artist)
+    {
+        SkASSERT(artist);
+        artist->ref();
+    }
+    virtual ~Artist_SkTagList()
+    {
+        fArtist->unref();
+    }
 };
 
 #endif

@@ -173,7 +173,7 @@ struct FMOD_DSP_STATE
 {
     FMOD_DSP      *instance;      /* [r] Handle to the DSP hand the user created.  Not to be modified.  C++ users cast to FMOD::DSP to use.  */
     void          *plugindata;    /* [w] Plugin writer created data the output author wants to attach to this object. */
-	unsigned short speakermask;	  /* [w] Specifies which speakers the DSP effect is active on */
+    unsigned short speakermask;      /* [w] Specifies which speakers the DSP effect is active on */
 };
 
 

@@ -21,10 +21,10 @@ CCLayer* CreateLayer(int nIndex)
         pLayer = new ActionScale(); break;
     case ACTION_ROTATE_LAYER:
         pLayer = new ActionRotate(); break;
-	case ACTION_SKEW_LAYER:
-		pLayer = new ActionSkew(); break;
-	case ACTION_SKEWROTATE_LAYER:
-		pLayer = new ActionSkewRotateScale(); break;
+    case ACTION_SKEW_LAYER:
+        pLayer = new ActionSkew(); break;
+    case ACTION_SKEWROTATE_LAYER:
+        pLayer = new ActionSkewRotateScale(); break;
     case ACTION_JUMP_LAYER:
         pLayer = new ActionJump(); break;
     case ACTION_BEZIER_LAYER:
@@ -67,18 +67,18 @@ CCLayer* CreateLayer(int nIndex)
         pLayer = new ActionOrbit(); break;
     case ACTION_FLLOW_LAYER:
         pLayer = new ActionFollow(); break;
-	case ACTION_TARGETED_LAYER:
-		pLayer = new ActionTargeted(); break;
-	case ACTION_ISSUE1305_LAYER:
-		pLayer = new Issue1305(); break;
-	case ACTION_ISSUE1305_2_LAYER:
-		pLayer = new Issue1305_2(); break;
-	case ACTION_ISSUE1288_LAYER:
-		pLayer = new Issue1288(); break;
-	case ACTION_ISSUE1288_2_LAYER:
-		pLayer = new Issue1288_2(); break;
-	case ACTION_ISSUE1327_LAYER:
-		pLayer = new Issue1327(); break;
+    case ACTION_TARGETED_LAYER:
+        pLayer = new ActionTargeted(); break;
+    case ACTION_ISSUE1305_LAYER:
+        pLayer = new Issue1305(); break;
+    case ACTION_ISSUE1305_2_LAYER:
+        pLayer = new Issue1305_2(); break;
+    case ACTION_ISSUE1288_LAYER:
+        pLayer = new Issue1288(); break;
+    case ACTION_ISSUE1288_2_LAYER:
+        pLayer = new Issue1288_2(); break;
+    case ACTION_ISSUE1327_LAYER:
+        pLayer = new Issue1327(); break;
     default:
         break;
     }
@@ -101,7 +101,7 @@ CCLayer* BackAction()
 {
     --s_nActionIdx;
     if( s_nActionIdx < 0 )
-        s_nActionIdx += ACTION_LAYER_COUNT;	
+        s_nActionIdx += ACTION_LAYER_COUNT;    
 
     CCLayer* pLayer = CreateLayer(s_nActionIdx);
     pLayer->autorelease();
@@ -174,7 +174,7 @@ void ActionsDemo::onEnter()
         CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
         addChild(l, 1);
         l->setPosition( CCPointMake(s.width/2, s.height - 60) );
-    }	
+    }    
 
     // add menu
     CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionsDemo::backCallback) );
@@ -228,20 +228,20 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	if( numberOfSprites == 0 )
-	{
-		m_tamara->setIsVisible(false);
-		m_kathia->setIsVisible(false);
-		m_grossini->setIsVisible(false);
-	} 
-	else if ( numberOfSprites == 1 ) 
+    if( numberOfSprites == 0 )
+    {
+        m_tamara->setIsVisible(false);
+        m_kathia->setIsVisible(false);
+        m_grossini->setIsVisible(false);
+    } 
+    else if ( numberOfSprites == 1 ) 
     {
         m_tamara->setIsVisible(false);
         m_kathia->setIsVisible(false);
         m_grossini->setPosition(CCPointMake(s.width/2, s.height/2));
     }
     else if( numberOfSprites == 2 ) 
-    {		
+    {        
         m_kathia->setPosition( CCPointMake(s.width/3, s.height/2));
         m_tamara->setPosition( CCPointMake(2*s.width/3, s.height/2));
         m_grossini->setIsVisible(false);
@@ -265,7 +265,7 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
         m_grossini->setPosition(CCPointMake(60, s.height/2));
     } 
     else if( numberOfSprites == 2 ) 
-    {		
+    {        
         m_kathia->setPosition( CCPointMake(60, s.height/3));
         m_tamara->setPosition( CCPointMake(60, 2*s.height/3));
         m_grossini->setIsVisible( false );
@@ -309,7 +309,7 @@ std::string ActionManual::subtitle()
 
 //------------------------------------------------------------------
 //
-//	ActionMove
+//    ActionMove
 //
 //------------------------------------------------------------------
 void ActionMove::onEnter()
@@ -362,82 +362,82 @@ std::string ActionScale::subtitle()
 
 //------------------------------------------------------------------
 //
-//	ActionSkew
+//    ActionSkew
 //
 //------------------------------------------------------------------
 void ActionSkew::onEnter()
 {
-	ActionsDemo::onEnter();
+    ActionsDemo::onEnter();
 
-	centerSprites(3);
+    centerSprites(3);
 
-	CCActionInterval *actionTo = CCSkewTo::actionWithDuration(2, 37.2f, -37.2f);
-	CCActionInterval *actionToBack = CCSkewTo::actionWithDuration(2, 0, 0);
-	CCActionInterval *actionBy = CCSkewBy::actionWithDuration(2, 0.0f, -90.0f);
-	CCActionInterval *actionBy2 = CCSkewBy::actionWithDuration(2, 45.0f, 45.0f);
-	CCActionInterval *actionByBack = actionBy->reverse();
+    CCActionInterval *actionTo = CCSkewTo::actionWithDuration(2, 37.2f, -37.2f);
+    CCActionInterval *actionToBack = CCSkewTo::actionWithDuration(2, 0, 0);
+    CCActionInterval *actionBy = CCSkewBy::actionWithDuration(2, 0.0f, -90.0f);
+    CCActionInterval *actionBy2 = CCSkewBy::actionWithDuration(2, 45.0f, 45.0f);
+    CCActionInterval *actionByBack = actionBy->reverse();
 
-	m_tamara->runAction(CCSequence::actions(actionTo, actionToBack, NULL));
-	m_grossini->runAction(CCSequence::actions(actionBy, actionByBack, NULL));
+    m_tamara->runAction(CCSequence::actions(actionTo, actionToBack, NULL));
+    m_grossini->runAction(CCSequence::actions(actionBy, actionByBack, NULL));
 
-	m_kathia->runAction(CCSequence::actions(actionBy2, actionBy2->reverse(), NULL));
+    m_kathia->runAction(CCSequence::actions(actionBy2, actionBy2->reverse(), NULL));
 }
 
 string ActionSkew::subtitle()
 {
-	return "SkewTo / SkewBy";
+    return "SkewTo / SkewBy";
 }
 
 void ActionSkewRotateScale::onEnter()
 {
     ActionsDemo::onEnter();
 
-	m_tamara->removeFromParentAndCleanup(true);
-	m_grossini->removeFromParentAndCleanup(true);
-	m_kathia->removeFromParentAndCleanup(true);
+    m_tamara->removeFromParentAndCleanup(true);
+    m_grossini->removeFromParentAndCleanup(true);
+    m_kathia->removeFromParentAndCleanup(true);
 
-	CCSize boxSize = CCSizeMake(100.0f, 100.0f);
+    CCSize boxSize = CCSizeMake(100.0f, 100.0f);
 
-	CCLayerColor *box = CCLayerColor::layerWithColor(ccc4(255, 255, 0, 255));
-	box->setAnchorPoint(ccp(0, 0));
-	box->setPosition(ccp(190, 110));
-	box->setContentSize(boxSize);
+    CCLayerColor *box = CCLayerColor::layerWithColor(ccc4(255, 255, 0, 255));
+    box->setAnchorPoint(ccp(0, 0));
+    box->setPosition(ccp(190, 110));
+    box->setContentSize(boxSize);
 
-	static float markrside = 10.0f;
-	CCLayerColor *uL = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255));
-	box->addChild(uL);
-	uL->setContentSize(CCSizeMake(markrside, markrside));
-	uL->setPosition(ccp(0.f, boxSize.height - markrside));
-	uL->setAnchorPoint(ccp(0, 0));
+    static float markrside = 10.0f;
+    CCLayerColor *uL = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255));
+    box->addChild(uL);
+    uL->setContentSize(CCSizeMake(markrside, markrside));
+    uL->setPosition(ccp(0.f, boxSize.height - markrside));
+    uL->setAnchorPoint(ccp(0, 0));
 
-	CCLayerColor *uR = CCLayerColor::layerWithColor(ccc4(0, 0, 255, 255));
-	box->addChild(uR);
-	uR->setContentSize(CCSizeMake(markrside, markrside));
-	uR->setPosition(ccp(boxSize.width - markrside, boxSize.height - markrside));
-	uR->setAnchorPoint(ccp(0, 0));
-	addChild(box);
+    CCLayerColor *uR = CCLayerColor::layerWithColor(ccc4(0, 0, 255, 255));
+    box->addChild(uR);
+    uR->setContentSize(CCSizeMake(markrside, markrside));
+    uR->setPosition(ccp(boxSize.width - markrside, boxSize.height - markrside));
+    uR->setAnchorPoint(ccp(0, 0));
+    addChild(box);
 
-	CCActionInterval *actionTo = CCSkewTo::actionWithDuration(2, 0.f, 2.f);
-	CCActionInterval *rotateTo = CCRotateTo::actionWithDuration(2, 61.0f);
-	CCActionInterval *actionScaleTo = CCScaleTo::actionWithDuration(2, -0.44f, 0.47f);
+    CCActionInterval *actionTo = CCSkewTo::actionWithDuration(2, 0.f, 2.f);
+    CCActionInterval *rotateTo = CCRotateTo::actionWithDuration(2, 61.0f);
+    CCActionInterval *actionScaleTo = CCScaleTo::actionWithDuration(2, -0.44f, 0.47f);
 
-	CCActionInterval *actionScaleToBack = CCScaleTo::actionWithDuration(2, 1.0f, 1.0f);
-	CCActionInterval *rotateToBack = CCRotateTo::actionWithDuration(2, 0);
-	CCActionInterval *actionToBack = CCSkewTo::actionWithDuration(2, 0, 0);
+    CCActionInterval *actionScaleToBack = CCScaleTo::actionWithDuration(2, 1.0f, 1.0f);
+    CCActionInterval *rotateToBack = CCRotateTo::actionWithDuration(2, 0);
+    CCActionInterval *actionToBack = CCSkewTo::actionWithDuration(2, 0, 0);
 
-	box->runAction(CCSequence::actions(actionTo, actionToBack, NULL));
-	box->runAction(CCSequence::actions(rotateTo, rotateToBack, NULL));
-	box->runAction(CCSequence::actions(actionScaleTo, actionScaleToBack, NULL));
+    box->runAction(CCSequence::actions(actionTo, actionToBack, NULL));
+    box->runAction(CCSequence::actions(rotateTo, rotateToBack, NULL));
+    box->runAction(CCSequence::actions(actionScaleTo, actionScaleToBack, NULL));
 }
 
 string ActionSkewRotateScale::subtitle()
 {
-	return "Skew + Rotate + Scale";
+    return "Skew + Rotate + Scale";
 }
 
 //------------------------------------------------------------------
 //
-//	ActionRotate
+//    ActionRotate
 //
 //------------------------------------------------------------------
 void ActionRotate::onEnter()
@@ -513,7 +513,7 @@ void ActionBezier::onEnter()
     bezier.endPosition = CCPointMake(300,100);
 
     CCActionInterval*  bezierForward = CCBezierBy::actionWithDuration(3, bezier);
-    CCActionInterval*  bezierBack = bezierForward->reverse();	
+    CCActionInterval*  bezierBack = bezierForward->reverse();    
     CCAction*  rep = CCRepeatForever::actionWithAction((CCActionInterval*)CCSequence::actions( bezierForward, bezierBack, NULL));
 
 
@@ -524,7 +524,7 @@ void ActionBezier::onEnter()
     bezier2.controlPoint_2 = CCPointMake(200, -s.height/2);
     bezier2.endPosition = CCPointMake(240,160);
 
-    CCActionInterval*  bezierTo1 = CCBezierTo::actionWithDuration(2, bezier2);	
+    CCActionInterval*  bezierTo1 = CCBezierTo::actionWithDuration(2, bezier2);    
 
     // sprite 3
     m_kathia->setPosition(CCPointMake(400,160));
@@ -627,64 +627,64 @@ void ActionAnimate::onEnter()
 
     centerSprites(3);
 
-	//
-	// Manual animation
-	//
-	CCAnimation* animation = CCAnimation::animation();
-	for( int i=1;i<15;i++)
-	{
-		char szName[100] = {0};
-		sprintf(szName, "Images/grossini_dance_%02d.png", i);
-		animation->addSpriteFrameWithFileName(szName);
-	}
-	// should last 2.8 seconds. And there are 14 frames.
-	animation->setDelayPerUnit(2.8f / 14.0f);
-	animation->setRestoreOriginalFrame(true);
+    //
+    // Manual animation
+    //
+    CCAnimation* animation = CCAnimation::animation();
+    for( int i=1;i<15;i++)
+    {
+        char szName[100] = {0};
+        sprintf(szName, "Images/grossini_dance_%02d.png", i);
+        animation->addSpriteFrameWithFileName(szName);
+    }
+    // should last 2.8 seconds. And there are 14 frames.
+    animation->setDelayPerUnit(2.8f / 14.0f);
+    animation->setRestoreOriginalFrame(true);
 
-	CCAnimate* action = CCAnimate::actionWithAnimation(animation);
-	m_grossini->runAction(CCSequence::actions(action, action->reverse(), NULL));
+    CCAnimate* action = CCAnimate::actionWithAnimation(animation);
+    m_grossini->runAction(CCSequence::actions(action, action->reverse(), NULL));
 
 
-	//
-	// File animation
-	//
-	// With 2 loops and reverse
-	CCAnimationCache *cache = CCAnimationCache::sharedAnimationCache();
-	cache->addAnimationsWithFile("animations/animations-2.plist");
-	CCAnimation *animation2 = cache->animationByName("dance_1");
+    //
+    // File animation
+    //
+    // With 2 loops and reverse
+    CCAnimationCache *cache = CCAnimationCache::sharedAnimationCache();
+    cache->addAnimationsWithFile("animations/animations-2.plist");
+    CCAnimation *animation2 = cache->animationByName("dance_1");
 
-	CCAnimate* action2 = CCAnimate::actionWithAnimation(animation2);
-	m_tamara->runAction(CCSequence::actions(action2, action2->reverse(), NULL));
+    CCAnimate* action2 = CCAnimate::actionWithAnimation(animation2);
+    m_tamara->runAction(CCSequence::actions(action2, action2->reverse(), NULL));
 
 // TODO:
-// 	observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:CCAnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
+//     observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:CCAnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
 // 
-// 		NSDictionary *userInfo = [notification userInfo];
-// 		NSLog(@"object %@ with data %@", [notification object], userInfo );
-// 	}];
+//         NSDictionary *userInfo = [notification userInfo];
+//         NSLog(@"object %@ with data %@", [notification object], userInfo );
+//     }];
 
 
-	//
-	// File animation
-	//
-	// with 4 loops
-	CCAnimation *animation3 = (CCAnimation *)animation2->copy()->autorelease();
-	animation3->setLoops(4);
+    //
+    // File animation
+    //
+    // with 4 loops
+    CCAnimation *animation3 = (CCAnimation *)animation2->copy()->autorelease();
+    animation3->setLoops(4);
 
 
-	CCAnimate* action3 = CCAnimate::actionWithAnimation(animation3);
-	m_kathia->runAction(action3);
+    CCAnimate* action3 = CCAnimate::actionWithAnimation(animation3);
+    m_kathia->runAction(action3);
 }
 
 void ActionAnimate::onExit()
 {
-	ActionsDemo::onExit();
-	//TODO:[[NSNotificationCenter defaultCenter] removeObserver:observer_];
+    ActionsDemo::onExit();
+    //TODO:[[NSNotificationCenter defaultCenter] removeObserver:observer_];
 }
 
 std::string ActionAnimate::title()
 {
-	return "Animation";
+    return "Animation";
 }
 
 std::string ActionAnimate::subtitle()
@@ -694,7 +694,7 @@ std::string ActionAnimate::subtitle()
 
 //------------------------------------------------------------------
 //
-//	ActionSequence
+//    ActionSequence
 //
 //------------------------------------------------------------------
 void ActionSequence::onEnter()
@@ -718,7 +718,7 @@ std::string ActionSequence::subtitle()
 
 //------------------------------------------------------------------
 //
-//	ActionSequence2
+//    ActionSequence2
 //
 //------------------------------------------------------------------
 void ActionSequence2::onEnter()
@@ -775,7 +775,7 @@ std::string ActionSequence2::subtitle()
 
 //------------------------------------------------------------------
 //
-//	ActionCallFunc
+//    ActionCallFunc
 //
 //------------------------------------------------------------------
 void ActionCallFunc::onEnter()
@@ -1205,238 +1205,238 @@ std::string ActionFollow::subtitle()
 
 void ActionTargeted::onEnter()
 {
-	ActionsDemo::onEnter();
-	centerSprites(2);
+    ActionsDemo::onEnter();
+    centerSprites(2);
 
 
-	CCJumpBy* jump1 = CCJumpBy::actionWithDuration(2,CCPointZero,100,3);
-	CCJumpBy* jump2 = (CCJumpBy*)jump1->copy()->autorelease();
-	CCRotateBy* rot1 =  CCRotateBy::actionWithDuration(1, 360);
-	CCRotateBy* rot2 = (CCRotateBy*)rot1->copy()->autorelease();
+    CCJumpBy* jump1 = CCJumpBy::actionWithDuration(2,CCPointZero,100,3);
+    CCJumpBy* jump2 = (CCJumpBy*)jump1->copy()->autorelease();
+    CCRotateBy* rot1 =  CCRotateBy::actionWithDuration(1, 360);
+    CCRotateBy* rot2 = (CCRotateBy*)rot1->copy()->autorelease();
 
-	CCTargetedAction *t1 = CCTargetedAction::actionWithTarget(m_kathia, jump2);
-	CCTargetedAction *t2 = CCTargetedAction::actionWithTarget(m_kathia, rot2);
+    CCTargetedAction *t1 = CCTargetedAction::actionWithTarget(m_kathia, jump2);
+    CCTargetedAction *t2 = CCTargetedAction::actionWithTarget(m_kathia, rot2);
 
 
-	CCSequence* seq = (CCSequence*)CCSequence::actions(jump1, t1, rot1, t2, NULL);
-	CCRepeatForever *always = CCRepeatForever::actionWithAction(seq);
+    CCSequence* seq = (CCSequence*)CCSequence::actions(jump1, t1, rot1, t2, NULL);
+    CCRepeatForever *always = CCRepeatForever::actionWithAction(seq);
 
-	m_tamara->runAction(always);
+    m_tamara->runAction(always);
 }
 
 std::string ActionTargeted::title()
 {
-	return "ActionTargeted";
+    return "ActionTargeted";
 }
 
 std::string ActionTargeted::subtitle()
 {
-	return "Action that runs on another target. Useful for sequences";
+    return "Action that runs on another target. Useful for sequences";
 }
 
 void Issue1305::onEnter()
 {
-	ActionsDemo::onEnter();
-	centerSprites(0);
+    ActionsDemo::onEnter();
+    centerSprites(0);
 
-	m_pSpriteTmp = CCSprite::spriteWithFile("Images/grossini.png");
-	/* c++ can't support block, so we use CCCallFuncN instead.
-	[spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
-		NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
-	}] ];
-	*/
+    m_pSpriteTmp = CCSprite::spriteWithFile("Images/grossini.png");
+    /* c++ can't support block, so we use CCCallFuncN instead.
+    [spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
+        NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
+    }] ];
+    */
 
-	m_pSpriteTmp->runAction(CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1305::log)));
-	m_pSpriteTmp->retain();
+    m_pSpriteTmp->runAction(CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1305::log)));
+    m_pSpriteTmp->retain();
 
-	scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
+    scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
 }
 
 void Issue1305::log(CCNode* pSender)
 {
-	CCLog("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
+    CCLog("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
 }
 
 void Issue1305::onExit()
 {
-	m_pSpriteTmp->release();
+    m_pSpriteTmp->release();
 }
 
 void Issue1305::addSprite(ccTime dt)
 {
-	m_pSpriteTmp->setPosition(ccp(250,250));
-	addChild(m_pSpriteTmp);
+    m_pSpriteTmp->setPosition(ccp(250,250));
+    addChild(m_pSpriteTmp);
 }
 
 std::string Issue1305::title()
 {
-	return "Issue 1305";
+    return "Issue 1305";
 }
 
 std::string Issue1305::subtitle()
 {
-	return "In two seconds you should see a message on the console. NOT BEFORE.";
+    return "In two seconds you should see a message on the console. NOT BEFORE.";
 }
 
 void Issue1305_2::onEnter()
 {
-	ActionsDemo::onEnter();
-	centerSprites(0);
+    ActionsDemo::onEnter();
+    centerSprites(0);
 
-	CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
-	spr->setPosition(ccp(200,200));
-	addChild(spr);
+    CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
+    spr->setPosition(ccp(200,200));
+    addChild(spr);
 
-	CCMoveBy* act1 = CCMoveBy::actionWithDuration(2 ,ccp(0, 100));
-	/* c++ can't support block, so we use CCCallFuncN instead.
-	id act2 = [CCCallBlock actionWithBlock:^{
-		NSLog(@"1st block");
-	}];
-	id act3 = [CCMoveBy actionWithDuration:2 position:ccp(0, -100)];
-	id act4 = [CCCallBlock actionWithBlock:^{
-		NSLog(@"2nd block");
-	}];
-	id act5 = [CCMoveBy actionWithDuration:2 position:ccp(100, -100)];
-	id act6 = [CCCallBlock actionWithBlock:^{
-		NSLog(@"3rd block");
-	}];
-	id act7 = [CCMoveBy actionWithDuration:2 position:ccp(-100, 0)];
-	id act8 = [CCCallBlock actionWithBlock:^{
-		NSLog(@"4th block");
-	}];
-	*/
+    CCMoveBy* act1 = CCMoveBy::actionWithDuration(2 ,ccp(0, 100));
+    /* c++ can't support block, so we use CCCallFuncN instead.
+    id act2 = [CCCallBlock actionWithBlock:^{
+        NSLog(@"1st block");
+    }];
+    id act3 = [CCMoveBy actionWithDuration:2 position:ccp(0, -100)];
+    id act4 = [CCCallBlock actionWithBlock:^{
+        NSLog(@"2nd block");
+    }];
+    id act5 = [CCMoveBy actionWithDuration:2 position:ccp(100, -100)];
+    id act6 = [CCCallBlock actionWithBlock:^{
+        NSLog(@"3rd block");
+    }];
+    id act7 = [CCMoveBy actionWithDuration:2 position:ccp(-100, 0)];
+    id act8 = [CCCallBlock actionWithBlock:^{
+        NSLog(@"4th block");
+    }];
+    */
 
-	CCCallFunc* act2 = CCCallFunc::actionWithTarget(this, callfunc_selector(Issue1305_2::log1)) ;
-	CCMoveBy* act3 = CCMoveBy::actionWithDuration(2, ccp(0, -100));
-	CCCallFunc* act4 = CCCallFunc::actionWithTarget(this, callfunc_selector(Issue1305_2::log2)) ;
-	CCMoveBy* act5 = CCMoveBy::actionWithDuration(2, ccp(100, -100));
-	CCCallFunc* act6 = CCCallFunc::actionWithTarget(this, callfunc_selector(Issue1305_2::log3)) ;
-	CCMoveBy* act7 = CCMoveBy::actionWithDuration(2, ccp(-100, 0));
-	CCCallFunc* act8 = CCCallFunc::actionWithTarget(this, callfunc_selector(Issue1305_2::log4)) ;
+    CCCallFunc* act2 = CCCallFunc::actionWithTarget(this, callfunc_selector(Issue1305_2::log1)) ;
+    CCMoveBy* act3 = CCMoveBy::actionWithDuration(2, ccp(0, -100));
+    CCCallFunc* act4 = CCCallFunc::actionWithTarget(this, callfunc_selector(Issue1305_2::log2)) ;
+    CCMoveBy* act5 = CCMoveBy::actionWithDuration(2, ccp(100, -100));
+    CCCallFunc* act6 = CCCallFunc::actionWithTarget(this, callfunc_selector(Issue1305_2::log3)) ;
+    CCMoveBy* act7 = CCMoveBy::actionWithDuration(2, ccp(-100, 0));
+    CCCallFunc* act8 = CCCallFunc::actionWithTarget(this, callfunc_selector(Issue1305_2::log4)) ;
 
-	CCFiniteTimeAction* actF = CCSequence::actions(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
+    CCFiniteTimeAction* actF = CCSequence::actions(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
 
-	//	[spr runAction:actF];
-	CCDirector::sharedDirector()->getActionManager()->addAction(actF ,spr, false);
+    //    [spr runAction:actF];
+    CCDirector::sharedDirector()->getActionManager()->addAction(actF ,spr, false);
 
 }
 
 void Issue1305_2::log1()
 {
-	CCLog("1st block");
+    CCLog("1st block");
 }
 
 void Issue1305_2::log2()
 {
-	CCLog("2nd block");
+    CCLog("2nd block");
 }
 
 void Issue1305_2::log3()
 {
-	CCLog("3rd block");
+    CCLog("3rd block");
 }
 
 void Issue1305_2::log4()
 {
-	CCLog("4th block");
+    CCLog("4th block");
 }
 
 std::string Issue1305_2::title()
 {
-	return "Issue 1305 #2";
+    return "Issue 1305 #2";
 }
 
 std::string Issue1305_2::subtitle()
 {
-	return "See console. You should only see one message for each block";
+    return "See console. You should only see one message for each block";
 }
 
 void Issue1288::onEnter()
 {
-	ActionsDemo::onEnter();
-	centerSprites(0);
+    ActionsDemo::onEnter();
+    centerSprites(0);
 
-	CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
-	spr->setPosition(ccp(100, 100));
-	addChild(spr);
+    CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
+    spr->setPosition(ccp(100, 100));
+    addChild(spr);
 
-	CCMoveBy* act1 = CCMoveBy::actionWithDuration(0.5, ccp(100, 0));
-	CCMoveBy* act2 = (CCMoveBy*)act1->reverse();
-	CCFiniteTimeAction* act3 = CCSequence::actions(act1, act2, NULL);
-	CCRepeat* act4 = CCRepeat::actionWithAction(act3, 2);
+    CCMoveBy* act1 = CCMoveBy::actionWithDuration(0.5, ccp(100, 0));
+    CCMoveBy* act2 = (CCMoveBy*)act1->reverse();
+    CCFiniteTimeAction* act3 = CCSequence::actions(act1, act2, NULL);
+    CCRepeat* act4 = CCRepeat::actionWithAction(act3, 2);
 
-	spr->runAction(act4);
+    spr->runAction(act4);
 }
 
 std::string Issue1288::title()
 {
-	return "Issue 1288";
+    return "Issue 1288";
 }
 
 std::string Issue1288::subtitle()
 {
-	return "Sprite should end at the position where it started.";
+    return "Sprite should end at the position where it started.";
 }
 
 void Issue1288_2::onEnter()
 {
-	ActionsDemo::onEnter();
-	centerSprites(0);
+    ActionsDemo::onEnter();
+    centerSprites(0);
 
-	CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
-	spr->setPosition(ccp(100, 100));
-	addChild(spr);
+    CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
+    spr->setPosition(ccp(100, 100));
+    addChild(spr);
 
-	CCMoveBy* act1 = CCMoveBy::actionWithDuration(0.5, ccp(100, 0));
-	spr->runAction(CCRepeat::actionWithAction(act1, 1));
+    CCMoveBy* act1 = CCMoveBy::actionWithDuration(0.5, ccp(100, 0));
+    spr->runAction(CCRepeat::actionWithAction(act1, 1));
 }
 
 std::string Issue1288_2::title()
 {
-	return "Issue 1288 #2";
+    return "Issue 1288 #2";
 }
 
 std::string Issue1288_2::subtitle()
 {
-	return "Sprite should move 100 pixels, and stay there";
+    return "Sprite should move 100 pixels, and stay there";
 }
 
 
 void Issue1327::onEnter()
 {
-	ActionsDemo::onEnter();
-	centerSprites(0);
+    ActionsDemo::onEnter();
+    centerSprites(0);
 
-	CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
-	spr->setPosition(ccp(100, 100));
-	addChild(spr);
+    CCSprite *spr = CCSprite::spriteWithFile("Images/grossini.png");
+    spr->setPosition(ccp(100, 100));
+    addChild(spr);
 
-	CCCallFuncN* act1 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
-	CCRotateBy* act2 = CCRotateBy::actionWithDuration(0.25, 45);
-	CCCallFuncN* act3 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
-	CCRotateBy* act4 = CCRotateBy::actionWithDuration(0.25, 45);
-	CCCallFuncN* act5 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
-	CCRotateBy* act6 = CCRotateBy::actionWithDuration(0.25, 45);
-	CCCallFuncN* act7 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
-	CCRotateBy* act8 = CCRotateBy::actionWithDuration(0.25, 45);
-	CCCallFuncN* act9 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCCallFuncN* act1 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCRotateBy* act2 = CCRotateBy::actionWithDuration(0.25, 45);
+    CCCallFuncN* act3 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCRotateBy* act4 = CCRotateBy::actionWithDuration(0.25, 45);
+    CCCallFuncN* act5 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCRotateBy* act6 = CCRotateBy::actionWithDuration(0.25, 45);
+    CCCallFuncN* act7 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
+    CCRotateBy* act8 = CCRotateBy::actionWithDuration(0.25, 45);
+    CCCallFuncN* act9 = CCCallFuncN::actionWithTarget(this, callfuncN_selector(Issue1327::logSprRotation));
 
-	CCFiniteTimeAction* actF = CCSequence::actions(act1, act2, act3, act4, act5, act6, act7, act8, act9, NULL);
-	spr->runAction(actF);
+    CCFiniteTimeAction* actF = CCSequence::actions(act1, act2, act3, act4, act5, act6, act7, act8, act9, NULL);
+    spr->runAction(actF);
 }
 
 std::string Issue1327::title()
 {
-	return "Issue 1327";
+    return "Issue 1327";
 }
 
 std::string Issue1327::subtitle()
 {
-	return "See console: You should see: 0, 45, 90, 135, 180";
+    return "See console: You should see: 0, 45, 90, 135, 180";
 }
 
 void Issue1327::logSprRotation(CCNode* pSender)
 {
-	CCLog("%f", ((CCSprite*)pSender)->getRotation());
+    CCLog("%f", ((CCSprite*)pSender)->getRotation());
 }
 

@@ -16,8 +16,8 @@
 // this is exactly the same as UIAcceleration, but we can modify the member variables
 @interface UIAccelerationSimulation: NSObject
 {
-	NSTimeInterval timestamp;
-	UIAccelerationValue x, y, z;
+    NSTimeInterval timestamp;
+    UIAccelerationValue x, y, z;
 }
 @property(nonatomic, readonly) NSTimeInterval timestamp;
 @property(nonatomic, readonly) UIAccelerationValue x, y, z;
@@ -33,12 +33,12 @@
 @interface AccelerometerSimulation : UIAccelerometer <NSMachPortDelegate>
 {
     
-	//CFSocketRef udpSocket;
-	int udpSocket;
-	NSThread *thread;
-	BOOL isExiting;
-	id<UIAccelerometerDelegate> accelDelegate;
-	UIAccelerationSimulation *accObject;
+    //CFSocketRef udpSocket;
+    int udpSocket;
+    NSThread *thread;
+    BOOL isExiting;
+    id<UIAccelerometerDelegate> accelDelegate;
+    UIAccelerationSimulation *accObject;
     // Threaded notification support 
     NSMutableArray *notifications;
     NSThread *notificationThread;

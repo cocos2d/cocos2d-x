@@ -36,15 +36,15 @@ NS_CC_BEGIN
 class CC_DLL CCThread
 {
 public:
-	CCThread() : m_pAutoreasePool(0) {}
-	~CCThread();
+    CCThread() : m_pAutoreasePool(0) {}
+    ~CCThread();
 
-	void createAutoreleasePool();
+    void createAutoreleasePool();
 
 private:
-	void *m_pAutoreasePool;
+    void *m_pAutoreasePool;
 };
 
 NS_CC_END
 
-#endif	// __CC_PLATFORM_THREAD_H__
+#endif    // __CC_PLATFORM_THREAD_H__

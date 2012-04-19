@@ -20,21 +20,21 @@
  */
 
 /**
-	@defgroup cpSpatialIndex cpSpatialIndex
-	
-	Spatial indexes are data structures that are used to accelerate collision detection
-	and spatial queries. Chipmunk provides a number of spatial index algorithms to pick from
-	and they are programmed in a generic way so that you can use them for holding more than
-	just cpShape structs.
-	
-	It works by using @c void pointers to the objects you add and using a callback to ask your code
-	for bounding boxes when it needs them. Several types of queries can be performed an index as well
-	as reindexing and full collision information. All communication to the spatial indexes is performed
-	through callback functions.
-	
-	Spatial indexes should be treated as opaque structs.
-	This meanns you shouldn't be reading any of the struct fields.
-	@{
+    @defgroup cpSpatialIndex cpSpatialIndex
+    
+    Spatial indexes are data structures that are used to accelerate collision detection
+    and spatial queries. Chipmunk provides a number of spatial index algorithms to pick from
+    and they are programmed in a generic way so that you can use them for holding more than
+    just cpShape structs.
+    
+    It works by using @c void pointers to the objects you add and using a callback to ask your code
+    for bounding boxes when it needs them. Several types of queries can be performed an index as well
+    as reindexing and full collision information. All communication to the spatial indexes is performed
+    through callback functions.
+    
+    Spatial indexes should be treated as opaque structs.
+    This meanns you shouldn't be reading any of the struct fields.
+    @{
 */
 
 //MARK: Spatial Index
@@ -56,11 +56,11 @@ typedef struct cpSpatialIndex cpSpatialIndex;
 
 /// @private
 struct cpSpatialIndex {
-	cpSpatialIndexClass *klass;
-	
-	cpSpatialIndexBBFunc bbfunc;
-	
-	cpSpatialIndex *staticIndex, *dynamicIndex;
+    cpSpatialIndexClass *klass;
+    
+    cpSpatialIndexBBFunc bbfunc;
+    
+    cpSpatialIndex *staticIndex, *dynamicIndex;
 };
 
 
@@ -132,22 +132,22 @@ typedef void (*cpSpatialIndexSegmentQueryImpl)(cpSpatialIndex *index, void *obj,
 typedef void (*cpSpatialIndexQueryImpl)(cpSpatialIndex *index, void *obj, cpBB bb, cpSpatialIndexQueryFunc func, void *data);
 
 struct cpSpatialIndexClass {
-	cpSpatialIndexDestroyImpl destroy;
-	
-	cpSpatialIndexCountImpl count;
-	cpSpatialIndexEachImpl each;
-	
-	cpSpatialIndexContainsImpl contains;
-	cpSpatialIndexInsertImpl insert;
-	cpSpatialIndexRemoveImpl remove;
-	
-	cpSpatialIndexReindexImpl reindex;
-	cpSpatialIndexReindexObjectImpl reindexObject;
-	cpSpatialIndexReindexQueryImpl reindexQuery;
-	
-	cpSpatialIndexPointQueryImpl pointQuery;
-	cpSpatialIndexSegmentQueryImpl segmentQuery;
-	cpSpatialIndexQueryImpl query;
+    cpSpatialIndexDestroyImpl destroy;
+    
+    cpSpatialIndexCountImpl count;
+    cpSpatialIndexEachImpl each;
+    
+    cpSpatialIndexContainsImpl contains;
+    cpSpatialIndexInsertImpl insert;
+    cpSpatialIndexRemoveImpl remove;
+    
+    cpSpatialIndexReindexImpl reindex;
+    cpSpatialIndexReindexObjectImpl reindexObject;
+    cpSpatialIndexReindexQueryImpl reindexQuery;
+    
+    cpSpatialIndexPointQueryImpl pointQuery;
+    cpSpatialIndexSegmentQueryImpl segmentQuery;
+    cpSpatialIndexQueryImpl query;
 };
 
 /// Destroy and free a spatial index.
@@ -158,71 +158,71 @@ void cpSpatialIndexCollideStatic(cpSpatialIndex *dynamicIndex, cpSpatialIndex *s
 /// Destroy a spatial index.
 static inline void cpSpatialIndexDestroy(cpSpatialIndex *index)
 {
-	if(index->klass) index->klass->destroy(index);
+    if(index->klass) index->klass->destroy(index);
 }
 
 /// Get the number of objects in the spatial index.
 static inline int cpSpatialIndexCount(cpSpatialIndex *index)
 {
-	return index->klass->count(index);
+    return index->klass->count(index);
 }
 
 /// Iterate the objects in the spatial index. @c func will be called once for each object.
 static inline void cpSpatialIndexEach(cpSpatialIndex *index, cpSpatialIndexIteratorFunc func, void *data)
 {
-	index->klass->each(index, func, data);
+    index->klass->each(index, func, data);
 }
 
 /// Returns true if the spatial index contains the given object.
 /// Most spatial indexes use hashed storage, so you must provide a hash value too.
 static inline cpBool cpSpatialIndexContains(cpSpatialIndex *index, void *obj, cpHashValue hashid)
 {
-	return index->klass->contains(index, obj, hashid);
+    return index->klass->contains(index, obj, hashid);
 }
 
 /// Add an object to a spatial index.
 /// Most spatial indexes use hashed storage, so you must provide a hash value too.
 static inline void cpSpatialIndexInsert(cpSpatialIndex *index, void *obj, cpHashValue hashid)
 {
-	index->klass->insert(index, obj, hashid);
+    index->klass->insert(index, obj, hashid);
 }
 
 /// Remove an object from a spatial index.
 /// Most spatial indexes use hashed storage, so you must provide a hash value too.
 static inline void cpSpatialIndexRemove(cpSpatialIndex *index, void *obj, cpHashValue hashid)
 {
-	index->klass->remove(index, obj, hashid);
+    index->klass->remove(index, obj, hashid);
 }
 
 /// Perform a full reindex of a spatial index.
 static inline void cpSpatialIndexReindex(cpSpatialIndex *index)
 {
-	index->klass->reindex(index);
+    index->klass->reindex(index);
 }
 
 /// Reindex a single object in the spatial index.
 static inline void cpSpatialIndexReindexObject(cpSpatialIndex *index, void *obj, cpHashValue hashid)
 {
-	index->klass->reindexObject(index, obj, hashid);
+    index->klass->reindexObject(index, obj, hashid);
 }
 
 /// Perform a point query against the spatial index, calling @c func for each potential match.
 /// A pointer to the point will be passed as @c obj1 of @c func.
-static inline	void cpSpatialIndexPointQuery(cpSpatialIndex *index, cpVect point, cpSpatialIndexQueryFunc func, void *data)
+static inline    void cpSpatialIndexPointQuery(cpSpatialIndex *index, cpVect point, cpSpatialIndexQueryFunc func, void *data)
 {
-	index->klass->pointQuery(index, point, func, data);
+    index->klass->pointQuery(index, point, func, data);
 }
 
 /// Perform a segment query against the spatial index, calling @c func for each potential match.
 static inline void cpSpatialIndexSegmentQuery(cpSpatialIndex *index, void *obj, cpVect a, cpVect b, cpFloat t_exit, cpSpatialIndexSegmentQueryFunc func, void *data)
 {
-	index->klass->segmentQuery(index, obj, a, b, t_exit, func, data);
+    index->klass->segmentQuery(index, obj, a, b, t_exit, func, data);
 }
 
 /// Perform a rectangle query against the spatial index, calling @c func for each potential match.
 static inline void cpSpatialIndexQuery(cpSpatialIndex *index, void *obj, cpBB bb, cpSpatialIndexQueryFunc func, void *data)
 {
-	index->klass->query(index, obj, bb, func, data);
+    index->klass->query(index, obj, bb, func, data);
 }
 
 /// Simultaneously reindex and find all colliding objects.
@@ -230,7 +230,7 @@ static inline void cpSpatialIndexQuery(cpSpatialIndex *index, void *obj, cpBB bb
 /// If the spatial index was initialized with a static index, it will collide it's objects against that as well.
 static inline void cpSpatialIndexReindexQuery(cpSpatialIndex *index, cpSpatialIndexQueryFunc func, void *data)
 {
-	index->klass->reindexQuery(index, func, data);
+    index->klass->reindexQuery(index, func, data);
 }
 
 ///@}

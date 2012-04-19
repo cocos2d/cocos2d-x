@@ -19,7 +19,7 @@
  * with updates from Robert Hutchinson.
  */
 
-#include "cdjpeg.h"		/* Common decls for cjpeg/djpeg applications */
+#include "cdjpeg.h"        /* Common decls for cjpeg/djpeg applications */
 
 #ifdef RLE_SUPPORTED
 
@@ -66,7 +66,7 @@ typedef struct _rle_source_struct {
 
   rle_kind visual;              /* actual type of input file */
   jvirt_sarray_ptr image;       /* virtual array to hold the image */
-  JDIMENSION row;		/* current row # in the virtual array */
+  JDIMENSION row;        /* current row # in the virtual array */
   rle_hdr header;               /* Input file information */
   rle_pixel** rle_row;          /* holds a row returned by rle_getrow() */
 
@@ -114,7 +114,7 @@ start_input_rle (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
   
   width  = source->header.xmax - source->header.xmin + 1;
   height = source->header.ymax - source->header.ymin + 1;
-  source->header.xmin = 0;		/* realign horizontally */
+  source->header.xmin = 0;        /* realign horizontally */
   source->header.xmax = width-1;
 
   cinfo->image_width      = width;
@@ -131,11 +131,11 @@ start_input_rle (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
   } else if (source->header.ncolors == 1 && source->header.ncmap == 3) {
     source->visual     = PSEUDOCOLOR;
     TRACEMS3(cinfo, 1, JTRC_RLE_MAPPED, width, height,
-	     1 << source->header.cmaplen);
+         1 << source->header.cmaplen);
   } else if (source->header.ncolors == 3 && source->header.ncmap == 3) {
     source->visual     = TRUECOLOR;
     TRACEMS3(cinfo, 1, JTRC_RLE_FULLMAP, width, height,
-	     1 << source->header.cmaplen);
+         1 << source->header.cmaplen);
   } else if (source->header.ncolors == 3 && source->header.ncmap == 0) {
     source->visual     = DIRECTCOLOR;
     TRACEMS2(cinfo, 1, JTRC_RLE, width, height);

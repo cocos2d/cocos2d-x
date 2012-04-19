@@ -44,52 +44,52 @@ class CCGLProgram;
 class CCGridBase : public CCObject
 {
 public:
-	virtual ~CCGridBase(void);
+    virtual ~CCGridBase(void);
 
-	/** wheter or not the grid is active */
-	inline bool isActive(void) { return m_bActive; }
-	void setActive(bool bActive);
+    /** wheter or not the grid is active */
+    inline bool isActive(void) { return m_bActive; }
+    void setActive(bool bActive);
 
-	/** number of times that the grid will be reused */
-	inline int getReuseGrid(void) { return m_nReuseGrid; }
-	inline void setReuseGrid(int nReuseGrid) { m_nReuseGrid = nReuseGrid; }
+    /** number of times that the grid will be reused */
+    inline int getReuseGrid(void) { return m_nReuseGrid; }
+    inline void setReuseGrid(int nReuseGrid) { m_nReuseGrid = nReuseGrid; }
 
-	/** size of the grid */
-	inline const ccGridSize& getGridSize(void) { return m_sGridSize; }
-	inline void setGridSize(const ccGridSize& gridSize) { m_sGridSize = gridSize; }
+    /** size of the grid */
+    inline const ccGridSize& getGridSize(void) { return m_sGridSize; }
+    inline void setGridSize(const ccGridSize& gridSize) { m_sGridSize = gridSize; }
 
-	/** pixels between the grids */
-	inline const CCPoint& getStep(void) { return m_obStep; }
-	inline void setStep(const CCPoint& step) { m_obStep = step; }
+    /** pixels between the grids */
+    inline const CCPoint& getStep(void) { return m_obStep; }
+    inline void setStep(const CCPoint& step) { m_obStep = step; }
 
-	/** is texture flipped */
-	inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
-	void setIsTextureFlipped(bool bFlipped);
+    /** is texture flipped */
+    inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
+    void setIsTextureFlipped(bool bFlipped);
 
-	bool initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
-	bool initWithSize(const ccGridSize& gridSize);
+    bool initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    bool initWithSize(const ccGridSize& gridSize);
 
-	void beforeDraw(void);
-	void afterDraw(CCNode *pTarget);
-	virtual void blit(void);
-	virtual void reuse(void);
-	virtual void calculateVertexPoints(void);
+    void beforeDraw(void);
+    void afterDraw(CCNode *pTarget);
+    virtual void blit(void);
+    virtual void reuse(void);
+    virtual void calculateVertexPoints(void);
 
 public:
-	static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
-	static CCGridBase* gridWithSize(const ccGridSize& gridSize);
-	void set2DProjection(void);
+    static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
+    static CCGridBase* gridWithSize(const ccGridSize& gridSize);
+    void set2DProjection(void);
 
 protected:
-	bool m_bActive;
-	int  m_nReuseGrid;
-	ccGridSize m_sGridSize;
-	CCTexture2D *m_pTexture;
-	CCPoint m_obStep;
-	CCGrabber *m_pGrabber;
-	bool m_bIsTextureFlipped;
-	CCGLProgram* m_pShaderProgram;
-	ccDirectorProjection m_directorProjection;
+    bool m_bActive;
+    int  m_nReuseGrid;
+    ccGridSize m_sGridSize;
+    CCTexture2D *m_pTexture;
+    CCPoint m_obStep;
+    CCGrabber *m_pGrabber;
+    bool m_bIsTextureFlipped;
+    CCGLProgram* m_pShaderProgram;
+    ccDirectorProjection m_directorProjection;
 };
 
 /**
@@ -98,29 +98,29 @@ protected:
 class CCGrid3D : public CCGridBase
 {
 public:
-	CCGrid3D();
+    CCGrid3D();
     ~CCGrid3D(void);
 
-	/** returns the vertex at a given position */
-	ccVertex3F vertex(const ccGridSize& pos);
-	/** returns the original (non-transformed) vertex at a given position */
-	ccVertex3F originalVertex(const ccGridSize& pos);
-	/** sets a new vertex at a given position */
-	void setVertex(const ccGridSize& pos, const ccVertex3F& vertex);
+    /** returns the vertex at a given position */
+    ccVertex3F vertex(const ccGridSize& pos);
+    /** returns the original (non-transformed) vertex at a given position */
+    ccVertex3F originalVertex(const ccGridSize& pos);
+    /** sets a new vertex at a given position */
+    void setVertex(const ccGridSize& pos, const ccVertex3F& vertex);
 
-	virtual void blit(void);
-	virtual void reuse(void);
-	virtual void calculateVertexPoints(void);
+    virtual void blit(void);
+    virtual void reuse(void);
+    virtual void calculateVertexPoints(void);
 
 public:
-	static CCGrid3D* gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
-	static CCGrid3D* gridWithSize(const ccGridSize& gridSize);
+    static CCGrid3D* gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    static CCGrid3D* gridWithSize(const ccGridSize& gridSize);
 
 protected:
-	GLvoid *m_pTexCoordinates;
-	GLvoid *m_pVertices;
-	GLvoid *m_pOriginalVertices;
-	GLushort *m_pIndices;
+    GLvoid *m_pTexCoordinates;
+    GLvoid *m_pVertices;
+    GLvoid *m_pOriginalVertices;
+    GLushort *m_pIndices;
 };
 
 /**
@@ -130,29 +130,29 @@ protected:
 class CCTiledGrid3D : public CCGridBase
 {
 public:
-	CCTiledGrid3D();
-	~CCTiledGrid3D(void);
+    CCTiledGrid3D();
+    ~CCTiledGrid3D(void);
 
-	/** returns the tile at the given position */
-	ccQuad3 tile(const ccGridSize& pos);
-	/** returns the original tile (untransformed) at the given position */
-	ccQuad3 originalTile(const ccGridSize& pos);
-	/** sets a new tile */
-	void setTile(const ccGridSize& pos, const ccQuad3& coords);
+    /** returns the tile at the given position */
+    ccQuad3 tile(const ccGridSize& pos);
+    /** returns the original tile (untransformed) at the given position */
+    ccQuad3 originalTile(const ccGridSize& pos);
+    /** sets a new tile */
+    void setTile(const ccGridSize& pos, const ccQuad3& coords);
 
-	virtual void blit(void);
-	virtual void reuse(void);
-	virtual void calculateVertexPoints(void);
+    virtual void blit(void);
+    virtual void reuse(void);
+    virtual void calculateVertexPoints(void);
 
 public:
-	static CCTiledGrid3D* gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
-	static CCTiledGrid3D* gridWithSize(const ccGridSize& gridSize);
+    static CCTiledGrid3D* gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    static CCTiledGrid3D* gridWithSize(const ccGridSize& gridSize);
 
 protected:
-	GLvoid *m_pTexCoordinates;
-	GLvoid *m_pVertices;
-	GLvoid *m_pOriginalVertices;
-	GLushort *m_pIndices;
+    GLvoid *m_pTexCoordinates;
+    GLvoid *m_pVertices;
+    GLvoid *m_pOriginalVertices;
+    GLushort *m_pIndices;
 };
 
 NS_CC_END

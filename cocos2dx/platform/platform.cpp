@@ -44,8 +44,8 @@ double CCTime::timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end)
     {
         return 0;
     }
-	
-	return ((end->tv_sec*1000.0+end->tv_usec/1000.0) - (start->tv_sec*1000.0+start->tv_usec/1000.0));
+    
+    return ((end->tv_sec*1000.0+end->tv_usec/1000.0) - (start->tv_sec*1000.0+start->tv_usec/1000.0));
 }
 
 NS_CC_END

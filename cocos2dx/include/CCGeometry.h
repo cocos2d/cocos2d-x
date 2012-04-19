@@ -34,66 +34,66 @@ typedef float CCFloat;
 class CC_DLL CCPoint
 {
 public:
-	float x;
-	float y;
+    float x;
+    float y;
 
 public:
 
-	CCPoint();
-	CCPoint(float x, float y);
+    CCPoint();
+    CCPoint(float x, float y);
 
 public:
-	static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
+    static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
 
 class CC_DLL CCSize
 {
 public:
-	float width;
-	float height;
+    float width;
+    float height;
 
 public:
-	CCSize();
-	CCSize(float width, float height);
+    CCSize();
+    CCSize(float width, float height);
 
 public:
-	static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
+    static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
 
 class CC_DLL CCRect
 {
 public:
-	CCPoint origin;
-	CCSize  size;
+    CCPoint origin;
+    CCSize  size;
 
 public:
-	CCRect();	
-	CCRect(float x, float y, float width, float height);
+    CCRect();    
+    CCRect(float x, float y, float width, float height);
 
 public:
-	//! return the leftmost x-value of 'rect'
-	static CCFloat CCRectGetMinX(const CCRect& rect);
+    //! return the leftmost x-value of 'rect'
+    static CCFloat CCRectGetMinX(const CCRect& rect);
 
-	//! return the rightmost x-value of 'rect'
-	static CCFloat CCRectGetMaxX(const CCRect& rect);
+    //! return the rightmost x-value of 'rect'
+    static CCFloat CCRectGetMaxX(const CCRect& rect);
 
-	//! return the midpoint x-value of 'rect'
-	static CCFloat CCRectGetMidX(const CCRect& rect);
+    //! return the midpoint x-value of 'rect'
+    static CCFloat CCRectGetMidX(const CCRect& rect);
 
-	//! Return the bottommost y-value of `rect'
-	static CCFloat CCRectGetMinY(const CCRect& rect);
+    //! Return the bottommost y-value of `rect'
+    static CCFloat CCRectGetMinY(const CCRect& rect);
 
-	//! Return the topmost y-value of `rect'
-	static CCFloat CCRectGetMaxY(const CCRect& rect);
+    //! Return the topmost y-value of `rect'
+    static CCFloat CCRectGetMaxY(const CCRect& rect);
 
-	//! Return the midpoint y-value of `rect'
-	static CCFloat CCRectGetMidY(const CCRect& rect);
+    //! Return the midpoint y-value of `rect'
+    static CCFloat CCRectGetMidY(const CCRect& rect);
 
-	static bool CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2);
+    static bool CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2);
 
     static bool CCRectContainsPoint(const CCRect& rect, const CCPoint& point);
 
-	static bool CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB);
+    static bool CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB);
 };
 
 

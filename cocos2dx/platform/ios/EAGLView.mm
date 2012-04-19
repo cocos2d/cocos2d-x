@@ -94,87 +94,87 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 + (Class) layerClass
 {
-	return [CAEAGLLayer class];
+    return [CAEAGLLayer class];
 }
 
 + (id) viewWithFrame:(CGRect)frame
 {
-	return [[[self alloc] initWithFrame:frame] autorelease];
+    return [[[self alloc] initWithFrame:frame] autorelease];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
-	return [[[self alloc]initWithFrame:frame pixelFormat:format] autorelease];
+    return [[[self alloc]initWithFrame:frame pixelFormat:format] autorelease];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
+    return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
 {
-	return [[[self alloc]initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
+    return [[[self alloc]initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
 }
 
 + (id) sharedEGLView
 {
-	return view;
+    return view;
 }
 
 - (id) initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+    return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format 
 {
-	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+    return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
 {
-	if((self = [super initWithFrame:frame]))
-	{
-		pixelformat_ = format;
-		depthFormat_ = depth;
-		multiSampling_ = sampling;
-		requestedSamples_ = nSamples;
-		preserveBackbuffer_ = retained;
-		markedText_ = nil;
-		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
-			[self release];
-			return nil;
-		}
+    if((self = [super initWithFrame:frame]))
+    {
+        pixelformat_ = format;
+        depthFormat_ = depth;
+        multiSampling_ = sampling;
+        requestedSamples_ = nSamples;
+        preserveBackbuffer_ = retained;
+        markedText_ = nil;
+        if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
+            [self release];
+            return nil;
+        }
         touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
         indexBitsUsed = 0x00000000;
         
         view = self;
-	}
+    }
         
-	return self;
+    return self;
 }
 
 -(id) initWithCoder:(NSCoder *)aDecoder
 {
-	if( (self = [super initWithCoder:aDecoder]) ) {
-		
-		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
-		
-		pixelformat_ = kEAGLColorFormatRGB565;
-		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
-		multiSampling_= NO;
-		requestedSamples_ = 0;
-		size_ = [eaglLayer bounds].size;
-		markedText_ = nil;
-		
-		if( ! [self setupSurfaceWithSharegroup:nil] ) {
-			[self release];
-			return nil;
-		}
+    if( (self = [super initWithCoder:aDecoder]) ) {
+        
+        CAEAGLLayer*            eaglLayer = (CAEAGLLayer*)[self layer];
+        
+        pixelformat_ = kEAGLColorFormatRGB565;
+        depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
+        multiSampling_= NO;
+        requestedSamples_ = 0;
+        size_ = [eaglLayer bounds].size;
+        markedText_ = nil;
+        
+        if( ! [self setupSurfaceWithSharegroup:nil] ) {
+            [self release];
+            return nil;
+        }
     }
-	
-	view = self;
+    
+    view = self;
     return self;
 }
 
@@ -198,14 +198,14 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 -(int) getWidth
 {
-	CGSize bound = [self bounds].size;
-	return bound.width;
+    CGSize bound = [self bounds].size;
+    return bound.width;
 }
 
 -(int) getHeight
 {
-	CGSize bound = [self bounds].size;
-	return bound.height;
+    CGSize bound = [self bounds].size;
+    return bound.height;
 }
 
 -(int) getUnUsedIndex
@@ -239,139 +239,139 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 -(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {
-	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
-	
-	eaglLayer.opaque = YES;
-	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
-									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
-	
-	
-	renderer_ = [[CCES2Renderer alloc] initWithDepthFormat:depthFormat_
-										 withPixelFormat:[self convertPixelFormat:pixelformat_]
-										  withSharegroup:sharegroup
-									   withMultiSampling:multiSampling_
-									 withNumberOfSamples:requestedSamples_];
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+    
+    eaglLayer.opaque = YES;
+    eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
+                                    pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
+    
+    
+    renderer_ = [[CCES2Renderer alloc] initWithDepthFormat:depthFormat_
+                                         withPixelFormat:[self convertPixelFormat:pixelformat_]
+                                          withSharegroup:sharegroup
+                                       withMultiSampling:multiSampling_
+                                     withNumberOfSamples:requestedSamples_];
     
     NSAssert(renderer_, @"OpenGL ES 2.O is required.");
-	if (!renderer_)
-		return NO;
-	
-	context_ = [renderer_ context];
-	
+    if (!renderer_)
+        return NO;
+    
+    context_ = [renderer_ context];
+    
 
-	//discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
-	
+    //discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+    
     CHECK_GL_ERROR_DEBUG();
     
-	return YES;
+    return YES;
 }
 
 - (void) dealloc
 {
     CFRelease(touchesIntergerDict);
-	[renderer_ release];
-	[super dealloc];
+    [renderer_ release];
+    [super dealloc];
 }
 
 - (void) layoutSubviews
 {
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-	size_ = [renderer_ backingSize];
+    size_ = [renderer_ backingSize];
 
-	// Issue #914 #924
-// 	CCDirector *director = [CCDirector sharedDirector];
-// 	[director reshapeProjection:size_];
+    // Issue #914 #924
+//     CCDirector *director = [CCDirector sharedDirector];
+//     [director reshapeProjection:size_];
     cocos2d::CCSize size;
     size.width = size_.width;
     size.height = size_.height;
     cocos2d::CCDirector::sharedDirector()->reshapeProjection(size);
 
-	// Avoid flicker. Issue #350
-	//[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-	cocos2d::CCDirector::sharedDirector()->drawScene();
+    // Avoid flicker. Issue #350
+    //[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+    cocos2d::CCDirector::sharedDirector()->drawScene();
 }
 
 - (void) swapBuffers
 {
-	// IMPORTANT:
-	// - preconditions
-	//	-> context_ MUST be the OpenGL context
-	//	-> renderbuffer_ must be the the RENDER BUFFER
+    // IMPORTANT:
+    // - preconditions
+    //    -> context_ MUST be the OpenGL context
+    //    -> renderbuffer_ must be the the RENDER BUFFER
 
 #ifdef __IPHONE_4_0
-	
-	if (multiSampling_)
-	{
-		/* Resolve from msaaFramebuffer to resolveFramebuffer */
-		//glDisable(GL_SCISSOR_TEST);     
-		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
-		glResolveMultisampleFramebufferAPPLE();
-	}
-	
-	if( discardFramebufferSupported_)
-	{	
-		if (multiSampling_)
-		{
-			if (depthFormat_)
-			{
-				GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
-				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
-			}
-			else
-			{
-				GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
-				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
-			}
-			
-			glBindRenderbuffer(GL_RENDERBUFFER, [renderer_ colorRenderBuffer]);
-	
-		}	
-		
-		// not MSAA
-		else if (depthFormat_ ) {
-			GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
-			glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
-		}
-	}
-	
-#endif // __IPHONE_4_0
-	
- 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
+    
+    if (multiSampling_)
+    {
+        /* Resolve from msaaFramebuffer to resolveFramebuffer */
+        //glDisable(GL_SCISSOR_TEST);     
+        glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+        glResolveMultisampleFramebufferAPPLE();
+    }
+    
+    if( discardFramebufferSupported_)
+    {    
+        if (multiSampling_)
         {
-// 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+            if (depthFormat_)
+            {
+                GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
+                glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
+            }
+            else
+            {
+                GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
+                glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
+            }
+            
+            glBindRenderbuffer(GL_RENDERBUFFER, [renderer_ colorRenderBuffer]);
+    
+        }    
+        
+        // not MSAA
+        else if (depthFormat_ ) {
+            GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
+            glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
+        }
+    }
+    
+#endif // __IPHONE_4_0
+    
+     if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
+        {
+//         CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
         }
 
 #if COCOS2D_DEBUG
-	CHECK_GL_ERROR();
+    CHECK_GL_ERROR();
 #endif
-	
-	// We can safely re-bind the framebuffer here, since this will be the
-	// 1st instruction of the new main loop
-	if( multiSampling_ )
-		glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);	
+    
+    // We can safely re-bind the framebuffer here, since this will be the
+    // 1st instruction of the new main loop
+    if( multiSampling_ )
+        glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);    
 }
 
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat
 {
-	// define the pixel format
-	GLenum pFormat;
-	
-	
-	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
-		pFormat = GL_RGB565;
-	else 
-		pFormat = GL_RGBA8_OES;
-	
-	return pFormat;
+    // define the pixel format
+    GLenum pFormat;
+    
+    
+    if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
+        pFormat = GL_RGB565;
+    else 
+        pFormat = GL_RGBA8_OES;
+    
+    return pFormat;
 }
 
 #pragma mark EAGLView - Point conversion
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
-	CGRect bounds = [self bounds];
+    CGRect bounds = [self bounds];
         
         CGPoint ret;
         ret.x = (point.x - bounds.origin.x) / bounds.size.width * size_.width;
@@ -382,7 +382,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect
 {
-	CGRect bounds = [self bounds];
+    CGRect bounds = [self bounds];
     
         CGRect ret;
         ret.origin.x = (rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width;
@@ -398,10 +398,10 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	cocos2d::CCSet set;
+    cocos2d::CCSet set;
     cocos2d::CCTouch *pTouch;
     
-	for (UITouch *touch in touches) {
+    for (UITouch *touch in touches) {
         NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
         int unUsedIndex = 0;
         
@@ -424,19 +424,19 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
             set.addObject(pTouch);
         }
         
-	}
-	
+    }
+    
     if (set.count() == 0)
         return;
     
-	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesBegan(&set);
+    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesBegan(&set);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	cocos2d::CCSet set;
-	for (UITouch *touch in touches) {
-		NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+    cocos2d::CCSet set;
+    for (UITouch *touch in touches) {
+        NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
                 if (! index) {
                     // if the index doesn't exist, it is an error
                     return;
@@ -448,20 +448,20 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
                     return;
                 }
         
-		float x = [touch locationInView: [touch view]].x;
-		float y = [touch locationInView: [touch view]].y;
-		pTouch->SetTouchInfo(x, y);
-		
-		set.addObject(pTouch);
-	}
-	
-	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesMoved(&set);
+        float x = [touch locationInView: [touch view]].x;
+        float y = [touch locationInView: [touch view]].y;
+        pTouch->SetTouchInfo(x, y);
+        
+        set.addObject(pTouch);
+    }
+    
+    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesMoved(&set);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	cocos2d::CCSet set;
-	for (UITouch *touch in touches) {
+    cocos2d::CCSet set;
+    for (UITouch *touch in touches) {
             NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
             if (! index) {
                 // if the index doesn't exist, it is an error
@@ -474,24 +474,24 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
                     return;
                 }
         
-		float x = [touch locationInView: [touch view]].x;
-		float y = [touch locationInView: [touch view]].y;
-		pTouch->SetTouchInfo(x, y);
-		
-		set.addObject(pTouch);
+        float x = [touch locationInView: [touch view]].x;
+        float y = [touch locationInView: [touch view]].y;
+        pTouch->SetTouchInfo(x, y);
+        
+        set.addObject(pTouch);
                 CFDictionaryRemoveValue(touchesIntergerDict, touch);
                 pTouch->release();
                 s_pTouches[[index intValue]] = NULL;
                 [self removeUsedIndexBit:[index intValue]];
-	}
-	
-	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesEnded(&set);
+    }
+    
+    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesEnded(&set);
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	cocos2d::CCSet set;
-	for (UITouch *touch in touches) {
+    cocos2d::CCSet set;
+    for (UITouch *touch in touches) {
             NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
             if (! index) {
                 // if the index doesn't exist, it is an error
@@ -504,18 +504,18 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
                     return;
                 }
         
-		float x = [touch locationInView: [touch view]].x;
-		float y = [touch locationInView: [touch view]].y;
-		pTouch->SetTouchInfo(x, y);
-		
-		set.addObject(pTouch);
+        float x = [touch locationInView: [touch view]].x;
+        float y = [touch locationInView: [touch view]].y;
+        pTouch->SetTouchInfo(x, y);
+        
+        set.addObject(pTouch);
                 CFDictionaryRemoveValue(touchesIntergerDict, touch);
                 pTouch->release();
                 s_pTouches[[index intValue]] = NULL;
                 [self removeUsedIndexBit:[index intValue]];
-	}
-	
-	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesCancelled(&set);
+    }
+    
+    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesCancelled(&set);
 }
 
 #pragma mark -
@@ -523,9 +523,9 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (BOOL)canBecomeFirstResponder
 {
-	if (nil != markedText_) {
-		[markedText_ release];
-	}
+    if (nil != markedText_) {
+        [markedText_ release];
+    }
     markedText_ = nil;
     return YES;
 }
@@ -540,20 +540,20 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (void)insertText:(NSString *)text
 {
-	if (nil != markedText_) {
-		[markedText_ release];
-		markedText_ = nil;
-	}
+    if (nil != markedText_) {
+        [markedText_ release];
+        markedText_ = nil;
+    }
     const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
     cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
 }
 
 - (void)deleteBackward
 {
-	if (nil != markedText_) {
-		[markedText_ release];
-		markedText_ = nil;
-	}
+    if (nil != markedText_) {
+        [markedText_ release];
+        markedText_ = nil;
+    }
     cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 }
 
@@ -586,7 +586,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 }
 - (UITextRange *)selectedTextRange;
 {
-	return [[[UITextRange alloc] init] autorelease];
+    return [[[UITextRange alloc] init] autorelease];
 }
 
 #pragma mark UITextInput - Replacing and Returning Text
@@ -594,7 +594,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (NSString *)textInRange:(UITextRange *)range;
 {
     CCLOG("textInRange");
-	return @"";
+    return @"";
 }
 - (void)replaceRange:(UITextRange *)range withText:(NSString *)theText;
 {
@@ -621,7 +621,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (UITextRange *)markedTextRange;
 {
     CCLOG("markedTextRange");
-	return nil; // Nil if no marked text.
+    return nil; // Nil if no marked text.
 }
 - (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle;
 {
@@ -631,19 +631,19 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (NSDictionary *)markedTextStyle;
 {
     CCLOG("markedTextStyle");
-	return nil;
+    return nil;
 }
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
 {
     CCLOG("setMarkedText");
-	if (markedText == markedText_) {
-		return;
-	}
-	if (nil != markedText_) {
-		[markedText_ release];
-	}
+    if (markedText == markedText_) {
+        return;
+    }
+    if (nil != markedText_) {
+        [markedText_ release];
+    }
     markedText_ = markedText;
-	[markedText_ retain];
+    [markedText_ retain];
 }
 - (void)unmarkText;
 {
@@ -654,7 +654,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     }
     const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
     cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
-	[markedText_ release];
+    [markedText_ release];
     markedText_ = nil;
 }
 
@@ -663,40 +663,40 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (UITextRange *)textRangeFromPosition:(UITextPosition *)fromPosition toPosition:(UITextPosition *)toPosition;
 {
     CCLOG("textRangeFromPosition");
-	return nil;
+    return nil;
 }
 - (UITextPosition *)positionFromPosition:(UITextPosition *)position offset:(NSInteger)offset;
 {
     CCLOG("positionFromPosition");
-	return nil;
+    return nil;
 }
 - (UITextPosition *)positionFromPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset;
 {
     CCLOG("positionFromPosition");
-	return nil;
+    return nil;
 }
 
 /* Simple evaluation of positions */
 - (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other;
 {
     CCLOG("comparePosition");
-	return 0;
+    return 0;
 }
 - (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition;
 {
     CCLOG("offsetFromPosition");
-	return 0;
+    return 0;
 }
 
 - (UITextPosition *)positionWithinRange:(UITextRange *)range farthestInDirection:(UITextLayoutDirection)direction;
 {
     CCLOG("positionWithinRange");
-	return nil;
+    return nil;
 }
 - (UITextRange *)characterRangeByExtendingPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction;
 {
     CCLOG("characterRangeByExtendingPosition");
-	return nil;
+    return nil;
 }
 
 #pragma mark Writing direction
@@ -704,7 +704,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction;
 {
     CCLOG("baseWritingDirectionForPosition");
-	return UITextWritingDirectionNatural;
+    return UITextWritingDirectionNatural;
 }
 - (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range;
 {
@@ -717,12 +717,12 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (CGRect)firstRectForRange:(UITextRange *)range;
 {
     CCLOG("firstRectForRange");
-	return CGRectNull;
+    return CGRectNull;
 }
 - (CGRect)caretRectForPosition:(UITextPosition *)position;
 {
-	CCLOG("caretRectForPosition");
-	return caretRect_;
+    CCLOG("caretRectForPosition");
+    return caretRect_;
 }
 
 #pragma mark Hit testing
@@ -731,17 +731,17 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (UITextPosition *)closestPositionToPoint:(CGPoint)point;
 {
     CCLOG("closestPositionToPoint");
-	return nil;
+    return nil;
 }
 - (UITextPosition *)closestPositionToPoint:(CGPoint)point withinRange:(UITextRange *)range;
 {
     CCLOG("closestPositionToPoint");
-	return nil;
+    return nil;
 }
 - (UITextRange *)characterRangeAtPoint:(CGPoint)point;
 {
     CCLOG("characterRangeAtPoint");
-	return nil;
+    return nil;
 }
 
 #pragma mark -
@@ -833,7 +833,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     }
     else if (UIKeyboardDidShowNotification == type)
     {
-		//CGSize screenSize = self.window.screen.bounds.size;
+        //CGSize screenSize = self.window.screen.bounds.size;
         dispatcher->dispatchKeyboardDidShow(notiInfo);
         caretRect_ = end;
         caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + [UIFont smallSystemFontSize]);

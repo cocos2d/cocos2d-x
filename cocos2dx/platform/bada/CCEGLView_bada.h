@@ -43,16 +43,16 @@ class EGLTouchDelegate;
 class CCEGL;
 
 class CC_DLL CCEGLView
-	:public Osp::Ui::Controls::Form
-	,public Osp::Ui::ITouchEventListener
-	,public Osp::Ui::ITextEventListener
+    :public Osp::Ui::Controls::Form
+    ,public Osp::Ui::ITouchEventListener
+    ,public Osp::Ui::ITextEventListener
 {
 public:
 
     CCEGLView();
     virtual ~CCEGLView();
 
-	CCRect  getFrame();
+    CCRect  getFrame();
     CCSize  getSize();
     bool    isOpenGLReady();
     bool    isIpad();
@@ -62,84 +62,84 @@ public:
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor);
 
-	int setDeviceOrientation(Osp::Ui::Orientation eOritation);
+    int setDeviceOrientation(Osp::Ui::Orientation eOritation);
     void setViewPortInPoints(float x, float y, float w, float h);
     void setScissorInPoints(float x, float y, float w, float h);
 
     void setIMEKeyboardState(bool bOpen);
-	// static function
-	/**
-	@brief	get the shared main open gl window
-	*/
-	static CCEGLView& sharedOpenGLView();
-	
-	float getMainScreenScale() { return -1.0f; }
+    // static function
+    /**
+    @brief    get the shared main open gl window
+    */
+    static CCEGLView& sharedOpenGLView();
+    
+    float getMainScreenScale() { return -1.0f; }
 
-	/*
-	 * param
-	 *   width[in]: resource width
-	 *   height[in]: resource height
-	 */
-	bool Create(Osp::App::Application* pApp, int width, int height);
-	void resize(int width, int height);
-	virtual result OnInitializing(void);
-	virtual result OnTerminating(void);
+    /*
+     * param
+     *   width[in]: resource width
+     *   height[in]: resource height
+     */
+    bool Create(Osp::App::Application* pApp, int width, int height);
+    void resize(int width, int height);
+    virtual result OnInitializing(void);
+    virtual result OnTerminating(void);
 
-	void onTouchesBegin(int id[], float x[], float y[], int pointerNumber);
-	void onTouchesMove(int id[], float x[], float y[], int pointerNumber);
-	void onTouchesEnd(int id[], float x[], float y[], int pointerNumber);
-	void onTouchEvent(const Osp::Ui::Control& source, Osp::Ui::TouchStatus status);
+    void onTouchesBegin(int id[], float x[], float y[], int pointerNumber);
+    void onTouchesMove(int id[], float x[], float y[], int pointerNumber);
+    void onTouchesEnd(int id[], float x[], float y[], int pointerNumber);
+    void onTouchEvent(const Osp::Ui::Control& source, Osp::Ui::TouchStatus status);
 
-	// touch event
-	virtual void OnTouchIndicated(const Osp::Ui::Control& source,
-		const Osp::Graphics::Point& startPosition, const Osp::Graphics::Point& currentPoint);
+    // touch event
+    virtual void OnTouchIndicated(const Osp::Ui::Control& source,
+        const Osp::Graphics::Point& startPosition, const Osp::Graphics::Point& currentPoint);
 
-	virtual void OnTouchPressed(const Osp::Ui::Control& source,
-		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
+    virtual void OnTouchPressed(const Osp::Ui::Control& source,
+        const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
-	virtual void OnTouchLongPressed(const Osp::Ui::Control& source,
-		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
+    virtual void OnTouchLongPressed(const Osp::Ui::Control& source,
+        const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
-	virtual void OnTouchReleased(const Osp::Ui::Control& source,
-		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
+    virtual void OnTouchReleased(const Osp::Ui::Control& source,
+        const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
-	virtual void OnTouchMoved(const Osp::Ui::Control& source,
-		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
+    virtual void OnTouchMoved(const Osp::Ui::Control& source,
+        const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
-	virtual void OnTouchDoublePressed(const Osp::Ui::Control& source,
-		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
+    virtual void OnTouchDoublePressed(const Osp::Ui::Control& source,
+        const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
-	virtual void OnTouchFocusIn(const Osp::Ui::Control& source,
-		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
+    virtual void OnTouchFocusIn(const Osp::Ui::Control& source,
+        const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
-	virtual void OnTouchFocusOut(const Osp::Ui::Control& source,
-		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
+    virtual void OnTouchFocusOut(const Osp::Ui::Control& source,
+        const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
-	virtual result OnDraw(void);
+    virtual result OnDraw(void);
 
     virtual void OnTextValueChanged(const Osp::Ui::Control& source);
-	virtual void OnTextValueChangeCanceled(const Osp::Ui::Control& source);
+    virtual void OnTextValueChangeCanceled(const Osp::Ui::Control& source);
 
 #ifdef CC_BADA_2_0
-	// pointer to OES methods from EGL
-	static PFNGLGENERATEMIPMAPOESPROC         glGenerateMipmapOES;
-	static PFNGLGENFRAMEBUFFERSOESPROC        glGenFramebuffersOES;
-	static PFNGLBINDFRAMEBUFFEROESPROC		  glBindFramebufferOES;
-	static PFNGLFRAMEBUFFERTEXTURE2DOESPROC   glFramebufferTexture2DOES;
-	static PFNGLDELETEFRAMEBUFFERSOESPROC     glDeleteFramebuffersOES;
-	static PFNGLCHECKFRAMEBUFFERSTATUSOESPROC glCheckFramebufferStatusOES;
+    // pointer to OES methods from EGL
+    static PFNGLGENERATEMIPMAPOESPROC         glGenerateMipmapOES;
+    static PFNGLGENFRAMEBUFFERSOESPROC        glGenFramebuffersOES;
+    static PFNGLBINDFRAMEBUFFEROESPROC          glBindFramebufferOES;
+    static PFNGLFRAMEBUFFERTEXTURE2DOESPROC   glFramebufferTexture2DOES;
+    static PFNGLDELETEFRAMEBUFFERSOESPROC     glDeleteFramebuffersOES;
+    static PFNGLCHECKFRAMEBUFFERSTATUSOESPROC glCheckFramebufferStatusOES;
 #endif
 
 private:
-	Osp::Ui::Controls::Keypad *m_pKeypad;
+    Osp::Ui::Controls::Keypad *m_pKeypad;
 
-	CCSize m_sSizeInPixel;
-	CCSize m_sSizeInPoint;
-	CCRect m_rcViewPort;
-	bool   m_bNotHVGA;
+    CCSize m_sSizeInPixel;
+    CCSize m_sSizeInPoint;
+    CCRect m_rcViewPort;
+    bool   m_bNotHVGA;
 
-	EGLTouchDelegate *m_pDelegate;
-	float  m_fScreenScaleFactor;
+    EGLTouchDelegate *m_pDelegate;
+    float  m_fScreenScaleFactor;
 
     bool                m_bCaptured;
 
@@ -147,11 +147,11 @@ private:
     CCTouch *           m_pTouch;
     CCEGL *            m_pEGL;
 
-	int					m_eInitOrientation;
+    int                    m_eInitOrientation;
 
-	Osp::Ui::Orientation  m_nowOrientation;
+    Osp::Ui::Orientation  m_nowOrientation;
 };
 
 NS_CC_END
 
-#endif	// end of __CCX_EGLVIEW_WIN32_H__
+#endif    // end of __CCX_EGLVIEW_WIN32_H__

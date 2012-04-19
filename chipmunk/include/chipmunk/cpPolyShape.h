@@ -24,17 +24,17 @@
 
 /// @private
 typedef struct cpPolyShapeAxis {
-	cpVect n;
-	cpFloat d;
+    cpVect n;
+    cpFloat d;
 } cpPolyShapeAxis;
 
 /// @private
 typedef struct cpPolyShape {
-	cpShape shape;
-	
-	int numVerts;
-	cpVect *verts, *tVerts;
-	cpPolyShapeAxis *axes, *tAxes;
+    cpShape shape;
+    
+    int numVerts;
+    cpVect *verts, *tVerts;
+    cpPolyShapeAxis *axes, *tAxes;
 } cpPolyShape;
 
 /// Allocate a polygon shape.

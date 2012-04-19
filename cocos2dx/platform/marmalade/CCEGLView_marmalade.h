@@ -44,107 +44,107 @@ public:
     CCEGLView();
     virtual ~CCEGLView();
 
-    CCSize	getSize();
-    bool	isOpenGLReady();
+    CCSize    getSize();
+    bool    isOpenGLReady();
     bool    isIpad();
-	/**
-	 * the width and height is the real size of phone
-	 */
-    void	setFrameWidthAndHeight(int width, int height);
-	/**
-	 * create a drawing rect, 
-	 * the width and heiht is the resource size match best
-	 */
-	void	create(int width, int height);
+    /**
+     * the width and height is the real size of phone
+     */
+    void    setFrameWidthAndHeight(int width, int height);
+    /**
+     * create a drawing rect, 
+     * the width and heiht is the resource size match best
+     */
+    void    create(int width, int height);
     EGLTouchDelegate* getDelegate(void);
     
     // keep compatible
-    void	release();
-    void	setTouchDelegate(EGLTouchDelegate * pDelegate);
-    void	swapBuffers();
-    bool	canSetContentScaleFactor();
-    void	setContentScaleFactor(float contentScaleFactor);
-	void	setViewPortInPoints(float x, float y, float w, float h);
-    void	setScissorInPoints(float x, float y, float w, float h);
-    void	setIMEKeyboardState(bool bOpen);
-	CCRect	getViewPort();
-	float	getScreenScaleFactor();
-	
-	float getMainScreenScale() { return 1.0f; }
+    void    release();
+    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
+    void    swapBuffers();
+    bool    canSetContentScaleFactor();
+    void    setContentScaleFactor(float contentScaleFactor);
+    void    setViewPortInPoints(float x, float y, float w, float h);
+    void    setScissorInPoints(float x, float y, float w, float h);
+    void    setIMEKeyboardState(bool bOpen);
+    CCRect    getViewPort();
+    float    getScreenScaleFactor();
+    
+    float getMainScreenScale() { return 1.0f; }
 
-	// static function
-	/**
-	 @brief	get the shared main open gl window
-	 */
-	static CCEGLView& sharedOpenGLView();
+    // static function
+    /**
+     @brief    get the shared main open gl window
+     */
+    static CCEGLView& sharedOpenGLView();
 
 private:
 
-	CCSize				m_sSizeInPixel;
-	CCSize				m_sSizeInPoint;
-	CCRect				m_rcViewPort;
-	bool				m_bNotHVGA;
-	
-	EGLTouchDelegate*	m_pDelegate;
-	float				m_fScreenScaleFactor;
-	
-	bool				m_bAccelState;
-	bool				m_bCaptured;
-	s3eKey				m_Key;
+    CCSize                m_sSizeInPixel;
+    CCSize                m_sSizeInPoint;
+    CCRect                m_rcViewPort;
+    bool                m_bNotHVGA;
+    
+    EGLTouchDelegate*    m_pDelegate;
+    float                m_fScreenScaleFactor;
+    
+    bool                m_bAccelState;
+    bool                m_bCaptured;
+    s3eKey                m_Key;
     CCSet *             m_pSet;
     CCTouch *           m_pTouch;
     
-    bool				m_isMultiTouch;
-	
-	static CCEGLView*	m_pInstance ;
-	
-	void	setTouch(void* systemData);
-	void	setMotionTouch(void* systemData);
-    void	setMultiTouch(void* systemData);
-	void	setMultiMotionTouch(void* systemData);
-	void	setKeyTouch(void* systemData);
-	void	setCharTouch(void* systemData);
+    bool                m_isMultiTouch;
+    
+    static CCEGLView*    m_pInstance ;
+    
+    void    setTouch(void* systemData);
+    void    setMotionTouch(void* systemData);
+    void    setMultiTouch(void* systemData);
+    void    setMultiMotionTouch(void* systemData);
+    void    setKeyTouch(void* systemData);
+    void    setCharTouch(void* systemData);
 
     CCTouch* findTouch(int id);
     CCTouch* touchSet[S3E_POINTER_TOUCH_MAX];
 
-	static int32 TouchEventHandler(void* systemData, void* userData)
-	{
-		((CCEGLView*)userData)->setTouch(systemData);
-		return 0;
-	}
+    static int32 TouchEventHandler(void* systemData, void* userData)
+    {
+        ((CCEGLView*)userData)->setTouch(systemData);
+        return 0;
+    }
 
-	static int32 MotionEventHandler(void* systemData, void* userData)
-	{
-		((CCEGLView*)userData)->setMotionTouch(systemData);
-		return 0;
-	}
-	
+    static int32 MotionEventHandler(void* systemData, void* userData)
+    {
+        ((CCEGLView*)userData)->setMotionTouch(systemData);
+        return 0;
+    }
+    
     static int32 MultiTouchEventHandler(void* systemData, void* userData)
-	{
-		((CCEGLView*)userData)->setMultiTouch(systemData);
-		return 0;
-	}
-	
+    {
+        ((CCEGLView*)userData)->setMultiTouch(systemData);
+        return 0;
+    }
+    
     static int32 MultiMotionEventHandler(void* systemData, void* userData)
-	{
-		((CCEGLView*)userData)->setMultiMotionTouch(systemData);
-		return 0;
-	}
+    {
+        ((CCEGLView*)userData)->setMultiMotionTouch(systemData);
+        return 0;
+    }
 
-	static int32 KeyEventHandler(void* systemData, void* userData)
-	{
-		((CCEGLView*)userData)->setKeyTouch(systemData);
-		return 0;
-	}
+    static int32 KeyEventHandler(void* systemData, void* userData)
+    {
+        ((CCEGLView*)userData)->setKeyTouch(systemData);
+        return 0;
+    }
 
-	static int32 CharEventHandler(void* systemData, void* userData)
-	{
-		((CCEGLView*)userData)->setCharTouch(systemData);
-		return 0;
-	}
+    static int32 CharEventHandler(void* systemData, void* userData)
+    {
+        ((CCEGLView*)userData)->setCharTouch(systemData);
+        return 0;
+    }
 };
-	
+    
 NS_CC_END
 
-#endif	// end of __CC_EGLVIEW_MARMALADE_H__
+#endif    // end of __CC_EGLVIEW_MARMALADE_H__

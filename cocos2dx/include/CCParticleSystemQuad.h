@@ -37,7 +37,7 @@ class CCSpriteFrame;
 
 It includes all the features of ParticleSystem.
 
-Special features and Limitations:	
+Special features and Limitations:    
 - Particle size can be any float number.
 - The system can be scaled
 - The particles can be rotated
@@ -50,55 +50,55 @@ Special features and Limitations:
 class CC_DLL CCParticleSystemQuad : public CCParticleSystem
 {
 protected:
-	ccV3F_C4B_T2F_Quad	*m_pQuads;		// quads to be rendered
-	GLushort			*m_pIndices;	// indices
+    ccV3F_C4B_T2F_Quad    *m_pQuads;        // quads to be rendered
+    GLushort            *m_pIndices;    // indices
 
 #if CC_TEXTURE_ATLAS_USE_VAO
-	GLuint				m_uVAOname;
+    GLuint                m_uVAOname;
 #endif
 
-	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
+    GLuint                m_pBuffersVBO[2]; //0: vertex  1: indices
 
 public:
-	CCParticleSystemQuad();
-	virtual ~CCParticleSystemQuad();
+    CCParticleSystemQuad();
+    virtual ~CCParticleSystemQuad();
 
     /** creates an initializes a CCParticleSystemQuad from a plist file.
     This plist files can be creted manually or with Particle Designer:  
     */
     static CCParticleSystemQuad * particleWithFile(const char *plistFile);
 
-	/** initialices the indices for the vertices*/
-	void setupIndices();
+    /** initialices the indices for the vertices*/
+    void setupIndices();
 
     /** initilizes the texture with a rectangle measured Points */
-	void initTexCoordsWithRect(const CCRect& rect);
+    void initTexCoordsWithRect(const CCRect& rect);
 
-	/** Sets a new CCSpriteFrame as particle.
-	WARNING: this method is experimental. Use setTexture:withRect instead.
-	@since v0.99.4
-	*/
-	void setDisplayFrame(CCSpriteFrame *spriteFrame);
+    /** Sets a new CCSpriteFrame as particle.
+    WARNING: this method is experimental. Use setTexture:withRect instead.
+    @since v0.99.4
+    */
+    void setDisplayFrame(CCSpriteFrame *spriteFrame);
 
     /** Sets a new texture with a rect. The rect is in Points.
-	@since v0.99.4
-	*/
-	void setTextureWithRect(CCTexture2D *texture, const CCRect& rect);
-	// super methods
-	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-	virtual void setTexture(CCTexture2D* texture);
-	virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
-	virtual void postStep();
-	virtual void draw();
-	virtual void setBatchNode(CCParticleBatchNode* batchNode);
-	virtual void setTotalParticles(unsigned int tp);
+    @since v0.99.4
+    */
+    void setTextureWithRect(CCTexture2D *texture, const CCRect& rect);
+    // super methods
+    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
+    virtual void setTexture(CCTexture2D* texture);
+    virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
+    virtual void postStep();
+    virtual void draw();
+    virtual void setBatchNode(CCParticleBatchNode* batchNode);
+    virtual void setTotalParticles(unsigned int tp);
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();
 #else
     void setupVBO();
 #endif
-	bool allocMemory();
+    bool allocMemory();
 };
 
 NS_CC_END

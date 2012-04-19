@@ -18,11 +18,11 @@ public:
 
 protected:
     CCLabelBMFont * m_plabel;
-    int				numberOfTouchesB;
-    int				numberOfTouchesM;
-    int				numberOfTouchesE;
-    int				numberOfTouchesC;
-    ccTime			elapsedTime;
+    int                numberOfTouchesB;
+    int                numberOfTouchesM;
+    int                numberOfTouchesE;
+    int                numberOfTouchesC;
+    ccTime            elapsedTime;
 };
 
 class TouchesPerformTest1 : public TouchesMainScene

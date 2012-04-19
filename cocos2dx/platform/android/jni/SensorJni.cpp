@@ -56,35 +56,35 @@ extern "C"
 //             (y - rcRect.origin.y) / fScreenScaleFactor, 
 //             z, 
 //             timeStamp);
-		CCDirector* pDirector = CCDirector::sharedDirector();
-		pDirector->getAccelerometer()->update(x, y, z, timeStamp);
-    }	
+        CCDirector* pDirector = CCDirector::sharedDirector();
+        pDirector->getAccelerometer()->update(x, y, z, timeStamp);
+    }    
 
-	void enableAccelerometerJNI()
-	{
-		JniMethodInfo t;
+    void enableAccelerometerJNI()
+    {
+        JniMethodInfo t;
 
-		if (JniHelper::getStaticMethodInfo(t, 
-			                         "org/cocos2dx/lib/Cocos2dxActivity",
-									 "enableAccelerometer",
-									 "()V"))
-		{
-			t.env->CallStaticVoidMethod(t.classID, t.methodID);
-			t.env->DeleteLocalRef(t.classID);
-		}
-	}
+        if (JniHelper::getStaticMethodInfo(t, 
+                                     "org/cocos2dx/lib/Cocos2dxActivity",
+                                     "enableAccelerometer",
+                                     "()V"))
+        {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
+        }
+    }
 
-	void disableAccelerometerJNI()
-	{
-		JniMethodInfo t;
+    void disableAccelerometerJNI()
+    {
+        JniMethodInfo t;
 
-		if (JniHelper::getStaticMethodInfo(t, 
-			"org/cocos2dx/lib/Cocos2dxActivity",
-			"disableAccelerometer",
-			"()V"))
-		{
-			t.env->CallStaticVoidMethod(t.classID, t.methodID);
-			t.env->DeleteLocalRef(t.classID);
-		}
-	}
+        if (JniHelper::getStaticMethodInfo(t, 
+            "org/cocos2dx/lib/Cocos2dxActivity",
+            "disableAccelerometer",
+            "()V"))
+        {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
+        }
+    }
 }

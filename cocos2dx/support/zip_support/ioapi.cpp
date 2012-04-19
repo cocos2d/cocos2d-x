@@ -117,9 +117,9 @@ static voidpf ZCALLBACK fopen64_file_func (voidpf opaque, const void* filename, 
     if ((filename!=NULL) && (mode_fopen != NULL))
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-		file = NULL;
+        file = NULL;
 #else
-	    file = fopen64((const char*)filename, mode_fopen);	
+        file = fopen64((const char*)filename, mode_fopen);    
 #endif
     }
 
@@ -203,10 +203,10 @@ static long ZCALLBACK fseek64_file_func (voidpf  opaque, voidpf stream, ZPOS64_T
     ret = 0;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA) || (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-	ret = -1;
+    ret = -1;
 #else
     if(fseeko64((FILE *)stream, offset, fseek_origin) != 0)
-		ret = -1;
+        ret = -1;
 #endif
     return ret;
 }

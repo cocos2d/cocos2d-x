@@ -74,7 +74,7 @@ public:
     */
     static const char* fullPathFromRelativePath(const char *pszRelativePath);
 
-	/** Returns the fullpath of an filename including the resolution of the image.
+    /** Returns the fullpath of an filename including the resolution of the image.
  
         If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
         If in iPad mode, and an iPad file is found, it will return that path.
@@ -88,68 +88,68 @@ public:
         If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
  
       */
-	static const char* fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType);
+    static const char* fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType);
 
     /// @cond
     static const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
     /// @endcond
 
-	/** Sets the iPhone RetinaDisplay suffix to load resources.
+    /** Sets the iPhone RetinaDisplay suffix to load resources.
         By default it is "-hd".
         Only valid on iOS. Not valid for OS X.
  
         @since v1.1
      */
-	static void setiPhoneRetinaDisplaySuffix(const char *suffix);
+    static void setiPhoneRetinaDisplaySuffix(const char *suffix);
 
-	/** Sets the iPad suffix to load resources.
+    /** Sets the iPad suffix to load resources.
         By default it is "".
         Only valid on iOS. Not valid for OS X.
  
 
      */
-	static void setiPadSuffix(const char *suffix);
+    static void setiPadSuffix(const char *suffix);
 
-	/** Sets the iPad Retina Display suffix to load resources.
+    /** Sets the iPad Retina Display suffix to load resources.
         By default it is "-ipadhd".
         Only valid on iOS. Not valid for OS X.
  
         @since v1.1
      */
-	static void setiPadRetinaDisplaySuffix(const char *suffix);
+    static void setiPadRetinaDisplaySuffix(const char *suffix);
 
-	/** Returns whether or not a given filename exists with the iPad suffix.
+    /** Returns whether or not a given filename exists with the iPad suffix.
         Only available on iOS. Not supported on OS X.
         @since v1.1
     */
-	bool iPadFileExistsAtPath(const char *filename);
+    bool iPadFileExistsAtPath(const char *filename);
 
-	/** Returns whether or not a given filename exists with the iPad RetinaDisplay suffix.
+    /** Returns whether or not a given filename exists with the iPad RetinaDisplay suffix.
         Only available on iOS. Not supported on OS X.
  
      */
-	bool iPadRetinaDisplayFileExistsAtPath(const char *filename);
+    bool iPadRetinaDisplayFileExistsAtPath(const char *filename);
 
-	/** Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.
+    /** Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.
         Only available on iOS. Not supported on OS X.
         @since v1.1
     */
-	bool iPhoneRetinaDisplayFileExistsAtPath(const char *filename);
+    bool iPhoneRetinaDisplayFileExistsAtPath(const char *filename);
 
     /**
     @brief  Set the ResourcePath,we will find resource in this path
     @param pszResourcePath  The absolute resource path
-	@warning Don't call this function in android and iOS, it has not effect.
-	In android, if you want to read file other than apk, you shoud use invoke getFileData(), and pass the 
-	absolute path.
+    @warning Don't call this function in android and iOS, it has not effect.
+    In android, if you want to read file other than apk, you shoud use invoke getFileData(), and pass the 
+    absolute path.
     */
     static void setResourcePath(const char *pszResourcePath);
 
-	/**
-	@brief   Get the writeable path
-	@return  The path that can write/read file
-	*/
-	static std::string getWriteablePath();
+    /**
+    @brief   Get the writeable path
+    @return  The path that can write/read file
+    */
+    static std::string getWriteablePath();
 
     /**
     @brief Set/Get whether pop-up a message box when the image load failed
@@ -200,4 +200,4 @@ public:
 
 NS_CC_END
 
-#endif	// __CC_FILEUTILS_PLATFORM_H__
+#endif    // __CC_FILEUTILS_PLATFORM_H__

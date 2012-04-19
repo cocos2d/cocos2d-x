@@ -49,24 +49,24 @@ kmScalar kmVec2LengthSq(const kmVec2* pIn)
 
 kmVec2* kmVec2Normalize(kmVec2* pOut, const kmVec2* pIn)
 {
-	kmScalar l = 1.0f / kmVec2Length(pIn);
+    kmScalar l = 1.0f / kmVec2Length(pIn);
 
-	kmVec2 v;
-	v.x = pIn->x * l;
-	v.y = pIn->y * l;
+    kmVec2 v;
+    v.x = pIn->x * l;
+    v.y = pIn->y * l;
 
-	pOut->x = v.x;
-	pOut->y = v.y;
+    pOut->x = v.x;
+    pOut->y = v.y;
 
-	return pOut;
+    return pOut;
 }
 
 kmVec2* kmVec2Add(kmVec2* pOut, const kmVec2* pV1, const kmVec2* pV2)
 {
-	pOut->x = pV1->x + pV2->x;
-	pOut->y = pV1->y + pV2->y;
+    pOut->x = pV1->x + pV2->x;
+    pOut->y = pV1->y + pV2->y;
 
-	return pOut;
+    return pOut;
 }
 
 kmScalar kmVec2Dot(const kmVec2* pV1, const kmVec2* pV2)
@@ -76,10 +76,10 @@ kmScalar kmVec2Dot(const kmVec2* pV1, const kmVec2* pV2)
 
 kmVec2* kmVec2Subtract(kmVec2* pOut, const kmVec2* pV1, const kmVec2* pV2)
 {
-	pOut->x = pV1->x - pV2->x;
-	pOut->y = pV1->y - pV2->y;
+    pOut->x = pV1->x - pV2->x;
+    pOut->y = pV1->y - pV2->y;
 
-	return pOut;
+    return pOut;
 }
 
 kmVec2* kmVec2Transform(kmVec2* pOut, const kmVec2* pV, const kmMat3* pM)
@@ -97,22 +97,22 @@ kmVec2* kmVec2Transform(kmVec2* pOut, const kmVec2* pV, const kmMat3* pM)
 
 kmVec2* kmVec2TransformCoord(kmVec2* pOut, const kmVec2* pV, const kmMat3* pM)
 {
-	assert(0);
+    assert(0);
     return NULL;
 }
 
 kmVec2* kmVec2Scale(kmVec2* pOut, const kmVec2* pIn, const kmScalar s)
 {
-	pOut->x = pIn->x * s;
-	pOut->y = pIn->y * s;
+    pOut->x = pIn->x * s;
+    pOut->y = pIn->y * s;
 
-	return pOut;
+    return pOut;
 }
 
 int kmVec2AreEqual(const kmVec2* p1, const kmVec2* p2)
 {
-	return (
-				(p1->x < p2->x + kmEpsilon && p1->x > p2->x - kmEpsilon) &&
-				(p1->y < p2->y + kmEpsilon && p1->y > p2->y - kmEpsilon)
-			);
+    return (
+                (p1->x < p2->x + kmEpsilon && p1->x > p2->x - kmEpsilon) &&
+                (p1->y < p2->y + kmEpsilon && p1->y > p2->y - kmEpsilon)
+            );
 }

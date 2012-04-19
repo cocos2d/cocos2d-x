@@ -13,10 +13,10 @@ bool Bug899Layer::init()
     if (BugsTestBaseLayer::init())
     {
         CCSprite *bg = CCSprite::spriteWithFile("Images/bugs/RetinaDisplay.jpg");
-		addChild(bg, 0);
-		bg->setAnchorPoint(CCPointZero);
+        addChild(bg, 0);
+        bg->setAnchorPoint(CCPointZero);
 
         return true;
-	}
-	return false;
+    }
+    return false;
 }

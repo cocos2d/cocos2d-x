@@ -17,15 +17,15 @@
 
 #if Z_BLOCKS
 enum {
-	ZAttributedStringEnumerationReverse = (1UL << 1),
-	ZAttributedStringEnumerationLongestEffectiveRangeNotRequired = (1UL << 20)
+    ZAttributedStringEnumerationReverse = (1UL << 1),
+    ZAttributedStringEnumerationLongestEffectiveRangeNotRequired = (1UL << 20)
 };
 typedef NSUInteger ZAttributedStringEnumerationOptions;
 #endif
 
 @interface ZAttributedString : NSObject <NSCoding, NSCopying, NSMutableCopying> {
-	NSMutableString *_buffer;
-	NSMutableArray *_attributes;
+    NSMutableString *_buffer;
+    NSMutableArray *_attributes;
 }
 @property (nonatomic, readonly) NSUInteger length;
 @property (nonatomic, readonly) NSString *string;
@@ -39,9 +39,9 @@ typedef NSUInteger ZAttributedStringEnumerationOptions;
 - (NSDictionary *)attributesAtIndex:(NSUInteger)index longestEffectiveRange:(NSRangePointer)aRange inRange:(NSRange)rangeLimit;
 #if Z_BLOCKS
 - (void)enumerateAttribute:(NSString *)attrName inRange:(NSRange)enumerationRange options:(ZAttributedStringEnumerationOptions)opts
-				usingBlock:(void (^)(id value, NSRange range, BOOL *stop))block;
+                usingBlock:(void (^)(id value, NSRange range, BOOL *stop))block;
 - (void)enumerateAttributesInRange:(NSRange)enumerationRange options:(ZAttributedStringEnumerationOptions)opts
-						usingBlock:(void (^)(NSDictionary *attrs, NSRange range, BOOL *stop))block;
+                        usingBlock:(void (^)(NSDictionary *attrs, NSRange range, BOOL *stop))block;
 #endif
 - (BOOL)isEqualToAttributedString:(ZAttributedString *)otherString;
 @end
@@ -66,12 +66,12 @@ extern NSString * const ZBackgroundColorAttributeName;
 extern NSString * const ZUnderlineStyleAttributeName;
 
 enum {
-	ZUnderlineStyleNone = 0x00,
-	ZUnderlineStyleSingle = 0x01
+    ZUnderlineStyleNone = 0x00,
+    ZUnderlineStyleSingle = 0x01
 };
 #define ZUnderlineStyleMask 0x00FF
 
 enum {
-	ZUnderlinePatternSolid = 0x0000
+    ZUnderlinePatternSolid = 0x0000
 };
 #define ZUnderlinePatternMask 0xFF00

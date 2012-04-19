@@ -49,21 +49,21 @@ CCEGLView::CCEGLView()
 , m_bAccelState(false)
 , m_Key(s3eKeyFirst)
 {
-	IW_CALLSTACK("CCEGLView::CCEGLView");
-	
+    IW_CALLSTACK("CCEGLView::CCEGLView");
+    
 
-	IwGLInit();
+    IwGLInit();
 
-	m_sSizeInPixel.width = IwGLGetInt(IW_GL_WIDTH);
-	m_sSizeInPixel.height = IwGLGetInt(IW_GL_HEIGHT);
+    m_sSizeInPixel.width = IwGLGetInt(IW_GL_WIDTH);
+    m_sSizeInPixel.height = IwGLGetInt(IW_GL_HEIGHT);
 
     m_pSet      = new CCSet;
-	m_pTouch    = new CCTouch;
+    m_pTouch    = new CCTouch;
 
     // Determine if the device supports multi-touch
     m_isMultiTouch = s3ePointerGetInt(S3E_POINTER_MULTI_TOUCH_AVAILABLE) ? true : false;
     
-	// For multi-touch devices we handle touch and motion events using different callbacks
+    // For multi-touch devices we handle touch and motion events using different callbacks
     if (m_isMultiTouch)
     {
         s3ePointerRegister(S3E_POINTER_TOUCH_EVENT, &MultiTouchEventHandler, this);
@@ -83,102 +83,102 @@ CCEGLView::CCEGLView()
     }
     
     // Register keyboard event handler
-//	s3eKeyboardRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler, this);
-//	s3eKeyboardRegister(S3E_KEYBOARD_CHAR_EVENT, &CharEventHandler, this);
+//    s3eKeyboardRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler, this);
+//    s3eKeyboardRegister(S3E_KEYBOARD_CHAR_EVENT, &CharEventHandler, this);
 }
 
 void CCEGLView::setFrameWidthAndHeight(int width, int height)
 {
-	m_sSizeInPixel.width = width;
-	m_sSizeInPixel.height = height;
+    m_sSizeInPixel.width = width;
+    m_sSizeInPixel.height = height;
 }
 void CCEGLView::create(int width, int height)
 {
-	if (width == 0 || height == 0)
-	{
-		return;
-	}
-		
-	m_sSizeInPoint.width = width;
-	m_sSizeInPoint.height = height;
-		
-	// calculate the factor and the rect of viewport	
-	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
-								(float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-	int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
-	int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
-	m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
-	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
-	m_rcViewPort.size.width = viewPortW;
-	m_rcViewPort.size.height = viewPortH;
-		
-	m_bNotHVGA = true;
-		
+    if (width == 0 || height == 0)
+    {
+        return;
+    }
+        
+    m_sSizeInPoint.width = width;
+    m_sSizeInPoint.height = height;
+        
+    // calculate the factor and the rect of viewport    
+    m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
+                                (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
+    int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
+    int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
+    m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
+    m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
+    m_rcViewPort.size.width = viewPortW;
+    m_rcViewPort.size.height = viewPortH;
+        
+    m_bNotHVGA = true;
+        
 }
 CCEGLView::~CCEGLView()
 {
-	IW_CALLSTACK("CCEGLView::~CCEGLView");
+    IW_CALLSTACK("CCEGLView::~CCEGLView");
 
     CC_SAFE_DELETE(m_pSet);
-	CC_SAFE_DELETE(m_pTouch);
+    CC_SAFE_DELETE(m_pTouch);
 
 }
-	
+    
 CCSize  CCEGLView::getSize()
 {
-	if (m_bNotHVGA)
-	{
-		CCSize size(m_sSizeInPoint.width, m_sSizeInPoint.height);
-		return size;
-	}
-	else
-	{
-		CCSize size(m_sSizeInPixel.width, m_sSizeInPixel.height);
-		return size;
-	}
-		
+    if (m_bNotHVGA)
+    {
+        CCSize size(m_sSizeInPoint.width, m_sSizeInPoint.height);
+        return size;
+    }
+    else
+    {
+        CCSize size(m_sSizeInPixel.width, m_sSizeInPixel.height);
+        return size;
+    }
+        
 }
 
 void CCEGLView::setTouch(void* systemData)
 {
-	s3ePointerEvent* event =(s3ePointerEvent*)systemData;
-	
-	switch (event->m_Pressed)
-	{
-	case S3E_POINTER_STATE_DOWN :
-		m_bCaptured = true;
-		m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
-		m_pSet->addObject(m_pTouch);
-		m_pDelegate->touchesBegan(m_pSet, NULL);
-		break;
+    s3ePointerEvent* event =(s3ePointerEvent*)systemData;
+    
+    switch (event->m_Pressed)
+    {
+    case S3E_POINTER_STATE_DOWN :
+        m_bCaptured = true;
+        m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
+        m_pSet->addObject(m_pTouch);
+        m_pDelegate->touchesBegan(m_pSet, NULL);
+        break;
 
-	case S3E_POINTER_STATE_UP :
-		if (m_bCaptured)
-		{
-			m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
-			m_pDelegate->touchesEnded(m_pSet, NULL);
-			m_pSet->removeObject(m_pTouch);
-			m_bCaptured = false;
-		}
-		break;
-	}
+    case S3E_POINTER_STATE_UP :
+        if (m_bCaptured)
+        {
+            m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
+            m_pDelegate->touchesEnded(m_pSet, NULL);
+            m_pSet->removeObject(m_pTouch);
+            m_bCaptured = false;
+        }
+        break;
+    }
 }
 
 void CCEGLView::setMotionTouch(void* systemData)
 {
-		s3ePointerMotionEvent* event =(s3ePointerMotionEvent*)systemData;
-		if (m_bCaptured)
-		{
+        s3ePointerMotionEvent* event =(s3ePointerMotionEvent*)systemData;
+        if (m_bCaptured)
+        {
             m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
             m_pDelegate->touchesMoved(m_pSet, NULL);
 
-		}
+        }
 }
 
 void CCEGLView::setMultiTouch(void* systemData)
 {
-	s3ePointerTouchEvent* event =(s3ePointerTouchEvent*)systemData;
-	
+    s3ePointerTouchEvent* event =(s3ePointerTouchEvent*)systemData;
+    
     if (touchSet[event->m_TouchID] == NULL) {
         m_pTouch = new CCTouch;
         touchSet[event->m_TouchID] = m_pTouch;
@@ -187,8 +187,8 @@ void CCEGLView::setMultiTouch(void* systemData)
         m_pTouch = touchSet[event->m_TouchID];
     }
     
-	switch (event->m_Pressed)
-	{
+    switch (event->m_Pressed)
+    {
         case S3E_POINTER_STATE_DOWN :
             m_pTouch->SetTouchInfo((float)event->m_x, (float)event->m_y);
             m_pSet->addObject(m_pTouch);
@@ -203,7 +203,7 @@ void CCEGLView::setMultiTouch(void* systemData)
                 touchSet[event->m_TouchID] = NULL;
             }
             break;
-	}
+    }
 }
 
 void CCEGLView::setMultiMotionTouch(void* systemData)
@@ -221,13 +221,13 @@ void CCEGLView::setMultiMotionTouch(void* systemData)
 CCTouch* CCEGLView::findTouch(int id) 
 {
     CCSetIterator iter;
-	for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
-	{
+    for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
+    {
         CCTouch *touch = (CCTouch*)*iter;
                 
-		if(touch->view() == id)
+        if(touch->view() == id)
             return touch;
-	}
+    }
     
     return NULL;
 }
@@ -235,27 +235,27 @@ CCTouch* CCEGLView::findTouch(int id)
 
 void CCEGLView::setKeyTouch(void* systemData)
 {
-// 	s3eKeyboardEvent* event = (s3eKeyboardEvent*)systemData;
-// 	if (event->m_Pressed)
-// 	{
-// 		if (event->m_Key!=m_Key)
-// 		{
-// 			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
-// 		}
-// 		else
-// 		{
-// 			CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+//     s3eKeyboardEvent* event = (s3eKeyboardEvent*)systemData;
+//     if (event->m_Pressed)
+//     {
+//         if (event->m_Key!=m_Key)
+//         {
+//             CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+//         }
+//         else
+//         {
+//             CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
 // 
-// 		}
-// 		m_Key =event->m_Key;
-// 	}
+//         }
+//         m_Key =event->m_Key;
+//     }
 }
 
 void CCEGLView::setCharTouch( void* systemData )
 {
 //     s3eKeyboardCharEvent* event = (s3eKeyboardCharEvent*)systemData;
-// 	s3eWChar c = event->m_Char ;
-// 	CCIMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&c, 1);
+//     s3eWChar c = event->m_Char ;
+//     CCIMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&c, 1);
 }
 
 bool CCEGLView::isOpenGLReady()
@@ -270,7 +270,7 @@ bool CCEGLView::isIpad()
 
 void CCEGLView::release()
 {
-	IW_CALLSTACK("CCEGLView::release");
+    IW_CALLSTACK("CCEGLView::release");
 
     if (m_isMultiTouch)
     {
@@ -283,31 +283,31 @@ void CCEGLView::release()
         s3ePointerUnRegister(S3E_POINTER_MOTION_EVENT, &MotionEventHandler);
     }
     
-//	s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler);
-//	s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &CharEventHandler);
+//    s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler);
+//    s3eKeyboardUnRegister(S3E_KEYBOARD_KEY_EVENT, &CharEventHandler);
 
-	if (IwGLIsInitialised())
-  		IwGLTerminate();
+    if (IwGLIsInitialised())
+          IwGLTerminate();
 
-	 s3eDeviceRequestQuit() ;
+     s3eDeviceRequestQuit() ;
 
-	 delete this ;
+     delete this ;
 }
 
 void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
-	m_pDelegate = pDelegate;
+    m_pDelegate = pDelegate;
 }
 
 EGLTouchDelegate* CCEGLView::getDelegate(void)
 {
-	return m_pDelegate;
+    return m_pDelegate;
 }
 
 void CCEGLView::swapBuffers()
 {
-	IW_CALLSTACK("CCEGLView::swapBuffers(");
-	IwGLSwapBuffers();
+    IW_CALLSTACK("CCEGLView::swapBuffers(");
+    IwGLSwapBuffers();
 }
 
 bool CCEGLView::canSetContentScaleFactor()
@@ -318,25 +318,25 @@ bool CCEGLView::canSetContentScaleFactor()
 
 void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
-	m_fScreenScaleFactor = contentScaleFactor;
+    m_fScreenScaleFactor = contentScaleFactor;
 }
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
-	if (m_bNotHVGA)
-	{
-		float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-		glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
-					(GLint)(y * factor) + m_rcViewPort.origin.y,
-					(GLint)(w * factor),
-					(GLint)(h * factor));
-	}
-	else
-	{
-		glViewport((GLint)x,
-					(GLint)y,
-					(GLint)w,
-					(GLint)h);
-	}		
+    if (m_bNotHVGA)
+    {
+        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
+                    (GLint)(y * factor) + m_rcViewPort.origin.y,
+                    (GLint)(w * factor),
+                    (GLint)(h * factor));
+    }
+    else
+    {
+        glViewport((GLint)x,
+                    (GLint)y,
+                    (GLint)w,
+                    (GLint)h);
+    }        
 }
 
 void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
@@ -355,43 +355,43 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
             (GLint)y,
             (GLint)w,
             (GLint)h);
-    }		
+    }        
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-	if(bOpen && s3eOSReadStringAvailable() == S3E_TRUE) {
-		const char* inputText = s3eOSReadStringUTF8("") ;
-		if( inputText!=0 ) {
-			CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(inputText, strlen(inputText));
-		}
-	}
+    if(bOpen && s3eOSReadStringAvailable() == S3E_TRUE) {
+        const char* inputText = s3eOSReadStringUTF8("") ;
+        if( inputText!=0 ) {
+            CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(inputText, strlen(inputText));
+        }
+    }
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
-	if( !m_pInstance ) {
-		m_pInstance = new CCEGLView() ;
-	}
-	return *m_pInstance;
+    if( !m_pInstance ) {
+        m_pInstance = new CCEGLView() ;
+    }
+    return *m_pInstance;
 }
-	
+    
 float CCEGLView::getScreenScaleFactor()
 {
-	return m_fScreenScaleFactor;
+    return m_fScreenScaleFactor;
 }
-	
+    
 CCRect CCEGLView::getViewPort()
 {
-	if (m_bNotHVGA)
-	{
-		return m_rcViewPort;
-	}
-	else
-	{
-		CCRect rect(0, 0, 0, 0);
-		return rect;
-	}
+    if (m_bNotHVGA)
+    {
+        return m_rcViewPort;
+    }
+    else
+    {
+        CCRect rect(0, 0, 0, 0);
+        return rect;
+    }
 }
 
 

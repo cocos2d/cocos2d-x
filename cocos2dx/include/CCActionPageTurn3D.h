@@ -40,11 +40,11 @@ NS_CC_BEGIN
 class CC_DLL CCPageTurn3D : public CCGrid3DAction
 {
 public:
-	virtual void update(ccTime time);
+    virtual void update(ccTime time);
 
 public:
-	/** create the action */
-	static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, ccTime time);
+    /** create the action */
+    static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, ccTime time);
 };
 
 NS_CC_END

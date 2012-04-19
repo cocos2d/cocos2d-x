@@ -11,7 +11,7 @@ Settings settings;
 
 enum 
 {
-	kTagBox2DNode,
+    kTagBox2DNode,
 }; 
 
 
@@ -22,9 +22,9 @@ enum
 //------------------------------------------------------------------
 enum
 {
-	IDC_NEXT = 100,
-	IDC_BACK,
-	IDC_RESTART
+    IDC_NEXT = 100,
+    IDC_BACK,
+    IDC_RESTART
 };
 
 MenuLayer::MenuLayer(void)
@@ -37,95 +37,95 @@ MenuLayer::~MenuLayer(void)
 
 MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 {
-	MenuLayer* pLayer = new MenuLayer();
-	pLayer->initWithEntryID(entryId);
-	pLayer->autorelease();
+    MenuLayer* pLayer = new MenuLayer();
+    pLayer->initWithEntryID(entryId);
+    pLayer->autorelease();
 
-	return pLayer;
+    return pLayer;
 }
 
 bool MenuLayer::initWithEntryID(int entryId)
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
-	
-	m_entryID = entryId;
-	
-	setIsTouchEnabled( true );
-	
-	Box2DView* view = Box2DView::viewWithEntryID( entryId );
-	addChild(view, 0, kTagBox2DNode);
-	view->setScale(15);
-	view->setAnchorPoint( ccp(0,0) );
-	view->setPosition( ccp(s.width/2, s.height/3) );
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    m_entryID = entryId;
+    
+    setIsTouchEnabled( true );
+    
+    Box2DView* view = Box2DView::viewWithEntryID( entryId );
+    addChild(view, 0, kTagBox2DNode);
+    view->setScale(15);
+    view->setAnchorPoint( ccp(0,0) );
+    view->setPosition( ccp(s.width/2, s.height/3) );
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//	CCLabelBMFont* label = CCLabelBMFont::labelWithString(view->title().c_str(),  "fonts/arial16.fnt");
-//#else	
-	CCLabelTTF* label = CCLabelTTF::labelWithString(view->title().c_str(), "Arial", 28);
+//    CCLabelBMFont* label = CCLabelBMFont::labelWithString(view->title().c_str(),  "fonts/arial16.fnt");
+//#else    
+    CCLabelTTF* label = CCLabelTTF::labelWithString(view->title().c_str(), "Arial", 28);
 //#endif
-	addChild(label, 1);
-	label->setPosition( ccp(s.width/2, s.height-50) );
+    addChild(label, 1);
+    label->setPosition( ccp(s.width/2, s.height-50) );
 
-	CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(MenuLayer::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(MenuLayer::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(MenuLayer::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(MenuLayer::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(MenuLayer::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(MenuLayer::nextCallback) );
 
-	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CCPointZero );
-	item1->setPosition( ccp( s.width/2 - 100,30) );
-	item2->setPosition( ccp( s.width/2, 30) );
-	item3->setPosition( ccp( s.width/2 + 100,30) );
-	
-	addChild(menu, 1);	
+    menu->setPosition( CCPointZero );
+    item1->setPosition( ccp( s.width/2 - 100,30) );
+    item2->setPosition( ccp( s.width/2, 30) );
+    item3->setPosition( ccp( s.width/2 + 100,30) );
+    
+    addChild(menu, 1);    
 
-	return true;
+    return true;
 }
 
 void MenuLayer::restartCallback(CCObject* sender)
 {
-	CCScene* s = new Box2dTestBedScene();
-	MenuLayer* box = MenuLayer::menuWithEntryID(m_entryID);
-	s->addChild( box );
-	CCDirector::sharedDirector()->replaceScene( s );
+    CCScene* s = new Box2dTestBedScene();
+    MenuLayer* box = MenuLayer::menuWithEntryID(m_entryID);
+    s->addChild( box );
+    CCDirector::sharedDirector()->replaceScene( s );
     s->release();
 }
 
 void MenuLayer::nextCallback(CCObject* sender)
 {
-	CCScene* s = new Box2dTestBedScene();
-	int next = m_entryID + 1;
-	if( next >= g_totalEntries)
-		next = 0;
-	MenuLayer* box = MenuLayer::menuWithEntryID(next);
-	s->addChild( box );
-	CCDirector::sharedDirector()->replaceScene( s );
+    CCScene* s = new Box2dTestBedScene();
+    int next = m_entryID + 1;
+    if( next >= g_totalEntries)
+        next = 0;
+    MenuLayer* box = MenuLayer::menuWithEntryID(next);
+    s->addChild( box );
+    CCDirector::sharedDirector()->replaceScene( s );
     s->release();
 }
 
 void MenuLayer::backCallback(CCObject* sender)
 {
-	CCScene* s = new Box2dTestBedScene();
-	int next = m_entryID - 1;
-	if( next < 0 ) {
-		next = g_totalEntries - 1;
-	}
-	
-	MenuLayer* box = MenuLayer::menuWithEntryID(next);
+    CCScene* s = new Box2dTestBedScene();
+    int next = m_entryID - 1;
+    if( next < 0 ) {
+        next = g_totalEntries - 1;
+    }
+    
+    MenuLayer* box = MenuLayer::menuWithEntryID(next);
 
-	s->addChild( box );
-	CCDirector::sharedDirector()->replaceScene( s );
+    s->addChild( box );
+    CCDirector::sharedDirector()->replaceScene( s );
     s->release();
 }
 
 void MenuLayer::registerWithTouchDispatcher()
 {
-	CCDirector* pDirector = CCDirector::sharedDirector();
+    CCDirector* pDirector = CCDirector::sharedDirector();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 bool MenuLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-	return true;
+    return true;
 }
 
 //-(void) MenuLayer::ccTouchEnded:(UITouch *)touch withEvent:(CCEvent *)event
@@ -138,17 +138,17 @@ bool MenuLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void MenuLayer::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView();	
-	CCPoint prevLocation = touch->previousLocationInView();	
-	
-	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
-	prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
-	
-	CCPoint diff = ccpSub(touchLocation,prevLocation);
-	
-	CCNode *node = getChildByTag( kTagBox2DNode );
-	CCPoint currentPos = node->getPosition();
-	node->setPosition( ccpAdd(currentPos, diff) );
+    CCPoint touchLocation = touch->locationInView();    
+    CCPoint prevLocation = touch->previousLocationInView();    
+    
+    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
+    
+    CCPoint diff = ccpSub(touchLocation,prevLocation);
+    
+    CCNode *node = getChildByTag( kTagBox2DNode );
+    CCPoint currentPos = node->getPosition();
+    node->setPosition( ccpAdd(currentPos, diff) );
 }
 
 //------------------------------------------------------------------
@@ -162,99 +162,99 @@ Box2DView::Box2DView(void)
 
 Box2DView* Box2DView::viewWithEntryID(int entryId)
 {
-	Box2DView* pView = new Box2DView();
-	pView->initWithEntryID(entryId);
-	pView->autorelease();
+    Box2DView* pView = new Box2DView();
+    pView->initWithEntryID(entryId);
+    pView->autorelease();
 
-	return pView;
+    return pView;
 }
 
 bool Box2DView::initWithEntryID(int entryId)
 {    
-//	setIsAccelerometerEnabled( true );
-	setIsTouchEnabled( true );
+//    setIsAccelerometerEnabled( true );
+    setIsTouchEnabled( true );
 
-	schedule( schedule_selector(Box2DView::tick) );
+    schedule( schedule_selector(Box2DView::tick) );
 
-	m_entry = g_testEntries + entryId;
-	m_test = m_entry->createFcn();		
-		
+    m_entry = g_testEntries + entryId;
+    m_test = m_entry->createFcn();        
+        
     return true;
 }
 
 std::string Box2DView::title()
 {
-	return std::string(m_entry->name);
+    return std::string(m_entry->name);
 }
 
 void Box2DView::tick(ccTime dt)
 {
-	m_test->Step(&settings);
+    m_test->Step(&settings);
 }
 
 void Box2DView::draw()
 {
-	CCLayer::draw();
+    CCLayer::draw();
 
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
-	kmGLPushMatrix();
+    kmGLPushMatrix();
 
-	m_test->m_world->DrawDebugData();
+    m_test->m_world->DrawDebugData();
 
-	kmGLPopMatrix();
+    kmGLPopMatrix();
 
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
 }
 
 Box2DView::~Box2DView()
 {
-	delete m_test;
+    delete m_test;
 }
 
 void Box2DView::registerWithTouchDispatcher()
 {
-	// higher priority than dragging
-	CCDirector* pDirector = CCDirector::sharedDirector();
+    // higher priority than dragging
+    CCDirector* pDirector = CCDirector::sharedDirector();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
 }
 
 bool Box2DView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView();	
-	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint touchLocation = touch->locationInView();    
+    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 
-	CCPoint nodePosition = convertToNodeSpace( touchLocation );
-//	NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
+    CCPoint nodePosition = convertToNodeSpace( touchLocation );
+//    NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
 
-	return m_test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));	
+    return m_test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));    
 }
 
 void Box2DView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView();	
-	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
-	CCPoint nodePosition = convertToNodeSpace( touchLocation );
-	
-	m_test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));		
+    CCPoint touchLocation = touch->locationInView();    
+    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint nodePosition = convertToNodeSpace( touchLocation );
+    
+    m_test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));        
 }
 
 void Box2DView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-	CCPoint touchLocation = touch->locationInView();	
-	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
-	CCPoint nodePosition = convertToNodeSpace( touchLocation );
-	
-	m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
+    CCPoint touchLocation = touch->locationInView();    
+    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint nodePosition = convertToNodeSpace( touchLocation );
+    
+    m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
 }
 
 // void Box2DView::accelerometer(UIAccelerometer* accelerometer, CCAcceleration* acceleration)
 // {
-// 	//// Only run for valid values
-// 	//if (acceleration.y!=0 && acceleration.x!=0)
-// 	//{
-// 	//	if (test) test->SetGravity((float)-acceleration.y,(float)acceleration.x);
-// 	//}
+//     //// Only run for valid values
+//     //if (acceleration.y!=0 && acceleration.x!=0)
+//     //{
+//     //    if (test) test->SetGravity((float)-acceleration.y,(float)acceleration.x);
+//     //}
 // } 
 
 

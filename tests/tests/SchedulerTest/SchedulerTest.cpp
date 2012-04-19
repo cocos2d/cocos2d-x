@@ -2,7 +2,7 @@
 #include "../testResource.h"
 
 enum {
-	kTagAnimationDance = 1,
+    kTagAnimationDance = 1,
 };
 
 #define MAX_TESTS           11
@@ -51,24 +51,24 @@ CCLayer* createSchedulerTest(int nIndex)
 CCLayer* nextSchedulerTest()
 {
 
-	sceneIdx++;
-	sceneIdx = sceneIdx % MAX_TESTS;
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_TESTS;
 
-	return createSchedulerTest(sceneIdx);
+    return createSchedulerTest(sceneIdx);
 }
 
 CCLayer* backSchedulerTest()
 {
-	sceneIdx--;
-	if( sceneIdx < 0 )
-		sceneIdx += MAX_TESTS;
+    sceneIdx--;
+    if( sceneIdx < 0 )
+        sceneIdx += MAX_TESTS;
 
-	return createSchedulerTest(sceneIdx);
+    return createSchedulerTest(sceneIdx);
 }
 
 CCLayer* restartSchedulerTest()
 {
-	return createSchedulerTest(sceneIdx);
+    return createSchedulerTest(sceneIdx);
 }
 
 //------------------------------------------------------------------
@@ -214,7 +214,7 @@ void SchedulerPauseResume::tick2(ccTime dt)
 
 void SchedulerPauseResume::pause(ccTime dt)
 {
-	CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
+    CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
 }
 
 std::string SchedulerPauseResume::title()

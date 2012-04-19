@@ -34,10 +34,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "kazmath/GL/mat4stack.h"
 
 void km_mat4_stack_initialize(km_mat4_stack* stack) {
-	stack->stack = (kmMat4*) malloc(sizeof(kmMat4) * INITIAL_SIZE); //allocate the memory
-	stack->capacity = INITIAL_SIZE; //Set the capacity to 10
-	stack->top = NULL; //Set the top to NULL
-	stack->item_count = 0;
+    stack->stack = (kmMat4*) malloc(sizeof(kmMat4) * INITIAL_SIZE); //allocate the memory
+    stack->capacity = INITIAL_SIZE; //Set the capacity to 10
+    stack->top = NULL; //Set the top to NULL
+    stack->item_count = 0;
 };
 
 void km_mat4_stack_push(km_mat4_stack* stack, const kmMat4* item)
@@ -48,7 +48,7 @@ void km_mat4_stack_push(km_mat4_stack* stack, const kmMat4* item)
 
     if(stack->item_count >= stack->capacity)
     {
-		kmMat4* temp = NULL;
+        kmMat4* temp = NULL;
         stack->capacity += INCREMENT;
         temp = stack->stack;
         stack->stack = (kmMat4*) malloc(stack->capacity*sizeof(kmMat4));
@@ -68,7 +68,7 @@ void km_mat4_stack_pop(km_mat4_stack* stack, kmMat4* pOut)
 
 void km_mat4_stack_release(km_mat4_stack* stack) {
     free(stack->stack);
-	stack->top = NULL;
-	stack->item_count = 0;
-	stack->capacity = 0;
+    stack->top = NULL;
+    stack->item_count = 0;
+    stack->capacity = 0;
 }

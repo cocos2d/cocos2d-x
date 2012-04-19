@@ -27,8 +27,8 @@ THE SOFTWARE.
 extern "C"
 
 {
-	extern void enableAccelerometerJNI();
-	extern void disableAccelerometerJNI();
+    extern void enableAccelerometerJNI();
+    extern void disableAccelerometerJNI();
 }
 
 #endif // __ANDROID_SENSOR_JNI_H__

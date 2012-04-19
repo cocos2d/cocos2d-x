@@ -50,57 +50,57 @@ All features from CCNode are valid, plus the following new features:
 class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
 {
 public:
-	CCLayer();
-	virtual ~CCLayer();
-	bool init();
-	static CCLayer *node(void);
+    CCLayer();
+    virtual ~CCLayer();
+    bool init();
+    static CCLayer *node(void);
 
-	virtual void onEnter();
-	virtual void onExit();
+    virtual void onEnter();
+    virtual void onExit();
     virtual void onEnterTransitionDidFinish();
     
     // default implements are used to call script callback if exist
-	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
-	// default implements are used to call script callback if exist
-	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
-	
+    // default implements are used to call script callback if exist
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
+    
     virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
 
-	/** If isTouchEnabled, this method is called onEnter. Override it to change the
-	way CCLayer receives touch events.
-	( Default: CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
-	Example:
-	void CCLayer::registerWithTouchDispatcher()
-	{
-	CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
-	}
-	@since v0.8.0
-	*/
-	virtual void registerWithTouchDispatcher(void);
+    /** If isTouchEnabled, this method is called onEnter. Override it to change the
+    way CCLayer receives touch events.
+    ( Default: CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
+    Example:
+    void CCLayer::registerWithTouchDispatcher()
+    {
+    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
+    }
+    @since v0.8.0
+    */
+    virtual void registerWithTouchDispatcher(void);
     
     /** Register script touch events handler */
     void registerScriptTouchHandler(int nHandler, bool bIsMultiTouches = false, int nPriority = INT_MIN, bool bSwallowsTouches = false);
     /** Unregister script touch events handler */
     void unregisterScriptTouchHandler(void);
 
-	/** whether or not it will receive Touch events.
-	You can enable / disable touch events with this property.
-	Only the touches of this node will be affected. This "method" is not propagated to it's children.
-	@since v0.8.1
-	*/
-	CC_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
-	/** whether or not it will receive Accelerometer events
-	You can enable / disable accelerometer events with this property.
-	@since v0.8.1
-	*/
-	CC_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+    /** whether or not it will receive Touch events.
+    You can enable / disable touch events with this property.
+    Only the touches of this node will be affected. This "method" is not propagated to it's children.
+    @since v0.8.1
+    */
+    CC_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
+    /** whether or not it will receive Accelerometer events
+    You can enable / disable accelerometer events with this property.
+    @since v0.8.1
+    */
+    CC_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
@@ -133,21 +133,21 @@ return NULL; \
 }; 
 
 #define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
-	static layer* node(__PARAMTYPE__ __PARAM__) \
+    static layer* node(__PARAMTYPE__ __PARAM__) \
     { \
-	    layer *pRet = new layer(); \
-	    if (pRet && pRet->init(__PARAM__)) \
+        layer *pRet = new layer(); \
+        if (pRet && pRet->init(__PARAM__)) \
         { \
-	        pRet->autorelease(); \
-	        return pRet; \
-	    } \
+            pRet->autorelease(); \
+            return pRet; \
+        } \
         else \
         { \
-	        delete pRet; \
-	        pRet = NULL; \
-	        return NULL; \
-	    } \
-	}
+            delete pRet; \
+            pRet = NULL; \
+            return NULL; \
+        } \
+    }
 
 
 //
@@ -162,50 +162,50 @@ All features from CCLayer are valid, plus the following new features:
 class CC_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
-	ccVertex2F m_pSquareVertices[4];
-	ccColor4F  m_pSquareColors[4];
+    ccVertex2F m_pSquareVertices[4];
+    ccColor4F  m_pSquareColors[4];
 
 public:
 
-	CCLayerColor();
-	virtual ~CCLayerColor();
+    CCLayerColor();
+    virtual ~CCLayerColor();
 
-	virtual void draw();
-	virtual void setContentSize(const CCSize& var);
+    virtual void draw();
+    virtual void setContentSize(const CCSize& var);
 
-	/** creates a CCLayer with color, width and height in Points */
-	static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
-	/** creates a CCLayer with color. Width and height are the window size. */
-	static CCLayerColor * layerWithColor(const ccColor4B& color);
+    /** creates a CCLayer with color, width and height in Points */
+    static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
+    /** creates a CCLayer with color. Width and height are the window size. */
+    static CCLayerColor * layerWithColor(const ccColor4B& color);
 
-	virtual bool init();
-	/** initializes a CCLayer with color, width and height in Points */
-	virtual bool initWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
-	/** initializes a CCLayer with color. Width and height are the window size. */
-	virtual bool initWithColor(const ccColor4B& color);
+    virtual bool init();
+    /** initializes a CCLayer with color, width and height in Points */
+    virtual bool initWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
+    /** initializes a CCLayer with color. Width and height are the window size. */
+    virtual bool initWithColor(const ccColor4B& color);
 
-	/** change width in Points*/
-	void changeWidth(GLfloat w);
-	/** change height in Points*/
-	void changeHeight(GLfloat h);
-	/** change width and height in Points
-	@since v0.8
-	*/
-	void changeWidthAndHeight(GLfloat w ,GLfloat h);
+    /** change width in Points*/
+    void changeWidth(GLfloat w);
+    /** change height in Points*/
+    void changeHeight(GLfloat h);
+    /** change width and height in Points
+    @since v0.8
+    */
+    void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
-	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
-	/** Color: conforms to CCRGBAProtocol protocol */
-	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
-	/** BlendFunction. Conforms to CCBlendProtocol protocol */
-	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+    /** Opacity: conforms to CCRGBAProtocol protocol */
+    CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
+    /** Color: conforms to CCRGBAProtocol protocol */
+    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
+    /** BlendFunction. Conforms to CCBlendProtocol protocol */
+    CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
-	virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool getIsOpacityModifyRGB(void) { return false;}
     LAYER_NODE_FUNC(CCLayerColor);
     
 protected:
-	virtual void updateColor();
+    virtual void updateColor();
 };
 
 //
@@ -246,11 +246,11 @@ public:
     /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
     virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
-	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_startColor, StartColor)
-	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_endColor, EndColor)
+    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_startColor, StartColor)
+    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_endColor, EndColor)
     CC_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
     CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
-	CC_PROPERTY_PASS_BY_REF(CCPoint, m_AlongVector, Vector)
+    CC_PROPERTY_PASS_BY_REF(CCPoint, m_AlongVector, Vector)
 
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
     Default: YES
@@ -270,34 +270,34 @@ Features:
 class CC_DLL CCLayerMultiplex : public CCLayer
 {
 protected:
-	unsigned int m_nEnabledLayer;
-	CCArray*     m_pLayers;
+    unsigned int m_nEnabledLayer;
+    CCArray*     m_pLayers;
 public:
 
-	CCLayerMultiplex();
-	virtual ~CCLayerMultiplex();
+    CCLayerMultiplex();
+    virtual ~CCLayerMultiplex();
 
-	/** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
-	static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
+    /** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
+    static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
 
     /**
-	 * lua script can not init with undetermined number of variables
-	 * so add these functinons to be used with lua.
-	 */
-	static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
-	void addLayer(CCLayer* layer);
-	bool initWithLayer(CCLayer* layer);
+     * lua script can not init with undetermined number of variables
+     * so add these functinons to be used with lua.
+     */
+    static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
+    void addLayer(CCLayer* layer);
+    bool initWithLayer(CCLayer* layer);
 
-	/** initializes a MultiplexLayer with one or more layers using a variable argument list. */
-	bool initWithLayers(CCLayer* layer, va_list params);
-	/** switches to a certain layer indexed by n. 
-	The current (old) layer will be removed from it's parent with 'cleanup:YES'.
-	*/
-	void switchTo(unsigned int n);
-	/** release the current layer and switches to another layer indexed by n.
-	The current (old) layer will be removed from it's parent with 'cleanup:YES'.
-	*/
-	void switchToAndReleaseMe(unsigned int n);
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
+    bool initWithLayers(CCLayer* layer, va_list params);
+    /** switches to a certain layer indexed by n. 
+    The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+    */
+    void switchTo(unsigned int n);
+    /** release the current layer and switches to another layer indexed by n.
+    The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+    */
+    void switchToAndReleaseMe(unsigned int n);
     
     LAYER_NODE_FUNC(CCLayerMultiplex);
 };

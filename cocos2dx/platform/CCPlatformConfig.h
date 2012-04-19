@@ -44,7 +44,7 @@ build for which target platform
 #define CC_PLATFORM_MARMALADE          4
 #define CC_PLATFORM_LINUX              5
 #define CC_PLATFORM_BADA               6
-#define CC_PLATFORM_QNX				   7
+#define CC_PLATFORM_QNX                   7
 
 // Determine tartet platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN

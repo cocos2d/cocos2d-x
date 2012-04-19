@@ -27,4 +27,4 @@ THE SOFTWARE.
 
 #include "../platform/CCEGLView_platform.h"
 
-#endif	// end of __CC_EGLVIEW_H__
+#endif    // end of __CC_EGLVIEW_H__

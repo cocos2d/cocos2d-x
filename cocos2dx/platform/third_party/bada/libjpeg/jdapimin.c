@@ -33,12 +33,12 @@ jpeg_CreateDecompress (j_decompress_ptr cinfo, int version, size_t structsize)
   int i;
 
   /* Guard against version mismatches between library and caller. */
-  cinfo->mem = NULL;		/* so jpeg_destroy knows mem mgr not called */
+  cinfo->mem = NULL;        /* so jpeg_destroy knows mem mgr not called */
   if (version != JPEG_LIB_VERSION)
     ERREXIT2(cinfo, JERR_BAD_LIB_VERSION, JPEG_LIB_VERSION, version);
   if (structsize != SIZEOF(struct jpeg_decompress_struct))
     ERREXIT2(cinfo, JERR_BAD_STRUCT_SIZE, 
-	     (int) SIZEOF(struct jpeg_decompress_struct), (int) structsize);
+         (int) SIZEOF(struct jpeg_decompress_struct), (int) structsize);
 
   /* For debugging purposes, we zero the whole master structure.
    * But the application has already set the err pointer, and may have set
@@ -129,15 +129,15 @@ default_decompress_parms (j_decompress_ptr cinfo)
     } else if (cinfo->saw_Adobe_marker) {
       switch (cinfo->Adobe_transform) {
       case 0:
-	cinfo->jpeg_color_space = JCS_RGB;
-	break;
+    cinfo->jpeg_color_space = JCS_RGB;
+    break;
       case 1:
-	cinfo->jpeg_color_space = JCS_YCbCr;
-	break;
+    cinfo->jpeg_color_space = JCS_YCbCr;
+    break;
       default:
-	WARNMS1(cinfo, JWRN_ADOBE_XFORM, cinfo->Adobe_transform);
-	cinfo->jpeg_color_space = JCS_YCbCr; /* assume it's YCbCr */
-	break;
+    WARNMS1(cinfo, JWRN_ADOBE_XFORM, cinfo->Adobe_transform);
+    cinfo->jpeg_color_space = JCS_YCbCr; /* assume it's YCbCr */
+    break;
       }
     } else {
       /* Saw no special markers, try to guess from the component IDs */
@@ -146,12 +146,12 @@ default_decompress_parms (j_decompress_ptr cinfo)
       int cid2 = cinfo->comp_info[2].component_id;
 
       if (cid0 == 1 && cid1 == 2 && cid2 == 3)
-	cinfo->jpeg_color_space = JCS_YCbCr; /* assume JFIF w/out marker */
+    cinfo->jpeg_color_space = JCS_YCbCr; /* assume JFIF w/out marker */
       else if (cid0 == 82 && cid1 == 71 && cid2 == 66)
-	cinfo->jpeg_color_space = JCS_RGB; /* ASCII 'R', 'G', 'B' */
+    cinfo->jpeg_color_space = JCS_RGB; /* ASCII 'R', 'G', 'B' */
       else {
-	TRACEMS3(cinfo, 1, JTRC_UNKNOWN_IDS, cid0, cid1, cid2);
-	cinfo->jpeg_color_space = JCS_YCbCr; /* assume it's YCbCr */
+    TRACEMS3(cinfo, 1, JTRC_UNKNOWN_IDS, cid0, cid1, cid2);
+    cinfo->jpeg_color_space = JCS_YCbCr; /* assume it's YCbCr */
       }
     }
     /* Always guess RGB is proper output colorspace. */
@@ -162,15 +162,15 @@ default_decompress_parms (j_decompress_ptr cinfo)
     if (cinfo->saw_Adobe_marker) {
       switch (cinfo->Adobe_transform) {
       case 0:
-	cinfo->jpeg_color_space = JCS_CMYK;
-	break;
+    cinfo->jpeg_color_space = JCS_CMYK;
+    break;
       case 2:
-	cinfo->jpeg_color_space = JCS_YCCK;
-	break;
+    cinfo->jpeg_color_space = JCS_YCCK;
+    break;
       default:
-	WARNMS1(cinfo, JWRN_ADOBE_XFORM, cinfo->Adobe_transform);
-	cinfo->jpeg_color_space = JCS_YCCK; /* assume it's YCCK */
-	break;
+    WARNMS1(cinfo, JWRN_ADOBE_XFORM, cinfo->Adobe_transform);
+    cinfo->jpeg_color_space = JCS_YCCK; /* assume it's YCCK */
+    break;
       }
     } else {
       /* No special markers, assume straight CMYK. */
@@ -186,7 +186,7 @@ default_decompress_parms (j_decompress_ptr cinfo)
   }
 
   /* Set defaults for other decompression parameters. */
-  cinfo->scale_num = cinfo->block_size;		/* 1:1 scaling */
+  cinfo->scale_num = cinfo->block_size;        /* 1:1 scaling */
   cinfo->scale_denom = cinfo->block_size;
   cinfo->output_gamma = 1.0;
   cinfo->buffered_image = FALSE;
@@ -254,7 +254,7 @@ jpeg_read_header (j_decompress_ptr cinfo, boolean require_image)
     retcode = JPEG_HEADER_OK;
     break;
   case JPEG_REACHED_EOI:
-    if (require_image)		/* Complain if application wanted an image */
+    if (require_image)        /* Complain if application wanted an image */
       ERREXIT(cinfo, JERR_NO_IMAGE);
     /* Reset to start state; it would be safer to require the application to
      * call jpeg_abort, but we can't change it now for compatibility reasons.
@@ -386,7 +386,7 @@ jpeg_finish_decompress (j_decompress_ptr cinfo)
   /* Read until EOI */
   while (! cinfo->inputctl->eoi_reached) {
     if ((*cinfo->inputctl->consume_input) (cinfo) == JPEG_SUSPENDED)
-      return FALSE;		/* Suspend, come back later */
+      return FALSE;        /* Suspend, come back later */
   }
   /* Do final cleanup */
   (*cinfo->src->term_source) (cinfo);

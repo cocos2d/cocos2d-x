@@ -9,44 +9,44 @@
 class MotionStreakTest : public CCLayer
 {
 public:
-	MotionStreakTest(void);
-	~MotionStreakTest(void);
+    MotionStreakTest(void);
+    ~MotionStreakTest(void);
 
-	virtual std::string title();
-	virtual void onEnter();
+    virtual std::string title();
+    virtual void onEnter();
 
-	void restartCallback(CCObject* pSender);
-	void nextCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
-	void modeCallback(CCObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
+    void modeCallback(CCObject* pSender);
 protected:
-	CCMotionStreak *streak;
+    CCMotionStreak *streak;
 };
 
 class MotionStreakTest1 : public MotionStreakTest
 {
 protected:
-	CCNode*		m_root;
-	CCNode*		m_target;
-	CCMotionStreak*		m_streak;
+    CCNode*        m_root;
+    CCNode*        m_target;
+    CCMotionStreak*        m_streak;
 
 public:
-	virtual void onEnter();
-	void onUpdate(ccTime delta);
-	virtual std::string title();
+    virtual void onEnter();
+    void onUpdate(ccTime delta);
+    virtual std::string title();
 };
 
 class MotionStreakTest2 : public MotionStreakTest
 {
 protected:
-	CCNode*		m_root;
-	CCNode*		m_target;
-	CCMotionStreak*		m_streak;
+    CCNode*        m_root;
+    CCNode*        m_target;
+    CCMotionStreak*        m_streak;
 
 public:
-	virtual void onEnter();
-	void ccTouchesMoved(CCSet* touches, CCEvent* event);
-	virtual std::string title();
+    virtual void onEnter();
+    void ccTouchesMoved(CCSet* touches, CCEvent* event);
+    virtual std::string title();
 };
 
 class MotionStreakTestScene : public TestScene

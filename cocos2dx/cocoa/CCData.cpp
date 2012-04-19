@@ -39,7 +39,7 @@ CCData::CCData(void)
 
 CCData::~CCData(void)
 {
-	CC_SAFE_DELETE_ARRAY(m_pData);
+    CC_SAFE_DELETE_ARRAY(m_pData);
 }
 
 CCData* CCData::dataWithContentsOfFile(const string &strPath)
@@ -53,16 +53,16 @@ CCData* CCData::dataWithContentsOfFile(const string &strPath)
         return NULL;
     }
 
-	CCData *pRet = new CCData();
+    CCData *pRet = new CCData();
     pRet->m_pData = new char[nSize];
     memcpy(pRet->m_pData, pBuffer, nSize);
 
-	return pRet;
+    return pRet;
 }
 
 void* CCData::bytes(void)
 {
-	return m_pData;
+    return m_pData;
 }
 
 //@todo implement
@@ -70,7 +70,7 @@ CCData* CCData::dataWithBytes(unsigned char *pBytes, int size)
 {
     CC_UNUSED_PARAM(pBytes);
     CC_UNUSED_PARAM(size);
-	return NULL;
+    return NULL;
 }
 
 NS_CC_END

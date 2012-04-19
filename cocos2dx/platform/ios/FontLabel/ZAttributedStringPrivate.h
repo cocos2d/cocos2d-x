@@ -10,8 +10,8 @@
 #import "ZAttributedString.h"
 
 @interface ZAttributeRun : NSObject <NSCopying, NSCoding> {
-	NSUInteger _index;
-	NSMutableDictionary *_attributes;
+    NSUInteger _index;
+    NSMutableDictionary *_attributes;
 }
 @property (nonatomic, readonly) NSUInteger index;
 @property (nonatomic, readonly) NSMutableDictionary *attributes;
