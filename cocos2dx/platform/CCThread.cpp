@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCThread.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCThread::~CCThread()
 {
@@ -36,4 +36,4 @@ void CCThread::createAutoreleasePool()
 
 }
 
-NS_CC_END;
+NS_CC_END

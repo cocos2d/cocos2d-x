@@ -41,28 +41,28 @@ NS_CC_BEGIN
 
 class CC_DLL CCControlColourPicker: public CCControl
 {
-	CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_colorValue, ColorValue);
-	virtual void setColorValue(const ccColor3B& colorValue);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_colorValue, ColorValue);
+    virtual void setColorValue(const ccColor3B& colorValue);
 
 protected:
-	HSV m_hsv;
-	CCControlSaturationBrightnessPicker* m_colourPicker;
+    HSV m_hsv;
+    CCControlSaturationBrightnessPicker* m_colourPicker;
     CCControlHuePicker* m_huePicker;
 
-	CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);   
-	
+    CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);   
+    
 public:
-	static CCControlColourPicker* colourPicker();
-	virtual bool init();
-	//virtual ~CCControlColourPicker();
-	void hueSliderValueChanged(CCObject * sender);
-	void colourSliderValueChanged(CCObject * sender);
+    static CCControlColourPicker* colourPicker();
+    virtual bool init();
+    //virtual ~CCControlColourPicker();
+    void hueSliderValueChanged(CCObject * sender);
+    void colourSliderValueChanged(CCObject * sender);
 
-protected:	
-	void updateControlPicker();
-	void updateHueAndControlPicker();
-	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
-	
+protected:    
+    void updateControlPicker();
+    void updateHueAndControlPicker();
+    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
+    
 };
 
 NS_CC_END

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCIMEDelegate.h"
 #include "CCTouchDelegateProtocol.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCTextFieldTTF;
 
@@ -37,7 +37,7 @@ class CC_DLL CCTextFieldDelegate
 {
 public:
     /**
-    @brief	If the sender doesn't want to attach with IME, return true;
+    @brief    If the sender doesn't want to attach with IME, return true;
     */
     virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender)
     { 
@@ -46,7 +46,7 @@ public:
     }
 
     /**
-    @brief	If the sender doesn't want to detach with IME, return true;
+    @brief    If the sender doesn't want to detach with IME, return true;
     */
     virtual bool onTextFieldDetachWithIME(CCTextFieldTTF * sender)
     {
@@ -55,7 +55,7 @@ public:
     }
 
     /**
-    @brief	If the sender doesn't want to insert the text, return true;
+    @brief    If the sender doesn't want to insert the text, return true;
     */
     virtual bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen)
     {
@@ -66,7 +66,7 @@ public:
     }
 
     /**
-    @brief	If the sender doesn't want to delete the delText, return true;
+    @brief    If the sender doesn't want to delete the delText, return true;
     */
     virtual bool onTextFieldDeleteBackward(CCTextFieldTTF * sender, const char * delText, int nLen)
     {
@@ -77,7 +77,7 @@ public:
     }
 
     /**
-    @brief	If doesn't want draw sender as default, return true.
+    @brief    If doesn't want draw sender as default, return true.
     */
     virtual bool onDraw(CCTextFieldTTF * sender)
     {
@@ -87,7 +87,7 @@ public:
 };
 
 /**
-@brief	A simple text input field with TTF font.
+@brief    A simple text input field with TTF font.
 */
 class CC_DLL CCTextFieldTTF : public CCLabelTTF, public CCIMEDelegate
 {
@@ -107,12 +107,12 @@ public:
     bool initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
 
     /**
-    @brief	Open keyboard and receive input text.
+    @brief    Open keyboard and receive input text.
     */
     virtual bool attachWithIME();
 
     /**
-    @brief	End text input  and close keyboard.
+    @brief    End text input  and close keyboard.
     */
     virtual bool detachWithIME();
 
@@ -122,7 +122,7 @@ public:
     
     CC_SYNTHESIZE(CCTextFieldDelegate *, m_pDelegate, Delegate);
     CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
-	CC_SYNTHESIZE_PASS_BY_REF(ccColor3B, m_ColorSpaceHolder, ColorSpaceHolder);
+    CC_SYNTHESIZE_PASS_BY_REF(ccColor3B, m_ColorSpaceHolder, ColorSpaceHolder);
 
     // input text property
 public:
@@ -156,6 +156,6 @@ private:
     LengthStack * m_pLens;
 };
 
-NS_CC_END;
+NS_CC_END
 
-#endif	// __CC_TEXT_FIELD_H__
+#endif    // __CC_TEXT_FIELD_H__

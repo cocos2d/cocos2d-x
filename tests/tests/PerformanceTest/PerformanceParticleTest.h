@@ -27,9 +27,9 @@ public:
     virtual void doTest() = 0;
 
 protected:
-    int			lastRenderedCount;
-    int			quantityParticles;
-    int			subtestNumber;
+    int            lastRenderedCount;
+    int            quantityParticles;
+    int            subtestNumber;
 };
 
 class ParticlePerformTest1 : public ParticleMainScene

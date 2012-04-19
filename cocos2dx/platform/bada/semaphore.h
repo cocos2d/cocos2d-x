@@ -33,9 +33,9 @@ typedef struct sem{
   Osp::Base::Runtime::Mutex *mutex;
 }sem_t;
 
-#define SEM_FAILED	((sem_t*)0)
-#define SEM_VALUE_MAX	((int)((~0u)>>1))
-#define SEM_MAGIC	0x35d108f2
+#define SEM_FAILED    ((sem_t*)0)
+#define SEM_VALUE_MAX    ((int)((~0u)>>1))
+#define SEM_MAGIC    0x35d108f2
 
 int sem_destroy(sem_t*sem);
 int sem_getvalue(sem_t*sem,int*sval);

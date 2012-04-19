@@ -214,7 +214,7 @@ typedef unsigned long long int  khronos_uint64_t;
  * uITRON
  */
 typedef signed int              khronos_int32_t;
-typedef unsigned int	        khronos_uint32_t;
+typedef unsigned int            khronos_uint32_t;
 typedef long long               khronos_int64_t;
 typedef unsigned long long      khronos_uint64_t;
 #define KHRONOS_SUPPORT_INT64   1

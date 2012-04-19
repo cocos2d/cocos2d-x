@@ -56,17 +56,17 @@ typedef struct
 class CC_DLL CCColor3bObject : public CCObject
 {
 public:
-	ccColor3B value;
-	CCColor3bObject(ccColor3B s_value):value(s_value){}
+    ccColor3B value;
+    CCColor3bObject(ccColor3B s_value):value(s_value){}
 };
 
 class CCControlUtils
 {
 public:
-	static CCSprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor);
-	static HSV HSVfromRGB(RGBA value);
+    static CCSprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor);
+    static HSV HSVfromRGB(RGBA value);
     static RGBA RGBfromHSV(HSV value);
-	static CCRect CCRectUnion(const CCRect& src1, const CCRect& src2);
+    static CCRect CCRectUnion(const CCRect& src1, const CCRect& src2);
 };
 
 NS_CC_END

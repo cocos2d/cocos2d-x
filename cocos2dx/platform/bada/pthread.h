@@ -33,14 +33,14 @@ extern "C" {
 #endif
 
 #define PTHREAD_STACK_SIZE (64*1024)
-#define PTHREAD_STACK_MINSIZE	16384
-#define PTHREAD_THREADS_MAX	1024
+#define PTHREAD_STACK_MINSIZE    16384
+#define PTHREAD_THREADS_MAX    1024
 
-#define MAX_SPIN_COUNT		50
-#define SPIN_SLEEP_DURATION	2000001
+#define MAX_SPIN_COUNT        50
+#define SPIN_SLEEP_DURATION    2000001
 #define PTHREAD_DESTRUCTOR_ITERATIONS 1
 
-#define PTHREAD_KEYS_MAX	32
+#define PTHREAD_KEYS_MAX    32
 
 
 typedef void* pthread_t;
@@ -91,7 +91,7 @@ int pthread_mutexattr_destroy(pthread_mutexattr_t*attr);
 //int pthread_mutexattr_setkind_np(pthread_mutexattr_t*attr,int kind);
 
 int pthread_mutex_init(pthread_mutex_t*mutex,
-		const pthread_mutexattr_t*mutexattr);
+        const pthread_mutexattr_t*mutexattr);
 int pthread_mutex_lock(pthread_mutex_t*mutex);
 int pthread_mutex_unlock(pthread_mutex_t*mutex);
 int pthread_mutex_trylock(pthread_mutex_t*mutex);
@@ -109,7 +109,7 @@ int pthread_cond_destroy(pthread_cond_t*cond);
 int pthread_cond_signal(pthread_cond_t*cond);
 int pthread_cond_broadcast(pthread_cond_t*cond);
 int pthread_cond_timedwait(pthread_cond_t*cond,pthread_mutex_t*mutex,
-			   const struct timespec*abstime);
+               const struct timespec*abstime);
 int pthread_cond_wait(pthread_cond_t*cond,pthread_mutex_t*mutex);
 
 // These two functions are not described in the standard. Use them as follows:
@@ -156,7 +156,7 @@ enum {
 #define PTHREAD_INHERIT_SCHED PTHREAD_INHERIT_SCHED
 };
 
-enum {	/* for completeness */
+enum {    /* for completeness */
   PTHREAD_SCOPE_SYSTEM,
 #define PTHREAD_SCOPE_SYSTEM PTHREAD_SCOPE_SYSTEM
   PTHREAD_SCOPE_PROCESS
@@ -173,9 +173,9 @@ int pthread_attr_setschedpolicy(pthread_attr_t*attr,const int policy);
 int pthread_attr_getschedpolicy(const pthread_attr_t*attr,int*policy);
 
 int pthread_attr_setschedparam(pthread_attr_t*attr,
-				const struct sched_param*param);
+                const struct sched_param*param);
 int pthread_attr_getschedparam(const pthread_attr_t*attr,
-				struct sched_param*param);
+                struct sched_param*param);
 
 int pthread_attr_setinheritsched(pthread_attr_t*attr,const int inherit);
 int pthread_attr_getinheritsched(const pthread_attr_t*attr,int*inherit);
@@ -190,13 +190,13 @@ int pthread_attr_setstacksize(pthread_attr_t*attr,const size_t stacksize);
 int pthread_attr_getstacksize(const pthread_attr_t*attr,size_t*stacksize);
 
 int pthread_setschedparam(const pthread_t target_thread,const int policy,
-			  const struct sched_param*param);
+              const struct sched_param*param);
 int pthread_getschedparam(const pthread_t target_thread,int*policy,
-			  struct sched_param*param);
+              struct sched_param*param);
 */
 /* ONCE */
 typedef int pthread_once_t;
-#define PTHREAD_ONCE_INIT	PTHREAD_SPIN_UNLOCKED
+#define PTHREAD_ONCE_INIT    PTHREAD_SPIN_UNLOCKED
 
 //int pthread_once(pthread_once_t*once_control,void(*init_routine)(void));
 
@@ -237,15 +237,15 @@ void pthread_cleanup_pop_restore_np(int execute);
 /* FORK */
 /*
 pid_t pthread_atfork(void(*prepare)(void),void(*parent)(void),
-		     void(*child)(void));
+             void(*child)(void));
 */
 /* THREADS */
 pthread_t pthread_self(void);
 
 int pthread_create(pthread_t*__threadarg,
-		const pthread_attr_t*__attr,
-		void*(*__start_routine)(void *),
-		void*__arg);
+        const pthread_attr_t*__attr,
+        void*(*__start_routine)(void *),
+        void*__arg);
 
 void pthread_exit(void*__retval);
 

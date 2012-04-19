@@ -21,25 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_UIACCELEROMETER_PLATFORM_H__
-#define __CC_UIACCELEROMETER_PLATFORM_H__
+#ifndef __CC_ACCELEROMETER_PLATFORM_H__
+#define __CC_ACCELEROMETER_PLATFORM_H__
 
 #include "CCPlatformConfig.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-    #include "wophone/CCAccelerometer_wophone.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #include "win32/CCAccelerometer_win32.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "android/CCAccelerometer_android.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "ios/CCAccelerometer_ios.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-	#include "marmalade/CCAccelerometer_marmalade.h"
+    #include "marmalade/CCAccelerometer_marmalade.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "linux/CCAccelerometer_linux.h"
+    #include "linux/CCAccelerometer_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-	#include "bada/CCAccelerometer_bada.h"
+    #include "bada/CCAccelerometer_bada.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
     #include "qnx/CCAccelerometer_qnx.h"
 #else

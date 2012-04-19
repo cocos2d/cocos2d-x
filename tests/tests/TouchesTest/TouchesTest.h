@@ -19,15 +19,15 @@ public:
 class Ball;
 class PongLayer : public CCLayer
 {
-	Ball*		m_ball;
-	CCArray*    m_paddles;
-	CCPoint		m_ballStartingVelocity; 
+    Ball*        m_ball;
+    CCArray*    m_paddles;
+    CCPoint        m_ballStartingVelocity; 
 public:
-	PongLayer();
-	~PongLayer();
+    PongLayer();
+    ~PongLayer();
 
-	void resetAndScoreBallForPlayer(int player);
-	void doStep(ccTime delta);
+    void resetAndScoreBallForPlayer(int player);
+    void doStep(ccTime delta);
 };
 
 #endif

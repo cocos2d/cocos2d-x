@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCEGLView.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static int _calcCharCount(const char * pszText)
 {
@@ -70,7 +70,7 @@ CCTextFieldTTF::~CCTextFieldTTF()
 //////////////////////////////////////////////////////////////////////////
 
 CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
-{		
+{        
     CCTextFieldTTF *pRet = new CCTextFieldTTF();
     if(pRet && pRet->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
     {
@@ -321,4 +321,4 @@ const char * CCTextFieldTTF::getPlaceHolder(void)
     return m_pPlaceHolder->c_str();
 }
 
-NS_CC_END;
+NS_CC_END

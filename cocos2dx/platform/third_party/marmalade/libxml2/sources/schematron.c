@@ -44,20 +44,20 @@
 static const xmlChar *xmlSchematronNs = XML_SCHEMATRON_NS;
 static const xmlChar *xmlOldSchematronNs = SCT_OLD_NS;
 
-#define IS_SCHEMATRON(node, elem)					\
-   ((node != NULL) && (node->type == XML_ELEMENT_NODE ) &&		\
-    (node->ns != NULL) &&						\
-    (xmlStrEqual(node->name, (const xmlChar *) elem)) &&		\
-    ((xmlStrEqual(node->ns->href, xmlSchematronNs)) ||			\
+#define IS_SCHEMATRON(node, elem)                    \
+   ((node != NULL) && (node->type == XML_ELEMENT_NODE ) &&        \
+    (node->ns != NULL) &&                        \
+    (xmlStrEqual(node->name, (const xmlChar *) elem)) &&        \
+    ((xmlStrEqual(node->ns->href, xmlSchematronNs)) ||            \
      (xmlStrEqual(node->ns->href, xmlOldSchematronNs))))
 
-#define NEXT_SCHEMATRON(node)						\
-   while (node != NULL) {						\
-       if ((node->type == XML_ELEMENT_NODE ) && (node->ns != NULL) && 	\
-           ((xmlStrEqual(node->ns->href, xmlSchematronNs)) ||		\
-	    (xmlStrEqual(node->ns->href, xmlOldSchematronNs))))		\
-	   break;							\
-       node = node->next;						\
+#define NEXT_SCHEMATRON(node)                        \
+   while (node != NULL) {                        \
+       if ((node->type == XML_ELEMENT_NODE ) && (node->ns != NULL) &&     \
+           ((xmlStrEqual(node->ns->href, xmlSchematronNs)) ||        \
+        (xmlStrEqual(node->ns->href, xmlOldSchematronNs))))        \
+       break;                            \
+       node = node->next;                        \
    }
 
 /**
@@ -65,9 +65,9 @@ static const xmlChar *xmlOldSchematronNs = SCT_OLD_NS;
  *
  * macro to flag unimplemented blocks
  */
-#define TODO 								\
-    xmlGenericError(xmlGenericErrorContext,				\
-	    "Unimplemented block at %s:%d\n",				\
+#define TODO                                 \
+    xmlGenericError(xmlGenericErrorContext,                \
+        "Unimplemented block at %s:%d\n",                \
             __FILE__, __LINE__);
 
 typedef enum {
@@ -83,12 +83,12 @@ typedef enum {
 typedef struct _xmlSchematronTest xmlSchematronTest;
 typedef xmlSchematronTest *xmlSchematronTestPtr;
 struct _xmlSchematronTest {
-    xmlSchematronTestPtr next;	/* the next test in the list */
-    xmlSchematronTestType type;	/* the test type */
-    xmlNodePtr node;		/* the node in the tree */
-    xmlChar *test;		/* the expression to test */
-    xmlXPathCompExprPtr comp;	/* the compiled expression */
-    xmlChar *report;		/* the message to report */
+    xmlSchematronTestPtr next;    /* the next test in the list */
+    xmlSchematronTestType type;    /* the test type */
+    xmlNodePtr node;        /* the node in the tree */
+    xmlChar *test;        /* the expression to test */
+    xmlXPathCompExprPtr comp;    /* the compiled expression */
+    xmlChar *report;        /* the message to report */
 };
 
 /**
@@ -99,13 +99,13 @@ struct _xmlSchematronTest {
 typedef struct _xmlSchematronRule xmlSchematronRule;
 typedef xmlSchematronRule *xmlSchematronRulePtr;
 struct _xmlSchematronRule {
-    xmlSchematronRulePtr next;	/* the next rule in the list */
+    xmlSchematronRulePtr next;    /* the next rule in the list */
     xmlSchematronRulePtr patnext;/* the next rule in the pattern list */
-    xmlNodePtr node;		/* the node in the tree */
-    xmlChar *context;		/* the context evaluation rule */
-    xmlSchematronTestPtr tests;	/* the list of tests */
-    xmlPatternPtr pattern;	/* the compiled pattern associated */
-    xmlChar *report;		/* the message to report */
+    xmlNodePtr node;        /* the node in the tree */
+    xmlChar *context;        /* the context evaluation rule */
+    xmlSchematronTestPtr tests;    /* the list of tests */
+    xmlPatternPtr pattern;    /* the compiled pattern associated */
+    xmlChar *report;        /* the message to report */
 };
 
 /**
@@ -117,8 +117,8 @@ typedef struct _xmlSchematronPattern xmlSchematronPattern;
 typedef xmlSchematronPattern *xmlSchematronPatternPtr;
 struct _xmlSchematronPattern {
     xmlSchematronPatternPtr next;/* the next pattern in the list */
-    xmlSchematronRulePtr rules;	/* the list of rules */
-    xmlChar *name;		/* the name of the pattern */
+    xmlSchematronRulePtr rules;    /* the list of rules */
+    xmlChar *name;        /* the name of the pattern */
 };
 
 /**
@@ -127,24 +127,24 @@ struct _xmlSchematronPattern {
  * A Schematrons definition
  */
 struct _xmlSchematron {
-    const xmlChar *name;	/* schema name */
-    int preserve;		/* was the document passed by the user */
-    xmlDocPtr doc;		/* pointer to the parsed document */
-    int flags;			/* specific to this schematron */
+    const xmlChar *name;    /* schema name */
+    int preserve;        /* was the document passed by the user */
+    xmlDocPtr doc;        /* pointer to the parsed document */
+    int flags;            /* specific to this schematron */
 
-    void *_private;		/* unused by the library */
-    xmlDictPtr dict;		/* the dictionnary used internally */
+    void *_private;        /* unused by the library */
+    xmlDictPtr dict;        /* the dictionnary used internally */
 
-    const xmlChar *title;	/* the title if any */
+    const xmlChar *title;    /* the title if any */
 
-    int nbNs;			/* the number of namespaces */
+    int nbNs;            /* the number of namespaces */
 
-    int nbPattern;		/* the number of patterns */
+    int nbPattern;        /* the number of patterns */
     xmlSchematronPatternPtr patterns;/* the patterns found */
-    xmlSchematronRulePtr rules;	/* the rules gathered */
-    int nbNamespaces;		/* number of namespaces in the array */
-    int maxNamespaces;		/* size of the array */
-    const xmlChar **namespaces;	/* the array of namespaces */
+    xmlSchematronRulePtr rules;    /* the rules gathered */
+    int nbNamespaces;        /* number of namespaces in the array */
+    int maxNamespaces;        /* size of the array */
+    const xmlChar **namespaces;    /* the array of namespaces */
 };
 
 /**
@@ -154,7 +154,7 @@ struct _xmlSchematron {
  */
 struct _xmlSchematronValidCtxt {
     int type;
-    int flags;			/* an or of xmlSchematronValidOptions */
+    int flags;            /* an or of xmlSchematronValidOptions */
 
     xmlDictPtr dict;
     int nberrors;
@@ -163,8 +163,8 @@ struct _xmlSchematronValidCtxt {
     xmlSchematronPtr schema;
     xmlXPathContextPtr xctxt;
 
-    FILE *outputFile;		/* if using XML_SCHEMATRON_OUT_FILE */
-    xmlBufferPtr outputBuffer;	/* if using XML_SCHEMATRON_OUT_BUFFER */
+    FILE *outputFile;        /* if using XML_SCHEMATRON_OUT_FILE */
+    xmlBufferPtr outputBuffer;    /* if using XML_SCHEMATRON_OUT_BUFFER */
     xmlOutputWriteCallback iowrite; /* if using XML_SCHEMATRON_OUT_IO */
     xmlOutputCloseCallback  ioclose;
     void *ioctx;
@@ -188,16 +188,16 @@ struct _xmlSchematronParserCtxt {
 
     int nberrors;
     int err;
-    xmlXPathContextPtr xctxt;	/* the XPath context used for compilation */
+    xmlXPathContextPtr xctxt;    /* the XPath context used for compilation */
     xmlSchematronPtr schema;
 
-    int nbNamespaces;		/* number of namespaces in the array */
-    int maxNamespaces;		/* size of the array */
-    const xmlChar **namespaces;	/* the array of namespaces */
+    int nbNamespaces;        /* number of namespaces in the array */
+    int maxNamespaces;        /* size of the array */
+    const xmlChar **namespaces;    /* the array of namespaces */
 
-    int nbIncludes;		/* number of includes in the array */
-    int maxIncludes;		/* size of the array */
-    xmlNodePtr *includes;	/* the array of includes */
+    int nbIncludes;        /* number of includes in the array */
+    int maxIncludes;        /* size of the array */
+    xmlNodePtr *includes;    /* the array of includes */
 
     /* error reporting data */
     void *userData;                      /* user specific data block */
@@ -210,9 +210,9 @@ struct _xmlSchematronParserCtxt {
 #define XML_STRON_CTXT_VALIDATOR 2
 
 /************************************************************************
- *									*
- *			Error reporting					*
- *									*
+ *                                    *
+ *            Error reporting                    *
+ *                                    *
  ************************************************************************/
 
 /**
@@ -255,7 +255,7 @@ xmlSchematronPErr(xmlSchematronParserCtxtPtr ctxt, xmlNodePtr node, int error,
         ctxt->nberrors++;
         channel = ctxt->error;
         data = ctxt->userData;
-	schannel = ctxt->serror;
+    schannel = ctxt->serror;
     }
     __xmlRaiseError(schannel, channel, data, ctxt, node, XML_FROM_SCHEMASP,
                     error, XML_ERR_ERROR, NULL, 0,
@@ -283,9 +283,9 @@ xmlSchematronVErrMemory(xmlSchematronValidCtxtPtr ctxt,
 }
 
 /************************************************************************
- *									*
- *		Parsing and compilation of the Schematrontrons		*
- *									*
+ *                                    *
+ *        Parsing and compilation of the Schematrontrons        *
+ *                                    *
  ************************************************************************/
 
 /**
@@ -319,11 +319,11 @@ xmlSchematronAddTest(xmlSchematronParserCtxtPtr ctxt,
      */
     comp = xmlXPathCtxtCompile(ctxt->xctxt, test);
     if (comp == NULL) {
-	xmlSchematronPErr(ctxt, node,
-	    XML_SCHEMAP_NOROOT,
-	    "Failed to compile test expression %s",
-	    test, NULL);
-	return(NULL);
+    xmlSchematronPErr(ctxt, node,
+        XML_SCHEMAP_NOROOT,
+        "Failed to compile test expression %s",
+        test, NULL);
+    return(NULL);
     }
 
     ret = (xmlSchematronTestPtr) xmlMalloc(sizeof(xmlSchematronTest));
@@ -339,12 +339,12 @@ xmlSchematronAddTest(xmlSchematronParserCtxtPtr ctxt,
     ret->report = report;
     ret->next = NULL;
     if (rule->tests == NULL) {
-	rule->tests = ret;
+    rule->tests = ret;
     } else {
         xmlSchematronTestPtr prev = rule->tests;
 
-	while (prev->next != NULL)
-	     prev = prev->next;
+    while (prev->next != NULL)
+         prev = prev->next;
         prev->next = ret;
     }
     return (ret);
@@ -362,14 +362,14 @@ xmlSchematronFreeTests(xmlSchematronTestPtr tests) {
 
     while (tests != NULL) {
         next = tests->next;
-	if (tests->test != NULL)
-	    xmlFree(tests->test);
-	if (tests->comp != NULL)
-	    xmlXPathFreeCompExpr(tests->comp);
-	if (tests->report != NULL)
-	    xmlFree(tests->report);
-	xmlFree(tests);
-	tests = next;
+    if (tests->test != NULL)
+        xmlFree(tests->test);
+    if (tests->comp != NULL)
+        xmlXPathFreeCompExpr(tests->comp);
+    if (tests->report != NULL)
+        xmlFree(tests->report);
+    xmlFree(tests);
+    tests = next;
     }
 }
 
@@ -388,7 +388,7 @@ xmlSchematronFreeTests(xmlSchematronTestPtr tests) {
 static xmlSchematronRulePtr
 xmlSchematronAddRule(xmlSchematronParserCtxtPtr ctxt, xmlSchematronPtr schema,
                      xmlSchematronPatternPtr pat, xmlNodePtr node,
-		     xmlChar *context, xmlChar *report)
+             xmlChar *context, xmlChar *report)
 {
     xmlSchematronRulePtr ret;
     xmlPatternPtr pattern;
@@ -403,10 +403,10 @@ xmlSchematronAddRule(xmlSchematronParserCtxtPtr ctxt, xmlSchematronPtr schema,
     pattern = xmlPatterncompile(context, ctxt->dict, XML_PATTERN_XPATH,
                                 ctxt->namespaces);
     if (pattern == NULL) {
-	xmlSchematronPErr(ctxt, node,
-	    XML_SCHEMAP_NOROOT,
-	    "Failed to compile context expression %s",
-	    context, NULL);
+    xmlSchematronPErr(ctxt, node,
+        XML_SCHEMAP_NOROOT,
+        "Failed to compile context expression %s",
+        context, NULL);
     }
 
     ret = (xmlSchematronRulePtr) xmlMalloc(sizeof(xmlSchematronRule));
@@ -421,22 +421,22 @@ xmlSchematronAddRule(xmlSchematronParserCtxtPtr ctxt, xmlSchematronPtr schema,
     ret->report = report;
     ret->next = NULL;
     if (schema->rules == NULL) {
-	schema->rules = ret;
+    schema->rules = ret;
     } else {
         xmlSchematronRulePtr prev = schema->rules;
 
-	while (prev->next != NULL)
-	     prev = prev->next;
+    while (prev->next != NULL)
+         prev = prev->next;
         prev->next = ret;
     }
     ret->patnext = NULL;
     if (pat->rules == NULL) {
-	pat->rules = ret;
+    pat->rules = ret;
     } else {
         xmlSchematronRulePtr prev = pat->rules;
 
-	while (prev->patnext != NULL)
-	     prev = prev->patnext;
+    while (prev->patnext != NULL)
+         prev = prev->patnext;
         prev->patnext = ret;
     }
     return (ret);
@@ -454,16 +454,16 @@ xmlSchematronFreeRules(xmlSchematronRulePtr rules) {
 
     while (rules != NULL) {
         next = rules->next;
-	if (rules->tests)
-	    xmlSchematronFreeTests(rules->tests);
-	if (rules->context != NULL)
-	    xmlFree(rules->context);
-	if (rules->pattern)
-	    xmlFreePattern(rules->pattern);
-	if (rules->report != NULL)
-	    xmlFree(rules->report);
-	xmlFree(rules);
-	rules = next;
+    if (rules->tests)
+        xmlSchematronFreeTests(rules->tests);
+    if (rules->context != NULL)
+        xmlFree(rules->context);
+    if (rules->pattern)
+        xmlFreePattern(rules->pattern);
+    if (rules->report != NULL)
+        xmlFree(rules->report);
+    xmlFree(rules);
+    rules = next;
     }
 }
 
@@ -496,12 +496,12 @@ xmlSchematronAddPattern(xmlSchematronParserCtxtPtr ctxt,
     ret->name = name;
     ret->next = NULL;
     if (schema->patterns == NULL) {
-	schema->patterns = ret;
+    schema->patterns = ret;
     } else {
         xmlSchematronPatternPtr prev = schema->patterns;
 
-	while (prev->next != NULL)
-	     prev = prev->next;
+    while (prev->next != NULL)
+         prev = prev->next;
         prev->next = ret;
     }
     return (ret);
@@ -519,10 +519,10 @@ xmlSchematronFreePatterns(xmlSchematronPatternPtr patterns) {
 
     while (patterns != NULL) {
         next = patterns->next;
-	if (patterns->name != NULL)
-	    xmlFree(patterns->name);
-	xmlFree(patterns);
-	patterns = next;
+    if (patterns->name != NULL)
+        xmlFree(patterns->name);
+    xmlFree(patterns);
+    patterns = next;
     }
 }
 
@@ -609,7 +609,7 @@ xmlSchematronNewParserCtxt(const char *URL)
     if (ret->xctxt == NULL) {
         xmlSchematronPErrMemory(NULL, "allocating schema parser XPath context",
                                 NULL);
-	xmlSchematronFreeParserCtxt(ret);
+    xmlSchematronFreeParserCtxt(ret);
         return (NULL);
     }
     ret->xctxt->flags = XML_XPATH_CHECKNS;
@@ -650,7 +650,7 @@ xmlSchematronNewMemParserCtxt(const char *buffer, int size)
     if (ret->xctxt == NULL) {
         xmlSchematronPErrMemory(NULL, "allocating schema parser XPath context",
                                 NULL);
-	xmlSchematronFreeParserCtxt(ret);
+    xmlSchematronFreeParserCtxt(ret);
         return (NULL);
     }
     return (ret);
@@ -690,7 +690,7 @@ xmlSchematronNewDocParserCtxt(xmlDocPtr doc)
     if (ret->xctxt == NULL) {
         xmlSchematronPErrMemory(NULL, "allocating schema parser XPath context",
                                 NULL);
-	xmlSchematronFreeParserCtxt(ret);
+    xmlSchematronFreeParserCtxt(ret);
         return (NULL);
     }
 
@@ -735,26 +735,26 @@ xmlSchematronPushInclude(xmlSchematronParserCtxtPtr ctxt,
     if (ctxt->includes == NULL) {
         ctxt->maxIncludes = 10;
         ctxt->includes = (xmlNodePtr *)
-	    xmlMalloc(ctxt->maxIncludes * 2 * sizeof(xmlNodePtr));
-	if (ctxt->includes == NULL) {
-	    xmlSchematronPErrMemory(NULL, "allocating parser includes",
-				    NULL);
-	    return;
-	}
+        xmlMalloc(ctxt->maxIncludes * 2 * sizeof(xmlNodePtr));
+    if (ctxt->includes == NULL) {
+        xmlSchematronPErrMemory(NULL, "allocating parser includes",
+                    NULL);
+        return;
+    }
         ctxt->nbIncludes = 0;
     } else if (ctxt->nbIncludes + 2 >= ctxt->maxIncludes) {
         xmlNodePtr *tmp;
 
-	tmp = (xmlNodePtr *)
-	    xmlRealloc(ctxt->includes, ctxt->maxIncludes * 4 *
-	               sizeof(xmlNodePtr));
-	if (tmp == NULL) {
-	    xmlSchematronPErrMemory(NULL, "allocating parser includes",
-				    NULL);
-	    return;
-	}
+    tmp = (xmlNodePtr *)
+        xmlRealloc(ctxt->includes, ctxt->maxIncludes * 4 *
+                   sizeof(xmlNodePtr));
+    if (tmp == NULL) {
+        xmlSchematronPErrMemory(NULL, "allocating parser includes",
+                    NULL);
+        return;
+    }
         ctxt->includes = tmp;
-	ctxt->maxIncludes *= 2;
+    ctxt->maxIncludes *= 2;
     }
     ctxt->includes[2 * ctxt->nbIncludes] = cur;
     ctxt->includes[2 * ctxt->nbIncludes + 1] = (xmlNodePtr) doc;
@@ -783,7 +783,7 @@ xmlSchematronPopInclude(xmlSchematronParserCtxtPtr ctxt)
     ret = ctxt->includes[2 * ctxt->nbIncludes];
     xmlFreeDoc(doc);
     if (ret != NULL)
-	ret = ret->next;
+    ret = ret->next;
     if (ret == NULL)
         return(xmlSchematronPopInclude(ctxt));
     return(ret);
@@ -805,26 +805,26 @@ xmlSchematronAddNamespace(xmlSchematronParserCtxtPtr ctxt,
     if (ctxt->namespaces == NULL) {
         ctxt->maxNamespaces = 10;
         ctxt->namespaces = (const xmlChar **)
-	    xmlMalloc(ctxt->maxNamespaces * 2 * sizeof(const xmlChar *));
-	if (ctxt->namespaces == NULL) {
-	    xmlSchematronPErrMemory(NULL, "allocating parser namespaces",
-				    NULL);
-	    return;
-	}
+        xmlMalloc(ctxt->maxNamespaces * 2 * sizeof(const xmlChar *));
+    if (ctxt->namespaces == NULL) {
+        xmlSchematronPErrMemory(NULL, "allocating parser namespaces",
+                    NULL);
+        return;
+    }
         ctxt->nbNamespaces = 0;
     } else if (ctxt->nbNamespaces + 2 >= ctxt->maxNamespaces) {
         const xmlChar **tmp;
 
-	tmp = (const xmlChar **)
-	    xmlRealloc((xmlChar **) ctxt->namespaces, ctxt->maxNamespaces * 4 *
-	               sizeof(const xmlChar *));
-	if (tmp == NULL) {
-	    xmlSchematronPErrMemory(NULL, "allocating parser namespaces",
-				    NULL);
-	    return;
-	}
+    tmp = (const xmlChar **)
+        xmlRealloc((xmlChar **) ctxt->namespaces, ctxt->maxNamespaces * 4 *
+                   sizeof(const xmlChar *));
+    if (tmp == NULL) {
+        xmlSchematronPErrMemory(NULL, "allocating parser namespaces",
+                    NULL);
+        return;
+    }
         ctxt->namespaces = tmp;
-	ctxt->maxNamespaces *= 2;
+    ctxt->maxNamespaces *= 2;
     }
     ctxt->namespaces[2 * ctxt->nbNamespaces] = 
         xmlDictLookup(ctxt->dict, ns, -1);
@@ -846,7 +846,7 @@ xmlSchematronAddNamespace(xmlSchematronParserCtxtPtr ctxt,
 static void
 xmlSchematronParseRule(xmlSchematronParserCtxtPtr ctxt,
                        xmlSchematronPatternPtr pattern,
-		       xmlNodePtr rule)
+               xmlNodePtr rule)
 {
     xmlNodePtr cur;
     int nbChecks = 0;
@@ -860,89 +860,89 @@ xmlSchematronParseRule(xmlSchematronParserCtxtPtr ctxt,
 
     context = xmlGetNoNsProp(rule, BAD_CAST "context");
     if (context == NULL) {
-	xmlSchematronPErr(ctxt, rule,
-	    XML_SCHEMAP_NOROOT,
-	    "rule has no context attribute",
-	    NULL, NULL);
-	return;
+    xmlSchematronPErr(ctxt, rule,
+        XML_SCHEMAP_NOROOT,
+        "rule has no context attribute",
+        NULL, NULL);
+    return;
     } else if (context[0] == 0) {
-	xmlSchematronPErr(ctxt, rule,
-	    XML_SCHEMAP_NOROOT,
-	    "rule has an empty context attribute",
-	    NULL, NULL);
-	xmlFree(context);
-	return;
+    xmlSchematronPErr(ctxt, rule,
+        XML_SCHEMAP_NOROOT,
+        "rule has an empty context attribute",
+        NULL, NULL);
+    xmlFree(context);
+    return;
     } else {
-	ruleptr = xmlSchematronAddRule(ctxt, ctxt->schema, pattern,
-	                               rule, context, NULL);
-	if (ruleptr == NULL) {
-	    xmlFree(context);
-	    return;
-	}
+    ruleptr = xmlSchematronAddRule(ctxt, ctxt->schema, pattern,
+                                   rule, context, NULL);
+    if (ruleptr == NULL) {
+        xmlFree(context);
+        return;
+    }
     }
 
     cur = rule->children;
     NEXT_SCHEMATRON(cur);
     while (cur != NULL) {
-	if (IS_SCHEMATRON(cur, "assert")) {
-	    nbChecks++;
-	    test = xmlGetNoNsProp(cur, BAD_CAST "test");
-	    if (test == NULL) {
-		xmlSchematronPErr(ctxt, cur,
-		    XML_SCHEMAP_NOROOT,
-		    "assert has no test attribute",
-		    NULL, NULL);
-	    } else if (test[0] == 0) {
-		xmlSchematronPErr(ctxt, cur,
-		    XML_SCHEMAP_NOROOT,
-		    "assert has an empty test attribute",
-		    NULL, NULL);
-		xmlFree(test);
-	    } else {
-		/* TODO will need dynamic processing instead */
-		report = xmlNodeGetContent(cur);
+    if (IS_SCHEMATRON(cur, "assert")) {
+        nbChecks++;
+        test = xmlGetNoNsProp(cur, BAD_CAST "test");
+        if (test == NULL) {
+        xmlSchematronPErr(ctxt, cur,
+            XML_SCHEMAP_NOROOT,
+            "assert has no test attribute",
+            NULL, NULL);
+        } else if (test[0] == 0) {
+        xmlSchematronPErr(ctxt, cur,
+            XML_SCHEMAP_NOROOT,
+            "assert has an empty test attribute",
+            NULL, NULL);
+        xmlFree(test);
+        } else {
+        /* TODO will need dynamic processing instead */
+        report = xmlNodeGetContent(cur);
 
-		testptr = xmlSchematronAddTest(ctxt, XML_SCHEMATRON_ASSERT,
-		                               ruleptr, cur, test, report);
-		if (testptr == NULL)
-		    xmlFree(test);
-	    }
-	} else if (IS_SCHEMATRON(cur, "report")) {
-	    nbChecks++;
-	    test = xmlGetNoNsProp(cur, BAD_CAST "test");
-	    if (test == NULL) {
-		xmlSchematronPErr(ctxt, cur,
-		    XML_SCHEMAP_NOROOT,
-		    "assert has no test attribute",
-		    NULL, NULL);
-	    } else if (test[0] == 0) {
-		xmlSchematronPErr(ctxt, cur,
-		    XML_SCHEMAP_NOROOT,
-		    "assert has an empty test attribute",
-		    NULL, NULL);
-		xmlFree(test);
-	    } else {
-		/* TODO will need dynamic processing instead */
-		report = xmlNodeGetContent(cur);
+        testptr = xmlSchematronAddTest(ctxt, XML_SCHEMATRON_ASSERT,
+                                       ruleptr, cur, test, report);
+        if (testptr == NULL)
+            xmlFree(test);
+        }
+    } else if (IS_SCHEMATRON(cur, "report")) {
+        nbChecks++;
+        test = xmlGetNoNsProp(cur, BAD_CAST "test");
+        if (test == NULL) {
+        xmlSchematronPErr(ctxt, cur,
+            XML_SCHEMAP_NOROOT,
+            "assert has no test attribute",
+            NULL, NULL);
+        } else if (test[0] == 0) {
+        xmlSchematronPErr(ctxt, cur,
+            XML_SCHEMAP_NOROOT,
+            "assert has an empty test attribute",
+            NULL, NULL);
+        xmlFree(test);
+        } else {
+        /* TODO will need dynamic processing instead */
+        report = xmlNodeGetContent(cur);
 
-		testptr = xmlSchematronAddTest(ctxt, XML_SCHEMATRON_REPORT,
-		                               ruleptr, cur, test, report);
-		if (testptr == NULL)
-		    xmlFree(test);
-	    }
-	} else {
-	    xmlSchematronPErr(ctxt, cur,
-		XML_SCHEMAP_NOROOT,
-		"Expecting an assert or a report element instead of %s",
-		cur->name, NULL);
-	}
-	cur = cur->next;
-	NEXT_SCHEMATRON(cur);
+        testptr = xmlSchematronAddTest(ctxt, XML_SCHEMATRON_REPORT,
+                                       ruleptr, cur, test, report);
+        if (testptr == NULL)
+            xmlFree(test);
+        }
+    } else {
+        xmlSchematronPErr(ctxt, cur,
+        XML_SCHEMAP_NOROOT,
+        "Expecting an assert or a report element instead of %s",
+        cur->name, NULL);
+    }
+    cur = cur->next;
+    NEXT_SCHEMATRON(cur);
     }
     if (nbChecks == 0) {
-	xmlSchematronPErr(ctxt, rule,
-	    XML_SCHEMAP_NOROOT,
-	    "rule has no assert nor report element", NULL, NULL);
+    xmlSchematronPErr(ctxt, rule,
+        XML_SCHEMAP_NOROOT,
+        "rule has no assert nor report element", NULL, NULL);
     }
 }
 
@@ -965,32 +965,32 @@ xmlSchematronParsePattern(xmlSchematronParserCtxtPtr ctxt, xmlNodePtr pat)
 
     id = xmlGetNoNsProp(pat, BAD_CAST "id");
     if (id == NULL) {
-	id = xmlGetNoNsProp(pat, BAD_CAST "name");
+    id = xmlGetNoNsProp(pat, BAD_CAST "name");
     }
     pattern = xmlSchematronAddPattern(ctxt, ctxt->schema, pat, id);
     if (pattern == NULL) {
-	if (id != NULL)
-	    xmlFree(id);
+    if (id != NULL)
+        xmlFree(id);
         return;
     }
     cur = pat->children;
     NEXT_SCHEMATRON(cur);
     while (cur != NULL) {
-	if (IS_SCHEMATRON(cur, "rule")) {
-	    xmlSchematronParseRule(ctxt, pattern, cur);
-	    nbRules++;
-	} else {
-	    xmlSchematronPErr(ctxt, cur,
-		XML_SCHEMAP_NOROOT,
-		"Expecting a rule element instead of %s", cur->name, NULL);
-	}
-	cur = cur->next;
-	NEXT_SCHEMATRON(cur);
+    if (IS_SCHEMATRON(cur, "rule")) {
+        xmlSchematronParseRule(ctxt, pattern, cur);
+        nbRules++;
+    } else {
+        xmlSchematronPErr(ctxt, cur,
+        XML_SCHEMAP_NOROOT,
+        "Expecting a rule element instead of %s", cur->name, NULL);
+    }
+    cur = cur->next;
+    NEXT_SCHEMATRON(cur);
     }
     if (nbRules == 0) {
-	xmlSchematronPErr(ctxt, pat,
-	    XML_SCHEMAP_NOROOT,
-	    "Pattern has no rule element", NULL, NULL);
+    xmlSchematronPErr(ctxt, pat,
+        XML_SCHEMAP_NOROOT,
+        "Pattern has no rule element", NULL, NULL);
     }
 }
 
@@ -1018,10 +1018,10 @@ xmlSchematronLoadInclude(xmlSchematronParserCtxtPtr ctxt, xmlNodePtr cur)
 
     href = xmlGetNoNsProp(cur, BAD_CAST "href");
     if (href == NULL) {
-	xmlSchematronPErr(ctxt, cur,
-	    XML_SCHEMAP_NOROOT,
-	    "Include has no href attribute", NULL, NULL);
-	return(cur->next);
+    xmlSchematronPErr(ctxt, cur,
+        XML_SCHEMAP_NOROOT,
+        "Include has no href attribute", NULL, NULL);
+    return(cur->next);
     }
 
     /* do the URI base composition, load and find the root */
@@ -1029,19 +1029,19 @@ xmlSchematronLoadInclude(xmlSchematronParserCtxtPtr ctxt, xmlNodePtr cur)
     URI = xmlBuildURI(href, base);
     doc = xmlReadFile((const char *) URI, NULL, SCHEMATRON_PARSE_OPTIONS);
     if (doc == NULL) {
-	xmlSchematronPErr(ctxt, cur,
-		      XML_SCHEMAP_FAILED_LOAD,
-		      "could not load include '%s'.\n",
-		      URI, NULL);
-	goto done;
+    xmlSchematronPErr(ctxt, cur,
+              XML_SCHEMAP_FAILED_LOAD,
+              "could not load include '%s'.\n",
+              URI, NULL);
+    goto done;
     }
     ret = xmlDocGetRootElement(doc);
     if (ret == NULL) {
-	xmlSchematronPErr(ctxt, cur,
-		      XML_SCHEMAP_FAILED_LOAD,
-		      "could not find root from include '%s'.\n",
-		      URI, NULL);
-	goto done;
+    xmlSchematronPErr(ctxt, cur,
+              XML_SCHEMAP_FAILED_LOAD,
+              "could not find root from include '%s'.\n",
+              URI, NULL);
+    goto done;
     }
 
     /* Success, push the include for rollback on exit */
@@ -1050,7 +1050,7 @@ xmlSchematronLoadInclude(xmlSchematronParserCtxtPtr ctxt, xmlNodePtr cur)
 done:
     if (ret == NULL) {
         if (doc != NULL)
-	    xmlFreeDoc(doc);
+        xmlFreeDoc(doc);
     }
     xmlFree(href);
     if (base != NULL)
@@ -1089,37 +1089,37 @@ xmlSchematronParse(xmlSchematronParserCtxtPtr ctxt)
      */
     if (ctxt->URL != NULL) {
         doc = xmlReadFile((const char *) ctxt->URL, NULL,
-	                  SCHEMATRON_PARSE_OPTIONS);
+                      SCHEMATRON_PARSE_OPTIONS);
         if (doc == NULL) {
-	    xmlSchematronPErr(ctxt, NULL,
-			  XML_SCHEMAP_FAILED_LOAD,
+        xmlSchematronPErr(ctxt, NULL,
+              XML_SCHEMAP_FAILED_LOAD,
                           "xmlSchematronParse: could not load '%s'.\n",
                           ctxt->URL, NULL);
             return (NULL);
         }
-	ctxt->preserve = 0;
+    ctxt->preserve = 0;
     } else if (ctxt->buffer != NULL) {
         doc = xmlReadMemory(ctxt->buffer, ctxt->size, NULL, NULL,
-	                    SCHEMATRON_PARSE_OPTIONS);
+                        SCHEMATRON_PARSE_OPTIONS);
         if (doc == NULL) {
-	    xmlSchematronPErr(ctxt, NULL,
-			  XML_SCHEMAP_FAILED_PARSE,
+        xmlSchematronPErr(ctxt, NULL,
+              XML_SCHEMAP_FAILED_PARSE,
                           "xmlSchematronParse: could not parse.\n",
                           NULL, NULL);
             return (NULL);
         }
         doc->URL = xmlStrdup(BAD_CAST "in_memory_buffer");
         ctxt->URL = xmlDictLookup(ctxt->dict, BAD_CAST "in_memory_buffer", -1);
-	ctxt->preserve = 0;
+    ctxt->preserve = 0;
     } else if (ctxt->doc != NULL) {
         doc = ctxt->doc;
-	preserve = 1;
-	ctxt->preserve = 1;
+    preserve = 1;
+    ctxt->preserve = 1;
     } else {
-	xmlSchematronPErr(ctxt, NULL,
-		      XML_SCHEMAP_NOTHING_TO_PARSE,
-		      "xmlSchematronParse: could not parse.\n",
-		      NULL, NULL);
+    xmlSchematronPErr(ctxt, NULL,
+              XML_SCHEMAP_NOTHING_TO_PARSE,
+              "xmlSchematronParse: could not parse.\n",
+              NULL, NULL);
         return (NULL);
     }
 
@@ -1128,21 +1128,21 @@ xmlSchematronParse(xmlSchematronParserCtxtPtr ctxt)
      */
     root = xmlDocGetRootElement(doc);
     if (root == NULL) {
-	xmlSchematronPErr(ctxt, (xmlNodePtr) doc,
-		      XML_SCHEMAP_NOROOT,
-		      "The schema has no document element.\n", NULL, NULL);
-	if (!preserve) {
-	    xmlFreeDoc(doc);
-	}
+    xmlSchematronPErr(ctxt, (xmlNodePtr) doc,
+              XML_SCHEMAP_NOROOT,
+              "The schema has no document element.\n", NULL, NULL);
+    if (!preserve) {
+        xmlFreeDoc(doc);
+    }
         return (NULL);
     }
 
     if (!IS_SCHEMATRON(root, "schema")) {
-	xmlSchematronPErr(ctxt, root,
-	    XML_SCHEMAP_NOROOT,
-	    "The XML document '%s' is not a XML schematron document",
-	    ctxt->URL, NULL);
-	goto exit;
+    xmlSchematronPErr(ctxt, root,
+        XML_SCHEMAP_NOROOT,
+        "The XML document '%s' is not a XML schematron document",
+        ctxt->URL, NULL);
+    goto exit;
     }
     ret = xmlSchematronNewSchematron(ctxt);
     if (ret == NULL)
@@ -1156,85 +1156,85 @@ xmlSchematronParse(xmlSchematronParserCtxtPtr ctxt)
     NEXT_SCHEMATRON(cur);
     if (IS_SCHEMATRON(cur, "title")) {
         xmlChar *title = xmlNodeGetContent(cur);
-	if (title != NULL) {
-	    ret->title = xmlDictLookup(ret->dict, title, -1);
-	    xmlFree(title);
-	}
-	cur = cur->next;
-	NEXT_SCHEMATRON(cur);
+    if (title != NULL) {
+        ret->title = xmlDictLookup(ret->dict, title, -1);
+        xmlFree(title);
+    }
+    cur = cur->next;
+    NEXT_SCHEMATRON(cur);
     }
     while (IS_SCHEMATRON(cur, "ns")) {
         xmlChar *prefix = xmlGetNoNsProp(cur, BAD_CAST "prefix");
         xmlChar *uri = xmlGetNoNsProp(cur, BAD_CAST "uri");
-	if ((uri == NULL) || (uri[0] == 0)) {
-	    xmlSchematronPErr(ctxt, cur,
-		XML_SCHEMAP_NOROOT,
-		"ns element has no uri", NULL, NULL);
-	}
-	if ((prefix == NULL) || (prefix[0] == 0)) {
-	    xmlSchematronPErr(ctxt, cur,
-		XML_SCHEMAP_NOROOT,
-		"ns element has no prefix", NULL, NULL);
-	}
-	if ((prefix) && (uri)) {
-	    xmlXPathRegisterNs(ctxt->xctxt, prefix, uri);
-	    xmlSchematronAddNamespace(ctxt, prefix, uri);
-	    ret->nbNs++;
-	}
-	if (uri)
-	    xmlFree(uri);
-	if (prefix)
-	    xmlFree(prefix);
-	cur = cur->next;
-	NEXT_SCHEMATRON(cur);
+    if ((uri == NULL) || (uri[0] == 0)) {
+        xmlSchematronPErr(ctxt, cur,
+        XML_SCHEMAP_NOROOT,
+        "ns element has no uri", NULL, NULL);
+    }
+    if ((prefix == NULL) || (prefix[0] == 0)) {
+        xmlSchematronPErr(ctxt, cur,
+        XML_SCHEMAP_NOROOT,
+        "ns element has no prefix", NULL, NULL);
+    }
+    if ((prefix) && (uri)) {
+        xmlXPathRegisterNs(ctxt->xctxt, prefix, uri);
+        xmlSchematronAddNamespace(ctxt, prefix, uri);
+        ret->nbNs++;
+    }
+    if (uri)
+        xmlFree(uri);
+    if (prefix)
+        xmlFree(prefix);
+    cur = cur->next;
+    NEXT_SCHEMATRON(cur);
     }
     while (cur != NULL) {
-	if (IS_SCHEMATRON(cur, "pattern")) {
-	    xmlSchematronParsePattern(ctxt, cur);
-	    ret->nbPattern++;
-	} else {
-	    xmlSchematronPErr(ctxt, cur,
-		XML_SCHEMAP_NOROOT,
-		"Expecting a pattern element instead of %s", cur->name, NULL);
-	}
-	cur = cur->next;
-	NEXT_SCHEMATRON(cur);
+    if (IS_SCHEMATRON(cur, "pattern")) {
+        xmlSchematronParsePattern(ctxt, cur);
+        ret->nbPattern++;
+    } else {
+        xmlSchematronPErr(ctxt, cur,
+        XML_SCHEMAP_NOROOT,
+        "Expecting a pattern element instead of %s", cur->name, NULL);
+    }
+    cur = cur->next;
+    NEXT_SCHEMATRON(cur);
     }
     if (ret->nbPattern == 0) {
-	xmlSchematronPErr(ctxt, root,
-	    XML_SCHEMAP_NOROOT,
-	    "The schematron document '%s' has no pattern",
-	    ctxt->URL, NULL);
-	goto exit;
+    xmlSchematronPErr(ctxt, root,
+        XML_SCHEMAP_NOROOT,
+        "The schematron document '%s' has no pattern",
+        ctxt->URL, NULL);
+    goto exit;
     }
     /* the original document must be kept for reporting */
     ret->doc = doc;
     if (preserve) {
-	    ret->preserve = 1;
+        ret->preserve = 1;
     }
     preserve = 1;
 
 exit:
     if (!preserve) {
-	xmlFreeDoc(doc);
+    xmlFreeDoc(doc);
     }
     if (ret != NULL) {
-	if (ctxt->nberrors != 0) {
-	    xmlSchematronFree(ret);
-	    ret = NULL;
-	} else {
-	    ret->namespaces = ctxt->namespaces;
-	    ret->nbNamespaces = ctxt->nbNamespaces;
-	    ctxt->namespaces = NULL;
-	}
+    if (ctxt->nberrors != 0) {
+        xmlSchematronFree(ret);
+        ret = NULL;
+    } else {
+        ret->namespaces = ctxt->namespaces;
+        ret->nbNamespaces = ctxt->nbNamespaces;
+        ctxt->namespaces = NULL;
+    }
     }
     return (ret);
 }
 
 /************************************************************************
- *									*
- *		Schematrontron Reports handler				*
- *									*
+ *                                    *
+ *        Schematrontron Reports handler                *
+ *                                    *
  ************************************************************************/
 
 static xmlNodePtr
@@ -1254,7 +1254,7 @@ xmlSchematronGetNode(xmlSchematronValidCtxtPtr ctxt,
 
     if ((ret->type == XPATH_NODESET) &&
         (ret->nodesetval != NULL) && (ret->nodesetval->nodeNr > 0))
-	node = ret->nodesetval->nodeTab[0];
+    node = ret->nodesetval->nodeTab[0];
 
     xmlXPathFreeObject(ret);
     return(node);
@@ -1289,7 +1289,7 @@ xmlSchematronReportOutput(xmlSchematronValidCtxtPtr ctxt ATTRIBUTE_UNUSED,
  */
 static xmlChar *
 xmlSchematronFormatReport(xmlSchematronValidCtxtPtr ctxt, 
-			  xmlNodePtr test, xmlNodePtr cur) {
+              xmlNodePtr test, xmlNodePtr cur) {
     xmlChar *ret = NULL;
     xmlNodePtr child, node;
 
@@ -1299,55 +1299,55 @@ xmlSchematronFormatReport(xmlSchematronValidCtxtPtr ctxt,
     child = test->children;
     while (child != NULL) {
         if ((child->type == XML_TEXT_NODE) ||
-	    (child->type == XML_CDATA_SECTION_NODE))
-	    ret = xmlStrcat(ret, child->content);
-	else if (IS_SCHEMATRON(child, "name")) {
-	    xmlChar *path;
+        (child->type == XML_CDATA_SECTION_NODE))
+        ret = xmlStrcat(ret, child->content);
+    else if (IS_SCHEMATRON(child, "name")) {
+        xmlChar *path;
 
-	    path = xmlGetNoNsProp(child, BAD_CAST "path");
+        path = xmlGetNoNsProp(child, BAD_CAST "path");
 
             node = cur;
-	    if (path != NULL) {
-	        node = xmlSchematronGetNode(ctxt, cur, path);
-		if (node == NULL)
-		    node = cur;
-		xmlFree(path);
-	    }
+        if (path != NULL) {
+            node = xmlSchematronGetNode(ctxt, cur, path);
+        if (node == NULL)
+            node = cur;
+        xmlFree(path);
+        }
 
-	    if ((node->ns == NULL) || (node->ns->prefix == NULL)) 
-	        ret = xmlStrcat(ret, node->name);
-	    else {
-	        ret = xmlStrcat(ret, node->ns->prefix);
-	        ret = xmlStrcat(ret, BAD_CAST ":");
-	        ret = xmlStrcat(ret, node->name);
-	    }
-	} else {
-	    child = child->next;
-	    continue;
-	}
+        if ((node->ns == NULL) || (node->ns->prefix == NULL)) 
+            ret = xmlStrcat(ret, node->name);
+        else {
+            ret = xmlStrcat(ret, node->ns->prefix);
+            ret = xmlStrcat(ret, BAD_CAST ":");
+            ret = xmlStrcat(ret, node->name);
+        }
+    } else {
+        child = child->next;
+        continue;
+    }
 
-	/*
-	 * remove superfluous \n
-	 */
-	if (ret != NULL) {
-	    int len = xmlStrlen(ret);
-	    xmlChar c;
+    /*
+     * remove superfluous \n
+     */
+    if (ret != NULL) {
+        int len = xmlStrlen(ret);
+        xmlChar c;
 
-	    if (len > 0) {
-		c = ret[len - 1];
-		if ((c == ' ') || (c == '\n') || (c == '\r') || (c == '\t')) {
-		    while ((c == ' ') || (c == '\n') ||
-		           (c == '\r') || (c == '\t')) {
-			len--;
-			if (len == 0)
-			    break;
-			c = ret[len - 1];
-		    }
-		    ret[len] = ' ';
-		    ret[len + 1] = 0;
-		}
-	    }
-	}
+        if (len > 0) {
+        c = ret[len - 1];
+        if ((c == ' ') || (c == '\n') || (c == '\r') || (c == '\t')) {
+            while ((c == ' ') || (c == '\n') ||
+                   (c == '\r') || (c == '\t')) {
+            len--;
+            if (len == 0)
+                break;
+            c = ret[len - 1];
+            }
+            ret[len] = ' ';
+            ret[len + 1] = 0;
+        }
+        }
+    }
 
         child = child->next;
     }
@@ -1366,44 +1366,44 @@ xmlSchematronFormatReport(xmlSchematronValidCtxtPtr ctxt,
  */
 static void
 xmlSchematronReportSuccess(xmlSchematronValidCtxtPtr ctxt, 
-		   xmlSchematronTestPtr test, xmlNodePtr cur, xmlSchematronPatternPtr pattern, int success) {
+           xmlSchematronTestPtr test, xmlNodePtr cur, xmlSchematronPatternPtr pattern, int success) {
     if ((ctxt == NULL) || (cur == NULL) || (test == NULL))
         return;
     /* if quiet and not SVRL report only failures */
     if ((ctxt->flags & XML_SCHEMATRON_OUT_QUIET) &&
         ((ctxt->flags & XML_SCHEMATRON_OUT_XML) == 0) &&
-	(test->type == XML_SCHEMATRON_REPORT))
+    (test->type == XML_SCHEMATRON_REPORT))
         return;
     if (ctxt->flags & XML_SCHEMATRON_OUT_XML) {
         TODO
     } else {
         xmlChar *path;
-	char msg[1000];
-	long line;
-	const xmlChar *report = NULL;
+    char msg[1000];
+    long line;
+    const xmlChar *report = NULL;
 
         if (((test->type == XML_SCHEMATRON_REPORT) & (!success)) ||
-	    ((test->type == XML_SCHEMATRON_ASSERT) & (success)))
-	    return;
-	line = xmlGetLineNo(cur);
-	path = xmlGetNodePath(cur);
-	if (path == NULL)
-	    path = (xmlChar *) cur->name;
+        ((test->type == XML_SCHEMATRON_ASSERT) & (success)))
+        return;
+    line = xmlGetLineNo(cur);
+    path = xmlGetNodePath(cur);
+    if (path == NULL)
+        path = (xmlChar *) cur->name;
 #if 0
-	if ((test->report != NULL) && (test->report[0] != 0))
-	    report = test->report;
+    if ((test->report != NULL) && (test->report[0] != 0))
+        report = test->report;
 #endif
-	if (test->node != NULL)
+    if (test->node != NULL)
             report = xmlSchematronFormatReport(ctxt, test->node, cur);
-	if (report == NULL) {
-	    if (test->type == XML_SCHEMATRON_ASSERT) {
+    if (report == NULL) {
+        if (test->type == XML_SCHEMATRON_ASSERT) {
             report = xmlStrdup((const xmlChar *) "node failed assert");
-	    } else {
+        } else {
             report = xmlStrdup((const xmlChar *) "node failed report");
-	    }
-	    }
-	    snprintf(msg, 999, "%s line %ld: %s\n", (const char *) path,
-		     line, (const char *) report);
+        }
+        }
+        snprintf(msg, 999, "%s line %ld: %s\n", (const char *) path,
+             line, (const char *) report);
 
     if (ctxt->flags & XML_SCHEMATRON_OUT_ERROR) {
         xmlStructuredErrorFunc schannel = NULL;
@@ -1416,7 +1416,7 @@ xmlSchematronReportSuccess(xmlSchematronValidCtxtPtr ctxt,
             else
                 channel = ctxt->error;
             data = ctxt->userData;
-	}
+    }
 
         __xmlRaiseError(schannel, channel, data,
                         NULL, cur, XML_FROM_SCHEMATRONV,
@@ -1427,13 +1427,13 @@ xmlSchematronReportSuccess(xmlSchematronValidCtxtPtr ctxt,
                         (const char *) report, 0, 0,
                         "%s", msg);
     } else {
-	xmlSchematronReportOutput(ctxt, cur, &msg[0]);
+    xmlSchematronReportOutput(ctxt, cur, &msg[0]);
     }
 
     xmlFree((char *) report);
 
-	if ((path != NULL) && (path != (xmlChar *) cur->name))
-	    xmlFree(path);
+    if ((path != NULL) && (path != (xmlChar *) cur->name))
+        xmlFree(path);
     }
 }
 
@@ -1446,7 +1446,7 @@ xmlSchematronReportSuccess(xmlSchematronValidCtxtPtr ctxt,
  */
 static void
 xmlSchematronReportPattern(xmlSchematronValidCtxtPtr ctxt, 
-			   xmlSchematronPatternPtr pattern) {
+               xmlSchematronPatternPtr pattern) {
     if ((ctxt == NULL) || (pattern == NULL))
         return;
     if ((ctxt->flags & XML_SCHEMATRON_OUT_QUIET) || (ctxt->flags & XML_SCHEMATRON_OUT_ERROR)) /* Error gives pattern name as part of error */
@@ -1454,20 +1454,20 @@ xmlSchematronReportPattern(xmlSchematronValidCtxtPtr ctxt,
     if (ctxt->flags & XML_SCHEMATRON_OUT_XML) {
         TODO
     } else {
-	char msg[1000];
+    char msg[1000];
 
-	if (pattern->name == NULL)
-	    return;
-	snprintf(msg, 999, "Pattern: %s\n", (const char *) pattern->name);
-	xmlSchematronReportOutput(ctxt, NULL, &msg[0]);
+    if (pattern->name == NULL)
+        return;
+    snprintf(msg, 999, "Pattern: %s\n", (const char *) pattern->name);
+    xmlSchematronReportOutput(ctxt, NULL, &msg[0]);
     }
 }
 
 
 /************************************************************************
- *									*
- *		Validation against a Schematrontron				*
- *									*
+ *                                    *
+ *        Validation against a Schematrontron                *
+ *                                    *
  ************************************************************************/
 
 /**
@@ -1519,15 +1519,15 @@ xmlSchematronNewValidCtxt(xmlSchematronPtr schema, int options)
     if (ret->xctxt == NULL) {
         xmlSchematronPErrMemory(NULL, "allocating schema parser XPath context",
                                 NULL);
-	xmlSchematronFreeValidCtxt(ret);
+    xmlSchematronFreeValidCtxt(ret);
         return (NULL);
     }
     for (i = 0;i < schema->nbNamespaces;i++) {
         if ((schema->namespaces[2 * i] == NULL) ||
             (schema->namespaces[2 * i + 1] == NULL))
-	    break;
-	xmlXPathRegisterNs(ret->xctxt, schema->namespaces[2 * i + 1],
-	                   schema->namespaces[2 * i]);
+        break;
+    xmlXPathRegisterNs(ret->xctxt, schema->namespaces[2 * i + 1],
+                       schema->namespaces[2 * i]);
     }
     return (ret);
 }
@@ -1553,34 +1553,34 @@ xmlSchematronFreeValidCtxt(xmlSchematronValidCtxtPtr ctxt)
 static xmlNodePtr
 xmlSchematronNextNode(xmlNodePtr cur) {
     if (cur->children != NULL) {
-	/*
-	 * Do not descend on entities declarations
-	 */
-	if (cur->children->type != XML_ENTITY_DECL) {
-	    cur = cur->children;
-	    /*
-	     * Skip DTDs
-	     */
-	    if (cur->type != XML_DTD_NODE)
-		return(cur);
-	}
+    /*
+     * Do not descend on entities declarations
+     */
+    if (cur->children->type != XML_ENTITY_DECL) {
+        cur = cur->children;
+        /*
+         * Skip DTDs
+         */
+        if (cur->type != XML_DTD_NODE)
+        return(cur);
+    }
     }
 
     while (cur->next != NULL) {
-	cur = cur->next;
-	if ((cur->type != XML_ENTITY_DECL) &&
-	    (cur->type != XML_DTD_NODE))
-	    return(cur);
+    cur = cur->next;
+    if ((cur->type != XML_ENTITY_DECL) &&
+        (cur->type != XML_DTD_NODE))
+        return(cur);
     }
     
     do {
-	cur = cur->parent;
-	if (cur == NULL) break;
-	if (cur->type == XML_DOCUMENT_NODE) return(NULL);
-	if (cur->next != NULL) {
-	    cur = cur->next;
-	    return(cur);
-	}
+    cur = cur->parent;
+    if (cur == NULL) break;
+    if (cur->type == XML_DOCUMENT_NODE) return(NULL);
+    if (cur->next != NULL) {
+        cur = cur->next;
+        return(cur);
+    }
     } while (cur != NULL);
     return(cur);
 }
@@ -1608,37 +1608,37 @@ xmlSchematronRunTest(xmlSchematronValidCtxtPtr ctxt,
     ctxt->xctxt->node = cur;
     ret = xmlXPathCompiledEval(test->comp, ctxt->xctxt);
     if (ret == NULL) {
-	failed = 1;
+    failed = 1;
     } else {
         switch (ret->type) {
-	    case XPATH_XSLT_TREE:
-	    case XPATH_NODESET:
-		if ((ret->nodesetval == NULL) ||
-		    (ret->nodesetval->nodeNr == 0))
-		    failed = 1;
-		break;
-	    case XPATH_BOOLEAN:
-		failed = !ret->boolval;
-		break;
-	    case XPATH_NUMBER:
-		if ((xmlXPathIsNaN(ret->floatval)) ||
-		    (ret->floatval == 0.0))
-		    failed = 1;
-		break;
-	    case XPATH_STRING:
-		if ((ret->stringval == NULL) ||
-		    (ret->stringval[0] == 0))
-		    failed = 1;
-		break;
-	    case XPATH_UNDEFINED:
-	    case XPATH_POINT:
-	    case XPATH_RANGE:
-	    case XPATH_LOCATIONSET:
-	    case XPATH_USERS:
-		failed = 1;
-		break;
-	}
-	xmlXPathFreeObject(ret);
+        case XPATH_XSLT_TREE:
+        case XPATH_NODESET:
+        if ((ret->nodesetval == NULL) ||
+            (ret->nodesetval->nodeNr == 0))
+            failed = 1;
+        break;
+        case XPATH_BOOLEAN:
+        failed = !ret->boolval;
+        break;
+        case XPATH_NUMBER:
+        if ((xmlXPathIsNaN(ret->floatval)) ||
+            (ret->floatval == 0.0))
+            failed = 1;
+        break;
+        case XPATH_STRING:
+        if ((ret->stringval == NULL) ||
+            (ret->stringval[0] == 0))
+            failed = 1;
+        break;
+        case XPATH_UNDEFINED:
+        case XPATH_POINT:
+        case XPATH_RANGE:
+        case XPATH_LOCATIONSET:
+        case XPATH_USERS:
+        failed = 1;
+        break;
+    }
+    xmlXPathFreeObject(ret);
     }
     if ((failed) && (test->type == XML_SCHEMATRON_ASSERT))
         ctxt->nberrors++;
@@ -1675,64 +1675,64 @@ xmlSchematronValidateDoc(xmlSchematronValidCtxtPtr ctxt, xmlDocPtr instance)
     root = xmlDocGetRootElement(instance);
     if (root == NULL) {
         TODO
-	ctxt->nberrors++;
-	return(1);
+    ctxt->nberrors++;
+    return(1);
     }
     if ((ctxt->flags & XML_SCHEMATRON_OUT_QUIET) ||
         (ctxt->flags == 0)) {
-	/*
-	 * we are just trying to assert the validity of the document,
-	 * speed primes over the output, run in a single pass
-	 */
-	cur = root;
-	while (cur != NULL) {
-	    rule = ctxt->schema->rules;
-	    while (rule != NULL) {
-		if (xmlPatternMatch(rule->pattern, cur) == 1) {
-		    test = rule->tests;
-		    while (test != NULL) {
-			xmlSchematronRunTest(ctxt, test, instance, cur, (xmlSchematronPatternPtr)rule->pattern);
-			test = test->next;
-		    }
-		}
-		rule = rule->next;
-	    }
-	    
-	    cur = xmlSchematronNextNode(cur);
-	}
+    /*
+     * we are just trying to assert the validity of the document,
+     * speed primes over the output, run in a single pass
+     */
+    cur = root;
+    while (cur != NULL) {
+        rule = ctxt->schema->rules;
+        while (rule != NULL) {
+        if (xmlPatternMatch(rule->pattern, cur) == 1) {
+            test = rule->tests;
+            while (test != NULL) {
+            xmlSchematronRunTest(ctxt, test, instance, cur, (xmlSchematronPatternPtr)rule->pattern);
+            test = test->next;
+            }
+        }
+        rule = rule->next;
+        }
+        
+        cur = xmlSchematronNextNode(cur);
+    }
     } else {
         /*
-	 * Process all contexts one at a time
-	 */
-	pattern = ctxt->schema->patterns;
-	
-	while (pattern != NULL) {
-	    xmlSchematronReportPattern(ctxt, pattern);
+     * Process all contexts one at a time
+     */
+    pattern = ctxt->schema->patterns;
+    
+    while (pattern != NULL) {
+        xmlSchematronReportPattern(ctxt, pattern);
 
-	    /*
-	     * TODO convert the pattern rule to a direct XPath and
-	     * compute directly instead of using the pattern matching
-	     * over the full document... 
-	     * Check the exact semantic
-	     */
-	    cur = root;
-	    while (cur != NULL) {
-		rule = pattern->rules;
-		while (rule != NULL) {
-		    if (xmlPatternMatch(rule->pattern, cur) == 1) {
-			test = rule->tests;
-			while (test != NULL) {
-			    xmlSchematronRunTest(ctxt, test, instance, cur, pattern);
-			    test = test->next;
-			}
-		    }
-		    rule = rule->patnext;
-		}
-		
-		cur = xmlSchematronNextNode(cur);
-	    }
-	    pattern = pattern->next;
-	}
+        /*
+         * TODO convert the pattern rule to a direct XPath and
+         * compute directly instead of using the pattern matching
+         * over the full document... 
+         * Check the exact semantic
+         */
+        cur = root;
+        while (cur != NULL) {
+        rule = pattern->rules;
+        while (rule != NULL) {
+            if (xmlPatternMatch(rule->pattern, cur) == 1) {
+            test = rule->tests;
+            while (test != NULL) {
+                xmlSchematronRunTest(ctxt, test, instance, cur, pattern);
+                test = test->next;
+            }
+            }
+            rule = rule->patnext;
+        }
+        
+        cur = xmlSchematronNextNode(cur);
+        }
+        pattern = pattern->next;
+    }
     }
     return(ctxt->nberrors);
 }
@@ -1752,24 +1752,24 @@ main(void)
         fprintf(stderr, "failed to build schematron parser\n");
     } else {
         schema = xmlSchematronParse(pctxt);
-	if (schema == NULL) {
-	    fprintf(stderr, "failed to compile schematron\n");
-	}
-	xmlSchematronFreeParserCtxt(pctxt);
+    if (schema == NULL) {
+        fprintf(stderr, "failed to compile schematron\n");
+    }
+    xmlSchematronFreeParserCtxt(pctxt);
     }
     instance = xmlReadFile("tst.sct", NULL,
                            XML_PARSE_NOENT | XML_PARSE_NOCDATA);
     if (instance == NULL) {
-	fprintf(stderr, "failed to parse instance\n");
+    fprintf(stderr, "failed to parse instance\n");
     }
     if ((schema != NULL) && (instance != NULL)) {
         vctxt = xmlSchematronNewValidCtxt(schema);
-	if (vctxt == NULL) {
-	    fprintf(stderr, "failed to build schematron validator\n");
-	} else {
-	    ret = xmlSchematronValidateDoc(vctxt, instance);
-	    xmlSchematronFreeValidCtxt(vctxt);
-	}
+    if (vctxt == NULL) {
+        fprintf(stderr, "failed to build schematron validator\n");
+    } else {
+        ret = xmlSchematronValidateDoc(vctxt, instance);
+        xmlSchematronFreeValidCtxt(vctxt);
+    }
     }
     xmlSchematronFree(schema);
     xmlFreeDoc(instance);

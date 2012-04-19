@@ -11,17 +11,17 @@
  * lossless transformations of JPEG data.
  */
 
-#include "cdjpeg.h"		/* Common decls for cjpeg/djpeg applications */
-#include "transupp.h"		/* Support routines for jpegtran */
-#include "jversion.h"		/* for version message */
+#include "cdjpeg.h"        /* Common decls for cjpeg/djpeg applications */
+#include "transupp.h"        /* Support routines for jpegtran */
+#include "jversion.h"        /* for version message */
 
-#ifdef USE_CCOMMAND		/* command-line reader for Macintosh */
+#ifdef USE_CCOMMAND        /* command-line reader for Macintosh */
 #ifdef __MWERKS__
 #include <SIOUX.h>              /* Metrowerks needs this */
-#include <console.h>		/* ... and this */
+#include <console.h>        /* ... and this */
 #endif
 #ifdef THINK_C
-#include <console.h>		/* Think declares it here */
+#include <console.h>        /* Think declares it here */
 #endif
 #endif
 
@@ -35,9 +35,9 @@
  */
 
 
-static const char * progname;	/* program name for error messages */
-static char * outfilename;	/* for -outfile switch */
-static JCOPY_OPTION copyoption;	/* -copy switch */
+static const char * progname;    /* program name for error messages */
+static char * outfilename;    /* for -outfile switch */
+static JCOPY_OPTION copyoption;    /* -copy switch */
 static jpeg_transform_info transformoption; /* image transformation options */
 
 
@@ -99,12 +99,12 @@ select_transform (JXFORM_CODE transform)
     transformoption.transform = transform;
   } else {
     fprintf(stderr, "%s: can only do one image transformation at a time\n",
-	    progname);
+        progname);
     usage();
   }
 #else
   fprintf(stderr, "%s: sorry, image transformation was not compiled\n",
-	  progname);
+      progname);
   exit(EXIT_FAILURE);
 #endif
 }
@@ -112,7 +112,7 @@ select_transform (JXFORM_CODE transform)
 
 LOCAL(int)
 parse_switches (j_compress_ptr cinfo, int argc, char **argv,
-		int last_file_arg_seen, boolean for_real)
+        int last_file_arg_seen, boolean for_real)
 /* Parse optional switches.
  * Returns argv[] index of first file-name argument (== argc if none).
  * Any file names with indexes <= last_file_arg_seen are ignored;
@@ -125,7 +125,7 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
   int argn;
   char * arg;
   boolean simple_progressive;
-  char * scansarg = NULL;	/* saves -scans parm if any */
+  char * scansarg = NULL;    /* saves -scans parm if any */
 
   /* Set up default JPEG parameters. */
   simple_progressive = FALSE;
@@ -143,12 +143,12 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
     if (*arg != '-') {
       /* Not a switch, must be a file name argument */
       if (argn <= last_file_arg_seen) {
-	outfilename = NULL;	/* -outfile applies to just one input file */
-	continue;		/* ignore this name if previously processed */
+    outfilename = NULL;    /* -outfile applies to just one input file */
+    continue;        /* ignore this name if previously processed */
       }
-      break;			/* else done parsing switches */
+      break;            /* else done parsing switches */
     }
-    arg++;			/* advance past switch marker character */
+    arg++;            /* advance past switch marker character */
 
     if (keymatch(arg, "arithmetic", 1)) {
       /* Use arithmetic coding. */
@@ -156,22 +156,22 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
       cinfo->arith_code = TRUE;
 #else
       fprintf(stderr, "%s: sorry, arithmetic coding not supported\n",
-	      progname);
+          progname);
       exit(EXIT_FAILURE);
 #endif
 
     } else if (keymatch(arg, "copy", 1)) {
       /* Select which extra markers to copy. */
-      if (++argn >= argc)	/* advance to next argument */
-	usage();
+      if (++argn >= argc)    /* advance to next argument */
+    usage();
       if (keymatch(argv[argn], "none", 1)) {
-	copyoption = JCOPYOPT_NONE;
+    copyoption = JCOPYOPT_NONE;
       } else if (keymatch(argv[argn], "comments", 1)) {
-	copyoption = JCOPYOPT_COMMENTS;
+    copyoption = JCOPYOPT_COMMENTS;
       } else if (keymatch(argv[argn], "all", 1)) {
-	copyoption = JCOPYOPT_ALL;
+    copyoption = JCOPYOPT_ALL;
       } else
-	usage();
+    usage();
 
     } else if (keymatch(arg, "debug", 1) || keymatch(arg, "verbose", 1)) {
       /* Enable debug printouts. */
@@ -179,29 +179,29 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
       static boolean printed_version = FALSE;
 
       if (! printed_version) {
-	fprintf(stderr, "Independent JPEG Group's JPEGTRAN, version %s\n%s\n",
-		JVERSION, JCOPYRIGHT);
-	printed_version = TRUE;
+    fprintf(stderr, "Independent JPEG Group's JPEGTRAN, version %s\n%s\n",
+        JVERSION, JCOPYRIGHT);
+    printed_version = TRUE;
       }
       cinfo->err->trace_level++;
 
     } else if (keymatch(arg, "flip", 1)) {
       /* Mirror left-right or top-bottom. */
-      if (++argn >= argc)	/* advance to next argument */
-	usage();
+      if (++argn >= argc)    /* advance to next argument */
+    usage();
       if (keymatch(argv[argn], "horizontal", 1))
-	select_transform(JXFORM_FLIP_H);
+    select_transform(JXFORM_FLIP_H);
       else if (keymatch(argv[argn], "vertical", 1))
-	select_transform(JXFORM_FLIP_V);
+    select_transform(JXFORM_FLIP_V);
       else
-	usage();
+    usage();
 
     } else if (keymatch(arg, "grayscale", 1) || keymatch(arg, "greyscale",1)) {
       /* Force to grayscale. */
 #if TRANSFORMS_SUPPORTED
       transformoption.force_grayscale = TRUE;
 #else
-      select_transform(JXFORM_NONE);	/* force an error */
+      select_transform(JXFORM_NONE);    /* force an error */
 #endif
 
     } else if (keymatch(arg, "maxmemory", 3)) {
@@ -209,12 +209,12 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
       long lval;
       char ch = 'x';
 
-      if (++argn >= argc)	/* advance to next argument */
-	usage();
+      if (++argn >= argc)    /* advance to next argument */
+    usage();
       if (sscanf(argv[argn], "%ld%c", &lval, &ch) < 1)
-	usage();
+    usage();
       if (ch == 'm' || ch == 'M')
-	lval *= 1000L;
+    lval *= 1000L;
       cinfo->mem->max_memory_to_use = lval * 1000L;
 
     } else if (keymatch(arg, "optimize", 1) || keymatch(arg, "optimise", 1)) {
@@ -223,15 +223,15 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
       cinfo->optimize_coding = TRUE;
 #else
       fprintf(stderr, "%s: sorry, entropy optimization was not compiled\n",
-	      progname);
+          progname);
       exit(EXIT_FAILURE);
 #endif
 
     } else if (keymatch(arg, "outfile", 4)) {
       /* Set output file name. */
-      if (++argn >= argc)	/* advance to next argument */
-	usage();
-      outfilename = argv[argn];	/* save it away for later use */
+      if (++argn >= argc)    /* advance to next argument */
+    usage();
+      outfilename = argv[argn];    /* save it away for later use */
 
     } else if (keymatch(arg, "progressive", 1)) {
       /* Select simple progressive mode. */
@@ -240,7 +240,7 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
       /* We must postpone execution until num_components is known. */
 #else
       fprintf(stderr, "%s: sorry, progressive output was not compiled\n",
-	      progname);
+          progname);
       exit(EXIT_FAILURE);
 #endif
 
@@ -249,43 +249,43 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
       long lval;
       char ch = 'x';
 
-      if (++argn >= argc)	/* advance to next argument */
-	usage();
+      if (++argn >= argc)    /* advance to next argument */
+    usage();
       if (sscanf(argv[argn], "%ld%c", &lval, &ch) < 1)
-	usage();
+    usage();
       if (lval < 0 || lval > 65535L)
-	usage();
+    usage();
       if (ch == 'b' || ch == 'B') {
-	cinfo->restart_interval = (unsigned int) lval;
-	cinfo->restart_in_rows = 0; /* else prior '-restart n' overrides me */
+    cinfo->restart_interval = (unsigned int) lval;
+    cinfo->restart_in_rows = 0; /* else prior '-restart n' overrides me */
       } else {
-	cinfo->restart_in_rows = (int) lval;
-	/* restart_interval will be computed during startup */
+    cinfo->restart_in_rows = (int) lval;
+    /* restart_interval will be computed during startup */
       }
 
     } else if (keymatch(arg, "rotate", 2)) {
       /* Rotate 90, 180, or 270 degrees (measured clockwise). */
-      if (++argn >= argc)	/* advance to next argument */
-	usage();
+      if (++argn >= argc)    /* advance to next argument */
+    usage();
       if (keymatch(argv[argn], "90", 2))
-	select_transform(JXFORM_ROT_90);
+    select_transform(JXFORM_ROT_90);
       else if (keymatch(argv[argn], "180", 3))
-	select_transform(JXFORM_ROT_180);
+    select_transform(JXFORM_ROT_180);
       else if (keymatch(argv[argn], "270", 3))
-	select_transform(JXFORM_ROT_270);
+    select_transform(JXFORM_ROT_270);
       else
-	usage();
+    usage();
 
     } else if (keymatch(arg, "scans", 1)) {
       /* Set scan script. */
 #ifdef C_MULTISCAN_FILES_SUPPORTED
-      if (++argn >= argc)	/* advance to next argument */
-	usage();
+      if (++argn >= argc)    /* advance to next argument */
+    usage();
       scansarg = argv[argn];
       /* We must postpone reading the file in case -progressive appears. */
 #else
       fprintf(stderr, "%s: sorry, multi-scan output was not compiled\n",
-	      progname);
+          progname);
       exit(EXIT_FAILURE);
 #endif
 
@@ -302,7 +302,7 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
       transformoption.trim = TRUE;
 
     } else {
-      usage();			/* bogus switch */
+      usage();            /* bogus switch */
     }
   }
 
@@ -311,18 +311,18 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
   if (for_real) {
 
 #ifdef C_PROGRESSIVE_SUPPORTED
-    if (simple_progressive)	/* process -progressive; -scans can override */
+    if (simple_progressive)    /* process -progressive; -scans can override */
       jpeg_simple_progression(cinfo);
 #endif
 
 #ifdef C_MULTISCAN_FILES_SUPPORTED
-    if (scansarg != NULL)	/* process -scans if it was present */
+    if (scansarg != NULL)    /* process -scans if it was present */
       if (! read_scan_script(cinfo, scansarg))
-	usage();
+    usage();
 #endif
   }
 
-  return argn;			/* return index of next arg (file name) */
+  return argn;            /* return index of next arg (file name) */
 }
 
 
@@ -352,7 +352,7 @@ main (int argc, char **argv)
 
   progname = argv[0];
   if (progname == NULL || progname[0] == 0)
-    progname = "jpegtran";	/* in case C library doesn't provide it */
+    progname = "jpegtran";    /* in case C library doesn't provide it */
 
   /* Initialize the JPEG decompression object with default error handling. */
   srcinfo.err = jpeg_std_error(&jsrcerr);
@@ -385,14 +385,14 @@ main (int argc, char **argv)
   if (outfilename == NULL) {
     if (file_index != argc-2) {
       fprintf(stderr, "%s: must name one input and one output file\n",
-	      progname);
+          progname);
       usage();
     }
     outfilename = argv[file_index+1];
   } else {
     if (file_index != argc-1) {
       fprintf(stderr, "%s: must name one input and one output file\n",
-	      progname);
+          progname);
       usage();
     }
   }
@@ -457,8 +457,8 @@ main (int argc, char **argv)
    */
 #if TRANSFORMS_SUPPORTED
   dst_coef_arrays = jtransform_adjust_parameters(&srcinfo, &dstinfo,
-						 src_coef_arrays,
-						 &transformoption);
+                         src_coef_arrays,
+                         &transformoption);
 #else
   dst_coef_arrays = src_coef_arrays;
 #endif
@@ -478,8 +478,8 @@ main (int argc, char **argv)
   /* Execute image transformation, if any */
 #if TRANSFORMS_SUPPORTED
   jtransform_execute_transformation(&srcinfo, &dstinfo,
-				    src_coef_arrays,
-				    &transformoption);
+                    src_coef_arrays,
+                    &transformoption);
 #endif
 
   /* Finish compression and release memory */
@@ -500,5 +500,5 @@ main (int argc, char **argv)
 
   /* All done. */
   exit(jsrcerr.num_warnings + jdsterr.num_warnings ?EXIT_WARNING:EXIT_SUCCESS);
-  return 0;			/* suppress no-return-value warnings */
+  return 0;            /* suppress no-return-value warnings */
 }

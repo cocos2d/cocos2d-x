@@ -28,22 +28,22 @@ THE SOFTWARE.
 
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 // record the resource path
 static string s_strResourcePath = "";
 
 void CCFileUtils::setResourcePath(const char* pszResourcePath)
 {
-	CCAssert(pszResourcePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
-	s_strResourcePath = pszResourcePath;
+    CCAssert(pszResourcePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
+    s_strResourcePath = pszResourcePath;
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
-	int len = 0;
-	if (pszRelativePath == NULL || (len = strlen(pszRelativePath)) <= 0)
-		return NULL;
-	CCString * pRet = new CCString();
+    int len = 0;
+    if (pszRelativePath == NULL || (len = strlen(pszRelativePath)) <= 0)
+        return NULL;
+    CCString * pRet = new CCString();
     pRet->autorelease();
     if (len > 1 && pszRelativePath[0] == '/')
     {
@@ -54,22 +54,22 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
         pRet->m_sString = s_strResourcePath;
         pRet->m_sString += pszRelativePath;
     }
-	return pRet->m_sString.c_str();
+    return pRet->m_sString.c_str();
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-	std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
-	CCString *pRet = new CCString();
-	pRet->autorelease();
-	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-	pRet->m_sString += pszFilename;
-	return pRet->m_sString.c_str();
+    std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+    CCString *pRet = new CCString();
+    pRet->autorelease();
+    pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
+    pRet->m_sString += pszFilename;
+    return pRet->m_sString.c_str();
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
-	CC_ASSERT(pszFileName != NULL && pszMode != NULL);
+    CC_ASSERT(pszFileName != NULL && pszMode != NULL);
     unsigned char * pData = 0;
     int len = 0;
     string fullPath;
@@ -78,12 +78,12 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
     if (len > 1 && pszFileName[0] == '/')
     {
-    	fullPath = pszFileName;
+        fullPath = pszFileName;
     }
     else
     {
-    	fullPath = s_strResourcePath;
-    	fullPath += pszFileName;
+        fullPath = s_strResourcePath;
+        fullPath += pszFileName;
     }
 
     do 
@@ -103,8 +103,8 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         if (pSize)
         {
             *pSize = size;
-        }			
-    } while (0);		
+        }            
+    } while (0);        
 
     if (! pData && getIsPopupNotify())
     {
@@ -131,8 +131,8 @@ int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 string CCFileUtils::getWriteablePath()
 {
-	return "/Home/";
+    return "/Home/";
 }
 
-NS_CC_END;
+NS_CC_END
 

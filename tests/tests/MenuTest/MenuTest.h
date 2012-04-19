@@ -7,11 +7,11 @@
 class MenuLayerMainMenu : public CCLayer
 {
 protected:
-	CCMenuItem*	m_disabledItem;
+    CCMenuItem*    m_disabledItem;
 
 public:
-	MenuLayerMainMenu(void);
-	~MenuLayerMainMenu();
+    MenuLayerMainMenu(void);
+    ~MenuLayerMainMenu();
 
 public:
     virtual void registerWithTouchDispatcher();
@@ -21,82 +21,82 @@ public:
     virtual void ccTouchMoved(CCTouch *touch, CCEvent * pEvent);
 
     void allowTouches(ccTime dt);
-	void menuCallback(CCObject* pSender);
-	void menuCallbackConfig(CCObject* pSender);
-	void menuCallbackDisabled(CCObject* pSender);
-	void menuCallbackEnable(CCObject* pSender);
-	void menuCallback2(CCObject* pSender);
-	void menuCallbackPriorityTest(CCObject* pSender);
-	void onQuit(CCObject* pSender);
+    void menuCallback(CCObject* pSender);
+    void menuCallbackConfig(CCObject* pSender);
+    void menuCallbackDisabled(CCObject* pSender);
+    void menuCallbackEnable(CCObject* pSender);
+    void menuCallback2(CCObject* pSender);
+    void menuCallbackPriorityTest(CCObject* pSender);
+    void onQuit(CCObject* pSender);
 
-	//CREATE_NODE(MenuLayer1);
+    //CREATE_NODE(MenuLayer1);
 };
 
 class MenuLayer2 : public CCLayer
 {
 protected:
-	CCPoint		m_centeredMenu;
-	bool                m_alignedH; 
+    CCPoint        m_centeredMenu;
+    bool                m_alignedH; 
 
-	void alignMenusH();
-	void alignMenusV();
-
-public:
-	MenuLayer2(void);
-	~MenuLayer2();
+    void alignMenusH();
+    void alignMenusV();
 
 public:
-	void menuCallback(CCObject* pSender);
-	void menuCallbackOpacity(CCObject* pSender);
-	void menuCallbackAlign(CCObject* pSender);
+    MenuLayer2(void);
+    ~MenuLayer2();
 
-	//CREATE_NODE(MenuLayer2);
+public:
+    void menuCallback(CCObject* pSender);
+    void menuCallbackOpacity(CCObject* pSender);
+    void menuCallbackAlign(CCObject* pSender);
+
+    //CREATE_NODE(MenuLayer2);
 };
 
 class MenuLayer3 : public CCLayer
 {
 protected:
-	CCMenuItem*	m_disabledItem;
+    CCMenuItem*    m_disabledItem;
 
 public:
-	MenuLayer3(void);
-	~MenuLayer3();
+    MenuLayer3(void);
+    ~MenuLayer3();
 
 public:
-	void menuCallback(CCObject* pSender);
-	void menuCallback2(CCObject* pSender);
-	void menuCallback3(CCObject* pSender);
+    void menuCallback(CCObject* pSender);
+    void menuCallback2(CCObject* pSender);
+    void menuCallback3(CCObject* pSender);
 
-	//CREATE_NODE(MenuLayer3);
+    //CREATE_NODE(MenuLayer3);
 };
 
 class MenuLayer4 : public CCLayer
 {
 public:
-	MenuLayer4(void);
-	~MenuLayer4();
+    MenuLayer4(void);
+    ~MenuLayer4();
 
 public:
-	void menuCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
+    void menuCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 
-	//CREATE_NODE(MenuLayer4);
+    //CREATE_NODE(MenuLayer4);
 };
 
 class MenuLayerPriorityTest : public CCLayer
 {
 public:
-	MenuLayerPriorityTest();
-	~MenuLayerPriorityTest();
+    MenuLayerPriorityTest();
+    ~MenuLayerPriorityTest();
 
-	void menuCallback(CCObject* pSender);
-	void disableMenuCallback(CCObject* pSender);
-	void enableMenuCallback();
-	void togglePriorityCallback(CCObject* pSender);
+    void menuCallback(CCObject* pSender);
+    void disableMenuCallback(CCObject* pSender);
+    void enableMenuCallback();
+    void togglePriorityCallback(CCObject* pSender);
 private:
-	CCMenu* m_pMenu1;
-	CCMenu* m_pMenu2;
-	bool m_bPriority;
+    CCMenu* m_pMenu1;
+    CCMenu* m_pMenu2;
+    bool m_bPriority;
 };
 
 

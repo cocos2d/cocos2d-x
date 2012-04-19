@@ -26,9 +26,9 @@
 @class ZAttributedString;
 
 @interface FontLabel : UILabel {
-	void *reserved; // works around a bug in UILabel
-	ZFont *zFont;
-	ZAttributedString *zAttributedText;
+    void *reserved; // works around a bug in UILabel
+    ZFont *zFont;
+    ZAttributedString *zAttributedText;
 }
 @property (nonatomic, setter=setCGFont:) CGFontRef cgFont __AVAILABILITY_INTERNAL_DEPRECATED;
 @property (nonatomic, assign) CGFloat pointSize __AVAILABILITY_INTERNAL_DEPRECATED;

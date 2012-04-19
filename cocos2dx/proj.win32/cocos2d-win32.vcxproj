@@ -337,7 +337,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\CCFileUtils.h" />
     <ClInclude Include="..\platform\CCGL.h" />
     <ClInclude Include="..\platform\CCImage.h" />
-    <ClInclude Include="..\platform\CCLibxml2.h" />
     <ClInclude Include="..\platform\CCPlatformConfig.h" />
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />

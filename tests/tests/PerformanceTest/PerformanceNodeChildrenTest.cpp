@@ -277,12 +277,14 @@ void IterateSpriteSheetCArray::update(ccTime dt)
     CCARRAY_FOREACH(pChildren, pObject)
     {
         CCSprite* pSprite = (CCSprite*)pObject;
-        pSprite->setIsVisible(false);    }
+        pSprite->setIsVisible(false);
+    }
 
 #if CC_ENABLE_PROFILERS
     CCProfilingEndTimingBlock(_profilingTimer);
 #endif
-}
+}
+
 
 std::string IterateSpriteSheetCArray::title()
 {
@@ -375,7 +377,7 @@ void AddSpriteSheet::update(ccTime dt)
     if( totalToAdd > 0 )
     {
         CCArray* sprites = CCArray::arrayWithCapacity(totalToAdd);
-        int		 *zs      = new int[totalToAdd];
+        int         *zs      = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
@@ -513,7 +515,7 @@ void ReorderSpriteSheet::update(ccTime dt)
             batchNode->addChild((CCNode*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
-        //		[batchNode sortAllChildren];
+        //        [batchNode sortAllChildren];
 
         // reorder them
 #if CC_ENABLE_PROFILERS

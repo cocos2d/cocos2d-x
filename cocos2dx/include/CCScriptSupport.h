@@ -189,12 +189,12 @@ public:
 class CC_DLL CCScriptEngineManager
 {
 public:
-	~CCScriptEngineManager(void);
+    ~CCScriptEngineManager(void);
     
-	CCScriptEngineProtocol* getScriptEngine(void) {
+    CCScriptEngineProtocol* getScriptEngine(void) {
         return m_pScriptEngine;
     }
-	void setScriptEngine(CCScriptEngineProtocol *pScriptEngine);
+    void setScriptEngine(CCScriptEngineProtocol *pScriptEngine);
     void removeScriptEngine(void);
 
     static CCScriptEngineManager* sharedManager(void);
@@ -206,7 +206,7 @@ private:
     {
     }
     
-	CCScriptEngineProtocol *m_pScriptEngine;
+    CCScriptEngineProtocol *m_pScriptEngine;
 };
 
 NS_CC_END

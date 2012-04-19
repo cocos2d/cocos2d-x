@@ -29,28 +29,27 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCGL.h"
 
-namespace cocos2d 
+NS_CC_BEGIN
+class CCTexture2D;
+
+/** FBO class that grabs the the contents of the screen */
+class CCGrabber : public CCObject
 {
-	class CCTexture2D;
+public:
+    CCGrabber(void);
+    ~CCGrabber(void);
 
-	/** FBO class that grabs the the contents of the screen */
-	class CCGrabber : public CCObject
-	{
-	public:
-		CCGrabber(void);
-		~CCGrabber(void);
+    void grab(CCTexture2D *pTexture);
+    void beforeRender(CCTexture2D *pTexture);
+    void afterRender(CCTexture2D *pTexture);
 
-		void grab(CCTexture2D *pTexture);
-		void beforeRender(CCTexture2D *pTexture);
-		void afterRender(CCTexture2D *pTexture);
+protected:
+    GLuint m_fbo;
+    GLint m_oldFBO;
+    GLfloat    m_oldClearColor[4];
+    CCGlesVersion m_eGlesVersion;
+};
 
-	protected:
-		GLuint m_fbo;
-		GLint m_oldFBO;
-		GLfloat	m_oldClearColor[4];
-		CCGlesVersion m_eGlesVersion;
-	};
-
-} // end of namespace cocos2d
+NS_CC_END
 
 #endif // __EFFECTS_CCGRABBER_H__

@@ -29,7 +29,7 @@
 #include "ccCommon.h"
 
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 /**
 @brief 
@@ -42,15 +42,15 @@ public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-	void setDelegate(CCAccelerometerDelegate* pDelegate);
-	void update(float x, float y, float z, uint64 sensorTimeStamp);
+    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void update(float x, float y, float z, uint64 sensorTimeStamp);
 
 private:
 
-	CCAccelerometerDelegate* m_pAccelDelegate;
-	CCAcceleration m_obAccelerationValue;
+    CCAccelerometerDelegate* m_pAccelDelegate;
+    CCAcceleration m_obAccelerationValue;
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif

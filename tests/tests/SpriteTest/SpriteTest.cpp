@@ -86,21 +86,21 @@ CCLayer* createSpriteTestLayer(int nIndex)
         case 38: return new SpriteNilTexture();
         case 39: return new SpriteSubclass();
         case 40: return new AnimationCache();
-		case 41: return new SpriteOffsetAnchorSkew();
-		case 42: return new SpriteBatchNodeOffsetAnchorSkew();
-		case 43: return new SpriteOffsetAnchorSkewScale();
-		case 44: return new SpriteBatchNodeOffsetAnchorSkewScale();
-		case 45: return new SpriteOffsetAnchorFlip();
-		case 46: return new SpriteBatchNodeOffsetAnchorFlip();
+        case 41: return new SpriteOffsetAnchorSkew();
+        case 42: return new SpriteBatchNodeOffsetAnchorSkew();
+        case 43: return new SpriteOffsetAnchorSkewScale();
+        case 44: return new SpriteBatchNodeOffsetAnchorSkewScale();
+        case 45: return new SpriteOffsetAnchorFlip();
+        case 46: return new SpriteBatchNodeOffsetAnchorFlip();
 
-		case 47: return new SpriteBatchNodeReorderSameIndex();
-		case 48: return new SpriteBatchNodeReorderOneChild();
-		case 49: return new NodeSort();
-		case 50: return new SpriteSkewNegativeScaleChildren();
-		case 51: return new SpriteBatchNodeSkewNegativeScaleChildren();
-		case 52: return new SpriteDoubleResolution();
-		case 53: return new SpriteBatchBug1217();
-		case 54: return new AnimationCacheFile();
+        case 47: return new SpriteBatchNodeReorderSameIndex();
+        case 48: return new SpriteBatchNodeReorderOneChild();
+        case 49: return new NodeSort();
+        case 50: return new SpriteSkewNegativeScaleChildren();
+        case 51: return new SpriteBatchNodeSkewNegativeScaleChildren();
+        case 52: return new SpriteDoubleResolution();
+        case 53: return new SpriteBatchBug1217();
+        case 54: return new AnimationCacheFile();
     }
 
     return NULL;
@@ -669,7 +669,7 @@ std::string SpriteBatchNodeZOrder::title()
 
 SpriteBatchNodeReorder::SpriteBatchNodeReorder()
 {
-	CCArray* a = CCArray::arrayWithCapacity(10);
+    CCArray* a = CCArray::arrayWithCapacity(10);
     CCSpriteBatchNode* asmtest = CCSpriteBatchNode::batchNodeWithFile("animations/ghosts.png");
     
     for(int i=0; i<10; i++)
@@ -682,9 +682,9 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     for(int i=0; i<10; i++)
     {
         if(i!=5)
-		{
+        {
             asmtest->reorderChild( (CCNode*)(a->objectAtIndex(i)), 9 );
-		}
+        }
     }
     
     int prev = -1;
@@ -824,7 +824,7 @@ std::string SpriteBatchNodeReorderIssue766::subtitle()
 //------------------------------------------------------------------
 SpriteBatchNodeReorderIssue767::SpriteBatchNodeReorderIssue767()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();		
+    CCSize s = CCDirector::sharedDirector()->getWinSize();        
 
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/ghosts.plist", "animations/ghosts.png");
     CCNode *aParent;
@@ -846,7 +846,7 @@ SpriteBatchNodeReorderIssue767::SpriteBatchNodeReorderIssue767()
     l2a = CCSprite::spriteWithSpriteFrameName("sister1.gif");
     l2a->setPosition(ccp( -25 + l1Size.width/2, 0 + l1Size.height/2));
     l1->addChild(l2a, -1, kTagSpriteLeft);
-    CCSize l2aSize = l2a->getContentSize();		
+    CCSize l2aSize = l2a->getContentSize();        
 
 
     // child right
@@ -930,28 +930,28 @@ void SpriteZVertex::onExit()
 
 SpriteZVertex::SpriteZVertex()
 {
-	//
-	// This test tests z-order
-	// If you are going to use it is better to use a 3D projection
-	//
-	// WARNING:
-	// The developer is resposible for ordering its sprites according to its Z if the sprite has
-	// transparent parts.
-	//
+    //
+    // This test tests z-order
+    // If you are going to use it is better to use a 3D projection
+    //
+    // WARNING:
+    // The developer is resposible for ordering its sprites according to its Z if the sprite has
+    // transparent parts.
+    //
 
-	//
-	// Configure shader to mimic glAlphaTest
-	//
-	CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-	GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformAlphaTestValue);
+    //
+    // Configure shader to mimic glAlphaTest
+    //
+    CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
+    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformAlphaTestValue);
 
-	// set alpha test value
-	// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-	if (getShaderProgram())
-	{
-		getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
-	}
-	
+    // set alpha test value
+    // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+    if (getShaderProgram())
+    {
+        getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+    }
+    
     
     m_dir = 1;
     m_time = 0;
@@ -972,7 +972,7 @@ SpriteZVertex::SpriteZVertex()
         CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
         sprite->setPosition( ccp((i+1)*step, s.height/2) );
         sprite->setVertexZ( 10 + i*40 );
-		sprite->setShaderProgram(alphaTestShader);
+        sprite->setShaderProgram(alphaTestShader);
         node->addChild(sprite, 0);
         
     }
@@ -982,7 +982,7 @@ SpriteZVertex::SpriteZVertex()
         CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*0, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
         sprite->setVertexZ( 10 + (10-i)*40 );
-		sprite->setShaderProgram(alphaTestShader);
+        sprite->setShaderProgram(alphaTestShader);
         node->addChild(sprite, 0);
     }
 
@@ -1015,27 +1015,27 @@ void SpriteBatchNodeZVertex::onExit()
 
 SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
 {
-	//
-	// This test tests z-order
-	// If you are going to use it is better to use a 3D projection
-	//
-	// WARNING:
-	// The developer is resposible for ordering its sprites according to its Z if the sprite has
-	// transparent parts.
-	//
+    //
+    // This test tests z-order
+    // If you are going to use it is better to use a 3D projection
+    //
+    // WARNING:
+    // The developer is resposible for ordering its sprites according to its Z if the sprite has
+    // transparent parts.
+    //
 
-	//
-	// Configure shader to mimic glAlphaTest
-	//
-	CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-	GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformAlphaTestValue);
+    //
+    // Configure shader to mimic glAlphaTest
+    //
+    CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
+    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformAlphaTestValue);
 
-	// set alpha test value
-	// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-	if (getShaderProgram())
-	{
-		getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
-	}
+    // set alpha test value
+    // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+    if (getShaderProgram())
+    {
+        getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+    }
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     float step = s.width/12;
@@ -1048,7 +1048,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     batch->setAnchorPoint( ccp(0.5f, 0.5f));
     batch->setPosition( ccp(s.width/2, s.height/2));
     
-	batch->setShaderProgram(alphaTestShader);
+    batch->setShaderProgram(alphaTestShader);
     addChild(batch, 0, kTagSpriteBatchNode);        
     
     for(int i=0;i<5;i++) 
@@ -1641,7 +1641,7 @@ void SpriteFrameTest::onEnter()
     spritebatch->addChild(m_pSprite1);
     addChild(spritebatch);
 
-	CCArray* animFrames = CCArray::arrayWithCapacity(15);
+    CCArray* animFrames = CCArray::arrayWithCapacity(15);
 
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
@@ -1666,7 +1666,7 @@ void SpriteFrameTest::onEnter()
     addChild(m_pSprite2);
 
 
-	CCArray* moreFrames = CCArray::arrayWithCapacity(20);
+    CCArray* moreFrames = CCArray::arrayWithCapacity(20);
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
@@ -1797,7 +1797,7 @@ void SpriteFrameAliasNameTest::onEnter()
     spriteBatch->addChild(sprite);
     addChild(spriteBatch);
 
-	CCArray* animFrames = CCArray::arrayWithCapacity(15);
+    CCArray* animFrames = CCArray::arrayWithCapacity(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
@@ -1868,7 +1868,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         
         point->setPosition( sprite->getPosition() );
         
-		CCArray* animFrames = CCArray::arrayWithCapacity(14);
+        CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
@@ -1945,7 +1945,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
         addChild(spritebatch);
         
-		CCArray* animFrames = CCArray::arrayWithCapacity(14);
+        CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
@@ -2020,7 +2020,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         
         point->setPosition( sprite->getPosition() );
         
-		CCArray* animFrames = CCArray::arrayWithCapacity(14);
+        CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
@@ -2097,7 +2097,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
         addChild(spritesheet);
         
-		CCArray* animFrames = CCArray::arrayWithCapacity(14);
+        CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
@@ -2159,7 +2159,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     sprite->setPosition( ccp( s.width/2-80, s.height/2) );
     addChild(sprite);
             
-	CCArray* animFrames = CCArray::arrayWithCapacity(6);
+    CCArray* animFrames = CCArray::arrayWithCapacity(6);
     animFrames->addObject(frame0);
     animFrames->addObject(frame1);
     animFrames->addObject(frame2);
@@ -2323,7 +2323,7 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite1->addChild(sprite3);
     
     // BEGIN NEW CODE
-	CCArray *animFrames = CCArray::array();
+    CCArray *animFrames = CCArray::array();
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
     {
@@ -3105,118 +3105,118 @@ std::string SpriteBatchNodeChildrenChildren::title()
 
 SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildren()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->addSpriteFramesWithFile("animations/grossini.plist");
-	cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-	CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-	addChild(spritebatch);
+    CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+    addChild(spritebatch);
 
-	for(int i=0;i<2;i++) {
-		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
+    for(int i=0;i<2;i++) {
+        CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
 
-		// Skew
-		CCSkewBy* skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy* skewX_back = (CCSkewBy*)skewX->reverse();
-		CCSkewBy* skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy* skewY_back = (CCSkewBy*)skewY->reverse();
+        // Skew
+        CCSkewBy* skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+        CCSkewBy* skewX_back = (CCSkewBy*)skewX->reverse();
+        CCSkewBy* skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+        CCSkewBy* skewY_back = (CCSkewBy*)skewY->reverse();
 
-		if(i == 1)
-		{
-			sprite->setScale(-1.0f);
-		}
+        if(i == 1)
+        {
+            sprite->setScale(-1.0f);
+        }
 
-		CCSequence* seq_skew = (CCSequence*)CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
-		sprite->runAction((CCAction*)CCRepeatForever::actionWithAction(seq_skew));
+        CCSequence* seq_skew = (CCSequence*)CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction((CCAction*)CCRepeatForever::actionWithAction(seq_skew));
 
-		CCSprite *child1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		child1->setPosition(ccp(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
+        CCSprite *child1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        child1->setPosition(ccp(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
 
-		child1->setScale(0.8);
+        child1->setScale(0.8);
 
-		sprite->addChild(child1);
+        sprite->addChild(child1);
 
-		spritebatch->addChild(sprite, i);
-	}
+        spritebatch->addChild(sprite, i);
+    }
 }
 
 SpriteBatchNodeSkewNegativeScaleChildren::~SpriteBatchNodeSkewNegativeScaleChildren()
 {
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->removeSpriteFramesFromFile("animations/grossini.plist");
-	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
 std::string SpriteBatchNodeSkewNegativeScaleChildren::title()
 {
-	return "SpriteBatchNode + children + skew";
+    return "SpriteBatchNode + children + skew";
 }
 
 std::string SpriteBatchNodeSkewNegativeScaleChildren::subtitle()
 {
-	return "SpriteBatchNode skew + negative scale with children";
+    return "SpriteBatchNode skew + negative scale with children";
 }
 
 // SpriteSkewNegativeScaleChildren
 
 SpriteSkewNegativeScaleChildren::SpriteSkewNegativeScaleChildren()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->addSpriteFramesWithFile("animations/grossini.plist");
-	cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-	CCNode *parent = CCNode::node();
-	addChild(parent);
+    CCNode *parent = CCNode::node();
+    addChild(parent);
 
-	for(int i=0;i<2;i++) {
-		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
+    for(int i=0;i<2;i++) {
+        CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
 
-		// Skew
-		CCSkewBy* skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy* skewX_back = (CCSkewBy*)skewX->reverse();
-		CCSkewBy* skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy* skewY_back = (CCSkewBy*)skewY->reverse();
+        // Skew
+        CCSkewBy* skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+        CCSkewBy* skewX_back = (CCSkewBy*)skewX->reverse();
+        CCSkewBy* skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+        CCSkewBy* skewY_back = (CCSkewBy*)skewY->reverse();
 
-		if(i == 1)
-		{
-			sprite->setScale(-1.0f);
-		}
+        if(i == 1)
+        {
+            sprite->setScale(-1.0f);
+        }
 
-		CCSequence* seq_skew = (CCSequence*)CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction(seq_skew));
+        CCSequence* seq_skew = (CCSequence*)CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction(seq_skew));
 
-		CCSprite *child1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		child1->setPosition(ccp(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
+        CCSprite *child1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        child1->setPosition(ccp(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
 
-		sprite->addChild(child1);
+        sprite->addChild(child1);
 
-		child1->setScale(0.8f);
+        child1->setScale(0.8f);
 
-		parent->addChild(sprite, i);
-	}
+        parent->addChild(sprite, i);
+    }
 }
 
 SpriteSkewNegativeScaleChildren::~SpriteSkewNegativeScaleChildren()
 {
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->removeSpriteFramesFromFile("animations/grossini.plist");
-	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
 std::string SpriteSkewNegativeScaleChildren::title()
 {
-	return "Sprite + children + skew";
+    return "Sprite + children + skew";
 }
 
 std::string SpriteSkewNegativeScaleChildren::subtitle()
 {
-	return "Sprite skew + negative scale with children";
+    return "Sprite skew + negative scale with children";
 }
 
 //------------------------------------------------------------------
@@ -3234,7 +3234,7 @@ SpriteNilTexture::SpriteNilTexture()
     // TEST: If no texture is given, then Opacity + Color should work.
 
     sprite = new CCSprite();
-	sprite->init();
+    sprite->init();
     sprite->setTextureRect( CCRectMake(0, 0, 300,300) );
     sprite->setColor(ccRED);
     sprite->setOpacity(128);
@@ -3243,7 +3243,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite->release();
 
     sprite = new CCSprite();
-	sprite->init();
+    sprite->init();
     sprite->setTextureRect(CCRectMake(0, 0, 300,300));
     sprite->setColor(ccBLUE);
     sprite->setOpacity(128);
@@ -3335,63 +3335,63 @@ std::string SpriteSubclass::subtitle()
 class DoubleSprite : public CCSprite
 {
 public:
-	DoubleSprite() {m_bHD = false;}
-	virtual bool initWithTexture(CCTexture2D* texture, CCRect rect);
-	// Called everytime the vertex needs to be updated.
-	virtual void setContentSize(const CCSize& size);
-	// rect used only for the vertex. Called everytime the vertex needs to be updated.
-	virtual void setVertexRect(CCRect rect);
+    DoubleSprite() {m_bHD = false;}
+    virtual bool initWithTexture(CCTexture2D* texture, CCRect rect);
+    // Called everytime the vertex needs to be updated.
+    virtual void setContentSize(const CCSize& size);
+    // rect used only for the vertex. Called everytime the vertex needs to be updated.
+    virtual void setVertexRect(CCRect rect);
 
-	static DoubleSprite* spriteWithFile(const char* pszFileName);
-	bool m_bHD;
+    static DoubleSprite* spriteWithFile(const char* pszFileName);
+    bool m_bHD;
 };
 
 DoubleSprite* DoubleSprite::spriteWithFile(const char* pszFileName)
 {
-	DoubleSprite* pSp = new DoubleSprite();
-	pSp->initWithFile(pszFileName);
-	pSp->autorelease();
-	return pSp;
+    DoubleSprite* pSp = new DoubleSprite();
+    pSp->initWithFile(pszFileName);
+    pSp->autorelease();
+    return pSp;
 }
 
 bool DoubleSprite::initWithTexture(CCTexture2D* texture, CCRect rect)
 {
-	if( CCSprite::initWithTexture(texture, rect)) 
-	{
+    if( CCSprite::initWithTexture(texture, rect)) 
+    {
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		ccResolutionType resolutionType = texture->getResolutionType();
-		m_bHD = ( resolutionType == kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
+        ccResolutionType resolutionType = texture->getResolutionType();
+        m_bHD = ( resolutionType == kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
 #endif
-		return true;
-	}
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 // Called everytime the vertex needs to be updated.
 void DoubleSprite::setContentSize(const CCSize& size)
 {
-	CCSize s = size;
-	// If Retina Display and Texture is in HD then scale the vertex rect
-	if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
-		s.width *= 2;
-		s.height *= 2;
-	}
+    CCSize s = size;
+    // If Retina Display and Texture is in HD then scale the vertex rect
+    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
+        s.width *= 2;
+        s.height *= 2;
+    }
 
-	CCSprite::setContentSize(s);
+    CCSprite::setContentSize(s);
 }
 
 // rect used only for the vertex. Called everytime the vertex needs to be updated.
 void DoubleSprite::setVertexRect(CCRect rect)
 {
-	// If Retina Display and Texture is in HD then scale the vertex rect
-	if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
-		rect.size.width *= 2;
-		rect.size.height *= 2;
-	}
+    // If Retina Display and Texture is in HD then scale the vertex rect
+    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
+        rect.size.width *= 2;
+        rect.size.height *= 2;
+    }
 
-	CCSprite::setVertexRect(rect);
+    CCSprite::setVertexRect(rect);
 }
 
 
@@ -3399,64 +3399,64 @@ void DoubleSprite::setVertexRect(CCRect rect)
 
 SpriteDoubleResolution::SpriteDoubleResolution()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	//
-	// LEFT: SD sprite
-	//
-	// there is no HD resolution file of grossini_dance_08.
-	DoubleSprite *spriteSD = DoubleSprite::spriteWithFile("Images/grossini_dance_08.png");
-	addChild(spriteSD);
-	spriteSD->setPosition(ccp(s.width/4*1,s.height/2));
+    //
+    // LEFT: SD sprite
+    //
+    // there is no HD resolution file of grossini_dance_08.
+    DoubleSprite *spriteSD = DoubleSprite::spriteWithFile("Images/grossini_dance_08.png");
+    addChild(spriteSD);
+    spriteSD->setPosition(ccp(s.width/4*1,s.height/2));
 
-	CCSprite *child1_left = DoubleSprite::spriteWithFile("Images/grossini_dance_08.png");
-	spriteSD->addChild(child1_left);
-	child1_left->setPosition(ccp(-30,0));
+    CCSprite *child1_left = DoubleSprite::spriteWithFile("Images/grossini_dance_08.png");
+    spriteSD->addChild(child1_left);
+    child1_left->setPosition(ccp(-30,0));
 
-	CCSprite *child1_right = CCSprite::spriteWithFile("Images/grossini.png");
-	spriteSD->addChild(child1_right);
-	child1_left->setPosition(ccp( spriteSD->getContentSize().height, 0));
-
-
-
-	//
-	// RIGHT: HD sprite
-	//
-	// there is an HD version of grossini.png
-	CCSprite *spriteHD = CCSprite::spriteWithFile("Images/grossini.png");
-	addChild(spriteHD);
-	spriteHD->setPosition(ccp(s.width/4*3,s.height/2));
-
-	CCSprite *child2_left = DoubleSprite::spriteWithFile("Images/grossini_dance_08.png");
-	spriteHD->addChild(child2_left);
-	child2_left->setPosition(ccp(-30,0));
-
-	CCSprite *child2_right = CCSprite::spriteWithFile("Images/grossini.png");
-	spriteHD->addChild(child2_right);
-	child2_left->setPosition(ccp( spriteHD->getContentSize().height, 0));
+    CCSprite *child1_right = CCSprite::spriteWithFile("Images/grossini.png");
+    spriteSD->addChild(child1_right);
+    child1_left->setPosition(ccp( spriteSD->getContentSize().height, 0));
 
 
 
-	// Actions
-	CCScaleBy* scale = CCScaleBy::actionWithDuration(2, 0.5);
-	CCScaleBy* scale_back = (CCScaleBy*)scale->reverse();
-	CCFiniteTimeAction* seq = CCSequence::actions(scale, scale_back, NULL);
+    //
+    // RIGHT: HD sprite
+    //
+    // there is an HD version of grossini.png
+    CCSprite *spriteHD = CCSprite::spriteWithFile("Images/grossini.png");
+    addChild(spriteHD);
+    spriteHD->setPosition(ccp(s.width/4*3,s.height/2));
 
-	CCFiniteTimeAction* seq_copy = (CCFiniteTimeAction*)seq->copy()->autorelease();
+    CCSprite *child2_left = DoubleSprite::spriteWithFile("Images/grossini_dance_08.png");
+    spriteHD->addChild(child2_left);
+    child2_left->setPosition(ccp(-30,0));
 
-	spriteSD->runAction(seq);
-	spriteHD->runAction(seq_copy);
+    CCSprite *child2_right = CCSprite::spriteWithFile("Images/grossini.png");
+    spriteHD->addChild(child2_right);
+    child2_left->setPosition(ccp( spriteHD->getContentSize().height, 0));
+
+
+
+    // Actions
+    CCScaleBy* scale = CCScaleBy::actionWithDuration(2, 0.5);
+    CCScaleBy* scale_back = (CCScaleBy*)scale->reverse();
+    CCFiniteTimeAction* seq = CCSequence::actions(scale, scale_back, NULL);
+
+    CCFiniteTimeAction* seq_copy = (CCFiniteTimeAction*)seq->copy()->autorelease();
+
+    spriteSD->runAction(seq);
+    spriteHD->runAction(seq_copy);
 
 }
 
 std::string SpriteDoubleResolution::title()
 {
-	return "Sprite Double resolution";
+    return "Sprite Double resolution";
 }
 
 std::string SpriteDoubleResolution::subtitle()
 {
-	return "Retina Display. SD (left) should be equal to HD (right)";
+    return "Retina Display. SD (left) should be equal to HD (right)";
 }
 
 //------------------------------------------------------------------
@@ -3466,7 +3466,7 @@ std::string SpriteDoubleResolution::subtitle()
 //------------------------------------------------------------------
 AnimationCache::AnimationCache()
 {
-	CCSpriteFrameCache *frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    CCSpriteFrameCache *frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
     frameCache->addSpriteFramesWithFile("animations/grossini.plist");
     frameCache->addSpriteFramesWithFile("animations/grossini_gray.plist");
     frameCache->addSpriteFramesWithFile("animations/grossini_blue.plist");
@@ -3474,7 +3474,7 @@ AnimationCache::AnimationCache()
     //
     // create animation "dance"
     //
-	CCArray* animFrames = CCArray::arrayWithCapacity(15);
+    CCArray* animFrames = CCArray::arrayWithCapacity(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
@@ -3526,11 +3526,11 @@ AnimationCache::AnimationCache()
     CCAnimationCache *animCache = CCAnimationCache::sharedAnimationCache();
 
     CCAnimation *normal = animCache->animationByName("dance");
-	normal->setRestoreOriginalFrame(true);
+    normal->setRestoreOriginalFrame(true);
     CCAnimation *dance_grey = animCache->animationByName("dance_gray");
-	dance_grey->setRestoreOriginalFrame(true);
+    dance_grey->setRestoreOriginalFrame(true);
     CCAnimation *dance_blue = animCache->animationByName("dance_blue");
-	dance_blue->setRestoreOriginalFrame(true);
+    dance_blue->setRestoreOriginalFrame(true);
 
     CCAnimate *animN = CCAnimate::actionWithAnimation(normal);
     CCAnimate *animG = CCAnimate::actionWithAnimation(dance_grey);
@@ -3539,9 +3539,9 @@ AnimationCache::AnimationCache()
     CCFiniteTimeAction *seq = CCSequence::actions(animN, animG, animB, NULL);
 
     // create an sprite without texture
-	CCSprite *grossini = CCSprite::node();
-	CCSpriteFrame *frame = frameCache->spriteFrameByName("grossini_dance_01.png");
-	grossini->setDisplayFrame(frame);
+    CCSprite *grossini = CCSprite::node();
+    CCSpriteFrame *frame = frameCache->spriteFrameByName("grossini_dance_01.png");
+    grossini->setDisplayFrame(frame);
 
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     grossini->setPosition(ccp(winSize.width/2, winSize.height/2));
@@ -3566,97 +3566,97 @@ std::string AnimationCache::subtitle()
 
 AnimationCacheFile::AnimationCacheFile()
 {
-	CCSpriteFrameCache *frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	frameCache->addSpriteFramesWithFile("animations/grossini.plist");
-	frameCache->addSpriteFramesWithFile("animations/grossini_gray.plist");
-	frameCache->addSpriteFramesWithFile("animations/grossini_blue.plist");
+    CCSpriteFrameCache *frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    frameCache->addSpriteFramesWithFile("animations/grossini.plist");
+    frameCache->addSpriteFramesWithFile("animations/grossini_gray.plist");
+    frameCache->addSpriteFramesWithFile("animations/grossini_blue.plist");
 
 
-	// Purge previously loaded animation
-	CCAnimationCache::purgeSharedAnimationCache();
+    // Purge previously loaded animation
+    CCAnimationCache::purgeSharedAnimationCache();
 
-	CCAnimationCache *animCache = CCAnimationCache::sharedAnimationCache();
+    CCAnimationCache *animCache = CCAnimationCache::sharedAnimationCache();
 
-	// Add an animation to the Cache
-	animCache->addAnimationsWithFile("animations/animations.plist");
-
-
-	CCAnimation *normal = animCache->animationByName("dance_1");
-	normal->setRestoreOriginalFrame(true);
-	CCAnimation *dance_grey = animCache->animationByName("dance_2");
-	dance_grey->setRestoreOriginalFrame(true);
-	CCAnimation *dance_blue = animCache->animationByName("dance_3");
-	dance_blue->setRestoreOriginalFrame(true);
-
-	CCAnimate *animN = CCAnimate::actionWithAnimation(normal);
-	CCAnimate *animG = CCAnimate::actionWithAnimation(dance_grey);
-	CCAnimate *animB = CCAnimate::actionWithAnimation(dance_blue);
-
-	CCSequence *seq = (CCSequence*)CCSequence::actions(animN, animG, animB, NULL);
-
-	// create an sprite without texture
-	CCSprite *grossini = CCSprite::node();
-
-	CCSpriteFrame *frame = frameCache->spriteFrameByName("grossini_dance_01.png");
-	grossini->setDisplayFrame(frame);
-
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-
-	grossini->setPosition(ccp(winSize.width/2, winSize.height/2));
-
-	addChild(grossini);
+    // Add an animation to the Cache
+    animCache->addAnimationsWithFile("animations/animations.plist");
 
 
-	// run the animation
-	grossini->runAction(seq);
+    CCAnimation *normal = animCache->animationByName("dance_1");
+    normal->setRestoreOriginalFrame(true);
+    CCAnimation *dance_grey = animCache->animationByName("dance_2");
+    dance_grey->setRestoreOriginalFrame(true);
+    CCAnimation *dance_blue = animCache->animationByName("dance_3");
+    dance_blue->setRestoreOriginalFrame(true);
+
+    CCAnimate *animN = CCAnimate::actionWithAnimation(normal);
+    CCAnimate *animG = CCAnimate::actionWithAnimation(dance_grey);
+    CCAnimate *animB = CCAnimate::actionWithAnimation(dance_blue);
+
+    CCSequence *seq = (CCSequence*)CCSequence::actions(animN, animG, animB, NULL);
+
+    // create an sprite without texture
+    CCSprite *grossini = CCSprite::node();
+
+    CCSpriteFrame *frame = frameCache->spriteFrameByName("grossini_dance_01.png");
+    grossini->setDisplayFrame(frame);
+
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+    grossini->setPosition(ccp(winSize.width/2, winSize.height/2));
+
+    addChild(grossini);
+
+
+    // run the animation
+    grossini->runAction(seq);
 }
 
 std::string AnimationCacheFile::title()
 {
-	return "AnimationCache - Load file";
+    return "AnimationCache - Load file";
 }
 
 std::string AnimationCacheFile::subtitle()
 {
-	return "Sprite should be animated";
+    return "Sprite should be animated";
 }
 
 // SpriteBatchBug1217
 
 SpriteBatchBug1217::SpriteBatchBug1217()
 {
-	CCSpriteBatchNode *bn = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 15);
+    CCSpriteBatchNode *bn = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 15);
 
-	CCSprite * s1 = CCSprite::spriteWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
-	CCSprite * s2 = CCSprite::spriteWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
-	CCSprite * s3 = CCSprite::spriteWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
+    CCSprite * s1 = CCSprite::spriteWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
+    CCSprite * s2 = CCSprite::spriteWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
+    CCSprite * s3 = CCSprite::spriteWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
 
-	s1->setColor(ccc3(255, 0, 0));
-	s2->setColor(ccc3(0, 255, 0));
-	s3->setColor(ccc3(0, 0, 255));
+    s1->setColor(ccc3(255, 0, 0));
+    s2->setColor(ccc3(0, 255, 0));
+    s3->setColor(ccc3(0, 0, 255));
 
-	s1->setPosition(ccp(20,200));
-	s2->setPosition(ccp(100,0));
-	s3->setPosition(ccp(100,0));
+    s1->setPosition(ccp(20,200));
+    s2->setPosition(ccp(100,0));
+    s3->setPosition(ccp(100,0));
 
-	bn->setPosition(ccp(0,0));
+    bn->setPosition(ccp(0,0));
 
-	//!!!!!
-	s1->addChild(s2);
-	s2->addChild(s3);
-	bn->addChild(s1);
+    //!!!!!
+    s1->addChild(s2);
+    s2->addChild(s3);
+    bn->addChild(s1);
 
-	addChild(bn);
+    addChild(bn);
 }
 
 std::string SpriteBatchBug1217::title()
 {
-	return "SpriteBatch - Bug 1217";
+    return "SpriteBatch - Bug 1217";
 }
 
 std::string SpriteBatchBug1217::subtitle()
 {
-	return "Adding big family to spritebatch. You shall see 3 heads";
+    return "Adding big family to spritebatch. You shall see 3 heads";
 }
 
 
@@ -3673,74 +3673,74 @@ void SpriteTestScene::runThisTest()
 // 
 SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	for (int i = 0; i < 3; i++)
-	{
-		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-		cache->addSpriteFramesWithFile("animations/grossini.plist");
-		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    for (int i = 0; i < 3; i++)
+    {
+        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        cache->addSpriteFramesWithFile("animations/grossini.plist");
+        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-		//
-		// Animation using Sprite batch
-		//
-		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
 
-		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
-		point->setScale(0.25f);
-		point->setPosition(sprite->getPosition());
-		addChild(point, 1);
+        CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 1);
 
-		switch (i)
-		{
-		case 0:
-			sprite->setAnchorPoint(CCPointZero);
-			break;
-		case 1:
-			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
-			break;
-		case 2:
-			sprite->setAnchorPoint(ccp(1, 1));
-			break;
-		}
+        switch (i)
+        {
+        case 0:
+            sprite->setAnchorPoint(CCPointZero);
+            break;
+        case 1:
+            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            break;
+        case 2:
+            sprite->setAnchorPoint(ccp(1, 1));
+            break;
+        }
 
-		point->setPosition(sprite->getPosition());
+        point->setPosition(sprite->getPosition());
 
-		CCArray *animFrames = CCArray::array();
-		char tmp[50];
-		for (int j = 0; j < 14; j++)
-		{			
-			sprintf(tmp, "grossini_dance_%02d.png", j + 1);
-			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
-			animFrames->addObject(frame);
-		}
+        CCArray *animFrames = CCArray::array();
+        char tmp[50];
+        for (int j = 0; j < 14; j++)
+        {            
+            sprintf(tmp, "grossini_dance_%02d.png", j + 1);
+            CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+            animFrames->addObject(frame);
+        }
 
-		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
-		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCActionInterval *skewX_back = skewX->reverse();
-		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCActionInterval *skewY_back = skewY->reverse();
+        CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+        CCActionInterval *skewX_back = skewX->reverse();
+        CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+        CCActionInterval *skewY_back = skewY->reverse();
 
-		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
+        CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
 
-		addChild(sprite, 0);
-	}
+        addChild(sprite, 0);
+    }
 }
 
 SpriteOffsetAnchorSkew::~SpriteOffsetAnchorSkew()
 {
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
 string SpriteOffsetAnchorSkew::title()
 {
-	return "Sprite offset + anchor + scale";
+    return "Sprite offset + anchor + scale";
 }
 
 //
@@ -3748,77 +3748,77 @@ string SpriteOffsetAnchorSkew::title()
 // 
 SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	for (int i = 0; i < 3; i++)
-	{
-		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-		cache->addSpriteFramesWithFile("animations/grossini.plist");
-		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    for (int i = 0; i < 3; i++)
+    {
+        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        cache->addSpriteFramesWithFile("animations/grossini.plist");
+        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-		//
-		// Animation using Sprite batch
-		//
-		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
 
-		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
-		point->setScale(0.25f);
-		point->setPosition(sprite->getPosition());
-		addChild(point, 200);
+        CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 200);
 
-		switch (i)
-		{
-		case 0:
-			sprite->setAnchorPoint(CCPointZero);
-			break;
-		case 1:
-			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
-			break;
-		case 2:
-			sprite->setAnchorPoint(ccp(1, 1));
-			break;
-		}
+        switch (i)
+        {
+        case 0:
+            sprite->setAnchorPoint(CCPointZero);
+            break;
+        case 1:
+            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            break;
+        case 2:
+            sprite->setAnchorPoint(ccp(1, 1));
+            break;
+        }
 
-		point->setPosition(sprite->getPosition());
+        point->setPosition(sprite->getPosition());
 
-		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-		addChild(spritebatch);
+        CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+        addChild(spritebatch);
 
-		CCArray* animFrames = CCArray::array();
-		char tmp[50];
-		for (int j = 0; j < 14; j++)
-		{			
-			sprintf(tmp, "grossini_dance_%02d.png", j + 1);
-			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
-			animFrames->addObject(frame);
-		}
+        CCArray* animFrames = CCArray::array();
+        char tmp[50];
+        for (int j = 0; j < 14; j++)
+        {            
+            sprintf(tmp, "grossini_dance_%02d.png", j + 1);
+            CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+            animFrames->addObject(frame);
+        }
 
-		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
-		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCActionInterval *skewX_back = skewX->reverse();
-		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCActionInterval *skewY_back = skewY->reverse();
+        CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+        CCActionInterval *skewX_back = skewX->reverse();
+        CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+        CCActionInterval *skewY_back = skewY->reverse();
 
-		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
+        CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
 
-		spritebatch->addChild(sprite, i);
-	}
+        spritebatch->addChild(sprite, i);
+    }
 }
 
 SpriteBatchNodeOffsetAnchorSkew::~SpriteBatchNodeOffsetAnchorSkew()
 {
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->removeSpriteFramesFromFile("animations/grossini.plist");
-	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
 string SpriteBatchNodeOffsetAnchorSkew::title()
 {
-	return "SpriteBatchNode offset + anchor + skew";
+    return "SpriteBatchNode offset + anchor + skew";
 }
 
 //
@@ -3826,163 +3826,163 @@ string SpriteBatchNodeOffsetAnchorSkew::title()
 //
 SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	for (int i = 0; i < 3; i++)
-	{
-		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-		cache->addSpriteFramesWithFile("animations/grossini.plist");
-		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    for (int i = 0; i < 3; i++)
+    {
+        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        cache->addSpriteFramesWithFile("animations/grossini.plist");
+        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-		//
-		// Animation using Sprite batch
-		//
-		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
 
-		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
-		point->setScale(0.25f);
-		point->setPosition(sprite->getPosition());
-		addChild(point, 1);
+        CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 1);
 
-		switch (i)
-		{
-		case 0:
-			sprite->setAnchorPoint(CCPointZero);
-			break;
-		case 1:
-			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
-			break;
-		case 2:
-			sprite->setAnchorPoint(ccp(1, 1));
-			break;
-		}
+        switch (i)
+        {
+        case 0:
+            sprite->setAnchorPoint(CCPointZero);
+            break;
+        case 1:
+            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            break;
+        case 2:
+            sprite->setAnchorPoint(ccp(1, 1));
+            break;
+        }
 
-		point->setPosition(sprite->getPosition());
+        point->setPosition(sprite->getPosition());
 
-		CCArray *animFrames = CCArray::array();
-		char tmp[50];
-		for (int j = 0; j < 14; j++)
-		{			
-			sprintf(tmp, "grossini_dance_%02d.png", j + 1);
-			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
-			animFrames->addObject(frame);
-		}
+        CCArray *animFrames = CCArray::array();
+        char tmp[50];
+        for (int j = 0; j < 14; j++)
+        {            
+            sprintf(tmp, "grossini_dance_%02d.png", j + 1);
+            CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+            animFrames->addObject(frame);
+        }
 
-		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
-		// Skew
-		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCActionInterval *skewX_back = skewX->reverse();
-		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCActionInterval *skewY_back = skewY->reverse();
+        // Skew
+        CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+        CCActionInterval *skewX_back = skewX->reverse();
+        CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+        CCActionInterval *skewY_back = skewY->reverse();
 
-		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
+        CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
 
-		// Scale
-		CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
-		CCActionInterval *scale_back = scale->reverse();
-		CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
+        // Scale
+        CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
+        CCActionInterval *scale_back = scale->reverse();
+        CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
 
-		addChild(sprite, 0);
-	}
+        addChild(sprite, 0);
+    }
 }
 
 SpriteOffsetAnchorSkewScale::~SpriteOffsetAnchorSkewScale()
 {
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->removeSpriteFramesFromFile("animations/grossini.plist");
-	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
 string SpriteOffsetAnchorSkewScale::title()
 {
-	return "Sprite anchor + skew + scale";
+    return "Sprite anchor + skew + scale";
 }
 
 SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	for (int i = 0; i < 3; i++)
-	{
-		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-		cache->addSpriteFramesWithFile("animations/grossini.plist");
-		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    for (int i = 0; i < 3; i++)
+    {
+        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        cache->addSpriteFramesWithFile("animations/grossini.plist");
+        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-		//
-		// Animation using Sprite batch
-		//
-		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
 
-		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
-		point->setScale(0.25f);
-		point->setPosition(sprite->getPosition());
-		addChild(point, 200);
+        CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 200);
 
-		switch (i)
-		{
-		case 0:
-			sprite->setAnchorPoint(CCPointZero);
-			break;
-		case 1:
-			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
-			break;
-		case 2:
-			sprite->setAnchorPoint(ccp(1, 1));
-			break;
-		}
+        switch (i)
+        {
+        case 0:
+            sprite->setAnchorPoint(CCPointZero);
+            break;
+        case 1:
+            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            break;
+        case 2:
+            sprite->setAnchorPoint(ccp(1, 1));
+            break;
+        }
 
-		point->setPosition(sprite->getPosition());
+        point->setPosition(sprite->getPosition());
 
-		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-		addChild(spritebatch);
+        CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+        addChild(spritebatch);
 
-		CCArray *animFrames = CCArray::array();
-		char tmp[50];
-		for (int j = 0; j < 14; j++)
-		{			
-			sprintf(tmp, "grossini_dance_%02d.png", j + 1);
-			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
-			animFrames->addObject(frame);
-		}
+        CCArray *animFrames = CCArray::array();
+        char tmp[50];
+        for (int j = 0; j < 14; j++)
+        {            
+            sprintf(tmp, "grossini_dance_%02d.png", j + 1);
+            CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+            animFrames->addObject(frame);
+        }
 
-		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
-		// skew
-		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCActionInterval *skewX_back = skewX->reverse();
-		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCActionInterval *skewY_back = skewY->reverse();
+        // skew
+        CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+        CCActionInterval *skewX_back = skewX->reverse();
+        CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+        CCActionInterval *skewY_back = skewY->reverse();
 
-		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
+        CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
 
-		// scale 
-		CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
-		CCActionInterval *scale_back = scale->reverse();
-		CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
+        // scale 
+        CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
+        CCActionInterval *scale_back = scale->reverse();
+        CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
 
-		spritebatch->addChild(sprite, i);
-	}
+        spritebatch->addChild(sprite, i);
+    }
 }
 
 SpriteBatchNodeOffsetAnchorSkewScale::~SpriteBatchNodeOffsetAnchorSkewScale()
 {
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->removeSpriteFramesFromFile("animations/grossini.plist");
-	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
 string SpriteBatchNodeOffsetAnchorSkewScale::title()
 {
-	return "SpriteBatchNode anchor + skew + scale";
+    return "SpriteBatchNode anchor + skew + scale";
 }
 
 //
@@ -3990,77 +3990,77 @@ string SpriteBatchNodeOffsetAnchorSkewScale::title()
 // 
 SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	for (int i = 0; i < 3; i++)
-	{
-		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-		cache->addSpriteFramesWithFile("animations/grossini.plist");
-		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    for (int i = 0; i < 3; i++)
+    {
+        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        cache->addSpriteFramesWithFile("animations/grossini.plist");
+        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-		//
-		// Animation using Sprite batch
-		//
-		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
 
-		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
-		point->setScale(0.25f);
-		point->setPosition(sprite->getPosition());
-		addChild(point, 1);
+        CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 1);
 
-		switch (i)
-		{
-		case 0:
-			sprite->setAnchorPoint(CCPointZero);
-			break;
-		case 1:
-			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
-			break;
-		case 2:
-			sprite->setAnchorPoint(ccp(1, 1));
-			break;
-		}
+        switch (i)
+        {
+        case 0:
+            sprite->setAnchorPoint(CCPointZero);
+            break;
+        case 1:
+            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            break;
+        case 2:
+            sprite->setAnchorPoint(ccp(1, 1));
+            break;
+        }
 
-		point->setPosition(sprite->getPosition());
+        point->setPosition(sprite->getPosition());
 
-		CCArray* animFrames = CCArray::array();
-		char tmp[50];
-		for (int j = 0; j < 14; j++)
-		{			
-			sprintf(tmp, "grossini_dance_%02d.png", i + 1);
-			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
-			animFrames->addObject(frame);
-		}
+        CCArray* animFrames = CCArray::array();
+        char tmp[50];
+        for (int j = 0; j < 14; j++)
+        {            
+            sprintf(tmp, "grossini_dance_%02d.png", i + 1);
+            CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+            animFrames->addObject(frame);
+        }
 
-		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
-		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
-		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
-		CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
-		CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
+        CCFlipY *flip = CCFlipY::actionWithFlipY(true);
+        CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
+        CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
+        CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 
-		addChild(sprite, 0);
-	}
+        addChild(sprite, 0);
+    }
 }
 
 SpriteOffsetAnchorFlip::~SpriteOffsetAnchorFlip()
 {
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->removeSpriteFramesFromFile("animations/grossini.plist");
-	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
 string SpriteOffsetAnchorFlip::title()
 {
-	return "Sprite offset + anchor + flip";
+    return "Sprite offset + anchor + flip";
 }
 
 string SpriteOffsetAnchorFlip::subtitle()
 {
-	return "issue #1078";
+    return "issue #1078";
 }
 
 //
@@ -4069,80 +4069,80 @@ string SpriteOffsetAnchorFlip::subtitle()
 
 SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	for (int i = 0; i < 3; i++)
-	{
-		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-		cache->addSpriteFramesWithFile("animations/grossini.plist");
-		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    for (int i = 0; i < 3; i++)
+    {
+        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        cache->addSpriteFramesWithFile("animations/grossini.plist");
+        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-		//
-		// Animation using Sprite batch
-		//
-		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
 
-		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
-		point->setScale(0.25f);
-		point->setPosition(sprite->getPosition());
-		addChild(point, 200);
+        CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 200);
 
-		switch (i)
-		{
-		case 0:
-			sprite->setAnchorPoint(CCPointZero);
-			break;
-		case 1:
-			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
-			break;
-		case 2:
-			sprite->setAnchorPoint(ccp(1, 1));
-			break;
-		}
+        switch (i)
+        {
+        case 0:
+            sprite->setAnchorPoint(CCPointZero);
+            break;
+        case 1:
+            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            break;
+        case 2:
+            sprite->setAnchorPoint(ccp(1, 1));
+            break;
+        }
 
-		point->setPosition(sprite->getPosition());
+        point->setPosition(sprite->getPosition());
 
-		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-		addChild(spritebatch);
+        CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+        addChild(spritebatch);
 
-		CCArray *animFrames = CCArray::array();
-		char tmp[50];
-		for (int j = 0; j < 14; j++)
-		{			
-			sprintf(tmp, "grossini_dance_%02d.png", i + 1);
-			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
-			animFrames->addObject(frame);
-		}
+        CCArray *animFrames = CCArray::array();
+        char tmp[50];
+        for (int j = 0; j < 14; j++)
+        {            
+            sprintf(tmp, "grossini_dance_%02d.png", i + 1);
+            CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+            animFrames->addObject(frame);
+        }
 
-		CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
-		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
+        CCAnimation *animation = CCAnimation::animationWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithAnimation(animation)));
 
-		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
-		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
-		CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
-		CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
-		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
+        CCFlipY *flip = CCFlipY::actionWithFlipY(true);
+        CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
+        CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
+        CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
+        sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 
-		spritebatch->addChild(sprite, i);
-	}
+        spritebatch->addChild(sprite, i);
+    }
 }
 
 SpriteBatchNodeOffsetAnchorFlip::~SpriteBatchNodeOffsetAnchorFlip()
 {
-	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->removeSpriteFramesFromFile("animations/grossini.plist");
-	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
 string SpriteBatchNodeOffsetAnchorFlip::title()
 {
-	return "SpriteBatchNode offset + anchor + flip";
+    return "SpriteBatchNode offset + anchor + flip";
 }
 
 string SpriteBatchNodeOffsetAnchorFlip::subtitle()
 {
-	return "issue #1078";
+    return "issue #1078";
 }
 
 
@@ -4150,64 +4150,64 @@ string SpriteBatchNodeOffsetAnchorFlip::subtitle()
 
 NodeSort::NodeSort()
 {
-	m_pNode = CCNode::node();
-	addChild(m_pNode, 0, 0);
+    m_pNode = CCNode::node();
+    addChild(m_pNode, 0, 0);
 
-	m_pSprite1 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
-	m_pSprite1->setPosition(CCPointMake(100, 160));
-	m_pNode->addChild(m_pSprite1, -6, 1);
+    m_pSprite1 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    m_pSprite1->setPosition(CCPointMake(100, 160));
+    m_pNode->addChild(m_pSprite1, -6, 1);
 
     m_pSprite2 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
-	m_pSprite2->setPosition(CCPointMake(164, 160));
-	m_pNode->addChild(m_pSprite2, -6, 2);
+    m_pSprite2->setPosition(CCPointMake(164, 160));
+    m_pNode->addChild(m_pSprite2, -6, 2);
 
-	m_pSprite4 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
-	m_pSprite4->setPosition(CCPointMake(292, 160));
-	m_pNode->addChild(m_pSprite4, -3, 4);
+    m_pSprite4 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    m_pSprite4->setPosition(CCPointMake(292, 160));
+    m_pNode->addChild(m_pSprite4, -3, 4);
 
     m_pSprite3 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
-	m_pSprite3->setPosition(CCPointMake(228, 160));
-	m_pNode->addChild(m_pSprite3, -4, 3);
+    m_pSprite3->setPosition(CCPointMake(228, 160));
+    m_pNode->addChild(m_pSprite3, -4, 3);
 
-	m_pSprite5 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
-	m_pSprite5->setPosition(CCPointMake(356, 160));
-	m_pNode->addChild(m_pSprite5, -3, 5);
+    m_pSprite5 = CCSprite::spriteWithFile("Images/piece.png", CCRectMake(128, 0, 64, 64));
+    m_pSprite5->setPosition(CCPointMake(356, 160));
+    m_pNode->addChild(m_pSprite5, -3, 5);
 
-	schedule(schedule_selector(NodeSort::reorderSprite));
+    schedule(schedule_selector(NodeSort::reorderSprite));
 }
 
 std::string NodeSort::title()
 {
-	return "node sort same index";
+    return "node sort same index";
 }
 
 std::string NodeSort::subtitle()
 {
-	return "tag order in console should be 2,1,3,4,5";
+    return "tag order in console should be 2,1,3,4,5";
 }
 
 void NodeSort::reorderSprite(ccTime dt)
 {
-	unschedule(schedule_selector(NodeSort::reorderSprite));
+    unschedule(schedule_selector(NodeSort::reorderSprite));
 
-	CCLog("Before reorder--");
-	
-	CCObject* pObj = NULL;
-	CCARRAY_FOREACH(m_pNode->getChildren(), pObj)
-	{
-		CCSprite *child = (CCSprite*)pObj;
-		CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
-	}
-	//z-4
-	m_pNode->reorderChild((CCNode *)m_pNode->getChildren()->objectAtIndex(0), -6);
+    CCLog("Before reorder--");
+    
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(m_pNode->getChildren(), pObj)
+    {
+        CCSprite *child = (CCSprite*)pObj;
+        CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
+    }
+    //z-4
+    m_pNode->reorderChild((CCNode *)m_pNode->getChildren()->objectAtIndex(0), -6);
 
-	m_pNode->sortAllChildren();
-	CCLog("After reorder--");
-	CCARRAY_FOREACH(m_pNode->getChildren(), pObj)
-	{
-		CCSprite *child = (CCSprite*)pObj;
-		CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
-	}
+    m_pNode->sortAllChildren();
+    CCLog("After reorder--");
+    CCARRAY_FOREACH(m_pNode->getChildren(), pObj)
+    {
+        CCSprite *child = (CCSprite*)pObj;
+        CCLog("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
+    }
 }
 
 /// SpriteBatchNodeReorderSameIndex
@@ -4242,113 +4242,113 @@ SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
 
 std::string SpriteBatchNodeReorderSameIndex::title()
 {
-	return "SpriteBatchNodeReorder same index";
+    return "SpriteBatchNodeReorder same index";
 }
 
 std::string SpriteBatchNodeReorderSameIndex::subtitle()
 {
-	return "tag order in console should be 2,3,4,5,1";
+    return "tag order in console should be 2,3,4,5,1";
 }
 
 void SpriteBatchNodeReorderSameIndex::reorderSprite(ccTime dt)
 {
-	m_pBatchNode->reorderChild(m_pSprite4, 4);
-	m_pBatchNode->reorderChild(m_pSprite5, 4);
-	m_pBatchNode->reorderChild(m_pSprite1, 4);
+    m_pBatchNode->reorderChild(m_pSprite4, 4);
+    m_pBatchNode->reorderChild(m_pSprite5, 4);
+    m_pBatchNode->reorderChild(m_pSprite1, 4);
 
-	m_pBatchNode->sortAllChildren();
-	CCObject *child;
-	CCARRAY_FOREACH(m_pBatchNode->getDescendants(), child)
-	{
-		CCLog("tag %i", (int)((CCSprite *)child)->getTag());
-	}	
+    m_pBatchNode->sortAllChildren();
+    CCObject *child;
+    CCARRAY_FOREACH(m_pBatchNode->getDescendants(), child)
+    {
+        CCLog("tag %i", (int)((CCSprite *)child)->getTag());
+    }    
 }
 
 /// SpriteBatchNodeReorderOneChild
 SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/ghosts.plist");
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/ghosts.plist");
 
-	CCSpriteBatchNode *aParent;
-	CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
+    CCSpriteBatchNode *aParent;
+    CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
 
-	//
-	// SpriteBatchNode: 3 levels of children
-	//
+    //
+    // SpriteBatchNode: 3 levels of children
+    //
 
-	aParent = CCSpriteBatchNode::batchNodeWithFile("animations/ghosts.png");
+    aParent = CCSpriteBatchNode::batchNodeWithFile("animations/ghosts.png");
 
-	m_pBatchNode = aParent;
-	//[[aParent texture] generateMipmap];
-	addChild(aParent);
+    m_pBatchNode = aParent;
+    //[[aParent texture] generateMipmap];
+    addChild(aParent);
 
-	// parent
-	l1 = CCSprite::spriteWithSpriteFrameName("father.gif");
-	l1->setPosition(ccp( s.width/2, s.height/2));
+    // parent
+    l1 = CCSprite::spriteWithSpriteFrameName("father.gif");
+    l1->setPosition(ccp( s.width/2, s.height/2));
 
-	aParent->addChild(l1);
-	CCSize l1Size = l1->getContentSize();
+    aParent->addChild(l1);
+    CCSize l1Size = l1->getContentSize();
 
-	// child left
-	l2a = CCSprite::spriteWithSpriteFrameName("sister1.gif");
-	l2a->setPosition(ccp( -10 + l1Size.width/2, 0 + l1Size.height/2));
+    // child left
+    l2a = CCSprite::spriteWithSpriteFrameName("sister1.gif");
+    l2a->setPosition(ccp( -10 + l1Size.width/2, 0 + l1Size.height/2));
 
-	l1->addChild(l2a, 1);
-	CCSize l2aSize = l2a->getContentSize();
-
-
-	// child right
-	l2b = CCSprite::spriteWithSpriteFrameName("sister2.gif");
-	l2b->setPosition(ccp( +50 + l1Size.width/2, 0 + l1Size.height/2));
-
-	l1->addChild(l2b, 2);
-	CCSize l2bSize = l2a->getContentSize();
+    l1->addChild(l2a, 1);
+    CCSize l2aSize = l2a->getContentSize();
 
 
-	// child left bottom
-	l3a1 = CCSprite::spriteWithSpriteFrameName("child1.gif");
-	l3a1->setScale(0.45f);
-	l3a1->setPosition(ccp(0+l2aSize.width/2,-50+l2aSize.height/2));
-	l2a->addChild(l3a1, 1);
+    // child right
+    l2b = CCSprite::spriteWithSpriteFrameName("sister2.gif");
+    l2b->setPosition(ccp( +50 + l1Size.width/2, 0 + l1Size.height/2));
 
-	// child left top
-	l3a2 = CCSprite::spriteWithSpriteFrameName("child1.gif");
-	l3a2->setScale(0.45f);
-	l3a2->setPosition(ccp(0+l2aSize.width/2,+50+l2aSize.height/2));
-	l2a->addChild(l3a2, 2);
+    l1->addChild(l2b, 2);
+    CCSize l2bSize = l2a->getContentSize();
 
-	m_pReorderSprite = l2a;
 
-	// child right bottom
-	l3b1 = CCSprite::spriteWithSpriteFrameName("child1.gif");
-	l3b1->setScale(0.45f);
-	l3b1->setFlipY(true);
-	l3b1->setPosition(ccp(0+l2bSize.width/2,-50+l2bSize.height/2));
-	l2b->addChild(l3b1);
+    // child left bottom
+    l3a1 = CCSprite::spriteWithSpriteFrameName("child1.gif");
+    l3a1->setScale(0.45f);
+    l3a1->setPosition(ccp(0+l2aSize.width/2,-50+l2aSize.height/2));
+    l2a->addChild(l3a1, 1);
 
-	// child right top
-	l3b2 = CCSprite::spriteWithSpriteFrameName("child1.gif");
-	l3b2->setScale(0.45f);
-	l3b2->setFlipY(true);
-	l3b2->setPosition(ccp(0+l2bSize.width/2,+50+l2bSize.height/2));
-	l2b->addChild(l3b2);
+    // child left top
+    l3a2 = CCSprite::spriteWithSpriteFrameName("child1.gif");
+    l3a2->setScale(0.45f);
+    l3a2->setPosition(ccp(0+l2aSize.width/2,+50+l2aSize.height/2));
+    l2a->addChild(l3a2, 2);
 
-	scheduleOnce(schedule_selector(SpriteBatchNodeReorderOneChild::reorderSprite), 2.0f);
+    m_pReorderSprite = l2a;
+
+    // child right bottom
+    l3b1 = CCSprite::spriteWithSpriteFrameName("child1.gif");
+    l3b1->setScale(0.45f);
+    l3b1->setFlipY(true);
+    l3b1->setPosition(ccp(0+l2bSize.width/2,-50+l2bSize.height/2));
+    l2b->addChild(l3b1);
+
+    // child right top
+    l3b2 = CCSprite::spriteWithSpriteFrameName("child1.gif");
+    l3b2->setScale(0.45f);
+    l3b2->setFlipY(true);
+    l3b2->setPosition(ccp(0+l2bSize.width/2,+50+l2bSize.height/2));
+    l2b->addChild(l3b2);
+
+    scheduleOnce(schedule_selector(SpriteBatchNodeReorderOneChild::reorderSprite), 2.0f);
 }
 
 void SpriteBatchNodeReorderOneChild::reorderSprite(ccTime dt)
 {
-	m_pReorderSprite->getParent()->reorderChild(m_pReorderSprite, -1);
+    m_pReorderSprite->getParent()->reorderChild(m_pReorderSprite, -1);
 
-	m_pBatchNode->sortAllChildren();
-	//CCSprite* child;
-	//CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
+    m_pBatchNode->sortAllChildren();
+    //CCSprite* child;
+    //CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
 }
 
 std::string SpriteBatchNodeReorderOneChild::title()
 {
-	return "SpriteBatchNode reorder 1 child";
+    return "SpriteBatchNode reorder 1 child";
 }
 

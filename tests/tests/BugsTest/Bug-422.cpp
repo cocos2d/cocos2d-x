@@ -9,45 +9,45 @@ bool Bug422Layer::init()
 {
     if (BugsTestBaseLayer::init())
     {
-		reset();
+        reset();
         return true;
-	}
+    }
 
-	return false;
+    return false;
 }
 
 void Bug422Layer::reset()
 {
-	static int localtag = 0;
-	localtag++;
+    static int localtag = 0;
+    localtag++;
 
-	// TO TRIGGER THE BUG:
-	// remove the itself from parent from an action
-	// The menu will be removed, but the instance will be alive
-	// and then a new node will be allocated occupying the memory.
-	// => CRASH BOOM BANG
-	CCNode *node = getChildByTag(localtag-1);
-	CCLog("Menu: %p", node);
-	removeChild(node, false);
-//	[self removeChildByTag:localtag-1 cleanup:NO];
+    // TO TRIGGER THE BUG:
+    // remove the itself from parent from an action
+    // The menu will be removed, but the instance will be alive
+    // and then a new node will be allocated occupying the memory.
+    // => CRASH BOOM BANG
+    CCNode *node = getChildByTag(localtag-1);
+    CCLog("Menu: %p", node);
+    removeChild(node, false);
+//    [self removeChildByTag:localtag-1 cleanup:NO];
 
     CCMenuItem *item1 = CCMenuItemFont::itemWithString("One", this, menu_selector(Bug422Layer::menuCallback));
-	CCLog("MenuItemFont: %p", item1);
+    CCLog("MenuItemFont: %p", item1);
     CCMenuItem *item2 = CCMenuItemFont::itemWithString("Two", this, menu_selector(Bug422Layer::menuCallback));
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, NULL);
-	menu->alignItemsVertically();
+    menu->alignItemsVertically();
 
-	float x = CCRANDOM_0_1() * 50;
-	float y = CCRANDOM_0_1() * 50;
-	menu->setPosition(ccpAdd( menu->getPosition(), ccp(x,y)));
-    addChild(menu, 0, localtag);	
+    float x = CCRANDOM_0_1() * 50;
+    float y = CCRANDOM_0_1() * 50;
+    menu->setPosition(ccpAdd( menu->getPosition(), ccp(x,y)));
+    addChild(menu, 0, localtag);    
 
     //[self check:self];
 }
 
 void Bug422Layer::check(CCNode* t)
 {
-	CCArray *array = t->getChildren();
+    CCArray *array = t->getChildren();
     CCObject* pChild = NULL;
     CCARRAY_FOREACH(array, pChild)
     {
@@ -60,5 +60,5 @@ void Bug422Layer::check(CCNode* t)
 
 void Bug422Layer::menuCallback(CCObject* sender)
 {
-	reset();
+    reset();
 }

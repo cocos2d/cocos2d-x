@@ -11,10 +11,10 @@ bool Bug350Layer::init()
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
         CCSprite *background = CCSprite::spriteWithFile("Hello.png");
-		background->setPosition(ccp(size.width/2, size.height/2));
-		addChild(background);
+        background->setPosition(ccp(size.width/2, size.height/2));
+        addChild(background);
         return true;
-	}
+    }
 
-	return false;
+    return false;
 }

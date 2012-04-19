@@ -30,27 +30,27 @@ struct b2AABB;
 // inside b2World::Step.
 class GLESDebugDraw : public b2Draw
 {
-	float32 mRatio;
-	cocos2d::CCGLProgram* mShaderProgram;
-	GLint		mColorLocation;
+    float32 mRatio;
+    cocos2d::CCGLProgram* mShaderProgram;
+    GLint        mColorLocation;
 
-	void initShader( void );
+    void initShader( void );
 public:
-	GLESDebugDraw();
+    GLESDebugDraw();
 
-	GLESDebugDraw( float32 ratio );
+    GLESDebugDraw( float32 ratio );
 
-	virtual void DrawPolygon(const b2Vec2* vertices, int vertexCount, const b2Color& color);
+    virtual void DrawPolygon(const b2Vec2* vertices, int vertexCount, const b2Color& color);
 
-	virtual void DrawSolidPolygon(const b2Vec2* vertices, int vertexCount, const b2Color& color);
+    virtual void DrawSolidPolygon(const b2Vec2* vertices, int vertexCount, const b2Color& color);
 
-	virtual void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color);
+    virtual void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color);
 
-	virtual void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color);
+    virtual void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color);
 
-	virtual void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color);
+    virtual void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color);
 
-	virtual void DrawTransform(const b2Transform& xf);
+    virtual void DrawTransform(const b2Transform& xf);
 
     virtual void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color);
 

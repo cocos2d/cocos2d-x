@@ -54,7 +54,7 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
 
     // purge textures
     CCTextureCache *mgr = CCTextureCache::sharedTextureCache();
-    //		[mgr removeAllTextures];
+    //        [mgr removeAllTextures];
     mgr->removeTexture(mgr->addImage("Images/grossinis_sister1.png"));
     mgr->removeTexture(mgr->addImage("Images/grossini_dance_atlas.png"));
     mgr->removeTexture(mgr->addImage("Images/spritesheet1.png"));
@@ -82,7 +82,7 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
             batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
-            break;				
+            break;                
         case 6:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
             batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
@@ -215,7 +215,7 @@ void SubTest::removeByTag(int tag)
         case 8:
         case 9:
             batchNode->removeChildAtIndex(tag, true);
-            //			[batchNode removeChildByTag:tag+100 cleanup:YES];
+            //            [batchNode removeChildByTag:tag+100 cleanup:YES];
             break;
         default:
             break;

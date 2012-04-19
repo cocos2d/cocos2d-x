@@ -48,7 +48,7 @@ extern "C" {
 #endif
 
 typedef struct kmMat4 {
-	kmScalar mat[16];
+    kmScalar mat[16];
 } kmMat4;
 
 CC_DLL kmMat4* const kmMat4Fill(kmMat4* pOut, const kmScalar* pMat);

@@ -54,29 +54,29 @@ extern "C" {
 
 
 XMLPUBFUN int XMLCALL
-		xmlC14NDocSaveTo	(xmlDocPtr doc,
-					 xmlNodeSetPtr nodes,
-					 int exclusive,
-					 xmlChar **inclusive_ns_prefixes,
-					 int with_comments,
-					 xmlOutputBufferPtr buf);
+        xmlC14NDocSaveTo    (xmlDocPtr doc,
+                     xmlNodeSetPtr nodes,
+                     int exclusive,
+                     xmlChar **inclusive_ns_prefixes,
+                     int with_comments,
+                     xmlOutputBufferPtr buf);
 
 XMLPUBFUN int XMLCALL
-		xmlC14NDocDumpMemory	(xmlDocPtr doc,
-					 xmlNodeSetPtr nodes,
-					 int exclusive,
-					 xmlChar **inclusive_ns_prefixes,
-					 int with_comments,
-					 xmlChar **doc_txt_ptr);
+        xmlC14NDocDumpMemory    (xmlDocPtr doc,
+                     xmlNodeSetPtr nodes,
+                     int exclusive,
+                     xmlChar **inclusive_ns_prefixes,
+                     int with_comments,
+                     xmlChar **doc_txt_ptr);
 
 XMLPUBFUN int XMLCALL
-		xmlC14NDocSave		(xmlDocPtr doc,
-					 xmlNodeSetPtr nodes,
-					 int exclusive,
-					 xmlChar **inclusive_ns_prefixes,
-					 int with_comments,
-					 const char* filename,
-					 int compression);
+        xmlC14NDocSave        (xmlDocPtr doc,
+                     xmlNodeSetPtr nodes,
+                     int exclusive,
+                     xmlChar **inclusive_ns_prefixes,
+                     int with_comments,
+                     const char* filename,
+                     int compression);
 
 
 /**
@@ -92,18 +92,18 @@ XMLPUBFUN int XMLCALL
  *
  * Returns 1 if the node should be included
  */
-typedef int (*xmlC14NIsVisibleCallback)	(void* user_data,
-					 xmlNodePtr node,
-					 xmlNodePtr parent);
+typedef int (*xmlC14NIsVisibleCallback)    (void* user_data,
+                     xmlNodePtr node,
+                     xmlNodePtr parent);
 
 XMLPUBFUN int XMLCALL
-		xmlC14NExecute		(xmlDocPtr doc,
-					 xmlC14NIsVisibleCallback is_visible_callback,
-					 void* user_data,
-					 int exclusive,
-					 xmlChar **inclusive_ns_prefixes,
-					 int with_comments,
-					 xmlOutputBufferPtr buf);
+        xmlC14NExecute        (xmlDocPtr doc,
+                     xmlC14NIsVisibleCallback is_visible_callback,
+                     void* user_data,
+                     int exclusive,
+                     xmlChar **inclusive_ns_prefixes,
+                     int with_comments,
+                     xmlOutputBufferPtr buf);
 
 #ifdef __cplusplus
 }

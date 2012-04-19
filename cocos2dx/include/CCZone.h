@@ -24,21 +24,24 @@ THE SOFTWARE.
 
 #ifndef __CC_ZONE_H__
 #define __CC_ZONE_H__
-#include <stdio.h>
 
-namespace   cocos2d {
+#include <stdio.h>
+#include "CCPlatformMacros.h"
+
+NS_CC_BEGIN
 
 class CCObject;
 
-class CCZone
+class CC_DLL CCZone
 {
 public:
-	CCZone(CCObject *pObject = NULL);
+    CCZone(CCObject *pObject = NULL);
 
 public:
-	CCObject *m_pCopyObject;
+    CCObject *m_pCopyObject;
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __CC_ZONE_H__
 

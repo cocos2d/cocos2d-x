@@ -37,9 +37,9 @@ THE SOFTWARE.
 /** @def CC_ENABLE_GL_STATE_CACHE
  If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
  In order to use them, you have to use the following functions, insead of the the GL ones:
-	- ccGLUseProgram() instead of glUseProgram()
-	- ccGLDeleteProgram() instead of glDeleteProgram()
-	- ccGLBlendFunc() instead of glBlendFunc()
+    - ccGLUseProgram() instead of glUseProgram()
+    - ccGLDeleteProgram() instead of glDeleteProgram()
+    - ccGLBlendFunc() instead of glBlendFunc()
 
  If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
 
@@ -152,7 +152,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
+#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL    1
 #endif
 
 /** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
@@ -186,8 +186,8 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 /** @def CC_TEXTURE_NPOT_SUPPORT
  If enabled, NPOT textures will be used where available. Only 3rd gen (and newer) devices support NPOT textures.
  NPOT textures have the following limitations:
-	- They can't have mipmaps
-	- They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
+    - They can't have mipmaps
+    - They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
  
  To enable set it to a value different than 0. Disabled by default.
 

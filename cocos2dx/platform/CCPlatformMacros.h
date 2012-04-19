@@ -30,8 +30,8 @@
 #include "ccConfig.h"
 #include "CCPlatformConfig.h"
 
-#define MacGLView					void
-#define NSWindow					        void
+#define MacGLView                    void
+#define NSWindow                            void
 
 /** @def CC_ENABLE_CACHE_TEXTTURE_DATA
 Enable it if you want to cache the texture data.
@@ -140,21 +140,21 @@ private: varType varName; \
 public: virtual varType get##funName(void) const { return varName; } \
 public: virtual void set##funName(varType var)   \
 { \
-	if (varName != var) \
-	{ \
-		CC_SAFE_RETAIN(var); \
-		CC_SAFE_RELEASE(varName); \
-		varName = var; \
-	} \
+    if (varName != var) \
+    { \
+        CC_SAFE_RETAIN(var); \
+        CC_SAFE_RELEASE(varName); \
+        varName = var; \
+    } \
 } 
 
-#define CC_SAFE_DELETE(p)			do { if(p) { delete (p); (p) = 0; } } while(0)
+#define CC_SAFE_DELETE(p)            do { if(p) { delete (p); (p) = 0; } } while(0)
 #define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
-#define CC_SAFE_FREE(p)			    do { if(p) { free(p); (p) = 0; } } while(0)
-#define CC_SAFE_RELEASE(p)			do { if(p) { (p)->release(); } } while(0)
-#define CC_SAFE_RELEASE_NULL(p)	    do { if(p) { (p)->release(); (p) = 0; } } while(0)
-#define CC_SAFE_RETAIN(p)			do { if(p) { (p)->retain(); } } while(0)
-#define CC_BREAK_IF(cond)			if(cond) break
+#define CC_SAFE_FREE(p)                do { if(p) { free(p); (p) = 0; } } while(0)
+#define CC_SAFE_RELEASE(p)            do { if(p) { (p)->release(); } } while(0)
+#define CC_SAFE_RELEASE_NULL(p)        do { if(p) { (p)->release(); (p) = 0; } } while(0)
+#define CC_SAFE_RETAIN(p)            do { if(p) { (p)->retain(); } } while(0)
+#define CC_BREAK_IF(cond)            if(cond) break
 
 
 // cocos2d debug
@@ -221,7 +221,7 @@ public: virtual void set##funName(varType var)   \
     #undef CC_DLL
     #if defined(_USRDLL)
         #define CC_DLL     __declspec(dllexport)
-    #else 		/* use a DLL library */
+    #else         /* use a DLL library */
         #define CC_DLL     __declspec(dllimport)
     #endif
 

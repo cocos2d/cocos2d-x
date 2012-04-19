@@ -29,10 +29,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../mat4.h"
 
 typedef struct km_mat4_stack {
-	int capacity; //The total item capacity
-	int item_count; //The number of items
-	kmMat4* top;
-	kmMat4* stack;
+    int capacity; //The total item capacity
+    int item_count; //The number of items
+    kmMat4* top;
+    kmMat4* stack;
 } km_mat4_stack;
 
 #ifdef __cplusplus

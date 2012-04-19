@@ -30,116 +30,116 @@
 class RopeJoint : public Test
 {
 public:
-	RopeJoint()
-	{
-		b2Body* ground = NULL;
-		{
-			b2BodyDef bd;
-			ground = m_world->CreateBody(&bd);
+    RopeJoint()
+    {
+        b2Body* ground = NULL;
+        {
+            b2BodyDef bd;
+            ground = m_world->CreateBody(&bd);
 
-			b2EdgeShape shape;
-			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
-			ground->CreateFixture(&shape, 0.0f);
-		}
+            b2EdgeShape shape;
+            shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+            ground->CreateFixture(&shape, 0.0f);
+        }
 
-		{
-			b2PolygonShape shape;
-			shape.SetAsBox(0.5f, 0.125f);
+        {
+            b2PolygonShape shape;
+            shape.SetAsBox(0.5f, 0.125f);
 
-			b2FixtureDef fd;
-			fd.shape = &shape;
-			fd.density = 20.0f;
-			fd.friction = 0.2f;
-			fd.filter.categoryBits = 0x0001;
-			fd.filter.maskBits = 0xFFFF & ~0x0002;
+            b2FixtureDef fd;
+            fd.shape = &shape;
+            fd.density = 20.0f;
+            fd.friction = 0.2f;
+            fd.filter.categoryBits = 0x0001;
+            fd.filter.maskBits = 0xFFFF & ~0x0002;
 
-			b2RevoluteJointDef jd;
-			jd.collideConnected = false;
+            b2RevoluteJointDef jd;
+            jd.collideConnected = false;
 
-			const int32 N = 10;
-			const float32 y = 15.0f;
-			m_ropeDef.localAnchorA.Set(0.0f, y);
+            const int32 N = 10;
+            const float32 y = 15.0f;
+            m_ropeDef.localAnchorA.Set(0.0f, y);
 
-			b2Body* prevBody = ground;
-			for (int32 i = 0; i < N; ++i)
-			{
-				b2BodyDef bd;
-				bd.type = b2_dynamicBody;
-				bd.position.Set(0.5f + 1.0f * i, y);
-				if (i == N - 1)
-				{
-					shape.SetAsBox(1.5f, 1.5f);
-					fd.density = 100.0f;
-					fd.filter.categoryBits = 0x0002;
-					bd.position.Set(1.0f * i, y);
-					bd.angularDamping = 0.4f;
-				}
+            b2Body* prevBody = ground;
+            for (int32 i = 0; i < N; ++i)
+            {
+                b2BodyDef bd;
+                bd.type = b2_dynamicBody;
+                bd.position.Set(0.5f + 1.0f * i, y);
+                if (i == N - 1)
+                {
+                    shape.SetAsBox(1.5f, 1.5f);
+                    fd.density = 100.0f;
+                    fd.filter.categoryBits = 0x0002;
+                    bd.position.Set(1.0f * i, y);
+                    bd.angularDamping = 0.4f;
+                }
 
-				b2Body* body = m_world->CreateBody(&bd);
+                b2Body* body = m_world->CreateBody(&bd);
 
-				body->CreateFixture(&fd);
+                body->CreateFixture(&fd);
 
-				b2Vec2 anchor(float32(i), y);
-				jd.Initialize(prevBody, body, anchor);
-				m_world->CreateJoint(&jd);
+                b2Vec2 anchor(float32(i), y);
+                jd.Initialize(prevBody, body, anchor);
+                m_world->CreateJoint(&jd);
 
-				prevBody = body;
-			}
+                prevBody = body;
+            }
 
-			m_ropeDef.localAnchorB.SetZero();
+            m_ropeDef.localAnchorB.SetZero();
 
-			float32 extraLength = 0.01f;
-			m_ropeDef.maxLength = N - 1.0f + extraLength;
-			m_ropeDef.bodyB = prevBody;
-		}
+            float32 extraLength = 0.01f;
+            m_ropeDef.maxLength = N - 1.0f + extraLength;
+            m_ropeDef.bodyB = prevBody;
+        }
 
-		{
-			m_ropeDef.bodyA = ground;
-			m_rope = m_world->CreateJoint(&m_ropeDef);
-		}
-	}
+        {
+            m_ropeDef.bodyA = ground;
+            m_rope = m_world->CreateJoint(&m_ropeDef);
+        }
+    }
 
-	void Keyboard(unsigned char key)
-	{
-		switch (key)
-		{
-		case 'j':
-			if (m_rope)
-			{
-				m_world->DestroyJoint(m_rope);
-				m_rope = NULL;
-			}
-			else
-			{
-				m_rope = m_world->CreateJoint(&m_ropeDef);
-			}
-			break;
-		}
-	}
+    void Keyboard(unsigned char key)
+    {
+        switch (key)
+        {
+        case 'j':
+            if (m_rope)
+            {
+                m_world->DestroyJoint(m_rope);
+                m_rope = NULL;
+            }
+            else
+            {
+                m_rope = m_world->CreateJoint(&m_ropeDef);
+            }
+            break;
+        }
+    }
 
-	void Step(Settings* settings)
-	{
-		Test::Step(settings);
-		m_debugDraw.DrawString(5, m_textLine, "Press (j) to toggle the rope joint.");
-		m_textLine += 15;
-		if (m_rope)
-		{
-			m_debugDraw.DrawString(5, m_textLine, "Rope ON");
-		}
-		else
-		{
-			m_debugDraw.DrawString(5, m_textLine, "Rope OFF");
-		}
-		m_textLine += 15;
-	}
+    void Step(Settings* settings)
+    {
+        Test::Step(settings);
+        m_debugDraw.DrawString(5, m_textLine, "Press (j) to toggle the rope joint.");
+        m_textLine += 15;
+        if (m_rope)
+        {
+            m_debugDraw.DrawString(5, m_textLine, "Rope ON");
+        }
+        else
+        {
+            m_debugDraw.DrawString(5, m_textLine, "Rope OFF");
+        }
+        m_textLine += 15;
+    }
 
-	static Test* Create()
-	{
-		return new RopeJoint;
-	}
+    static Test* Create()
+    {
+        return new RopeJoint;
+    }
 
-	b2RopeJointDef m_ropeDef;
-	b2Joint* m_rope;
+    b2RopeJointDef m_ropeDef;
+    b2Joint* m_rope;
 };
 
 #endif

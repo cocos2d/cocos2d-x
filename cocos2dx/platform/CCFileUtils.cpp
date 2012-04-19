@@ -32,12 +32,11 @@ THE SOFTWARE.
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
-#include "CCLibxml2.h"
 #include "CCString.h"
 #include "CCSAXParser.h"
 #include "support/zip_support/unzip.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static const char *__suffixiPhoneRetinaDisplay = "-hd";
 static const char *__suffixiPad = "-ipad";
@@ -81,7 +80,7 @@ public:
         : m_eResultType(SAX_RESULT_NONE),
           m_pRootArray(NULL), 
           m_pRootDict(NULL),
-		  m_pCurDict(NULL),
+          m_pCurDict(NULL),
           m_tState(SAX_NONE),
           m_pArray(NULL)
     {
@@ -131,9 +130,9 @@ public:
             m_pCurDict = new CCDictionary();
             if(! m_pRootDict)
             {
-				// Because it will call m_pCurDict->release() later, so retain here.
+                // Because it will call m_pCurDict->release() later, so retain here.
                 m_pRootDict = m_pCurDict;
-				m_pRootDict->retain();
+                m_pRootDict->retain();
             }
             m_tState = SAX_DICT;
 
@@ -156,7 +155,7 @@ public:
                 pPreDict->setObject(m_pCurDict, m_sCurKey.c_str());
             }
 
-			m_pCurDict->release();
+            m_pCurDict->release();
 
             // record the dict state
             m_tStateStack.push(m_tState);
@@ -181,11 +180,11 @@ public:
         else if (sName == "array")
         {
             m_tState = SAX_ARRAY;
-			m_pArray = new CCArray();
+            m_pArray = new CCArray();
             if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray == NULL)
             {
                 m_pRootArray = m_pArray;
-				m_pRootArray->retain();
+                m_pRootArray->retain();
             }
             CCSAXState preState = SAX_NONE;
             if (! m_tStateStack.empty())
@@ -307,9 +306,9 @@ public:
 
 std::string& CCFileUtils::removeSuffixFromFile(std::string& path)
 {
-	// XXX win32 now can only support iphone retina, because 
-	// we don't know it is ipad retina or iphone retina.
-	// fixe me later
+    // XXX win32 now can only support iphone retina, because 
+    // we don't know it is ipad retina or iphone retina.
+    // fixe me later
     if( CC_CONTENT_SCALE_FACTOR() == 2 )
     {
         std::string::size_type pos = path.rfind("/") + 1; // the begin index of last part of path
@@ -328,8 +327,8 @@ std::string& CCFileUtils::removeSuffixFromFile(std::string& path)
 
 CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
-	CCDictMaker tMaker;
-	return tMaker.dictionaryWithContentsOfFile(pFileName);
+    CCDictMaker tMaker;
+    return tMaker.dictionaryWithContentsOfFile(pFileName);
 }
 
 CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
@@ -383,42 +382,42 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-	ccResolutionType ignore;
+    ccResolutionType ignore;
     return fullPathFromRelativePath(pszRelativePath, &ignore);
 }
 
 /// functions iOS specific
 void CCFileUtils::setiPhoneRetinaDisplaySuffix(const char *suffix)
 {
-	assert(0);
+    assert(0);
 }
 
 void CCFileUtils::setiPadSuffix(const char *suffix)
 {
-	assert(0);
+    assert(0);
 }
 
 void CCFileUtils::setiPadRetinaDisplaySuffix(const char *suffix)
 {
-	assert(0);
+    assert(0);
 }
 
 bool CCFileUtils::iPadFileExistsAtPath(const char *filename)
 {
-	assert(0);
-	return false;
+    assert(0);
+    return false;
 }
 
 bool CCFileUtils::iPadRetinaDisplayFileExistsAtPath(const char *filename)
 {
-	assert(0);
-	return false;
+    assert(0);
+    return false;
 }
 
 bool CCFileUtils::iPhoneRetinaDisplayFileExistsAtPath(const char *filename)
 {
-	assert(0);
-	return false;
+    assert(0);
+    return false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -436,14 +435,10 @@ bool CCFileUtils::getIsPopupNotify()
     return s_bPopupNotify;
 }
 
-NS_CC_END;
+NS_CC_END
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "win32/CCFileUtils_win32.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include "wophone/CCFileUtils_wophone.cpp"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

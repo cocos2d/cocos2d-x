@@ -15,141 +15,141 @@ public:
 class ParticleDemo : public CCLayerColor
 {
 protected:
-	CCParticleSystem*	m_emitter;
-	CCSprite*			m_background;
+    CCParticleSystem*    m_emitter;
+    CCSprite*            m_background;
 
 public:
-	ParticleDemo(void);
-	~ParticleDemo(void);
+    ParticleDemo(void);
+    ~ParticleDemo(void);
 
-	virtual void onEnter(void);
+    virtual void onEnter(void);
 
-	virtual std::string title();
+    virtual std::string title();
 
-	void restartCallback(CCObject* pSender);
-	void nextCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
-	void toggleCallback(CCObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
+    void toggleCallback(CCObject* pSender);
 
-	virtual void registerWithTouchDispatcher();
-	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+    virtual void registerWithTouchDispatcher();
+    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
 
-	virtual void update(ccTime dt);
-	void setEmitterPosition();
+    virtual void update(ccTime dt);
+    void setEmitterPosition();
 };
 
 class DemoFirework : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoFire : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoSun : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoGalaxy : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoFlower : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoBigFlower : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoRotFlower : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoMeteor : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoSpiral : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoExplosion : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoSmoke : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoSnow : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoRain : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoModernArt : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoRing : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class ParallaxParticle : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 class DemoParticleFromFile : public ParticleDemo
@@ -157,7 +157,7 @@ class DemoParticleFromFile : public ParticleDemo
 public:
     std::string m_title;
     DemoParticleFromFile(const char *file)
-    {	
+    {    
         m_title = file;
     }
     virtual void onEnter();
@@ -204,84 +204,84 @@ private:
 class Issue1201 : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class ParticleBatchHybrid : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	void switchRender(ccTime dt);
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    void switchRender(ccTime dt);
+    virtual std::string title();
+    virtual std::string subtitle();
 private:
-	CCNode* m_pParent1;
-	CCNode* m_pParent2;
+    CCNode* m_pParent1;
+    CCNode* m_pParent2;
 };
 
 class ParticleBatchMultipleEmitters : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class ParticleReorder : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	void reorderParticles(ccTime dt);
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    void reorderParticles(ccTime dt);
+    virtual std::string title();
+    virtual std::string subtitle();
 private:
-	unsigned int m_nOrder;
+    unsigned int m_nOrder;
 };
 
 class MultipleParticleSystems : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
-	virtual std::string subtitle();
-	virtual void update(ccTime dt);
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void update(ccTime dt);
 };
 
 class MultipleParticleSystemsBatched : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual void update(ccTime dt);
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual void update(ccTime dt);
+    virtual std::string title();
+    virtual std::string subtitle();
 private:
-	CCParticleBatchNode* m_pBatchNode;
+    CCParticleBatchNode* m_pBatchNode;
 };
 
 class AddAndDeleteParticleSystems : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	virtual void update(ccTime dt);
-	void removeSystem(ccTime dt);
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual void update(ccTime dt);
+    void removeSystem(ccTime dt);
+    virtual std::string title();
+    virtual std::string subtitle();
 private:
-	CCParticleBatchNode* m_pBatchNode;
+    CCParticleBatchNode* m_pBatchNode;
 };
 
 class ReorderParticleSystems : public ParticleDemo
 {
 public:
-	virtual void onEnter();
-	void reorderSystem(ccTime time);
-	virtual void update(ccTime dt);
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    void reorderSystem(ccTime time);
+    virtual void update(ccTime dt);
+    virtual std::string title();
+    virtual std::string subtitle();
 private:
-	CCParticleBatchNode* m_pBatchNode;
+    CCParticleBatchNode* m_pBatchNode;
 };
 
 #endif

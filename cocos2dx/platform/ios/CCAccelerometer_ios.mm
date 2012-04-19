@@ -25,19 +25,20 @@
 #include "CCAccelerometer.h"
 #include "AccelerometerDelegateWrapper.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
     
-    CCAccelerometer::CCAccelerometer()
-    {
-    }
-    
-    CCAccelerometer::~CCAccelerometer()
-    {
-    }
-    
-    void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
-    {
-        [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:pDelegate];
-    }
+CCAccelerometer::CCAccelerometer()
+{
 }
+
+CCAccelerometer::~CCAccelerometer()
+{
+}
+
+void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
+{
+    [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:pDelegate];
+}
+
+NS_CC_END
 

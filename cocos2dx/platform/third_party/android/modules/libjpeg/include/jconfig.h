@@ -5,6 +5,6 @@
 #include "jconfig_win.h"
 #else
 #include "jconfig_linux.h"
-#endif	// WIN32
+#endif    // WIN32
 
 #endif /* __JCONFIG_H__ */

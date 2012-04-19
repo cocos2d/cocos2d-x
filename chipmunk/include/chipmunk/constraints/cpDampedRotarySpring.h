@@ -28,16 +28,16 @@ const cpConstraintClass *cpDampedRotarySpringGetClass(void);
 
 /// @private
 typedef struct cpDampedRotarySpring {
-	cpConstraint constraint;
-	cpFloat restAngle;
-	cpFloat stiffness;
-	cpFloat damping;
-	cpDampedRotarySpringTorqueFunc springTorqueFunc;
-	
-	cpFloat target_wrn;
-	cpFloat w_coef;
-	
-	cpFloat iSum;
+    cpConstraint constraint;
+    cpFloat restAngle;
+    cpFloat stiffness;
+    cpFloat damping;
+    cpDampedRotarySpringTorqueFunc springTorqueFunc;
+    
+    cpFloat target_wrn;
+    cpFloat w_coef;
+    
+    cpFloat iSum;
 } cpDampedRotarySpring;
 
 /// Allocate a damped rotary spring.

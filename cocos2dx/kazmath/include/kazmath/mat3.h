@@ -34,7 +34,7 @@ struct kmVec3;
 struct kmQuaternion;
 
 typedef struct kmMat3{
-	kmScalar mat[9];
+    kmScalar mat[9];
 } kmMat3;
 
 #ifdef __cplusplus

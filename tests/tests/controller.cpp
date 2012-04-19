@@ -57,10 +57,10 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ChipmunkAccelTouchTestScene(); break;
 #else
 #ifdef MARMALADEUSECHIPMUNK
-#if	(MARMALADEUSECHIPMUNK == 1)
+#if    (MARMALADEUSECHIPMUNK == 1)
         pScene = new ChipmunkAccelTouchTestScene(); 
 #endif
-		break;
+        break;
 #endif
 #endif
     case TEST_LABEL:
@@ -83,14 +83,14 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new EffectAdvanceScene(); break;
     case TEST_HIRES:
         pScene = new HiResTestScene(); break;
-	case TEST_ACCELEROMRTER:
+    case TEST_ACCELEROMRTER:
         pScene = new AccelerometerTestScene(); break;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;
 #endif
-	case TEST_COCOSDENSHION:
-		pScene = new CocosDenshionTestScene(); break;
+    case TEST_COCOSDENSHION:
+        pScene = new CocosDenshionTestScene(); break;
     case TEST_PERFORMANCE:
         pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:
@@ -98,31 +98,31 @@ static TestScene* CreateTestScene(int nIdx)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-	case TEST_CURL:
-		pScene = new CurlTestScene(); break;
+    case TEST_CURL:
+        pScene = new CurlTestScene(); break;
 #endif
 #endif
-	case TEST_USERDEFAULT:
-		pScene = new UserDefaultTestScene(); break;
+    case TEST_USERDEFAULT:
+        pScene = new UserDefaultTestScene(); break;
     case TEST_DIRECTOR:
         pScene = new DirectorTestScene(); break;
     case TEST_BUGS:
         pScene = new BugsTestScene(); break;
-	case TEST_FONTS:
-		pScene = new FontTestScene(); break;
-	case TEST_CURRENT_LANGUAGE:
-		pScene = new CurrentLanguageTestScene(); break;
+    case TEST_FONTS:
+        pScene = new FontTestScene(); break;
+    case TEST_CURRENT_LANGUAGE:
+        pScene = new CurrentLanguageTestScene(); break;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-	case TEST_TEXTURECACHE: pScene = new TextureCacheTestScene(); break;
+    case TEST_TEXTURECACHE: pScene = new TextureCacheTestScene(); break;
 #endif
     case TEST_EXTENSIONS:
         {
             pScene = new ExtensionsTestScene();
         }
         break;
-	case TEST_SHADER:
-		pScene = new ShaderTestScene();
-		break;
+    case TEST_SHADER:
+        pScene = new ShaderTestScene();
+        break;
     default:
         break;
     }
@@ -146,10 +146,10 @@ TestController::TestController()
     for (int i = 0; i < TESTS_COUNT; ++i)
     {
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-// 		CCLabelBMFont* label = CCLabelBMFont::labelWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+//         CCLabelBMFont* label = CCLabelBMFont::labelWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 // #else
         CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);
-// #endif		
+// #endif        
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
 
         m_pItemMenu->addChild(pMenuItem, i + 10000);
@@ -188,7 +188,7 @@ void TestController::closeCallback(CCObject * pSender)
 {
     CCDirector::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+    exit(0);
 #endif
 }
 
@@ -197,7 +197,7 @@ void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    m_tBeginPos = touch->locationInView();	
+    m_tBeginPos = touch->locationInView();    
     m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
 }
 
@@ -206,7 +206,7 @@ void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    CCPoint touchLocation = touch->locationInView();	
+    CCPoint touchLocation = touch->locationInView();    
     touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
     float nMoveY = touchLocation.y - m_tBeginPos.y;
 

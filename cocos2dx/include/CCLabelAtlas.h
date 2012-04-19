@@ -25,50 +25,53 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCLABEL_ATLAS_H__
 #define __CCLABEL_ATLAS_H__
+
 #include "CCAtlasNode.h"
-namespace cocos2d{
 
-	/** @brief CCLabelAtlas is a subclass of CCAtlasNode.
+NS_CC_BEGIN
 
-	It can be as a replacement of CCLabel since it is MUCH faster.
+/** @brief CCLabelAtlas is a subclass of CCAtlasNode.
 
-	CCLabelAtlas versus CCLabel:
-	- CCLabelAtlas is MUCH faster than CCLabel
-	- CCLabelAtlas "characters" have a fixed height and width
-	- CCLabelAtlas "characters" can be anything you want since they are taken from an image file
+It can be as a replacement of CCLabel since it is MUCH faster.
 
-	A more flexible class is CCLabelBMFont. It supports variable width characters and it also has a nice editor.
-	*/
-	class CC_DLL CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol
-	{
-	public:
-		CCLabelAtlas()
-			:m_sString("")
-		{}
-		virtual ~CCLabelAtlas()
-		{ 
-			m_sString.clear(); 
-		}
-		/** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-		static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
+CCLabelAtlas versus CCLabel:
+- CCLabelAtlas is MUCH faster than CCLabel
+- CCLabelAtlas "characters" have a fixed height and width
+- CCLabelAtlas "characters" can be anything you want since they are taken from an image file
 
-		/** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-		bool initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
-		// super methods
-		virtual void updateAtlasValues();
-		virtual void setString(const char *label);
-		virtual const char* getString(void);
+A more flexible class is CCLabelBMFont. It supports variable width characters and it also has a nice editor.
+*/
+class CC_DLL CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol
+{
+public:
+    CCLabelAtlas()
+        :m_sString("")
+    {}
+    virtual ~CCLabelAtlas()
+    { 
+        m_sString.clear(); 
+    }
+    /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+    static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
+
+    /** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+    bool initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
+    // super methods
+    virtual void updateAtlasValues();
+    virtual void setString(const char *label);
+    virtual const char* getString(void);
 #if CC_LABELATLAS_DEBUG_DRAW
-		virtual void draw();
+    virtual void draw();
 #endif
 
-		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
-	protected:
-		// string to render
-		std::string m_sString;
-		// the first char in the charmap
-		unsigned char m_cMapStartChar;
-	};
-}// namespace cocos2d
+    virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
+protected:
+    // string to render
+    std::string m_sString;
+    // the first char in the charmap
+    unsigned char m_cMapStartChar;
+};
+
+NS_CC_END
 
 #endif //__CCLABEL_ATLAS_H__

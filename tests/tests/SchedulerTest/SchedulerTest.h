@@ -40,7 +40,7 @@ public:
     void autoremove(ccTime dt);
     void tick(ccTime dt);
 private:
-	ccTime accum;
+    ccTime accum;
 };
 
 class SchedulerPauseResume : public SchedulerTestLayer
@@ -190,8 +190,8 @@ public:
     CCActionManager *actionManager1;
     CCActionManager *actionManager2;
 
-    CCControlSlider	*sliderCtl1;
-    CCControlSlider	*sliderCtl2;
+    CCControlSlider    *sliderCtl1;
+    CCControlSlider    *sliderCtl2;
 };
 
 

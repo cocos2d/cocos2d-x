@@ -32,24 +32,24 @@ THE SOFTWARE.
 #include <FApp.h>
 #include <FSystem.h>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 
 
 class CC_DLL CCApplication
-	: public Osp::App::Application
-	, public Osp::Base::Runtime::ITimerEventListener
+    : public Osp::App::Application
+    , public Osp::Base::Runtime::ITimerEventListener
     , public Osp::Ui::IKeyEventListener
 {
 public:
     CCApplication();
     virtual ~CCApplication();
     /**
-    @brief	Implement for initialize OpenGL instance, set source path, etc...
+    @brief    Implement for initialize OpenGL instance, set source path, etc...
     */
     virtual bool initInstance() = 0;
     /**
-    @brief	Implement Window create, CCDirector and CCScene init code here.
+    @brief    Implement Window create, CCDirector and CCScene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
@@ -68,12 +68,12 @@ public:
     virtual void applicationWillEnterForeground() {}
 
     /**
-    @brief	Get status bar rectangle in EGLView window.
+    @brief    Get status bar rectangle in EGLView window.
     */
     CCRect statusBarFrame(CCRect * rect);
 
     /**
-    @brief	Get current applicaiton instance.
+    @brief    Get current applicaiton instance.
     @return Current application instance pointer.
     */
     static CCApplication& sharedApplication();
@@ -99,7 +99,7 @@ public:
     } Orientation;
 
     /**
-    @brief	Callback by CCDirector for change device orientation.
+    @brief    Callback by CCDirector for change device orientation.
     @orientation    The defination of orientation which CCDirector want change to.
     @return         The actual orientation of the application.
     */
@@ -110,16 +110,16 @@ public:
     virtual bool OnAppTerminating(Osp::App::AppRegistry& appRegistry, bool forcedTermination = false);
     virtual void OnForeground(void);
     virtual void OnBackground(void);
-	virtual void OnKeyPressed(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
-	virtual void OnKeyReleased(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
-	virtual void OnKeyLongPressed(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
-	virtual void OnLowMemory(void);
-	virtual void OnBatteryLevelChanged(Osp::System::BatteryLevel batteryLevel);
-	virtual void OnTimerExpired(Osp::Base::Runtime::Timer& timer);
+    virtual void OnKeyPressed(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
+    virtual void OnKeyReleased(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
+    virtual void OnKeyLongPressed(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
+    virtual void OnLowMemory(void);
+    virtual void OnBatteryLevelChanged(Osp::System::BatteryLevel batteryLevel);
+    virtual void OnTimerExpired(Osp::Base::Runtime::Timer& timer);
 protected:
-	Osp::Base::Runtime::Timer* m_pTimer;
+    Osp::Base::Runtime::Timer* m_pTimer;
 };
 
-NS_CC_END;
+NS_CC_END
 
-#endif	// end of __CCX_APPLICATION_WIN32_H__
+#endif    // end of __CCX_APPLICATION_WIN32_H__

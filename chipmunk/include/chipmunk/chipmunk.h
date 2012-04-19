@@ -27,26 +27,26 @@ extern "C" {
 #endif
 
 #ifndef CP_ALLOW_PRIVATE_ACCESS
-	#define CP_ALLOW_PRIVATE_ACCESS 0
+    #define CP_ALLOW_PRIVATE_ACCESS 0
 #endif
 
 #if CP_ALLOW_PRIVATE_ACCESS == 1
-	#define CP_PRIVATE(symbol) symbol
+    #define CP_PRIVATE(symbol) symbol
 #else
-	#define CP_PRIVATE(symbol) symbol##_private
+    #define CP_PRIVATE(symbol) symbol##_private
 #endif
 
 void cpMessage(const char *condition, const char *file, int line, int isError, int isHardError, const char *message, ...);
 #ifdef NDEBUG
-	#define	cpAssertWarn(condition, ...)
+    #define    cpAssertWarn(condition, ...)
 #else
-	#define cpAssertWarn(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 0, 0, __VA_ARGS__)
+    #define cpAssertWarn(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 0, 0, __VA_ARGS__)
 #endif
 
 #ifdef NDEBUG
-	#define	cpAssertSoft(condition, ...)
+    #define    cpAssertSoft(condition, ...)
 #else
-	#define cpAssertSoft(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 1, 0, __VA_ARGS__)
+    #define cpAssertSoft(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 1, 0, __VA_ARGS__)
 #endif
 
 // Hard assertions are important and cheap to execute. They are not disabled by compiling as debug.
@@ -54,28 +54,28 @@ void cpMessage(const char *condition, const char *file, int line, int isError, i
 
 
 #include "chipmunk_types.h"
-	
+    
 /// @defgroup misc Misc
 /// @{
 
 /// Allocated size for various Chipmunk buffers
 #ifndef CP_BUFFER_BYTES
-	#define CP_BUFFER_BYTES (32*1024)
+    #define CP_BUFFER_BYTES (32*1024)
 #endif
 
 #ifndef cpcalloc
-	/// Chipmunk calloc() alias.
-	#define cpcalloc calloc
+    /// Chipmunk calloc() alias.
+    #define cpcalloc calloc
 #endif
 
 #ifndef cprealloc
-	/// Chipmunk realloc() alias.
-	#define cprealloc realloc
+    /// Chipmunk realloc() alias.
+    #define cprealloc realloc
 #endif
 
 #ifndef cpfree
-	/// Chipmunk free() alias.
-	#define cpfree free
+    /// Chipmunk free() alias.
+    #define cpfree free
 #endif
 
 typedef struct cpArray cpArray;
@@ -98,7 +98,7 @@ typedef struct cpSpace cpSpace;
 #include "cpShape.h"
 #include "cpPolyShape.h"
 
-#include "cpArbiter.h"	
+#include "cpArbiter.h"    
 #include "constraints/cpConstraint.h"
 
 #include "cpSpace.h"

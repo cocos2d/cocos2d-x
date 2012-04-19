@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCCommon.h"
 #include "CCGeometry.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCSet;
 class CCTouch;
@@ -56,8 +56,8 @@ public:
     
     float getMainScreenScale() { return -1.0f; }
 
-	virtual bool Create(LPCTSTR pTitle, int w, int h);
-	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+    virtual bool Create(LPCTSTR pTitle, int w, int h);
+    virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
     void setViewPortInPoints(float x, float y, float w, float h);
     void setScissorInPoints(float x, float y, float w, float h);
@@ -69,13 +69,13 @@ public:
     void resize(int width, int height);
     void centerWindow();
     void setScreenScale(float factor);
-	typedef void (*LPFN_ACCELEROMETER_KEYHOOK)( UINT message,WPARAM wParam, LPARAM lParam );
-	void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );
+    typedef void (*LPFN_ACCELEROMETER_KEYHOOK)( UINT message,WPARAM wParam, LPARAM lParam );
+    void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );
 
     // static function
 
     /**
-    @brief	get the shared main open gl window
+    @brief    get the shared main open gl window
     */
     static CCEGLView& sharedOpenGLView();
 
@@ -91,14 +91,14 @@ private:
 
     CCEGL *            m_pEGL;
 
-	HWND				m_hWnd;
+    HWND                m_hWnd;
 
     SIZE                m_tSizeInPoints;
     float               m_fScreenScaleFactor;
     RECT                m_rcViewPort;
-	LPFN_ACCELEROMETER_KEYHOOK	m_lpfnAccelerometerKeyHook;
+    LPFN_ACCELEROMETER_KEYHOOK    m_lpfnAccelerometerKeyHook;
 };
 
-NS_CC_END;
+NS_CC_END
 
-#endif	// end of __CC_EGLVIEW_WIN32_H__
+#endif    // end of __CC_EGLVIEW_WIN32_H__

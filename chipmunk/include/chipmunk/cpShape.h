@@ -27,20 +27,20 @@ typedef struct cpShapeClass cpShapeClass;
 
 /// Segment query info struct.
 typedef struct cpSegmentQueryInfo {
-	/// The shape that was hit, NULL if no collision occured.
-	cpShape *shape;
-	/// The normalized distance along the query segment in the range [0, 1].
-	cpFloat t;
-	/// The normal of the surface hit.
-	cpVect n;
+    /// The shape that was hit, NULL if no collision occured.
+    cpShape *shape;
+    /// The normalized distance along the query segment in the range [0, 1].
+    cpFloat t;
+    /// The normal of the surface hit.
+    cpVect n;
 } cpSegmentQueryInfo;
 
 /// @private
 typedef enum cpShapeType{
-	CP_CIRCLE_SHAPE,
-	CP_SEGMENT_SHAPE,
-	CP_POLY_SHAPE,
-	CP_NUM_SHAPES
+    CP_CIRCLE_SHAPE,
+    CP_SEGMENT_SHAPE,
+    CP_POLY_SHAPE,
+    CP_NUM_SHAPES
 } cpShapeType;
 
 typedef cpBB (*cpShapeCacheDataImpl)(cpShape *shape, cpVect p, cpVect rot);
@@ -50,53 +50,53 @@ typedef void (*cpShapeSegmentQueryImpl)(cpShape *shape, cpVect a, cpVect b, cpSe
 
 /// @private
 struct cpShapeClass {
-	cpShapeType type;
-	
-	cpShapeCacheDataImpl cacheData;
-	cpShapeDestroyImpl destroy;
-	cpShapePointQueryImpl pointQuery;
-	cpShapeSegmentQueryImpl segmentQuery;
+    cpShapeType type;
+    
+    cpShapeCacheDataImpl cacheData;
+    cpShapeDestroyImpl destroy;
+    cpShapePointQueryImpl pointQuery;
+    cpShapeSegmentQueryImpl segmentQuery;
 };
 
 /// Opaque collision shape struct.
 struct cpShape {
-	CP_PRIVATE(const cpShapeClass *klass);
-	
-	/// The rigid body this collision shape is attached to.
-	cpBody *body;
+    CP_PRIVATE(const cpShapeClass *klass);
+    
+    /// The rigid body this collision shape is attached to.
+    cpBody *body;
 
-	/// The current bounding box of the shape.
-	cpBB bb;
-	
-	/// Sensor flag.
-	/// Sensor shapes call collision callbacks but don't produce collisions.
-	cpBool sensor;
-	
-	/// Coefficient of restitution. (elasticity)
-	cpFloat e;
-	/// Coefficient of friction.
-	cpFloat u;
-	/// Surface velocity used when solving for friction.
-	cpVect surface_v;
+    /// The current bounding box of the shape.
+    cpBB bb;
+    
+    /// Sensor flag.
+    /// Sensor shapes call collision callbacks but don't produce collisions.
+    cpBool sensor;
+    
+    /// Coefficient of restitution. (elasticity)
+    cpFloat e;
+    /// Coefficient of friction.
+    cpFloat u;
+    /// Surface velocity used when solving for friction.
+    cpVect surface_v;
 
-	/// User definable data pointer.
-	/// Generally this points to your the game object class so you can access it
-	/// when given a cpShape reference in a callback.
-	cpDataPointer data;
-	
-	/// Collision type of this shape used when picking collision handlers.
-	cpCollisionType collision_type;
-	/// Group of this shape. Shapes in the same group don't collide.
-	cpGroup group;
-	// Layer bitmask for this shape. Shapes only collide if the bitwise and of their layers is non-zero.
-	cpLayers layers;
-	
-	CP_PRIVATE(cpSpace *space);
-	
-	CP_PRIVATE(cpShape *next);
-	CP_PRIVATE(cpShape *prev);
-	
-	CP_PRIVATE(cpHashValue hashid);
+    /// User definable data pointer.
+    /// Generally this points to your the game object class so you can access it
+    /// when given a cpShape reference in a callback.
+    cpDataPointer data;
+    
+    /// Collision type of this shape used when picking collision handlers.
+    cpCollisionType collision_type;
+    /// Group of this shape. Shapes in the same group don't collide.
+    cpGroup group;
+    // Layer bitmask for this shape. Shapes only collide if the bitwise and of their layers is non-zero.
+    cpLayers layers;
+    
+    CP_PRIVATE(cpSpace *space);
+    
+    CP_PRIVATE(cpShape *next);
+    CP_PRIVATE(cpShape *prev);
+    
+    CP_PRIVATE(cpHashValue hashid);
 };
 
 /// Destroy a shape.
@@ -117,8 +117,8 @@ static inline type cpShapeGet##name(const cpShape *shape){return shape->member;}
 
 #define CP_DefineShapeStructSetter(type, member, name, activates) \
 static inline void cpShapeSet##name(cpShape *shape, type value){ \
-	if(activates && shape->body) cpBodyActivate(shape->body); \
-	shape->member = value; \
+    if(activates && shape->body) cpBodyActivate(shape->body); \
+    shape->member = value; \
 }
 
 #define CP_DefineShapeStructProperty(type, member, name, activates) \
@@ -149,13 +149,13 @@ cpBool cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInf
 /// Get the hit point for a segment query.
 static inline cpVect cpSegmentQueryHitPoint(const cpVect start, const cpVect end, const cpSegmentQueryInfo info)
 {
-	return cpvlerp(start, end, info.t);
+    return cpvlerp(start, end, info.t);
 }
 
 /// Get the hit distance for a segment query.
 static inline cpFloat cpSegmentQueryHitDist(const cpVect start, const cpVect end, const cpSegmentQueryInfo info)
 {
-	return cpvdist(start, end)*info.t;
+    return cpvdist(start, end)*info.t;
 }
 
 #define CP_DeclareShapeGetter(struct, type, name) type struct##Get##name(const cpShape *shape)
@@ -165,10 +165,10 @@ static inline cpFloat cpSegmentQueryHitDist(const cpVect start, const cpVect end
 
 /// @private
 typedef struct cpCircleShape {
-	cpShape shape;
-	
-	cpVect c, tc;
-	cpFloat r;
+    cpShape shape;
+    
+    cpVect c, tc;
+    cpFloat r;
 } cpCircleShape;
 
 /// Allocate a circle shape.
@@ -186,13 +186,13 @@ CP_DeclareShapeGetter(cpCircleShape, cpFloat, Radius);
 
 /// @private
 typedef struct cpSegmentShape {
-	cpShape shape;
-	
-	cpVect a, b, n;
-	cpVect ta, tb, tn;
-	cpFloat r;
-	
-	cpVect a_tangent, b_tangent;
+    cpShape shape;
+    
+    cpVect a, b, n;
+    cpVect ta, tb, tn;
+    cpFloat r;
+    
+    cpVect a_tangent, b_tangent;
 } cpSegmentShape;
 
 /// Allocate a segment shape.

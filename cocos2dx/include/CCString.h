@@ -32,65 +32,65 @@ NS_CC_BEGIN
 class CC_DLL CCString : public CCObject
 {
 public:
-	CCString();
-	CCString(const char* str);
-	CCString(const std::string& str);
-	CCString(const CCString& str);
+    CCString();
+    CCString(const char* str);
+    CCString(const std::string& str);
+    CCString(const CCString& str);
 
-	virtual ~CCString();
-	
-	/* override assignment operator */
-	CCString& operator= (const CCString& other);
+    virtual ~CCString();
+    
+    /* override assignment operator */
+    CCString& operator= (const CCString& other);
 
-	/** init a string with format, it's similar with the c function 'sprintf' */ 
-	bool initWithFormat(const char* format, ...);
+    /** init a string with format, it's similar with the c function 'sprintf' */ 
+    bool initWithFormat(const char* format, ...);
 
-	/** convert to int value */
-	int intValue() const;
+    /** convert to int value */
+    int intValue() const;
 
-	/** convert to unsigned int value */
-	unsigned int uintValue() const;
+    /** convert to unsigned int value */
+    unsigned int uintValue() const;
 
-	/** convert to float value */
-	float floatValue() const;
+    /** convert to float value */
+    float floatValue() const;
 
-	/** convert to double value */
-	double doubleValue() const;
+    /** convert to double value */
+    double doubleValue() const;
 
-	/** convert to bool value */
+    /** convert to bool value */
     bool boolValue() const;
 
-	/** get the C string */
-	const char* getCString() const;
+    /** get the C string */
+    const char* getCString() const;
 
-	/** get the length of string */
-	unsigned int length() const;
+    /** get the length of string */
+    unsigned int length() const;
 
-	/* override functions */
+    /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual bool isEqual(const CCObject* pObject);
 
-	/* static funcitons */
-	/** create a string with c string 
+    /* static funcitons */
+    /** create a string with c string 
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-	static CCString* stringWithCString(const char* pStr);
+    static CCString* stringWithCString(const char* pStr);
 
-	/** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
+    /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
      *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */ 
-	static CCString* stringWithFormat(const char* format, ...);
+    static CCString* stringWithFormat(const char* format, ...);
 
-	/** create a string with binary data 
+    /** create a string with binary data 
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-	static CCString* stringWithData(unsigned char* pData, unsigned long nLen);
+    static CCString* stringWithData(unsigned char* pData, unsigned long nLen);
 
-	/** create a string with a file, 
+    /** create a string with a file, 
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
@@ -98,11 +98,11 @@ public:
 
 private:
 
-	/** only for internal use */
-	bool initWithFormatAndValist(const char* format, va_list ap);
+    /** only for internal use */
+    bool initWithFormatAndValist(const char* format, va_list ap);
 
 public:
-	std::string m_sString;
+    std::string m_sString;
 };
 
 #define CCStringMake(str) CCString::stringWithCString(str)

@@ -33,70 +33,70 @@ typedef void (*cpBodyPositionFunc)(cpBody *body, cpFloat dt);
 /// Used internally to track information on the collision graph.
 /// @private
 typedef struct cpComponentNode {
-	cpBody *root;
-	cpBody *next;
-	cpFloat idleTime;
+    cpBody *root;
+    cpBody *next;
+    cpFloat idleTime;
 } cpComponentNode;
 
 /// Chipmunk's rigid body struct.
 struct cpBody {
-	/// Function that is called to integrate the body's velocity. (Defaults to cpBodyUpdateVelocity)
-	cpBodyVelocityFunc velocity_func;
-	
-	/// Function that is called to integrate the body's position. (Defaults to cpBodyUpdatePosition)
-	cpBodyPositionFunc position_func;
-	
-	/// Mass of the body.
-	/// Must agree with cpBody.m_inv! Use cpBodySetMass() when changing the mass for this reason.
-	cpFloat m;
-	/// Mass inverse.
-	cpFloat m_inv;
-	
-	/// Moment of inertia of the body.
-	/// Must agree with cpBody.i_inv! Use cpBodySetMoment() when changing the moment for this reason.
-	cpFloat i;
-	/// Moment of inertia inverse.
-	cpFloat i_inv;
-	
-	/// Position of the rigid body's center of gravity.
-	cpVect p;
-	/// Velocity of the rigid body's center of gravity.
-	cpVect v;
-	/// Force acting on the rigid body's center of gravity.
-	cpVect f;
-	
-	/// Rotation of the body around it's center of gravity in radians.
-	/// Must agree with cpBody.rot! Use cpBodySetAngle() when changing the angle for this reason.
-	cpFloat a;
-	/// Angular velocity of the body around it's center of gravity in radians/second.
-	cpFloat w;
-	/// Torque applied to the body around it's center of gravity.
-	cpFloat t;
-	
-	/// Cached unit length vector representing the angle of the body.
-	/// Used for fast rotations using cpvrotate().
-	cpVect rot;
-	
-	/// User definable data pointer.
-	/// Generally this points to your the game object class so you can access it
-	/// when given a cpBody reference in a callback.
-	cpDataPointer data;
-	
-	/// Maximum velocity allowed when updating the velocity.
-	cpFloat v_limit;
-	/// Maximum rotational rate (in radians/second) allowed when updating the angular velocity.
-	cpFloat w_limit;
-	
-	CP_PRIVATE(cpVect v_bias);
-	CP_PRIVATE(cpFloat w_bias);
-	
-	CP_PRIVATE(cpSpace *space);
-	
-	CP_PRIVATE(cpShape *shapeList);
-	CP_PRIVATE(cpArbiter *arbiterList);
-	CP_PRIVATE(cpConstraint *constraintList);
-	
-	CP_PRIVATE(cpComponentNode node);
+    /// Function that is called to integrate the body's velocity. (Defaults to cpBodyUpdateVelocity)
+    cpBodyVelocityFunc velocity_func;
+    
+    /// Function that is called to integrate the body's position. (Defaults to cpBodyUpdatePosition)
+    cpBodyPositionFunc position_func;
+    
+    /// Mass of the body.
+    /// Must agree with cpBody.m_inv! Use cpBodySetMass() when changing the mass for this reason.
+    cpFloat m;
+    /// Mass inverse.
+    cpFloat m_inv;
+    
+    /// Moment of inertia of the body.
+    /// Must agree with cpBody.i_inv! Use cpBodySetMoment() when changing the moment for this reason.
+    cpFloat i;
+    /// Moment of inertia inverse.
+    cpFloat i_inv;
+    
+    /// Position of the rigid body's center of gravity.
+    cpVect p;
+    /// Velocity of the rigid body's center of gravity.
+    cpVect v;
+    /// Force acting on the rigid body's center of gravity.
+    cpVect f;
+    
+    /// Rotation of the body around it's center of gravity in radians.
+    /// Must agree with cpBody.rot! Use cpBodySetAngle() when changing the angle for this reason.
+    cpFloat a;
+    /// Angular velocity of the body around it's center of gravity in radians/second.
+    cpFloat w;
+    /// Torque applied to the body around it's center of gravity.
+    cpFloat t;
+    
+    /// Cached unit length vector representing the angle of the body.
+    /// Used for fast rotations using cpvrotate().
+    cpVect rot;
+    
+    /// User definable data pointer.
+    /// Generally this points to your the game object class so you can access it
+    /// when given a cpBody reference in a callback.
+    cpDataPointer data;
+    
+    /// Maximum velocity allowed when updating the velocity.
+    cpFloat v_limit;
+    /// Maximum rotational rate (in radians/second) allowed when updating the angular velocity.
+    cpFloat w_limit;
+    
+    CP_PRIVATE(cpVect v_bias);
+    CP_PRIVATE(cpFloat w_bias);
+    
+    CP_PRIVATE(cpSpace *space);
+    
+    CP_PRIVATE(cpShape *shapeList);
+    CP_PRIVATE(cpArbiter *arbiterList);
+    CP_PRIVATE(cpConstraint *constraintList);
+    
+    CP_PRIVATE(cpComponentNode node);
 };
 
 /// Allocate a cpBody.
@@ -118,10 +118,10 @@ void cpBodyFree(cpBody *body);
 
 /// Check that the properties of a body is sane. (Only in debug mode)
 #ifdef NDEBUG
-	#define	cpBodyAssertSane(body)
+    #define    cpBodyAssertSane(body)
 #else
-	void cpBodySanityCheck(cpBody *body);
-	#define	cpBodyAssertSane(body) cpBodySanityCheck(body)
+    void cpBodySanityCheck(cpBody *body);
+    #define    cpBodyAssertSane(body) cpBodySanityCheck(body)
 #endif
 
 // Defined in cpSpace.c
@@ -138,19 +138,19 @@ void cpBodySleepWithGroup(cpBody *body, cpBody *group);
 /// Returns true if the body is sleeping.
 static inline cpBool cpBodyIsSleeping(const cpBody *body)
 {
-	return (CP_PRIVATE(body->node).root != ((cpBody*)0));
+    return (CP_PRIVATE(body->node).root != ((cpBody*)0));
 }
 
 /// Returns true if the body is static.
 static inline cpBool cpBodyIsStatic(const cpBody *body)
 {
-	return CP_PRIVATE(body->node).idleTime == INFINITY;
+    return CP_PRIVATE(body->node).idleTime == INFINITY;
 }
 
 /// Returns true if the body has not been added to a space.
 static inline cpBool cpBodyIsRogue(const cpBody *body)
 {
-	return (body->CP_PRIVATE(space) == ((cpSpace*)0));
+    return (body->CP_PRIVATE(space) == ((cpSpace*)0));
 }
 
 
@@ -159,9 +159,9 @@ static inline type cpBodyGet##name(const cpBody *body){return body->member;}
 
 #define CP_DefineBodyStructSetter(type, member, name) \
 static inline void cpBodySet##name(cpBody *body, const type value){ \
-	cpBodyActivate(body); \
-	cpBodyAssertSane(body); \
-	body->member = value; \
+    cpBodyActivate(body); \
+    cpBodyAssertSane(body); \
+    body->member = value; \
 }
 
 #define CP_DefineBodyStructProperty(type, member, name) \
@@ -198,13 +198,13 @@ void cpBodyUpdatePosition(cpBody *body, cpFloat dt);
 /// Convert body relative/local coordinates to absolute/world coordinates.
 static inline cpVect cpBodyLocal2World(const cpBody *body, const cpVect v)
 {
-	return cpvadd(body->p, cpvrotate(v, body->rot));
+    return cpvadd(body->p, cpvrotate(v, body->rot));
 }
 
 /// Convert body absolute/world coordinates to  relative/local coordinates.
 static inline cpVect cpBodyWorld2Local(const cpBody *body, const cpVect v)
 {
-	return cpvunrotate(cpvsub(v, body->p), body->rot);
+    return cpvunrotate(cpvsub(v, body->p), body->rot);
 }
 
 /// Set the forces and torque or a body to zero.
@@ -223,10 +223,10 @@ cpVect cpBodyGetVelAtLocalPoint(cpBody *body, cpVect point);
 /// Get the kinetic energy of a body.
 static inline cpFloat cpBodyKineticEnergy(const cpBody *body)
 {
-	// Need to do some fudging to avoid NaNs
-	cpFloat vsq = cpvdot(body->v, body->v);
-	cpFloat wsq = body->w*body->w;
-	return (vsq ? vsq*body->m : 0.0f) + (wsq ? wsq*body->i : 0.0f);
+    // Need to do some fudging to avoid NaNs
+    cpFloat vsq = cpvdot(body->v, body->v);
+    cpFloat wsq = body->w*body->w;
+    return (vsq ? vsq*body->m : 0.0f) + (wsq ? wsq*body->i : 0.0f);
 }
 
 /// Body/shape iterator callback function type. 

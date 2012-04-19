@@ -43,9 +43,9 @@ THE SOFTWARE.
 /** @def CC_SWAP
 simple macro that swaps 2 variables
 */
-#define CC_SWAP(x, y, type)	\
-{	type temp = (x);		\
-	x = y; y = temp;		\
+#define CC_SWAP(x, y, type)    \
+{    type temp = (x);        \
+    x = y; y = temp;        \
 }
 
 
@@ -84,12 +84,12 @@ default gl blend src function. Compatible with premultiplied alpha images.
  */
 #define CC_NODE_DRAW_SETUP() \
 do { \
-	ccGLEnable( m_glServerState ); \
-	if (getShaderProgram() != NULL) \
-	{ \
-		getShaderProgram()->use(); \
-		getShaderProgram()->setUniformForModelViewProjectionMatrix(); \
-	} \
+    ccGLEnable( m_glServerState ); \
+    if (getShaderProgram() != NULL) \
+    { \
+        getShaderProgram()->use(); \
+        getShaderProgram()->setUniformForModelViewProjectionMatrix(); \
+    } \
 } while(0)
 
 
@@ -99,10 +99,10 @@ do { \
 
   @since v0.99.4
   */
-#define CC_DIRECTOR_END()										\
-do {															\
-	CCDirector *__director = CCDirector::sharedDirector();		\
-	__director->end();											\
+#define CC_DIRECTOR_END()                                        \
+do {                                                            \
+    CCDirector *__director = CCDirector::sharedDirector();        \
+    __director->end();                                            \
 } while(0)
 
 /** @def CC_CONTENT_SCALE_FACTOR
@@ -118,39 +118,39 @@ On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
 /** @def CC_RECT_PIXELS_TO_POINTS
  Converts a rect in pixels to points
  */
-#define CC_RECT_PIXELS_TO_POINTS(__rect_in_pixels__)																		\
-	CCRectMake( (__rect_in_pixels__).origin.x / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).origin.y / CC_CONTENT_SCALE_FACTOR(),	\
-			(__rect_in_pixels__).size.width / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).size.height / CC_CONTENT_SCALE_FACTOR() )
+#define CC_RECT_PIXELS_TO_POINTS(__rect_in_pixels__)                                                                        \
+    CCRectMake( (__rect_in_pixels__).origin.x / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).origin.y / CC_CONTENT_SCALE_FACTOR(),    \
+            (__rect_in_pixels__).size.width / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).size.height / CC_CONTENT_SCALE_FACTOR() )
 
 /** @def CC_RECT_POINTS_TO_PIXELS
  Converts a rect in points to pixels
  */
-#define CC_RECT_POINTS_TO_PIXELS(__rect_in_points_points__)																		\
-	CCRectMake( (__rect_in_points_points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).origin.y * CC_CONTENT_SCALE_FACTOR(),	\
-			(__rect_in_points_points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).size.height * CC_CONTENT_SCALE_FACTOR() )
+#define CC_RECT_POINTS_TO_PIXELS(__rect_in_points_points__)                                                                        \
+    CCRectMake( (__rect_in_points_points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).origin.y * CC_CONTENT_SCALE_FACTOR(),    \
+            (__rect_in_points_points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).size.height * CC_CONTENT_SCALE_FACTOR() )
 
 /** @def CC_POINT_PIXELS_TO_POINTS
  Converts a rect in pixels to points
  */
-#define CC_POINT_PIXELS_TO_POINTS(__pixels__)																		\
+#define CC_POINT_PIXELS_TO_POINTS(__pixels__)                                                                        \
 CCPointMake( (__pixels__).x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).y / CC_CONTENT_SCALE_FACTOR())
 
 /** @def CC_POINT_POINTS_TO_PIXELS
  Converts a rect in points to pixels
  */
-#define CC_POINT_POINTS_TO_PIXELS(__points__)																		\
+#define CC_POINT_POINTS_TO_PIXELS(__points__)                                                                        \
 CCPointMake( (__points__).x * CC_CONTENT_SCALE_FACTOR(), (__points__).y * CC_CONTENT_SCALE_FACTOR())
 
 /** @def CC_POINT_PIXELS_TO_POINTS
  Converts a rect in pixels to points
  */
-#define CC_SIZE_PIXELS_TO_POINTS(__size_in_pixels__)																		\
+#define CC_SIZE_PIXELS_TO_POINTS(__size_in_pixels__)                                                                        \
 CCSizeMake( (__size_in_pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__size_in_pixels__).height / CC_CONTENT_SCALE_FACTOR())
 
 /** @def CC_POINT_POINTS_TO_PIXELS
  Converts a rect in points to pixels
  */
-#define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)																		\
+#define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)                                                                        \
 CCSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_points__).height * CC_CONTENT_SCALE_FACTOR())
 
 
@@ -159,8 +159,8 @@ CCSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_p
 #endif // FLT_EPSILON
 
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
-	        TypeName(const TypeName&);\
-			void operator=(const TypeName&)
+            TypeName(const TypeName&);\
+            void operator=(const TypeName&)
 
 /**
 Helper marcos which converts 4-byte little/big endian 
@@ -222,12 +222,12 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #define CHECK_GL_ERROR_DEBUG()
 #else
 #define CHECK_GL_ERROR_DEBUG() \
-	do { \
-		GLenum __error = glGetError(); \
-		if(__error) { \
-			CCLog("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); \
-		} \
-	} while (false)
+    do { \
+        GLenum __error = glGetError(); \
+        if(__error) { \
+            CCLog("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); \
+        } \
+    } while (false)
 #endif
 
 /** @def CC_INCREMENT_GL_DRAWS_BY_ONE
