@@ -13,14 +13,14 @@ typedef unsigned int CCControlEvent;
 
 class CC_DLL CCInvocation : public CCObject
 {
-	CC_SYNTHESIZE_READONLY(SEL_MenuHandler, m_action, Action);
-	CC_SYNTHESIZE_READONLY(CCObject*, m_target, Target);
-	CC_SYNTHESIZE_READONLY(CCControlEvent, m_controlEvent, ControlEvent);
-	
+    CC_SYNTHESIZE_READONLY(SEL_MenuHandler, m_action, Action);
+    CC_SYNTHESIZE_READONLY(CCObject*, m_target, Target);
+    CC_SYNTHESIZE_READONLY(CCControlEvent, m_controlEvent, ControlEvent);
+    
 public:
-	CCInvocation(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
+    CCInvocation(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
 
-	void invoke(CCObject* sender);
+    void invoke(CCObject* sender);
 };
 
 NS_CC_END

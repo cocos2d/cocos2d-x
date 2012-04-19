@@ -43,13 +43,13 @@ bool AppDelegate::initInstance()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)        
         // OpenGLView is initialized in HelloWorld/android/jni/helloworld/main.cpp
-		// the default setting is to create a fullscreen view
-		// if you want to use auto-scale, please enable view->create(320,480) in main.cpp
+        // the default setting is to create a fullscreen view
+        // if you want to use auto-scale, please enable view->create(320,480) in main.cpp
 #endif  // CC_PLATFORM_ANDROID
       
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-		// MaxAksenov said it's NOT a very elegant solution. I agree, haha
-		CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+        // MaxAksenov said it's NOT a very elegant solution. I agree, haha
+        CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 #endif
         
         bRet = true;
@@ -59,29 +59,29 @@ bool AppDelegate::initInstance()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-	// initialize director
-	CCDirector *pDirector = CCDirector::sharedDirector();
+    // initialize director
+    CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
 
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
     // pDirector->enableRetinaDisplay(true);
 
-	// sets landscape mode
-	// pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    // sets landscape mode
+    // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
-	// turn on display FPS
-	pDirector->setDisplayFPS(true);
+    // turn on display FPS
+    pDirector->setDisplayFPS(true);
 
-	// set FPS. the default value is 1.0/60 if you don't call this
-	pDirector->setAnimationInterval(1.0 / 60);
+    // set FPS. the default value is 1.0/60 if you don't call this
+    pDirector->setAnimationInterval(1.0 / 60);
 
-	// create a scene. it's an autorelease object
-	CCScene *pScene = HelloWorld::scene();
+    // create a scene. it's an autorelease object
+    CCScene *pScene = HelloWorld::scene();
 
-	// run
-	pDirector->runWithScene(pScene);
+    // run
+    pDirector->runWithScene(pScene);
 
-	return true;
+    return true;
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
@@ -89,15 +89,15 @@ void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->pause();
 
-	// if you use SimpleAudioEngine, it must be pause
-	// SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    // if you use SimpleAudioEngine, it must be pause
+    // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
-	
-	// if you use SimpleAudioEngine, it must resume here
-	// SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    
+    // if you use SimpleAudioEngine, it must resume here
+    // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

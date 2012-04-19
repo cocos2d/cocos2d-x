@@ -41,34 +41,34 @@ public:
      */
     virtual void setColor(const ccColor3B& color) = 0;
 
-	/** returns the color
-	 @since v0.8
-	 */
-	virtual const ccColor3B& getColor(void) = 0;
+    /** returns the color
+     @since v0.8
+     */
+    virtual const ccColor3B& getColor(void) = 0;
 
     // returns the opacity
     virtual GLubyte getOpacity(void) = 0;
 
-	/** sets the opacity.
-	 @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
-	 Values goes from 0 to 255, where 255 means fully opaque.
-	 */
-	virtual void setOpacity(GLubyte opacity) = 0;
+    /** sets the opacity.
+     @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
+     Values goes from 0 to 255, where 255 means fully opaque.
+     */
+    virtual void setOpacity(GLubyte opacity) = 0;
 
-	// optional
+    // optional
 
-	/** sets the premultipliedAlphaOpacity property.
-	 If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
-	 If set to YES then oapcity will be applied as: glColor(opacity, opacity, opacity, opacity );
-	 Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
-	 @since v0.8
-	 */
-	virtual void setIsOpacityModifyRGB(bool bValue) = 0;
+    /** sets the premultipliedAlphaOpacity property.
+     If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
+     If set to YES then oapcity will be applied as: glColor(opacity, opacity, opacity, opacity );
+     Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
+     @since v0.8
+     */
+    virtual void setIsOpacityModifyRGB(bool bValue) = 0;
 
-	/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
-	 @since v0.8
-	 */
-	virtual bool getIsOpacityModifyRGB(void) = 0;
+    /** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
+     @since v0.8
+     */
+    virtual bool getIsOpacityModifyRGB(void) = 0;
 };
 
 /**
@@ -78,11 +78,11 @@ public:
 class CC_DLL CCBlendProtocol
 {
 public:
-	// set the source blending function for the texture
-	virtual void setBlendFunc(ccBlendFunc blendFunc) = 0;
+    // set the source blending function for the texture
+    virtual void setBlendFunc(ccBlendFunc blendFunc) = 0;
 
-	// returns the blending function used for the texture
-	virtual ccBlendFunc getBlendFunc(void) = 0;
+    // returns the blending function used for the texture
+    virtual ccBlendFunc getBlendFunc(void) = 0;
 };
 
 /** @brief CCNode objects that uses a Texture2D to render the images.
@@ -90,17 +90,17 @@ public:
  If the texture has alpha premultiplied the default blending function is:
     src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
  else
-	src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
+    src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
  But you can change the blending funtion at any time.
  @since v0.8.0
  */
 class CC_DLL CCTextureProtocol : public CCBlendProtocol
 {
 public:
-	// returns the used texture
-	virtual CCTexture2D* getTexture(void) = 0;
+    // returns the used texture
+    virtual CCTexture2D* getTexture(void) = 0;
 
-	// sets a new texture. it will be retained
+    // sets a new texture. it will be retained
     virtual void setTexture(CCTexture2D *texture) = 0;
 };
 
@@ -108,21 +108,21 @@ public:
 class CC_DLL CCLabelProtocol
 {
 public:
-	// sets a new label using an string
-	virtual void setString(const char *label) = 0;
+    // sets a new label using an string
+    virtual void setString(const char *label) = 0;
 
-	/** returns the string that is rendered */
-	virtual const char* getString(void) = 0;
+    /** returns the string that is rendered */
+    virtual const char* getString(void) = 0;
 };
 
 /** OpenGL projection protocol */
 class CC_DLL CCDirectorDelegate
 {
 public:
-	/** Called by CCDirector when the porjection is updated, and "custom" projection is used
-	@since v0.99.5
-	*/
-	virtual void updateProjection(void) = 0;
+    /** Called by CCDirector when the porjection is updated, and "custom" projection is used
+    @since v0.99.5
+    */
+    virtual void updateProjection(void) = 0;
 };
 
 NS_CC_END

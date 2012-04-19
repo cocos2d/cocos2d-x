@@ -3,7 +3,7 @@
 #include "CCDirector.h"
 
 /**
-@brief	This function change the PVRFrame show/hide setting in register.
+@brief    This function change the PVRFrame show/hide setting in register.
 @param  bEnable If true show the PVRFrame window, otherwise hide.
 */
 static void PVRFrameEnableControlWindow(bool bEnable);
@@ -17,7 +17,7 @@ CCApplication::CCApplication()
 : m_hInstance(NULL)
 , m_hAccelTable(NULL)
 {
-    m_hInstance	= GetModuleHandle(NULL);
+    m_hInstance    = GetModuleHandle(NULL);
     m_nAnimationInterval.QuadPart = 0;
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
@@ -118,30 +118,30 @@ ccLanguageType CCApplication::getCurrentLanguage()
 {
     ccLanguageType ret = kLanguageEnglish;
 
-	LCID localeID = GetUserDefaultLCID();
-	unsigned short primaryLanguageID = localeID & 0xFF;
-	
-	switch (primaryLanguageID)
-	{
-		case LANG_CHINESE:
-			ret = kLanguageChinese;
-			break;
-		case LANG_FRENCH:
-			ret = kLanguageFrench;
-			break;
-		case LANG_ITALIAN:
-			ret = kLanguageItalian;
-			break;
-		case LANG_GERMAN:
-			ret = kLanguageGerman;
-			break;
-		case LANG_SPANISH:
-			ret = kLanguageSpanish;
-			break;
-		case LANG_RUSSIAN:
-			ret = kLanguageRussian;
-			break;
-	}
+    LCID localeID = GetUserDefaultLCID();
+    unsigned short primaryLanguageID = localeID & 0xFF;
+    
+    switch (primaryLanguageID)
+    {
+        case LANG_CHINESE:
+            ret = kLanguageChinese;
+            break;
+        case LANG_FRENCH:
+            ret = kLanguageFrench;
+            break;
+        case LANG_ITALIAN:
+            ret = kLanguageItalian;
+            break;
+        case LANG_GERMAN:
+            ret = kLanguageGerman;
+            break;
+        case LANG_SPANISH:
+            ret = kLanguageSpanish;
+            break;
+        case LANG_RUSSIAN:
+            ret = kLanguageRussian;
+            break;
+    }
 
     return ret;
 }

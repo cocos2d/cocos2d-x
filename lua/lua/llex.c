@@ -30,7 +30,7 @@
 
 
 
-#define currIsNewline(ls)	(ls->current == '\n' || ls->current == '\r')
+#define currIsNewline(ls)    (ls->current == '\n' || ls->current == '\r')
 
 
 /* ORDER RESERVED */

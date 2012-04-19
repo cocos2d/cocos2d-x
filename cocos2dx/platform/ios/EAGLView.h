@@ -79,19 +79,19 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface EAGLView : UIView <UIKeyInput, UITextInput>
 {
-    id						<CCESRenderer> renderer_;	
-	EAGLContext				*context_; // weak ref
+    id                        <CCESRenderer> renderer_;    
+    EAGLContext                *context_; // weak ref
 
-	NSString				*pixelformat_;
-	GLuint					depthFormat_;
-	BOOL					preserveBackbuffer_;
+    NSString                *pixelformat_;
+    GLuint                    depthFormat_;
+    BOOL                    preserveBackbuffer_;
 
-	CGSize					size_;
-	BOOL					discardFramebufferSupported_;
+    CGSize                    size_;
+    BOOL                    discardFramebufferSupported_;
 
-	//fsaa addition
-	BOOL					multisampling_;
-	unsigned int               requestedSamples_;
+    //fsaa addition
+    BOOL                    multisampling_;
+    unsigned int               requestedSamples_;
 @private
     CFMutableDictionaryRef  touchesIntergerDict;
     unsigned int               indexBitsUsed;

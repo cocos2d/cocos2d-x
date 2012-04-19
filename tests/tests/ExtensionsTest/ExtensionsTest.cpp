@@ -13,7 +13,7 @@ enum
 static const std::string testsName[MAX_COUNT] = 
 {
     "NotificationCenterTest",
-	"CCControlButtonTest"
+    "CCControlButtonTest"
 };
 
 ////////////////////////////////////////////////////////
@@ -52,13 +52,13 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
     case 0:
         runNotificationCenterTest();
         break;
-	case 1:
-		{
-			CCControlSceneManager* pManager = CCControlSceneManager::sharedControlSceneManager();
-			CCScene* pScene = pManager->currentControlScene();
-			CCDirector::sharedDirector()->replaceScene(pScene);
-		}
-		break;
+    case 1:
+        {
+            CCControlSceneManager* pManager = CCControlSceneManager::sharedControlSceneManager();
+            CCScene* pScene = pManager->currentControlScene();
+            CCDirector::sharedDirector()->replaceScene(pScene);
+        }
+        break;
     default:
         break;
     }

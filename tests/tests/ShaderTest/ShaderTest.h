@@ -7,17 +7,17 @@
 class ShaderTestDemo : public CCLayer
 {
 public:
-	ShaderTestDemo(void);
+    ShaderTestDemo(void);
 
-	virtual std::string title();
-	virtual std::string subtitle();
-	virtual bool init();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual bool init();
 
-	void restartCallback(CCObject* pSender);
-	void nextCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 
-	LAYER_NODE_FUNC(ShaderTestDemo);
+    LAYER_NODE_FUNC(ShaderTestDemo);
 };
 
 class ShaderMonjori : public ShaderTestDemo
@@ -25,59 +25,59 @@ class ShaderMonjori : public ShaderTestDemo
 public:
     ShaderMonjori();
 
-	virtual std::string title();
-	virtual std::string subtitle();
-	virtual bool init();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual bool init();
 };
 
 class ShaderMandelbrot : public ShaderTestDemo
 {
 public:
-	ShaderMandelbrot();
+    ShaderMandelbrot();
 
-	virtual std::string title();
-	virtual std::string subtitle();
-	virtual bool init();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual bool init();
 };
 
 class ShaderJulia : public ShaderTestDemo
 {
 public:
-	ShaderJulia();
+    ShaderJulia();
 
     virtual std::string title();
-	virtual std::string subtitle();
-	virtual bool init();
+    virtual std::string subtitle();
+    virtual bool init();
 };
 
 class ShaderHeart : public ShaderTestDemo
 {
 public:
-	ShaderHeart();
+    ShaderHeart();
 
     virtual std::string title();
-	virtual std::string subtitle();
-	virtual bool init();
+    virtual std::string subtitle();
+    virtual bool init();
 };
 
 class ShaderFlower : public ShaderTestDemo
 {
 public:
-	ShaderFlower();
+    ShaderFlower();
 
     virtual std::string title();
-	virtual std::string subtitle();
-	virtual bool init();
+    virtual std::string subtitle();
+    virtual bool init();
 };
 
 class ShaderPlasma : public ShaderTestDemo
 {
 public:
-	ShaderPlasma();
+    ShaderPlasma();
 
     virtual std::string title();
-	virtual std::string subtitle();
-	virtual bool init();
+    virtual std::string subtitle();
+    virtual bool init();
 };
 
 class SpriteBlur;
@@ -105,7 +105,7 @@ public:
     void update(ccTime dt);
 protected:
     CCLabelBMFont* m_pLabel;
-    ccTime		   m_fAccum;
+    ccTime           m_fAccum;
 };
 
 class ShaderNode : public CCNode
@@ -113,21 +113,21 @@ class ShaderNode : public CCNode
 public:
     ShaderNode();
 
-	bool initWithVertex(const char *vert, const char *frag);
-	void loadShaderVertex(const char *vert, const char *frag);
+    bool initWithVertex(const char *vert, const char *frag);
+    void loadShaderVertex(const char *vert, const char *frag);
 
-	virtual void update(ccTime dt);
-	virtual void setPosition(const CCPoint &newPosition);
-	virtual void draw();
+    virtual void update(ccTime dt);
+    virtual void setPosition(const CCPoint &newPosition);
+    virtual void draw();
 
-	static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
+    static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
 
 private:
 
-	ccVertex2F m_center;
-	ccVertex2F m_resolution;
-	float      m_time;
-	GLuint     m_uniformCenter, m_uniformResolution, m_uniformTime;
+    ccVertex2F m_center;
+    ccVertex2F m_resolution;
+    float      m_time;
+    GLuint     m_uniformCenter, m_uniformResolution, m_uniformTime;
 };
 
 class ShaderTestScene : public TestScene

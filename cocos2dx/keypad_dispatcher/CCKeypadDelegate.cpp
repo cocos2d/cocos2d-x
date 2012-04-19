@@ -39,22 +39,22 @@ CCKeypadDelegate* CCKeypadHandler::getDelegate()
 
 CCKeypadHandler::~CCKeypadHandler()
 {
-	if (m_pDelegate)
-	{
-		dynamic_cast<CCObject*>(m_pDelegate)->release();
-	}  
+    if (m_pDelegate)
+    {
+        dynamic_cast<CCObject*>(m_pDelegate)->release();
+    }  
 }
 
 void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)
 {
     if (pDelegate)
     {
-		dynamic_cast<CCObject*>(pDelegate)->retain();
+        dynamic_cast<CCObject*>(pDelegate)->retain();
     }
 
     if (m_pDelegate)
     {
-		dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<CCObject*>(m_pDelegate)->release();
     }
     m_pDelegate = pDelegate;
 }

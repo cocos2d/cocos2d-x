@@ -7,11 +7,11 @@
 class UserDefaultTest : public CCLayer
 {
 public:
-	UserDefaultTest();
-	~UserDefaultTest();
+    UserDefaultTest();
+    ~UserDefaultTest();
 
 private:
-	void doTest();
+    void doTest();
 };
 
 class UserDefaultTestScene : public TestScene

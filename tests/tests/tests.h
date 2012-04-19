@@ -45,11 +45,11 @@
 #include "ShaderTest/ShaderTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-	#include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
+    #include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
 #else
 #ifdef MARMALADEUSECHIPMUNK
-#if	(MARMALADEUSECHIPMUNK == 1)
-	#include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
+#if    (MARMALADEUSECHIPMUNK == 1)
+    #include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
 #endif
 #endif
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
@@ -90,19 +90,19 @@ enum
     TEST_HIRES,
     TEST_ACCELEROMRTER,
     TEST_KEYPAD,
-	TEST_COCOSDENSHION,
+    TEST_COCOSDENSHION,
     TEST_PERFORMANCE,
     TEST_ZWOPTEX,
-	TEST_CURL,
-	TEST_USERDEFAULT,
+    TEST_CURL,
+    TEST_USERDEFAULT,
     TEST_DIRECTOR,
     TEST_BUGS,
-	TEST_FONTS,
-	TEST_CURRENT_LANGUAGE,
-	TEST_TEXTURECACHE,
+    TEST_FONTS,
+    TEST_CURRENT_LANGUAGE,
+    TEST_TEXTURECACHE,
     TEST_EXTENSIONS,
-	TEST_SHADER,
-    TESTS_COUNT,	
+    TEST_SHADER,
+    TESTS_COUNT,    
 };
 
 const std::string g_aTestNames[TESTS_COUNT] = {
@@ -138,18 +138,18 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "HiResTest",
     "Accelerometer",
     "KeypadTest",
-	"CocosDenshionTest",
+    "CocosDenshionTest",
     "PerformanceTest",
     "ZwoptexTest",
-	"CurlTest",
-	"UserDefaultTest",
+    "CurlTest",
+    "UserDefaultTest",
     "DirectorTest",
     "BugsTest",
-	"FontTest",
-	"CurrentLanguageTest",
-	"TextureCacheTest",
+    "FontTest",
+    "CurrentLanguageTest",
+    "TextureCacheTest",
     "ExtensionsTest",
-	"ShaderTest"
+    "ShaderTest"
 };
 
 #endif

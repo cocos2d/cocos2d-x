@@ -33,17 +33,17 @@ NS_CC_BEGIN
 class CC_DLL CCData : public CCObject
 {
 public:
-	CCData(void);
-	~CCData(void);
-	
-	void* bytes(void);
+    CCData(void);
+    ~CCData(void);
+    
+    void* bytes(void);
 
 public:
-	static CCData* dataWithBytes(unsigned char *pBytes, int size);
-	static CCData* dataWithContentsOfFile(const std::string &strPath);
+    static CCData* dataWithBytes(unsigned char *pBytes, int size);
+    static CCData* dataWithContentsOfFile(const std::string &strPath);
 
 private:
-	char *m_pData;
+    char *m_pData;
 };
 
 NS_CC_END

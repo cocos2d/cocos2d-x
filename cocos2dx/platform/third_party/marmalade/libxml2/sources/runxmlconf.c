@@ -52,9 +52,9 @@ const char *skipped_tests[] = {
 };
 
 /************************************************************************
- *									*
- *		File name and path utilities				*
- *									*
+ *                                    *
+ *        File name and path utilities                *
+ *                                    *
  ************************************************************************/
 
 static int checkTestFile(const char *filename) {
@@ -85,9 +85,9 @@ static xmlChar *composeDir(const xmlChar *dir, const xmlChar *path) {
 }
 
 /************************************************************************
- *									*
- *		Libxml2 specific routines				*
- *									*
+ *                                    *
+ *        Libxml2 specific routines                *
+ *                                    *
  ************************************************************************/
 
 static int nb_skipped = 0;
@@ -101,7 +101,7 @@ static int nb_leaks = 0;
  */
 static xmlParserInputPtr
 testExternalEntityLoader(const char *URL, const char *ID ATTRIBUTE_UNUSED,
-			 xmlParserCtxtPtr ctxt) {
+             xmlParserCtxtPtr ctxt) {
     xmlParserInputPtr ret;
 
     ret = xmlNewInputFromFile(ctxt, (const char *) URL);
@@ -122,16 +122,16 @@ static void test_log(const char *msg, ...) {
     va_list args;
     if (logfile != NULL) {
         fprintf(logfile, "\n------------\n");
-	va_start(args, msg);
-	vfprintf(logfile, msg, args);
-	va_end(args);
-	fprintf(logfile, "%s", testErrors);
-	testErrorsSize = 0; testErrors[0] = 0;
+    va_start(args, msg);
+    vfprintf(logfile, msg, args);
+    va_end(args);
+    fprintf(logfile, "%s", testErrors);
+    testErrorsSize = 0; testErrors[0] = 0;
     }
     if (verbose) {
-	va_start(args, msg);
-	vfprintf(stderr, msg, args);
-	va_end(args);
+    va_start(args, msg);
+    vfprintf(stderr, msg, args);
+    va_end(args);
     }
 }
 
@@ -143,16 +143,16 @@ testErrorHandler(void *userData ATTRIBUTE_UNUSED, xmlErrorPtr error) {
         return;
     res = snprintf(&testErrors[testErrorsSize],
                     32768 - testErrorsSize,
-		   "%s:%d: %s\n", (error->file ? error->file : "entity"),
-		   error->line, error->message);
+           "%s:%d: %s\n", (error->file ? error->file : "entity"),
+           error->line, error->message);
     if (error->level == XML_ERR_FATAL)
         nbFatal++;
     else if (error->level == XML_ERR_ERROR)
         nbError++;
     if (testErrorsSize + res >= 32768) {
         /* buffer is full */
-	testErrorsSize = 32768;
-	testErrors[testErrorsSize] = 0;
+    testErrorsSize = 32768;
+    testErrors[testErrorsSize] = 0;
     } else {
         testErrorsSize += res;
     }
@@ -179,14 +179,14 @@ initializeLibxml2(void) {
     * cache by default for the whole library.
     */
     if (ctxtXPath->cache != NULL)
-	xmlXPathContextSetCache(ctxtXPath, 0, -1, 0);
+    xmlXPathContextSetCache(ctxtXPath, 0, -1, 0);
     xmlSetStructuredErrorFunc(NULL, testErrorHandler);
 }
 
 /************************************************************************
- *									*
- *		Run the xmlconf test if found				*
- *									*
+ *                                    *
+ *        Run the xmlconf test if found                *
+ *                                    *
  ************************************************************************/
 
 static int
@@ -198,22 +198,22 @@ xmlconfTestInvalid(const char *id, const char *filename, int options) {
     ctxt = xmlNewParserCtxt();
     if (ctxt == NULL) {
         test_log("test %s : %s out of memory\n",
-	         id, filename);
+             id, filename);
         return(0);
     }
     doc = xmlCtxtReadFile(ctxt, filename, NULL, options);
     if (doc == NULL) {
         test_log("test %s : %s invalid document turned not well-formed too\n",
-	         id, filename);
+             id, filename);
     } else {
     /* invalidity should be reported both in the context and in the document */
         if ((ctxt->valid != 0) || (doc->properties & XML_DOC_DTDVALID)) {
-	    test_log("test %s : %s failed to detect invalid document\n",
-		     id, filename);
-	    nb_errors++;
-	    ret = 0;
-	}
-	xmlFreeDoc(doc);
+        test_log("test %s : %s failed to detect invalid document\n",
+             id, filename);
+        nb_errors++;
+        ret = 0;
+    }
+    xmlFreeDoc(doc);
     }
     xmlFreeParserCtxt(ctxt);
     return(ret);
@@ -228,24 +228,24 @@ xmlconfTestValid(const char *id, const char *filename, int options) {
     ctxt = xmlNewParserCtxt();
     if (ctxt == NULL) {
         test_log("test %s : %s out of memory\n",
-	         id, filename);
+             id, filename);
         return(0);
     }
     doc = xmlCtxtReadFile(ctxt, filename, NULL, options);
     if (doc == NULL) {
         test_log("test %s : %s failed to parse a valid document\n",
-	         id, filename);
+             id, filename);
         nb_errors++;
-	ret = 0;
+    ret = 0;
     } else {
     /* validity should be reported both in the context and in the document */
         if ((ctxt->valid == 0) || ((doc->properties & XML_DOC_DTDVALID) == 0)) {
-	    test_log("test %s : %s failed to validate a valid document\n",
-		     id, filename);
-	    nb_errors++;
-	    ret = 0;
-	}
-	xmlFreeDoc(doc);
+        test_log("test %s : %s failed to validate a valid document\n",
+             id, filename);
+        nb_errors++;
+        ret = 0;
+    }
+    xmlFreeDoc(doc);
     }
     xmlFreeParserCtxt(ctxt);
     return(ret);
@@ -263,18 +263,18 @@ xmlconfTestNotNSWF(const char *id, const char *filename, int options) {
     doc = xmlReadFile(filename, NULL, options);
     if (doc == NULL) {
         test_log("test %s : %s failed to parse the XML\n",
-	         id, filename);
+             id, filename);
         nb_errors++;
-	ret = 0;
+    ret = 0;
     } else {
-	if ((xmlLastError.code == XML_ERR_OK) ||
-	    (xmlLastError.domain != XML_FROM_NAMESPACE)) {
-	    test_log("test %s : %s failed to detect namespace error\n",
-		     id, filename);
-	    nb_errors++;
-	    ret = 0;
-	}
-	xmlFreeDoc(doc);
+    if ((xmlLastError.code == XML_ERR_OK) ||
+        (xmlLastError.domain != XML_FROM_NAMESPACE)) {
+        test_log("test %s : %s failed to detect namespace error\n",
+             id, filename);
+        nb_errors++;
+        ret = 0;
+    }
+    xmlFreeDoc(doc);
     }
     return(ret);
 }
@@ -287,10 +287,10 @@ xmlconfTestNotWF(const char *id, const char *filename, int options) {
     doc = xmlReadFile(filename, NULL, options);
     if (doc != NULL) {
         test_log("test %s : %s failed to detect not well formedness\n",
-	         id, filename);
+             id, filename);
         nb_errors++;
-	xmlFreeDoc(doc);
-	ret = 0;
+    xmlFreeDoc(doc);
+    ret = 0;
     }
     return(ret);
 }
@@ -318,32 +318,32 @@ xmlconfTestItem(xmlDocPtr doc, xmlNodePtr cur) {
     id = xmlGetProp(cur, BAD_CAST "ID");
     if (id == NULL) {
         test_log("test missing ID, line %ld\n", xmlGetLineNo(cur));
-	goto error;
+    goto error;
     }
     for (i = 0;skipped_tests[i] != NULL;i++) {
         if (!strcmp(skipped_tests[i], (char *) id)) {
-	    test_log("Skipping test %s from skipped list\n", (char *) id);
-	    ret = 0;
-	    nb_skipped++;
-	    goto error;
-	}
+        test_log("Skipping test %s from skipped list\n", (char *) id);
+        ret = 0;
+        nb_skipped++;
+        goto error;
+    }
     }
     type = xmlGetProp(cur, BAD_CAST "TYPE");
     if (type == NULL) {
         test_log("test %s missing TYPE\n", (char *) id);
-	goto error;
+    goto error;
     }
     uri = xmlGetProp(cur, BAD_CAST "URI");
     if (uri == NULL) {
         test_log("test %s missing URI\n", (char *) id);
-	goto error;
+    goto error;
     }
     base = xmlNodeGetBase(doc, cur);
     filename = composeDir(base, uri);
     if (!checkTestFile((char *) filename)) {
         test_log("test %s missing file %s \n", id,
-	         (filename ? (char *)filename : "NULL"));
-	goto error;
+             (filename ? (char *)filename : "NULL"));
+    goto error;
     }
 
     version = xmlGetProp(cur, BAD_CAST "VERSION");
@@ -356,31 +356,31 @@ xmlconfTestItem(xmlDocPtr doc, xmlNodePtr cur) {
     rec = xmlGetProp(cur, BAD_CAST "RECOMMENDATION");
     if ((rec == NULL) ||
         (xmlStrEqual(rec, BAD_CAST "XML1.0")) ||
-	(xmlStrEqual(rec, BAD_CAST "XML1.0-errata2e")) ||
-	(xmlStrEqual(rec, BAD_CAST "XML1.0-errata3e")) ||
-	(xmlStrEqual(rec, BAD_CAST "XML1.0-errata4e"))) {
-	if ((version != NULL) && (!xmlStrEqual(version, BAD_CAST "1.0"))) {
-	    test_log("Skipping test %s for %s\n", (char *) id,
-	             (char *) version);
-	    ret = 0;
-	    nb_skipped++;
-	    goto error;
-	}
-	ret = 1;
+    (xmlStrEqual(rec, BAD_CAST "XML1.0-errata2e")) ||
+    (xmlStrEqual(rec, BAD_CAST "XML1.0-errata3e")) ||
+    (xmlStrEqual(rec, BAD_CAST "XML1.0-errata4e"))) {
+    if ((version != NULL) && (!xmlStrEqual(version, BAD_CAST "1.0"))) {
+        test_log("Skipping test %s for %s\n", (char *) id,
+                 (char *) version);
+        ret = 0;
+        nb_skipped++;
+        goto error;
+    }
+    ret = 1;
     } else if ((xmlStrEqual(rec, BAD_CAST "NS1.0")) ||
-	       (xmlStrEqual(rec, BAD_CAST "NS1.0-errata1e"))) {
-	ret = 1;
-	nstest = 1;
+           (xmlStrEqual(rec, BAD_CAST "NS1.0-errata1e"))) {
+    ret = 1;
+    nstest = 1;
     } else {
         test_log("Skipping test %s for REC %s\n", (char *) id, (char *) rec);
-	ret = 0;
-	nb_skipped++;
-	goto error;
+    ret = 0;
+    nb_skipped++;
+    goto error;
     }
     edition = xmlGetProp(cur, BAD_CAST "EDITION");
     if ((edition != NULL) && (xmlStrchr(edition, '5') == NULL)) {
         /* test limited to all versions before 5th */
-	options |= XML_PARSE_OLD10;
+    options |= XML_PARSE_OLD10;
     }
 
     /*
@@ -392,24 +392,24 @@ xmlconfTestItem(xmlDocPtr doc, xmlNodePtr cur) {
 
     if (xmlStrEqual(type, BAD_CAST "not-wf")) {
         if (nstest == 0)
-	    xmlconfTestNotWF((char *) id, (char *) filename, options);
+        xmlconfTestNotWF((char *) id, (char *) filename, options);
         else 
-	    xmlconfTestNotNSWF((char *) id, (char *) filename, options);
+        xmlconfTestNotNSWF((char *) id, (char *) filename, options);
     } else if (xmlStrEqual(type, BAD_CAST "valid")) {
         options |= XML_PARSE_DTDVALID;
-	xmlconfTestValid((char *) id, (char *) filename, options);
+    xmlconfTestValid((char *) id, (char *) filename, options);
     } else if (xmlStrEqual(type, BAD_CAST "invalid")) {
         options |= XML_PARSE_DTDVALID;
-	xmlconfTestInvalid((char *) id, (char *) filename, options);
+    xmlconfTestInvalid((char *) id, (char *) filename, options);
     } else if (xmlStrEqual(type, BAD_CAST "error")) {
         test_log("Skipping error test %s \n", (char *) id);
-	ret = 0;
-	nb_skipped++;
-	goto error;
+    ret = 0;
+    nb_skipped++;
+    goto error;
     } else {
         test_log("test %s unknown TYPE value %s\n", (char *) id, (char *)type);
-	ret = -1;
-	goto error;
+    ret = -1;
+    goto error;
     }
 
     /*
@@ -419,9 +419,9 @@ xmlconfTestItem(xmlDocPtr doc, xmlNodePtr cur) {
     final = xmlMemUsed();
     if (final > mem) {
         test_log("test %s : %s leaked %d bytes\n",
-	         id, filename, final - mem);
+             id, filename, final - mem);
         nb_leaks++;
-	xmlMemDisplayLast(logfile, final - mem);
+    xmlMemDisplayLast(logfile, final - mem);
     }
     nb_tests++;
 
@@ -455,33 +455,33 @@ xmlconfTestCases(xmlDocPtr doc, xmlNodePtr cur, int level) {
     int output = 0;
 
     if (level == 1) {
-	profile = xmlGetProp(cur, BAD_CAST "PROFILE");
-	if (profile != NULL) {
-	    output = 1;
-	    level++;
-	    printf("Test cases: %s\n", (char *) profile);
-	    xmlFree(profile);
-	}
+    profile = xmlGetProp(cur, BAD_CAST "PROFILE");
+    if (profile != NULL) {
+        output = 1;
+        level++;
+        printf("Test cases: %s\n", (char *) profile);
+        xmlFree(profile);
+    }
     }
     cur = cur->children;
     while (cur != NULL) {
         /* look only at elements we ignore everything else */
         if (cur->type == XML_ELEMENT_NODE) {
-	    if (xmlStrEqual(cur->name, BAD_CAST "TESTCASES")) {
-	        ret += xmlconfTestCases(doc, cur, level);
-	    } else if (xmlStrEqual(cur->name, BAD_CAST "TEST")) {
-	        if (xmlconfTestItem(doc, cur) >= 0)
-		    ret++;
-		tests++;
-	    } else {
-	        fprintf(stderr, "Unhandled element %s\n", (char *)cur->name);
-	    }
-	}
+        if (xmlStrEqual(cur->name, BAD_CAST "TESTCASES")) {
+            ret += xmlconfTestCases(doc, cur, level);
+        } else if (xmlStrEqual(cur->name, BAD_CAST "TEST")) {
+            if (xmlconfTestItem(doc, cur) >= 0)
+            ret++;
+        tests++;
+        } else {
+            fprintf(stderr, "Unhandled element %s\n", (char *)cur->name);
+        }
+    }
         cur = cur->next;
     }
     if (output == 1) {
-	if (tests > 0)
-	    printf("Test cases: %d tests\n", tests);
+    if (tests > 0)
+        printf("Test cases: %d tests\n", tests);
     }
     return(ret);
 }
@@ -494,19 +494,19 @@ xmlconfTestSuite(xmlDocPtr doc, xmlNodePtr cur) {
     profile = xmlGetProp(cur, BAD_CAST "PROFILE");
     if (profile != NULL) {
         printf("Test suite: %s\n", (char *) profile);
-	xmlFree(profile);
+    xmlFree(profile);
     } else
         printf("Test suite\n");
     cur = cur->children;
     while (cur != NULL) {
         /* look only at elements we ignore everything else */
         if (cur->type == XML_ELEMENT_NODE) {
-	    if (xmlStrEqual(cur->name, BAD_CAST "TESTCASES")) {
-	        ret += xmlconfTestCases(doc, cur, 1);
-	    } else {
-	        fprintf(stderr, "Unhandled element %s\n", (char *)cur->name);
-	    }
-	}
+        if (xmlStrEqual(cur->name, BAD_CAST "TESTCASES")) {
+            ret += xmlconfTestCases(doc, cur, 1);
+        } else {
+            fprintf(stderr, "Unhandled element %s\n", (char *)cur->name);
+        }
+    }
         cur = cur->next;
     }
     return(ret);
@@ -529,21 +529,21 @@ xmlconfTest(void) {
 
     if (!checkTestFile(confxml)) {
         fprintf(stderr, "%s is missing \n", confxml);
-	xmlconfInfo();
-	return(-1);
+    xmlconfInfo();
+    return(-1);
     }
     doc = xmlReadFile(confxml, NULL, XML_PARSE_NOENT);
     if (doc == NULL) {
         fprintf(stderr, "%s is corrupted \n", confxml);
-	xmlconfInfo();
-	return(-1);
+    xmlconfInfo();
+    return(-1);
     }
 
     cur = xmlDocGetRootElement(doc);
     if ((cur == NULL) || (!xmlStrEqual(cur->name, BAD_CAST "TESTSUITE"))) {
         fprintf(stderr, "Unexpected format %s\n", confxml);
-	xmlconfInfo();
-	ret = -1;
+    xmlconfInfo();
+    ret = -1;
     } else {
         ret = xmlconfTestSuite(doc, cur);
     }
@@ -552,9 +552,9 @@ xmlconfTest(void) {
 }
 
 /************************************************************************
- *									*
- *		The driver for the tests				*
- *									*
+ *                                    *
+ *        The driver for the tests                *
+ *                                    *
  ************************************************************************/
 
 int
@@ -565,8 +565,8 @@ main(int argc ATTRIBUTE_UNUSED, char **argv ATTRIBUTE_UNUSED) {
     logfile = fopen(LOGFILE, "w");
     if (logfile == NULL) {
         fprintf(stderr,
-	        "Could not open the log file, running in verbose mode\n");
-	verbose = 1;
+            "Could not open the log file, running in verbose mode\n");
+    verbose = 1;
     }
     initializeLibxml2();
 
@@ -579,25 +579,25 @@ main(int argc ATTRIBUTE_UNUSED, char **argv ATTRIBUTE_UNUSED) {
     old_leaks = nb_leaks;
     xmlconfTest();
     if ((nb_errors == old_errors) && (nb_leaks == old_leaks))
-	printf("Ran %d tests, no errors\n", nb_tests - old_tests);
+    printf("Ran %d tests, no errors\n", nb_tests - old_tests);
     else
-	printf("Ran %d tests, %d errors, %d leaks\n",
-	       nb_tests - old_tests,
-	       nb_errors - old_errors,
-	       nb_leaks - old_leaks);
+    printf("Ran %d tests, %d errors, %d leaks\n",
+           nb_tests - old_tests,
+           nb_errors - old_errors,
+           nb_leaks - old_leaks);
     if ((nb_errors == 0) && (nb_leaks == 0)) {
         ret = 0;
-	printf("Total %d tests, no errors\n",
-	       nb_tests);
+    printf("Total %d tests, no errors\n",
+           nb_tests);
     } else {
-	ret = 1;
-	printf("Total %d tests, %d errors, %d leaks\n",
-	       nb_tests, nb_errors, nb_leaks);
-	printf("See %s for detailed output\n", LOGFILE);
-	if ((nb_leaks == 0) && (nb_errors == NB_EXPECTED_ERRORS)) {
-	    printf("%d errors were expected\n", nb_errors);
-	    ret = 0;
-	}
+    ret = 1;
+    printf("Total %d tests, %d errors, %d leaks\n",
+           nb_tests, nb_errors, nb_leaks);
+    printf("See %s for detailed output\n", LOGFILE);
+    if ((nb_leaks == 0) && (nb_errors == NB_EXPECTED_ERRORS)) {
+        printf("%d errors were expected\n", nb_errors);
+        ret = 0;
+    }
     }
     xmlXPathFreeContext(ctxtXPath);
     xmlCleanupParser();

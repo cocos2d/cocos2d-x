@@ -42,13 +42,13 @@ public:
     CCAccelerometer();
     ~CCAccelerometer();
 
-	void setDelegate(CCAccelerometerDelegate* pDelegate);
-	void update(float x, float y, float z, uint64 sensorTimeStamp);
+    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void update(float x, float y, float z, uint64 sensorTimeStamp);
 
 private:
 
-	CCAccelerometerDelegate* m_pAccelDelegate;
-	CCAcceleration m_obAccelerationValue;
+    CCAccelerometerDelegate* m_pAccelDelegate;
+    CCAcceleration m_obAccelerationValue;
 };
 
 NS_CC_END

@@ -43,123 +43,123 @@ NS_CC_BEGIN
 class CCEGL
 {
 public:
-	~CCEGL() 
-	{
-		if (EGL_NO_SURFACE != m_eglSurface)
-		{
-			eglDestroySurface(m_eglDisplay, m_eglSurface);
-		}
-		if (EGL_NO_CONTEXT != m_eglContext)
-		{
-			eglDestroyContext(m_eglDisplay, m_eglContext);
-		}
-		eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-		eglTerminate(m_eglDisplay);
-		if (m_eglNativeDisplay)
-		{
-			ReleaseDC(m_eglNativeWindow, m_eglNativeDisplay);
-		}
-	}
+    ~CCEGL() 
+    {
+        if (EGL_NO_SURFACE != m_eglSurface)
+        {
+            eglDestroySurface(m_eglDisplay, m_eglSurface);
+        }
+        if (EGL_NO_CONTEXT != m_eglContext)
+        {
+            eglDestroyContext(m_eglDisplay, m_eglContext);
+        }
+        eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+        eglTerminate(m_eglDisplay);
+        if (m_eglNativeDisplay)
+        {
+            ReleaseDC(m_eglNativeWindow, m_eglNativeDisplay);
+        }
+    }
 
-	static CCEGL * create(CCEGLView * pWindow)
-	{
-		CCEGL * pEGL = new CCEGL;
-		BOOL bSuccess = FALSE;
-		do 
-		{
-			CC_BREAK_IF(! pEGL);
+    static CCEGL * create(CCEGLView * pWindow)
+    {
+        CCEGL * pEGL = new CCEGL;
+        BOOL bSuccess = FALSE;
+        do 
+        {
+            CC_BREAK_IF(! pEGL);
 
-			pEGL->m_eglNativeWindow = pWindow->getHWnd();
+            pEGL->m_eglNativeWindow = pWindow->getHWnd();
 
-			pEGL->m_eglNativeDisplay = GetDC(pEGL->m_eglNativeWindow);
+            pEGL->m_eglNativeDisplay = GetDC(pEGL->m_eglNativeWindow);
 
-			EGLDisplay eglDisplay;
-			CC_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
+            EGLDisplay eglDisplay;
+            CC_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
 
-			EGLint nMajor, nMinor;
-			CC_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
+            EGLint nMajor, nMinor;
+            CC_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
 
-			const EGLint aConfigAttribs[] =
-			{
-				EGL_LEVEL,				0,
-				EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,
-				EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,
-				EGL_NATIVE_RENDERABLE,	EGL_FALSE,
-				EGL_DEPTH_SIZE,			16,
-				EGL_NONE,
-			};
-			EGLint iConfigs;
-			EGLConfig eglConfig;
-			CC_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
-				|| (iConfigs != 1));
+            const EGLint aConfigAttribs[] =
+            {
+                EGL_LEVEL,                0,
+                EGL_SURFACE_TYPE,        EGL_WINDOW_BIT,
+                EGL_RENDERABLE_TYPE,    EGL_OPENGL_ES2_BIT,
+                EGL_NATIVE_RENDERABLE,    EGL_FALSE,
+                EGL_DEPTH_SIZE,            16,
+                EGL_NONE,
+            };
+            EGLint iConfigs;
+            EGLConfig eglConfig;
+            CC_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
+                || (iConfigs != 1));
 
-			EGLContext eglContext;
-			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
-			CC_BREAK_IF(EGL_NO_CONTEXT == eglContext);
+            EGLContext eglContext;
+            eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
+            CC_BREAK_IF(EGL_NO_CONTEXT == eglContext);
 
-			EGLSurface eglSurface;
-			eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, pEGL->m_eglNativeWindow, NULL);
-			CC_BREAK_IF(EGL_NO_SURFACE == eglSurface);
+            EGLSurface eglSurface;
+            eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, pEGL->m_eglNativeWindow, NULL);
+            CC_BREAK_IF(EGL_NO_SURFACE == eglSurface);
 
-			CC_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
+            CC_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
 
-			pEGL->m_eglDisplay = eglDisplay;
-			pEGL->m_eglConfig  = eglConfig;
-			pEGL->m_eglContext = eglContext;
-			pEGL->m_eglSurface = eglSurface;
-			bSuccess = TRUE;
-		} while (0);
+            pEGL->m_eglDisplay = eglDisplay;
+            pEGL->m_eglConfig  = eglConfig;
+            pEGL->m_eglContext = eglContext;
+            pEGL->m_eglSurface = eglSurface;
+            bSuccess = TRUE;
+        } while (0);
 
-		if (! bSuccess)
-		{
-			CC_SAFE_DELETE(pEGL);  
-		}
+        if (! bSuccess)
+        {
+            CC_SAFE_DELETE(pEGL);  
+        }
 
-		return pEGL;
-	}
+        return pEGL;
+    }
 
-	void resizeSurface()
-	{
-//  		if (! m_eglNativeWindow || EGL_NO_DISPLAY == m_eglDisplay)
-//  		{
-//  			return;
-//  		}
+    void resizeSurface()
+    {
+//          if (! m_eglNativeWindow || EGL_NO_DISPLAY == m_eglDisplay)
+//          {
+//              return;
+//          }
 //  
-//  		// release old surface
-//  		if (EGL_NO_SURFACE != m_eglSurface)
-//  		{
-//  			eglDestroySurface(m_eglDisplay, m_eglSurface);
-//  			m_eglSurface = EGL_NO_SURFACE;
-//  		}
+//          // release old surface
+//          if (EGL_NO_SURFACE != m_eglSurface)
+//          {
+//              eglDestroySurface(m_eglDisplay, m_eglSurface);
+//              m_eglSurface = EGL_NO_SURFACE;
+//          }
 //  
-//  		// create new surface and make current
-//  		m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_eglNativeWindow, NULL);
-//  		eglMakeCurrent(m_eglDisplay, m_eglSurface, m_eglSurface, m_eglContext);
-	}
+//          // create new surface and make current
+//          m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_eglNativeWindow, NULL);
+//          eglMakeCurrent(m_eglDisplay, m_eglSurface, m_eglSurface, m_eglContext);
+    }
 
-	void swapBuffers()
-	{
-		if (EGL_NO_DISPLAY != m_eglDisplay)
-		{
-			eglSwapBuffers(m_eglDisplay, m_eglSurface);
-		}
-	}
+    void swapBuffers()
+    {
+        if (EGL_NO_DISPLAY != m_eglDisplay)
+        {
+            eglSwapBuffers(m_eglDisplay, m_eglSurface);
+        }
+    }
 private:
-	CCEGL() 
-		: m_eglNativeWindow(NULL)
-		, m_eglNativeDisplay(EGL_DEFAULT_DISPLAY)
-		, m_eglDisplay(EGL_NO_DISPLAY)
-		, m_eglConfig(0)
-		, m_eglSurface(EGL_NO_SURFACE)
-		, m_eglContext(EGL_NO_CONTEXT)
-	{}
+    CCEGL() 
+        : m_eglNativeWindow(NULL)
+        , m_eglNativeDisplay(EGL_DEFAULT_DISPLAY)
+        , m_eglDisplay(EGL_NO_DISPLAY)
+        , m_eglConfig(0)
+        , m_eglSurface(EGL_NO_SURFACE)
+        , m_eglContext(EGL_NO_CONTEXT)
+    {}
 
-	EGLNativeWindowType     m_eglNativeWindow;
-	EGLNativeDisplayType    m_eglNativeDisplay;
-	EGLDisplay              m_eglDisplay;
-	EGLConfig               m_eglConfig;
-	EGLSurface              m_eglSurface;
-	EGLContext              m_eglContext;
+    EGLNativeWindowType     m_eglNativeWindow;
+    EGLNativeDisplayType    m_eglNativeDisplay;
+    EGLDisplay              m_eglDisplay;
+    EGLConfig               m_eglConfig;
+    EGLSurface              m_eglSurface;
+    EGLContext              m_eglContext;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -170,14 +170,14 @@ static const WCHAR * kWindowClassName = L"Cocos2dxWin32";
 
 static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	if (s_pMainWindow && s_pMainWindow->getHWnd() == hWnd)
-	{
-		return s_pMainWindow->WindowProc(uMsg, wParam, lParam);
-	}
-	else
-	{
-		return DefWindowProc(hWnd, uMsg, wParam, lParam);
-	}
+    if (s_pMainWindow && s_pMainWindow->getHWnd() == hWnd)
+    {
+        return s_pMainWindow->WindowProc(uMsg, wParam, lParam);
+    }
+    else
+    {
+        return DefWindowProc(hWnd, uMsg, wParam, lParam);
+    }
 }
 
 CCEGLView::CCEGLView()
@@ -200,78 +200,78 @@ CCEGLView::~CCEGLView()
 
 bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 {
-	bool bRet = false;
-	do 
-	{
-		CC_BREAK_IF(m_hWnd);
+    bool bRet = false;
+    do 
+    {
+        CC_BREAK_IF(m_hWnd);
 
-		HINSTANCE hInstance = GetModuleHandle( NULL );
-		WNDCLASS  wc;		// Windows Class Structure
+        HINSTANCE hInstance = GetModuleHandle( NULL );
+        WNDCLASS  wc;        // Windows Class Structure
 
-		// Redraw On Size, And Own DC For Window.
-		wc.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;  
-		wc.lpfnWndProc    = _WindowProc;					// WndProc Handles Messages
-		wc.cbClsExtra     = 0;                              // No Extra Window Data
-		wc.cbWndExtra     = 0;								// No Extra Window Data
-		wc.hInstance      = hInstance;						// Set The Instance
-		wc.hIcon          = LoadIcon( NULL, IDI_WINLOGO );	// Load The Default Icon
-		wc.hCursor        = LoadCursor( NULL, IDC_ARROW );	// Load The Arrow Pointer
-		wc.hbrBackground  = NULL;                           // No Background Required For GL
-		wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
-		wc.lpszClassName  = kWindowClassName;               // Set The Class Name
+        // Redraw On Size, And Own DC For Window.
+        wc.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;  
+        wc.lpfnWndProc    = _WindowProc;                    // WndProc Handles Messages
+        wc.cbClsExtra     = 0;                              // No Extra Window Data
+        wc.cbWndExtra     = 0;                                // No Extra Window Data
+        wc.hInstance      = hInstance;                        // Set The Instance
+        wc.hIcon          = LoadIcon( NULL, IDI_WINLOGO );    // Load The Default Icon
+        wc.hCursor        = LoadCursor( NULL, IDC_ARROW );    // Load The Arrow Pointer
+        wc.hbrBackground  = NULL;                           // No Background Required For GL
+        wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
+        wc.lpszClassName  = kWindowClassName;               // Set The Class Name
 
-		CC_BREAK_IF(! RegisterClass(&wc) && 1410 != GetLastError());		
+        CC_BREAK_IF(! RegisterClass(&wc) && 1410 != GetLastError());        
 
-		// center window position
-		RECT rcDesktop;
-		GetWindowRect(GetDesktopWindow(), &rcDesktop);
+        // center window position
+        RECT rcDesktop;
+        GetWindowRect(GetDesktopWindow(), &rcDesktop);
 
-		// create window
-		m_hWnd = CreateWindowEx(
-			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,	// Extended Style For The Window
-			kWindowClassName,									// Class Name
-			pTitle,												// Window Title
-			WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,		// Defined Window Style
-			0, 0,								                // Window Position
-			0,                                                  // Window Width
-			0,                                                  // Window Height
-			NULL,												// No Parent Window
-			NULL,												// No Menu
-			hInstance,											// Instance
-			NULL );
+        // create window
+        m_hWnd = CreateWindowEx(
+            WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,    // Extended Style For The Window
+            kWindowClassName,                                    // Class Name
+            pTitle,                                                // Window Title
+            WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,        // Defined Window Style
+            0, 0,                                                // Window Position
+            0,                                                  // Window Width
+            0,                                                  // Window Height
+            NULL,                                                // No Parent Window
+            NULL,                                                // No Menu
+            hInstance,                                            // Instance
+            NULL );
 
-		CC_BREAK_IF(! m_hWnd);
+        CC_BREAK_IF(! m_hWnd);
 
         m_tSizeInPoints.cx = w;
         m_tSizeInPoints.cy = h;
         resize(w, h);
 
-		// init egl
-		m_pEGL = CCEGL::create(this);
+        // init egl
+        m_pEGL = CCEGL::create(this);
 
-		if (! m_pEGL)
-		{
-			DestroyWindow(m_hWnd);
-			m_hWnd = NULL;
-			break;
-		}
+        if (! m_pEGL)
+        {
+            DestroyWindow(m_hWnd);
+            m_hWnd = NULL;
+            break;
+        }
 
-		s_pMainWindow = this;
-		bRet = true;
-	} while (0);
+        s_pMainWindow = this;
+        bRet = true;
+    } while (0);
 
-	return bRet;
+    return bRet;
 }
 
 LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	PAINTSTRUCT ps;
+    PAINTSTRUCT ps;
 
-	switch (message)
-	{
-	case WM_LBUTTONDOWN:
-		if (m_pDelegate && m_pTouch && MK_LBUTTON == wParam)
-		{
+    switch (message)
+    {
+    case WM_LBUTTONDOWN:
+        if (m_pDelegate && m_pTouch && MK_LBUTTON == wParam)
+        {
             POINT pt = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             if (PtInRect(&m_rcViewPort, pt))
             {
@@ -282,58 +282,58 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 m_pSet->addObject(m_pTouch);
                 m_pDelegate->touchesBegan(m_pSet, NULL);
             }
-		}
-		break;
+        }
+        break;
 
-	case WM_MOUSEMOVE:
-		if (MK_LBUTTON == wParam && m_bCaptured)
-		{
+    case WM_MOUSEMOVE:
+        if (MK_LBUTTON == wParam && m_bCaptured)
+        {
             m_pTouch->SetTouchInfo((float)((short)LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
                 (float)((short)HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
             m_pDelegate->touchesMoved(m_pSet, NULL);
-		}
-		break;
+        }
+        break;
 
-	case WM_LBUTTONUP:
-		if (m_bCaptured)
-		{
-			m_pTouch->SetTouchInfo((float)((short)LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
+    case WM_LBUTTONUP:
+        if (m_bCaptured)
+        {
+            m_pTouch->SetTouchInfo((float)((short)LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
                 (float)((short)HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
-			m_pDelegate->touchesEnded(m_pSet, NULL);
-			m_pSet->removeObject(m_pTouch);
+            m_pDelegate->touchesEnded(m_pSet, NULL);
+            m_pSet->removeObject(m_pTouch);
             ReleaseCapture();
-			m_bCaptured = false;
-		}
-		break;
-	case WM_SIZE:
-		switch (wParam)
-		{
-		case SIZE_RESTORED:
-			CCApplication::sharedApplication().applicationWillEnterForeground();
-			break;
-		case SIZE_MINIMIZED:
-			CCApplication::sharedApplication().applicationDidEnterBackground();
-			break;
-		}
-		break;
-	case WM_KEYDOWN:
-		if (wParam == VK_F1 || wParam == VK_F2)
-		{
-			CCDirector* pDirector = CCDirector::sharedDirector();
-			if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
-				pDirector->getKeypadDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
-		}
-		if ( m_lpfnAccelerometerKeyHook!=NULL )
-		{
-			(*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-		}
-		break;
-	case WM_KEYUP:
-		if ( m_lpfnAccelerometerKeyHook!=NULL )
-		{
-			(*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-		}
-		break;
+            m_bCaptured = false;
+        }
+        break;
+    case WM_SIZE:
+        switch (wParam)
+        {
+        case SIZE_RESTORED:
+            CCApplication::sharedApplication().applicationWillEnterForeground();
+            break;
+        case SIZE_MINIMIZED:
+            CCApplication::sharedApplication().applicationDidEnterBackground();
+            break;
+        }
+        break;
+    case WM_KEYDOWN:
+        if (wParam == VK_F1 || wParam == VK_F2)
+        {
+            CCDirector* pDirector = CCDirector::sharedDirector();
+            if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
+                pDirector->getKeypadDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
+        }
+        if ( m_lpfnAccelerometerKeyHook!=NULL )
+        {
+            (*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
+        }
+        break;
+    case WM_KEYUP:
+        if ( m_lpfnAccelerometerKeyHook!=NULL )
+        {
+            (*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
+        }
+        break;
     case WM_CHAR:
         {
             if (wParam < 0x20)
@@ -353,7 +353,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 else if (VK_ESCAPE == wParam)
                 {
                     // ESC input
-					CCDirector::sharedDirector()->end();
+                    CCDirector::sharedDirector()->end();
                 }
             }
             else if (wParam < 128)
@@ -368,35 +368,35 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
                 CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
             }
-			if ( m_lpfnAccelerometerKeyHook!=NULL )
-			{
-				(*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-			}
+            if ( m_lpfnAccelerometerKeyHook!=NULL )
+            {
+                (*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
+            }
         }
         break;
 
-	case WM_PAINT:
-		BeginPaint(m_hWnd, &ps);
-		EndPaint(m_hWnd, &ps);
-		break;
+    case WM_PAINT:
+        BeginPaint(m_hWnd, &ps);
+        EndPaint(m_hWnd, &ps);
+        break;
 
-	case WM_CLOSE:
-		CCDirector::sharedDirector()->end();
-		break;
+    case WM_CLOSE:
+        CCDirector::sharedDirector()->end();
+        break;
 
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
 
-	default:
-		return DefWindowProc(m_hWnd, message, wParam, lParam);
-	}
-	return 0;
+    default:
+        return DefWindowProc(m_hWnd, message, wParam, lParam);
+    }
+    return 0;
 }
 
 void CCEGLView::setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook )
 {
-	m_lpfnAccelerometerKeyHook=lpfnAccelerometerKeyHook;
+    m_lpfnAccelerometerKeyHook=lpfnAccelerometerKeyHook;
 }
 
 CCSize CCEGLView::getSize()
@@ -416,13 +416,13 @@ bool CCEGLView::isIpad()
 
 void CCEGLView::release()
 {
-	if (m_hWnd)
-	{
-		DestroyWindow(m_hWnd);
-		m_hWnd = NULL;
-	}
-	s_pMainWindow = NULL;
-	UnregisterClass(kWindowClassName, GetModuleHandle(NULL));
+    if (m_hWnd)
+    {
+        DestroyWindow(m_hWnd);
+        m_hWnd = NULL;
+    }
+    s_pMainWindow = NULL;
+    UnregisterClass(kWindowClassName, GetModuleHandle(NULL));
 
     CC_SAFE_DELETE(m_pSet);
     CC_SAFE_DELETE(m_pTouch);

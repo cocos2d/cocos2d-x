@@ -22,9 +22,9 @@
 void xmlUpgradeOldNs(xmlDocPtr doc);
 
 /************************************************************************
- *									*
- *		Deprecated functions kept for compatibility		*
- *									*
+ *                                    *
+ *        Deprecated functions kept for compatibility        *
+ *                                    *
  ************************************************************************/
 
 #ifdef LIBXML_HTML_ENABLED
@@ -739,16 +739,16 @@ xmlEncodeEntities(xmlDocPtr doc ATTRIBUTE_UNUSED,
 }
 
 /************************************************************************
- *									*
- *		Old set of SAXv1 functions 				*
- *									*
+ *                                    *
+ *        Old set of SAXv1 functions                 *
+ *                                    *
  ************************************************************************/
 static int deprecated_v1_msg = 0;
 
-#define DEPRECATED(n)						\
-    if (deprecated_v1_msg == 0)					\
-	xmlGenericError(xmlGenericErrorContext,			\
-	  "Use of deprecated SAXv1 function %s\n", n);		\
+#define DEPRECATED(n)                        \
+    if (deprecated_v1_msg == 0)                    \
+    xmlGenericError(xmlGenericErrorContext,            \
+      "Use of deprecated SAXv1 function %s\n", n);        \
     deprecated_v1_msg++;
 
 /**

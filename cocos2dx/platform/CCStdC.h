@@ -114,8 +114,8 @@ int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
 struct timeval
 {
- 	long tv_sec;		// seconds
- 	long tv_usec;    // microSeconds
+     long tv_sec;        // seconds
+     long tv_usec;    // microSeconds
 };
 
 struct timezone

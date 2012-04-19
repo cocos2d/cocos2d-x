@@ -30,11 +30,11 @@ NS_CC_BEGIN
 class CCLock
 {
 public:
-	CCLock(void);
-	~CCLock(void);
+    CCLock(void);
+    ~CCLock(void);
 
-	void lock(void);
-	void unlock(void);
+    void lock(void);
+    void unlock(void);
 };
 
 NS_CC_END

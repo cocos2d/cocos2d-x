@@ -37,14 +37,14 @@ static CCApplication * s_pApplication = NULL;
 static long long s_nAnimationInterval = 1000/60;
 
 CCApplication::CCApplication() :
-		m_pTimer(null)
+        m_pTimer(null)
 {
-	s_pApplication = this;
+    s_pApplication = this;
 }
 
 CCApplication::~CCApplication()
 {
-	s_pApplication = NULL;
+    s_pApplication = NULL;
 }
 
 CCApplication::Orientation CCApplication::setOrientation(CCApplication::Orientation orientation)
@@ -73,36 +73,36 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-	ccLanguageType ret = kLanguageEnglish;
-	result r = E_SUCCESS;
-	String value;
-	r = SettingInfo::GetValue(L"Language", value);
-	if (value.Equals("ZHO", false))
-	{
-		ret = kLanguageChinese;
-	}
-	else if (value.Equals("FRA", false))
-	{
-		ret = kLanguageFrench;
-	}
-	else if (value.Equals("ITA", false))
-	{
-		ret = kLanguageItalian;
-	}
-	else if (value.Equals("DEU", false))
-	{
-		ret = kLanguageGerman;
-	}
-	else if (value.Equals("SPA", false))
-	{
-		ret = kLanguageSpanish;
-	}
-	else if (value.Equals("RUS", false))
-	{
-		ret = kLanguageRussian;
-	}
+    ccLanguageType ret = kLanguageEnglish;
+    result r = E_SUCCESS;
+    String value;
+    r = SettingInfo::GetValue(L"Language", value);
+    if (value.Equals("ZHO", false))
+    {
+        ret = kLanguageChinese;
+    }
+    else if (value.Equals("FRA", false))
+    {
+        ret = kLanguageFrench;
+    }
+    else if (value.Equals("ITA", false))
+    {
+        ret = kLanguageItalian;
+    }
+    else if (value.Equals("DEU", false))
+    {
+        ret = kLanguageGerman;
+    }
+    else if (value.Equals("SPA", false))
+    {
+        ret = kLanguageSpanish;
+    }
+    else if (value.Equals("RUS", false))
+    {
+        ret = kLanguageRussian;
+    }
 
-	return ret;
+    return ret;
 }
 
 void CCApplication::setAnimationInterval(double interval)
@@ -112,55 +112,55 @@ void CCApplication::setAnimationInterval(double interval)
 
 bool CCApplication::OnAppInitializing(AppRegistry& appRegistry)
 {
-	result r = E_FAILURE;
-	if (! initInstance() || !applicationDidFinishLaunching())
-		return false;
+    result r = E_FAILURE;
+    if (! initInstance() || !applicationDidFinishLaunching())
+        return false;
 
-	CCEGLView::sharedOpenGLView().AddKeyEventListener(*this);
+    CCEGLView::sharedOpenGLView().AddKeyEventListener(*this);
 
-	m_pTimer = new Timer;
-	if (null == m_pTimer)
-	{
-		return E_FAILURE;
-	}
+    m_pTimer = new Timer;
+    if (null == m_pTimer)
+    {
+        return E_FAILURE;
+    }
 
-	r = m_pTimer->Construct(*this);
-	if (IsFailed(r))
-	{
-		delete m_pTimer;
-		m_pTimer = null;
-		return E_FAILURE;
-	}
+    r = m_pTimer->Construct(*this);
+    if (IsFailed(r))
+    {
+        delete m_pTimer;
+        m_pTimer = null;
+        return E_FAILURE;
+    }
 
-	return true;
+    return true;
 }
 
 
 bool CCApplication::OnAppTerminating(AppRegistry& appRegistry, bool forcedTermination)
 {
-	if (m_pTimer)
-	{
-		m_pTimer->Cancel();
-		delete m_pTimer;
-		m_pTimer = null;
-	}
-	return true;
+    if (m_pTimer)
+    {
+        m_pTimer->Cancel();
+        delete m_pTimer;
+        m_pTimer = null;
+    }
+    return true;
 }
 
 
 void CCApplication::OnForeground(void)
 {
-	if (m_pTimer)
-		m_pTimer->Start(s_nAnimationInterval);
+    if (m_pTimer)
+        m_pTimer->Start(s_nAnimationInterval);
     applicationWillEnterForeground();
 }
 
 
 void CCApplication::OnBackground(void)
 {
-	if (m_pTimer)
-		m_pTimer->Cancel();
-	applicationDidEnterBackground();
+    if (m_pTimer)
+        m_pTimer->Cancel();
+    applicationDidEnterBackground();
 }
 
 
@@ -175,8 +175,8 @@ void CCApplication::OnBatteryLevelChanged(BatteryLevel batteryLevel)
 
 void CCApplication::OnTimerExpired(Timer& timer)
 {
-	m_pTimer->Start(s_nAnimationInterval);
-	CCDirector::sharedDirector()->mainLoop();
+    m_pTimer->Start(s_nAnimationInterval);
+    CCDirector::sharedDirector()->mainLoop();
 }
 
 NS_CC_END

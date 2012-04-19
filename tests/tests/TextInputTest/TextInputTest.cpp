@@ -53,7 +53,7 @@ CCLayer* backTextInputTest()
     testIdx--;
     int total = kTextInputTestsCount;
     if( testIdx < 0 )
-        testIdx += total;	
+        testIdx += total;    
 
     return restartTextInputTest();
 }
@@ -157,7 +157,7 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
 {
-	CCDirector* pDirector = CCDirector::sharedDirector();
+    CCDirector* pDirector = CCDirector::sharedDirector();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
@@ -204,7 +204,7 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
 bool KeyboardNotificationLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCLOG("++++++++++++++++++++++++++++++++++++++++++++");
-    m_beginPos = pTouch->locationInView();	
+    m_beginPos = pTouch->locationInView();    
     m_beginPos = CCDirector::sharedDirector()->convertToGL(m_beginPos);
     return true;
 }
@@ -216,7 +216,7 @@ void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         return;
     }
     
-    CCPoint endPos = pTouch->locationInView();	
+    CCPoint endPos = pTouch->locationInView();    
     endPos = CCDirector::sharedDirector()->convertToGL(endPos);
 
     float delta = 5.0f;
@@ -279,12 +279,12 @@ void TextFieldTTFDefaultTest::onEnter()
         FONT_SIZE);
     addChild(pTextField);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)	
-	// on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
-	// so we had to set a higher position to make it visable
-	pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
+    // on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position to make it visable
+    pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
 #else
-	pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+    pTextField->setPosition(ccp(s.width / 2, s.height / 2));
 #endif
 
     m_pTrackNode = pTextField;
@@ -340,13 +340,13 @@ void TextFieldTTFActionTest::onEnter()
     addChild(m_pTextField);
 
     m_pTextField->setDelegate(this);
-	
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)	
-	// on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
-	// so we had to set a higher position
-	m_pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
+    // on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position
+    m_pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
 #else
-	m_pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+    m_pTextField->setPosition(ccp(s.width / 2, s.height / 2));
 #endif
 
     m_pTrackNode = m_pTextField;

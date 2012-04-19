@@ -78,7 +78,7 @@ local int gz_comp(state, flush)
             have = (unsigned)(strm->next_out - state->next);
             if (have && ((got = write(state->fd, state->next, have)) < 0 ||
                          (unsigned)got != have)) {
-            	//cjh               gz_error(state, Z_ERRNO, zstrerror());
+                //cjh               gz_error(state, Z_ERRNO, zstrerror());
                 return -1;
             }
             if (strm->avail_out == 0) {

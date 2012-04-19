@@ -90,8 +90,8 @@ void CCLuaEngine::addSearchPath(const char* path)
 
 int CCLuaEngine::executeString(const char *codes)
 {
-	int nRet =	luaL_dostring(m_state, codes);
-	lua_gc(m_state, LUA_GCCOLLECT, 0);
+    int nRet =    luaL_dostring(m_state, codes);
+    lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (nRet != 0)
     {
@@ -116,7 +116,7 @@ int CCLuaEngine::executeScriptFile(const char* filename)
     return 0;
 }
 
-int	CCLuaEngine::executeGlobalFunction(const char* functionName)
+int    CCLuaEngine::executeGlobalFunction(const char* functionName)
 {
     lua_getglobal(m_state, functionName);  /* query function by name, stack: function */
     if (!lua_isfunction(m_state, -1))

@@ -36,21 +36,21 @@ class CCGridBase;
 class CC_DLL CCGridAction : public CCActionInterval
 {
 public:
-	virtual CCObject* copyWithZone(CCZone* pZone);
-	virtual void startWithTarget(CCNode *pTarget);
-	virtual CCActionInterval* reverse(void);
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual CCActionInterval* reverse(void);
 
-	/** initializes the action with size and duration */
-	virtual bool initWithSize(const ccGridSize& gridSize, ccTime duration);
-	/** returns the grid */
-	virtual CCGridBase* getGrid(void);
+    /** initializes the action with size and duration */
+    virtual bool initWithSize(const ccGridSize& gridSize, ccTime duration);
+    /** returns the grid */
+    virtual CCGridBase* getGrid(void);
 
 public:
-	/** creates the action with size and duration */
-	static CCGridAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
+    /** creates the action with size and duration */
+    static CCGridAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
 
 protected:
-	ccGridSize m_sGridSize;
+    ccGridSize m_sGridSize;
 };
 
 /** 
@@ -60,17 +60,17 @@ protected:
 class CC_DLL CCGrid3DAction : public CCGridAction
 {
 public:
-	/** returns the grid */
-	virtual CCGridBase* getGrid(void);
-	/** returns the vertex than belongs to certain position in the grid */
-	ccVertex3F vertex(const ccGridSize& pos);
-	/** returns the non-transformed vertex than belongs to certain position in the grid */
-	ccVertex3F originalVertex(const ccGridSize& pos);
-	/** sets a new vertex to a certain position of the grid */
-	void setVertex(const ccGridSize& pos, const ccVertex3F& vertex);
+    /** returns the grid */
+    virtual CCGridBase* getGrid(void);
+    /** returns the vertex than belongs to certain position in the grid */
+    ccVertex3F vertex(const ccGridSize& pos);
+    /** returns the non-transformed vertex than belongs to certain position in the grid */
+    ccVertex3F originalVertex(const ccGridSize& pos);
+    /** sets a new vertex to a certain position of the grid */
+    void setVertex(const ccGridSize& pos, const ccVertex3F& vertex);
 
 public:
-	/** creates the action with size and duration */
+    /** creates the action with size and duration */
     static CCGrid3DAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
 };
 
@@ -78,18 +78,18 @@ public:
 class CC_DLL CCTiledGrid3DAction : public CCGridAction
 {
 public:
-	/** returns the tile that belongs to a certain position of the grid */
-	ccQuad3 tile(const ccGridSize& pos);
-	/** returns the non-transformed tile that belongs to a certain position of the grid */
-	ccQuad3 originalTile(const ccGridSize& pos);
-	/** sets a new tile to a certain position of the grid */
-	void setTile(const ccGridSize& pos, const ccQuad3& coords);
+    /** returns the tile that belongs to a certain position of the grid */
+    ccQuad3 tile(const ccGridSize& pos);
+    /** returns the non-transformed tile that belongs to a certain position of the grid */
+    ccQuad3 originalTile(const ccGridSize& pos);
+    /** sets a new tile to a certain position of the grid */
+    void setTile(const ccGridSize& pos, const ccQuad3& coords);
 
-	/** returns the grid */
-	virtual CCGridBase* getGrid(void);
+    /** returns the grid */
+    virtual CCGridBase* getGrid(void);
 
 public:
-	/** creates the action with size and duration */
+    /** creates the action with size and duration */
     static CCTiledGrid3DAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
 };
 
@@ -97,78 +97,78 @@ public:
 class CC_DLL CCAccelDeccelAmplitude : public CCActionInterval
 {
 public:
-	virtual ~CCAccelDeccelAmplitude(void);
-	/** initializes the action with an inner action that has the amplitude property, and a duration time */
-	bool initWithAction(CCAction *pAction, ccTime duration);
+    virtual ~CCAccelDeccelAmplitude(void);
+    /** initializes the action with an inner action that has the amplitude property, and a duration time */
+    bool initWithAction(CCAction *pAction, ccTime duration);
 
-	virtual void startWithTarget(CCNode *pTarget);
-	virtual void update(ccTime time);
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual void update(ccTime time);
     virtual CCActionInterval* reverse(void);
 
-	/** get amplitude rate */
-	inline float getRate(void) { return m_fRate; }
-	/** set amplitude rate */
-	inline void setRate(float fRate) { m_fRate = fRate; }
+    /** get amplitude rate */
+    inline float getRate(void) { return m_fRate; }
+    /** set amplitude rate */
+    inline void setRate(float fRate) { m_fRate = fRate; }
 
 public:
-	/** creates the action with an inner action that has the amplitude property, and a duration time */
-	static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+    /** creates the action with an inner action that has the amplitude property, and a duration time */
+    static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
 
 protected:
-	float m_fRate;
-	CCActionInterval *m_pOther;
+    float m_fRate;
+    CCActionInterval *m_pOther;
 };
 
 /** @brief CCAccelAmplitude action */
 class CC_DLL CCAccelAmplitude : public CCActionInterval
 {
 public:
-	~CCAccelAmplitude(void);
-	/** initializes the action with an inner action that has the amplitude property, and a duration time */
-	bool initWithAction(CCAction *pAction, ccTime duration);
+    ~CCAccelAmplitude(void);
+    /** initializes the action with an inner action that has the amplitude property, and a duration time */
+    bool initWithAction(CCAction *pAction, ccTime duration);
 
-	/** get amplitude rate */
-	inline float getRate(void) { return m_fRate; }
-	/** set amplitude rate */
-	inline void setRate(float fRate) { m_fRate = fRate; }
+    /** get amplitude rate */
+    inline float getRate(void) { return m_fRate; }
+    /** set amplitude rate */
+    inline void setRate(float fRate) { m_fRate = fRate; }
 
-	virtual void startWithTarget(CCNode *pTarget);
-	virtual void update(ccTime time);
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual void update(ccTime time);
     virtual CCActionInterval* reverse(void);
 
 public:
-	/** creates the action with an inner action that has the amplitude property, and a duration time */
-	static CCAccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+    /** creates the action with an inner action that has the amplitude property, and a duration time */
+    static CCAccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
 
 protected:
-	float m_fRate;
-	CCActionInterval *m_pOther;
+    float m_fRate;
+    CCActionInterval *m_pOther;
 };
 
 /** @brief CCDeccelAmplitude action */
 class CC_DLL CCDeccelAmplitude : public CCActionInterval
 {
 public:
-	~CCDeccelAmplitude(void);
-	/** initializes the action with an inner action that has the amplitude property, and a duration time */
-	bool initWithAction(CCAction *pAction, ccTime duration);
+    ~CCDeccelAmplitude(void);
+    /** initializes the action with an inner action that has the amplitude property, and a duration time */
+    bool initWithAction(CCAction *pAction, ccTime duration);
 
-	/** get amplitude rate */
-	inline float getRate(void) { return m_fRate; }
-	/** set amplitude rate */
-	inline void setRate(float fRate) { m_fRate = fRate; }
+    /** get amplitude rate */
+    inline float getRate(void) { return m_fRate; }
+    /** set amplitude rate */
+    inline void setRate(float fRate) { m_fRate = fRate; }
 
-	virtual void startWithTarget(CCNode *pTarget);
-	virtual void update(ccTime time);
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual void update(ccTime time);
     virtual CCActionInterval* reverse(void);
 
 public:
-	/** creates the action with an inner action that has the amplitude property, and a duration time */
+    /** creates the action with an inner action that has the amplitude property, and a duration time */
     static CCDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
 
 protected:
-	float m_fRate;
-	CCActionInterval *m_pOther;
+    float m_fRate;
+    CCActionInterval *m_pOther;
 };
 
 /** @brief CCStopGrid action.
@@ -179,28 +179,28 @@ protected:
 class CC_DLL CCStopGrid : public CCActionInstant
 {
 public:
-	virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CCNode *pTarget);
 
 public:
-	/** Allocates and initializes the action */
-	static CCStopGrid* action(void);
+    /** Allocates and initializes the action */
+    static CCStopGrid* action(void);
 };
 
 /** @brief CCReuseGrid action */
 class CC_DLL CCReuseGrid : public CCActionInstant
 {
 public:
-	/** initializes an action with the number of times that the current grid will be reused */
+    /** initializes an action with the number of times that the current grid will be reused */
     bool initWithTimes(int times);
 
-	virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CCNode *pTarget);
 
 public:
-	/** creates an action with the number of times that the current grid will be reused */
-	static CCReuseGrid* actionWithTimes(int times);
+    /** creates an action with the number of times that the current grid will be reused */
+    static CCReuseGrid* actionWithTimes(int times);
 
 protected:
-	int m_nTimes;
+    int m_nTimes;
 };
 
 NS_CC_END

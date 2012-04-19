@@ -42,37 +42,37 @@ bool AppDelegate::initInstance()
         // Android doesn't need to do anything.
 
 #endif  // CC_PLATFORM_ANDROID
-	
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 
-		// Initialize OpenGLView instance, that release by CCDirector when application terminate.
-		// The HelloWorld is designed as HVGA.
-		CCEGLView * pMainWnd = new CCEGLView();
-		CC_BREAK_IF(! pMainWnd
-				|| ! pMainWnd->Create("cocos2d: tests", 480, 320, 480, 320));
+        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
+        // The HelloWorld is designed as HVGA.
+        CCEGLView * pMainWnd = new CCEGLView();
+        CC_BREAK_IF(! pMainWnd
+                || ! pMainWnd->Create("cocos2d: tests", 480, 320, 480, 320));
 
-		//set the base resource folder pay attention to add "/"
-		CCFileUtils::setResourcePath("../Resources/");
+        //set the base resource folder pay attention to add "/"
+        CCFileUtils::setResourcePath("../Resources/");
 
 #endif  // CC_PLATFORM_LINUX
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 
-		CCEGLView * pMainWnd = new CCEGLView();
-		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this, 480, 320));
-		pMainWnd->setDeviceOrientation(Osp::Ui::ORIENTATION_LANDSCAPE);
-		CCFileUtils::setResourcePath("/Res/");
+        CCEGLView * pMainWnd = new CCEGLView();
+        CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this, 480, 320));
+        pMainWnd->setDeviceOrientation(Osp::Ui::ORIENTATION_LANDSCAPE);
+        CCFileUtils::setResourcePath("/Res/");
 
 #endif  // CC_PLATFORM_BADA
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-		CCEGLView * pMainWnd = new CCEGLView();
-		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(1024, 600));
-		CCFileUtils::setResourcePath("app/native/Resources");
+        CCEGLView * pMainWnd = new CCEGLView();
+        CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(1024, 600));
+        CCFileUtils::setResourcePath("app/native/Resources");
 #endif // CC_PLATFORM_QNX
 
         bRet = true;
@@ -93,18 +93,18 @@ bool AppDelegate::applicationDidFinishLaunching()
     // tests set device orientation in RootViewController.mm
     // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
-	// turn on display FPS
+    // turn on display FPS
     pDirector->setDisplayStats(true);
 
-	// set FPS. the default value is 1.0/60 if you don't call this
-	pDirector->setAnimationInterval(1.0 / 60);
+    // set FPS. the default value is 1.0/60 if you don't call this
+    pDirector->setAnimationInterval(1.0 / 60);
 
     CCScene * pScene = CCScene::node();
     CCLayer * pLayer = new TestController();
     pLayer->autorelease();
 
     pScene->addChild(pLayer);
-	pDirector->runWithScene(pScene);
+    pDirector->runWithScene(pScene);
 
     return true;
 }
@@ -114,7 +114,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->pause();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-	SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
@@ -122,5 +122,5 @@ void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-	SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

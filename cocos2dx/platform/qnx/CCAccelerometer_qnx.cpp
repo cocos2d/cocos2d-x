@@ -29,18 +29,18 @@ THE SOFTWARE.
 #include <bps/accelerometer.h>
 #include <fcntl.h>
 
-#define BUFFER_SIZE 			30
+#define BUFFER_SIZE             30
 
 NS_CC_BEGIN
 
-int	CCAccelerometer::m_initialOrientationAngle = 0;
+int    CCAccelerometer::m_initialOrientationAngle = 0;
 
 CCAccelerometer::CCAccelerometer()
 {
-	m_pAccelDelegate = NULL;
-	m_initialOrientationAngle = atoi(getenv("ORIENTATION"));
+    m_pAccelDelegate = NULL;
+    m_initialOrientationAngle = atoi(getenv("ORIENTATION"));
 
-	accelerometer_set_update_frequency(FREQ_40_HZ);
+    accelerometer_set_update_frequency(FREQ_40_HZ);
 }
 
 CCAccelerometer::~CCAccelerometer()
@@ -50,45 +50,45 @@ CCAccelerometer::~CCAccelerometer()
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 {
-	m_pAccelDelegate = pDelegate;
+    m_pAccelDelegate = pDelegate;
 }
 
 void CCAccelerometer::update(long timeStamp)
 {
-	if ( m_pAccelDelegate != NULL)
-	{
-		int angle = atoi(getenv("ORIENTATION"));
+    if ( m_pAccelDelegate != NULL)
+    {
+        int angle = atoi(getenv("ORIENTATION"));
 
-		double x, y, z;
+        double x, y, z;
 
-		accelerometer_read_forces(&x, &y, &z);
+        accelerometer_read_forces(&x, &y, &z);
 
-		if (m_initialOrientationAngle == 270)
-	    {
-	    	m_accelerationValue.x = y;
-	    	m_accelerationValue.y = -x;
-	    }
-		else if (m_initialOrientationAngle == 90)
-		{
-			m_accelerationValue.x = -y;
-			m_accelerationValue.y = x;
-		}
-		else if (m_initialOrientationAngle == 0)
-		{
-			m_accelerationValue.x = x;
-			m_accelerationValue.y = y;
-	    }
-		else if (m_initialOrientationAngle == 180)
-		{
-			m_accelerationValue.x = -x;
-			m_accelerationValue.y = -y;
-		}
+        if (m_initialOrientationAngle == 270)
+        {
+            m_accelerationValue.x = y;
+            m_accelerationValue.y = -x;
+        }
+        else if (m_initialOrientationAngle == 90)
+        {
+            m_accelerationValue.x = -y;
+            m_accelerationValue.y = x;
+        }
+        else if (m_initialOrientationAngle == 0)
+        {
+            m_accelerationValue.x = x;
+            m_accelerationValue.y = y;
+        }
+        else if (m_initialOrientationAngle == 180)
+        {
+            m_accelerationValue.x = -x;
+            m_accelerationValue.y = -y;
+        }
 
-		m_accelerationValue.z = z;
-		m_accelerationValue.timestamp = (double)timeStamp;
+        m_accelerationValue.z = z;
+        m_accelerationValue.timestamp = (double)timeStamp;
 
-		m_pAccelDelegate->didAccelerate(&m_accelerationValue);
-	}
+        m_pAccelDelegate->didAccelerate(&m_accelerationValue);
+    }
 }
 
 NS_CC_END

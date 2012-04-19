@@ -56,74 +56,74 @@ class CCSprite;
 class CC_DLL CCSpriteBatchNode : public CCNode, public CCTextureProtocol
 {
 public:
-	~CCSpriteBatchNode();
+    ~CCSpriteBatchNode();
 
-	// property
+    // property
     
-	// retain
-	inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
-	inline void setTextureAtlas(CCTextureAtlas* textureAtlas) 
-	{ 
-		if (textureAtlas != m_pobTextureAtlas)
-		{
-			CC_SAFE_RETAIN(textureAtlas);
-			CC_SAFE_RELEASE(m_pobTextureAtlas);
-			m_pobTextureAtlas = textureAtlas;
-		}
-	}
+    // retain
+    inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
+    inline void setTextureAtlas(CCTextureAtlas* textureAtlas) 
+    { 
+        if (textureAtlas != m_pobTextureAtlas)
+        {
+            CC_SAFE_RETAIN(textureAtlas);
+            CC_SAFE_RELEASE(m_pobTextureAtlas);
+            m_pobTextureAtlas = textureAtlas;
+        }
+    }
 
-	inline CCArray* getDescendants(void) { return m_pobDescendants; }
+    inline CCArray* getDescendants(void) { return m_pobDescendants; }
 
-	/** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
-	The capacity will be increased in 33% in runtime if it run out of space.
-	*/
-	static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D *tex);
+    /** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
+    The capacity will be increased in 33% in runtime if it run out of space.
+    */
+    static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D *tex);
 
-	/** creates a CCSpriteBatchNode with a texture2d and capacity of children.
-	The capacity will be increased in 33% in runtime if it run out of space.
-	*/
-	static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);
+    /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
+    The capacity will be increased in 33% in runtime if it run out of space.
+    */
+    static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);
 
-	/** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) with a default capacity of 29 children.
-	The capacity will be increased in 33% in runtime if it run out of space.
-	The file will be loaded using the TextureMgr.
-	*/
-	static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage);
+    /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) with a default capacity of 29 children.
+    The capacity will be increased in 33% in runtime if it run out of space.
+    The file will be loaded using the TextureMgr.
+    */
+    static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage);
 
-	/** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
-	The capacity will be increased in 33% in runtime if it run out of space.
-	The file will be loaded using the TextureMgr.
-	*/
-	static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
+    /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
+    The capacity will be increased in 33% in runtime if it run out of space.
+    The file will be loaded using the TextureMgr.
+    */
+    static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
 
-	/** initializes a CCSpriteBatchNode with a texture2d and capacity of children.
-	The capacity will be increased in 33% in runtime if it run out of space.
-	*/
-	bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
-	/** initializes a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
-	The capacity will be increased in 33% in runtime if it run out of space.
-	The file will be loaded using the TextureMgr.
-	*/
-	bool initWithFile(const char* fileImage, unsigned int capacity);
+    /** initializes a CCSpriteBatchNode with a texture2d and capacity of children.
+    The capacity will be increased in 33% in runtime if it run out of space.
+    */
+    bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
+    /** initializes a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
+    The capacity will be increased in 33% in runtime if it run out of space.
+    The file will be loaded using the TextureMgr.
+    */
+    bool initWithFile(const char* fileImage, unsigned int capacity);
 
-	void increaseAtlasCapacity();
+    void increaseAtlasCapacity();
 
-	/** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
-	@warning Removing a child from a CCSpriteBatchNode is very slow
-	*/
-	void removeChildAtIndex(unsigned int index, bool doCleanup);
+    /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
+    @warning Removing a child from a CCSpriteBatchNode is very slow
+    */
+    void removeChildAtIndex(unsigned int index, bool doCleanup);
 
-	void insertChild(CCSprite *child, unsigned int index);
-	void appendChild(CCSprite* sprite);
-	void removeSpriteFromAtlas(CCSprite *sprite);
+    void insertChild(CCSprite *child, unsigned int index);
+    void appendChild(CCSprite* sprite);
+    void removeSpriteFromAtlas(CCSprite *sprite);
 
-	unsigned int rebuildIndexInOrder(CCSprite *parent, unsigned int index);
-	unsigned int highestAtlasIndexInChild(CCSprite *sprite);
-	unsigned int lowestAtlasIndexInChild(CCSprite *sprite);
-	unsigned int atlasIndexForChild(CCSprite *sprite, int z);
-	/* Sprites use this to start sortChildren, don't call this manually */
-	void reorderBatch(bool reorder);
-	// CCTextureProtocol
+    unsigned int rebuildIndexInOrder(CCSprite *parent, unsigned int index);
+    unsigned int highestAtlasIndexInChild(CCSprite *sprite);
+    unsigned int lowestAtlasIndexInChild(CCSprite *sprite);
+    unsigned int atlasIndexForChild(CCSprite *sprite, int z);
+    /* Sprites use this to start sortChildren, don't call this manually */
+    void reorderBatch(bool reorder);
+    // CCTextureProtocol
     virtual CCTexture2D* getTexture(void);
     virtual void setTexture(CCTexture2D *texture);
     virtual void setBlendFunc(ccBlendFunc blendFunc);
@@ -137,7 +137,7 @@ public:
         
     virtual void removeChild(CCNode* child, bool cleanup);
     virtual void removeAllChildrenWithCleanup(bool cleanup);
-	virtual void sortAllChildren();
+    virtual void sortAllChildren();
     virtual void draw(void);
 
 protected:
@@ -156,16 +156,16 @@ protected:
     CCSpriteBatchNode * addSpriteWithoutQuad(CCSprite*child, unsigned int z, int aTag);
 
 private:
-	void updateAtlasIndex(CCSprite* sprite, int* curIndex);
-	void swap(int oldIndex, int newIndex);
-	void updateBlendFunc();
+    void updateAtlasIndex(CCSprite* sprite, int* curIndex);
+    void swap(int oldIndex, int newIndex);
+    void updateBlendFunc();
 
 protected:
-	CCTextureAtlas *m_pobTextureAtlas;
-	ccBlendFunc m_blendFunc;
+    CCTextureAtlas *m_pobTextureAtlas;
+    ccBlendFunc m_blendFunc;
 
-	// all descendants: chlidren, gran children, etc...
-	CCArray* m_pobDescendants;
+    // all descendants: chlidren, gran children, etc...
+    CCArray* m_pobDescendants;
 };
 
 NS_CC_END

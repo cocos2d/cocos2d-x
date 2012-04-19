@@ -52,41 +52,41 @@ static int libxml_is_threaded = -1;
 #if (__GNUC__ == 3 && __GNUC_MINOR__ >= 3) || (__GNUC__ > 3)
 extern int pthread_once (pthread_once_t *__once_control,
                          void (*__init_routine) (void))
-	   __attribute((weak));
+       __attribute((weak));
 extern void *pthread_getspecific (pthread_key_t __key)
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_setspecific (pthread_key_t __key,
                                 __const void *__pointer)
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_key_create (pthread_key_t *__key,
                                void (*__destr_function) (void *))
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_key_delete (pthread_key_t __key)
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_mutex_init ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_mutex_destroy ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_mutex_lock ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_mutex_unlock ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_cond_init ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_cond_destroy ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_cond_wait ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_equal ()
-	   __attribute((weak));
+       __attribute((weak));
 extern pthread_t pthread_self ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_key_create ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_key_delete ()
-	   __attribute((weak));
+       __attribute((weak));
 extern int pthread_cond_signal ()
-	   __attribute((weak));
+       __attribute((weak));
 #endif
 #endif /* linux */
 #endif /* __GNUC__ */
@@ -513,7 +513,7 @@ __xmlGlobalInitMutexUnlock(void)
         pthread_mutex_unlock(&global_init_lock);
 #elif defined HAVE_WIN32_THREADS
     if (global_init_lock != NULL) {
-	LeaveCriticalSection(global_init_lock);
+    LeaveCriticalSection(global_init_lock);
     }
 #elif defined HAVE_BEOS_THREADS
     release_sem(global_init_lock);
@@ -540,9 +540,9 @@ __xmlGlobalInitMutexDestroy(void)
 }
 
 /************************************************************************
- *									*
- *			Per thread global state handling		*
- *									*
+ *                                    *
+ *            Per thread global state handling        *
+ *                                    *
  ************************************************************************/
 
 #ifdef LIBXML_THREAD_ENABLED
@@ -583,8 +583,8 @@ xmlNewGlobalState(void)
 
     gs = malloc(sizeof(xmlGlobalState));
     if (gs == NULL) {
-	xmlGenericError(xmlGenericErrorContext,
-			"xmlGetGlobalState: out of memory\n");
+    xmlGenericError(xmlGenericErrorContext,
+            "xmlGetGlobalState: out of memory\n");
         return (NULL);
     }
 
@@ -668,8 +668,8 @@ xmlGetGlobalState(void)
     if ((globalval = (xmlGlobalState *)
          pthread_getspecific(globalkey)) == NULL) {
         xmlGlobalState *tsd = xmlNewGlobalState();
-	if (tsd == NULL)
-	    return(NULL);
+    if (tsd == NULL)
+        return(NULL);
 
         pthread_setspecific(globalkey, tsd);
         return (tsd);
@@ -697,15 +697,15 @@ xmlGetGlobalState(void)
         xmlGlobalState *tsd = xmlNewGlobalState();
 
         if (tsd == NULL)
-	    return(NULL);
+        return(NULL);
         p = (xmlGlobalStateCleanupHelperParams *)
             malloc(sizeof(xmlGlobalStateCleanupHelperParams));
-	if (p == NULL) {
+    if (p == NULL) {
             xmlGenericError(xmlGenericErrorContext,
                             "xmlGetGlobalState: out of memory\n");
             xmlFreeGlobalState(tsd);
-	    return(NULL);
-	}
+        return(NULL);
+    }
         p->memory = tsd;
 #if defined(LIBXML_STATIC) && !defined(LIBXML_STATIC_FOR_DLL)
         DuplicateHandle(GetCurrentProcess(), GetCurrentThread(),
@@ -736,8 +736,8 @@ xmlGetGlobalState(void)
 
     if ((globalval = (xmlGlobalState *) tls_get(globalkey)) == NULL) {
         xmlGlobalState *tsd = xmlNewGlobalState();
-	if (tsd == NULL)
-	    return (NULL);
+    if (tsd == NULL)
+        return (NULL);
 
         tls_set(globalkey, tsd);
         on_exit_thread(xmlGlobalStateCleanup, NULL);
@@ -750,9 +750,9 @@ xmlGetGlobalState(void)
 }
 
 /************************************************************************
- *									*
- *			Library wide thread interfaces			*
- *									*
+ *                                    *
+ *            Library wide thread interfaces            *
+ *                                    *
  ************************************************************************/
 
 /**

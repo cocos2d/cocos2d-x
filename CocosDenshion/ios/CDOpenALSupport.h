@@ -55,8 +55,8 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif	
-	
+#endif    
+    
 
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
@@ -64,10 +64,10 @@ extern "C" {
 
 
 //Taken from oalTouch MyOpenALSupport 1.1
-void* CDloadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate);
+void* CDloadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*    outSampleRate);
 void* CDloadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei* outSampleRate);
 void* CDGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei* outSampleRate);
-	
+    
 #ifdef __cplusplus
 }
 #endif

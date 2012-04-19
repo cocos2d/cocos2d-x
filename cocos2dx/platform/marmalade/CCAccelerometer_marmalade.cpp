@@ -37,32 +37,32 @@ CCAccelerometer::~CCAccelerometer()
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
 {
-	m_pAccelDelegate = pDelegate;
+    m_pAccelDelegate = pDelegate;
 
-	if (pDelegate)
-	{		
-		if (s3eAccelerometerStart() != S3E_RESULT_SUCCESS)
-		{
-			CCLog("s3eAccelerometerStart() - ERROR\n");
-		}
-	}
-	else
-	{
-		s3eAccelerometerStop();
-	}
+    if (pDelegate)
+    {        
+        if (s3eAccelerometerStart() != S3E_RESULT_SUCCESS)
+        {
+            CCLog("s3eAccelerometerStart() - ERROR\n");
+        }
+    }
+    else
+    {
+        s3eAccelerometerStop();
+    }
 }
 
 void CCAccelerometer::update(float x, float y, float z, uint64 sensorTimeStamp) 
 {
-	if (m_pAccelDelegate)
-	{
-		m_obAccelerationValue.x = ((double)x)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.y = ((double)y)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.z = ((double)z)/S3E_ACCELEROMETER_1G ;
-		m_obAccelerationValue.timestamp = (double)(sensorTimeStamp / 1000.0);
+    if (m_pAccelDelegate)
+    {
+        m_obAccelerationValue.x = ((double)x)/S3E_ACCELEROMETER_1G ;
+        m_obAccelerationValue.y = ((double)y)/S3E_ACCELEROMETER_1G ;
+        m_obAccelerationValue.z = ((double)z)/S3E_ACCELEROMETER_1G ;
+        m_obAccelerationValue.timestamp = (double)(sensorTimeStamp / 1000.0);
 
-		m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
-	}	
+        m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+    }    
 }
 
 NS_CC_END

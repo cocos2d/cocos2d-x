@@ -21,14 +21,14 @@ kmBool kmRay2IntersectLineSegment(const kmRay2* ray, const kmVec2* p1, const kmV
     float y4 = p2->y;
 
     float denom = (y4 -y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
-	float ua, x, y;
+    float ua, x, y;
     //If denom is zero, the lines are parallel
     if(denom > -kmEpsilon && denom < kmEpsilon) {
         return KM_FALSE;
     }
 
     ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denom;
-//	float ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denom;
+//    float ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denom;
 
     x = x1 + ua * (x2 - x1);
     y = y1 + ua * (y2 - y1);
@@ -125,8 +125,8 @@ kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2
     kmBool intersected = KM_FALSE;
 
     if(kmRay2IntersectLineSegment(ray, p1, p2, &intersect)) {
-		kmVec2 tmp;
-		kmScalar this_distance;
+        kmVec2 tmp;
+        kmScalar this_distance;
 
         intersected = KM_TRUE;
         this_distance = kmVec2Length(kmVec2Subtract(&tmp, &intersect, &ray->start));
@@ -140,8 +140,8 @@ kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2
     }
 
     if(kmRay2IntersectLineSegment(ray, p2, p3, &intersect)) {
-		kmVec2 tmp;
-		kmScalar this_distance;
+        kmVec2 tmp;
+        kmScalar this_distance;
         intersected = KM_TRUE;
 
         this_distance = kmVec2Length(kmVec2Subtract(&tmp, &intersect, &ray->start));
@@ -155,8 +155,8 @@ kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2
     }
 
     if(kmRay2IntersectLineSegment(ray, p3, p1, &intersect)) {
-		kmVec2 tmp;
-		kmScalar this_distance;
+        kmVec2 tmp;
+        kmScalar this_distance;
         intersected = KM_TRUE;
 
         this_distance = kmVec2Length(kmVec2Subtract(&tmp, &intersect, &ray->start));
@@ -183,5 +183,5 @@ kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2
 
 kmBool kmRay2IntersectCircle(const kmRay2* ray, const kmVec2 centre, const kmScalar radius, kmVec2* intersection) {
     assert(0 && "Not implemented");
-	return 0;
+    return 0;
 }

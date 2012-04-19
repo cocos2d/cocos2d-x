@@ -23,12 +23,12 @@
 #import <UIKit/UIKit.h>
 
 @interface ZFont : NSObject {
-	CGFontRef _cgFont;
-	CGFloat _pointSize;
-	CGFloat _ratio;
-	NSString *_familyName;
-	NSString *_fontName;
-	NSString *_postScriptName;
+    CGFontRef _cgFont;
+    CGFloat _pointSize;
+    CGFloat _ratio;
+    NSString *_familyName;
+    NSString *_fontName;
+    NSString *_postScriptName;
 }
 @property (nonatomic, readonly) CGFontRef cgFont;
 @property (nonatomic, readonly) CGFloat pointSize;

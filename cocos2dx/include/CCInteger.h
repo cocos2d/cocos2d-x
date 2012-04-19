@@ -8,9 +8,9 @@ NS_CC_BEGIN
 class CC_DLL CCInteger : public CCObject
 {
 public:
-	CCInteger(int v)
-		: value(v) {}
-	int value;
+    CCInteger(int v)
+        : value(v) {}
+    int value;
 };
 
 NS_CC_END

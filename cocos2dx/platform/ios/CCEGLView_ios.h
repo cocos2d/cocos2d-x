@@ -70,4 +70,4 @@ private:
 
 NS_CC_END
 
-#endif	// end of __CC_EGLVIEW_IPHONE_H__
+#endif    // end of __CC_EGLVIEW_IPHONE_H__

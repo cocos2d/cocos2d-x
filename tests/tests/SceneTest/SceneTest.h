@@ -7,44 +7,44 @@
 class SceneTestLayer1 : public CCLayer
 {
 public:
-	SceneTestLayer1();
-	~SceneTestLayer1();
+    SceneTestLayer1();
+    ~SceneTestLayer1();
 
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
 
-	void testDealloc(ccTime dt);
-	void onPushScene(CCObject* pSender);
-	void onPushSceneTran(CCObject* pSender);
-	void onQuit(CCObject* pSender);
+    void testDealloc(ccTime dt);
+    void onPushScene(CCObject* pSender);
+    void onPushSceneTran(CCObject* pSender);
+    void onQuit(CCObject* pSender);
 
-	//CREATE_NODE(SceneTestLayer1);
+    //CREATE_NODE(SceneTestLayer1);
 } ;
 
 class SceneTestLayer2 : public CCLayer
 {
-	float	m_timeCounter;
+    float    m_timeCounter;
 public:
-	SceneTestLayer2();
+    SceneTestLayer2();
 
-	void testDealloc(ccTime dt);
-	void onGoBack(CCObject* pSender);
-	void onReplaceScene(CCObject* pSender);
-	void onReplaceSceneTran(CCObject* pSender);
+    void testDealloc(ccTime dt);
+    void onGoBack(CCObject* pSender);
+    void onReplaceScene(CCObject* pSender);
+    void onReplaceSceneTran(CCObject* pSender);
 
-	//CREATE_NODE(SceneTestLayer2);
+    //CREATE_NODE(SceneTestLayer2);
 } ;
 
 class SceneTestLayer3 : public CCLayerColor
 {
 public:
-	SceneTestLayer3();
+    SceneTestLayer3();
 
-	virtual void testDealloc(ccTime dt);
+    virtual void testDealloc(ccTime dt);
 
-	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 
-	//CREATE_NODE(SceneTestLayer3);
+    //CREATE_NODE(SceneTestLayer3);
 } ;
 
 class SceneTestScene : public TestScene

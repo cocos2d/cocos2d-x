@@ -34,15 +34,15 @@ THE SOFTWARE.
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     # include "ios/CCApplication_ios.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-	#include "marmalade/CCApplication_marmalade.h"
+    #include "marmalade/CCApplication_marmalade.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "linux/CCApplication_linux.h"
+    #include "linux/CCApplication_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-	#include "bada/CCApplication_bada.h"
+    #include "bada/CCApplication_bada.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
     #include "qnx/CCApplication_qnx.h"
 #else
     #error
 #endif
 
-#endif	// __CC_APPLICATION_PLATFORM_H__
+#endif    // __CC_APPLICATION_PLATFORM_H__

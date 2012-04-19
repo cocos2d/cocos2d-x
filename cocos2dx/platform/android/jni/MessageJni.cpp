@@ -50,85 +50,85 @@ extern "C"
     {
         cocos2d::CCDirector::sharedDirector()->mainLoop();
     }
-	
-	// handle onPause and onResume
-	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause()
-	{
-	        CCApplication::sharedApplication().applicationDidEnterBackground();
-	}
-	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume()
-	{
-	        // Shared OpenGL View instance doesn't exist yet when Activity.onResume is first called
-	        if (CCDirector::sharedDirector()->getOpenGLView())
-			{
-	            CCApplication::sharedApplication().applicationWillEnterForeground();
-			}
-	}
+    
+    // handle onPause and onResume
+    
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause()
+    {
+            CCApplication::sharedApplication().applicationDidEnterBackground();
+    }
+    
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume()
+    {
+            // Shared OpenGL View instance doesn't exist yet when Activity.onResume is first called
+            if (CCDirector::sharedDirector()->getOpenGLView())
+            {
+                CCApplication::sharedApplication().applicationWillEnterForeground();
+            }
+    }
 
-	void showMessageBoxJNI(const char * pszMsg, const char * pszTitle)
-	{
-		if (! pszMsg)
-		{
-			return;
-		}
+    void showMessageBoxJNI(const char * pszMsg, const char * pszTitle)
+    {
+        if (! pszMsg)
+        {
+            return;
+        }
 
         JniMethodInfo t;
-		if (JniHelper::getStaticMethodInfo(t
+        if (JniHelper::getStaticMethodInfo(t
             , "org/cocos2dx/lib/Cocos2dxActivity"
             , "showMessageBox"
             , "(Ljava/lang/String;Ljava/lang/String;)V"))
-		{
-			jstring stringArg1;
+        {
+            jstring stringArg1;
 
-			if (! pszTitle)
-			{
-				stringArg1 = t.env->NewStringUTF("");
-			}
-			else
-			{
-				stringArg1 = t.env->NewStringUTF(pszTitle);
-			}
+            if (! pszTitle)
+            {
+                stringArg1 = t.env->NewStringUTF("");
+            }
+            else
+            {
+                stringArg1 = t.env->NewStringUTF(pszTitle);
+            }
 
-			jstring stringArg2 = t.env->NewStringUTF(pszMsg);
-			t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2);
+            jstring stringArg2 = t.env->NewStringUTF(pszMsg);
+            t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2);
 
-			t.env->DeleteLocalRef(stringArg1);
+            t.env->DeleteLocalRef(stringArg1);
             t.env->DeleteLocalRef(stringArg2);
-			t.env->DeleteLocalRef(t.classID);
-		}
-	}
+            t.env->DeleteLocalRef(t.classID);
+        }
+    }
 
 
-	//////////////////////////////////////////////////////////////////////////
-	// terminate the process
-	//////////////////////////////////////////////////////////////////////////
-	void terminateProcessJNI()
-	{
-		JniMethodInfo t;
+    //////////////////////////////////////////////////////////////////////////
+    // terminate the process
+    //////////////////////////////////////////////////////////////////////////
+    void terminateProcessJNI()
+    {
+        JniMethodInfo t;
 
-		if (JniHelper::getStaticMethodInfo(t
-			, "org/cocos2dx/lib/Cocos2dxActivity"
-			, "terminateProcess"
-			, "()V"))
-		{
-			t.env->CallStaticVoidMethod(t.classID, t.methodID);
-			t.env->DeleteLocalRef(t.classID);
-		}
-	}
+        if (JniHelper::getStaticMethodInfo(t
+            , "org/cocos2dx/lib/Cocos2dxActivity"
+            , "terminateProcess"
+            , "()V"))
+        {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
+        }
+    }
 
-	//////////////////////////////////////////////////////////////////////////
-	// set apk path
-	//////////////////////////////////////////////////////////////////////////
-	void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
-	{
-		const char* str;
-		jboolean isCopy;
-		str = env->GetStringUTFChars(apkPath, &isCopy);
-		if (isCopy) {
-			cocos2d::CCFileUtils::setResourcePath(str);
-			env->ReleaseStringUTFChars(apkPath, str);
-		}
-	}
+    //////////////////////////////////////////////////////////////////////////
+    // set apk path
+    //////////////////////////////////////////////////////////////////////////
+    void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
+    {
+        const char* str;
+        jboolean isCopy;
+        str = env->GetStringUTFChars(apkPath, &isCopy);
+        if (isCopy) {
+            cocos2d::CCFileUtils::setResourcePath(str);
+            env->ReleaseStringUTFChars(apkPath, str);
+        }
+    }
 }

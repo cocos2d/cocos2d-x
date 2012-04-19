@@ -69,9 +69,9 @@ typedef struct FMOD_SOUNDGROUP    FMOD_SOUNDGROUP;
 typedef struct FMOD_REVERB        FMOD_REVERB;
 typedef struct FMOD_DSP           FMOD_DSP;
 typedef struct FMOD_DSPCONNECTION FMOD_DSPCONNECTION;
-typedef struct FMOD_POLYGON		  FMOD_POLYGON;
-typedef struct FMOD_GEOMETRY	  FMOD_GEOMETRY;
-typedef struct FMOD_SYNCPOINT	  FMOD_SYNCPOINT;
+typedef struct FMOD_POLYGON          FMOD_POLYGON;
+typedef struct FMOD_GEOMETRY      FMOD_GEOMETRY;
+typedef struct FMOD_SYNCPOINT      FMOD_SYNCPOINT;
 typedef unsigned int              FMOD_MODE;
 typedef unsigned int              FMOD_TIMEUNIT;
 typedef unsigned int              FMOD_INITFLAGS;
@@ -236,7 +236,7 @@ typedef enum
 */
 typedef struct
 {
-	float x;        /* X co-ordinate in 3D space. */
+    float x;        /* X co-ordinate in 3D space. */
     float y;        /* Y co-ordinate in 3D space. */
     float z;        /* Z co-ordinate in 3D space. */
 } FMOD_VECTOR;
@@ -367,7 +367,7 @@ typedef enum
     FMOD_OUTPUTTYPE_PSP,             /* PSP             - Native PSP output.                        (Default on PSP) */
     FMOD_OUTPUTTYPE_PS3,             /* PS3             - Native PS3 output.                        (Default on PS3) */
     FMOD_OUTPUTTYPE_NGP,             /* NGP             - Native NGP output.                        (Default on NGP) */
-	FMOD_OUTPUTTYPE_WII,			 /* Wii			    - Native Wii output.                        (Default on Wii) */
+    FMOD_OUTPUTTYPE_WII,             /* Wii                - Native Wii output.                        (Default on Wii) */
     FMOD_OUTPUTTYPE_3DS,             /* 3DS             - Native 3DS output                         (Default on 3DS) */
     FMOD_OUTPUTTYPE_AUDIOTRACK,      /* Android         - Java Audio Track output.                  (Default on Android 2.2 and below) */
     FMOD_OUTPUTTYPE_OPENSL,          /* Android         - OpenSL ES output.                         (Default on Android 2.3 and above) */   

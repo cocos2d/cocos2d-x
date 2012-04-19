@@ -26,15 +26,15 @@ const cpConstraintClass *cpPivotJointGetClass(void);
 
 /// @private
 typedef struct cpPivotJoint {
-	cpConstraint constraint;
-	cpVect anchr1, anchr2;
-	
-	cpVect r1, r2;
-	cpVect k1, k2;
-	
-	cpVect jAcc;
-	cpFloat jMaxLen;
-	cpVect bias;
+    cpConstraint constraint;
+    cpVect anchr1, anchr2;
+    
+    cpVect r1, r2;
+    cpVect k1, k2;
+    
+    cpVect jAcc;
+    cpFloat jMaxLen;
+    cpVect bias;
 } cpPivotJoint;
 
 /// Allocate a pivot joint

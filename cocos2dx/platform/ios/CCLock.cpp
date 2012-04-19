@@ -36,12 +36,12 @@ CCLock::~CCLock(void)
 
 void CCLock::lock(void)
 {
-	
+    
 }
 
 void CCLock::unlock(void)
 {
-	
+    
 }
 
 NS_CC_END

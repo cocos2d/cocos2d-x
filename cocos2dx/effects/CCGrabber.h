@@ -36,18 +36,18 @@ class CCTexture2D;
 class CCGrabber : public CCObject
 {
 public:
-	CCGrabber(void);
-	~CCGrabber(void);
+    CCGrabber(void);
+    ~CCGrabber(void);
 
-	void grab(CCTexture2D *pTexture);
-	void beforeRender(CCTexture2D *pTexture);
-	void afterRender(CCTexture2D *pTexture);
+    void grab(CCTexture2D *pTexture);
+    void beforeRender(CCTexture2D *pTexture);
+    void afterRender(CCTexture2D *pTexture);
 
 protected:
-	GLuint m_fbo;
-	GLint m_oldFBO;
-	GLfloat	m_oldClearColor[4];
-	CCGlesVersion m_eGlesVersion;
+    GLuint m_fbo;
+    GLint m_oldFBO;
+    GLfloat    m_oldClearColor[4];
+    CCGlesVersion m_eGlesVersion;
 };
 
 NS_CC_END

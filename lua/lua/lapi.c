@@ -38,9 +38,9 @@ const char lua_ident[] =
 
 
 
-#define api_checknelems(L, n)	api_check(L, (n) <= (L->top - L->base))
+#define api_checknelems(L, n)    api_check(L, (n) <= (L->top - L->base))
 
-#define api_checkvalidindex(L, i)	api_check(L, (i) != luaO_nilobject)
+#define api_checkvalidindex(L, i)    api_check(L, (i) != luaO_nilobject)
 
 #define api_incr_top(L)   {api_check(L, L->top < L->ci->top); L->top++;}
 
@@ -771,7 +771,7 @@ LUA_API int lua_setfenv (lua_State *L, int idx) {
 
 #define checkresults(L,na,nr) \
      api_check(L, (nr) == LUA_MULTRET || (L->ci->top - L->top >= (nr) - (na)))
-	
+    
 
 LUA_API void lua_call (lua_State *L, int nargs, int nresults) {
   StkId func;

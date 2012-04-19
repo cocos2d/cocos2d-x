@@ -31,10 +31,10 @@ typedef cpFloat (*cpConstraintGetImpulseImpl)(cpConstraint *constraint);
 
 /// @private
 struct cpConstraintClass {
-	cpConstraintPreStepImpl preStep;
-	cpConstraintApplyCachedImpulseImpl applyCachedImpulse;
-	cpConstraintApplyImpulseImpl applyImpulse;
-	cpConstraintGetImpulseImpl getImpulse;
+    cpConstraintPreStepImpl preStep;
+    cpConstraintApplyCachedImpulseImpl applyCachedImpulse;
+    cpConstraintApplyImpulseImpl applyImpulse;
+    cpConstraintGetImpulseImpl getImpulse;
 };
 
 /// Callback function type that gets called before solving a joint.
@@ -45,41 +45,41 @@ typedef void (*cpConstraintPostSolveFunc)(cpConstraint *constraint, cpSpace *spa
 
 /// Opaque cpConstraint struct.
 struct cpConstraint {
-	CP_PRIVATE(const cpConstraintClass *klass);
-	
-	/// The first body connected to this constraint.
-	cpBody *a;
-	/// The second body connected to this constraint.
-	cpBody *b;
-	
-	CP_PRIVATE(cpSpace *space);
-	
-	CP_PRIVATE(cpConstraint *next_a);
-	CP_PRIVATE(cpConstraint *next_b);
-	
-	/// The maximum force that this constraint is allowed to use.
-	/// Defaults to infinity.
-	cpFloat maxForce;
-	/// The rate at which joint error is corrected.
-	/// Defaults to pow(1.0 - 0.1, 60.0) meaning that it will
-	/// correct 10% of the error every 1/60th of a second.
-	cpFloat errorBias;
-	/// The maximum rate at which joint error is corrected.
-	/// Defaults to infinity.
-	cpFloat maxBias;
-	
-	/// Function called before the solver runs.
-	/// Animate your joint anchors, update your motor torque, etc.
-	cpConstraintPreSolveFunc preSolve;
-	
-	/// Function called after the solver runs.
-	/// Use the applied impulse to perform effects like breakable joints.
-	cpConstraintPostSolveFunc postSolve;
-	
-	/// User definable data pointer.
-	/// Generally this points to your the game object class so you can access it
-	/// when given a cpConstraint reference in a callback.
-	cpDataPointer data;
+    CP_PRIVATE(const cpConstraintClass *klass);
+    
+    /// The first body connected to this constraint.
+    cpBody *a;
+    /// The second body connected to this constraint.
+    cpBody *b;
+    
+    CP_PRIVATE(cpSpace *space);
+    
+    CP_PRIVATE(cpConstraint *next_a);
+    CP_PRIVATE(cpConstraint *next_b);
+    
+    /// The maximum force that this constraint is allowed to use.
+    /// Defaults to infinity.
+    cpFloat maxForce;
+    /// The rate at which joint error is corrected.
+    /// Defaults to pow(1.0 - 0.1, 60.0) meaning that it will
+    /// correct 10% of the error every 1/60th of a second.
+    cpFloat errorBias;
+    /// The maximum rate at which joint error is corrected.
+    /// Defaults to infinity.
+    cpFloat maxBias;
+    
+    /// Function called before the solver runs.
+    /// Animate your joint anchors, update your motor torque, etc.
+    cpConstraintPreSolveFunc preSolve;
+    
+    /// Function called after the solver runs.
+    /// Use the applied impulse to perform effects like breakable joints.
+    cpConstraintPostSolveFunc postSolve;
+    
+    /// User definable data pointer.
+    /// Generally this points to your the game object class so you can access it
+    /// when given a cpConstraint reference in a callback.
+    cpDataPointer data;
 };
 
 /// Destroy a constraint.
@@ -90,8 +90,8 @@ void cpConstraintFree(cpConstraint *constraint);
 /// @private
 static inline void cpConstraintActivateBodies(cpConstraint *constraint)
 {
-	cpBody *a = constraint->a; if(a) cpBodyActivate(a);
-	cpBody *b = constraint->b; if(b) cpBodyActivate(b);
+    cpBody *a = constraint->a; if(a) cpBodyActivate(a);
+    cpBody *b = constraint->b; if(b) cpBodyActivate(b);
 }
 
 /// @private
@@ -101,8 +101,8 @@ static inline type cpConstraint##Get##name(const cpConstraint *constraint){retur
 /// @private
 #define CP_DefineConstraintStructSetter(type, member, name) \
 static inline void cpConstraint##Set##name(cpConstraint *constraint, type value){ \
-	cpConstraintActivateBodies(constraint); \
-	constraint->member = value; \
+    cpConstraintActivateBodies(constraint); \
+    constraint->member = value; \
 }
 
 /// @private
@@ -122,25 +122,25 @@ CP_DefineConstraintStructProperty(cpDataPointer, data, UserData);
 // Get the last impulse applied by this constraint.
 static inline cpFloat cpConstraintGetImpulse(cpConstraint *constraint)
 {
-	return constraint->CP_PRIVATE(klass)->getImpulse(constraint);
+    return constraint->CP_PRIVATE(klass)->getImpulse(constraint);
 }
 
 /// @}
 
 #define cpConstraintCheckCast(constraint, struct) \
-	cpAssertHard(constraint->CP_PRIVATE(klass) == struct##GetClass(), "Constraint is not a "#struct)
+    cpAssertHard(constraint->CP_PRIVATE(klass) == struct##GetClass(), "Constraint is not a "#struct)
 
 #define CP_DefineConstraintGetter(struct, type, member, name) \
 static inline type struct##Get##name(const cpConstraint *constraint){ \
-	cpConstraintCheckCast(constraint, struct); \
-	return ((struct *)constraint)->member; \
+    cpConstraintCheckCast(constraint, struct); \
+    return ((struct *)constraint)->member; \
 }
 
 #define CP_DefineConstraintSetter(struct, type, member, name) \
 static inline void struct##Set##name(cpConstraint *constraint, type value){ \
-	cpConstraintCheckCast(constraint, struct); \
-	cpConstraintActivateBodies(constraint); \
-	((struct *)constraint)->member = value; \
+    cpConstraintCheckCast(constraint, struct); \
+    cpConstraintActivateBodies(constraint); \
+    ((struct *)constraint)->member = value; \
 }
 
 #define CP_DefineConstraintProperty(struct, type, member, name) \

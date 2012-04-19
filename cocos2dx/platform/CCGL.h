@@ -32,10 +32,10 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 
 #define CC_GLVIEW                   cocos2d::CCEGLView
-#define	glClearDepth				glClearDepthf
-#define glDeleteVertexArrays		glDeleteVertexArraysOES
-#define glGenVertexArrays			glGenVertexArraysOES
-#define glBindVertexArray			glBindVertexArrayOES
+#define    glClearDepth                glClearDepthf
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
+#define glGenVertexArrays            glGenVertexArraysOES
+#define glBindVertexArray            glBindVertexArrayOES
 
 #include "CCCommon.h"
 
@@ -79,18 +79,18 @@ extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
 #include "GL/glext.h"
 
 //declare here while define in CCEGLView_linux.cpp
-extern PFNGLGENFRAMEBUFFERSEXTPROC         	glGenFramebuffersEXT;
-extern PFNGLDELETEFRAMEBUFFERSEXTPROC      	glDeleteFramebuffersEXT;
-extern PFNGLBINDFRAMEBUFFEREXTPROC         	glBindFramebufferEXT;
-extern PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC  	glCheckFramebufferStatusEXT;
-extern PFNGLFRAMEBUFFERTEXTURE2DEXTPROC    	glFramebufferTexture2DEXT;
-extern PFNGLGENERATEMIPMAPEXTPROC          	glGenerateMipmapEXT;
+extern PFNGLGENFRAMEBUFFERSEXTPROC             glGenFramebuffersEXT;
+extern PFNGLDELETEFRAMEBUFFERSEXTPROC          glDeleteFramebuffersEXT;
+extern PFNGLBINDFRAMEBUFFEREXTPROC             glBindFramebufferEXT;
+extern PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC      glCheckFramebufferStatusEXT;
+extern PFNGLFRAMEBUFFERTEXTURE2DEXTPROC        glFramebufferTexture2DEXT;
+extern PFNGLGENERATEMIPMAPEXTPROC              glGenerateMipmapEXT;
 
-extern PFNGLGENBUFFERSARBPROC 			   	glGenBuffersARB;
-extern PFNGLBINDBUFFERARBPROC 				glBindBufferARB;
-extern PFNGLBUFFERDATAARBPROC 				glBufferDataARB;
-extern PFNGLBUFFERSUBDATAARBPROC 			glBufferSubDataARB;
-extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
+extern PFNGLGENBUFFERSARBPROC                    glGenBuffersARB;
+extern PFNGLBINDBUFFERARBPROC                 glBindBufferARB;
+extern PFNGLBUFFERDATAARBPROC                 glBufferDataARB;
+extern PFNGLBUFFERSUBDATAARBPROC             glBufferSubDataARB;
+extern PFNGLDELETEBUFFERSARBPROC             glDeleteBuffersARB;
 
 
 
@@ -110,16 +110,16 @@ extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
 #undef CC_GL_COLOR_ATTACHMENT0
 #undef CC_GL_FRAMEBUFFER_COMPLETE
 
-#define ccglOrtho					glOrtho
-#define	ccglClearDepth				glClearDepth
-#define ccglTranslate				glTranslated
+#define ccglOrtho                    glOrtho
+#define    ccglClearDepth                glClearDepth
+#define ccglTranslate                glTranslated
 
-#define ccglGenerateMipmap			glGenerateMipmapEXT
-#define ccglGenFramebuffers			glGenFramebuffersEXT
-#define ccglBindFramebuffer			glBindFramebufferEXT
-#define ccglFramebufferTexture2D	glFramebufferTexture2DEXT
-#define ccglDeleteFramebuffers		glDeleteFramebuffersEXT
-#define ccglCheckFramebufferStatus	glCheckFramebufferStatusEXT
+#define ccglGenerateMipmap            glGenerateMipmapEXT
+#define ccglGenFramebuffers            glGenFramebuffersEXT
+#define ccglBindFramebuffer            glBindFramebufferEXT
+#define ccglFramebufferTexture2D    glFramebufferTexture2DEXT
+#define ccglDeleteFramebuffers        glDeleteFramebuffersEXT
+#define ccglCheckFramebufferStatus    glCheckFramebufferStatusEXT
 
 
 #define glFrustumf                  glFrustum
@@ -129,10 +129,10 @@ extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
 #define glBufferSubData             glBufferSubDataARB
 #define glDeleteBuffers             glDeleteBuffersARB
 
-#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
-#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
-#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
-#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
+#define CC_GL_FRAMEBUFFER            GL_FRAMEBUFFER
+#define CC_GL_FRAMEBUFFER_BINDING    GL_FRAMEBUFFER_BINDING
+#define CC_GL_COLOR_ATTACHMENT0        GL_COLOR_ATTACHMENT0
+#define CC_GL_FRAMEBUFFER_COMPLETE    GL_FRAMEBUFFER_COMPLETE
 
 #define GL_POINT_SPRITE_OES         GL_POINT_SPRITE_ARB
 #define GL_COORD_REPLACE_OES        GL_COORD_REPLACE_ARB

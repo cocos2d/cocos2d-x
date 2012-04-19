@@ -35,25 +35,25 @@ class CCGLProgram;
 
 /** vertex attrib flags */
 enum {
-	kCCVertexAttribFlag_None		= 0,
+    kCCVertexAttribFlag_None        = 0,
 
-	kCCVertexAttribFlag_Position	= 1 << 0,
-	kCCVertexAttribFlag_Color		= 1 << 1,
-	kCCVertexAttribFlag_TexCoords	= 1 << 2,
+    kCCVertexAttribFlag_Position    = 1 << 0,
+    kCCVertexAttribFlag_Color        = 1 << 1,
+    kCCVertexAttribFlag_TexCoords    = 1 << 2,
 
-	kCCVertexAttribFlag_PosColorTex = ( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color | kCCVertexAttribFlag_TexCoords ),
+    kCCVertexAttribFlag_PosColorTex = ( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color | kCCVertexAttribFlag_TexCoords ),
 };
 
 /** GL server side states */
 typedef enum {
-//	CC_GL_SCISSOR_TEST = 1 << 0,
-//	CC_GL_STENCIL_TEST = 1 << 1,
-//	CC_GL_DEPTH_TEST = 1 << 2,
-	CC_GL_BLEND = 1 << 3,
-//	CC_GL_DITHER = 1 << 4,
+//    CC_GL_SCISSOR_TEST = 1 << 0,
+//    CC_GL_STENCIL_TEST = 1 << 1,
+//    CC_GL_DEPTH_TEST = 1 << 2,
+    CC_GL_BLEND = 1 << 3,
+//    CC_GL_DITHER = 1 << 4,
 
-//	CC_GL_ALL = ( CC_GL_SCISSOR_TEST | CC_GL_STENCIL_TEST | CC_GL_DEPTH_TEST | CC_GL_BLEND | CC_GL_DITHER ),
-	CC_GL_ALL = ( CC_GL_BLEND ),
+//    CC_GL_ALL = ( CC_GL_SCISSOR_TEST | CC_GL_STENCIL_TEST | CC_GL_DEPTH_TEST | CC_GL_BLEND | CC_GL_DITHER ),
+    CC_GL_ALL = ( CC_GL_BLEND ),
 
 } ccGLServerState;
 
@@ -92,9 +92,9 @@ void CC_DLL ccSetProjectionMatrixDirty( void );
 /** Will enable the vertex attribs that are passed as flags.
  Possible flags:
 
-	* kCCVertexAttribFlag_Position
-	* kCCVertexAttribFlag_Color
-	* kCCVertexAttribFlag_TexCoords
+    * kCCVertexAttribFlag_Position
+    * kCCVertexAttribFlag_Color
+    * kCCVertexAttribFlag_TexCoords
 
  These flags can be ORed. The flags that are not present, will be disabled.
 

@@ -26,12 +26,12 @@ const cpConstraintClass *cpSimpleMotorGetClass(void);
 
 /// @private
 typedef struct cpSimpleMotor {
-	cpConstraint constraint;
-	cpFloat rate;
-	
-	cpFloat iSum;
-		
-	cpFloat jAcc, jMax;
+    cpConstraint constraint;
+    cpFloat rate;
+    
+    cpFloat iSum;
+        
+    cpFloat jAcc, jMax;
 } cpSimpleMotor;
 
 /// Allocate a simple motor.

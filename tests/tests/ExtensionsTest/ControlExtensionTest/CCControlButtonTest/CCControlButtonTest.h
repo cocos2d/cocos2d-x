@@ -41,8 +41,8 @@ public:
 class CCControlButtonTest_Event : public CCControlScene
 {
 public:
-	CCControlButtonTest_Event();
-	~CCControlButtonTest_Event();
+    CCControlButtonTest_Event();
+    ~CCControlButtonTest_Event();
     bool init();
     void touchDownAction(CCObject *sender);
     void touchDragInsideAction(CCObject *sender);

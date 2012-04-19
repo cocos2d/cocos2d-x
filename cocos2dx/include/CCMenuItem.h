@@ -54,7 +54,7 @@ public:
     CCMenuItem()
     : m_bIsSelected(false)
     , m_bIsEnabled(false)            
-    , m_pListener(NULL)			
+    , m_pListener(NULL)            
     , m_pfnSelector(NULL)
     , m_nScriptHandler(0)
     {}
@@ -80,7 +80,7 @@ public:
     void setTarget(CCObject *rec, SEL_MenuHandler selector);
 protected:
     CCObject*       m_pListener;
-    SEL_MenuHandler	m_pfnSelector;
+    SEL_MenuHandler    m_pfnSelector;
     int             m_nScriptHandler;
 };
 
@@ -127,8 +127,8 @@ public:
     virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool getIsOpacityModifyRGB(void) { return false;}
 protected:
-    ccColor3B	m_tColorBackup;
-    float		m_fOriginalScale;
+    ccColor3B    m_tColorBackup;
+    float        m_fOriginalScale;
 };
 
 /** @brief A CCMenuItemAtlasFont
@@ -264,12 +264,12 @@ public:
     static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
-	/** sets the sprite frame for the normal image */
-	void setNormalSpriteFrame(CCSpriteFrame* frame);
-	/** sets the sprite frame for the selected image */
-	void setSelectedSpriteFrame(CCSpriteFrame* frame);
-	/** sets the sprite frame for the disabled image */
-	void setDisabledSpriteFrame(CCSpriteFrame* frame);
+    /** sets the sprite frame for the normal image */
+    void setNormalSpriteFrame(CCSpriteFrame* frame);
+    /** sets the sprite frame for the selected image */
+    void setSelectedSpriteFrame(CCSpriteFrame* frame);
+    /** sets the sprite frame for the disabled image */
+    void setDisabledSpriteFrame(CCSpriteFrame* frame);
 };
 
 /** @brief A CCMenuItemToggle
@@ -292,11 +292,11 @@ public:
     CCMenuItemToggle()
     : m_cOpacity(0)
     , m_uSelectedIndex(0)
-    , m_pSubItems(NULL)			
+    , m_pSubItems(NULL)            
     {}
     virtual ~CCMenuItemToggle();
     /** creates a menu item from a list of items with a target/selector */
-    static CCMenuItemToggle* itemWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);		
+    static CCMenuItemToggle* itemWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);        
     /** initializes a menu item from a list of items with a target selector */
     bool initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args);
     

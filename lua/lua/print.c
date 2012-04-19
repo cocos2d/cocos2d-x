@@ -15,10 +15,10 @@
 #include "lopcodes.h"
 #include "lundump.h"
 
-#define PrintFunction	luaU_print
+#define PrintFunction    luaU_print
 
-#define Sizeof(x)	((int)sizeof(x))
-#define VOID(p)		((const void*)(p))
+#define Sizeof(x)    ((int)sizeof(x))
+#define VOID(p)        ((const void*)(p))
 
 static void PrintString(const TString* ts)
 {
@@ -39,10 +39,10 @@ static void PrintString(const TString* ts)
    case '\r': printf("\\r"); break;
    case '\t': printf("\\t"); break;
    case '\v': printf("\\v"); break;
-   default:	if (isprint((unsigned char)c))
-   			putchar(c);
-		else
-			printf("\\%03u",(unsigned char)c);
+   default:    if (isprint((unsigned char)c))
+               putchar(c);
+        else
+            printf("\\%03u",(unsigned char)c);
   }
  }
  putchar('"');
@@ -54,20 +54,20 @@ static void PrintConstant(const Proto* f, int i)
  switch (ttype(o))
  {
   case LUA_TNIL:
-	printf("nil");
-	break;
+    printf("nil");
+    break;
   case LUA_TBOOLEAN:
-	printf(bvalue(o) ? "true" : "false");
-	break;
+    printf(bvalue(o) ? "true" : "false");
+    break;
   case LUA_TNUMBER:
-	printf(LUA_NUMBER_FMT,nvalue(o));
-	break;
+    printf(LUA_NUMBER_FMT,nvalue(o));
+    break;
   case LUA_TSTRING:
-	PrintString(rawtsvalue(o));
-	break;
-  default:				/* cannot happen */
-	printf("? type=%d",ttype(o));
-	break;
+    PrintString(rawtsvalue(o));
+    break;
+  default:                /* cannot happen */
+    printf("? type=%d",ttype(o));
+    break;
  }
 }
 
@@ -155,8 +155,8 @@ static void PrintCode(const Proto* f)
  }
 }
 
-#define SS(x)	(x==1)?"":"s"
-#define S(x)	x,SS(x)
+#define SS(x)    (x==1)?"":"s"
+#define S(x)    x,SS(x)
 
 static void PrintHeader(const Proto* f)
 {
@@ -168,14 +168,14 @@ static void PrintHeader(const Proto* f)
  else
   s="(string)";
  printf("\n%s <%s:%d,%d> (%d instruction%s, %d bytes at %p)\n",
- 	(f->linedefined==0)?"main":"function",s,
-	f->linedefined,f->lastlinedefined,
-	S(f->sizecode),f->sizecode*Sizeof(Instruction),VOID(f));
+     (f->linedefined==0)?"main":"function",s,
+    f->linedefined,f->lastlinedefined,
+    S(f->sizecode),f->sizecode*Sizeof(Instruction),VOID(f));
  printf("%d%s param%s, %d slot%s, %d upvalue%s, ",
-	f->numparams,f->is_vararg?"+":"",SS(f->numparams),
-	S(f->maxstacksize),S(f->nups));
+    f->numparams,f->is_vararg?"+":"",SS(f->numparams),
+    S(f->maxstacksize),S(f->nups));
  printf("%d local%s, %d constant%s, %d function%s\n",
-	S(f->sizelocvars),S(f->sizek),S(f->sizep));
+    S(f->sizelocvars),S(f->sizek),S(f->sizep));
 }
 
 static void PrintConstants(const Proto* f)

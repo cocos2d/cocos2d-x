@@ -28,9 +28,9 @@ public:
     virtual std::string subtitle();
 
 protected:
-	CCSprite * sprite1;
+    CCSprite * sprite1;
     CCSprite * sprite2;
-	int counter;
+    int counter;
 };
 
 class ZwoptexTestScene : public TestScene

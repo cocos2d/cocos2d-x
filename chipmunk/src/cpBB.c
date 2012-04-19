@@ -27,21 +27,21 @@
 cpVect
 cpBBClampVect(const cpBB bb, const cpVect v)
 {
-	cpFloat x = cpfmin(cpfmax(bb.l, v.x), bb.r);
-	cpFloat y = cpfmin(cpfmax(bb.b, v.y), bb.t);
-	return cpv(x, y);
+    cpFloat x = cpfmin(cpfmax(bb.l, v.x), bb.r);
+    cpFloat y = cpfmin(cpfmax(bb.b, v.y), bb.t);
+    return cpv(x, y);
 }
 
 cpVect
 cpBBWrapVect(const cpBB bb, const cpVect v)
 {
-	cpFloat ix = cpfabs(bb.r - bb.l);
-	cpFloat modx = cpfmod(v.x - bb.l, ix);
-	cpFloat x = (modx > 0.0f) ? modx : modx + ix;
-	
-	cpFloat iy = cpfabs(bb.t - bb.b);
-	cpFloat mody = cpfmod(v.y - bb.b, iy);
-	cpFloat y = (mody > 0.0f) ? mody : mody + iy;
-	
-	return cpv(x + bb.l, y + bb.b);
+    cpFloat ix = cpfabs(bb.r - bb.l);
+    cpFloat modx = cpfmod(v.x - bb.l, ix);
+    cpFloat x = (modx > 0.0f) ? modx : modx + ix;
+    
+    cpFloat iy = cpfabs(bb.t - bb.b);
+    cpFloat mody = cpfmod(v.y - bb.b, iy);
+    cpFloat y = (mody > 0.0f) ? mody : mody + iy;
+    
+    return cpv(x + bb.l, y + bb.b);
 }

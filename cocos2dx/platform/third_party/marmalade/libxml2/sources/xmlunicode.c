@@ -21,7 +21,7 @@
 #include <libxml/xmlunicode.h>
 #include <libxml/chvalid.h>
 
-typedef int (xmlIntFunc)(int);	/* just to keep one's mind untwisted */
+typedef int (xmlIntFunc)(int);    /* just to keep one's mind untwisted */
 
 typedef struct {
     const char *rangename;
@@ -30,7 +30,7 @@ typedef struct {
 
 typedef struct {
     xmlUnicodeRange *table;
-    int		    numentries;
+    int            numentries;
 } xmlUnicodeNameTable;
 
 
@@ -953,13 +953,13 @@ static xmlIntFunc
     high = tptr->numentries - 1;
     sptr = tptr->table;
     while (low <= high) {
-	mid = (low + high) / 2;
-	if ((cmp=strcmp(tname, sptr[mid].rangename)) == 0)
-	    return (sptr[mid].func);
-	if (cmp < 0)
-	    high = mid - 1;
-	else
-	    low = mid + 1;
+    mid = (low + high) / 2;
+    if ((cmp=strcmp(tname, sptr[mid].rangename)) == 0)
+        return (sptr[mid].func);
+    if (cmp < 0)
+        high = mid - 1;
+    else
+        low = mid + 1;
     }
     return (NULL);    
 }
@@ -2645,7 +2645,7 @@ xmlUCSIsBlock(int code, const char *block) {
 
     func = xmlUnicodeLookup(&xmlUnicodeBlockTbl, block);
     if (func == NULL)
-	return (-1);
+    return (-1);
     return (func(code));
 }
 
@@ -3170,7 +3170,7 @@ xmlUCSIsCat(int code, const char *cat) {
 
     func = xmlUnicodeLookup(&xmlUnicodeCatTbl, cat);
     if (func == NULL)
-	return (-1);
+    return (-1);
     return (func(code));
 }
 

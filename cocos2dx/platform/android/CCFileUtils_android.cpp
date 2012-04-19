@@ -31,78 +31,78 @@ using namespace std;
 
 // record the resource path
 static string s_strResourcePath = "";
-	
+    
 /*
  * This function is implemented for jni to set apk path.
  */
 void CCFileUtils::setResourcePath(const char* pszResourcePath)
 {
-	CCAssert(pszResourcePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
-	
-	string tmp(pszResourcePath);
+    CCAssert(pszResourcePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
+    
+    string tmp(pszResourcePath);
 
-	if ((! pszResourcePath) || tmp.find(".apk") == string::npos)
-	{
-		return;
-	}
+    if ((! pszResourcePath) || tmp.find(".apk") == string::npos)
+    {
+        return;
+    }
 
-	s_strResourcePath = pszResourcePath;
+    s_strResourcePath = pszResourcePath;
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath,
                                                   ccResolutionType *pResolutionType)
 {
-	return pszRelativePath;
+    return pszRelativePath;
 }
 
 const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-	std::string relativeFile = pszRelativeFile;
-	CCString *pRet = new CCString();
-	pRet->autorelease();
-	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-	pRet->m_sString += pszFilename;
-	return pRet->m_sString.c_str();
+    std::string relativeFile = pszRelativeFile;
+    CCString *pRet = new CCString();
+    pRet->autorelease();
+    pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
+    pRet->m_sString += pszFilename;
+    return pRet->m_sString.c_str();
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
-{	
-	unsigned char * pData = 0;
-	string fullPath(pszFileName);
+{    
+    unsigned char * pData = 0;
+    string fullPath(pszFileName);
 
-	if ((! pszFileName) || (! pszMode))
-	{
-		return 0;
-	}
+    if ((! pszFileName) || (! pszMode))
+    {
+        return 0;
+    }
 
-	if (pszFileName[0] != '/')
-	{
-		// read from apk
-		fullPath.insert(0, "assets/");
-		pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
-	}
-	else
-	{
-		do 
-		{
-			// read rrom other path than user set it
-			FILE *fp = fopen(pszFileName, pszMode);
-			CC_BREAK_IF(!fp);
+    if (pszFileName[0] != '/')
+    {
+        // read from apk
+        fullPath.insert(0, "assets/");
+        pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+    }
+    else
+    {
+        do 
+        {
+            // read rrom other path than user set it
+            FILE *fp = fopen(pszFileName, pszMode);
+            CC_BREAK_IF(!fp);
 
-			unsigned long size;
-			fseek(fp,0,SEEK_END);
-			size = ftell(fp);
-			fseek(fp,0,SEEK_SET);
-			pData = new unsigned char[size];
-			size = fread(pData,sizeof(unsigned char), size,fp);
-			fclose(fp);
+            unsigned long size;
+            fseek(fp,0,SEEK_END);
+            size = ftell(fp);
+            fseek(fp,0,SEEK_SET);
+            pData = new unsigned char[size];
+            size = fread(pData,sizeof(unsigned char), size,fp);
+            fclose(fp);
 
-			if (pSize)
-			{
-				*pSize = size;
-			}			
-		} while (0);		
-	}
+            if (pSize)
+            {
+                *pSize = size;
+            }            
+        } while (0);        
+    }
 
     if (! pData && getIsPopupNotify())
     {
@@ -128,20 +128,20 @@ int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 string CCFileUtils::getWriteablePath()
 {
-	// the path is: /data/data/ + package name
-	string dir("/data/data/");
-	const char *tmp = getPackageNameJNI();
+    // the path is: /data/data/ + package name
+    string dir("/data/data/");
+    const char *tmp = getPackageNameJNI();
 
-	if (tmp)
-	{
-		dir.append(tmp).append("/");
+    if (tmp)
+    {
+        dir.append(tmp).append("/");
 
-		return dir;
-	}
-	else
-	{
-		return "";
-	}
+        return dir;
+    }
+    else
+    {
+        return "";
+    }
 }
 
 NS_CC_END

@@ -24,7 +24,7 @@ LUALIB_API void (luaL_setn) (lua_State *L, int t, int n);
 #endif
 
 #if defined(LUA_COMPAT_OPENLIB)
-#define luaI_openlib	luaL_openlib
+#define luaI_openlib    luaL_openlib
 #endif
 
 
@@ -97,26 +97,26 @@ LUALIB_API const char *(luaL_findtable) (lua_State *L, int idx,
 ** ===============================================================
 */
 
-#define luaL_argcheck(L, cond,numarg,extramsg)	\
-		((void)((cond) || luaL_argerror(L, (numarg), (extramsg))))
-#define luaL_checkstring(L,n)	(luaL_checklstring(L, (n), NULL))
-#define luaL_optstring(L,n,d)	(luaL_optlstring(L, (n), (d), NULL))
-#define luaL_checkint(L,n)	((int)luaL_checkinteger(L, (n)))
-#define luaL_optint(L,n,d)	((int)luaL_optinteger(L, (n), (d)))
-#define luaL_checklong(L,n)	((long)luaL_checkinteger(L, (n)))
-#define luaL_optlong(L,n,d)	((long)luaL_optinteger(L, (n), (d)))
+#define luaL_argcheck(L, cond,numarg,extramsg)    \
+        ((void)((cond) || luaL_argerror(L, (numarg), (extramsg))))
+#define luaL_checkstring(L,n)    (luaL_checklstring(L, (n), NULL))
+#define luaL_optstring(L,n,d)    (luaL_optlstring(L, (n), (d), NULL))
+#define luaL_checkint(L,n)    ((int)luaL_checkinteger(L, (n)))
+#define luaL_optint(L,n,d)    ((int)luaL_optinteger(L, (n), (d)))
+#define luaL_checklong(L,n)    ((long)luaL_checkinteger(L, (n)))
+#define luaL_optlong(L,n,d)    ((long)luaL_optinteger(L, (n), (d)))
 
-#define luaL_typename(L,i)	lua_typename(L, lua_type(L,(i)))
+#define luaL_typename(L,i)    lua_typename(L, lua_type(L,(i)))
 
 #define luaL_dofile(L, fn) \
-	(luaL_loadfile(L, fn) || lua_pcall(L, 0, LUA_MULTRET, 0))
+    (luaL_loadfile(L, fn) || lua_pcall(L, 0, LUA_MULTRET, 0))
 
 #define luaL_dostring(L, s) \
-	(luaL_loadstring(L, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+    (luaL_loadstring(L, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 
-#define luaL_getmetatable(L,n)	(lua_getfield(L, LUA_REGISTRYINDEX, (n)))
+#define luaL_getmetatable(L,n)    (lua_getfield(L, LUA_REGISTRYINDEX, (n)))
 
-#define luaL_opt(L,f,n,d)	(lua_isnoneornil(L,(n)) ? (d) : f(L,(n)))
+#define luaL_opt(L,f,n,d)    (lua_isnoneornil(L,(n)) ? (d) : f(L,(n)))
 
 /*
 ** {======================================================
@@ -127,7 +127,7 @@ LUALIB_API const char *(luaL_findtable) (lua_State *L, int idx,
 
 
 typedef struct luaL_Buffer {
-  char *p;			/* current position in buffer */
+  char *p;            /* current position in buffer */
   int lvl;  /* number of strings in the stack (level) */
   lua_State *L;
   char buffer[LUAL_BUFFERSIZE];
@@ -138,9 +138,9 @@ typedef struct luaL_Buffer {
    (*(B)->p++ = (char)(c)))
 
 /* compatibility only */
-#define luaL_putchar(B,c)	luaL_addchar(B,c)
+#define luaL_putchar(B,c)    luaL_addchar(B,c)
 
-#define luaL_addsize(B,n)	((B)->p += (n))
+#define luaL_addsize(B,n)    ((B)->p += (n))
 
 LUALIB_API void (luaL_buffinit) (lua_State *L, luaL_Buffer *B);
 LUALIB_API char *(luaL_prepbuffer) (luaL_Buffer *B);
@@ -167,7 +167,7 @@ LUALIB_API void (luaL_pushresult) (luaL_Buffer *B);
 #define lua_getref(L,ref)       lua_rawgeti(L, LUA_REGISTRYINDEX, (ref))
 
 
-#define luaL_reg	luaL_Reg
+#define luaL_reg    luaL_Reg
 
 #endif
 

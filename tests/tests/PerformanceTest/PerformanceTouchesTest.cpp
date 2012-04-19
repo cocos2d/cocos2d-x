@@ -54,7 +54,7 @@ void TouchesMainScene::onEnter()
     addChild(m_plabel);
 
     elapsedTime = 0;
-    numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;	
+    numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;    
 }
 
 void TouchesMainScene::update(ccTime dt)
@@ -99,7 +99,7 @@ std::string TouchesPerformTest1::title()
 
 void TouchesPerformTest1::registerWithTouchDispatcher()
 {
-	CCDirector* pDirector = CCDirector::sharedDirector();
+    CCDirector* pDirector = CCDirector::sharedDirector();
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
@@ -142,7 +142,7 @@ std::string TouchesPerformTest2::title()
 
 void TouchesPerformTest2::registerWithTouchDispatcher()
 {
-	CCDirector* pDirector = CCDirector::sharedDirector();
+    CCDirector* pDirector = CCDirector::sharedDirector();
     pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 

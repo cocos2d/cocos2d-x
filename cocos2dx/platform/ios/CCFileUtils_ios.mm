@@ -52,71 +52,71 @@ static NSFileManager *__localFileManager= [[NSFileManager alloc] init];
 static NSString* removeSuffixFromPath(NSString *suffix, NSString *path)
 {
     // quick return
-	if( ! suffix || [suffix length] == 0 )
-	{
-		return path;
+    if( ! suffix || [suffix length] == 0 )
+    {
+        return path;
     }
     
-	NSString *name = [path lastPathComponent];
+    NSString *name = [path lastPathComponent];
     
-	// check if path already has the suffix.
-	if( [name rangeOfString:suffix].location != NSNotFound ) {
+    // check if path already has the suffix.
+    if( [name rangeOfString:suffix].location != NSNotFound ) {
         
-		CCLOG("cocos2d: Filename(%s) contains %s suffix. Removing it. See cocos2d issue #1040", [path UTF8String], [suffix UTF8String]);
+        CCLOG("cocos2d: Filename(%s) contains %s suffix. Removing it. See cocos2d issue #1040", [path UTF8String], [suffix UTF8String]);
         
-		NSString *newLastname = [name stringByReplacingOccurrencesOfString:suffix withString:@""];
+        NSString *newLastname = [name stringByReplacingOccurrencesOfString:suffix withString:@""];
         
-		NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
-		return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
-	}
+        NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
+        return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
+    }
     
-	return path;
+    return path;
 }
 
 static NSString* getPathForSuffix(NSString *path, NSString *suffix)
 {
     // quick return
-	if( ! suffix || [suffix length] == 0 )
-	{
-		return path;
+    if( ! suffix || [suffix length] == 0 )
+    {
+        return path;
     }
     
-	NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
-	NSString *name = [pathWithoutExtension lastPathComponent];
+    NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
+    NSString *name = [pathWithoutExtension lastPathComponent];
     
-	// check if path already has the suffix.
-	if( [name rangeOfString:suffix].location != NSNotFound ) {
+    // check if path already has the suffix.
+    if( [name rangeOfString:suffix].location != NSNotFound ) {
         
-		CCLOG("cocos2d: WARNING Filename(%s) already has the suffix %s. Using it.", [name UTF8String], [suffix UTF8String]);
-		return path;
-	}
+        CCLOG("cocos2d: WARNING Filename(%s) already has the suffix %s. Using it.", [name UTF8String], [suffix UTF8String]);
+        return path;
+    }
     
     
-	NSString *extension = [path pathExtension];
+    NSString *extension = [path pathExtension];
     
-	if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
-	{
-		// All ccz / gz files should be in the format filename.xxx.ccz
-		// so we need to pull off the .xxx part of the extension as well
-		extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
-		pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
-	}
+    if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
+    {
+        // All ccz / gz files should be in the format filename.xxx.ccz
+        // so we need to pull off the .xxx part of the extension as well
+        extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
+        pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
+    }
     
     
-	NSString *newName = [pathWithoutExtension stringByAppendingString:suffix];
-	newName = [newName stringByAppendingPathExtension:extension];
+    NSString *newName = [pathWithoutExtension stringByAppendingString:suffix];
+    newName = [newName stringByAppendingPathExtension:extension];
     
-	if( [__localFileManager fileExistsAtPath:newName] )
-		return newName;
+    if( [__localFileManager fileExistsAtPath:newName] )
+        return newName;
     
-	CCLOG("cocos2d: CCFileUtils: Warning file not found: %s", [[newName lastPathComponent] UTF8String] );
+    CCLOG("cocos2d: CCFileUtils: Warning file not found: %s", [[newName lastPathComponent] UTF8String] );
     
-	return nil;
+    return nil;
 }
 
 static void static_addItemToCCArray(id item, CCArray *pArray)
 {
-	// add string value into array
+    // add string value into array
     if ([item isKindOfClass:[NSString class]]) {
         CCString* pValue = new CCString([item UTF8String]);
         
@@ -125,7 +125,7 @@ static void static_addItemToCCArray(id item, CCArray *pArray)
         return;
     }
 
-	// add number value into array(such as int, float, bool and so on)
+    // add number value into array(such as int, float, bool and so on)
     if ([item isKindOfClass:[NSNumber class]]) {
         NSString* pStr = [item stringValue];
         CCString* pValue = new CCString([pStr UTF8String]);
@@ -162,11 +162,11 @@ static void static_addItemToCCArray(id item, CCArray *pArray)
 
 static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
 {
-	// the key must be a string
+    // the key must be a string
     CCAssert([key isKindOfClass:[NSString class]], "The key should be a string!");
     std::string pKey = [key UTF8String];
 
-	// the value is a new dictionary
+    // the value is a new dictionary
     if ([value isKindOfClass:[NSDictionary class]]) {
         CCDictionary* pSubDict = new CCDictionary();
         for (id subKey in [value allKeys]) {
@@ -178,7 +178,7 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
         return;
     }
 
-	// the value is a string
+    // the value is a string
     if ([value isKindOfClass:[NSString class]]) {
         CCString* pValue = new CCString([value UTF8String]);
 
@@ -187,7 +187,7 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
         return;
     }
 
-	// the value is a number
+    // the value is a number
     if ([value isKindOfClass:[NSNumber class]]) {
         NSString* pStr = [value stringValue];
         CCString* pValue = new CCString([pStr UTF8String]);
@@ -197,7 +197,7 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
         return;
     }
 
-	// the value is a array
+    // the value is a array
     if ([value isKindOfClass:[NSArray class]]) {
         CCArray *pArray = new CCArray();
         pArray->init();
@@ -253,25 +253,25 @@ std::string& CCFileUtils::removeSuffixFromFile(std::string& cpath )
 
     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
-	    if( CC_CONTENT_SCALE_FACTOR() == 2 )
-	    {
-		    ret = removeSuffixFromPath(__suffixiPadRetinaDisplay, path);
-		}
-	    else
-	    {
-		    ret = removeSuffixFromPath(__suffixiPad, path);
-		}	
+        if( CC_CONTENT_SCALE_FACTOR() == 2 )
+        {
+            ret = removeSuffixFromPath(__suffixiPadRetinaDisplay, path);
+        }
+        else
+        {
+            ret = removeSuffixFromPath(__suffixiPad, path);
+        }    
     }
     else
     {
-	    if( CC_CONTENT_SCALE_FACTOR() == 2 )
-	    {
-		    ret = removeSuffixFromPath(__suffixiPhoneRetinaDisplay, [NSString stringWithUTF8String:cpath.c_str()]);
-		}
-	    else
-	    {
-		    ret = path;
-		}
+        if( CC_CONTENT_SCALE_FACTOR() == 2 )
+        {
+            ret = removeSuffixFromPath(__suffixiPhoneRetinaDisplay, [NSString stringWithUTF8String:cpath.c_str()]);
+        }
+        else
+        {
+            ret = path;
+        }
     }
 
     
@@ -305,18 +305,18 @@ bool fileExistsAtPath(const char *cpath, const char *csuffix)
 
     // only if it is not an absolute path
     if( ! [relPath isAbsolutePath] ) {
-	    // pathForResource also searches in .lproj directories. issue #1230
-	    NSString *file = [relPath lastPathComponent];
-	    NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
+        // pathForResource also searches in .lproj directories. issue #1230
+        NSString *file = [relPath lastPathComponent];
+        NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
     
-	    fullpath = [[NSBundle mainBundle] pathForResource:file
-											   ofType:nil
-										  inDirectory:imageDirectory];
+        fullpath = [[NSBundle mainBundle] pathForResource:file
+                                               ofType:nil
+                                          inDirectory:imageDirectory];
     
     }
 
     if (fullpath == nil)
-	    fullpath = relPath;
+        fullpath = relPath;
 
     NSString *path = getPathForSuffix(fullpath, suffix);
 
@@ -354,53 +354,53 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
     // only if it is not an absolute path
     if( ! [relPath isAbsolutePath] ) {
     
-	    // pathForResource also searches in .lproj directories. issue #1230
-	    NSString *file = [relPath lastPathComponent];
-	    NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
+        // pathForResource also searches in .lproj directories. issue #1230
+        NSString *file = [relPath lastPathComponent];
+        NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
     
-	    fullpath = [[NSBundle mainBundle] pathForResource:file
-											   ofType:nil
-										  inDirectory:imageDirectory];
+        fullpath = [[NSBundle mainBundle] pathForResource:file
+                                               ofType:nil
+                                          inDirectory:imageDirectory];
     
     
     }
 
     if (fullpath == nil)
     {
-	    fullpath = relPath;
-	}
+        fullpath = relPath;
+    }
 
     NSString *ret = nil;
 
     // iPad?
     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-	    // Retina Display ?
-	    if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-		    ret = getPathForSuffix(fullpath, __suffixiPadRetinaDisplay);
-		    *pResolutionType = kCCResolutioniPadRetinaDisplay;
-	    }
-	    else
-	    {
-		    ret = getPathForSuffix(fullpath, __suffixiPad);
-		    *pResolutionType = kCCResolutioniPad;			
-	    }
+        // Retina Display ?
+        if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+            ret = getPathForSuffix(fullpath, __suffixiPadRetinaDisplay);
+            *pResolutionType = kCCResolutioniPadRetinaDisplay;
+        }
+        else
+        {
+            ret = getPathForSuffix(fullpath, __suffixiPad);
+            *pResolutionType = kCCResolutioniPad;            
+        }
     }
     // iPhone ?
     else
     {
-	    // Retina Display ?
-	    if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-		    ret = getPathForSuffix(fullpath, __suffixiPhoneRetinaDisplay);
-		    *pResolutionType = kCCResolutioniPhoneRetinaDisplay;
-	    }
+        // Retina Display ?
+        if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+            ret = getPathForSuffix(fullpath, __suffixiPhoneRetinaDisplay);
+            *pResolutionType = kCCResolutioniPhoneRetinaDisplay;
+        }
     }
 
     // If it is iPhone Non RetinaDisplay, or if the previous "getPath" failed, then use iPhone images.
     if( ret == nil )
     {
-	    *pResolutionType = kCCResolutioniPhone;
-	    ret = fullpath;
+        *pResolutionType = kCCResolutioniPhone;
+        ret = fullpath;
     }
 
     return [ret UTF8String];
@@ -505,44 +505,44 @@ std::string CCFileUtils::getWriteablePath()
 
 unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
 {
-	    unsigned char * pBuffer = NULL;
-	    unzFile pFile = NULL;
-	    *pSize = 0;
-	
-	    do 
-	    {
-	        CC_BREAK_IF(!pszZipFilePath || !pszFileName);
-	        CC_BREAK_IF(strlen(pszZipFilePath) == 0);
-	
-	        pFile = unzOpen(pszZipFilePath);
-	        CC_BREAK_IF(!pFile);
-	
-	        int nRet = unzLocateFile(pFile, pszFileName, 1);
-	        CC_BREAK_IF(UNZ_OK != nRet);
-	
-	        char szFilePathA[260];
-	        unz_file_info FileInfo;
-	        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
-	        CC_BREAK_IF(UNZ_OK != nRet);
-	
-	        nRet = unzOpenCurrentFile(pFile);
-	        CC_BREAK_IF(UNZ_OK != nRet);
-	
-	        pBuffer = new unsigned char[FileInfo.uncompressed_size];
-	        int nSize = 0;
-	        nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
-	        CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
-	
-	        *pSize = FileInfo.uncompressed_size;
-	        unzCloseCurrentFile(pFile);
-	    } while (0);
-	
-	    if (pFile)
-	    {
-	        unzClose(pFile);
-	    }
+        unsigned char * pBuffer = NULL;
+        unzFile pFile = NULL;
+        *pSize = 0;
+    
+        do 
+        {
+            CC_BREAK_IF(!pszZipFilePath || !pszFileName);
+            CC_BREAK_IF(strlen(pszZipFilePath) == 0);
+    
+            pFile = unzOpen(pszZipFilePath);
+            CC_BREAK_IF(!pFile);
+    
+            int nRet = unzLocateFile(pFile, pszFileName, 1);
+            CC_BREAK_IF(UNZ_OK != nRet);
+    
+            char szFilePathA[260];
+            unz_file_info FileInfo;
+            nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
+            CC_BREAK_IF(UNZ_OK != nRet);
+    
+            nRet = unzOpenCurrentFile(pFile);
+            CC_BREAK_IF(UNZ_OK != nRet);
+    
+            pBuffer = new unsigned char[FileInfo.uncompressed_size];
+            int nSize = 0;
+            nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
+            CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
+    
+            *pSize = FileInfo.uncompressed_size;
+            unzCloseCurrentFile(pFile);
+        } while (0);
+    
+        if (pFile)
+        {
+            unzClose(pFile);
+        }
 
-			return pBuffer;
+            return pBuffer;
 }
 
 NS_CC_END

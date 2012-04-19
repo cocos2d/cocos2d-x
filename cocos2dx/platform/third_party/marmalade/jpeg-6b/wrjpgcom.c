@@ -11,48 +11,48 @@
  * JPEG markers.
  */
 
-#define JPEG_CJPEG_DJPEG	/* to get the command-line config symbols */
-#include "jinclude.h"		/* get auto-config symbols, <stdio.h> */
+#define JPEG_CJPEG_DJPEG    /* to get the command-line config symbols */
+#include "jinclude.h"        /* get auto-config symbols, <stdio.h> */
 
-#ifndef HAVE_STDLIB_H		/* <stdlib.h> should declare malloc() */
+#ifndef HAVE_STDLIB_H        /* <stdlib.h> should declare malloc() */
 extern void * malloc ();
 #endif
-#include <ctype.h>		/* to declare isupper(), tolower() */
+#include <ctype.h>        /* to declare isupper(), tolower() */
 #ifdef USE_SETMODE
-#include <fcntl.h>		/* to declare setmode()'s parameter macros */
+#include <fcntl.h>        /* to declare setmode()'s parameter macros */
 /* If you have setmode() but not <io.h>, just delete this line: */
-#include <io.h>			/* to declare setmode() */
+#include <io.h>            /* to declare setmode() */
 #endif
 
-#ifdef USE_CCOMMAND		/* command-line reader for Macintosh */
+#ifdef USE_CCOMMAND        /* command-line reader for Macintosh */
 #ifdef __MWERKS__
 #include <SIOUX.h>              /* Metrowerks needs this */
-#include <console.h>		/* ... and this */
+#include <console.h>        /* ... and this */
 #endif
 #ifdef THINK_C
-#include <console.h>		/* Think declares it here */
+#include <console.h>        /* Think declares it here */
 #endif
 #endif
 
-#ifdef DONT_USE_B_MODE		/* define mode parameters for fopen() */
-#define READ_BINARY	"r"
-#define WRITE_BINARY	"w"
+#ifdef DONT_USE_B_MODE        /* define mode parameters for fopen() */
+#define READ_BINARY    "r"
+#define WRITE_BINARY    "w"
 #else
-#ifdef VMS			/* VMS is very nonstandard */
-#define READ_BINARY	"rb", "ctx=stm"
-#define WRITE_BINARY	"wb", "ctx=stm"
-#else				/* standard ANSI-compliant case */
-#define READ_BINARY	"rb"
-#define WRITE_BINARY	"wb"
+#ifdef VMS            /* VMS is very nonstandard */
+#define READ_BINARY    "rb", "ctx=stm"
+#define WRITE_BINARY    "wb", "ctx=stm"
+#else                /* standard ANSI-compliant case */
+#define READ_BINARY    "rb"
+#define WRITE_BINARY    "wb"
 #endif
 #endif
 
-#ifndef EXIT_FAILURE		/* define exit() codes if not provided */
+#ifndef EXIT_FAILURE        /* define exit() codes if not provided */
 #define EXIT_FAILURE  1
 #endif
 #ifndef EXIT_SUCCESS
 #ifdef VMS
-#define EXIT_SUCCESS  1		/* VMS is very nonstandard */
+#define EXIT_SUCCESS  1        /* VMS is very nonstandard */
 #else
 #define EXIT_SUCCESS  0
 #endif
@@ -63,7 +63,7 @@ extern void * malloc ();
  */
 
 #ifndef MAX_COM_LENGTH
-#define MAX_COM_LENGTH 65000L	/* must be <= 65533 in any case */
+#define MAX_COM_LENGTH 65000L    /* must be <= 65533 in any case */
 #endif
 
 
@@ -72,12 +72,12 @@ extern void * malloc ();
  * To reuse this code in another application, you might need to change these.
  */
 
-static FILE * infile;		/* input JPEG file */
+static FILE * infile;        /* input JPEG file */
 
 /* Return next input byte, or EOF if no more */
 #define NEXTBYTE()  getc(infile)
 
-static FILE * outfile;		/* output JPEG file */
+static FILE * outfile;        /* output JPEG file */
 
 /* Emit an output byte */
 #define PUTBYTE(x)  putc((x), outfile)
@@ -154,11 +154,11 @@ copy_rest_of_file (void)
  * in this program.  (See jdmarker.c for a more complete list.)
  */
 
-#define M_SOF0  0xC0		/* Start Of Frame N */
-#define M_SOF1  0xC1		/* N indicates which compression process */
-#define M_SOF2  0xC2		/* Only SOF0-SOF2 are now in common use */
+#define M_SOF0  0xC0        /* Start Of Frame N */
+#define M_SOF1  0xC1        /* N indicates which compression process */
+#define M_SOF2  0xC2        /* Only SOF0-SOF2 are now in common use */
 #define M_SOF3  0xC3
-#define M_SOF5  0xC5		/* NB: codes C4 and CC are NOT SOF markers */
+#define M_SOF5  0xC5        /* NB: codes C4 and CC are NOT SOF markers */
 #define M_SOF6  0xC6
 #define M_SOF7  0xC7
 #define M_SOF9  0xC9
@@ -167,10 +167,10 @@ copy_rest_of_file (void)
 #define M_SOF13 0xCD
 #define M_SOF14 0xCE
 #define M_SOF15 0xCF
-#define M_SOI   0xD8		/* Start Of Image (beginning of datastream) */
-#define M_EOI   0xD9		/* End Of Image (end of datastream) */
-#define M_SOS   0xDA		/* Start Of Scan (begins compressed data) */
-#define M_COM   0xFE		/* COMment */
+#define M_SOI   0xD8        /* Start Of Image (beginning of datastream) */
+#define M_EOI   0xD9        /* End Of Image (end of datastream) */
+#define M_SOS   0xDA        /* Start Of Scan (begins compressed data) */
+#define M_COM   0xFE        /* COMment */
 
 
 /*
@@ -302,40 +302,40 @@ scan_JPEG_header (int keep_COM)
       /* Note that marker codes 0xC4, 0xC8, 0xCC are not, and must not be,
        * treated as SOFn.  C4 in particular is actually DHT.
        */
-    case M_SOF0:		/* Baseline */
-    case M_SOF1:		/* Extended sequential, Huffman */
-    case M_SOF2:		/* Progressive, Huffman */
-    case M_SOF3:		/* Lossless, Huffman */
-    case M_SOF5:		/* Differential sequential, Huffman */
-    case M_SOF6:		/* Differential progressive, Huffman */
-    case M_SOF7:		/* Differential lossless, Huffman */
-    case M_SOF9:		/* Extended sequential, arithmetic */
-    case M_SOF10:		/* Progressive, arithmetic */
-    case M_SOF11:		/* Lossless, arithmetic */
-    case M_SOF13:		/* Differential sequential, arithmetic */
-    case M_SOF14:		/* Differential progressive, arithmetic */
-    case M_SOF15:		/* Differential lossless, arithmetic */
+    case M_SOF0:        /* Baseline */
+    case M_SOF1:        /* Extended sequential, Huffman */
+    case M_SOF2:        /* Progressive, Huffman */
+    case M_SOF3:        /* Lossless, Huffman */
+    case M_SOF5:        /* Differential sequential, Huffman */
+    case M_SOF6:        /* Differential progressive, Huffman */
+    case M_SOF7:        /* Differential lossless, Huffman */
+    case M_SOF9:        /* Extended sequential, arithmetic */
+    case M_SOF10:        /* Progressive, arithmetic */
+    case M_SOF11:        /* Lossless, arithmetic */
+    case M_SOF13:        /* Differential sequential, arithmetic */
+    case M_SOF14:        /* Differential progressive, arithmetic */
+    case M_SOF15:        /* Differential lossless, arithmetic */
       return marker;
 
-    case M_SOS:			/* should not see compressed data before SOF */
+    case M_SOS:            /* should not see compressed data before SOF */
       ERREXIT("SOS without prior SOFn");
       break;
 
-    case M_EOI:			/* in case it's a tables-only JPEG stream */
+    case M_EOI:            /* in case it's a tables-only JPEG stream */
       return marker;
 
-    case M_COM:			/* Existing COM: conditionally discard */
+    case M_COM:            /* Existing COM: conditionally discard */
       if (keep_COM) {
-	write_marker(marker);
-	copy_variable();
+    write_marker(marker);
+    copy_variable();
       } else {
-	skip_variable();
+    skip_variable();
       }
       break;
 
-    default:			/* Anything else just gets copied */
+    default:            /* Anything else just gets copied */
       write_marker(marker);
-      copy_variable();		/* we assume it has a parameter count... */
+      copy_variable();        /* we assume it has a parameter count... */
       break;
     }
   } /* end loop */
@@ -344,7 +344,7 @@ scan_JPEG_header (int keep_COM)
 
 /* Command line parsing code */
 
-static const char * progname;	/* program name for error messages */
+static const char * progname;    /* program name for error messages */
 
 
 static void
@@ -370,7 +370,7 @@ usage (void)
   fprintf(stderr, "If you do not give either -comment or -cfile on the command line,\n");
   fprintf(stderr, "then the comment text is read from standard input.\n");
   fprintf(stderr, "It can be multiple lines, up to %u characters total.\n",
-	  (unsigned int) MAX_COM_LENGTH);
+      (unsigned int) MAX_COM_LENGTH);
 #ifndef TWO_FILE_COMMANDLINE
   fprintf(stderr, "You must specify an input JPEG file name when supplying\n");
   fprintf(stderr, "comment text from standard input.\n");
@@ -391,17 +391,17 @@ keymatch (char * arg, const char * keyword, int minchars)
 
   while ((ca = *arg++) != '\0') {
     if ((ck = *keyword++) == '\0')
-      return 0;			/* arg longer than keyword, no good */
-    if (isupper(ca))		/* force arg to lcase (assume ck is already) */
+      return 0;            /* arg longer than keyword, no good */
+    if (isupper(ca))        /* force arg to lcase (assume ck is already) */
       ca = tolower(ca);
     if (ca != ck)
-      return 0;			/* no good */
-    nmatched++;			/* count matched characters */
+      return 0;            /* no good */
+    nmatched++;            /* count matched characters */
   }
   /* reached end of argument; fail if it's too short for unique abbrev */
   if (nmatched < minchars)
     return 0;
-  return 1;			/* A-OK */
+  return 1;            /* A-OK */
 }
 
 
@@ -427,21 +427,21 @@ main (int argc, char **argv)
 
   progname = argv[0];
   if (progname == NULL || progname[0] == 0)
-    progname = "wrjpgcom";	/* in case C library doesn't provide it */
+    progname = "wrjpgcom";    /* in case C library doesn't provide it */
 
   /* Parse switches, if any */
   for (argn = 1; argn < argc; argn++) {
     arg = argv[argn];
     if (arg[0] != '-')
-      break;			/* not switch, must be file name */
-    arg++;			/* advance over '-' */
+      break;            /* not switch, must be file name */
+    arg++;            /* advance over '-' */
     if (keymatch(arg, "replace", 1)) {
       keep_COM = 0;
     } else if (keymatch(arg, "cfile", 2)) {
       if (++argn >= argc) usage();
       if ((comment_file = fopen(argv[argn], "r")) == NULL) {
-	fprintf(stderr, "%s: can't open %s\n", progname, argv[argn]);
-	exit(EXIT_FAILURE);
+    fprintf(stderr, "%s: can't open %s\n", progname, argv[argn]);
+    exit(EXIT_FAILURE);
       }
     } else if (keymatch(arg, "comment", 1)) {
       if (++argn >= argc) usage();
@@ -450,21 +450,21 @@ main (int argc, char **argv)
        * under MS-DOG and must parse out the quoted string ourselves.  Sigh.
        */
       if (comment_arg[0] == '"') {
-	comment_arg = (char *) malloc((size_t) MAX_COM_LENGTH);
-	if (comment_arg == NULL)
-	  ERREXIT("Insufficient memory");
-	strcpy(comment_arg, argv[argn]+1);
-	for (;;) {
-	  comment_length = (unsigned int) strlen(comment_arg);
-	  if (comment_length > 0 && comment_arg[comment_length-1] == '"') {
-	    comment_arg[comment_length-1] = '\0'; /* zap terminating quote */
-	    break;
-	  }
-	  if (++argn >= argc)
-	    ERREXIT("Missing ending quote mark");
-	  strcat(comment_arg, " ");
-	  strcat(comment_arg, argv[argn]);
-	}
+    comment_arg = (char *) malloc((size_t) MAX_COM_LENGTH);
+    if (comment_arg == NULL)
+      ERREXIT("Insufficient memory");
+    strcpy(comment_arg, argv[argn]+1);
+    for (;;) {
+      comment_length = (unsigned int) strlen(comment_arg);
+      if (comment_length > 0 && comment_arg[comment_length-1] == '"') {
+        comment_arg[comment_length-1] = '\0'; /* zap terminating quote */
+        break;
+      }
+      if (++argn >= argc)
+        ERREXIT("Missing ending quote mark");
+      strcat(comment_arg, " ");
+      strcat(comment_arg, argv[argn]);
+    }
       }
       comment_length = (unsigned int) strlen(comment_arg);
     } else
@@ -488,10 +488,10 @@ main (int argc, char **argv)
     }
   } else {
     /* default input file is stdin */
-#ifdef USE_SETMODE		/* need to hack file mode? */
+#ifdef USE_SETMODE        /* need to hack file mode? */
     setmode(fileno(stdin), O_BINARY);
 #endif
-#ifdef USE_FDOPEN		/* need to re-open in binary mode? */
+#ifdef USE_FDOPEN        /* need to re-open in binary mode? */
     if ((infile = fdopen(fileno(stdin), READ_BINARY)) == NULL) {
       fprintf(stderr, "%s: can't open stdin\n", progname);
       exit(EXIT_FAILURE);
@@ -506,7 +506,7 @@ main (int argc, char **argv)
   /* Must have explicit output file name */
   if (argn != argc-2) {
     fprintf(stderr, "%s: must name one input and one output file\n",
-	    progname);
+        progname);
     usage();
   }
   if ((outfile = fopen(argv[argn+1], WRITE_BINARY)) == NULL) {
@@ -520,10 +520,10 @@ main (int argc, char **argv)
     usage();
   }
   /* default output file is stdout */
-#ifdef USE_SETMODE		/* need to hack file mode? */
+#ifdef USE_SETMODE        /* need to hack file mode? */
   setmode(fileno(stdout), O_BINARY);
 #endif
-#ifdef USE_FDOPEN		/* need to re-open in binary mode? */
+#ifdef USE_FDOPEN        /* need to re-open in binary mode? */
   if ((outfile = fdopen(fileno(stdout), WRITE_BINARY)) == NULL) {
     fprintf(stderr, "%s: can't open stdout\n", progname);
     exit(EXIT_FAILURE);
@@ -545,9 +545,9 @@ main (int argc, char **argv)
     src_file = (comment_file != NULL ? comment_file : stdin);
     while ((c = getc(src_file)) != EOF) {
       if (comment_length >= (unsigned int) MAX_COM_LENGTH) {
-	fprintf(stderr, "Comment text may not exceed %u bytes\n",
-		(unsigned int) MAX_COM_LENGTH);
-	exit(EXIT_FAILURE);
+    fprintf(stderr, "Comment text may not exceed %u bytes\n",
+        (unsigned int) MAX_COM_LENGTH);
+    exit(EXIT_FAILURE);
       }
       comment_arg[comment_length++] = (char) c;
     }
@@ -579,5 +579,5 @@ main (int argc, char **argv)
 
   /* All done. */
   exit(EXIT_SUCCESS);
-  return 0;			/* suppress no-return-value warnings */
+  return 0;            /* suppress no-return-value warnings */
 }

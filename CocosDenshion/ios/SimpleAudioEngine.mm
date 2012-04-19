@@ -153,21 +153,21 @@ SimpleAudioEngine::~SimpleAudioEngine()
 
 SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 {
-	if (! s_pEngine)
-	{
-		s_pEngine = new SimpleAudioEngine();
-	}
+    if (! s_pEngine)
+    {
+        s_pEngine = new SimpleAudioEngine();
+    }
     
-	return s_pEngine;
+    return s_pEngine;
 }
 
 void SimpleAudioEngine::end()
 {
-	if (s_pEngine)
-	{
-		delete s_pEngine;
-		s_pEngine = NULL;
-	}
+    if (s_pEngine)
+    {
+        delete s_pEngine;
+        s_pEngine = NULL;
+    }
     
             static_end();
 }
@@ -179,12 +179,12 @@ void SimpleAudioEngine::setResource(const char* pszZipFileName)
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
-	static_preloadBackgroundMusic(pszFilePath);
+    static_preloadBackgroundMusic(pszFilePath);
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
-	static_playBackgroundMusic(pszFilePath, bLoop);
+    static_playBackgroundMusic(pszFilePath, bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)

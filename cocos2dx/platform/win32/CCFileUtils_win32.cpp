@@ -38,14 +38,14 @@ static char s_pszResourcePath[MAX_PATH] = {0};
 
 static void _CheckPath()
 {
-	if (! s_pszResourcePath[0])
-	{
-		WCHAR  wszPath[MAX_PATH];
-		int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath, 
-			GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
-			s_pszResourcePath, MAX_PATH, NULL, NULL);
+    if (! s_pszResourcePath[0])
+    {
+        WCHAR  wszPath[MAX_PATH];
+        int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath, 
+            GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
+            s_pszResourcePath, MAX_PATH, NULL, NULL);
         s_pszResourcePath[nNum] = '\\';
-	}
+    }
 }
 
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
@@ -58,7 +58,7 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
-	_CheckPath();
+    _CheckPath();
 
     CCString * pRet = new CCString();
     pRet->autorelease();
@@ -71,7 +71,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
         && ('/' == pszRelativePath[0] || '\\' == pszRelativePath[0]))
     {
         // path start with '/' or '\', is absolute path without driver name
-		char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
+        char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
         pRet->m_sString = szDriver;
         pRet->m_sString += pszRelativePath;
     }
@@ -81,22 +81,22 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
         pRet->m_sString += pszRelativePath;
     }
 
-	// is ipad?
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	bool isIpad = (winSize.width == 1024 || winSize.height == 768);
+    // is ipad?
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    bool isIpad = (winSize.width == 1024 || winSize.height == 768);
 
-	std::string hiRes = pRet->m_sString.c_str();
+    std::string hiRes = pRet->m_sString.c_str();
     std::string::size_type pos = hiRes.find_last_of("/\\");
     std::string::size_type dotPos = hiRes.find_last_of(".");
     *pResolutionType = kCCResolutioniPhone;
 
-	if (isIpad)
-	{
-		if (CC_CONTENT_SCALE_FACTOR() == 1.0f)
-		{
-			// ipad
+    if (isIpad)
+    {
+        if (CC_CONTENT_SCALE_FACTOR() == 1.0f)
+        {
+            // ipad
 
-			if (std::string::npos != dotPos && dotPos > pos)
+            if (std::string::npos != dotPos && dotPos > pos)
             {
                 hiRes.insert(dotPos, CC_IPAD_FILENAME_SUFFIX);
             }
@@ -106,12 +106,12 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
             }
             
             *pResolutionType = kCCResolutioniPad;
-		}
-		else
-		{
-			// ipad retina
+        }
+        else
+        {
+            // ipad retina
 
-			if (std::string::npos != dotPos && dotPos > pos)
+            if (std::string::npos != dotPos && dotPos > pos)
             {
                 hiRes.insert(dotPos, CC_IPAD_DISPLAY_RETINA_SUPPFIX);
             }
@@ -121,13 +121,13 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
             }
             
             *pResolutionType = kCCResolutioniPadRetinaDisplay;
-		}
-	}
-	else
-	{	
-		if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
+        }
+    }
+    else
+    {    
+        if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
         {
-			// iphone retina
+            // iphone retina
 
             if (std::string::npos != dotPos && dotPos > pos)
             {
@@ -140,27 +140,27 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
             
             *pResolutionType = kCCResolutioniPhoneRetinaDisplay;
         }
-	}  
+    }  
 
-	DWORD attrib = GetFileAttributesA(hiRes.c_str());
-	if (attrib != INVALID_FILE_ATTRIBUTES && ! (FILE_ATTRIBUTE_DIRECTORY & attrib))
+    DWORD attrib = GetFileAttributesA(hiRes.c_str());
+    if (attrib != INVALID_FILE_ATTRIBUTES && ! (FILE_ATTRIBUTE_DIRECTORY & attrib))
     {
         pRet->m_sString.swap(hiRes);
     }
 
-	return pRet->m_sString.c_str();
+    return pRet->m_sString.c_str();
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-	_CheckPath();
-	// std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
-	std::string relativeFile = pszRelativeFile;
-	CCString *pRet = new CCString();
-	pRet->autorelease();
-	pRet->m_sString = relativeFile.substr(0, relativeFile.find_last_of("/\\") + 1);
-	pRet->m_sString += pszFilename;
-	return pRet->m_sString.c_str();
+    _CheckPath();
+    // std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+    std::string relativeFile = pszRelativeFile;
+    CCString *pRet = new CCString();
+    pRet->autorelease();
+    pRet->m_sString = relativeFile.substr(0, relativeFile.find_last_of("/\\") + 1);
+    pRet->m_sString += pszFilename;
+    return pRet->m_sString.c_str();
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
@@ -200,17 +200,17 @@ void CCFileUtils::setResource(const char* pszZipFileName)
 
 string CCFileUtils::getWriteablePath()
 {
-	// return the path that the exe file saved in
+    // return the path that the exe file saved in
 
-	char full_path[_MAX_PATH + 1];
-	::GetModuleFileNameA(NULL, full_path, _MAX_PATH + 1);
+    char full_path[_MAX_PATH + 1];
+    ::GetModuleFileNameA(NULL, full_path, _MAX_PATH + 1);
 
-	string ret((char*)full_path);
+    string ret((char*)full_path);
 
-	// remove xxx.exe
-	ret =  ret.substr(0, ret.rfind("\\") + 1);
+    // remove xxx.exe
+    ret =  ret.substr(0, ret.rfind("\\") + 1);
 
-	return ret;
+    return ret;
 }
 
 NS_CC_END

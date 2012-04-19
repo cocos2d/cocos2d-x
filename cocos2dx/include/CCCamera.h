@@ -59,56 +59,56 @@ using the camera.
 class CC_DLL CCCamera : public CCObject
 {
 protected:
-	float m_fEyeX;
-	float m_fEyeY;
-	float m_fEyeZ;
+    float m_fEyeX;
+    float m_fEyeY;
+    float m_fEyeZ;
 
-	float m_fCenterX;
-	float m_fCenterY;
-	float m_fCenterZ;
+    float m_fCenterX;
+    float m_fCenterY;
+    float m_fCenterZ;
 
-	float m_fUpX;
-	float m_fUpY;
-	float m_fUpZ;
+    float m_fUpX;
+    float m_fUpY;
+    float m_fUpZ;
 
-	bool m_bDirty;
-	kmMat4	m_lookupMatrix;
+    bool m_bDirty;
+    kmMat4    m_lookupMatrix;
 public:
-	CCCamera(void);
-	~CCCamera(void);
+    CCCamera(void);
+    ~CCCamera(void);
 
-	void init(void);
+    void init(void);
 
-	const char* description(void);
+    const char* description(void);
 
-	/** sets the dirty value */
-	inline void setDirty(bool bValue) { m_bDirty = bValue; }
-	/** get the dirty value */
-	inline bool getDirty(void) { return m_bDirty; }
+    /** sets the dirty value */
+    inline void setDirty(bool bValue) { m_bDirty = bValue; }
+    /** get the dirty value */
+    inline bool getDirty(void) { return m_bDirty; }
 
-	/** sets the camera in the default position */
-	void restore(void);
-	/** Sets the camera using gluLookAt using its eye, center and up_vector */
-	void locate(void);
-	/** sets the eye values in points */
-	void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
-	/** sets the center values in points */
-	void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
-	/** sets the up values */
-	void setUpXYZ(float fUpX, float fUpY, float fUpZ);
+    /** sets the camera in the default position */
+    void restore(void);
+    /** Sets the camera using gluLookAt using its eye, center and up_vector */
+    void locate(void);
+    /** sets the eye values in points */
+    void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
+    /** sets the center values in points */
+    void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
+    /** sets the up values */
+    void setUpXYZ(float fUpX, float fUpY, float fUpZ);
 
-	/** get the eye vector values in points */
-	void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
-	/** get the center vector values int points */
-	void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
-	/** get the up vector values */
-	void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
+    /** get the eye vector values in points */
+    void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
+    /** get the center vector values int points */
+    void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
+    /** get the up vector values */
+    void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
 public:
-	/** returns the Z eye */
-	static float getZEye();
+    /** returns the Z eye */
+    static float getZEye();
 
 private:
-	DISALLOW_COPY_AND_ASSIGN(CCCamera);
+    DISALLOW_COPY_AND_ASSIGN(CCCamera);
 };
 
 NS_CC_END

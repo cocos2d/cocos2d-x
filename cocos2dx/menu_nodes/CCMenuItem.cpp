@@ -39,12 +39,12 @@ static unsigned int _fontSize = kCCItemSize;
 static std::string _fontName = "Marker Felt";
 static bool _fontNameRelease = false;
 
-const unsigned int	kCurrentItem = 0xc0c05001;
-const unsigned int	kZoomActionTag = 0xc0c05002;
+const unsigned int    kCurrentItem = 0xc0c05001;
+const unsigned int    kZoomActionTag = 0xc0c05002;
 
-const unsigned int	kNormalTag = 0x1;
-const unsigned int	kSelectedTag = 0x2;
-const unsigned int	kDisableTag = 0x3;
+const unsigned int    kNormalTag = 0x1;
+const unsigned int    kSelectedTag = 0x2;
+const unsigned int    kDisableTag = 0x3;
 //
 // CCMenuItem
 //
@@ -410,7 +410,7 @@ void CCMenuItemSprite::setNormalImage(CCNode* var)
     }
     
     m_pNormalImage = var;
-	this->setContentSize(m_pNormalImage->getContentSize());
+    this->setContentSize(m_pNormalImage->getContentSize());
 }
 CCNode * CCMenuItemSprite::getSelectedImage()
 {
@@ -642,17 +642,17 @@ bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *s
 //
 void CCMenuItemImage::setNormalSpriteFrame(CCSpriteFrame * frame)
 {
-	setNormalImage(CCSprite::spriteWithSpriteFrame(frame));
+    setNormalImage(CCSprite::spriteWithSpriteFrame(frame));
 }
 
 void CCMenuItemImage::setSelectedSpriteFrame(CCSpriteFrame * frame)
 {
-	setSelectedImage(CCSprite::spriteWithSpriteFrame(frame));
+    setSelectedImage(CCSprite::spriteWithSpriteFrame(frame));
 }
 
 void CCMenuItemImage::setDisabledSpriteFrame(CCSpriteFrame * frame)
 {
-	setDisabledImage(CCSprite::spriteWithSpriteFrame(frame));
+    setDisabledImage(CCSprite::spriteWithSpriteFrame(frame));
 }
 
 //
@@ -683,8 +683,8 @@ CCMenuItemToggle * CCMenuItemToggle::itemWithTarget(CCObject* target, SEL_MenuHa
 bool CCMenuItemToggle::initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 {
     CCMenuItem::initWithTarget(target, selector);
-	this->m_pSubItems = CCArray::array();
-	this->m_pSubItems->retain();
+    this->m_pSubItems = CCArray::array();
+    this->m_pSubItems->retain();
     int z = 0;
     CCMenuItem *i = item;
     while(i) 
@@ -709,8 +709,8 @@ CCMenuItemToggle* CCMenuItemToggle::itemWithItem(CCMenuItem *item)
 bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
 {
     CCMenuItem::initWithTarget(NULL, NULL);
-	this->m_pSubItems = CCArray::array();
-	this->m_pSubItems->retain();
+    this->m_pSubItems = CCArray::array();
+    this->m_pSubItems->retain();
     m_pSubItems->addObject(item);
     m_uSelectedIndex = UINT_MAX;
     this->setSelectedIndex(0);
@@ -731,11 +731,11 @@ void CCMenuItemToggle::setSelectedIndex(unsigned int index)
     if( index != m_uSelectedIndex )
     {
         m_uSelectedIndex = index;
-		CCMenuItem *currentItem = (CCMenuItem*)getChildByTag(kCurrentItem);
-		if( currentItem )
-		{
-			currentItem->removeFromParentAndCleanup(false);
-		}
+        CCMenuItem *currentItem = (CCMenuItem*)getChildByTag(kCurrentItem);
+        if( currentItem )
+        {
+            currentItem->removeFromParentAndCleanup(false);
+        }
 
         CCMenuItem* item = (CCMenuItem*)m_pSubItems->objectAtIndex(m_uSelectedIndex);
         this->addChild(item, 0, kCurrentItem);
@@ -774,10 +774,10 @@ void CCMenuItemToggle::setIsEnabled(bool enabled)
     
     if(m_pSubItems && m_pSubItems->count() > 0)
     {
-		CCObject* pObj = NULL;
-		CCARRAY_FOREACH(m_pSubItems, pObj)
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(m_pSubItems, pObj)
         {
-			CCMenuItem* pItem = (CCMenuItem*)pObj;
+            CCMenuItem* pItem = (CCMenuItem*)pObj;
             pItem->setIsEnabled(enabled);
         }
     }
@@ -799,10 +799,10 @@ void CCMenuItemToggle::setOpacity(GLubyte opacity)
     m_cOpacity = opacity;
     if(m_pSubItems && m_pSubItems->count() > 0)
     {
-		CCObject* pObj = NULL;
-		CCARRAY_FOREACH(m_pSubItems, pObj)
-		{
-			CCMenuItem* pItem = (CCMenuItem*)pObj;
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(m_pSubItems, pObj)
+        {
+            CCMenuItem* pItem = (CCMenuItem*)pObj;
             dynamic_cast<CCRGBAProtocol*>(pItem)->setOpacity(opacity);
         }
     }
@@ -816,10 +816,10 @@ void CCMenuItemToggle::setColor(const ccColor3B& color)
     m_tColor = color;
     if(m_pSubItems && m_pSubItems->count() > 0)
     {
-		CCObject* pObj = NULL;
-		CCARRAY_FOREACH(m_pSubItems, pObj)
-		{
-			CCMenuItem* pItem = (CCMenuItem*)pObj;
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(m_pSubItems, pObj)
+        {
+            CCMenuItem* pItem = (CCMenuItem*)pObj;
             dynamic_cast<CCRGBAProtocol*>(pItem)->setColor(color);
         }
     }

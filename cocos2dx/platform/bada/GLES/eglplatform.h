@@ -101,25 +101,25 @@ typedef int  EGLNativeDisplayType;
 typedef void *EGLNativeWindowType;
 typedef struct
 {
-	void	*pBuffer;
-	long	lWidth;
-	long	lHeight;
-	enum
-	{
-		NUEGL_PIXELFORMAT_565 = 0,
-		NUEGL_PIXELFORMAT_4444 = 1,
-		NUEGL_PIXELFORMAT_8888 = 2,
-		NUEGL_PIXELFORMAT_1555 = 3,
-		NUEGL_PIXELFORMAT_force_to_32_bits = 0x12345678
-	} ePixelFormat;
-	enum
-	{
-		NUEGL_ROTATE_0 = 0,
-		NUEGL_ROTATE_90 = 1,
-		NUEGL_ROTATE_180 = 2,
-		NUEGL_ROTATE_270 = 3,
-		NUEGL_ROTATE_force_to_32_bits = 0x12345678
-	} eRotation;
+    void    *pBuffer;
+    long    lWidth;
+    long    lHeight;
+    enum
+    {
+        NUEGL_PIXELFORMAT_565 = 0,
+        NUEGL_PIXELFORMAT_4444 = 1,
+        NUEGL_PIXELFORMAT_8888 = 2,
+        NUEGL_PIXELFORMAT_1555 = 3,
+        NUEGL_PIXELFORMAT_force_to_32_bits = 0x12345678
+    } ePixelFormat;
+    enum
+    {
+        NUEGL_ROTATE_0 = 0,
+        NUEGL_ROTATE_90 = 1,
+        NUEGL_ROTATE_180 = 2,
+        NUEGL_ROTATE_270 = 3,
+        NUEGL_ROTATE_force_to_32_bits = 0x12345678
+    } eRotation;
 } sEGLNativePixmapType;
 typedef sEGLNativePixmapType *EGLNativePixmapType;
 #else

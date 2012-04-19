@@ -40,27 +40,27 @@ The children will be moved faster / slower than the parent according the the par
 */
 class CC_DLL CCParallaxNode : public CCNode 
 {
-	/** array that holds the offset / ratio of the children */
-	CC_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)
+    /** array that holds the offset / ratio of the children */
+    CC_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)
 
 public:
-	/** Adds a child to the container with a z-order, a parallax ratio and a position offset
-	It returns self, so you can chain several addChilds.
-	@since v0.8
-	*/
-	CCParallaxNode();
-	virtual ~CCParallaxNode();
-	static CCParallaxNode * node();
-	virtual void addChild(CCNode * child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
-	// super methods
-	virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
-	virtual void removeChild(CCNode* child, bool cleanup);
-	virtual void removeAllChildrenWithCleanup(bool cleanup);
-	virtual void visit(void);
+    /** Adds a child to the container with a z-order, a parallax ratio and a position offset
+    It returns self, so you can chain several addChilds.
+    @since v0.8
+    */
+    CCParallaxNode();
+    virtual ~CCParallaxNode();
+    static CCParallaxNode * node();
+    virtual void addChild(CCNode * child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
+    // super methods
+    virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
+    virtual void removeChild(CCNode* child, bool cleanup);
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    virtual void visit(void);
 private:
-	CCPoint absolutePosition();
+    CCPoint absolutePosition();
 protected:
-	CCPoint	m_tLastPosition;
+    CCPoint    m_tLastPosition;
 };
 
 NS_CC_END

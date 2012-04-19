@@ -30,7 +30,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
-@brief	Input Method Edit Message Dispatcher.
+@brief    Input Method Edit Message Dispatcher.
 */
 class CC_DLL CCIMEDispatcher
 {
@@ -53,12 +53,12 @@ public:
     void dispatchInsertText(const char * pText, int nLen);
 
     /**
-    @brief	dispatch the delete backward operation
+    @brief    dispatch the delete backward operation
     */
     void dispatchDeleteBackward();
 
     /**
-    @brief	get the content text, which current CCIMEDelegate which attached with IME has.
+    @brief    get the content text, which current CCIMEDelegate which attached with IME has.
     */
     const char * getContentText();
 
@@ -79,7 +79,7 @@ protected:
     void addDelegate(CCIMEDelegate * pDelegate);
 
     /**
-    @brief	attach the pDeleate with ime.
+    @brief    attach the pDeleate with ime.
     @return If the old delegate can detattach with ime and the new delegate 
             can attach with ime, return true, otherwise return false.
     */
@@ -100,4 +100,4 @@ private:
 
 NS_CC_END
 
-#endif	// __CC_IME_DISPATCHER_H__
+#endif    // __CC_IME_DISPATCHER_H__

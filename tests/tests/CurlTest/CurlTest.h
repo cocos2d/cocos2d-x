@@ -7,13 +7,13 @@
 class CurlTest : public CCLayer
 {
 public:
-	CurlTest();
-	~CurlTest();
+    CurlTest();
+    ~CurlTest();
 
-	virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
+    virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
-	cocos2d::CCLabelTTF*         m_pLabel;
+    cocos2d::CCLabelTTF*         m_pLabel;
 };
 
 class CurlTestScene : public TestScene

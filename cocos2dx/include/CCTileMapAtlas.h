@@ -51,40 +51,40 @@ Instead, use the newer TMX file format: CCTMXTiledMap
 */
 class CC_DLL CCTileMapAtlas : public CCAtlasNode 
 {
-	/** TileMap info */
-	CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
+    /** TileMap info */
+    CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
 public:
-	CCTileMapAtlas();
-	virtual ~CCTileMapAtlas();
-	/** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
-	The tile file will be loaded using the TextureMgr.
-	*/
-	static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-	/** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
-	The file will be loaded using the TextureMgr.
-	*/
-	bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-	/** returns a tile from position x,y.
-	For the moment only channel R is used
-	*/
-	ccColor3B tileAt(const ccGridSize& position);
-	/** sets a tile at position x,y.
-	For the moment only channel R is used
-	*/
-	void setTile(const ccColor3B& tile, const ccGridSize& position);
-	/** dealloc the map from memory */
-	void releaseMap();
+    CCTileMapAtlas();
+    virtual ~CCTileMapAtlas();
+    /** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
+    The tile file will be loaded using the TextureMgr.
+    */
+    static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+    /** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
+    The file will be loaded using the TextureMgr.
+    */
+    bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+    /** returns a tile from position x,y.
+    For the moment only channel R is used
+    */
+    ccColor3B tileAt(const ccGridSize& position);
+    /** sets a tile at position x,y.
+    For the moment only channel R is used
+    */
+    void setTile(const ccColor3B& tile, const ccGridSize& position);
+    /** dealloc the map from memory */
+    void releaseMap();
 private:
-	void loadTGAfile(const char *file);
-	void calculateItemsToRender();
-	void updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index);
-	void updateAtlasValues();
+    void loadTGAfile(const char *file);
+    void calculateItemsToRender();
+    void updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index);
+    void updateAtlasValues();
 
 protected:
-	//! x,y to altas dicctionary
-	StringToIntegerDictionary *m_pPosToAtlasIndex;
-	//! numbers of tiles to render
-	int				m_nItemsToRender;
+    //! x,y to altas dicctionary
+    StringToIntegerDictionary *m_pPosToAtlasIndex;
+    //! numbers of tiles to render
+    int                m_nItemsToRender;
 };
 
 NS_CC_END

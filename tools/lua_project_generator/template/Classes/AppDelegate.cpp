@@ -13,8 +13,8 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-	// end simple audio engine here, or it may crashed on win32
-	SimpleAudioEngine::sharedEngine()->end();
+    // end simple audio engine here, or it may crashed on win32
+    SimpleAudioEngine::sharedEngine()->end();
     CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
     CC_SAFE_DELETE(m_pLuaEngine);
 }
@@ -42,15 +42,15 @@ bool AppDelegate::initInstance()
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-		// OpenGLView initialized in HelloWorld/android/jni/helloworld/main.cpp
-		// the default setting is to create a fullscreen view
-		// if you want to use auto-scale, please enable view->create(320,480) in main.cpp
+        // OpenGLView initialized in HelloWorld/android/jni/helloworld/main.cpp
+        // the default setting is to create a fullscreen view
+        // if you want to use auto-scale, please enable view->create(320,480) in main.cpp
 
 #endif  // CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-		// MaxAksenov said it's NOT a very elegant solution. I agree, haha
-		CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+        // MaxAksenov said it's NOT a very elegant solution. I agree, haha
+        CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
@@ -65,8 +65,8 @@ bool AppDelegate::initInstance()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-	// initialize director
-	CCDirector *pDirector = CCDirector::sharedDirector();
+    // initialize director
+    CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
@@ -75,42 +75,42 @@ bool AppDelegate::applicationDidFinishLaunching()
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
     // pDirector->enableRetinaDisplay(true);
 
-	// turn on display FPS
-	pDirector->setDisplayFPS(true);
+    // turn on display FPS
+    pDirector->setDisplayFPS(true);
 
-	// pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
-	// set FPS. the default value is 1.0/60 if you don't call this
-	pDirector->setAnimationInterval(1.0 / 60);
+    // set FPS. the default value is 1.0/60 if you don't call this
+    pDirector->setAnimationInterval(1.0 / 60);
 
-	// register lua engine
+    // register lua engine
     m_pLuaEngine = new LuaEngine; 
-	CCScriptEngineManager::sharedScriptEngineManager()->setScriptEngine(m_pLuaEngine);
+    CCScriptEngineManager::sharedScriptEngineManager()->setScriptEngine(m_pLuaEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	unsigned long size;
-	char *pFileContent = (char*)CCFileUtils::getFileData("main.lua", "r", &size);
+    unsigned long size;
+    char *pFileContent = (char*)CCFileUtils::getFileData("main.lua", "r", &size);
 
-	if (pFileContent)
-	{
-	    // copy the file contents and add '\0' at the end, or the lua parser can not parse it
-	    char *pCodes = new char[size + 1];
-	    pCodes[size] = '\0';
-	    memcpy(pCodes, pFileContent, size);
-	    delete[] pFileContent;
+    if (pFileContent)
+    {
+        // copy the file contents and add '\0' at the end, or the lua parser can not parse it
+        char *pCodes = new char[size + 1];
+        pCodes[size] = '\0';
+        memcpy(pCodes, pFileContent, size);
+        delete[] pFileContent;
 
-	    CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeString(pCodes);
-	    delete []pCodes;
-	}
+        CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeString(pCodes);
+        delete []pCodes;
+    }
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	string path = CCFileUtils::fullPathFromRelativePath("main.lua");
-	CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
+    string path = CCFileUtils::fullPathFromRelativePath("main.lua");
+    CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
 #endif 
 
-	return true;
+    return true;
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
@@ -118,15 +118,15 @@ void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->pause();
 
-	// if you use SimpleAudioEngine, it must be pause
-	// SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    // if you use SimpleAudioEngine, it must be pause
+    // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
-	
-	// if you use SimpleAudioEngine, it must resume here
-	// SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    
+    // if you use SimpleAudioEngine, it must resume here
+    // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

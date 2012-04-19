@@ -6,11 +6,11 @@
 
 int main()
 {
-	AppDelegate* app;
-	int nRet = 0;
-	
-	app = new AppDelegate;
-	nRet = cocos2d::CCApplication::sharedApplication().Run();;
-	delete app;
-	return nRet;
+    AppDelegate* app;
+    int nRet = 0;
+    
+    app = new AppDelegate;
+    nRet = cocos2d::CCApplication::sharedApplication().Run();;
+    delete app;
+    return nRet;
 }

@@ -35,22 +35,22 @@ int CCApplication::run()
         {
                 return 0;
         }
-	
-	return -1;
+    
+    return -1;
 }
 
 void CCApplication::setAnimationInterval(double interval)
 {
-	JniMethodInfo methodInfo;
-	if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval", 
-		"(D)V"))
-	{
-		CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
-	}
-	else
-	{
-		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, interval);
-	}
+    JniMethodInfo methodInfo;
+    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval", 
+        "(D)V"))
+    {
+        CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
+    }
+    else
+    {
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, interval);
+    }
 }
 
 CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
@@ -105,7 +105,7 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageSpanish;
     }
-	else if (0 == strcmp("ru", pLanguageName))
+    else if (0 == strcmp("ru", pLanguageName))
     {
         ret = kLanguageRussian;
     }

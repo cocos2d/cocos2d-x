@@ -39,29 +39,29 @@ NS_CC_BEGIN
 */
 class CC_DLL CCTMXObjectGroup : public CCObject
 {
-	/** offset position of child objects */
-	CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
-	/** list of properties stored in a dictionary */
-	CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
-	/** array of the objects */
-	CC_PROPERTY(CCArray*, m_pObjects, Objects);
+    /** offset position of child objects */
+    CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
+    /** list of properties stored in a dictionary */
+    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    /** array of the objects */
+    CC_PROPERTY(CCArray*, m_pObjects, Objects);
 public:
-	CCTMXObjectGroup();
-	virtual ~CCTMXObjectGroup();
+    CCTMXObjectGroup();
+    virtual ~CCTMXObjectGroup();
 
-	inline const char* getGroupName(){ return m_sGroupName.c_str(); }
-	inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
+    inline const char* getGroupName(){ return m_sGroupName.c_str(); }
+    inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
 
-	/** return the value for the specific property name */
-	CCString *propertyNamed(const char* propertyName);
+    /** return the value for the specific property name */
+    CCString *propertyNamed(const char* propertyName);
 
-	/** return the dictionary for the specific object name.
-	It will return the 1st object found on the array for the given name.
-	*/
-	CCDictionary* objectNamed(const char *objectName);
-protected:	
-	/** name of the group */
-	std::string m_sGroupName;
+    /** return the dictionary for the specific object name.
+    It will return the 1st object found on the array for the given name.
+    */
+    CCDictionary* objectNamed(const char *objectName);
+protected:    
+    /** name of the group */
+    std::string m_sGroupName;
 };
 
 NS_CC_END

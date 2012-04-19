@@ -23,113 +23,113 @@ using namespace CocosDenshion;
 static int tolua_collect_CCPoint (lua_State* tolua_S)
 {
  CCPoint* self = (CCPoint*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_CCString (lua_State* tolua_S)
 {
  CCString* self = (CCString*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccV3F_C4B_T2F_Quad (lua_State* tolua_S)
 {
  ccV3F_C4B_T2F_Quad* self = (ccV3F_C4B_T2F_Quad*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
 {
  CCAffineTransform* self = (CCAffineTransform*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_CCFloat (lua_State* tolua_S)
 {
  CCFloat* self = (CCFloat*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
 {
  ccBlendFunc* self = (ccBlendFunc*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccVertex3F (lua_State* tolua_S)
 {
  ccVertex3F* self = (ccVertex3F*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccVertex2F (lua_State* tolua_S)
 {
  ccVertex2F* self = (ccVertex2F*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccGridSize (lua_State* tolua_S)
 {
  ccGridSize* self = (ccGridSize*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccColor4F (lua_State* tolua_S)
 {
  ccColor4F* self = (ccColor4F*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_CCSize (lua_State* tolua_S)
 {
  CCSize* self = (CCSize*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccColor3B (lua_State* tolua_S)
 {
  ccColor3B* self = (ccColor3B*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccColor4B (lua_State* tolua_S)
 {
  ccColor4B* self = (ccColor4B*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_CCRect (lua_State* tolua_S)
 {
  CCRect* self = (CCRect*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_ccTex2F (lua_State* tolua_S)
 {
  ccTex2F* self = (ccTex2F*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 
 static int tolua_collect_CCCamera (lua_State* tolua_S)
 {
  CCCamera* self = (CCCamera*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
+    Mtolua_delete(self);
+    return 0;
 }
 #endif
 

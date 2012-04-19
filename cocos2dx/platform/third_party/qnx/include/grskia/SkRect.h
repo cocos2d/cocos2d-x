@@ -180,18 +180,18 @@ struct SK_API SkIRect {
     }
 
     /** Return true if this rectangle contains the specified rectangle.
-		For speed, this method does not check if either this or the specified
-		rectangles are empty, and if either is, its return value is undefined.
-		In the debugging build however, we assert that both this and the
-		specified rectangles are non-empty.
+        For speed, this method does not check if either this or the specified
+        rectangles are empty, and if either is, its return value is undefined.
+        In the debugging build however, we assert that both this and the
+        specified rectangles are non-empty.
     */
     bool containsNoEmptyCheck(int32_t left, int32_t top,
-							  int32_t right, int32_t bottom) const {
-		SkASSERT(fLeft < fRight && fTop < fBottom);
+                              int32_t right, int32_t bottom) const {
+        SkASSERT(fLeft < fRight && fTop < fBottom);
         SkASSERT(left < right && top < bottom);
 
         return fLeft <= left && fTop <= top &&
-			   fRight >= right && fBottom >= bottom;
+               fRight >= right && fBottom >= bottom;
     }
     
     /** If r intersects this rectangle, return true and set this rectangle to that

@@ -85,19 +85,19 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN];
+    char buf[MAX_LEN];
 
-	va_list args;
-	va_start(args, pszFormat);    	
-	vsprintf(buf, pszFormat, args);
-	va_end(args);
+    va_list args;
+    va_start(args, pszFormat);        
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
 
-	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-	showMessageBoxJNI(pszMsg, pszTitle);
+    showMessageBoxJNI(pszMsg, pszTitle);
 }
 
 NS_CC_END
@@ -115,15 +115,15 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN];
-	
-	va_list args;
-	va_start(args, pszFormat);    	
-	vsprintf(buf, pszFormat, args);
-	va_end(args);
-	
-	//TODO will copy how orx do
-	printf(buf);
+    char buf[MAX_LEN];
+    
+    va_list args;
+    va_start(args, pszFormat);        
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
+    
+    //TODO will copy how orx do
+    printf(buf);
 }
 
 // marmalade no MessageBox, use CCLog instead
@@ -149,14 +149,14 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN];
+    char buf[MAX_LEN];
 
-	va_list args;
-	va_start(args, pszFormat);
-	vsprintf(buf, pszFormat, args);
-	va_end(args);
+    va_list args;
+    va_start(args, pszFormat);
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
 
-	IwTrace(GAME, (buf));
+    IwTrace(GAME, (buf));
 }
 
 // marmalade no MessageBox, use CCLog instead
@@ -184,24 +184,24 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN] = {0};
+    char buf[MAX_LEN] = {0};
 
-	va_list args;
-	va_start(args, pszFormat);
-	vsnprintf(buf, MAX_LEN, pszFormat, args);
-	va_end(args);
-	__App_info(__PRETTY_FUNCTION__ , __LINE__, buf);
+    va_list args;
+    va_start(args, pszFormat);
+    vsnprintf(buf, MAX_LEN, pszFormat, args);
+    va_end(args);
+    __App_info(__PRETTY_FUNCTION__ , __LINE__, buf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-	if (pszMsg != NULL && pszTitle != NULL)
-	{
-		int iRet = 0;
-		MessageBox msgBox;
-		msgBox.Construct(pszTitle, pszMsg, MSGBOX_STYLE_OK);
-		msgBox.ShowAndWait(iRet);
-	}
+    if (pszMsg != NULL && pszTitle != NULL)
+    {
+        int iRet = 0;
+        MessageBox msgBox;
+        msgBox.Construct(pszTitle, pszMsg, MSGBOX_STYLE_OK);
+        msgBox.ShowAndWait(iRet);
+    }
 }
 
 NS_CC_END
@@ -223,19 +223,19 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN];
+    char buf[MAX_LEN];
 
-	va_list args;
-	va_start(args, pszFormat);
-	vsprintf(buf, pszFormat, args);
-	va_end(args);
+    va_list args;
+    va_start(args, pszFormat);
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
 
-	fprintf(stderr, "cocos2d-x debug info [%s]\n",  buf);
+    fprintf(stderr, "cocos2d-x debug info [%s]\n",  buf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-	CCLog("%s: %s", pszTitle, pszMsg);
+    CCLog("%s: %s", pszTitle, pszMsg);
 }
 
 NS_CC_END

@@ -35,9 +35,9 @@ static char s_pszResourcePath[S3E_FILE_MAX_PATH] = {0};
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
 
-	IwAssert(GAME, pszRelativePath);
+    IwAssert(GAME, pszRelativePath);
 
-	CCString * pRet = new CCString();
+    CCString * pRet = new CCString();
     pRet->autorelease();
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
     {
@@ -45,7 +45,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
     }
     else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
     {
-		char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
+        char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
         pRet->m_sString = szDriver;
         pRet->m_sString += pszRelativePath;
     }
@@ -56,27 +56,27 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
     }
 
 
-	return pRet->m_sString.c_str();
+    return pRet->m_sString.c_str();
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
 
-	std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+    std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
 
-	CCString *pRet = new CCString();
-	pRet->autorelease();
-	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-	pRet->m_sString += pszFilename;
-	return pRet->m_sString.c_str();
+    CCString *pRet = new CCString();
+    pRet->autorelease();
+    pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
+    pRet->m_sString += pszFilename;
+    return pRet->m_sString.c_str();
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
-	IW_CALLSTACK("CCFileUtils::getFileData");
+    IW_CALLSTACK("CCFileUtils::getFileData");
 
-	s3eFile* pFile = s3eFileOpen(pszFileName, pszMode);
-	
+    s3eFile* pFile = s3eFileOpen(pszFileName, pszMode);
+    
     if (! pFile && getIsPopupNotify())
     {    
         IwAssertMsg(GAME, pFile, ("Open file %s Failed. s3eFileError Code : %i", pszFileName, s3eFileGetError()));
@@ -86,22 +86,22 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         *pSize = 0;
         return 0;
     }
-	int32 fileSize = s3eFileGetSize(pFile);
-	*pSize=fileSize;
+    int32 fileSize = s3eFileGetSize(pFile);
+    *pSize=fileSize;
 
-	static int32* pDataToBeReadBinary;
+    static int32* pDataToBeReadBinary;
 
-	pDataToBeReadBinary = (int32*)s3eMallocBase(fileSize);
-	memset(pDataToBeReadBinary, 0, fileSize);
-	s3eFileRead(pDataToBeReadBinary, fileSize, 1, pFile);
-	s3eFileClose(pFile);
-	
-	return (unsigned char*)pDataToBeReadBinary;
+    pDataToBeReadBinary = (int32*)s3eMallocBase(fileSize);
+    memset(pDataToBeReadBinary, 0, fileSize);
+    s3eFileRead(pDataToBeReadBinary, fileSize, 1, pFile);
+    s3eFileClose(pFile);
+    
+    return (unsigned char*)pDataToBeReadBinary;
 }
 
 std::string CCFileUtils::getWriteablePath()
 {
-	return string("ram://");
+    return string("ram://");
 }
 
 NS_CC_END

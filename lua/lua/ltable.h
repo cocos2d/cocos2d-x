@@ -10,12 +10,12 @@
 #include "lobject.h"
 
 
-#define gnode(t,i)	(&(t)->node[i])
-#define gkey(n)		(&(n)->i_key.nk)
-#define gval(n)		(&(n)->i_val)
-#define gnext(n)	((n)->i_key.nk.next)
+#define gnode(t,i)    (&(t)->node[i])
+#define gkey(n)        (&(n)->i_key.nk)
+#define gval(n)        (&(n)->i_val)
+#define gnext(n)    ((n)->i_key.nk.next)
 
-#define key2tval(n)	(&(n)->i_key.tvk)
+#define key2tval(n)    (&(n)->i_key.tvk)
 
 
 LUAI_FUNC const TValue *luaH_getnum (Table *t, int key);

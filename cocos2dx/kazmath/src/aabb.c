@@ -55,8 +55,8 @@ kmAABB* const kmAABBAssign(kmAABB* pOut, const kmAABB* pIn)
  */
 kmAABB* const kmAABBScale(kmAABB* pOut, const kmAABB* pIn, kmScalar s)
 {
-	assert(0 && "Not implemented");
-	return 0;
+    assert(0 && "Not implemented");
+    return 0;
 }
 
 

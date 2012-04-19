@@ -793,15 +793,15 @@ typedef void (GL_APIENTRYP PFNGLDISABLEDRIVERCONTROLQCOMPROC) (GLuint driverCont
 #define GL_MAX_ELEMENTS_INDICES           0x80E9
 
 /* PVRTC */
-#define GL_PVRTC2_OES				0x1911
-#define GL_PVRTC4_OES				0x1912
-	
+#define GL_PVRTC2_OES                0x1911
+#define GL_PVRTC4_OES                0x1912
+    
 //
 // For sync OpenGLES 2.0 */
 //
 /* Separate Blend Functions */
-#define GL_BLEND_DST_RGB	                0x80C8
-#define GL_BLEND_SRC_RGB 					0x80C9
+#define GL_BLEND_DST_RGB                    0x80C8
+#define GL_BLEND_SRC_RGB                     0x80C9
 
 /* Vertex Arrays */
 #define GL_VERTEX_ATTRIB_ARRAY_ENABLED        0x8622
@@ -818,69 +818,69 @@ typedef void (GL_APIENTRYP PFNGLDISABLEDRIVERCONTROLQCOMPROC) (GLuint driverCont
 #define GL_VERTEX_SHADER                  0x8B31
 
 /* Framebuffer Object. */
-#define GL_INVALID_FRAMEBUFFER_OPERATION	0x0506
+#define GL_INVALID_FRAMEBUFFER_OPERATION    0x0506
 
 /** Texture and Texture Environment as in ShaderInterface.doc  **/
 //
 // Texture environment modes
 //
-#define   TEX_ENV_MODE_REPLACE   		1
-#define   TEX_ENV_MODE_MODULATE  		2
-#define   TEX_ENV_MODE_ADD	   		3
-#define   TEX_ENV_MODE_DECAL     		4
-#define   TEX_ENV_MODE_BLEND     		5
-#define   TEX_ENV_MODE_COMBINE          	6
+#define   TEX_ENV_MODE_REPLACE           1
+#define   TEX_ENV_MODE_MODULATE          2
+#define   TEX_ENV_MODE_ADD               3
+#define   TEX_ENV_MODE_DECAL             4
+#define   TEX_ENV_MODE_BLEND             5
+#define   TEX_ENV_MODE_COMBINE              6
 //
 // Combine RGB
 //
-#define   TEX_COMBINE_RGB_REPLACE 		1
-#define   TEX_COMBINE_RGB_MODULATE		2
-#define   TEX_COMBINE_RGB_ADD     		3
-#define   TEX_COMBINE_RGB_ADD_SIGNED	4
-#define   TEX_COMBINE_RGB_INTERPOLATE	5
-#define   TEX_COMBINE_RGB_SUBTRACT		6
-#define   TEX_COMBINE_RGB_DOT3_RGB		7
-#define   TEX_COMBINE_RGB_DOT3_RGBA		8
+#define   TEX_COMBINE_RGB_REPLACE         1
+#define   TEX_COMBINE_RGB_MODULATE        2
+#define   TEX_COMBINE_RGB_ADD             3
+#define   TEX_COMBINE_RGB_ADD_SIGNED    4
+#define   TEX_COMBINE_RGB_INTERPOLATE    5
+#define   TEX_COMBINE_RGB_SUBTRACT        6
+#define   TEX_COMBINE_RGB_DOT3_RGB        7
+#define   TEX_COMBINE_RGB_DOT3_RGBA        8
 
 //
 // Combine Alpha
 //
-#define   TEX_COMBINE_ALPHA_REPLACE 		1
-#define   TEX_COMBINE_ALPHA_MODULATE		2
-#define   TEX_COMBINE_ALPHA_ADD     		3
-#define   TEX_COMBINE_ALPHA_ADD_SIGNED		4
-#define   TEX_COMBINE_ALPHA_INTERPOLATE		5
-#define   TEX_COMBINE_ALPHA_SUBTRACT		6
+#define   TEX_COMBINE_ALPHA_REPLACE         1
+#define   TEX_COMBINE_ALPHA_MODULATE        2
+#define   TEX_COMBINE_ALPHA_ADD             3
+#define   TEX_COMBINE_ALPHA_ADD_SIGNED        4
+#define   TEX_COMBINE_ALPHA_INTERPOLATE        5
+#define   TEX_COMBINE_ALPHA_SUBTRACT        6
 
  
 //
 // Combiner RGB and ALPHA source arguments
 //
-#define   TEX_ENV_COMBINER_SRC_TEXTURE			1
-#define   TEX_ENV_COMBINER_SRC_CONSTANT			2
-#define   TEX_ENV_COMBINER_SRC_PRIMARY_COLOR  	3
-#define   TEX_ENV_COMBINER_SRC_PREVIOUS 		4
+#define   TEX_ENV_COMBINER_SRC_TEXTURE            1
+#define   TEX_ENV_COMBINER_SRC_CONSTANT            2
+#define   TEX_ENV_COMBINER_SRC_PRIMARY_COLOR      3
+#define   TEX_ENV_COMBINER_SRC_PREVIOUS         4
 
 //
 // Combiner RGB operands
 //
-#define   TEX_ENV_COMBINER_RGB_OP_SRC_COLOR     			1
-#define   TEX_ENV_COMBINER_RGB_OP_ONE_MINUS_SRC_COLOR     	2
-#define   TEX_ENV_COMBINER_RGB_OP_SRC_ALPHA     			3
-#define   TEX_ENV_COMBINER_RGB_OP_ONE_MINUS_SRC_ALPHA     	4
+#define   TEX_ENV_COMBINER_RGB_OP_SRC_COLOR                 1
+#define   TEX_ENV_COMBINER_RGB_OP_ONE_MINUS_SRC_COLOR         2
+#define   TEX_ENV_COMBINER_RGB_OP_SRC_ALPHA                 3
+#define   TEX_ENV_COMBINER_RGB_OP_ONE_MINUS_SRC_ALPHA         4
 
 //
 // Combiner ALPHA operands
 //
-#define   TEX_ENV_COMBINER_ALPHA_OP_SRC_ALPHA     			1
-#define   TEX_ENV_COMBINER_ALPHA_OP_ONE_MINUS_SRC_ALPHA    	2
+#define   TEX_ENV_COMBINER_ALPHA_OP_SRC_ALPHA                 1
+#define   TEX_ENV_COMBINER_ALPHA_OP_ONE_MINUS_SRC_ALPHA        2
 
 //
 //  Fog mode
 //
-#define  FOGMODE_LINEAR 	1
-#define  FOGMODE_EXP    	2
-#define  FOGMODE_EXP2	 	3
+#define  FOGMODE_LINEAR     1
+#define  FOGMODE_EXP        2
+#define  FOGMODE_EXP2         3
 
 #ifdef __cplusplus
 }
