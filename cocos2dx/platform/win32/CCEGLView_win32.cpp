@@ -182,16 +182,11 @@ static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 CCEGLView::CCEGLView()
 : m_bCaptured(false)
-, m_pDelegate(NULL)
 , m_pEGL(NULL)
 , m_hWnd(NULL)
-, m_fScreenScaleFactor(1.0f)
 , m_lpfnAccelerometerKeyHook(NULL)
 {
-    m_pTouch    = new CCTouch;
-    m_pSet      = new CCSet;
-    m_tSizeInPoints.cx = m_tSizeInPoints.cy = 0;
-    SetRectEmpty(&m_rcViewPort);
+    
 }
 
 CCEGLView::~CCEGLView()
@@ -242,8 +237,9 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
         CC_BREAK_IF(! m_hWnd);
 
-        m_tSizeInPoints.cx = w;
-        m_tSizeInPoints.cy = h;
+        m_sSizeInPoint.width = (float)w;
+        m_sSizeInPoint.height = (float)h;
+
         resize(w, h);
 
         // init egl
@@ -270,17 +266,15 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_LBUTTONDOWN:
-        if (m_pDelegate && m_pTouch && MK_LBUTTON == wParam)
+        if (m_pDelegate && MK_LBUTTON == wParam)
         {
-            POINT pt = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            if (PtInRect(&m_rcViewPort, pt))
+            CCPoint pt((float)LOWORD(lParam), (float)HIWORD(lParam));
+            if (CCRect::CCRectContainsPoint(m_rcViewPort, pt))
             {
                 m_bCaptured = true;
                 SetCapture(m_hWnd);
-                m_pTouch->SetTouchInfo((float)(pt.x - m_rcViewPort.left) / m_fScreenScaleFactor,
-                    (float)(pt.y - m_rcViewPort.top) / m_fScreenScaleFactor);
-                m_pSet->addObject(m_pTouch);
-                m_pDelegate->touchesBegan(m_pSet, NULL);
+                int id = 0;
+                handleTouchesBegin(1, &id, &pt.x, &pt.y);
             }
         }
         break;
@@ -288,19 +282,19 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     case WM_MOUSEMOVE:
         if (MK_LBUTTON == wParam && m_bCaptured)
         {
-            m_pTouch->SetTouchInfo((float)((short)LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
-                (float)((short)HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
-            m_pDelegate->touchesMoved(m_pSet, NULL);
+            CCPoint pt((float)LOWORD(lParam), (float)HIWORD(lParam));
+            int id = 0;
+            handleTouchesMove(1, &id, &pt.x, &pt.y);
         }
         break;
 
     case WM_LBUTTONUP:
         if (m_bCaptured)
         {
-            m_pTouch->SetTouchInfo((float)((short)LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
-                (float)((short)HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
-            m_pDelegate->touchesEnded(m_pSet, NULL);
-            m_pSet->removeObject(m_pTouch);
+            CCPoint pt((float)LOWORD(lParam), (float)HIWORD(lParam));
+            int id = 0;
+            handleTouchesEnd(1, &id, &pt.x, &pt.y);
+
             ReleaseCapture();
             m_bCaptured = false;
         }
@@ -399,10 +393,6 @@ void CCEGLView::setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelero
     m_lpfnAccelerometerKeyHook=lpfnAccelerometerKeyHook;
 }
 
-CCSize CCEGLView::getSize()
-{
-    return CCSize((float)(m_tSizeInPoints.cx), (float)(m_tSizeInPoints.cy));
-}
 
 bool CCEGLView::isOpenGLReady()
 {
@@ -414,7 +404,7 @@ bool CCEGLView::isIpad()
     return false;
 }
 
-void CCEGLView::release()
+void CCEGLView::end()
 {
     if (m_hWnd)
     {
@@ -424,15 +414,7 @@ void CCEGLView::release()
     s_pMainWindow = NULL;
     UnregisterClass(kWindowClassName, GetModuleHandle(NULL));
 
-    CC_SAFE_DELETE(m_pSet);
-    CC_SAFE_DELETE(m_pTouch);
-    CC_SAFE_DELETE(m_pEGL);
     delete this;
-}
-
-void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
-{
-    m_pDelegate = pDelegate;
 }
 
 void CCEGLView::swapBuffers()
@@ -443,32 +425,10 @@ void CCEGLView::swapBuffers()
     }
 }
 
-void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
-{
-    if (m_pEGL)
-    {
-        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glViewport((GLint)(x * factor) + m_rcViewPort.left,
-            (GLint)(y * factor) + m_rcViewPort.top,
-            (GLint)(w * factor),
-            (GLint)(h * factor));
-    }
-}
-
-void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
-{
-    if (m_pEGL)
-    {
-        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glScissor((GLint)(x * factor) + m_rcViewPort.left,
-            (GLint)(y * factor) + m_rcViewPort.top,
-            (GLint)(w * factor),
-            (GLint)(h * factor));
-    }
-}
 
 void CCEGLView::setIMEKeyboardState(bool /*bOpen*/)
 {
+
 }
 
 HWND CCEGLView::getHWnd()
@@ -505,20 +465,20 @@ void CCEGLView::resize(int width, int height)
     }
 
     // calculate view port in pixels
-    int viewPortW = (int)(m_tSizeInPoints.cx * m_fScreenScaleFactor);
-    int viewPortH = (int)(m_tSizeInPoints.cy * m_fScreenScaleFactor);
+    float viewPortW = m_sSizeInPoint.width * m_fScreenScaleFactor;
+    float viewPortH = m_sSizeInPoint.height * m_fScreenScaleFactor;
 
     GetClientRect(m_hWnd, &rcClient);
 
     // calculate client new width and height
-    int newW = rcClient.right - rcClient.left;
-    int newH = rcClient.bottom - rcClient.top;
+    float newW = rcClient.right - rcClient.left;
+    float newH = rcClient.bottom - rcClient.top;
 
     // calculate new view port
-    m_rcViewPort.left   = rcClient.left + (newW - viewPortW) / 2;
-    m_rcViewPort.top    = rcClient.top + (newH - viewPortH) / 2;
-    m_rcViewPort.right  = m_rcViewPort.left + viewPortW;
-    m_rcViewPort.bottom = m_rcViewPort.top + viewPortH;
+    m_rcViewPort.origin.x   = rcClient.left + (newW - viewPortW) / 2;
+    m_rcViewPort.origin.y    = rcClient.top + (newH - viewPortH) / 2;
+    m_rcViewPort.size.width  = viewPortW;
+    m_rcViewPort.size.height = viewPortH;
 }
 
 void CCEGLView::centerWindow()
@@ -553,11 +513,6 @@ void CCEGLView::centerWindow()
     SetWindowPos(m_hWnd, 0, offsetX, offsetY, 0, 0, SWP_NOCOPYBITS | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-void CCEGLView::setScreenScale(float factor)
-{
-    m_fScreenScaleFactor = factor;
-}
-
 bool CCEGLView::canSetContentScaleFactor()
 {
     return true;
@@ -565,8 +520,9 @@ bool CCEGLView::canSetContentScaleFactor()
 
 void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
-    m_fScreenScaleFactor = contentScaleFactor;
-    resize((int)(m_tSizeInPoints.cx * contentScaleFactor), (int)(m_tSizeInPoints.cy * contentScaleFactor));
+    CCEGLViewProtocol::setContentScaleFactor(contentScaleFactor);
+
+    resize((int)(m_sSizeInPoint.width * contentScaleFactor), (int)(m_sSizeInPoint.height * contentScaleFactor));
     centerWindow();
 }
 

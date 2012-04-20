@@ -92,6 +92,7 @@ platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCCommon.cpp \
 platform/platform.cpp \
+platform/CCEGLViewProtocol.cpp \
 platform/android/CCEGLView_android.cpp \
 platform/android/CCAccelerometer_android.cpp \
 platform/android/CCApplication_android.cpp \

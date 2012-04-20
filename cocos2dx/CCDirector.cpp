@@ -45,7 +45,6 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "CCKeypadDispatcher.h"
 #include "CCAccelerometer.h"
-#include "CCGL.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
 #include "CCUserDefault.h"
@@ -55,7 +54,7 @@ THE SOFTWARE.
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
-
+#include "CCEGLView.h"
 #include <string>
 
 using namespace std;
@@ -574,7 +573,7 @@ void CCDirector::purgeDirector()
     CHECK_GL_ERROR_DEBUG();
     
     // OpenGL view
-    m_pobOpenGLView->release();
+    m_pobOpenGLView->end();
     m_pobOpenGLView = NULL;
 }
 
