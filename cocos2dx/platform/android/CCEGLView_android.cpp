@@ -57,11 +57,7 @@ void CCEGLView::setFrameWidthAndHeight(int width, int height)
 {
     m_sSizeInPixel.width = width;
     m_sSizeInPixel.height = height;
-}
-
-bool CCEGLView::isIpad()
-{
-    return false;
+    create(width, height);
 }
 
 void CCEGLView::create(int width, int height)
@@ -84,8 +80,8 @@ void CCEGLView::create(int width, int height)
     m_rcViewPort.size.width = viewPortW;
     m_rcViewPort.size.height = viewPortH;
     
+    CCLog("m_fScreenScaleFactor = %f", m_fScreenScaleFactor);
     m_bNotHVGA = true;
-    CCLog("CCEGLView::create");
 }
 
 CCEGLView::~CCEGLView()

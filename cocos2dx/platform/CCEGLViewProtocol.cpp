@@ -59,6 +59,11 @@ CCEGLViewProtocol::~CCEGLViewProtocol()
 
 }
 
+bool CCEGLViewProtocol::isIpad()
+{
+    return false;
+}
+
 CCSize CCEGLViewProtocol::getSize()
 {
     CCSize size(m_sSizeInPoint.width, m_sSizeInPoint.height);
@@ -140,8 +145,10 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             pTouch->SetTouchInfo(nUnusedIndex, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
                 (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 
-            s_TouchesIntergerDict.setObject(CCInteger::integerWithInt(nUnusedIndex), id);
+            CCInteger* pInterObj = new CCInteger(nUnusedIndex);
+            s_TouchesIntergerDict.setObject(pInterObj, id);
             set.addObject(pTouch);
+            pInterObj->release();
         }
     }
 

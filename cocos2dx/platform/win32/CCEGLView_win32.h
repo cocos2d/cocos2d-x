@@ -42,7 +42,6 @@ public:
     virtual ~CCEGLView();
 
     bool    isOpenGLReady();
-    bool    isIpad();
     void    end();
 
     void    swapBuffers();
