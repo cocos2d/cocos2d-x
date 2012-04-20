@@ -18,7 +18,7 @@ class CCLabelBMFont : public CCSpriteBatchNode
     void setWidth(float width);
     void setLineBreakWithoutSpace(bool breakWithoutSpace);
     static void purgeCachedData();
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
+    static CCLabelBMFont * labelWithString(char *str, char *fntFile);
+    static CCLabelBMFont * labelWithString(char *str, char *fntFile, float width, CCTextAlignment alignment);
+    static CCLabelBMFont * labelWithString(char *str, char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
 };
