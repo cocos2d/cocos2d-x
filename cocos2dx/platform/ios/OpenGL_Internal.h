@@ -69,11 +69,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //#define CHECK_GL_ERROR() ({ GLenum __error = glGetError(); if(__error) printf("OpenGL error 0x%04X in %s\n", __error, __FUNCTION__); (__error ? NO : YES); })
 #define CHECK_GL_ERROR() ({ GLenum __error = glGetError(); if(__error) printf("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); })
 
-#if DEBUG
-#define CHECK_GL_ERROR_DEBUG() ({ GLenum __error = glGetError(); if(__error) printf("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); })
-#else
-#define CHECK_GL_ERROR_DEBUG()
-#endif
 
 /* Optional delegate methods support */
 #ifndef __DELEGATE_IVAR__
