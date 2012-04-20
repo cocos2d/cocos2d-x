@@ -31,13 +31,13 @@ NS_CC_BEGIN
 CCArray::CCArray()
 : data(NULL)
 {
-	init();
+    init();
 }
 
 CCArray::CCArray(unsigned int capacity)
 : data(NULL)
 {
-	initWithCapacity(capacity);
+    initWithCapacity(capacity);
 }
 
 CCArray* CCArray::array()
@@ -58,18 +58,18 @@ CCArray* CCArray::array()
 
 CCArray* CCArray::arrayWithObject(CCObject* pObject)
 {
-	CCArray* pArray = new CCArray();
+    CCArray* pArray = new CCArray();
 
-	if (pArray && pArray->initWithObject(pObject))
-	{
-		pArray->autorelease();
-	}
-	else
-	{
-		CC_SAFE_DELETE(pArray);
-	}
+    if (pArray && pArray->initWithObject(pObject))
+    {
+        pArray->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pArray);
+    }
 
-	return pArray;
+    return pArray;
 }
 
 CCArray* CCArray::arrayWithObjects(CCObject* pObject, ...)
@@ -145,19 +145,19 @@ bool CCArray::init()
 
 bool CCArray::initWithObject(CCObject* pObject)
 {
-	ccArrayFree(data);
-	bool bRet = initWithCapacity(1);
-	if (bRet)
-	{
-		addObject(pObject);
-	}
-	return bRet;
+    ccArrayFree(data);
+    bool bRet = initWithCapacity(1);
+    if (bRet)
+    {
+        addObject(pObject);
+    }
+    return bRet;
 }
 
 /** Initializes an array with some objects */
 bool CCArray::initWithObjects(CCObject* pObject, ...)
 {
-	ccArrayFree(data);
+    ccArrayFree(data);
     bool bRet = false;
     do 
     {
@@ -191,14 +191,14 @@ bool CCArray::initWithObjects(CCObject* pObject, ...)
 
 bool CCArray::initWithCapacity(unsigned int capacity)
 {
-	ccArrayFree(data);
+    ccArrayFree(data);
     data = ccArrayNew(capacity);
     return true;
 }
 
 bool CCArray::initWithArray(CCArray* otherArray)
 {
-	ccArrayFree(data);
+    ccArrayFree(data);
     bool bRet = false;
     do 
     {
@@ -354,18 +354,18 @@ CCArray::~CCArray()
 
 void CCArray::replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject/* = true*/)
 {
-	if (bReleaseObject && uIndex < data->num && data->arr[uIndex] != NULL)
-	{
-		data->arr[uIndex]->release();
-	}
+    if (bReleaseObject && uIndex < data->num && data->arr[uIndex] != NULL)
+    {
+        data->arr[uIndex]->release();
+    }
 
-	data->arr[uIndex] = pObject;
+    data->arr[uIndex] = pObject;
 
-	// add the ref
-	if (pObject)
-	{
-		pObject->retain();
-	}
+    // add the ref
+    if (pObject)
+    {
+        pObject->retain();
+    }
 }
 
 CCObject* CCArray::copyWithZone(CCZone* pZone)

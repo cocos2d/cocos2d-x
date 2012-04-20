@@ -7,14 +7,14 @@
 class KeypadTest : public CCLayer
 {
 public:
-	KeypadTest();
-	~KeypadTest();
+    KeypadTest();
+    ~KeypadTest();
 
     virtual void keyBackClicked();
-	virtual void keyMenuClicked();
+    virtual void keyMenuClicked();
 
 private:
-    CCLabelTTF*			m_pLabel;
+    CCLabelTTF*            m_pLabel;
     bool                m_bShow;
 };
 

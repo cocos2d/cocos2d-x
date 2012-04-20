@@ -53,7 +53,7 @@ TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
 
 TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
 {
-	void* ptr = NULL;
+    void* ptr = NULL;
     const char* type = NULL;
     void** ud = NULL;
     if (refid == 0) return -1;

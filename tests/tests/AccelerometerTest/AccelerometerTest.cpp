@@ -25,20 +25,20 @@ AccelerometerTest::~AccelerometerTest(void)
 
 std::string AccelerometerTest::title()
 {
-	return "AccelerometerTest";
+    return "AccelerometerTest";
 }
 
 void AccelerometerTest::onEnter()
 {
-	CCLayer::onEnter();
+    CCLayer::onEnter();
 
     setIsAccelerometerEnabled(true);
 
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
-	addChild(label, 1);
-	label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    addChild(label, 1);
+    label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
     m_pBall = CCSprite::spriteWithFile("Images/ball.png");
     m_pBall->setPosition(ccp(s.width / 2, s.height / 2));
@@ -63,7 +63,7 @@ void AccelerometerTest::didAccelerate(CCAcceleration* pAccelerationValue)
 
     /*FIXME: Testing on the Nexus S sometimes m_pBall is NULL */
     if ( m_pBall == NULL ) {
-    	return;
+        return;
     }
 
     CCSize ballSize  = m_pBall->getContentSize();

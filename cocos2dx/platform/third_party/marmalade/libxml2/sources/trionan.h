@@ -67,7 +67,7 @@ TRIO_PUBLIC int trio_isinf TRIO_PROTO((double number));
  * If number is finite return non-zero, otherwise return zero.
  */
 #if 0
-	/* Temporary fix - these 2 routines not used in libxml */
+    /* Temporary fix - these 2 routines not used in libxml */
 TRIO_PUBLIC int trio_isfinite TRIO_PROTO((double number));
 
 TRIO_PUBLIC int trio_fpclassify TRIO_PROTO((double number));

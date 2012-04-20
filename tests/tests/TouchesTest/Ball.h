@@ -9,24 +9,24 @@ using namespace cocos2d;
 
 class Ball : public CCSprite
 {
-	CCPoint m_velocity;
+    CCPoint m_velocity;
 public:
-	Ball(void);
-	virtual ~Ball(void);
+    Ball(void);
+    virtual ~Ball(void);
 
-	float radius();
-	//BOOL initWithTexture(CCTexture2D* aTexture);
-	//virtual void setTexture(CCTexture2D* newTexture);
-	void move(ccTime delta);
-	void collideWithPaddle(Paddle* paddle);
+    float radius();
+    //BOOL initWithTexture(CCTexture2D* aTexture);
+    //virtual void setTexture(CCTexture2D* newTexture);
+    void move(ccTime delta);
+    void collideWithPaddle(Paddle* paddle);
 
-
-public:
-	void setVelocity(CCPoint velocity){m_velocity = velocity;}
-	CCPoint getVelocity(){return m_velocity;}
 
 public:
-	static Ball* ballWithTexture(CCTexture2D* aTexture);
+    void setVelocity(CCPoint velocity){m_velocity = velocity;}
+    CCPoint getVelocity(){return m_velocity;}
+
+public:
+    static Ball* ballWithTexture(CCTexture2D* aTexture);
 };
 
 #endif

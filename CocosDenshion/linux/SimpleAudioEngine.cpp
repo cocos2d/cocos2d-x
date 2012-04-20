@@ -6,29 +6,29 @@ namespace CocosDenshion {
 static AudioPlayer* oAudioPlayer;
 
 SimpleAudioEngine::SimpleAudioEngine() {
-	oAudioPlayer = FmodAudioPlayer::sharedPlayer();
+    oAudioPlayer = FmodAudioPlayer::sharedPlayer();
 }
 
 SimpleAudioEngine::~SimpleAudioEngine() {
 }
 
 SimpleAudioEngine* SimpleAudioEngine::sharedEngine() {
-	static SimpleAudioEngine s_SharedEngine;
-	return &s_SharedEngine;
+    static SimpleAudioEngine s_SharedEngine;
+    return &s_SharedEngine;
 }
 
 void SimpleAudioEngine::end() {
-	oAudioPlayer->close();
+    oAudioPlayer->close();
 
 //    sharedMusic().Close();
 //
-//	EffectList::iterator p = sharedList().begin();
-//	while (p != sharedList().end())
-//	{
-//		delete p->second;
-//		p->second = NULL;
-//		p++;
-//	}
+//    EffectList::iterator p = sharedList().begin();
+//    while (p != sharedList().end())
+//    {
+//        delete p->second;
+//        p->second = NULL;
+//        p++;
+//    }
 //    sharedList().clear();
 //    return;
 }
@@ -41,36 +41,36 @@ void SimpleAudioEngine::setResource(const char* pszZipFileName) {
 //////////////////////////////////////////////////////////////////////////
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath,
-		bool bLoop) {
-	oAudioPlayer->playBackgroundMusic(pszFilePath, bLoop);
+        bool bLoop) {
+    oAudioPlayer->playBackgroundMusic(pszFilePath, bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData) {
-	oAudioPlayer->stopBackgroundMusic(bReleaseData);
+    oAudioPlayer->stopBackgroundMusic(bReleaseData);
 }
 
 void SimpleAudioEngine::pauseBackgroundMusic() {
-	oAudioPlayer->pauseBackgroundMusic();
+    oAudioPlayer->pauseBackgroundMusic();
 }
 
 void SimpleAudioEngine::resumeBackgroundMusic() {
-	oAudioPlayer->resumeBackgroundMusic();
+    oAudioPlayer->resumeBackgroundMusic();
 }
 
 void SimpleAudioEngine::rewindBackgroundMusic() {
-	oAudioPlayer->rewindBackgroundMusic();
+    oAudioPlayer->rewindBackgroundMusic();
 }
 
 bool SimpleAudioEngine::willPlayBackgroundMusic() {
-	return oAudioPlayer->willPlayBackgroundMusic();
+    return oAudioPlayer->willPlayBackgroundMusic();
 }
 
 bool SimpleAudioEngine::isBackgroundMusicPlaying() {
-	return oAudioPlayer->isBackgroundMusicPlaying();
+    return oAudioPlayer->isBackgroundMusicPlaying();
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
-	return oAudioPlayer->preloadBackgroundMusic(pszFilePath);
+    return oAudioPlayer->preloadBackgroundMusic(pszFilePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -78,40 +78,40 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
 //////////////////////////////////////////////////////////////////////////
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath,
-		bool bLoop) {
-	return oAudioPlayer->playEffect(pszFilePath, bLoop);
+        bool bLoop) {
+    return oAudioPlayer->playEffect(pszFilePath, bLoop);
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId) {
-	return oAudioPlayer->stopEffect(nSoundId);
+    return oAudioPlayer->stopEffect(nSoundId);
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath) {
-	return oAudioPlayer->preloadEffect(pszFilePath);
+    return oAudioPlayer->preloadEffect(pszFilePath);
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath) {
-	return oAudioPlayer->unloadEffect(pszFilePath);
+    return oAudioPlayer->unloadEffect(pszFilePath);
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int uSoundId) {
-	oAudioPlayer->pauseEffect(uSoundId);
+    oAudioPlayer->pauseEffect(uSoundId);
 }
 
 void SimpleAudioEngine::pauseAllEffects() {
-	oAudioPlayer->pauseAllEffects();
+    oAudioPlayer->pauseAllEffects();
 }
 
 void SimpleAudioEngine::resumeEffect(unsigned int uSoundId) {
-	oAudioPlayer->resumeEffect(uSoundId);
+    oAudioPlayer->resumeEffect(uSoundId);
 }
 
 void SimpleAudioEngine::resumeAllEffects() {
-	oAudioPlayer->resumeAllEffects();
+    oAudioPlayer->resumeAllEffects();
 }
 
 void SimpleAudioEngine::stopAllEffects() {
-	oAudioPlayer->stopAllEffects();
+    oAudioPlayer->stopAllEffects();
 }
 
 
@@ -121,19 +121,19 @@ void SimpleAudioEngine::stopAllEffects() {
 //////////////////////////////////////////////////////////////////////////
 
 float SimpleAudioEngine::getBackgroundMusicVolume() {
-	return oAudioPlayer->getBackgroundMusicVolume();
+    return oAudioPlayer->getBackgroundMusicVolume();
 }
 
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume) {
-	return oAudioPlayer->setBackgroundMusicVolume(volume);
+    return oAudioPlayer->setBackgroundMusicVolume(volume);
 }
 
 float SimpleAudioEngine::getEffectsVolume() {
-	return oAudioPlayer->getBackgroundMusicVolume();
+    return oAudioPlayer->getBackgroundMusicVolume();
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume) {
-	return oAudioPlayer->setEffectsVolume(volume);
+    return oAudioPlayer->setEffectsVolume(volume);
 }
 
 //////////////////////////////////////////////////////////////////////////

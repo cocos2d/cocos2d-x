@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<VERSION name = "1.0">
-<!-- The version of file -->
-      <SOFT_ID name="cocos2dx_helloworld">
-      <!-- For software packag ID -->
-            <APP_ID name = "HelloWorld" type="String" >WOPHONE_cocos2dx_helloworld</APP_ID>
-            <!-- WOPHONE_XXX_ZZZ is Application ID, APP_ID_1 is the name of application ID -->
-      </SOFT_ID>
- </VERSION>

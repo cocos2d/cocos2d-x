@@ -34,113 +34,113 @@ static CDBufferManager *bufferManager = nil;
 // Init
 + (SimpleAudioEngine *) sharedEngine
 {
-	@synchronized(self)     {
-		if (!sharedEngine)
-			sharedEngine = [[SimpleAudioEngine alloc] init];
-	}
-	return sharedEngine;
+    @synchronized(self)     {
+        if (!sharedEngine)
+            sharedEngine = [[SimpleAudioEngine alloc] init];
+    }
+    return sharedEngine;
 }
 
 + (id) alloc
 {
-	@synchronized(self)     {
-		NSAssert(sharedEngine == nil, @"Attempted to allocate a second instance of a singleton.");
-		return [super alloc];
-	}
-	return nil;
+    @synchronized(self)     {
+        NSAssert(sharedEngine == nil, @"Attempted to allocate a second instance of a singleton.");
+        return [super alloc];
+    }
+    return nil;
 }
 
 -(id) init
 {
-	if((self=[super init])) {
-		am = [CDAudioManager sharedManager];
-		soundEngine = am.soundEngine;
-		bufferManager = [[CDBufferManager alloc] initWithEngine:soundEngine];
-		mute_ = NO;
-		enabled_ = YES;
-	}
-	return self;
+    if((self=[super init])) {
+        am = [CDAudioManager sharedManager];
+        soundEngine = am.soundEngine;
+        bufferManager = [[CDBufferManager alloc] initWithEngine:soundEngine];
+        mute_ = NO;
+        enabled_ = YES;
+    }
+    return self;
 }
 
 // Memory
 - (void) dealloc
 {
-	am = nil;
-	soundEngine = nil;
-	bufferManager = nil;
-	[super dealloc];
+    am = nil;
+    soundEngine = nil;
+    bufferManager = nil;
+    [super dealloc];
 }
 
 +(void) end 
 {
-	am = nil;
-	[CDAudioManager end];
-	[bufferManager release];
-	[sharedEngine release];
-	sharedEngine = nil;
-}	
+    am = nil;
+    [CDAudioManager end];
+    [bufferManager release];
+    [sharedEngine release];
+    sharedEngine = nil;
+}    
 
 #pragma mark SimpleAudioEngine - background music
 
 -(void) preloadBackgroundMusic:(NSString*) filePath {
-	[am preloadBackgroundMusic:filePath];
+    [am preloadBackgroundMusic:filePath];
 }
 
 -(void) playBackgroundMusic:(NSString*) filePath
 {
-	[am playBackgroundMusic:filePath loop:TRUE];
+    [am playBackgroundMusic:filePath loop:TRUE];
 }
 
 -(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop
 {
-	[am playBackgroundMusic:filePath loop:loop];
+    [am playBackgroundMusic:filePath loop:loop];
 }
 
 -(void) stopBackgroundMusic
 {
-	[am stopBackgroundMusic];
+    [am stopBackgroundMusic];
 }
 
 -(void) pauseBackgroundMusic {
-	[am pauseBackgroundMusic];
-}	
+    [am pauseBackgroundMusic];
+}    
 
 -(void) resumeBackgroundMusic {
-	[am resumeBackgroundMusic];
-}	
+    [am resumeBackgroundMusic];
+}    
 
 -(void) rewindBackgroundMusic {
-	[am rewindBackgroundMusic];
+    [am rewindBackgroundMusic];
 }
 
 -(BOOL) isBackgroundMusicPlaying {
-	return [am isBackgroundMusicPlaying];
-}	
+    return [am isBackgroundMusicPlaying];
+}    
 
 -(BOOL) willPlayBackgroundMusic {
-	return [am willPlayBackgroundMusic];
+    return [am willPlayBackgroundMusic];
 }
 
 #pragma mark SimpleAudioEngine - sound effects
 
 -(ALuint) playEffect:(NSString*) filePath loop:(BOOL) loop
 {
-	return [self playEffect:filePath loop:loop pitch:1.0f pan:0.0f gain:1.0f];
+    return [self playEffect:filePath loop:loop pitch:1.0f pan:0.0f gain:1.0f];
 }
 
 -(ALuint) playEffect:(NSString*) filePath loop:(BOOL) loop pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain
 {
-	int soundId = [bufferManager bufferForFile:filePath create:YES];
-	if (soundId != kCDNoBuffer) {
-		return [soundEngine playSound:soundId sourceGroupId:0 pitch:pitch pan:pan gain:gain loop:loop];
-	} else {
-		return CD_MUTE;
-	}	
+    int soundId = [bufferManager bufferForFile:filePath create:YES];
+    if (soundId != kCDNoBuffer) {
+        return [soundEngine playSound:soundId sourceGroupId:0 pitch:pitch pan:pan gain:gain loop:loop];
+    } else {
+        return CD_MUTE;
+    }    
 }
 
 -(void) stopEffect:(ALuint) soundId {
-	[soundEngine stopSound:soundId];
-}	
+    [soundEngine stopSound:soundId];
+}    
 
 -(void) pauseEffect:(ALuint) soundId {
   [soundEngine pauseSound: soundId];
@@ -164,77 +164,77 @@ static CDBufferManager *bufferManager = nil;
 
 -(void) preloadEffect:(NSString*) filePath
 {
-	int soundId = [bufferManager bufferForFile:filePath create:YES];
-	if (soundId == kCDNoBuffer) {
-		CDLOG(@"Denshion::SimpleAudioEngine sound failed to preload %@",filePath);
-	}
+    int soundId = [bufferManager bufferForFile:filePath create:YES];
+    if (soundId == kCDNoBuffer) {
+        CDLOG(@"Denshion::SimpleAudioEngine sound failed to preload %@",filePath);
+    }
 }
 
 -(void) unloadEffect:(NSString*) filePath
 {
-	CDLOGINFO(@"Denshion::SimpleAudioEngine unloadedEffect %@",filePath);
-	[bufferManager releaseBufferForFile:filePath];
+    CDLOGINFO(@"Denshion::SimpleAudioEngine unloadedEffect %@",filePath);
+    [bufferManager releaseBufferForFile:filePath];
 }
 
 #pragma mark Audio Interrupt Protocol
 -(BOOL) mute
 {
-	return mute_;
+    return mute_;
 }
 
 -(void) setMute:(BOOL) muteValue
 {
-	if (mute_ != muteValue) {
-		mute_ = muteValue;
-		am.mute = mute_;
-	}	
+    if (mute_ != muteValue) {
+        mute_ = muteValue;
+        am.mute = mute_;
+    }    
 }
 
 -(BOOL) enabled
 {
-	return enabled_;
+    return enabled_;
 }
 
 -(void) setEnabled:(BOOL) enabledValue
 {
-	if (enabled_ != enabledValue) {
-		enabled_ = enabledValue;
-		am.enabled = enabled_;
-	}	
+    if (enabled_ != enabledValue) {
+        enabled_ = enabledValue;
+        am.enabled = enabled_;
+    }    
 }
 
 
 #pragma mark SimpleAudioEngine - BackgroundMusicVolume
 -(float) backgroundMusicVolume
 {
-	return am.backgroundMusic.volume;
-}	
+    return am.backgroundMusic.volume;
+}    
 
 -(void) setBackgroundMusicVolume:(float) volume
 {
-	am.backgroundMusic.volume = volume;
-}	
+    am.backgroundMusic.volume = volume;
+}    
 
 #pragma mark SimpleAudioEngine - EffectsVolume
 -(float) effectsVolume
 {
-	return am.soundEngine.masterGain;
-}	
+    return am.soundEngine.masterGain;
+}    
 
 -(void) setEffectsVolume:(float) volume
 {
-	am.soundEngine.masterGain = volume;
-}	
+    am.soundEngine.masterGain = volume;
+}    
 
 -(CDSoundSource *) soundSourceForFile:(NSString*) filePath {
-	int soundId = [bufferManager bufferForFile:filePath create:YES];
-	if (soundId != kCDNoBuffer) {
-		CDSoundSource *result = [soundEngine soundSourceForSound:soundId sourceGroupId:0];
-		CDLOGINFO(@"Denshion::SimpleAudioEngine sound source created for %@",filePath);
-		return result;
-	} else {
-		return nil;
-	}	
-}	
+    int soundId = [bufferManager bufferForFile:filePath create:YES];
+    if (soundId != kCDNoBuffer) {
+        CDSoundSource *result = [soundEngine soundSourceForSound:soundId sourceGroupId:0];
+        CDLOGINFO(@"Denshion::SimpleAudioEngine sound source created for %@",filePath);
+        return result;
+    } else {
+        return nil;
+    }    
+}    
 
 @end 

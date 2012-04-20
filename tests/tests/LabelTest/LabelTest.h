@@ -8,108 +8,108 @@ class AtlasDemo : public CCLayer
 protected:
 
 public:
-	AtlasDemo(void);
-	~AtlasDemo(void);
+    AtlasDemo(void);
+    ~AtlasDemo(void);
 
-	virtual std::string title();
-	virtual std::string subtitle();
-	virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
 
-	void restartCallback(CCObject* pSender);
-	void nextCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 };
 
 
 class Atlas1 : public AtlasDemo
 {
-	CCTextureAtlas*		m_textureAtlas;
+    CCTextureAtlas*        m_textureAtlas;
 public:
-	Atlas1();
-	~Atlas1();
-	virtual std::string title();
-	virtual std::string subtitle();
-	virtual void draw();
+    Atlas1();
+    ~Atlas1();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void draw();
 };
 
 class LabelAtlasTest : public AtlasDemo
 {
-	ccTime		m_time;
+    ccTime        m_time;
 public:
-	LabelAtlasTest();
+    LabelAtlasTest();
 
-	virtual void step(ccTime dt);
+    virtual void step(ccTime dt);
 
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class LabelAtlasColorTest : public AtlasDemo
 {
-	ccTime		m_time;
+    ccTime        m_time;
 public:
-	LabelAtlasColorTest();
-	virtual void step(ccTime dt);
-	virtual std::string title();
-	virtual std::string subtitle();
+    LabelAtlasColorTest();
+    virtual void step(ccTime dt);
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class Atlas3 : public AtlasDemo
 {
-	ccTime		m_time;
+    ccTime        m_time;
 public:
-	Atlas3();
+    Atlas3();
 
-	virtual void step(ccTime dt);
+    virtual void step(ccTime dt);
 
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class Atlas4 : public AtlasDemo
 {
-	ccTime		m_time;
+    ccTime        m_time;
 public:
-	Atlas4();
-	virtual void step(ccTime dt);
-	virtual void draw();
+    Atlas4();
+    virtual void step(ccTime dt);
+    virtual void draw();
 
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class Atlas5 : public AtlasDemo
 {
 public:
-	Atlas5();
-	virtual std::string title();
-	virtual std::string subtitle();
+    Atlas5();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 
 class Atlas6 : public AtlasDemo
 {
 public:
-	Atlas6();
-	virtual std::string title();
-	virtual std::string subtitle();
+    Atlas6();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class AtlasBitmapColor : public AtlasDemo
 {
 public:
-	AtlasBitmapColor();
-	virtual std::string title();
+    AtlasBitmapColor();
+    virtual std::string title();
 
-	virtual std::string subtitle();
+    virtual std::string subtitle();
 };
 
 class AtlasFastBitmap : public AtlasDemo
 {
 public:
-	AtlasFastBitmap();
-	virtual std::string title();
-	virtual std::string subtitle();
+    AtlasFastBitmap();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class BitmapFontMultiLine : public AtlasDemo
@@ -165,24 +165,24 @@ public:
 class LabelTTFTest : public AtlasDemo
 {
 public:
-	LabelTTFTest();
-	virtual std::string title();
-	virtual std::string subtitle();
+    LabelTTFTest();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class LabelTTFMultiline : public AtlasDemo
 {
 public:
-	LabelTTFMultiline();
-	virtual std::string title();
-	virtual std::string subtitle();
+    LabelTTFMultiline();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class LabelTTFChinese : public AtlasDemo
 {
 public:
-	LabelTTFChinese();
-	virtual std::string title();
+    LabelTTFChinese();
+    virtual std::string title();
 };
 
 class LabelBMFontChinese : public AtlasDemo
@@ -195,50 +195,50 @@ public:
 class BitmapFontMultiLineAlignment : public AtlasDemo
 {
 public:
-	BitmapFontMultiLineAlignment();
-	~BitmapFontMultiLineAlignment();
+    BitmapFontMultiLineAlignment();
+    ~BitmapFontMultiLineAlignment();
     void snapArrowsToEdge();
-	virtual std::string title();
-	virtual std::string subtitle();
-	void stringChanged(CCObject *sender);
-	void alignmentChanged(CCObject *sender);
-	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual std::string title();
+    virtual std::string subtitle();
+    void stringChanged(CCObject *sender);
+    void alignmentChanged(CCObject *sender);
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 public:
-	CCLabelBMFont *m_pLabelShouldRetain;
-	CCSprite *m_pArrowsBarShouldRetain;
-	CCSprite *m_pArrowsShouldRetain;
-	CCMenuItemFont *m_pLastSentenceItem, *m_pLastAlignmentItem;
-	bool m_drag;
+    CCLabelBMFont *m_pLabelShouldRetain;
+    CCSprite *m_pArrowsBarShouldRetain;
+    CCSprite *m_pArrowsShouldRetain;
+    CCMenuItemFont *m_pLastSentenceItem, *m_pLastAlignmentItem;
+    bool m_drag;
 };
 
 class LabelTTFA8Test : public AtlasDemo
 {
 public:
-	LabelTTFA8Test();
+    LabelTTFA8Test();
 
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class BMFontOneAtlas : public AtlasDemo
 {
 public:
-	BMFontOneAtlas();
+    BMFontOneAtlas();
 
     virtual std::string title();
-	virtual std::string subtitle();
+    virtual std::string subtitle();
 };
 
 class BMFontUnicode : public AtlasDemo
 {
 public:
-	BMFontUnicode();
+    BMFontUnicode();
 
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 // we don't support linebreak mode

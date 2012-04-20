@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCKeypadDispatcher.h"
 #include "support/data_support/ccCArray.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 //------------------------------------------------------------------
 //
@@ -37,8 +37,8 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 , m_bToAdd(false)
 , m_bToRemove(false)
 {
-	m_pDelegates = CCArray::array();
-	m_pDelegates->retain();
+    m_pDelegates = CCArray::array();
+    m_pDelegates->retain();
 
     m_pHandlersToAdd    = ccCArrayNew(8);
     m_pHandlersToRemove = ccCArrayNew(8);
@@ -46,16 +46,16 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 
 CCKeypadDispatcher::~CCKeypadDispatcher()
 {
-	CC_SAFE_RELEASE(m_pDelegates);
-	if (m_pHandlersToAdd)
-	{
-		ccCArrayFree(m_pHandlersToAdd);
-	}
+    CC_SAFE_RELEASE(m_pDelegates);
+    if (m_pHandlersToAdd)
+    {
+        ccCArrayFree(m_pHandlersToAdd);
+    }
     
-	if (m_pHandlersToRemove)
-	{
-		ccCArrayFree(m_pHandlersToRemove);
-	}    
+    if (m_pHandlersToRemove)
+    {
+        ccCArrayFree(m_pHandlersToRemove);
+    }    
 }
 
 void CCKeypadDispatcher::removeDelegate(CCKeypadDelegate* pDelegate)
@@ -106,8 +106,8 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
 void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 {
     CCKeypadHandler* pHandler = NULL;
-	CCObject* pObj = NULL;
-	CCARRAY_FOREACH(m_pDelegates, pObj)
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(m_pDelegates, pObj)
     {
         pHandler = (CCKeypadHandler*)pObj;
         if (pHandler && pHandler->getDelegate() == pDelegate)
@@ -127,8 +127,8 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 
     if (m_pDelegates->count() > 0)
     {
-		CCObject* pObj = NULL;
-		CCARRAY_FOREACH(m_pDelegates, pObj)
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(m_pDelegates, pObj)
         {
             CC_BREAK_IF(!pObj);
 
@@ -173,4 +173,4 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
     return true;
 }
 
-}
+NS_CC_END

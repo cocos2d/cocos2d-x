@@ -9,19 +9,19 @@ NS_CC_BEGIN
 #define kMaxStringLen (1024*100)
 
 CCString::CCString()
-	:m_sString("")
+    :m_sString("")
 {}
 
 CCString::CCString(const char * str)
-	:m_sString(str)
+    :m_sString(str)
 {}
 
 CCString::CCString(const std::string& str)
-	:m_sString(str)
+    :m_sString(str)
 {}
 
 CCString::CCString(const CCString& str)
-	:m_sString(str.getCString())
+    :m_sString(str.getCString())
 {}
 
 CCString::~CCString()
@@ -31,81 +31,81 @@ CCString::~CCString()
 
 CCString& CCString::operator= (const CCString& other)
 {
-	m_sString = other.m_sString;
-	return *this;
+    m_sString = other.m_sString;
+    return *this;
 }
 
 bool CCString::initWithFormatAndValist(const char* format, va_list ap)
 {
-	bool bRet = false;
-	char* pBuf = (char*)malloc(kMaxStringLen);
-	if (pBuf != NULL)
-	{
-		vsnprintf(pBuf, kMaxStringLen, format, ap);
-		m_sString = pBuf;
-		free(pBuf);
-		bRet = true;
-	}
-	return bRet;
+    bool bRet = false;
+    char* pBuf = (char*)malloc(kMaxStringLen);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, kMaxStringLen, format, ap);
+        m_sString = pBuf;
+        free(pBuf);
+        bRet = true;
+    }
+    return bRet;
 }
 
 bool CCString::initWithFormat(const char* format, ...)
 {
-	bool bRet = false;
-	m_sString.clear();
+    bool bRet = false;
+    m_sString.clear();
 
-	va_list ap;
-	va_start(ap, format);
+    va_list ap;
+    va_start(ap, format);
 
-	bRet = initWithFormatAndValist(format, ap);
+    bRet = initWithFormatAndValist(format, ap);
 
-	va_end(ap);
+    va_end(ap);
 
-	return bRet;
+    return bRet;
 }
 
 int CCString::intValue() const
 {
-	if (length() == 0)
-	{
-		return 0;
-	}
-	return atoi(m_sString.c_str());
+    if (length() == 0)
+    {
+        return 0;
+    }
+    return atoi(m_sString.c_str());
 }
 
 unsigned int CCString::uintValue() const
 {
-	if (length() == 0)
-	{
-		return 0;
-	}
-	return (unsigned int)atoi(m_sString.c_str());
+    if (length() == 0)
+    {
+        return 0;
+    }
+    return (unsigned int)atoi(m_sString.c_str());
 }
 
 float CCString::floatValue() const
 {
-	if (length() == 0)
-	{
-		return 0.0f;
-	}
-	return (float)atof(m_sString.c_str());
+    if (length() == 0)
+    {
+        return 0.0f;
+    }
+    return (float)atof(m_sString.c_str());
 }
 
 double CCString::doubleValue() const
 {
-	if (length() == 0)
-	{
-		return 0.0;
-	}
-	return atof(m_sString.c_str());
+    if (length() == 0)
+    {
+        return 0.0;
+    }
+    return atof(m_sString.c_str());
 }
 
 bool CCString::boolValue() const
 {
-	if (length() == 0)
-	{
-		return false;
-	}
+    if (length() == 0)
+    {
+        return false;
+    }
 
     if (0 == strcmp(m_sString.c_str(), "0") || 0 == strcmp(m_sString.c_str(), "false"))
     {
@@ -116,12 +116,12 @@ bool CCString::boolValue() const
 
 const char* CCString::getCString() const
 {
-	return m_sString.c_str();
+    return m_sString.c_str();
 }
 
 unsigned int CCString::length() const
 {
-	return m_sString.length();
+    return m_sString.length();
 }
 
 CCObject* CCString::copyWithZone(CCZone* pZone)
@@ -147,37 +147,37 @@ bool CCString::isEqual(const CCObject* pObject)
 
 CCString* CCString::stringWithCString(const char* pStr)
 {
-	CCString* pRet = new CCString(pStr);
-	pRet->autorelease();
-	return pRet;
+    CCString* pRet = new CCString(pStr);
+    pRet->autorelease();
+    return pRet;
 }
 
 CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
 {
-	CCString* pRet = NULL;
-	if (pData != NULL && nLen > 0)
-	{
-		char* pStr = (char*)malloc(nLen+1);
-		if (pStr != NULL)
-		{
-			pStr[nLen] = '\0';
-			memcpy(pStr, pData, nLen);
-			pRet = CCString::stringWithCString(pStr);
-			free(pStr);
-		}
-	}
-	return pRet;
+    CCString* pRet = NULL;
+    if (pData != NULL && nLen > 0)
+    {
+        char* pStr = (char*)malloc(nLen+1);
+        if (pStr != NULL)
+        {
+            pStr[nLen] = '\0';
+            memcpy(pStr, pData, nLen);
+            pRet = CCString::stringWithCString(pStr);
+            free(pStr);
+        }
+    }
+    return pRet;
 }
 
 CCString* CCString::stringWithFormat(const char* format, ...)
 {
-	CCString* pRet = CCString::stringWithCString("");
-	va_list ap;
-	va_start(ap, format);
-	pRet->initWithFormatAndValist(format, ap);
-	va_end(ap);
+    CCString* pRet = CCString::stringWithCString("");
+    va_list ap;
+    va_start(ap, format);
+    pRet->initWithFormatAndValist(format, ap);
+    va_end(ap);
 
-	return pRet;
+    return pRet;
 }
 
 CCString* CCString::stringWithContentsOfFile(const char* pszFileName)

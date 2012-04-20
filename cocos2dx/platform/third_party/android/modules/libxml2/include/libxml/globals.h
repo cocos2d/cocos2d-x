@@ -64,33 +64,33 @@ XMLCALL xmlOutputBufferCreateFilenameDefault (xmlOutputBufferCreateFilenameFunc 
  * compatibility support.
  */
 
-#undef	docbDefaultSAXHandler
-#undef	htmlDefaultSAXHandler
-#undef	oldXMLWDcompatibility
-#undef	xmlBufferAllocScheme
-#undef	xmlDefaultBufferSize
-#undef	xmlDefaultSAXHandler
-#undef	xmlDefaultSAXLocator
-#undef	xmlDoValidityCheckingDefaultValue
-#undef	xmlFree
-#undef	xmlGenericError
-#undef	xmlStructuredError
-#undef	xmlGenericErrorContext
-#undef	xmlGetWarningsDefaultValue
-#undef	xmlIndentTreeOutput
+#undef    docbDefaultSAXHandler
+#undef    htmlDefaultSAXHandler
+#undef    oldXMLWDcompatibility
+#undef    xmlBufferAllocScheme
+#undef    xmlDefaultBufferSize
+#undef    xmlDefaultSAXHandler
+#undef    xmlDefaultSAXLocator
+#undef    xmlDoValidityCheckingDefaultValue
+#undef    xmlFree
+#undef    xmlGenericError
+#undef    xmlStructuredError
+#undef    xmlGenericErrorContext
+#undef    xmlGetWarningsDefaultValue
+#undef    xmlIndentTreeOutput
 #undef  xmlTreeIndentString
-#undef	xmlKeepBlanksDefaultValue
-#undef	xmlLineNumbersDefaultValue
-#undef	xmlLoadExtDtdDefaultValue
-#undef	xmlMalloc
-#undef	xmlMallocAtomic
-#undef	xmlMemStrdup
-#undef	xmlParserDebugEntities
-#undef	xmlParserVersion
-#undef	xmlPedanticParserDefaultValue
-#undef	xmlRealloc
-#undef	xmlSaveNoEmptyTags
-#undef	xmlSubstituteEntitiesDefaultValue
+#undef    xmlKeepBlanksDefaultValue
+#undef    xmlLineNumbersDefaultValue
+#undef    xmlLoadExtDtdDefaultValue
+#undef    xmlMalloc
+#undef    xmlMallocAtomic
+#undef    xmlMemStrdup
+#undef    xmlParserDebugEntities
+#undef    xmlParserVersion
+#undef    xmlPedanticParserDefaultValue
+#undef    xmlRealloc
+#undef    xmlSaveNoEmptyTags
+#undef    xmlSubstituteEntitiesDefaultValue
 #undef  xmlRegisterNodeDefaultValue
 #undef  xmlDeregisterNodeDefaultValue
 #undef  xmlLastError
@@ -116,48 +116,48 @@ typedef struct _xmlGlobalState xmlGlobalState;
 typedef xmlGlobalState *xmlGlobalStatePtr;
 struct _xmlGlobalState
 {
-	const char *xmlParserVersion;
+    const char *xmlParserVersion;
 
-	xmlSAXLocator xmlDefaultSAXLocator;
-	xmlSAXHandlerV1 xmlDefaultSAXHandler;
-	xmlSAXHandlerV1 docbDefaultSAXHandler;
-	xmlSAXHandlerV1 htmlDefaultSAXHandler;
+    xmlSAXLocator xmlDefaultSAXLocator;
+    xmlSAXHandlerV1 xmlDefaultSAXHandler;
+    xmlSAXHandlerV1 docbDefaultSAXHandler;
+    xmlSAXHandlerV1 htmlDefaultSAXHandler;
 
-	xmlFreeFunc xmlFree;
-	xmlMallocFunc xmlMalloc;
-	xmlStrdupFunc xmlMemStrdup;
-	xmlReallocFunc xmlRealloc;
+    xmlFreeFunc xmlFree;
+    xmlMallocFunc xmlMalloc;
+    xmlStrdupFunc xmlMemStrdup;
+    xmlReallocFunc xmlRealloc;
 
-	xmlGenericErrorFunc xmlGenericError;
-	xmlStructuredErrorFunc xmlStructuredError;
-	void *xmlGenericErrorContext;
+    xmlGenericErrorFunc xmlGenericError;
+    xmlStructuredErrorFunc xmlStructuredError;
+    void *xmlGenericErrorContext;
 
-	int oldXMLWDcompatibility;
+    int oldXMLWDcompatibility;
 
-	xmlBufferAllocationScheme xmlBufferAllocScheme;
-	int xmlDefaultBufferSize;
+    xmlBufferAllocationScheme xmlBufferAllocScheme;
+    int xmlDefaultBufferSize;
 
-	int xmlSubstituteEntitiesDefaultValue;
-	int xmlDoValidityCheckingDefaultValue;
-	int xmlGetWarningsDefaultValue;
-	int xmlKeepBlanksDefaultValue;
-	int xmlLineNumbersDefaultValue;
-	int xmlLoadExtDtdDefaultValue;
-	int xmlParserDebugEntities;
-	int xmlPedanticParserDefaultValue;
+    int xmlSubstituteEntitiesDefaultValue;
+    int xmlDoValidityCheckingDefaultValue;
+    int xmlGetWarningsDefaultValue;
+    int xmlKeepBlanksDefaultValue;
+    int xmlLineNumbersDefaultValue;
+    int xmlLoadExtDtdDefaultValue;
+    int xmlParserDebugEntities;
+    int xmlPedanticParserDefaultValue;
 
-	int xmlSaveNoEmptyTags;
-	int xmlIndentTreeOutput;
-	const char *xmlTreeIndentString;
+    int xmlSaveNoEmptyTags;
+    int xmlIndentTreeOutput;
+    const char *xmlTreeIndentString;
 
-	xmlRegisterNodeFunc xmlRegisterNodeDefaultValue;
-	xmlDeregisterNodeFunc xmlDeregisterNodeDefaultValue;
+    xmlRegisterNodeFunc xmlRegisterNodeDefaultValue;
+    xmlDeregisterNodeFunc xmlDeregisterNodeDefaultValue;
 
-	xmlMallocFunc xmlMallocAtomic;
-	xmlError xmlLastError;
+    xmlMallocFunc xmlMallocAtomic;
+    xmlError xmlLastError;
 
-	xmlParserInputBufferCreateFilenameFunc xmlParserInputBufferCreateFilenameValue;
-	xmlOutputBufferCreateFilenameFunc xmlOutputBufferCreateFilenameValue;
+    xmlParserInputBufferCreateFilenameFunc xmlParserInputBufferCreateFilenameValue;
+    xmlOutputBufferCreateFilenameFunc xmlOutputBufferCreateFilenameValue;
 };
 
 #ifdef __cplusplus
@@ -168,7 +168,7 @@ struct _xmlGlobalState
 extern "C" {
 #endif
 
-XMLPUBFUN void XMLCALL	xmlInitializeGlobalState(xmlGlobalStatePtr gs);
+XMLPUBFUN void XMLCALL    xmlInitializeGlobalState(xmlGlobalStatePtr gs);
 
 XMLPUBFUN void XMLCALL xmlThrDefSetGenericErrorFunc(void *ctx, xmlGenericErrorFunc handler);
 
@@ -180,9 +180,9 @@ XMLPUBFUN xmlDeregisterNodeFunc XMLCALL xmlDeregisterNodeDefault(xmlDeregisterNo
 XMLPUBFUN xmlDeregisterNodeFunc XMLCALL xmlThrDefDeregisterNodeDefault(xmlDeregisterNodeFunc func);
 
 XMLPUBFUN xmlOutputBufferCreateFilenameFunc XMLCALL
-	xmlThrDefOutputBufferCreateFilenameDefault(xmlOutputBufferCreateFilenameFunc func);
+    xmlThrDefOutputBufferCreateFilenameDefault(xmlOutputBufferCreateFilenameFunc func);
 XMLPUBFUN xmlParserInputBufferCreateFilenameFunc XMLCALL
-	xmlThrDefParserInputBufferCreateFilenameDefault(xmlParserInputBufferCreateFilenameFunc func);
+    xmlThrDefParserInputBufferCreateFilenameDefault(xmlParserInputBufferCreateFilenameFunc func);
 
 /** DOC_DISABLE */
 /*

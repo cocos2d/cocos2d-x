@@ -41,7 +41,7 @@ struct kmVec4;
 struct kmMat4;
 
 typedef struct kmPlane {
-	kmScalar 	a, b, c, d;
+    kmScalar     a, b, c, d;
 } kmPlane;
 
 #ifdef __cplusplus
@@ -49,9 +49,9 @@ extern "C" {
 #endif
 
 typedef enum POINT_CLASSIFICATION {
-	POINT_INFRONT_OF_PLANE = 0,
-	POINT_BEHIND_PLANE,
-	POINT_ON_PLANE,
+    POINT_INFRONT_OF_PLANE = 0,
+    POINT_BEHIND_PLANE,
+    POINT_ON_PLANE,
 } POINT_CLASSIFICATION;
 
 CC_DLL const kmScalar kmPlaneDot(const kmPlane* pP, const struct kmVec4* pV);

@@ -48,76 +48,76 @@ CCLabelTTF::CCLabelTTF()
 
 CCLabelTTF::~CCLabelTTF()
 {
-	CC_SAFE_DELETE(m_pFontName);
-	CC_SAFE_DELETE(m_pString);        
+    CC_SAFE_DELETE(m_pFontName);
+    CC_SAFE_DELETE(m_pString);        
 }
 
 CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
-	CCLabelTTF *pRet = new CCLabelTTF();
-	if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
-	{
-		pRet->autorelease();
-		return pRet;
-	}
-	CC_SAFE_DELETE(pRet);
-	return NULL;
+    CCLabelTTF *pRet = new CCLabelTTF();
+    if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
 }
 CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const char *fontName, float fontSize)
 {
-	CCLabelTTF *pRet = new CCLabelTTF();
-	if(pRet && pRet->initWithString(label, fontName, fontSize))
-	{
-		pRet->autorelease();
-		return pRet;
-	}
-	CC_SAFE_DELETE(pRet);
-	return NULL;
+    CCLabelTTF *pRet = new CCLabelTTF();
+    if(pRet && pRet->initWithString(label, fontName, fontSize))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
 }
 
 bool CCLabelTTF::init()
 {
-	return this->initWithString("", "Helvetica", 12);
+    return this->initWithString("", "Helvetica", 12);
 }
 
 bool CCLabelTTF::initWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
-	CCAssert(label != NULL, "");
-	if (CCSprite::init())
-	{
-		// shader program
-		setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
+    CCAssert(label != NULL, "");
+    if (CCSprite::init())
+    {
+        // shader program
+        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
 
-		m_tDimensions = CCSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
-		m_eAlignment = alignment;
+        m_tDimensions = CCSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
+        m_eAlignment = alignment;
 
         CC_SAFE_DELETE(m_pFontName);
         m_pFontName = new std::string(fontName);
 
-		m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
-		this->setString(label);
-		return true;
-	}
-	return false;
+        m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
+        this->setString(label);
+        return true;
+    }
+    return false;
 }
 bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
-	CCAssert(label != NULL, "");
-	if (CCSprite::init())
-	{
-		// shader program
-		setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
+    CCAssert(label != NULL, "");
+    if (CCSprite::init())
+    {
+        // shader program
+        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
 
-		m_tDimensions = CCSizeZero;
+        m_tDimensions = CCSizeZero;
 
-		CC_SAFE_DELETE(m_pFontName);
+        CC_SAFE_DELETE(m_pFontName);
         m_pFontName = new std::string(fontName);
 
-		m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
-		this->setString(label);
-		return true;
-	}
-	return false;
+        m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
+        this->setString(label);
+        return true;
+    }
+    return false;
 }
 void CCLabelTTF::setString(const char *label)
 {
@@ -128,52 +128,52 @@ void CCLabelTTF::setString(const char *label)
     }
     m_pString = new std::string(label);
     
-	CCTexture2D *texture;
-	if( CCSize::CCSizeEqualToSize( m_tDimensions, CCSizeZero ) )
-	{
-		texture = new CCTexture2D();
-		texture->initWithString(label, m_pFontName->c_str(), m_fFontSize);
-	}
-	else
-	{
-		texture = new CCTexture2D();
-		texture->initWithString(label, m_tDimensions, m_eAlignment, m_pFontName->c_str(), m_fFontSize);
-	}
+    CCTexture2D *texture;
+    if( CCSize::CCSizeEqualToSize( m_tDimensions, CCSizeZero ) )
+    {
+        texture = new CCTexture2D();
+        texture->initWithString(label, m_pFontName->c_str(), m_fFontSize);
+    }
+    else
+    {
+        texture = new CCTexture2D();
+        texture->initWithString(label, m_tDimensions, m_eAlignment, m_pFontName->c_str(), m_fFontSize);
+    }
 
 // TODO
 // #ifdef __CC_PLATFORM_IOS
-// 	// iPad ?
-// 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-// 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-// 			[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
-// 		else
-// 			[tex setResolutionType:kCCResolutioniPad];
-// 	}
-// 	// iPhone ?
-// 	else
-// 	{
-// 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-// 			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
-// 		else
-// 			[tex setResolutionType:kCCResolutioniPhone];
-// 	}
+//     // iPad ?
+//     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+//         if( CC_CONTENT_SCALE_FACTOR() == 2 )
+//             [tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+//         else
+//             [tex setResolutionType:kCCResolutioniPad];
+//     }
+//     // iPhone ?
+//     else
+//     {
+//         if( CC_CONTENT_SCALE_FACTOR() == 2 )
+//             [tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
+//         else
+//             [tex setResolutionType:kCCResolutioniPhone];
+//     }
 // #end
-	this->setTexture(texture);
-	texture->release();
+    this->setTexture(texture);
+    texture->release();
 
     CCRect rect = CCRectZero;
-	rect.size = m_pobTexture->getContentSize();
-	this->setTextureRect(rect);
+    rect.size = m_pobTexture->getContentSize();
+    this->setTextureRect(rect);
 }
 
 const char* CCLabelTTF::getString(void)
 {
-	return m_pString->c_str();
+    return m_pString->c_str();
 }
 
 const char* CCLabelTTF::description()
 {
-	return CCString::stringWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
+    return CCString::stringWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
 }
 
 NS_CC_END

@@ -41,69 +41,69 @@ NS_CC_BEGIN
 
 class CC_DLL CCControlSlider: public CCControl
 {
-	//maunally put in the setters
-	CC_SYNTHESIZE_READONLY(float, m_value, Value);
-	virtual void setValue(float val);
-	CC_SYNTHESIZE_READONLY(float, m_minimumValue, MinimumValue);
-	virtual void setMinimumValue(float val);
-	CC_SYNTHESIZE_READONLY(float, m_maximumValue, MaximumValue);
-	virtual void setMaximumValue(float val);
+    //maunally put in the setters
+    CC_SYNTHESIZE_READONLY(float, m_value, Value);
+    virtual void setValue(float val);
+    CC_SYNTHESIZE_READONLY(float, m_minimumValue, MinimumValue);
+    virtual void setMinimumValue(float val);
+    CC_SYNTHESIZE_READONLY(float, m_maximumValue, MaximumValue);
+    virtual void setMaximumValue(float val);
 
-	//interval to snap to
-	CC_SYNTHESIZE(float, m_snappingInterval, SnappingInterval);
+    //interval to snap to
+    CC_SYNTHESIZE(float, m_snappingInterval, SnappingInterval);
 
-	// maybe this should be read-only
-	CC_SYNTHESIZE_READONLY(CCMenuItem*, m_thumbItem, ThumbItem);
-	CC_SYNTHESIZE_READONLY(CCSprite*, m_progressSprite, ProgressSprite);
-	CC_SYNTHESIZE_READONLY(CCSprite*, m_backgroundSprite, BackgroundSprite);
+    // maybe this should be read-only
+    CC_SYNTHESIZE_READONLY(CCMenuItem*, m_thumbItem, ThumbItem);
+    CC_SYNTHESIZE_READONLY(CCSprite*, m_progressSprite, ProgressSprite);
+    CC_SYNTHESIZE_READONLY(CCSprite*, m_backgroundSprite, BackgroundSprite);
 
 public:
 
-	virtual ~CCControlSlider();
+    virtual ~CCControlSlider();
 
-	/** 
-	* Initializes a slider with a background sprite, a progress bar and a thumb
-	* item.
-	*
-	* @param backgroundSprite  CCSprite, that is used as a background.
-	* @param progressSprite    CCSprite, that is used as a progress bar.
-	* @param thumbItem         CCMenuItem, that is used as a thumb.
-	*/
-	virtual bool initWithSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem);
+    /** 
+    * Initializes a slider with a background sprite, a progress bar and a thumb
+    * item.
+    *
+    * @param backgroundSprite  CCSprite, that is used as a background.
+    * @param progressSprite    CCSprite, that is used as a progress bar.
+    * @param thumbItem         CCMenuItem, that is used as a thumb.
+    */
+    virtual bool initWithSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem);
 
 
-	/** 
-	* Creates slider with a background filename, a progress filename and a 
-	* thumb image filename.
-	*/
-	static CCControlSlider* sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile);
+    /** 
+    * Creates slider with a background filename, a progress filename and a 
+    * thumb image filename.
+    */
+    static CCControlSlider* sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile);
 
-	/** 
-	* Creates a slider with a given background sprite and a progress bar and a
-	* thumb item.
-	*
-	* @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
-	*/
-	static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
+    /** 
+    * Creates a slider with a given background sprite and a progress bar and a
+    * thumb item.
+    *
+    * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
+    */
+    static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
 
 
 
 
 protected:
-	void sliderBegan(CCPoint location);
-	void sliderMoved(CCPoint location);
-	void sliderEnded(CCPoint location);
+    void sliderBegan(CCPoint location);
+    void sliderMoved(CCPoint location);
+    void sliderEnded(CCPoint location);
 
-	virtual CCPoint getTouchLocationInControl(CCTouch* touch);
+    virtual CCPoint getTouchLocationInControl(CCTouch* touch);
 
-	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
+    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 
 
 
 /** Returns the value for the given location. */
-	float valueForLocation(CCPoint location);
+    float valueForLocation(CCPoint location);
 };
 
 NS_CC_END

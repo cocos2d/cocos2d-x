@@ -26,18 +26,18 @@ const cpConstraintClass *cpGrooveJointGetClass(void);
 
 /// @private
 typedef struct cpGrooveJoint {
-	cpConstraint constraint;
-	cpVect grv_n, grv_a, grv_b;
-	cpVect  anchr2;
-	
-	cpVect grv_tn;
-	cpFloat clamp;
-	cpVect r1, r2;
-	cpVect k1, k2;
-	
-	cpVect jAcc;
-	cpFloat jMaxLen;
-	cpVect bias;
+    cpConstraint constraint;
+    cpVect grv_n, grv_a, grv_b;
+    cpVect  anchr2;
+    
+    cpVect grv_tn;
+    cpFloat clamp;
+    cpVect r1, r2;
+    cpVect k1, k2;
+    
+    cpVect jAcc;
+    cpFloat jMaxLen;
+    cpVect bias;
 } cpGrooveJoint;
 
 /// Allocate a groove joint.

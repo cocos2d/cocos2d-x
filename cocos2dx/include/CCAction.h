@@ -32,11 +32,11 @@ THE SOFTWARE.
 #include "CCZone.h"
 #include "CCNode.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 enum {
-	//! Default tag
-	kCCActionTagInvalid = -1,
+    //! Default tag
+    kCCActionTagInvalid = -1,
 };
 
 /** 
@@ -46,66 +46,66 @@ class CC_DLL CCAction : public CCObject
 {
 public:
     CCAction(void);
-	virtual ~CCAction(void);
+    virtual ~CCAction(void);
 
-	const char* description();
+    const char* description();
 
-	virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual CCObject* copyWithZone(CCZone *pZone);
 
-	//! return true if the action has finished
-	virtual bool isDone(void);
+    //! return true if the action has finished
+    virtual bool isDone(void);
 
-	//! called before the action start. It will also set the target.
-	virtual void startWithTarget(CCNode *pTarget);
+    //! called before the action start. It will also set the target.
+    virtual void startWithTarget(CCNode *pTarget);
 
-	/** 
-	called after the action has finished. It will set the 'target' to nil.
+    /** 
+    called after the action has finished. It will set the 'target' to nil.
     IMPORTANT: You should never call "[action stop]" manually. Instead, use: "target->stopAction(action);"
-	*/
+    */
     virtual void stop(void);
 
-	//! called every frame with it's delta time. DON'T override unless you know what you are doing.
-	virtual void step(ccTime dt);
+    //! called every frame with it's delta time. DON'T override unless you know what you are doing.
+    virtual void step(ccTime dt);
 
-	/** 
-	called once per frame. time a value between 0 and 1
+    /** 
+    called once per frame. time a value between 0 and 1
 
-	For example: 
-	- 0 means that the action just started
-	- 0.5 means that the action is in the middle
-	- 1 means that the action is over
-	*/
-	virtual void update(ccTime time);
-	
-	inline CCNode* getTarget(void) { return m_pTarget; }
-	/** The action will modify the target properties. */
-	inline void setTarget(CCNode *pTarget) { m_pTarget = pTarget; }
-	
-	inline CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
-	/** Set the original target, since target can be nil.
-	Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
-	The target is 'assigned', it is not 'retained'.
-	@since v0.8.2
-	*/
-	inline void setOriginalTarget(CCNode *pOriginalTarget) { m_pOriginalTarget = pOriginalTarget; }
+    For example: 
+    - 0 means that the action just started
+    - 0.5 means that the action is in the middle
+    - 1 means that the action is over
+    */
+    virtual void update(ccTime time);
+    
+    inline CCNode* getTarget(void) { return m_pTarget; }
+    /** The action will modify the target properties. */
+    inline void setTarget(CCNode *pTarget) { m_pTarget = pTarget; }
+    
+    inline CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
+    /** Set the original target, since target can be nil.
+    Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
+    The target is 'assigned', it is not 'retained'.
+    @since v0.8.2
+    */
+    inline void setOriginalTarget(CCNode *pOriginalTarget) { m_pOriginalTarget = pOriginalTarget; }
 
-	inline int getTag(void) { return m_nTag; }
-	inline void setTag(int nTag) { m_nTag = nTag; }
+    inline int getTag(void) { return m_nTag; }
+    inline void setTag(int nTag) { m_nTag = nTag; }
 
 public:
-	/** Allocates and initializes the action */
-	static CCAction* action();
+    /** Allocates and initializes the action */
+    static CCAction* action();
 
 protected:
-	CCNode	*m_pOriginalTarget;
-	/** The "target".
-	The target will be set with the 'startWithTarget' method.
-	When the 'stop' method is called, target will be set to nil.
-	The target is 'assigned', it is not 'retained'.
-	*/
-	CCNode	*m_pTarget;
-	/** The action tag. An identifier of the action */
-	int 	m_nTag;
+    CCNode    *m_pOriginalTarget;
+    /** The "target".
+    The target will be set with the 'startWithTarget' method.
+    When the 'stop' method is called, target will be set to nil.
+    The target is 'assigned', it is not 'retained'.
+    */
+    CCNode    *m_pTarget;
+    /** The action tag. An identifier of the action */
+    int     m_nTag;
 };
 
 /** 
@@ -120,20 +120,20 @@ protected:
 class CC_DLL CCFiniteTimeAction : public CCAction
 {
 public:
-	CCFiniteTimeAction()
-		: m_fDuration(0)
-	{}
-	virtual ~CCFiniteTimeAction(){}
+    CCFiniteTimeAction()
+        : m_fDuration(0)
+    {}
+    virtual ~CCFiniteTimeAction(){}
     //! get duration in seconds of the action
-	inline ccTime getDuration(void) { return m_fDuration; }
-	//! set duration in seconds of the action
-	inline void setDuration(ccTime duration) { m_fDuration = duration; }
+    inline ccTime getDuration(void) { return m_fDuration; }
+    //! set duration in seconds of the action
+    inline void setDuration(ccTime duration) { m_fDuration = duration; }
 
-	/** returns a reversed action */
-	virtual CCFiniteTimeAction* reverse(void);
+    /** returns a reversed action */
+    virtual CCFiniteTimeAction* reverse(void);
 protected:
-	//! duration in seconds
-	ccTime m_fDuration;
+    //! duration in seconds
+    ccTime m_fDuration;
 };
 
 class CCActionInterval;
@@ -148,40 +148,40 @@ class CCRepeatForever;
 class CC_DLL CCSpeed : public CCAction
 {
 public:
-	CCSpeed()
-		: m_fSpeed(0.0)
-		, m_pInnerAction(NULL)
-	{}
-	virtual ~CCSpeed(void);
+    CCSpeed()
+        : m_fSpeed(0.0)
+        , m_pInnerAction(NULL)
+    {}
+    virtual ~CCSpeed(void);
 
-	inline float getSpeed(void) { return m_fSpeed; }
-	/** alter the speed of the inner function in runtime */
-	inline void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
+    inline float getSpeed(void) { return m_fSpeed; }
+    /** alter the speed of the inner function in runtime */
+    inline void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
 
-	/** initializes the action */
-	bool initWithAction(CCActionInterval *pAction, float fSpeed);
+    /** initializes the action */
+    bool initWithAction(CCActionInterval *pAction, float fSpeed);
 
-	virtual CCObject* copyWithZone(CCZone *pZone);
-	virtual void startWithTarget(CCNode* pTarget);
-	virtual void stop();
-	virtual void step(ccTime dt);
-	virtual bool isDone(void);
-	virtual CCActionInterval* reverse(void);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual void startWithTarget(CCNode* pTarget);
+    virtual void stop();
+    virtual void step(ccTime dt);
+    virtual bool isDone(void);
+    virtual CCActionInterval* reverse(void);
 
-	void setInnerAction(CCActionInterval *pAction);
+    void setInnerAction(CCActionInterval *pAction);
 
-	inline CCActionInterval* getInnerAction()
-	{
-		return m_pInnerAction;
-	}
+    inline CCActionInterval* getInnerAction()
+    {
+        return m_pInnerAction;
+    }
 
 public:
-	/** creates the action */
-	static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
+    /** creates the action */
+    static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
     
 protected:
-	float m_fSpeed;
-	CCActionInterval *m_pInnerAction;
+    float m_fSpeed;
+    CCActionInterval *m_pInnerAction;
 };
 
 
@@ -200,59 +200,60 @@ Instead of using CCCamera as a "follower", use this action instead.
 class CC_DLL CCFollow : public CCAction
 {
 public:
-	CCFollow()
-		: m_pobFollowedNode(NULL)
+    CCFollow()
+        : m_pobFollowedNode(NULL)
         , m_bBoundarySet(false)
-		, m_bBoundaryFullyCovered(false)		
-		, m_fLeftBoundary(0.0)
-		, m_fRightBoundary(0.0)
-		, m_fTopBoundary(0.0)
+        , m_bBoundaryFullyCovered(false)        
+        , m_fLeftBoundary(0.0)
+        , m_fRightBoundary(0.0)
+        , m_fTopBoundary(0.0)
         , m_fBottomBoundary(0.0)
-	{}
-	virtual ~CCFollow(void);
-	
-	inline bool isBoundarySet(void) { return m_bBoundarySet; }
-	/** alter behavior - turn on/off boundary */
-	inline void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
+    {}
+    virtual ~CCFollow(void);
+    
+    inline bool isBoundarySet(void) { return m_bBoundarySet; }
+    /** alter behavior - turn on/off boundary */
+    inline void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
 
-	/** initializes the action */
-	bool initWithTarget(CCNode *pFollowedNode);
+    /** initializes the action */
+    bool initWithTarget(CCNode *pFollowedNode);
 
-	/** initializes the action with a set boundary */
-	bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect);
+    /** initializes the action with a set boundary */
+    bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect);
 
-	virtual CCObject* copyWithZone(CCZone *pZone);
-	virtual void step(ccTime dt);
-	virtual bool isDone(void);
-	virtual void stop(void);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual void step(ccTime dt);
+    virtual bool isDone(void);
+    virtual void stop(void);
 
 public:
-	/** creates the action with no boundary set */
-	static CCFollow* actionWithTarget(CCNode *pFollowedNode);
+    /** creates the action with no boundary set */
+    static CCFollow* actionWithTarget(CCNode *pFollowedNode);
 
-	/** creates the action with a set boundary */
-	static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect);
+    /** creates the action with a set boundary */
+    static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect);
 
 protected:
-	// node to follow
-	CCNode *m_pobFollowedNode;
+    // node to follow
+    CCNode *m_pobFollowedNode;
 
-	// whether camera should be limited to certain area
-	bool m_bBoundarySet;
+    // whether camera should be limited to certain area
+    bool m_bBoundarySet;
 
-	// if screen size is bigger than the boundary - update not needed
-	bool m_bBoundaryFullyCovered;
+    // if screen size is bigger than the boundary - update not needed
+    bool m_bBoundaryFullyCovered;
 
-	// fast access to the screen dimensions
-	CCPoint m_obHalfScreenSize;
-	CCPoint m_obFullScreenSize;
+    // fast access to the screen dimensions
+    CCPoint m_obHalfScreenSize;
+    CCPoint m_obFullScreenSize;
 
-	// world boundaries
-	float m_fLeftBoundary;
-	float m_fRightBoundary;
-	float m_fTopBoundary;
-	float m_fBottomBoundary;
+    // world boundaries
+    float m_fLeftBoundary;
+    float m_fRightBoundary;
+    float m_fTopBoundary;
+    float m_fBottomBoundary;
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __ACTIONS_CCACTION_H__

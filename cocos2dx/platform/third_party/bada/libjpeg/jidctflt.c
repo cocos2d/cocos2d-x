@@ -40,7 +40,7 @@
 #define JPEG_INTERNALS
 #include "jinclude.h"
 #include "jpeglib.h"
-#include "jdct.h"		/* Private declarations for DCT subsystem */
+#include "jdct.h"        /* Private declarations for DCT subsystem */
 
 #ifdef DCT_FLOAT_SUPPORTED
 
@@ -67,8 +67,8 @@
 
 GLOBAL(void)
 jpeg_idct_float (j_decompress_ptr cinfo, jpeg_component_info * compptr,
-		 JCOEFPTR coef_block,
-		 JSAMPARRAY output_buf, JDIMENSION output_col)
+         JCOEFPTR coef_block,
+         JSAMPARRAY output_buf, JDIMENSION output_col)
 {
   FAST_FLOAT tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
   FAST_FLOAT tmp10, tmp11, tmp12, tmp13;
@@ -97,9 +97,9 @@ jpeg_idct_float (j_decompress_ptr cinfo, jpeg_component_info * compptr,
      */
     
     if (inptr[DCTSIZE*1] == 0 && inptr[DCTSIZE*2] == 0 &&
-	inptr[DCTSIZE*3] == 0 && inptr[DCTSIZE*4] == 0 &&
-	inptr[DCTSIZE*5] == 0 && inptr[DCTSIZE*6] == 0 &&
-	inptr[DCTSIZE*7] == 0) {
+    inptr[DCTSIZE*3] == 0 && inptr[DCTSIZE*4] == 0 &&
+    inptr[DCTSIZE*5] == 0 && inptr[DCTSIZE*6] == 0 &&
+    inptr[DCTSIZE*7] == 0) {
       /* AC terms all zero */
       FAST_FLOAT dcval = DEQUANTIZE(inptr[DCTSIZE*0], quantptr[DCTSIZE*0]);
       
@@ -112,7 +112,7 @@ jpeg_idct_float (j_decompress_ptr cinfo, jpeg_component_info * compptr,
       wsptr[DCTSIZE*6] = dcval;
       wsptr[DCTSIZE*7] = dcval;
       
-      inptr++;			/* advance pointers to next column */
+      inptr++;            /* advance pointers to next column */
       quantptr++;
       wsptr++;
       continue;
@@ -125,13 +125,13 @@ jpeg_idct_float (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     tmp2 = DEQUANTIZE(inptr[DCTSIZE*4], quantptr[DCTSIZE*4]);
     tmp3 = DEQUANTIZE(inptr[DCTSIZE*6], quantptr[DCTSIZE*6]);
 
-    tmp10 = tmp0 + tmp2;	/* phase 3 */
+    tmp10 = tmp0 + tmp2;    /* phase 3 */
     tmp11 = tmp0 - tmp2;
 
-    tmp13 = tmp1 + tmp3;	/* phases 5-3 */
+    tmp13 = tmp1 + tmp3;    /* phases 5-3 */
     tmp12 = (tmp1 - tmp3) * ((FAST_FLOAT) 1.414213562) - tmp13; /* 2*c4 */
 
-    tmp0 = tmp10 + tmp13;	/* phase 2 */
+    tmp0 = tmp10 + tmp13;    /* phase 2 */
     tmp3 = tmp10 - tmp13;
     tmp1 = tmp11 + tmp12;
     tmp2 = tmp11 - tmp12;
@@ -143,19 +143,19 @@ jpeg_idct_float (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     tmp6 = DEQUANTIZE(inptr[DCTSIZE*5], quantptr[DCTSIZE*5]);
     tmp7 = DEQUANTIZE(inptr[DCTSIZE*7], quantptr[DCTSIZE*7]);
 
-    z13 = tmp6 + tmp5;		/* phase 6 */
+    z13 = tmp6 + tmp5;        /* phase 6 */
     z10 = tmp6 - tmp5;
     z11 = tmp4 + tmp7;
     z12 = tmp4 - tmp7;
 
-    tmp7 = z11 + z13;		/* phase 5 */
+    tmp7 = z11 + z13;        /* phase 5 */
     tmp11 = (z11 - z13) * ((FAST_FLOAT) 1.414213562); /* 2*c4 */
 
     z5 = (z10 + z12) * ((FAST_FLOAT) 1.847759065); /* 2*c2 */
     tmp10 = z5 - z12 * ((FAST_FLOAT) 1.082392200); /* 2*(c2-c6) */
     tmp12 = z5 - z10 * ((FAST_FLOAT) 2.613125930); /* 2*(c2+c6) */
 
-    tmp6 = tmp12 - tmp7;	/* phase 2 */
+    tmp6 = tmp12 - tmp7;    /* phase 2 */
     tmp5 = tmp11 - tmp6;
     tmp4 = tmp10 - tmp5;
 
@@ -168,7 +168,7 @@ jpeg_idct_float (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     wsptr[DCTSIZE*3] = tmp3 + tmp4;
     wsptr[DCTSIZE*4] = tmp3 - tmp4;
 
-    inptr++;			/* advance pointers to next column */
+    inptr++;            /* advance pointers to next column */
     quantptr++;
     wsptr++;
   }
@@ -228,7 +228,7 @@ jpeg_idct_float (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     outptr[3] = range_limit[((int) (tmp3 + tmp4)) & RANGE_MASK];
     outptr[4] = range_limit[((int) (tmp3 - tmp4)) & RANGE_MASK];
     
-    wsptr += DCTSIZE;		/* advance pointer to next row */
+    wsptr += DCTSIZE;        /* advance pointer to next row */
   }
 }
 

@@ -7,7 +7,7 @@
 class RenderTextureTestDemo : public CCLayer
 {
 public:
-	virtual void onEnter();
+    virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
 
@@ -25,27 +25,27 @@ public:
     RenderTextureTest();
     ~RenderTextureTest();
     virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
-	
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    
 private:
-    CCRenderTexture*	m_target;
-    CCSprite*			m_brush;
+    CCRenderTexture*    m_target;
+    CCSprite*            m_brush;
 };
 
 class RenderTextureSave : public RenderTextureTestDemo
 {
 public:
-	RenderTextureSave();
-	~RenderTextureSave();
-	virtual std::string title();
-	virtual std::string subtitle();
-	virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-	void clearImage(CCObject *pSender);
-	void saveImage(CCObject *pSender);
+    RenderTextureSave();
+    ~RenderTextureSave();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
+    void clearImage(CCObject *pSender);
+    void saveImage(CCObject *pSender);
 
 private:
-	CCRenderTexture *m_pTarget;
-	CCSprite *m_pBrush;
+    CCRenderTexture *m_pTarget;
+    CCSprite *m_pBrush;
 };
 
 class RenderTextureIssue937 : public RenderTextureTestDemo
@@ -65,28 +65,28 @@ public:
 class RenderTextureZbuffer : public RenderTextureTestDemo
 {
 public:
-	RenderTextureZbuffer();
+    RenderTextureZbuffer();
 
-	virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-	virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
-	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
+    virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual std::string title();
+    virtual std::string subtitle();
 
-	void renderScreenShot();
+    void renderScreenShot();
 
 private:
-	cocos2d::CCSpriteBatchNode *mgr;;
+    cocos2d::CCSpriteBatchNode *mgr;;
 
-	cocos2d::CCSprite *sp1;
-	cocos2d::CCSprite *sp2;
-	cocos2d::CCSprite *sp3;
-	cocos2d::CCSprite *sp4;
-	cocos2d::CCSprite *sp5;
-	cocos2d::CCSprite *sp6;
-	cocos2d::CCSprite *sp7;
-	cocos2d::CCSprite *sp8;
-	cocos2d::CCSprite *sp9;
+    cocos2d::CCSprite *sp1;
+    cocos2d::CCSprite *sp2;
+    cocos2d::CCSprite *sp3;
+    cocos2d::CCSprite *sp4;
+    cocos2d::CCSprite *sp5;
+    cocos2d::CCSprite *sp6;
+    cocos2d::CCSprite *sp7;
+    cocos2d::CCSprite *sp8;
+    cocos2d::CCSprite *sp9;
 };
 
 #endif

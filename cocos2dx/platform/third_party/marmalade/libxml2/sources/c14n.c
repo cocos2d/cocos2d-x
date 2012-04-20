@@ -28,9 +28,9 @@
 #include <libxml/c14n.h>
 
 /************************************************************************
- *									*
- *		Some declaration better left private ATM		*
- *									*
+ *                                    *
+ *        Some declaration better left private ATM        *
+ *                                    *
  ************************************************************************/
 
 typedef enum {
@@ -44,8 +44,8 @@ typedef struct _xmlC14NVisibleNsStack {
     int nsPrevStart;        /* the begginning of the stack for previous visible node */
     int nsPrevEnd;          /* the end of the stack for previous visible node */
     int nsMax;              /* size of the array as allocated */
-    xmlNsPtr 	*nsTab;	    /* array of ns in no particular order */	      
-    xmlNodePtr	*nodeTab;   /* array of nodes in no particular order */
+    xmlNsPtr     *nsTab;        /* array of ns in no particular order */          
+    xmlNodePtr    *nodeTab;   /* array of nodes in no particular order */
 } xmlC14NVisibleNsStack, *xmlC14NVisibleNsStackPtr;
 
 typedef struct _xmlC14NCtx {
@@ -71,25 +71,25 @@ typedef struct _xmlC14NCtx {
     int error;
 } xmlC14NCtx, *xmlC14NCtxPtr;
 
-static xmlC14NVisibleNsStackPtr	xmlC14NVisibleNsStackCreate	(void);
-static void     xmlC14NVisibleNsStackDestroy	(xmlC14NVisibleNsStackPtr cur);
-static void     xmlC14NVisibleNsStackAdd	    (xmlC14NVisibleNsStackPtr cur, 
+static xmlC14NVisibleNsStackPtr    xmlC14NVisibleNsStackCreate    (void);
+static void     xmlC14NVisibleNsStackDestroy    (xmlC14NVisibleNsStackPtr cur);
+static void     xmlC14NVisibleNsStackAdd        (xmlC14NVisibleNsStackPtr cur, 
                                                  xmlNsPtr ns,
                                                  xmlNodePtr node);
-static void 			xmlC14NVisibleNsStackSave	(xmlC14NVisibleNsStackPtr cur,
-								 xmlC14NVisibleNsStackPtr state);
-static void 			xmlC14NVisibleNsStackRestore	(xmlC14NVisibleNsStackPtr cur,
-								 xmlC14NVisibleNsStackPtr state);
-static void 			xmlC14NVisibleNsStackShift	(xmlC14NVisibleNsStackPtr cur);
-static int			xmlC14NVisibleNsStackFind	(xmlC14NVisibleNsStackPtr cur, 
-								 xmlNsPtr ns);
-static int			xmlExcC14NVisibleNsStackFind	(xmlC14NVisibleNsStackPtr cur, 
-								 xmlNsPtr ns,
-								 xmlC14NCtxPtr ctx);
+static void             xmlC14NVisibleNsStackSave    (xmlC14NVisibleNsStackPtr cur,
+                                 xmlC14NVisibleNsStackPtr state);
+static void             xmlC14NVisibleNsStackRestore    (xmlC14NVisibleNsStackPtr cur,
+                                 xmlC14NVisibleNsStackPtr state);
+static void             xmlC14NVisibleNsStackShift    (xmlC14NVisibleNsStackPtr cur);
+static int            xmlC14NVisibleNsStackFind    (xmlC14NVisibleNsStackPtr cur, 
+                                 xmlNsPtr ns);
+static int            xmlExcC14NVisibleNsStackFind    (xmlC14NVisibleNsStackPtr cur, 
+                                 xmlNsPtr ns,
+                                 xmlC14NCtxPtr ctx);
 
-static int			xmlC14NIsNodeInNodeset		(xmlNodeSetPtr nodes,
-								 xmlNodePtr node,
-								 xmlNodePtr parent);
+static int            xmlC14NIsNodeInNodeset        (xmlNodeSetPtr nodes,
+                                 xmlNodePtr node,
+                                 xmlNodePtr parent);
 
 
 
@@ -105,27 +105,27 @@ typedef enum {
 static xmlChar *xmlC11NNormalizeString(const xmlChar * input,
                                        xmlC14NNormalizationMode mode);
 
-#define 	xmlC11NNormalizeAttr( a ) \
+#define     xmlC11NNormalizeAttr( a ) \
     xmlC11NNormalizeString((a), XMLC14N_NORMALIZE_ATTR)
-#define 	xmlC11NNormalizeComment( a ) \
+#define     xmlC11NNormalizeComment( a ) \
     xmlC11NNormalizeString((a), XMLC14N_NORMALIZE_COMMENT)
-#define 	xmlC11NNormalizePI( a )	\
+#define     xmlC11NNormalizePI( a )    \
     xmlC11NNormalizeString((a), XMLC14N_NORMALIZE_PI)
-#define 	xmlC11NNormalizeText( a ) \
+#define     xmlC11NNormalizeText( a ) \
     xmlC11NNormalizeString((a), XMLC14N_NORMALIZE_TEXT)
 
-#define 	xmlC14NIsVisible( ctx, node, parent ) \
+#define     xmlC14NIsVisible( ctx, node, parent ) \
      (((ctx)->is_visible_callback != NULL) ? \
-	(ctx)->is_visible_callback((ctx)->user_data, \
-		(xmlNodePtr)(node), (xmlNodePtr)(parent)) : 1)
+    (ctx)->is_visible_callback((ctx)->user_data, \
+        (xmlNodePtr)(node), (xmlNodePtr)(parent)) : 1)
 
-#define 	xmlC14NIsExclusive( ctx ) \
+#define     xmlC14NIsExclusive( ctx ) \
     ( (ctx)->mode == XML_C14N_EXCLUSIVE_1_0 )
 
 /************************************************************************
- *									*
- * 		Some factorized error routines				*
- *									*
+ *                                    *
+ *         Some factorized error routines                *
+ *                                    *
  ************************************************************************/
 
 /**
@@ -138,9 +138,9 @@ static void
 xmlC14NErrMemory(const char *extra)
 {
     __xmlRaiseError(NULL, NULL, NULL, NULL, NULL, XML_FROM_C14N,
-		    XML_ERR_NO_MEMORY, XML_ERR_ERROR, NULL, 0, extra,
-		    NULL, NULL, 0, 0,
-		    "Memory allocation failed : %s\n", extra);
+            XML_ERR_NO_MEMORY, XML_ERR_ERROR, NULL, 0, extra,
+            NULL, NULL, 0, 0,
+            "Memory allocation failed : %s\n", extra);
 }
 
 /**
@@ -153,9 +153,9 @@ static void
 xmlC14NErrParam(const char *extra)
 {
     __xmlRaiseError(NULL, NULL, NULL, NULL, NULL, XML_FROM_C14N,
-		    XML_ERR_INTERNAL_ERROR, XML_ERR_ERROR, NULL, 0, extra,
-		    NULL, NULL, 0, 0,
-		    "Invalid parameter : %s\n", extra);
+            XML_ERR_INTERNAL_ERROR, XML_ERR_ERROR, NULL, 0, extra,
+            NULL, NULL, 0, 0,
+            "Invalid parameter : %s\n", extra);
 }
 
 /**
@@ -168,9 +168,9 @@ static void
 xmlC14NErrInternal(const char *extra)
 {
     __xmlRaiseError(NULL, NULL, NULL, NULL, NULL, XML_FROM_C14N,
-		    XML_ERR_INTERNAL_ERROR, XML_ERR_ERROR, NULL, 0, extra,
-		    NULL, NULL, 0, 0,
-		    "Internal error : %s\n", extra);
+            XML_ERR_INTERNAL_ERROR, XML_ERR_ERROR, NULL, 0, extra,
+            NULL, NULL, 0, 0,
+            "Internal error : %s\n", extra);
 }
 
 /**
@@ -183,9 +183,9 @@ static void
 xmlC14NErrInvalidNode(const char *node_type, const char *extra)
 {
     __xmlRaiseError(NULL, NULL, NULL, NULL, NULL, XML_FROM_C14N,
-		    XML_C14N_INVALID_NODE, XML_ERR_ERROR, NULL, 0, extra,
-		    NULL, NULL, 0, 0,
-		    "Node %s is invalid here : %s\n", node_type, extra);
+            XML_C14N_INVALID_NODE, XML_ERR_ERROR, NULL, 0, extra,
+            NULL, NULL, 0, 0,
+            "Node %s is invalid here : %s\n", node_type, extra);
 }
 
 /**
@@ -198,9 +198,9 @@ static void
 xmlC14NErrUnknownNode(int node_type, const char *extra)
 {
     __xmlRaiseError(NULL, NULL, NULL, NULL, NULL, XML_FROM_C14N,
-		    XML_C14N_UNKNOW_NODE, XML_ERR_ERROR, NULL, 0, extra,
-		    NULL, NULL, 0, 0,
-		    "Unknown node type %d found : %s\n", node_type, extra);
+            XML_C14N_UNKNOW_NODE, XML_ERR_ERROR, NULL, 0, extra,
+            NULL, NULL, 0, 0,
+            "Unknown node type %d found : %s\n", node_type, extra);
 }
 
 /**
@@ -213,9 +213,9 @@ static void
 xmlC14NErrRelativeNamespace(const char *ns_uri)
 {
     __xmlRaiseError(NULL, NULL, NULL, NULL, NULL, XML_FROM_C14N,
-		    XML_C14N_RELATIVE_NAMESPACE, XML_ERR_ERROR, NULL, 0, NULL,
-		    NULL, NULL, 0, 0,
-		    "Relative namespace UR is invalid here : %s\n", ns_uri);
+            XML_C14N_RELATIVE_NAMESPACE, XML_ERR_ERROR, NULL, 0, NULL,
+            NULL, NULL, 0, 0,
+            "Relative namespace UR is invalid here : %s\n", ns_uri);
 }
 
 
@@ -237,41 +237,41 @@ xmlC14NErr(xmlC14NCtxPtr ctxt, xmlNodePtr node, int error,
     if (ctxt != NULL)
         ctxt->error = error;
     __xmlRaiseError(NULL, NULL, NULL,
-		    ctxt, node, XML_FROM_C14N, error,
-		    XML_ERR_ERROR, NULL, 0,
-		    NULL, NULL, NULL, 0, 0, "%s", msg);
+            ctxt, node, XML_FROM_C14N, error,
+            XML_ERR_ERROR, NULL, 0,
+            NULL, NULL, NULL, 0, 0, "%s", msg);
 }
 
 /************************************************************************
- *									*
- *		The implementation internals				*
- *									*
+ *                                    *
+ *        The implementation internals                *
+ *                                    *
  ************************************************************************/
-#define XML_NAMESPACES_DEFAULT		16
+#define XML_NAMESPACES_DEFAULT        16
 
-static int			
+static int            
 xmlC14NIsNodeInNodeset(xmlNodeSetPtr nodes, xmlNodePtr node, xmlNodePtr parent) {
     if((nodes != NULL) && (node != NULL)) {
-	if(node->type != XML_NAMESPACE_DECL) {
-	    return(xmlXPathNodeSetContains(nodes, node));
-	} else {
-	    xmlNs ns;
-	    
-	    memcpy(&ns, node, sizeof(ns)); 
-	    
-	    /* this is a libxml hack! check xpath.c for details */
-	    if((parent != NULL) && (parent->type == XML_ATTRIBUTE_NODE)) {
-		ns.next = (xmlNsPtr)parent->parent;
-	    } else {
-		ns.next = (xmlNsPtr)parent; 
-	    }
+    if(node->type != XML_NAMESPACE_DECL) {
+        return(xmlXPathNodeSetContains(nodes, node));
+    } else {
+        xmlNs ns;
+        
+        memcpy(&ns, node, sizeof(ns)); 
+        
+        /* this is a libxml hack! check xpath.c for details */
+        if((parent != NULL) && (parent->type == XML_ATTRIBUTE_NODE)) {
+        ns.next = (xmlNsPtr)parent->parent;
+        } else {
+        ns.next = (xmlNsPtr)parent; 
+        }
 
-	    /* 
-	     * If the input is an XPath node-set, then the node-set must explicitly 
-	     * contain every node to be rendered to the canonical form.
-	     */
-	    return(xmlXPathNodeSetContains(nodes, (xmlNodePtr)&ns));
-	}
+        /* 
+         * If the input is an XPath node-set, then the node-set must explicitly 
+         * contain every node to be rendered to the canonical form.
+         */
+        return(xmlXPathNodeSetContains(nodes, (xmlNodePtr)&ns));
+    }
     }
     return(1);
 }
@@ -283,7 +283,7 @@ xmlC14NVisibleNsStackCreate(void) {
     ret = (xmlC14NVisibleNsStackPtr) xmlMalloc(sizeof(xmlC14NVisibleNsStack));
     if (ret == NULL) {
         xmlC14NErrMemory("creating namespaces stack");
-	return(NULL);
+    return(NULL);
     }
     memset(ret, 0 , (size_t) sizeof(xmlC14NVisibleNsStack));
     return(ret);
@@ -296,12 +296,12 @@ xmlC14NVisibleNsStackDestroy(xmlC14NVisibleNsStackPtr cur) {
         return;
     }
     if(cur->nsTab != NULL) {
-	memset(cur->nsTab, 0, cur->nsMax * sizeof(xmlNsPtr));
-	xmlFree(cur->nsTab);
+    memset(cur->nsTab, 0, cur->nsMax * sizeof(xmlNsPtr));
+    xmlFree(cur->nsTab);
     }
     if(cur->nodeTab != NULL) {
-	memset(cur->nodeTab, 0, cur->nsMax * sizeof(xmlNodePtr));
-	xmlFree(cur->nodeTab);
+    memset(cur->nodeTab, 0, cur->nsMax * sizeof(xmlNodePtr));
+    xmlFree(cur->nodeTab);
     }
     memset(cur, 0, sizeof(xmlC14NVisibleNsStack));
     xmlFree(cur);
@@ -314,39 +314,39 @@ xmlC14NVisibleNsStackAdd(xmlC14NVisibleNsStackPtr cur, xmlNsPtr ns, xmlNodePtr n
        ((cur->nsTab == NULL) && (cur->nodeTab != NULL)) ||
        ((cur->nsTab != NULL) && (cur->nodeTab == NULL))) {
         xmlC14NErrParam("adding namespace to stack");
-	return;
+    return;
     }
 
     if ((cur->nsTab == NULL) && (cur->nodeTab == NULL)) {
         cur->nsTab = (xmlNsPtr*) xmlMalloc(XML_NAMESPACES_DEFAULT * sizeof(xmlNsPtr));
         cur->nodeTab = (xmlNodePtr*) xmlMalloc(XML_NAMESPACES_DEFAULT * sizeof(xmlNodePtr));
-	if ((cur->nsTab == NULL) || (cur->nodeTab == NULL)) {
-	    xmlC14NErrMemory("adding node to stack");
-	    return;
-	}
-	memset(cur->nsTab, 0 , XML_NAMESPACES_DEFAULT * sizeof(xmlNsPtr));
-	memset(cur->nodeTab, 0 , XML_NAMESPACES_DEFAULT * sizeof(xmlNodePtr));
+    if ((cur->nsTab == NULL) || (cur->nodeTab == NULL)) {
+        xmlC14NErrMemory("adding node to stack");
+        return;
+    }
+    memset(cur->nsTab, 0 , XML_NAMESPACES_DEFAULT * sizeof(xmlNsPtr));
+    memset(cur->nodeTab, 0 , XML_NAMESPACES_DEFAULT * sizeof(xmlNodePtr));
         cur->nsMax = XML_NAMESPACES_DEFAULT;
     } else if(cur->nsMax == cur->nsCurEnd) {
-	void *tmp;	
-	int tmpSize;
-	
-	tmpSize = 2 * cur->nsMax;
-	tmp = xmlRealloc(cur->nsTab, tmpSize * sizeof(xmlNsPtr));
-	if (tmp == NULL) {
-	    xmlC14NErrMemory("adding node to stack");
-	    return;
-	}
-	cur->nsTab = (xmlNsPtr*)tmp;
+    void *tmp;    
+    int tmpSize;
+    
+    tmpSize = 2 * cur->nsMax;
+    tmp = xmlRealloc(cur->nsTab, tmpSize * sizeof(xmlNsPtr));
+    if (tmp == NULL) {
+        xmlC14NErrMemory("adding node to stack");
+        return;
+    }
+    cur->nsTab = (xmlNsPtr*)tmp;
 
-	tmp = xmlRealloc(cur->nodeTab, tmpSize * sizeof(xmlNodePtr));
-	if (tmp == NULL) {
-	    xmlC14NErrMemory("adding node to stack");
-	    return;
-	}
-	cur->nodeTab = (xmlNodePtr*)tmp;
+    tmp = xmlRealloc(cur->nodeTab, tmpSize * sizeof(xmlNodePtr));
+    if (tmp == NULL) {
+        xmlC14NErrMemory("adding node to stack");
+        return;
+    }
+    cur->nodeTab = (xmlNodePtr*)tmp;
 
-	cur->nsMax = tmpSize;
+    cur->nsMax = tmpSize;
     }
     cur->nsTab[cur->nsCurEnd] = ns;
     cur->nodeTab[cur->nsCurEnd] = node;
@@ -358,7 +358,7 @@ static void
 xmlC14NVisibleNsStackSave(xmlC14NVisibleNsStackPtr cur, xmlC14NVisibleNsStackPtr state) {
     if((cur == NULL) || (state == NULL)) {
         xmlC14NErrParam("saving namespaces stack");
-	return;
+    return;
     }
     
     state->nsCurEnd = cur->nsCurEnd;
@@ -370,7 +370,7 @@ static void
 xmlC14NVisibleNsStackRestore(xmlC14NVisibleNsStackPtr cur, xmlC14NVisibleNsStackPtr state) {
     if((cur == NULL) || (state == NULL)) {
         xmlC14NErrParam("restoring namespaces stack");
-	return;
+    return;
     }
     cur->nsCurEnd = state->nsCurEnd;
     cur->nsPrevStart = state->nsPrevStart;
@@ -381,7 +381,7 @@ static void
 xmlC14NVisibleNsStackShift(xmlC14NVisibleNsStackPtr cur) {
     if(cur == NULL) {
         xmlC14NErrParam("shifting namespaces stack");
-	return;
+    return;
     }
     cur->nsPrevStart = cur->nsPrevEnd;
     cur->nsPrevEnd = cur->nsCurEnd;
@@ -393,15 +393,15 @@ xmlC14NStrEqual(const xmlChar *str1, const xmlChar *str2) {
     if (str1 == NULL) return((*str2) == '\0');
     if (str2 == NULL) return((*str1) == '\0');
     do {
-	if (*str1++ != *str2) return(0);
+    if (*str1++ != *str2) return(0);
     } while (*str2++);
     return(1);
 }
 
 /**
  * xmlC14NVisibleNsStackFind:
- * @ctx:		the C14N context 
- * @ns:			the namespace to check
+ * @ctx:        the C14N context 
+ * @ns:            the namespace to check
  *
  * Checks whether the given namespace was already rendered or not
  *
@@ -429,19 +429,19 @@ xmlC14NVisibleNsStackFind(xmlC14NVisibleNsStackPtr cur, xmlNsPtr ns)
     has_empty_ns = (xmlC14NStrEqual(prefix, NULL) && xmlC14NStrEqual(href, NULL));
 
     if (cur->nsTab != NULL) {
-	int start = (has_empty_ns) ? 0 : cur->nsPrevStart;
+    int start = (has_empty_ns) ? 0 : cur->nsPrevStart;
         for (i = cur->nsCurEnd - 1; i >= start; --i) {
             xmlNsPtr ns1 = cur->nsTab[i];
-	    
-	    if(xmlC14NStrEqual(prefix, (ns1 != NULL) ? ns1->prefix : NULL)) {
-		return(xmlC14NStrEqual(href, (ns1 != NULL) ? ns1->href : NULL));
-	    }
+        
+        if(xmlC14NStrEqual(prefix, (ns1 != NULL) ? ns1->prefix : NULL)) {
+        return(xmlC14NStrEqual(href, (ns1 != NULL) ? ns1->href : NULL));
+        }
         }
     }
     return(has_empty_ns);
 }
 
-static int			
+static int            
 xmlExcC14NVisibleNsStackFind(xmlC14NVisibleNsStackPtr cur, xmlNsPtr ns, xmlC14NCtxPtr ctx) {
     int i;
     const xmlChar *prefix;
@@ -462,17 +462,17 @@ xmlExcC14NVisibleNsStackFind(xmlC14NVisibleNsStackPtr cur, xmlNsPtr ns, xmlC14NC
     has_empty_ns = (xmlC14NStrEqual(prefix, NULL) && xmlC14NStrEqual(href, NULL));
 
     if (cur->nsTab != NULL) {
-	int start = 0;
+    int start = 0;
         for (i = cur->nsCurEnd - 1; i >= start; --i) {
             xmlNsPtr ns1 = cur->nsTab[i];
-	    
-	    if(xmlC14NStrEqual(prefix, (ns1 != NULL) ? ns1->prefix : NULL)) {
-		if(xmlC14NStrEqual(href, (ns1 != NULL) ? ns1->href : NULL)) {
-	    	    return(xmlC14NIsVisible(ctx, ns1, cur->nodeTab[i]));
-		} else {
-		    return(0);
-		}
-	    }
+        
+        if(xmlC14NStrEqual(prefix, (ns1 != NULL) ? ns1->prefix : NULL)) {
+        if(xmlC14NStrEqual(href, (ns1 != NULL) ? ns1->href : NULL)) {
+                return(xmlC14NIsVisible(ctx, ns1, cur->nodeTab[i]));
+        } else {
+            return(0);
+        }
+        }
         }
     }
     return(has_empty_ns);
@@ -483,8 +483,8 @@ xmlExcC14NVisibleNsStackFind(xmlC14NVisibleNsStackPtr cur, xmlNsPtr ns, xmlC14NC
 
 /**
  * xmlC14NIsXmlNs:
- * @ns: 		the namespace to check
- *  		
+ * @ns:         the namespace to check
+ *          
  * Checks whether the given namespace is a default "xml:" namespace
  * with href="http://www.w3.org/XML/1998/namespace"
  *
@@ -503,8 +503,8 @@ xmlC14NIsXmlNs(xmlNsPtr ns)
 
 /**
  * xmlC14NNsCompare:
- * @ns1:		the pointer to first namespace
- * @ns2: 		the pointer to second namespace
+ * @ns1:        the pointer to first namespace
+ * @ns2:         the pointer to second namespace
  *
  * Compares the namespaces by names (prefixes).
  *
@@ -526,8 +526,8 @@ xmlC14NNsCompare(xmlNsPtr ns1, xmlNsPtr ns2)
 
 /**
  * xmlC14NPrintNamespaces:
- * @ns:			the pointer to namespace
- * @ctx: 		the C14N context
+ * @ns:            the pointer to namespace
+ * @ctx:         the C14N context
  *
  * Prints the given namespace to the output buffer from C14N context.
  *
@@ -550,7 +550,7 @@ xmlC14NPrintNamespaces(const xmlNsPtr ns, xmlC14NCtxPtr ctx)
         xmlOutputBufferWriteString(ctx->buf, " xmlns=\"");
     }
     if(ns->href != NULL) {
-	xmlOutputBufferWriteString(ctx->buf, (const char *) ns->href);
+    xmlOutputBufferWriteString(ctx->buf, (const char *) ns->href);
     }
     xmlOutputBufferWriteString(ctx->buf, "\"");
     return (1);
@@ -558,8 +558,8 @@ xmlC14NPrintNamespaces(const xmlNsPtr ns, xmlC14NCtxPtr ctx)
 
 /**
  * xmlC14NProcessNamespacesAxis:
- * @ctx: 		the C14N context
- * @node:		the current node
+ * @ctx:         the C14N context
+ * @node:        the current node
  *
  * Prints out canonical namespace axis of the current node to the
  * buffer from C14N context as follows 
@@ -574,7 +574,7 @@ xmlC14NPrintNamespaces(const xmlNsPtr ns, xmlC14NCtxPtr ctx)
  * by xmlns="" if and only if the following conditions are met:
  *    - the element E that owns the axis is in the node-set
  *    - The nearest ancestor element of E in the node-set has a default 
- *	    namespace node in the node-set (default namespace nodes always 
+ *        namespace node in the node-set (default namespace nodes always 
  *      have non-empty values in XPath)
  * The latter condition eliminates unnecessary occurrences of xmlns="" in 
  * the canonical form since an element only receives an xmlns="" if its 
@@ -620,24 +620,24 @@ xmlC14NProcessNamespacesAxis(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
 
     /* check all namespaces */
     for(n = cur; n != NULL; n = n->parent) {
-	for(ns = n->nsDef; ns != NULL; ns = ns->next) {
-	    tmp = xmlSearchNs(cur->doc, cur, ns->prefix);
-	    
-	    if((tmp == ns) && !xmlC14NIsXmlNs(ns) && xmlC14NIsVisible(ctx, ns, cur)) {
-		already_rendered = xmlC14NVisibleNsStackFind(ctx->ns_rendered, ns);
-		if(visible) {
-        	    xmlC14NVisibleNsStackAdd(ctx->ns_rendered, ns, cur);
-		}
-		if(!already_rendered) {
-		    xmlListInsert(list, ns); 
-		}
-    		if(xmlStrlen(ns->prefix) == 0) {
-		    has_empty_ns = 1;
-		}
-	    }
-	}
+    for(ns = n->nsDef; ns != NULL; ns = ns->next) {
+        tmp = xmlSearchNs(cur->doc, cur, ns->prefix);
+        
+        if((tmp == ns) && !xmlC14NIsXmlNs(ns) && xmlC14NIsVisible(ctx, ns, cur)) {
+        already_rendered = xmlC14NVisibleNsStackFind(ctx->ns_rendered, ns);
+        if(visible) {
+                xmlC14NVisibleNsStackAdd(ctx->ns_rendered, ns, cur);
+        }
+        if(!already_rendered) {
+            xmlListInsert(list, ns); 
+        }
+            if(xmlStrlen(ns->prefix) == 0) {
+            has_empty_ns = 1;
+        }
+        }
     }
-	
+    }
+    
     /**
      * if the first node is not the default namespace node (a node with no 
      * namespace URI and no local name), then generate a space followed by 
@@ -652,10 +652,10 @@ xmlC14NProcessNamespacesAxis(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
 
         memset(&ns_default, 0, sizeof(ns_default));
         if(!xmlC14NVisibleNsStackFind(ctx->ns_rendered, &ns_default)) {
-    	    xmlC14NPrintNamespaces(&ns_default, ctx);
-	}
+            xmlC14NPrintNamespaces(&ns_default, ctx);
     }
-	
+    }
+    
     
     /* 
      * print out all elements from list 
@@ -672,8 +672,8 @@ xmlC14NProcessNamespacesAxis(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
 
 /**
  * xmlExcC14NProcessNamespacesAxis:
- * @ctx: 		the C14N context
- * @node:		the current node
+ * @ctx:         the C14N context
+ * @node:        the current node
  *
  * Prints out exclusive canonical namespace axis of the current node to the
  * buffer from C14N context as follows 
@@ -737,55 +737,55 @@ xmlExcC14NProcessNamespacesAxis(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
      * handled as provided in Canonical XML
      */
     if(ctx->inclusive_ns_prefixes != NULL) {
-	xmlChar *prefix; 
-	int i;
-	
-	for (i = 0; ctx->inclusive_ns_prefixes[i] != NULL; ++i) {
-	    prefix = ctx->inclusive_ns_prefixes[i];
-	    /*
-	     * Special values for namespace with empty prefix
-	     */
+    xmlChar *prefix; 
+    int i;
+    
+    for (i = 0; ctx->inclusive_ns_prefixes[i] != NULL; ++i) {
+        prefix = ctx->inclusive_ns_prefixes[i];
+        /*
+         * Special values for namespace with empty prefix
+         */
             if (xmlStrEqual(prefix, BAD_CAST "#default")
                 || xmlStrEqual(prefix, BAD_CAST "")) {
                 prefix = NULL;
-		has_empty_ns_in_inclusive_list = 1;
+        has_empty_ns_in_inclusive_list = 1;
             }
-	
-	    ns = xmlSearchNs(cur->doc, cur, prefix);	    
-	    if((ns != NULL) && !xmlC14NIsXmlNs(ns) && xmlC14NIsVisible(ctx, ns, cur)) {
-		already_rendered = xmlC14NVisibleNsStackFind(ctx->ns_rendered, ns);
-		if(visible) {
-    	    	    xmlC14NVisibleNsStackAdd(ctx->ns_rendered, ns, cur);
-		}
-		if(!already_rendered) {
-	    	    xmlListInsert(list, ns); 
-		}
-    		if(xmlStrlen(ns->prefix) == 0) {
-		    has_empty_ns = 1;
-		}
-	    }
-	}
+    
+        ns = xmlSearchNs(cur->doc, cur, prefix);        
+        if((ns != NULL) && !xmlC14NIsXmlNs(ns) && xmlC14NIsVisible(ctx, ns, cur)) {
+        already_rendered = xmlC14NVisibleNsStackFind(ctx->ns_rendered, ns);
+        if(visible) {
+                    xmlC14NVisibleNsStackAdd(ctx->ns_rendered, ns, cur);
+        }
+        if(!already_rendered) {
+                xmlListInsert(list, ns); 
+        }
+            if(xmlStrlen(ns->prefix) == 0) {
+            has_empty_ns = 1;
+        }
+        }
+    }
     }
     
     /* add node namespace */
     if(cur->ns != NULL) {
-	ns = cur->ns;
+    ns = cur->ns;
     } else {
         ns = xmlSearchNs(cur->doc, cur, NULL);
-	has_visibly_utilized_empty_ns = 1;
+    has_visibly_utilized_empty_ns = 1;
     }
     if((ns != NULL) && !xmlC14NIsXmlNs(ns)) {
-	if(visible && xmlC14NIsVisible(ctx, ns, cur)) { 
-	    if(!xmlExcC14NVisibleNsStackFind(ctx->ns_rendered, ns, ctx)) {
-		xmlListInsert(list, ns);
-	    }
-	}
-	if(visible) {
-    	    xmlC14NVisibleNsStackAdd(ctx->ns_rendered, ns, cur); 
-	}
-	if(xmlStrlen(ns->prefix) == 0) {
-	    has_empty_ns = 1;
-	}
+    if(visible && xmlC14NIsVisible(ctx, ns, cur)) { 
+        if(!xmlExcC14NVisibleNsStackFind(ctx->ns_rendered, ns, ctx)) {
+        xmlListInsert(list, ns);
+        }
+    }
+    if(visible) {
+            xmlC14NVisibleNsStackAdd(ctx->ns_rendered, ns, cur); 
+    }
+    if(xmlStrlen(ns->prefix) == 0) {
+        has_empty_ns = 1;
+    }
     }
     
         
@@ -794,42 +794,42 @@ xmlExcC14NProcessNamespacesAxis(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
         /* 
          * we need to check that attribute is visible and has non
          * default namespace (XML Namespaces: "default namespaces 
-    	 * do not apply directly to attributes")	 
+         * do not apply directly to attributes")     
          */
-	if((attr->ns != NULL) && !xmlC14NIsXmlNs(attr->ns) && xmlC14NIsVisible(ctx, attr, cur)) {
-	    already_rendered = xmlExcC14NVisibleNsStackFind(ctx->ns_rendered, attr->ns, ctx);
-	    xmlC14NVisibleNsStackAdd(ctx->ns_rendered, attr->ns, cur); 
-	    if(!already_rendered && visible) {
-		xmlListInsert(list, attr->ns); 
-	    }
-	    if(xmlStrlen(attr->ns->prefix) == 0) {
-		has_empty_ns = 1;
-	    }
-	} else if((attr->ns != NULL) && (xmlStrlen(attr->ns->prefix) == 0) && (xmlStrlen(attr->ns->href) == 0)) {
-	    has_visibly_utilized_empty_ns = 1;
-	}
+    if((attr->ns != NULL) && !xmlC14NIsXmlNs(attr->ns) && xmlC14NIsVisible(ctx, attr, cur)) {
+        already_rendered = xmlExcC14NVisibleNsStackFind(ctx->ns_rendered, attr->ns, ctx);
+        xmlC14NVisibleNsStackAdd(ctx->ns_rendered, attr->ns, cur); 
+        if(!already_rendered && visible) {
+        xmlListInsert(list, attr->ns); 
+        }
+        if(xmlStrlen(attr->ns->prefix) == 0) {
+        has_empty_ns = 1;
+        }
+    } else if((attr->ns != NULL) && (xmlStrlen(attr->ns->prefix) == 0) && (xmlStrlen(attr->ns->href) == 0)) {
+        has_visibly_utilized_empty_ns = 1;
+    }
     }
 
     /*
      * Process xmlns=""
      */
     if(visible && has_visibly_utilized_empty_ns && 
-	    !has_empty_ns && !has_empty_ns_in_inclusive_list) {
+        !has_empty_ns && !has_empty_ns_in_inclusive_list) {
         static xmlNs ns_default;
 
         memset(&ns_default, 0, sizeof(ns_default));
-	
+    
         already_rendered = xmlExcC14NVisibleNsStackFind(ctx->ns_rendered, &ns_default, ctx);
-	if(!already_rendered) {
-    	    xmlC14NPrintNamespaces(&ns_default, ctx);
-	}
+    if(!already_rendered) {
+            xmlC14NPrintNamespaces(&ns_default, ctx);
+    }
     } else if(visible && !has_empty_ns && has_empty_ns_in_inclusive_list) {
         static xmlNs ns_default;
 
         memset(&ns_default, 0, sizeof(ns_default));
         if(!xmlC14NVisibleNsStackFind(ctx->ns_rendered, &ns_default)) {
-    	    xmlC14NPrintNamespaces(&ns_default, ctx);
-	}
+            xmlC14NPrintNamespaces(&ns_default, ctx);
+    }
     }
 
     
@@ -849,8 +849,8 @@ xmlExcC14NProcessNamespacesAxis(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
 
 /**
  * xmlC14NIsXmlAttr:
- * @attr: 		the attr to check
- *  		
+ * @attr:         the attr to check
+ *          
  * Checks whether the given attribute is a default "xml:" namespace
  * with href="http://www.w3.org/XML/1998/namespace"
  *
@@ -868,8 +868,8 @@ xmlC14NIsXmlAttr(xmlAttrPtr attr)
 
 /**
  * xmlC14NAttrsCompare:
- * @attr1:		the pointer tls o first attr
- * @attr2: 		the pointer to second attr
+ * @attr1:        the pointer tls o first attr
+ * @attr2:         the pointer to second attr
  *
  * Prints the given attribute to the output buffer from C14N context.
  *
@@ -917,8 +917,8 @@ xmlC14NAttrsCompare(xmlAttrPtr attr1, xmlAttrPtr attr2)
 
 /**
  * xmlC14NPrintAttrs:
- * @attr:		the pointer to attr
- * @ctx: 		the C14N context
+ * @attr:        the pointer to attr
+ * @ctx:         the C14N context
  *
  * Prints out canonical attribute urrent node to the
  * buffer from C14N context as follows 
@@ -1088,9 +1088,9 @@ xmlC14NFixupBaseAttr(xmlC14NCtxPtr ctx, xmlAttrPtr xml_base_attr)
 
 /**
  * xmlC14NProcessAttrsAxis:
- * @ctx: 		the C14N context
- * @cur:		the current node
- * @parent_visible:	the visibility of parent node
+ * @ctx:         the C14N context
+ * @cur:        the current node
+ * @parent_visible:    the visibility of parent node
  * @all_parents_visible: the visibility of all parent nodes
  *
  * Prints out canonical attribute axis of the current node to the
@@ -1340,8 +1340,8 @@ xmlC14NProcessAttrsAxis(xmlC14NCtxPtr ctx, xmlNodePtr cur, int parent_visible)
 
 /** 
  * xmlC14NCheckForRelativeNamespaces:
- * @ctx:		the C14N context
- * @cur:		the current element node
+ * @ctx:        the C14N context
+ * @cur:        the current element node
  *
  * Checks that current element node has no relative namespaces defined
  *
@@ -1388,11 +1388,11 @@ xmlC14NCheckForRelativeNamespaces(xmlC14NCtxPtr ctx, xmlNodePtr cur)
 
 /**
  * xmlC14NProcessElementNode:
- * @ctx: 		the pointer to C14N context object
- * @cur:		the node to process
+ * @ctx:         the pointer to C14N context object
+ * @cur:        the node to process
  * @visible:    this node is visible
  * @all_parents_visible: whether all the parents of this node are visible
- *  		
+ *          
  * Canonical XML v 1.0 (http://www.w3.org/TR/xml-c14n)
  *
  * Element Nodes
@@ -1438,11 +1438,11 @@ xmlC14NProcessElementNode(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
     memset(&state, 0, sizeof(state));
     xmlC14NVisibleNsStackSave(ctx->ns_rendered, &state);
 
-    if (visible) {	
+    if (visible) {    
         if (ctx->parent_is_doc) {
-	    /* save this flag into the stack */
-	    parent_is_doc = ctx->parent_is_doc;
-	    ctx->parent_is_doc = 0;
+        /* save this flag into the stack */
+        parent_is_doc = ctx->parent_is_doc;
+        ctx->parent_is_doc = 0;
             ctx->pos = XMLC14N_INSIDE_DOCUMENT_ELEMENT;
         }
         xmlOutputBufferWriteString(ctx->buf, "<");
@@ -1466,13 +1466,13 @@ xmlC14NProcessElementNode(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
     }
     /* todo: shouldn't this go to "visible only"? */
     if(visible) {
-	xmlC14NVisibleNsStackShift(ctx->ns_rendered);
+    xmlC14NVisibleNsStackShift(ctx->ns_rendered);
     }
     
     ret = xmlC14NProcessAttrsAxis(ctx, cur, visible);
     if (ret < 0) {
-	xmlC14NErrInternal("processing attributes axis");
-    	return (-1);
+    xmlC14NErrInternal("processing attributes axis");
+        return (-1);
     }
 
     if (visible) { 
@@ -1495,9 +1495,9 @@ xmlC14NProcessElementNode(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
         xmlOutputBufferWriteString(ctx->buf, (const char *) cur->name);
         xmlOutputBufferWriteString(ctx->buf, ">");
         if (parent_is_doc) {
-	    /* restore this flag from the stack for next node */
+        /* restore this flag from the stack for next node */
             ctx->parent_is_doc = parent_is_doc;
-	    ctx->pos = XMLC14N_AFTER_DOCUMENT_ELEMENT;
+        ctx->pos = XMLC14N_AFTER_DOCUMENT_ELEMENT;
         }
     }
 
@@ -1510,9 +1510,9 @@ xmlC14NProcessElementNode(xmlC14NCtxPtr ctx, xmlNodePtr cur, int visible)
 
 /**
  * xmlC14NProcessNode:
- * @ctx: 		the pointer to C14N context object
- * @cur:		the node to process
- *  		
+ * @ctx:         the pointer to C14N context object
+ * @cur:        the node to process
+ *          
  * Processes the given node
  *
  * Returns non-negative value on success or negative value on fail
@@ -1701,9 +1701,9 @@ xmlC14NProcessNode(xmlC14NCtxPtr ctx, xmlNodePtr cur)
 
 /**
  * xmlC14NProcessNodeList:
- * @ctx: 		the pointer to C14N context object
- * @cur:		the node to start from
- *  		
+ * @ctx:         the pointer to C14N context object
+ * @cur:        the node to start from
+ *          
  * Processes all nodes in the row starting from cur.
  *
  * Returns non-negative value on success or negative value on fail
@@ -1728,7 +1728,7 @@ xmlC14NProcessNodeList(xmlC14NCtxPtr ctx, xmlNodePtr cur)
 /**
  * xmlC14NFreeCtx:
  * @ctx: the pointer to C14N context object
- * 		
+ *         
  * Cleanups the C14N context object.
  */
 
@@ -1748,28 +1748,28 @@ xmlC14NFreeCtx(xmlC14NCtxPtr ctx)
 
 /**
  * xmlC14NNewCtx:
- * @doc: 		the XML document for canonization
+ * @doc:         the XML document for canonization
  * @is_visible_callback:the function to use to determine is node visible 
- *			or not
- * @user_data: 		the first parameter for @is_visible_callback function
- *			(in most cases, it is nodes set)
+ *            or not
+ * @user_data:         the first parameter for @is_visible_callback function
+ *            (in most cases, it is nodes set)
  * @mode:   the c14n mode (see @xmlC14NMode)
  * @inclusive_ns_prefixe the list of inclusive namespace prefixes 
- *			ended with a NULL or NULL if there is no
- *			inclusive namespaces (only for ` 
- *			canonicalization)
- * @with_comments: 	include comments in the result (!=0) or not (==0)
- * @buf: 		the output buffer to store canonical XML; this 
- *			buffer MUST have encoder==NULL because C14N requires
- *			UTF-8 output
- *  		
+ *            ended with a NULL or NULL if there is no
+ *            inclusive namespaces (only for ` 
+ *            canonicalization)
+ * @with_comments:     include comments in the result (!=0) or not (==0)
+ * @buf:         the output buffer to store canonical XML; this 
+ *            buffer MUST have encoder==NULL because C14N requires
+ *            UTF-8 output
+ *          
  * Creates new C14N context object to store C14N parameters.
  *
  * Returns pointer to newly created object (success) or NULL (fail)
  */
 static xmlC14NCtxPtr
 xmlC14NNewCtx(xmlDocPtr doc,  
-	      xmlC14NIsVisibleCallback is_visible_callback, void* user_data,
+          xmlC14NIsVisibleCallback is_visible_callback, void* user_data,
               xmlC14NMode mode, xmlChar ** inclusive_ns_prefixes,
               int with_comments, xmlOutputBufferPtr buf)
 {
@@ -1794,7 +1794,7 @@ xmlC14NNewCtx(xmlDocPtr doc,
      */
     if (doc->charset != XML_CHAR_ENCODING_UTF8) {
         xmlC14NErr(ctx, (xmlNodePtr) doc, XML_C14N_REQUIRES_UTF8,
-		   "xmlC14NNewCtx: source document not in UTF8\n");
+           "xmlC14NNewCtx: source document not in UTF8\n");
         return (NULL);
     }
 
@@ -1803,7 +1803,7 @@ xmlC14NNewCtx(xmlDocPtr doc,
      */
     ctx = (xmlC14NCtxPtr) xmlMalloc(sizeof(xmlC14NCtx));
     if (ctx == NULL) {
-	xmlC14NErrMemory("creating context");
+    xmlC14NErrMemory("creating context");
         return (NULL);
     }
     memset(ctx, 0, sizeof(xmlC14NCtx));
@@ -1822,8 +1822,8 @@ xmlC14NNewCtx(xmlDocPtr doc,
 
     if(ctx->ns_rendered == NULL) {
         xmlC14NErr(ctx, (xmlNodePtr) doc, XML_C14N_CREATE_STACK,
-		   "xmlC14NNewCtx: xmlC14NVisibleNsStackCreate failed\n");
-	xmlC14NFreeCtx(ctx);
+           "xmlC14NNewCtx: xmlC14NVisibleNsStackCreate failed\n");
+    xmlC14NFreeCtx(ctx);
         return (NULL);
     }
 
@@ -1840,31 +1840,31 @@ xmlC14NNewCtx(xmlDocPtr doc,
 
 /**
  * xmlC14NExecute:
- * @doc: 		the XML document for canonization
+ * @doc:         the XML document for canonization
  * @is_visible_callback:the function to use to determine is node visible 
- *			or not
- * @user_data: 		the first parameter for @is_visible_callback function
- *			(in most cases, it is nodes set)
- * @mode:	the c14n mode (see @xmlC14NMode)
+ *            or not
+ * @user_data:         the first parameter for @is_visible_callback function
+ *            (in most cases, it is nodes set)
+ * @mode:    the c14n mode (see @xmlC14NMode)
  * @inclusive_ns_prefixes: the list of inclusive namespace prefixes 
- *			ended with a NULL or NULL if there is no
- *			inclusive namespaces (only for exclusive 
- *			canonicalization, ignored otherwise)
- * @with_comments: 	include comments in the result (!=0) or not (==0)
- * @buf: 		the output buffer to store canonical XML; this 
- *			buffer MUST have encoder==NULL because C14N requires
- *			UTF-8 output
- *  		
+ *            ended with a NULL or NULL if there is no
+ *            inclusive namespaces (only for exclusive 
+ *            canonicalization, ignored otherwise)
+ * @with_comments:     include comments in the result (!=0) or not (==0)
+ * @buf:         the output buffer to store canonical XML; this 
+ *            buffer MUST have encoder==NULL because C14N requires
+ *            UTF-8 output
+ *          
  * Dumps the canonized image of given XML document into the provided buffer.
  * For details see "Canonical XML" (http://www.w3.org/TR/xml-c14n) or
  * "Exclusive XML Canonicalization" (http://www.w3.org/TR/xml-exc-c14n)
  *
  * Returns non-negative value on success or a negative value on fail  
  */
-int 		
+int         
 xmlC14NExecute(xmlDocPtr doc, xmlC14NIsVisibleCallback is_visible_callback,
-	 void* user_data, int mode, xmlChar **inclusive_ns_prefixes,
-	 int with_comments, xmlOutputBufferPtr buf) {
+     void* user_data, int mode, xmlChar **inclusive_ns_prefixes,
+     int with_comments, xmlOutputBufferPtr buf) {
 
     xmlC14NCtxPtr ctx;
     xmlC14NMode c14n_mode = XML_C14N_1_0;
@@ -1898,11 +1898,11 @@ xmlC14NExecute(xmlDocPtr doc, xmlC14NIsVisibleCallback is_visible_callback,
     }
 
     ctx = xmlC14NNewCtx(doc, is_visible_callback, user_data, 
-	            c14n_mode, inclusive_ns_prefixes,
+                c14n_mode, inclusive_ns_prefixes,
                     with_comments, buf);
     if (ctx == NULL) {
         xmlC14NErr(NULL, (xmlNodePtr) doc, XML_C14N_CREATE_CTXT,
-		   "xmlC14NExecute: unable to create C14N context\n");
+           "xmlC14NExecute: unable to create C14N context\n");
         return (-1);
     }
 
@@ -1944,19 +1944,19 @@ xmlC14NExecute(xmlDocPtr doc, xmlC14NIsVisibleCallback is_visible_callback,
 
 /**
  * xmlC14NDocSaveTo:
- * @doc: 		the XML document for canonization
- * @nodes: 		the nodes set to be included in the canonized image
- *      		or NULL if all document nodes should be included
- * @mode:		the c14n mode (see @xmlC14NMode)
+ * @doc:         the XML document for canonization
+ * @nodes:         the nodes set to be included in the canonized image
+ *              or NULL if all document nodes should be included
+ * @mode:        the c14n mode (see @xmlC14NMode)
  * @inclusive_ns_prefixes: the list of inclusive namespace prefixes 
- *			ended with a NULL or NULL if there is no
- *			inclusive namespaces (only for exclusive 
- *			canonicalization, ignored otherwise)
- * @with_comments: 	include comments in the result (!=0) or not (==0)
- * @buf: 		the output buffer to store canonical XML; this 
- *			buffer MUST have encoder==NULL because C14N requires
- *			UTF-8 output
- *  		
+ *            ended with a NULL or NULL if there is no
+ *            inclusive namespaces (only for exclusive 
+ *            canonicalization, ignored otherwise)
+ * @with_comments:     include comments in the result (!=0) or not (==0)
+ * @buf:         the output buffer to store canonical XML; this 
+ *            buffer MUST have encoder==NULL because C14N requires
+ *            UTF-8 output
+ *          
  * Dumps the canonized image of given XML document into the provided buffer.
  * For details see "Canonical XML" (http://www.w3.org/TR/xml-c14n) or
  * "Exclusive XML Canonicalization" (http://www.w3.org/TR/xml-exc-c14n)
@@ -1968,30 +1968,30 @@ xmlC14NDocSaveTo(xmlDocPtr doc, xmlNodeSetPtr nodes,
                  int mode, xmlChar ** inclusive_ns_prefixes,
                  int with_comments, xmlOutputBufferPtr buf) {
     return(xmlC14NExecute(doc, 
-			(xmlC14NIsVisibleCallback)xmlC14NIsNodeInNodeset,
-			nodes,
-			mode,
-			inclusive_ns_prefixes,
-			with_comments,
-			buf));
+            (xmlC14NIsVisibleCallback)xmlC14NIsNodeInNodeset,
+            nodes,
+            mode,
+            inclusive_ns_prefixes,
+            with_comments,
+            buf));
 }
 
 
 /**
  * xmlC14NDocDumpMemory:
- * @doc: 		the XML document for canonization
- * @nodes: 		the nodes set to be included in the canonized image
- *      		or NULL if all document nodes should be included
- * @mode:		the c14n mode (see @xmlC14NMode)
+ * @doc:         the XML document for canonization
+ * @nodes:         the nodes set to be included in the canonized image
+ *              or NULL if all document nodes should be included
+ * @mode:        the c14n mode (see @xmlC14NMode)
  * @inclusive_ns_prefixes: the list of inclusive namespace prefixes 
- *			ended with a NULL or NULL if there is no
- *			inclusive namespaces (only for exclusive 
- *			canonicalization, ignored otherwise)
- * @with_comments: 	include comments in the result (!=0) or not (==0)
- * @doc_txt_ptr: 	the memory pointer for allocated canonical XML text;
- *			the caller of this functions is responsible for calling
- *			xmlFree() to free allocated memory 
- *  		
+ *            ended with a NULL or NULL if there is no
+ *            inclusive namespaces (only for exclusive 
+ *            canonicalization, ignored otherwise)
+ * @with_comments:     include comments in the result (!=0) or not (==0)
+ * @doc_txt_ptr:     the memory pointer for allocated canonical XML text;
+ *            the caller of this functions is responsible for calling
+ *            xmlFree() to free allocated memory 
+ *          
  * Dumps the canonized image of given XML document into memory.
  * For details see "Canonical XML" (http://www.w3.org/TR/xml-c14n) or
  * "Exclusive XML Canonicalization" (http://www.w3.org/TR/xml-exc-c14n)
@@ -2048,21 +2048,21 @@ xmlC14NDocDumpMemory(xmlDocPtr doc, xmlNodeSetPtr nodes,
 
 /**
  * xmlC14NDocSave:
- * @doc: 		the XML document for canonization
- * @nodes: 		the nodes set to be included in the canonized image
- *      		or NULL if all document nodes should be included
- * @mode:		the c14n mode (see @xmlC14NMode)
+ * @doc:         the XML document for canonization
+ * @nodes:         the nodes set to be included in the canonized image
+ *              or NULL if all document nodes should be included
+ * @mode:        the c14n mode (see @xmlC14NMode)
  * @inclusive_ns_prefixes: the list of inclusive namespace prefixes 
- *			ended with a NULL or NULL if there is no
- *			inclusive namespaces (only for exclusive 
- *			canonicalization, ignored otherwise)
- * @with_comments: 	include comments in the result (!=0) or not (==0)
- * @filename: 		the filename to store canonical XML image
- * @compression:	the compression level (zlib requred): 
- *				-1 - libxml default,
- *				 0 - uncompressed, 
- *				>0 - compression level
- *  		
+ *            ended with a NULL or NULL if there is no
+ *            inclusive namespaces (only for exclusive 
+ *            canonicalization, ignored otherwise)
+ * @with_comments:     include comments in the result (!=0) or not (==0)
+ * @filename:         the filename to store canonical XML image
+ * @compression:    the compression level (zlib requred): 
+ *                -1 - libxml default,
+ *                 0 - uncompressed, 
+ *                >0 - compression level
+ *          
  * Dumps the canonized image of given XML document into the file.
  * For details see "Canonical XML" (http://www.w3.org/TR/xml-c14n) or
  * "Exclusive XML Canonicalization" (http://www.w3.org/TR/xml-exc-c14n)
@@ -2118,20 +2118,20 @@ xmlC14NDocSave(xmlDocPtr doc, xmlNodeSetPtr nodes,
 /*
  * Macro used to grow the current buffer.
  */
-#define growBufferReentrant() {						\
-    buffer_size *= 2;							\
-    buffer = (xmlChar *)						\
-    		xmlRealloc(buffer, buffer_size * sizeof(xmlChar));	\
-    if (buffer == NULL) {						\
-	xmlC14NErrMemory("growing buffer");				\
-	return(NULL);							\
-    }									\
+#define growBufferReentrant() {                        \
+    buffer_size *= 2;                            \
+    buffer = (xmlChar *)                        \
+            xmlRealloc(buffer, buffer_size * sizeof(xmlChar));    \
+    if (buffer == NULL) {                        \
+    xmlC14NErrMemory("growing buffer");                \
+    return(NULL);                            \
+    }                                    \
 }
 
 /** 
  * xmlC11NNormalizeString:
- * @input:		the input string
- * @mode:		the normalization mode (attribute, comment, PI or text)
+ * @input:        the input string
+ * @mode:        the normalization mode (attribute, comment, PI or text)
  *
  * Converts a string to a canonical (normalized) format. The code is stolen
  * from xmlEncodeEntitiesReentrant(). Added normalization of \x09, \x0a, \x0A
@@ -2158,7 +2158,7 @@ xmlC11NNormalizeString(const xmlChar * input,
     buffer_size = 1000;
     buffer = (xmlChar *) xmlMallocAtomic(buffer_size * sizeof(xmlChar));
     if (buffer == NULL) {
-	xmlC14NErrMemory("allocating buffer");
+    xmlC14NErrMemory("allocating buffer");
         return (NULL);
     }
     out = buffer;
@@ -2211,7 +2211,7 @@ xmlC11NNormalizeString(const xmlChar * input,
         } else if ((*cur == '\x0D') && ((mode == XMLC14N_NORMALIZE_ATTR) ||
                                         (mode == XMLC14N_NORMALIZE_TEXT) ||
                                         (mode == XMLC14N_NORMALIZE_COMMENT) ||
-					(mode == XMLC14N_NORMALIZE_PI))) {
+                    (mode == XMLC14N_NORMALIZE_PI))) {
             *out++ = '&';
             *out++ = '#';
             *out++ = 'x';

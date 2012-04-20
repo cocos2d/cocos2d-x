@@ -26,9 +26,9 @@ public:
     int getQuantityOfNodes() { return quantityOfNodes; }
 
 protected:
-    int	lastRenderedCount;
-    int	quantityOfNodes;
-    int	currentQuantityOfNodes;
+    int    lastRenderedCount;
+    int    quantityOfNodes;
+    int    currentQuantityOfNodes;
 };
 
 class IterateSpriteSheet : public NodeChildrenMainScene
@@ -41,7 +41,7 @@ public:
     virtual std::string profilerName();
 
 protected:
-    CCSpriteBatchNode	*batchNode;
+    CCSpriteBatchNode    *batchNode;
 
 #if CC_ENABLE_PROFILERS
     CCProfilingTimer    *_profilingTimer;
@@ -78,7 +78,7 @@ public:
     virtual std::string profilerName();
 
 protected:
-    CCSpriteBatchNode	*batchNode;
+    CCSpriteBatchNode    *batchNode;
 
 #if CC_ENABLE_PROFILERS
     CCProfilingTimer* _profilingTimer;

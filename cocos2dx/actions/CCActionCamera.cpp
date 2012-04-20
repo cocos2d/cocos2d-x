@@ -28,133 +28,134 @@ THE SOFTWARE.
 #include "CCCamera.h"
 #include "CCStdC.h"
 
-namespace cocos2d{
-	//
-	// CameraAction
-	//
-	void CCActionCamera::startWithTarget(CCNode *pTarget)
-	{
-		CCActionInterval::startWithTarget(pTarget);
-		
-		CCCamera *camera = pTarget->getCamera();
-		camera->getCenterXYZ(&m_fCenterXOrig, &m_fCenterYOrig, &m_fCenterZOrig);
-		camera->getEyeXYZ(&m_fEyeXOrig, &m_fEyeYOrig, &m_fEyeZOrig);
-		camera->getUpXYZ(&m_fUpXOrig, &m_fUpYOrig, &m_fUpZOrig);
-	}
-	
-	CCActionInterval * CCActionCamera::reverse()
-	{
-		return CCReverseTime::actionWithAction(this);
-	}
-	//
-	// CCOrbitCamera
-	//
-	CCOrbitCamera * CCOrbitCamera::actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
-	{
-		CCOrbitCamera * pRet = new CCOrbitCamera();
-		if(pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
-		{
-			pRet->autorelease();
-			return pRet;
-		}
-		CC_SAFE_DELETE(pRet);
-		return NULL;
-	}
+NS_CC_BEGIN
+//
+// CameraAction
+//
+void CCActionCamera::startWithTarget(CCNode *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    
+    CCCamera *camera = pTarget->getCamera();
+    camera->getCenterXYZ(&m_fCenterXOrig, &m_fCenterYOrig, &m_fCenterZOrig);
+    camera->getEyeXYZ(&m_fEyeXOrig, &m_fEyeYOrig, &m_fEyeZOrig);
+    camera->getUpXYZ(&m_fUpXOrig, &m_fUpYOrig, &m_fUpZOrig);
+}
 
-	CCObject * CCOrbitCamera::copyWithZone(CCZone *pZone)
-	{
-		CCZone* pNewZone = NULL;
-		CCOrbitCamera* pRet = NULL;
-		if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
-			pRet = (CCOrbitCamera*)(pZone->m_pCopyObject);
-		else
-		{
-			pRet = new CCOrbitCamera();
-			pZone = pNewZone = new CCZone(pRet);
-		}
+CCActionInterval * CCActionCamera::reverse()
+{
+    return CCReverseTime::actionWithAction(this);
+}
+//
+// CCOrbitCamera
+//
+CCOrbitCamera * CCOrbitCamera::actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
+{
+    CCOrbitCamera * pRet = new CCOrbitCamera();
+    if(pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
 
-		CCActionInterval::copyWithZone(pZone);
+CCObject * CCOrbitCamera::copyWithZone(CCZone *pZone)
+{
+    CCZone* pNewZone = NULL;
+    CCOrbitCamera* pRet = NULL;
+    if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
+        pRet = (CCOrbitCamera*)(pZone->m_pCopyObject);
+    else
+    {
+        pRet = new CCOrbitCamera();
+        pZone = pNewZone = new CCZone(pRet);
+    }
 
-		pRet->initWithDuration(m_fDuration, m_fRadius, m_fDeltaRadius, m_fAngleZ, m_fDeltaAngleZ, m_fAngleX, m_fDeltaAngleX);
+    CCActionInterval::copyWithZone(pZone);
 
-		CC_SAFE_DELETE(pNewZone);
-		return pRet;
-	}
+    pRet->initWithDuration(m_fDuration, m_fRadius, m_fDeltaRadius, m_fAngleZ, m_fDeltaAngleZ, m_fAngleX, m_fDeltaAngleX);
 
-	bool CCOrbitCamera::initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
-	{
-		if ( CCActionInterval::initWithDuration(t) )
-		{
-			m_fRadius = radius;
-			m_fDeltaRadius = deltaRadius;
-			m_fAngleZ = angleZ;
-			m_fDeltaAngleZ = deltaAngleZ;
-			m_fAngleX = angleX;
-			m_fDeltaAngleX = deltaAngleX;
+    CC_SAFE_DELETE(pNewZone);
+    return pRet;
+}
 
-			m_fRadDeltaZ = (CCFloat)CC_DEGREES_TO_RADIANS(deltaAngleZ);
-			m_fRadDeltaX = (CCFloat)CC_DEGREES_TO_RADIANS(deltaAngleX);
-			return true;
-		}
-		return false;
-	}
+bool CCOrbitCamera::initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
+{
+    if ( CCActionInterval::initWithDuration(t) )
+    {
+        m_fRadius = radius;
+        m_fDeltaRadius = deltaRadius;
+        m_fAngleZ = angleZ;
+        m_fDeltaAngleZ = deltaAngleZ;
+        m_fAngleX = angleX;
+        m_fDeltaAngleX = deltaAngleX;
 
-	void CCOrbitCamera::startWithTarget(CCNode *pTarget)
-	{
-		CCActionInterval::startWithTarget(pTarget);
-		float r, zenith, azimuth;
-		this->sphericalRadius(&r, &zenith, &azimuth);
-		if( isnan(m_fRadius) )
-			m_fRadius = r;
-		if( isnan(m_fAngleZ) )
-			m_fAngleZ = (CCFloat)CC_RADIANS_TO_DEGREES(zenith);
-		if( isnan(m_fAngleX) )
-			m_fAngleX = (CCFloat)CC_RADIANS_TO_DEGREES(azimuth);
+        m_fRadDeltaZ = (CCFloat)CC_DEGREES_TO_RADIANS(deltaAngleZ);
+        m_fRadDeltaX = (CCFloat)CC_DEGREES_TO_RADIANS(deltaAngleX);
+        return true;
+    }
+    return false;
+}
 
-		m_fRadZ = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);
-		m_fRadX = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleX);
-	}
+void CCOrbitCamera::startWithTarget(CCNode *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    float r, zenith, azimuth;
+    this->sphericalRadius(&r, &zenith, &azimuth);
+    if( isnan(m_fRadius) )
+        m_fRadius = r;
+    if( isnan(m_fAngleZ) )
+        m_fAngleZ = (CCFloat)CC_RADIANS_TO_DEGREES(zenith);
+    if( isnan(m_fAngleX) )
+        m_fAngleX = (CCFloat)CC_RADIANS_TO_DEGREES(azimuth);
 
-	void CCOrbitCamera::update(ccTime dt)
-	{
-		float r = (m_fRadius + m_fDeltaRadius * dt) * CCCamera::getZEye();
-		float za = m_fRadZ + m_fRadDeltaZ * dt;
-		float xa = m_fRadX + m_fRadDeltaX * dt;
+    m_fRadZ = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);
+    m_fRadX = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleX);
+}
 
-		float i = sinf(za) * cosf(xa) * r + m_fCenterXOrig;
-		float j = sinf(za) * sinf(xa) * r + m_fCenterYOrig;
-		float k = cosf(za) * r + m_fCenterZOrig;
+void CCOrbitCamera::update(ccTime dt)
+{
+    float r = (m_fRadius + m_fDeltaRadius * dt) * CCCamera::getZEye();
+    float za = m_fRadZ + m_fRadDeltaZ * dt;
+    float xa = m_fRadX + m_fRadDeltaX * dt;
 
-		m_pTarget->getCamera()->setEyeXYZ(i,j,k);
-	}
+    float i = sinf(za) * cosf(xa) * r + m_fCenterXOrig;
+    float j = sinf(za) * sinf(xa) * r + m_fCenterYOrig;
+    float k = cosf(za) * r + m_fCenterZOrig;
 
-	void CCOrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimuth)
-	{
-		float ex, ey, ez, cx, cy, cz, x, y, z;
-		float r; // radius
-		float s;
+    m_pTarget->getCamera()->setEyeXYZ(i,j,k);
+}
 
-		CCCamera* pCamera = m_pTarget->getCamera();
-		pCamera->getEyeXYZ(&ex, &ey, &ez);
-		pCamera->getCenterXYZ(&cx, &cy, &cz);
+void CCOrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimuth)
+{
+    float ex, ey, ez, cx, cy, cz, x, y, z;
+    float r; // radius
+    float s;
 
-		x = ex-cx;
-		y = ey-cy;
-		z = ez-cz;
+    CCCamera* pCamera = m_pTarget->getCamera();
+    pCamera->getEyeXYZ(&ex, &ey, &ez);
+    pCamera->getCenterXYZ(&cx, &cy, &cz);
 
-		r = sqrtf( powf(x,2) + powf(y,2) + powf(z,2));
-		s = sqrtf( powf(x,2) + powf(y,2));
-		if( s == 0.0f )
-			s = FLT_EPSILON;
-		if(r==0.0f)
-			r = FLT_EPSILON;
+    x = ex-cx;
+    y = ey-cy;
+    z = ez-cz;
 
-		*zenith = acosf( z/r);
-		if( x < 0 )
-			*azimuth= (CCFloat)M_PI - asinf(y/s);
-		else
-			*azimuth = asinf(y/s);
+    r = sqrtf( powf(x,2) + powf(y,2) + powf(z,2));
+    s = sqrtf( powf(x,2) + powf(y,2));
+    if( s == 0.0f )
+        s = FLT_EPSILON;
+    if(r==0.0f)
+        r = FLT_EPSILON;
 
-		*newRadius = r / CCCamera::getZEye();				
-	}
-} // namespace cocos2d
+    *zenith = acosf( z/r);
+    if( x < 0 )
+        *azimuth= (CCFloat)M_PI - asinf(y/s);
+    else
+        *azimuth = asinf(y/s);
+
+    *newRadius = r / CCCamera::getZEye();                
+}
+
+NS_CC_END

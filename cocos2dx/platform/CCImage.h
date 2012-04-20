@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCCommon.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CC_DLL CCImage
 {
@@ -39,8 +39,8 @@ public:
     {
         kFmtJpg = 0,
         kFmtPng,
-		kFmtRawData,
-		kFmtUnKnown
+        kFmtRawData,
+        kFmtUnKnown
     }EImageFormat;
 
     typedef enum
@@ -64,33 +64,33 @@ public:
     */
     bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
 
-	/*
-	 @brief The same meaning as initWithImageFile, but it is thread safe. It is casued by
-	        loadImage() in CCTextureCache.cpp.
-	 @param fullpath  full path of the file   
+    /*
+     @brief The same meaning as initWithImageFile, but it is thread safe. It is casued by
+            loadImage() in CCTextureCache.cpp.
+     @param fullpath  full path of the file   
      @param imageType the type of image, now only support tow types.
      @return  true if load correctly
-	 */
-	bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
+     */
+    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
 
     /**
     @brief  Load image from stream buffer.
 
-	@warning kFmtRawData only support RGBA8888
+    @warning kFmtRawData only support RGBA8888
     @param pBuffer  stream buffer that hold the image data
     @param nLength  the length of data(managed in byte)
-	@param nWidth, nHeight, nBitsPerComponent are used for kFmtRawData
+    @param nWidth, nHeight, nBitsPerComponent are used for kFmtRawData
     @return true if load correctly
     */
     bool initWithImageData(void * pData, 
-						   int nDataLen, 
-						   EImageFormat eFmt = kFmtPng,
-						   int nWidth = 0,
-						   int nHeight = 0,
-						   int nBitsPerComponent = 8);
+                           int nDataLen, 
+                           EImageFormat eFmt = kFmtPng,
+                           int nWidth = 0,
+                           int nHeight = 0,
+                           int nBitsPerComponent = 8);
 
     /**
-    @brief	Create image with specified string.
+    @brief    Create image with specified string.
     @param  pText       the text which the image show, nil cause init fail
     @param  nWidth      the image width, if 0, the width match the text's width
     @param  nHeight     the image height, if 0, the height match the text's height
@@ -115,9 +115,9 @@ public:
     void release();
 
     /**
-    @brief	Save the CCImage data to specified file with specified format.
-	@param	pszFilePath		the file's absolute path, including file subfix
-	@param	bIsToRGB		if the image is saved as RGB format
+    @brief    Save the CCImage data to specified file with specified format.
+    @param    pszFilePath        the file's absolute path, including file subfix
+    @param    bIsToRGB        if the image is saved as RGB format
     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
@@ -129,11 +129,11 @@ protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);
 
-	// @warning kFmtRawData only support RGBA8888
-	bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent);
+    // @warning kFmtRawData only support RGBA8888
+    bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent);
 
-	bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
-	bool _saveImageToJPG(const char *pszFilePath);
+    bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
+    bool _saveImageToJPG(const char *pszFilePath);
 
     unsigned char *m_pData;
     bool m_bHasAlpha;
@@ -145,6 +145,6 @@ private:
     CCImage & operator=(const CCImage&);
 };
 
-NS_CC_END;
+NS_CC_END
 
-#endif	// __CC_IMAGE_H__
+#endif    // __CC_IMAGE_H__

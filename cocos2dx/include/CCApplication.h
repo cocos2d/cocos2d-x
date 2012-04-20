@@ -27,4 +27,4 @@ THE SOFTWARE.
 
 #include "platform/CCApplication_platform.h"
 
-#endif	// __CC_APPLICATION_H__
+#endif    // __CC_APPLICATION_H__

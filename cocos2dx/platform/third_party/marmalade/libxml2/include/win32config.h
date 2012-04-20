@@ -50,7 +50,7 @@
    function. */
 #ifndef isinf
 #define isinf(d) ((_fpclass(d) == _FPCLASS_PINF) ? 1 \
-	: ((_fpclass(d) == _FPCLASS_NINF) ? -1 : 0))
+    : ((_fpclass(d) == _FPCLASS_NINF) ? -1 : 0))
 #endif
 /* _isnan(x) returns nonzero if (x == NaN) and zero otherwise. */
 #ifndef isnan

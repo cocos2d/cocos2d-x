@@ -109,13 +109,13 @@ typedef xmlTextReader *xmlTextReaderPtr;
  * Constructors & Destructor
  */
 XMLPUBFUN xmlTextReaderPtr XMLCALL
-			xmlNewTextReader	(xmlParserInputBufferPtr input,
-	                                         const char *URI);
+            xmlNewTextReader    (xmlParserInputBufferPtr input,
+                                             const char *URI);
 XMLPUBFUN xmlTextReaderPtr XMLCALL
-			xmlNewTextReaderFilename(const char *URI);
+            xmlNewTextReaderFilename(const char *URI);
 
 XMLPUBFUN void XMLCALL
-			xmlFreeTextReader	(xmlTextReaderPtr reader);
+            xmlFreeTextReader    (xmlTextReaderPtr reader);
 
 XMLPUBFUN int XMLCALL
             xmlTextReaderSetup(xmlTextReaderPtr reader,
@@ -126,135 +126,135 @@ XMLPUBFUN int XMLCALL
  * Iterators
  */
 XMLPUBFUN int XMLCALL
-			xmlTextReaderRead	(xmlTextReaderPtr reader);
+            xmlTextReaderRead    (xmlTextReaderPtr reader);
 
 #ifdef LIBXML_WRITER_ENABLED
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderReadInnerXml	(xmlTextReaderPtr reader);
+            xmlTextReaderReadInnerXml    (xmlTextReaderPtr reader);
 
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderReadOuterXml	(xmlTextReaderPtr reader);
+            xmlTextReaderReadOuterXml    (xmlTextReaderPtr reader);
 #endif
 
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderReadString		(xmlTextReaderPtr reader);
+            xmlTextReaderReadString        (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderReadAttributeValue	(xmlTextReaderPtr reader);
+            xmlTextReaderReadAttributeValue    (xmlTextReaderPtr reader);
 
 /*
  * Attributes of the node
  */
 XMLPUBFUN int XMLCALL
-			xmlTextReaderAttributeCount(xmlTextReaderPtr reader);
+            xmlTextReaderAttributeCount(xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderDepth	(xmlTextReaderPtr reader);
+            xmlTextReaderDepth    (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderHasAttributes(xmlTextReaderPtr reader);
+            xmlTextReaderHasAttributes(xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderHasValue(xmlTextReaderPtr reader);
+            xmlTextReaderHasValue(xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderIsDefault	(xmlTextReaderPtr reader);
+            xmlTextReaderIsDefault    (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderIsEmptyElement(xmlTextReaderPtr reader);
+            xmlTextReaderIsEmptyElement(xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderNodeType	(xmlTextReaderPtr reader);
+            xmlTextReaderNodeType    (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderQuoteChar	(xmlTextReaderPtr reader);
+            xmlTextReaderQuoteChar    (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-			xmlTextReaderReadState	(xmlTextReaderPtr reader);
+            xmlTextReaderReadState    (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
                         xmlTextReaderIsNamespaceDecl(xmlTextReaderPtr reader);
 
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstBaseUri	(xmlTextReaderPtr reader);
+            xmlTextReaderConstBaseUri    (xmlTextReaderPtr reader);
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstLocalName	(xmlTextReaderPtr reader);
+            xmlTextReaderConstLocalName    (xmlTextReaderPtr reader);
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstName	(xmlTextReaderPtr reader);
+            xmlTextReaderConstName    (xmlTextReaderPtr reader);
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstNamespaceUri(xmlTextReaderPtr reader);
+            xmlTextReaderConstNamespaceUri(xmlTextReaderPtr reader);
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstPrefix	(xmlTextReaderPtr reader);
+            xmlTextReaderConstPrefix    (xmlTextReaderPtr reader);
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstXmlLang	(xmlTextReaderPtr reader);
+            xmlTextReaderConstXmlLang    (xmlTextReaderPtr reader);
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstString	(xmlTextReaderPtr reader,
-						 const xmlChar *str);
+            xmlTextReaderConstString    (xmlTextReaderPtr reader,
+                         const xmlChar *str);
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstValue	(xmlTextReaderPtr reader);
+            xmlTextReaderConstValue    (xmlTextReaderPtr reader);
 
 /*
  * use the Const version of the routine for
  * better performance and simpler code
  */
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderBaseUri	(xmlTextReaderPtr reader);
+            xmlTextReaderBaseUri    (xmlTextReaderPtr reader);
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderLocalName	(xmlTextReaderPtr reader);
+            xmlTextReaderLocalName    (xmlTextReaderPtr reader);
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderName	(xmlTextReaderPtr reader);
+            xmlTextReaderName    (xmlTextReaderPtr reader);
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderNamespaceUri(xmlTextReaderPtr reader);
+            xmlTextReaderNamespaceUri(xmlTextReaderPtr reader);
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderPrefix	(xmlTextReaderPtr reader);
+            xmlTextReaderPrefix    (xmlTextReaderPtr reader);
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderXmlLang	(xmlTextReaderPtr reader);
+            xmlTextReaderXmlLang    (xmlTextReaderPtr reader);
 XMLPUBFUN xmlChar * XMLCALL
-			xmlTextReaderValue	(xmlTextReaderPtr reader);
+            xmlTextReaderValue    (xmlTextReaderPtr reader);
 
 /*
  * Methods of the XmlTextReader
  */
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderClose		(xmlTextReaderPtr reader);
+            xmlTextReaderClose        (xmlTextReaderPtr reader);
 XMLPUBFUN xmlChar * XMLCALL
-		    xmlTextReaderGetAttributeNo	(xmlTextReaderPtr reader,
-						 int no);
+            xmlTextReaderGetAttributeNo    (xmlTextReaderPtr reader,
+                         int no);
 XMLPUBFUN xmlChar * XMLCALL
-		    xmlTextReaderGetAttribute	(xmlTextReaderPtr reader,
-						 const xmlChar *name);
+            xmlTextReaderGetAttribute    (xmlTextReaderPtr reader,
+                         const xmlChar *name);
 XMLPUBFUN xmlChar * XMLCALL
-		    xmlTextReaderGetAttributeNs	(xmlTextReaderPtr reader,
-						 const xmlChar *localName,
-						 const xmlChar *namespaceURI);
+            xmlTextReaderGetAttributeNs    (xmlTextReaderPtr reader,
+                         const xmlChar *localName,
+                         const xmlChar *namespaceURI);
 XMLPUBFUN xmlParserInputBufferPtr XMLCALL
-		    xmlTextReaderGetRemainder	(xmlTextReaderPtr reader);
+            xmlTextReaderGetRemainder    (xmlTextReaderPtr reader);
 XMLPUBFUN xmlChar * XMLCALL
-		    xmlTextReaderLookupNamespace(xmlTextReaderPtr reader,
-						 const xmlChar *prefix);
+            xmlTextReaderLookupNamespace(xmlTextReaderPtr reader,
+                         const xmlChar *prefix);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderMoveToAttributeNo(xmlTextReaderPtr reader,
-						 int no);
+            xmlTextReaderMoveToAttributeNo(xmlTextReaderPtr reader,
+                         int no);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderMoveToAttribute(xmlTextReaderPtr reader,
-						 const xmlChar *name);
+            xmlTextReaderMoveToAttribute(xmlTextReaderPtr reader,
+                         const xmlChar *name);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderMoveToAttributeNs(xmlTextReaderPtr reader,
-						 const xmlChar *localName,
-						 const xmlChar *namespaceURI);
+            xmlTextReaderMoveToAttributeNs(xmlTextReaderPtr reader,
+                         const xmlChar *localName,
+                         const xmlChar *namespaceURI);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderMoveToFirstAttribute(xmlTextReaderPtr reader);
+            xmlTextReaderMoveToFirstAttribute(xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderMoveToNextAttribute(xmlTextReaderPtr reader);
+            xmlTextReaderMoveToNextAttribute(xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderMoveToElement	(xmlTextReaderPtr reader);
+            xmlTextReaderMoveToElement    (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderNormalization	(xmlTextReaderPtr reader);
+            xmlTextReaderNormalization    (xmlTextReaderPtr reader);
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstEncoding  (xmlTextReaderPtr reader);
+            xmlTextReaderConstEncoding  (xmlTextReaderPtr reader);
 
 /*
  * Extensions
  */
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderSetParserProp	(xmlTextReaderPtr reader,
-						 int prop,
-						 int value);
+            xmlTextReaderSetParserProp    (xmlTextReaderPtr reader,
+                         int prop,
+                         int value);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderGetParserProp	(xmlTextReaderPtr reader,
-						 int prop);
+            xmlTextReaderGetParserProp    (xmlTextReaderPtr reader,
+                         int prop);
 XMLPUBFUN xmlNodePtr XMLCALL
-		    xmlTextReaderCurrentNode	(xmlTextReaderPtr reader);
+            xmlTextReaderCurrentNode    (xmlTextReaderPtr reader);
 
 XMLPUBFUN int XMLCALL
             xmlTextReaderGetParserLineNumber(xmlTextReaderPtr reader);
@@ -263,121 +263,121 @@ XMLPUBFUN int XMLCALL
             xmlTextReaderGetParserColumnNumber(xmlTextReaderPtr reader);
 
 XMLPUBFUN xmlNodePtr XMLCALL
-		    xmlTextReaderPreserve	(xmlTextReaderPtr reader);
+            xmlTextReaderPreserve    (xmlTextReaderPtr reader);
 #ifdef LIBXML_PATTERN_ENABLED
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderPreservePattern(xmlTextReaderPtr reader,
-						 const xmlChar *pattern,
-						 const xmlChar **namespaces);
+            xmlTextReaderPreservePattern(xmlTextReaderPtr reader,
+                         const xmlChar *pattern,
+                         const xmlChar **namespaces);
 #endif /* LIBXML_PATTERN_ENABLED */
 XMLPUBFUN xmlDocPtr XMLCALL
-		    xmlTextReaderCurrentDoc	(xmlTextReaderPtr reader);
+            xmlTextReaderCurrentDoc    (xmlTextReaderPtr reader);
 XMLPUBFUN xmlNodePtr XMLCALL
-		    xmlTextReaderExpand		(xmlTextReaderPtr reader);
+            xmlTextReaderExpand        (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderNext		(xmlTextReaderPtr reader);
+            xmlTextReaderNext        (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderNextSibling	(xmlTextReaderPtr reader);
+            xmlTextReaderNextSibling    (xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderIsValid	(xmlTextReaderPtr reader);
+            xmlTextReaderIsValid    (xmlTextReaderPtr reader);
 #ifdef LIBXML_SCHEMAS_ENABLED
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderRelaxNGValidate(xmlTextReaderPtr reader,
-						 const char *rng);
+            xmlTextReaderRelaxNGValidate(xmlTextReaderPtr reader,
+                         const char *rng);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderRelaxNGSetSchema(xmlTextReaderPtr reader,
-						 xmlRelaxNGPtr schema);
+            xmlTextReaderRelaxNGSetSchema(xmlTextReaderPtr reader,
+                         xmlRelaxNGPtr schema);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderSchemaValidate	(xmlTextReaderPtr reader,
-						 const char *xsd);
+            xmlTextReaderSchemaValidate    (xmlTextReaderPtr reader,
+                         const char *xsd);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderSchemaValidateCtxt(xmlTextReaderPtr reader,
-						 xmlSchemaValidCtxtPtr ctxt,
-						 int options);
+            xmlTextReaderSchemaValidateCtxt(xmlTextReaderPtr reader,
+                         xmlSchemaValidCtxtPtr ctxt,
+                         int options);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderSetSchema	(xmlTextReaderPtr reader,
-						 xmlSchemaPtr schema);
+            xmlTextReaderSetSchema    (xmlTextReaderPtr reader,
+                         xmlSchemaPtr schema);
 #endif
 XMLPUBFUN const xmlChar * XMLCALL
-		    xmlTextReaderConstXmlVersion(xmlTextReaderPtr reader);
+            xmlTextReaderConstXmlVersion(xmlTextReaderPtr reader);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderStandalone     (xmlTextReaderPtr reader);
+            xmlTextReaderStandalone     (xmlTextReaderPtr reader);
 
 
 /*
  * Index lookup
  */
 XMLPUBFUN long XMLCALL
-		xmlTextReaderByteConsumed	(xmlTextReaderPtr reader);
+        xmlTextReaderByteConsumed    (xmlTextReaderPtr reader);
 
 /*
  * New more complete APIs for simpler creation and reuse of readers
  */
 XMLPUBFUN xmlTextReaderPtr XMLCALL
-		xmlReaderWalker		(xmlDocPtr doc);
+        xmlReaderWalker        (xmlDocPtr doc);
 XMLPUBFUN xmlTextReaderPtr XMLCALL
-		xmlReaderForDoc		(const xmlChar * cur,
-					 const char *URL,
-					 const char *encoding,
-					 int options);
+        xmlReaderForDoc        (const xmlChar * cur,
+                     const char *URL,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN xmlTextReaderPtr XMLCALL
-		xmlReaderForFile	(const char *filename,
-					 const char *encoding,
-					 int options);
+        xmlReaderForFile    (const char *filename,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN xmlTextReaderPtr XMLCALL
-		xmlReaderForMemory	(const char *buffer,
-					 int size,
-					 const char *URL,
-					 const char *encoding,
-					 int options);
+        xmlReaderForMemory    (const char *buffer,
+                     int size,
+                     const char *URL,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN xmlTextReaderPtr XMLCALL
-		xmlReaderForFd		(int fd,
-					 const char *URL,
-					 const char *encoding,
-					 int options);
+        xmlReaderForFd        (int fd,
+                     const char *URL,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN xmlTextReaderPtr XMLCALL
-		xmlReaderForIO		(xmlInputReadCallback ioread,
-					 xmlInputCloseCallback ioclose,
-					 void *ioctx,
-					 const char *URL,
-					 const char *encoding,
-					 int options);
+        xmlReaderForIO        (xmlInputReadCallback ioread,
+                     xmlInputCloseCallback ioclose,
+                     void *ioctx,
+                     const char *URL,
+                     const char *encoding,
+                     int options);
 
 XMLPUBFUN int XMLCALL
-		xmlReaderNewWalker	(xmlTextReaderPtr reader,
-					 xmlDocPtr doc);
+        xmlReaderNewWalker    (xmlTextReaderPtr reader,
+                     xmlDocPtr doc);
 XMLPUBFUN int XMLCALL
-		xmlReaderNewDoc		(xmlTextReaderPtr reader,
-					 const xmlChar * cur,
-					 const char *URL,
-					 const char *encoding,
-					 int options);
+        xmlReaderNewDoc        (xmlTextReaderPtr reader,
+                     const xmlChar * cur,
+                     const char *URL,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN int XMLCALL
-		xmlReaderNewFile	(xmlTextReaderPtr reader,
-					 const char *filename,
-					 const char *encoding,
-					 int options);
+        xmlReaderNewFile    (xmlTextReaderPtr reader,
+                     const char *filename,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN int XMLCALL
-		xmlReaderNewMemory	(xmlTextReaderPtr reader,
-					 const char *buffer,
-					 int size,
-					 const char *URL,
-					 const char *encoding,
-					 int options);
+        xmlReaderNewMemory    (xmlTextReaderPtr reader,
+                     const char *buffer,
+                     int size,
+                     const char *URL,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN int XMLCALL
-		xmlReaderNewFd		(xmlTextReaderPtr reader,
-					 int fd,
-					 const char *URL,
-					 const char *encoding,
-					 int options);
+        xmlReaderNewFd        (xmlTextReaderPtr reader,
+                     int fd,
+                     const char *URL,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN int XMLCALL
-		xmlReaderNewIO		(xmlTextReaderPtr reader,
-					 xmlInputReadCallback ioread,
-					 xmlInputCloseCallback ioclose,
-					 void *ioctx,
-					 const char *URL,
-					 const char *encoding,
-					 int options);
+        xmlReaderNewIO        (xmlTextReaderPtr reader,
+                     xmlInputReadCallback ioread,
+                     xmlInputCloseCallback ioclose,
+                     void *ioctx,
+                     const char *URL,
+                     const char *encoding,
+                     int options);
 /*
  * Error handling extensions
  */
@@ -393,26 +393,26 @@ typedef void *  xmlTextReaderLocatorPtr;
  * Signature of an error callback from a reader parser
  */
 typedef void   (XMLCALL *xmlTextReaderErrorFunc)(void *arg,
-						 const char *msg,
-						 xmlParserSeverities severity,
-						 xmlTextReaderLocatorPtr locator);
+                         const char *msg,
+                         xmlParserSeverities severity,
+                         xmlTextReaderLocatorPtr locator);
 XMLPUBFUN int XMLCALL
-		    xmlTextReaderLocatorLineNumber(xmlTextReaderLocatorPtr locator);
+            xmlTextReaderLocatorLineNumber(xmlTextReaderLocatorPtr locator);
 /*int             xmlTextReaderLocatorLinePosition(xmlTextReaderLocatorPtr locator);*/
 XMLPUBFUN xmlChar * XMLCALL
-		    xmlTextReaderLocatorBaseURI (xmlTextReaderLocatorPtr locator);
+            xmlTextReaderLocatorBaseURI (xmlTextReaderLocatorPtr locator);
 XMLPUBFUN void XMLCALL
-		    xmlTextReaderSetErrorHandler(xmlTextReaderPtr reader,
-						 xmlTextReaderErrorFunc f,
-						 void *arg);
+            xmlTextReaderSetErrorHandler(xmlTextReaderPtr reader,
+                         xmlTextReaderErrorFunc f,
+                         void *arg);
 XMLPUBFUN void XMLCALL
-		    xmlTextReaderSetStructuredErrorHandler(xmlTextReaderPtr reader,
-							   xmlStructuredErrorFunc f,
-							   void *arg);
+            xmlTextReaderSetStructuredErrorHandler(xmlTextReaderPtr reader,
+                               xmlStructuredErrorFunc f,
+                               void *arg);
 XMLPUBFUN void XMLCALL
-		    xmlTextReaderGetErrorHandler(xmlTextReaderPtr reader,
-						 xmlTextReaderErrorFunc *f,
-						 void **arg);
+            xmlTextReaderGetErrorHandler(xmlTextReaderPtr reader,
+                         xmlTextReaderErrorFunc *f,
+                         void **arg);
 
 #endif /* LIBXML_READER_ENABLED */
 

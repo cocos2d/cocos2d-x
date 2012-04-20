@@ -324,87 +324,87 @@ typedef enum {
 /*! \var typedef void GLvoid
     \brief A type definition for GLvoid.
 */
-typedef void             	GLvoid;
+typedef void                 GLvoid;
 
 /*! \var typedef unsigned int GLenum
     \brief A type definition for GLenum.    
 */
-typedef unsigned int    	GLenum;
+typedef unsigned int        GLenum;
 
 /*! \var typedef unsigned char GLboolean
     \brief A type definition for GLboolean.    
 */
-typedef unsigned char   	GLboolean;
+typedef unsigned char       GLboolean;
 
 /*! \var typedef unsigned int GLbitfield
     \brief A type definition for GLbitfield.    
 */
-typedef unsigned int    	GLbitfield;
+typedef unsigned int        GLbitfield;
 
 /*! \var typedef signed char GLbyte
     \brief A type definition for GLbyte.
 */
-typedef khronos_int8_t   	GLbyte;
+typedef khronos_int8_t       GLbyte;
 
 /*! \var typedef short GLshort
     \brief A type definition for GLshort.
 */
-typedef short           	GLshort;
+typedef short               GLshort;
 
 /*! \var typedef int GLint
     \brief A type definition for GLint.   
 */
-typedef int             	GLint;
+typedef int                 GLint;
 
 /*! \var typedef int GLsizei
     \brief A type definition for GLsizei.
 */
-typedef int             	GLsizei;
+typedef int                 GLsizei;
 
 /*! \var typedef khronos_uint8_t GLubyte
     \brief A type definition for GLubyte.
 */
-typedef khronos_uint8_t  	GLubyte;
+typedef khronos_uint8_t      GLubyte;
 
 /*! \var typedef unsigned short GLushort
     \brief A type definition for GLushort.    
 */
-typedef unsigned short  	GLushort;
+typedef unsigned short      GLushort;
 
-/*! \var unsigned int    	GLuint
+/*! \var unsigned int        GLuint
     \brief A type definition for GLuint.
 */
-typedef unsigned int    	GLuint;
+typedef unsigned int        GLuint;
 
 /*! \var typedef khronos_float_t GLfloat
     \brief A type definition for GLfloat.    
 */
-typedef khronos_float_t  	GLfloat;
+typedef khronos_float_t      GLfloat;
 
 /*! \var typedef khronos_float_t GLclampf
     \brief A type definition for GLclampf.    
 */
-typedef khronos_float_t  	GLclampf;
+typedef khronos_float_t      GLclampf;
 
 /*! \var typedef khronos_int32_t GLfixed
     \brief A type definition for GLfixed.    
 */
-typedef khronos_int32_t  	GLfixed;
+typedef khronos_int32_t      GLfixed;
 
 /*! \var typedef khronos_int32_t GLclampx
     \brief A type definition for GLclampx.    
 */
-typedef khronos_int32_t  	GLclampx;
+typedef khronos_int32_t      GLclampx;
 
 /*! \var typedef khronos_intptr_t GLintptr
     \brief A type definition for GLintptr.
 */
-typedef khronos_intptr_t 	GLintptr;
+typedef khronos_intptr_t     GLintptr;
 
 /*! \var typedef khronos_ssize_t GLsizeiptr
     \brief A type definition for GLsizeiptr.    
 */
-typedef khronos_ssize_t  	GLsizeiptr;
+typedef khronos_ssize_t      GLsizeiptr;
 
 /**
  * @}

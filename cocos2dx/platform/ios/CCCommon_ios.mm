@@ -29,7 +29,7 @@
 
 #import <UIKit/UIAlert.h>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
@@ -58,4 +58,4 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     [messageBox show];
 }
 
-NS_CC_END;
+NS_CC_END

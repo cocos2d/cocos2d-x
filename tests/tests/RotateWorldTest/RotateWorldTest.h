@@ -12,42 +12,42 @@ public:
 class SpriteLayer : public CCLayer
 {
 public:
-	virtual void onEnter();
-	static SpriteLayer* node()
-	{
-		SpriteLayer* pNode = new SpriteLayer();
-		pNode->autorelease();
+    virtual void onEnter();
+    static SpriteLayer* node()
+    {
+        SpriteLayer* pNode = new SpriteLayer();
+        pNode->autorelease();
 
-		return pNode;
-	}
+        return pNode;
+    }
 };
 
 class TestLayer : public CCLayer
 {
 public:
-	virtual void onEnter();
+    virtual void onEnter();
 
-	static TestLayer* node()
-	{
-		TestLayer* pNode = new TestLayer();
-		pNode->autorelease();
+    static TestLayer* node()
+    {
+        TestLayer* pNode = new TestLayer();
+        pNode->autorelease();
 
-		return pNode;
-	}
+        return pNode;
+    }
 };
 
 class RotateWorldMainLayer : public CCLayer
 {
 public:
-	virtual void onEnter();
+    virtual void onEnter();
 
-	static RotateWorldMainLayer* node()
-	{
-		RotateWorldMainLayer* pNode = new RotateWorldMainLayer();
-		pNode->autorelease();
+    static RotateWorldMainLayer* node()
+    {
+        RotateWorldMainLayer* pNode = new RotateWorldMainLayer();
+        pNode->autorelease();
 
-		return pNode;
-	}
+        return pNode;
+    }
 };
 
 #endif

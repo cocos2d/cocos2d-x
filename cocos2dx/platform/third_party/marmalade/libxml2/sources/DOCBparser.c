@@ -109,7 +109,7 @@ docbFreeParserCtxt(docbParserCtxtPtr ctxt ATTRIBUTE_UNUSED)
 int
 docbParseChunk(docbParserCtxtPtr ctxt ATTRIBUTE_UNUSED,
                const char *chunk ATTRIBUTE_UNUSED,
-	       int size ATTRIBUTE_UNUSED,
+           int size ATTRIBUTE_UNUSED,
                int terminate ATTRIBUTE_UNUSED)
 {
     static int deprecated = 0;
@@ -143,8 +143,8 @@ docbParserCtxtPtr
 docbCreatePushParserCtxt(docbSAXHandlerPtr sax ATTRIBUTE_UNUSED,
                          void *user_data ATTRIBUTE_UNUSED,
                          const char *chunk ATTRIBUTE_UNUSED,
-			 int size ATTRIBUTE_UNUSED,
-			 const char *filename ATTRIBUTE_UNUSED,
+             int size ATTRIBUTE_UNUSED,
+             const char *filename ATTRIBUTE_UNUSED,
                          xmlCharEncoding enc ATTRIBUTE_UNUSED)
 {
     static int deprecated = 0;
@@ -175,7 +175,7 @@ docbCreatePushParserCtxt(docbSAXHandlerPtr sax ATTRIBUTE_UNUSED,
 docbDocPtr
 docbSAXParseDoc(xmlChar * cur ATTRIBUTE_UNUSED,
                 const char *encoding ATTRIBUTE_UNUSED,
-		docbSAXHandlerPtr sax ATTRIBUTE_UNUSED,
+        docbSAXHandlerPtr sax ATTRIBUTE_UNUSED,
                 void *userData ATTRIBUTE_UNUSED)
 {
     static int deprecated = 0;
@@ -187,7 +187,7 @@ docbSAXParseDoc(xmlChar * cur ATTRIBUTE_UNUSED,
     }
 
     return (xmlSAXParseMemoryWithData(sax, (const char *)cur,
-			  xmlStrlen((const xmlChar *) cur), 0,  userData));
+              xmlStrlen((const xmlChar *) cur), 0,  userData));
 }
 
 /**
@@ -261,7 +261,7 @@ docbDocPtr
 docbSAXParseFile(const char *filename ATTRIBUTE_UNUSED,
                  const char *encoding ATTRIBUTE_UNUSED,
                  docbSAXHandlerPtr sax ATTRIBUTE_UNUSED,
-		 void *userData ATTRIBUTE_UNUSED)
+         void *userData ATTRIBUTE_UNUSED)
 {
     static int deprecated = 0;
 

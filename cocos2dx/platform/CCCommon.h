@@ -42,7 +42,7 @@ void CC_DLL CCLog(const char * pszFormat, ...);
  */
 inline void CC_DLL CCLuaLog(const char * pszFormat)
 {
-	CCLog(pszFormat);
+    CCLog(pszFormat);
 }
 
 
@@ -67,4 +67,4 @@ typedef enum LanguageType
 
 NS_CC_END
 
-#endif	// __CC_COMMON_H__
+#endif    // __CC_COMMON_H__

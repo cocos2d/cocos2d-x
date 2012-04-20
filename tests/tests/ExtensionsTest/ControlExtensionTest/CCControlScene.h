@@ -36,28 +36,28 @@ USING_NS_CC;
 public: \
 static CCScene* sceneWithTitle(const char * title) \
 { \
-	CCScene* pScene = CCScene::node(); \
-	controlScene* controlLayer = new controlScene(); \
-	if (controlLayer && controlLayer->init()) \
-	{ \
-		controlLayer->autorelease(); \
-		controlLayer->getSceneTitleLabel()->setString(title); \
-		pScene->addChild(controlLayer); \
-	} \
-	else \
-	{ \
-		CC_SAFE_DELETE(controlLayer); \
-	} \
-	return pScene; \
+    CCScene* pScene = CCScene::node(); \
+    controlScene* controlLayer = new controlScene(); \
+    if (controlLayer && controlLayer->init()) \
+    { \
+        controlLayer->autorelease(); \
+        controlLayer->getSceneTitleLabel()->setString(title); \
+        pScene->addChild(controlLayer); \
+    } \
+    else \
+    { \
+        CC_SAFE_DELETE(controlLayer); \
+    } \
+    return pScene; \
 }
 
 
 class CCControlScene : public cocos2d::CCLayer
 {
 public:
-	CCControlScene();
+    CCControlScene();
     ~CCControlScene();
-	bool init();
+    bool init();
     // Menu Callbacks
     void toExtensionsMainLayer(cocos2d::CCObject* sender);
     void previousCallback(cocos2d::CCObject* sender);

@@ -40,17 +40,17 @@ static id s_sharedDirectorCaller;
 
 +(id) sharedDirectorCaller
 {
-	if (s_sharedDirectorCaller == nil)
-	{
-		s_sharedDirectorCaller = [CCDirectorCaller new];
-	}
-	
-	return s_sharedDirectorCaller;
+    if (s_sharedDirectorCaller == nil)
+    {
+        s_sharedDirectorCaller = [CCDirectorCaller new];
+    }
+    
+    return s_sharedDirectorCaller;
 }
 
 +(void) destroy
 {
-	[s_sharedDirectorCaller release];
+    [s_sharedDirectorCaller release];
 }
 
 -(void) alloc
@@ -60,8 +60,8 @@ static id s_sharedDirectorCaller;
 
 -(void) dealloc
 {
-	[displayLink release];
-	[super dealloc];
+    [displayLink release];
+    [super dealloc];
 }
 
 -(void) startMainLoop
@@ -87,10 +87,10 @@ static id s_sharedDirectorCaller;
         [displayLink setFrameInterval: self.interval];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
-					  
+                      
 -(void) doCaller: (id) sender
 {
-	cocos2d::CCDirector::sharedDirector()->mainLoop();
+    cocos2d::CCDirector::sharedDirector()->mainLoop();
 }
 
 @end

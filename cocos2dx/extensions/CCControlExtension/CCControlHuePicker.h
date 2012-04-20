@@ -39,28 +39,28 @@ NS_CC_BEGIN
 
 class CC_DLL CCControlHuePicker : public CCControl
 {
-	//maunally put in the setters
-	CC_SYNTHESIZE_READONLY(float, m_hue, Hue);
-	virtual void setHue(float val);
-	CC_SYNTHESIZE_READONLY(float, m_huePercentage, HuePercentage);
-	virtual void setHuePercentage(float val);
+    //maunally put in the setters
+    CC_SYNTHESIZE_READONLY(float, m_hue, Hue);
+    virtual void setHue(float val);
+    CC_SYNTHESIZE_READONLY(float, m_huePercentage, HuePercentage);
+    virtual void setHuePercentage(float val);
 
 
-	//not sure if these need to be there actually. I suppose someone might want to access the sprite?
-	CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);
-	CC_SYNTHESIZE_READONLY(CCSprite*, m_slider, Slider);
-	CC_SYNTHESIZE_READONLY(CCPoint, m_startPos, StartPos);
+    //not sure if these need to be there actually. I suppose someone might want to access the sprite?
+    CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);
+    CC_SYNTHESIZE_READONLY(CCSprite*, m_slider, Slider);
+    CC_SYNTHESIZE_READONLY(CCPoint, m_startPos, StartPos);
 
-public:	
-	virtual ~CCControlHuePicker();
-	virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
-	static CCControlHuePicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
+public:    
+    virtual ~CCControlHuePicker();
+    virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
+    static CCControlHuePicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
 
-protected:	
-	void updateSliderPosition(CCPoint location);
-	bool checkSliderPosition(CCPoint location);
+protected:    
+    void updateSliderPosition(CCPoint location);
+    bool checkSliderPosition(CCPoint location);
 
-	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
+    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 };
 

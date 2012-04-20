@@ -34,9 +34,9 @@ template <typename T> struct SkTSize {
     void setEmpty() {
         fWidth = fHeight = 0;
     }
-	
-	T width() const { return fWidth; }
-	T height() const { return fHeight; }
+    
+    T width() const { return fWidth; }
+    T height() const { return fHeight; }
     
     /** If width or height is < 0, it is set to 0 */
     void clampNegToZero() {

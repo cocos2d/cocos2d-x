@@ -36,9 +36,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 struct kmMat4;
 
 typedef struct kmVec3 {
-	kmScalar x;
-	kmScalar y;
-	kmScalar z;
+    kmScalar x;
+    kmScalar y;
+    kmScalar z;
 } kmVec3;
 
 #ifdef __cplusplus

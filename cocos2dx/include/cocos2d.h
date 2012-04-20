@@ -36,7 +36,7 @@ THE SOFTWARE.
 // all cocos2d include files
 //
 
-#include "ccConfig.h"	// should be included first
+#include "ccConfig.h"    // should be included first
 #include "CCAction.h"
 #include "CCAnimation.h"
 #include "CCAnimationCache.h"
@@ -90,11 +90,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "CCProgressTimer.h"
 #include "CCTransitionProgress.h"
-
-// havn't implement on wophone
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE)
 #include "CCTextFieldTTF.h"
-#endif
 
 //
 // cocoa includes
@@ -139,10 +135,10 @@ THE SOFTWARE.
 // extensions
 #include "cocos2dExt.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 const char* cocos2dVersion();
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif // __COCOS2D_H__

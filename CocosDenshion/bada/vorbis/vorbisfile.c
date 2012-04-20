@@ -912,11 +912,11 @@ static int _ov_open1(void *f,OggVorbis_File *vf,const char *initial,
   /* Fetch all BOS pages, store the vorbis header and all seen serial
      numbers, load subsequent vorbis setup headers */
   if((ret=_fetch_headers(vf,vf->vi,vf->vc,&serialno_list,&serialno_list_size,NULL))<0){
-	  
+      
     vf->datasource=NULL;
     ov_clear(vf);
   }else{
-	  
+      
     /* serial number list for first link needs to be held somewhere
        for second stage of seekable stream open; this saves having to
        seek/reread first link's serialnumber data then. */
@@ -938,7 +938,7 @@ static int _ov_open1(void *f,OggVorbis_File *vf,const char *initial,
 }
 
 static int _ov_open2(OggVorbis_File *vf){
-	
+    
   if(vf->ready_state != PARTOPEN) return OV_EINVAL;
   vf->ready_state=OPENED;
   if(vf->seekable){

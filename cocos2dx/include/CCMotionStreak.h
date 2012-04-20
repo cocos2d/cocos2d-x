@@ -39,47 +39,47 @@ NS_CC_BEGIN
 class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 {
 public:
-	CCMotionStreak();
-	virtual ~CCMotionStreak();
-	/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
-	static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
-	/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
-	static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+    CCMotionStreak();
+    virtual ~CCMotionStreak();
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
+    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
+    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
 
-	/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
-	bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
-	/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-	bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+    bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
+    bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
 
-	/** color used for the tint */
-	void tintWithColor(ccColor3B colors);
+    /** color used for the tint */
+    void tintWithColor(ccColor3B colors);
 
-	/** Remove all living segments of the ribbon */
-	void reset();
+    /** Remove all living segments of the ribbon */
+    void reset();
 
-	/** Override super methods */
-	virtual void setPosition(const CCPoint& position);
-	virtual void draw();
-	virtual void update(ccTime delta);
+    /** Override super methods */
+    virtual void setPosition(const CCPoint& position);
+    virtual void draw();
+    virtual void update(ccTime delta);
 
-	/* Implement interfaces */
-	virtual CCTexture2D* getTexture(void);
-	virtual void setTexture(CCTexture2D *texture);
-	virtual void setBlendFunc(ccBlendFunc blendFunc);
-	virtual ccBlendFunc getBlendFunc(void);
+    /* Implement interfaces */
+    virtual CCTexture2D* getTexture(void);
+    virtual void setTexture(CCTexture2D *texture);
+    virtual void setBlendFunc(ccBlendFunc blendFunc);
+    virtual ccBlendFunc getBlendFunc(void);
     virtual void setColor(const ccColor3B& color);
-	virtual const ccColor3B& getColor(void);
+    virtual const ccColor3B& getColor(void);
     virtual GLubyte getOpacity(void);
-	virtual void setOpacity(GLubyte opacity);
-	virtual void setIsOpacityModifyRGB(bool bValue);
-	virtual bool getIsOpacityModifyRGB(void);
+    virtual void setOpacity(GLubyte opacity);
+    virtual void setIsOpacityModifyRGB(bool bValue);
+    virtual bool getIsOpacityModifyRGB(void);
 
-	/** When fast mode is enbled, new points are added faster but with lower precision */
-	CC_SYNTHESIZE(bool, m_bFastMode, IsFastMode);
+    /** When fast mode is enbled, new points are added faster but with lower precision */
+    CC_SYNTHESIZE(bool, m_bFastMode, IsFastMode);
 private:
-	/** texture used for the motion streak */
-	CCTexture2D* m_pTexture;
-	ccBlendFunc m_tBlendFunc;
+    /** texture used for the motion streak */
+    CCTexture2D* m_pTexture;
+    ccBlendFunc m_tBlendFunc;
     CCPoint m_tPositionR;
     ccColor3B m_tColor;
 

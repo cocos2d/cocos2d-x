@@ -43,7 +43,7 @@ initxmlDefaultSAXHandler(xmlSAXHandlerV1 *hdlr, int warning)
 {
     
     if(hdlr->initialized == 1)
-	return;
+    return;
 
     hdlr->internalSubset = xmlSAX2InternalSubset;
     hdlr->externalSubset = xmlSAX2ExternalSubset;
@@ -69,9 +69,9 @@ initxmlDefaultSAXHandler(xmlSAXHandlerV1 *hdlr, int warning)
     hdlr->ignorableWhitespace = xmlSAX2Characters;
     hdlr->processingInstruction = xmlSAX2ProcessingInstruction;
     if (warning == 0)
-	hdlr->warning = NULL;
+    hdlr->warning = NULL;
     else
-	hdlr->warning = xmlParserWarning;
+    hdlr->warning = xmlParserWarning;
     hdlr->error = xmlParserError;
     hdlr->fatalError = xmlParserError;
 
@@ -91,7 +91,7 @@ void
 inithtmlDefaultSAXHandler(xmlSAXHandlerV1 *hdlr)
 {
     if(hdlr->initialized == 1)
-	return;
+    return;
 
     hdlr->internalSubset = xmlSAX2InternalSubset;
     hdlr->externalSubset = NULL;
@@ -138,7 +138,7 @@ void
 initdocbDefaultSAXHandler(xmlSAXHandlerV1 *hdlr)
 {
     if(hdlr->initialized == 1)
-	return;
+    return;
 
     hdlr->internalSubset = xmlSAX2InternalSubset;
     hdlr->externalSubset = NULL;

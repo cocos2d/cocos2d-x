@@ -31,44 +31,44 @@
 
 /** Different modes of the engine */
 typedef enum {
-	kAMM_FxOnly,					//!Other apps will be able to play audio
-	kAMM_FxPlusMusic,				//!Only this app will play audio
-	kAMM_FxPlusMusicIfNoOtherAudio,	//!If another app is playing audio at start up then allow it to continue and don't play music
-	kAMM_MediaPlayback,				//!This app takes over audio e.g music player app
-	kAMM_PlayAndRecord				//!App takes over audio and has input and output
+    kAMM_FxOnly,                    //!Other apps will be able to play audio
+    kAMM_FxPlusMusic,                //!Only this app will play audio
+    kAMM_FxPlusMusicIfNoOtherAudio,    //!If another app is playing audio at start up then allow it to continue and don't play music
+    kAMM_MediaPlayback,                //!This app takes over audio e.g music player app
+    kAMM_PlayAndRecord                //!App takes over audio and has input and output
 } tAudioManagerMode;
 
 /** Possible states of the engine */
 typedef enum {
-	kAMStateUninitialised, //!Audio manager has not been initialised - do not use
-	kAMStateInitialising,  //!Audio manager is in the process of initialising - do not use
-	kAMStateInitialised	   //!Audio manager is initialised - safe to use
+    kAMStateUninitialised, //!Audio manager has not been initialised - do not use
+    kAMStateInitialising,  //!Audio manager is in the process of initialising - do not use
+    kAMStateInitialised       //!Audio manager is initialised - safe to use
 } tAudioManagerState;
 
 typedef enum {
-	kAMRBDoNothing,			    //Audio manager will not do anything on resign or becoming active
-	kAMRBStopPlay,    			//Background music is stopped on resign and resumed on become active
-	kAMRBStop					//Background music is stopped on resign but not resumed - maybe because you want to do this from within your game
+    kAMRBDoNothing,                //Audio manager will not do anything on resign or becoming active
+    kAMRBStopPlay,                //Background music is stopped on resign and resumed on become active
+    kAMRBStop                    //Background music is stopped on resign but not resumed - maybe because you want to do this from within your game
 } tAudioManagerResignBehavior;
 
 /** Notifications */
 extern NSString * const kCDN_AudioManagerInitialised;
 
-@interface CDAsynchInitialiser : NSOperation {}	
+@interface CDAsynchInitialiser : NSOperation {}    
 @end
 
 /** CDAudioManager supports two long audio source channels called left and right*/
 typedef enum {
-	kASC_Left = 0,
-	kASC_Right = 1
-} tAudioSourceChannel;	
+    kASC_Left = 0,
+    kASC_Right = 1
+} tAudioSourceChannel;    
 
 typedef enum {
-	kLAS_Init,
-	kLAS_Loaded,
-	kLAS_Playing,
-	kLAS_Paused,
-	kLAS_Stopped,
+    kLAS_Init,
+    kLAS_Loaded,
+    kLAS_Playing,
+    kLAS_Paused,
+    kLAS_Stopped,
 } tLongAudioSourceState;
 
 @class CDLongAudioSource;
@@ -90,20 +90,20 @@ typedef enum {
  @since v0.99
  */
 @interface CDLongAudioSource : NSObject <AVAudioPlayerDelegate, CDAudioInterruptProtocol>{
-	AVAudioPlayer	*audioSourcePlayer;
-	NSString		*audioSourceFilePath;
-	NSInteger		numberOfLoops;
-	float			volume;
-	id<CDLongAudioSourceDelegate> delegate; 
-	BOOL			mute;
-	BOOL			enabled_;
-	BOOL			backgroundMusic;
-@public	
-	BOOL			systemPaused;//Used for auto resign handling
-	NSTimeInterval	systemPauseLocation;//Used for auto resign handling
+    AVAudioPlayer    *audioSourcePlayer;
+    NSString        *audioSourceFilePath;
+    NSInteger        numberOfLoops;
+    float            volume;
+    id<CDLongAudioSourceDelegate> delegate; 
+    BOOL            mute;
+    BOOL            enabled_;
+    BOOL            backgroundMusic;
+@public    
+    BOOL            systemPaused;//Used for auto resign handling
+    NSTimeInterval    systemPauseLocation;//Used for auto resign handling
 @protected
-	tLongAudioSourceState state;
-}	
+    tLongAudioSourceState state;
+}    
 @property (readonly) AVAudioPlayer *audioSourcePlayer;
 @property (readonly) NSString *audioSourceFilePath;
 @property (readwrite, nonatomic) NSInteger numberOfLoops;
@@ -143,24 +143,24 @@ typedef enum {
  @since v0.8
  */
 @interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol, AVAudioSessionDelegate> {
-	CDSoundEngine		*soundEngine;
-	CDLongAudioSource	*backgroundMusic;
-	NSMutableArray		*audioSourceChannels;
-	NSString*			_audioSessionCategory;
-	BOOL				_audioWasPlayingAtStartup;
-	tAudioManagerMode	_mode;
-	SEL backgroundMusicCompletionSelector;
-	id backgroundMusicCompletionListener;
-	BOOL willPlayBackgroundMusic;
-	BOOL _mute;
-	BOOL _resigned;
-	BOOL _interrupted;
-	BOOL _audioSessionActive;
-	BOOL enabled_;
-	
-	//For handling resign/become active
-	BOOL _isObservingAppEvents;
-	tAudioManagerResignBehavior _resignBehavior;
+    CDSoundEngine        *soundEngine;
+    CDLongAudioSource    *backgroundMusic;
+    NSMutableArray        *audioSourceChannels;
+    NSString*            _audioSessionCategory;
+    BOOL                _audioWasPlayingAtStartup;
+    tAudioManagerMode    _mode;
+    SEL backgroundMusicCompletionSelector;
+    id backgroundMusicCompletionListener;
+    BOOL willPlayBackgroundMusic;
+    BOOL _mute;
+    BOOL _resigned;
+    BOOL _interrupted;
+    BOOL _audioSessionActive;
+    BOOL enabled_;
+    
+    //For handling resign/become active
+    BOOL _isObservingAppEvents;
+    tAudioManagerResignBehavior _resignBehavior;
 }
 
 @property (readonly) CDSoundEngine *soundEngine;
@@ -229,10 +229,10 @@ static const int kCDNoBuffer = -1;
 
 /** Allows buffers to be associated with file names */
 @interface CDBufferManager:NSObject{
-	NSMutableDictionary* loadedBuffers;
-	NSMutableArray	*freedBuffers;
-	CDSoundEngine *soundEngine;
-	int nextBufferId;
+    NSMutableDictionary* loadedBuffers;
+    NSMutableArray    *freedBuffers;
+    CDSoundEngine *soundEngine;
+    int nextBufferId;
 }
 
 -(id) initWithEngine:(CDSoundEngine *) theSoundEngine;

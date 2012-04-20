@@ -39,14 +39,14 @@ class CCTMXMapInfo;
 /** Possible oritentations of the TMX map */
 enum
 {
-	/** Orthogonal orientation */
-	CCTMXOrientationOrtho,
+    /** Orthogonal orientation */
+    CCTMXOrientationOrtho,
 
-	/** Hexagonal orientation */
-	CCTMXOrientationHex,
+    /** Hexagonal orientation */
+    CCTMXOrientationHex,
 
-	/** Isometric orientation */
-	CCTMXOrientationIso,
+    /** Isometric orientation */
+    CCTMXOrientationIso,
 };
 
 /** @brief CCTMXTiledMap knows how to parse and render a TMX map.
@@ -102,50 +102,50 @@ object->propertyNamed(name_of_the_property);
 */
 class CC_DLL CCTMXTiledMap : public CCNode
 {
-	/** the map's size property measured in tiles */
-	CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapSize, MapSize);
-	/** the tiles's size property measured in pixels */
-	CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tTileSize, TileSize);
-	/** map orientation */
-	CC_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
-	/** object groups */
-	CC_PROPERTY(CCArray*, m_pObjectGroups, ObjectGroups);
-	/** properties */
-	CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
+    /** the map's size property measured in tiles */
+    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapSize, MapSize);
+    /** the tiles's size property measured in pixels */
+    CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tTileSize, TileSize);
+    /** map orientation */
+    CC_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
+    /** object groups */
+    CC_PROPERTY(CCArray*, m_pObjectGroups, ObjectGroups);
+    /** properties */
+    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
-	CCTMXTiledMap();
-	virtual ~CCTMXTiledMap();
+    CCTMXTiledMap();
+    virtual ~CCTMXTiledMap();
 
-	/** creates a TMX Tiled Map with a TMX file.*/
-	static CCTMXTiledMap* tiledMapWithTMXFile(const char *tmxFile);
+    /** creates a TMX Tiled Map with a TMX file.*/
+    static CCTMXTiledMap* tiledMapWithTMXFile(const char *tmxFile);
 
-	/** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-	static CCTMXTiledMap* tiledMapWithXML(const char* tmxString, const char* resourcePath);
+    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
+    static CCTMXTiledMap* tiledMapWithXML(const char* tmxString, const char* resourcePath);
 
-	/** initializes a TMX Tiled Map with a TMX file */
-	bool initWithTMXFile(const char *tmxFile);
+    /** initializes a TMX Tiled Map with a TMX file */
+    bool initWithTMXFile(const char *tmxFile);
 
-	/** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-	bool initWithXML(const char* tmxString, const char* resourcePath);
+    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
+    bool initWithXML(const char* tmxString, const char* resourcePath);
 
-	/** return the TMXLayer for the specific layer */
-	CCTMXLayer* layerNamed(const char *layerName);
+    /** return the TMXLayer for the specific layer */
+    CCTMXLayer* layerNamed(const char *layerName);
 
-	/** return the TMXObjectGroup for the secific group */
-	CCTMXObjectGroup* objectGroupNamed(const char *groupName);
+    /** return the TMXObjectGroup for the secific group */
+    CCTMXObjectGroup* objectGroupNamed(const char *groupName);
 
-	/** return the value for the specific property name */
-	CCString *propertyNamed(const char *propertyName);
+    /** return the value for the specific property name */
+    CCString *propertyNamed(const char *propertyName);
 
-	/** return properties dictionary for tile GID */
-	CCDictionary* propertiesForGID(int GID);
+    /** return properties dictionary for tile GID */
+    CCDictionary* propertiesForGID(int GID);
 
 private:
-	CCTMXLayer * parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
-	CCTMXTilesetInfo * tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
-	void buildWithMapInfo(CCTMXMapInfo* mapInfo);
+    CCTMXLayer * parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+    CCTMXTilesetInfo * tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+    void buildWithMapInfo(CCTMXMapInfo* mapInfo);
 protected:
-	//! tile properties
+    //! tile properties
     CCDictionary* m_pTileProperties;
 
 };

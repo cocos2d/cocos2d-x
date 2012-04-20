@@ -10,7 +10,7 @@ bool Bug458Layer::init()
 {
     if(BugsTestBaseLayer::init())
     {
-		// ask director the the window size
+        // ask director the the window size
         CCSize size = CCDirector::sharedDirector()->getWinSize();
 
         QuestionContainerSprite* question = new QuestionContainerSprite();
@@ -18,13 +18,13 @@ bool Bug458Layer::init()
         question->init();
         question2->init();
 
-//		[question setContentSize:CGSizeMake(50,50)];
-//		[question2 setContentSize:CGSizeMake(50,50)];
-		
+//        [question setContentSize:CGSizeMake(50,50)];
+//        [question2 setContentSize:CGSizeMake(50,50)];
+        
         CCMenuItemSprite* sprite = CCMenuItemSprite::itemWithNormalSprite(question2, question, this, menu_selector(Bug458Layer::selectAnswer));
         CCLayerColor* layer = CCLayerColor::layerWithColor(ccc4(0,0,255,255), 100, 100);
-		question->release();
-		question2->release();
+        question->release();
+        question2->release();
 
         CCLayerColor* layer2 = CCLayerColor::layerWithColor(ccc4(255,0,0,255), 100, 100);
         CCMenuItemSprite* sprite2 = CCMenuItemSprite::itemWithNormalSprite(layer, layer2, this, menu_selector(Bug458Layer::selectAnswer));        
@@ -32,12 +32,12 @@ bool Bug458Layer::init()
         menu->alignItemsVerticallyWithPadding(100);
         menu->setPosition(ccp(size.width / 2, size.height / 2));
 
-		// add the label as a child to this Layer
-		addChild(menu);
+        // add the label as a child to this Layer
+        addChild(menu);
 
         return true;
-	}
-	return false;
+    }
+    return false;
 }
 
 void Bug458Layer::selectAnswer(CCObject* sender)

@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCCommon.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 /**
 @brief The device accelerometer reports values for each axis in units of g-force 
 */
@@ -51,6 +51,6 @@ public:
     virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
 };
 
-} //namespace   cocos2d 
+NS_CC_END
 
 #endif

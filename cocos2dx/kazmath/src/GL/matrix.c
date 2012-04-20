@@ -40,152 +40,152 @@ static unsigned char initialized = 0;
 void lazyInitialize()
 {
 
-	if (!initialized) {
-		kmMat4 identity; //Temporary identity matrix
+    if (!initialized) {
+        kmMat4 identity; //Temporary identity matrix
 
-		//Initialize all 3 stacks
-		//modelview_matrix_stack = (km_mat4_stack*) malloc(sizeof(km_mat4_stack));
-		km_mat4_stack_initialize(&modelview_matrix_stack);
+        //Initialize all 3 stacks
+        //modelview_matrix_stack = (km_mat4_stack*) malloc(sizeof(km_mat4_stack));
+        km_mat4_stack_initialize(&modelview_matrix_stack);
 
-		//projection_matrix_stack = (km_mat4_stack*) malloc(sizeof(km_mat4_stack));
-		km_mat4_stack_initialize(&projection_matrix_stack);
+        //projection_matrix_stack = (km_mat4_stack*) malloc(sizeof(km_mat4_stack));
+        km_mat4_stack_initialize(&projection_matrix_stack);
 
-		//texture_matrix_stack = (km_mat4_stack*) malloc(sizeof(km_mat4_stack));
-		km_mat4_stack_initialize(&texture_matrix_stack);
+        //texture_matrix_stack = (km_mat4_stack*) malloc(sizeof(km_mat4_stack));
+        km_mat4_stack_initialize(&texture_matrix_stack);
 
-		current_stack = &modelview_matrix_stack;
-		initialized = 1;
+        current_stack = &modelview_matrix_stack;
+        initialized = 1;
 
-		kmMat4Identity(&identity);
+        kmMat4Identity(&identity);
 
-		//Make sure that each stack has the identity matrix
-		km_mat4_stack_push(&modelview_matrix_stack, &identity);
-		km_mat4_stack_push(&projection_matrix_stack, &identity);
-		km_mat4_stack_push(&texture_matrix_stack, &identity);
-	}
+        //Make sure that each stack has the identity matrix
+        km_mat4_stack_push(&modelview_matrix_stack, &identity);
+        km_mat4_stack_push(&projection_matrix_stack, &identity);
+        km_mat4_stack_push(&texture_matrix_stack, &identity);
+    }
 }
 
 void kmGLMatrixMode(kmGLEnum mode)
 {
-	lazyInitialize();
+    lazyInitialize();
 
-	switch(mode)
-	{
-		case KM_GL_MODELVIEW:
-			current_stack = &modelview_matrix_stack;
-		break;
-		case KM_GL_PROJECTION:
-			current_stack = &projection_matrix_stack;
-		break;
-		case KM_GL_TEXTURE:
-			current_stack = &texture_matrix_stack;
-		break;
-		default:
-			assert(0 && "Invalid matrix mode specified"); //TODO: Proper error handling
-		break;
-	}
+    switch(mode)
+    {
+        case KM_GL_MODELVIEW:
+            current_stack = &modelview_matrix_stack;
+        break;
+        case KM_GL_PROJECTION:
+            current_stack = &projection_matrix_stack;
+        break;
+        case KM_GL_TEXTURE:
+            current_stack = &texture_matrix_stack;
+        break;
+        default:
+            assert(0 && "Invalid matrix mode specified"); //TODO: Proper error handling
+        break;
+    }
 }
 
 void kmGLPushMatrix(void)
 {
-	kmMat4 top;
+    kmMat4 top;
 
-	lazyInitialize(); //Initialize the stacks if they haven't been already
+    lazyInitialize(); //Initialize the stacks if they haven't been already
 
-	//Duplicate the top of the stack (i.e the current matrix)
-	kmMat4Assign(&top, current_stack->top);
-	km_mat4_stack_push(current_stack, &top);
+    //Duplicate the top of the stack (i.e the current matrix)
+    kmMat4Assign(&top, current_stack->top);
+    km_mat4_stack_push(current_stack, &top);
 }
 
 void kmGLPopMatrix(void)
 {
     assert(initialized && "Cannot Pop empty matrix stack");
-	//No need to lazy initialize, you shouldnt be popping first anyway!
-	km_mat4_stack_pop(current_stack, NULL);
+    //No need to lazy initialize, you shouldnt be popping first anyway!
+    km_mat4_stack_pop(current_stack, NULL);
 }
 
 void kmGLLoadIdentity()
 {
-	lazyInitialize();
+    lazyInitialize();
 
-	kmMat4Identity(current_stack->top); //Replace the top matrix with the identity matrix
+    kmMat4Identity(current_stack->top); //Replace the top matrix with the identity matrix
 }
 
 void kmGLFreeAll()
 {
-	//Clear the matrix stacks
-	km_mat4_stack_release(&modelview_matrix_stack);
-	km_mat4_stack_release(&projection_matrix_stack);
-	km_mat4_stack_release(&texture_matrix_stack);
+    //Clear the matrix stacks
+    km_mat4_stack_release(&modelview_matrix_stack);
+    km_mat4_stack_release(&projection_matrix_stack);
+    km_mat4_stack_release(&texture_matrix_stack);
 
-	//Delete the matrices
-	initialized = 0; //Set to uninitialized
+    //Delete the matrices
+    initialized = 0; //Set to uninitialized
 
-	current_stack = NULL; //Set the current stack to point nowhere
+    current_stack = NULL; //Set the current stack to point nowhere
 }
 
 void kmGLMultMatrix(const kmMat4* pIn)
 {
-	lazyInitialize();
-	kmMat4Multiply(current_stack->top, current_stack->top, pIn);
+    lazyInitialize();
+    kmMat4Multiply(current_stack->top, current_stack->top, pIn);
 }
 
 void kmGLLoadMatrix(const kmMat4* pIn)
 {
-	lazyInitialize();
-	kmMat4Assign(current_stack->top, pIn);
+    lazyInitialize();
+    kmMat4Assign(current_stack->top, pIn);
 }
 
 void kmGLGetMatrix(kmGLEnum mode, kmMat4* pOut)
 {
-	lazyInitialize();
+    lazyInitialize();
 
-	switch(mode)
-	{
-		case KM_GL_MODELVIEW:
-			kmMat4Assign(pOut, modelview_matrix_stack.top);
-		break;
-		case KM_GL_PROJECTION:
-			kmMat4Assign(pOut, projection_matrix_stack.top);
-		break;
-		case KM_GL_TEXTURE:
-			kmMat4Assign(pOut, texture_matrix_stack.top);
-		break;
-		default:
-			assert(1 && "Invalid matrix mode specified"); //TODO: Proper error handling
-		break;
-	}
+    switch(mode)
+    {
+        case KM_GL_MODELVIEW:
+            kmMat4Assign(pOut, modelview_matrix_stack.top);
+        break;
+        case KM_GL_PROJECTION:
+            kmMat4Assign(pOut, projection_matrix_stack.top);
+        break;
+        case KM_GL_TEXTURE:
+            kmMat4Assign(pOut, texture_matrix_stack.top);
+        break;
+        default:
+            assert(1 && "Invalid matrix mode specified"); //TODO: Proper error handling
+        break;
+    }
 }
 
 void kmGLTranslatef(float x, float y, float z)
 {
-	kmMat4 translation;
+    kmMat4 translation;
 
-	//Create a rotation matrix using the axis and the angle
-	kmMat4Translation(&translation,x,y,z);
+    //Create a rotation matrix using the axis and the angle
+    kmMat4Translation(&translation,x,y,z);
 
-	//Multiply the rotation matrix by the current matrix
-	kmMat4Multiply(current_stack->top, current_stack->top, &translation);
+    //Multiply the rotation matrix by the current matrix
+    kmMat4Multiply(current_stack->top, current_stack->top, &translation);
 }
 
 void kmGLRotatef(float angle, float x, float y, float z)
 {
-	kmVec3 axis;
-	kmMat4 rotation;
+    kmVec3 axis;
+    kmMat4 rotation;
 
-	//Create an axis vector
-	kmVec3Fill(&axis, x, y, z);
+    //Create an axis vector
+    kmVec3Fill(&axis, x, y, z);
 
-	//Create a rotation matrix using the axis and the angle
-	kmMat4RotationAxisAngle(&rotation, &axis, kmDegreesToRadians(angle));
+    //Create a rotation matrix using the axis and the angle
+    kmMat4RotationAxisAngle(&rotation, &axis, kmDegreesToRadians(angle));
 
-	//Multiply the rotation matrix by the current matrix
-	kmMat4Multiply(current_stack->top, current_stack->top, &rotation);
+    //Multiply the rotation matrix by the current matrix
+    kmMat4Multiply(current_stack->top, current_stack->top, &rotation);
 }
 
 void kmGLScalef(float x, float y, float z)
 {
-	kmMat4 scaling;
-	kmMat4Scaling(&scaling, x, y, z);
-	kmMat4Multiply(current_stack->top, current_stack->top, &scaling);
+    kmMat4 scaling;
+    kmMat4Scaling(&scaling, x, y, z);
+    kmMat4Multiply(current_stack->top, current_stack->top, &scaling);
 }
