@@ -47,7 +47,6 @@ protected:
     GLuint m_fbo;
     GLint m_oldFBO;
     GLfloat    m_oldClearColor[4];
-    CCGlesVersion m_eGlesVersion;
 };
 
 NS_CC_END

@@ -123,12 +123,6 @@ std::string RenderTextureTestDemo::subtitle()
 RenderTextureTest::RenderTextureTest()
 : m_brush(NULL)
 {
-    if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
-    {
-        CCMessageBox("The Opengl ES version is lower than 2.0, and the test may not run correctly.", "Cocos2d-x Hint");
-        return;
-    }
-
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // create a render texture, this is what we're going to draw into
