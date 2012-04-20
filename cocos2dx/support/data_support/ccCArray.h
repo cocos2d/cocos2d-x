@@ -97,7 +97,7 @@ static inline void ccArrayDoubleCapacity(ccArray *arr)
     arr->max *= 2;
     CCObject** newArr = (CCObject**)realloc( arr->arr, arr->max * sizeof(CCObject*) );
     // will fail when there's not enough memory
-    CCAssert(newArr != NULL, "ccArrayDoubleCapacity failed. Not enough memory");
+    CCAssert(newArr != 0, "ccArrayDoubleCapacity failed. Not enough memory");
     arr->arr = newArr;
 }
 
