@@ -238,6 +238,11 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     CCLog("%s: %s", pszTitle, pszMsg);
 }
 
+void CCLuaLog(const char * pszFormat)
+{
+    CCLog(pszFormat);
+}
+
 NS_CC_END
 
 #endif // CC_PLATFORM_QNX

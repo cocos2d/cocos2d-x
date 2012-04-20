@@ -32,15 +32,16 @@ using namespace std;
 
 NS_CC_BEGIN
 
+CCConfiguration* CCConfiguration::s_gSharedConfiguration = NULL;
+
 CCConfiguration::CCConfiguration(void)
-:m_nMaxTextureSize(0) 
+: m_nMaxTextureSize(0) 
+, m_nMaxModelviewStackDepth(0)
 , m_nMaxTextureUnits(0)
 , m_bSupportsPVRTC(false)
 , m_bSupportsNPOT(false)
 , m_bSupportsBGRA8888(false)
 , m_bSupportsDiscardFramebuffer(false)
-, m_bInited(false)
-, m_uOSVersion(0)
 , m_nMaxSamplesAllowed(0)
 , m_pGlExtensions(NULL)
 {
@@ -56,9 +57,12 @@ bool CCConfiguration::init(void)
 
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
     glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &m_nMaxTextureUnits);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    glGetIntegerv(GL_MAX_SAMPLES_APPLE, &m_nMaxSamplesAllowed);
+#endif
 
     m_bSupportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
-    m_bSupportsNPOT = checkForGLExtension("GL_APPLE_texture_2D_limited_npot");
+    m_bSupportsNPOT = true;
     m_bSupportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
     m_bSupportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
 
@@ -68,58 +72,37 @@ bool CCConfiguration::init(void)
     CCLOG("cocos2d: GL supports BGRA8888 textures: %s", (m_bSupportsBGRA8888 ? "YES" : "NO"));
     CCLOG("cocos2d: GL supports NPOT textures: %s", (m_bSupportsNPOT ? "YES" : "NO"));
     CCLOG("cocos2d: GL supports discard_framebuffer: %s", (m_bSupportsDiscardFramebuffer ? "YES" : "NO"));
-    
-#if CC_TEXTURE_NPOT_SUPPORT
-    CCLOG("cocos2d: compiled with NPOT support: %s", "YES");
-#else
-    CCLOG("cocos2d: compiled with NPOT support: %s", "NO");
-#endif // CC_TEXTURE_NPOT_SUPPORT 
 
     
-#if CC_TEXTURE_ATLAS_USE_VAO
-    CCLOG("cocos2d: compiled with VAO support in TextureAtlas : %s", "YES");
+    CCLOG("cocos2d: compiled with Profiling Support: %s",
+#if CC_ENABLE_PROFILERS
+          
+          "YES - *** Disable it when you finish profiling ***"
 #else
-    CCLOG("cocos2d: compiled with VAO support in TextureAtlas : %s", "NO");
-#endif // CC_TEXTURE_ATLAS_USE_VAO
+          "NO"
+#endif
+          );
+    
+#if CC_ENABLE_GL_STATE_CACHE == 0
+	CCLOG("");
+	CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it by editing ccConfig.h");
+	printf("\n");
+#endif
+    
+    CHECK_GL_ERROR_DEBUG();
 
     return true;
 }
 
-CCGlesVersion CCConfiguration::getGlesVersion()
-{
-    // To get the Opengl ES version
-    std::string strVersion((char *)glGetString(GL_VERSION));
-    if ((int)strVersion.find("1.0") != -1)
-    {
-        return GLES_VER_1_0;
-    }
-    else if ((int)strVersion.find("1.1") != -1)
-    {
-        return GLES_VER_1_1;
-    }
-    else if ((int)strVersion.find("2.0") != -1)
-    {
-        return GLES_VER_2_0;
-    }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    return GLES_VER_2_0;
-#else
-
-
-    return GLES_VER_INVALID;
-#endif
-}
-
 CCConfiguration* CCConfiguration::sharedConfiguration(void)
 {
-    static CCConfiguration sharedConfiguration;
-    if (!sharedConfiguration.m_bInited)
+    if (! s_gSharedConfiguration)
     {
-        sharedConfiguration.init();
-        sharedConfiguration.m_bInited = true;
+        s_gSharedConfiguration = new CCConfiguration();
+        s_gSharedConfiguration->init();
     }
     
-    return &sharedConfiguration;
+    return s_gSharedConfiguration;
 }
 
 bool CCConfiguration::checkForGLExtension(const string &searchName)

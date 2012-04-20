@@ -50,7 +50,6 @@ CCProfiler* CCProfiler::sharedProfiler(void)
 
 CCProfilingTimer* CCProfiler::createAndAddTimerWithName(const char* timerName)
 {
-    CCProfiler *p = CCProfiler::sharedProfiler();
     CCProfilingTimer *t = new CCProfilingTimer();
     t->initWithName(timerName);
     m_pActiveTimers->setObject(t, timerName);

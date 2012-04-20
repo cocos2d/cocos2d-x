@@ -96,13 +96,6 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
 
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
 {
-    // If the gles version is lower than GLES_VER_2_0, 
-    // some extended gles functions can't be implemented, so return false directly.
-    if (CCConfiguration::sharedConfiguration()->getGlesVersion() < GLES_VER_2_0)
-    {
-        return false;
-    }
-
     CCAssert(m_ePixelFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
