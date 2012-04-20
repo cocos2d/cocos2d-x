@@ -78,8 +78,6 @@ bool AppDelegate::initInstance() {
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
-    CCAssert(false, "error");
-    
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
 
