@@ -33,22 +33,30 @@ NS_CC_BEGIN
 class CCTouch : public CCObject
 {
 public:
-    CCTouch() {}
-    CCTouch(float x, float y) :  m_point(x, y), m_prevPoint(x, y) {}
+    CCTouch() 
+        : m_nId(0)
+    {}
 
     CCPoint locationInView() { return m_point; }
     CCPoint previousLocationInView() { return m_prevPoint; }
 
-    void SetTouchInfo(float x, float y)
+    void SetTouchInfo(int id, float x, float y)
     {
+        m_nId = id;
         m_prevPoint = m_point;
         m_point.x   = x;
         m_point.y   = y;
     }
 
+    int getID() const
+    {
+        return m_nId;
+    }
+
 private:
+    int m_nId;
     CCPoint m_point;
-    CCPoint    m_prevPoint;
+    CCPoint m_prevPoint;
 };
 
 class CCEvent : public CCObject

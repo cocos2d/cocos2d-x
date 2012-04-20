@@ -48,9 +48,7 @@ void initExtensions() {
 NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
-    : m_bNotHVGA(false), 
-      m_pDelegate(NULL),
-      m_fScreenScaleFactor(1.0)  
+    : m_bNotHVGA(false)
 {
     initExtensions();
 }
@@ -87,7 +85,7 @@ void CCEGLView::create(int width, int height)
     m_rcViewPort.size.height = viewPortH;
     
     m_bNotHVGA = true;
-    
+    CCLog("CCEGLView::create");
 }
 
 CCEGLView::~CCEGLView()
@@ -95,116 +93,25 @@ CCEGLView::~CCEGLView()
 
 }
 
-CCSize  CCEGLView::getSize()
-{
-        if (m_bNotHVGA)
-        {
-                CCSize size(m_sSizeInPoint.width, m_sSizeInPoint.height);
-            return size;
-        }
-        else
-        {
-                CCSize size(m_sSizeInPixel.width, m_sSizeInPixel.height);
-            return size;
-        }
-    
-}
 
 bool CCEGLView::isOpenGLReady()
 {
     return (m_sSizeInPixel.width != 0 && m_sSizeInPixel.height != 0);
 }
 
-void CCEGLView::release()
+void CCEGLView::end()
 {
     terminateProcessJNI();
-}
-
-void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
-{
-    m_pDelegate = pDelegate;
-}
-
-EGLTouchDelegate* CCEGLView::getDelegate(void)
-{
-    return m_pDelegate;
 }
 
 void CCEGLView::swapBuffers()
 {
 }
 
-bool CCEGLView::canSetContentScaleFactor()
-{
-    // can scale content?
-    return false;
-}
-
-void CCEGLView::setContentScaleFactor(float contentScaleFactor)
-{
-    m_fScreenScaleFactor = contentScaleFactor;
-} 
-
-void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
-{
-    if (m_bNotHVGA)
-    {
-        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
-            (GLint)(y * factor) + m_rcViewPort.origin.y,
-            (GLint)(w * factor),
-            (GLint)(h * factor));
-    }
-    else
-    {
-        glViewport((GLint)x,
-            (GLint)y,
-            (GLint)w,
-            (GLint)h);
-    }        
-}
-
-void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
-{
-    if (m_bNotHVGA)
-    {
-        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
-            (GLint)(y * factor) + m_rcViewPort.origin.y,
-            (GLint)(w * factor),
-            (GLint)(h * factor));
-    }
-    else
-    {
-        glScissor((GLint)x,
-            (GLint)y,
-            (GLint)w,
-            (GLint)h);
-    }        
-}
-
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
     static CCEGLView instance;
     return instance;
-}
-
-float CCEGLView::getScreenScaleFactor()
-{
-        return m_fScreenScaleFactor;
-}
-
-CCRect CCEGLView::getViewPort()
-{
-    if (m_bNotHVGA)
-    {
-        return m_rcViewPort;
-    }
-    else
-    {
-        CCRect rect(0, 0, 0, 0);
-        return rect;
-    }
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)

@@ -788,6 +788,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCEGLViewProtocol.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCEGLViewProtocol.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCFileUtils.cpp"
 				>
 			</File>

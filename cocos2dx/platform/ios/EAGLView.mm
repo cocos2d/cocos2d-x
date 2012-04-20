@@ -73,10 +73,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS IMPLEMENTATIONS:
 
-#define MAX_TOUCHES     11
 
 static EAGLView *view;
-static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 @interface EAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
@@ -88,8 +86,6 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 @synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize context=context_;
-@synthesize touchesIntergerDict;
-@synthesize indexBitsUsed;
 @synthesize multiSampling=multiSampling_;
 
 + (Class) layerClass

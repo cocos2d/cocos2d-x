@@ -1,6 +1,6 @@
 # set params
-NDK_ROOT_LOCAL=/cygdrive/d/programe/android/ndk/android-ndk-r6b
-COCOS2DX_ROOT_LOCAL=/cygdrive/e/cocos2d-x
+NDK_ROOT_LOCAL=/cygdrive/e/android/android-ndk-r7b
+COCOS2DX_ROOT_LOCAL=/cygdrive/f/Project/dumganhar/cocos2d-x
 
 # try to get global variable
 if [ $NDK_ROOT"aaa" != "aaa" ]; then
@@ -14,7 +14,7 @@ if [ $COCOS2DX_ROOT"aaa" != "aaa" ]; then
 fi
 
 GAME_ROOT=$COCOS2DX_ROOT_LOCAL/HelloLua
-GAME_ANDROID_ROOT=$GAME_ROOT/android
+GAME_ANDROID_ROOT=$GAME_ROOT/proj.android
 GAME_RESOURCE_ROOT=$GAME_ROOT/Resources
 
 # make sure assets is exist
