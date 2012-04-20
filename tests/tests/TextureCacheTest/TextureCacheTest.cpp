@@ -84,10 +84,10 @@ void TextureCacheTest::addSprite()
     CCSprite *s15 = CCSprite::spriteWithFile("Images/grossini_dance_14.png");
 
     // just loading textures to slow down
-    CCSprite *s16 = CCSprite::spriteWithFile("Images/background1.png");
-    CCSprite *s17 = CCSprite::spriteWithFile("Images/background2.png");
-    CCSprite *s18 = CCSprite::spriteWithFile("Images/background3.png");
-    CCSprite *s19 = CCSprite::spriteWithFile("Images/blocks.png");
+    CCSprite::spriteWithFile("Images/background1.png");
+    CCSprite::spriteWithFile("Images/background2.png");
+    CCSprite::spriteWithFile("Images/background3.png");
+    CCSprite::spriteWithFile("Images/blocks.png");
 
     s1->setPosition(CCPointMake(50, 50));
     s2->setPosition(CCPointMake(60, 50));

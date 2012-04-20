@@ -250,7 +250,6 @@ void CCSpriteBatchNode::sortAllChildren()
         int i = 0,j = 0,length = m_pChildren->data->num;
         CCNode ** x = (CCNode**)m_pChildren->data->arr;
         CCNode *tempItem = NULL;
-        CCSprite *child = NULL;
 
         //insertion sort
         for(i=1; i<length; i++)
