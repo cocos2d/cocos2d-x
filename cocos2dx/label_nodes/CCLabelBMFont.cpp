@@ -1282,7 +1282,6 @@ void CCLabelBMFont::updateLabel()
 
                 if (shift != 0)
                 {
-                    int j = 0;
                     for (unsigned j = 0; j < line_length; j++)
                     {
                         index = i + j + lineNumber;
