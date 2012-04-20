@@ -41,12 +41,12 @@ mkdir $GAME_ANDROID_ROOT/assets
 # copy resources
 for file in $RESOURCE_ROOT/*
 do
-    if [ -d $file ]; then
-        cp -rf $file $GAME_ANDROID_ROOT/assets
+    if [ -d "$file" ]; then
+        cp -rf "$file" $GAME_ANDROID_ROOT/assets
     fi
 
-    if [ -f $file ]; then
-        cp $file $GAME_ANDROID_ROOT/assets
+    if [ -f "$file" ]; then
+        cp "$file" $GAME_ANDROID_ROOT/assets
     fi
 done
 
