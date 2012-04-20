@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Apr 17 15:56:14 2012.
+** Generated automatically by tolua++-1.0.92 on Fri Apr 20 15:40:59 2012.
 */
 
 #include <vector>
@@ -21979,8 +21979,8 @@ static int tolua_Cocos2d_CCLabelBMFont_labelWithString00(lua_State* tolua_S)
  else
 #endif
  {
-  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
-  const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+  char* str = ((char*)  tolua_tostring(tolua_S,2,0));
+  char* fntFile = ((char*)  tolua_tostring(tolua_S,3,0));
   {
    CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  CCLabelBMFont::labelWithString(str,fntFile);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -22013,8 +22013,8 @@ static int tolua_Cocos2d_CCLabelBMFont_labelWithString01(lua_State* tolua_S)
   goto tolua_lerror;
  else
  {
-  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
-  const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+  char* str = ((char*)  tolua_tostring(tolua_S,2,0));
+  char* fntFile = ((char*)  tolua_tostring(tolua_S,3,0));
   float width = ((float)  tolua_tonumber(tolua_S,4,0));
   CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,5,0));
   {
@@ -22047,8 +22047,8 @@ static int tolua_Cocos2d_CCLabelBMFont_labelWithString02(lua_State* tolua_S)
   goto tolua_lerror;
  else
  {
-  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
-  const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+  char* str = ((char*)  tolua_tostring(tolua_S,2,0));
+  char* fntFile = ((char*)  tolua_tostring(tolua_S,3,0));
   float width = ((float)  tolua_tonumber(tolua_S,4,0));
   CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,5,0));
   CCPoint imageOffset = *((CCPoint*)  tolua_tousertype(tolua_S,6,0));
