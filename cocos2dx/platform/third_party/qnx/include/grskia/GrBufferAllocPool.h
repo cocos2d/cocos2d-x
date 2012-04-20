@@ -185,7 +185,7 @@ private:
     int                             fPreallocBuffersInUse;
     int                             fFirstPreallocBuffer;
     GrAutoMalloc                    fCpuData;
-    void*                       	fBufferPtr;
+    void*                           fBufferPtr;
 };
 
 class GrVertexBuffer;

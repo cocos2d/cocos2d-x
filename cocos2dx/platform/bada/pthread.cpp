@@ -36,7 +36,7 @@ typedef void*(*pthread_func)(void *);
 
 //struct _pthread_fastlock
 //{
-//	int __spinlock;
+//    int __spinlock;
 //};
 
 //typedef struct _pthread_descr_struct*_pthread_descr;
@@ -63,12 +63,12 @@ struct sched_param {
 
 /* Attributes for threads.  */
 struct pthread_attr{
-  int		__detachstate;
-  int		__schedpolicy;
-  struct sched_param	__schedparam;
-  int		__inheritsched;
-  int		__scope;
-  void *	__stackaddr;
+  int        __detachstate;
+  int        __schedpolicy;
+  struct sched_param    __schedparam;
+  int        __inheritsched;
+  int        __scope;
+  void *    __stackaddr;
   unsigned long __stacksize;
 };
 
@@ -82,304 +82,304 @@ struct pthread_cond{
 };
 
 class RunnableProxy :
-		public Object,
-  		public virtual IRunnable
+        public Object,
+          public virtual IRunnable
 {
 private:
-	pthread_func _func;
-	void * _parameter;
+    pthread_func _func;
+    void * _parameter;
 
 public:
-	void SetFunc(pthread_func func)
-	{
-		_func = func;
-	}
+    void SetFunc(pthread_func func)
+    {
+        _func = func;
+    }
 
-	pthread_func GetFunc()
-	{
-		return _func;
-	}
+    pthread_func GetFunc()
+    {
+        return _func;
+    }
 
-	void SetParameter(void *parameter)
-	{
-		_parameter = parameter;
-	}
+    void SetParameter(void *parameter)
+    {
+        _parameter = parameter;
+    }
 
-	void *GetParameter()
-	{
-		return _parameter;
-	}
+    void *GetParameter()
+    {
+        return _parameter;
+    }
 
-	Object* Run(void)
-	{
-		void *result = _func(_parameter);
-		return (Object *)result;
-	}
+    Object* Run(void)
+    {
+        void *result = _func(_parameter);
+        return (Object *)result;
+    }
 };
 
 pthread_t pthread_self(void)
 {
-	return Thread::GetCurrentThread();
+    return Thread::GetCurrentThread();
 }
 
 int pthread_create(pthread_t*__threadarg,
-			const pthread_attr_t*__attr,
-			void*(*__start_routine)(void *),
-			void*__arg)
+            const pthread_attr_t*__attr,
+            void*(*__start_routine)(void *),
+            void*__arg)
 {
-	if (NULL == __threadarg)
-	{
-		return -1;
-	}
-	Thread *thread = new Thread();
-	RunnableProxy *proxy = new RunnableProxy();
-	proxy->SetFunc(__start_routine);
-	proxy->SetParameter(__arg);
-	thread->Construct(*proxy);
-	*__threadarg = thread;
-	return (int)thread->Start();
+    if (NULL == __threadarg)
+    {
+        return -1;
+    }
+    Thread *thread = new Thread();
+    RunnableProxy *proxy = new RunnableProxy();
+    proxy->SetFunc(__start_routine);
+    proxy->SetParameter(__arg);
+    thread->Construct(*proxy);
+    *__threadarg = thread;
+    return (int)thread->Start();
 }
 
 void pthread_exit(void*__retval)
 {
-	Thread::Exit(-1);
+    Thread::Exit(-1);
 }
 
 int pthread_join(pthread_t __th,void**__thread_return)
 {
-	if (!__th)
-	{
-		return -1;
-	}
-	return ((Thread*)__th)->Join();
+    if (!__th)
+    {
+        return -1;
+    }
+    return ((Thread*)__th)->Join();
 }
 
 int pthread_cancel(pthread_t thread)
 {
-	if (!thread)
-	{
-		return -1;
-	}
-	return ((Thread*)thread)->Exit();
+    if (!thread)
+    {
+        return -1;
+    }
+    return ((Thread*)thread)->Exit();
 }
 
 int pthread_detach(pthread_t __th)
 {
-	if (__th)
-	{
-		((Thread*)__th)->Exit();
-		delete __th;
-	}
-	return 0;
+    if (__th)
+    {
+        ((Thread*)__th)->Exit();
+        delete __th;
+    }
+    return 0;
 }
 
 int pthread_equal(pthread_t __thread1,pthread_t __thread2)
 {
-	if (!__thread1 || !__thread2)
-	{
-		return (void *)__thread1 == (void *)__thread2;
-	}
-	return ((Thread*)__thread1)->Equals(*((Thread*)__thread2));
+    if (!__thread1 || !__thread2)
+    {
+        return (void *)__thread1 == (void *)__thread2;
+    }
+    return ((Thread*)__thread1)->Equals(*((Thread*)__thread2));
 }
 
 int pthread_kill(pthread_t thread,int sig)
 {
-	if (!thread)
-	{
-		return -1;
-	}
-	return ((Thread*)thread)->Exit(sig);
+    if (!thread)
+    {
+        return -1;
+    }
+    return ((Thread*)thread)->Exit(sig);
 }
 
 int pthread_attr_init(pthread_attr_t*attr)
 {
-	*attr = new pthread_attr();
-	(*attr)->__stacksize = Thread::DEFAULT_STACK_SIZE;
-	struct sched_param param;
-	param.sched_priority = THREAD_PRIORITY_MID;
-	(*attr)->__schedparam = param;
-	return 0;
+    *attr = new pthread_attr();
+    (*attr)->__stacksize = Thread::DEFAULT_STACK_SIZE;
+    struct sched_param param;
+    param.sched_priority = THREAD_PRIORITY_MID;
+    (*attr)->__schedparam = param;
+    return 0;
 }
 
 int pthread_attr_destroy(pthread_attr_t*attr)
 {
-	return 0;
+    return 0;
 }
 
 int pthread_attr_setdetachstate(pthread_attr_t*attr,const int detachstate)
 {
-	(*attr)->__detachstate = detachstate;
-	return 0;
+    (*attr)->__detachstate = detachstate;
+    return 0;
 }
 
 int pthread_attr_getdetachstate(const pthread_attr_t*attr,int*detachstate)
 {
-	*detachstate = (*attr)->__detachstate;
-	return 0;
+    *detachstate = (*attr)->__detachstate;
+    return 0;
 }
 
 int pthread_mutexattr_init(pthread_mutexattr_t*attr)
 {
-	*attr = new pthread_mutexattr();
-	return 0;
+    *attr = new pthread_mutexattr();
+    return 0;
 }
 
 int pthread_mutexattr_destroy(pthread_mutexattr_t*attr)
 {
-	return 0;
+    return 0;
 }
 
 int pthread_mutex_init(pthread_mutex_t*mutex,
-		const pthread_mutexattr_t*mutexattr)
+        const pthread_mutexattr_t*mutexattr)
 {
-	if (!mutex)
-	{
-		return -1;
-	}
-	*mutex = new pthread_mutex();
-	(*mutex)->lock = new Mutex();
-	(*mutex)->acquired = false;
-	return (*mutex)->lock->Create();
+    if (!mutex)
+    {
+        return -1;
+    }
+    *mutex = new pthread_mutex();
+    (*mutex)->lock = new Mutex();
+    (*mutex)->acquired = false;
+    return (*mutex)->lock->Create();
 }
 
 int pthread_mutex_lock(pthread_mutex_t*mutex)
 {
-	if (!mutex || !(*mutex)->lock)
-	{
-		return -1;
-	}
-	int res = (*mutex)->lock->Acquire();
-	if (res == E_SUCCESS)
-	{
-		(*mutex)->acquired = true;
-	}
-	return res;
+    if (!mutex || !(*mutex)->lock)
+    {
+        return -1;
+    }
+    int res = (*mutex)->lock->Acquire();
+    if (res == E_SUCCESS)
+    {
+        (*mutex)->acquired = true;
+    }
+    return res;
 }
 
 int pthread_mutex_unlock(pthread_mutex_t*mutex)
 {
-	if (!mutex || !(*mutex)->lock)
-	{
-		return -1;
-	}
-	int res = (*mutex)->lock->Release();
-	if (res == E_SUCCESS)
-	{
-		(*mutex)->acquired = false;
-	}
-	return res;
+    if (!mutex || !(*mutex)->lock)
+    {
+        return -1;
+    }
+    int res = (*mutex)->lock->Release();
+    if (res == E_SUCCESS)
+    {
+        (*mutex)->acquired = false;
+    }
+    return res;
 }
 
 int pthread_mutex_trylock(pthread_mutex_t*mutex)
 {
-	if (!mutex || !(*mutex)->lock)
-	{
-		return -1;
-	}
-	if (!(*mutex)->acquired)
-	{
-		int res = (*mutex)->lock->Acquire();
-		if (res == E_SUCCESS)
-		{
-			(*mutex)->acquired = true;
-		}
-		return res;
-	}
-	return -1;
+    if (!mutex || !(*mutex)->lock)
+    {
+        return -1;
+    }
+    if (!(*mutex)->acquired)
+    {
+        int res = (*mutex)->lock->Acquire();
+        if (res == E_SUCCESS)
+        {
+            (*mutex)->acquired = true;
+        }
+        return res;
+    }
+    return -1;
 }
 
 int pthread_mutex_destroy(pthread_mutex_t*mutex)
 {
-	delete (*mutex)->lock;
-	(*mutex)->acquired = false;
-	delete (*mutex);
-	return 0;
+    delete (*mutex)->lock;
+    (*mutex)->acquired = false;
+    delete (*mutex);
+    return 0;
 }
 
 int pthread_cond_init(pthread_cond_t*cond,pthread_condattr_t*cond_attr)
 {
-	if (!cond)
-	{
-		return -1;
-	}
-	*cond = new pthread_cond();
-	(*cond)->lock = new Monitor();
-	(*cond)->lock->Construct();
-	return 0;
+    if (!cond)
+    {
+        return -1;
+    }
+    *cond = new pthread_cond();
+    (*cond)->lock = new Monitor();
+    (*cond)->lock->Construct();
+    return 0;
 }
 
 int pthread_cond_destroy(pthread_cond_t*cond)
 {
-	if (cond != NULL)
-	{
-		delete (*cond)->lock;
-		delete (*cond);
-		return 1;
-	}
-	return 0;
+    if (cond != NULL)
+    {
+        delete (*cond)->lock;
+        delete (*cond);
+        return 1;
+    }
+    return 0;
 }
 
 int pthread_cond_signal(pthread_cond_t*cond)
 {
-	if (!cond)
-	{
-		return -1;
-	}
-	return (*cond)->lock->Notify();
+    if (!cond)
+    {
+        return -1;
+    }
+    return (*cond)->lock->Notify();
 }
 
 int pthread_cond_broadcast(pthread_cond_t*cond)
 {
-	if (!cond)
-	{
-		return -1;
-	}
-	return (*cond)->lock->NotifyAll();
+    if (!cond)
+    {
+        return -1;
+    }
+    return (*cond)->lock->NotifyAll();
 }
 
 int pthread_cond_timedwait(pthread_cond_t*cond,pthread_mutex_t*mutex,
-			   const struct timespec*abstime)
+               const struct timespec*abstime)
 {
-	if (!cond)
-	{
-		return -1;
-	}
-	(*cond)->lock->Enter();
-	(*cond)->lock->Wait();
-	(*cond)->lock->Exit();
-	return 1;
+    if (!cond)
+    {
+        return -1;
+    }
+    (*cond)->lock->Enter();
+    (*cond)->lock->Wait();
+    (*cond)->lock->Exit();
+    return 1;
 }
 
 int pthread_cond_wait(pthread_cond_t*cond,pthread_mutex_t*mutex)
 {
-	if (!cond)
-	{
-		return -1;
-	}
-	(*cond)->lock->Enter();
-	(*cond)->lock->Wait();
-	(*cond)->lock->Exit();
-	return 1;
+    if (!cond)
+    {
+        return -1;
+    }
+    (*cond)->lock->Enter();
+    (*cond)->lock->Wait();
+    (*cond)->lock->Exit();
+    return 1;
 }
 
 int pthread_condattr_init(pthread_condattr_t*attr)
 {
-	return 0;
+    return 0;
 }
 
 int pthread_condattr_destroy(pthread_condattr_t*attr)
 {
-	return 0;
+    return 0;
 }
 
 int pthread_condattr_getpshared(const pthread_condattr_t*attr,int*pshared)
 {
-	return 0;
+    return 0;
 }
 
 int pthread_condattr_setpshared(pthread_condattr_t*attr,int pshared)
 {
-	return 0;
+    return 0;
 }
 
 }

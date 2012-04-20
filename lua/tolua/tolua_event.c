@@ -17,8 +17,8 @@
 #include "tolua++.h"
 
 /* Store at ubox
-	* It stores, creating the corresponding table if needed,
-	* the pair key/value in the corresponding ubox table
+    * It stores, creating the corresponding table if needed,
+    * the pair key/value in the corresponding ubox table
 */
 static void storeatubox (lua_State* L, int lo)
 {
@@ -28,7 +28,7 @@ static void storeatubox (lua_State* L, int lo)
         lua_pop(L, 1);
         lua_newtable(L);
         lua_pushvalue(L, -1);
-        lua_setfenv(L, lo);	/* stack: k,v,table  */
+        lua_setfenv(L, lo);    /* stack: k,v,table  */
     };
     lua_insert(L, -3);
     lua_settable(L, -3); /* on lua 5.1, we trade the "tolua_peers" lookup for a settable call */
@@ -131,8 +131,8 @@ static int module_newindex_event (lua_State* L)
 }
 
 /* Class index function
-	* If the object is a userdata (ie, an object), it searches the field in
-	* the alternative table stored in the corresponding "ubox" table.
+    * If the object is a userdata (ie, an object), it searches the field in
+    * the alternative table stored in the corresponding "ubox" table.
 */
 static int class_index_event (lua_State* L)
 {
@@ -235,9 +235,9 @@ static int class_index_event (lua_State* L)
 }
 
 /* Newindex function
-	* It first searches for a C/C++ varaible to be set.
-	* Then, it either stores it in the alternative ubox table (in the case it is
-	* an object) or in the own table (that represents the class or module).
+    * It first searches for a C/C++ varaible to be set.
+    * Then, it either stores it in the alternative ubox table (in the case it is
+    * an object) or in the own table (that represents the class or module).
 */
 static int class_newindex_event (lua_State* L)
 {
@@ -400,22 +400,22 @@ static int class_eq_event (lua_State* L)
 /*
 static int class_gc_event (lua_State* L)
 {
-	void* u = *((void**)lua_touserdata(L,1));
-	fprintf(stderr, "collecting: looking at %p\n", u);
-	lua_pushstring(L,"tolua_gc");
-	lua_rawget(L,LUA_REGISTRYINDEX);
-	lua_pushlightuserdata(L,u);
-	lua_rawget(L,-2);
-	if (lua_isfunction(L,-1))
-	{
-		lua_pushvalue(L,1);
-		lua_call(L,1,0);
- 		lua_pushlightuserdata(L,u);
-		lua_pushnil(L);
-		lua_rawset(L,-3);
-	}
-	lua_pop(L,2);
-	return 0;
+    void* u = *((void**)lua_touserdata(L,1));
+    fprintf(stderr, "collecting: looking at %p\n", u);
+    lua_pushstring(L,"tolua_gc");
+    lua_rawget(L,LUA_REGISTRYINDEX);
+    lua_pushlightuserdata(L,u);
+    lua_rawget(L,-2);
+    if (lua_isfunction(L,-1))
+    {
+        lua_pushvalue(L,1);
+        lua_call(L,1,0);
+         lua_pushlightuserdata(L,u);
+        lua_pushnil(L);
+        lua_rawset(L,-3);
+    }
+    lua_pop(L,2);
+    return 0;
 }
 */
 TOLUA_API int class_gc_event (lua_State* L)
@@ -461,7 +461,7 @@ TOLUA_API int class_gc_event (lua_State* L)
 
 
 /* Register module events
-	* It expects the metatable on the top of the stack
+    * It expects the metatable on the top of the stack
 */
 TOLUA_API void tolua_moduleevents (lua_State* L)
 {
@@ -489,7 +489,7 @@ TOLUA_API int tolua_ismodulemetatable (lua_State* L)
 }
 
 /* Register class events
-	* It expects the metatable on the top of the stack
+    * It expects the metatable on the top of the stack
 */
 TOLUA_API void tolua_classevents (lua_State* L)
 {

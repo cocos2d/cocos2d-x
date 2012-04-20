@@ -27,9 +27,9 @@ typedef LUAI_MEM l_mem;
 typedef unsigned char lu_byte;
 
 
-#define MAX_SIZET	((size_t)(~(size_t)0)-2)
+#define MAX_SIZET    ((size_t)(~(size_t)0)-2)
 
-#define MAX_LUMEM	((lu_mem)(~(lu_mem)0)-2)
+#define MAX_LUMEM    ((lu_mem)(~(lu_mem)0)-2)
 
 
 #define MAX_INT (INT_MAX-2)  /* maximum value of an int (-2 for safety) */
@@ -54,30 +54,30 @@ typedef LUAI_UACNUMBER l_uacNumber;
 /* internal assertions for in-house debugging */
 #ifdef lua_assert
 
-#define check_exp(c,e)		(lua_assert(c), (e))
-#define api_check(l,e)		lua_assert(e)
+#define check_exp(c,e)        (lua_assert(c), (e))
+#define api_check(l,e)        lua_assert(e)
 
 #else
 
-#define lua_assert(c)		((void)0)
-#define check_exp(c,e)		(e)
-#define api_check		luai_apicheck
+#define lua_assert(c)        ((void)0)
+#define check_exp(c,e)        (e)
+#define api_check        luai_apicheck
 
 #endif
 
 
 #ifndef UNUSED
-#define UNUSED(x)	((void)(x))	/* to avoid warnings */
+#define UNUSED(x)    ((void)(x))    /* to avoid warnings */
 #endif
 
 
 #ifndef cast
-#define cast(t, exp)	((t)(exp))
+#define cast(t, exp)    ((t)(exp))
 #endif
 
-#define cast_byte(i)	cast(lu_byte, (i))
-#define cast_num(i)	cast(lua_Number, (i))
-#define cast_int(i)	cast(int, (i))
+#define cast_byte(i)    cast(lu_byte, (i))
+#define cast_num(i)    cast(lua_Number, (i))
+#define cast_int(i)    cast(int, (i))
 
 
 
@@ -90,19 +90,19 @@ typedef lu_int32 Instruction;
 
 
 /* maximum stack for a Lua function */
-#define MAXSTACK	250
+#define MAXSTACK    250
 
 
 
 /* minimum size for the string table (must be power of 2) */
 #ifndef MINSTRTABSIZE
-#define MINSTRTABSIZE	32
+#define MINSTRTABSIZE    32
 #endif
 
 
 /* minimum size for string buffer */
 #ifndef LUA_MINBUFFER
-#define LUA_MINBUFFER	32
+#define LUA_MINBUFFER    32
 #endif
 
 
@@ -120,9 +120,9 @@ typedef lu_int32 Instruction;
 ** macro to control inclusion of some hard tests on stack reallocation
 */ 
 #ifndef HARDSTACKTESTS
-#define condhardstacktests(x)	((void)0)
+#define condhardstacktests(x)    ((void)0)
 #else
-#define condhardstacktests(x)	x
+#define condhardstacktests(x)    x
 #endif
 
 #endif

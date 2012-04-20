@@ -35,32 +35,32 @@ const kmScalar kmPlaneDot(const kmPlane* pP, const kmVec4* pV)
     //a*x + b*y + c*z + d*w
 
     return (pP->a * pV->x +
-	    pP->b * pV->y +
-	    pP->c * pV->z +
-	    pP->d * pV->w);
+        pP->b * pV->y +
+        pP->c * pV->z +
+        pP->d * pV->w);
 }
 
 const kmScalar kmPlaneDotCoord(const kmPlane* pP, const kmVec3* pV)
 {
     return (pP->a * pV->x +
-	    pP->b * pV->y +
-	    pP->c * pV->z + pP->d);
+        pP->b * pV->y +
+        pP->c * pV->z + pP->d);
 }
 
 const kmScalar kmPlaneDotNormal(const kmPlane* pP, const kmVec3* pV)
 {
     return (pP->a * pV->x +
-	    pP->b * pV->y +
-	    pP->c * pV->z);
+        pP->b * pV->y +
+        pP->c * pV->z);
 }
 
 kmPlane* const kmPlaneFromPointNormal(kmPlane* pOut, const kmVec3* pPoint, const kmVec3* pNormal)
 {
     /*
-	Planea = Nx
-	Planeb = Ny
-	Planec = Nz
-	Planed = −N⋅P
+    Planea = Nx
+    Planeb = Ny
+    Planec = Nz
+    Planed = −N⋅P
     */
 
 
@@ -105,9 +105,9 @@ kmPlane* const kmPlaneFromPoints(kmPlane* pOut, const kmVec3* p1, const kmVec3* 
 kmVec3* const kmPlaneIntersectLine(kmVec3* pOut, const kmPlane* pP, const kmVec3* pV1, const kmVec3* pV2)
 {
     /*
-	    n = (Planea, Planeb, Planec)
-	    d = V − U
-	    Out = U − d⋅(Pd + n⋅U)⁄(d⋅n) [iff d⋅n ≠ 0]
+        n = (Planea, Planeb, Planec)
+        d = V − U
+        Out = U − d⋅(Pd + n⋅U)⁄(d⋅n) [iff d⋅n ≠ 0]
     */
     kmVec3 d;
     assert(0 && "Not implemented");
@@ -119,10 +119,10 @@ kmVec3* const kmPlaneIntersectLine(kmVec3* pOut, const kmPlane* pP, const kmVec3
     //TODO: Continue here!
     /*if (fabs(kmVec3Dot(&pP->m_N, &d)) > kmEpsilon)
     {
-	    //If we get here then the plane and line are parallel (i.e. no intersection)
-	    pOut = nullptr; //Set to nullptr
+        //If we get here then the plane and line are parallel (i.e. no intersection)
+        pOut = nullptr; //Set to nullptr
 
-	    return pOut;
+        return pOut;
     } */
 
     return NULL;
@@ -130,28 +130,28 @@ kmVec3* const kmPlaneIntersectLine(kmVec3* pOut, const kmPlane* pP, const kmVec3
 
 kmPlane* const kmPlaneNormalize(kmPlane* pOut, const kmPlane* pP)
 {
-	kmVec3 n;
+    kmVec3 n;
     kmScalar l = 0;
 
-	n.x = pP->a;
-	n.y = pP->b;
-	n.z = pP->c;
+    n.x = pP->a;
+    n.y = pP->b;
+    n.z = pP->c;
 
-	l = 1.0f / kmVec3Length(&n); //Get 1/length
-	kmVec3Normalize(&n, &n); //Normalize the vector and assign to pOut
+    l = 1.0f / kmVec3Length(&n); //Get 1/length
+    kmVec3Normalize(&n, &n); //Normalize the vector and assign to pOut
 
-	pOut->a = n.x;
-	pOut->b = n.y;
-	pOut->c = n.z;
+    pOut->a = n.x;
+    pOut->b = n.y;
+    pOut->c = n.z;
 
-	pOut->d = pP->d * l; //Scale the D value and assign to pOut
+    pOut->d = pP->d * l; //Scale the D value and assign to pOut
 
-	return pOut;
+    return pOut;
 }
 
 kmPlane* const kmPlaneScale(kmPlane* pOut, const kmPlane* pP, kmScalar s)
 {
-	assert(0 && "Not implemented");
+    assert(0 && "Not implemented");
     return NULL;
 }
 

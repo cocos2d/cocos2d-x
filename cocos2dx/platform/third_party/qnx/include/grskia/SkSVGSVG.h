@@ -30,11 +30,11 @@ private:
     SkString f_width;
     SkString f_version;
     SkString f_viewBox;
-	SkString f_x;
+    SkString f_x;
     SkString f_xml_space;
     SkString f_xmlns;
     SkString f_xml_xlink;
-	SkString f_y;
+    SkString f_y;
 
     typedef SkSVGElement INHERITED;
 };

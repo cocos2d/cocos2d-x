@@ -13,8 +13,8 @@ enum
     ACTION_MOVE_LAYER,
     ACTION_SCALE_LAYER,
     ACTION_ROTATE_LAYER,
-	ACTION_SKEW_LAYER,
-	ACTION_SKEWROTATE_LAYER,
+    ACTION_SKEW_LAYER,
+    ACTION_SKEWROTATE_LAYER,
     ACTION_JUMP_LAYER,
     ACTION_BEZIER_LAYER,
     ACTION_BLINK_LAYER,
@@ -36,12 +36,12 @@ enum
     ACTION_REVERSESEQUENCE2_LAYER,
     ACTION_ORBIT_LAYER,
     ACTION_FLLOW_LAYER,
-	ACTION_TARGETED_LAYER,
-	ACTION_ISSUE1305_LAYER,
-	ACTION_ISSUE1305_2_LAYER,
-	ACTION_ISSUE1288_LAYER,
-	ACTION_ISSUE1288_2_LAYER,
-	ACTION_ISSUE1327_LAYER,
+    ACTION_TARGETED_LAYER,
+    ACTION_ISSUE1305_LAYER,
+    ACTION_ISSUE1305_2_LAYER,
+    ACTION_ISSUE1288_LAYER,
+    ACTION_ISSUE1288_2_LAYER,
+    ACTION_ISSUE1327_LAYER,
     ACTION_LAYER_COUNT,
 };
 
@@ -58,9 +58,10 @@ public:
 class ActionsDemo : public CCLayer
 {
 protected:
-    CCSprite*	m_grossini;
-    CCSprite*	m_tamara;
-    CCSprite*	m_kathia;public:
+    CCSprite*    m_grossini;
+    CCSprite*    m_tamara;
+    CCSprite*    m_kathia;
+public:
     virtual void onEnter();
     virtual void onExit();
 
@@ -97,14 +98,14 @@ public:
 
 class ActionSkew : public ActionsDemo
 {
-	virtual void onEnter();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual std::string subtitle();
 };
 
 class ActionSkewRotateScale : public ActionsDemo
 {
-	virtual void onEnter();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual std::string subtitle();
 };
 
 class ActionRotate : public ActionsDemo
@@ -153,8 +154,8 @@ class ActionAnimate : public ActionsDemo
 {
 public:
     virtual void onEnter();
-	virtual void onExit();
-	virtual std::string title();
+    virtual void onExit();
+    virtual std::string title();
     virtual std::string subtitle();
 };
 
@@ -278,59 +279,59 @@ public:
 class ActionTargeted : public ActionsDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class Issue1305 : public ActionsDemo
 {
 public:
-	virtual void onEnter();
-	virtual void onExit();
-	void log(CCNode* pSender);
-	void addSprite(ccTime dt);
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual void onExit();
+    void log(CCNode* pSender);
+    void addSprite(ccTime dt);
+    virtual std::string title();
+    virtual std::string subtitle();
 private:
-	CCSprite* m_pSpriteTmp;
+    CCSprite* m_pSpriteTmp;
 };
 
 class Issue1305_2 : public ActionsDemo
 {
 public:
-	virtual void onEnter();
-	void log1();
-	void log2();
-	void log3();
-	void log4();
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    void log1();
+    void log2();
+    void log3();
+    void log4();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class Issue1288 : public ActionsDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class Issue1288_2 : public ActionsDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string title();
-	virtual std::string subtitle();
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class Issue1327 : public ActionsDemo
 {
 public:
-	virtual void onEnter();
-	virtual std::string subtitle();
-	virtual std::string title();
-	void logSprRotation(CCNode* pSender);
+    virtual void onEnter();
+    virtual std::string subtitle();
+    virtual std::string title();
+    void logSprRotation(CCNode* pSender);
 };
 
 #endif

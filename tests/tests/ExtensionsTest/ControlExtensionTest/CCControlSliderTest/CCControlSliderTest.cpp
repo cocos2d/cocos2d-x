@@ -59,7 +59,7 @@ bool CCControlSliderTest::init()
         // When the value of the slider will change, the given selector will be call
         slider->addTargetWithActionForControlEvents(this, menu_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
 
-        addChild(slider);	
+        addChild(slider);    
         return true;
     }
     return false;
@@ -68,7 +68,7 @@ bool CCControlSliderTest::init()
 void CCControlSliderTest::valueChanged(CCObject *sender)
 {
     CCControlSlider* pSlider = (CCControlSlider*)sender;
-	// Change value of label.
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Slider value = %.02f", pSlider->getValue())->getCString());	
+    // Change value of label.
+    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Slider value = %.02f", pSlider->getValue())->getCString());    
 }
 

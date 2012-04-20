@@ -40,29 +40,29 @@ using namespace cocos2d;
 
 extern "C"
 {
-	const char* getPackageNameJNI()
-	{
-		JniMethodInfo t;
+    const char* getPackageNameJNI()
+    {
+        JniMethodInfo t;
 
-		if (JniHelper::getStaticMethodInfo(t, 
-						"org/cocos2dx/lib/Cocos2dxActivity",
-						"getCocos2dxPackageName",
-						"()Ljava/lang/String;"))
-		{
-			jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
-			t.env->DeleteLocalRef(t.classID);
-			CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
-			ret->autorelease();
+        if (JniHelper::getStaticMethodInfo(t, 
+                        "org/cocos2dx/lib/Cocos2dxActivity",
+                        "getCocos2dxPackageName",
+                        "()Ljava/lang/String;"))
+        {
+            jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
+            CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
+            ret->autorelease();
 
-			LOGD("package name %s", ret->m_sString.c_str());
+            LOGD("package name %s", ret->m_sString.c_str());
 
-			return ret->m_sString.c_str();
-		}
+            return ret->m_sString.c_str();
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
-	//////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
     // handle get current language
     //////////////////////////////////////////////////////////////////////////
     const char* getCurrentLanguageJNI()
@@ -75,13 +75,13 @@ extern "C"
             , "()Ljava/lang/String;"))
         {
             jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
-			t.env->DeleteLocalRef(t.classID);
-	        CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
-			ret->autorelease();
+            t.env->DeleteLocalRef(t.classID);
+            CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
+            ret->autorelease();
 
-	        LOGD("language name %s", ret.c_str());
+            LOGD("language name %s", ret.c_str());
 
-			return ret->m_sString.c_str();
+            return ret->m_sString.c_str();
         }
 
         return 0;

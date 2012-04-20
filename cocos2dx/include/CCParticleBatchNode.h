@@ -60,64 +60,64 @@ class CCParticleSystem;
 class CC_DLL CCParticleBatchNode : public CCNode, public CCTextureProtocol
 {
 public:
-	CCParticleBatchNode();
-	virtual ~CCParticleBatchNode();
-	/** initializes the particle system with CCTexture2D, a default capacity of 500 */
-	static CCParticleBatchNode* batchNodeWithTexture(CCTexture2D * tex);
+    CCParticleBatchNode();
+    virtual ~CCParticleBatchNode();
+    /** initializes the particle system with CCTexture2D, a default capacity of 500 */
+    static CCParticleBatchNode* batchNodeWithTexture(CCTexture2D * tex);
 
-	/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a default capacity of 500 particles */
-	static CCParticleBatchNode* batchNodeWithFile(const char* imageFile);
+    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a default capacity of 500 particles */
+    static CCParticleBatchNode* batchNodeWithFile(const char* imageFile);
 
-	/** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use */
-	static CCParticleBatchNode* batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity);
+    /** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use */
+    static CCParticleBatchNode* batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity);
 
-	/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
-	static CCParticleBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
+    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
+    static CCParticleBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
 
-	/** initializes the particle system with CCTexture2D, a capacity of particles */
-	bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
+    /** initializes the particle system with CCTexture2D, a capacity of particles */
+    bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
 
-	/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
-	bool initWithFile(const char* fileImage, unsigned int capacity);
+    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
+    bool initWithFile(const char* fileImage, unsigned int capacity);
 
-	/** Add a child into the CCParticleBatchNode */
-	virtual void addChild(CCNode * child);
-	virtual void addChild(CCNode * child, int zOrder);
-	virtual void addChild(CCNode * child, int zOrder, int tag);
+    /** Add a child into the CCParticleBatchNode */
+    virtual void addChild(CCNode * child);
+    virtual void addChild(CCNode * child, int zOrder);
+    virtual void addChild(CCNode * child, int zOrder, int tag);
 
-	/** Inserts a child into the CCParticleBatchNode */
-	void insertChild(CCParticleSystem* pSystem, unsigned int index);
+    /** Inserts a child into the CCParticleBatchNode */
+    void insertChild(CCParticleSystem* pSystem, unsigned int index);
 
-	/** remove child from the CCParticleBatchNode */
-	virtual void removeChild(CCNode* child, bool cleanup);
-	virtual void reorderChild(CCNode * child, int zOrder);
-	void removeChildAtIndex(unsigned int index, bool doCleanup);
-	void removeAllChildrenWithCleanup(bool doCleanup);
-	/** disables a particle by inserting a 0'd quad into the texture atlas */
-	void disableParticle(unsigned int particleIndex);
-	virtual void draw(void);
-	// returns the used texture
-	virtual CCTexture2D* getTexture(void);
-	// sets a new texture. it will be retained
-	virtual void setTexture(CCTexture2D *texture);
-	virtual void setBlendFunc(ccBlendFunc blendFunc);
-	// returns the blending function used for the texture
-	virtual ccBlendFunc getBlendFunc(void);
+    /** remove child from the CCParticleBatchNode */
+    virtual void removeChild(CCNode* child, bool cleanup);
+    virtual void reorderChild(CCNode * child, int zOrder);
+    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void removeAllChildrenWithCleanup(bool doCleanup);
+    /** disables a particle by inserting a 0'd quad into the texture atlas */
+    void disableParticle(unsigned int particleIndex);
+    virtual void draw(void);
+    // returns the used texture
+    virtual CCTexture2D* getTexture(void);
+    // sets a new texture. it will be retained
+    virtual void setTexture(CCTexture2D *texture);
+    virtual void setBlendFunc(ccBlendFunc blendFunc);
+    // returns the blending function used for the texture
+    virtual ccBlendFunc getBlendFunc(void);
 
-	void visit();
+    void visit();
 
 private:
-	void updateAllAtlasIndexes();
-	void increaseAtlasCapacityTo(unsigned int quantity);
-	unsigned int searchNewPositionInChildrenForZ(int z);
-	void getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, CCNode* child, int z);
-	unsigned int addChildHelper(CCParticleSystem* child, int z, int aTag);
-	void updateBlendFunc(void);
-	/** the texture atlas used for drawing the quads */
-	CC_SYNTHESIZE(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
+    void updateAllAtlasIndexes();
+    void increaseAtlasCapacityTo(unsigned int quantity);
+    unsigned int searchNewPositionInChildrenForZ(int z);
+    void getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, CCNode* child, int z);
+    unsigned int addChildHelper(CCParticleSystem* child, int z, int aTag);
+    void updateBlendFunc(void);
+    /** the texture atlas used for drawing the quads */
+    CC_SYNTHESIZE(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
 private:
-	/** the blend function used for drawing the quads */
-	ccBlendFunc m_tBlendFunc;
+    /** the blend function used for drawing the quads */
+    ccBlendFunc m_tBlendFunc;
 };
 
 NS_CC_END

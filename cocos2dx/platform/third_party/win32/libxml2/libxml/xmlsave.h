@@ -27,11 +27,11 @@ extern "C" {
  * to the xmlSaveToFd() and similar calls.
  */
 typedef enum {
-    XML_SAVE_FORMAT     = 1<<0,	/* format save output */
-    XML_SAVE_NO_DECL    = 1<<1,	/* drop the xml declaration */
-    XML_SAVE_NO_EMPTY	= 1<<2, /* no empty tags */
-    XML_SAVE_NO_XHTML	= 1<<3, /* disable XHTML1 specific rules */
-    XML_SAVE_XHTML	= 1<<4, /* force XHTML1 specific rules */
+    XML_SAVE_FORMAT     = 1<<0,    /* format save output */
+    XML_SAVE_NO_DECL    = 1<<1,    /* drop the xml declaration */
+    XML_SAVE_NO_EMPTY    = 1<<2, /* no empty tags */
+    XML_SAVE_NO_XHTML    = 1<<3, /* disable XHTML1 specific rules */
+    XML_SAVE_XHTML    = 1<<4, /* force XHTML1 specific rules */
     XML_SAVE_AS_XML     = 1<<5, /* force XML serialization on HTML doc */
     XML_SAVE_AS_HTML    = 1<<6  /* force HTML serialization on XML doc */
 } xmlSaveOption;
@@ -41,43 +41,43 @@ typedef struct _xmlSaveCtxt xmlSaveCtxt;
 typedef xmlSaveCtxt *xmlSaveCtxtPtr;
 
 XMLPUBFUN xmlSaveCtxtPtr XMLCALL
-		xmlSaveToFd		(int fd,
-					 const char *encoding,
-					 int options);
+        xmlSaveToFd        (int fd,
+                     const char *encoding,
+                     int options);
 XMLPUBFUN xmlSaveCtxtPtr XMLCALL
-		xmlSaveToFilename	(const char *filename,
-					 const char *encoding,
-					 int options);
+        xmlSaveToFilename    (const char *filename,
+                     const char *encoding,
+                     int options);
 
 XMLPUBFUN xmlSaveCtxtPtr XMLCALL
-		xmlSaveToBuffer		(xmlBufferPtr buffer,
-					 const char *encoding,
-					 int options);
+        xmlSaveToBuffer        (xmlBufferPtr buffer,
+                     const char *encoding,
+                     int options);
 
 XMLPUBFUN xmlSaveCtxtPtr XMLCALL
-		xmlSaveToIO		(xmlOutputWriteCallback iowrite,
-					 xmlOutputCloseCallback ioclose,
-					 void *ioctx,
-					 const char *encoding,
-					 int options);
+        xmlSaveToIO        (xmlOutputWriteCallback iowrite,
+                     xmlOutputCloseCallback ioclose,
+                     void *ioctx,
+                     const char *encoding,
+                     int options);
 
 XMLPUBFUN long XMLCALL
-		xmlSaveDoc		(xmlSaveCtxtPtr ctxt,
-					 xmlDocPtr doc);
+        xmlSaveDoc        (xmlSaveCtxtPtr ctxt,
+                     xmlDocPtr doc);
 XMLPUBFUN long XMLCALL
-		xmlSaveTree		(xmlSaveCtxtPtr ctxt,
-					 xmlNodePtr node);
+        xmlSaveTree        (xmlSaveCtxtPtr ctxt,
+                     xmlNodePtr node);
 
 XMLPUBFUN int XMLCALL
-		xmlSaveFlush		(xmlSaveCtxtPtr ctxt);
+        xmlSaveFlush        (xmlSaveCtxtPtr ctxt);
 XMLPUBFUN int XMLCALL
-		xmlSaveClose		(xmlSaveCtxtPtr ctxt);
+        xmlSaveClose        (xmlSaveCtxtPtr ctxt);
 XMLPUBFUN int XMLCALL
-		xmlSaveSetEscape	(xmlSaveCtxtPtr ctxt,
-					 xmlCharEncodingOutputFunc escape);
+        xmlSaveSetEscape    (xmlSaveCtxtPtr ctxt,
+                     xmlCharEncodingOutputFunc escape);
 XMLPUBFUN int XMLCALL
-		xmlSaveSetAttrEscape	(xmlSaveCtxtPtr ctxt,
-					 xmlCharEncodingOutputFunc escape);
+        xmlSaveSetAttrEscape    (xmlSaveCtxtPtr ctxt,
+                     xmlCharEncodingOutputFunc escape);
 #ifdef __cplusplus
 }
 #endif

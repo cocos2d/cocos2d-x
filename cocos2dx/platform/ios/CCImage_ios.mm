@@ -382,15 +382,15 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         }      
         
 #if CC_FONT_LABEL_SUPPORT
-	    if (! font)
-	    {
-		        font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
-		        if (font)
+        if (! font)
+        {
+                font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
+                if (font)
                 {
                     //dim = [str sizeWithZFont:font];
                     dim =_caculateStringSizeWithFontOrZFont(str, font, &constrainSize, true);
                 }  
-	    }
+        }
 #endif // CC_FONT_LABEL_SUPPORT
 
         if (! font)
@@ -436,11 +436,11 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         CGContextRef context = CGBitmapContextCreate(data, dim.width, dim.height, 8, dim.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
         CGColorSpaceRelease(colorSpace);
         
-		if (! context)
-		{
-		        delete[] data;
-		        break;
-		}
+        if (! context)
+        {
+                delete[] data;
+                break;
+        }
         
         CGContextSetRGBFillColor(context, 1, 1, 1, 1);
         CGContextTranslateCTM(context, 0.0f, dim.height);
@@ -454,16 +454,16 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                                 : UITextAlignmentLeft;
         
         // normal fonts
-	if( [font isKindOfClass:[UIFont class] ] )
-	{
-		[str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
-	}
-	
+    if( [font isKindOfClass:[UIFont class] ] )
+    {
+        [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+    }
+    
 #if CC_FONT_LABEL_SUPPORT
-	else // ZFont class 
-	{
-		[FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
-	}
+    else // ZFont class 
+    {
+        [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+    }
 #endif
         
         UIGraphicsPopContext();
@@ -483,7 +483,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
     return bRet;
 }
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCImage::CCImage()
 : m_nWidth(0)
@@ -509,10 +509,10 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 
 bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
-	  CC_UNUSED_PARAM(imageType);
-	  /*
-	   * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
-	   */
+      CC_UNUSED_PARAM(imageType);
+      /*
+       * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
+       */
     CCFileData data(fullpath, "rb");
     return initWithImageData(data.getBuffer(), data.getSize(), imageType);
 }
@@ -554,25 +554,25 @@ bool CCImage::initWithImageData(void * pData,
 bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
 {
     bool bRet = false;
-	do 
-	{
-		CC_BREAK_IF(0 == nWidth || 0 == nHeight);
+    do 
+    {
+        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
 
-		m_nBitsPerComponent = nBitsPerComponent;
-		m_nHeight   = (short)nHeight;
-		m_nWidth    = (short)nWidth;
-		m_bHasAlpha = true;
+        m_nBitsPerComponent = nBitsPerComponent;
+        m_nHeight   = (short)nHeight;
+        m_nWidth    = (short)nWidth;
+        m_bHasAlpha = true;
 
-		// only RGBA8888 surported
-		int nBytesPerComponent = 4;
-		int nSize = nHeight * nWidth * nBytesPerComponent;
-		m_pData = new unsigned char[nSize];
-		CC_BREAK_IF(! m_pData);
-		memcpy(m_pData, pData, nSize);
+        // only RGBA8888 surported
+        int nBytesPerComponent = 4;
+        int nSize = nHeight * nWidth * nBytesPerComponent;
+        m_pData = new unsigned char[nSize];
+        CC_BREAK_IF(! m_pData);
+        memcpy(m_pData, pData, nSize);
 
-		bRet = true;
-	} while (0);
-	return bRet;
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
 bool CCImage::_initWithJpgData(void *pData, int nDatalen)
@@ -623,88 +623,88 @@ bool CCImage::initWithString(
 
 bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
-	bool saveToPNG = false;
-	bool needToCopyPixels = false;
-	std::string filePath(pszFilePath);
-	if (std::string::npos != filePath.find(".png"))
-	{
-	    saveToPNG = true;
-	}
-		
-	int bitsPerComponent = 8;			
-	int bitsPerPixel = m_bHasAlpha ? 32 : 24;
-	if ((! saveToPNG) || bIsToRGB)
-	{
-	    bitsPerPixel = 24;
-	}			
-	
-	int bytesPerRow	= (bitsPerPixel/8) * m_nWidth;
-	int myDataLength = bytesPerRow * m_nHeight;
-	
-	unsigned char *pixels	= m_pData;
-	
-	// The data has alpha channel, and want to save it with an RGB png file,
+    bool saveToPNG = false;
+    bool needToCopyPixels = false;
+    std::string filePath(pszFilePath);
+    if (std::string::npos != filePath.find(".png"))
+    {
+        saveToPNG = true;
+    }
+        
+    int bitsPerComponent = 8;            
+    int bitsPerPixel = m_bHasAlpha ? 32 : 24;
+    if ((! saveToPNG) || bIsToRGB)
+    {
+        bitsPerPixel = 24;
+    }            
+    
+    int bytesPerRow    = (bitsPerPixel/8) * m_nWidth;
+    int myDataLength = bytesPerRow * m_nHeight;
+    
+    unsigned char *pixels    = m_pData;
+    
+    // The data has alpha channel, and want to save it with an RGB png file,
     // or want to save as jpg,  remove the alpha channel.
-	if ((saveToPNG && m_bHasAlpha && bIsToRGB)
+    if ((saveToPNG && m_bHasAlpha && bIsToRGB)
        || (! saveToPNG))
-	{
-	    pixels = new unsigned char[myDataLength];
-	    
-	    for (int i = 0; i < m_nHeight; ++i)
-		{
-			for (int j = 0; j < m_nWidth; ++j)
-			{
-				pixels[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
-				pixels[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
-				pixels[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
-			}
-		}
-		
-	    needToCopyPixels = true;
-	}
-		
-	// make data provider with data.
-	CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
-	if (saveToPNG && m_bHasAlpha && (! bIsToRGB))
-	{
-	    bitmapInfo |= kCGImageAlphaPremultipliedLast;
-	}
-	CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
-	CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
-	CGImageRef iref					= CGImageCreate(m_nWidth, m_nHeight,
-														bitsPerComponent, bitsPerPixel, bytesPerRow,
-														colorSpaceRef, bitmapInfo, provider,
-														NULL, false,
-														kCGRenderingIntentDefault);
-		
-	UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
-		
-	CGImageRelease(iref);	
-	CGColorSpaceRelease(colorSpaceRef);
-	CGDataProviderRelease(provider);
-	
-	NSData *data;
-				
-	if (saveToPNG)
-	{
-		data = UIImagePNGRepresentation(image);
-	}
-	else
-	{
-		data = UIImageJPEGRepresentation(image, 1.0f);
-	}
-	
-	[data writeToFile:[NSString stringWithUTF8String:pszFilePath] atomically:YES];
-		
-	[image release];
-		
-	if (needToCopyPixels)
-	{
-	    delete [] pixels;
-	}
-	
-	return true;
+    {
+        pixels = new unsigned char[myDataLength];
+        
+        for (int i = 0; i < m_nHeight; ++i)
+        {
+            for (int j = 0; j < m_nWidth; ++j)
+            {
+                pixels[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
+                pixels[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
+                pixels[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
+            }
+        }
+        
+        needToCopyPixels = true;
+    }
+        
+    // make data provider with data.
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
+    if (saveToPNG && m_bHasAlpha && (! bIsToRGB))
+    {
+        bitmapInfo |= kCGImageAlphaPremultipliedLast;
+    }
+    CGDataProviderRef provider        = CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
+    CGColorSpaceRef colorSpaceRef    = CGColorSpaceCreateDeviceRGB();
+    CGImageRef iref                    = CGImageCreate(m_nWidth, m_nHeight,
+                                                        bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                                        colorSpaceRef, bitmapInfo, provider,
+                                                        NULL, false,
+                                                        kCGRenderingIntentDefault);
+        
+    UIImage* image                    = [[UIImage alloc] initWithCGImage:iref];
+        
+    CGImageRelease(iref);    
+    CGColorSpaceRelease(colorSpaceRef);
+    CGDataProviderRelease(provider);
+    
+    NSData *data;
+                
+    if (saveToPNG)
+    {
+        data = UIImagePNGRepresentation(image);
+    }
+    else
+    {
+        data = UIImageJPEGRepresentation(image, 1.0f);
+    }
+    
+    [data writeToFile:[NSString stringWithUTF8String:pszFilePath] atomically:YES];
+        
+    [image release];
+        
+    if (needToCopyPixels)
+    {
+        delete [] pixels;
+    }
+    
+    return true;
 }
 
-NS_CC_END;
+NS_CC_END
 

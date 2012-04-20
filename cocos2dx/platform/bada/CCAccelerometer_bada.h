@@ -32,10 +32,10 @@ THE SOFTWARE.
 #include <FUixSensorTypes.h>
 #include <FUixSensorData.h>
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CC_DLL CCAccelerometer :
-	public Osp::Uix::ISensorEventListener
+    public Osp::Uix::ISensorEventListener
 {
 public:
     CCAccelerometer();
@@ -46,11 +46,11 @@ public:
 private:
     void setEnable(bool bEnable);
 
-	CCAccelerometerDelegate* m_pAccelDelegate;
-	Osp::Uix::SensorManager* m_pSensor;
-	bool m_bEnabled;
+    CCAccelerometerDelegate* m_pAccelDelegate;
+    Osp::Uix::SensorManager* m_pSensor;
+    bool m_bEnabled;
 };
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #endif

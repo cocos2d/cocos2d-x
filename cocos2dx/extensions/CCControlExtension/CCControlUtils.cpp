@@ -5,16 +5,16 @@ NS_CC_BEGIN
 
 CCSprite* CCControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor)
 {
-	CCSprite *sprite =CCSprite::spriteWithSpriteFrameName(spriteName);
+    CCSprite *sprite =CCSprite::spriteWithSpriteFrameName(spriteName);
     
-	if (!sprite)
-		return NULL;
+    if (!sprite)
+        return NULL;
 
-	sprite->setPosition(pos);
-	sprite->setAnchorPoint(anchor);
-	target->addChild(sprite);
+    sprite->setPosition(pos);
+    sprite->setAnchorPoint(anchor);
+    target->addChild(sprite);
 
-	return sprite;
+    return sprite;
 }
 
 
@@ -65,7 +65,7 @@ RGBA CCControlUtils::RGBfromHSV(HSV value)
     double      hh, p, q, t, ff;
     long        i;
     RGBA        out;
-    out.a		= 1;
+    out.a        = 1;
     
     if (value.s <= 0.0) // < is bogus, just shuts up warnings
     {       
@@ -133,17 +133,17 @@ RGBA CCControlUtils::RGBfromHSV(HSV value)
 
 CCRect CCControlUtils::CCRectUnion(const CCRect& src1, const CCRect& src2) 
 {
-	CCRect result;
-	
-	float x1 = MIN(CCRect::CCRectGetMinX(src1), CCRect::CCRectGetMinX(src2));
-	float y1 = MIN(CCRect::CCRectGetMinY(src1), CCRect::CCRectGetMinY(src2));
+    CCRect result;
+    
+    float x1 = MIN(CCRect::CCRectGetMinX(src1), CCRect::CCRectGetMinX(src2));
+    float y1 = MIN(CCRect::CCRectGetMinY(src1), CCRect::CCRectGetMinY(src2));
 
-	float x2 = MAX(CCRect::CCRectGetMaxX(src1), CCRect::CCRectGetMaxX(src2));
-	float y2 = MAX(CCRect::CCRectGetMaxY(src1), CCRect::CCRectGetMaxY(src2));
-	
-	result.origin=ccp(x1,x2);
-	result.size=CCSizeMake(x2-x1, y2-y1);
-	return result;
+    float x2 = MAX(CCRect::CCRectGetMaxX(src1), CCRect::CCRectGetMaxX(src2));
+    float y2 = MAX(CCRect::CCRectGetMaxY(src1), CCRect::CCRectGetMaxY(src2));
+    
+    result.origin=ccp(x1,x2);
+    result.size=CCSizeMake(x2-x1, y2-y1);
+    return result;
 }
 
 NS_CC_END

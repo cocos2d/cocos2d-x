@@ -26,16 +26,16 @@ const cpConstraintClass *cpSlideJointGetClass(void);
 
 /// @private
 typedef struct cpSlideJoint {
-	cpConstraint constraint;
-	cpVect anchr1, anchr2;
-	cpFloat min, max;
-	
-	cpVect r1, r2;
-	cpVect n;
-	cpFloat nMass;
-	
-	cpFloat jnAcc, jnMax;
-	cpFloat bias;
+    cpConstraint constraint;
+    cpVect anchr1, anchr2;
+    cpFloat min, max;
+    
+    cpVect r1, r2;
+    cpVect n;
+    cpFloat nMass;
+    
+    cpFloat jnAcc, jnMax;
+    cpFloat bias;
 } cpSlideJoint;
 
 /// Allocate a slide joint.

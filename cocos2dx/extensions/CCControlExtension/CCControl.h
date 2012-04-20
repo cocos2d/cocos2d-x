@@ -62,7 +62,7 @@ enum
     CCControlStateHighlighted  = 1 << 1, // Highlighted state of a control. A control enters this state when a touch down, drag inside or drag enter is performed. You can retrieve and set this value through the highlighted property.
     CCControlStateDisabled     = 1 << 2, // Disabled state of a control. This state indicates that the control is currently disabled. You can retrieve and set this value through the enabled property.
     CCControlStateSelected     = 1 << 3,  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
-	CCControlStateInitial      = 1 << 3
+    CCControlStateInitial      = 1 << 3
 };
 typedef unsigned int CCControlState;
 
@@ -81,21 +81,21 @@ typedef unsigned int CCControlState;
 class CC_DLL CCControl : public CCLayer, public CCRGBAProtocol
 {
 
-	//CCRGBAProtocol
-	CC_PROPERTY(GLubyte, m_cOpacity, Opacity); 
-	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
-	CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB);
+    //CCRGBAProtocol
+    CC_PROPERTY(GLubyte, m_cOpacity, Opacity); 
+    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
+    CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB);
 
-	/** Changes the priority of the button. The lower the number, the higher the priority. */
-	CC_SYNTHESIZE(int, m_nDefaultTouchPriority, DefaultTouchPriority);
-	/** The current control state constant. */
-	CC_SYNTHESIZE_READONLY(CCControlState, m_nState, State);
-	/** Tells whether the control is enabled. */
-	CC_SYNTHESIZE(bool, m_bEnabled, IsEnabled);
-	/** A Boolean value that determines the control’s selected state. */
-	CC_SYNTHESIZE(bool, m_bSelected, IsSelected);
-	/** A Boolean value that determines whether the control is highlighted. */
-	CC_SYNTHESIZE(bool, m_bHighlighted, IsHighlighted);
+    /** Changes the priority of the button. The lower the number, the higher the priority. */
+    CC_SYNTHESIZE(int, m_nDefaultTouchPriority, DefaultTouchPriority);
+    /** The current control state constant. */
+    CC_SYNTHESIZE_READONLY(CCControlState, m_nState, State);
+    /** Tells whether the control is enabled. */
+    CC_SYNTHESIZE(bool, m_bEnabled, IsEnabled);
+    /** A Boolean value that determines the control’s selected state. */
+    CC_SYNTHESIZE(bool, m_bSelected, IsSelected);
+    /** A Boolean value that determines whether the control is highlighted. */
+    CC_SYNTHESIZE(bool, m_bHighlighted, IsHighlighted);
     
     protected:
     // CCControlState, CCArray<CCInvocation*>
@@ -104,73 +104,73 @@ class CC_DLL CCControl : public CCLayer, public CCRGBAProtocol
 
 
 public:
-	CCControl();
-	virtual bool init(void);
-	virtual ~CCControl();
+    CCControl();
+    virtual bool init(void);
+    virtual ~CCControl();
 
 
-	virtual void onEnter();
-	virtual void onExit();
-	virtual void registerWithTouchDispatcher();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual void registerWithTouchDispatcher();
 
-	/**
+    /**
  * Sends action messages for the given control events.
  *
  * @param controlEvents A bitmask whose set flags specify the control events for
  * which action messages are sent. See "CCControlEvent" for bitmask constants.
  */
-	virtual void sendActionsForControlEvents(CCControlEvent controlEvents);
+    virtual void sendActionsForControlEvents(CCControlEvent controlEvents);
 
-	/**
-	* Adds a target and action for a particular event (or events) to an internal
-	* dispatch table.
-	* The action message may optionnaly include the sender and the event as 
-	* parameters, in that order.
-	* When you call this method, target is not retained.
-	*
-	* @param target The target object—that is, the object to which the action 
-	* message is sent. It cannot be nil. The target is not retained.
-	* @param action A selector identifying an action message. It cannot be NULL.
-	* @param controlEvents A bitmask specifying the control events for which the 
-	* action message is sent. See "CCControlEvent" for bitmask constants.
-	*/
-	virtual void addTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents);
+    /**
+    * Adds a target and action for a particular event (or events) to an internal
+    * dispatch table.
+    * The action message may optionnaly include the sender and the event as 
+    * parameters, in that order.
+    * When you call this method, target is not retained.
+    *
+    * @param target The target object—that is, the object to which the action 
+    * message is sent. It cannot be nil. The target is not retained.
+    * @param action A selector identifying an action message. It cannot be NULL.
+    * @param controlEvents A bitmask specifying the control events for which the 
+    * action message is sent. See "CCControlEvent" for bitmask constants.
+    */
+    virtual void addTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents);
 
-	/**
-	* Removes a target and action for a particular event (or events) from an 
-	* internal dispatch table.
-	*
-	* @param target The target object—that is, the object to which the action 
-	* message is sent. Pass nil to remove all targets paired with action and the
-	* specified control events.
-	* @param action A selector identifying an action message. Pass NULL to remove
-	* all action messages paired with target.
-	* @param controlEvents A bitmask specifying the control events associated with
-	* target and action. See "CCControlEvent" for bitmask constants.
-	*/
-	virtual void removeTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents);
+    /**
+    * Removes a target and action for a particular event (or events) from an 
+    * internal dispatch table.
+    *
+    * @param target The target object—that is, the object to which the action 
+    * message is sent. Pass nil to remove all targets paired with action and the
+    * specified control events.
+    * @param action A selector identifying an action message. Pass NULL to remove
+    * all action messages paired with target.
+    * @param controlEvents A bitmask specifying the control events associated with
+    * target and action. See "CCControlEvent" for bitmask constants.
+    */
+    virtual void removeTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents);
 
-	/**
-	* Returns a point corresponding to the touh location converted into the 
-	* control space coordinates.
-	* @param touch A CCTouch object that represents a touch.
-	*/
-	virtual CCPoint getTouchLocation(CCTouch* touch);
+    /**
+    * Returns a point corresponding to the touh location converted into the 
+    * control space coordinates.
+    * @param touch A CCTouch object that represents a touch.
+    */
+    virtual CCPoint getTouchLocation(CCTouch* touch);
 
-	
-	/**
-	* Returns a boolean value that indicates whether a touch is inside the bounds
-	* of the receiver. The given touch must be relative to the world.
-	*
-	* @param touch A CCTouch object that represents a touch.
-	*
-	* @return YES whether a touch is inside the receiver’s rect.
-	*/
-	virtual bool isTouchInside(CCTouch * touch);
+    
+    /**
+    * Returns a boolean value that indicates whether a touch is inside the bounds
+    * of the receiver. The given touch must be relative to the world.
+    *
+    * @param touch A CCTouch object that represents a touch.
+    *
+    * @return YES whether a touch is inside the receiver’s rect.
+    */
+    virtual bool isTouchInside(CCTouch * touch);
 
 
 protected:
-	/**
+    /**
  * Returns an CCInvocation object able to construct messages using a given 
  * target-action pair. (The invocation may optionnaly include the sender and
  * the event as parameters, in that order)
@@ -183,26 +183,26 @@ protected:
  * @return an CCInvocation object able to construct messages using a given 
  * target-action pair.
  */
-	CCInvocation* invocationWithTargetAndActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
+    CCInvocation* invocationWithTargetAndActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
 
 
 
-	/**
-	* Returns the CCInvocation list for the given control event. If the list does
-	* not exist, it'll create an empty array before returning it.
-	*
-	* @param controlEvent A control events for which the action message is sent.
-	* See "CCControlEvent" for constants.
-	*
-	* @return the CCInvocation list for the given control event.
-	*/
+    /**
+    * Returns the CCInvocation list for the given control event. If the list does
+    * not exist, it'll create an empty array before returning it.
+    *
+    * @param controlEvent A control events for which the action message is sent.
+    * See "CCControlEvent" for constants.
+    *
+    * @return the CCInvocation list for the given control event.
+    */
     //<CCInvocation*>
-	CCArray* dispatchListforControlEvent(CCControlEvent controlEvent);
+    CCArray* dispatchListforControlEvent(CCControlEvent controlEvent);
 public:
-	void addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
-	void removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
+    void addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
+    void removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
 
-	LAYER_NODE_FUNC(CCControl);
+    LAYER_NODE_FUNC(CCControl);
 
 };
 

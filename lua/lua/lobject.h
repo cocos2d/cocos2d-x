@@ -17,17 +17,17 @@
 
 
 /* tags for values visible from Lua */
-#define LAST_TAG	LUA_TTHREAD
+#define LAST_TAG    LUA_TTHREAD
 
-#define NUM_TAGS	(LAST_TAG+1)
+#define NUM_TAGS    (LAST_TAG+1)
 
 
 /*
 ** Extra tags for non-values
 */
-#define LUA_TPROTO	(LAST_TAG+1)
-#define LUA_TUPVAL	(LAST_TAG+2)
-#define LUA_TDEADKEY	(LAST_TAG+3)
+#define LUA_TPROTO    (LAST_TAG+1)
+#define LUA_TUPVAL    (LAST_TAG+2)
+#define LUA_TDEADKEY    (LAST_TAG+3)
 
 
 /*
@@ -40,7 +40,7 @@ typedef union GCObject GCObject;
 ** Common Header for all collectable objects (in macro form, to be
 ** included in other objects)
 */
-#define CommonHeader	GCObject *next; lu_byte tt; lu_byte marked
+#define CommonHeader    GCObject *next; lu_byte tt; lu_byte marked
 
 
 /*
@@ -68,7 +68,7 @@ typedef union {
 ** Tagged Values
 */
 
-#define TValuefields	Value value; int tt
+#define TValuefields    Value value; int tt
 
 typedef struct lua_TValue {
   TValuefields;
@@ -76,31 +76,31 @@ typedef struct lua_TValue {
 
 
 /* Macros to test type */
-#define ttisnil(o)	(ttype(o) == LUA_TNIL)
-#define ttisnumber(o)	(ttype(o) == LUA_TNUMBER)
-#define ttisstring(o)	(ttype(o) == LUA_TSTRING)
-#define ttistable(o)	(ttype(o) == LUA_TTABLE)
-#define ttisfunction(o)	(ttype(o) == LUA_TFUNCTION)
-#define ttisboolean(o)	(ttype(o) == LUA_TBOOLEAN)
-#define ttisuserdata(o)	(ttype(o) == LUA_TUSERDATA)
-#define ttisthread(o)	(ttype(o) == LUA_TTHREAD)
-#define ttislightuserdata(o)	(ttype(o) == LUA_TLIGHTUSERDATA)
+#define ttisnil(o)    (ttype(o) == LUA_TNIL)
+#define ttisnumber(o)    (ttype(o) == LUA_TNUMBER)
+#define ttisstring(o)    (ttype(o) == LUA_TSTRING)
+#define ttistable(o)    (ttype(o) == LUA_TTABLE)
+#define ttisfunction(o)    (ttype(o) == LUA_TFUNCTION)
+#define ttisboolean(o)    (ttype(o) == LUA_TBOOLEAN)
+#define ttisuserdata(o)    (ttype(o) == LUA_TUSERDATA)
+#define ttisthread(o)    (ttype(o) == LUA_TTHREAD)
+#define ttislightuserdata(o)    (ttype(o) == LUA_TLIGHTUSERDATA)
 
 /* Macros to access values */
-#define ttype(o)	((o)->tt)
-#define gcvalue(o)	check_exp(iscollectable(o), (o)->value.gc)
-#define pvalue(o)	check_exp(ttislightuserdata(o), (o)->value.p)
-#define nvalue(o)	check_exp(ttisnumber(o), (o)->value.n)
-#define rawtsvalue(o)	check_exp(ttisstring(o), &(o)->value.gc->ts)
-#define tsvalue(o)	(&rawtsvalue(o)->tsv)
-#define rawuvalue(o)	check_exp(ttisuserdata(o), &(o)->value.gc->u)
-#define uvalue(o)	(&rawuvalue(o)->uv)
-#define clvalue(o)	check_exp(ttisfunction(o), &(o)->value.gc->cl)
-#define hvalue(o)	check_exp(ttistable(o), &(o)->value.gc->h)
-#define bvalue(o)	check_exp(ttisboolean(o), (o)->value.b)
-#define thvalue(o)	check_exp(ttisthread(o), &(o)->value.gc->th)
+#define ttype(o)    ((o)->tt)
+#define gcvalue(o)    check_exp(iscollectable(o), (o)->value.gc)
+#define pvalue(o)    check_exp(ttislightuserdata(o), (o)->value.p)
+#define nvalue(o)    check_exp(ttisnumber(o), (o)->value.n)
+#define rawtsvalue(o)    check_exp(ttisstring(o), &(o)->value.gc->ts)
+#define tsvalue(o)    (&rawtsvalue(o)->tsv)
+#define rawuvalue(o)    check_exp(ttisuserdata(o), &(o)->value.gc->u)
+#define uvalue(o)    (&rawuvalue(o)->uv)
+#define clvalue(o)    check_exp(ttisfunction(o), &(o)->value.gc->cl)
+#define hvalue(o)    check_exp(ttistable(o), &(o)->value.gc->h)
+#define bvalue(o)    check_exp(ttisboolean(o), (o)->value.b)
+#define thvalue(o)    check_exp(ttisthread(o), &(o)->value.gc->th)
 
-#define l_isfalse(o)	(ttisnil(o) || (ttisboolean(o) && bvalue(o) == 0))
+#define l_isfalse(o)    (ttisnil(o) || (ttisboolean(o) && bvalue(o) == 0))
 
 /*
 ** for internal debug only
@@ -169,24 +169,24 @@ typedef struct lua_TValue {
 */
 
 /* from stack to (same) stack */
-#define setobjs2s	setobj
+#define setobjs2s    setobj
 /* to stack (not from same stack) */
-#define setobj2s	setobj
-#define setsvalue2s	setsvalue
-#define sethvalue2s	sethvalue
-#define setptvalue2s	setptvalue
+#define setobj2s    setobj
+#define setsvalue2s    setsvalue
+#define sethvalue2s    sethvalue
+#define setptvalue2s    setptvalue
 /* from table to same table */
-#define setobjt2t	setobj
+#define setobjt2t    setobj
 /* to table */
-#define setobj2t	setobj
+#define setobj2t    setobj
 /* to new object */
-#define setobj2n	setobj
-#define setsvalue2n	setsvalue
+#define setobj2n    setobj
+#define setsvalue2n    setsvalue
 
 #define setttype(obj, tt) (ttype(obj) = (tt))
 
 
-#define iscollectable(o)	(ttype(o) >= LUA_TSTRING)
+#define iscollectable(o)    (ttype(o) >= LUA_TSTRING)
 
 
 
@@ -207,7 +207,7 @@ typedef union TString {
 } TString;
 
 
-#define getstr(ts)	cast(const char *, (ts) + 1)
+#define getstr(ts)    cast(const char *, (ts) + 1)
 #define svalue(o)       getstr(rawtsvalue(o))
 
 
@@ -254,9 +254,9 @@ typedef struct Proto {
 
 
 /* masks for new-style vararg */
-#define VARARG_HASARG		1
-#define VARARG_ISVARARG		2
-#define VARARG_NEEDSARG		4
+#define VARARG_HASARG        1
+#define VARARG_ISVARARG        2
+#define VARARG_NEEDSARG        4
 
 
 typedef struct LocVar {
@@ -289,8 +289,8 @@ typedef struct UpVal {
 */
 
 #define ClosureHeader \
-	CommonHeader; lu_byte isC; lu_byte nupvalues; GCObject *gclist; \
-	struct Table *env
+    CommonHeader; lu_byte isC; lu_byte nupvalues; GCObject *gclist; \
+    struct Table *env
 
 typedef struct CClosure {
   ClosureHeader;
@@ -312,8 +312,8 @@ typedef union Closure {
 } Closure;
 
 
-#define iscfunction(o)	(ttype(o) == LUA_TFUNCTION && clvalue(o)->c.isC)
-#define isLfunction(o)	(ttype(o) == LUA_TFUNCTION && !clvalue(o)->c.isC)
+#define iscfunction(o)    (ttype(o) == LUA_TFUNCTION && clvalue(o)->c.isC)
+#define isLfunction(o)    (ttype(o) == LUA_TFUNCTION && !clvalue(o)->c.isC)
 
 
 /*
@@ -353,18 +353,18 @@ typedef struct Table {
 ** `module' operation for hashing (size is always a power of 2)
 */
 #define lmod(s,size) \
-	(check_exp((size&(size-1))==0, (cast(int, (s) & ((size)-1)))))
+    (check_exp((size&(size-1))==0, (cast(int, (s) & ((size)-1)))))
 
 
-#define twoto(x)	(1<<(x))
-#define sizenode(t)	(twoto((t)->lsizenode))
+#define twoto(x)    (1<<(x))
+#define sizenode(t)    (twoto((t)->lsizenode))
 
 
-#define luaO_nilobject		(&luaO_nilobject_)
+#define luaO_nilobject        (&luaO_nilobject_)
 
 LUAI_DATA const TValue luaO_nilobject_;
 
-#define ceillog2(x)	(luaO_log2((x)-1) + 1)
+#define ceillog2(x)    (luaO_log2((x)-1) + 1)
 
 LUAI_FUNC int luaO_log2 (unsigned int x);
 LUAI_FUNC int luaO_int2fb (unsigned int x);

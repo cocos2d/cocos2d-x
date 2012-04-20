@@ -55,11 +55,11 @@
 #define GrIsALIGN4(n)   (((n) & 3) == 0)
 
 template <typename T> const T& GrMin(const T& a, const T& b) {
-	return (a < b) ? a : b;
+    return (a < b) ? a : b;
 }
 
 template <typename T> const T& GrMax(const T& a, const T& b) {
-	return (b < a) ? a : b;
+    return (b < a) ? a : b;
 }
 
 // compile time versions of min/max

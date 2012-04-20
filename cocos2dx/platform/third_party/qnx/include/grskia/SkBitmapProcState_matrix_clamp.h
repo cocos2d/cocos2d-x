@@ -16,8 +16,8 @@
  */
 
 
-#if	!defined(__ARM_HAVE_NEON)
-#error	this file can be used only when the NEON unit is enabled
+#if    !defined(__ARM_HAVE_NEON)
+#error    this file can be used only when the NEON unit is enabled
 #endif
 
 #include <arm_neon.h>
@@ -93,38 +93,38 @@ static void SCALE_NOFILTER_NAME(const SkBitmapProcState& s,
 
     int i;
 
-	/* very much like done in decal_nofilter, but with
-	 * an extra clamping function applied.
-	 * TILEX_PROCF(fx,max) SkClampMax((fx)>>16, max)
-	 */
-	if (count >= 8) {
-	    /* SkFixed is 16.16 fixed point */
-	    SkFixed dx2 = dx+dx;
-	    SkFixed dx4 = dx2+dx2;
-	    SkFixed dx8 = dx4+dx4;
+    /* very much like done in decal_nofilter, but with
+     * an extra clamping function applied.
+     * TILEX_PROCF(fx,max) SkClampMax((fx)>>16, max)
+     */
+    if (count >= 8) {
+        /* SkFixed is 16.16 fixed point */
+        SkFixed dx2 = dx+dx;
+        SkFixed dx4 = dx2+dx2;
+        SkFixed dx8 = dx4+dx4;
 
-	    /* now build fx/fx+dx/fx+2dx/fx+3dx */
-	    SkFixed fx1, fx2, fx3;
-	    int32x2_t lower, upper;
-	    int32x4_t lbase, hbase;
-	    int16_t *dst16 = (int16_t *)xy;
+        /* now build fx/fx+dx/fx+2dx/fx+3dx */
+        SkFixed fx1, fx2, fx3;
+        int32x2_t lower, upper;
+        int32x4_t lbase, hbase;
+        int16_t *dst16 = (int16_t *)xy;
 
-	    fx1 = fx+dx;
-	    fx2 = fx1+dx;
-	    fx3 = fx2+dx;
+        fx1 = fx+dx;
+        fx2 = fx1+dx;
+        fx3 = fx2+dx;
 
-	    /* build my template(s) */
-	    /* avoid the 'lbase unitialized' warning */
-	    lbase = vdupq_n_s32(fx);
-	    lbase = vsetq_lane_s32(fx1, lbase, 1);
-	    lbase = vsetq_lane_s32(fx2, lbase, 2);
-	    lbase = vsetq_lane_s32(fx3, lbase, 3);
+        /* build my template(s) */
+        /* avoid the 'lbase unitialized' warning */
+        lbase = vdupq_n_s32(fx);
+        lbase = vsetq_lane_s32(fx1, lbase, 1);
+        lbase = vsetq_lane_s32(fx2, lbase, 2);
+        lbase = vsetq_lane_s32(fx3, lbase, 3);
 
-	    hbase = vaddq_s32(lbase, vdupq_n_s32(dx4));
+        hbase = vaddq_s32(lbase, vdupq_n_s32(dx4));
 
-	    /* store & bump */
-	    do {
-	        int32x4_t lout;
+        /* store & bump */
+        do {
+            int32x4_t lout;
             int32x4_t hout;
             int16x8_t hi16;
 
@@ -146,9 +146,9 @@ static void SCALE_NOFILTER_NAME(const SkBitmapProcState& s,
             dst16 += 8;
             count -= 8;
             fx += dx8;
-	    } while (count >= 8);
-	    xy = (uint32_t *) dst16;
-	}
+        } while (count >= 8);
+        xy = (uint32_t *) dst16;
+    }
 
     uint16_t* xx = (uint16_t*)xy;
     for (i = count; i > 0; --i) {
@@ -256,7 +256,7 @@ static void AFFINE_NOFILTER_NAME(const SkBitmapProcState& s,
             x2base = vaddq_s32 (x2base, vdupq_n_s32 (dx8));
             y2base = vaddq_s32 (y2base, vdupq_n_s32 (dy8));
 
-            dst16 += 16;		/* 8x32 aka 16x16 */
+            dst16 += 16;        /* 8x32 aka 16x16 */
             count -= 8;
             fx += dx8;
             fy += dy8;
@@ -270,7 +270,7 @@ static void AFFINE_NOFILTER_NAME(const SkBitmapProcState& s,
     }
 }
 
-#undef	DEBUG_PERSP_NOFILTER
+#undef    DEBUG_PERSP_NOFILTER
 
 static void PERSP_NOFILTER_NAME(const SkBitmapProcState& s,
                                 uint32_t* SK_RESTRICT xy,
@@ -290,17 +290,17 @@ static void PERSP_NOFILTER_NAME(const SkBitmapProcState& s,
         const SkFixed* SK_RESTRICT srcXY = iter.getXY();
 
 #if defined(DEBUG_PERSP_NOFILTER)
-	/* debugging stuff */
-	const SkFixed *end_srcXY = srcXY + (count*2);
-	uint32_t *end_xy = xy + (count);
-	const SkFixed *base_srcXY = srcXY;
-	uint32_t *base_xy = xy;
-	int base_count = count;
+    /* debugging stuff */
+    const SkFixed *end_srcXY = srcXY + (count*2);
+    uint32_t *end_xy = xy + (count);
+    const SkFixed *base_srcXY = srcXY;
+    uint32_t *base_xy = xy;
+    int base_count = count;
 #endif
 
 #if 1
         // 2009/9/30: crashes in ApiDemos - Views - Animation - 3D Transition
-	// 2009/10/9: reworked to avoid illegal (but allowed by gas) insn
+    // 2009/10/9: reworked to avoid illegal (but allowed by gas) insn
 
         /* srcXY is a batch of 32 bit numbers X0,Y0,X1,Y1...
          * but we immediately discard the low 16 bits...
@@ -315,99 +315,99 @@ static void PERSP_NOFILTER_NAME(const SkBitmapProcState& s,
             int16x4_t maxY4 = vdup_n_s16((int16_t)maxY);
             int16x4_t zero4 = vdup_n_s16(0);
 
-	    /* The constructs with local blocks for register assignments
-	     * and asm() instructions is to make keep any hard register
-	     * assignments to as small a scope as possible. and to avoid
-	     * burning call-preserved hard registers on the vld/vst 
-	     * instructions.
-	     */
+        /* The constructs with local blocks for register assignments
+         * and asm() instructions is to make keep any hard register
+         * assignments to as small a scope as possible. and to avoid
+         * burning call-preserved hard registers on the vld/vst 
+         * instructions.
+         */
 
             do {
                 int16x4_t xlo, xhi, ylo, yhi;
                 int16x4_t x2lo, x2hi, y2lo, y2hi;
 
                 /* vld4 does the de-interleaving for us */
-		{
+        {
                     register int16x4_t t_xlo asm("d0");
                     register int16x4_t t_xhi asm("d1");
                     register int16x4_t t_ylo asm("d2");
                     register int16x4_t t_yhi asm("d3");
 
-                    asm ("vld4.16	{d0-d3},[%4]  /* xlo=%P0 xhi=%P1 ylo=%P2 yhi=%P3 */"
+                    asm ("vld4.16    {d0-d3},[%4]  /* xlo=%P0 xhi=%P1 ylo=%P2 yhi=%P3 */"
                         : "=w" (t_xlo), "=w" (t_xhi), "=w" (t_ylo), "=w" (t_yhi)
                         : "r" (mysrc)
                     );
-		    xlo = t_xlo;
-		    xhi = t_xhi;
-		    ylo = t_ylo;
-		    yhi = t_yhi;
-		}
+            xlo = t_xlo;
+            xhi = t_xhi;
+            ylo = t_ylo;
+            yhi = t_yhi;
+        }
 
                 /* clamp X>>16 (aka xhi) to 0..maxX */
-                xhi = vmax_s16(xhi, zero4);	/* now 0.. */
-                xhi = vmin_s16(xhi, maxX4);	/* now 0..maxX */
+                xhi = vmax_s16(xhi, zero4);    /* now 0.. */
+                xhi = vmin_s16(xhi, maxX4);    /* now 0..maxX */
 
                 /* clamp Y>>16 (aka yhi) to 0..maxY */
-                yhi = vmax_s16(yhi, zero4);	/* now 0.. */
-                yhi = vmin_s16(yhi, maxY4);	/* now 0..maxY */
+                yhi = vmax_s16(yhi, zero4);    /* now 0.. */
+                yhi = vmin_s16(yhi, maxY4);    /* now 0..maxY */
 
-		/* deal with the second set of numbers */
-		{
+        /* deal with the second set of numbers */
+        {
                     register int16x4_t t_xlo asm("d4");
                     register int16x4_t t_xhi asm("d5");
                     register int16x4_t t_ylo asm("d6");
                     register int16x4_t t_yhi asm("d7");
 
                     /* offset == 256 bits == 32 bytes == 8 longs == 16 shorts */
-                    asm ("vld4.16	{d4-d7},[%4]  /* xlo=%P0 xhi=%P1 ylo=%P2 yhi=%P3 */"
+                    asm ("vld4.16    {d4-d7},[%4]  /* xlo=%P0 xhi=%P1 ylo=%P2 yhi=%P3 */"
                         : "=w" (t_xlo), "=w" (t_xhi), "=w" (t_ylo), "=w" (t_yhi)
                         : "r" (mysrc+16)
                     );
-		    x2lo = t_xlo;
-		    x2hi = t_xhi;
-		    y2lo = t_ylo;
-		    y2hi = t_yhi;
-		}
+            x2lo = t_xlo;
+            x2hi = t_xhi;
+            y2lo = t_ylo;
+            y2hi = t_yhi;
+        }
 
                 /* clamp the second 4 here */
 
-		if (0) { extern void rbe(void); rbe(); }
+        if (0) { extern void rbe(void); rbe(); }
 
                 /* clamp X>>16 (aka xhi) to 0..maxX */
-                x2hi = vmax_s16(x2hi, zero4);	/* now 0.. */
-                x2hi = vmin_s16(x2hi, maxX4);	/* now 0..maxX */
+                x2hi = vmax_s16(x2hi, zero4);    /* now 0.. */
+                x2hi = vmin_s16(x2hi, maxX4);    /* now 0..maxX */
 
                 /* clamp Y>>16 (aka yhi) to 0..maxY */
-                y2hi = vmax_s16(y2hi, zero4);	/* now 0.. */
-                y2hi = vmin_s16(y2hi, maxY4);	/* now 0..maxY */
+                y2hi = vmax_s16(y2hi, zero4);    /* now 0.. */
+                y2hi = vmin_s16(y2hi, maxY4);    /* now 0..maxY */
 
                 /* we're storing as {x,y}s: x is [0], y is [1] */
                 /* we'll use vst2 to make this happen */
 
-		{
+        {
                     register int16x4_t out_x asm("d16") = xhi;
                     register int16x4_t out_y asm("d17") = yhi;
 
-                    asm ("vst2.16	{d16-d17},[%2]  /* xlo=%P0 xhi=%P1 */"
-			:
-			: "w" (out_x), "w" (out_y), "r" (mydst)
-			);
-		}
-		{
+                    asm ("vst2.16    {d16-d17},[%2]  /* xlo=%P0 xhi=%P1 */"
+            :
+            : "w" (out_x), "w" (out_y), "r" (mydst)
+            );
+        }
+        {
                     register int16x4_t out_x asm("d18") = x2hi;
                     register int16x4_t out_y asm("d19") = y2hi;
 
-                    asm ("vst2.16	{d18-d19},[%2]  /* xlo=%P0 xhi=%P1 */"
-			:
-			: "w" (out_x), "w" (out_y), "r" (mydst+8)
-			);
-		}
+                    asm ("vst2.16    {d18-d19},[%2]  /* xlo=%P0 xhi=%P1 */"
+            :
+            : "w" (out_x), "w" (out_y), "r" (mydst+8)
+            );
+        }
 
                 /* XXX: gcc isn't interleaving these with the NEON ops
                  * but i think that all the scoreboarding works out */
-                count -= 8;	/* 8 iterations */
-                mysrc += 32;	/* 16 longs, aka 32 shorts */
-                mydst += 16;	/* 16 shorts, aka 8 longs */
+                count -= 8;    /* 8 iterations */
+                mysrc += 32;    /* 16 longs, aka 32 shorts */
+                mydst += 16;    /* 16 shorts, aka 8 longs */
             } while (count >= 8);
             /* get xy and srcXY fixed up */
             srcXY = (const SkFixed *) mysrc;
@@ -422,10 +422,10 @@ static void PERSP_NOFILTER_NAME(const SkBitmapProcState& s,
         }
 
 #if defined(DEBUG_PERSP_NOFILTER)
-	/* for checking our NEON-produced results against vanilla code */
-	{
-	    int bad = (-1);
-	    for (int i = 0; i < base_count; i++) {
+    /* for checking our NEON-produced results against vanilla code */
+    {
+        int bad = (-1);
+        for (int i = 0; i < base_count; i++) {
             uint32_t val;
             val = (TILEY_PROCF (base_srcXY[i * 2 + 1], maxY) << 16) |
                     TILEX_PROCF (base_srcXY[i * 2 + 0], maxX);
@@ -434,11 +434,11 @@ static void PERSP_NOFILTER_NAME(const SkBitmapProcState& s,
                 bad = i;
                 break;
             }
-	    }
-	    if (bad >= 0) {
+        }
+        if (bad >= 0) {
             SkDebugf("clamp-nofilter-persp failed piece %d\n", bad);
             SkDebugf("    maxX %08x maxY %08x\n", maxX, maxY);
-            bad -= (bad & 0x7);	       /* align */
+            bad -= (bad & 0x7);           /* align */
             for (int i = bad; i < bad + 8; i++) {
                 uint32_t val;
                 val = (TILEY_PROCF (base_srcXY[i * 2 + 1], maxY) << 16) |
@@ -449,21 +449,21 @@ static void PERSP_NOFILTER_NAME(const SkBitmapProcState& s,
                  base_srcXY[i * 2 + 1]);
             }
             SkDebugf ("---\n");
-	    }
+        }
 
-	    if (end_xy != xy) {
+        if (end_xy != xy) {
             SkDebugf("xy ended at %08x, should be %08x\n", xy, end_xy);
-	    }
-	    if (end_srcXY != srcXY) {
+        }
+        if (end_srcXY != srcXY) {
             SkDebugf("srcXY ended at %08x, should be %08x\n", srcXY,
                       end_srcXY);
-	    }
-	}
+        }
+    }
 #endif
     }
 }
 
-#undef	DEBUG_PERSP_NOFILTER
+#undef    DEBUG_PERSP_NOFILTER
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -620,8 +620,8 @@ static void AFFINE_FILTER_NAME(const SkBitmapProcState& s,
         int32x4_t wide_dx, wide_fx, wide_onex, wide_fx1;
         int32x4_t wide_dy, wide_fy, wide_oney, wide_fy1;
 
-    #undef	AFFINE_DEBUG
-    #if	defined(AFFINE_DEBUG)
+    #undef    AFFINE_DEBUG
+    #if    defined(AFFINE_DEBUG)
         SkFixed fyp = fy;
         SkFixed fxp = fx;
         uint32_t *xyp = xy;
@@ -696,19 +696,19 @@ static void AFFINE_FILTER_NAME(const SkBitmapProcState& s,
             wide_y = vorrq_s32(wide_i, wide_fy1);
 
             /* interleave as YXYXYXYX as part of the storing */
-	    {
+        {
                 /* vst2.32 needs side-by-side registers */
                 register int32x4_t t_x asm("q1");
                 register int32x4_t t_y asm("q0");
 
-		t_x = wide_x; t_y = wide_y;
-                asm ("vst2.32	{q0-q1},[%2]  /* y=%q0 x=%q1 */"
+        t_x = wide_x; t_y = wide_y;
+                asm ("vst2.32    {q0-q1},[%2]  /* y=%q0 x=%q1 */"
                     :
                     : "w" (t_y), "w" (t_x), "r" (xy)
                     );
-	    }
+        }
 
-    #if	defined(AFFINE_DEBUG)
+    #if    defined(AFFINE_DEBUG)
             /* make sure we're good here -- check the 4 we just output */
             for (int i = 0; i<4;i++) {
             uint32_t val;
@@ -740,7 +740,7 @@ static void AFFINE_FILTER_NAME(const SkBitmapProcState& s,
             fx += dx+dx+dx+dx;
             wide_fy += vdupq_n_s32(dy+dy+dy+dy);
             fy += dy+dy+dy+dy;
-            xy += 8;		/* 4 x's, 4 y's */
+            xy += 8;        /* 4 x's, 4 y's */
             count -= 4;
         }
     }
@@ -785,14 +785,14 @@ static void PERSP_FILTER_NAME(const SkBitmapProcState& s,
                  */
 
                 /* load src:  x-y-x-y-x-y-x-y */
-		{
-		    register int32x4_t q0 asm ("q0");
-		    register int32x4_t q1 asm ("q1");
-                    asm ("vld2.32	{q0-q1},[%2]  /* x=%q0 y=%q1 */"
+        {
+            register int32x4_t q0 asm ("q0");
+            register int32x4_t q1 asm ("q1");
+                    asm ("vld2.32    {q0-q1},[%2]  /* x=%q0 y=%q1 */"
                          : "=w" (q0), "=w" (q1)
                          : "r" (srcXY));
-		    wide_x = q0; wide_y = q1;
-		}
+            wide_x = q0; wide_y = q1;
+        }
 
                 /* do the X side, then the Y side, then interleave them */
 
@@ -859,14 +859,14 @@ static void PERSP_FILTER_NAME(const SkBitmapProcState& s,
                 count -= 4;
 
                 /* store interleaved as y-x-y-x-y-x-y-x (NB != read order) */
-		{
-		    register int32x4_t q0 asm ("q0") = wide_y;
-		    register int32x4_t q1 asm ("q1") = wide_x;
-			
-                    asm ("vst2.32	{q0-q1},[%2]  /* y=%q0 x=%q1 */"
+        {
+            register int32x4_t q0 asm ("q0") = wide_y;
+            register int32x4_t q1 asm ("q1") = wide_x;
+            
+                    asm ("vst2.32    {q0-q1},[%2]  /* y=%q0 x=%q1 */"
                         :
                         : "w" (q0), "w" (q1), "r" (xy));
-		}
+        }
 
                 /* on to the next iteration */
                 /* count, srcXY are handled above */
@@ -876,7 +876,7 @@ static void PERSP_FILTER_NAME(const SkBitmapProcState& s,
 
         /* was do-while; NEON code invalidates original count>0 assumption */
         while (--count >= 0) { 
-	    /* NB: we read x/y, we write y/x */
+        /* NB: we read x/y, we write y/x */
             *xy++ = PACK_FILTER_Y_NAME(srcXY[1] - (oneY >> 1), maxY,
                                        oneY PREAMBLE_ARG_Y);
             *xy++ = PACK_FILTER_X_NAME(srcXY[0] - (oneX >> 1), maxX,

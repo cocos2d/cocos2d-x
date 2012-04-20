@@ -28,12 +28,12 @@ THE SOFTWARE.
 #include "CCThread.h"
 #include "CCPlatformMacros.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 struct CC_DLL cc_timeval
 {
-    long	tv_sec;		// seconds
-    long	tv_usec;    // microSeconds
+    long    tv_sec;        // seconds
+    long    tv_usec;    // microSeconds
 };
 
 class CC_DLL CCTime
@@ -43,6 +43,6 @@ public:
     static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif // __PLATFORM_H__

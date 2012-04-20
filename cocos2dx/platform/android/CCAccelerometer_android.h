@@ -33,15 +33,15 @@ namespace   cocos2d {
 class CC_DLL CCAccelerometer
 {
 public:
-	CCAccelerometer();
+    CCAccelerometer();
     ~CCAccelerometer();
 
     void setDelegate(CCAccelerometerDelegate* pDelegate);
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:
-	CCAccelerometerDelegate* m_pAccelDelegate;
-	CCAcceleration m_obAccelerationValue;
+    CCAccelerometerDelegate* m_pAccelDelegate;
+    CCAcceleration m_obAccelerationValue;
 };
 
 }//namespace cocos2d

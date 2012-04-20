@@ -31,37 +31,37 @@ NS_CC_BEGIN
 
 class CC_DLL CCAutoreleasePool : public CCObject
 {
-	CCArray*	m_pManagedObjectArray;	
+    CCArray*    m_pManagedObjectArray;    
 public:
-	CCAutoreleasePool(void);
-	~CCAutoreleasePool(void);
+    CCAutoreleasePool(void);
+    ~CCAutoreleasePool(void);
 
-	void addObject(CCObject *pObject);
-	void removeObject(CCObject *pObject);
+    void addObject(CCObject *pObject);
+    void removeObject(CCObject *pObject);
 
-	void clear();
+    void clear();
 };
 
 class CC_DLL CCPoolManager
 {
-	CCArray*	m_pReleasePoolStack;	
-	CCAutoreleasePool*					m_pCurReleasePool;
+    CCArray*    m_pReleasePoolStack;    
+    CCAutoreleasePool*                    m_pCurReleasePool;
 
-	CCAutoreleasePool* getCurReleasePool();
+    CCAutoreleasePool* getCurReleasePool();
 public:
-	CCPoolManager();
-	~CCPoolManager();
-	void finalize();
-	void push();
-	void pop();
+    CCPoolManager();
+    ~CCPoolManager();
+    void finalize();
+    void push();
+    void pop();
 
-	void removeObject(CCObject* pObject);
-	void addObject(CCObject* pObject);
+    void removeObject(CCObject* pObject);
+    void addObject(CCObject* pObject);
 
-	static CCPoolManager* sharedPoolManager();
+    static CCPoolManager* sharedPoolManager();
     static void purgePoolManager();
 
-	friend class CCAutoreleasePool;
+    friend class CCAutoreleasePool;
 };
 
 NS_CC_END

@@ -46,14 +46,14 @@ class CC_DLL CCObject : public CCCopying
 {
 public:
     // object id, CCScriptSupport need public m_uID
-    unsigned int		m_uID;
+    unsigned int        m_uID;
     // Lua reference id
     int                 m_nLuaID;
 protected:
     // count of refrence
-    unsigned int		m_uReference;
+    unsigned int        m_uReference;
     // is the object autoreleased
-    bool		m_bManaged;		
+    bool        m_bManaged;        
 public:
     CCObject(void);
     virtual ~CCObject(void);

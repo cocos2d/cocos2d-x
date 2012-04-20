@@ -29,7 +29,7 @@
 #import "CCGeometry.h"
 #import "CCDirectorCaller.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCApplication* CCApplication::sm_pSharedApplication = 0;
 
@@ -138,11 +138,11 @@ ccLanguageType CCApplication::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"es"]){
         ret = kLanguageSpanish;
     }
-	else if ([languageCode isEqualToString:@"ru"]){
+    else if ([languageCode isEqualToString:@"ru"]){
         ret = kLanguageRussian;
     }
 
     return ret;
 }
 
-NS_CC_END;
+NS_CC_END

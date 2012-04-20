@@ -133,8 +133,8 @@ ogg_uint32_t *_make_words(long *l,long n,long sparsecount){
   if(sparsecount != 1){
     for(i=1;i<33;i++)
       if(marker[i] & (0xffffffffUL>>(32-i))){
-	_ogg_free(r);
-	return(NULL);
+    _ogg_free(r);
+    return(NULL);
       }
   }
 

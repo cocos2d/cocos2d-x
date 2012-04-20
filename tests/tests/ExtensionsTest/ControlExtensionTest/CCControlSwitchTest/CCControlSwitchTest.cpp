@@ -80,8 +80,8 @@ bool CCControlSwitchTest::init()
         // Update the value label
         valueChanged(switchControl);
         return true;
-	}
-	return false;
+    }
+    return false;
 }
 
 void CCControlSwitchTest::valueChanged(CCObject* sender)

@@ -7,13 +7,13 @@
 #include "ChipmunkAccelTouchTest.h"
 
 enum {
-	kTagParentNode = 1,
+    kTagParentNode = 1,
 };
 
 // callback to remove Shapes from the Space
 void removeShape( cpBody *body, cpShape *shape, void *data )
 {
-	cpShapeFree( shape );
+    cpShapeFree( shape );
 }
 
 ChipmunkPhysicsSprite::ChipmunkPhysicsSprite()
@@ -24,13 +24,13 @@ ChipmunkPhysicsSprite::ChipmunkPhysicsSprite()
 
 ChipmunkPhysicsSprite::~ChipmunkPhysicsSprite()
 {
-	cpBodyEachShape(body_, removeShape, NULL);
-	cpBodyFree( body_ );
+    cpBodyEachShape(body_, removeShape, NULL);
+    cpBodyFree( body_ );
 }
 
 void ChipmunkPhysicsSprite::setPhysicsBody(cpBody * body)
 {
-	body_ = body;
+    body_ = body;
 }
 
 // this method will only get called if the sprite is batched.
@@ -38,238 +38,238 @@ void ChipmunkPhysicsSprite::setPhysicsBody(cpBody * body)
 // If you return NO, then nodeToParentTransform won't be called.
 bool ChipmunkPhysicsSprite::isDirty(void)
 {
-	return true;
+    return true;
 }
 
 CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
 {
-	CCFloat x = body_->p.x;
-	CCFloat y = body_->p.y;
+    CCFloat x = body_->p.x;
+    CCFloat y = body_->p.y;
 
-	if ( !getIsRelativeAnchorPoint() ) {
-		x += m_tAnchorPointInPoints.x;
-		y += m_tAnchorPointInPoints.y;
-	}
+    if ( !getIsRelativeAnchorPoint() ) {
+        x += m_tAnchorPointInPoints.x;
+        y += m_tAnchorPointInPoints.y;
+    }
 
-	// Make matrix
-	CCFloat c = body_->rot.x;
-	CCFloat s = body_->rot.y;
+    // Make matrix
+    CCFloat c = body_->rot.x;
+    CCFloat s = body_->rot.y;
 
-	if( ! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPoints, CCPointZero) ){
-		x += c*-m_tAnchorPointInPoints.x + -s*-m_tAnchorPointInPoints.y;
-		y += s*-m_tAnchorPointInPoints.x + c*-m_tAnchorPointInPoints.y;
-	}
+    if( ! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPoints, CCPointZero) ){
+        x += c*-m_tAnchorPointInPoints.x + -s*-m_tAnchorPointInPoints.y;
+        y += s*-m_tAnchorPointInPoints.x + c*-m_tAnchorPointInPoints.y;
+    }
 
-	// Rot, Translate Matrix
-	m_tTransform = CCAffineTransformMake( c,  s,
-		-s,	c,
-		x,	y );
+    // Rot, Translate Matrix
+    m_tTransform = CCAffineTransformMake( c,  s,
+        -s,    c,
+        x,    y );
 
-	return m_tTransform;
+    return m_tTransform;
 }
 
 ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
 {
-	// enable events
-	setIsTouchEnabled(true);
-	setIsAccelerometerEnabled(true);
+    // enable events
+    setIsTouchEnabled(true);
+    setIsAccelerometerEnabled(true);
 
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	// title
-	CCLabelTTF *label = CCLabelTTF::labelWithString("Multi touch the screen", "Marker Felt", 36);
-	label->setPosition(ccp( s.width / 2, s.height - 30));
-	this->addChild(label, -1);
+    // title
+    CCLabelTTF *label = CCLabelTTF::labelWithString("Multi touch the screen", "Marker Felt", 36);
+    label->setPosition(ccp( s.width / 2, s.height - 30));
+    this->addChild(label, -1);
 
-	// reset button
-	createResetButton();
+    // reset button
+    createResetButton();
 
-	// init physics
-	initPhysics();
+    // init physics
+    initPhysics();
 
 #if 1
-	// Use batch node. Faster
-	CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
-	spriteTexture_ = parent->getTexture();
+    // Use batch node. Faster
+    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
+    spriteTexture_ = parent->getTexture();
 #else
-	// doesn't use batch node. Slower
-	spriteTexture_ = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
-	CCNode *parent = CCNode::node();
+    // doesn't use batch node. Slower
+    spriteTexture_ = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
+    CCNode *parent = CCNode::node();
 #endif
-	addChild(parent, 0, kTagParentNode);
+    addChild(parent, 0, kTagParentNode);
 
-	addNewSpriteAtPosition(ccp(200,200));
+    addNewSpriteAtPosition(ccp(200,200));
 
-	scheduleUpdate();
+    scheduleUpdate();
 }
 
 ChipmunkAccelTouchTestLayer::~ChipmunkAccelTouchTestLayer()
 {
-	// manually Free rogue shapes
-	for( int i=0;i<4;i++) {
-		cpShapeFree( walls_[i] );
-	}
+    // manually Free rogue shapes
+    for( int i=0;i<4;i++) {
+        cpShapeFree( walls_[i] );
+    }
 
-	cpSpaceFree( space_ );
+    cpSpaceFree( space_ );
 
 }
 
 void ChipmunkAccelTouchTestLayer::initPhysics()
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	// init chipmunk
-	cpInitChipmunk();
+    // init chipmunk
+    cpInitChipmunk();
 
-	space_ = cpSpaceNew();
+    space_ = cpSpaceNew();
 
-	space_->gravity = cpv(0, -100);
+    space_->gravity = cpv(0, -100);
 
-	//
-	// rogue shapes
-	// We have to free them manually
-	//
-	// bottom
-	walls_[0] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
+    //
+    // rogue shapes
+    // We have to free them manually
+    //
+    // bottom
+    walls_[0] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
 
-	// top
-	walls_[1] = cpSegmentShapeNew( space_->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
+    // top
+    walls_[1] = cpSegmentShapeNew( space_->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
 
-	// left
-	walls_[2] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
+    // left
+    walls_[2] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
 
-	// right
-	walls_[3] = cpSegmentShapeNew( space_->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
+    // right
+    walls_[3] = cpSegmentShapeNew( space_->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
 
-	for( int i=0;i<4;i++) {
-		walls_[i]->e = 1.0f;
-		walls_[i]->u = 1.0f;
-		cpSpaceAddStaticShape(space_, walls_[i] );
-	}
+    for( int i=0;i<4;i++) {
+        walls_[i]->e = 1.0f;
+        walls_[i]->u = 1.0f;
+        cpSpaceAddStaticShape(space_, walls_[i] );
+    }
 }
 
 void ChipmunkAccelTouchTestLayer::update(ccTime delta)
 {
-	// Should use a fixed size step based on the animation interval.
-	int steps = 2;
-	CCFloat dt = CCDirector::sharedDirector()->getAnimationInterval()/(CCFloat)steps;
+    // Should use a fixed size step based on the animation interval.
+    int steps = 2;
+    CCFloat dt = CCDirector::sharedDirector()->getAnimationInterval()/(CCFloat)steps;
 
-	for(int i=0; i<steps; i++){
-		cpSpaceStep(space_, dt);
-	}
+    for(int i=0; i<steps; i++){
+        cpSpaceStep(space_, dt);
+    }
 }
 
 void ChipmunkAccelTouchTestLayer::createResetButton()
 {
-	CCMenuItemImage *reset = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(ChipmunkAccelTouchTestLayer::reset));
+    CCMenuItemImage *reset = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(ChipmunkAccelTouchTestLayer::reset));
 
-	CCMenu *menu = CCMenu::menuWithItems(reset, NULL);
+    CCMenu *menu = CCMenu::menuWithItems(reset, NULL);
 
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	menu->setPosition(ccp(s.width/2, 30));
-	this->addChild(menu, -1);
+    menu->setPosition(ccp(s.width/2, 30));
+    this->addChild(menu, -1);
 }
 
 void ChipmunkAccelTouchTestLayer::reset(CCObject* sender)
 {
-	CCScene* s = new ChipmunkAccelTouchTestScene();
-	ChipmunkAccelTouchTestLayer* child = new ChipmunkAccelTouchTestLayer();
-	s->addChild(child);
-	child->release();
-	CCDirector::sharedDirector()->replaceScene(s);
-	s->release();
+    CCScene* s = new ChipmunkAccelTouchTestScene();
+    ChipmunkAccelTouchTestLayer* child = new ChipmunkAccelTouchTestLayer();
+    s->addChild(child);
+    child->release();
+    CCDirector::sharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ChipmunkAccelTouchTestLayer::addNewSpriteAtPosition(CCPoint pos)
 {
-	int posx, posy;
+    int posx, posy;
 
-	CCNode *parent = getChildByTag(kTagParentNode);
+    CCNode *parent = getChildByTag(kTagParentNode);
 
-	posx = CCRANDOM_0_1() * 200.0f;
-	posy = CCRANDOM_0_1() * 200.0f;
+    posx = CCRANDOM_0_1() * 200.0f;
+    posy = CCRANDOM_0_1() * 200.0f;
 
-	posx = (posx % 4) * 85;
-	posy = (posy % 3) * 121;
+    posx = (posx % 4) * 85;
+    posy = (posy % 3) * 121;
 
-	ChipmunkPhysicsSprite *sprite = new ChipmunkPhysicsSprite();
-	sprite->initWithTexture(spriteTexture_, CCRectMake(posx, posy, 85, 121));
-	sprite->autorelease();
+    ChipmunkPhysicsSprite *sprite = new ChipmunkPhysicsSprite();
+    sprite->initWithTexture(spriteTexture_, CCRectMake(posx, posy, 85, 121));
+    sprite->autorelease();
 
-	parent->addChild(sprite);
+    parent->addChild(sprite);
 
-	sprite->setPosition(pos);
+    sprite->setPosition(pos);
 
-	int num = 4;
-	cpVect verts[] = {
-		cpv(-24,-54),
-		cpv(-24, 54),
-		cpv( 24, 54),
-		cpv( 24,-54),
-	};
+    int num = 4;
+    cpVect verts[] = {
+        cpv(-24,-54),
+        cpv(-24, 54),
+        cpv( 24, 54),
+        cpv( 24,-54),
+    };
 
-	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
+    cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 
-	body->p = cpv(pos.x, pos.y);
-	cpSpaceAddBody(space_, body);
+    body->p = cpv(pos.x, pos.y);
+    cpSpaceAddBody(space_, body);
 
-	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
-	shape->e = 0.5f; shape->u = 0.5f;
-	cpSpaceAddShape(space_, shape);
+    cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
+    shape->e = 0.5f; shape->u = 0.5f;
+    cpSpaceAddShape(space_, shape);
 
-	sprite->setPhysicsBody(body);
+    sprite->setPhysicsBody(body);
 }
 
 void ChipmunkAccelTouchTestLayer::onEnter()
 {
-	CCLayer::onEnter();
+    CCLayer::onEnter();
 }
 
 void ChipmunkAccelTouchTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
-	//Add a new body/atlas sprite at the touched location
-	CCSetIterator it;
-	CCTouch* touch;
+    //Add a new body/atlas sprite at the touched location
+    CCSetIterator it;
+    CCTouch* touch;
 
-	for( it = touches->begin(); it != touches->end(); it++) 
-	{
-		touch = (CCTouch*)(*it);
+    for( it = touches->begin(); it != touches->end(); it++) 
+    {
+        touch = (CCTouch*)(*it);
 
-		if(!touch)
-			break;
+        if(!touch)
+            break;
 
-		CCPoint location = touch->locationInView();
+        CCPoint location = touch->locationInView();
 
-		location = CCDirector::sharedDirector()->convertToGL(location);
+        location = CCDirector::sharedDirector()->convertToGL(location);
 
-		addNewSpriteAtPosition( location );
-	}
+        addNewSpriteAtPosition( location );
+    }
 }
 
 void ChipmunkAccelTouchTestLayer::didAccelerate(CCAcceleration* pAccelerationValue)
 {
-	static float prevX=0, prevY=0;
+    static float prevX=0, prevY=0;
 
 #define kFilterFactor 0.05f
 
-	float accelX = (float) pAccelerationValue->x * kFilterFactor + (1- kFilterFactor)*prevX;
-	float accelY = (float) pAccelerationValue->y * kFilterFactor + (1- kFilterFactor)*prevY;
+    float accelX = (float) pAccelerationValue->x * kFilterFactor + (1- kFilterFactor)*prevX;
+    float accelY = (float) pAccelerationValue->y * kFilterFactor + (1- kFilterFactor)*prevY;
 
-	prevX = accelX;
-	prevY = accelY;
+    prevX = accelX;
+    prevY = accelY;
 
-	CCPoint v = ccp( accelX, accelY);
-	v = ccpMult(v, 200);
-	space_->gravity = cpv(v.x, v.y);
+    CCPoint v = ccp( accelX, accelY);
+    v = ccpMult(v, 200);
+    space_->gravity = cpv(v.x, v.y);
 }
 
 void ChipmunkAccelTouchTestScene::runThisTest()
 {
-	CCLayer* pLayer = new ChipmunkAccelTouchTestLayer();
-	addChild(pLayer);
-	pLayer->release();
+    CCLayer* pLayer = new ChipmunkAccelTouchTestLayer();
+    addChild(pLayer);
+    pLayer->release();
 
-	CCDirector::sharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }
 

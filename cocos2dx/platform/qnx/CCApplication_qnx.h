@@ -5,7 +5,7 @@
 
 #include "CCCommon.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCRect;
 
@@ -16,12 +16,12 @@ public:
     virtual ~CCApplication();
 
     /**
-    @brief	Implement for initialize OpenGL instance, set source path, etc...
+    @brief    Implement for initialize OpenGL instance, set source path, etc...
     */
     virtual bool initInstance() = 0;
 
     /**
-    @brief	Implement CCDirector and CCScene init code here.
+    @brief    Implement CCDirector and CCScene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
@@ -40,10 +40,10 @@ public:
     virtual void applicationWillEnterForeground() = 0;
 
     /**
-    @brief	Callback by CCDirector for limit FPS.
+    @brief    Callback by CCDirector for limit FPS.
     @interval       The time, which expressed in second in second, between current frame and next. 
     */
-    void 		 setAnimationInterval(double interval);
+    void          setAnimationInterval(double interval);
 
     typedef enum
     {
@@ -58,24 +58,24 @@ public:
     } Orientation;
 
     /**
-    @brief	Callback by CCDirector for change device orientation.
+    @brief    Callback by CCDirector for change device orientation.
     @orientation    The defination of orientation which CCDirector want change to.
     @return         The actual orientation of the application.
     */
     Orientation setOrientation(Orientation orientation);
 
     /**
-    @brief	Get status bar rectangle in EGLView window.
+    @brief    Get status bar rectangle in EGLView window.
     */
     void    statusBarFrame(CCRect * rect);
 
     /**
-    @brief	Run the message loop.
+    @brief    Run the message loop.
     */
     int run();
 
     /**
-    @brief	Get current applicaiton instance.
+    @brief    Get current applicaiton instance.
     @return Current application instance pointer.
     */
     static CCApplication& sharedApplication();
@@ -92,9 +92,9 @@ protected:
 
 private:
 
-    static long	m_animationInterval;
+    static long    m_animationInterval;
 };
 
-NS_CC_END;
+NS_CC_END
 
-#endif	// __CCX_APPLICATION_QNX_H__
+#endif    // __CCX_APPLICATION_QNX_H__

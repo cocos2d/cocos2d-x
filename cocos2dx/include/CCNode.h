@@ -49,7 +49,7 @@ class CCScheduler;
 class CCActionManager;
 
 enum {
-	kCCNodeTagInvalid = -1,
+    kCCNodeTagInvalid = -1,
 };
 
 enum {
@@ -61,15 +61,15 @@ enum {
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-	    CCObject* child;                                              \
-	    CCARRAY_FOREACH(pArray, child)                                \
-	    {                                                             \
-		    elementType pNode = (elementType) child;                  \
-		    if(pNode)                                                 \
-		    {                                                         \
-			    pNode->func();                                        \
-		    }                                                         \
-	    }                                                             \
+        CCObject* child;                                              \
+        CCARRAY_FOREACH(pArray, child)                                \
+        {                                                             \
+            elementType pNode = (elementType) child;                  \
+            if(pNode)                                                 \
+            {                                                         \
+                pNode->func();                                        \
+            }                                                         \
+        }                                                             \
     }                                                                 \
 }                                                                     \
 while(false)
@@ -78,15 +78,15 @@ while(false)
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-	    CCObject* child = NULL;                                       \
-	    CCARRAY_FOREACH(pArray, child)                                \
-	    {                                                             \
-		    elementType pNode = (elementType) child;                  \
-		    if(pNode)                                                 \
-		    {                                                         \
-			    pNode->func(pObject);                                 \
-		    }                                                         \
-	    }                                                             \
+        CCObject* child = NULL;                                       \
+        CCARRAY_FOREACH(pArray, child)                                \
+        {                                                             \
+            elementType pNode = (elementType) child;                  \
+            if(pNode)                                                 \
+            {                                                         \
+                pNode->func(pObject);                                 \
+            }                                                         \
+        }                                                             \
     }                                                                 \
 }                                                                     \
 while(false)
@@ -149,10 +149,10 @@ while(false)
 class CC_DLL CCNode : public CCObject
 {
 
-	// variable property
+    // variable property
 
-	/** The z order of the node relative to it's "brothers": children of the same parent */
-	CC_PROPERTY_READONLY(int, m_nZOrder, ZOrder)
+    /** The z order of the node relative to it's "brothers": children of the same parent */
+    CC_PROPERTY_READONLY(int, m_nZOrder, ZOrder)
 
     /** The real openGL Z vertex.
      Differences between openGL Z vertex and cocos2d Z order:
@@ -171,11 +171,11 @@ class CC_DLL CCNode : public CCObject
      @warning: Assert when m_fScaleX != m_fScaleY.
      */
     float getScale();
-	/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
-	void setScale(float scale);
+    /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
+    void setScale(float scale);
 
-	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
-	CC_PROPERTY(float, m_fScaleX, ScaleX)
+    /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
+    CC_PROPERTY(float, m_fScaleX, ScaleX)
 
     /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
     CC_PROPERTY(float, m_fScaleY, ScaleY)
@@ -202,7 +202,7 @@ class CC_DLL CCNode : public CCObject
     void setPositionX(float x);
     void setPositionY(float y);
     void setPosition(float x, float y);
-	void _setZOrder(int z);
+    void _setZOrder(int z);
     /** The X skew angle of the node in degrees.
      This angle describes the shear distortion in the X direction.
      Thus, it is the angle between the Y axis and the left edge of the shape
@@ -270,97 +270,97 @@ class CC_DLL CCNode : public CCObject
 
     /** A custom user data pointer */
     CC_PROPERTY(void *, m_pUserData, UserData)
-	/** Similar to userData, but instead of holding a void* it holds an id */
-	CC_SYNTHESIZE_RETAIN(CCObject*, m_pUserObject, UserObject);
+    /** Similar to userData, but instead of holding a void* it holds an id */
+    CC_SYNTHESIZE_RETAIN(CCObject*, m_pUserObject, UserObject);
 
-	/** Shader Program
-	 @since v2.0
-	 */
-	CC_SYNTHESIZE_RETAIN(CCGLProgram*, m_pShaderProgram, ShaderProgram);
+    /** Shader Program
+     @since v2.0
+     */
+    CC_SYNTHESIZE_RETAIN(CCGLProgram*, m_pShaderProgram, ShaderProgram);
 
-	/** used internally for zOrder sorting, don't change this manually */
-	CC_SYNTHESIZE(int, m_nOrderOfArrival, OrderOfArrival);
+    /** used internally for zOrder sorting, don't change this manually */
+    CC_SYNTHESIZE(int, m_nOrderOfArrival, OrderOfArrival);
 
-	/** GL server side state
-	 @since v2.0
-	*/
-	CC_SYNTHESIZE(ccGLServerState, m_glServerState, GLServerState);
+    /** GL server side state
+     @since v2.0
+    */
+    CC_SYNTHESIZE(ccGLServerState, m_glServerState, GLServerState);
 
-	/** CCActionManager used by all the actions.
-	 IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
-	 @since v2.0
-	 */
-	CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
+    /** CCActionManager used by all the actions.
+     IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
+     @since v2.0
+     */
+    CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
 
-	/** CCScheduler used to schedule all "updates" and timers.
-	 IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
-	 @since v2.0
-	 */
-	CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
+    /** CCScheduler used to schedule all "updates" and timers.
+     IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
+     @since v2.0
+     */
+    CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
 
 protected:
 
-	// transform
-	CCAffineTransform m_tTransform, m_tInverse;
+    // transform
+    CCAffineTransform m_tTransform, m_tInverse;
 
-	// To reduce memory, place bools that are not properties here:
-	bool m_bIsTransformDirty;
-	bool m_bIsInverseDirty;
-	bool m_bReorderChildDirty;
+    // To reduce memory, place bools that are not properties here:
+    bool m_bIsTransformDirty;
+    bool m_bIsInverseDirty;
+    bool m_bReorderChildDirty;
     int m_nScriptHandler;
 
 private:
-	//! lazy allocs
-	void childrenAlloc(void);
+    //! lazy allocs
+    void childrenAlloc(void);
 
-	//! helper that reorder a child
-	void insertChild(CCNode* child, int z);
+    //! helper that reorder a child
+    void insertChild(CCNode* child, int z);
 
-	//! used internally to alter the zOrder variable. DON'T call this method manually
-	void setZOrder(int z);
-	
-	
-	void detachChild(CCNode *child, bool doCleanup);
+    //! used internally to alter the zOrder variable. DON'T call this method manually
+    void setZOrder(int z);
+    
+    
+    void detachChild(CCNode *child, bool doCleanup);
 
-	CCPoint convertToWindowSpace(const CCPoint& nodePoint);
+    CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 
 public:
 
-	CCNode(void);
+    CCNode(void);
 
-	virtual ~CCNode(void);
+    virtual ~CCNode(void);
 
-	const char* description(void);
+    const char* description(void);
 
-	/** allocates and initializes a node.
+    /** allocates and initializes a node.
      The node will be created as "autorelease".
      */
-	static CCNode * node(void);
+    static CCNode * node(void);
 
-	//scene managment
+    //scene managment
 
-	/** callback that is called every time the CCNode enters the 'stage'.
+    /** callback that is called every time the CCNode enters the 'stage'.
      If the CCNode enters the 'stage' with a transition, this callback is called when the transition starts.
      During onEnter you can't a "sister/brother" node.
      */
-	virtual void onEnter();
+    virtual void onEnter();
 
-	/** callback that is called when the CCNode enters in the 'stage'.
+    /** callback that is called when the CCNode enters in the 'stage'.
      If the CCNode enters the 'stage' with a transition, this callback is called when the transition finishes.
      @since v0.8
      */
-	virtual void onEnterTransitionDidFinish();
+    virtual void onEnterTransitionDidFinish();
 
-	/** callback that is called every time the CCNode leaves the 'stage'.
+    /** callback that is called every time the CCNode leaves the 'stage'.
      If the CCNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
      During onExit you can't access a sibling node.
      */
-	virtual void onExit();
+    virtual void onExit();
 
-	/** callback that is called every time the CCNode leaves the 'stage'.
-	 If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
-	 */
-	virtual void onExitTransitionDidStart();
+    /** callback that is called every time the CCNode leaves the 'stage'.
+     If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
+     */
+    virtual void onExitTransitionDidStart();
 
     /** Register onEnter/onExit handler script function
      
@@ -369,73 +369,73 @@ public:
     virtual void registerScriptHandler(int nHandler);
     virtual void unregisterScriptHandler(void);
 
-	// composition: ADD
+    // composition: ADD
 
-	/** Adds a child to the container with z-order as 0.
+    /** Adds a child to the container with z-order as 0.
      If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      @since v0.7.1
      */
-	virtual void addChild(CCNode * child);
+    virtual void addChild(CCNode * child);
 
-	/** Adds a child to the container with a z-order
+    /** Adds a child to the container with a z-order
      If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      @since v0.7.1
      */
-	virtual void addChild(CCNode * child, int zOrder);
+    virtual void addChild(CCNode * child, int zOrder);
 
-	/** Adds a child to the container with z order and tag
+    /** Adds a child to the container with z order and tag
      If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      @since v0.7.1
      */
-	virtual void addChild(CCNode * child, int zOrder, int tag);
+    virtual void addChild(CCNode * child, int zOrder, int tag);
 
-	// composition: REMOVE
+    // composition: REMOVE
 
-	/** Remove itself from its parent node. If cleanup is true, then also remove all actions and callbacks.
+    /** Remove itself from its parent node. If cleanup is true, then also remove all actions and callbacks.
      If the node orphan, then nothing happens.
      @since v0.99.3
      */
-	void removeFromParentAndCleanup(bool cleanup);
+    void removeFromParentAndCleanup(bool cleanup);
 
-	/** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+    /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      @since v0.7.1
      */
-	virtual void removeChild(CCNode* child, bool cleanup);
+    virtual void removeChild(CCNode* child, bool cleanup);
 
-	/** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+    /** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
      @since v0.7.1
      */
-	void removeChildByTag(int tag, bool cleanup);
+    void removeChildByTag(int tag, bool cleanup);
 
-	/** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
+    /** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
      @since v0.7.1
      */
-	virtual void removeAllChildrenWithCleanup(bool cleanup);
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
 
-	// composition: GET
-	/** Gets a child from the container given its tag
+    // composition: GET
+    /** Gets a child from the container given its tag
      @return returns a CCNode object
      @since v0.7.1
      */
-	CCNode * getChildByTag(int tag);
+    CCNode * getChildByTag(int tag);
 
-	/** Reorders a child according to a new z value.
+    /** Reorders a child according to a new z value.
      * The child MUST be already added.
      */
-	virtual void reorderChild(CCNode * child, int zOrder);
+    virtual void reorderChild(CCNode * child, int zOrder);
 
-	/** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
-	 don't call this manually unless a child added needs to be removed in the same frame */
-	virtual void sortAllChildren();
+    /** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
+     don't call this manually unless a child added needs to be removed in the same frame */
+    virtual void sortAllChildren();
 
-	/** Stops all running actions and schedulers
+    /** Stops all running actions and schedulers
      @since v0.8
      */
-	virtual void cleanup(void);
+    virtual void cleanup(void);
 
-	// draw
+    // draw
 
-	/** Override this method to draw your own node.
+    /** Override this method to draw your own node.
      The following GL states will be enabled by default:
      - glEnableClientState(GL_VERTEX_ARRAY);
      - glEnableClientState(GL_COLOR_ARRAY);
@@ -446,187 +446,187 @@ public:
 
      But if you enable any other GL state, you should disable it after drawing your node.
      */
-	virtual void draw(void);
+    virtual void draw(void);
 
-	/** recursive method that visit its children and draw them */
-	virtual void visit(void);
+    /** recursive method that visit its children and draw them */
+    virtual void visit(void);
 
-	// transformations
+    // transformations
 
-	/** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
-	void transform(void);
+    /** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
+    void transform(void);
 
-	/** performs OpenGL view-matrix transformation of it's ancestors.
+    /** performs OpenGL view-matrix transformation of it's ancestors.
      Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)
      it's necessary to transform the ancestors again.
      @since v0.7.2
      */
-	void transformAncestors(void);
+    void transformAncestors(void);
 
-	/** returns a "local" axis aligned bounding box of the node.
+    /** returns a "local" axis aligned bounding box of the node.
      The returned box is relative only to its parent.
 
      @since v0.8.2
      */
-	CCRect boundingBox(void);
+    CCRect boundingBox(void);
 
-	// actions
+    // actions
 
-	/** Executes an action, and returns the action that is executed.
+    /** Executes an action, and returns the action that is executed.
      The node becomes the action's target.
      @warning Starting from v0.8 actions don't retain their target anymore.
      @since v0.7.1
      @return An Action pointer
      */
 
-	CCAction* runAction(CCAction* action);
+    CCAction* runAction(CCAction* action);
 
-	/** Removes all actions from the running action list */
-	void stopAllActions(void);
+    /** Removes all actions from the running action list */
+    void stopAllActions(void);
 
-	/** Removes an action from the running action list */
-	void stopAction(CCAction* action);
+    /** Removes an action from the running action list */
+    void stopAction(CCAction* action);
 
-	/** Removes an action from the running action list given its tag
+    /** Removes an action from the running action list given its tag
      @since v0.7.1
      */
-	void stopActionByTag(int tag);
+    void stopActionByTag(int tag);
 
-	/** Gets an action from the running action list given its tag
+    /** Gets an action from the running action list given its tag
      @since v0.7.1
      @return the Action the with the given tag
      */
-	CCAction* getActionByTag(int tag);
+    CCAction* getActionByTag(int tag);
 
-	/** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
+    /** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
      * Composable actions are counted as 1 action. Example:
      *    If you are running 1 Sequence of 7 actions, it will return 1.
      *    If you are running 7 Sequences of 2 actions, it will return 7.
      */
-	unsigned int numberOfRunningActions(void);
+    unsigned int numberOfRunningActions(void);
 
 
-	// timers
+    // timers
 
-	/** check whether a selector is scheduled. */
-	bool isScheduled(SEL_SCHEDULE selector);
+    /** check whether a selector is scheduled. */
+    bool isScheduled(SEL_SCHEDULE selector);
 
-	/** schedules the "update" method. It will use the order number 0. This method will be called every frame.
+    /** schedules the "update" method. It will use the order number 0. This method will be called every frame.
      Scheduled methods with a lower order value will be called before the ones that have a higher order value.
      Only one "update" method could be scheduled per node.
 
      @since v0.99.3
      */
-	void scheduleUpdate(void);
+    void scheduleUpdate(void);
 
-	/** schedules the "update" selector with a custom priority. This selector will be called every frame.
+    /** schedules the "update" selector with a custom priority. This selector will be called every frame.
      Scheduled selectors with a lower priority will be called before the ones that have a higher value.
      Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
 
      @since v0.99.3
      */
-	void scheduleUpdateWithPriority(int priority);
+    void scheduleUpdateWithPriority(int priority);
 
-	/* unschedules the "update" method.
+    /* unschedules the "update" method.
 
      @since v0.99.3
      */
-	void unscheduleUpdate(void);
+    void unscheduleUpdate(void);
 
-	/** schedules a selector.
+    /** schedules a selector.
      The scheduled selector will be ticked every frame
      */
-	void schedule(SEL_SCHEDULE selector);
+    void schedule(SEL_SCHEDULE selector);
 
-	/** schedules a custom selector with an interval time in seconds.
+    /** schedules a custom selector with an interval time in seconds.
      If time is 0 it will be ticked every frame.
      If time is 0, it is recommended to use 'scheduleUpdate' instead.
      If the selector is already scheduled, then the interval parameter
      will be updated without scheduling it again.
      */
-	void schedule(SEL_SCHEDULE selector, ccTime interval);
+    void schedule(SEL_SCHEDULE selector, ccTime interval);
 
-	/**
-	 repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
-	 delay is the amount of time the action will wait before execution
-	 */
-	void schedule(SEL_SCHEDULE selector, ccTime interval, unsigned int repeat, ccTime delay);
+    /**
+     repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
+     delay is the amount of time the action will wait before execution
+     */
+    void schedule(SEL_SCHEDULE selector, ccTime interval, unsigned int repeat, ccTime delay);
 
-	/**
-	 Schedules a selector that runs only once, with a delay of 0 or larger
-	*/
-	void scheduleOnce(SEL_SCHEDULE selector, ccTime delay);
+    /**
+     Schedules a selector that runs only once, with a delay of 0 or larger
+    */
+    void scheduleOnce(SEL_SCHEDULE selector, ccTime delay);
 
-	/** unschedules a custom selector.*/
-	void unschedule(SEL_SCHEDULE selector);
+    /** unschedules a custom selector.*/
+    void unschedule(SEL_SCHEDULE selector);
 
-	/** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
+    /** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
      Actions are not affected by this method.
      @since v0.99.3
      */
-	void unscheduleAllSelectors(void);
+    void unscheduleAllSelectors(void);
 
-	/** resumes all scheduled selectors and actions.
+    /** resumes all scheduled selectors and actions.
      Called internally by onEnter
      */
-	void resumeSchedulerAndActions(void);
-	/** pauses all scheduled selectors and actions.
+    void resumeSchedulerAndActions(void);
+    /** pauses all scheduled selectors and actions.
      Called internally by onExit
      */
-	void pauseSchedulerAndActions(void);
+    void pauseSchedulerAndActions(void);
 
-	// transformation methods
+    // transformation methods
 
-	/** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+    /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      The matrix is in Pixels.
      @since v0.7.1
      */
-	virtual CCAffineTransform nodeToParentTransform(void);
+    virtual CCAffineTransform nodeToParentTransform(void);
 
-	/** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
+    /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      The matrix is in Pixels.
      @since v0.7.1
      */
-	virtual CCAffineTransform parentToNodeTransform(void);
+    virtual CCAffineTransform parentToNodeTransform(void);
 
-	/** Retrusn the world affine transform matrix. The matrix is in Pixels.
+    /** Retrusn the world affine transform matrix. The matrix is in Pixels.
      @since v0.7.1
      */
-	virtual CCAffineTransform nodeToWorldTransform(void);
+    virtual CCAffineTransform nodeToWorldTransform(void);
 
-	/** Returns the inverse world affine transform matrix. The matrix is in Pixels.
+    /** Returns the inverse world affine transform matrix. The matrix is in Pixels.
      @since v0.7.1
      */
-	virtual CCAffineTransform worldToNodeTransform(void);
+    virtual CCAffineTransform worldToNodeTransform(void);
 
-	/** Converts a Point to node (local) space coordinates. The result is in Points.
+    /** Converts a Point to node (local) space coordinates. The result is in Points.
      @since v0.7.1
      */
-	CCPoint convertToNodeSpace(const CCPoint& worldPoint);
-	/** Converts a Point to world space coordinates. The result is in Points.
+    CCPoint convertToNodeSpace(const CCPoint& worldPoint);
+    /** Converts a Point to world space coordinates. The result is in Points.
      @since v0.7.1
      */
-	CCPoint convertToWorldSpace(const CCPoint& nodePoint);
-	/** Converts a Point to node (local) space coordinates. The result is in Points.
+    CCPoint convertToWorldSpace(const CCPoint& nodePoint);
+    /** Converts a Point to node (local) space coordinates. The result is in Points.
      treating the returned/received node point as anchor relative.
      @since v0.7.1
      */
-	CCPoint convertToNodeSpaceAR(const CCPoint& worldPoint);
-	/** Converts a local Point to world space coordinates.The result is in Points.
+    CCPoint convertToNodeSpaceAR(const CCPoint& worldPoint);
+    /** Converts a local Point to world space coordinates.The result is in Points.
      treating the returned/received node point as anchor relative.
      @since v0.7.1
      */
-	CCPoint convertToWorldSpaceAR(const CCPoint& nodePoint);
+    CCPoint convertToWorldSpaceAR(const CCPoint& nodePoint);
 
-	/** convenience methods which take a CCTouch instead of CCPoint
+    /** convenience methods which take a CCTouch instead of CCPoint
      @since v0.7.1
      */
-	CCPoint convertTouchToNodeSpace(CCTouch * touch);
+    CCPoint convertTouchToNodeSpace(CCTouch * touch);
 
-	/** converts a CCTouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
+    /** converts a CCTouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
      @since v0.7.1
      */
-	CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
+    CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
 };
 
 NS_CC_END

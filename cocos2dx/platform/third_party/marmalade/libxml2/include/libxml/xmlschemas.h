@@ -26,8 +26,8 @@ extern "C" {
  * This error codes are obsolete; not used any more.
  */
 typedef enum {
-    XML_SCHEMAS_ERR_OK		= 0,
-    XML_SCHEMAS_ERR_NOROOT	= 1,
+    XML_SCHEMAS_ERR_OK        = 0,
+    XML_SCHEMAS_ERR_NOROOT    = 1,
     XML_SCHEMAS_ERR_UNDECLAREDELEM,
     XML_SCHEMAS_ERR_NOTTOPLEVEL,
     XML_SCHEMAS_ERR_MISSING,
@@ -65,17 +65,17 @@ typedef enum {
  * This is the set of XML Schema validation options.
  */
 typedef enum {
-    XML_SCHEMA_VAL_VC_I_CREATE			= 1<<0
-	/* Default/fixed: create an attribute node
-	* or an element's text node on the instance.
-	*/
+    XML_SCHEMA_VAL_VC_I_CREATE            = 1<<0
+    /* Default/fixed: create an attribute node
+    * or an element's text node on the instance.
+    */
 } xmlSchemaValidOption;
 
 /*
-    XML_SCHEMA_VAL_XSI_ASSEMBLE			= 1<<1,
-	* assemble schemata using
-	* xsi:schemaLocation and
-	* xsi:noNamespaceSchemaLocation
+    XML_SCHEMA_VAL_XSI_ASSEMBLE            = 1<<1,
+    * assemble schemata using
+    * xsi:schemaLocation and
+    * xsi:noNamespaceSchemaLocation
 */
 
 /**
@@ -117,86 +117,86 @@ typedef xmlSchemaValidCtxt *xmlSchemaValidCtxtPtr;
  * Interfaces for parsing.
  */
 XMLPUBFUN xmlSchemaParserCtxtPtr XMLCALL
-	    xmlSchemaNewParserCtxt	(const char *URL);
+        xmlSchemaNewParserCtxt    (const char *URL);
 XMLPUBFUN xmlSchemaParserCtxtPtr XMLCALL
-	    xmlSchemaNewMemParserCtxt	(const char *buffer,
-					 int size);
+        xmlSchemaNewMemParserCtxt    (const char *buffer,
+                     int size);
 XMLPUBFUN xmlSchemaParserCtxtPtr XMLCALL
-	    xmlSchemaNewDocParserCtxt	(xmlDocPtr doc);
+        xmlSchemaNewDocParserCtxt    (xmlDocPtr doc);
 XMLPUBFUN void XMLCALL
-	    xmlSchemaFreeParserCtxt	(xmlSchemaParserCtxtPtr ctxt);
+        xmlSchemaFreeParserCtxt    (xmlSchemaParserCtxtPtr ctxt);
 XMLPUBFUN void XMLCALL
-	    xmlSchemaSetParserErrors	(xmlSchemaParserCtxtPtr ctxt,
-					 xmlSchemaValidityErrorFunc err,
-					 xmlSchemaValidityWarningFunc warn,
-					 void *ctx);
+        xmlSchemaSetParserErrors    (xmlSchemaParserCtxtPtr ctxt,
+                     xmlSchemaValidityErrorFunc err,
+                     xmlSchemaValidityWarningFunc warn,
+                     void *ctx);
 XMLPUBFUN void XMLCALL
-	    xmlSchemaSetParserStructuredErrors(xmlSchemaParserCtxtPtr ctxt,
-					 xmlStructuredErrorFunc serror,
-					 void *ctx);
+        xmlSchemaSetParserStructuredErrors(xmlSchemaParserCtxtPtr ctxt,
+                     xmlStructuredErrorFunc serror,
+                     void *ctx);
 XMLPUBFUN int XMLCALL
-		xmlSchemaGetParserErrors(xmlSchemaParserCtxtPtr ctxt,
-					xmlSchemaValidityErrorFunc * err,
-					xmlSchemaValidityWarningFunc * warn,
-					void **ctx);
+        xmlSchemaGetParserErrors(xmlSchemaParserCtxtPtr ctxt,
+                    xmlSchemaValidityErrorFunc * err,
+                    xmlSchemaValidityWarningFunc * warn,
+                    void **ctx);
 XMLPUBFUN int XMLCALL
-		xmlSchemaIsValid	(xmlSchemaValidCtxtPtr ctxt);
+        xmlSchemaIsValid    (xmlSchemaValidCtxtPtr ctxt);
 
 XMLPUBFUN xmlSchemaPtr XMLCALL
-	    xmlSchemaParse		(xmlSchemaParserCtxtPtr ctxt);
+        xmlSchemaParse        (xmlSchemaParserCtxtPtr ctxt);
 XMLPUBFUN void XMLCALL
-	    xmlSchemaFree		(xmlSchemaPtr schema);
+        xmlSchemaFree        (xmlSchemaPtr schema);
 #ifdef LIBXML_OUTPUT_ENABLED
 XMLPUBFUN void XMLCALL
-	    xmlSchemaDump		(FILE *output,
-					 xmlSchemaPtr schema);
+        xmlSchemaDump        (FILE *output,
+                     xmlSchemaPtr schema);
 #endif /* LIBXML_OUTPUT_ENABLED */
 /*
  * Interfaces for validating
  */
 XMLPUBFUN void XMLCALL
-	    xmlSchemaSetValidErrors	(xmlSchemaValidCtxtPtr ctxt,
-					 xmlSchemaValidityErrorFunc err,
-					 xmlSchemaValidityWarningFunc warn,
-					 void *ctx);
+        xmlSchemaSetValidErrors    (xmlSchemaValidCtxtPtr ctxt,
+                     xmlSchemaValidityErrorFunc err,
+                     xmlSchemaValidityWarningFunc warn,
+                     void *ctx);
 XMLPUBFUN void XMLCALL
-	    xmlSchemaSetValidStructuredErrors(xmlSchemaValidCtxtPtr ctxt,
-					 xmlStructuredErrorFunc serror,
-					 void *ctx);
+        xmlSchemaSetValidStructuredErrors(xmlSchemaValidCtxtPtr ctxt,
+                     xmlStructuredErrorFunc serror,
+                     void *ctx);
 XMLPUBFUN int XMLCALL
-	    xmlSchemaGetValidErrors	(xmlSchemaValidCtxtPtr ctxt,
-					 xmlSchemaValidityErrorFunc *err,
-					 xmlSchemaValidityWarningFunc *warn,
-					 void **ctx);
+        xmlSchemaGetValidErrors    (xmlSchemaValidCtxtPtr ctxt,
+                     xmlSchemaValidityErrorFunc *err,
+                     xmlSchemaValidityWarningFunc *warn,
+                     void **ctx);
 XMLPUBFUN int XMLCALL
-	    xmlSchemaSetValidOptions	(xmlSchemaValidCtxtPtr ctxt,
-					 int options);
+        xmlSchemaSetValidOptions    (xmlSchemaValidCtxtPtr ctxt,
+                     int options);
 XMLPUBFUN int XMLCALL
-	    xmlSchemaValidCtxtGetOptions(xmlSchemaValidCtxtPtr ctxt);
+        xmlSchemaValidCtxtGetOptions(xmlSchemaValidCtxtPtr ctxt);
 
 XMLPUBFUN xmlSchemaValidCtxtPtr XMLCALL
-	    xmlSchemaNewValidCtxt	(xmlSchemaPtr schema);
+        xmlSchemaNewValidCtxt    (xmlSchemaPtr schema);
 XMLPUBFUN void XMLCALL
-	    xmlSchemaFreeValidCtxt	(xmlSchemaValidCtxtPtr ctxt);
+        xmlSchemaFreeValidCtxt    (xmlSchemaValidCtxtPtr ctxt);
 XMLPUBFUN int XMLCALL
-	    xmlSchemaValidateDoc	(xmlSchemaValidCtxtPtr ctxt,
-					 xmlDocPtr instance);
+        xmlSchemaValidateDoc    (xmlSchemaValidCtxtPtr ctxt,
+                     xmlDocPtr instance);
 XMLPUBFUN int XMLCALL
             xmlSchemaValidateOneElement (xmlSchemaValidCtxtPtr ctxt,
-			                 xmlNodePtr elem);
+                             xmlNodePtr elem);
 XMLPUBFUN int XMLCALL
-	    xmlSchemaValidateStream	(xmlSchemaValidCtxtPtr ctxt,
-					 xmlParserInputBufferPtr input,
-					 xmlCharEncoding enc,
-					 xmlSAXHandlerPtr sax,
-					 void *user_data);
+        xmlSchemaValidateStream    (xmlSchemaValidCtxtPtr ctxt,
+                     xmlParserInputBufferPtr input,
+                     xmlCharEncoding enc,
+                     xmlSAXHandlerPtr sax,
+                     void *user_data);
 XMLPUBFUN int XMLCALL
-	    xmlSchemaValidateFile	(xmlSchemaValidCtxtPtr ctxt,
-					 const char * filename,
-					 int options);
+        xmlSchemaValidateFile    (xmlSchemaValidCtxtPtr ctxt,
+                     const char * filename,
+                     int options);
 
 XMLPUBFUN xmlParserCtxtPtr XMLCALL
-	    xmlSchemaValidCtxtGetParserCtxt(xmlSchemaValidCtxtPtr ctxt);
+        xmlSchemaValidCtxtGetParserCtxt(xmlSchemaValidCtxtPtr ctxt);
 
 /*
  * Interface to insert Schemas SAX validation in a SAX stream
@@ -205,11 +205,11 @@ typedef struct _xmlSchemaSAXPlug xmlSchemaSAXPlugStruct;
 typedef xmlSchemaSAXPlugStruct *xmlSchemaSAXPlugPtr;
 
 XMLPUBFUN xmlSchemaSAXPlugPtr XMLCALL
-            xmlSchemaSAXPlug		(xmlSchemaValidCtxtPtr ctxt,
-					 xmlSAXHandlerPtr *sax,
-					 void **user_data);
+            xmlSchemaSAXPlug        (xmlSchemaValidCtxtPtr ctxt,
+                     xmlSAXHandlerPtr *sax,
+                     void **user_data);
 XMLPUBFUN int XMLCALL
-            xmlSchemaSAXUnplug		(xmlSchemaSAXPlugPtr plug);
+            xmlSchemaSAXUnplug        (xmlSchemaSAXPlugPtr plug);
 #ifdef __cplusplus
 }
 #endif

@@ -6,7 +6,7 @@
 class KeyboardNotificationLayer;
 
 /**
-@brief	TextInputTest for retain prev, reset, next, main menu buttons.
+@brief    TextInputTest for retain prev, reset, next, main menu buttons.
 */
 class TextInputTest : public CCLayer
 {
@@ -99,4 +99,4 @@ public:
     virtual void runThisTest();
 };
 
-#endif	// __TEXT_INPUT_TEST_H__
+#endif    // __TEXT_INPUT_TEST_H__

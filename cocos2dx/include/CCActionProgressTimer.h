@@ -27,8 +27,7 @@ THE SOFTWARE.
 
 #include "CCActionInterval.h"
 
-namespace cocos2d
-{
+NS_CC_BEGIN
 
 /**
 @brief Progress to percentage
@@ -37,20 +36,20 @@ namespace cocos2d
 class CC_DLL CCProgressTo : public CCActionInterval
 {
 public:
-	/** Initializes with a duration and a percent */
-	bool initWithDuration(ccTime duration, float fPercent);
+    /** Initializes with a duration and a percent */
+    bool initWithDuration(ccTime duration, float fPercent);
 
-	virtual CCObject* copyWithZone(CCZone *pZone);
-	virtual void startWithTarget(CCNode *pTarget);
-	virtual void update(ccTime time);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual void update(ccTime time);
 
 public:
-	/** Creates and initializes with a duration and a percent */
-	static CCProgressTo* actionWithDuration(ccTime duration, float fPercent);
+    /** Creates and initializes with a duration and a percent */
+    static CCProgressTo* actionWithDuration(ccTime duration, float fPercent);
 
 protected:
-	float m_fTo;
-	float m_fFrom;
+    float m_fTo;
+    float m_fFrom;
 };
 
 /**
@@ -60,23 +59,23 @@ protected:
 class CC_DLL CCProgressFromTo : public CCActionInterval
 {
 public:
-	/** Initializes the action with a duration, a "from" percentage and a "to" percentage */
+    /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
 
-	virtual CCObject* copyWithZone(CCZone *pZone);
-	virtual CCActionInterval* reverse(void);
-	virtual void startWithTarget(CCNode *pTarget);
-	virtual void update(ccTime time);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual CCActionInterval* reverse(void);
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual void update(ccTime time);
 
 public:
-	/** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
-	static CCProgressFromTo* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
+    /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
+    static CCProgressFromTo* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
 
 protected:
-	float m_fTo;
-	float m_fFrom;
+    float m_fTo;
+    float m_fFrom;
 };
 
-} // end of namespace cocos2d
+NS_CC_END
 
 #endif // __ACTION_CCPROGRESS_TIMER_H__

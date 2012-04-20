@@ -41,15 +41,15 @@ public:
  CCActionTween is an action that lets you update any property of an object.
  For example, if you want to modify the "width" property of a target from 200 to 300 in 2 seconds, then:
 
-	id modifyWidth = [CCActionTween actionWithDuration:2 key:@"width" from:200 to:300];
-	[target runAction:modifyWidth];
+    id modifyWidth = [CCActionTween actionWithDuration:2 key:@"width" from:200 to:300];
+    [target runAction:modifyWidth];
 
 
  Another example: CCScaleTo action could be rewriten using CCPropertyAction:
 
-	// scaleA and scaleB are equivalents
-	id scaleA = [CCScaleTo actionWithDuration:2 scale:3];
-	id scaleB = [CCActionTween actionWithDuration:2 key:@"scale" from:1 to:3];
+    // scaleA and scaleB are equivalents
+    id scaleA = [CCScaleTo actionWithDuration:2 scale:3];
+    id scaleB = [CCActionTween actionWithDuration:2 key:@"scale" from:1 to:3];
 
 
  @since v0.99.2
@@ -67,9 +67,9 @@ public:
     void update(ccTime dt);
     CCActionInterval* reverse();
 
-    std::string		m_strKey;
-	float			m_fFrom, m_fTo;
-	float			m_fDelta;
+    std::string        m_strKey;
+    float            m_fFrom, m_fTo;
+    float            m_fDelta;
 };
 
 NS_CC_END

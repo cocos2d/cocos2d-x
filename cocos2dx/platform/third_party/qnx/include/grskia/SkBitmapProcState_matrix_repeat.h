@@ -15,8 +15,8 @@
  */
 
 
-#if	!defined(__ARM_HAVE_NEON)
-#error	this file can be used only when the NEON unit is enabled
+#if    !defined(__ARM_HAVE_NEON)
+#error    this file can be used only when the NEON unit is enabled
 #endif
 
 #include <arm_neon.h>
@@ -90,67 +90,67 @@ static void SCALE_NOFILTER_NAME(const SkBitmapProcState& s,
     {
         int i;
 
-#if	defined(__ARM_HAVE_NEON)
-	/* RBE: very much like done in decal_nofilter ,
-	 * but some processing of the 'fx' information 
+#if    defined(__ARM_HAVE_NEON)
+    /* RBE: very much like done in decal_nofilter ,
+     * but some processing of the 'fx' information 
          * TILEX_PROCF(fx, max)    (((fx) & 0xFFFF) * ((max) + 1) >> 16)
-	 */
-	if (count >= 8) {
-	    /* SkFixed is 16.16 fixed point */
-	    SkFixed dx2 = dx+dx;
-	    SkFixed dx4 = dx2+dx2;
-	    SkFixed dx8 = dx4+dx4;
+     */
+    if (count >= 8) {
+        /* SkFixed is 16.16 fixed point */
+        SkFixed dx2 = dx+dx;
+        SkFixed dx4 = dx2+dx2;
+        SkFixed dx8 = dx4+dx4;
 
-	    /* now build fx/fx+dx/fx+2dx/fx+3dx */
-	    SkFixed fx1, fx2, fx3;
-	    int32x2_t lower, upper;
-	    int32x4_t lbase, hbase;
-	    int16_t *dst16 = (int16_t *)xy;
+        /* now build fx/fx+dx/fx+2dx/fx+3dx */
+        SkFixed fx1, fx2, fx3;
+        int32x2_t lower, upper;
+        int32x4_t lbase, hbase;
+        int16_t *dst16 = (int16_t *)xy;
 
-	    fx1 = fx+dx;
-	    fx2 = fx1+dx;
-	    fx3 = fx2+dx;
+        fx1 = fx+dx;
+        fx2 = fx1+dx;
+        fx3 = fx2+dx;
 
-	    lbase = vdupq_n_s32(fx);
-	    lbase = vsetq_lane_s32(fx1, lbase, 1);
-	    lbase = vsetq_lane_s32(fx2, lbase, 2);
-	    lbase = vsetq_lane_s32(fx3, lbase, 3);
-	    hbase = vaddq_s32(lbase, vdupq_n_s32(dx4));
+        lbase = vdupq_n_s32(fx);
+        lbase = vsetq_lane_s32(fx1, lbase, 1);
+        lbase = vsetq_lane_s32(fx2, lbase, 2);
+        lbase = vsetq_lane_s32(fx3, lbase, 3);
+        hbase = vaddq_s32(lbase, vdupq_n_s32(dx4));
 
-	    /* store & bump */
-	    do
-	    {
-	        int32x4_t lout;
-		int32x4_t hout;
-		int16x8_t hi16;
+        /* store & bump */
+        do
+        {
+            int32x4_t lout;
+        int32x4_t hout;
+        int16x8_t hi16;
 
-         	/* TILEX_PROCF(fx, max) (((fx)&0xFFFF)*((max)+1)>> 16) */
-		/* mask to low 16 [would like to use uzp tricks) */
-	        lout = vandq_s32(lbase, vdupq_n_s32(0xffff));
-	        hout = vandq_s32(hbase, vdupq_n_s32(0xffff));
-		/* bare multiplication, not SkFixedMul */
-		lout = vmulq_s32(lout, vdupq_n_s32(maxX+1));
-		hout = vmulq_s32(hout, vdupq_n_s32(maxX+1));
+             /* TILEX_PROCF(fx, max) (((fx)&0xFFFF)*((max)+1)>> 16) */
+        /* mask to low 16 [would like to use uzp tricks) */
+            lout = vandq_s32(lbase, vdupq_n_s32(0xffff));
+            hout = vandq_s32(hbase, vdupq_n_s32(0xffff));
+        /* bare multiplication, not SkFixedMul */
+        lout = vmulq_s32(lout, vdupq_n_s32(maxX+1));
+        hout = vmulq_s32(hout, vdupq_n_s32(maxX+1));
 
-		/* extraction, using uzp */
-		/* this is ok -- we want all hi(lout)s then all hi(hout)s */
-		asm ("vuzpq.16 %q0, %q1" : "+w" (lout), "+w" (hout));
-		hi16 = vreinterpretq_s16_s32(hout);
-		vst1q_s16(dst16, hi16);
+        /* extraction, using uzp */
+        /* this is ok -- we want all hi(lout)s then all hi(hout)s */
+        asm ("vuzpq.16 %q0, %q1" : "+w" (lout), "+w" (hout));
+        hi16 = vreinterpretq_s16_s32(hout);
+        vst1q_s16(dst16, hi16);
 
-		/* bump our base on to the next */
-		lbase = vaddq_s32 (lbase, vdupq_n_s32(dx8));
-		hbase = vaddq_s32 (hbase, vdupq_n_s32(dx8));
-		dst16 += 8;
-		count -= 8;
-		fx += dx8;
-	    } while (count >= 8);
-	    xy = (uint32_t *) dst16;
-	}
+        /* bump our base on to the next */
+        lbase = vaddq_s32 (lbase, vdupq_n_s32(dx8));
+        hbase = vaddq_s32 (hbase, vdupq_n_s32(dx8));
+        dst16 += 8;
+        count -= 8;
+        fx += dx8;
+        } while (count >= 8);
+        xy = (uint32_t *) dst16;
+    }
 #else
-	/* simple, portable way of looking at 4 at a crack;
-	 * so gets some loop unrolling, but not full SIMD speed
-	 */
+    /* simple, portable way of looking at 4 at a crack;
+     * so gets some loop unrolling, but not full SIMD speed
+     */
         for (i = (count >> 2); i > 0; --i) {
             unsigned a, b;
             a = TILEX_PROCF(fx, maxX); fx += dx;
@@ -168,8 +168,8 @@ static void SCALE_NOFILTER_NAME(const SkBitmapProcState& s,
             *xy++ = (b << 16) | a;
 #endif
         }
-	/* loop doesn't adjust count */
-	count -= (count>>2);
+    /* loop doesn't adjust count */
+    count -= (count>>2);
 #endif
         uint16_t* xx = (uint16_t*)xy;
         for (i = count; i > 0; --i) {
@@ -209,67 +209,67 @@ static void AFFINE_NOFILTER_NAME(const SkBitmapProcState& s,
     SkFixed bfx = fx, bfy=fy, bdx=dx, bdy=dy;
 #endif
 
-#if	defined(__ARM_HAVE_NEON)
+#if    defined(__ARM_HAVE_NEON)
 
-	if (0) { extern void rbe(void); rbe(); }
+    if (0) { extern void rbe(void); rbe(); }
 
-	/* RBE: benchmarks show this eats up time; can we neonize it? */
-	/* RBE: very much like done in decal_nofilter ,
-	 * but some processing of the 'fx' information 
+    /* RBE: benchmarks show this eats up time; can we neonize it? */
+    /* RBE: very much like done in decal_nofilter ,
+     * but some processing of the 'fx' information 
          * TILEX_PROCF(fx, max)    (((fx) & 0xFFFF) * ((max) + 1) >> 16)
-	 */
-	if (count >= 4) {
-	    /* SkFixed is 16.16 fixed point */
-	    SkFixed dx4 = dx*4;
-	    SkFixed dy4 = dy*4;
+     */
+    if (count >= 4) {
+        /* SkFixed is 16.16 fixed point */
+        SkFixed dx4 = dx*4;
+        SkFixed dy4 = dy*4;
 
-	    /* now build fx/fx+dx/fx+2dx/fx+3dx */
-	    int32x2_t lower, upper;
-	    int32x4_t xbase, ybase;
-	    int16_t *dst16 = (int16_t *)xy;
+        /* now build fx/fx+dx/fx+2dx/fx+3dx */
+        int32x2_t lower, upper;
+        int32x4_t xbase, ybase;
+        int16_t *dst16 = (int16_t *)xy;
 
-	    /* synthesize 4x for both X and Y */
-	    xbase = vdupq_n_s32(fx);
-	    xbase = vsetq_lane_s32(fx+dx, xbase, 1);
-	    xbase = vsetq_lane_s32(fx+dx+dx, xbase, 2);
-	    xbase = vsetq_lane_s32(fx+dx+dx+dx, xbase, 3);
+        /* synthesize 4x for both X and Y */
+        xbase = vdupq_n_s32(fx);
+        xbase = vsetq_lane_s32(fx+dx, xbase, 1);
+        xbase = vsetq_lane_s32(fx+dx+dx, xbase, 2);
+        xbase = vsetq_lane_s32(fx+dx+dx+dx, xbase, 3);
 
-	    ybase = vdupq_n_s32(fy);
-	    ybase = vsetq_lane_s32(fy+dy, ybase, 1);
-	    ybase = vsetq_lane_s32(fy+dy+dy, ybase, 2);
-	    ybase = vsetq_lane_s32(fy+dy+dy+dy, ybase, 3);
+        ybase = vdupq_n_s32(fy);
+        ybase = vsetq_lane_s32(fy+dy, ybase, 1);
+        ybase = vsetq_lane_s32(fy+dy+dy, ybase, 2);
+        ybase = vsetq_lane_s32(fy+dy+dy+dy, ybase, 3);
 
-	    /* store & bump */
-	    do {
-	        int32x4_t xout;
+        /* store & bump */
+        do {
+            int32x4_t xout;
             int32x4_t yout;
             int16x8_t hi16;
 
-         	/* TILEX_PROCF(fx, max) (((fx)&0xFFFF)*((max)+1)>> 16) */
-		/* mask to low 16 [would like to use uzp tricks) */
-	        xout = vandq_s32(xbase, vdupq_n_s32(0xffff));
-	        yout = vandq_s32(ybase, vdupq_n_s32(0xffff));
-		/* bare multiplication, not SkFixedMul */
-		xout = vmulq_s32(xout, vdupq_n_s32(maxX+1));
-		yout = vmulq_s32(yout, vdupq_n_s32(maxY+1));
+             /* TILEX_PROCF(fx, max) (((fx)&0xFFFF)*((max)+1)>> 16) */
+        /* mask to low 16 [would like to use uzp tricks) */
+            xout = vandq_s32(xbase, vdupq_n_s32(0xffff));
+            yout = vandq_s32(ybase, vdupq_n_s32(0xffff));
+        /* bare multiplication, not SkFixedMul */
+        xout = vmulq_s32(xout, vdupq_n_s32(maxX+1));
+        yout = vmulq_s32(yout, vdupq_n_s32(maxY+1));
 
-		/* put hi16 from xout over low16 from yout */
-		yout = vsriq_n_s32(yout, xout, 16);
+        /* put hi16 from xout over low16 from yout */
+        yout = vsriq_n_s32(yout, xout, 16);
 
-		/* and then yout has the interleaved upper 16's */
-		hi16 = vreinterpretq_s16_s32(yout);
-		vst1q_s16(dst16, hi16);
+        /* and then yout has the interleaved upper 16's */
+        hi16 = vreinterpretq_s16_s32(yout);
+        vst1q_s16(dst16, hi16);
 
-		/* bump preserved base & on to the next */
-		xbase = vaddq_s32 (xbase, vdupq_n_s32(dx4));
-		ybase = vaddq_s32 (ybase, vdupq_n_s32(dy4));
-		dst16 += 8;	/* 8 x16 aka 4x32 */
-		count -= 4;
-		fx += dx4;
-		fy += dy4;
-	    } while (count >= 4);
-	    xy = (uint32_t *) dst16;
-	}
+        /* bump preserved base & on to the next */
+        xbase = vaddq_s32 (xbase, vdupq_n_s32(dx4));
+        ybase = vaddq_s32 (ybase, vdupq_n_s32(dy4));
+        dst16 += 8;    /* 8 x16 aka 4x32 */
+        count -= 4;
+        fx += dx4;
+        fy += dy4;
+        } while (count >= 4);
+        xy = (uint32_t *) dst16;
+    }
 
 #if 0
     /* diagnostics... see whether we agree with the NEON code */
@@ -278,11 +278,11 @@ static void AFFINE_NOFILTER_NAME(const SkBitmapProcState& s,
     int myi = (-1);
     SkFixed ofx = bfx, ofy= bfy, odx= bdx, ody= bdy;
     for (myi = ocount; myi > 0; --myi) {
-	uint32_t val = (TILEY_PROCF(ofy, maxY) << 16) | TILEX_PROCF(ofx, maxX);
-	if (val != *myxy++) {
-		bad++;
-		break;
-	}
+    uint32_t val = (TILEY_PROCF(ofy, maxY) << 16) | TILEX_PROCF(ofx, maxX);
+    if (val != *myxy++) {
+        bad++;
+        break;
+    }
         ofx += odx; ofy += ody;
     }
     if (bad) {
@@ -296,8 +296,8 @@ static void AFFINE_NOFILTER_NAME(const SkBitmapProcState& s,
 #endif
 
     for (int i = count; i > 0; --i) {
-	/* fx, fy, dx, dy are all 32 bit 16.16 fixed point */
-	/* (((fx) & 0xFFFF) * ((max) + 1) >> 16) */
+    /* fx, fy, dx, dy are all 32 bit 16.16 fixed point */
+    /* (((fx) & 0xFFFF) * ((max) + 1) >> 16) */
         *xy++ = (TILEY_PROCF(fy, maxY) << 16) | TILEX_PROCF(fx, maxX);
         fx += dx; fy += dy;
     }
@@ -319,99 +319,99 @@ static void PERSP_NOFILTER_NAME(const SkBitmapProcState& s,
     while ((count = iter.next()) != 0) {
         const SkFixed* SK_RESTRICT srcXY = iter.getXY();
 
-#if	defined(__ARM_HAVE_NEON)
-	/* RBE: */
-	/* TILEX_PROCF(fx, max) (((fx) & 0xFFFF) * ((max) + 1) >> 16) */
-	/* it's a little more complicated than what I did for the
-	 * clamp case -- where I could immediately snip to the top
-	 * 16 bits and do my min/max games there.
-	 * ... might only be able to get 4x unrolling here
-	 */
+#if    defined(__ARM_HAVE_NEON)
+    /* RBE: */
+    /* TILEX_PROCF(fx, max) (((fx) & 0xFFFF) * ((max) + 1) >> 16) */
+    /* it's a little more complicated than what I did for the
+     * clamp case -- where I could immediately snip to the top
+     * 16 bits and do my min/max games there.
+     * ... might only be able to get 4x unrolling here
+     */
 
-	/* vld2 to get a set of 32x4's ... */
-	/* do the tile[xy]_procf operations */
-	/* which includes doing vuzp to get hi16's */
-	/* store it */
-	/* -- inner loop (other than vld2) can be had from above */
+    /* vld2 to get a set of 32x4's ... */
+    /* do the tile[xy]_procf operations */
+    /* which includes doing vuzp to get hi16's */
+    /* store it */
+    /* -- inner loop (other than vld2) can be had from above */
 
-	/* srcXY is a batch of 32 bit numbers X0,Y0,X1,Y1...
-	 * but we immediately discard the low 16 bits...
-	 * so what we're going to do is vld4, which will give us
-	 * xlo,xhi,ylo,yhi distribution and we can ignore the 'lo'
-	 * parts....
-	 */
-	if (0) { extern void rbe(void); rbe(); }
-	if (count >= 8) {
-	    int32_t *mysrc = (int32_t *) srcXY;
-	    int16_t *mydst = (int16_t *) xy;
-	    do {
-		int32x4_t x, y, x2, y2;
-		int16x8_t hi, hi2;
+    /* srcXY is a batch of 32 bit numbers X0,Y0,X1,Y1...
+     * but we immediately discard the low 16 bits...
+     * so what we're going to do is vld4, which will give us
+     * xlo,xhi,ylo,yhi distribution and we can ignore the 'lo'
+     * parts....
+     */
+    if (0) { extern void rbe(void); rbe(); }
+    if (count >= 8) {
+        int32_t *mysrc = (int32_t *) srcXY;
+        int16_t *mydst = (int16_t *) xy;
+        do {
+        int32x4_t x, y, x2, y2;
+        int16x8_t hi, hi2;
 
-		/* read array of x,y,x,y,x,y */
-	        /* vld2 does the de-interleaving for us */
-		/* isolate reg-bound scopes; gcc will minimize register
-		 * motion if possible; this ensures that we don't lose
-		 * a register across a debugging call because it happens
-		 * to be bound into a call-clobbered register
-		 */
-		{
-		    register int32x4_t q0 asm("q0");
-		    register int32x4_t q1 asm("q1");
-		    asm ("vld2.32	{q0-q1},[%2]  /* x=%q0 y=%q1 */"
-		        : "=w" (q0), "=w" (q1)
-		        : "r" (mysrc)
-		        );
-		    x = q0; y = q1;
-		}
+        /* read array of x,y,x,y,x,y */
+            /* vld2 does the de-interleaving for us */
+        /* isolate reg-bound scopes; gcc will minimize register
+         * motion if possible; this ensures that we don't lose
+         * a register across a debugging call because it happens
+         * to be bound into a call-clobbered register
+         */
+        {
+            register int32x4_t q0 asm("q0");
+            register int32x4_t q1 asm("q1");
+            asm ("vld2.32    {q0-q1},[%2]  /* x=%q0 y=%q1 */"
+                : "=w" (q0), "=w" (q1)
+                : "r" (mysrc)
+                );
+            x = q0; y = q1;
+        }
 
-		/* offset == 256 bits == 32 bytes == 8 longs */
-		{
-		    register int32x4_t q2 asm("q2");
-		    register int32x4_t q3 asm("q3");
-		    asm ("vld2.32	{q2-q3},[%2]  /* x=%q0 y=%q1 */"
-		        : "=w" (q2), "=w" (q3)
-		        : "r" (mysrc+8)
-		        );
-		    x2 = q2; y2 = q3;
-		}
+        /* offset == 256 bits == 32 bytes == 8 longs */
+        {
+            register int32x4_t q2 asm("q2");
+            register int32x4_t q3 asm("q3");
+            asm ("vld2.32    {q2-q3},[%2]  /* x=%q0 y=%q1 */"
+                : "=w" (q2), "=w" (q3)
+                : "r" (mysrc+8)
+                );
+            x2 = q2; y2 = q3;
+        }
 
-         	/* TILEX_PROCF(fx, max) (((fx)&0xFFFF)*((max)+1)>> 16) */
-		/* mask to low 16 [would like to use uzp tricks) */
-		/* bare multiplication, not SkFixedMul */
-	        x = vandq_s32(x, vdupq_n_s32(0xffff));
-		x = vmulq_s32(x, vdupq_n_s32(maxX+1));
-	        y = vandq_s32(y, vdupq_n_s32(0xffff));
-		y = vmulq_s32(y, vdupq_n_s32(maxY+1));
+             /* TILEX_PROCF(fx, max) (((fx)&0xFFFF)*((max)+1)>> 16) */
+        /* mask to low 16 [would like to use uzp tricks) */
+        /* bare multiplication, not SkFixedMul */
+            x = vandq_s32(x, vdupq_n_s32(0xffff));
+        x = vmulq_s32(x, vdupq_n_s32(maxX+1));
+            y = vandq_s32(y, vdupq_n_s32(0xffff));
+        y = vmulq_s32(y, vdupq_n_s32(maxY+1));
 
-	        x2 = vandq_s32(x2, vdupq_n_s32(0xffff));
-		x2 = vmulq_s32(x2, vdupq_n_s32(maxX+1));
-	        y2 = vandq_s32(y2, vdupq_n_s32(0xffff));
-		y2 = vmulq_s32(y2, vdupq_n_s32(maxY+1));
+            x2 = vandq_s32(x2, vdupq_n_s32(0xffff));
+        x2 = vmulq_s32(x2, vdupq_n_s32(maxX+1));
+            y2 = vandq_s32(y2, vdupq_n_s32(0xffff));
+        y2 = vmulq_s32(y2, vdupq_n_s32(maxY+1));
 
-		/* now collect interleaved high 16's */
-		/* (hi-x, hi-y)4  (hi-x2; hi-y2)4 */
+        /* now collect interleaved high 16's */
+        /* (hi-x, hi-y)4  (hi-x2; hi-y2)4 */
 
-		/* extraction, using uzp, leaves hi16's in y */
-		y = vsriq_n_s32(y, x, 16);
-		hi = vreinterpretq_s16_s32(y);
-		vst1q_s16(mydst, hi);
+        /* extraction, using uzp, leaves hi16's in y */
+        y = vsriq_n_s32(y, x, 16);
+        hi = vreinterpretq_s16_s32(y);
+        vst1q_s16(mydst, hi);
 
-		/* and likewise for the second 8 entries */
-		y2 = vsriq_n_s32(y2, x2, 16);
-		hi2 = vreinterpretq_s16_s32(y2);
-		vst1q_s16(mydst+8, hi2);
+        /* and likewise for the second 8 entries */
+        y2 = vsriq_n_s32(y2, x2, 16);
+        hi2 = vreinterpretq_s16_s32(y2);
+        vst1q_s16(mydst+8, hi2);
 
-		/* XXX: gcc isn't interleaving these with the NEON ops
-		 * but i think that all the scoreboarding works out */
-		count -= 8;	/* 8 iterations */
-		mysrc += 16;	/* 16 longs */
-		mydst += 16;	/* 16 shorts, aka 8 longs */
-	    } while (count >= 8);
-	    /* get xy and srcXY fixed up */
-	    srcXY = (const SkFixed *) mysrc;
-	    xy = (uint32_t *) mydst;
-	}
+        /* XXX: gcc isn't interleaving these with the NEON ops
+         * but i think that all the scoreboarding works out */
+        count -= 8;    /* 8 iterations */
+        mysrc += 16;    /* 16 longs */
+        mydst += 16;    /* 16 shorts, aka 8 longs */
+        } while (count >= 8);
+        /* get xy and srcXY fixed up */
+        srcXY = (const SkFixed *) mysrc;
+        xy = (uint32_t *) mydst;
+    }
 #endif
         while (--count >= 0) {
             *xy++ = (TILEY_PROCF(srcXY[1], maxY) << 16) |

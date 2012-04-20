@@ -374,15 +374,15 @@
 
   static raccess_guess_rec  raccess_guess_table[FT_RACCESS_N_RULES] =
   {
-    { raccess_guess_apple_double,	FT_RFork_Rule_apple_double, },
-    { raccess_guess_apple_single,	FT_RFork_Rule_apple_single, },
-    { raccess_guess_darwin_ufs_export,	FT_RFork_Rule_darwin_ufs_export, },
-    { raccess_guess_darwin_newvfs,	FT_RFork_Rule_darwin_newvfs, },
-    { raccess_guess_darwin_hfsplus,	FT_RFork_Rule_darwin_hfsplus, },
-    { raccess_guess_vfat,		FT_RFork_Rule_vfat, },
-    { raccess_guess_linux_cap,		FT_RFork_Rule_linux_cap, },
-    { raccess_guess_linux_double,	FT_RFork_Rule_linux_double, },
-    { raccess_guess_linux_netatalk,	FT_RFork_Rule_linux_netatalk, },
+    { raccess_guess_apple_double,    FT_RFork_Rule_apple_double, },
+    { raccess_guess_apple_single,    FT_RFork_Rule_apple_single, },
+    { raccess_guess_darwin_ufs_export,    FT_RFork_Rule_darwin_ufs_export, },
+    { raccess_guess_darwin_newvfs,    FT_RFork_Rule_darwin_newvfs, },
+    { raccess_guess_darwin_hfsplus,    FT_RFork_Rule_darwin_hfsplus, },
+    { raccess_guess_vfat,        FT_RFork_Rule_vfat, },
+    { raccess_guess_linux_cap,        FT_RFork_Rule_linux_cap, },
+    { raccess_guess_linux_double,    FT_RFork_Rule_linux_double, },
+    { raccess_guess_linux_netatalk,    FT_RFork_Rule_linux_netatalk, },
   };
 
   FT_BASE_DEF( void )

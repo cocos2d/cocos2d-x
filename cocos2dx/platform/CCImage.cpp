@@ -66,7 +66,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
     }
 }
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
 // Impliment CCImage
@@ -97,22 +97,22 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 
 bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
-	CC_UNUSED_PARAM(imageType);
+    CC_UNUSED_PARAM(imageType);
     CCFileData data(fullpath, "rb");
     return initWithImageData(data.getBuffer(), data.getSize(), imageType);
 }
 
 bool CCImage::initWithImageData(void * pData, 
-								int nDataLen, 
-								EImageFormat eFmt/* = eSrcFmtPng*/, 
-								int nWidth/* = 0*/,
-								int nHeight/* = 0*/,
-								int nBitsPerComponent/* = 8*/)
+                                int nDataLen, 
+                                EImageFormat eFmt/* = eSrcFmtPng*/, 
+                                int nWidth/* = 0*/,
+                                int nHeight/* = 0*/,
+                                int nBitsPerComponent/* = 8*/)
 {
     bool bRet = false;
     do 
     {
-    	CC_BREAK_IF(! pData || nDataLen <= 0);
+        CC_BREAK_IF(! pData || nDataLen <= 0);
 
         if (kFmtPng == eFmt)
         {
@@ -124,11 +124,11 @@ bool CCImage::initWithImageData(void * pData,
             bRet = _initWithJpgData(pData, nDataLen);
             break;
         }
-		else if (kFmtRawData == eFmt)
-		{
-			bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
-			break;
-		}
+        else if (kFmtRawData == eFmt)
+        {
+            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
+            break;
+        }
     } while (0);
     return bRet;
 }
@@ -215,7 +215,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
     do 
     {
         // png header len is 8 bytes
-    	CC_BREAK_IF(nDatalen < 8);
+        CC_BREAK_IF(nDatalen < 8);
 
         // check the data is png or not
         memcpy(header, pData, 8);
@@ -308,283 +308,283 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 
 bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
 {
-	bool bRet = false;
-	do 
-	{
-		CC_BREAK_IF(0 == nWidth || 0 == nHeight);
+    bool bRet = false;
+    do 
+    {
+        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
 
-		m_nBitsPerComponent = nBitsPerComponent;
-		m_nHeight   = (short)nHeight;
-		m_nWidth    = (short)nWidth;
-		m_bHasAlpha = true;
+        m_nBitsPerComponent = nBitsPerComponent;
+        m_nHeight   = (short)nHeight;
+        m_nWidth    = (short)nWidth;
+        m_bHasAlpha = true;
 
-		// only RGBA8888 surported
-		int nBytesPerComponent = 4;
-		int nSize = nHeight * nWidth * nBytesPerComponent;
-		m_pData = new unsigned char[nSize];
-		CC_BREAK_IF(! m_pData);
-		memcpy(m_pData, pData, nSize);
+        // only RGBA8888 surported
+        int nBytesPerComponent = 4;
+        int nSize = nHeight * nWidth * nBytesPerComponent;
+        m_pData = new unsigned char[nSize];
+        CC_BREAK_IF(! m_pData);
+        memcpy(m_pData, pData, nSize);
 
-		bRet = true;
-	} while (0);
-	return bRet;
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
 bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
-	bool bRet = false;
+    bool bRet = false;
 
-	do 
-	{
-		CC_BREAK_IF(NULL == pszFilePath);
+    do 
+    {
+        CC_BREAK_IF(NULL == pszFilePath);
 
-		std::string strFilePath(pszFilePath);
-		CC_BREAK_IF(strFilePath.size() <= 4);
+        std::string strFilePath(pszFilePath);
+        CC_BREAK_IF(strFilePath.size() <= 4);
 
-		std::string strLowerCasePath(strFilePath);
-		for (unsigned int i = 0; i < strLowerCasePath.length(); ++i)
-		{
-			strLowerCasePath[i] = tolower(strFilePath[i]);
-		}
+        std::string strLowerCasePath(strFilePath);
+        for (unsigned int i = 0; i < strLowerCasePath.length(); ++i)
+        {
+            strLowerCasePath[i] = tolower(strFilePath[i]);
+        }
 
-		if (std::string::npos != strLowerCasePath.find(".png"))
-		{
-			CC_BREAK_IF(!_saveImageToPNG(pszFilePath, bIsToRGB));
-		}
-		else if (std::string::npos != strLowerCasePath.find(".jpg"))
-		{
-			CC_BREAK_IF(!_saveImageToJPG(pszFilePath));
-		}
-		else
-		{
-			break;
-		}
+        if (std::string::npos != strLowerCasePath.find(".png"))
+        {
+            CC_BREAK_IF(!_saveImageToPNG(pszFilePath, bIsToRGB));
+        }
+        else if (std::string::npos != strLowerCasePath.find(".jpg"))
+        {
+            CC_BREAK_IF(!_saveImageToJPG(pszFilePath));
+        }
+        else
+        {
+            break;
+        }
 
-		bRet = true;
-	} while (0);
+        bRet = true;
+    } while (0);
 
-	return bRet;
+    return bRet;
 }
 
 bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 {
-	bool bRet = false;
-	do 
-	{
-		CC_BREAK_IF(NULL == pszFilePath);
+    bool bRet = false;
+    do 
+    {
+        CC_BREAK_IF(NULL == pszFilePath);
 
-		FILE *fp;
-		png_structp png_ptr;
-		png_infop info_ptr;
-		png_colorp palette;
-		png_bytep *row_pointers;
+        FILE *fp;
+        png_structp png_ptr;
+        png_infop info_ptr;
+        png_colorp palette;
+        png_bytep *row_pointers;
 
-		fp = fopen(pszFilePath, "wb");
-		CC_BREAK_IF(NULL == fp);
+        fp = fopen(pszFilePath, "wb");
+        CC_BREAK_IF(NULL == fp);
 
-		png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
-		if (NULL == png_ptr)
-		{
-			fclose(fp);
-			break;
-		}
+        if (NULL == png_ptr)
+        {
+            fclose(fp);
+            break;
+        }
 
-		info_ptr = png_create_info_struct(png_ptr);
-		if (NULL == info_ptr)
-		{
-			fclose(fp);
-			png_destroy_write_struct(&png_ptr, NULL);
-			break;
-		}
+        info_ptr = png_create_info_struct(png_ptr);
+        if (NULL == info_ptr)
+        {
+            fclose(fp);
+            png_destroy_write_struct(&png_ptr, NULL);
+            break;
+        }
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-		if (setjmp(png_jmpbuf(png_ptr)))
-		{
-			fclose(fp);
-			png_destroy_write_struct(&png_ptr, &info_ptr);
-			break;
-		}
+        if (setjmp(png_jmpbuf(png_ptr)))
+        {
+            fclose(fp);
+            png_destroy_write_struct(&png_ptr, &info_ptr);
+            break;
+        }
 #endif
-		png_init_io(png_ptr, fp);
+        png_init_io(png_ptr, fp);
 
-		if (!bIsToRGB && m_bHasAlpha)
-		{
-			png_set_IHDR(png_ptr, info_ptr, m_nWidth, m_nHeight, 8, PNG_COLOR_TYPE_RGB_ALPHA,
-				PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
-		} 
-		else
-		{
-			png_set_IHDR(png_ptr, info_ptr, m_nWidth, m_nHeight, 8, PNG_COLOR_TYPE_RGB,
-				PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
-		}
+        if (!bIsToRGB && m_bHasAlpha)
+        {
+            png_set_IHDR(png_ptr, info_ptr, m_nWidth, m_nHeight, 8, PNG_COLOR_TYPE_RGB_ALPHA,
+                PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+        } 
+        else
+        {
+            png_set_IHDR(png_ptr, info_ptr, m_nWidth, m_nHeight, 8, PNG_COLOR_TYPE_RGB,
+                PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+        }
 
-		palette = (png_colorp)png_malloc(png_ptr, PNG_MAX_PALETTE_LENGTH * sizeof (png_color));
-		png_set_PLTE(png_ptr, info_ptr, palette, PNG_MAX_PALETTE_LENGTH);
+        palette = (png_colorp)png_malloc(png_ptr, PNG_MAX_PALETTE_LENGTH * sizeof (png_color));
+        png_set_PLTE(png_ptr, info_ptr, palette, PNG_MAX_PALETTE_LENGTH);
 
-		png_write_info(png_ptr, info_ptr);
+        png_write_info(png_ptr, info_ptr);
 
-		png_set_packing(png_ptr);
+        png_set_packing(png_ptr);
 
-		row_pointers = (png_bytep *)malloc(m_nHeight * sizeof(png_bytep));
-		if(row_pointers == NULL)
-		{
-			fclose(fp);
-			png_destroy_write_struct(&png_ptr, &info_ptr);
-			break;
-		}
+        row_pointers = (png_bytep *)malloc(m_nHeight * sizeof(png_bytep));
+        if(row_pointers == NULL)
+        {
+            fclose(fp);
+            png_destroy_write_struct(&png_ptr, &info_ptr);
+            break;
+        }
 
-		if (!m_bHasAlpha)
-		{
-			for (int i = 0; i < (int)m_nHeight; i++)
-			{
-				row_pointers[i] = (png_bytep)m_pData + i * m_nWidth * 3;
-			}
+        if (!m_bHasAlpha)
+        {
+            for (int i = 0; i < (int)m_nHeight; i++)
+            {
+                row_pointers[i] = (png_bytep)m_pData + i * m_nWidth * 3;
+            }
 
-			png_write_image(png_ptr, row_pointers);
+            png_write_image(png_ptr, row_pointers);
 
-			free(row_pointers);
-			row_pointers = NULL;
-		}
-		else
-		{
-			if (bIsToRGB)
-			{
-				unsigned char *pTempData = new unsigned char[m_nWidth * m_nHeight * 3];
-				if (NULL == pTempData)
-				{
-					fclose(fp);
-					png_destroy_write_struct(&png_ptr, &info_ptr);
-					break;
-				}
+            free(row_pointers);
+            row_pointers = NULL;
+        }
+        else
+        {
+            if (bIsToRGB)
+            {
+                unsigned char *pTempData = new unsigned char[m_nWidth * m_nHeight * 3];
+                if (NULL == pTempData)
+                {
+                    fclose(fp);
+                    png_destroy_write_struct(&png_ptr, &info_ptr);
+                    break;
+                }
 
-				for (int i = 0; i < m_nHeight; ++i)
-				{
-					for (int j = 0; j < m_nWidth; ++j)
-					{
-						pTempData[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
-						pTempData[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
-						pTempData[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
-					}
-				}
+                for (int i = 0; i < m_nHeight; ++i)
+                {
+                    for (int j = 0; j < m_nWidth; ++j)
+                    {
+                        pTempData[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
+                        pTempData[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
+                        pTempData[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
+                    }
+                }
 
-				for (int i = 0; i < (int)m_nHeight; i++)
-				{
-					row_pointers[i] = (png_bytep)pTempData + i * m_nWidth * 3;
-				}
+                for (int i = 0; i < (int)m_nHeight; i++)
+                {
+                    row_pointers[i] = (png_bytep)pTempData + i * m_nWidth * 3;
+                }
 
-				png_write_image(png_ptr, row_pointers);
+                png_write_image(png_ptr, row_pointers);
 
-				free(row_pointers);
-				row_pointers = NULL;
+                free(row_pointers);
+                row_pointers = NULL;
 
-				CC_SAFE_DELETE_ARRAY(pTempData);
-			} 
-			else
-			{
-				for (int i = 0; i < (int)m_nHeight; i++)
-				{
-					row_pointers[i] = (png_bytep)m_pData + i * m_nWidth * 4;
-				}
+                CC_SAFE_DELETE_ARRAY(pTempData);
+            } 
+            else
+            {
+                for (int i = 0; i < (int)m_nHeight; i++)
+                {
+                    row_pointers[i] = (png_bytep)m_pData + i * m_nWidth * 4;
+                }
 
-				png_write_image(png_ptr, row_pointers);
+                png_write_image(png_ptr, row_pointers);
 
-				free(row_pointers);
-				row_pointers = NULL;
-			}
-		}
+                free(row_pointers);
+                row_pointers = NULL;
+            }
+        }
 
-		png_write_end(png_ptr, info_ptr);
+        png_write_end(png_ptr, info_ptr);
 
-		png_free(png_ptr, palette);
-		palette = NULL;
+        png_free(png_ptr, palette);
+        palette = NULL;
 
-		png_destroy_write_struct(&png_ptr, &info_ptr);
+        png_destroy_write_struct(&png_ptr, &info_ptr);
 
-		fclose(fp);
+        fclose(fp);
 
-		bRet = true;
-	} while (0);
-	return bRet;
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 bool CCImage::_saveImageToJPG(const char * pszFilePath)
 {
-	bool bRet = false;
-	do 
-	{
-		CC_BREAK_IF(NULL == pszFilePath);
+    bool bRet = false;
+    do 
+    {
+        CC_BREAK_IF(NULL == pszFilePath);
 
-		struct jpeg_compress_struct cinfo;
-		struct jpeg_error_mgr jerr;
-		FILE * outfile;                 /* target file */
-		JSAMPROW row_pointer[1];        /* pointer to JSAMPLE row[s] */
-		int     row_stride;          /* physical row width in image buffer */
+        struct jpeg_compress_struct cinfo;
+        struct jpeg_error_mgr jerr;
+        FILE * outfile;                 /* target file */
+        JSAMPROW row_pointer[1];        /* pointer to JSAMPLE row[s] */
+        int     row_stride;          /* physical row width in image buffer */
 
-		cinfo.err = jpeg_std_error(&jerr);
-		/* Now we can initialize the JPEG compression object. */
-		jpeg_create_compress(&cinfo);
+        cinfo.err = jpeg_std_error(&jerr);
+        /* Now we can initialize the JPEG compression object. */
+        jpeg_create_compress(&cinfo);
 
-		CC_BREAK_IF((outfile = fopen(pszFilePath, "wb")) == NULL);
-		
-		jpeg_stdio_dest(&cinfo, outfile);
+        CC_BREAK_IF((outfile = fopen(pszFilePath, "wb")) == NULL);
+        
+        jpeg_stdio_dest(&cinfo, outfile);
 
-		cinfo.image_width = m_nWidth;    /* image width and height, in pixels */
-		cinfo.image_height = m_nHeight;
-		cinfo.input_components = 3;       /* # of color components per pixel */
-		cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
+        cinfo.image_width = m_nWidth;    /* image width and height, in pixels */
+        cinfo.image_height = m_nHeight;
+        cinfo.input_components = 3;       /* # of color components per pixel */
+        cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
 
-		jpeg_set_defaults(&cinfo);
+        jpeg_set_defaults(&cinfo);
 
-		jpeg_start_compress(&cinfo, TRUE);
+        jpeg_start_compress(&cinfo, TRUE);
 
-		row_stride = m_nWidth * 3; /* JSAMPLEs per row in image_buffer */
+        row_stride = m_nWidth * 3; /* JSAMPLEs per row in image_buffer */
 
-		if (m_bHasAlpha)
-		{
-			unsigned char *pTempData = new unsigned char[m_nWidth * m_nHeight * 3];
-			if (NULL == pTempData)
-			{
-				jpeg_finish_compress(&cinfo);
-				jpeg_destroy_compress(&cinfo);
-				fclose(outfile);
-				break;
-			}
+        if (m_bHasAlpha)
+        {
+            unsigned char *pTempData = new unsigned char[m_nWidth * m_nHeight * 3];
+            if (NULL == pTempData)
+            {
+                jpeg_finish_compress(&cinfo);
+                jpeg_destroy_compress(&cinfo);
+                fclose(outfile);
+                break;
+            }
 
-			for (int i = 0; i < m_nHeight; ++i)
-			{
-				for (int j = 0; j < m_nWidth; ++j)
+            for (int i = 0; i < m_nHeight; ++i)
+            {
+                for (int j = 0; j < m_nWidth; ++j)
 
-				{
-					pTempData[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
-					pTempData[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
-					pTempData[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
-				}
-			}
+                {
+                    pTempData[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
+                    pTempData[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
+                    pTempData[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
+                }
+            }
 
-			while (cinfo.next_scanline < cinfo.image_height) {
-				row_pointer[0] = & pTempData[cinfo.next_scanline * row_stride];
-				(void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
-			}
+            while (cinfo.next_scanline < cinfo.image_height) {
+                row_pointer[0] = & pTempData[cinfo.next_scanline * row_stride];
+                (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+            }
 
-			CC_SAFE_DELETE_ARRAY(pTempData);
-		} 
-		else
-		{
-			while (cinfo.next_scanline < cinfo.image_height) {
-				row_pointer[0] = & m_pData[cinfo.next_scanline * row_stride];
-				(void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
-			}
-		}
+            CC_SAFE_DELETE_ARRAY(pTempData);
+        } 
+        else
+        {
+            while (cinfo.next_scanline < cinfo.image_height) {
+                row_pointer[0] = & m_pData[cinfo.next_scanline * row_stride];
+                (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+            }
+        }
 
-		jpeg_finish_compress(&cinfo);
-		fclose(outfile);
-		jpeg_destroy_compress(&cinfo);
-		
-		bRet = true;
-	} while (0);
-	return bRet;
+        jpeg_finish_compress(&cinfo);
+        fclose(outfile);
+        jpeg_destroy_compress(&cinfo);
+        
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
-NS_CC_END;
+NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM != TARGET_OS_IPHONE)
 /* ios/CCImage_ios.mm uses "mm" as the extension, 
@@ -594,10 +594,6 @@ NS_CC_END;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "win32/CCImage_win32.cpp"
 #endif 
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include "wophone/CCImage_wophone.cpp"
-#endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCImage_android.cpp"

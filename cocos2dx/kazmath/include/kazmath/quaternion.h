@@ -38,15 +38,15 @@ struct kmMat3;
 struct kmVec3;
 
 typedef struct kmQuaternion {
-	kmScalar x;
-	kmScalar y;
-	kmScalar z;
-	kmScalar w;
+    kmScalar x;
+    kmScalar y;
+    kmScalar z;
+    kmScalar w;
 } kmQuaternion;
 
 CC_DLL kmQuaternion* const kmQuaternionConjugate(kmQuaternion* pOut, const kmQuaternion* pIn); ///< Returns pOut, sets pOut to the conjugate of pIn
 
-CC_DLL const kmScalar 	kmQuaternionDot(const kmQuaternion* q1, const kmQuaternion* q2); ///< Returns the dot product of the 2 quaternions
+CC_DLL const kmScalar     kmQuaternionDot(const kmQuaternion* q1, const kmQuaternion* q2); ///< Returns the dot product of the 2 quaternions
 
 CC_DLL kmQuaternion* kmQuaternionExp(kmQuaternion* pOut, const kmQuaternion* pIn); ///< Returns the exponential of the quaternion
 
@@ -57,7 +57,7 @@ CC_DLL kmQuaternion* kmQuaternionIdentity(kmQuaternion* pOut);
 ///< Returns the inverse of the passed Quaternion
 
 CC_DLL kmQuaternion* kmQuaternionInverse(kmQuaternion* pOut,
-											const kmQuaternion* pIn);
+                                            const kmQuaternion* pIn);
 
 ///< Returns true if the quaternion is an identity quaternion
 

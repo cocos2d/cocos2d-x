@@ -29,9 +29,9 @@ static int xmlModulePlatformClose(void *handle);
 static int xmlModulePlatformSymbol(void *handle, const char *name, void **result);
 
 /************************************************************************
- *									*
- * 		module memory error handler				*
- *									*
+ *                                    *
+ *         module memory error handler                *
+ *                                    *
  ************************************************************************/
 
 /**
@@ -106,7 +106,7 @@ int
 xmlModuleSymbol(xmlModulePtr module, const char *name, void **symbol)
 {
     int rc = -1;
-	
+    
     if ((NULL == module) || (symbol == NULL)) {
         __xmlRaiseError(NULL, NULL, NULL, NULL, NULL, XML_FROM_MODULE,
                         XML_MODULE_OPEN, XML_ERR_FATAL, NULL, 0, 0,
@@ -121,7 +121,7 @@ xmlModuleSymbol(xmlModulePtr module, const char *name, void **symbol)
                         XML_MODULE_OPEN, XML_ERR_FATAL, NULL, 0, 0,
                         name, NULL, 0, 0,
                         "failed to find symbol: %s\n",
-			(name == NULL ? "NULL" : name));
+            (name == NULL ? "NULL" : name));
         return rc;
     }
 
@@ -236,7 +236,7 @@ xmlModulePlatformSymbol(void *handle, const char *name, void **symbol)
 {
     *symbol = dlsym(handle, name);
     if (dlerror() != NULL) {
-	return -1;
+    return -1;
     }
     return 0;
 }

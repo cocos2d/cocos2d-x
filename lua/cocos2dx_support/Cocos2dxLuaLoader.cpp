@@ -28,34 +28,34 @@ using namespace cocos2d;
 
 extern "C"
 {
-	int loader_Android(lua_State *L)
-	{
-		std::string filename(luaL_checkstring(L, 1));
-		filename.append(".lua");
+    int loader_Android(lua_State *L)
+    {
+        std::string filename(luaL_checkstring(L, 1));
+        filename.append(".lua");
 
-		unsigned long size;
-		char *pFileContent = (char*)CCFileUtils::getFileData(filename.c_str(), "r", &size);
+        unsigned long size;
+        char *pFileContent = (char*)CCFileUtils::getFileData(filename.c_str(), "r", &size);
 
-		if (pFileContent)
-		{
-			// copy the file contents and add '\0' at the end, or the lua parser can not parse it
-			char *pCodes = new char[size + 1];
-			pCodes[size] = '\0';
-			memcpy(pCodes, pFileContent, size);
-			delete[] pFileContent;
+        if (pFileContent)
+        {
+            // copy the file contents and add '\0' at the end, or the lua parser can not parse it
+            char *pCodes = new char[size + 1];
+            pCodes[size] = '\0';
+            memcpy(pCodes, pFileContent, size);
+            delete[] pFileContent;
 
-			if (luaL_loadstring(L, pCodes) != 0)
-			{
-				luaL_error(L, "error loading module %s from file %s :\n\t%s",
-					lua_tostring(L, 1), filename.c_str(), lua_tostring(L, -1));
-			}
-			delete []pCodes;
-		}
-		else
-		{
-			CCLog("can not get file data of %s", filename.c_str());
-		}
+            if (luaL_loadstring(L, pCodes) != 0)
+            {
+                luaL_error(L, "error loading module %s from file %s :\n\t%s",
+                    lua_tostring(L, 1), filename.c_str(), lua_tostring(L, -1));
+            }
+            delete []pCodes;
+        }
+        else
+        {
+            CCLog("can not get file data of %s", filename.c_str());
+        }
 
-		return 1;
-	}
+        return 1;
+    }
 }

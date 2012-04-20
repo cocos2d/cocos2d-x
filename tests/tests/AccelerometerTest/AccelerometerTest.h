@@ -12,13 +12,13 @@ protected:
     double    m_fLastTime;
 
 public:
-	AccelerometerTest(void);
-	~AccelerometerTest(void);
+    AccelerometerTest(void);
+    ~AccelerometerTest(void);
 
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 
-	virtual std::string title();
-	virtual void onEnter();
+    virtual std::string title();
+    virtual void onEnter();
 };
 
 class AccelerometerTestScene : public TestScene

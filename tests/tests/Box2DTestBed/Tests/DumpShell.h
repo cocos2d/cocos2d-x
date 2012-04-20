@@ -24,8 +24,8 @@ class DumpShell : public Test
 {
 public:
 
-	DumpShell()
-	{
+    DumpShell()
+    {
 
 b2Vec2 g(0.000000000000000e+00f, 0.000000000000000e+00f);
 m_world->SetGravity(g);
@@ -256,12 +256,12 @@ joints = NULL;
 bodies = NULL;
 
 
-	}
+    }
 
-	static Test* Create()
-	{
-		return new DumpShell;
-	}
+    static Test* Create()
+    {
+        return new DumpShell;
+    }
 };
 
 #endif

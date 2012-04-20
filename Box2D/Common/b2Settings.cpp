@@ -37,25 +37,25 @@ b2Version b2_version = {2, 2, 1};
 // Memory allocators. Modify these to use your own allocator.
 void* b2Alloc(int32 size)
 {
-	return malloc(size);
+    return malloc(size);
 }
 
 void b2Free(void* mem)
 {
-	free(mem);
+    free(mem);
 }
 
 // You can modify this to use your logging facility.
 void b2Log(const char* string, ...)
 {
 #if defined(SHP)
-	#ifdef _DEBUG
-	__App_info(__PRETTY_FUNCTION__ , __LINE__, string);
-	#endif
+    #ifdef _DEBUG
+    __App_info(__PRETTY_FUNCTION__ , __LINE__, string);
+    #endif
 #else
-	va_list args;
-	va_start(args, string);
-	vprintf(string, args);
-	va_end(args);
+    va_list args;
+    va_start(args, string);
+    vprintf(string, args);
+    va_end(args);
 #endif
 }

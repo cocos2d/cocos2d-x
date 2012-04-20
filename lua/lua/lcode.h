@@ -36,11 +36,11 @@ typedef enum BinOpr {
 typedef enum UnOpr { OPR_MINUS, OPR_NOT, OPR_LEN, OPR_NOUNOPR } UnOpr;
 
 
-#define getcode(fs,e)	((fs)->f->code[(e)->u.s.info])
+#define getcode(fs,e)    ((fs)->f->code[(e)->u.s.info])
 
-#define luaK_codeAsBx(fs,o,A,sBx)	luaK_codeABx(fs,o,A,(sBx)+MAXARG_sBx)
+#define luaK_codeAsBx(fs,o,A,sBx)    luaK_codeABx(fs,o,A,(sBx)+MAXARG_sBx)
 
-#define luaK_setmultret(fs,e)	luaK_setreturns(fs, e, LUA_MULTRET)
+#define luaK_setmultret(fs,e)    luaK_setreturns(fs, e, LUA_MULTRET)
 
 LUAI_FUNC int luaK_codeABx (FuncState *fs, OpCode o, int A, unsigned int Bx);
 LUAI_FUNC int luaK_codeABC (FuncState *fs, OpCode o, int A, int B, int C);

@@ -27,7 +27,8 @@ THE SOFTWARE.
 #define __CCPAGE_TURN_TRANSITION_H__
 
 #include "CCTransition.h"
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 /**
 @brief A transition which peels back the bottom right hand corner of a scene
@@ -43,34 +44,35 @@ is turned on in CCDirector using:
 class CC_DLL CCTransitionPageTurn : public CCTransitionScene
 {
 protected:
-	bool	m_bBack;
-	
+    bool    m_bBack;
+    
 public:
-	CCTransitionPageTurn();
-	virtual ~CCTransitionPageTurn();
+    CCTransitionPageTurn();
+    virtual ~CCTransitionPageTurn();
 
-	/**
-	* Creates a base transition with duration and incoming scene.
-	* If back is true then the effect is reversed to appear as if the incoming 
-	* scene is being turned from left over the outgoing scene.
-	*/
-	static CCTransitionPageTurn* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
+    /**
+    * Creates a base transition with duration and incoming scene.
+    * If back is true then the effect is reversed to appear as if the incoming 
+    * scene is being turned from left over the outgoing scene.
+    */
+    static CCTransitionPageTurn* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
 
-	/**
-	* Creates a base transition with duration and incoming scene.
-	* If back is true then the effect is reversed to appear as if the incoming 
-	* scene is being turned from left over the outgoing scene.
-	*/
-	virtual bool initWithDuration(ccTime t,CCScene* scene,bool backwards);
+    /**
+    * Creates a base transition with duration and incoming scene.
+    * If back is true then the effect is reversed to appear as if the incoming 
+    * scene is being turned from left over the outgoing scene.
+    */
+    virtual bool initWithDuration(ccTime t,CCScene* scene,bool backwards);
 
-	CCActionInterval* actionWithSize(const ccGridSize& vector);
+    CCActionInterval* actionWithSize(const ccGridSize& vector);
 
-	virtual void onEnter();
+    virtual void onEnter();
 
 protected:
-	virtual void sceneOrder();
+    virtual void sceneOrder();
 };
-}//namespace   cocos2d 
+
+NS_CC_END
 
 #endif // __CCPAGE_TURN_TRANSITION_H__
 

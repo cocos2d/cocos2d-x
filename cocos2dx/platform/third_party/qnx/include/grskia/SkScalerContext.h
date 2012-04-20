@@ -60,12 +60,12 @@ struct SkGlyph {
         unsigned rb = width;
         if (SkMask::kBW_Format == format) {
             rb = (rb + 7) >> 3;
-		} else if (SkMask::kARGB32_Format == format ||
+        } else if (SkMask::kARGB32_Format == format ||
                    SkMask::kLCD32_Format == format)
         {
-			rb <<= 2;
-		} else if (SkMask::kLCD16_Format == format) {
-			rb = SkAlign4(rb << 1);
+            rb <<= 2;
+        } else if (SkMask::kLCD16_Format == format) {
+            rb = SkAlign4(rb << 1);
         } else {
             rb = SkAlign4(rb);
         }

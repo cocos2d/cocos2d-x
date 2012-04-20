@@ -142,7 +142,7 @@ public:
     }
 };
 
-#define MAX_LAYER	41
+#define MAX_LAYER    41
 
 static std::string transitions[MAX_LAYER] = {
     "CCTransitionJumpZoom",
@@ -262,7 +262,7 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     }
 
     return NULL;
-}							
+}                            
 
 
 void TransitionsTestScene::runThisTest()
@@ -293,7 +293,7 @@ TestLayer1::TestLayer1(void)
 
     CCLabelTTF* label = CCLabelTTF::labelWithString("SCENE 1", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
-    label->setPosition( CCPointMake(x/2,y/2));	
+    label->setPosition( CCPointMake(x/2,y/2));    
     addChild( label);
 
     // menu
@@ -308,7 +308,7 @@ TestLayer1::TestLayer1(void)
     item2->setPosition( CCPointMake( size.width/2, 30) );
     item3->setPosition( CCPointMake( size.width/2 + 100,30) );
 
-    addChild(menu, 1);	
+    addChild(menu, 1);    
 
     schedule( schedule_selector(TestLayer1::step), 1.0f); 
 }
@@ -358,7 +358,7 @@ void TestLayer1::backCallback(CCObject* pSender)
     s_nSceneIdx--;
     int total = MAX_LAYER;
     if( s_nSceneIdx < 0 )
-        s_nSceneIdx += total;	
+        s_nSceneIdx += total;    
 
     CCScene* s = new TransitionsTestScene();
 
@@ -422,7 +422,7 @@ TestLayer2::TestLayer2()
 
     CCLabelTTF* label = CCLabelTTF::labelWithString("SCENE 2", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
-    label->setPosition( CCPointMake(x/2,y/2));	
+    label->setPosition( CCPointMake(x/2,y/2));    
     addChild( label);
 
     // menu
@@ -437,7 +437,7 @@ TestLayer2::TestLayer2()
     item2->setPosition( CCPointMake( x/2, 30) );
     item3->setPosition( CCPointMake( x/2 + 100,30) );
 
-    addChild(menu, 1);	
+    addChild(menu, 1);    
 
     schedule(schedule_selector(TestLayer2::step), 1.0f);
 }
@@ -487,7 +487,7 @@ void TestLayer2::backCallback(CCObject* pSender)
     s_nSceneIdx--;
     int total = MAX_LAYER;
     if( s_nSceneIdx < 0 )
-        s_nSceneIdx += total;	
+        s_nSceneIdx += total;    
 
     CCScene* s = new TransitionsTestScene();
 

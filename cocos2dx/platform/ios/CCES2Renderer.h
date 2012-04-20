@@ -39,23 +39,23 @@
     GLint backingWidth_;
     GLint backingHeight_;
 
-	unsigned int	samplesToUse_;
-	BOOL			multiSampling_;
+    unsigned int    samplesToUse_;
+    BOOL            multiSampling_;
 
-	unsigned int	depthFormat_;
-	unsigned int	pixelFormat_;
+    unsigned int    depthFormat_;
+    unsigned int    pixelFormat_;
 
-	// The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
+    // The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
     GLuint defaultFramebuffer_;
-	GLuint colorRenderbuffer_;
-	GLuint depthBuffer_;
+    GLuint colorRenderbuffer_;
+    GLuint depthBuffer_;
 
 
-	//buffers for MSAA
-	GLuint msaaFramebuffer_;
-	GLuint msaaColorbuffer_;
+    //buffers for MSAA
+    GLuint msaaFramebuffer_;
+    GLuint msaaColorbuffer_;
 
-	EAGLContext *context_;
+    EAGLContext *context_;
 }
 
 /** Color Renderbuffer */

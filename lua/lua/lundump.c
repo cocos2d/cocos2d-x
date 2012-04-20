@@ -31,7 +31,7 @@ typedef struct {
 #define IF(c,s)
 #define error(S,s)
 #else
-#define IF(c,s)		if (c) error(S,s)
+#define IF(c,s)        if (c) error(S,s)
 
 static void error(LoadState* S, const char* why)
 {
@@ -40,10 +40,10 @@ static void error(LoadState* S, const char* why)
 }
 #endif
 
-#define LoadMem(S,b,n,size)	LoadBlock(S,b,(n)*(size))
-#define	LoadByte(S)		(lu_byte)LoadChar(S)
-#define LoadVar(S,x)		LoadMem(S,&x,1,sizeof(x))
-#define LoadVector(S,b,n,size)	LoadMem(S,b,n,size)
+#define LoadMem(S,b,n,size)    LoadBlock(S,b,(n)*(size))
+#define    LoadByte(S)        (lu_byte)LoadChar(S)
+#define LoadVar(S,x)        LoadMem(S,&x,1,sizeof(x))
+#define LoadVector(S,b,n,size)    LoadMem(S,b,n,size)
 
 static void LoadBlock(LoadState* S, void* b, size_t size)
 {
@@ -83,7 +83,7 @@ static TString* LoadString(LoadState* S)
  {
   char* s=luaZ_openspace(S->L,S->b,size);
   LoadBlock(S,s,size);
-  return luaS_newlstr(S->L,s,size-1);		/* remove trailing '\0' */
+  return luaS_newlstr(S->L,s,size-1);        /* remove trailing '\0' */
  }
 }
 
@@ -111,20 +111,20 @@ static void LoadConstants(LoadState* S, Proto* f)
   switch (t)
   {
    case LUA_TNIL:
-   	setnilvalue(o);
-	break;
+       setnilvalue(o);
+    break;
    case LUA_TBOOLEAN:
-   	setbvalue(o,LoadChar(S)!=0);
-	break;
+       setbvalue(o,LoadChar(S)!=0);
+    break;
    case LUA_TNUMBER:
-	setnvalue(o,LoadNumber(S));
-	break;
+    setnvalue(o,LoadNumber(S));
+    break;
    case LUA_TSTRING:
-	setsvalue2n(S->L,o,LoadString(S));
-	break;
+    setsvalue2n(S->L,o,LoadString(S));
+    break;
    default:
-	error(S,"bad constant");
-	break;
+    error(S,"bad constant");
+    break;
   }
  }
  n=LoadInt(S);
@@ -218,10 +218,10 @@ void luaU_header (char* h)
  h+=sizeof(LUA_SIGNATURE)-1;
  *h++=(char)LUAC_VERSION;
  *h++=(char)LUAC_FORMAT;
- *h++=(char)*(char*)&x;				/* endianness */
+ *h++=(char)*(char*)&x;                /* endianness */
  *h++=(char)sizeof(int);
  *h++=(char)sizeof(size_t);
  *h++=(char)sizeof(Instruction);
  *h++=(char)sizeof(lua_Number);
- *h++=(char)(((lua_Number)0.5)==0);		/* is lua_Number integral? */
+ *h++=(char)(((lua_Number)0.5)==0);        /* is lua_Number integral? */
 }

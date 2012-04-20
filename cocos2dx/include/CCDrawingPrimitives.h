@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #ifndef __CCDRAWING_PRIMITIVES__
 #define __CCDRAWING_PRIMITIVES__
-	
+    
 /**
  @file
  Drawing OpenGL ES primitives.
@@ -45,7 +45,7 @@ THE SOFTWARE.
  */
 #include "ccTypes.h"
 #include "ccMacros.h"
-#include "CCGeometry.h"	// for CCPoint
+#include "CCGeometry.h"    // for CCPoint
 
 NS_CC_BEGIN
 

@@ -31,7 +31,7 @@ int CC_DLL gettimeofday(struct timeval * val, struct timezone *)
     if (val)
     {
         LARGE_INTEGER liTime, liFreq;
-		QueryPerformanceFrequency( &liFreq );
+        QueryPerformanceFrequency( &liFreq );
         QueryPerformanceCounter( &liTime );
         val->tv_sec     = (long)( liTime.QuadPart / liFreq.QuadPart );
         val->tv_usec    = (long)( liTime.QuadPart * 1000000.0 / liFreq.QuadPart - val->tv_sec * 1000000.0 );
@@ -46,11 +46,11 @@ int CC_DLL gettimeofday(struct timeval * val, struct timezone *)
 {
     if (val)
     {
-    	long long curTick = 0;
-    	SystemTime::GetTicks(curTick);
-    	unsigned int ms = curTick;
-    	val->tv_sec = ms / 1000;
-    	val->tv_usec = (ms % 1000) * 1000;
+        long long curTick = 0;
+        SystemTime::GetTicks(curTick);
+        unsigned int ms = curTick;
+        val->tv_sec = ms / 1000;
+        val->tv_usec = (ms % 1000) * 1000;
     }
     return 0;
 }

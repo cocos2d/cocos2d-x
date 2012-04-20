@@ -9,20 +9,20 @@
 #include "SkTRegistry.h"
 
 namespace skiagm {
-	
-	static inline SkISize make_isize(int w, int h) {
-		SkISize sz;
-		sz.set(w, h);
-		return sz;
-	}
+    
+    static inline SkISize make_isize(int w, int h) {
+        SkISize sz;
+        sz.set(w, h);
+        return sz;
+    }
 
     class GM {
     public:
         GM();
         virtual ~GM();
-		
-		void draw(SkCanvas*);
-		SkISize getISize() { return this->onISize(); }
+        
+        void draw(SkCanvas*);
+        SkISize getISize() { return this->onISize(); }
         const char* shortName() {
             if (fShortName.size() == 0) {
                 fShortName = this->onShortName();
@@ -30,9 +30,9 @@ namespace skiagm {
             return fShortName.c_str();
         }
 
-	protected:
-		virtual void onDraw(SkCanvas*) = 0;
-		virtual SkISize onISize() = 0;
+    protected:
+        virtual void onDraw(SkCanvas*) = 0;
+        virtual SkISize onISize() = 0;
         virtual SkString onShortName() = 0;
         
     private:

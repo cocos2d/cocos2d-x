@@ -1,7 +1,7 @@
 #include "DirectorTest.h"
 #include "../testResource.h"
 
-#define MAX_LAYER	1
+#define MAX_LAYER    1
 
 CCLayer* nextDirectorTestCase();
 CCLayer* backDirectorTestCase();
@@ -27,18 +27,18 @@ CCLayer* createTestCaseLayer(int index)
 }
 
 CCLayer* nextDirectorTestCase()
-{	
-	sceneIdx++;
-	sceneIdx = sceneIdx % MAX_LAYER;
+{    
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
 
-	return createTestCaseLayer(sceneIdx);
+    return createTestCaseLayer(sceneIdx);
 }
 
 CCLayer* backDirectorTestCase()
 {
-	sceneIdx--;
-	if( sceneIdx < 0 )
-		sceneIdx += MAX_LAYER;
+    sceneIdx--;
+    if( sceneIdx < 0 )
+        sceneIdx += MAX_LAYER;
 
     return createTestCaseLayer(sceneIdx);
 }
@@ -92,7 +92,7 @@ bool DirectorTest::init()
 void DirectorTest::restartCallback(CCObject* pSender)
 {
     CCScene *s = new DirectorTestScene();
-	s->addChild(restartDirectorTestCase());
+    s->addChild(restartDirectorTestCase());
     CCDirector::sharedDirector()->replaceScene(s);
     s->autorelease();
 }
@@ -115,12 +115,12 @@ void DirectorTest::backCallback(CCObject* pSender)
 
 std::string DirectorTest::title()
 {
-	return "No title";
+    return "No title";
 }
 
 std::string DirectorTest::subtitle()
 {
-	return "";
+    return "";
 }
 
 ///---------------------------------------
@@ -136,28 +136,28 @@ bool Director1::init()
     {
         CC_BREAK_IF(! DirectorTest::init());
 
-		setIsTouchEnabled(true);
+        setIsTouchEnabled(true);
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
         CCMenuItem *item = CCMenuItemFont::itemWithString("Rotate Device", this, menu_selector(Director1::rotateDevice));
         CCMenu *menu = CCMenu::menuWithItems(item, NULL);
-		menu->setPosition(ccp( s.width/2, s.height/2));
-		addChild(menu);
+        menu->setPosition(ccp( s.width/2, s.height/2));
+        addChild(menu);
 
         bRet = true;
-	} while (0);
+    } while (0);
 
-	return bRet;
+    return bRet;
 }
 
 void Director1::newOrientation()
 {
-	
+    
 }
 
 void Director1::rotateDevice(CCObject* pSender)
 {
-	newOrientation();
+    newOrientation();
     restartCallback(NULL);
 }
 
@@ -172,22 +172,22 @@ void Director1::ccTouchesEnded(CCSet * touches, CCEvent* event)
 
         if(!touch)
             break;
-		CCPoint a = touch->locationInView();
+        CCPoint a = touch->locationInView();
 
         CCDirector *director = CCDirector::sharedDirector();
-		CCPoint b = director->convertToUI(director->convertToGL(a));
-		CCLog("(%d,%d) == (%d,%d)", (int) a.x, (int)a.y, (int)b.x, (int)b.y );
-	}
+        CCPoint b = director->convertToUI(director->convertToGL(a));
+        CCLog("(%d,%d) == (%d,%d)", (int) a.x, (int)a.y, (int)b.x, (int)b.y );
+    }
 }
 
 std::string Director1::title()
 {
-	return "Testing conversion";
+    return "Testing conversion";
 }
 
 std::string Director1::subtitle()
 {
-	return "Tap screen and see the debug console";
+    return "Tap screen and see the debug console";
 }
 
 ///---------------------------------------

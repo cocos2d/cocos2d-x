@@ -29,23 +29,23 @@ THE SOFTWARE.
 #include "CCAccelerometerDelegate.h"
 #include <list>
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CC_DLL CCAccelerometer
 {
 public:
-	CCAccelerometer();
+    CCAccelerometer();
     ~CCAccelerometer();
 
     void setDelegate(CCAccelerometerDelegate* pDelegate);
     void update(long sensorTimeStamp);
 
 private:
-	CCAccelerometerDelegate* m_pAccelDelegate;
-	CCAcceleration 			 m_accelerationValue;
-    static int				 m_initialOrientationAngle;
+    CCAccelerometerDelegate* m_pAccelDelegate;
+    CCAcceleration              m_accelerationValue;
+    static int                 m_initialOrientationAngle;
 };
 
-}//namespace cocos2d
+NS_CC_END
 
 #endif

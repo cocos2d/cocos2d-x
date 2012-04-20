@@ -10,7 +10,7 @@
 
 #include "CCCommon.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class CCAccelerometer
 {
@@ -23,6 +23,6 @@ public:
     void setDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);}
 };
 
-}//namespace   cocos2d
+NS_CC_END
 
 #endif /* CCACCELEROMETER_LINUX_H_ */
