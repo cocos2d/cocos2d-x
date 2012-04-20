@@ -328,14 +328,20 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
     CCSize size = m_obWinSizeInPixels;
-    CCSize sizePoint = m_obWinSizeInPoints;
+    //CCSize sizePoint = m_obWinSizeInPoints;
 
-    glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+    //glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+    if (m_pobOpenGLView)
+    {
+        m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
+    }
 
     switch (kProjection)
     {
     case kCCDirectorProjection2D:
         {
+
+            
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             kmMat4 orthoMatrix;
@@ -348,11 +354,6 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
     case kCCDirectorProjection3D:
         {
-            // reset the viewport if 3d proj & retina display
-            if( CC_CONTENT_SCALE_FACTOR() != 1 )
-            {
-                glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
-            }
             float zeye = this->getZEye();
 
             kmMat4 matrixPerspective, matrixLookup;
@@ -361,16 +362,24 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLLoadIdentity();
 
             // issue #1334
-            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
+            if (m_pobOpenGLView && m_pobOpenGLView->isIpad() && m_pobOpenGLView->getMainScreenScale() > 1.0f)
+            {
+                kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2);
+            }
+            else
+            {
+                 kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500);
+            }
+           
 //            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
             kmGLMultMatrix(&matrixPerspective);
 
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
             kmVec3 eye, center, up;
-            kmVec3Fill( &eye, sizePoint.width/2, sizePoint.height/2, zeye );
-            kmVec3Fill( &center, sizePoint.width/2, sizePoint.height/2, 0 );
-            kmVec3Fill( &up, 0, 1, 0);
+            kmVec3Fill( &eye, size.width/2, size.height/2, zeye );
+            kmVec3Fill( &center, size.width/2, size.height/2, 0.0f );
+            kmVec3Fill( &up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
         }
