@@ -57,9 +57,15 @@ It's new in cocos2d-x since v0.99.5
 // generic macros
 
 // namespace cocos2d {}
-#define NS_CC_BEGIN                     namespace cocos2d {
-#define NS_CC_END                       }
-#define USING_NS_CC                     using namespace cocos2d
+#ifdef __cplusplus
+    #define NS_CC_BEGIN                     namespace cocos2d {
+    #define NS_CC_END                       }
+    #define USING_NS_CC                     using namespace cocos2d
+#else
+    #define NS_CC_BEGIN                     
+    #define NS_CC_END
+    #define USING_NS_CC                     
+#endif 
 
 /** CC_PROPERTY_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
@@ -226,6 +232,22 @@ public: virtual void set##funName(varType var)   \
     #endif
 
 #endif  // CC_PLATFORM_WIN32
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
+#include "CCCommon.h"
+#include <stdio.h>
+
+    #undef CC_ASSERT
+    #define CC_ASSERT(cond) \
+if (! (cond)) \
+{ \
+    char content[100]; \
+    sprintf(content, "%s function:%s line:%d", __FILE__, __FUNCTION__, __LINE__ - 3);  \
+    CCMessageBox(content, "Assert error"); \
+}
+
+#endif // CC_PLATFORM_ANDROID
 
 
 
