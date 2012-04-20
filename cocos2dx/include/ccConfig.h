@@ -183,25 +183,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
     #endif
 #endif
 
-/** @def CC_TEXTURE_NPOT_SUPPORT
- If enabled, NPOT textures will be used where available. Only 3rd gen (and newer) devices support NPOT textures.
- NPOT textures have the following limitations:
-    - They can't have mipmaps
-    - They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
- 
- To enable set it to a value different than 0. Disabled by default.
-
- This value governs only the PNG, GIF, BMP, images.
- This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.
-
- @deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
-
- @since v0.99.2
- */
-#ifndef CC_TEXTURE_NPOT_SUPPORT
-#define CC_TEXTURE_NPOT_SUPPORT 0
-#endif
-
 
 /** @def CC_USE_LA88_LABELS
  If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.
