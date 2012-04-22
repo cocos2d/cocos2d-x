@@ -951,15 +951,9 @@ void CCLabelBMFont::setString(const char *newString)
 
 void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
 {
-	if (fromUpdate)
-	{
-        CC_SAFE_DELETE_ARRAY(m_sString);
-		m_sString = cc_utf8_from_cstr(newString);
-	}
-	else
-	{
-		m_sString_initial = newString;
-	}
+	CC_SAFE_DELETE_ARRAY(m_sString);
+	m_sString = cc_utf8_from_cstr(newString);
+	m_sString_initial = newString;
 
 	updateString(fromUpdate);
 }
@@ -1079,16 +1073,20 @@ void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 // LabelBMFont - Alignment
 void CCLabelBMFont::updateLabel()
 {
-	this->setString(m_sString_initial.c_str(), true);
-
 	if (m_fWidth > 0)
 	{
 		// Step 1: Make multiline
 		vector<unsigned short> str_whole = cc_utf8_vec_from_cstr(m_sString);
+
 		unsigned int stringLength = str_whole.size();
+
 		vector<unsigned short> multiline_string;
+		multiline_string.reserve( stringLength );
+
 		vector<unsigned short> last_word;
-		int line = 1, i = 0;
+		last_word.reserve( stringLength );
+
+		unsigned int line = 1, i = 0;
 		bool start_line = false, start_word = false;
 		float startOfLine = -1, startOfWord = -1;
 		int skip = 0;
@@ -1110,7 +1108,7 @@ void CCLabelBMFont::updateLabel()
 
 			if (!start_word)
 			{
-				startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
+				startOfWord = getLetterPosXLeft( characterSprite );
 				start_word = true;
 			}
 			if (!start_line)
@@ -1124,10 +1122,7 @@ void CCLabelBMFont::updateLabel()
 			{
 				cc_utf8_trim_ws(&last_word);
 
-// 					int found = cc_utf8_find_char(last_word, ' ');
-// 					if (found != -1)
-// 						cc_utf8_trim_from(&last_word, found + 1);
-
+				last_word.push_back('\n');
 				multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 				last_word.clear();
 				start_word = false;
@@ -1144,7 +1139,7 @@ void CCLabelBMFont::updateLabel()
 
 				if (!startOfWord)
 				{
-					startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
+					startOfWord = getLetterPosXLeft( characterSprite );
 					start_word = true;
 				}
 				if (!startOfLine)
@@ -1167,8 +1162,7 @@ void CCLabelBMFont::updateLabel()
 			}
 
 			// Out of bounds.
-			if (characterSprite->getPosition().x + characterSprite->getContentSize().width / 2.0f - startOfLine 
-				> m_fWidth )
+			if ( getLetterPosXRight( characterSprite ) - startOfLine > m_fWidth )
 			{
 				if (!m_bLineBreakWithoutSpaces)
 				{
@@ -1206,7 +1200,7 @@ void CCLabelBMFont::updateLabel()
 
 					if (!startOfWord)
 					{
-						startOfWord = characterSprite->getPosition().x - characterSprite->getContentSize().width/2.0f;
+						startOfWord = getLetterPosXLeft( characterSprite );
 						start_word = true;
 					}
 					if (!startOfLine)
@@ -1257,11 +1251,13 @@ void CCLabelBMFont::updateLabel()
 			if (m_sString[ctr] == '\n' || m_sString[ctr] == 0)
 			{
 				float lineWidth = 0.0f;
-				int line_length = last_line.size();
+				unsigned int line_length = last_line.size();
 				int index = i + line_length - 1 + lineNumber;
 				if (index < 0) continue;
 
 				CCSprite* lastChar = (CCSprite*)getChildByTag(index);
+				if ( lastChar == NULL )
+					continue;
 
 				lineWidth = lastChar->getPosition().x + lastChar->getContentSize().width/2.0f;
 
@@ -1279,7 +1275,8 @@ void CCLabelBMFont::updateLabel()
 
 				if (shift != 0)
 				{
-					for (int j = 0; j < line_length; j++)
+					int j = 0;
+					for (unsigned j = 0; j < line_length; j++)
 					{
 						index = i + j + lineNumber;
 						if (index < 0) continue;
@@ -1318,6 +1315,34 @@ void CCLabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
 {
 	m_bLineBreakWithoutSpaces = breakWithoutSpace;
 	updateLabel();
+}
+
+void CCLabelBMFont::setScale(float scale)
+{
+	CCSpriteBatchNode::setScale(scale);
+	updateLabel();
+}
+
+void CCLabelBMFont::setScaleX(float scaleX)
+{
+	CCSpriteBatchNode::setScaleX(scaleX);
+	updateLabel();
+}
+
+void CCLabelBMFont::setScaleY(float scaleY)
+{
+	CCSpriteBatchNode::setScaleY(scaleY);
+	updateLabel();
+}
+
+float CCLabelBMFont::getLetterPosXLeft( CCSprite* sp )
+{
+	return sp->getPosition().x * m_fScaleX - (sp->getContentSize().width * m_fScaleX * sp->getAnchorPoint().x);
+}
+
+float CCLabelBMFont::getLetterPosXRight( CCSprite* sp )
+{
+	return sp->getPosition().x * m_fScaleX + (sp->getContentSize().width * m_fScaleX * sp->getAnchorPoint().x);
 }
 
 //LabelBMFont - Debug draw
