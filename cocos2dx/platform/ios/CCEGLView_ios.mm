@@ -43,7 +43,7 @@ CCEGLView::~CCEGLView()
 CCSize CCEGLView::getSize()
 {
     cocos2d::CCSize size([[EAGLView sharedEGLView] getWidth], [[EAGLView sharedEGLView] getHeight]);
-    
+
     return size;
 }
 
@@ -57,17 +57,17 @@ bool CCEGLView::isOpenGLReady()
     return [EAGLView sharedEGLView] != NULL;
 }
     
-    bool CCEGLView::canSetContentScaleFactor()
-    {
-       return [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)];
-    }
+bool CCEGLView::canSetContentScaleFactor()
+{
+   return [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)];
+}
     
-    void CCEGLView::setContentScaleFactor(float contentScaleFactor)
-    {
-        UIView * view = [EAGLView sharedEGLView];
-        view.contentScaleFactor = contentScaleFactor;
-        [view setNeedsLayout];
-    }
+void CCEGLView::setContentScaleFactor(float contentScaleFactor)
+{
+    UIView * view = [EAGLView sharedEGLView];
+    view.contentScaleFactor = contentScaleFactor;
+    [view setNeedsLayout];
+}
 
 void CCEGLView::end()
 {
