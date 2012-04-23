@@ -37,23 +37,10 @@ public:
     virtual ~CCEGLView();
 
     bool    isOpenGLReady();
-    /**
-     * the width and height is the real size of phone
-     */
-    void    setFrameWidthAndHeight(int width, int height);
-    /**
-     * create a drawing rect, 
-     * the width and heiht is the resource size match best
-     */
-    void    create(int width, int height);
 
     // keep compatible
     void    end();
-    
     void    swapBuffers();
-
-
-    
     void    setIMEKeyboardState(bool bOpen);
     
     // static function
@@ -61,10 +48,6 @@ public:
     @brief    get the shared main open gl window
     */
     static CCEGLView& sharedOpenGLView();
-    
-private:
-
-    bool   m_bNotHVGA;
 };
 
 NS_CC_END

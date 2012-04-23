@@ -25,6 +25,9 @@ bool AppDelegate::initInstance() {
         CC_BREAK_IF(! pMainWnd
                 || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 480, 320));
 
+        // set the design resolution screen size, if you want to use Design Resoulution scaled to current screen, please uncomment next line.
+        //pMainWnd->setDesignResolutionSize(480, 320);
+
 #endif  // CC_PLATFORM_WIN32
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 

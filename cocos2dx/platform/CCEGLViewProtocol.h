@@ -24,6 +24,8 @@ public:
     virtual bool    isIpad();
     virtual CCRect  getViewPort();
     virtual CCSize  getSize();
+    virtual void    setFrameSize(float width, float height);
+    virtual void    setDesignResolutionSize(float width, float height);
     virtual void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     virtual float   getScreenScaleFactor();
     virtual bool    canSetContentScaleFactor();
@@ -41,6 +43,7 @@ public:
 private:
     void getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[], float xs[], float ys[]);
 protected:
+    bool m_bNeedScale;
     EGLTouchDelegate* m_pDelegate;
     float  m_fScreenScaleFactor;
     CCSize m_sSizeInPixel;
