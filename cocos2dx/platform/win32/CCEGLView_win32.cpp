@@ -503,7 +503,7 @@ void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     CCEGLViewProtocol::setContentScaleFactor(contentScaleFactor);
 
-    resize((int)(m_sSizeInPoint.width * contentScaleFactor), (int)(m_sSizeInPoint.height * contentScaleFactor));
+    resize((int)(m_sSizeInPixel.width * contentScaleFactor), (int)(m_sSizeInPixel.height * contentScaleFactor));
     centerWindow();
 }
 
