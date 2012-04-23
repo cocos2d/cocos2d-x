@@ -328,7 +328,7 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
     CCSize size = m_obWinSizeInPixels;
-    //CCSize sizePoint = m_obWinSizeInPoints;
+    CCSize sizePoint = m_obWinSizeInPoints;
 
     //glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
     if (m_pobOpenGLView)
@@ -354,6 +354,12 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
     case kCCDirectorProjection3D:
         {
+            // reset the viewport if 3d proj & retina display
+            if( CC_CONTENT_SCALE_FACTOR() != 1.0f )
+            {
+                glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+            }
+
             float zeye = this->getZEye();
 
             kmMat4 matrixPerspective, matrixLookup;
@@ -377,8 +383,8 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
             kmVec3 eye, center, up;
-            kmVec3Fill( &eye, size.width/2, size.height/2, zeye );
-            kmVec3Fill( &center, size.width/2, size.height/2, 0.0f );
+            kmVec3Fill( &eye, sizePoint.width/2, sizePoint.height/2, zeye );
+            kmVec3Fill( &center, sizePoint.width/2, sizePoint.height/2, 0.0f );
             kmVec3Fill( &up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
