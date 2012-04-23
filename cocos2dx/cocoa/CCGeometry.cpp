@@ -23,17 +23,33 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGeometry.h"
+#include "ccMacros.h"
 
 // implementation of CCPoint
 NS_CC_BEGIN
 
 CCPoint::CCPoint(void)
 {
-    x = 0;
-    y = 0;
+    setPoint(0.0f, 0.0f);
 }
 
 CCPoint::CCPoint(float x, float y)
+{
+    setPoint(x, y);
+}
+
+CCPoint::CCPoint(const CCPoint& other)
+{
+    setPoint(other.x, other.y);
+}
+
+CCPoint& CCPoint::operator= (const CCPoint& other)
+{
+    setPoint(other.x, other.y);
+    return *this;
+}
+
+void CCPoint::setPoint(float x, float y)
 {
     this->x = x;
     this->y = y;
@@ -48,11 +64,26 @@ bool CCPoint::CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2)
 
 CCSize::CCSize(void)
 {
-    width = 0;
-    height = 0;
+    setSize(0.0f, 0.0f);
 }
 
 CCSize::CCSize(float width, float height)
+{
+    setSize(width, height);
+}
+
+CCSize::CCSize(const CCSize& other)
+{
+    setSize(other.width, other.height);
+}
+
+CCSize& CCSize::operator= (const CCSize& other)
+{
+    setSize(other.width, other.height);
+    return *this;
+}
+
+void CCSize::setSize(float width, float height)
 {
     this->width = width;
     this->height = height;
@@ -67,17 +98,29 @@ bool CCSize::CCSizeEqualToSize(const CCSize& size1, const CCSize& size2)
 
 CCRect::CCRect(void)
 {
-    origin.x = 0;
-    origin.y = 0;
-
-    size.width = 0;
-    size.height = 0;
+    setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 CCRect::CCRect(float x, float y, float width, float height)
 {
+    setRect(x, y, width, height);
+}
+
+CCRect::CCRect(const CCRect& other)
+{
+    setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
+}
+
+CCRect& CCRect::operator= (const CCRect& other)
+{
+    setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
+    return *this;
+}
+
+void CCRect::setRect(float x, float y, float width, float height)
+{
     // Only support that, the width and height > 0
-    CC_ASSERT(width >= 0 && height >= 0);
+    CCAssert(width >= 0.0f && height >= 0.0f, "width and height of Rect must not less than 0.");
 
     origin.x = x;
     origin.y = y;

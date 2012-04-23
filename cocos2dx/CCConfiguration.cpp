@@ -73,15 +73,14 @@ bool CCConfiguration::init(void)
     CCLOG("cocos2d: GL supports NPOT textures: %s", (m_bSupportsNPOT ? "YES" : "NO"));
     CCLOG("cocos2d: GL supports discard_framebuffer: %s", (m_bSupportsDiscardFramebuffer ? "YES" : "NO"));
 
-    
-    CCLOG("cocos2d: compiled with Profiling Support: %s",
+    bool bEnableProfilers = false;
+
 #if CC_ENABLE_PROFILERS
-          
-          "YES - *** Disable it when you finish profiling ***"
-#else
-          "NO"
+    bEnableProfilers = true;
 #endif
-          );
+
+    CCLOG("cocos2d: compiled with Profiling Support: %s",
+        bEnableProfilers ? "YES - *** Disable it when you finish profiling ***" : "NO");
     
 #if CC_ENABLE_GL_STATE_CACHE == 0
 	CCLOG("");

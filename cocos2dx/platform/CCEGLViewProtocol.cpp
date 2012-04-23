@@ -6,14 +6,9 @@
 #include "CCDictionary.h"
 #include "CCInteger.h"
 
-#undef COCOS2D_DEBUG;
-#define COCOS2D_DEBUG 1
-
 NS_CC_BEGIN
 
-#define MAX_TOUCHES  5
-
-static CCTouch* s_pTouches[MAX_TOUCHES] = { NULL };
+static CCTouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
 static unsigned int s_indexBitsUsed = 0;
 static CCDictionary s_TouchesIntergerDict;
 
@@ -22,7 +17,7 @@ static int getUnUsedIndex()
     int i;
     int temp = s_indexBitsUsed;
 
-    for (i = 0; i < MAX_TOUCHES; i++) {
+    for (i = 0; i < CC_MAX_TOUCHES; i++) {
         if (! (temp & 0x00000001)) {
             s_indexBitsUsed |= (1 <<  i);
             return i;
@@ -37,7 +32,7 @@ static int getUnUsedIndex()
 
 static void removeUsedIndexBit(int index)
 {
-    if (index < 0 || index >= MAX_TOUCHES) 
+    if (index < 0 || index >= CC_MAX_TOUCHES) 
     {
         return;
     }
@@ -48,8 +43,9 @@ static void removeUsedIndexBit(int index)
 }
 
 CCEGLViewProtocol::CCEGLViewProtocol()
-: m_pDelegate(NULL)
-, m_fScreenScaleFactor(1.0f)
+  : m_bNeedScale(false)
+  , m_pDelegate(NULL)
+  , m_fScreenScaleFactor(1.0f)
 {
 
 }
@@ -64,9 +60,46 @@ bool CCEGLViewProtocol::isIpad()
     return false;
 }
 
+void CCEGLViewProtocol::setFrameSize(float width, float height)
+{
+    m_sSizeInPixel.setSize(width, height);
+    m_rcViewPort.size.setSize(width, height);
+}
+
+void CCEGLViewProtocol::setDesignResolutionSize(float width, float height)
+{
+    if (width == 0.0f || height == 0.0f)
+    {
+        return;
+    }
+
+    m_sSizeInPoint.setSize(width, height);
+
+    // calculate the factor and the rect of viewport    
+    m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
+        (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
+    int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
+    int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
+    m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
+    m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
+    m_rcViewPort.size.width = viewPortW;
+    m_rcViewPort.size.height = viewPortH;
+
+    CCLOG("m_fScreenScaleFactor = %f", m_fScreenScaleFactor);
+    m_bNeedScale = true;  
+}
+
 CCSize CCEGLViewProtocol::getSize()
 {
-    CCSize size(m_sSizeInPoint.width, m_sSizeInPoint.height);
+    CCSize size;
+    if (m_bNeedScale)
+    {
+        size.setSize(m_sSizeInPoint.width, m_sSizeInPoint.height);      
+    }
+    else
+    {
+        size.setSize(m_sSizeInPixel.width, m_sSizeInPixel.height);
+    }
     return size;
 }
 
@@ -97,20 +130,40 @@ void CCEGLViewProtocol::setContentScaleFactor(float contentScaleFactor)
 
 void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
-    float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-    glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
-        (GLint)(y * factor) + m_rcViewPort.origin.y,
-        (GLsizei)(w * factor),
-        (GLsizei)(h * factor));
+    if (m_bNeedScale)
+    {
+        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
+            (GLint)(y * factor) + m_rcViewPort.origin.y,
+            (GLsizei)(w * factor),
+            (GLsizei)(h * factor));
+    }
+    else
+    {
+        glViewport((GLint)x,
+            (GLint)y,
+            (GLsizei)w,
+            (GLsizei)h);
+    }
 }
 
 void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
 {
-    float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-    glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
-        (GLint)(y * factor) + m_rcViewPort.origin.y,
-        (GLsizei)(w * factor),
-        (GLsizei)(h * factor));
+    if (m_bNeedScale)
+    {
+        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+        glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
+            (GLint)(y * factor) + m_rcViewPort.origin.y,
+            (GLsizei)(w * factor),
+            (GLsizei)(h * factor));
+    }
+    else
+    {
+        glScissor((GLint)x,
+            (GLint)y,
+            (GLsizei)w,
+            (GLsizei)h);
+    }
 }
 
 float CCEGLViewProtocol::getMainScreenScale()
