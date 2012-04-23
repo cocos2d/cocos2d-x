@@ -62,7 +62,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 */
 
 #import <QuartzCore/QuartzCore.h>
-
+#import "CCEGLView.h"
 #import "EAGLView.h"
 #import "CCES2Renderer.h"
 #import "CCDirector.h"
@@ -74,7 +74,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASS IMPLEMENTATIONS:
 
 
-static EAGLView *view;
+static EAGLView *view = 0;
 
 @interface EAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
@@ -142,8 +142,7 @@ static EAGLView *view;
             [self release];
             return nil;
         }
-        touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
-        indexBitsUsed = 0x00000000;
+
         
         view = self;
     }
@@ -204,34 +203,6 @@ static EAGLView *view;
     return bound.height;
 }
 
--(int) getUnUsedIndex
-{
-    int i;
-    int temp = indexBitsUsed;
-    
-    for (i = 0; i < MAX_TOUCHES; i++) {
-        if (! (temp & 0x00000001)) {
-            indexBitsUsed |= (1 <<  i);
-            return i;
-        }
-        
-        temp >>= 1;
-    }
-    
-    // all bits are used
-    return -1;
-}
-
--(void) removeUsedIndexBit:(int) index
-{
-   if (index < 0 || index >= MAX_TOUCHES) {
-       return;
-   }
-    
-    unsigned int temp = 1 << index;
-    temp = ~temp;
-    indexBitsUsed &= temp;
-}
 
 -(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {
@@ -265,7 +236,6 @@ static EAGLView *view;
 
 - (void) dealloc
 {
-    CFRelease(touchesIntergerDict);
     [renderer_ release];
     [super dealloc];
 }
@@ -394,124 +364,66 @@ static EAGLView *view;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    cocos2d::CCSet set;
-    cocos2d::CCTouch *pTouch;
+    int ids[CC_MAX_TOUCHES] = {0};
+    float xs[CC_MAX_TOUCHES] = {0.0f};
+    float ys[CC_MAX_TOUCHES] = {0.0f};
     
+    int i = 0;
     for (UITouch *touch in touches) {
-        NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
-        int unUsedIndex = 0;
-        
-        // it is a new touch
-        if (! index) {
-            unUsedIndex = [self getUnUsedIndex];
-            
-            // The touches is more than MAX_TOUCHES ?
-            if (unUsedIndex == -1) {
-                return;
-            }
-            
-            pTouch = s_pTouches[unUsedIndex] = new cocos2d::CCTouch();
-            float x = [touch locationInView: [touch view]].x;
-            float y = [touch locationInView: [touch view]].y;
-            pTouch->SetTouchInfo(x, y);
-            
-            CFDictionaryAddValue(touchesIntergerDict, touch, [NSNumber numberWithInt:unUsedIndex]);
-            
-            set.addObject(pTouch);
-        }
-        
+        ids[i] = (int)touch;
+        xs[i] = [touch locationInView: [touch view]].x;
+        ys[i] = [touch locationInView: [touch view]].y;
+        ++i;
     }
-    
-    if (set.count() == 0)
-        return;
-    
-    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesBegan(&set);
+    cocos2d::CCEGLView::sharedOpenGLView().handleTouchesBegin(i, ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    cocos2d::CCSet set;
-    for (UITouch *touch in touches) {
-        NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
-                if (! index) {
-                    // if the index doesn't exist, it is an error
-                    return;
-                }
-                
-                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
-                if (! pTouch) {
-                    // if the pTouch is null, it is an error
-                    return;
-                }
-        
-        float x = [touch locationInView: [touch view]].x;
-        float y = [touch locationInView: [touch view]].y;
-        pTouch->SetTouchInfo(x, y);
-        
-        set.addObject(pTouch);
-    }
+    int ids[CC_MAX_TOUCHES] = {0};
+    float xs[CC_MAX_TOUCHES] = {0.0f};
+    float ys[CC_MAX_TOUCHES] = {0.0f};
     
-    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesMoved(&set);
+    int i = 0;
+    for (UITouch *touch in touches) {
+        ids[i] = (int)touch;
+        xs[i] = [touch locationInView: [touch view]].x;
+        ys[i] = [touch locationInView: [touch view]].y;
+        ++i;
+    }
+    cocos2d::CCEGLView::sharedOpenGLView().handleTouchesMove(i, ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    cocos2d::CCSet set;
-    for (UITouch *touch in touches) {
-            NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
-            if (! index) {
-                // if the index doesn't exist, it is an error
-                return;
-            }
-        
-                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
-                if (! pTouch) {
-                    // if the pTouch is null, it is an error
-                    return;
-                }
-        
-        float x = [touch locationInView: [touch view]].x;
-        float y = [touch locationInView: [touch view]].y;
-        pTouch->SetTouchInfo(x, y);
-        
-        set.addObject(pTouch);
-                CFDictionaryRemoveValue(touchesIntergerDict, touch);
-                pTouch->release();
-                s_pTouches[[index intValue]] = NULL;
-                [self removeUsedIndexBit:[index intValue]];
-    }
+    int ids[CC_MAX_TOUCHES] = {0};
+    float xs[CC_MAX_TOUCHES] = {0.0f};
+    float ys[CC_MAX_TOUCHES] = {0.0f};
     
-    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesEnded(&set);
+    int i = 0;
+    for (UITouch *touch in touches) {
+        ids[i] = (int)touch;
+        xs[i] = [touch locationInView: [touch view]].x;
+        ys[i] = [touch locationInView: [touch view]].y;
+        ++i;
+    }
+    cocos2d::CCEGLView::sharedOpenGLView().handleTouchesEnd(i, ids, xs, ys);
 }
-
+    
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    cocos2d::CCSet set;
-    for (UITouch *touch in touches) {
-            NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
-            if (! index) {
-                // if the index doesn't exist, it is an error
-                return;
-            }
-        
-                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
-                if (! pTouch) {
-                    // if the pTouch is null, it is an error
-                    return;
-                }
-        
-        float x = [touch locationInView: [touch view]].x;
-        float y = [touch locationInView: [touch view]].y;
-        pTouch->SetTouchInfo(x, y);
-        
-        set.addObject(pTouch);
-                CFDictionaryRemoveValue(touchesIntergerDict, touch);
-                pTouch->release();
-                s_pTouches[[index intValue]] = NULL;
-                [self removeUsedIndexBit:[index intValue]];
-    }
+    int ids[CC_MAX_TOUCHES] = {0};
+    float xs[CC_MAX_TOUCHES] = {0.0f};
+    float ys[CC_MAX_TOUCHES] = {0.0f};
     
-    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesCancelled(&set);
+    int i = 0;
+    for (UITouch *touch in touches) {
+        ids[i] = (int)touch;
+        xs[i] = [touch locationInView: [touch view]].x;
+        ys[i] = [touch locationInView: [touch view]].y;
+        ++i;
+    }
+    cocos2d::CCEGLView::sharedOpenGLView().handleTouchesCancel(i, ids, xs, ys);
 }
 
 #pragma mark -

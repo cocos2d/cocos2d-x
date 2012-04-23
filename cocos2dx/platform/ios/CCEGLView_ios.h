@@ -26,15 +26,13 @@ THE SOFTWARE.
 #define __CC_EGLVIEW_IPHONE_H__
 
 #include "CCCommon.h"
+#include "CCEGLViewProtocol.h"
 
 NS_CC_BEGIN
 
-class CCSet;
-class CCTouch;
-class EGLTouchDelegate;
-class CCSize;
 
-class CC_DLL CCEGLView
+
+class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
 public:
     CCEGLView();
@@ -47,25 +45,16 @@ public:
     void    setContentScaleFactor(float contentScaleFactor);
     
     // keep compatible
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
+    void    end();
     void    swapBuffers();
-    void    setViewPortInPoints(float x, float y, float w, float h);
-    void    setScissorInPoints(float x, float y, float w, float h);
 
-    void touchesBegan(CCSet *set);
-    void touchesMoved(CCSet *set);
-    void touchesEnded(CCSet *set);
-    void touchesCancelled(CCSet *set);
     
     float getMainScreenScale();
     
     void setIMEKeyboardState(bool bOpen);
     
     static CCEGLView& sharedOpenGLView();
-        
-private:
-    EGLTouchDelegate *m_pDelegate;
+
 };
 
 NS_CC_END

@@ -6,14 +6,11 @@
 #include "CCDictionary.h"
 #include "CCInteger.h"
 
-#undef COCOS2D_DEBUG;
-#define COCOS2D_DEBUG 1
 
 NS_CC_BEGIN
 
-#define MAX_TOUCHES  5
 
-static CCTouch* s_pTouches[MAX_TOUCHES] = { NULL };
+static CCTouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
 static unsigned int s_indexBitsUsed = 0;
 static CCDictionary s_TouchesIntergerDict;
 
@@ -22,7 +19,7 @@ static int getUnUsedIndex()
     int i;
     int temp = s_indexBitsUsed;
 
-    for (i = 0; i < MAX_TOUCHES; i++) {
+    for (i = 0; i < CC_MAX_TOUCHES; i++) {
         if (! (temp & 0x00000001)) {
             s_indexBitsUsed |= (1 <<  i);
             return i;
@@ -37,7 +34,7 @@ static int getUnUsedIndex()
 
 static void removeUsedIndexBit(int index)
 {
-    if (index < 0 || index >= MAX_TOUCHES) 
+    if (index < 0 || index >= CC_MAX_TOUCHES) 
     {
         return;
     }

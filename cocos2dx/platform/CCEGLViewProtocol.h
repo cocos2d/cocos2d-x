@@ -5,6 +5,8 @@
 
 NS_CC_BEGIN
 
+#define CC_MAX_TOUCHES  5
+
 class EGLTouchDelegate;
 class CCSet;
 
