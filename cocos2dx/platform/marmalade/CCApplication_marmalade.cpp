@@ -27,7 +27,7 @@
 #include "CCDirector.h"
 #include "CCAccelerometer.h"
 #include "CCTouchDispatcher.h"
-
+#include "CCAutoreleasePool.h"
 
 #include <s3e.h>
 #include <IwMemBucketHelpers.h>
@@ -50,9 +50,13 @@ CCApplication::CCApplication()
 CCApplication::~CCApplication()
 {
 	IW_CALLSTACK("CCApplication::~CCApplication");
-	
+
+	CCDirector::deleteDirector();
+
 	CC_ASSERT(this == sm_pSharedApplication);		
 	sm_pSharedApplication = NULL;
+
+	CCSharedFinalizer::finalizeAll();
 }
 
 
@@ -62,7 +66,7 @@ int CCApplication::Run()
 	
 	s3eBool quitRequested = 0;
 
-	if ( ! initInstance() || !applicationDidFinishLaunching() )
+	if ( !CCDirector::sharedDirector() || ! initInstance() || !applicationDidFinishLaunching() )
 	{
 		return 0;
 	}

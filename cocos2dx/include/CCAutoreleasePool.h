@@ -58,6 +58,7 @@ public:
 	void addObject(CCObject* pObject);
 
 	static CCPoolManager* getInstance();
+	static void deletePoolManager();
 
 	friend class CCAutoreleasePool;
 };

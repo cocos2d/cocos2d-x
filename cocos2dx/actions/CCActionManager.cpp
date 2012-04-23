@@ -63,6 +63,15 @@ CCActionManager* CCActionManager::sharedManager(void)
 			gSharedManager = NULL;
 			pRet = NULL;
 		}
+		struct Lib {
+			static void destroy()
+			{
+				if(gSharedManager){
+					gSharedManager->purgeSharedManager();
+				}		
+			}
+		};
+		CCSharedFinalizer::atexit(Lib::destroy);
 	}
 
 	return pRet;

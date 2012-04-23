@@ -63,6 +63,7 @@ CCKeypadDispatcher* CCKeypadDispatcher::sharedDispatcher()
     if (! s_KeypadDispatcher)
     {
         s_KeypadDispatcher = new CCKeypadDispatcher;
+		CCSharedFinalizer::atexit(CCKeypadDispatcher::purgeSharedDispatcher);
     }
 
     return s_KeypadDispatcher;

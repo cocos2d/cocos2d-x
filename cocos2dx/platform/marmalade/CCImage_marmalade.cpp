@@ -33,6 +33,7 @@
 #include "IwUtil.h"
 #include "png.h"
 #include "ft2build.h"
+#include "CCObject.h"
 #include FT_FREETYPE_H 
 #define FONT_KERNING 2
 #define RSHIFT6(num) ((num)>>6)
@@ -493,19 +494,23 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 	return bRet;
 }
 
+static BitmapDC * s_BmpDC;
 
-
-
-
-
-
+void deleteBitmapDC()
+{
+	delete s_BmpDC;
+	s_BmpDC = NULL;
+}
 
 static BitmapDC& sharedBitmapDC()
 {
-	static BitmapDC s_BmpDC;
-	return s_BmpDC;
+	if(!s_BmpDC){
+		s_BmpDC = new BitmapDC;
+		CCSharedFinalizer::atexit(deleteBitmapDC);
+	}
+	return *s_BmpDC;
 }
- 
+
 //////////////////////////////////////////////////////////////////////////
 // Implement CCImage
 //////////////////////////////////////////////////////////////////////////

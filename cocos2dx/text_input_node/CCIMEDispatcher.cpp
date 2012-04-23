@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCIMEDispatcher.h"
 
 #include <list>
+#include <CCObject.h>
 
 NS_CC_BEGIN;
 
@@ -330,10 +331,22 @@ void CCIMEDispatcher::dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& inf
 // static member function
 //////////////////////////////////////////////////////////////////////////
 
+static CCIMEDispatcher * s_instance = NULL;
+
 CCIMEDispatcher* CCIMEDispatcher::sharedDispatcher()
 {
-    static CCIMEDispatcher s_instance;
-    return &s_instance;
+	if(!s_instance){
+		s_instance = new CCIMEDispatcher();
+		struct Lib {
+			static void destroy()
+			{
+				delete s_instance;
+				s_instance = NULL;
+			}
+		};
+		CCSharedFinalizer::atexit(Lib::destroy);
+	}
+    return s_instance;
 }
 
 NS_CC_END;

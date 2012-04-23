@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCProfiling.h"
+#include "CCObject.h"
 
 #if CC_ENABLE_PROFILERS
 
@@ -37,6 +38,15 @@ namespace cocos2d
 		{
 			g_sSharedProfiler = new CCProfiler();
 			g_sSharedProfiler->init();
+			
+			struct Lib {
+				void destroy()
+				{
+					delete g_sSharedProfiler;
+					g_sSharedProfiler = NULL;
+				}
+			};
+			CCSharedFinalizer::atexit(Lib::destroy);
 		}
 
 		return g_sSharedProfiler;

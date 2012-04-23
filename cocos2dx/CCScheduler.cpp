@@ -192,6 +192,7 @@ CCScheduler* CCScheduler::sharedScheduler(void)
 	{
 		pSharedScheduler = new CCScheduler();
 		pSharedScheduler->init();
+		CCSharedFinalizer::atexit(CCScheduler::purgeSharedScheduler);
 	}
 
 	return pSharedScheduler;
@@ -769,7 +770,9 @@ void CCScheduler::tick(ccTime dt)
 
 void CCScheduler::purgeSharedScheduler(void)
 {
-	pSharedScheduler->release();
-	pSharedScheduler = NULL;
+	if(pSharedScheduler){
+		pSharedScheduler->release();
+		pSharedScheduler = NULL;
+	}
 }
 }//namespace   cocos2d 

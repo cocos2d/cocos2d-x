@@ -38,6 +38,7 @@ namespace cocos2d
 		{
 			s_pSharedAnimationCache = new CCAnimationCache();
 			s_pSharedAnimationCache->init();
+			CCSharedFinalizer::atexit(CCAnimationCache::purgeSharedAnimationCache);
 		}
 
 		return s_pSharedAnimationCache;

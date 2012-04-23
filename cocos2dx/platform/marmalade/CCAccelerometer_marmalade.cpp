@@ -36,8 +36,9 @@ CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
 
 CCAccelerometer::~CCAccelerometer() 
 {
-	if( m_spCCAccelerometer ) {
-		delete m_spCCAccelerometer ;
+	if( m_spCCAccelerometer == this ) {
+                // avoid recursion 
+		// delete m_spCCAccelerometer ;
 		m_spCCAccelerometer = NULL;
 	}
 }
@@ -48,9 +49,16 @@ CCAccelerometer* CCAccelerometer::sharedAccelerometer()
 	if (m_spCCAccelerometer == NULL)
 	{
 		m_spCCAccelerometer = new CCAccelerometer();
+		CCSharedFinalizer::atexit(CCAccelerometer::deleteAccelerometer);
 	}
 
 	return m_spCCAccelerometer;
+}
+
+void CCAccelerometer::deleteAccelerometer()
+{
+	delete m_spCCAccelerometer;
+	m_spCCAccelerometer = NULL;
 }
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
