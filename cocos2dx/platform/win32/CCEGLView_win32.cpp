@@ -237,9 +237,6 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
         CC_BREAK_IF(! m_hWnd);
 
-        m_sSizeInPoint.width = (float)w;
-        m_sSizeInPoint.height = (float)h;
-
         resize(w, h);
 
         // init egl
@@ -268,7 +265,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     case WM_LBUTTONDOWN:
         if (m_pDelegate && MK_LBUTTON == wParam)
         {
-            CCPoint pt((float)LOWORD(lParam), (float)HIWORD(lParam));
+            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+            CCPoint pt(point.x, point.y);
             if (CCRect::CCRectContainsPoint(m_rcViewPort, pt))
             {
                 m_bCaptured = true;
@@ -282,7 +280,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     case WM_MOUSEMOVE:
         if (MK_LBUTTON == wParam && m_bCaptured)
         {
-            CCPoint pt((float)LOWORD(lParam), (float)HIWORD(lParam));
+            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+            CCPoint pt(point.x, point.y);
             int id = 0;
             handleTouchesMove(1, &id, &pt.x, &pt.y);
         }
@@ -291,7 +290,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     case WM_LBUTTONUP:
         if (m_bCaptured)
         {
-            CCPoint pt((float)LOWORD(lParam), (float)HIWORD(lParam));
+            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+            CCPoint pt(point.x, point.y);
             int id = 0;
             handleTouchesEnd(1, &id, &pt.x, &pt.y);
 
@@ -459,21 +459,7 @@ void CCEGLView::resize(int width, int height)
         m_pEGL->resizeSurface();
     }
 
-    // calculate view port in pixels
-    float viewPortW = m_sSizeInPoint.width * m_fScreenScaleFactor;
-    float viewPortH = m_sSizeInPoint.height * m_fScreenScaleFactor;
-
-    GetClientRect(m_hWnd, &rcClient);
-
-    // calculate client new width and height
-    float newW = rcClient.right - rcClient.left;
-    float newH = rcClient.bottom - rcClient.top;
-
-    // calculate new view port
-    m_rcViewPort.origin.x   = rcClient.left + (newW - viewPortW) / 2;
-    m_rcViewPort.origin.y    = rcClient.top + (newH - viewPortH) / 2;
-    m_rcViewPort.size.width  = viewPortW;
-    m_rcViewPort.size.height = viewPortH;
+    setFrameSize(width, height);
 }
 
 void CCEGLView::centerWindow()
