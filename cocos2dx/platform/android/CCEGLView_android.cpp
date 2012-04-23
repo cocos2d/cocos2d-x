@@ -48,47 +48,14 @@ void initExtensions() {
 NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
-    : m_bNotHVGA(false)
 {
     initExtensions();
-}
-
-void CCEGLView::setFrameWidthAndHeight(int width, int height)
-{
-    m_sSizeInPixel.width = width;
-    m_sSizeInPixel.height = height;
-    create(width, height);
-}
-
-void CCEGLView::create(int width, int height)
-{
-    if (width == 0 || height == 0)
-    {
-        return;
-    }
-
-    m_sSizeInPoint.width = width;
-    m_sSizeInPoint.height = height;
-
-    // calculate the factor and the rect of viewport    
-    m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
-                                 (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-    int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
-    int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
-    m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
-    m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
-    m_rcViewPort.size.width = viewPortW;
-    m_rcViewPort.size.height = viewPortH;
-    
-    CCLog("m_fScreenScaleFactor = %f", m_fScreenScaleFactor);
-    m_bNotHVGA = true;
 }
 
 CCEGLView::~CCEGLView()
 {
 
 }
-
 
 bool CCEGLView::isOpenGLReady()
 {

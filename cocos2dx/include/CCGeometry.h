@@ -38,10 +38,11 @@ public:
     float y;
 
 public:
-
     CCPoint();
     CCPoint(float x, float y);
-
+    CCPoint(const CCPoint& other);
+    CCPoint& operator= (const CCPoint& other);
+    void setPoint(float x, float y);
 public:
     static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
@@ -55,7 +56,9 @@ public:
 public:
     CCSize();
     CCSize(float width, float height);
-
+    CCSize(const CCSize& other);
+    CCSize& operator= (const CCSize& other);
+    void setSize(float width, float height);
 public:
     static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
@@ -69,7 +72,9 @@ public:
 public:
     CCRect();    
     CCRect(float x, float y, float width, float height);
-
+    CCRect(const CCRect& other);
+    CCRect& operator= (const CCRect& other);
+    void setRect(float x, float y, float width, float height);
 public:
     //! return the leftmost x-value of 'rect'
     static CCFloat CCRectGetMinX(const CCRect& rect);
