@@ -229,7 +229,7 @@ static EAGLView *view = 0;
 
     //discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
     
-    CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR();
     
     return YES;
 }

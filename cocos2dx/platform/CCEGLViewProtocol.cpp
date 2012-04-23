@@ -195,9 +195,15 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             }
 
             CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
-            pTouch->SetTouchInfo(nUnusedIndex, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
-                (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-
+            if (m_bNeedScale)
+            {
+                pTouch->SetTouchInfo(nUnusedIndex, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
+                    (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+            }
+            else
+            {
+                pTouch->SetTouchInfo(nUnusedIndex, x, y);
+            }
             CCInteger* pInterObj = new CCInteger(nUnusedIndex);
             s_TouchesIntergerDict.setObject(pInterObj, id);
             set.addObject(pTouch);
@@ -233,8 +239,15 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         CCTouch* pTouch = s_pTouches[pIndex->getValue()];
         if (pTouch)
         {
-            pTouch->SetTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
-                (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+            if (m_bNeedScale)
+            {
+                pTouch->SetTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
+                    (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+            }
+            else
+            {
+                pTouch->SetTouchInfo(pIndex->getValue(), x, y);
+            }
             set.addObject(pTouch);
         }
         else
@@ -274,8 +287,16 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         {
             CCLOG("Ending touches with id: %d, x=%f, y=%f", id, x, y);
 
-            pTouch->SetTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-                (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+            if (m_bNeedScale)
+            {
+                pTouch->SetTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+                    (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+            }
+            else
+            {
+                pTouch->SetTouchInfo(pIndex->getValue(), x, y);
+            }
+            
             set.addObject(pTouch);
 
             // release the object
