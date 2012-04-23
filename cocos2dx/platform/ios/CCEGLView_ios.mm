@@ -31,7 +31,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
-: m_pDelegate(0)
 {
 
 }
@@ -41,9 +40,10 @@ CCEGLView::~CCEGLView()
 
 }
 
-cocos2d::CCSize  CCEGLView::getSize()
+CCSize CCEGLView::getSize()
 {
     cocos2d::CCSize size([[EAGLView sharedEGLView] getWidth], [[EAGLView sharedEGLView] getHeight]);
+    
     return size;
 }
 
@@ -69,7 +69,7 @@ bool CCEGLView::isOpenGLReady()
         [view setNeedsLayout];
     }
 
-void CCEGLView::release()
+void CCEGLView::end()
 {
     [CCDirectorCaller destroy];
     
@@ -77,53 +77,12 @@ void CCEGLView::release()
     [[EAGLView sharedEGLView] removeFromSuperview];
 }
 
-void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
-{
-    m_pDelegate = pDelegate;
-}
 
 void CCEGLView::swapBuffers()
 {
     [[EAGLView sharedEGLView] swapBuffers];
 }
-    
-void CCEGLView::touchesBegan(CCSet *set)
-{
-    if (m_pDelegate) {
-        m_pDelegate->touchesBegan(set, NULL);
-    }
-}
 
-void CCEGLView::touchesMoved(CCSet *set)
-{
-    if (m_pDelegate) {
-        m_pDelegate->touchesMoved(set, NULL);
-    }
-}
-
-void CCEGLView::touchesEnded(CCSet *set)
-{
-    if (m_pDelegate) {
-        m_pDelegate->touchesEnded(set, NULL);
-    }
-}
-
-void CCEGLView::touchesCancelled(CCSet *set)
-{
-    if (m_pDelegate) {
-        m_pDelegate->touchesCancelled(set, NULL);
-    }
-}
-
-void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
-{
-    glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
-}
-
-void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
-{
-    glScissor((GLint)x, (GLint)y, (GLint)w, (GLint)h);
-}
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {

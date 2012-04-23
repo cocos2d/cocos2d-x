@@ -472,11 +472,15 @@ CCSize CCDirector::getWinSizeInPixels()
 void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 {
     CC_UNUSED_PARAM(newWindowSize);
-    m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-    m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
+    if (m_pobOpenGLView)
+    {
+       m_obWinSizeInPoints = m_pobOpenGLView->getSize();
+       m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
                                      m_obWinSizeInPoints.height * m_fContentScaleFactor);
+ 
+       setProjection(m_eProjection);       
+    }
 
-    setProjection(m_eProjection);
 }
 
 // scene management
