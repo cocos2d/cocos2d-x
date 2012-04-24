@@ -26,41 +26,33 @@ THE SOFTWARE.
 #define __CC_EGLVIEW_WIN32_H__
 
 #include <Windows.h>
-
 #include "CCCommon.h"
 #include "CCGeometry.h"
+#include "CCEGLViewProtocol.h"
 
 NS_CC_BEGIN
 
-class CCSet;
-class CCTouch;
-class EGLTouchDelegate;
-
 class CCEGL;
 
-class CC_DLL CCEGLView
+class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
 public:
 
     CCEGLView();
     virtual ~CCEGLView();
 
-    CCSize  getSize();
     bool    isOpenGLReady();
-    bool    isIpad();
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
+    void    end();
+
     void    swapBuffers();
+
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor);
     
-    float getMainScreenScale() { return -1.0f; }
 
     virtual bool Create(LPCTSTR pTitle, int w, int h);
     virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
-    void setViewPortInPoints(float x, float y, float w, float h);
-    void setScissorInPoints(float x, float y, float w, float h);
 
     void setIMEKeyboardState(bool bOpen);
 
@@ -68,7 +60,7 @@ public:
     HWND getHWnd();
     void resize(int width, int height);
     void centerWindow();
-    void setScreenScale(float factor);
+
     typedef void (*LPFN_ACCELEROMETER_KEYHOOK)( UINT message,WPARAM wParam, LPARAM lParam );
     void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );
 
@@ -82,20 +74,9 @@ public:
 protected:
 
 private:
-
     bool                m_bCaptured;
-
-    CCSet *             m_pSet;
-    CCTouch *           m_pTouch;
-    EGLTouchDelegate *  m_pDelegate;
-
     CCEGL *            m_pEGL;
-
     HWND                m_hWnd;
-
-    SIZE                m_tSizeInPoints;
-    float               m_fScreenScaleFactor;
-    RECT                m_rcViewPort;
     LPFN_ACCELEROMETER_KEYHOOK    m_lpfnAccelerometerKeyHook;
 };
 

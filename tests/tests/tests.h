@@ -55,6 +55,7 @@
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 
 #include "ExtensionsTest/ExtensionsTest.h"
+#include "MutiTouchTest/MutiTouchTest.h"
 
 enum
 {
@@ -102,6 +103,7 @@ enum
     TEST_TEXTURECACHE,
     TEST_EXTENSIONS,
     TEST_SHADER,
+    TEST_MUTITOUCH,
     TESTS_COUNT,    
 };
 
@@ -149,7 +151,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "CurrentLanguageTest",
     "TextureCacheTest",
     "ExtensionsTest",
-    "ShaderTest"
+    "ShaderTest",
+    "MutiTouchTest"
 };
 
 #endif

@@ -93,8 +93,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     BOOL                    multisampling_;
     unsigned int               requestedSamples_;
 @private
-    CFMutableDictionaryRef  touchesIntergerDict;
-    unsigned int               indexBitsUsed;
     NSString *              markedText_;
     CGRect                  caretRect_;
 }
@@ -139,8 +137,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @property(nonatomic,readwrite) BOOL multiSampling;
 
-@property(readonly) CFMutableDictionaryRef touchesIntergerDict;
-@property(readwrite) unsigned int indexBitsUsed;
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
@@ -150,7 +146,5 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(int) getWidth;
 -(int) getHeight;
--(int) getUnUsedIndex;
--(void) removeUsedIndexBit:(int) index;
 
 @end
