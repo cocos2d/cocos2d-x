@@ -1179,6 +1179,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="MutiTouchTest"
+					>
+					<File
+						RelativePath="..\tests\MutiTouchTest\MutiTouchTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\MutiTouchTest\MutiTouchTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

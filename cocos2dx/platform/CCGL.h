@@ -29,10 +29,9 @@ THE SOFTWARE.
 // Common layer for OpenGL stuff
 //
 
-#include "CCEGLView.h"
 
 #define CC_GLVIEW                   cocos2d::CCEGLView
-#define    glClearDepth                glClearDepthf
+#define glClearDepth                glClearDepthf
 #define glDeleteVertexArrays        glDeleteVertexArraysOES
 #define glGenVertexArrays            glGenVertexArraysOES
 #define glBindVertexArray            glBindVertexArrayOES

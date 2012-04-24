@@ -14,6 +14,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		780482A41546ABC9008A7E94 /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 780482A31546ABC9008A7E94 /* CCApplicationProtocol.h */; };
 		782A3D2F153BB225002386FE /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 782A3D2E153BB225002386FE /* CCString.cpp */; };
 		784B77561519BF0E00FA820F /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 784B773C1519BF0E00FA820F /* chipmunk.h */; };
 		784B77571519BF0E00FA820F /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = 784B773D1519BF0E00FA820F /* chipmunk_ffi.h */; };
@@ -82,6 +83,9 @@
 		7871C432152093AE007353A3 /* CCTransitionProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7871C431152093AE007353A3 /* CCTransitionProgress.cpp */; };
 		7871C434152093C9007353A3 /* CCTransitionProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 7871C433152093C9007353A3 /* CCTransitionProgress.h */; };
 		7871C43815209506007353A3 /* ShaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7871C43615209506007353A3 /* ShaderTest.cpp */; };
+		787FAAD31545336200B3AD0A /* MutiTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 787FAAD11545336200B3AD0A /* MutiTouchTest.cpp */; };
+		787FAAD71545340D00B3AD0A /* CCEGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 787FAAD51545340D00B3AD0A /* CCEGLViewProtocol.cpp */; };
+		787FAAD81545340D00B3AD0A /* CCEGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 787FAAD61545340D00B3AD0A /* CCEGLViewProtocol.h */; };
 		789B5603151978C80038CD1E /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 789B5602151978C80038CD1E /* ccShaders.h */; };
 		789B5607151979E80038CD1E /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 789B5605151979E80038CD1E /* ActionsEaseTest.cpp */; };
 		789B560B15197B010038CD1E /* ActionsProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 789B560915197B010038CD1E /* ActionsProgressTest.cpp */; };
@@ -640,6 +644,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		780482A31546ABC9008A7E94 /* CCApplicationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationProtocol.h; sourceTree = "<group>"; };
 		782A3D2E153BB225002386FE /* CCString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCString.cpp; sourceTree = "<group>"; };
 		784B773C1519BF0E00FA820F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		784B773D1519BF0E00FA820F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -761,6 +766,10 @@
 		7871C433152093C9007353A3 /* CCTransitionProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionProgress.h; sourceTree = "<group>"; };
 		7871C43615209506007353A3 /* ShaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderTest.cpp; sourceTree = "<group>"; };
 		7871C43715209506007353A3 /* ShaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTest.h; sourceTree = "<group>"; };
+		787FAAD11545336200B3AD0A /* MutiTouchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MutiTouchTest.cpp; sourceTree = "<group>"; };
+		787FAAD21545336200B3AD0A /* MutiTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MutiTouchTest.h; sourceTree = "<group>"; };
+		787FAAD51545340D00B3AD0A /* CCEGLViewProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLViewProtocol.cpp; sourceTree = "<group>"; };
+		787FAAD61545340D00B3AD0A /* CCEGLViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLViewProtocol.h; sourceTree = "<group>"; };
 		789B5602151978C80038CD1E /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		789B5605151979E80038CD1E /* ActionsEaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionsEaseTest.cpp; sourceTree = "<group>"; };
 		789B5606151979E80038CD1E /* ActionsEaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionsEaseTest.h; sourceTree = "<group>"; };
@@ -1659,6 +1668,15 @@
 			path = ShaderTest;
 			sourceTree = "<group>";
 		};
+		787FAAD01545336200B3AD0A /* MutiTouchTest */ = {
+			isa = PBXGroup;
+			children = (
+				787FAAD11545336200B3AD0A /* MutiTouchTest.cpp */,
+				787FAAD21545336200B3AD0A /* MutiTouchTest.h */,
+			);
+			path = MutiTouchTest;
+			sourceTree = "<group>";
+		};
 		789B5604151979E80038CD1E /* ActionsEaseTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2403,6 +2421,7 @@
 				BF31E18E12E979A100D4F513 /* LayerTest */,
 				BF31E19112E979A100D4F513 /* MenuTest */,
 				BF31E19412E979A100D4F513 /* MotionStreakTest */,
+				787FAAD01545336200B3AD0A /* MutiTouchTest */,
 				7871C42D15209375007353A3 /* NodeTest */,
 				BF31E19712E979A100D4F513 /* ParallaxTest */,
 				BF31E19A12E979A100D4F513 /* ParticleTest */,
@@ -2831,26 +2850,29 @@
 		BF83591A13276C7700F3C033 /* platform */ = {
 			isa = PBXGroup;
 			children = (
-				BF83592C13276C7700F3C033 /* CCCommon.cpp */,
-				BF83593113276C7700F3C033 /* CCGL.cpp */,
-				D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */,
-				BF83594013276C7700F3C033 /* CCStdC.cpp */,
-				BF83596C13276C7700F3C033 /* platform.cpp */,
 				BF83592913276C7700F3C033 /* CCAccelerometer_platform.h */,
 				BF83592A13276C7700F3C033 /* CCApplication_platform.h */,
+				780482A31546ABC9008A7E94 /* CCApplicationProtocol.h */,
 				BF83592B13276C7700F3C033 /* CCArchOptimalParticleSystem.h */,
+				BF83592C13276C7700F3C033 /* CCCommon.cpp */,
 				BF83592D13276C7700F3C033 /* CCCommon.h */,
 				BF83592F13276C7700F3C033 /* CCEGLView_platform.h */,
+				787FAAD51545340D00B3AD0A /* CCEGLViewProtocol.cpp */,
+				787FAAD61545340D00B3AD0A /* CCEGLViewProtocol.h */,
 				BF316084133DE0A500E0532D /* CCFileUtils.h */,
+				BF83593113276C7700F3C033 /* CCGL.cpp */,
 				BF83593213276C7700F3C033 /* CCGL.h */,
 				BF83593513276C7700F3C033 /* CCImage.h */,
 				BF83593E13276C7700F3C033 /* CCPlatformConfig.h */,
 				BF83593F13276C7700F3C033 /* CCPlatformMacros.h */,
+				D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */,
 				D4F1A26F133B2FE700937FFA /* CCSAXParser.h */,
+				BF83594013276C7700F3C033 /* CCStdC.cpp */,
 				BF83594113276C7700F3C033 /* CCStdC.h */,
 				BF83594313276C7700F3C033 /* CCThread.h */,
-				BF83596D13276C7700F3C033 /* platform.h */,
 				BF83594513276C7700F3C033 /* ios */,
+				BF83596C13276C7700F3C033 /* platform.cpp */,
+				BF83596D13276C7700F3C033 /* platform.h */,
 			);
 			path = platform;
 			sourceTree = "<group>";
@@ -3199,7 +3221,9 @@
 				78ED2F83153D5B8F00330E29 /* CCNotificationCenter.h in Headers */,
 				78ED2FA2153D5CB700330E29 /* ccShaderEx_SwitchMask_frag.h in Headers */,
 				78ED2FA4153D5DAB00330E29 /* cocos2dExt.h in Headers */,
+				787FAAD81545340D00B3AD0A /* CCEGLViewProtocol.h in Headers */,
 				15DCB05315452BC800A4F597 /* CCEventType.h in Headers */,
+				780482A41546ABC9008A7E94 /* CCApplicationProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3535,6 +3559,7 @@
 				78ED2F9E153D5BE800330E29 /* CCControlSliderTest.cpp in Sources */,
 				78ED2F9F153D5BE800330E29 /* CCControlSwitchTest.cpp in Sources */,
 				78ED2FA0153D5BE800330E29 /* NotificationCenterTest.cpp in Sources */,
+				787FAAD31545336200B3AD0A /* MutiTouchTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3678,6 +3703,7 @@
 				78ED2F7E153D5B8F00330E29 /* CCScale9Sprite.cpp in Sources */,
 				78ED2F80153D5B8F00330E29 /* CCSpacer.cpp in Sources */,
 				78ED2F82153D5B8F00330E29 /* CCNotificationCenter.cpp in Sources */,
+				787FAAD71545340D00B3AD0A /* CCEGLViewProtocol.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

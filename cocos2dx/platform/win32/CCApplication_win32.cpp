@@ -1,5 +1,5 @@
 #include "CCApplication.h"
-
+#include "CCEGLView.h"
 #include "CCDirector.h"
 
 /**
@@ -94,15 +94,6 @@ void CCApplication::setAnimationInterval(double interval)
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
     m_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
-}
-
-void CCApplication::statusBarFrame(CCRect * rect)
-{
-    if (rect)
-    {
-        // Windows doesn't have status bar.
-        *rect = CCRectMake(0, 0, 0, 0);
-    }
 }
 
 //////////////////////////////////////////////////////////////////////////

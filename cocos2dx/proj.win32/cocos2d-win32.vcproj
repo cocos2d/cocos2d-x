@@ -432,6 +432,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCEventType.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCGeometry.h"
 				>
 			</File>
@@ -772,6 +776,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCApplicationProtocol.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCArchOptimalParticleSystem.h"
 				>
 			</File>
@@ -785,6 +793,14 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCEGLView_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCEGLViewProtocol.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCEGLViewProtocol.h"
 				>
 			</File>
 			<File

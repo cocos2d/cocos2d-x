@@ -10,8 +10,12 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		780482AB1546AC59008A7E94 /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 780482AA1546AC59008A7E94 /* CCApplicationProtocol.h */; };
+		780482AE1546AC91008A7E94 /* CCEventType.h in Headers */ = {isa = PBXBuildFile; fileRef = 780482AD1546AC91008A7E94 /* CCEventType.h */; };
 		782F4619153FEDF0009FC2E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4617153FEDF0009FC2E5 /* Default.png */; };
 		782F461A153FEDF0009FC2E5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4618153FEDF0009FC2E5 /* Icon.png */; };
+		783F0818154167F500DCBBB6 /* CCEGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 783F0816154167F500DCBBB6 /* CCEGLViewProtocol.cpp */; };
+		783F0819154167F500DCBBB6 /* CCEGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 783F0817154167F500DCBBB6 /* CCEGLViewProtocol.h */; };
 		784521CE14EBA449009D533B /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521C514EBA449009D533B /* CloseNormal.png */; };
 		784521CF14EBA449009D533B /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521C614EBA449009D533B /* CloseSelected.png */; };
 		784521D214EBA449009D533B /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521CA14EBA449009D533B /* HelloWorld.png */; };
@@ -371,8 +375,12 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		780482AA1546AC59008A7E94 /* CCApplicationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationProtocol.h; sourceTree = "<group>"; };
+		780482AD1546AC91008A7E94 /* CCEventType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventType.h; sourceTree = "<group>"; };
 		782F4617153FEDF0009FC2E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		782F4618153FEDF0009FC2E5 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
+		783F0816154167F500DCBBB6 /* CCEGLViewProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLViewProtocol.cpp; sourceTree = "<group>"; };
+		783F0817154167F500DCBBB6 /* CCEGLViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLViewProtocol.h; sourceTree = "<group>"; };
 		784521C514EBA449009D533B /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		784521C614EBA449009D533B /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		784521CA14EBA449009D533B /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
@@ -938,6 +946,7 @@
 				78E69562151885710085D6AC /* CCDirector.h */,
 				78E69563151885710085D6AC /* CCDrawingPrimitives.h */,
 				78E69564151885710085D6AC /* CCEGLView.h */,
+				780482AD1546AC91008A7E94 /* CCEventType.h */,
 				78E69565151885710085D6AC /* CCGeometry.h */,
 				78E69566151885710085D6AC /* CCGL.h */,
 				78E69567151885710085D6AC /* CCGLProgram.h */,
@@ -1260,26 +1269,29 @@
 		BF83520813275F5600F3C033 /* platform */ = {
 			isa = PBXGroup;
 			children = (
-				AD7C5EC6147512AD008E5647 /* FontLabel */,
-				AD7C5EC414751287008E5647 /* CCThread_ios.mm */,
-				BF315F8D133DDEAF00E0532D /* CCFileUtils.h */,
-				BF315F8E133DDEAF00E0532D /* CCSAXParser.cpp */,
-				BF315F8F133DDEAF00E0532D /* CCSAXParser.h */,
-				BF83567E1327611D00F3C033 /* ios */,
 				BF83521713275F5600F3C033 /* CCAccelerometer_platform.h */,
 				BF83521813275F5600F3C033 /* CCApplication_platform.h */,
+				780482AA1546AC59008A7E94 /* CCApplicationProtocol.h */,
 				BF83521913275F5600F3C033 /* CCArchOptimalParticleSystem.h */,
 				BF83521A13275F5600F3C033 /* CCCommon.cpp */,
 				BF83521B13275F5600F3C033 /* CCCommon.h */,
 				BF83521D13275F5600F3C033 /* CCEGLView_platform.h */,
+				783F0816154167F500DCBBB6 /* CCEGLViewProtocol.cpp */,
+				783F0817154167F500DCBBB6 /* CCEGLViewProtocol.h */,
+				BF315F8D133DDEAF00E0532D /* CCFileUtils.h */,
 				BF83521F13275F5600F3C033 /* CCGL.cpp */,
 				BF83522013275F5600F3C033 /* CCGL.h */,
 				BF83522313275F5600F3C033 /* CCImage.h */,
 				BF83522C13275F5600F3C033 /* CCPlatformConfig.h */,
 				BF83522D13275F5600F3C033 /* CCPlatformMacros.h */,
+				BF315F8E133DDEAF00E0532D /* CCSAXParser.cpp */,
+				BF315F8F133DDEAF00E0532D /* CCSAXParser.h */,
 				BF83522E13275F5600F3C033 /* CCStdC.cpp */,
 				BF83522F13275F5600F3C033 /* CCStdC.h */,
 				BF83523113275F5600F3C033 /* CCThread.h */,
+				AD7C5EC414751287008E5647 /* CCThread_ios.mm */,
+				AD7C5EC6147512AD008E5647 /* FontLabel */,
+				BF83567E1327611D00F3C033 /* ios */,
 				BF83525A13275F5600F3C033 /* platform.cpp */,
 				BF83525B13275F5600F3C033 /* platform.h */,
 			);
@@ -1623,6 +1635,9 @@
 				78ED2FE9153D5F3700330E29 /* CCScale9Sprite.h in Headers */,
 				78ED2FEB153D5F3700330E29 /* CCSpacer.h in Headers */,
 				78ED2FED153D5F3700330E29 /* CCNotificationCenter.h in Headers */,
+				783F0819154167F500DCBBB6 /* CCEGLViewProtocol.h in Headers */,
+				780482AB1546AC59008A7E94 /* CCApplicationProtocol.h in Headers */,
+				780482AE1546AC91008A7E94 /* CCEventType.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1862,6 +1877,7 @@
 				78ED2FE8153D5F3700330E29 /* CCScale9Sprite.cpp in Sources */,
 				78ED2FEA153D5F3700330E29 /* CCSpacer.cpp in Sources */,
 				78ED2FEC153D5F3700330E29 /* CCNotificationCenter.cpp in Sources */,
+				783F0818154167F500DCBBB6 /* CCEGLViewProtocol.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
