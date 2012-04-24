@@ -262,7 +262,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
     //discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
     
-    CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR();
     
     return YES;
 }

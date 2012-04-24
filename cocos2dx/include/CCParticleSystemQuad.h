@@ -92,6 +92,10 @@ public:
     virtual void draw();
     virtual void setBatchNode(CCParticleBatchNode* batchNode);
     virtual void setTotalParticles(unsigned int tp);
+    
+    /** listen the event that coming to foreground on Android
+     */
+    void listenBackToForeground(CCObject *obj);
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();

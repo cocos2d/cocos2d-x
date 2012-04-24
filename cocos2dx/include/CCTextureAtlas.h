@@ -193,6 +193,9 @@ public:
     /** draws all the Atlas's Quads
     */
     void drawQuads();
+    /** listen the event that coming to foreground on Android
+     */
+    void listenBackToForeground(CCObject *obj);
 private:
     void setupIndices();
     void mapBuffers();

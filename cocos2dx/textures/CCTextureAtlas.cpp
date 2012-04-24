@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"
+#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "CCEventType.h"
 // support
 #include "CCTexture2D.h"
 #include "CCString.h"
@@ -61,6 +63,8 @@ CCTextureAtlas::~CCTextureAtlas()
     glDeleteVertexArrays(1, &m_uVAOname);
 #endif
     CC_SAFE_RELEASE(m_pTexture);
+    
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 unsigned int CCTextureAtlas::getTotalQuads()
@@ -171,6 +175,12 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
     memset( m_pQuads, 0, m_uCapacity * sizeof(ccV3F_C4B_T2F_Quad) );
     memset( m_pIndices, 0, m_uCapacity * 6 * sizeof(GLushort) );
+    
+    // listen the event when app go to background
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                           callfuncO_selector(CCTextureAtlas::listenBackToForeground),
+                                                           EVNET_COME_TO_FOREGROUND,
+                                                           NULL);
 
     this->setupIndices();
 
@@ -183,6 +193,18 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
     m_bDirty = true;
 
     return true;
+}
+
+void CCTextureAtlas::listenBackToForeground(CCObject *obj)
+{  
+#if CC_TEXTURE_ATLAS_USE_VAO
+    setupVBOandVAO();    
+#else    
+    setupVBO();
+#endif
+    
+    // set m_bDirty to true to force it rebinding buffer
+    m_bDirty = true;
 }
 
 const char* CCTextureAtlas::description()
@@ -561,8 +583,11 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 
 void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 {    
-    if (0 == n) return;
-    ccGLBindTexture2D( m_pTexture->getName() );
+    if (0 == n) 
+    {
+        return;
+    }
+    ccGLBindTexture2D(m_pTexture->getName());
 
 #if CC_TEXTURE_ATLAS_USE_VAO
 
@@ -580,7 +605,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
         m_bDirty = false;
     }
 
-    glBindVertexArray( m_uVAOname );
+    glBindVertexArray(m_uVAOname);
 
 #if CC_REBIND_INDICES_BUFFER
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
@@ -608,28 +633,29 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
 
     // XXX: update is done in draw... perhaps it should be done in a timer
-    if (m_bDirty) {
+    if (m_bDirty) 
+    {
         glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*start, sizeof(m_pQuads[0]) * n , &m_pQuads[start] );
         m_bDirty = false;
     }
 
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
 
     // vertices
-    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, vertices));
 
     // colors
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, colors));
 
     // tex coords
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
+    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])));
 #else
-    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
+    glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])));
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
