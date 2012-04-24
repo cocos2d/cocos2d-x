@@ -96,15 +96,6 @@ void CCApplication::setAnimationInterval(double interval)
     m_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
 }
 
-void CCApplication::statusBarFrame(CCRect * rect)
-{
-    if (rect)
-    {
-        // Windows doesn't have status bar.
-        *rect = CCRectMake(0, 0, 0, 0);
-    }
-}
-
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////

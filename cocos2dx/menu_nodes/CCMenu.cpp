@@ -123,12 +123,6 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
         setAnchorPoint(ccp(0.5f, 0.5f));
         this->setContentSize(s);
 
-        // XXX: in v0.7, winSize should return the visible size
-        // XXX: so the bar calculation should be done there
-        CCRect r;
-        CCApplication::sharedApplication().statusBarFrame(&r);
-        s.height -= r.size.height;
-        
         setPosition(ccp(s.width/2, s.height/2));
         
         if (pArrayOfItems != NULL)
