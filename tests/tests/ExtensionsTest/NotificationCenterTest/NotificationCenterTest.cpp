@@ -34,7 +34,7 @@ Light::Light()
 
 Light::~Light()
 {
-    CCNotificationCenter::sharedNotifCenter()->removeObserver(this, MSG_SWITCH_STATE);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SWITCH_STATE);
 }
 
 Light* Light::lightWithFile(const char* name)
@@ -50,11 +50,11 @@ void Light::setIsConnectToSwitch(bool bConnectToSwitch)
     m_bConnected = bConnectToSwitch;
     if (m_bConnected)
     {
-        CCNotificationCenter::sharedNotifCenter()->addObserver(this, callfuncO_selector(Light::switchStateChanged), MSG_SWITCH_STATE, NULL);
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(Light::switchStateChanged), MSG_SWITCH_STATE, NULL);
     }
     else
     {
-        CCNotificationCenter::sharedNotifCenter()->removeObserver(this, MSG_SWITCH_STATE);
+        CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SWITCH_STATE);
     }
     updateLightState();
 }
@@ -128,7 +128,7 @@ NotificationCenterTest::NotificationCenterTest()
         light->setIsConnectToSwitch(bConnected);
     }
 
-    CCNotificationCenter::sharedNotifCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)item->getSelectedIndex());
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)item->getSelectedIndex());
 }
 
 void NotificationCenterTest::toExtensionsMainLayer(cocos2d::CCObject* sender)
@@ -142,7 +142,7 @@ void NotificationCenterTest::toggleSwitch(CCObject *sender)
 {
     CCMenuItemToggle* item = (CCMenuItemToggle*)sender;
     int index = item->getSelectedIndex();
-    CCNotificationCenter::sharedNotifCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)index);
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)index);
 }
 
 void NotificationCenterTest::connectToSwitch(CCObject *sender)

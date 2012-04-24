@@ -38,6 +38,8 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCGLProgram.h"
 #include "support/TransformUtils.h"
+#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "CCEventType.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -65,6 +67,14 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
 #endif
 
         setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+        
+        
+        // Need to listen the event only when not use batchnode, because it will use VBO
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                      callfuncO_selector(CCParticleSystemQuad::listenBackToForeground),
+                                                                      EVNET_COME_TO_FOREGROUND,
+                                                                      NULL);
+        
         return true;
     }
     return false;
@@ -91,6 +101,8 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
         glDeleteVertexArrays(1, &m_uVAOname);
 #endif
     }
+    
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 // implementation CCParticleSystemQuad
@@ -236,7 +248,7 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const C
 
     // vertices
     GLfloat size_2 = particle->size/2;
-    if( particle->rotation ) 
+    if (particle->rotation) 
     {
         GLfloat x1 = -size_2;
         GLfloat y1 = -size_2;
@@ -273,7 +285,9 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const C
         // top-right vertex:
         quad->tr.vertices.x = cx;
         quad->tr.vertices.y = cy;
-    } else {
+    } 
+    else 
+    {
         // bottom-left vertex:
         quad->bl.vertices.x = newPosition.x - size_2;
         quad->bl.vertices.y = newPosition.y - size_2;
@@ -476,6 +490,15 @@ void CCParticleSystemQuad::setupVBO()
 }
 
 #endif
+
+void CCParticleSystemQuad::listenBackToForeground(CCObject *obj)
+{
+#if CC_TEXTURE_ATLAS_USE_VAO
+        setupVBOandVAO();
+#else
+        setupVBO();
+#endif
+}
 
 bool CCParticleSystemQuad::allocMemory()
 {

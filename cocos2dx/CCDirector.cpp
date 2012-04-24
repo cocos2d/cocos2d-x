@@ -585,7 +585,7 @@ void CCDirector::purgeDirector()
     
     // cocos2d-x specific data structures
     CCUserDefault::purgeSharedUserDefault();
-    CCNotificationCenter::purgeNotifCenter();
+    CCNotificationCenter::purgeNotificationCenter();
     
     ccGLInvalidateStateCache();
     

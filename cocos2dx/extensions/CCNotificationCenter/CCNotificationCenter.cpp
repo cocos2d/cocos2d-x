@@ -43,7 +43,7 @@ CCNotificationCenter::~CCNotificationCenter()
     m_observers->release();
 }
 
-CCNotificationCenter *CCNotificationCenter::sharedNotifCenter(void)
+CCNotificationCenter *CCNotificationCenter::sharedNotificationCenter(void)
 {
     if (!s_sharedNotifCenter)
     {
@@ -52,7 +52,7 @@ CCNotificationCenter *CCNotificationCenter::sharedNotifCenter(void)
     return s_sharedNotifCenter;
 }
 
-void CCNotificationCenter::purgeNotifCenter(void)
+void CCNotificationCenter::purgeNotificationCenter(void)
 {
     CC_SAFE_RELEASE_NULL(s_sharedNotifCenter);
 }

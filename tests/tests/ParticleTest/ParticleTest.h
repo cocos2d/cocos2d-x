@@ -19,12 +19,12 @@ protected:
     CCSprite*            m_background;
 
 public:
-    ParticleDemo(void);
     ~ParticleDemo(void);
 
     virtual void onEnter(void);
 
     virtual std::string title();
+    virtual std::string subtitle();
 
     void restartCallback(CCObject* pSender);
     void nextCallback(CCObject* pSender);
