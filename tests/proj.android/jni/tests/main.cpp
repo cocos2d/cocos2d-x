@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "cocos2d.h"
+#include "CCEventType.h"
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
 #include <android/log.h>
@@ -36,9 +37,11 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
     {
         ccDrawInit();
         ccGLInvalidateStateCache();
-        cocos2d::CCDirector::sharedDirector()->setGLDefaultValues();   
+          
         CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
         cocos2d::CCTextureCache::reloadAllTextures();
+        cocos2d::CCNotificationCenter::sharedNotificationCenter()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
+        cocos2d::CCDirector::sharedDirector()->setGLDefaultValues(); 
     }
 }
 

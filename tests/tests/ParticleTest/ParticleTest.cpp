@@ -1057,13 +1057,19 @@ CCLayer* restartParticleAction()
     return pLayer;
 } 
 
-
-ParticleDemo::ParticleDemo(void)
+ParticleDemo::~ParticleDemo(void)
 {
+    CC_SAFE_RELEASE(m_emitter);
+}
+
+void ParticleDemo::onEnter(void)
+{
+    CCLayer::onEnter();
+    
     initWithColor( ccc4(127,127,127,255) );
-
+    
     m_emitter = NULL;
-
+    
     setIsTouchEnabled( true );
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1071,30 +1077,31 @@ ParticleDemo::ParticleDemo(void)
     addChild(label, 100, 1000);
     label->setPosition( CCPointMake(s.width/2, s.height-50) );
     
-    CCLabelTTF *tapScreen = CCLabelTTF::labelWithString("(Tap the Screen)", "Arial", 20);
-    tapScreen->setPosition( CCPointMake(s.width/2, s.height-80) );
-    addChild(tapScreen, 100);
+    CCLabelTTF *sub = CCLabelTTF::labelWithString(subtitle().c_str(), "Arial", 16);
+    addChild(sub, 100);
+    sub->setPosition(CCPointMake(s.width/2, s.height-80));
+    
     
     CCMenuItemImage* item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ParticleDemo::backCallback) );
     CCMenuItemImage* item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ParticleDemo::restartCallback) );
     CCMenuItemImage* item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2,  this, menu_selector(ParticleDemo::nextCallback) );
     
     CCMenuItemToggle* item4 = CCMenuItemToggle::itemWithTarget(    this, 
-                                                                menu_selector(ParticleDemo::toggleCallback), 
-                                                                CCMenuItemFont::itemWithString( "Free Movement" ),
-                                                                CCMenuItemFont::itemWithString( "Relative Movement" ),
-                                                                CCMenuItemFont::itemWithString( "Grouped Movement" ),
-                                                                NULL );
+                                                               menu_selector(ParticleDemo::toggleCallback), 
+                                                               CCMenuItemFont::itemWithString( "Free Movement" ),
+                                                               CCMenuItemFont::itemWithString( "Relative Movement" ),
+                                                               CCMenuItemFont::itemWithString( "Grouped Movement" ),
+                                                               NULL );
     
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, item4, NULL);
-        
+    
     menu->setPosition( CCPointZero );
     item1->setPosition( CCPointMake( s.width/2 - 100,30) );
     item2->setPosition( CCPointMake( s.width/2, 30) );
     item3->setPosition( CCPointMake( s.width/2 + 100,30) );
     item4->setPosition( CCPointMake( 0, 100) );
     item4->setAnchorPoint( CCPointMake(0,0) );
-
+    
     addChild( menu, 100 );
     
     CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0000", "fonts/fps_images.png", 16, 24, '.');
@@ -1105,7 +1112,7 @@ ParticleDemo::ParticleDemo(void)
     m_background = CCSprite::spriteWithFile(s_back3);
     addChild(m_background, 5);
     m_background->setPosition( CCPointMake(s.width/2, s.height-180) );
-
+    
     CCActionInterval* move = CCMoveBy::actionWithDuration(4, CCPointMake(300,0) );
     CCActionInterval* move_back = move->reverse();
     CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
@@ -1113,16 +1120,6 @@ ParticleDemo::ParticleDemo(void)
     
     
     scheduleUpdate();
-}
-
-ParticleDemo::~ParticleDemo(void)
-{
-    CC_SAFE_RELEASE(m_emitter);
-}
-
-void ParticleDemo::onEnter(void)
-{
-    CCLayer::onEnter();
 
     CCLabelTTF* pLabel = (CCLabelTTF*)(this->getChildByTag(1000));
     pLabel->setString(title().c_str());
@@ -1131,6 +1128,11 @@ void ParticleDemo::onEnter(void)
 std::string ParticleDemo::title()
 {
     return "No title";
+}
+
+std::string ParticleDemo::subtitle()
+{
+    return "No titile";
 }
 
 void ParticleDemo::registerWithTouchDispatcher()

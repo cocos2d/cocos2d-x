@@ -225,7 +225,7 @@ It should work same as apples CFSwapInt32LittleToHost(..)
     do { \
         GLenum __error = glGetError(); \
         if(__error) { \
-            CCLog("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); \
+            CCLog("OpenGL error 0x%04X in %s %s %d\n", __error, __FILE__, __FUNCTION__, __LINE__); \
         } \
     } while (false)
 #endif
