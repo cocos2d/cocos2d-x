@@ -222,7 +222,7 @@ void CCRenderTexture::end(bool bIsTOCacheTexture)
         glViewport((GLsizei)(-size.width/2), (GLsizei)(-size.height/2), (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()));
     }
 
-//TODO: Does this line take effect?    director->setProjection(director->getProjection());
+    director->setProjection(director->getProjection());
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
     if (bIsTOCacheTexture)

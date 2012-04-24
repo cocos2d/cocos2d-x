@@ -123,6 +123,9 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_SHADER:
         pScene = new ShaderTestScene();
         break;
+    case TEST_MUTITOUCH:
+        pScene = new MutiTouchTestScene();
+        break;
     default:
         break;
     }

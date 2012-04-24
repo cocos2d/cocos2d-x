@@ -26,62 +26,30 @@ THE SOFTWARE.
 #define __CC_EGLVIEW_ANDROID_H__
 
 #include "CCGeometry.h"
+#include "CCEGLViewProtocol.h"
 
-namespace   cocos2d {
-class CCSet;
-class CCTouch;
-class EGLTouchDelegate;
+NS_CC_BEGIN
 
-class CC_DLL CCEGLView
+class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
 public:
     CCEGLView();
     virtual ~CCEGLView();
 
-    CCSize  getSize();
     bool    isOpenGLReady();
-    bool    isIpad();
-    /**
-     * the width and height is the real size of phone
-     */
-    void    setFrameWidthAndHeight(int width, int height);
-    /**
-     * create a drawing rect, 
-     * the width and heiht is the resource size match best
-     */
-    void    create(int width, int height);
-    EGLTouchDelegate* getDelegate(void);
-    
+
     // keep compatible
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
+    void    end();
     void    swapBuffers();
-    bool    canSetContentScaleFactor();
-    void    setContentScaleFactor(float contentScaleFactor); 
-    void    setViewPortInPoints(float x, float y, float w, float h);
-    void    setScissorInPoints(float x, float y, float w, float h);
-    CCRect  getViewPort();
-    float   getScreenScaleFactor();
     void    setIMEKeyboardState(bool bOpen);
     
-    float   getMainScreenScale() { return -1.0f; }
-
     // static function
     /**
     @brief    get the shared main open gl window
     */
     static CCEGLView& sharedOpenGLView();
-    
-private:
-    CCSize m_sSizeInPixel;
-    CCSize m_sSizeInPoint;
-    CCRect m_rcViewPort;
-    bool   m_bNotHVGA;
-    
-    EGLTouchDelegate *m_pDelegate;
-    float  m_fScreenScaleFactor;
 };
 
-}   // end of namespace   cocos2d
+NS_CC_END
 
 #endif    // end of __CC_EGLVIEW_ANDROID_H__

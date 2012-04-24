@@ -55,6 +55,7 @@ tests/NodeTest/NodeTest.cpp \
 tests/TextInputTest/TextInputTest.cpp \
 tests/MenuTest/MenuTest.cpp \
 tests/MotionStreakTest/MotionStreakTest.cpp \
+tests/MutiTouchTest/MutiTouchTest.cpp \
 tests/ParallaxTest/ParallaxTest.cpp \
 tests/ParticleTest/ParticleTest.cpp \
 tests/PerformanceTest/PerformanceNodeChildrenTest.cpp \
