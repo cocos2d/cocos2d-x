@@ -246,34 +246,22 @@ bool CCTexture2D::initWithImage(CCImage *uiImage)
 
 bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
 {
-    unsigned int POTWide, POTHigh;
-
-    if(uiImage == NULL)
+    if (uiImage == NULL)
     {
         CCLOG("cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
         this->release();
         return false;
     }
-
+    
+    unsigned int imageWidth = uiImage->getWidth();
+    unsigned int imageHeight = uiImage->getHeight();
+    
     CCConfiguration *conf = CCConfiguration::sharedConfiguration();
 
-#if CC_TEXTURE_NPOT_SUPPORT
-    if( conf->isSupportsNPOT() ) 
-    {
-        POTWide = uiImage->getWidth();
-        POTHigh = uiImage->getHeight();
-    }
-    else 
-#endif
-    {
-        POTWide = ccNextPOT(uiImage->getWidth());
-        POTHigh = ccNextPOT(uiImage->getHeight());
-    }
-
     unsigned maxTextureSize = conf->getMaxTextureSize();
-    if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) 
+    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 
     {
-        CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", POTWide, POTHigh, maxTextureSize, maxTextureSize);
+        CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
         this->release();
         return NULL;
     }
@@ -281,7 +269,7 @@ bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
     m_eResolutionType = resolution;
 
     // always load premultiplied images
-    return initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
+    return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
 }
 bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned int POTWide, unsigned int POTHigh)
 {

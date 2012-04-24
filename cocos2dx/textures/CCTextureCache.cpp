@@ -525,6 +525,10 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 
     } while (0);
 
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    VolatileTexture::addCCImage(texture, image);
+#endif
+    
     return texture;
 }
 
@@ -626,6 +630,7 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 , m_alignment(CCTextAlignmentCenter)
 , m_strFontName("")
 , m_strText("")
+, uiImage(NULL)
 , m_fFontSize(0.0f)
 {
     m_size = CCSizeMake(0, 0);
@@ -635,26 +640,17 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 VolatileTexture::~VolatileTexture()
 {
     textures.remove(this);
+    CC_SAFE_FREE(uiImage);
 }
 
 void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format)
 {
     if (isReloading)
-        return;
-
-    VolatileTexture *vt = 0;
-    std::list<VolatileTexture *>::iterator i = textures.begin();
-    while( i != textures.end() )
     {
-        VolatileTexture *v = *i++;
-        if (v->texture == tt) {
-            vt = v;
-            break;
-        }
+        return;
     }
 
-    if (!vt)
-        vt = new VolatileTexture(tt);
+    VolatileTexture *vt = findVolotileTexture(tt);
 
     vt->m_eCashedImageType = kImageFile;
     vt->m_strFileName = imageFileName;
@@ -662,24 +658,44 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
     vt->m_PixelFormat = tt->getPixelFormat();
 }
 
-void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize)
+void VolatileTexture::addCCImage(CCTexture2D *tt, CCImage *image)
 {
-    if (isReloading)
-        return;
+    VolatileTexture *vt = findVolotileTexture(tt);
+    
+    vt->uiImage = image;
+    vt->m_eCashedImageType = kImage;
+}
 
+VolatileTexture* VolatileTexture::findVolotileTexture(CCTexture2D *tt)
+{
     VolatileTexture *vt = 0;
     std::list<VolatileTexture *>::iterator i = textures.begin();
-    while( i != textures.end() )
+    while (i != textures.end())
     {
         VolatileTexture *v = *i++;
-        if (v->texture == tt) {
+        if (v->texture == tt) 
+        {
             vt = v;
             break;
         }
     }
-
-    if (!vt)
+    
+    if (! vt)
+    {
         vt = new VolatileTexture(tt);
+    }
+    
+    return vt;
+}
+
+void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize)
+{
+    if (isReloading)
+    {
+        return;
+    }
+
+    VolatileTexture *vt = findVolotileTexture(tt);
 
     vt->m_eCashedImageType = kImageData;
     vt->m_pTextureData = data;
@@ -690,21 +706,11 @@ void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPix
 void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
     if (isReloading)
-        return;
-
-    VolatileTexture *vt = 0;
-    std::list<VolatileTexture *>::iterator i = textures.begin();
-    while( i != textures.end() )
     {
-        VolatileTexture *v = *i++;
-        if (v->texture == tt) {
-            vt = v;
-            break;
-        }
+        return;
     }
 
-    if (!vt)
-        vt = new VolatileTexture(tt);
+    VolatileTexture *vt = findVolotileTexture(tt);
 
     vt->m_eCashedImageType = kString;
     vt->m_size        = dimensions;
@@ -714,13 +720,15 @@ void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, const 
     vt->m_strText     = text;
 }
 
-void VolatileTexture::removeTexture(CCTexture2D *t) {
+void VolatileTexture::removeTexture(CCTexture2D *t) 
+{
 
     std::list<VolatileTexture *>::iterator i = textures.begin();
-    while( i != textures.end() )
+    while (i != textures.end())
     {
         VolatileTexture *vt = *i++;
-        if (vt->texture == t) {
+        if (vt->texture == t) 
+        {
             delete vt;
             break;
         }
@@ -732,11 +740,11 @@ void VolatileTexture::reloadAllTextures()
     isReloading = true;
 
     CCLOG("reload all texture");
-    std::list<VolatileTexture *>::iterator i = textures.begin();
+    std::list<VolatileTexture *>::iterator iter = textures.begin();
 
-    while( i != textures.end() )
+    while (iter != textures.end())
     {
-        VolatileTexture *vt = *i++;
+        VolatileTexture *vt = *iter++;
 
         switch (vt->m_eCashedImageType)
         {
@@ -775,10 +783,11 @@ void VolatileTexture::reloadAllTextures()
             break;
         case kImageData:
             {
-                unsigned int nPOTWide, nPOTHigh;
-                nPOTWide = ccNextPOT((int)vt->m_TextureSize.width);
-                nPOTHigh = ccNextPOT((int)vt->m_TextureSize.height);
-                vt->texture->initWithData(vt->m_pTextureData, vt->m_PixelFormat, nPOTWide, nPOTHigh, vt->m_TextureSize);
+                vt->texture->initWithData(vt->m_pTextureData, 
+                                          vt->m_PixelFormat, 
+                                          vt->m_TextureSize.width, 
+                                          vt->m_TextureSize.height, 
+                                          vt->m_TextureSize);
             }
             break;
         case kString:
@@ -788,6 +797,12 @@ void VolatileTexture::reloadAllTextures()
                     vt->m_alignment,
                     vt->m_strFontName.c_str(),
                     vt->m_fFontSize);
+            }
+            break;
+        case kImage:
+            {
+                vt->texture->initWithImage(vt->uiImage,
+                                           kCCResolutionUnknown);
             }
             break;
         default:
