@@ -432,6 +432,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCEventType.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCGeometry.h"
 				>
 			</File>
@@ -769,6 +773,10 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCApplication_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCApplicationProtocol.h"
 				>
 			</File>
 			<File
