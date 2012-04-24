@@ -87,7 +87,7 @@
             
         }
 
-        CHECK_GL_ERROR_DEBUG();
+        CHECK_GL_ERROR();
     }
 
     return self;

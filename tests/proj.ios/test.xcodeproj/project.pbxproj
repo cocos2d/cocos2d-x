@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		15DC5D2315340C72009A99D4 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 15DC5D2215340C72009A99D4 /* Shaders */; };
+		15DCB05315452BC800A4F597 /* CCEventType.h in Headers */ = {isa = PBXBuildFile; fileRef = 15DCB05215452BC700A4F597 /* CCEventType.h */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -630,6 +631,7 @@
 
 /* Begin PBXFileReference section */
 		15DC5D2215340C72009A99D4 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = "../../../cocos2d-x/tests/Resources/Shaders"; sourceTree = "<group>"; };
+		15DCB05215452BC700A4F597 /* CCEventType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventType.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
@@ -1828,6 +1830,7 @@
 				78E6968B151899BD0085D6AC /* CCZone.h */,
 				78E6968C151899BD0085D6AC /* cocos2d.h */,
 				78ED2FA3153D5DAB00330E29 /* cocos2dExt.h */,
+				15DCB05215452BC700A4F597 /* CCEventType.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -3196,6 +3199,7 @@
 				78ED2F83153D5B8F00330E29 /* CCNotificationCenter.h in Headers */,
 				78ED2FA2153D5CB700330E29 /* ccShaderEx_SwitchMask_frag.h in Headers */,
 				78ED2FA4153D5DAB00330E29 /* cocos2dExt.h in Headers */,
+				15DCB05315452BC800A4F597 /* CCEventType.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
