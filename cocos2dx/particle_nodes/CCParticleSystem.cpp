@@ -269,62 +269,61 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
             //don't get the internal texture if a batchNode is used
             if (!m_pBatchNode)
             {
-            // texture        
-            // Try to get the texture from the cache
-            const char* textureName = dictionary->valueForKey("textureFileName")->getCString();
-            std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
-
-            CCTexture2D *tex = NULL;
-
-            if (strlen(textureName) > 0)
-            {
-                // set not pop-up message box when load image failed
-                bool bNotify = CCFileUtils::getIsPopupNotify();
-                CCFileUtils::setIsPopupNotify(false);
-                tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
-
-                // reset the value of UIImage notify
-                CCFileUtils::setIsPopupNotify(bNotify);
-            }
-
-            if (tex)
-            {
-                setTexture(tex);
-            }
-            else
-            {                        
-                const char *textureData = dictionary->valueForKey("textureImageData")->getCString();
-                CCAssert(textureData, "");
-
-                int dataLen = strlen(textureData);
-                if(dataLen != 0)
+                // texture        
+                // Try to get the texture from the cache
+                const char* textureName = dictionary->valueForKey("textureFileName")->getCString();
+                std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
+                
+                CCTexture2D *tex = NULL;
+                
+                if (strlen(textureName) > 0)
                 {
-                    // if it fails, try to get it from the base64-gzipped data    
-                    int decodeLen = base64Decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
-                    CCAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
-                    CC_BREAK_IF(!buffer);
-
+                    // set not pop-up message box when load image failed
+                    bool bNotify = CCFileUtils::getIsPopupNotify();
+                    CCFileUtils::setIsPopupNotify(false);
+                    tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
+                    
+                    // reset the value of UIImage notify
+                    CCFileUtils::setIsPopupNotify(bNotify);
+                }
+                
+                if (tex)
+                {
+                    setTexture(tex);
+                }
+                else
+                {                        
+                    const char *textureData = dictionary->valueForKey("textureImageData")->getCString();
+                    CCAssert(textureData, "");
+                    
+                    int dataLen = strlen(textureData);
+                    if(dataLen != 0)
+                    {
+                        // if it fails, try to get it from the base64-gzipped data    
+                        int decodeLen = base64Decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
+                        CCAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
+                        CC_BREAK_IF(!buffer);
+                        
                         int deflatedLen = ZipUtils::ccInflateMemory(buffer, decodeLen, &deflated);
                         CCAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
+                        // don't delete image, VolatileTexture use it in CCTextureCache::sharedTextureCache()->addUIImage()
                         image = new CCImage();
                         bool isOK = image->initWithImageData(deflated, deflatedLen);
                         CCAssert(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
                         setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str()));
+                    }
                 }
-            }
-            CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
-            
+                CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
             }
             bRet = true;
         }
     } while (0);
     CC_SAFE_DELETE_ARRAY(buffer);
     CC_SAFE_DELETE_ARRAY(deflated);
-    CC_SAFE_DELETE(image);
     return bRet;
 }
 
@@ -470,7 +469,7 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
     float a = CC_DEGREES_TO_RADIANS( m_fAngle + m_fAngleVar * CCRANDOM_MINUS1_1() );    
 
     // Mode Gravity: A
-    if( m_nEmitterMode == kCCParticleModeGravity ) 
+    if (m_nEmitterMode == kCCParticleModeGravity) 
     {
         CCPoint v(cosf( a ), sinf( a ));
         float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
@@ -488,17 +487,22 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
     }
 
     // Mode Radius: B
-    else {
+    else 
+    {
         // Set the default diameter of the particle from the source position
         float startRadius = modeB.startRadius + modeB.startRadiusVar * CCRANDOM_MINUS1_1();
         float endRadius = modeB.endRadius + modeB.endRadiusVar * CCRANDOM_MINUS1_1();
 
         particle->modeB.radius = startRadius;
 
-        if( modeB.endRadius == kCCParticleStartRadiusEqualToEndRadius )
+        if(modeB.endRadius == kCCParticleStartRadiusEqualToEndRadius)
+        {
             particle->modeB.deltaRadius = 0;
+        }
         else
+        {
             particle->modeB.deltaRadius = (endRadius - startRadius) / particle->timeToLive;
+        }
 
         particle->modeB.angle = a;
         particle->modeB.degreesPerSecond = CC_DEGREES_TO_RADIANS(modeB.rotatePerSecond + modeB.rotatePerSecondVar * CCRANDOM_MINUS1_1());
@@ -532,7 +536,7 @@ void CCParticleSystem::update(ccTime dt)
 {
     CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 
-    if( m_bIsActive && m_fEmissionRate )
+    if (m_bIsActive && m_fEmissionRate)
     {
         float rate = 1.0f / m_fEmissionRate;
         //issue #1201, prevent bursts of particles, due to too high emitCounter
@@ -541,14 +545,14 @@ void CCParticleSystem::update(ccTime dt)
             m_fEmitCounter += dt;
         }
         
-        while( m_uParticleCount < m_uTotalParticles && m_fEmitCounter > rate ) 
+        while (m_uParticleCount < m_uTotalParticles && m_fEmitCounter > rate) 
         {
             this->addParticle();
             m_fEmitCounter -= rate;
         }
 
         m_fElapsed += dt;
-        if(m_fDuration != -1 && m_fDuration < m_fElapsed)
+        if (m_fDuration != -1 && m_fDuration < m_fElapsed)
         {
             this->stopSystem();
         }
@@ -557,35 +561,37 @@ void CCParticleSystem::update(ccTime dt)
     m_uParticleIdx = 0;
 
     CCPoint currentPosition = CCPointZero;
-    if( m_ePositionType == kCCPositionTypeFree )
+    if (m_ePositionType == kCCPositionTypeFree)
     {
         currentPosition = this->convertToWorldSpace(CCPointZero);
     }
-    else if ( m_ePositionType == kCCPositionTypeRelative )
+    else if (m_ePositionType == kCCPositionTypeRelative)
     {
         currentPosition = m_tPosition;
     }
 
     if (m_bIsVisible)
     {
-        while( m_uParticleIdx < m_uParticleCount )
+        while (m_uParticleIdx < m_uParticleCount)
         {
             tCCParticle *p = &m_pParticles[m_uParticleIdx];
 
             // life
             p->timeToLive -= dt;
 
-            if( p->timeToLive > 0 ) 
+            if (p->timeToLive > 0) 
             {
                 // Mode A: gravity, direction, tangential accel & radial accel
-                if( m_nEmitterMode == kCCParticleModeGravity ) 
+                if (m_nEmitterMode == kCCParticleModeGravity) 
                 {
                     CCPoint tmp, radial, tangential;
 
                     radial = CCPointZero;
                     // radial acceleration
-                    if(p->pos.x || p->pos.y)
+                    if (p->pos.x || p->pos.y)
+                    {
                         radial = ccpNormalize(p->pos);
+                    }
                     tangential = radial;
                     radial = ccpMult(radial, p->modeA.radialAccel);
 
@@ -604,7 +610,8 @@ void CCParticleSystem::update(ccTime dt)
                 }
 
                 // Mode B: radius movement
-                else {                
+                else 
+                {                
                     // Update the angle and radius of the particle.
                     p->modeB.angle += p->modeB.degreesPerSecond * dt;
                     p->modeB.radius += p->modeB.deltaRadius * dt;
@@ -632,7 +639,7 @@ void CCParticleSystem::update(ccTime dt)
 
                 CCPoint    newPos;
 
-                if( m_ePositionType == kCCPositionTypeFree || m_ePositionType == kCCPositionTypeRelative ) 
+                if (m_ePositionType == kCCPositionTypeFree || m_ePositionType == kCCPositionTypeRelative) 
                 {
                     CCPoint diff = ccpSub( currentPosition, p->startPos );
                     newPos = ccpSub(p->pos, diff);
@@ -655,7 +662,6 @@ void CCParticleSystem::update(ccTime dt)
 
                 // update particle counter
                 ++m_uParticleIdx;
-
             } 
             else 
             {
@@ -687,8 +693,10 @@ void CCParticleSystem::update(ccTime dt)
         } //while
         m_bTransformSystemDirty = false;
     }
-    if (!m_pBatchNode)
+    if (! m_pBatchNode)
+    {
         postStep();
+    }
 
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 }

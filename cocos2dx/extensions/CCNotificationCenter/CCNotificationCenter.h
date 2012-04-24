@@ -37,8 +37,8 @@ public:
     CCNotificationCenter();
     ~CCNotificationCenter();
     
-    static CCNotificationCenter *sharedNotifCenter(void);
-    static void purgeNotifCenter(void);
+    static CCNotificationCenter *sharedNotificationCenter(void);
+    static void purgeNotificationCenter(void);
 
     void addObserver(CCObject *target, 
                      SEL_CallFuncO selector,
