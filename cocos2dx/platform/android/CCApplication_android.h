@@ -2,42 +2,18 @@
 #define __CC_APPLICATION_ANDROID_H__
 
 #include "CCApplication.h"
-
 #include "CCCommon.h"
+#include "CCApplicationProtocol.h"
 
 NS_CC_BEGIN
 
 class CCRect;
 
-class CC_DLL CCApplication
+class CC_DLL CCApplication : public CCApplicationProtocol
 {
 public:
     CCApplication();
     virtual ~CCApplication();
-
-    /**
-    @brief    Implement for initialize OpenGL instance, set source path, etc...
-    */
-    virtual bool initInstance() = 0;
-
-    /**
-    @brief    Implement CCDirector and CCScene init code here.
-    @return true    Initialize success, app continue.
-    @return false   Initialize failed, app terminate.
-    */
-    virtual bool applicationDidFinishLaunching() = 0;
-
-    /**
-    @brief  The function be called when the application enter background
-    @param  the pointer of the application
-    */
-    virtual void applicationDidEnterBackground() = 0;
-
-    /**
-    @brief  The function be called when the application enter foreground
-    @param  the pointer of the application
-    */
-    virtual void applicationWillEnterForeground() = 0;
 
     /**
     @brief    Callback by CCDirector for limit FPS.
@@ -65,11 +41,6 @@ public:
     Orientation setOrientation(Orientation orientation);
 
     /**
-    @brief    Get status bar rectangle in EGLView window.
-    */
-    void    statusBarFrame(CCRect * rect);
-
-    /**
     @brief    Run the message loop.
     */
     int run();
@@ -84,7 +55,7 @@ public:
     @brief Get current language config
     @return Current language config
     */
-    static ccLanguageType getCurrentLanguage();
+    virtual ccLanguageType getCurrentLanguage();
 
 protected:
     static CCApplication * sm_pSharedApplication;
@@ -92,4 +63,4 @@ protected:
 
 NS_CC_END
 
-#endif    // __CCX_APPLICATION_ANDROID_H__
+#endif    // __CC_APPLICATION_ANDROID_H__

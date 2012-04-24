@@ -88,13 +88,13 @@ CCApplication::Orientation CCApplication::setOrientation(Orientation eOritation)
     return eOritation;
 }
 
-void CCApplication::statusBarFrame(cocos2d::CCRect * rect)
-{
-    rect->origin.x = [[UIApplication sharedApplication] statusBarFrame].origin.x;
-    rect->origin.y = [[UIApplication sharedApplication] statusBarFrame].origin.y;
-    rect->size.width = [[UIApplication sharedApplication] statusBarFrame].size.width;
-    rect->size.height = [[UIApplication sharedApplication] statusBarFrame].size.height;
-}
+//void CCApplication::statusBarFrame(cocos2d::CCRect * rect)
+//{
+//    rect->origin.x = [[UIApplication sharedApplication] statusBarFrame].origin.x;
+//    rect->origin.y = [[UIApplication sharedApplication] statusBarFrame].origin.y;
+//    rect->size.width = [[UIApplication sharedApplication] statusBarFrame].size.width;
+//    rect->size.height = [[UIApplication sharedApplication] statusBarFrame].size.height;
+//}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // static member function
