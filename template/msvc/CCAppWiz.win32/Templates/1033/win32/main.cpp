@@ -2,7 +2,8 @@
 
 #include "AppDelegate.h"
 
-#define USE_WIN32_CONSOLE
+// uncomment below line, open debug console
+// #define USE_WIN32_CONSOLE
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
 					   HINSTANCE hPrevInstance,
