@@ -68,7 +68,8 @@ public:
     CCDictionary *m_pRootDict;
     CCDictionary *m_pCurDict;
     std::stack<CCDictionary*> m_tDictStack;
-    std::string m_sCurKey;///< parsed key
+    std::string m_sCurKey;   ///< parsed key
+    std::string m_sCurValue; // parsed value
     CCSAXState m_tState;
     CCArray* m_pArray;
 
@@ -128,7 +129,7 @@ public:
         if( sName == "dict" )
         {
             m_pCurDict = new CCDictionary();
-            if(! m_pRootDict)
+            if(m_eResultType == SAX_RESULT_DICT && m_pRootDict == NULL)
             {
                 // Because it will call m_pCurDict->release() later, so retain here.
                 m_pRootDict = m_pCurDict;
@@ -262,6 +263,23 @@ public:
             }
             str->release();
         }
+        else if (sName == "string" || sName == "integer" || sName == "real")
+        {
+            CCString* pStrValue = new CCString(m_sCurValue);
+
+            if (SAX_ARRAY == curState)
+            {
+                m_pArray->addObject(pStrValue);
+            }
+            else if (SAX_DICT == curState)
+            {
+                m_pCurDict->setObject(pStrValue, m_sCurKey.c_str());
+            }
+
+            pStrValue->release();
+            m_sCurValue.clear();
+        }
+        
         m_tState = SAX_NONE;
     }
 
@@ -285,18 +303,14 @@ public:
         case SAX_REAL:
         case SAX_STRING:
             {
-                CCAssert(!m_sCurKey.empty(), "not found key : <integet/real>");
-
-                if (SAX_ARRAY == curState)
+                if (curState == SAX_DICT)
                 {
-                    m_pArray->addObject(pText);
+                    CCAssert(!m_sCurKey.empty(), "not found key : <integet/real>");
                 }
-                else if (SAX_DICT == curState)
-                {
-                    m_pCurDict->setObject(pText, m_sCurKey.c_str());
-                }
-                break;
+                
+                m_sCurValue.append(pText->getCString());
             }
+            break;
         default:
             break;
         }
