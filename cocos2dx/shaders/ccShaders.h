@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,27 +22,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_ACCELEROMETER_PLATFORM_H__
-#define __CC_ACCELEROMETER_PLATFORM_H__
+#ifndef __CCSHADER_H__
+#define __CCSHADER_H__
 
-#include "CCPlatformConfig.h"
+#include "CCGL.h"
+#include "CCPlatformMacros.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "win32/CCAccelerometer_win32.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "android/CCAccelerometer_android.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "ios/CCAccelerometer_ios.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    #include "marmalade/CCAccelerometer_marmalade.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    #include "linux/CCAccelerometer_linux.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    #include "bada/CCAccelerometer_bada.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-    #include "qnx/CCAccelerometer_qnx.h"
-#else
-    #error
-#endif
+NS_CC_BEGIN
 
-#endif // __CC_UIACCELEROMETER_PLATFORM_H__
+extern CC_DLL const GLchar * ccPosition_uColor_frag;
+extern CC_DLL const GLchar * ccPosition_uColor_vert;
+
+extern CC_DLL const GLchar * ccPositionColor_frag;
+extern CC_DLL const GLchar * ccPositionColor_vert;
+
+extern CC_DLL const GLchar * ccPositionTexture_frag;
+extern CC_DLL const GLchar * ccPositionTexture_vert;
+
+extern CC_DLL const GLchar * ccPositionTextureA8Color_frag;
+extern CC_DLL const GLchar * ccPositionTextureA8Color_vert;
+
+extern CC_DLL const GLchar * ccPositionTextureColor_frag;
+extern CC_DLL const GLchar * ccPositionTextureColor_vert;
+
+extern CC_DLL const GLchar * ccPositionTextureColorAlphaTest_frag;
+
+extern CC_DLL const GLchar * ccPositionTexture_uColor_frag;
+extern CC_DLL const GLchar * ccPositionTexture_uColor_vert;
+
+extern CC_DLL const GLchar * ccExSwitchMask_frag;
+
+NS_CC_END
+
+#endif /* __CCSHADER_H__ */

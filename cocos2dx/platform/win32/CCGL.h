@@ -22,10 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGL.h"
-#include "CCStdC.h"
+#ifndef __CCGL_H__
+#define __CCGL_H__
 
-NS_CC_BEGIN
+#define glClearDepth                glClearDepthf
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
+#define glGenVertexArrays           glGenVertexArraysOES
+#define glBindVertexArray           glBindVertexArrayOES
+
+#include "GLES2/gl2.h"
+#include "GLES2/gl2ext.h"
 
 
-NS_CC_END
+#endif // __PLATFOMR_CCGL_H__

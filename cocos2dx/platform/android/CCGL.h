@@ -22,27 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_PLATFORM_H__
-#define __CC_EGLVIEW_PLATFORM_H__
+#ifndef __CCGL_H__
+#define __CCGL_H__
 
-#include "CCPlatformConfig.h"
+#define glClearDepth                glClearDepthf
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
+#define glGenVertexArrays           glGenVertexArraysOES
+#define glBindVertexArray           glBindVertexArrayOES
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "win32/CCEGLView_win32.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "android/CCEGLView_android.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "ios/CCEGLView_ios.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    #include "marmalade/CCEGLView_marmalade.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    #include "linux/CCEGLView_linux.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    #include "bada/CCEGLView_bada.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-    #include "qnx/CCEGLView_qnx.h"
-#else
-    #error
+// GL_GLEXT_PROTOTYPES isn't defined in glplatform.h on android ndk r7 
+// we manually define it here
+#include <GLES2/gl2platform.h>
+#ifndef GL_GLEXT_PROTOTYPES
+#define GL_GLEXT_PROTOTYPES 1
 #endif
 
-#endif    // end of __CC_EGLVIEW_PLATFORM_H__
+// normal process
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+// gl2.h don't define GLchar on Android
+typedef char GLchar;
+
+//declare here while define in CCEGLView_android.cpp
+extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT;
+extern PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOESEXT;
+extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
+
+#define glGenVertexArraysOES glGenVertexArraysOESEXT
+#define glBindVertexArrayOES glBindVertexArrayOESEXT
+#define glDeleteVertexArraysOES glDeleteVertexArraysOESEXT
+
+
+#endif // __PLATFOMR_CCGL_H__

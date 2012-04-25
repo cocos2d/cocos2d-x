@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCGEMETRY_H__
 #define __CCGEMETRY_H__
 
-#include "CCCommon.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
@@ -102,9 +102,9 @@ public:
 };
 
 
-#define CCPointMake(x, y) CCPoint((x), (y))
-#define CCSizeMake(width, height) CCSize((width), (height))
-#define CCRectMake(x, y, width, height) CCRect((x), (y), (width), (height))
+#define CCPointMake(x, y) CCPoint((float)(x), (float)(y))
+#define CCSizeMake(width, height) CCSize((float)(width), (float)(height))
+#define CCRectMake(x, y, width, height) CCRect((float)(x), (float)(y), (float)(width), (float)(height))
 
 
 const CCPoint CCPointZero = CCPointMake(0,0);

@@ -28,7 +28,6 @@ THE SOFTWARE.
 #define __CCTYPES_H__
 
 #include "CCGeometry.h"
-
 #include "CCGL.h"
 
 NS_CC_BEGIN
