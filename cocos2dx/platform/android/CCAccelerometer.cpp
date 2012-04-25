@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCAccelerometer_android.h"
+#include "CCAccelerometer.h"
 #include "jni/SensorJni.h"
 #include <stdio.h>
 #include <android/log.h>

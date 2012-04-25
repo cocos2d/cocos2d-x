@@ -55,7 +55,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "support/CCProfiling.h"
 // opengl
-#include "platform/CCGL.h"
+#include "CCGL.h"
 
 
 NS_CC_BEGIN

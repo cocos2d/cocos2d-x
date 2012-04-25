@@ -27,10 +27,7 @@ THE SOFTWARE.
 #ifndef __ACTIONS_CCACTION_H__
 #define __ACTIONS_CCACTION_H__
 
-#include "ccTypes.h"
 #include "CCObject.h"
-#include "CCZone.h"
-#include "CCNode.h"
 
 NS_CC_BEGIN
 

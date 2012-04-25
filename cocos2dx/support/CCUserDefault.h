@@ -25,9 +25,7 @@ THE SOFTWARE.
 #define __SUPPORT_CCUSERDEFAULT_H__
 
 #include "CCPlatformMacros.h"
-
 #include <string>
-
 
 NS_CC_BEGIN
 

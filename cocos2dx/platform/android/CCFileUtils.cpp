@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#define __CC_PLATFORM_FILEUTILS_CPP__
+#include "CCFileUtilsCommon_cpp.h"
+
 NS_CC_BEGIN
 
 #include "CCCommon.h"

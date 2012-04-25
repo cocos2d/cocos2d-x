@@ -22,9 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_H__
-#define __CC_EGLVIEW_H__
+#include "CCCommon.h"
 
-#include "../platform/CCEGLView_platform.h"
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
-#endif    // end of __CC_EGLVIEW_H__
+#include <Windows.h>
+#include "CCStdC.h"
+
+NS_CC_BEGIN
+
+void CCLog(const char * pszFormat, ...)
+{
+    char szBuf[MAX_LEN];
+
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsnprintf_s(szBuf, MAX_LEN, MAX_LEN, pszFormat, ap);
+    va_end(ap);
+
+    WCHAR wszBuf[MAX_LEN] = {0};
+    MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
+    OutputDebugStringW(wszBuf);
+    OutputDebugStringA("\n");
+}
+
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
+}
+
+NS_CC_END
+

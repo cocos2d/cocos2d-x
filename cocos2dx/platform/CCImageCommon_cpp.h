@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#ifndef __CC_PLATFORM_IMAGE_CPP__
+#error "CCFileUtilsCommon_cpp.h can only be included for CCFileUtils.cpp in platform/win32(android,...)"
+#endif /* __CC_PLATFORM_IMAGE_CPP__ */
 
 #include "CCImage.h"
 #include "CCCommon.h"
@@ -590,23 +593,3 @@ NS_CC_END
 /* ios/CCImage_ios.mm uses "mm" as the extension, 
    so we cannot inclue it in this CCImage.cpp.
    It makes a little difference on ios */
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "win32/CCImage_win32.cpp"
-#endif 
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "android/CCImage_android.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-#include "bada/CCImage_bada.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-#include "qnx/CCImage_qnx.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#include "linux/CCImage_linux.cpp"
-#endif

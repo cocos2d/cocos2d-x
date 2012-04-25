@@ -21,9 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_CCAccelerometer_H__
-#define __CC_CCAccelerometer_H__
 
-#include "platform/CCAccelerometer_platform.h"
+#include "CCCommon.h"
 
-#endif // __CC_CCAccelerometer_H__
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
+
+#include <android/log.h>
+#include <stdio.h>
+#include <jni.h>
+#include "android/jni/MessageJni.h"
+
+NS_CC_BEGIN
+
+void CCLog(const char * pszFormat, ...)
+{
+    char buf[MAX_LEN];
+
+    va_list args;
+    va_start(args, pszFormat);        
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
+
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+}
+
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    showMessageBoxJNI(pszMsg, pszTitle);
+}
+
+NS_CC_END

@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 //#define COCOS2D_DEBUG 1
 
+#define __CC_PLATFORM_IMAGE_CPP__
+#include "CCImageCommon_cpp.h"
+
 #include <android/log.h>
 #include <string.h>
 #include <jni.h>

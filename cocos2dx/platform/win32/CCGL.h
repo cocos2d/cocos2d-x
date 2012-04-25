@@ -22,27 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_PLATFORM_H__
-#define __CC_EGLVIEW_PLATFORM_H__
+#ifndef __CCGL_H__
+#define __CCGL_H__
 
-#include "CCPlatformConfig.h"
+#define glClearDepth                glClearDepthf
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
+#define glGenVertexArrays           glGenVertexArraysOES
+#define glBindVertexArray           glBindVertexArrayOES
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "win32/CCEGLView_win32.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "android/CCEGLView_android.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "ios/CCEGLView_ios.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    #include "marmalade/CCEGLView_marmalade.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    #include "linux/CCEGLView_linux.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    #include "bada/CCEGLView_bada.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-    #include "qnx/CCEGLView_qnx.h"
-#else
-    #error
-#endif
+#include "GLES2/gl2.h"
+#include "GLES2/gl2ext.h"
 
-#endif    // end of __CC_EGLVIEW_PLATFORM_H__
+
+#endif // __PLATFOMR_CCGL_H__

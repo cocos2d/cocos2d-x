@@ -25,15 +25,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "platform/CCGL.h"
-
+#include "CCGL.h"
 #include "CCParticleSystemQuad.h"
 #include "CCSpriteFrame.h"
 #include "CCDirector.h"
-
 #include "CCParticleBatchNode.h"
 #include "CCTextureAtlas.h"
-#include "CCDirector.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CCGLProgram.h"
