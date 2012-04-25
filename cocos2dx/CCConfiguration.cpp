@@ -83,9 +83,9 @@ bool CCConfiguration::init(void)
         bEnableProfilers ? "YES - *** Disable it when you finish profiling ***" : "NO");
     
 #if CC_ENABLE_GL_STATE_CACHE == 0
-	CCLOG("");
-	CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it by editing ccConfig.h");
-	printf("\n");
+    CCLOG("");
+    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it by editing ccConfig.h");
+    printf("\n");
 #endif
     
     CHECK_GL_ERROR_DEBUG();
