@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCApplication_ios.h"
+#import "CCApplication.h"
 
 #import <UIKit/UIKit.h>
 

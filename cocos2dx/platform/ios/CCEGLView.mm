@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "EAGLView.h"
 #include "CCDirectorCaller.h"
-#include "CCEGLView_ios.h"
+#include "CCEGLView.h"
 #include "CCSet.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
