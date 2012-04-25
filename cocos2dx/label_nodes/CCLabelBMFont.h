@@ -198,9 +198,9 @@ public:
     virtual void setAlignment(CCTextAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
-	virtual void setScale(float scale);
-	virtual void setScaleX(float scaleX);
-	virtual void setScaleY(float scaleY);
+    virtual void setScale(float scale);
+    virtual void setScaleX(float scaleX);
+    virtual void setScaleY(float scaleY);
 
 #if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw();
@@ -208,8 +208,8 @@ public:
 private:
     char * atlasNameFromFntFile(const char *fntFile);
     int kerningAmountForFirst(unsigned short first, unsigned short second);
-	float getLetterPosXLeft( CCSprite* characterSprite );
-	float getLetterPosXRight( CCSprite* characterSprite );
+    float getLetterPosXLeft( CCSprite* characterSprite );
+    float getLetterPosXRight( CCSprite* characterSprite );
 
 };
 
