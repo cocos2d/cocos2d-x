@@ -10,6 +10,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		780482AB1546AC59008A7E94 /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 780482AA1546AC59008A7E94 /* CCApplicationProtocol.h */; };
+		780482AE1546AC91008A7E94 /* CCEventType.h in Headers */ = {isa = PBXBuildFile; fileRef = 780482AD1546AC91008A7E94 /* CCEventType.h */; };
 		782F4619153FEDF0009FC2E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4617153FEDF0009FC2E5 /* Default.png */; };
 		782F461A153FEDF0009FC2E5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4618153FEDF0009FC2E5 /* Icon.png */; };
 		783F0818154167F500DCBBB6 /* CCEGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 783F0816154167F500DCBBB6 /* CCEGLViewProtocol.cpp */; };
@@ -373,6 +375,8 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		780482AA1546AC59008A7E94 /* CCApplicationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationProtocol.h; sourceTree = "<group>"; };
+		780482AD1546AC91008A7E94 /* CCEventType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventType.h; sourceTree = "<group>"; };
 		782F4617153FEDF0009FC2E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		782F4618153FEDF0009FC2E5 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		783F0816154167F500DCBBB6 /* CCEGLViewProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLViewProtocol.cpp; sourceTree = "<group>"; };
@@ -942,6 +946,7 @@
 				78E69562151885710085D6AC /* CCDirector.h */,
 				78E69563151885710085D6AC /* CCDrawingPrimitives.h */,
 				78E69564151885710085D6AC /* CCEGLView.h */,
+				780482AD1546AC91008A7E94 /* CCEventType.h */,
 				78E69565151885710085D6AC /* CCGeometry.h */,
 				78E69566151885710085D6AC /* CCGL.h */,
 				78E69567151885710085D6AC /* CCGLProgram.h */,
@@ -1266,6 +1271,7 @@
 			children = (
 				BF83521713275F5600F3C033 /* CCAccelerometer_platform.h */,
 				BF83521813275F5600F3C033 /* CCApplication_platform.h */,
+				780482AA1546AC59008A7E94 /* CCApplicationProtocol.h */,
 				BF83521913275F5600F3C033 /* CCArchOptimalParticleSystem.h */,
 				BF83521A13275F5600F3C033 /* CCCommon.cpp */,
 				BF83521B13275F5600F3C033 /* CCCommon.h */,
@@ -1630,6 +1636,8 @@
 				78ED2FEB153D5F3700330E29 /* CCSpacer.h in Headers */,
 				78ED2FED153D5F3700330E29 /* CCNotificationCenter.h in Headers */,
 				783F0819154167F500DCBBB6 /* CCEGLViewProtocol.h in Headers */,
+				780482AB1546AC59008A7E94 /* CCApplicationProtocol.h in Headers */,
+				780482AE1546AC91008A7E94 /* CCEventType.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

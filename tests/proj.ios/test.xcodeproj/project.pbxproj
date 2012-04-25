@@ -14,6 +14,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		780482A41546ABC9008A7E94 /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 780482A31546ABC9008A7E94 /* CCApplicationProtocol.h */; };
 		782A3D2F153BB225002386FE /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 782A3D2E153BB225002386FE /* CCString.cpp */; };
 		784B77561519BF0E00FA820F /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 784B773C1519BF0E00FA820F /* chipmunk.h */; };
 		784B77571519BF0E00FA820F /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = 784B773D1519BF0E00FA820F /* chipmunk_ffi.h */; };
@@ -643,6 +644,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		780482A31546ABC9008A7E94 /* CCApplicationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationProtocol.h; sourceTree = "<group>"; };
 		782A3D2E153BB225002386FE /* CCString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCString.cpp; sourceTree = "<group>"; };
 		784B773C1519BF0E00FA820F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		784B773D1519BF0E00FA820F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -2850,6 +2852,7 @@
 			children = (
 				BF83592913276C7700F3C033 /* CCAccelerometer_platform.h */,
 				BF83592A13276C7700F3C033 /* CCApplication_platform.h */,
+				780482A31546ABC9008A7E94 /* CCApplicationProtocol.h */,
 				BF83592B13276C7700F3C033 /* CCArchOptimalParticleSystem.h */,
 				BF83592C13276C7700F3C033 /* CCCommon.cpp */,
 				BF83592D13276C7700F3C033 /* CCCommon.h */,
@@ -3220,6 +3223,7 @@
 				78ED2FA4153D5DAB00330E29 /* cocos2dExt.h in Headers */,
 				787FAAD81545340D00B3AD0A /* CCEGLViewProtocol.h in Headers */,
 				15DCB05315452BC800A4F597 /* CCEventType.h in Headers */,
+				780482A41546ABC9008A7E94 /* CCApplicationProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
