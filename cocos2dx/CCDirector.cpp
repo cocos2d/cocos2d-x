@@ -23,9 +23,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "cocoa/CCNS.h"
 #include "CCDirector.h"
+#include "CCNS.h"
 #include "CCScene.h"
 #include "CCArray.h"
 #include "CCScheduler.h"
@@ -287,7 +286,7 @@ void CCDirector::calculateDeltaTime(void)
 
 // m_pobOpenGLView
 
-void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
+void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 {
     CCAssert(pobOpenGLView, "opengl view should not be null");
 
@@ -357,7 +356,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             // reset the viewport if 3d proj & retina display
             if( CC_CONTENT_SCALE_FACTOR() != 1.0f )
             {
-                glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+                glViewport((GLint)-size.width/2, (GLint)-size.height/2, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
             }
 
             float zeye = this->getZEye();

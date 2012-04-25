@@ -29,9 +29,7 @@
  */
 #include "ccConfig.h"
 #include "CCPlatformConfig.h"
-
-#define MacGLView                    void
-#define NSWindow                            void
+#include "CCPlatformDefine.h"
 
 /** @def CC_ENABLE_CACHE_TEXTTURE_DATA
 Enable it if you want to cache the texture data.
@@ -186,69 +184,6 @@ public: virtual void set##funName(varType var)   \
 #else
 #define LUALOG(format, ...)     cocos2d::CCLog(format, ##__VA_ARGS__)
 #endif // Lua engine debug
-
-// shared library declartor
-#define CC_DLL 
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-// assertion
-#include <assert.h>
-#define CC_ASSERT(cond)                assert(cond)
-#else
-// bada platform
-
-#include <FBaseConfig.h>
-#include <FBaseSys.h>
-
-#undef CC_DLL
-#define CC_DLL  _EXPORT_
-
-#include "CCPlatformFunc_bada.h"
-
-#ifdef _DEBUG
-#define CC_ASSERT(cond)  (void)( (!!(cond)) || (badaAssert(__PRETTY_FUNCTION__ , __LINE__ , #cond),0) )
-#else
-#define CC_ASSERT(cond)  void(0)
-#endif /* _DEBUG */
-#endif
-
-#define CC_UNUSED_PARAM(unusedparam)   (void)unusedparam
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#undef CC_UNUSED_PARAM
-#define CC_UNUSED_PARAM(unusedparam)   //unusedparam
-#endif
-
-
-// platform depended macros
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
-    #undef CC_DLL
-    #if defined(_USRDLL)
-        #define CC_DLL     __declspec(dllexport)
-    #else         /* use a DLL library */
-        #define CC_DLL     __declspec(dllimport)
-    #endif
-
-#endif  // CC_PLATFORM_WIN32
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-
-#include "CCCommon.h"
-#include <stdio.h>
-
-    #undef CC_ASSERT
-    #define CC_ASSERT(cond) \
-if (! (cond)) \
-{ \
-    char content[100]; \
-    sprintf(content, "%s function:%s line:%d", __FILE__, __FUNCTION__, __LINE__ - 3);  \
-    CCMessageBox(content, "Assert error"); \
-}
-
-#endif // CC_PLATFORM_ANDROID
-
 
 
 #endif // __CC_PLATFORM_MACROS_H__

@@ -21,6 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __CC_PLATFORM_FILEUTILS_CPP__
+#error "CCFileUtilsCommon_cpp.h can only be included for CCFileUtils.cpp in platform/win32(android,...)"
+#endif /* __CC_PLATFORM_FILEUTILS_CPP__ */
 
 #include "CCFileUtils.h"
 #include "CCDirector.h"
@@ -403,34 +406,34 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 /// functions iOS specific
 void CCFileUtils::setiPhoneRetinaDisplaySuffix(const char *suffix)
 {
-    assert(0);
+    CCAssert(0, "not implement");
 }
 
 void CCFileUtils::setiPadSuffix(const char *suffix)
 {
-    assert(0);
+    CCAssert(0, "not implement");
 }
 
 void CCFileUtils::setiPadRetinaDisplaySuffix(const char *suffix)
 {
-    assert(0);
+    CCAssert(0, "not implement");
 }
 
 bool CCFileUtils::iPadFileExistsAtPath(const char *filename)
 {
-    assert(0);
+    CCAssert(0, "not implement");
     return false;
 }
 
 bool CCFileUtils::iPadRetinaDisplayFileExistsAtPath(const char *filename)
 {
-    assert(0);
+    CCAssert(0, "not implement");
     return false;
 }
 
 bool CCFileUtils::iPhoneRetinaDisplayFileExistsAtPath(const char *filename)
 {
-    assert(0);
+    CCAssert(0, "not implement");
     return false;
 }
 
@@ -450,29 +453,5 @@ bool CCFileUtils::getIsPopupNotify()
 }
 
 NS_CC_END
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "win32/CCFileUtils_win32.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "android/CCFileUtils_android.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-#include "marmalade/CCFileUtils_marmalade.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-#include "bada/CCFileUtils_bada.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-#include "qnx/CCFileUtils_qnx.cpp"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#include "linux/CCFileUtils_linux.cpp"
-#endif
 
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
