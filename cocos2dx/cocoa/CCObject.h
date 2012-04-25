@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __COCOA_NSOBJECT_H__
-#define __COCOA_NSOBJECT_H__
+#ifndef __CCOBJECT_H__
+#define __CCOBJECT_H__
 
-#include "CCCommon.h"
 #include "ccTypes.h"
+#include "CCCommon.h"
 
 NS_CC_BEGIN
 
@@ -90,4 +90,4 @@ typedef void (CCObject::*SEL_EventHandler)(CCEvent*);
 
 NS_CC_END
 
-#endif // __COCOA_NSOBJECT_H__
+#endif // __CCOBJECT_H__

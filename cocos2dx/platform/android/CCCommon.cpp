@@ -22,27 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_APPLICATION_PLATFORM_H__
-#define __CC_APPLICATION_PLATFORM_H__
+#include "CCCommon.h"
 
-#include "CCPlatformConfig.h"
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "win32/CCApplication_win32.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "android/CCApplication_android.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    # include "ios/CCApplication_ios.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    #include "marmalade/CCApplication_marmalade.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    #include "linux/CCApplication_linux.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    #include "bada/CCApplication_bada.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-    #include "qnx/CCApplication_qnx.h"
-#else
-    #error
-#endif
+#include <android/log.h>
+#include <stdio.h>
+#include <jni.h>
+#include "android/jni/MessageJni.h"
 
-#endif    // __CC_APPLICATION_PLATFORM_H__
+NS_CC_BEGIN
+
+void CCLog(const char * pszFormat, ...)
+{
+    char buf[MAX_LEN];
+
+    va_list args;
+    va_start(args, pszFormat);        
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
+
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+}
+
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    showMessageBoxJNI(pszMsg, pszTitle);
+}
+
+NS_CC_END

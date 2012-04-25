@@ -111,8 +111,8 @@ public:
     inline float getSecondsPerFrame() { return m_fSecondsPerFrame; }
 
     /** Get the CCEGLView, where everything is rendered */
-    inline CC_GLVIEW* getOpenGLView(void) { return m_pobOpenGLView; }
-    void setOpenGLView(CC_GLVIEW *pobOpenGLView);
+    inline CCEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
+    void setOpenGLView(CCEGLView *pobOpenGLView);
 
     inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
     void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
@@ -319,7 +319,7 @@ protected:
     void calculateDeltaTime();
 protected:
     /* The CCEGLView, where everything is rendered */
-    CC_GLVIEW    *m_pobOpenGLView;
+    CCEGLView    *m_pobOpenGLView;
 
     double m_dAnimationInterval;
     double m_dOldAnimationInterval;
