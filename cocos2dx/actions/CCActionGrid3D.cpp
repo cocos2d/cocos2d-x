@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCActionGrid3D.h"
 #include "CCPointExtension.h"
 #include "CCDirector.h"
-
+#include "CCZone.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN

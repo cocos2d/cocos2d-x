@@ -21,8 +21,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCAccelerometer_win32.h"
-#include "CCEGLView_win32.h"
+#include "CCAccelerometer.h"
+#include "CCEGLView.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
 

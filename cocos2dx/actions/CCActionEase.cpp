@@ -31,7 +31,7 @@ THE SOFTWARE.
  */
 
 #include "CCActionEase.h"
-#include "CCObject.h"
+#include "CCZone.h"
 
 NS_CC_BEGIN
 

@@ -21,27 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_ACCELEROMETER_PLATFORM_H__
-#define __CC_ACCELEROMETER_PLATFORM_H__
 
-#include "CCPlatformConfig.h"
+#ifndef __CCGL_H__
+#define __CCGL_H__
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "win32/CCAccelerometer_win32.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "android/CCAccelerometer_android.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "ios/CCAccelerometer_ios.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    #include "marmalade/CCAccelerometer_marmalade.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    #include "linux/CCAccelerometer_linux.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    #include "bada/CCAccelerometer_bada.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-    #include "qnx/CCAccelerometer_qnx.h"
-#else
-    #error
-#endif
+#define glClearDepth                glClearDepthf
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
+#define glGenVertexArrays           glGenVertexArraysOES
+#define glBindVertexArray           glBindVertexArrayOES
 
-#endif // __CC_UIACCELEROMETER_PLATFORM_H__
+#include <OpenGLES/ES2/gl.h>
+#include <OPenGLES/ES2/glext.h>
+
+
+#endif // __PLATFOMR_CCGL_H__
