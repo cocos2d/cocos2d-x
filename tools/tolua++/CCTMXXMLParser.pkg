@@ -17,8 +17,8 @@ enum {
 
 class CCTMXLayerInfo : public CCObject
 {
-    CCStringToStringDictionary* getProperties();
-    void setProperties(CCStringToStringDictionary* pval);
+    CCDictionary* getProperties();
+    void setProperties(CCDictionary* pval);
 };
 
 class CCTMXTilesetInfo : public CCObject
@@ -34,12 +34,12 @@ class CCTMXMapInfo : public CCObject
     CCSize getMapSize();
     void setTileSize(CCSize sz);
     CCSize getTileSize();
-    void setLayers(CCMutableArray<CCTMXLayerInfo*>* pval);
-    CCMutableArray<CCTMXLayerInfo*>* getLayers();
-    void setTilesets(CCMutableArray<CCTMXTilesetInfo*>* pval);
-    CCMutableArray<CCTMXTilesetInfo*>* getTilesets();
-    void setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* val);
-    CCMutableArray<CCTMXObjectGroup*>* getObjectGroups();
+    void setLayers(CCArray* pval);
+    CCArray* getLayers();
+    void setTilesets(CCArray* pval);
+    CCArray* getTilesets();
+    void setObjectGroups(CCArray* val);
+    CCArray* getObjectGroups();
     void setParentElement(int val);
     int getParentElement();
     void setParentGID(unsigned int val);
@@ -48,10 +48,10 @@ class CCTMXMapInfo : public CCObject
     int getLayerAttribs();
     void setStoringCharacters(bool val);
     bool getStoringCharacters();
-    void setProperties(CCStringToStringDictionary* pval);
-    CCStringToStringDictionary* getProperties();
-    void setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties);
-    CCDictionary<int, CCStringToStringDictionary*> * getTileProperties();
+    void setProperties(CCDictionary* pval);
+    CCDictionary* getProperties();
+    void setTileProperties(CCDictionary* tileProperties);
+    CCDictionary* getTileProperties();
     void setCurrentString(const char *currentString);
     const char* getCurrentString();
     void setTMXFileName(const char *fileName);
