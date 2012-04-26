@@ -50,4 +50,9 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     showMessageBoxJNI(pszMsg, pszTitle);
 }
 
+void CCLuaLog(const char * pszFormat)
+{
+	CCLog(pszFormat);
+}
+
 NS_CC_END
