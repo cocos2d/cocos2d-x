@@ -1,0 +1,29 @@
+class CCDictionary : public CCObject
+{
+    CCDictionary();
+    ~CCDictionary();
+    
+    unsigned int count();
+    CCArray* allKeys();
+    CCArray* allKeysForObject(CCObject* object);
+
+    CCObject* objectForKey(const CCString& key);
+    CCObject* objectForKey(int key);
+    const CCString* valueForKey(const CCString& key);
+    const CCString* valueForKey(int key);
+
+
+    void setObject(CCObject* pObject, const CCString& key);
+    void setObject(CCObject* pObject, int key);
+
+    void removeObjectForKey(const CCString& key);
+    void removeObjectForKey(int key);
+    void removeObjectsForKeys(CCArray* pKeyArray);
+    void removeObjectForElememt(CCDictElement* pElement);
+    void removeAllObjects();
+
+    static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
+    static CCDictionary* dictionaryWithContentsOfFile(const char *pFileName);
+
+};
+
