@@ -34,7 +34,7 @@ NS_CC_BEGIN
 //
 bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
         m_fDuration = kCCParticleDurationInfinity;
@@ -104,7 +104,7 @@ bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
         m_fDuration= kCCParticleDurationInfinity;
@@ -172,7 +172,7 @@ bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // additive
         this->setIsBlendAdditive(true);
@@ -244,7 +244,7 @@ bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
         m_fDuration = kCCParticleDurationInfinity;
@@ -318,7 +318,7 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
         m_fDuration = kCCParticleDurationInfinity;
@@ -391,7 +391,7 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
         m_fDuration = kCCParticleDurationInfinity;
@@ -465,7 +465,7 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) ) 
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
     {
         // duration
         m_fDuration = kCCParticleDurationInfinity;
@@ -539,7 +539,7 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) ) 
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
     {
         // duration
         m_fDuration = 0.1f;
@@ -612,7 +612,7 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
         m_fDuration = kCCParticleDurationInfinity;
@@ -681,7 +681,7 @@ bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) ) 
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
     {
         // duration
         m_fDuration = kCCParticleDurationInfinity;
@@ -754,7 +754,7 @@ bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
 //
 bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
 {
-    if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+    if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
         m_fDuration = kCCParticleDurationInfinity;

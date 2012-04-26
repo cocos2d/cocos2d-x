@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCPointExtension.h"
 #include "effects/CCGrid.h"
-
+#include "CCZone.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN

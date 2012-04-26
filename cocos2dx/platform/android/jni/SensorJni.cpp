@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "SensorJni.h"
 #include "CCGeometry.h"
 #include "CCAccelerometer.h"
-#include "platform/android/CCAccelerometer_android.h"
+#include "platform/android/CCAccelerometer.h"
 #include "CCEGLView.h"
 #include "JniHelper.h"
 #include <android/log.h>

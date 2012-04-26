@@ -1,29 +1,36 @@
-
 typedef enum {
-    /// Radial Counter-Clockwise
-    kCCProgressTimerTypeRadialCCW,
-    /// Radial ClockWise
-    kCCProgressTimerTypeRadialCW,
-    /// Horizontal Left-Right
-    kCCProgressTimerTypeHorizontalBarLR,
-    /// Horizontal Right-Left
-    kCCProgressTimerTypeHorizontalBarRL,
-    /// Vertical Bottom-top
-    kCCProgressTimerTypeVerticalBarBT,
-    /// Vertical Top-Bottom
-    kCCProgressTimerTypeVerticalBarTB,
+    kCCProgressTimerTypeRadial,
+    kCCProgressTimerTypeBar,
 } CCProgressTimerType;
 
 class CCProgressTimer : public CCNode
 {
     CCProgressTimerType getType(void);
+
     float getPercentage(void);
-    CCSprite* getSprite(void);
+
+    CCSprite* getSprite(void) { return m_pSprite; }
 
     void setPercentage(float fPercentage);
     void setSprite(CCSprite *pSprite);
     void setType(CCProgressTimerType type);
+    void setReverseProgress(bool reverse);
+    void setAnchorPoint(CCPoint anchorPoint);
 
-    static CCProgressTimer* progressWithFile(const char *pszFileName);
-    static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
+    void setColor(const ccColor3B& color);
+    const ccColor3B& getColor(void);
+    GLubyte getOpacity(void);
+    void setOpacity(GLubyte opacity);
+    void setIsOpacityModifyRGB(bool bValue);
+    bool getIsOpacityModifyRGB(void);
+
+    static CCProgressTimer* progressWithSprite(CCSprite* sp);
+
+    CCPoint getMidpoint();
+    void setMidpoint(CCPoint pt);
+    CCPoint getBarChangeRate();
+    void setBarChangeRate(CCPoint rate);
+
+    bool getIsReverseDirection();
+    void setIsReverseDirection(bool bReverseDir);
 };

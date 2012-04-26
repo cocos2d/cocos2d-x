@@ -183,7 +183,7 @@ void CCGridBase::set2DProjection()
 
     CCSize    size = director->getWinSizeInPixels();
 
-    glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+    glViewport(0, 0, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLLoadIdentity();
 
