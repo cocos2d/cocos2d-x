@@ -48,7 +48,8 @@ void ScriptingCore::runScript(const char *path)
 }
 ```
 
-Basically, the dpath string should point to wherever the JS directory is located. This allows for the "reload script"
+Basically, the dpath string should point to wherever the JS directory is located. This affects every script
+run through the `runScript` function from `ScriptingCore`. It also allows for the "reload script"
 button to work on the demo:
 
 ![screenshot 1](http://dl.dropbox.com/u/29043245/testjs1.png)
