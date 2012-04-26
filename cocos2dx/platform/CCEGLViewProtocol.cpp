@@ -235,7 +235,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
             return;
         }
 
-        CCLOG("Moving touches with id: %d, x=%f, y=%f", id, x, y);
+        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f", id, x, y);
         CCTouch* pTouch = s_pTouches[pIndex->getValue()];
         if (pTouch)
         {
@@ -285,7 +285,7 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         CCTouch* pTouch = s_pTouches[pIndex->getValue()];        
         if (pTouch)
         {
-            CCLOG("Ending touches with id: %d, x=%f, y=%f", id, x, y);
+            CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
 
             if (m_bNeedScale)
             {

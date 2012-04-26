@@ -309,8 +309,8 @@ void CCSpriteFrameCache::removeSpriteFrameByName(const char *pszName)
 
     if (key)
     {
-        m_pSpriteFrames->removeObjectForKey(*key);
-        m_pSpriteFramesAliases->removeObjectForKey(*key);
+        m_pSpriteFrames->removeObjectForKey(key->getCString());
+        m_pSpriteFramesAliases->removeObjectForKey(key->getCString());
     }
     else
     {
@@ -372,7 +372,7 @@ CCSpriteFrame* CCSpriteFrameCache::spriteFrameByName(const char *pszName)
         CCString *key = (CCString*)m_pSpriteFramesAliases->objectForKey(pszName);  
         if (key)
         {
-            frame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(*key);
+            frame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(key->getCString());
             if (! frame)
             {
                 CCLOG("cocos2d: CCSpriteFrameCahce: Frame '%s' not found", pszName);
