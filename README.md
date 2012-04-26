@@ -49,12 +49,15 @@ void ScriptingCore::runScript(const char *path)
 ```
 
 Basically, the dpath string should point to wherever the JS directory is located. This affects every script
-run through the `runScript` function from `ScriptingCore`. It also allows for the "reload script"
-button to work on the demo:
+run through the `runScript` function from `ScriptingCore`. If you don't want that behaviour, then just set
+the dpath string to `""`. It also allows for the "reload script" button to work on the demo:
 
 ![screenshot 1](http://dl.dropbox.com/u/29043245/testjs1.png)
 
-Here the buttons represent:
+If you set the dpath string to `""` (empty string) then the reload button will try to reload the script from
+inside the bundle.
+
+In the test scenes the buttons represent:
 
 * top left: will reload the current script
 * left arrow: previous test scene in the script
