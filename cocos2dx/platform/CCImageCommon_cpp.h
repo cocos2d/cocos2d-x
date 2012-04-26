@@ -31,21 +31,12 @@ THE SOFTWARE.
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "png.h"
+#include "jpeglib.h"
 #include <string>
 #include <ctype.h>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) 
 // on ios, we should use platform/ios/CCImage_ios.mm instead
-
-#define  QGLOBAL_H        // defined for wophone
-#include "jpeglib.h"
-#undef   QGLOBAL_H
-
-#define CC_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
-    (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
-    ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
-    ((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
-    ((unsigned)(unsigned char)(va) << 24))
 
 typedef struct 
 {
@@ -209,20 +200,21 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
 
 bool CCImage::_initWithPngData(void * pData, int nDatalen)
 {
+// length of bytes to check if it is a valid png file
+#define PNGSIGSIZE  8
     bool bRet = false;
-    png_byte        header[8]   = {0}; 
+    png_byte        header[PNGSIGSIZE]   = {0}; 
     png_structp     png_ptr     =   0;
     png_infop       info_ptr    = 0;
-    unsigned char * pImateData  = 0;
 
     do 
     {
         // png header len is 8 bytes
-        CC_BREAK_IF(nDatalen < 8);
+        CC_BREAK_IF(nDatalen < PNGSIGSIZE);
 
         // check the data is png or not
-        memcpy(header, pData, 8);
-        CC_BREAK_IF(png_sig_cmp(header, 0, 8));
+        memcpy(header, pData, PNGSIGSIZE);
+        CC_BREAK_IF(png_sig_cmp(header, 0, PNGSIGSIZE));
 
         // init png_struct
         png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
@@ -231,9 +223,11 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         // init png_info
         info_ptr = png_create_info_struct(png_ptr);
         CC_BREAK_IF(!info_ptr);
+
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
         CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
 #endif
+
         // set the read call back function
         tImageSource imageSource;
         imageSource.data    = (unsigned char*)pData;
@@ -241,67 +235,74 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         imageSource.offset  = 0;
         png_set_read_fn(png_ptr, &imageSource, pngReadCallback);
 
-        // read png
-        // PNG_TRANSFORM_EXPAND: perform set_expand()
-        // PNG_TRANSFORM_PACKING: expand 1, 2 and 4-bit samples to bytes
-        // PNG_TRANSFORM_STRIP_16: strip 16-bit samples to 8 bits
-        // PNG_TRANSFORM_GRAY_TO_RGB: expand grayscale samples to RGB (or GA to RGBA)
-        png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_PACKING 
-            | PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_GRAY_TO_RGB, 0);
+        // read png header info
+        
+        // read png file info
+        png_read_info(png_ptr, info_ptr);
+        
+        m_nWidth = png_get_image_width(png_ptr, info_ptr);
+        m_nHeight = png_get_image_height(png_ptr, info_ptr);
+        m_nBitsPerComponent = png_get_bit_depth(png_ptr, info_ptr);
+        png_uint_32 channels = png_get_channels(png_ptr, info_ptr);
+        png_uint_32 color_type = png_get_color_type(png_ptr, info_ptr);
 
-        int         color_type  = 0;
-        png_uint_32 nWidth = 0;
-        png_uint_32 nHeight = 0;
-        int         nBitsPerComponent = 0;
-        png_get_IHDR(png_ptr, info_ptr, &nWidth, &nHeight, &nBitsPerComponent, &color_type, 0, 0, 0);
-
-        // init image info
-        m_bPreMulti = true;
-        m_bHasAlpha = ( info_ptr->color_type & PNG_COLOR_MASK_ALPHA ) ? true : false;
-
-        // allocate memory and read data
-        int bytesPerComponent = 3;
+        CCLOG("color type %u", color_type);
+        // only support color type: PNG_COLOR_TYPE_RGB, PNG_COLOR_TYPE_RGB_ALPHA PNG_COLOR_TYPE_PALETTE
+        // and expand bit depth to 8
+        switch (color_type) {
+            case PNG_COLOR_TYPE_RGB:
+            case PNG_COLOR_TYPE_RGB_ALPHA:
+                // do nothing
+                
+                break;
+            case PNG_COLOR_TYPE_PALETTE:
+                png_set_palette_to_rgb(png_ptr);
+                channels = 3;
+                
+                break;
+            case PNG_COLOR_TYPE_GRAY:
+            case PNG_COLOR_TYPE_GRAY_ALPHA:
+                if (m_nBitsPerComponent < 8)
+                {
+                    png_set_expand_gray_1_2_4_to_8(png_ptr);
+                }
+                png_set_gray_to_rgb(png_ptr);
+                channels = 3;
+                
+                break;
+                
+            default:
+                CCLog("unsopprted color type %u", color_type);
+                goto out;
+        }
+        if (m_nBitsPerComponent == 16)
+        {
+            png_set_strip_16(png_ptr);
+            m_nBitsPerComponent = 8;
+        } 
+        
+        m_bHasAlpha = (color_type & PNG_COLOR_MASK_ALPHA) ? true : false;
         if (m_bHasAlpha)
         {
-            bytesPerComponent = 4;
+            channels = 4;
         }
-        pImateData = new unsigned char[nHeight * nWidth * bytesPerComponent];
-        CC_BREAK_IF(! pImateData);
 
-        png_bytep * rowPointers = png_get_rows(png_ptr, info_ptr);
-
-        // copy data to image info
-        int bytesPerRow = nWidth * bytesPerComponent;
-        if(m_bHasAlpha)
+        // read png data
+        // m_nBitsPerComponent will always be 8
+        m_pData = new unsigned char[m_nWidth * m_nHeight * channels];
+        png_bytep row_pointers[m_nHeight];
+        const unsigned int stride = m_nWidth * channels;
+        for (size_t i = 0; i < m_nHeight; ++i)
         {
-            unsigned int *tmp = (unsigned int *)pImateData;
-            for(unsigned int i = 0; i < nHeight; i++)
-            {
-                for(int j = 0; j < bytesPerRow; j += 4)
-                {
-                    *tmp++ = CC_RGB_PREMULTIPLY_APLHA( rowPointers[i][j], rowPointers[i][j + 1], 
-                        rowPointers[i][j + 2], rowPointers[i][j + 3] );
-                }
-            }
+            png_uint_32 q = i * stride;
+            row_pointers[i] = (png_bytep)m_pData + q;
         }
-        else
-        {
-            for (unsigned int j = 0; j < nHeight; ++j)
-            {
-                memcpy(pImateData + j * bytesPerRow, rowPointers[j], bytesPerRow);
-            }
-        }
+        png_read_image(png_ptr, row_pointers);
 
-        m_nBitsPerComponent = nBitsPerComponent;
-        m_nHeight   = (short)nHeight;
-        m_nWidth    = (short)nWidth;
-        m_pData     = pImateData;
-        pImateData  = 0;
         bRet        = true;
     } while (0);
 
-    CC_SAFE_DELETE_ARRAY(pImateData);
-
+out:
     if (png_ptr)
     {
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
