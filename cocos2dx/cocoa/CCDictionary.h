@@ -118,22 +118,25 @@ public:
     /** @warning : We use '==' to compare two objects*/
     CCArray* allKeysForObject(CCObject* object);
 
-    CCObject* objectForKey(const CCString& key);
+    CCObject* objectForKey(const std::string& key);
     CCObject* objectForKey(int key);
-    const CCString* valueForKey(const CCString& key);
+    const CCString* valueForKey(const std::string& key);
     const CCString* valueForKey(int key);
 
 
-    void setObject(CCObject* pObject, const CCString& key);
+    void setObject(CCObject* pObject, const std::string& key);
     void setObject(CCObject* pObject, int key);
 
-    void removeObjectForKey(const CCString& key);
+    void removeObjectForKey(const std::string& key);
     void removeObjectForKey(int key);
     void removeObjectsForKeys(CCArray* pKeyArray);
     void removeObjectForElememt(CCDictElement* pElement);
     void removeAllObjects();
 
     virtual CCObject* copyWithZone(CCZone* pZone);
+
+    /* static functions */
+    static CCDictionary* dictionary();
 
     static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
     /**
@@ -150,7 +153,7 @@ public:
     static CCDictionary* dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
 
 private:
-    void setObjectUnSafe(CCObject* pObject, const CCString& key);
+    void setObjectUnSafe(CCObject* pObject, const std::string& key);
     void setObjectUnSafe(CCObject* pObject, const int key);
     
 public:

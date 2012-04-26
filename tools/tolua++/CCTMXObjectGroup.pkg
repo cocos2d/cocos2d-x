@@ -4,16 +4,16 @@ class CCTMXObjectGroup : public CCObject
     void setPositionOffset(CCPoint pt);
     CCPoint getPositionOffset();
 
-    void setProperties(CCStringToStringDictionary* pval);
-    CCStringToStringDictionary* getProperties();
+    void setProperties(CCDictionary* pval);
+    CCDictionary* getProperties();
 
-    void setObjects(CCMutableArray<CCStringToStringDictionary*>* val);
-    CCMutableArray<CCStringToStringDictionary*>* getObjects();
+    void setObjects(CCArray* val);
+    CCArray* getObjects();
 
     void setGroupName(const char *groupName);
     const char* getGroupName();
 
     CCString *propertyNamed(const char* propertyName);
 
-    CCStringToStringDictionary* objectNamed(const char *objectName);
+    CCDictionary* objectNamed(const char *objectName);
 };

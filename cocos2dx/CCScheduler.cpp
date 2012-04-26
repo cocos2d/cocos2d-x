@@ -179,6 +179,10 @@ void CCTimer::update(ccTime dt)
                     {
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
+					if (m_nScriptHandler)
+					{
+						CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
+					}
                     m_fElapsed = m_fElapsed - m_fDelay;
                     m_nTimesExecuted+=1;
                     m_bUseDelay = false;
@@ -192,6 +196,10 @@ void CCTimer::update(ccTime dt)
                     {
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
+					if (m_nScriptHandler)
+					{
+						CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
+					}
                     m_fElapsed = 0;
                     m_nTimesExecuted += 1;
 
