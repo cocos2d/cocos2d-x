@@ -290,16 +290,20 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         // read png data
         // m_nBitsPerComponent will always be 8
         m_pData = new unsigned char[m_nWidth * m_nHeight * channels];
-        png_bytep row_pointers[m_nHeight];
-        const unsigned int stride = m_nWidth * channels;
-        for (size_t i = 0; i < m_nHeight; ++i)
+        png_bytep* row_pointers = (png_bytep*)malloc(sizeof(png_bytep)*m_nHeight);
+        if (row_pointers)
         {
-            png_uint_32 q = i * stride;
-            row_pointers[i] = (png_bytep)m_pData + q;
+            const unsigned int stride = m_nWidth * channels;
+            for (size_t i = 0; i < m_nHeight; ++i)
+            {
+                png_uint_32 q = i * stride;
+                row_pointers[i] = (png_bytep)m_pData + q;
+            }
+            png_read_image(png_ptr, row_pointers);
+            free(row_pointers);
+            bRet = true;
         }
-        png_read_image(png_ptr, row_pointers);
 
-        bRet        = true;
     } while (0);
 
 out:
