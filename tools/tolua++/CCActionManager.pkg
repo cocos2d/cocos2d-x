@@ -1,15 +1,21 @@
 
 class CCActionManager : public CCObject
 {
-    void removeAllActions(void);
-    void removeAllActionsFromTarget(CCObject *pTarget);
-    void removeAction(CCAction *pAction);
-    void removeActionByTag(int tag, CCObject *pTarget);
+    void addAction(CCAction *pAction, CCNode *pTarget, bool paused);
 
-    int numberOfRunningActionsInTarget(CCObject *pTarget);
+    void removeAllActions(void);
+
+    void removeAllActionsFromTarget(CCObject *pTarget);
+
+    void removeAction(CCAction *pAction);
+
+    void removeActionByTag(unsigned int tag, CCObject *pTarget);
+
+    CCAction* getActionByTag(unsigned int tag, CCObject *pTarget);
+
+    unsigned int numberOfRunningActionsInTarget(CCObject *pTarget);
 
     void pauseTarget(CCObject *pTarget);
-    void resumeTarget(CCObject *pTarget);
 
-    static CCActionManager* sharedManager(void);
+    void resumeTarget(CCObject *pTarget);
 };

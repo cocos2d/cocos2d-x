@@ -53,6 +53,3 @@ class CCParticleSystemQuad : public CCParticleSystem {
     static CCParticleSystemQuad * particleWithFile(const char *plistFile);
 };
 
-class CCParticleSystemPoint : public CCParticleSystem {
-    static CCParticleSystemPoint * particleWithFile(const char *plistFile);
-};

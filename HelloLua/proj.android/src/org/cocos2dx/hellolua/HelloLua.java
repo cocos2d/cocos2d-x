@@ -24,22 +24,34 @@ THE SOFTWARE.
 package org.cocos2dx.hellolua;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import org.cocos2dx.lib.Cocos2dxRenderer;
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 public class HelloLua extends Cocos2dxActivity{
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
-		// get the packageName,it's used to set the resource path
-		String packageName = getApplication().getPackageName();
-		super.setPackageName(packageName);
+        if (detectOpenGLES20()) {
+			// get the packageName,it's used to set the resource path
+			String packageName = getApplication().getPackageName();
+			super.setPackageName(packageName);
 		
-        mGLView = new LuaGLSurfaceView(this);
-        setContentView(mGLView);
+	        mGLView = new LuaGLSurfaceView(this);
+			setContentView(mGLView);
+	        mGLView.setEGLContextClientVersion(2);
+	        mGLView.setCocos2dxRenderer(new Cocos2dxRenderer());
+		}
+		else {
+			Log.d("activity", "don't support gles2.0");
+			finish();
+		}
 	}
 	
 	 @Override
@@ -54,7 +66,16 @@ public class HelloLua extends Cocos2dxActivity{
 	     mGLView.onResume();
 	 }
 	  
-	 private GLSurfaceView mGLView;
+	 private boolean detectOpenGLES20() 
+	 {
+	     ActivityManager am =
+	            (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	     ConfigurationInfo info = am.getDeviceConfigurationInfo();
+	     return (info.reqGlEsVersion >= 0x20000);
+	 }
+	 
+	 private LuaGLSurfaceView mGLView;
+
 	
      static {
          System.loadLibrary("cocosdenshion");

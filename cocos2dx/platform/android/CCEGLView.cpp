@@ -30,8 +30,7 @@ THE SOFTWARE.
 #include "jni/MessageJni.h"
 
 #include <stdlib.h>
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
+#include "CCGL.h"
 #include <EGL/egl.h>
 #include <android/log.h>
 
