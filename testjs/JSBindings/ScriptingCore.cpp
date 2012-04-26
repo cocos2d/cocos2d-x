@@ -41,6 +41,7 @@ ScriptingCore::ScriptingCore()
 	S_CCPoint::jsCreateClass(this->cx, cocos, "Point");
 	S_CCSize::jsCreateClass(this->cx, cocos, "Size");
 	S_CCRect::jsCreateClass(this->cx, cocos, "Rect");
+	S_CCSet::jsCreateClass(this->cx, cocos, "Set");
 	S_CCTouch::jsCreateClass(this->cx, cocos, "Touch");
 	S_CCDirector::jsCreateClass(this->cx, cocos, "Director");
 	S_CCNode::jsCreateClass(this->cx, cocos, "Node");
@@ -48,6 +49,11 @@ ScriptingCore::ScriptingCore()
 	S_CCLayer::jsCreateClass(this->cx, cocos, "Layer");
 	S_CCSprite::jsCreateClass(this->cx, cocos, "Sprite");
 	S_CCRenderTexture::jsCreateClass(this->cx, cocos, "RenderTexture");
+	S_CCMenu::jsCreateClass(this->cx, cocos, "Menu");
+	S_CCMenuItem::jsCreateClass(this->cx, cocos, "MenuItem");
+	S_CCMenuItemImage::jsCreateClass(this->cx, cocos, "MenuItemImage");
+	S_CCMenuItemLabel::jsCreateClass(this->cx, cocos, "MenuItemLabel");
+	S_CCMenuItemSprite::jsCreateClass(this->cx, cocos, "MenuItemSprite");
 	S_CCSpriteFrame::jsCreateClass(this->cx, cocos, "SpriteFrame");
 	S_CCSpriteFrameCache::jsCreateClass(this->cx, cocos, "SpriteFrameCache");
 	S_CCAnimation::jsCreateClass(this->cx, cocos, "Animation");
@@ -58,11 +64,14 @@ ScriptingCore::ScriptingCore()
 	S_CCRotateBy::jsCreateClass(this->cx, cocos, "RotateBy");
 	S_CCRotateTo::jsCreateClass(this->cx, cocos, "RotateTo");
 	S_CCRepeatForever::jsCreateClass(this->cx, cocos, "RepeatForever");
+	S_CCSequence::jsCreateClass(this->cx, cocos, "Sequence");
+	S_CCLabelTTF::jsCreateClass(this->cx, cocos, "LabelTTF");
 
 	// register some global functions
 	JS_DefineFunction(this->cx, cocos, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(this->cx, cocos, "addGCRootObject", ScriptingCore::addRootJS, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(this->cx, cocos, "removeGCRootObject", ScriptingCore::removeRootJS, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(this->cx, cocos, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(this->cx, cocos, "addGCRootObject", ScriptingCore::addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(this->cx, cocos, "removeGCRootObject", ScriptingCore::removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(this->cx, cocos, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
@@ -83,7 +92,13 @@ void ScriptingCore::evalString(const char *string)
 
 void ScriptingCore::runScript(const char *path)
 {
+#ifdef DEBUG
+	std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
+	dpath += path;
+	const char *realPath = dpath.c_str();
+#else
 	const char *realPath = CCFileUtils::fullPathFromRelativePath(path);
+#endif
 	unsigned char *content = NULL;
 	size_t contentSize = CCFileUtils::ccLoadFileIntoMemory(realPath, &content);
 	if (content && contentSize) {

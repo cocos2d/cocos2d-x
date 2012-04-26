@@ -79,6 +79,20 @@ public:
 	};
 
 	/**
+	 * run a script from script :)
+	 */
+	static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp)
+	{
+		if (argc == 1) {
+			JSString *string;
+			if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string) == JS_TRUE) {
+				ScriptingCore::getInstance().runScript(JS_EncodeString(cx, string));
+			}
+		}
+		return JS_TRUE;
+	};
+
+	/**
 	 * Register an object as a member of the GC's root set, preventing
 	 * them from being GC'ed
 	 */
