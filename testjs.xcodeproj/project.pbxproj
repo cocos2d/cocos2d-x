@@ -7,10 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00F94698152DFEEF007EB065 /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F94695152DFEEF007EB065 /* ScriptingCore.cpp */; };
+		00AA6832153F8060001AB56E /* out.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00AA682E153F8060001AB56E /* out.cpp */; };
+		00AA6833153F8060001AB56E /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00AA6830153F8060001AB56E /* ScriptingCore.cpp */; };
+		00AA6846153F85A3001AB56E /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6834153F85A3001AB56E /* b1-hd.png */; };
+		00AA6847153F85A3001AB56E /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6835153F85A3001AB56E /* b1-ipad.png */; };
+		00AA6848153F85A3001AB56E /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6836153F85A3001AB56E /* b1.png */; };
+		00AA6849153F85A3001AB56E /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6837153F85A3001AB56E /* b2-hd.png */; };
+		00AA684A153F85A3001AB56E /* b2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6838153F85A3001AB56E /* b2-ipad.png */; };
+		00AA684B153F85A3001AB56E /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6839153F85A3001AB56E /* b2.png */; };
+		00AA684C153F85A3001AB56E /* f1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA683A153F85A3001AB56E /* f1-hd.png */; };
+		00AA684D153F85A3001AB56E /* f1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA683B153F85A3001AB56E /* f1-ipad.png */; };
+		00AA684E153F85A3001AB56E /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA683C153F85A3001AB56E /* f1.png */; };
+		00AA684F153F85A3001AB56E /* f2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA683D153F85A3001AB56E /* f2-hd.png */; };
+		00AA6850153F85A3001AB56E /* f2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA683E153F85A3001AB56E /* f2-ipad.png */; };
+		00AA6851153F85A3001AB56E /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA683F153F85A3001AB56E /* f2.png */; };
+		00AA6852153F85A3001AB56E /* r1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6840153F85A3001AB56E /* r1-hd.png */; };
+		00AA6853153F85A3001AB56E /* r1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6841153F85A3001AB56E /* r1-ipad.png */; };
+		00AA6854153F85A3001AB56E /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6842153F85A3001AB56E /* r1.png */; };
+		00AA6855153F85A3001AB56E /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6843153F85A3001AB56E /* r2-hd.png */; };
+		00AA6856153F85A3001AB56E /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6844153F85A3001AB56E /* r2-ipad.png */; };
+		00AA6857153F85A3001AB56E /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6845153F85A3001AB56E /* r2.png */; };
+		00CD253115488C8D00B91EB5 /* grossini_dance_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 00CD253015488C8D00B91EB5 /* grossini_dance_05.png */; };
+		00CD253415488CF900B91EB5 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 00CD253315488CF900B91EB5 /* grossinis_sister1.png */; };
 		00F9469B152E0D3D007EB065 /* tank.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00F94699152E0D3D007EB065 /* tank.plist */; };
 		00F9469C152E0D3D007EB065 /* tank.png in Resources */ = {isa = PBXBuildFile; fileRef = 00F9469A152E0D3D007EB065 /* tank.png */; };
-		00F946C9152E6742007EB065 /* out.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F946C7152E6742007EB065 /* out.cpp */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -149,12 +169,32 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00F94695152DFEEF007EB065 /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
-		00F94696152DFEEF007EB065 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
+		00AA682E153F8060001AB56E /* out.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = out.cpp; sourceTree = "<group>"; };
+		00AA682F153F8060001AB56E /* out.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = out.hpp; sourceTree = "<group>"; };
+		00AA6830153F8060001AB56E /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
+		00AA6831153F8060001AB56E /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
+		00AA6834153F85A3001AB56E /* b1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b1-hd.png"; path = "Resources/b1-hd.png"; sourceTree = "<group>"; };
+		00AA6835153F85A3001AB56E /* b1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b1-ipad.png"; path = "Resources/b1-ipad.png"; sourceTree = "<group>"; };
+		00AA6836153F85A3001AB56E /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b1.png; path = Resources/b1.png; sourceTree = "<group>"; };
+		00AA6837153F85A3001AB56E /* b2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b2-hd.png"; path = "Resources/b2-hd.png"; sourceTree = "<group>"; };
+		00AA6838153F85A3001AB56E /* b2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b2-ipad.png"; path = "Resources/b2-ipad.png"; sourceTree = "<group>"; };
+		00AA6839153F85A3001AB56E /* b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b2.png; path = Resources/b2.png; sourceTree = "<group>"; };
+		00AA683A153F85A3001AB56E /* f1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "f1-hd.png"; path = "Resources/f1-hd.png"; sourceTree = "<group>"; };
+		00AA683B153F85A3001AB56E /* f1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "f1-ipad.png"; path = "Resources/f1-ipad.png"; sourceTree = "<group>"; };
+		00AA683C153F85A3001AB56E /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f1.png; path = Resources/f1.png; sourceTree = "<group>"; };
+		00AA683D153F85A3001AB56E /* f2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "f2-hd.png"; path = "Resources/f2-hd.png"; sourceTree = "<group>"; };
+		00AA683E153F85A3001AB56E /* f2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "f2-ipad.png"; path = "Resources/f2-ipad.png"; sourceTree = "<group>"; };
+		00AA683F153F85A3001AB56E /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f2.png; path = Resources/f2.png; sourceTree = "<group>"; };
+		00AA6840153F85A3001AB56E /* r1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "r1-hd.png"; path = "Resources/r1-hd.png"; sourceTree = "<group>"; };
+		00AA6841153F85A3001AB56E /* r1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "r1-ipad.png"; path = "Resources/r1-ipad.png"; sourceTree = "<group>"; };
+		00AA6842153F85A3001AB56E /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = r1.png; path = Resources/r1.png; sourceTree = "<group>"; };
+		00AA6843153F85A3001AB56E /* r2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "r2-hd.png"; path = "Resources/r2-hd.png"; sourceTree = "<group>"; };
+		00AA6844153F85A3001AB56E /* r2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "r2-ipad.png"; path = "Resources/r2-ipad.png"; sourceTree = "<group>"; };
+		00AA6845153F85A3001AB56E /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = r2.png; path = Resources/r2.png; sourceTree = "<group>"; };
+		00CD253015488C8D00B91EB5 /* grossini_dance_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossini_dance_05.png; path = Resources/grossini_dance_05.png; sourceTree = "<group>"; };
+		00CD253315488CF900B91EB5 /* grossinis_sister1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossinis_sister1.png; path = Resources/grossinis_sister1.png; sourceTree = "<group>"; };
 		00F94699152E0D3D007EB065 /* tank.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = tank.plist; path = Resources/tank.plist; sourceTree = "<group>"; };
 		00F9469A152E0D3D007EB065 /* tank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tank.png; path = Resources/tank.png; sourceTree = "<group>"; };
-		00F946C7152E6742007EB065 /* out.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = out.cpp; path = ../out.cpp; sourceTree = "<group>"; };
-		00F946C8152E6742007EB065 /* out.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = out.hpp; path = ../out.hpp; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* testjs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testjs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -456,23 +496,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00F94693152DFEEF007EB065 /* JSBindings */ = {
+		00AA682D153F8060001AB56E /* JSBindings */ = {
 			isa = PBXGroup;
 			children = (
-				00F946C7152E6742007EB065 /* out.cpp */,
-				00F946C8152E6742007EB065 /* out.hpp */,
-				00F94695152DFEEF007EB065 /* ScriptingCore.cpp */,
-				00F94696152DFEEF007EB065 /* ScriptingCore.h */,
+				00AA682E153F8060001AB56E /* out.cpp */,
+				00AA682F153F8060001AB56E /* out.hpp */,
+				00AA6830153F8060001AB56E /* ScriptingCore.cpp */,
+				00AA6831153F8060001AB56E /* ScriptingCore.h */,
 			);
 			name = JSBindings;
-			path = "../../Documents/cocos2d-x/js/JSBindings";
+			path = testjs/JSBindings;
 			sourceTree = "<group>";
 		};
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
 				A92277071517C16A001B78AA /* JS */,
-				00F94693152DFEEF007EB065 /* JSBindings */,
+				00AA682D153F8060001AB56E /* JSBindings */,
 				A92275511517C094001B78AA /* testjs */,
 				A92275401517C094001B78AA /* Frameworks */,
 				A922753E1517C094001B78AA /* Products */,
@@ -517,6 +557,26 @@
 		A92275521517C094001B78AA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				00CD253315488CF900B91EB5 /* grossinis_sister1.png */,
+				00CD253015488C8D00B91EB5 /* grossini_dance_05.png */,
+				00AA6834153F85A3001AB56E /* b1-hd.png */,
+				00AA6835153F85A3001AB56E /* b1-ipad.png */,
+				00AA6836153F85A3001AB56E /* b1.png */,
+				00AA6837153F85A3001AB56E /* b2-hd.png */,
+				00AA6838153F85A3001AB56E /* b2-ipad.png */,
+				00AA6839153F85A3001AB56E /* b2.png */,
+				00AA683A153F85A3001AB56E /* f1-hd.png */,
+				00AA683B153F85A3001AB56E /* f1-ipad.png */,
+				00AA683C153F85A3001AB56E /* f1.png */,
+				00AA683D153F85A3001AB56E /* f2-hd.png */,
+				00AA683E153F85A3001AB56E /* f2-ipad.png */,
+				00AA683F153F85A3001AB56E /* f2.png */,
+				00AA6840153F85A3001AB56E /* r1-hd.png */,
+				00AA6841153F85A3001AB56E /* r1-ipad.png */,
+				00AA6842153F85A3001AB56E /* r1.png */,
+				00AA6843153F85A3001AB56E /* r2-hd.png */,
+				00AA6844153F85A3001AB56E /* r2-ipad.png */,
+				00AA6845153F85A3001AB56E /* r2.png */,
 				00F94699152E0D3D007EB065 /* tank.plist */,
 				00F9469A152E0D3D007EB065 /* tank.png */,
 				A9F1763C152D013F00A6DB1E /* background.png */,
@@ -1118,6 +1178,26 @@
 				A9F1763D152D013F00A6DB1E /* background.png in Resources */,
 				00F9469B152E0D3D007EB065 /* tank.plist in Resources */,
 				00F9469C152E0D3D007EB065 /* tank.png in Resources */,
+				00AA6846153F85A3001AB56E /* b1-hd.png in Resources */,
+				00AA6847153F85A3001AB56E /* b1-ipad.png in Resources */,
+				00AA6848153F85A3001AB56E /* b1.png in Resources */,
+				00AA6849153F85A3001AB56E /* b2-hd.png in Resources */,
+				00AA684A153F85A3001AB56E /* b2-ipad.png in Resources */,
+				00AA684B153F85A3001AB56E /* b2.png in Resources */,
+				00AA684C153F85A3001AB56E /* f1-hd.png in Resources */,
+				00AA684D153F85A3001AB56E /* f1-ipad.png in Resources */,
+				00AA684E153F85A3001AB56E /* f1.png in Resources */,
+				00AA684F153F85A3001AB56E /* f2-hd.png in Resources */,
+				00AA6850153F85A3001AB56E /* f2-ipad.png in Resources */,
+				00AA6851153F85A3001AB56E /* f2.png in Resources */,
+				00AA6852153F85A3001AB56E /* r1-hd.png in Resources */,
+				00AA6853153F85A3001AB56E /* r1-ipad.png in Resources */,
+				00AA6854153F85A3001AB56E /* r1.png in Resources */,
+				00AA6855153F85A3001AB56E /* r2-hd.png in Resources */,
+				00AA6856153F85A3001AB56E /* r2-ipad.png in Resources */,
+				00AA6857153F85A3001AB56E /* r2.png in Resources */,
+				00CD253115488C8D00B91EB5 /* grossini_dance_05.png in Resources */,
+				00CD253415488CF900B91EB5 /* grossinis_sister1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1242,8 +1322,8 @@
 				A92276F61517C097001B78AA /* RootViewController.mm in Sources */,
 				A92276FA1517C097001B78AA /* AppDelegate.cpp in Sources */,
 				A92276FD1517C097001B78AA /* HelloWorldScene.cpp in Sources */,
-				00F94698152DFEEF007EB065 /* ScriptingCore.cpp in Sources */,
-				00F946C9152E6742007EB065 /* out.cpp in Sources */,
+				00AA6832153F8060001AB56E /* out.cpp in Sources */,
+				00AA6833153F8060001AB56E /* ScriptingCore.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
