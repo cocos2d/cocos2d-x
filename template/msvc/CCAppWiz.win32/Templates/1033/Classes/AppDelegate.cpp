@@ -38,6 +38,9 @@ bool AppDelegate::initInstance()
 		CC_BREAK_IF(! pMainWnd
 				|| ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 480, 320));
 
+		// set the design resolution screen size, if you want to use Design Resoulution scaled to current screen, please uncomment next line.
+		//pMainWnd->setDesignResolutionSize(480, 320);
+
 #endif  // CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -102,7 +105,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 //     pDirector->enableRetinaDisplay(true);
 
     // turn on display FPS
-    pDirector->setDisplayFPS(true);
+    pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
@@ -130,7 +133,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+	std::string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif
