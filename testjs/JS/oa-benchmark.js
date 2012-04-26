@@ -83,11 +83,11 @@ for (var i=0; i < tanks.length; i++) {
 	var tank = new Tank();
 	tank.tankId = i;
 	scene.addChild(tank.sprite);
-	if (i == 0) {
+	if (i === 0) {
 		// this is not working correctly (only on ccnodes)
 		tank.sprite.onEnter = function () {
 			cocos.log("on enter");
-		}
+		};
 	}
 
 	// second argument false by default
