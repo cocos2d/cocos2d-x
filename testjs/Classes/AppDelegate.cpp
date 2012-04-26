@@ -91,7 +91,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setAnimationInterval(1.0 / 60);
 
 	// run the main script
-	ScriptingCore::getInstance().runScript("JS/oa-benchmark.js");
+	ScriptingCore::getInstance().runScript("JS/1to1/test_actions.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_layer.js");
 
 	return true;
 }
