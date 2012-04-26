@@ -35,6 +35,7 @@ cocoa/CCObject.cpp \
 cocoa/CCSet.cpp \
 cocoa/CCString.cpp \
 cocoa/CCZone.cpp \
+cocoa/CCArray.cpp \
 cocos2d.cpp \
 CCDirector.cpp \
 effects/CCGrabber.cpp \
@@ -84,18 +85,17 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
-platform/CCFileUtils.cpp \
-platform/CCGL.cpp \
-platform/CCImage.cpp \
 platform/CCStdC.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
-platform/CCCommon.cpp \
 platform/platform.cpp \
 platform/CCEGLViewProtocol.cpp \
-platform/android/CCEGLView_android.cpp \
-platform/android/CCAccelerometer_android.cpp \
-platform/android/CCApplication_android.cpp \
+platform/android/CCEGLView.cpp \
+platform/android/CCAccelerometer.cpp \
+platform/android/CCApplication.cpp \
+platform/android/CCCommon.cpp \
+platform/android/CCFileUtils.cpp \
+platform/android/CCImage.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
 platform/android/jni/MessageJni.cpp \
@@ -113,7 +113,6 @@ sprite_nodes/CCSprite.cpp \
 sprite_nodes/CCSpriteBatchNode.cpp \
 sprite_nodes/CCSpriteFrame.cpp \
 sprite_nodes/CCSpriteFrameCache.cpp \
-support/CCArray.cpp \
 support/CCProfiling.cpp \
 support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
@@ -141,25 +140,67 @@ touch_dispatcher/CCTouchDispatcher.cpp \
 touch_dispatcher/CCTouchHandler.cpp 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
-                           $(LOCAL_PATH)/include \
-                           $(LOCAL_PATH)/platform \
-                           $(LOCAL_PATH)/kazmath/include
-                           
+                    $(LOCAL_PATH)/actions \
+                    $(LOCAL_PATH)/base_nodes \
+                    $(LOCAL_PATH)/cocoa \
+                    $(LOCAL_PATH)/effects \
+                    $(LOCAL_PATH)/extensions \
+                    $(LOCAL_PATH)/include \
+                    $(LOCAL_PATH)/kazmath/include \
+                    $(LOCAL_PATH)/keypad_dispatcher \
+                    $(LOCAL_PATH)/label_nodes \
+                    $(LOCAL_PATH)/layers_scenes_transitions_nodes \
+                    $(LOCAL_PATH)/menu_nodes \
+                    $(LOCAL_PATH)/misc_nodes \
+                    $(LOCAL_PATH)/particle_nodes \
+                    $(LOCAL_PATH)/platform \
+                    $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/script_support \
+                    $(LOCAL_PATH)/shaders \
+                    $(LOCAL_PATH)/sprite_nodes \
+                    $(LOCAL_PATH)/support \
+                    $(LOCAL_PATH)/text_input_node \
+                    $(LOCAL_PATH)/textures \
+                    $(LOCAL_PATH)/tileMap_parallax_nodes \
+                    $(LOCAL_PATH)/touch_dispatcher
+
+
 LOCAL_EXPORT_LDLIBS := -llog\
                        -lz \
                        -lGLESv2 \
                        -lEGL
-                    
+
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
+                    $(LOCAL_PATH)/actions \
+                    $(LOCAL_PATH)/base_nodes \
+                    $(LOCAL_PATH)/cocoa \
+                    $(LOCAL_PATH)/effects \
+                    $(LOCAL_PATH)/extensions \
                     $(LOCAL_PATH)/include \
+                    $(LOCAL_PATH)/kazmath/include \
+                    $(LOCAL_PATH)/keypad_dispatcher \
+                    $(LOCAL_PATH)/label_nodes \
+                    $(LOCAL_PATH)/layers_scenes_transitions_nodes \
+                    $(LOCAL_PATH)/menu_nodes \
+                    $(LOCAL_PATH)/misc_nodes \
+                    $(LOCAL_PATH)/particle_nodes \
                     $(LOCAL_PATH)/platform \
-                    $(LOCAL_PATH)/kazmath/include
+                    $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/script_support \
+                    $(LOCAL_PATH)/shaders \
+                    $(LOCAL_PATH)/sprite_nodes \
+                    $(LOCAL_PATH)/support \
+                    $(LOCAL_PATH)/text_input_node \
+                    $(LOCAL_PATH)/textures \
+                    $(LOCAL_PATH)/tileMap_parallax_nodes \
+                    $(LOCAL_PATH)/touch_dispatcher
+
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -lEGL \
                 -llog \
                 -lz 
-                
+
 LOCAL_STATIC_LIBRARIES := png_static_prebuilt
 LOCAL_STATIC_LIBRARIES += xml2_static_prebuilt
 LOCAL_STATIC_LIBRARIES += jpeg_static_prebuilt

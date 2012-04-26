@@ -22,16 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCUserDefault.h"
+#include "CCCommon.h"
 #include "platform/CCFileUtils.h"
-
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #include <libxml/parser.h>
 #include <libxml/tree.h>
-//#else
-//#include <libxml/parser.h>
-//#include <libxml/tree.h>
-//#endif
-
 
 // root name of xml
 #define USERDEFAULT_ROOT_NAME    "userDefaultRoot"

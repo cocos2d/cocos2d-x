@@ -185,8 +185,6 @@ class CCAnimate : public CCActionInterval
     void setAnimation(CCAnimation *pAnimation);
 
     static CCAction* actionWithAnimation(CCAnimation *pAnimation);
-    static CCAction* actionWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
-    static CCAction* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 };
 
 class CCProgressTo : public CCAction

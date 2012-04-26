@@ -27,6 +27,7 @@
 #include "CCActionInstant.h"
 #include "CCNode.h"
 #include "CCSprite.h"
+#include "CCZone.h"
 
 NS_CC_BEGIN
 //

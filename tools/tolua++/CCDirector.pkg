@@ -24,5 +24,11 @@ class CCDirector : public CCObject
 
     CCFloat getContentScaleFactor(void);
 
+    CCScheduler* getScheduler();
+    CCActionManager* getActionManager();
+    CCTouchDispatcher* getTouchDispatcher();
+    CCKeypadDispatcher* getKeypadDispatcher();
+    CCAccelerometer* getAccelerometer();
+
     static CCDirector* sharedDirector(void);
 };

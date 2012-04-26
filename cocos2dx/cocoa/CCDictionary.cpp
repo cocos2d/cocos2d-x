@@ -88,14 +88,14 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
     return pArray;
 }
 
-CCObject* CCDictionary::objectForKey(const CCString& key)
+CCObject* CCDictionary::objectForKey(const std::string& key)
 {
     if (m_eDictType == kCCDictUnknown && m_eDictType == kCCDictUnknown) return NULL;
     CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as key.");
 
     CCObject* pRetObject = NULL;
     CCDictElement *pElement = NULL;
-    HASH_FIND_STR(m_pElements, key.getCString(), pElement);
+    HASH_FIND_STR(m_pElements, key.c_str(), pElement);
     if (pElement != NULL)
     {
         pRetObject = pElement->m_pObject;
@@ -118,7 +118,7 @@ CCObject* CCDictionary::objectForKey(int key)
     return pRetObject;
 }
 
-const CCString* CCDictionary::valueForKey(const CCString& key)
+const CCString* CCDictionary::valueForKey(const std::string& key)
 {
     CCString* pStr = (CCString*)objectForKey(key);
     if (pStr == NULL)
@@ -138,7 +138,7 @@ const CCString* CCDictionary::valueForKey(int key)
     return pStr;
 }
 
-void CCDictionary::setObject(CCObject* pObject, const CCString& key)
+void CCDictionary::setObject(CCObject* pObject, const std::string& key)
 {
     CCAssert(key.length() > 0 && pObject != NULL, "Invalid Argument!");
     if (m_eOldDictType == kCCDictUnknown)
@@ -149,7 +149,7 @@ void CCDictionary::setObject(CCObject* pObject, const CCString& key)
     CCAssert(m_eDictType == m_eOldDictType, "this dictionary does not use string as key.");
 
     CCDictElement *pElement = NULL;
-    HASH_FIND_STR(m_pElements, key.getCString(), pElement);
+    HASH_FIND_STR(m_pElements, key.c_str(), pElement);
     if (pElement == NULL)
     {
         setObjectUnSafe(pObject, key);
@@ -191,7 +191,7 @@ void CCDictionary::setObject(CCObject* pObject, int key)
 
 }
 
-void CCDictionary::removeObjectForKey(const CCString& key)
+void CCDictionary::removeObjectForKey(const std::string& key)
 {
     if (m_eOldDictType == kCCDictUnknown) 
     {
@@ -200,7 +200,7 @@ void CCDictionary::removeObjectForKey(const CCString& key)
     CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as its key");
     CCAssert(key.length() > 0, "Invalid Argument!");
     CCDictElement *pElement = NULL;
-    HASH_FIND_STR(m_pElements, key.getCString(), pElement);
+    HASH_FIND_STR(m_pElements, key.c_str(), pElement);
     removeObjectForElememt(pElement);
 }
 
@@ -216,10 +216,10 @@ void CCDictionary::removeObjectForKey(int key)
     removeObjectForElememt(pElement);
 }
 
-void CCDictionary::setObjectUnSafe(CCObject* pObject, const CCString& key)
+void CCDictionary::setObjectUnSafe(CCObject* pObject, const std::string& key)
 {
     pObject->retain();
-    CCDictElement* pElement = new CCDictElement(key.getCString(), pObject);
+    CCDictElement* pElement = new CCDictElement(key.c_str(), pObject);
     HASH_ADD_STR(m_pElements, m_szKey, pElement);
 }
 
@@ -236,7 +236,7 @@ void CCDictionary::removeObjectsForKeys(CCArray* pKeyArray)
     CCARRAY_FOREACH(pKeyArray, pObj)
     {
         CCString* pStr = (CCString*)pObj;
-        removeObjectForKey(*pStr);
+        removeObjectForKey(pStr->getCString());
     }
 }
 
@@ -283,6 +283,16 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
     }
 
     return pNewDict;
+}
+
+CCDictionary* CCDictionary::dictionary()
+{
+    CCDictionary* pRet = new CCDictionary();
+    if (pRet != NULL)
+    {
+        pRet->autorelease();
+    }
+    return pRet;
 }
 
 CCDictionary* CCDictionary::dictionaryWithDictionary(CCDictionary* srcDict)
