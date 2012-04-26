@@ -1,19 +1,12 @@
 class CCArray : public CCObject
 {
 public:
-    ~CCArray();
 
     static CCArray* array();
     static CCArray* arrayWithObject(CCObject* pObject);
     static CCArray* arrayWithCapacity(unsigned int capacity);
     static CCArray* arrayWithArray(CCArray* otherArray);
     static CCArray* arrayWithContentsOfFile(const char* pFileName);
-    static CCArray* arrayWithContentsOfFileThreadSafe(const char* pFileName);
-
-    bool init();
-    bool initWithObject(CCObject* pObject);
-    bool initWithCapacity(unsigned int capacity);
-    bool initWithArray(CCArray* otherArray);
 
     unsigned int count();
 
@@ -59,6 +52,4 @@ public:
 
     void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
 
-    CCArray();
-    CCArray(unsigned int capacity);
 };

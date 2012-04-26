@@ -1,35 +1,18 @@
 
 class CCString : public CCObject
 {
-public:
-    CCString();
-    CCString(const char* str);
-    CCString(const std::string& str);
-    CCString(const CCString& str);
-    ~CCString();
-    
-//    CCString& operator= (const CCString& other);
-
- //   bool initWithFormat(const char* format, ...);
-
     int intValue() const;
-
     unsigned int uintValue() const;
-
     float floatValue() const;
-
     double doubleValue() const;
-
     bool boolValue() const;
-
     const char* getCString() const;
-
     unsigned int length() const;
 
     bool isEqual(const CCObject* pObject);
 
     static CCString* stringWithCString(const char* pStr);
- //   static CCString* stringWithFormat(const char* format, ...);
     static CCString* stringWithData(unsigned char* pData, unsigned long nLen);
     static CCString* stringWithContentsOfFile(const char* pszFileName);
 };
+

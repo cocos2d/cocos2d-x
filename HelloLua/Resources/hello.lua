@@ -30,7 +30,7 @@ local function creatDog()
     spriteDog.isPaused = false
     spriteDog:setPosition(0, winSize.height / 4 * 3)
 
-    local animFrames = CCArray:new(2)
+    local animFrames = CCArray:arrayWithCapacity(2)
 
     animFrames:addObject(frame0)
     animFrames:addObject(frame1)
