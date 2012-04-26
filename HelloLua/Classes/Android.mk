@@ -20,7 +20,7 @@ LOCAL_STATIC_LIBRARIES += jpeg_static_prebuilt
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 
 LOCAL_SHARED_LIBRARIES := cocosdenshion_shared lua_shared
-            
+
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,cocos2dx/platform/third_party/android/modules/libpng)
