@@ -10,4 +10,4 @@
 // C RunTime Header Files
 #include "CCStdC.h"
 
-#endif    // __WINMAIN_H__
+#endif	// __WINMAIN_H__
