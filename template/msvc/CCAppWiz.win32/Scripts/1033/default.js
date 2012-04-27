@@ -103,7 +103,7 @@ function CreateCustomProject(strProjectName, strProjectPath) {
             strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n"
                  + "<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n"
                  + "  <PropertyGroup>\r\n"
-                 + "    <ShowAllFiles>true</ShowAllFiles>\r\n"
+                 + "    <ShowAllFiles>false</ShowAllFiles>\r\n"
                  + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">$(ProjectDir)Resources</LocalDebuggerWorkingDirectory>\r\n"
                  + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">$(ProjectDir)Resources</LocalDebuggerWorkingDirectory>\r\n"
                  + "    <DebuggerFlavor Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">WindowsLocalDebugger</DebuggerFlavor>\r\n"
