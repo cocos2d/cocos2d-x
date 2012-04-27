@@ -1195,6 +1195,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="TextureWatcher"
+				>
+				<File
+					RelativePath="..\extensions\TextureWatcher\NdListView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\TextureWatcher\NdListView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\TextureWatcher\NdListViewCell.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\TextureWatcher\NdListViewCell.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\TextureWatcher\NdTextureWatcher.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\TextureWatcher\NdTextureWatcher.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="kazmath"
