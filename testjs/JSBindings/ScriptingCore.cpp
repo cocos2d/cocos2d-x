@@ -93,9 +93,17 @@ void ScriptingCore::evalString(const char *string)
 void ScriptingCore::runScript(const char *path)
 {
 #ifdef DEBUG
-	std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
+	/**
+	 * dpath should point to the parent directory of the "JS" folder. If this is
+	 * set to "" (as it is now) then it will take the scripts from the app bundle.
+	 * By setting the absolute path you can iterate the development only by
+	 * modifying those scripts and reloading from the simulator (no recompiling/
+	 * relaunching)
+	 */
+//	std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
+	std::string dpath("");
 	dpath += path;
-	const char *realPath = dpath.c_str();
+	const char *realPath = CCFileUtils::fullPathFromRelativePath(dpath.c_str());
 #else
 	const char *realPath = CCFileUtils::fullPathFromRelativePath(path);
 #endif
