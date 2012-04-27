@@ -187,6 +187,10 @@ JSBool S_CCAnimate::jsreverse(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCActionInterval* ret = self->reverse();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAction::jsClass, S_CCAction::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -207,6 +211,10 @@ JSBool S_CCAnimate::jsactionWithAnimation(JSContext *cx, uint32_t argc, jsval *v
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCAnimation* narg0; JSGET_PTRSHELL(CCAnimation, narg0, arg0);
 		CCAnimate* ret = CCAnimate::actionWithAnimation(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAnimate::jsClass, S_CCAnimate::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -229,6 +237,10 @@ JSBool S_CCAnimate::jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp
 		JS_ConvertArguments(cx, 3, JS_ARGV(cx, vp), "dob", &arg0, &arg1, &arg2);
 		CCAnimation* narg1; JSGET_PTRSHELL(CCAnimation, narg1, arg1);
 		CCAnimate* ret = CCAnimate::actionWithDuration(arg0, narg1, arg2);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAnimate::jsClass, S_CCAnimate::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -761,6 +773,10 @@ JSBool S_CCMenu::jsmenuWithItems(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCMenuItem* narg0; JSGET_PTRSHELL(CCMenuItem, narg0, arg0);
 		CCMenu* ret = CCMenu::menuWithItems(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCMenu::jsClass, S_CCMenu::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -781,6 +797,10 @@ JSBool S_CCMenu::jsmenuWithItem(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCMenuItem* narg0; JSGET_PTRSHELL(CCMenuItem, narg0, arg0);
 		CCMenu* ret = CCMenu::menuWithItem(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCMenu::jsClass, S_CCMenu::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -1108,6 +1128,10 @@ JSBool S_CCAction::jsaction(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCAction* ret = CCAction::action();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAction::jsClass, S_CCAction::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -1263,6 +1287,10 @@ JSBool S_CCMenuItemSprite::jsitemFromNormalSprite(JSContext *cx, uint32_t argc, 
 		CCNode* narg1; JSGET_PTRSHELL(CCNode, narg1, arg1);
 		CCNode* narg2; JSGET_PTRSHELL(CCNode, narg2, arg2);
 		CCMenuItemSprite* ret = CCMenuItemSprite::itemFromNormalSprite(narg0, narg1, narg2);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCMenuItemSprite::jsClass, S_CCMenuItemSprite::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -1482,6 +1510,10 @@ JSBool S_CCSequence::jsreverse(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCActionInterval* ret = self->reverse();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAction::jsClass, S_CCAction::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -1528,6 +1560,10 @@ JSBool S_CCSequence::jsactionsWithArray(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCArray* narg0; JSGET_PTRSHELL(CCArray, narg0, arg0);
 		CCFiniteTimeAction* ret = CCSequence::actionsWithArray(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAction::jsClass, S_CCAction::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -1550,6 +1586,10 @@ JSBool S_CCSequence::jsactionOneTwo(JSContext *cx, uint32_t argc, jsval *vp) {
 		CCFiniteTimeAction* narg0; JSGET_PTRSHELL(CCFiniteTimeAction, narg0, arg0);
 		CCFiniteTimeAction* narg1; JSGET_PTRSHELL(CCFiniteTimeAction, narg1, arg1);
 		CCSequence* ret = CCSequence::actionOneTwo(narg0, narg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSequence::jsClass, S_CCSequence::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -1759,6 +1799,10 @@ JSBool S_CCSpriteFrame::jsframeWithTexture(JSContext *cx, uint32_t argc, jsval *
 		CCTexture2D* narg0; JSGET_PTRSHELL(CCTexture2D, narg0, arg0);
 		CCRect* narg1; JSGET_PTRSHELL(CCRect, narg1, arg1);
 		CCSpriteFrame* ret = CCSpriteFrame::frameWithTexture(narg0, *narg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSpriteFrame::jsClass, S_CCSpriteFrame::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -1967,6 +2011,10 @@ JSBool S_CCAnimation::jsanimation(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCAnimation* ret = CCAnimation::animation();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAnimation::jsClass, S_CCAnimation::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -1987,6 +2035,10 @@ JSBool S_CCAnimation::jsanimationWithFrames(JSContext *cx, uint32_t argc, jsval 
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCMutableArray<CCSpriteFrame*>* narg0; JSGET_PTRSHELL(CCMutableArray<CCSpriteFrame*>, narg0, arg0);
 		CCAnimation* ret = CCAnimation::animationWithFrames(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAnimation::jsClass, S_CCAnimation::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -2087,6 +2139,10 @@ JSBool S_CCMenuItemImage::jsitemFromNormalImage(JSContext *cx, uint32_t argc, js
 		char *narg0 = JS_EncodeString(cx, arg0);
 		char *narg1 = JS_EncodeString(cx, arg1);
 		CCMenuItemImage* ret = CCMenuItemImage::itemFromNormalImage(narg0, narg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCMenuItemImage::jsClass, S_CCMenuItemImage::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -2258,6 +2314,10 @@ JSBool S_CCRotateBy::jsreverse(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCActionInterval* ret = self->reverse();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAction::jsClass, S_CCAction::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -2278,6 +2338,10 @@ JSBool S_CCRotateBy::jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *v
 		double arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "dd", &arg0, &arg1);
 		CCRotateBy* ret = CCRotateBy::actionWithDuration(arg0, arg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCRotateBy::jsClass, S_CCRotateBy::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -2641,6 +2705,10 @@ JSBool S_CCMoveTo::jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "do", &arg0, &arg1);
 		CCPoint* narg1; JSGET_PTRSHELL(CCPoint, narg1, arg1);
 		CCMoveTo* ret = CCMoveTo::actionWithDuration(arg0, *narg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCMoveTo::jsClass, S_CCMoveTo::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -3034,6 +3102,10 @@ JSBool S_CCRotateTo::jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *v
 		double arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "dd", &arg0, &arg1);
 		CCRotateTo* ret = CCRotateTo::actionWithDuration(arg0, arg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCRotateTo::jsClass, S_CCRotateTo::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -3300,6 +3372,10 @@ JSBool S_CCSpriteFrameCache::jsspriteFrameByName(JSContext *cx, uint32_t argc, j
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
 		char *narg0 = JS_EncodeString(cx, arg0);
 		CCSpriteFrame* ret = self->spriteFrameByName(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSpriteFrame::jsClass, S_CCSpriteFrame::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -3318,6 +3394,10 @@ JSBool S_CCSpriteFrameCache::jssharedSpriteFrameCache(JSContext *cx, uint32_t ar
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCSpriteFrameCache* ret = CCSpriteFrameCache::sharedSpriteFrameCache();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSpriteFrameCache::jsClass, S_CCSpriteFrameCache::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -3972,6 +4052,10 @@ JSBool S_CCNode::jsrunAction(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCAction* narg0; JSGET_PTRSHELL(CCAction, narg0, arg0);
 		CCAction* ret = self->runAction(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAction::jsClass, S_CCAction::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -5196,6 +5280,10 @@ JSBool S_CCDirector::jssharedDirector(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCDirector* ret = CCDirector::sharedDirector();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCDirector::jsClass, S_CCDirector::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -5566,6 +5654,10 @@ JSBool S_CCMoveBy::jsreverse(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCActionInterval* ret = self->reverse();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAction::jsClass, S_CCAction::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -5587,6 +5679,10 @@ JSBool S_CCMoveBy::jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "do", &arg0, &arg1);
 		CCPoint* narg1; JSGET_PTRSHELL(CCPoint, narg1, arg1);
 		CCMoveBy* ret = CCMoveBy::actionWithDuration(arg0, *narg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCMoveBy::jsClass, S_CCMoveBy::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -5768,6 +5864,10 @@ JSBool S_CCRepeatForever::jsreverse(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCActionInterval* ret = self->reverse();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAction::jsClass, S_CCAction::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -5788,6 +5888,10 @@ JSBool S_CCRepeatForever::jsactionWithAction(JSContext *cx, uint32_t argc, jsval
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCActionInterval* narg0; JSGET_PTRSHELL(CCActionInterval, narg0, arg0);
 		CCRepeatForever* ret = CCRepeatForever::actionWithAction(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCRepeatForever::jsClass, S_CCRepeatForever::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -6336,6 +6440,10 @@ JSBool S_CCSet::jscopy(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCSet* ret = self->copy();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSet::jsClass, S_CCSet::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -6864,6 +6972,10 @@ JSBool S_CCSprite::jsspriteWithTexture(JSContext *cx, uint32_t argc, jsval *vp) 
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCTexture2D* narg0; JSGET_PTRSHELL(CCTexture2D, narg0, arg0);
 		CCSprite* ret = CCSprite::spriteWithTexture(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSprite::jsClass, S_CCSprite::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -6884,6 +6996,10 @@ JSBool S_CCSprite::jsspriteWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCSpriteFrame* narg0; JSGET_PTRSHELL(CCSpriteFrame, narg0, arg0);
 		CCSprite* ret = CCSprite::spriteWithSpriteFrame(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSprite::jsClass, S_CCSprite::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -6904,6 +7020,10 @@ JSBool S_CCSprite::jsspriteWithSpriteFrameName(JSContext *cx, uint32_t argc, jsv
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
 		char *narg0 = JS_EncodeString(cx, arg0);
 		CCSprite* ret = CCSprite::spriteWithSpriteFrameName(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSprite::jsClass, S_CCSprite::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -6924,6 +7044,10 @@ JSBool S_CCSprite::jsspriteWithFile(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
 		char *narg0 = JS_EncodeString(cx, arg0);
 		CCSprite* ret = CCSprite::spriteWithFile(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSprite::jsClass, S_CCSprite::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -6946,6 +7070,10 @@ JSBool S_CCSprite::jsspriteWithBatchNode(JSContext *cx, uint32_t argc, jsval *vp
 		CCSpriteBatchNode* narg0; JSGET_PTRSHELL(CCSpriteBatchNode, narg0, arg0);
 		CCRect* narg1; JSGET_PTRSHELL(CCRect, narg1, arg1);
 		CCSprite* ret = CCSprite::spriteWithBatchNode(narg0, *narg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSprite::jsClass, S_CCSprite::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
@@ -7232,6 +7360,10 @@ JSBool S_CCSprite::jsdisplayedFrame(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 0) {
 		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
 		CCSpriteFrame* ret = self->displayedFrame();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCSpriteFrame::jsClass, S_CCSpriteFrame::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
