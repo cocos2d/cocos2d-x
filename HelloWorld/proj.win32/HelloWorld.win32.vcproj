@@ -119,7 +119,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\Classes"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\actions&quot;;&quot;$(SolutionDir)cocos2dx\base_nodes&quot;;&quot;$(SolutionDir)cocos2dx\cocoa&quot;;&quot;$(SolutionDir)cocos2dx\effects&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\keypad_dispatcher&quot;;&quot;$(SolutionDir)cocos2dx\label_nodes&quot;;&quot;$(SolutionDir)cocos2dx\layers_scenes_transitions_nodes&quot;;&quot;$(SolutionDir)cocos2dx\menu_nodes&quot;;&quot;$(SolutionDir)cocos2dx\misc_nodes&quot;;&quot;$(SolutionDir)cocos2dx\particle_nodes&quot;;&quot;$(SolutionDir)cocos2dx\script_support&quot;;&quot;$(SolutionDir)cocos2dx\shaders&quot;;&quot;$(SolutionDir)cocos2dx\sprite_nodes&quot;;&quot;$(SolutionDir)cocos2dx\support&quot;;&quot;$(SolutionDir)cocos2dx\text_input_node&quot;;&quot;$(SolutionDir)cocos2dx\textures&quot;;&quot;$(SolutionDir)cocos2dx\tileMap_parallax_nodes&quot;;&quot;$(SolutionDir)cocos2dx\touch_dispatcher&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\Classes"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
