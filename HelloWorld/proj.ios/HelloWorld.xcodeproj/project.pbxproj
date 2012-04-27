@@ -438,7 +438,6 @@
 		781C37091547F12900633F88 /* CCEGLViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEGLViewProtocol.h; path = ../../cocos2dx/platform/CCEGLViewProtocol.h; sourceTree = "<group>"; };
 		781C370A1547F12900633F88 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCFileUtils.h; path = ../../cocos2dx/platform/CCFileUtils.h; sourceTree = "<group>"; };
 		781C370B1547F12900633F88 /* CCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCImage.h; path = ../../cocos2dx/platform/CCImage.h; sourceTree = "<group>"; };
-		781C370C1547F12900633F88 /* CCImageCommon_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCImageCommon_cpp.h; path = ../../cocos2dx/platform/CCImageCommon_cpp.h; sourceTree = "<group>"; };
 		781C370D1547F12900633F88 /* CCPlatformConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPlatformConfig.h; path = ../../cocos2dx/platform/CCPlatformConfig.h; sourceTree = "<group>"; };
 		781C370E1547F12900633F88 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPlatformMacros.h; path = ../../cocos2dx/platform/CCPlatformMacros.h; sourceTree = "<group>"; };
 		781C370F1547F12900633F88 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSAXParser.cpp; path = ../../cocos2dx/platform/CCSAXParser.cpp; sourceTree = "<group>"; };
@@ -1107,7 +1106,6 @@
 				781C37091547F12900633F88 /* CCEGLViewProtocol.h */,
 				781C370A1547F12900633F88 /* CCFileUtils.h */,
 				781C370B1547F12900633F88 /* CCImage.h */,
-				781C370C1547F12900633F88 /* CCImageCommon_cpp.h */,
 				781C370D1547F12900633F88 /* CCPlatformConfig.h */,
 				781C370E1547F12900633F88 /* CCPlatformMacros.h */,
 				781C370F1547F12900633F88 /* CCSAXParser.cpp */,
