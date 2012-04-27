@@ -994,7 +994,7 @@ void TexturePixelFormat::onEnter()
     // A8 image (8-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
     CCSprite *sprite6 = CCSprite::spriteWithFile("Images/test-rgba1.png");
-    sprite6->setPosition(ccp(6*s.width/7, s.height/2+32));
+    sprite6->setPosition(ccp(6*s.width/7, s.height/2-32));
     addChild(sprite6, 0);
     
     // remove texture from texture manager    

@@ -60,19 +60,18 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
                             || (info == kCGImageAlphaLast) 
                             || (info == kCGImageAlphaFirst);
     
-    pImageinfo->isPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast) 
-                                        || (info == kCGImageAlphaPremultipliedFirst);
-    
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(cgImage);
     if (colorSpace)
     {
         if (pImageinfo->hasAlpha)
         {
             info = kCGImageAlphaPremultipliedLast;
+            pImageinfo->isPremultipliedAlpha = true;
         }
         else 
         {
             info = kCGImageAlphaNoneSkipLast;
+            pImageinfo->isPremultipliedAlpha = false;
         }
     }
     else
@@ -94,7 +93,7 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
                                                  info | kCGBitmapByteOrder32Big);
     
     CGContextClearRect(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height));
-    CGContextTranslateCTM(context, 0, 0);
+    //CGContextTranslateCTM(context, 0, 0);
     CGContextDrawImage(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height), cgImage);
     
     CGContextRelease(context);
