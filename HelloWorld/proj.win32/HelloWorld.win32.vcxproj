@@ -54,7 +54,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\Classes;$(SolutionDir)cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\Classes;..\..\cocos2dx;..\..\cocos2dx\actions;..\..\cocos2dx\base_nodes;..\..\cocos2dx\cocoa;..\..\cocos2dx\effects;..\..\cocos2dx\include;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\keypad_dispatcher;..\..\cocos2dx\label_nodes;..\..\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx\menu_nodes;..\..\cocos2dx\misc_nodes;..\..\cocos2dx\particle_nodes;..\..\cocos2dx\script_support;..\..\cocos2dx\shaders;..\..\cocos2dx\sprite_nodes;..\..\cocos2dx\support;..\..\cocos2dx\text_input_node;..\..\cocos2dx\textures;..\..\cocos2dx\tileMap_parallax_nodes;..\..\cocos2dx\touch_dispatcher;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -81,7 +81,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\Classes;$(SolutionDir)cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\Classes;..\..\cocos2dx;..\..\cocos2dx\actions;..\..\cocos2dx\base_nodes;..\..\cocos2dx\cocoa;..\..\cocos2dx\effects;..\..\cocos2dx\include;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\keypad_dispatcher;..\..\cocos2dx\label_nodes;..\..\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx\menu_nodes;..\..\cocos2dx\misc_nodes;..\..\cocos2dx\particle_nodes;..\..\cocos2dx\script_support;..\..\cocos2dx\shaders;..\..\cocos2dx\sprite_nodes;..\..\cocos2dx\support;..\..\cocos2dx\text_input_node;..\..\cocos2dx\textures;..\..\cocos2dx\tileMap_parallax_nodes;..\..\cocos2dx\touch_dispatcher;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

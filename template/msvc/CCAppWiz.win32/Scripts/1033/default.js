@@ -92,8 +92,14 @@ function CreateCustomProject(strProjectName, strProjectPath) {
                 continue;
             }
             else {
-                FileSys.CreateFolder(strPath);
-                FileSys.CreateFolder(strPath+"\\proj.win32");
+                if (!FileSys.FolderExists(strPath)) {
+                    FileSys.CreateFolder(strPath);
+                }
+                var strWin32ProjectPath = strPath + "\\proj.win32";
+
+                if (!FileSys.FolderExists(strWin32ProjectPath)) {
+                    FileSys.CreateFolder(strWin32ProjectPath);
+                }
             }
         }
 
@@ -104,8 +110,8 @@ function CreateCustomProject(strProjectName, strProjectPath) {
                  + "<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n"
                  + "  <PropertyGroup>\r\n"
                  + "    <ShowAllFiles>false</ShowAllFiles>\r\n"
-                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">$(ProjectDir)Resources</LocalDebuggerWorkingDirectory>\r\n"
-                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">$(ProjectDir)Resources</LocalDebuggerWorkingDirectory>\r\n"
+                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">$(ProjectDir)..\\Resources</LocalDebuggerWorkingDirectory>\r\n"
+                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">$(ProjectDir)..\\Resources</LocalDebuggerWorkingDirectory>\r\n"
                  + "    <DebuggerFlavor Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">WindowsLocalDebugger</DebuggerFlavor>\r\n"
                  + "    <DebuggerFlavor Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">WindowsLocalDebugger</DebuggerFlavor>\r\n"
                  + "  </PropertyGroup>\r\n"
