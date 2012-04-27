@@ -985,7 +985,7 @@ void TexturePixelFormat::onEnter()
     // RGB565 image (16-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565);
     CCSprite *sprite5 = CCSprite::spriteWithFile("Images/test-rgba1.png");
-    sprite5->setPosition(ccp(4*s.width/7, s.height/2+32));
+    sprite5->setPosition(ccp(5*s.width/7, s.height/2+32));
     addChild(sprite5, 0);
 
     // remove texture from texture manager    
@@ -994,7 +994,7 @@ void TexturePixelFormat::onEnter()
     // A8 image (8-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
     CCSprite *sprite6 = CCSprite::spriteWithFile("Images/test-rgba1.png");
-    sprite6->setPosition(ccp(5*s.width/7, s.height/2+32));
+    sprite6->setPosition(ccp(6*s.width/7, s.height/2+32));
     addChild(sprite6, 0);
     
     // remove texture from texture manager    

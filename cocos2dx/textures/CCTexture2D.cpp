@@ -305,19 +305,38 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
     
     if (pixelFormat == kCCTexture2DPixelFormat_RGB565)
     {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBB" to "RRRRRGGGGGGBBBBB"
-        
-        tempData = new unsigned char[width * height * 2];
-        outPixel16 = (unsigned short*)tempData;
-        inPixel8 = (unsigned char*)image->getData();
-        
-        for(unsigned int i = 0; i < length; ++i)
+        if (hasAlpha)
         {
-            *outPixel16++ = 
-            (((*inPixel8++ & 0xFF) >> 3) << 11) |  // R
-            (((*inPixel8++ & 0xFF) >> 2) << 5)  |  // G
-            (((*inPixel8++ & 0xFF) >> 3) << 0);    // B
+            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
+            
+            tempData = new unsigned char[width * height * 2];
+            outPixel16 = (unsigned short*)tempData;
+            inPixel32 = (unsigned int*)image->getData();
+            
+            for(unsigned int i = 0; i < length; ++i, ++inPixel32)
+            {
+                *outPixel16++ = 
+                ((((*inPixel32 >>  0) & 0xFF) >> 3) << 11) |  // R
+                ((((*inPixel32 >>  8) & 0xFF) >> 2) << 5)  |  // G
+                ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);    // B
+            }
         }
+        else 
+        {
+            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBB" to "RRRRRGGGGGGBBBBB"
+            
+            tempData = new unsigned char[width * height * 2];
+            outPixel16 = (unsigned short*)tempData;
+            inPixel8 = (unsigned char*)image->getData();
+            
+            for(unsigned int i = 0; i < length; ++i)
+            {
+                *outPixel16++ = 
+                (((*inPixel8++ & 0xFF) >> 3) << 11) |  // R
+                (((*inPixel8++ & 0xFF) >> 2) << 5)  |  // G
+                (((*inPixel8++ & 0xFF) >> 3) << 0);    // B
+            }
+        }    
     }
     else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444)
     {
@@ -354,7 +373,30 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
     }
     else if (pixelFormat == kCCTexture2DPixelFormat_A8)
     {
-        // fixed me, how to convert?
+        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "AAAAAAAA"
+        inPixel32 = (unsigned int*)image->getData();
+        tempData = new unsigned char[width * height];
+        unsigned char *outPixel8 = tempData;
+        
+        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
+        {
+            *outPixel8++ = (*inPixel32 >> 24) & 0xFF;  // A
+        }
+    }
+    
+    if (hasAlpha && pixelFormat == kCCTexture2DPixelFormat_RGB888)
+    {
+        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
+        inPixel32 = (unsigned int*)image->getData();
+        tempData = new unsigned char[width * height * 3];
+        unsigned char *outPixel8 = tempData;
+        
+        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
+        {
+            *outPixel8++ = (*inPixel32 >> 0) & 0xFF; // R
+            *outPixel8++ = (*inPixel32 >> 8) & 0xFF; // G
+            *outPixel8++ = (*inPixel32 >> 16) & 0xFF; // B
+        }
     }
     
     initWithData(tempData, pixelFormat, width, height, imageSize);
