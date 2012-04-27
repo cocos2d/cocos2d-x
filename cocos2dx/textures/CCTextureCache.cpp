@@ -194,6 +194,17 @@ const char* CCTextureCache::description()
     return CCString::stringWithFormat("<CCTextureCache | Number of textures = %u>", m_pTextures->count())->getCString();
 }
 
+CCDictionary* CCTextureCache::snapshotTextures()
+{ 
+    CCDictionary* pRet = new CCDictionary();
+    CCDictElement* pElement = NULL;
+    CCDICT_FOREACH(m_pTextures, pElement)
+    {
+        pRet->setObject(pElement->getObject(), pElement->getStrKey());
+    }
+    return pRet;
+}
+
 void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector)
 {
     CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");    

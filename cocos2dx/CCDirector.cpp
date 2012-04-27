@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "CCTransition.h"
 #include "CCSpriteFrameCache.h"
 #include "CCAutoreleasePool.h"
-#include "platform/platform.h"
+#include "platform.h"
 #include "CCApplication.h"
 #include "CCLabelBMFont.h"
 #include "CCActionManager.h"
@@ -47,17 +47,17 @@ THE SOFTWARE.
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
 #include "CCUserDefault.h"
-#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
 #include "CCEGLView.h"
+#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "extensions/CCTextureWatcher/CCTextureWatcher.h"
 #include <string>
 
 using namespace std;
-using namespace cocos2d;
 
 unsigned int g_uNumberOfDraws = 0;
 
@@ -90,7 +90,7 @@ CCDirector::CCDirector(void)
 bool CCDirector::init(void)
 {
     CCLOG("cocos2d: %s", cocos2dVersion());
-
+    
     // scenes
     m_pRunningScene = NULL;
     m_pNextScene = NULL;
@@ -130,6 +130,9 @@ bool CCDirector::init(void)
 
     m_fContentScaleFactor = 1;    
     m_bIsContentScaleSupported = false;
+
+    m_pWatcherFun = NULL;
+    m_pWatcherSender = NULL;
 
     // scheduler
     m_pScheduler = new CCScheduler();
@@ -232,6 +235,10 @@ void CCDirector::drawScene(void)
         showStats();
     }
 
+    if (m_pWatcherFun && m_pWatcherSender)
+    {
+        (*m_pWatcherFun)(m_pWatcherSender);
+    }
 
     kmGLPopMatrix();
 
@@ -584,8 +591,9 @@ void CCDirector::purgeDirector()
     
     // cocos2d-x specific data structures
     CCUserDefault::purgeSharedUserDefault();
-    CCNotificationCenter::purgeNotificationCenter();
-    
+    extension::CCNotificationCenter::purgeNotificationCenter();
+    extension::CCTextureWatcher::purgeTextureWatcher();
+
     ccGLInvalidateStateCache();
     
     CHECK_GL_ERROR_DEBUG();
@@ -932,6 +940,13 @@ void CCDisplayLinkDirector::setAnimationInterval(double dValue)
         startAnimation();
     }    
 }
+
+void CCDirector::setWatcherCallbackFun(void *pSender, WatcherCallbackFun fun)
+{
+    m_pWatcherFun = fun;
+    m_pWatcherSender = pSender;
+}
+
 
 NS_CC_END
 

@@ -33,7 +33,7 @@
 
 using namespace std;
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 enum
 {
@@ -462,4 +462,4 @@ void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     sendActionsForControlEvents(CCControlEventTouchCancel);
 }
 
-NS_CC_END
+NS_CC_EXT_END

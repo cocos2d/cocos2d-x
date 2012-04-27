@@ -33,7 +33,7 @@
 #include "CCControlUtils.h"
 #include "CCLayer.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 class CCInvocation;
 
@@ -206,6 +206,6 @@ public:
 
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif

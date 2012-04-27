@@ -1,20 +1,20 @@
+#include "CCListView.h"
+#include "CCListViewCell.h"
+#include "cocos2d.h"
 
-#include "NdListView.h"
-#include "NdListViewCell.h"
-
+NS_CC_EXT_BEGIN
 
 const int TOUCHBEGIN	= 1;
 const int TOUCHEND		= 2;
 const int TOUCHMOVING	= 3;
 const int TOUCHCANCELLED= 4;
 
-namespace NdCxControl 
-{
+
 /******************************************
 **************Public Functions*************
 *******************************************/
-NdListViewCell::NdListViewCell(void) 
-	:m_nSeparatorStyle(NdListViewCellSeparatorStyleNone)
+CCListViewCell::CCListViewCell(void) 
+	:m_nSeparatorStyle(CCListViewCellSeparatorStyleNone)
 	,m_bIsSelected(false)
 {
 	setIsTouchEnabled(true);
@@ -22,27 +22,27 @@ NdListViewCell::NdListViewCell(void)
 	m_separatorLineColor = ccc3(128, 128, 128);
 }
 
-NdListViewCell::~NdListViewCell(void) 
+CCListViewCell::~CCListViewCell(void) 
 {
 
 }
 
-NdListViewCell *NdListViewCell::node(void)
+CCListViewCell *CCListViewCell::node(void)
 {
-	NdListViewCell *pRet = new NdListViewCell();
+	CCListViewCell *pRet = new CCListViewCell();
 	pRet->initWithColorWidthHeight(ccc4(255, 255, 255, 255), 0, 0);
  	pRet->autorelease();
 	return pRet;
 }
 
-void NdListViewCell::selected(void)
+void CCListViewCell::selected(void)
 {
 	m_bIsSelected = true;
 	CCLayerColor::setColor(ccc3(m_selectionColor.r, m_selectionColor.g, m_selectionColor.b));
 	CCLayerColor::setOpacity(m_selectionColor.a);
 }
 
-void NdListViewCell::unselected(void)
+void CCListViewCell::unselected(void)
 {
 	m_bIsSelected = false;
 	CCLayerColor::setColor(ccc3(m_normalColor.r, m_normalColor.g, m_normalColor.b));
@@ -52,34 +52,34 @@ void NdListViewCell::unselected(void)
 /******************************************
 **************Virturl Functions************
 *******************************************/
-bool NdListViewCell::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
+bool CCListViewCell::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
 {
 	this->m_normalColor = color;
-	return CCLayerColor::initWithColorWidthHeight(color, width, height);
+	return CCLayerColor::initWithColor(color, width, height);
 }
 
-void NdListViewCell::draw(void)
+void CCListViewCell::draw(void)
 {
 	CCLayerColor::draw();
 	CCSize size = this->getContentSize();
-	NdListView *owner = this->getOwner();
-	if (NdListViewCellSeparatorStyleSingleLine == m_nSeparatorStyle)
+	CCListView *owner = this->getOwner();
+	if (CCListViewCellSeparatorStyleSingleLine == m_nSeparatorStyle)
 	{
 		glLineWidth(1.0f);
-		glColor4ub(m_separatorLineColor.r, m_separatorLineColor.g, m_separatorLineColor.b, 255);
+		ccDrawColor4B(m_separatorLineColor.r, m_separatorLineColor.g, m_separatorLineColor.b, 255);
 
-		if (NdListViewModeHorizontal == owner->getMode())
+		if (CCListViewModeHorizontal == owner->getMode())
 		{
 			ccDrawLine(CCPointMake(size.width, 0), CCPointMake(size.width, size.height));
 		}
-		else if (NdListViewModeVertical == owner->getMode())
+		else if (CCListViewModeVertical == owner->getMode())
 		{
 			ccDrawLine(CCPointMake(0, 0), CCPointMake(size.width, 0));
 		}
 	}
 }
 
-void NdListViewCell::setColor(ccColor3B var)
+void CCListViewCell::setColor(ccColor3B var)
 {
 	m_normalColor.r = var.r;
 	m_normalColor.g = var.g;
@@ -87,10 +87,10 @@ void NdListViewCell::setColor(ccColor3B var)
 	CCLayerColor::setColor(var);
 }
 
-void NdListViewCell::setOpacity(GLubyte var)
+void CCListViewCell::setOpacity(GLubyte var)
 {
 	m_normalColor.a = var;
 	CCLayerColor::setOpacity(var);
 }
 
-} // end of namespace NdCxControl
+NS_CC_EXT_END

@@ -3,7 +3,8 @@
 
 #include "cocos2d.h"
 
-using namespace cocos2d;
+USING_NS_CC;
+USING_NS_CC_EXT;
 using namespace std;
 
 class TestScene : public CCScene
