@@ -1,15 +1,18 @@
-#include "NdListView.h"
-#include "../cocos2dx_support/LuaEngineImpl.h"
+#include "CCListView.h"
+//#include "../cocos2dx_support/LuaEngineImpl.h"
+#include "cocos2d.h"
 
-namespace NdCxControl 
-{
+using namespace std;
+
+NS_CC_EXT_BEGIN
+
 #define ND_LISTVIEW_ACTION_INTERVAL		0.6666
 /******************************************
 **************Public Functions*************
 *******************************************/
-NdListView* NdListView::viewWithMode(NdListViewMode mode)
+CCListView* CCListView::viewWithMode(CCListViewMode mode)
 {
-	NdListView *pRet = new NdListView();
+	CCListView *pRet = new CCListView();
 	if (pRet && pRet->initWithMode(mode))
 	{
 		pRet->autorelease();
@@ -17,26 +20,29 @@ NdListView* NdListView::viewWithMode(NdListViewMode mode)
 	}
 	else
 	{
-		CC_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 }
 
-bool NdListView::initWithMode(NdListViewMode mode)
+bool CCListView::initWithMode(CCListViewMode mode)
 {
+    bool bRet = false;
 	m_nMode = mode;
 	m_layerPanel = CCLayer::node();
 	this->addChild(m_layerPanel);
 
-	return CCLayerColor::initWithColorWidthHeight(ccc4(255, 255, 255, 0), 0, 0);
+	bRet = CCLayerColor::initWithColor(ccc4(255, 255, 255, 0), 0, 0);
+    setIsTouchEnabled(true);
+    return bRet;
 }
 
-NdListView::NdListView(void)
-	:m_nMode(NdListViewModeVertical)
-	,m_nState(NdListViewStateWatting)
-	,m_nSlideDir(NdListViewSlideDirNone)
+CCListView::CCListView(void)
+	:m_nMode(CCListViewModeVertical)
+	,m_nState(CCListViewStateWatting)
+	,m_nSlideDir(CCListViewSlideDirNone)
 	,m_layerPanel(NULL)
-	,m_nSeparatorStyle(NdListViewCellSeparatorStyleSingleLine)
+	,m_nSeparatorStyle(CCListViewCellSeparatorStyleSingleLine)
 	,m_nSelectedRow(-1)
 	,m_nCurrentRow(-1)
 	,m_fActionDuration(ND_LISTVIEW_ACTION_INTERVAL)
@@ -51,11 +57,11 @@ NdListView::NdListView(void)
 	m_bIsTouchEnabled = true;
 }
 
-NdListView::~NdListView(void) 
+CCListView::~CCListView(void) 
 {
 }
 
-void NdListView::setDelegateName(const char* pszName)
+void CCListView::setDelegateName(const char* pszName)
 {
 	if (pszName)
 	{
@@ -67,29 +73,29 @@ void NdListView::setDelegateName(const char* pszName)
 	}
 }
 
-void NdListView::selectCellAtRow(unsigned int nRow)
+void CCListView::selectCellAtRow(unsigned int nRow)
 {
-	NdListViewCell *cell = cellAtRow(nRow);
+	CCListViewCell *cell = cellAtRow(nRow);
 	if (cell)
 	{
 		cell->selected();
 	}
 }
 
-void NdListView::unselectCellAtRow(unsigned int nRow)
+void CCListView::unselectCellAtRow(unsigned int nRow)
 {
 	if (nRow == m_nSelectedRow)
 	{
 		m_nSelectedRow = -1;
 	}
-	NdListViewCell *cell = cellAtRow(nRow);
+	CCListViewCell *cell = cellAtRow(nRow);
 	if (cell)
 	{
 		cell->unselected();
 	}
 }
 
-void NdListView::reload(void)
+void CCListView::reload(void)
 {
 	m_layerPanel->removeAllChildrenWithCleanup(true);
 	m_layerPanel->setPosition(CCPointZero);
@@ -99,7 +105,7 @@ void NdListView::reload(void)
 	this->displayVisibleRows();
 }
 
-void NdListView::insertCellsAtRow(unsigned int nRow, unsigned int nCount)
+void CCListView::insertCellsAtRow(unsigned int nRow, unsigned int nCount)
 {
 	if (nRow >= m_nNumberOfRows)
 	{
@@ -131,7 +137,7 @@ void NdListView::insertCellsAtRow(unsigned int nRow, unsigned int nCount)
 	m_layerPanel->resumeSchedulerAndActions();
 }
 
-void NdListView::deleteCellsAtRow(unsigned int nRow, unsigned int nCount)
+void CCListView::deleteCellsAtRow(unsigned int nRow, unsigned int nCount)
 {
 	if (m_nNumberOfRows == 0)
 	{
@@ -158,7 +164,7 @@ void NdListView::deleteCellsAtRow(unsigned int nRow, unsigned int nCount)
 	{
 		if (n >= m_drawedRows.location && n <= CCRange::CCMaxRange(m_drawedRows))
 		{
-			NdListViewCell *cell = this->cellAtRow(n);
+			CCListViewCell *cell = this->cellAtRow(n);
 			if (cell)
 			{
 				CCPoint pos = cell->getPosition();
@@ -171,12 +177,12 @@ void NdListView::deleteCellsAtRow(unsigned int nRow, unsigned int nCount)
 					{
 						int tag = cell->getTag();
 						cell->setTag(tag - 1);
-						if (NdListViewModeHorizontal == m_nMode)
+						if (CCListViewModeHorizontal == m_nMode)
 						{
 							cell->setPosition(pos);
 							pos.x += cell->getContentSize().width;
 						}
-						else if (NdListViewModeVertical == m_nMode)
+						else if (CCListViewModeVertical == m_nMode)
 						{
 							pos.y -= cell->getContentSize().height;
 							cell->setPosition(pos);
@@ -195,7 +201,7 @@ void NdListView::deleteCellsAtRow(unsigned int nRow, unsigned int nCount)
 		{
 			for (unsigned int i = m_drawedRows.location; i <= CCRange::CCMaxRange(m_drawedRows); i++)
 			{
-				NdListViewCell *cell = this->cellAtRow(i);
+				CCListViewCell *cell = this->cellAtRow(i);
 				if (cell)
 				{
 					int tag = cell->getTag();
@@ -212,7 +218,7 @@ void NdListView::deleteCellsAtRow(unsigned int nRow, unsigned int nCount)
 	m_layerPanel->resumeSchedulerAndActions();
 }
 
-void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
+void CCListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 {
 	if (!isFullFill())
 	{
@@ -222,7 +228,7 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 	{
 		return;
 	}
-	if (NdListViewStateWatting != m_nState)
+	if (CCListViewStateWatting != m_nState)
 	{
 		this->stopActionImmediately();
 	}
@@ -234,19 +240,19 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 
 	float disX = 0;
 	float disY = 0;
-	m_nSlideDir = NdListViewSlideDirNone;
-	if (NdListViewModeHorizontal == m_nMode)
+	m_nSlideDir = CCListViewSlideDirNone;
+	if (CCListViewModeHorizontal == m_nMode)
 	{
 		float dis = 0;
 		unsigned int nCount = 0;
-		NdListViewCell *cell = NULL;
+		CCListViewCell *cell = NULL;
 		if (nRow > m_visibleRows.location)
 		{
-			m_nSlideDir = NdListViewSlideDirLeft;
+			m_nSlideDir = CCListViewSlideDirLeft;
 		}
 		else
 		{
-			m_nSlideDir = NdListViewSlideDirRight;
+			m_nSlideDir = CCListViewSlideDirRight;
 		}
 
 		while(1)
@@ -256,11 +262,11 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 				break;
 			}
 
-			if (NdListViewSlideDirRight == m_nSlideDir)
+			if (CCListViewSlideDirRight == m_nSlideDir)
 			{
 				cell = appendRowToFront(nRow + nCount);
 			}
-			else if (NdListViewSlideDirLeft == m_nSlideDir)
+			else if (CCListViewSlideDirLeft == m_nSlideDir)
 			{
 				cell = appendRowToBack(nRow + nCount);
 			}
@@ -272,11 +278,11 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 
-		if (NdListViewSlideDirLeft == m_nSlideDir && dis < this->getContentSize().width)
+		if (CCListViewSlideDirLeft == m_nSlideDir && dis < this->getContentSize().width)
 		{
 			// at last
 			while(1)
@@ -294,14 +300,14 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 				}
 				else
 				{
-					CCLog("NdListView cell == NULL at line %d", __LINE__);
+					CCLog("CCListView cell == NULL at line %d", __LINE__);
 				}
 			}
 		}
 
-		if (NdListViewSlideDirRight == m_nSlideDir)
+		if (CCListViewSlideDirRight == m_nSlideDir)
 		{
-			NdListViewCell* cell = NULL;
+			CCListViewCell* cell = NULL;
 			unsigned nLast = 0;
 			if (CCRange::CCLocationInRange(nRow + nCount - 1, m_visibleRows))
 			{
@@ -326,18 +332,18 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 					}
 					else
 					{
-						CCLog("NdListView cell == NULL at line %d", __LINE__);
+						CCLog("CCListView cell == NULL at line %d", __LINE__);
 					}
 				}
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
-		else if (NdListViewSlideDirLeft == m_nSlideDir)
+		else if (CCListViewSlideDirLeft == m_nSlideDir)
 		{
-			NdListViewCell* cell = NULL;
+			CCListViewCell* cell = NULL;
 			unsigned nFirst = 0;
 			if (CCRange::CCLocationInRange(nRow, m_visibleRows))
 			{
@@ -364,13 +370,13 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 					}
 					else
 					{
-						CCLog("NdListView cell == NULL at line %d", __LINE__);
+						CCLog("CCListView cell == NULL at line %d", __LINE__);
 					}
 				}
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 
@@ -380,18 +386,18 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 		CCPoint ptView = this->convertToWorldSpace(CCPointZero);
 		disX = ptView.x - ptCell.x;
 	}
-	else if (NdListViewModeVertical == m_nMode)
+	else if (CCListViewModeVertical == m_nMode)
 	{
 		float dis = 0;
 		unsigned int nCount = 0;
-		NdListViewCell *cell = NULL;
+		CCListViewCell *cell = NULL;
 		if (nRow > m_visibleRows.location)
 		{
-			m_nSlideDir = NdListViewSlideDirUp;
+			m_nSlideDir = CCListViewSlideDirUp;
 		}
 		else
 		{
-			m_nSlideDir = NdListViewSlideDirDown;
+			m_nSlideDir = CCListViewSlideDirDown;
 		}
 
 		while(1)
@@ -401,11 +407,11 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 				break;
 			}
 
-			if (NdListViewSlideDirDown == m_nSlideDir)
+			if (CCListViewSlideDirDown == m_nSlideDir)
 			{
 				cell = appendRowToFront(nRow + nCount);
 			}
-			else if (NdListViewSlideDirUp == m_nSlideDir)
+			else if (CCListViewSlideDirUp == m_nSlideDir)
 			{
 				cell = appendRowToBack(nRow + nCount);
 			}
@@ -417,11 +423,11 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 
-		if (NdListViewSlideDirUp == m_nSlideDir && dis < this->getContentSize().height)
+		if (CCListViewSlideDirUp == m_nSlideDir && dis < this->getContentSize().height)
 		{
 			// at last
 			while(1)
@@ -439,14 +445,14 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 				}
 				else
 				{
-					CCLog("NdListView cell == NULL at line %d", __LINE__);
+					CCLog("CCListView cell == NULL at line %d", __LINE__);
 				}
 			}
 		}
 
-		if (NdListViewSlideDirDown == m_nSlideDir)
+		if (CCListViewSlideDirDown == m_nSlideDir)
 		{
-			NdListViewCell* cell = NULL;
+			CCListViewCell* cell = NULL;
 			unsigned nLast = 0;
 			if (CCRange::CCLocationInRange(nRow + nCount - 1, m_visibleRows))
 			{
@@ -472,18 +478,18 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 					}
 					else
 					{
-						CCLog("NdListView cell == NULL at line %d", __LINE__);
+						CCLog("CCListView cell == NULL at line %d", __LINE__);
 					}
 				}
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
-		else if (NdListViewSlideDirUp == m_nSlideDir)
+		else if (CCListViewSlideDirUp == m_nSlideDir)
 		{
-			NdListViewCell* cell = NULL;
+			CCListViewCell* cell = NULL;
 			unsigned nFirst = 0;
 			if (CCRange::CCLocationInRange(nRow, m_visibleRows))
 			{
@@ -508,13 +514,13 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 					}
 					else
 					{
-						CCLog("NdListView cell == NULL at line %d", __LINE__);
+						CCLog("CCListView cell == NULL at line %d", __LINE__);
 					}
 				}
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 
@@ -528,13 +534,13 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 	m_ptDestination = m_layerPanel->getPosition();
 	m_ptDestination.x += disX;
 	m_ptDestination.y += disY;
-	m_nState = NdListViewStateScroll;
+	m_nState = CCListViewStateScroll;
 
 	if (bAnimated)
 	{
 		CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
 		CCEaseOut *ease = CCEaseOut::actionWithAction(moveBy, 3);
-		CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(NdListView::finishScroll)), NULL);
+		CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishScroll)), NULL);
 		m_layerPanel->runAction(actions);
 	}
 	else
@@ -543,7 +549,7 @@ void NdListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 	}
 }
 
-void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
+void CCListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 {
 	if (!isFullFill())
 	{
@@ -553,7 +559,7 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 	{
 		return;
 	}
-	if (NdListViewStateWatting != m_nState)
+	if (CCListViewStateWatting != m_nState)
 	{
 		this->stopActionImmediately();
 	}
@@ -565,19 +571,19 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 
 	float disX = 0;
 	float disY = 0;
-	m_nSlideDir = NdListViewSlideDirNone;
-	if (NdListViewModeHorizontal == m_nMode)
+	m_nSlideDir = CCListViewSlideDirNone;
+	if (CCListViewModeHorizontal == m_nMode)
 	{
 		float dis = 0;
 		int nCount = 0;
-		NdListViewCell *cell = NULL;
+		CCListViewCell *cell = NULL;
 		if (nRow > CCRange::CCMaxRange(m_visibleRows))
 		{
-			m_nSlideDir = NdListViewSlideDirLeft;
+			m_nSlideDir = CCListViewSlideDirLeft;
 		}
 		else
 		{
-			m_nSlideDir = NdListViewSlideDirRight;
+			m_nSlideDir = CCListViewSlideDirRight;
 		}
 
 		while(1)
@@ -587,11 +593,11 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 				break;
 			}
 
-			if (NdListViewSlideDirRight == m_nSlideDir)
+			if (CCListViewSlideDirRight == m_nSlideDir)
 			{
 				cell = appendRowToFront(nRow - nCount);
 			}
-			else if (NdListViewSlideDirLeft == m_nSlideDir)
+			else if (CCListViewSlideDirLeft == m_nSlideDir)
 			{
 				cell = appendRowToBack(nRow - nCount);
 			}
@@ -603,11 +609,11 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 
-		if (NdListViewSlideDirRight == m_nSlideDir && dis < this->getContentSize().width)
+		if (CCListViewSlideDirRight == m_nSlideDir && dis < this->getContentSize().width)
 		{
 			// at first
 			while(1)
@@ -625,14 +631,14 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 				}
 				else
 				{
-					CCLog("NdListView cell == NULL at line %d", __LINE__);
+					CCLog("CCListView cell == NULL at line %d", __LINE__);
 				}
 			}
 		}
 
-		if (NdListViewSlideDirRight == m_nSlideDir)
+		if (CCListViewSlideDirRight == m_nSlideDir)
 		{
-			NdListViewCell* cell = NULL;
+			CCListViewCell* cell = NULL;
 			unsigned nLast = 0;
 			if (CCRange::CCLocationInRange(nRow, m_visibleRows))
 			{
@@ -657,18 +663,18 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 					}
 					else
 					{
-						CCLog("NdListView cell == NULL at line %d", __LINE__);
+						CCLog("CCListView cell == NULL at line %d", __LINE__);
 					}
 				}
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
-		else if (NdListViewSlideDirLeft == m_nSlideDir)
+		else if (CCListViewSlideDirLeft == m_nSlideDir)
 		{
-			NdListViewCell* cell = NULL;
+			CCListViewCell* cell = NULL;
 			unsigned nFirst = 0;
 			if (CCRange::CCLocationInRange(nRow - nCount + 1, m_visibleRows))
 			{
@@ -696,13 +702,13 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 					}
 					else
 					{
-						CCLog("NdListView cell == NULL at line %d", __LINE__);
+						CCLog("CCListView cell == NULL at line %d", __LINE__);
 					}
 				}
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 
@@ -712,18 +718,18 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 		CCPoint ptView = this->convertToWorldSpace(CCPointZero);
 		disX = ptView.x + this->getContentSize().width - (ptCell.x + cell->getContentSize().width);
 	}
-	else if (NdListViewModeVertical == m_nMode)
+	else if (CCListViewModeVertical == m_nMode)
 	{
 		float dis = 0;
 		int nCount = 0;
-		NdListViewCell *cell = NULL;
+		CCListViewCell *cell = NULL;
 		if (nRow > CCRange::CCMaxRange(m_visibleRows))
 		{
-			m_nSlideDir = NdListViewSlideDirUp;
+			m_nSlideDir = CCListViewSlideDirUp;
 		}
 		else
 		{
-			m_nSlideDir = NdListViewSlideDirDown;
+			m_nSlideDir = CCListViewSlideDirDown;
 		}
 
 		while(1)
@@ -733,11 +739,11 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 				break;
 			}
 
-			if (NdListViewSlideDirDown == m_nSlideDir)
+			if (CCListViewSlideDirDown == m_nSlideDir)
 			{
 				cell = appendRowToFront(nRow - nCount);
 			}
-			else if (NdListViewSlideDirUp == m_nSlideDir)
+			else if (CCListViewSlideDirUp == m_nSlideDir)
 			{
 				cell = appendRowToBack(nRow - nCount);
 			}
@@ -749,11 +755,11 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 
-		if (NdListViewSlideDirDown == m_nSlideDir && dis < this->getContentSize().height)
+		if (CCListViewSlideDirDown == m_nSlideDir && dis < this->getContentSize().height)
 		{
 			// at first
 			while(1)
@@ -771,14 +777,14 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 				}
 				else
 				{
-					CCLog("NdListView cell == NULL at line %d", __LINE__);
+					CCLog("CCListView cell == NULL at line %d", __LINE__);
 				}
 			}
 		}
 
-		if (NdListViewSlideDirDown == m_nSlideDir)
+		if (CCListViewSlideDirDown == m_nSlideDir)
 		{
-			NdListViewCell* cell = NULL;
+			CCListViewCell* cell = NULL;
 			unsigned nLast = 0;
 			if (CCRange::CCLocationInRange(nRow, m_visibleRows))
 			{
@@ -804,18 +810,18 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 					}
 					else
 					{
-						CCLog("NdListView cell == NULL at line %d", __LINE__);
+						CCLog("CCListView cell == NULL at line %d", __LINE__);
 					}
 				}
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
-		else if (NdListViewSlideDirUp == m_nSlideDir)
+		else if (CCListViewSlideDirUp == m_nSlideDir)
 		{
-			NdListViewCell* cell = NULL;
+			CCListViewCell* cell = NULL;
 			unsigned nFirst = 0;
 			if (CCRange::CCLocationInRange(nRow - nCount + 1, m_visibleRows))
 			{
@@ -841,13 +847,13 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 					}
 					else
 					{
-						CCLog("NdListView cell == NULL at line %d", __LINE__);
+						CCLog("CCListView cell == NULL at line %d", __LINE__);
 					}
 				}
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 
@@ -861,13 +867,13 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 	m_ptDestination = m_layerPanel->getPosition();
 	m_ptDestination.x += disX;
 	m_ptDestination.y += disY;
-	m_nState = NdListViewStateScroll;
+	m_nState = CCListViewStateScroll;
 
 	if (bAnimated)
 	{
 		CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
 		CCEaseOut *ease = CCEaseOut::actionWithAction(moveBy, 3);
-		CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(NdListView::finishScroll)), NULL);
+		CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishScroll)), NULL);
 		m_layerPanel->runAction(actions);
 	}
 	else
@@ -876,35 +882,35 @@ void NdListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 	}
 }
 
-NdListViewSlideDir NdListView::getSlideDir(CCPoint ptTouchBegan, CCPoint ptTouchEnd)
+CCListViewSlideDir CCListView::getSlideDir(CCPoint ptTouchBegan, CCPoint ptTouchEnd)
 {
-	NdListViewSlideDir nSlideDir = NdListViewSlideDirNone;
+	CCListViewSlideDir nSlideDir = CCListViewSlideDirNone;
 
 	int nOffsetX = ptTouchEnd.x - ptTouchBegan.x;
 	int nOffsetY = ptTouchEnd.y - ptTouchBegan.y;
 
 	int disMin = CCDirector::sharedDirector()->getWinSize().height / 100;
 
-	if(NdListViewModeHorizontal == m_nMode)
+	if(CCListViewModeHorizontal == m_nMode)
 	{
 		if(nOffsetX >= disMin)
 		{
-			nSlideDir = NdListViewSlideDirRight;
+			nSlideDir = CCListViewSlideDirRight;
 		}
 		else if (nOffsetX <= -disMin)
 		{
-			nSlideDir = NdListViewSlideDirLeft;
+			nSlideDir = CCListViewSlideDirLeft;
 		}
 	}
-	else if (NdListViewModeVertical == m_nMode)
+	else if (CCListViewModeVertical == m_nMode)
 	{
 		if(nOffsetY >= disMin)
 		{
-			nSlideDir = NdListViewSlideDirUp;
+			nSlideDir = CCListViewSlideDirUp;
 		}
 		else if (nOffsetY <= -disMin)
 		{
-			nSlideDir = NdListViewSlideDirDown;
+			nSlideDir = CCListViewSlideDirDown;
 		}
 	}
 	return nSlideDir;
@@ -913,9 +919,9 @@ NdListViewSlideDir NdListView::getSlideDir(CCPoint ptTouchBegan, CCPoint ptTouch
 /******************************************
 **************Private Functions************
 *******************************************/
-int NdListView::rowForTouch(cocos2d::CCTouch *touch)
+int CCListView::rowForTouch(cocos2d::CCTouch *touch)
 {
-	CCPoint touchLocation = touch->locationInView(touch->view());
+	CCPoint touchLocation = touch->locationInView();
 	touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
 
 	CCArray *pChildren = m_layerPanel->getChildren();
@@ -943,14 +949,14 @@ int NdListView::rowForTouch(cocos2d::CCTouch *touch)
 	return -1;
 }
 
-void NdListView::finishFix(void)
+void CCListView::finishFix(void)
 {
 	if(m_pListViewParent)
 	{
 		m_pListViewParent->setIsEnabled(true);
 	}
-	m_nState = NdListViewStateWatting;
-	m_nSlideDir = NdListViewSlideDirNone;
+	m_nState = CCListViewStateWatting;
+	m_nSlideDir = CCListViewSlideDirNone;
 	clearUnvisibleRows();
 	triggerDidScrollToRow(m_visibleRows.location);
 
@@ -963,21 +969,21 @@ void NdListView::finishFix(void)
 	//CCLog("row num left:%d [%d, %d]", nCount, m_drawedRows.location, CCRange::CCMaxRange(m_drawedRows));
 }
 
-void NdListView::finishScroll(void)
+void CCListView::finishScroll(void)
 {
 	finishFix();
 }
 
-void NdListView::finishEaseOut(void)
+void CCListView::finishEaseOut(void)
 {
 	bool bNeedFix = false;
 
-	if (NdListViewModeHorizontal == m_nMode)
+	if (CCListViewModeHorizontal == m_nMode)
 	{
 		bool bFullFill = isFullFill();
-		if (NdListViewSlideDirLeft == m_nSlideDir && bFullFill)
+		if (CCListViewSlideDirLeft == m_nSlideDir && bFullFill)
 		{
-			NdListViewCell *cell = cellAtRow(m_nNumberOfRows - 1);
+			CCListViewCell *cell = cellAtRow(m_nNumberOfRows - 1);
 			if (cell)
 			{
 				CCPoint ptCell = cell->convertToWorldSpace(CCPointZero);
@@ -991,7 +997,7 @@ void NdListView::finishEaseOut(void)
 		}
 		else
 		{
-			NdListViewCell *cell = cellAtRow(0);
+			CCListViewCell *cell = cellAtRow(0);
 			if (cell)
 			{
 				CCPoint ptCell = cell->convertToWorldSpace(CCPointZero);
@@ -1004,12 +1010,12 @@ void NdListView::finishEaseOut(void)
 			}
 		}
 	}
-	else if (NdListViewModeVertical == m_nMode)
+	else if (CCListViewModeVertical == m_nMode)
 	{
 		bool bFullFill = this->isFullFill();
-		if (NdListViewSlideDirUp == m_nSlideDir && bFullFill)
+		if (CCListViewSlideDirUp == m_nSlideDir && bFullFill)
 		{
-			NdListViewCell *cell = cellAtRow(m_nNumberOfRows - 1);
+			CCListViewCell *cell = cellAtRow(m_nNumberOfRows - 1);
 			if (cell)
 			{
 				CCPoint ptCell = cell->convertToWorldSpace(CCPointZero);
@@ -1023,7 +1029,7 @@ void NdListView::finishEaseOut(void)
 		}
 		else
 		{
-			NdListViewCell *cell = cellAtRow(0);
+			CCListViewCell *cell = cellAtRow(0);
 			if (cell)
 			{
 				CCPoint ptCell = cell->convertToWorldSpace(CCPointZero);
@@ -1043,7 +1049,7 @@ void NdListView::finishEaseOut(void)
 	}
 }
 
-bool NdListView::isTouchInside(CCTouch *touch)
+bool CCListView::isTouchInside(CCTouch *touch)
 {
 	CCPoint point;
 	if (m_pListViewParent)
@@ -1059,16 +1065,16 @@ bool NdListView::isTouchInside(CCTouch *touch)
 	return bIn;
 }
 
-bool NdListView::isFullFill(void)
+bool CCListView::isFullFill(void)
 {
 	bool bRet = false;
 	float length = 0;
 	for (unsigned int i = m_drawedRows.location; i <= CCRange::CCMaxRange(m_drawedRows); i++)
 	{
-		NdListViewCell *cell = cellAtRow(i);
+		CCListViewCell *cell = cellAtRow(i);
 		if (cell)
 		{
-			if (NdListViewModeHorizontal == m_nMode)
+			if (CCListViewModeHorizontal == m_nMode)
 			{
 				length += cell->getContentSize().width;
 				if (length >= this->getContentSize().width)
@@ -1077,7 +1083,7 @@ bool NdListView::isFullFill(void)
 					break;
 				}
 			}
-			else if (NdListViewModeVertical == m_nMode)
+			else if (CCListViewModeVertical == m_nMode)
 			{
 				length += cell->getContentSize().height;
 				if (length >= this->getContentSize().height)
@@ -1091,122 +1097,122 @@ bool NdListView::isFullFill(void)
 	return bRet;
 }
 
-NdListViewCell *NdListView::cellAtRow(unsigned int nRow)
+CCListViewCell *CCListView::cellAtRow(unsigned int nRow)
 {
-	NdListViewCell *cell = (NdListViewCell*)m_layerPanel->getChildByTag(nRow);
+	CCListViewCell *cell = (CCListViewCell*)m_layerPanel->getChildByTag(nRow);
 	return cell;
 }
 
-void NdListView::stopActionImmediately(void)
+void CCListView::stopActionImmediately(void)
 {
 	m_layerPanel->stopAllActions();
-	if (NdListViewStateScroll == m_nState)
+	if (CCListViewStateScroll == m_nState)
 	{
 		m_layerPanel->setPosition(m_ptDestination);
 		finishScroll();
 	}
 }
 
-unsigned int NdListView::triggerNumberOfCells(void)
+unsigned int CCListView::triggerNumberOfCells(void)
 {
 	unsigned int nRow = 0;
-	NdListViewProtrolData data;
+	CCListViewProtrolData data;
 
 	if (m_strDeletegate.size() > 0)
 	{
-		CCScriptEngineProtocol* scriptEngine = CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine();
+		CCScriptEngineProtocol* scriptEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
 		if (scriptEngine)
 		{
 			std::string script;
-			script = m_strDeletegate + "NdListView_numberOfCells";
-			scriptEngine->executeCallFuncNTDT(script.c_str(), this, "NdCxControl::NdListView", &data, "NdCxControl::NdListViewProtrolData");
+			script = m_strDeletegate + "CCListView_numberOfCells";
+//TODO:			scriptEngine->executeCallFuncNTDT(script.c_str(), this, "NdCxControl::CCListView", &data, "NdCxControl::CCListViewProtrolData");
 			nRow = data.nNumberOfRows;
 		}
 	}
 
 	if (m_pDelegate)
 	{
-		m_pDelegate->NdListView_numberOfCells(this, &data);
+		m_pDelegate->CCListView_numberOfCells(this, &data);
 		nRow = data.nNumberOfRows;
 	}
 	return nRow;
 }
 
-NdListViewCell *NdListView::triggerCellForRow(unsigned int nRow)
+CCListViewCell *CCListView::triggerCellForRow(unsigned int nRow)
 {
-	NdListViewCell *cell = NULL;
-	NdListViewProtrolData data;
+	CCListViewCell *cell = NULL;
+	CCListViewProtrolData data;
 	data.nRow = nRow;
 	data.cell = NULL;
 	if (m_strDeletegate.size() > 0)
 	{
-		CCScriptEngineProtocol* scriptEngine = CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine();
+		CCScriptEngineProtocol* scriptEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
 		if (scriptEngine)
 		{
 			std::string script;
-			script = m_strDeletegate + "NdListView_cellForRow";
-			scriptEngine->executeCallFuncNTDT(script.c_str(), this, "NdCxControl::NdListView",  &data, "NdCxControl::NdListViewProtrolData");
+			script = m_strDeletegate + "CCListView_cellForRow";
+//TODO:			scriptEngine->executeCallFuncNTDT(script.c_str(), this, "NdCxControl::CCListView",  &data, "NdCxControl::CCListViewProtrolData");
 			cell = data.cell;
 		}
 	}
 	if (m_pDelegate)
 	{
-		m_pDelegate->NdListView_cellForRow(this, &data);
+		m_pDelegate->CCListView_cellForRow(this, &data);
 		cell = data.cell;
 	}
 	return cell;
 }
 
-void NdListView::triggerDidClickCellAtRow(unsigned int nRow)
+void CCListView::triggerDidClickCellAtRow(unsigned int nRow)
 {
-	NdListViewProtrolData data;
+	CCListViewProtrolData data;
 	data.nRow = nRow;
 	if (m_strDeletegate.size() > 0)
 	{
-		CCScriptEngineProtocol* scriptEngine = CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine();
+		CCScriptEngineProtocol* scriptEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
 		if (scriptEngine)
 		{
 			std::string script;
-			script = m_strDeletegate + "NdListView_didClickCellAtRow";
-			scriptEngine->executeCallFuncNTDT(script.c_str(), this, "NdCxControl::NdListView", &data, "NdCxControl::NdListViewProtrolData");
+			script = m_strDeletegate + "CCListView_didClickCellAtRow";
+//TODO:			scriptEngine->executeCallFuncNTDT(script.c_str(), this, "NdCxControl::CCListView", &data, "NdCxControl::CCListViewProtrolData");
 		}
 	}
 
 	if (m_pDelegate)
 	{
-		m_pDelegate->NdListView_didClickCellAtRow(this, &data);
+		m_pDelegate->CCListView_didClickCellAtRow(this, &data);
 	}
 }
 
-void NdListView::triggerDidScrollToRow(unsigned int nRow)
+void CCListView::triggerDidScrollToRow(unsigned int nRow)
 {
-	NdListViewProtrolData data;
+	CCListViewProtrolData data;
 	data.nRow = nRow;
 	if (m_strDeletegate.size() > 0)
 	{
-		CCScriptEngineProtocol* scriptEngine = CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine();
+		CCScriptEngineProtocol* scriptEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
 		if (scriptEngine)
 		{
 			std::string script;
-			script = m_strDeletegate + "NdListView_didScrollToRow";
-			scriptEngine->executeCallFuncNTDT(script.c_str(), this, "NdCxControl::NdListView", &data, "NdCxControl::NdListViewProtrolData");
+			script = m_strDeletegate + "CCListView_didScrollToRow";
+//TODO:			scriptEngine->executeCallFuncNTDT(script.c_str(), this, "NdCxControl::CCListView", &data, "NdCxControl::CCListViewProtrolData");
 		}
 	}
 	if (m_pDelegate)
 	{
-		m_pDelegate->NdListView_didScrollToRow(this, &data);
+		m_pDelegate->CCListView_didScrollToRow(this, &data);
 	}
 }
 
-void NdListView::displayVisibleRows(void)
+void CCListView::displayVisibleRows(void)
 {
 	CCSize size = getContentSize();
 	float posPannel, boundPannel;
 	unsigned int rowCount = m_drawedRows.location;
 	
-	NdListViewCell *cell = cellAtRow(rowCount);
+	CCListViewCell *cell = cellAtRow(rowCount);
 
-	if (m_nMode == NdListViewModeHorizontal)
+	if (m_nMode == CCListViewModeHorizontal)
 	{
 		if (cell)
 		{
@@ -1218,7 +1224,7 @@ void NdListView::displayVisibleRows(void)
 		}
 		boundPannel = posPannel + size.width;
 	}
-	else if (m_nMode == NdListViewModeVertical)
+	else if (m_nMode == CCListViewModeVertical)
 	{
 		if (cell)
 		{
@@ -1231,7 +1237,7 @@ void NdListView::displayVisibleRows(void)
 		boundPannel = posPannel - size.height;
 	}
 
-	NdListViewCell *lastCell = NULL;
+	CCListViewCell *lastCell = NULL;
 	while(1)
 	{
 		// row condition
@@ -1239,19 +1245,19 @@ void NdListView::displayVisibleRows(void)
 			break;
 
 		// size condition
-		if (m_nMode == NdListViewModeHorizontal)
+		if (m_nMode == CCListViewModeHorizontal)
 		{
 			if (posPannel >= boundPannel)
 				break;
 		}
-		else if (m_nMode == NdListViewModeVertical)
+		else if (m_nMode == CCListViewModeVertical)
 		{
 			if (posPannel <= boundPannel)
 				break;
 		}
 
 		// get cell
-		NdListViewCell *cell = cellAtRow(rowCount);
+		CCListViewCell *cell = cellAtRow(rowCount);
 
 		if (NULL == cell)
 		{
@@ -1259,12 +1265,12 @@ void NdListView::displayVisibleRows(void)
 			if (cell)
 			{
 				CCSize cellSize = cell->getContentSize();
-				if (m_nMode == NdListViewModeHorizontal)
+				if (m_nMode == CCListViewModeHorizontal)
 				{
 					cell->setPosition(CCPointMake(posPannel, 0));
 					cell->setContentSize(CCSizeMake(cellSize.width, size.height));
 				}
-				else if (m_nMode == NdListViewModeVertical)
+				else if (m_nMode == CCListViewModeVertical)
 				{
 					cell->setPosition(CCPointMake(0, posPannel - cellSize.height));
 					cell->setContentSize(CCSizeMake(size.width, cellSize.height));
@@ -1275,11 +1281,11 @@ void NdListView::displayVisibleRows(void)
 
 		if (cell)
 		{
-			if (m_nMode == NdListViewModeHorizontal)
+			if (m_nMode == CCListViewModeHorizontal)
 			{
 				posPannel += cell->getContentSize().width;
 			}
-			else if (m_nMode == NdListViewModeVertical)
+			else if (m_nMode == CCListViewModeVertical)
 			{
 				posPannel -= cell->getContentSize().height;
 			}
@@ -1295,17 +1301,17 @@ void NdListView::displayVisibleRows(void)
 
 	if (lastCell)
 	{
-		lastCell->setSeparatorStyle(NdListViewCellSeparatorStyleNone);
+		lastCell->setSeparatorStyle(CCListViewCellSeparatorStyleNone);
 	}
 }
 
-NdListViewCell* NdListView::appendRowToBack(unsigned int nRow)
+CCListViewCell* CCListView::appendRowToBack(unsigned int nRow)
 {
 	if (nRow >= m_nNumberOfRows)
 	{
 		return NULL;
 	}
-	NdListViewCell *cell = cellAtRow(nRow);
+	CCListViewCell *cell = cellAtRow(nRow);
 	if (cell == NULL)
 	{
 		cell = triggerCellForRow(nRow);
@@ -1315,16 +1321,16 @@ NdListViewCell* NdListView::appendRowToBack(unsigned int nRow)
 			CCSize cellSize = cell->getContentSize();
 			float pos;
 			unsigned int nLastRow = CCRange::CCMaxRange(m_drawedRows);
-			NdListViewCell *lastCell = cellAtRow(nLastRow);
+			CCListViewCell *lastCell = cellAtRow(nLastRow);
 			if (lastCell)
 			{
-				if (m_nMode == NdListViewModeHorizontal)
+				if (m_nMode == CCListViewModeHorizontal)
 				{
 					pos = lastCell->getPosition().x + lastCell->getContentSize().width;
 					cell->setPosition(CCPointMake(pos, 0));
 					cell->setContentSize(CCSizeMake(cellSize.width, size.height));
 				}
-				else if (m_nMode == NdListViewModeVertical)
+				else if (m_nMode == CCListViewModeVertical)
 				{
 					pos = lastCell->getPosition().y - cell->getContentSize().height;
 					cell->setPosition(CCPointMake(0, pos));
@@ -1338,7 +1344,7 @@ NdListViewCell* NdListView::appendRowToBack(unsigned int nRow)
 				m_layerPanel->addChild(cell, nRow, nRow);
 				if (nRow > CCRange::CCMaxRange(m_drawedRows))
 				{
-					cell->setSeparatorStyle(NdListViewCellSeparatorStyleNone);
+					cell->setSeparatorStyle(CCListViewCellSeparatorStyleNone);
 					lastCell->setSeparatorStyle(m_nSeparatorStyle);
 					m_drawedRows.length += nRow - CCRange::CCMaxRange(m_drawedRows);
 				}
@@ -1349,20 +1355,20 @@ NdListViewCell* NdListView::appendRowToBack(unsigned int nRow)
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 		else
 		{
-			CCLog("NdListView cell == NULL at line %d", __LINE__);
+			CCLog("CCListView cell == NULL at line %d", __LINE__);
 		}
 	}
 	return cell;
 }
 
-NdListViewCell* NdListView::appendRowToFront(unsigned int nRow)
+CCListViewCell* CCListView::appendRowToFront(unsigned int nRow)
 {
-	NdListViewCell *cell = cellAtRow(nRow);
+	CCListViewCell *cell = cellAtRow(nRow);
 	if (cell == NULL)
 	{
 		cell = triggerCellForRow(nRow);
@@ -1372,16 +1378,16 @@ NdListViewCell* NdListView::appendRowToFront(unsigned int nRow)
 			CCSize cellSize = cell->getContentSize();
 			float pos;
 			unsigned int nFirstRow = m_drawedRows.location;
-			NdListViewCell *firstCell = cellAtRow(nFirstRow);
+			CCListViewCell *firstCell = cellAtRow(nFirstRow);
 			if (firstCell)
 			{
-				if (m_nMode == NdListViewModeHorizontal)
+				if (m_nMode == CCListViewModeHorizontal)
 				{
 					pos = firstCell->getPosition().x - cell->getContentSize().width;
 					cell->setPosition(CCPointMake(pos, 0));
 					cell->setContentSize(CCSizeMake(cellSize.width, size.height));
 				}
-				else if (m_nMode == NdListViewModeVertical)
+				else if (m_nMode == CCListViewModeVertical)
 				{
 					pos = firstCell->getPosition().y + firstCell->getContentSize().height;
 					cell->setPosition(CCPointMake(0, pos));
@@ -1401,29 +1407,29 @@ NdListViewCell* NdListView::appendRowToFront(unsigned int nRow)
 			}
 			else
 			{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 			}
 		}
 		else
 		{
-				CCLog("NdListView cell == NULL at line %d", __LINE__);
+				CCLog("CCListView cell == NULL at line %d", __LINE__);
 		}
 	}
 	return cell;
 }
 // 对齐末行
-void NdListView::fixFirstRow(void)
+void CCListView::fixFirstRow(void)
 {
 	unsigned int location = m_drawedRows.location;
 
-	NdListViewCell *cell = cellAtRow(location);
+	CCListViewCell *cell = cellAtRow(location);
 	if (cell)
 	{
 		float disX = 0;
 		float disY = 0;
 		CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
 		CCPoint posView = this->convertToWorldSpace(CCPointZero);
-		if (NdListViewModeHorizontal == m_nMode)
+		if (CCListViewModeHorizontal == m_nMode)
 		{
 			float dis = posCell.x - posView.x;
 			dis = -dis;
@@ -1431,7 +1437,7 @@ void NdListView::fixFirstRow(void)
 			disX = dis;
 			disY = 0;
 		}
-		else if (NdListViewModeVertical == m_nMode)
+		else if (CCListViewModeVertical == m_nMode)
 		{
 			float dis = posCell.y + cell->getContentSize().height - (posView.y + this->getContentSize().height);
 			dis = -dis;
@@ -1440,10 +1446,10 @@ void NdListView::fixFirstRow(void)
 			disY = dis;
 		}
 		
-		m_nState = NdListViewStateFix;
+		m_nState = CCListViewStateFix;
 		CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
 		CCEaseInOut *ease = CCEaseInOut::actionWithAction(moveBy, 2);
-		CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(NdListView::finishFix)), NULL);
+		CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishFix)), NULL);
 		m_layerPanel->runAction(actions);
 	}
 	else
@@ -1452,17 +1458,17 @@ void NdListView::fixFirstRow(void)
 	}
 }
 // 对齐首行
-void NdListView::fixLastRow(void)
+void CCListView::fixLastRow(void)
 {
 	unsigned int nLastRow = CCRange::CCMaxRange(m_drawedRows);
-	NdListViewCell *cell = cellAtRow(nLastRow);
+	CCListViewCell *cell = cellAtRow(nLastRow);
 	if (cell)
 	{
 		float disX = 0;
 		float disY = 0;
 		CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
 		CCPoint posView = this->convertToWorldSpace(CCPointZero);
-		if (NdListViewModeHorizontal == m_nMode)
+		if (CCListViewModeHorizontal == m_nMode)
 		{
 			float dis = posCell.x + cell->getContentSize().width - (posView.x + this->getContentSize().width);
 			dis = -dis;
@@ -1470,7 +1476,7 @@ void NdListView::fixLastRow(void)
 			disX = dis;
 			disY = 0;
 		}
-		else if (NdListViewModeVertical == m_nMode)
+		else if (CCListViewModeVertical == m_nMode)
 		{
 			float dis = posCell.y - posView.y;
 			dis = -dis;
@@ -1479,10 +1485,10 @@ void NdListView::fixLastRow(void)
 			disY = dis;
 		}
 
-		m_nState = NdListViewStateFix;
+		m_nState = CCListViewStateFix;
 		CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
 		CCEaseInOut *ease = CCEaseInOut::actionWithAction(moveBy, 2);
-		CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(NdListView::finishFix)), NULL);
+		CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishFix)), NULL);
 		m_layerPanel->runAction(actions);
 	}
 	else
@@ -1491,20 +1497,20 @@ void NdListView::fixLastRow(void)
 	}
 }
 // 手势滑动界面，减速效果
-void NdListView::easeOutWithDistance(float dis)
+void CCListView::easeOutWithDistance(float dis)
 {
 	float disX = 0;
 	float disY = 0;
 
-	if (NdListViewModeHorizontal == m_nMode)
+	if (CCListViewModeHorizontal == m_nMode)
 	{
-		if (NdListViewSlideDirLeft == m_nSlideDir)
+		if (CCListViewSlideDirLeft == m_nSlideDir)
 		{
 			// drag Left
 			while(1)
 			{
 				unsigned int nLastRow = CCRange::CCMaxRange(m_drawedRows);
-				NdListViewCell *cell = cellAtRow(nLastRow);
+				CCListViewCell *cell = cellAtRow(nLastRow);
 				if (cell)
 				{
 					CCPoint ptCell = cell->convertToWorldSpace(CCPointZero);
@@ -1551,7 +1557,7 @@ void NdListView::easeOutWithDistance(float dis)
 			while(1)
 			{
 				unsigned int nFirstRow = m_drawedRows.location;
-				NdListViewCell *cell = cellAtRow(nFirstRow);
+				CCListViewCell *cell = cellAtRow(nFirstRow);
 				if (cell)
 				{
 					CCPoint ptCell = cell->convertToWorldSpace(CCPointZero);
@@ -1595,15 +1601,15 @@ void NdListView::easeOutWithDistance(float dis)
 		disX = dis;
 		disY = 0;
 	}
-	else if (NdListViewModeVertical == m_nMode)
+	else if (CCListViewModeVertical == m_nMode)
 	{
-		if (NdListViewSlideDirUp == m_nSlideDir)
+		if (CCListViewSlideDirUp == m_nSlideDir)
 		{
 			// drag up
 			while(1)
 			{
 				unsigned int nLastRow = CCRange::CCMaxRange(m_drawedRows);
-				NdListViewCell *cell = cellAtRow(nLastRow);
+				CCListViewCell *cell = cellAtRow(nLastRow);
 				if (cell)
 				{
 					CCPoint ptCell = cell->convertToWorldSpace(CCPointZero);
@@ -1646,7 +1652,7 @@ void NdListView::easeOutWithDistance(float dis)
 			while(1)
 			{
 				unsigned int nFirstRow = m_drawedRows.location;
-				NdListViewCell *cell = cellAtRow(nFirstRow);
+				CCListViewCell *cell = cellAtRow(nFirstRow);
 				if (cell)
 				{
 					CCPoint ptCell = cell->convertToWorldSpace(CCPointZero);
@@ -1687,24 +1693,24 @@ void NdListView::easeOutWithDistance(float dis)
 		disY = dis;
 	}
 
-	m_nState = NdListViewStateEaseOut;
+	m_nState = CCListViewStateEaseOut;
 	CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
 	CCEaseOut *ease = CCEaseOut::actionWithAction(moveBy, 3);
-	CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(NdListView::finishEaseOut)), NULL);
+	CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishEaseOut)), NULL);
 	m_layerPanel->runAction(actions);
 }
 
-void NdListView::clearUnvisibleRows(void)
+void CCListView::clearUnvisibleRows(void)
 {
 	CCRange oldRange = m_drawedRows;
 	for (unsigned int i = oldRange.location; i < oldRange.location + oldRange.length; i++)
 	{
-		NdListViewCell *cell = cellAtRow(i);
+		CCListViewCell *cell = cellAtRow(i);
 		if (cell)
 		{
 			CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
 			CCPoint posView = this->convertToWorldSpace(CCPointZero);
-			if (NdListViewModeHorizontal == m_nMode)
+			if (CCListViewModeHorizontal == m_nMode)
 			{
 				if (posCell.x + cell->getContentSize().width <= posView.x) 
 				{
@@ -1715,7 +1721,7 @@ void NdListView::clearUnvisibleRows(void)
 					break;
 				}
 			}
-			else if (NdListViewModeVertical == m_nMode)
+			else if (CCListViewModeVertical == m_nMode)
 			{
 				if (posCell.y >= posView.y + this->getContentSize().height) 
 				{
@@ -1734,12 +1740,12 @@ void NdListView::clearUnvisibleRows(void)
 	oldRange = m_drawedRows;
 	for (int i = oldRange.location + oldRange.length - 1; i >= (int)oldRange.location; i--)
 	{
-		NdListViewCell *cell = cellAtRow(i);
+		CCListViewCell *cell = cellAtRow(i);
 		if (cell)
 		{
 			CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
 			CCPoint posView = this->convertToWorldSpace(CCPointZero);
-			if (NdListViewModeHorizontal == m_nMode)
+			if (CCListViewModeHorizontal == m_nMode)
 			{
 				if (posCell.x >= posView.x + this->getContentSize().width) 
 				{
@@ -1750,7 +1756,7 @@ void NdListView::clearUnvisibleRows(void)
 					break;
 				}
 			}
-			else if (NdListViewModeVertical == m_nMode)
+			else if (CCListViewModeVertical == m_nMode)
 			{
 				if (posCell.y + cell->getContentSize().height <= posView.y) 
 				{
@@ -1770,19 +1776,20 @@ void NdListView::clearUnvisibleRows(void)
 /******************************************
 **************Virturl Functions************
 *******************************************/
-void NdListView::registerWithTouchDispatcher()
+void CCListView::registerWithTouchDispatcher()
 {
+    CCDirector* pDirector = CCDirector::sharedDirector();
 	if (m_pListViewParent)
 	{
-		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority - 1, false);
+		pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority - 1, false);
 	}
 	else
 	{
-		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority - 2, false);
+		pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority - 2, false);
 	}
 }
 
-void NdListView::onEnter(void)
+void CCListView::onEnter(void)
 {
 	if (0 == m_nNumberOfRows)
 	{
@@ -1796,12 +1803,12 @@ void NdListView::onEnter(void)
 	CCLayerColor::onEnter();
 }
 
-void NdListView::onExit(void)
+void CCListView::onExit(void)
 {
 	CCLayerColor::onExit();
 }
 
-void NdListView::visit(void)
+void CCListView::visit(void)
 {
 	if (!m_pListViewParent)
 	{
@@ -1823,7 +1830,7 @@ void NdListView::visit(void)
 	}
 }
 
-bool NdListView::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool CCListView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	 CC_UNUSED_PARAM(event);
 
@@ -1832,7 +1839,7 @@ bool NdListView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 		return false;
 	}
 
-	if (m_pListViewParent && NdListViewSlideDirNone != m_pListViewParent->getSlideDir())
+	if (m_pListViewParent && CCListViewSlideDirNone != m_pListViewParent->getSlideDir())
 	{
 		return false;
 	}
@@ -1848,7 +1855,7 @@ bool NdListView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 		return false;
 	}
 
-	CCPoint touchPoint = touch->locationInView(touch->view());
+	CCPoint touchPoint = touch->locationInView();
 
 	m_ptTouchBegan = m_ptTouchEnd = CCDirector::sharedDirector()->convertToGL(touchPoint);
 	m_ptPanelOffset = m_layerPanel->getPosition();
@@ -1858,13 +1865,13 @@ bool NdListView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 	m_nCurrentRow = this->rowForTouch(touch);
 	if (m_nCurrentRow != -1)
 	{	
-		if (NdListViewStateWatting != m_nState)
+		if (CCListViewStateWatting != m_nState)
 		{
 			stopActionImmediately();
 		}
 
-		m_nState = NdListViewStateTrackingTouch;
-		if (NdListViewSlideDirNone == m_nSlideDir)
+		m_nState = CCListViewStateTrackingTouch;
+		if (CCListViewSlideDirNone == m_nSlideDir)
 		{
 			this->selectCellAtRow(m_nCurrentRow);
 		}
@@ -1880,20 +1887,20 @@ bool NdListView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 	return false;
 }
 
-void NdListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void CCListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	CC_UNUSED_PARAM(event);
-	if (NdListViewStateTrackingTouch != m_nState || !isTouchInside(touch) || !m_bIsEnabled)
+	if (CCListViewStateTrackingTouch != m_nState || !isTouchInside(touch) || !m_bIsEnabled)
 	{
 		return;
 	}
 
-	CCPoint touchPoint = touch->locationInView(touch->view());
+	CCPoint touchPoint = touch->locationInView();
 	m_ptTouchEnd = CCDirector::sharedDirector()->convertToGL(touchPoint);         	
 
 
-	NdListViewSlideDir nsliderDir = NdListViewSlideDirNone;
-	if (m_pListViewParent && NdListViewSlideDirNone != m_pListViewParent->getSlideDir(m_ptTouchBegan, m_ptTouchEnd))
+	CCListViewSlideDir nsliderDir = CCListViewSlideDirNone;
+	if (m_pListViewParent && CCListViewSlideDirNone != m_pListViewParent->getSlideDir(m_ptTouchBegan, m_ptTouchEnd))
 	{
 		return;
 	}
@@ -1903,23 +1910,26 @@ void NdListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 	}
 	
 
-	if(NdListViewModeHorizontal == m_nMode && NdListViewSlideDirNone != nsliderDir)
+	if(CCListViewModeHorizontal == m_nMode && CCListViewSlideDirNone != nsliderDir)
 	{
 		m_nSlideDir = nsliderDir;
 		m_layerPanel->setPosition(CCPointMake(m_ptPanelOffset.x + (m_ptTouchEnd.x - m_ptTouchBegan.x),m_ptPanelOffset.y));
-		if (NdListViewSlideDirLeft == m_nSlideDir)
+		if (CCListViewSlideDirLeft == m_nSlideDir)
 		{
 			// drag left
 			unsigned int nLastRow = CCRange::CCMaxRange(m_drawedRows);
 			if (nLastRow < m_nNumberOfRows - 1)
 			{
-				NdListViewCell *cell = cellAtRow(nLastRow);
-				CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
-				CCPoint posView = this->convertToWorldSpace(CCPointZero);
-				if (posCell.x + cell->getContentSize().width <= posView.x + this->getContentSize().width)
-				{
-					appendRowToBack(nLastRow + 1);
-				}
+				CCListViewCell *cell = cellAtRow(nLastRow);
+                if (cell)
+                {
+				    CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
+				    CCPoint posView = this->convertToWorldSpace(CCPointZero);
+				    if (posCell.x + cell->getContentSize().width <= posView.x + this->getContentSize().width)
+				    {
+					    appendRowToBack(nLastRow + 1);
+				    }
+                }
 			}
 		}
 		else
@@ -1928,7 +1938,7 @@ void NdListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 			unsigned int nFirstRow = m_drawedRows.location;
 			if (nFirstRow > 0)
 			{
-				NdListViewCell *cell = cellAtRow(nFirstRow);
+				CCListViewCell *cell = cellAtRow(nFirstRow);
 				CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
 				CCPoint posView = this->convertToWorldSpace(CCPointZero);
 				if (posCell.x >= posView.x)
@@ -1938,17 +1948,17 @@ void NdListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 			}
 		}
 	}
-	else if (NdListViewModeVertical == m_nMode && NdListViewSlideDirNone != nsliderDir)
+	else if (CCListViewModeVertical == m_nMode && CCListViewSlideDirNone != nsliderDir)
 	{
 		m_nSlideDir = nsliderDir;
 		m_layerPanel->setPosition(CCPointMake(m_ptPanelOffset.x, m_ptPanelOffset.y + (m_ptTouchEnd.y - m_ptTouchBegan.y)));
-		if (NdListViewSlideDirUp == m_nSlideDir)
+		if (CCListViewSlideDirUp == m_nSlideDir)
 		{
 			// drag up
 			unsigned int nLastRow = CCRange::CCMaxRange(m_drawedRows);
 			if (nLastRow < m_nNumberOfRows - 1)
 			{
-				NdListViewCell *cell = cellAtRow(nLastRow);
+				CCListViewCell *cell = cellAtRow(nLastRow);
 				CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
 				CCPoint posView = this->convertToWorldSpace(CCPointZero);
 				if (posCell.y >= posView.y)
@@ -1963,7 +1973,7 @@ void NdListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 			unsigned int nFirstRow = m_drawedRows.location;
 			if (nFirstRow > 0)
 			{
-				NdListViewCell *cell = cellAtRow(nFirstRow);
+				CCListViewCell *cell = cellAtRow(nFirstRow);
 				CCPoint posCell = cell->convertToWorldSpace(CCPointZero);
 				CCPoint posView = this->convertToWorldSpace(CCPointZero);
 				if (posCell.y + cell->getContentSize().height <= posView.y + this->getContentSize().height)
@@ -1974,23 +1984,23 @@ void NdListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 		}
 	}
 
-	if (NdListViewSlideDirNone != m_nSlideDir && m_nCurrentRow != -1 && m_nCurrentRow != m_nSelectedRow)
+	if (CCListViewSlideDirNone != m_nSlideDir && m_nCurrentRow != -1 && m_nCurrentRow != m_nSelectedRow)
 	{
 		this->unselectCellAtRow(m_nCurrentRow);
 	}
 
-	if (NdListViewSlideDirNone != m_nSlideDir && m_pListViewParent)
+	if (CCListViewSlideDirNone != m_nSlideDir && m_pListViewParent)
 	{
 		m_pListViewParent->setIsEnabled(false);
 	}
 }
 
-void NdListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void CCListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 	CC_UNUSED_PARAM(touch);
 	CC_UNUSED_PARAM(event);
 
-	if(m_nState != NdListViewStateTrackingTouch || !m_bIsEnabled)
+	if(m_nState != CCListViewStateTrackingTouch || !m_bIsEnabled)
 	{
 		m_bIsOnTouch = false;
 		return;
@@ -2002,7 +2012,7 @@ void NdListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 	// 手机平台用时较长，此系数可能需要根据不同平台做相应调整
 	timeElapse /= 200;
 #endif
-	if(NdListViewSlideDirLeft == m_nSlideDir || NdListViewSlideDirRight == m_nSlideDir)
+	if(CCListViewSlideDirLeft == m_nSlideDir || CCListViewSlideDirRight == m_nSlideDir)
 	{
 		float dis = m_ptTouchEnd.x - m_ptTouchBegan.x;
 		float speed = dis / timeElapse;
@@ -2012,7 +2022,7 @@ void NdListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 		}
 		else
 		{
-			if (NdListViewSlideDirLeft == m_nSlideDir && isFullFill())
+			if (CCListViewSlideDirLeft == m_nSlideDir && isFullFill())
 			{
 				// drag up
 				fixLastRow();
@@ -2024,7 +2034,7 @@ void NdListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 			}
 		}
 	}
-	else if (NdListViewSlideDirUp == m_nSlideDir || NdListViewSlideDirDown == m_nSlideDir)
+	else if (CCListViewSlideDirUp == m_nSlideDir || CCListViewSlideDirDown == m_nSlideDir)
 	{
 		float dis = m_ptTouchEnd.y - m_ptTouchBegan.y;
 		float speed = dis / timeElapse;
@@ -2034,7 +2044,7 @@ void NdListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 		}
 		else
 		{
-			if (NdListViewSlideDirUp == m_nSlideDir && isFullFill())
+			if (CCListViewSlideDirUp == m_nSlideDir && isFullFill())
 			{
 				// drag up
 				fixLastRow();
@@ -2056,9 +2066,9 @@ void NdListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 	{
 		if (currentRow == m_nCurrentRow)
 		{
-			if (NdListViewSlideDirNone == m_nSlideDir)
+			if (CCListViewSlideDirNone == m_nSlideDir)
 			{
-				if (m_pListViewParent == NULL || (m_pListViewParent && NdListViewSlideDirNone == m_pListViewParent->getSlideDir()))
+				if (m_pListViewParent == NULL || (m_pListViewParent && CCListViewSlideDirNone == m_pListViewParent->getSlideDir()))
 				{
 					if (m_nSelectedRow != -1 && m_nSelectedRow != m_nCurrentRow)
 					{
@@ -2099,11 +2109,11 @@ void NdListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 	m_bIsOnTouch = false;
 }
 
-bool NdListView::isMenuTouch(CCTouch *touch, CCNode *parent)
+bool CCListView::isMenuTouch(CCTouch *touch, CCNode *parent)
 {
-	if (parent->getClassType() == CCMenuItem_classID)
+	if (dynamic_cast<CCMenuItem*>(parent))
 	{
-		CCPoint touchPoint = touch->locationInView(touch->view());
+		CCPoint touchPoint = touch->locationInView();
 		touchPoint.y = cocos2d::CCDirector::sharedDirector()->getWinSize().height - touchPoint.y;
 		touchPoint = parent->convertToNodeSpace(touchPoint);
 		CCRect rect = CCRectZero;
@@ -2128,18 +2138,18 @@ bool NdListView::isMenuTouch(CCTouch *touch, CCNode *parent)
 	return false;
 }
 
-void NdListView::ccTouchCancelled(CCTouch *touch, CCEvent *event)
+void CCListView::ccTouchCancelled(CCTouch *touch, CCEvent *event)
 {
 	CC_UNUSED_PARAM(touch);
 	CC_UNUSED_PARAM(event);
 
-	CCAssert(m_nState == NdListViewStateTrackingTouch, "[NdListview ccTouchCancelled] -- invalid state");
+	CCAssert(m_nState == CCListViewStateTrackingTouch, "[NdListview ccTouchCancelled] -- invalid state");
 	
 	finishFix();
 	m_bIsOnTouch = false;
 }
 
-} // end of namespace NdCxControl
+NS_CC_EXT_END
 
 
 

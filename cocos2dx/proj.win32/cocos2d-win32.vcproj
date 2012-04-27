@@ -1196,30 +1196,38 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="TextureWatcher"
+				Name="CCTextureWatcher"
 				>
 				<File
-					RelativePath="..\extensions\TextureWatcher\NdListView.cpp"
+					RelativePath="..\extensions\CCTextureWatcher\CCTextureWatcher.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\TextureWatcher\NdListView.h"
+					RelativePath="..\extensions\CCTextureWatcher\CCTextureWatcher.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCListView"
+				>
+				<File
+					RelativePath="..\extensions\CCListView\CCControlDefine.h"
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\TextureWatcher\NdListViewCell.cpp"
+					RelativePath="..\extensions\CCListView\CCListView.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\TextureWatcher\NdListViewCell.h"
+					RelativePath="..\extensions\CCListView\CCListView.h"
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\TextureWatcher\NdTextureWatcher.cpp"
+					RelativePath="..\extensions\CCListView\CCListViewCell.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\TextureWatcher\NdTextureWatcher.h"
+					RelativePath="..\extensions\CCListView\CCListViewCell.h"
 					>
 				</File>
 			</Filter>

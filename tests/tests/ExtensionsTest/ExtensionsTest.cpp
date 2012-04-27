@@ -5,7 +5,7 @@
 
 enum
 {
-    MAX_COUNT = 2,
+    MAX_COUNT = 3,
     LINE_SPACE = 40,
     kItemTagBasic = 1000,
 };
@@ -13,7 +13,8 @@ enum
 static const std::string testsName[MAX_COUNT] = 
 {
     "NotificationCenterTest",
-    "CCControlButtonTest"
+    "CCControlButtonTest",
+    "TextureWatcherTest"
 };
 
 ////////////////////////////////////////////////////////
@@ -57,6 +58,13 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             CCControlSceneManager* pManager = CCControlSceneManager::sharedControlSceneManager();
             CCScene* pScene = pManager->currentControlScene();
             CCDirector::sharedDirector()->replaceScene(pScene);
+        }
+        break;
+    case 2:
+        {
+            static bool s_bOpened = false;
+            s_bOpened = !s_bOpened;
+            CCTextureWatcher::sharedTextureWatcher()->setDisplayWatcher(s_bOpened);
         }
         break;
     default:
