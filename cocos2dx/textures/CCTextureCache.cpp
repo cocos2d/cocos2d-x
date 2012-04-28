@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <string>
 #include <cctype>
 #include <queue>
+#include <list>
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
@@ -541,6 +542,7 @@ void CCTextureCache::removeAllTextures()
 
 void CCTextureCache::removeUnusedTextures()
 {
+    /*
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(m_pTextures, pElement)
     {
@@ -550,6 +552,32 @@ void CCTextureCache::removeUnusedTextures()
         {
             CCLOG("cocos2d: CCTextureCache: removing unused texture: %s", pElement->getStrKey());
             m_pTextures->removeObjectForElememt(pElement);
+        }
+    }
+     */
+    
+    /** Inter engineer zhuoshi sun finds that this way will get better performance
+     */    
+    if (m_pTextures->count())
+    {   
+        // find elements to be removed
+        CCDictElement* pElement = NULL;
+        list<CCDictElement*> elementToRemove;
+        CCDICT_FOREACH(m_pTextures, pElement)
+        {
+            CCLOG("cocos2d: CCTextureCache: texture: %s", pElement->getStrKey());
+            CCTexture2D *value = (CCTexture2D*)pElement->getObject();
+            if (value->retainCount() == 1)
+            {
+                elementToRemove.push_back(pElement);
+            }
+        }
+        
+        // remove elements
+        for (list<CCDictElement*>::iterator iter = elementToRemove.begin(); iter != elementToRemove.end(); ++iter)
+        {
+            CCLOG("cocos2d: CCTextureCache: removing unused texture: %s", (*iter)->getStrKey());
+            m_pTextures->removeObjectForElememt(*iter);
         }
     }
 }
