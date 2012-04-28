@@ -23,6 +23,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include <pthread.h>
+#include <semaphore.h>
+#include <stack>
+#include <string>
+#include <cctype>
+#include <queue>
+#include <list>
+
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
@@ -34,13 +42,6 @@ THE SOFTWARE.
 #include "support/ccUtils.h"
 #include "CCScheduler.h"
 #include "CCThread.h"
-
-#include <pthread.h>
-#include <semaphore.h>
-#include <stack>
-#include <string>
-#include <cctype>
-#include <queue>
 
 namespace   cocos2d {
 
@@ -533,17 +534,26 @@ void CCTextureCache::removeAllTextures()
 
 void CCTextureCache::removeUnusedTextures()
 {
-	std::vector<std::string> keys = m_pTextures->allKeys();
-	std::vector<std::string>::iterator it;
-	for (it = keys.begin(); it != keys.end(); ++it)
-	{
-		CCTexture2D *value = m_pTextures->objectForKey(*it);
-		if (value->retainCount() == 1)
-		{
-			CCLOG("cocos2d: CCTextureCache: removing unused texture: %s", (*it).c_str());
-			m_pTextures->removeObjectForKey(*it);
-		}
-	}
+	if (m_pTextures->begin())
+    {
+        CCTexture2D *texture = NULL;
+        std::string key;
+        std::list<std::string> keysToRemove;
+        while ((texture = m_pTextures->next(&key)) != NULL)
+        {
+            if (texture->retainCount() == 1)
+            {
+                keysToRemove.push_back(key);
+            }
+        };
+        m_pTextures->end();
+        
+        for (std::list<std::string>::iterator it=keysToRemove.begin(); it!=keysToRemove.end(); ++it)
+        {
+            CCLOG("cocos2d: CCTextureCache: removing unused texture: %s", (*it).c_str());             
+            m_pTextures->removeObjectForKey(*it);
+        }
+    } 
 }
 
 void CCTextureCache::removeTexture(CCTexture2D* texture)
