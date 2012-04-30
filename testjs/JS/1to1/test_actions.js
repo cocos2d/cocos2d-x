@@ -167,6 +167,25 @@ scenes['test_sequence'] = function () {
 	return scene;
 };
 
+scenes['test_easein'] = function () {
+	var s1 = new cocos.Sprite.create("grossini_dance_05.png");
+	s1.position = cocos.Point.create(50, winSize.height / 2);
+
+	var moveBy = new cocos.MoveBy();
+	moveBy.initWithDuration(2.0, cocos.Point.create(200, 0));
+	var ease = cocos.EaseIn.actionWithAction(moveBy, 0.2);
+	s1.runAction(ease);
+
+	var scene = new cocos.Scene(); scene.init();
+	scene.addChild(s1);
+	
+	// add the menu
+	var menu = createMenu("Test EaseIn");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
 /**
  * from here on there's code that can be shared between different tests
  * basically is the hud and the scene handling
