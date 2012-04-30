@@ -110,6 +110,45 @@ public:
 
 };
 
+class S_CCEaseBackInOut : public CCEaseBackInOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseBackInOut(JSObject *obj) : CCEaseBackInOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseBackOut : public CCEaseBackOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseBackOut(JSObject *obj) : CCEaseBackOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCMenu : public CCMenu
 {
 	JSObject *m_jsobj;
@@ -301,6 +340,91 @@ public:
 	void menuAction(cocos2d::CCObject *o);
 };
 
+class S_CCParticleSystem : public CCParticleSystem
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCParticleSystem(JSObject *obj) : CCParticleSystem(), m_jsobj(obj) {};
+	enum {
+		kPlistFile = 1,
+		kElapsed,
+		kParticles,
+		kEmitCounter,
+		kParticleIdx,
+		kIsActive,
+		kParticleCount,
+		kDuration,
+		kSourcePosition,
+		kPosVar,
+		kLife,
+		kLifeVar,
+		kAngle,
+		kAngleVar,
+		kStartSize,
+		kStartSizeVar,
+		kEndSize,
+		kEndSizeVar,
+		kStartColor,
+		kStartColorVar,
+		kEndColor,
+		kEndColorVar,
+		kStartSpin,
+		kStartSpinVar,
+		kEndSpin,
+		kEndSpinVar,
+		kEmissionRate,
+		kTotalParticles,
+		kTexture,
+		kBlendFunc,
+		kIsBlendAdditive,
+		kType,
+		kIsAutoRemoveOnFinish,
+		kEmitterMode
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsparticleWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithDictionary(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTotalParticles(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaddParticle(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitParticle(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstopSystem(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsisFull(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdateQuadWithParticle(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jspostStep(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void update(ccTime delta);
+
+};
+
+class S_CCEaseElasticIn : public CCEaseElasticIn
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseElasticIn(JSObject *obj) : CCEaseElasticIn(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCRotateBy : public CCRotateBy
 {
 	JSObject *m_jsobj;
@@ -346,6 +470,29 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsCCPointEqualToPoint(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseElastic : public CCEaseElastic
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseElastic(JSObject *obj) : CCEaseElastic(), m_jsobj(obj) {};
+	enum {
+		kPeriod = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -427,6 +574,26 @@ public:
 
 };
 
+class S_CCEaseElasticOut : public CCEaseElasticOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseElasticOut(JSObject *obj) : CCEaseElasticOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCRotateTo : public CCRotateTo
 {
 	JSObject *m_jsobj;
@@ -450,6 +617,46 @@ public:
 	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseElasticInOut : public CCEaseElasticInOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseElasticInOut(JSObject *obj) : CCEaseElasticInOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseBounceIn : public CCEaseBounceIn
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseBounceIn(JSObject *obj) : CCEaseBounceIn(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -483,6 +690,143 @@ public:
 	static JSBool jsspriteFrameByName(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jssharedSpriteFrameCache(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jspurgeSharedSpriteFrameCache(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseBounce : public CCEaseBounce
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseBounce(JSObject *obj) : CCEaseBounce(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsbounceTime(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseBounceInOut : public CCEaseBounceInOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseBounceInOut(JSObject *obj) : CCEaseBounceInOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseBackIn : public CCEaseBackIn
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseBackIn(JSObject *obj) : CCEaseBackIn(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseBounceOut : public CCEaseBounceOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseBounceOut(JSObject *obj) : CCEaseBounceOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseIn : public CCEaseIn
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseIn(JSObject *obj) : CCEaseIn(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFiniteTimeAction : public CCFiniteTimeAction
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFiniteTimeAction(JSObject *obj) : CCFiniteTimeAction(), m_jsobj(obj) {};
+	enum {
+		kDuration = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseOut : public CCEaseOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseOut(JSObject *obj) : CCEaseOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -572,6 +916,95 @@ public:
 	static JSBool jsconvertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsconvertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 	virtual void update(ccTime delta);
+
+};
+
+class S_CCEaseExponentialIn : public CCEaseExponentialIn
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseExponentialIn(JSObject *obj) : CCEaseExponentialIn(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseInOut : public CCEaseInOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseInOut(JSObject *obj) : CCEaseInOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseExponentialOut : public CCEaseExponentialOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseExponentialOut(JSObject *obj) : CCEaseExponentialOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCParticleSystemQuad : public CCParticleSystemQuad
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCParticleSystemQuad(JSObject *obj) : CCParticleSystemQuad(), m_jsobj(obj) {};
+	enum {
+		kQuads = 1,
+		kIndices,
+		kQuadsID
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsparticleWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitIndices(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitTexCoordsWithRect(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTotalParticles(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdateQuadWithParticle(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jspostStep(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -693,6 +1126,71 @@ public:
 
 };
 
+class S_CCEaseExponentialInOut : public CCEaseExponentialInOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseExponentialInOut(JSObject *obj) : CCEaseExponentialInOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCParticleSystemPoint : public CCParticleSystemPoint
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCParticleSystemPoint(JSObject *obj) : CCParticleSystemPoint(), m_jsobj(obj) {};
+	enum {
+		kVertices = 1,
+		kVerticesID
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsparticleWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTotalParticles(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdateQuadWithParticle(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jspostStep(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseSineIn : public CCEaseSineIn
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseSineIn(JSObject *obj) : CCEaseSineIn(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCMenuItem : public CCMenuItem
 {
 	JSObject *m_jsobj;
@@ -747,6 +1245,53 @@ public:
 
 };
 
+class S_CCEaseSineOut : public CCEaseSineOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseSineOut(JSObject *obj) : CCEaseSineOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCActionInterval : public CCActionInterval
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCActionInterval(JSObject *obj) : CCActionInterval(), m_jsobj(obj) {};
+	enum {
+		kElapsed = 1,
+		kFirstTick
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsisDone(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstep(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCRepeatForever : public CCRepeatForever
 {
 	JSObject *m_jsobj;
@@ -769,6 +1314,25 @@ public:
 	static JSBool jsstep(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsisDone(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCEaseSineInOut : public CCEaseSineInOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseSineInOut(JSObject *obj) : CCEaseSineInOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -804,6 +1368,32 @@ public:
 	static JSBool jsclear(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jssaveBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 	virtual void update(ccTime delta);
+
+};
+
+class S_CCActionEase : public CCActionEase
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCActionEase(JSObject *obj) : CCActionEase(), m_jsobj(obj) {};
+	enum {
+		kOther = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstop(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -953,6 +1543,29 @@ public:
 	static JSBool jsisFrameDisplayed(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsdisplayedFrame(JSContext *cx, uint32_t argc, jsval *vp);
 	virtual void update(ccTime delta);
+
+};
+
+class S_CCEaseRateAction : public CCEaseRateAction
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCEaseRateAction(JSObject *obj) : CCEaseRateAction(), m_jsobj(obj) {};
+	enum {
+		kRate = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
