@@ -31,6 +31,7 @@
 		00CD253415488CF900B91EB5 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 00CD253315488CF900B91EB5 /* grossinis_sister1.png */; };
 		00F9469B152E0D3D007EB065 /* tank.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00F94699152E0D3D007EB065 /* tank.plist */; };
 		00F9469C152E0D3D007EB065 /* tank.png in Resources */ = {isa = PBXBuildFile; fileRef = 00F9469A152E0D3D007EB065 /* tank.png */; };
+		A037152E154F7A1E00081CBA /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = A037152D154F7A1E00081CBA /* grossinis_sister2.png */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -195,6 +196,7 @@
 		00CD253315488CF900B91EB5 /* grossinis_sister1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossinis_sister1.png; path = Resources/grossinis_sister1.png; sourceTree = "<group>"; };
 		00F94699152E0D3D007EB065 /* tank.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = tank.plist; path = Resources/tank.plist; sourceTree = "<group>"; };
 		00F9469A152E0D3D007EB065 /* tank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tank.png; path = Resources/tank.png; sourceTree = "<group>"; };
+		A037152D154F7A1E00081CBA /* grossinis_sister2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossinis_sister2.png; path = Resources/grossinis_sister2.png; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* testjs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testjs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -557,6 +559,7 @@
 		A92275521517C094001B78AA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A037152D154F7A1E00081CBA /* grossinis_sister2.png */,
 				00CD253315488CF900B91EB5 /* grossinis_sister1.png */,
 				00CD253015488C8D00B91EB5 /* grossini_dance_05.png */,
 				00AA6834153F85A3001AB56E /* b1-hd.png */,
@@ -1198,6 +1201,7 @@
 				00AA6857153F85A3001AB56E /* r2.png in Resources */,
 				00CD253115488C8D00B91EB5 /* grossini_dance_05.png in Resources */,
 				00CD253415488CF900B91EB5 /* grossinis_sister1.png in Resources */,
+				A037152E154F7A1E00081CBA /* grossinis_sister2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
