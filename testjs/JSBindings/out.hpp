@@ -161,7 +161,9 @@ public:
 		kColor = 1,
 		kCOpacity,
 		kEState,
-		kSelectedItem
+		kSelectedItem,
+		kOpacity,
+		kIsOpacityModifyRGB
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -219,7 +221,10 @@ public:
 	enum {
 		kNormalImage = 1,
 		kSelectedImage,
-		kDisabledImage
+		kDisabledImage,
+		kColor,
+		kOpacity,
+		kIsOpacityModifyRGB
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -277,8 +282,7 @@ public:
 		kRotated,
 		kRect,
 		kOffsetInPixels,
-		kOriginalSizeInPixels,
-		kTexture
+		kOriginalSizeInPixels
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -377,12 +381,25 @@ public:
 		kEndSpinVar,
 		kEmissionRate,
 		kTotalParticles,
-		kTexture,
 		kBlendFunc,
 		kIsBlendAdditive,
 		kType,
 		kIsAutoRemoveOnFinish,
-		kEmitterMode
+		kEmitterMode,
+		kGravity,
+		kSpeed,
+		kSpeedVar,
+		kTangentialAccel,
+		kTangentialAccelVar,
+		kRadialAccel,
+		kRadialAccelVar,
+		kStartRadius,
+		kStartRadiusVar,
+		kEndRadius,
+		kEndRadiusVar,
+		kRotatePerSecond,
+		kRotatePerSecondVar,
+		kPositionType
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -392,7 +409,6 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsparticleWithFile(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinitWithFile(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsinitWithDictionary(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinitWithTotalParticles(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsaddParticle(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinitParticle(JSContext *cx, uint32_t argc, jsval *vp);
@@ -678,14 +694,12 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsinit(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsaddSpriteFramesWithDictionary(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsaddSpriteFramesWithFile(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsaddSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsremoveSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsremoveUnusedSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsremoveSpriteFrameByName(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsremoveSpriteFramesFromFile(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsremoveSpriteFramesFromDictionary(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsremoveSpriteFramesFromTexture(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsspriteFrameByName(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jssharedSpriteFrameCache(JSContext *cx, uint32_t argc, jsval *vp);
@@ -849,7 +863,6 @@ public:
 		kSkewX,
 		kSkewY,
 		kChildren,
-		kCamera,
 		kGrid,
 		kIsVisible,
 		kAnchorPoint,
@@ -867,7 +880,12 @@ public:
 		kIsTransformDirty,
 		kIsInverseDirty,
 		kIsTransformGLDirty,
-		kScriptHandler
+		kScriptHandler,
+		kScale,
+		kPositionLua,
+		kPositionX,
+		kPositionY,
+		kChildrenCount
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -898,17 +916,12 @@ public:
 	static JSBool jsstopAction(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstopActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsnumberOfRunningActions(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsisScheduled(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsscheduleUpdateWithPriority(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsunscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsschedule(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsunschedule(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsunscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsresumeSchedulerAndActions(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jspauseSchedulerAndActions(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsparentToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsworldToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsconvertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsconvertToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsconvertToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
@@ -936,6 +949,26 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFileUtils : public CCFileUtils
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFileUtils(JSObject *obj) : CCFileUtils(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsgetFileData(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsfullPathFromRelativePath(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsfullPathFromRelativeFile(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1031,7 +1064,6 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jslabelWithString(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinitWithString(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsconvertToLabelProtocol(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1081,7 +1113,7 @@ public:
 		kDeltaTime,
 		kNextDeltaTimeZero,
 		kEProjection,
-		kWinSize,
+		kWinSizeInPoints,
 		kWinSizeInPixels,
 		kContentScaleFactor,
 		kPszFPS,
@@ -1089,7 +1121,13 @@ public:
 		kProjectionDelegate,
 		kEDeviceOrientation,
 		kIsContentScaleSupported,
-		kRetinaDisplay
+		kRetinaDisplay,
+		kAnimationInterval,
+		kProjection,
+		kWinSize,
+		kDisplaySizeInPixels,
+		kZEye,
+		kDeviceOrientation
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1275,7 +1313,8 @@ public:
 	S_CCActionInterval(JSObject *obj) : CCActionInterval(), m_jsobj(obj) {};
 	enum {
 		kElapsed = 1,
-		kFirstTick
+		kFirstTick,
+		kAmplitudeRate
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1349,8 +1388,6 @@ public:
 		kSprite = 1,
 		kFBO,
 		kOldFBO,
-		kTexture,
-		kUITextureImage,
 		kEPixelFormat
 	};
 
@@ -1409,7 +1446,10 @@ public:
 		kDisabledColor = 1,
 		kLabel,
 		kColorBackup,
-		kOriginalScale
+		kOriginalScale,
+		kOpacity,
+		kColor,
+		kIsOpacityModifyRGB
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1488,7 +1528,6 @@ public:
 	enum {
 		kOpacity = 1,
 		kColor,
-		kTextureAtlas,
 		kAtlasIndex,
 		kBatchNode,
 		kTransform,
@@ -1496,7 +1535,6 @@ public:
 		kRecursiveDirty,
 		kHasChildren,
 		kBlendFunc,
-		kTexture,
 		kUsesBatchNode,
 		kRect,
 		kRectInPixels,
@@ -1507,7 +1545,10 @@ public:
 		kColorUnmodified,
 		kOpacityModifyRGB,
 		kFlipX,
-		kFlipY
+		kFlipY,
+		kSpriteBatchNode,
+		kHonorParentTransform,
+		kIsOpacityModifyRGB
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
