@@ -91,6 +91,7 @@ ScriptingCore::ScriptingCore()
 	S_CCSequence::jsCreateClass(this->cx, cocos, "Sequence");
 	S_CCLabelTTF::jsCreateClass(this->cx, cocos, "LabelTTF");
 	S_CCParticleSystem::jsCreateClass(this->cx, cocos, "ParticleSystem");
+	S_CCFileUtils::jsCreateClass(this->cx, cocos, "FileUtils");
 
 	// register some global functions
 	JS_DefineFunction(this->cx, cocos, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
