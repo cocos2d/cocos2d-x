@@ -64,7 +64,6 @@ public:
 	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstop(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAnimation(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -144,7 +143,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -262,7 +260,6 @@ public:
 	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstop(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactions(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionsWithArray(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionOneTwo(JSContext *cx, uint32_t argc, jsval *vp);
@@ -436,7 +433,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -462,7 +458,6 @@ public:
 	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -507,7 +502,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -605,7 +599,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -651,7 +644,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -671,7 +663,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -760,7 +751,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -780,7 +770,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -947,7 +936,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -987,7 +975,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -1007,7 +994,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -1224,7 +1210,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -1278,7 +1263,6 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -1298,7 +1282,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -1352,7 +1335,6 @@ public:
 	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstep(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsisDone(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -1429,7 +1411,6 @@ public:
 	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstop(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -1605,7 +1586,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
