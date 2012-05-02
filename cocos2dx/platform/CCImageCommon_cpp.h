@@ -300,10 +300,33 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
                 row_pointers[i] = (png_bytep)m_pData + q;
             }
             png_read_image(png_ptr, row_pointers);
+            
+            if (m_bHasAlpha)
+            {
+                // premultiply alpha, or the effect will wrong when want to use other pixel format in CCTexture2D,
+                // such as RGB888, RGB5A1
+#define CC_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
+(unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
+((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
+((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
+((unsigned)(unsigned char)(va) << 24))
+                
+                unsigned int *tmp = (unsigned int *)m_pData;
+                for(unsigned int i = 0; i < m_nHeight; i++)
+                {
+                    for(int j = 0; j < m_nWidth * channels; j += 4)
+                    {
+                        *tmp++ = CC_RGB_PREMULTIPLY_APLHA( row_pointers[i][j], row_pointers[i][j + 1], 
+                                                          row_pointers[i][j + 2], row_pointers[i][j + 3] );
+                    }
+                }
+                
+                m_bPreMulti = true;
+            }
+
             free(row_pointers);
             bRet = true;
         }
-
     } while (0);
 
 out:

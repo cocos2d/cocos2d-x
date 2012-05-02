@@ -13,7 +13,7 @@
 #include "CCSprite.h"
 #include "CCPointExtension.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 CCScale9Sprite::CCScale9Sprite()
 {
@@ -461,4 +461,4 @@ bool CCScale9Sprite::getIsOpacityModifyRGB()
     return m_bIsOpacityModifyRGB;
 }
 
-NS_CC_END
+NS_CC_EXT_END
