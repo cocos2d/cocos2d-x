@@ -201,17 +201,16 @@ LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
                 -lz 
 
-LOCAL_STATIC_LIBRARIES := png_static_prebuilt
-LOCAL_STATIC_LIBRARIES += xml2_static_prebuilt
-LOCAL_STATIC_LIBRARIES += jpeg_static_prebuilt
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-add-path,$(LOCAL_PATH)/..)
-$(call import-module,cocos2dx/platform/third_party/android/modules/libpng)
-$(call import-module,cocos2dx/platform/third_party/android/modules/libxml2)
-$(call import-module,cocos2dx/platform/third_party/android/modules/libjpeg)
+$(call import-module,libjpeg)
+$(call import-module,libpng)
+$(call import-module,libxml2)
 
