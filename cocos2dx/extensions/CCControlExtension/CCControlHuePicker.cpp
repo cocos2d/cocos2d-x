@@ -31,7 +31,7 @@
 #include "CCControlHuePicker.h"
 #include "CCPointExtension.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 CCControlHuePicker::~CCControlHuePicker()
 {
@@ -158,4 +158,4 @@ void CCControlHuePicker::ccTouchMoved(CCTouch* touch, CCEvent* event)
     //checkSliderPosition(touchLocation);
 }
 
-NS_CC_END
+NS_CC_EXT_END

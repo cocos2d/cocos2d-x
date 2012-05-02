@@ -6,7 +6,7 @@
 
 using namespace std;
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 enum 
 {
@@ -437,4 +437,4 @@ const ccColor3B& CCMenuPassive::getColor(void)
     return m_tColor;
 }
 
-NS_CC_END
+NS_CC_EXT_END

@@ -29,11 +29,13 @@
 
 #include "CCControl.h"
 
-NS_CC_BEGIN
+
+namespace cocos2d { class CCSprite; }
+namespace cocos2d { class CCLabelTTF; }
+
+NS_CC_EXT_BEGIN
 
 class CCControlSwitchSprite;
-class CCSprite;
-class CCLabelTTF;
 
 /** @class CCControlSwitch Switch control for Cocos2D. */
 class CC_DLL CCControlSwitch : public CCControl
@@ -85,7 +87,7 @@ protected:
 };
 
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif /* __CCCONTROLSWITCH_H__ */
 
