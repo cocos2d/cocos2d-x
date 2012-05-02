@@ -31,7 +31,7 @@
 #include "CCTouch.h"
 #include "CCDirector.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 CCControlSlider::~CCControlSlider()
 {
@@ -218,4 +218,4 @@ float CCControlSlider::valueForLocation(CCPoint location)
     return m_minimumValue + percent * (m_maximumValue - m_minimumValue);
 }
 
-NS_CC_END
+NS_CC_EXT_END

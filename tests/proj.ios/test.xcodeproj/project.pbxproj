@@ -422,6 +422,13 @@
 		78ED2F9E153D5BE800330E29 /* CCControlSliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78ED2F92153D5BE800330E29 /* CCControlSliderTest.cpp */; };
 		78ED2F9F153D5BE800330E29 /* CCControlSwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78ED2F95153D5BE800330E29 /* CCControlSwitchTest.cpp */; };
 		78ED2FA0153D5BE800330E29 /* NotificationCenterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78ED2F98153D5BE800330E29 /* NotificationCenterTest.cpp */; };
+		78EE00EA1550D18D004C84B0 /* CCControlDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 78EE00E21550D18D004C84B0 /* CCControlDefine.h */; };
+		78EE00EB1550D18D004C84B0 /* CCListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00E31550D18D004C84B0 /* CCListView.cpp */; };
+		78EE00EC1550D18D004C84B0 /* CCListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78EE00E41550D18D004C84B0 /* CCListView.h */; };
+		78EE00ED1550D18D004C84B0 /* CCListViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00E51550D18D004C84B0 /* CCListViewCell.cpp */; };
+		78EE00EE1550D18D004C84B0 /* CCListViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 78EE00E61550D18D004C84B0 /* CCListViewCell.h */; };
+		78EE00EF1550D18D004C84B0 /* CCTextureWatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00E81550D18D004C84B0 /* CCTextureWatcher.cpp */; };
+		78EE00F01550D18D004C84B0 /* CCTextureWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 78EE00E91550D18D004C84B0 /* CCTextureWatcher.h */; };
 		ADDD87E51484BB53005306E7 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = ADDD85FA1484BB37005306E7 /* Box2D.h */; };
 		ADDD87E61484BB53005306E7 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADDD85FC1484BB37005306E7 /* b2BroadPhase.cpp */; };
 		ADDD87E71484BB53005306E7 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = ADDD85FD1484BB37005306E7 /* b2BroadPhase.h */; };
@@ -1106,6 +1113,13 @@
 		78ED2F96153D5BE800330E29 /* CCControlSwitchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlSwitchTest.h; sourceTree = "<group>"; };
 		78ED2F98153D5BE800330E29 /* NotificationCenterTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NotificationCenterTest.cpp; sourceTree = "<group>"; };
 		78ED2F99153D5BE800330E29 /* NotificationCenterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCenterTest.h; sourceTree = "<group>"; };
+		78EE00E21550D18D004C84B0 /* CCControlDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlDefine.h; sourceTree = "<group>"; };
+		78EE00E31550D18D004C84B0 /* CCListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCListView.cpp; sourceTree = "<group>"; };
+		78EE00E41550D18D004C84B0 /* CCListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCListView.h; sourceTree = "<group>"; };
+		78EE00E51550D18D004C84B0 /* CCListViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCListViewCell.cpp; sourceTree = "<group>"; };
+		78EE00E61550D18D004C84B0 /* CCListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCListViewCell.h; sourceTree = "<group>"; };
+		78EE00E81550D18D004C84B0 /* CCTextureWatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureWatcher.cpp; sourceTree = "<group>"; };
+		78EE00E91550D18D004C84B0 /* CCTextureWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureWatcher.h; sourceTree = "<group>"; };
 		ADDD85FA1484BB37005306E7 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		ADDD85FC1484BB37005306E7 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		ADDD85FD1484BB37005306E7 /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -1536,7 +1550,9 @@
 			isa = PBXGroup;
 			children = (
 				781C37AB1547F9DC00633F88 /* CCControlExtension */,
+				78EE00E11550D18D004C84B0 /* CCListView */,
 				781C37C51547F9DC00633F88 /* CCNotificationCenter */,
+				78EE00E71550D18D004C84B0 /* CCTextureWatcher */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -2285,6 +2301,27 @@
 				78ED2F99153D5BE800330E29 /* NotificationCenterTest.h */,
 			);
 			path = NotificationCenterTest;
+			sourceTree = "<group>";
+		};
+		78EE00E11550D18D004C84B0 /* CCListView */ = {
+			isa = PBXGroup;
+			children = (
+				78EE00E21550D18D004C84B0 /* CCControlDefine.h */,
+				78EE00E31550D18D004C84B0 /* CCListView.cpp */,
+				78EE00E41550D18D004C84B0 /* CCListView.h */,
+				78EE00E51550D18D004C84B0 /* CCListViewCell.cpp */,
+				78EE00E61550D18D004C84B0 /* CCListViewCell.h */,
+			);
+			path = CCListView;
+			sourceTree = "<group>";
+		};
+		78EE00E71550D18D004C84B0 /* CCTextureWatcher */ = {
+			isa = PBXGroup;
+			children = (
+				78EE00E81550D18D004C84B0 /* CCTextureWatcher.cpp */,
+				78EE00E91550D18D004C84B0 /* CCTextureWatcher.h */,
+			);
+			path = CCTextureWatcher;
 			sourceTree = "<group>";
 		};
 		ADDD85F81484BB37005306E7 /* Box2D */ = {
@@ -3185,6 +3222,10 @@
 				781C39EE1547FA0800633F88 /* ZFont.h in Headers */,
 				781C39F01547FA0800633F88 /* OpenGL_Internal.h in Headers */,
 				781C39F11547FA0800633F88 /* AccelerometerSimulation.h in Headers */,
+				78EE00EA1550D18D004C84B0 /* CCControlDefine.h in Headers */,
+				78EE00EC1550D18D004C84B0 /* CCListView.h in Headers */,
+				78EE00EE1550D18D004C84B0 /* CCListViewCell.h in Headers */,
+				78EE00F01550D18D004C84B0 /* CCTextureWatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3660,6 +3701,9 @@
 				781C39EC1547FA0800633F88 /* ZAttributedString.m in Sources */,
 				781C39EF1547FA0800633F88 /* ZFont.m in Sources */,
 				781C39F21547FA0800633F88 /* AccelerometerSimulation.m in Sources */,
+				78EE00EB1550D18D004C84B0 /* CCListView.cpp in Sources */,
+				78EE00ED1550D18D004C84B0 /* CCListViewCell.cpp in Sources */,
+				78EE00EF1550D18D004C84B0 /* CCTextureWatcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

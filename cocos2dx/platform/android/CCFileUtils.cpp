@@ -118,11 +118,6 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     return pData;
 }
 
-void CCFileUtils::setResource(const char* pszZipFileName)
-{
-    CCAssert(0, "Have not implement!");
-}
-
 int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 {
     CCAssert(0, "Have not implement!");

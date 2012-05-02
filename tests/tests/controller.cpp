@@ -166,6 +166,7 @@ TestController::TestController()
     setIsTouchEnabled(true);
 
     addChild(pMenu, 1);
+
 }
 
 TestController::~TestController()

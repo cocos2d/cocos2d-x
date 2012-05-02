@@ -153,6 +153,9 @@
 		784521CE14EBA449009D533B /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521C514EBA449009D533B /* CloseNormal.png */; };
 		784521CF14EBA449009D533B /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521C614EBA449009D533B /* CloseSelected.png */; };
 		784521D214EBA449009D533B /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 784521CA14EBA449009D533B /* HelloWorld.png */; };
+		78EE00FF1550D1C7004C84B0 /* CCListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00F81550D1C7004C84B0 /* CCListView.cpp */; };
+		78EE01001550D1C7004C84B0 /* CCListViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00FA1550D1C7004C84B0 /* CCListViewCell.cpp */; };
+		78EE01011550D1C7004C84B0 /* CCTextureWatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00FD1550D1C7004C84B0 /* CCTextureWatcher.cpp */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
 		BF1373F1128A899E00D9F789 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
@@ -489,6 +492,13 @@
 		784521C514EBA449009D533B /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		784521C614EBA449009D533B /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		784521CA14EBA449009D533B /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
+		78EE00F71550D1C7004C84B0 /* CCControlDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlDefine.h; sourceTree = "<group>"; };
+		78EE00F81550D1C7004C84B0 /* CCListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCListView.cpp; sourceTree = "<group>"; };
+		78EE00F91550D1C7004C84B0 /* CCListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCListView.h; sourceTree = "<group>"; };
+		78EE00FA1550D1C7004C84B0 /* CCListViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCListViewCell.cpp; sourceTree = "<group>"; };
+		78EE00FB1550D1C7004C84B0 /* CCListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCListViewCell.h; sourceTree = "<group>"; };
+		78EE00FD1550D1C7004C84B0 /* CCTextureWatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureWatcher.cpp; sourceTree = "<group>"; };
+		78EE00FE1550D1C7004C84B0 /* CCTextureWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureWatcher.h; sourceTree = "<group>"; };
 		BF137426128A8E4600D9F789 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF23D4E3143315EB00657E08 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		BF23D4E4143315EB00657E08 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -691,7 +701,9 @@
 			isa = PBXGroup;
 			children = (
 				781C35B41547F0ED00633F88 /* CCControlExtension */,
+				78EE00F61550D1C7004C84B0 /* CCListView */,
 				781C35CE1547F0ED00633F88 /* CCNotificationCenter */,
+				78EE00FC1550D1C7004C84B0 /* CCTextureWatcher */,
 			);
 			name = extensions;
 			path = ../../cocos2dx/extensions;
@@ -1195,6 +1207,27 @@
 			path = ../Resources;
 			sourceTree = "<group>";
 		};
+		78EE00F61550D1C7004C84B0 /* CCListView */ = {
+			isa = PBXGroup;
+			children = (
+				78EE00F71550D1C7004C84B0 /* CCControlDefine.h */,
+				78EE00F81550D1C7004C84B0 /* CCListView.cpp */,
+				78EE00F91550D1C7004C84B0 /* CCListView.h */,
+				78EE00FA1550D1C7004C84B0 /* CCListViewCell.cpp */,
+				78EE00FB1550D1C7004C84B0 /* CCListViewCell.h */,
+			);
+			path = CCListView;
+			sourceTree = "<group>";
+		};
+		78EE00FC1550D1C7004C84B0 /* CCTextureWatcher */ = {
+			isa = PBXGroup;
+			children = (
+				78EE00FD1550D1C7004C84B0 /* CCTextureWatcher.cpp */,
+				78EE00FE1550D1C7004C84B0 /* CCTextureWatcher.h */,
+			);
+			path = CCTextureWatcher;
+			sourceTree = "<group>";
+		};
 		BF23D4E2143315EB00657E08 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1426,6 +1459,9 @@
 				781C374E1547F14B00633F88 /* ZFont.m in Sources */,
 				781C374F1547F14B00633F88 /* AccelerometerSimulation.m in Sources */,
 				781C37521547F16600633F88 /* platform.cpp in Sources */,
+				78EE00FF1550D1C7004C84B0 /* CCListView.cpp in Sources */,
+				78EE01001550D1C7004C84B0 /* CCListViewCell.cpp in Sources */,
+				78EE01011550D1C7004C84B0 /* CCTextureWatcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

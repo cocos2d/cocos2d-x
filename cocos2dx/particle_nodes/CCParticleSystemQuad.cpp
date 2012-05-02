@@ -67,7 +67,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
         
         
         // Need to listen the event only when not use batchnode, because it will use VBO
-        CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+        extension::CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                       callfuncO_selector(CCParticleSystemQuad::listenBackToForeground),
                                                                       EVNET_COME_TO_FOREGROUND,
                                                                       NULL);
@@ -99,7 +99,7 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 #endif
     }
     
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    extension::CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 // implementation CCParticleSystemQuad
