@@ -60,8 +60,8 @@ the dpath string to `""`. It also allows for the "reload script" button to work 
 
 ![screenshot 1](http://dl.dropbox.com/u/29043245/testjs1.png)
 
-If you set the dpath string to `""` (empty string) then the reload button will try to reload the script from
-inside the bundle.
+If you set the dpath string to `""` (empty string, the default setting) then the reload button will try to
+reload the script from inside the bundle.
 
 In the test scenes the buttons represent:
 
