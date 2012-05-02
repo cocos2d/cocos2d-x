@@ -47,7 +47,7 @@ CCApplication::~CCApplication()
 
 int CCApplication::run()
 {
-    if (initInstance() && applicationDidFinishLaunching()) 
+    if (applicationDidFinishLaunching()) 
     {
         [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
     }
