@@ -1,6 +1,8 @@
 #include "main.h"
-
 #include "AppDelegate.h"
+#include "CCEGLView.h"
+
+USING_NS_CC;
 
 // uncomment below line, open debug console
 #define USE_WIN32_CONSOLE
@@ -20,10 +22,15 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	freopen("CONOUT$", "w", stderr);
 #endif
 
-	// create the application instance
-	AppDelegate app;
+    // create the application instance
+    AppDelegate app;
+    CCEGLView& eglView = CCEGLView::sharedOpenGLView();
+    eglView.setViewName("Hello Lua");
+    eglView.setFrameSize(480, 320);
+    // set the design resolution screen size, if you want to use Design Resoulution scaled to current screen, please uncomment next line.
+    // eglView.setDesignResolutionSize(480, 320);
 
-	int ret = cocos2d::CCApplication::sharedApplication().run();
+	int ret = CCApplication::sharedApplication().run();
 
 #ifdef USE_WIN32_CONSOLE
 	FreeConsole();

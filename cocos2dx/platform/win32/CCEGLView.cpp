@@ -165,8 +165,8 @@ private:
 //////////////////////////////////////////////////////////////////////////
 // impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
-static CCEGLView * s_pMainWindow;
-static const WCHAR * kWindowClassName = L"Cocos2dxWin32";
+static CCEGLView* s_pMainWindow = NULL;
+static const char* kWindowClassName = "Cocos2dxWin32";
 
 static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -225,7 +225,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
         m_hWnd = CreateWindowEx(
             WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,    // Extended Style For The Window
             kWindowClassName,                                    // Class Name
-            pTitle,                                                // Window Title
+            m_szViewName,                                                // Window Title
             WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,        // Defined Window Style
             0, 0,                                                // Window Position
             0,                                                  // Window Width
@@ -408,7 +408,6 @@ void CCEGLView::end()
     }
     s_pMainWindow = NULL;
     UnregisterClass(kWindowClassName, GetModuleHandle(NULL));
-
     delete this;
 }
 
@@ -459,7 +458,12 @@ void CCEGLView::resize(int width, int height)
         m_pEGL->resizeSurface();
     }
 
-    setFrameSize(width, height);
+    CCEGLViewProtocol::setFrameSize(width, height);
+}
+
+void CCEGLView::setFrameSize(float width, float height)
+{
+    Create((LPCTSTR)m_szViewName, width, height);
 }
 
 void CCEGLView::centerWindow()
@@ -509,8 +513,12 @@ void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
-    CC_ASSERT(s_pMainWindow);
-    return *s_pMainWindow;
+    static CCEGLView* s_pEglView = NULL;
+    if (s_pEglView == NULL)
+    {
+        s_pEglView = new CCEGLView();
+    }
+    return *s_pEglView;
 }
 
 NS_CC_END
