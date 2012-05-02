@@ -53,6 +53,9 @@ extensions/CCControlExtension/CCInvocation.cpp \
 extensions/CCControlExtension/CCMenuPassive.cpp \
 extensions/CCControlExtension/CCScale9Sprite.cpp \
 extensions/CCControlExtension/CCSpacer.cpp \
+extensions/CCListView/CCListView.cpp \
+extensions/CCListView/CCListViewCell.cpp \
+extensions/CCTextureWatcher/CCTextureWatcher.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

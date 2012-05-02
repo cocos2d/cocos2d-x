@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
-//#import "cocos2d.h"
 
 
 class SchedulerTestLayer : public CCLayer

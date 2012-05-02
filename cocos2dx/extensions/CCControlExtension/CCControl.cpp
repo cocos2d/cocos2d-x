@@ -32,7 +32,7 @@
 #include "CCMenu.h"
 #include "CCTouch.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 CCControl::CCControl()
 {
@@ -299,4 +299,4 @@ CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
     return invocationList;
 }
 
-NS_CC_END
+NS_CC_EXT_END

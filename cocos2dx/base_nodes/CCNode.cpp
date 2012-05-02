@@ -524,7 +524,10 @@ void CCNode::addChild(CCNode *child)
 
 void CCNode::removeFromParentAndCleanup(bool cleanup)
 {
-    this->m_pParent->removeChild(this,cleanup);
+    if (m_pParent != NULL)
+    {
+        m_pParent->removeChild(this,cleanup);
+    } 
 }
 
 /* "remove" logic MUST only be on this method

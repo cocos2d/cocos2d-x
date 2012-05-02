@@ -27,9 +27,10 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 
-NS_CC_BEGIN
 
-class CCArray;
+namespace cocos2d { class CCArray; }
+
+NS_CC_EXT_BEGIN
 
 class CC_DLL CCNotificationCenter : public CCObject
 {
@@ -59,7 +60,7 @@ private:
     //
     // variables
     //
-    CCArray *m_observers;
+    cocos2d::CCArray *m_observers;
 };
 
 class CC_DLL CCNotificationObserver : public CCObject
@@ -79,6 +80,6 @@ private:
     CC_PROPERTY_READONLY(CCObject *, m_object, Object);
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif//__CCNOTIFICATIONCENTER_H__

@@ -33,7 +33,7 @@
 #include "CCSpriteFrameCache.h"
 #include "CCSpriteBatchNode.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 bool CCControlColourPicker::init()
 {
@@ -158,4 +158,4 @@ bool CCControlColourPicker::ccTouchBegan(CCTouch* touch, CCEvent* pEvent)
     return false;
 }
 
-NS_CC_END
+NS_CC_EXT_END
