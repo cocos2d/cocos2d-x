@@ -12,87 +12,84 @@ using namespace cocos2d;
 using namespace CocosDenshion;
 
 #define PTM_RATIO 32
-enum 
+
+enum {
+    kTagParentNode = 1,
+};
+
+PhysicsSprite::PhysicsSprite()
+: m_pBody(NULL)
 {
-    kTagTileMap = 1,
-    kTagSpriteManager = 1,
-    kTagAnimation1 = 1,
-}; 
+
+}
+
+void PhysicsSprite::setPhysicsBody(b2Body * body)
+{
+    m_pBody = body;
+}
+
+// this method will only get called if the sprite is batched.
+// return YES if the physics values (angles, position ) changed
+// If you return NO, then nodeToParentTransform won't be called.
+bool PhysicsSprite::isDirty(void)
+{
+    return true;
+}
+
+// returns the transform matrix according the Chipmunk Body values
+CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
+{
+    b2Vec2 pos  = m_pBody->GetPosition();
+
+    float x = pos.x * PTM_RATIO;
+    float y = pos.y * PTM_RATIO;
+
+    if ( !getIsRelativeAnchorPoint() ) {
+        x += m_tAnchorPointInPoints.x;
+        y += m_tAnchorPointInPoints.y;
+    }
+
+    // Make matrix
+    float radians = m_pBody->GetAngle();
+    float c = cosf(radians);
+    float s = sinf(radians);
+
+    if( ! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPoints, CCPointZero) ){
+        x += c*-m_tAnchorPointInPoints.x + -s*-m_tAnchorPointInPoints.y;
+        y += s*-m_tAnchorPointInPoints.x + c*-m_tAnchorPointInPoints.y;
+    }
+
+    // Rot, Translate Matrix
+    m_tTransform = CCAffineTransformMake( c,  s,
+        -s,    c,
+        x,    y );
+
+    return m_tTransform;
+}
 
 HelloWorld::HelloWorld()
 {
     setIsTouchEnabled( true );
     setIsAccelerometerEnabled( true );
-    
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    //UXLOG(L"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
-    
-    // Define the gravity vector.
-    b2Vec2 gravity;
-    gravity.Set(0.0f, -10.0f);
-    
-    // Do we want to let bodies sleep?
-    bool doSleep = true;
-    
-    // Construct a world object, which will hold and simulate the rigid bodies.
-    world = new b2World(gravity);
-    world->SetAllowSleeping(doSleep);    
-    world->SetContinuousPhysics(true);
-    
-    /*    
-     m_debugDraw = new GLESDebugDraw( PTM_RATIO );
-     world->SetDebugDraw(m_debugDraw);
-     
-     uint flags = 0;
-     flags += b2DebugDraw::e_shapeBit;
-     flags += b2DebugDraw::e_jointBit;
-     flags += b2DebugDraw::e_aabbBit;
-     flags += b2DebugDraw::e_pairBit;
-     flags += b2DebugDraw::e_centerOfMassBit;
-     m_debugDraw->SetFlags(flags);        
-     */
-    
-    b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(screenSize.width/2/PTM_RATIO, 
-                               screenSize.height/2/PTM_RATIO); // bottom-left corner
-    
-    // Call the body factory which allocates memory for the ground body
-    // from a pool and creates the ground box shape (also from a pool).
-    // The body is also added to the world.
-    b2Body* groundBody = world->CreateBody(&groundBodyDef);
-    
-    // Define the ground box shape.
-    b2PolygonShape groundBox;        
-    
-    // bottom
-    groundBox.SetAsBox(screenSize.width/2/PTM_RATIO, 0, b2Vec2(0, -screenSize.height/2/PTM_RATIO), 0);
-     groundBody->CreateFixture(&groundBox, 0);
-    
-    // top
-    groundBox.SetAsBox(screenSize.width/2/PTM_RATIO, 0, b2Vec2(0, screenSize.height/2/PTM_RATIO), 0);
-    groundBody->CreateFixture(&groundBox, 0);
-    
-    // left
-    groundBox.SetAsBox(0, screenSize.height/2/PTM_RATIO, b2Vec2(-screenSize.width/2/PTM_RATIO, 0), 0);
-    groundBody->CreateFixture(&groundBox, 0);
-    
-    // right
-    groundBox.SetAsBox(0, screenSize.height/2/PTM_RATIO, b2Vec2(screenSize.width/2/PTM_RATIO, 0), 0);
-    groundBody->CreateFixture(&groundBox, 0);
-    
-    
-    //Set up sprite
-    CCSpriteBatchNode *mgr = CCSpriteBatchNode::batchNodeWithFile("blocks.png", 150);
-    addChild(mgr, 0, kTagSpriteManager);
-    
-    addNewSpriteWithCoords( CCPointMake(screenSize.width/2, screenSize.height/2) );
-    
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    // init physics
+    this->initPhysics();
+
+    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("blocks.png", 100);
+    m_pSpriteTexture = parent->getTexture();
+
+    addChild(parent, 0, kTagParentNode);
+
+
+    addNewSpriteAtPosition(ccp(s.width/2, s.height/2));
+
     CCLabelTTF *label = CCLabelTTF::labelWithString("Tap screen", "Marker Felt", 32);
     addChild(label, 0);
-    label->setColor( ccc3(0,0,255) );
-    label->setPosition( CCPointMake( screenSize.width/2, screenSize.height-50) );
+    label->setColor(ccc3(0,0,255));
+    label->setPosition(ccp( s.width/2, s.height-50));
     
-    schedule( schedule_selector(HelloWorld::tick) );
+    scheduleUpdate();
 }
 
 HelloWorld::~HelloWorld()
@@ -103,21 +100,78 @@ HelloWorld::~HelloWorld()
     //delete m_debugDraw;
 }
 
+void HelloWorld::initPhysics()
+{
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    b2Vec2 gravity;
+    gravity.Set(0.0f, -10.0f);
+    world = new b2World(gravity);
+
+    // Do we want to let bodies sleep?
+    world->SetAllowSleeping(true);
+
+    world->SetContinuousPhysics(true);
+
+//     m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+//     world->SetDebugDraw(m_debugDraw);
+
+    uint32 flags = 0;
+    flags += b2Draw::e_shapeBit;
+    //        flags += b2Draw::e_jointBit;
+    //        flags += b2Draw::e_aabbBit;
+    //        flags += b2Draw::e_pairBit;
+    //        flags += b2Draw::e_centerOfMassBit;
+    //m_debugDraw->SetFlags(flags);
+
+
+    // Define the ground body.
+    b2BodyDef groundBodyDef;
+    groundBodyDef.position.Set(0, 0); // bottom-left corner
+
+    // Call the body factory which allocates memory for the ground body
+    // from a pool and creates the ground box shape (also from a pool).
+    // The body is also added to the world.
+    b2Body* groundBody = world->CreateBody(&groundBodyDef);
+
+    // Define the ground box shape.
+    b2EdgeShape groundBox;
+
+    // bottom
+
+    groundBox.Set(b2Vec2(0,0), b2Vec2(s.width/PTM_RATIO,0));
+    groundBody->CreateFixture(&groundBox,0);
+
+    // top
+    groundBox.Set(b2Vec2(0,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO));
+    groundBody->CreateFixture(&groundBox,0);
+
+    // left
+    groundBox.Set(b2Vec2(0,s.height/PTM_RATIO), b2Vec2(0,0));
+    groundBody->CreateFixture(&groundBox,0);
+
+    // right
+    groundBox.Set(b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,0));
+    groundBody->CreateFixture(&groundBox,0);
+}
+
 void HelloWorld::draw()
 {
-    // Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-    // Needed states:  GL_VERTEX_ARRAY, 
-    // Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-    glDisable(GL_TEXTURE_2D);
-    glDisableClientState(GL_COLOR_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    
-    //world->DrawDebugData();
-    
-    // restore default GL states
-    glEnable(GL_TEXTURE_2D);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);    
+    //
+    // IMPORTANT:
+    // This is only for debug purposes
+    // It is recommend to disable it
+    //
+    CCLayer::draw();
+
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+
+    kmGLPushMatrix();
+
+    world->DrawDebugData();
+
+    kmGLPopMatrix();
 }
 
 void HelloWorld::addNewSpriteWithCoords(CCPoint p)
@@ -156,7 +210,7 @@ void HelloWorld::addNewSpriteWithCoords(CCPoint p)
 }
 
 
-void HelloWorld::tick(ccTime dt)
+void HelloWorld::update(ccTime dt)
 {
     //It is recommended that a fixed time step is used with Box2D for stability
     //of the simulation, however, we are using a variable time step here.
