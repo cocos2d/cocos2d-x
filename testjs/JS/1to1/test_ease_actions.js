@@ -52,16 +52,16 @@ scenes['test_easein'] = function () {
 	moveBy2.initWithDuration(2.0, cocos.Point.create( winSize.width-100, 0));
 	moveBy3.initWithDuration(2.0, cocos.Point.create( winSize.width-100, 0));
 	
-//	var easein = cocos.EaseIn.actionWithAction(moveBy1, 0.2);
-//	var seq1 = cocos.Sequence.actions(easein, easein.reverse );
-//	s1.runAction(easein.reverse);
-//
-//	var seq2 = cocos.Sequence.actions( moveBy2. moveBy2.reverse );
-//	s2.runAction( seq2 );
-//
-//	var easeout = cocos.EaseOut.actionWithAction(moveBy3, 0.2);
-//	var seq3 = cocos.Sequence.actions(easeout, easeout.reverse );
-//	s3.runAction( seq3 );
+	var easein = cocos.EaseIn.actionWithAction(moveBy1, 0.2);
+	var seq1 = cocos.Sequence.actions(easein, easein.reverse());
+	s1.runAction(seq1);
+
+	var seq2 = cocos.Sequence.actions(moveBy2, moveBy2.reverse());
+	s2.runAction(seq2);
+
+	var easeout = cocos.EaseOut.actionWithAction(moveBy3, 0.2);
+	var seq3 = cocos.Sequence.actions(easeout, easeout.reverse());
+	s3.runAction(seq3);
 
 	var scene = new cocos.Scene(); scene.init();
 	scene.addChild(s1);
