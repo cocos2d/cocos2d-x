@@ -193,12 +193,6 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     return pBuffer;
 }
 
-void CCFileUtils::setResource(const char* pszZipFileName)
-{
-    CC_UNUSED_PARAM(pszZipFileName);
-    CCAssert(0, "Have not implement!");
-}
-
 string CCFileUtils::getWriteablePath()
 {
     // return the path that the exe file saved in
