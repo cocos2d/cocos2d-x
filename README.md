@@ -28,29 +28,19 @@ For a sneak peak, you can take a look at what's in the JS directory.
 ### Before hitting the "Build" button
 
 In debug mode, (when there's a `#define DEBUG` somewhere), the javascript code will be read from somewhere else and not from the JS directory
-in the app bundle. To make sure this works, modify the absolute path in ScriptingCore:
+in the app bundle. To make sure this works, modify the absolute path in `ScriptingCore.cpp`:
 
 ```c++
 void ScriptingCore::runScript(const char *path)
 {
 #ifdef DEBUG
-	std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
+	std::string dpath("/Users/rabarca/Desktop/testjs/testjs/"); // <~ this is what you want to modify!
 	dpath += path;
 	const char *realPath = dpath.c_str();
 #else
 	const char *realPath = CCFileUtils::fullPathFromRelativePath(path);
 #endif
-	unsigned char *content = NULL;
-	size_t contentSize = CCFileUtils::ccLoadFileIntoMemory(realPath, &content);
-	if (content && contentSize) {
-		JSBool ok;
-		jsval rval;
-		ok = JS_EvaluateScript(this->cx, this->global, (char *)content, contentSize, path, 1, &rval);
-		if (JSVAL_IS_NULL(rval) || rval == JSVAL_FALSE) {
-			CCLog("error evaluating script:\n%s", content);
-		}
-		free(content);
-	}
+	...
 }
 ```
 
