@@ -56,6 +56,12 @@ bool HelloWorld::init()
 	// ask director the window size
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
+
+	CCParticleSystem *emitter = ARCH_OPTIMAL_PARTICLE_SYSTEM::particleWithFile("ForestFire.plist");
+	emitter->setPosition(ccp(size.width / 2, size.height / 2));
+	emitter->resetSystem();
+	this->addChild(emitter, 100);
+
 	// position the label on the center of the screen
 	pLabel->setPosition( ccp(size.width / 2, size.height - 20) );
 
@@ -63,13 +69,13 @@ bool HelloWorld::init()
 	this->addChild(pLabel, 1);
 
 	// add "HelloWorld" splash screen"
-	CCSprite* pSprite = CCSprite::spriteWithFile("HelloWorld.png");
+//	CCSprite* pSprite = CCSprite::spriteWithFile("HelloWorld.png");
 
 	// position the sprite on the center of the screen
-	pSprite->setPosition( ccp(size.width/2, size.height/2) );
+//	pSprite->setPosition( ccp(size.width/2, size.height/2) );
 
 	// add the sprite as a child to this layer
-	this->addChild(pSprite, 0);
+//	this->addChild(pSprite, 0);
 	
 	return true;
 }
