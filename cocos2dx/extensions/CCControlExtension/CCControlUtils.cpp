@@ -1,7 +1,7 @@
 #include "CCControlUtils.h"
 #include "CCPointExtension.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 CCSprite* CCControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor)
 {
@@ -146,4 +146,4 @@ CCRect CCControlUtils::CCRectUnion(const CCRect& src1, const CCRect& src2)
     return result;
 }
 
-NS_CC_END
+NS_CC_EXT_END

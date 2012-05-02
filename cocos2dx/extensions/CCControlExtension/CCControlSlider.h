@@ -37,7 +37,7 @@
 #define SLIDER_MARGIN_H 24
 #define SLIDER_MARGIN_V 8
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 class CC_DLL CCControlSlider: public CCControl
 {
@@ -106,6 +106,6 @@ protected:
     float valueForLocation(CCPoint location);
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif

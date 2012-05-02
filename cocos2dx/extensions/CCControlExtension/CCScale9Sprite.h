@@ -13,11 +13,11 @@
 #include "CCProtocols.h"
 
 
-NS_CC_BEGIN
+namespace cocos2d { class CCSprite; }
+namespace cocos2d { class CCSpriteBatchNode; }
+namespace cocos2d { class CCSpriteFrame; }
 
-class CCSprite;
-class CCSpriteBatchNode;
-class CCSpriteFrame;
+NS_CC_EXT_BEGIN
 
 enum positions
 {
@@ -276,6 +276,6 @@ public:
     
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif // __CCScale9Sprite_H__

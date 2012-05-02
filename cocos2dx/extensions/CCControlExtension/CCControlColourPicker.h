@@ -37,7 +37,7 @@
 #include "CCControlHuePicker.h"
 #include "CCControlSaturationBrightnessPicker.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 class CC_DLL CCControlColourPicker: public CCControl
 {
@@ -65,6 +65,6 @@ protected:
     
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif

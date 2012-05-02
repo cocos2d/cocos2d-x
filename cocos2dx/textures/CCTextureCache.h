@@ -65,6 +65,8 @@ public:
 
     const char* description(void);
 
+    CCDictionary* snapshotTextures();
+
     /** Retruns ths shared instance of the cache */
     static CCTextureCache * sharedTextureCache();
 
