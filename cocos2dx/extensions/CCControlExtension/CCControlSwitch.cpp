@@ -24,16 +24,9 @@
  */
 
 #include "CCControlSwitch.h"
-#include "CCPointExtension.h"
-#include "CCLabelTTF.h"
-#include "CCRenderTexture.h"
-#include "CCTouch.h"
-#include "CCDirector.h"
-#include "ccShaders.h"
-#include "CCActionTween.h"
+#include "cocos2d.h"
 
-NS_CC_BEGIN
-
+NS_CC_EXT_BEGIN
 // CCControlSwitchSprite
 
 class CCControlSwitchSprite : public CCSprite, public CCActionTweenDelegate
@@ -438,4 +431,4 @@ void CCControlSwitch::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     }
 }
 
-NS_CC_END
+NS_CC_EXT_END

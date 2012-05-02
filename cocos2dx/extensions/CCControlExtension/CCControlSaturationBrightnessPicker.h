@@ -35,7 +35,7 @@
 #include "CCControl.h"
 #include "CCInvocation.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 class CC_DLL CCControlSaturationBrightnessPicker : public CCControl
 {
@@ -68,6 +68,6 @@ protected:
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif

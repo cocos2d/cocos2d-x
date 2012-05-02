@@ -3,7 +3,7 @@
 
 #include "CCLayer.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 class CC_DLL CCSpacer: public CCLayer
 {
@@ -12,6 +12,6 @@ public:
     static CCSpacer* horizontalSpacer(float space);
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif

@@ -33,7 +33,7 @@
 #include "CCInvocation.h"
 #include "CCScale9Sprite.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 /** @class CCControlButton Button control for Cocos2D. */
 class CC_DLL CCControlButton : public CCControl
@@ -181,6 +181,6 @@ public:
 
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif

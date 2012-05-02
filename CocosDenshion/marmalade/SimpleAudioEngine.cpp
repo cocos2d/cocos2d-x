@@ -95,11 +95,6 @@ namespace CocosDenshion
         }
     }
 
-    void SimpleAudioEngine::setResource(const char* pszZipFileName)
-    {
-        // todo
-    }
-
     void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
     {
         s3eFile *fileHandle = s3eFileOpen(pszFilePath, "rb");

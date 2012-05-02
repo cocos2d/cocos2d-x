@@ -475,10 +475,6 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     }
     return pBuffer;
 }
-void CCFileUtils::setResource(const char* pszZipFileName)
-{
-    CCAssert(0, "Have not implement!");
-}
 
 // notification support when getFileData from a invalid file
 static bool s_bPopupNotify = true;
