@@ -164,6 +164,9 @@
 		78DC4C9715490B7300317402 /* AccelerometerSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4C8515490B7300317402 /* AccelerometerSimulation.m */; };
 		78DC4C9A15490B9500317402 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DC4C9815490B9500317402 /* Default.png */; };
 		78DC4C9B15490B9500317402 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DC4C9915490B9500317402 /* Icon.png */; };
+		78EE00DD1550D16B004C84B0 /* CCListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00D61550D16B004C84B0 /* CCListView.cpp */; };
+		78EE00DE1550D16B004C84B0 /* CCListViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00D81550D16B004C84B0 /* CCListViewCell.cpp */; };
+		78EE00DF1550D16B004C84B0 /* CCTextureWatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78EE00DB1550D16B004C84B0 /* CCTextureWatcher.cpp */; };
 		BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41513A864D700616D55 /* AppDelegate.cpp */; };
 		BF82F42113A8652A00616D55 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* AppController.mm */; };
 		BF82F42213A8652A00616D55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42013A8652A00616D55 /* main.m */; };
@@ -558,6 +561,13 @@
 		78DC4C8515490B7300317402 /* AccelerometerSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerometerSimulation.m; sourceTree = "<group>"; };
 		78DC4C9815490B9500317402 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		78DC4C9915490B9500317402 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
+		78EE00D51550D16B004C84B0 /* CCControlDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlDefine.h; sourceTree = "<group>"; };
+		78EE00D61550D16B004C84B0 /* CCListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCListView.cpp; sourceTree = "<group>"; };
+		78EE00D71550D16B004C84B0 /* CCListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCListView.h; sourceTree = "<group>"; };
+		78EE00D81550D16B004C84B0 /* CCListViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCListViewCell.cpp; sourceTree = "<group>"; };
+		78EE00D91550D16B004C84B0 /* CCListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCListViewCell.h; sourceTree = "<group>"; };
+		78EE00DB1550D16B004C84B0 /* CCTextureWatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureWatcher.cpp; sourceTree = "<group>"; };
+		78EE00DC1550D16B004C84B0 /* CCTextureWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureWatcher.h; sourceTree = "<group>"; };
 		BF82F41513A864D700616D55 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
 		BF82F41613A864D700616D55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		BF82F41E13A8652A00616D55 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -853,7 +863,9 @@
 			isa = PBXGroup;
 			children = (
 				78DC4AFA15490AF300317402 /* CCControlExtension */,
+				78EE00D41550D16B004C84B0 /* CCListView */,
 				78DC4B1415490AF300317402 /* CCNotificationCenter */,
+				78EE00DA1550D16B004C84B0 /* CCTextureWatcher */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -1266,6 +1278,27 @@
 				78DC4C8515490B7300317402 /* AccelerometerSimulation.m */,
 			);
 			path = Simulation;
+			sourceTree = "<group>";
+		};
+		78EE00D41550D16B004C84B0 /* CCListView */ = {
+			isa = PBXGroup;
+			children = (
+				78EE00D51550D16B004C84B0 /* CCControlDefine.h */,
+				78EE00D61550D16B004C84B0 /* CCListView.cpp */,
+				78EE00D71550D16B004C84B0 /* CCListView.h */,
+				78EE00D81550D16B004C84B0 /* CCListViewCell.cpp */,
+				78EE00D91550D16B004C84B0 /* CCListViewCell.h */,
+			);
+			path = CCListView;
+			sourceTree = "<group>";
+		};
+		78EE00DA1550D16B004C84B0 /* CCTextureWatcher */ = {
+			isa = PBXGroup;
+			children = (
+				78EE00DB1550D16B004C84B0 /* CCTextureWatcher.cpp */,
+				78EE00DC1550D16B004C84B0 /* CCTextureWatcher.h */,
+			);
+			path = CCTextureWatcher;
 			sourceTree = "<group>";
 		};
 		BF82F41413A864B000616D55 /* Classes */ = {
@@ -1755,6 +1788,9 @@
 				78DC4C9515490B7300317402 /* ZAttributedString.m in Sources */,
 				78DC4C9615490B7300317402 /* ZFont.m in Sources */,
 				78DC4C9715490B7300317402 /* AccelerometerSimulation.m in Sources */,
+				78EE00DD1550D16B004C84B0 /* CCListView.cpp in Sources */,
+				78EE00DE1550D16B004C84B0 /* CCListViewCell.cpp in Sources */,
+				78EE00DF1550D16B004C84B0 /* CCTextureWatcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

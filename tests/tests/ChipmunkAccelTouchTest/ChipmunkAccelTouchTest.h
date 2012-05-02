@@ -22,11 +22,11 @@ public:
     void update(ccTime dt);
     virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
-    CCTexture2D *spriteTexture_; // weak ref
 
-    cpSpace *space_; // strong ref
-
-    cpShape *walls_[4];
+private:
+    CCTexture2D* m_pSpriteTexture; // weak ref
+    cpSpace* m_pSpace; // strong ref
+    cpShape* m_pWalls[4];
 };
 
 class ChipmunkPhysicsSprite : public CCSprite
@@ -38,7 +38,7 @@ public:
     virtual bool isDirty(void);
     virtual CCAffineTransform nodeToParentTransform(void);
 private:
-    cpBody *body_;    // strong ref
+    cpBody* m_pBody;    // strong ref
 };
 
 class ChipmunkAccelTouchTestScene : public TestScene

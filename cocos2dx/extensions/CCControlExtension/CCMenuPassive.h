@@ -7,7 +7,7 @@
 
 #include "CCControl.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 class CC_DLL CCMenuPassive : public CCLayer, public CCRGBAProtocol
 {
@@ -59,6 +59,6 @@ public:
         virtual bool getIsOpacityModifyRGB(void) { return false;}
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif
