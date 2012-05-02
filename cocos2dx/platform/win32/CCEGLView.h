@@ -48,7 +48,7 @@ public:
 
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor);
-    
+    virtual void setFrameSize(float width, float height);
 
     virtual bool Create(LPCTSTR pTitle, int w, int h);
     virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
