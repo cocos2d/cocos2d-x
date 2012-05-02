@@ -4,10 +4,16 @@ Simple iOS (and soon Android) example of cocos2d-x game running javascript bindi
 
 *NOTE* This is a WIP and the bindings are not yet complete! What's working:
 
-	CCPoint CCSize CCRect CCDirector CCNode CCSprite CCScene CCSpriteFrameCache
-	CCSpriteFrame CCAction CCAnimate CCAnimation CCRepeatForever CCLayer CCTouch
-	CCSet CCMoveBy CCMoveTo CCRotateTo CCRotateBy CCRenderTexture CCMenu CCMenuItem
-	CCMenuItemLabel CCMenuItemSprite CCMenuItemImage CCLabelTTF CCSequence
+    CCPoint CCSize CCRect CCDirector CCNode CCSprite CCScene CCSpriteFrameCache
+    CCSpriteFrame CCAction CCAnimate CCAnimation CCRepeatForever CCLayer CCTouch
+    CCSet CCMoveBy CCMoveTo CCRotateTo CCRotateBy CCRenderTexture CCMenu CCMenuItem
+    CCMenuItemLabel CCMenuItemSprite CCMenuItemImage CCLabelTTF CCSequence
+    CCActionInterval CCFiniteTimeAction CCFileUtils
+    CCEaseBackInOut CCEaseBackOut CCEaseElasticIn CCEaseElastic CCEaseElasticOut CCEaseElasticInOut
+    CCEaseBounceIn CCEaseBounce CCEaseBounceInOut CCEaseBackIn CCEaseBounceOut CCEaseIn CCEaseOut
+    CCEaseExponentialIn CCEaseInOut CCEaseExponentialOut CCEaseExponentialInOut CCEaseSineIn
+    CCEaseSineOut CCEaseSineInOut CCActionEase CCEaseRateAction CCParticleSystem CCParticleSystemQuad
+    CCParticleSystemPoint
 
 This is just a proof of concept and there are plans around this in order to make a more js-friendly API, right now
 the bindings were created automatically and the final idea is not to use them as they are but to create a higher
