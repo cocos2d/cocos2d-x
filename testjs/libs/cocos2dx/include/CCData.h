@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCData : public CCObject
+class CC_DLL CCData : public CCObject
 {
 public:
 	CCData(void);
