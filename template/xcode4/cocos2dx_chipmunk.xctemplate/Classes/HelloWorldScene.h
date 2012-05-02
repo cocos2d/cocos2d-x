@@ -31,18 +31,18 @@ class HelloWorld : public cocos2d::CCLayer {
 public:
     HelloWorld();
     ~HelloWorld();
- 
+    bool init();
     static cocos2d::CCScene* scene();
     LAYER_NODE_FUNC(HelloWorld);
     
     void initPhysics();
-    void addNewSpriteAtPosition(CCPoint p);
-    void update(ccTime dt);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
-    virtual void didAccelerate(CCAcceleration* pAccelerationValue);
+    void addNewSpriteAtPosition(cocos2d::CCPoint p);
+    void update(cocos2d::ccTime dt);
+    virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+    virtual void didAccelerate(cocos2d::CCAcceleration* pAccelerationValue);
 
 private:
-    CCTexture2D* m_pSpriteTexture; // weak ref
+    cocos2d::CCTexture2D* m_pSpriteTexture; // weak ref
     cpSpace* m_pSpace; // strong ref
     cpShape* m_pWalls[4];
 

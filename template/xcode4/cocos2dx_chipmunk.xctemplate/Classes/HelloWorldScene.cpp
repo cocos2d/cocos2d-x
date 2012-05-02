@@ -81,6 +81,13 @@ HelloWorld::HelloWorld()
 
 HelloWorld::~HelloWorld()
 {
+    // manually Free rogue shapes
+    for( int i=0;i<4;i++) {
+        cpShapeFree( m_pWalls[i] );
+    }
+    
+    cpSpaceFree( m_pSpace );
+    
 }
 
 CCScene* HelloWorld::scene()
@@ -121,7 +128,7 @@ bool HelloWorld::init()
 
 #if 1
     // Use batch node. Faster
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
+    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("grossini_dance_atlas.png", 100);
     m_pSpriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
@@ -137,21 +144,6 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::onEnter()
-{
-    CCLayer::onEnter();
-}
-
-HelloWorld::~HelloWorld()
-{
-    // manually Free rogue shapes
-    for( int i=0;i<4;i++) {
-        cpShapeFree( m_pWalls[i] );
-    }
-
-    cpSpaceFree( m_pSpace );
-
-}
 
 void HelloWorld::initPhysics()
 {
