@@ -158,10 +158,6 @@ namespace CocosDenshion
         stopBackground(true);
     }
 
-    void SimpleAudioEngine::setResource(const char* pszZipFileName)
-    {
-    }
-
     //
     // OGG support
     //
