@@ -7,7 +7,7 @@
 
 #include "CCObject.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 typedef unsigned int CCControlEvent;
 
@@ -23,6 +23,6 @@ public:
     void invoke(CCObject* sender);
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif

@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 static CCNotificationCenter *s_sharedNotifCenter = NULL;
 
@@ -185,4 +185,4 @@ CCObject *CCNotificationObserver::getObject()
     return m_object;
 }
 
-NS_CC_END
+NS_CC_EXT_END
