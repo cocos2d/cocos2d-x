@@ -30,7 +30,7 @@
 #include "cocos2dExt.h"
 
 USING_NS_CC;
-
+USING_NS_CC_EXT;
 
 #define CONTROL_SCENE_NODE_FUNC(controlScene) \
 public: \
