@@ -46,12 +46,7 @@ bool AppDelegate::initInstance()
         // the default setting is to create a fullscreen view
         // if you want to use auto-scale, please enable view->create(320,480) in main.cpp
 #endif  // CC_PLATFORM_ANDROID
-      
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-        // MaxAksenov said it's NOT a very elegant solution. I agree, haha
-        CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-#endif
-        
+ 
         bRet = true;
     } while (0);
     return bRet;
@@ -70,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
     // turn on display FPS
-    pDirector->setDisplayFPS(true);
+    pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
