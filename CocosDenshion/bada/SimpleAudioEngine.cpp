@@ -295,11 +295,6 @@ void SimpleAudioEngine::end()
     }
 }
 
-void SimpleAudioEngine::setResource(const char* pszZipFileName)
-{
-
-}
-
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
     openMediaPlayer(s_pBackPlayer, pszFilePath);

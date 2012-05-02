@@ -158,15 +158,6 @@ public:
     static bool getIsPopupNotify();
 
     ///////////////////////////////////////////////////
-    // interfaces on wophone
-    ///////////////////////////////////////////////////
-    /**
-    @brief  Set the resource zip file name
-    @param pszZipFileName The relative path of the .zip file
-    */
-    static void setResource(const char* pszZipFileName);
-
-    ///////////////////////////////////////////////////
     // interfaces on ios
     ///////////////////////////////////////////////////
     static int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
