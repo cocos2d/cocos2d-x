@@ -172,11 +172,6 @@ void SimpleAudioEngine::end()
             static_end();
 }
 
-void SimpleAudioEngine::setResource(const char* pszZipFileName)
-{
-
-}
-
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
     static_preloadBackgroundMusic(pszFilePath);
