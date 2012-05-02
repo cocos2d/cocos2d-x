@@ -12,13 +12,13 @@
 #include "cocos2d.h"
 #include "Box2D.h"
 
-class PhysicsSprite : public CCSprite
+class PhysicsSprite : public cocos2d::CCSprite
 {
 public:
     PhysicsSprite();
     void setPhysicsBody(b2Body * body);
     virtual bool isDirty(void);
-    virtual CCAffineTransform nodeToParentTransform(void);
+    virtual cocos2d::CCAffineTransform nodeToParentTransform(void);
 private:
     b2Body* m_pBody;    // strong ref
 };
@@ -33,7 +33,7 @@ public:
     
     void initPhysics();
     // adds a new sprite at a given coordinate
-    void addNewSpriteWithCoords(cocos2d::CCPoint p);
+    void addNewSpriteAtPosition(cocos2d::CCPoint p);
 
     virtual void draw();
     virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
@@ -41,6 +41,7 @@ public:
     
 private:
     b2World* world;
+    cocos2d::CCTexture2D* m_pSpriteTexture; // weak ref
 };
 
 #endif // __HELLO_WORLD_H__

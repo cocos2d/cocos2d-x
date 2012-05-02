@@ -174,18 +174,20 @@ void HelloWorld::draw()
     kmGLPopMatrix();
 }
 
-void HelloWorld::addNewSpriteWithCoords(CCPoint p)
+void HelloWorld::addNewSpriteAtPosition(CCPoint p)
 {
-    //UXLOG(L"Add sprite %0.2f x %02.f",p.x,p.y);
-    CCSpriteBatchNode* sheet = (CCSpriteBatchNode*)getChildByTag(kTagSpriteManager);
+    CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
+    CCNode* parent = getChildByTag(kTagParentNode);
     
     //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
     //just randomly picking one of the images
     int idx = (CCRANDOM_0_1() > .5 ? 0:1);
     int idy = (CCRANDOM_0_1() > .5 ? 0:1);
+    PhysicsSprite *sprite = new PhysicsSprite();
+    sprite->initWithTexture(m_pSpriteTexture, CCRectMake(32 * idx,32 * idy,32,32));
+    sprite->autorelease();
     
-    CCSprite *sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(32 * idx,32 * idy,32,32));
-    sheet->addChild(sprite);
+    parent->addChild(sprite);
     
     sprite->setPosition( CCPointMake( p.x, p.y) );
     
@@ -194,7 +196,7 @@ void HelloWorld::addNewSpriteWithCoords(CCPoint p)
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
-    bodyDef.userData = sprite;
+    
     b2Body *body = world->CreateBody(&bodyDef);
     
     // Define another box shape for our dynamic body.
@@ -207,6 +209,8 @@ void HelloWorld::addNewSpriteWithCoords(CCPoint p)
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
     body->CreateFixture(&fixtureDef);
+    
+    sprite->setPhysicsBody(body);
 }
 
 
@@ -253,7 +257,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
         
         location = CCDirector::sharedDirector()->convertToGL(location);
         
-        addNewSpriteWithCoords( location );
+        addNewSpriteAtPosition( location );
     }
 }
 
