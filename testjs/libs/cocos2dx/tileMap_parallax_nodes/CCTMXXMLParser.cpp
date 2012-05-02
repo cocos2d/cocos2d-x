@@ -258,7 +258,7 @@ namespace cocos2d {
 			std::string version = valueForKey("version", attributeDict);
 			if ( version != "1.0")
 			{
-				CCLOG("cocos2d: TMXFormat: Unsupported TMX version: %@", version.c_str());
+				CCLOG("cocos2d: TMXFormat: Unsupported TMX version: %s", version.c_str());
 			}
 			std::string orientationStr = valueForKey("orientation", attributeDict);
 			if( orientationStr == "orthogonal")
