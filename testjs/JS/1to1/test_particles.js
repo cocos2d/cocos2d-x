@@ -41,8 +41,7 @@ scenes['test_particle'] = function () {
 
 	var scene = new cocos.Scene(); scene.init();
 	
-	var p1 = new cocos.ParticleSystem();
-	p1.initWithFile("LavaFlow.plist");
+	var p1 = cocos.ParticleSystem.particleWithFile("LavaFlow.plist");
 	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
 	scene.addChild(p1);
 
