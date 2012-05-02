@@ -51,9 +51,9 @@ ScriptingCore::ScriptingCore()
 	S_CCRenderTexture::jsCreateClass(this->cx, cocos, "RenderTexture");
 	S_CCMenu::jsCreateClass(this->cx, cocos, "Menu");
 	S_CCMenuItem::jsCreateClass(this->cx, cocos, "MenuItem");
-	S_CCMenuItemImage::jsCreateClass(this->cx, cocos, "MenuItemImage");
 	S_CCMenuItemLabel::jsCreateClass(this->cx, cocos, "MenuItemLabel");
 	S_CCMenuItemSprite::jsCreateClass(this->cx, cocos, "MenuItemSprite");
+	S_CCMenuItemImage::jsCreateClass(this->cx, cocos, "MenuItemImage");
 	S_CCSpriteFrame::jsCreateClass(this->cx, cocos, "SpriteFrame");
 	S_CCSpriteFrameCache::jsCreateClass(this->cx, cocos, "SpriteFrameCache");
 	S_CCAnimation::jsCreateClass(this->cx, cocos, "Animation");
@@ -61,10 +61,12 @@ ScriptingCore::ScriptingCore()
 	S_CCActionInterval::jsCreateClass(this->cx, cocos, "ActionInterval");
 	S_CCFiniteTimeAction::jsCreateClass(this->cx, cocos, "FiniteTimeAction");
 	S_CCAnimate::jsCreateClass(this->cx, cocos, "Animate");
-	S_CCMoveBy::jsCreateClass(this->cx, cocos, "MoveBy");
 	S_CCMoveTo::jsCreateClass(this->cx, cocos, "MoveTo");
+	S_CCMoveBy::jsCreateClass(this->cx, cocos, "MoveBy");
 	S_CCRotateBy::jsCreateClass(this->cx, cocos, "RotateBy");
 	S_CCRotateTo::jsCreateClass(this->cx, cocos, "RotateTo");
+	S_CCActionEase::jsCreateClass(this->cx, cocos, "ActionEase");
+	S_CCEaseRateAction::jsCreateClass(this->cx, cocos, "EaseRateAction");
 	S_CCEaseBackInOut::jsCreateClass(this->cx, cocos, "EaseBackInOut");
 	S_CCEaseBackOut::jsCreateClass(this->cx, cocos, "EaseBackOut");
 	S_CCEaseElasticIn::jsCreateClass(this->cx, cocos, "EaseElasticIn");
@@ -85,8 +87,6 @@ ScriptingCore::ScriptingCore()
 	S_CCEaseSineIn::jsCreateClass(this->cx, cocos, "EaseSineIn");
 	S_CCEaseSineOut::jsCreateClass(this->cx, cocos, "EaseSineOut");
 	S_CCEaseSineInOut::jsCreateClass(this->cx, cocos, "EaseSineInOut");
-	S_CCActionEase::jsCreateClass(this->cx, cocos, "ActionEase");
-	S_CCEaseRateAction::jsCreateClass(this->cx, cocos, "EaseRateAction");
 	S_CCRepeatForever::jsCreateClass(this->cx, cocos, "RepeatForever");
 	S_CCSequence::jsCreateClass(this->cx, cocos, "Sequence");
 	S_CCLabelTTF::jsCreateClass(this->cx, cocos, "LabelTTF");
