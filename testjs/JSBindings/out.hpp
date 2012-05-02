@@ -341,14 +341,14 @@ public:
 	void menuAction(cocos2d::CCObject *o);
 };
 
-class S_CCParticleSystem : public CCParticleSystem
+class S_CCParticleSystem : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 	JSObject *m_jsobj;
 public:
 	static JSClass *jsClass;
 	static JSObject *jsObject;
 
-	S_CCParticleSystem(JSObject *obj) : CCParticleSystem(), m_jsobj(obj) {};
+	S_CCParticleSystem(JSObject *obj) : ARCH_OPTIMAL_PARTICLE_SYSTEM(), m_jsobj(obj) {};
 	enum {
 		kPlistFile = 1,
 		kElapsed,

@@ -2781,7 +2781,7 @@ JSBool S_CCParticleSystem::jsparticleWithFile(JSContext *cx, uint32_t argc, jsva
 		JSString *arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
 		char *narg0 = JS_EncodeString(cx, arg0);
-		CCParticleSystem* ret = CCParticleSystem::particleWithFile(narg0);
+		CCParticleSystem* ret = ARCH_OPTIMAL_PARTICLE_SYSTEM::particleWithFile(narg0);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
