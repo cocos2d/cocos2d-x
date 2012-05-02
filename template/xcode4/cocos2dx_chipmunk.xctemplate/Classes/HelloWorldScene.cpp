@@ -132,7 +132,7 @@ bool HelloWorld::init()
     m_pSpriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
-    m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
+    m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("grossini_dance_atlas.png");
     CCNode *parent = CCNode::node();
 #endif
     addChild(parent, 0, kTagParentNode);
