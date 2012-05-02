@@ -130,7 +130,7 @@ void HelloWorld::addNewSpriteWithCoords(CCPoint p)
     int idx = (CCRANDOM_0_1() > .5 ? 0:1);
     int idy = (CCRANDOM_0_1() > .5 ? 0:1);
     
-    CCSprite *sprite = CCSprite::spriteWithBatchNode(sheet, CCRectMake(32 * idx,32 * idy,32,32));
+    CCSprite *sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(32 * idx,32 * idy,32,32));
     sheet->addChild(sprite);
     
     sprite->setPosition( CCPointMake( p.x, p.y) );
@@ -195,7 +195,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
         
-        CCPoint location = touch->locationInView(touch->view());
+        CCPoint location = touch->locationInView();
         
         location = CCDirector::sharedDirector()->convertToGL(location);
         

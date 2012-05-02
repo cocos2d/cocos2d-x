@@ -63,10 +63,6 @@ bool AppDelegate::initInstance()
 
 #endif  // CC_PLATFORM_ANDROID
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-        // MaxAksenov said it's NOT a very elegant solution. I agree, haha
-        CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-#endif
         bRet = true;
     } while (0);
     return bRet;
@@ -82,7 +78,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // pDirector->enableRetinaDisplay(true);
 
     // turn on display FPS
-    pDirector->setDisplayFPS(true);
+    pDirector->setDisplayStats(true);
 
     // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
