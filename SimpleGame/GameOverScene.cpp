@@ -29,7 +29,7 @@ GameOverScene::~GameOverScene()
 
 bool GameOverLayer::init()
 {
-    if ( CCLayerColor::initWithColor( ccc4(255,255,255,255) ) )
+    if ( CCLayerColor::initWithColor( ccc4f(255,255,255,255) ) )
     {
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->_label = CCLabelTTF::labelWithString("","Artial", 32);

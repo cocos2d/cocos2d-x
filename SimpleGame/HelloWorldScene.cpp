@@ -49,7 +49,7 @@ bool HelloWorld::init()
 {
 	//////////////////////////////
 	// 1. super init first
-    if ( !CCLayerColor::initWithColor( ccc4(255,255,255,255) ) )
+    if ( !CCLayerColor::initWithColor( ccc4f(255,255,255,255) ) )
     {
         return false;
     }
@@ -167,7 +167,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
     // Choose one of the touches to work with
     CCTouch* touch = (CCTouch*)( touches->anyObject() );
-    CCPoint location = touch->locationInView(touch->view());
+    CCPoint location = touch->locationInView();
     location = CCDirector::sharedDirector()->convertToGL(location);
 
     // Set up initial location of projectile
