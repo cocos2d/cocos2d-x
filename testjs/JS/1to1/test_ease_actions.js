@@ -130,7 +130,7 @@ scenes['test_easeinout'] = function () {
 };
 
 //
-// Ease Bounce
+// Ease BounceIn / Out
 //
 scenes['test_bouncein'] = function () {
 	
@@ -151,10 +151,10 @@ scenes['test_bouncein'] = function () {
 	var move1_back = move1.reverse();
 	
 
-	var move_ease_in = cocos.EaseBounceIn.actionWithAction( move1 );
+	var move_ease_in = cocos.EaseBounceIn.actionWithAction( move2 );
 	var move_ease_in_back = move_ease_in.reverse();
 	
-	var move_ease_out = cocos.EaseBounceOut.actionWithAction( move2 );
+	var move_ease_out = cocos.EaseBounceOut.actionWithAction( move3 );
 	var move_ease_out_back = move_ease_out.reverse();
 	
 	var seq1 = cocos.Sequence.actions( move1, move1_back );
@@ -176,6 +176,302 @@ scenes['test_bouncein'] = function () {
 	
 	return scene;
 };
+
+//
+// Ease BounceInOut
+//
+scenes['test_bounceinout'] = function () {
+	
+	var s1 = new cocos.Sprite.create("grossinis_sister1.png");
+	s1.position = cocos.Point.create(50, winSize.height * 3 / 4 );
+	
+	var s2 = new cocos.Sprite.create("grossinis_sister2.png");
+	s2.position = cocos.Point.create(50, winSize.height * 1 / 4);
+	
+	
+	var move1 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move2 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	
+	var move1_back = move1.reverse();
+	
+	var move_ease = cocos.EaseBounceInOut.actionWithAction( move2 );
+	var move_ease_back = move_ease.reverse();
+	
+	var seq1 = cocos.Sequence.actions( move1, move1_back );
+	var seq2 = cocos.Sequence.actions( move_ease, move_ease_back );
+	
+	
+	s1.runAction( cocos.RepeatForever.actionWithAction( seq1 ) );
+	s2.runAction( cocos.RepeatForever.actionWithAction( seq2 ) );
+	
+	var scene = new cocos.Scene(); scene.init();
+	scene.addChild(s1);
+	scene.addChild(s2);
+	
+	// add the menu
+	var menu = createMenu("Test EaseBounceInOut + reverse");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+//
+// EaseBackIn / Out
+//
+scenes['test_backin_out'] = function () {
+	
+	var s1 = new cocos.Sprite.create("grossinis_sister1.png");
+	s1.position = cocos.Point.create(50, winSize.height * 3 / 4 );
+	
+	var s2 = new cocos.Sprite.create("grossini_dance_05.png");
+	s2.position = cocos.Point.create(50, winSize.height * 2 / 4);
+	
+	var s3 = new cocos.Sprite.create("grossinis_sister2.png");
+	s3.position = cocos.Point.create(50, winSize.height * 1 / 4);
+	
+	
+	var move1 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move2 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move3 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	
+	var move1_back = move1.reverse();
+	
+	
+	var move_ease_in = cocos.EaseBackIn.actionWithAction( move2 );
+	var move_ease_in_back = move_ease_in.reverse();
+	
+	var move_ease_out = cocos.EaseBackOut.actionWithAction( move3 );
+	var move_ease_out_back = move_ease_out.reverse();
+	
+	var seq1 = cocos.Sequence.actions( move1, move1_back );
+	var seq2 = cocos.Sequence.actions( move_ease_in, move_ease_in_back );
+	var seq3 = cocos.Sequence.actions( move_ease_out, move_ease_out_back );
+	
+	s1.runAction( cocos.RepeatForever.actionWithAction( seq1 ) );
+	s2.runAction( cocos.RepeatForever.actionWithAction( seq2 ) );
+	s3.runAction( cocos.RepeatForever.actionWithAction( seq3 ) );
+	
+	var scene = new cocos.Scene(); scene.init();
+	scene.addChild(s1);
+	scene.addChild(s2);
+	scene.addChild(s3);
+	
+	// add the menu
+	var menu = createMenu("Test EaseBackIn / Out and reverse");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+//
+// EaseBackInOut
+//
+scenes['test_backinout'] = function () {
+	
+	var s1 = new cocos.Sprite.create("grossinis_sister1.png");
+	s1.position = cocos.Point.create(50, winSize.height * 3 / 4 );
+	
+	var s2 = new cocos.Sprite.create("grossinis_sister2.png");
+	s2.position = cocos.Point.create(50, winSize.height * 1 / 4);
+	
+	
+	var move1 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move2 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	
+	var move1_back = move1.reverse();
+	
+	var move_ease = cocos.EaseBackInOut.actionWithAction( move2 );
+	var move_ease_back = move_ease.reverse();
+	
+	var seq1 = cocos.Sequence.actions( move1, move1_back );
+	var seq2 = cocos.Sequence.actions( move_ease, move_ease_back );
+	
+	
+	s1.runAction( cocos.RepeatForever.actionWithAction( seq1 ) );
+	s2.runAction( cocos.RepeatForever.actionWithAction( seq2 ) );
+	
+	var scene = new cocos.Scene(); scene.init();
+	scene.addChild(s1);
+	scene.addChild(s2);
+	
+	// add the menu
+	var menu = createMenu("Test EaseBackInOut + reverse");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+//
+// EaseBounceIn / Out
+//
+scenes['test_sinein_out'] = function () {
+	
+	var s1 = new cocos.Sprite.create("grossinis_sister1.png");
+	s1.position = cocos.Point.create(50, winSize.height * 3 / 4 );
+	
+	var s2 = new cocos.Sprite.create("grossini_dance_05.png");
+	s2.position = cocos.Point.create(50, winSize.height * 2 / 4);
+	
+	var s3 = new cocos.Sprite.create("grossinis_sister2.png");
+	s3.position = cocos.Point.create(50, winSize.height * 1 / 4);
+	
+	
+	var move1 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move2 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move3 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	
+	var move1_back = move1.reverse();
+	
+	
+	var move_ease_in = cocos.EaseSineIn.actionWithAction( move2 );
+	var move_ease_in_back = move_ease_in.reverse();
+	
+	var move_ease_out = cocos.EaseSineOut.actionWithAction( move3 );
+	var move_ease_out_back = move_ease_out.reverse();
+	
+	var seq1 = cocos.Sequence.actions( move1, move1_back );
+	var seq2 = cocos.Sequence.actions( move_ease_in, move_ease_in_back );
+	var seq3 = cocos.Sequence.actions( move_ease_out, move_ease_out_back );
+	
+	s1.runAction( cocos.RepeatForever.actionWithAction( seq1 ) );
+	s2.runAction( cocos.RepeatForever.actionWithAction( seq2 ) );
+	s3.runAction( cocos.RepeatForever.actionWithAction( seq3 ) );
+	
+	var scene = new cocos.Scene(); scene.init();
+	scene.addChild(s1);
+	scene.addChild(s2);
+	scene.addChild(s3);
+	
+	// add the menu
+	var menu = createMenu("Test EaseSineIn / Out and reverse");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+//
+// EaseSineInOut
+//
+scenes['test_sineinout'] = function () {
+	
+	var s1 = new cocos.Sprite.create("grossinis_sister1.png");
+	s1.position = cocos.Point.create(50, winSize.height * 3 / 4 );
+	
+	var s2 = new cocos.Sprite.create("grossinis_sister2.png");
+	s2.position = cocos.Point.create(50, winSize.height * 1 / 4);
+	
+	
+	var move1 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move2 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	
+	var move1_back = move1.reverse();
+	
+	var move_ease = cocos.EaseSineInOut.actionWithAction( move2 );
+	var move_ease_back = move_ease.reverse();
+	
+	var seq1 = cocos.Sequence.actions( move1, move1_back );
+	var seq2 = cocos.Sequence.actions( move_ease, move_ease_back );
+	
+	
+	s1.runAction( cocos.RepeatForever.actionWithAction( seq1 ) );
+	s2.runAction( cocos.RepeatForever.actionWithAction( seq2 ) );
+	
+	var scene = new cocos.Scene(); scene.init();
+	scene.addChild(s1);
+	scene.addChild(s2);
+	
+	// add the menu
+	var menu = createMenu("Test EaseSineInOut + reverse");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+//
+// EaseElasticIn / Out
+//
+scenes['test_elasticin_out'] = function () {
+	
+	var s1 = new cocos.Sprite.create("grossinis_sister1.png");
+	s1.position = cocos.Point.create(50, winSize.height * 3 / 4 );
+	
+	var s2 = new cocos.Sprite.create("grossini_dance_05.png");
+	s2.position = cocos.Point.create(50, winSize.height * 2 / 4);
+	
+	var s3 = new cocos.Sprite.create("grossinis_sister2.png");
+	s3.position = cocos.Point.create(50, winSize.height * 1 / 4);
+	
+	
+	var move1 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move2 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move3 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	
+	var move1_back = move1.reverse();
+	
+	var move_ease_in = cocos.EaseElasticIn.actionWithAction( move2 );
+	var move_ease_in_back = move_ease_in.reverse();
+	
+	var move_ease_out = cocos.EaseElasticOut.actionWithAction( move3 );
+	var move_ease_out_back = move_ease_out.reverse();
+	
+	var seq1 = cocos.Sequence.actions( move1, move1_back );
+	var seq2 = cocos.Sequence.actions( move_ease_in, move_ease_in_back );
+	var seq3 = cocos.Sequence.actions( move_ease_out, move_ease_out_back );
+	
+	s1.runAction( cocos.RepeatForever.actionWithAction( seq1 ) );
+	s2.runAction( cocos.RepeatForever.actionWithAction( seq2 ) );
+	s3.runAction( cocos.RepeatForever.actionWithAction( seq3 ) );
+	
+	var scene = new cocos.Scene(); scene.init();
+	scene.addChild(s1);
+	scene.addChild(s2);
+	scene.addChild(s3);
+	
+	// add the menu
+	var menu = createMenu("Test EaseElasticIn / Out and reverse");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+//
+// EaseElasticInOut
+//
+scenes['test_elasticinout'] = function () {
+	
+	var s1 = new cocos.Sprite.create("grossinis_sister1.png");
+	s1.position = cocos.Point.create(50, winSize.height * 3 / 4 );
+	
+	var s2 = new cocos.Sprite.create("grossinis_sister2.png");
+	s2.position = cocos.Point.create(50, winSize.height * 1 / 4);
+	
+	
+	var move1 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	var move2 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
+	
+	var move1_back = move1.reverse();
+	
+	var move_ease = cocos.EaseElasticInOut.actionWithAction( move2 );
+	var move_ease_back = move_ease.reverse();
+	
+	var seq1 = cocos.Sequence.actions( move1, move1_back );
+	var seq2 = cocos.Sequence.actions( move_ease, move_ease_back );
+	
+	
+	s1.runAction( cocos.RepeatForever.actionWithAction( seq1 ) );
+	s2.runAction( cocos.RepeatForever.actionWithAction( seq2 ) );
+	
+	var scene = new cocos.Scene(); scene.init();
+	scene.addChild(s1);
+	scene.addChild(s2);
+	
+	// add the menu
+	var menu = createMenu("Test EaseElasticInOut + reverse");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
 /**
  * from here on there's code that can be shared between different tests
  * basically is the hud and the scene handling
