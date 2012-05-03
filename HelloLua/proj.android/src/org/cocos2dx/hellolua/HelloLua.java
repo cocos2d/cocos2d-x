@@ -78,8 +78,6 @@ public class HelloLua extends Cocos2dxActivity{
 
 	
      static {
-         System.loadLibrary("cocosdenshion");
-         System.loadLibrary("lua");
          System.loadLibrary("game");
      }
 }

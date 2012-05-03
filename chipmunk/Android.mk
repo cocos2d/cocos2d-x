@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := chipmunk_shared
+LOCAL_MODULE := chipmunk_static
 
 LOCAL_MODULE_FILENAME := libchipmunk
 
@@ -42,4 +42,4 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/include/chipmunk
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include/chipmunk
 LOCAL_CFLAGS := -std=c99
                                  
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
