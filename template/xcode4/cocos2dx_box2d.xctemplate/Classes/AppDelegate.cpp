@@ -22,41 +22,6 @@ AppDelegate::~AppDelegate()
 {
 }
 
-bool AppDelegate::initInstance()
-{
-    bool bRet = false;
-    do 
-    {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
-        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
-        // The HelloWorld is designed as HVGA.
-        CCEGLView * pMainWnd = new CCEGLView();
-        CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 480, 320));
-
-#endif  // CC_PLATFORM_WIN32
-        
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        // OpenGLView is initialized in AppDelegate.mm on ios platform, nothing need to do here.
-#endif  // CC_PLATFORM_IOS
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)        
-        // OpenGLView is initialized in HelloWorld/android/jni/helloworld/main.cpp
-        // the default setting is to create a fullscreen view
-        // if you want to use auto-scale, please enable view->create(320,480) in main.cpp
-#endif  // CC_PLATFORM_ANDROID
-        
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-        // MaxAksenov said it's NOT a very elegant solution. I agree, haha
-        CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-#endif
-        
-        bRet = true;
-    } while (0);
-    return bRet;
-}
-
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
@@ -70,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
     // turn on display FPS
-    pDirector->setDisplayFPS(true);
+    pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);

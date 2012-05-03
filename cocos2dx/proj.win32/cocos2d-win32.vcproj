@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -104,7 +104,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -1192,6 +1192,42 @@
 				</File>
 				<File
 					RelativePath="..\extensions\CCNotificationCenter\CCNotificationCenter.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCTextureWatcher"
+				>
+				<File
+					RelativePath="..\extensions\CCTextureWatcher\CCTextureWatcher.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCTextureWatcher\CCTextureWatcher.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCListView"
+				>
+				<File
+					RelativePath="..\extensions\CCListView\CCControlDefine.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCListView\CCListView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCListView\CCListView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCListView\CCListViewCell.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCListView\CCListViewCell.h"
 					>
 				</File>
 			</Filter>

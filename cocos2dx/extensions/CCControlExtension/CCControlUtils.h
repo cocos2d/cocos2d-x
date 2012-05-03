@@ -34,7 +34,7 @@
 
 #include "CCSprite.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 typedef struct
 {
@@ -60,7 +60,7 @@ public:
     CCColor3bObject(ccColor3B s_value):value(s_value){}
 };
 
-class CCControlUtils
+class CC_DLL CCControlUtils
 {
 public:
     static CCSprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor);
@@ -69,6 +69,6 @@ public:
     static CCRect CCRectUnion(const CCRect& src1, const CCRect& src2);
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif

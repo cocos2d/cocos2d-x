@@ -53,12 +53,6 @@ public:
     static void end();
 
     /**
-    @brief  Set the zip file name
-    @param pszZipFileName The relative path of the .zip file
-    */
-    static void setResource(const char* pszZipFileName);
-
-    /**
      @brief Preload background music
      @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
      */

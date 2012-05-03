@@ -47,7 +47,7 @@ CCEGLViewProtocol::CCEGLViewProtocol()
   , m_pDelegate(NULL)
   , m_fScreenScaleFactor(1.0f)
 {
-
+    strncpy(m_szViewName, "Cocos2d-x Game", sizeof(m_szViewName));
 }
 
 CCEGLViewProtocol::~CCEGLViewProtocol()
@@ -80,10 +80,8 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height)
         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
     int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
     int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
-    m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
-    m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
-    m_rcViewPort.size.width = viewPortW;
-    m_rcViewPort.size.height = viewPortH;
+
+    m_rcViewPort.setRect((m_sSizeInPixel.width - viewPortW) / 2, (m_sSizeInPixel.height - viewPortH) / 2, viewPortW, viewPortH);
 
     CCLOG("m_fScreenScaleFactor = %f", m_fScreenScaleFactor);
     m_bNeedScale = true;  
@@ -169,6 +167,19 @@ void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h
 float CCEGLViewProtocol::getMainScreenScale()
 {
     return -1.0f;
+}
+
+void CCEGLViewProtocol::setViewName(const char* pszViewName)
+{
+    if (pszViewName != NULL && strlen(pszViewName) > 0)
+    {
+        strncpy(m_szViewName, pszViewName, sizeof(m_szViewName));
+    }
+}
+
+const char* CCEGLViewProtocol::getViewName()
+{
+    return m_szViewName;
 }
 
 void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
