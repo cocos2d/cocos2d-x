@@ -33,7 +33,9 @@ public:
     virtual void    setViewPortInPoints(float x , float y , float w , float h);
     virtual void    setScissorInPoints(float x , float y , float w , float h);
     virtual float   getMainScreenScale();
-    
+    virtual void    setViewName(const char* pszViewName);
+    const char*     getViewName();
+
     /** handle touch events by default, if you want to custom your handles, please override these functions */
     virtual void    handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
     virtual void    handleTouchesMove(int num, int ids[], float xs[], float ys[]);
@@ -49,6 +51,7 @@ protected:
     CCSize m_sSizeInPixel;
     CCSize m_sSizeInPoint;
     CCRect m_rcViewPort;
+    char m_szViewName[50];
 };
 
 NS_CC_END

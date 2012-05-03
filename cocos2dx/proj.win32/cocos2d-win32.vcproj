@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -104,7 +104,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
