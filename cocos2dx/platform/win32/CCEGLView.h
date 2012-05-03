@@ -37,24 +37,22 @@ class CCEGL;
 class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
 public:
-
     CCEGLView();
     virtual ~CCEGLView();
 
-    bool    isOpenGLReady();
-    void    end();
+    /* override functions */
+    virtual bool isOpenGLReady();
+    virtual void end();
+    virtual void swapBuffers();
+    virtual bool canSetContentScaleFactor();
+    virtual void setContentScaleFactor(float contentScaleFactor);
+    virtual void setFrameSize(float width, float height);
+    virtual void setIMEKeyboardState(bool bOpen);
 
-    void    swapBuffers();
-
-    bool    canSetContentScaleFactor();
-    void    setContentScaleFactor(float contentScaleFactor);
-    
-
+private:
     virtual bool Create(LPCTSTR pTitle, int w, int h);
+public:
     virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
-
-
-    void setIMEKeyboardState(bool bOpen);
 
     // win32 platform function
     HWND getHWnd();
@@ -65,7 +63,6 @@ public:
     void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );
 
     // static function
-
     /**
     @brief    get the shared main open gl window
     */
