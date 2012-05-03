@@ -107,7 +107,7 @@ scenes['test_manual'] = function () {
 	scene.addChild(menu, 1);
 	
 	return scene;
-}
+};
 
 /**
  * test particle
