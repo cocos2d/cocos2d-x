@@ -47,7 +47,7 @@ scenes['test_manual'] = function () {
 	
 	scene.addChild(p1);
 
-//	p1.texture = cocos.TextureCache.sharedTextureCache.addImage( "stars2.png" );
+	p1.texture = cocos.TextureCache.sharedTextureCache().addImage( "stars2.png" );
 	
 	p1.duration = 3;
     
