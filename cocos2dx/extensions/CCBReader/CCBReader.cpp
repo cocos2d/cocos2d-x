@@ -1,3 +1,28 @@
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2012 XiaoLong Zhang, Chukong Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 //
 //  CCBReader.cpp
 //  CocosBuilderTest
@@ -284,7 +309,7 @@ CCNode* CCBReader::createCustomClassWithName(CCString* className)
 		 
     CObject* newClass = (CObject*)CClassFactory::sharedClassFactory().getClassByName(className->m_sString) ;
     if ( newClass == NULL ){
-        CCLog("WARNING! Class of type %s couldn't be found", className);
+        CCLOG("WARNING! Class of type %s couldn't be found", className);
         return NULL ;
     }
     newClass->registProperty() ;
@@ -373,11 +398,11 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
 	//std::vector<std::string> allKeys = dict->allKeysForObject(dict->objectForKey("children"));
 	//CCString* customString = props->objectForKey("memberVarAssignmentName");
     CCString* customClass = (CCString*)props->objectForKey("customClass");
-//    CCLog("customClass is %s", customClass->toStdString().c_str()) ;
+//    CCLOG("customClass is %s", customClass->toStdString().c_str()) ;
     
     //CObject*obj = (CObject*)createCustomClassWithName(customClass);
 //
-//	CCLog("ccObjectFromDictionary className:%s customClassName:%s", className->m_sString.c_str(), (customClass ? customClass->m_sString.c_str() : "-"));
+//	CCLOG("ccObjectFromDictionary className:%s customClassName:%s", className->m_sString.c_str(), (customClass ? customClass->m_sString.c_str() : "-"));
 //
 	
     if (extraProps) customClass = NULL;
@@ -420,18 +445,10 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         {
 			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spriteSheetFile->m_sString.c_str());
             
-            try {
-                spriteNormal = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileNormal"))->getCString());
-                spriteSelected = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileSelected"))->getCString());
-				spriteDisabled = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileDisabled"))->getCString());
-            }
-            catch (exception& e)
-            {
-				
-                spriteNormal = NULL;
-                spriteSelected = NULL;
-                spriteDisabled = NULL;
-            }
+            spriteNormal = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileNormal"))->getCString());
+            spriteSelected = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileSelected"))->getCString());
+            spriteDisabled = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileDisabled"))->getCString());
+            // TBD: how to defense if exception raise here?
         }
         else
         {
@@ -469,7 +486,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         //target->registMethod() ;
         if ( selectorName->m_sString.empty() )
         {
-            CCLog("WARNING! CCMenuItemImage target doesn't respond to selector %@",selectorName) ;
+            CCLOG("WARNING! CCMenuItemImage target doesn't respond to selector %@",selectorName) ;
             target = NULL ;
             sel = NULL ;
         }
@@ -493,13 +510,9 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
 		fontFile->m_sString += ((CCString*)props->objectForKey("fontFile"))->m_sString;
         CCString* stringText = ((CCString*)props->objectForKey("string"));
 		
-        try {
-			node = (CObject*)CCLabelBMFont::labelWithString(stringText->m_sString.c_str(), fontFile->m_sString.c_str());
-        }
-        catch (exception& e) {
-			delete node;
-            node = NULL;
-        }
+        node = (CObject*)CCLabelBMFont::labelWithString(stringText->m_sString.c_str(), 
+                                                        fontFile->m_sString.c_str() );
+
 		
 		delete fontFile;
 		fontFile = 0;
@@ -522,16 +535,9 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         
         if (spriteSheetFile && !spriteSheetFile->length())
         {
-            try
-            {
-				CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spriteSheetFile->m_sString.c_str());
-                node = (CObject*)CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFile"))->m_sString.c_str());
-
-            }
-            catch (exception& e) {
-				delete node;
-                node = NULL;
-            }
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spriteSheetFile->m_sString.c_str());
+            node = (CObject*)CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFile"))->m_sString.c_str());
+            // TBD: how to defense if exception raise here?
         }
         else
         {
@@ -554,7 +560,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         {
             if (dynamic_cast<CCLayerGradient*>(node) == NULL)
             {
-                CCLog("WARNING! %s is not subclass of CCNode", customClass);
+                CCLOG("WARNING! %s is not subclass of CCNode", customClass);
 				delete node;
                 node = NULL;
             }
@@ -577,7 +583,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         {
             if (dynamic_cast<CCLayerColor*>(node) == NULL)
             {
-                CCLog("WARNING! %s is not subclass of CCNode", customClass);
+                CCLOG("WARNING! %s is not subclass of CCNode", customClass);
 				delete node;
                 node = NULL;
             }
@@ -597,7 +603,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         {
             if (dynamic_cast<CCLayer*>(node) == NULL)
             {
-                CCLog("WARNING! %s is not subclass of CCNode", customClass);
+                CCLOG("WARNING! %s is not subclass of CCNode", customClass);
 				delete node;
                 node = NULL;
             }
@@ -618,7 +624,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         {
             if (dynamic_cast<CCNode*>(node) == NULL)
             {
-                CCLog("WARNING! %s is not subclass of CCNode", customClass);
+                CCLOG("WARNING! %s is not subclass of CCNode", customClass);
 				delete node;
                 node = NULL;
             }
@@ -632,7 +638,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
     }
     else
     {
-		CCLog("WARNING! Class of type %@ couldn't be found", className);
+		CCLOG("WARNING! Class of type %@ couldn't be found", className);
         return NULL;
     }
     
@@ -651,7 +657,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         }
         else
         {
-			CCLog("WARNING! Failed to add child to node");
+			CCLOG("WARNING! Failed to add child to node");
         }
     }
     if ( !extraProps )
@@ -671,9 +677,9 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             
             if ( assignTo != NULL )
             {
-                //CCLog("sprite;s position is %f", node->getPosition().x) ;
-                string spriteStr = "set" + assignmentName->m_sString ;
-                CCLog("spriteStr is %s, sprite's position is %f", spriteStr.c_str(), node->getPosition().x);
+                //CCLOG("sprite;s position is %f", node->getPosition().x) ;
+                std::string spriteStr = "set" + assignmentName->m_sString ;
+                CCLOG("spriteStr is %s, sprite's position is %f", spriteStr.c_str(), node->getPosition().x);
                 assignTo->propertyMap[spriteStr](assignTo, node) ;
                 // @_@||
                 //无奈 T_T  可能问题：1、在ccb中定义了变量，可是没有在文件中声明。
@@ -700,7 +706,7 @@ CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict, CCDictionary* ext
 {
 	if (!dict)
     {
-        CCLog("WARNING! Trying to load invalid file type");
+        CCLOG("WARNING! Trying to load invalid file type");
         return NULL;
     }
 	
@@ -709,12 +715,12 @@ CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict, CCDictionary* ext
     
     if (!fileType  || fileType->m_sString.compare("CocosBuilder") != 0)
     {
-        CCLog("WARNING! Trying to load invalid file type");
+        CCLOG("WARNING! Trying to load invalid file type");
     }
 
     if (fileVersion > 1)
     {
-        CCLog("WARNING! Trying to load file made with a newer version of CocosBuilder, please update the CCBReader class");
+        CCLOG("WARNING! Trying to load file made with a newer version of CocosBuilder, please update the CCBReader class");
         return NULL;
     }
     
@@ -740,7 +746,7 @@ CCNode* CCBReader::nodeGraphFromFile(const char* file)
 CCNode* CCBReader::nodeGraphFromFile(const char* file, CCObject* owner)
 {
 
-	CCLog("CCBReader path is: %s", file);    
+	CCLOG("CCBReader path is: %s", file);    
 	std::string xmlFile = CCFileUtils::fullPathFromRelativePath(file);    
     CCDictionary* dict = (CCDictionary*) CCDictionary::dictionaryWithContentsOfFileThreadSafe(xmlFile.c_str());
 	CCAssert(dict != NULL, "CCBReader: file not found");

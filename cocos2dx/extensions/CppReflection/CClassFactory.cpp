@@ -1,10 +1,27 @@
-//
-//  CClassFactory.cpp
-//  cocos2dXReflection
-//
-//  Created by 晓龙 张 on 12-2-17.
-//  Copyright (c) 2012年 chukong-inc. All rights reserved.
-//
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2012 XiaoLong Zhang, Chukong Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CClassFactory.h"
 #include "CObject.h"
@@ -19,12 +36,12 @@ CClassFactory& CClassFactory::sharedClassFactory() {
 
 CClassFactory::CClassFactory()
 {
-    CClassFactory::m_classMap = map<string, createClass>();
+    CClassFactory::m_classMap = std::map<std::string, createClass>();
 }
 
-void* CClassFactory::getClassByName(string className)
+void* CClassFactory::getClassByName(std::string className)
 {
-    map<string, createClass>::const_iterator iter ;
+    std::map<std::string, createClass>::const_iterator iter ;
     
     iter = m_classMap.find(className) ;
     
@@ -34,9 +51,9 @@ void* CClassFactory::getClassByName(string className)
         return iter->second() ;
 }
 
-void CClassFactory::registClass(string name, createClass method)
+void CClassFactory::registClass(std::string name, createClass method)
 {
     CCLog(name.c_str()) ;
-    m_classMap.insert(pair<string, createClass>(name, method)) ;
+    m_classMap.insert(std::pair<std::string, createClass>(name, method)) ;
     
 }
