@@ -1624,6 +1624,7 @@ public:
 	enum {
 		kOpacity = 1,
 		kColor,
+		kTextureAtlas,
 		kAtlasIndex,
 		kBatchNode,
 		kTransform,

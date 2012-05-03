@@ -980,7 +980,17 @@ JSBool S_CCMenu::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool st
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kColor:
-				// don't know what this is (js ~> c)
+		do {
+			JSObject *arr = JSVAL_TO_OBJECT(*val);
+			jsval jr, jg, jb;
+			int32_t r, g, b;
+			JS_GetElement(cx, arr, 0, &jr);
+			JS_GetElement(cx, arr, 1, &jg);
+			JS_GetElement(cx, arr, 2, &jb);
+			JS_ValueToInt32(cx, jr, &r); JS_ValueToInt32(cx, jg, &g); JS_ValueToInt32(cx, jb, &b);
+			ccColor3B color = ccc3(r, g, b);
+			cobj->setColor(color);
+		} while (0);
 		break;
 	case kOpacity:
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setOpacity(tmp); } while (0);
@@ -3038,16 +3048,60 @@ JSBool S_CCParticleSystem::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 		do { double tmp; JS_ValueToNumber(cx, *val, &tmp); cobj->setEndSizeVar(tmp); } while (0);
 		break;
 	case kStartColor:
-				// don't know what this is (js ~> c)
+		do {
+			JSObject *arr = JSVAL_TO_OBJECT(*val);
+			jsval jr, jg, jb, ja;
+			double r, g, b, a;
+			JS_GetElement(cx, arr, 0, &jr);
+			JS_GetElement(cx, arr, 1, &jg);
+			JS_GetElement(cx, arr, 2, &jb);
+			JS_GetElement(cx, arr, 3, &ja);
+			JS_ValueToNumber(cx, jr, &r); JS_ValueToNumber(cx, jg, &g); JS_ValueToNumber(cx, jb, &b); JS_ValueToNumber(cx, ja, &a);
+			ccColor4F color = {r, g, b, a};
+			cobj->setStartColor(color);
+		} while (0);
 		break;
 	case kStartColorVar:
-				// don't know what this is (js ~> c)
+		do {
+			JSObject *arr = JSVAL_TO_OBJECT(*val);
+			jsval jr, jg, jb, ja;
+			double r, g, b, a;
+			JS_GetElement(cx, arr, 0, &jr);
+			JS_GetElement(cx, arr, 1, &jg);
+			JS_GetElement(cx, arr, 2, &jb);
+			JS_GetElement(cx, arr, 3, &ja);
+			JS_ValueToNumber(cx, jr, &r); JS_ValueToNumber(cx, jg, &g); JS_ValueToNumber(cx, jb, &b); JS_ValueToNumber(cx, ja, &a);
+			ccColor4F color = {r, g, b, a};
+			cobj->setStartColorVar(color);
+		} while (0);
 		break;
 	case kEndColor:
-				// don't know what this is (js ~> c)
+		do {
+			JSObject *arr = JSVAL_TO_OBJECT(*val);
+			jsval jr, jg, jb, ja;
+			double r, g, b, a;
+			JS_GetElement(cx, arr, 0, &jr);
+			JS_GetElement(cx, arr, 1, &jg);
+			JS_GetElement(cx, arr, 2, &jb);
+			JS_GetElement(cx, arr, 3, &ja);
+			JS_ValueToNumber(cx, jr, &r); JS_ValueToNumber(cx, jg, &g); JS_ValueToNumber(cx, jb, &b); JS_ValueToNumber(cx, ja, &a);
+			ccColor4F color = {r, g, b, a};
+			cobj->setEndColor(color);
+		} while (0);
 		break;
 	case kEndColorVar:
-				// don't know what this is (js ~> c)
+		do {
+			JSObject *arr = JSVAL_TO_OBJECT(*val);
+			jsval jr, jg, jb, ja;
+			double r, g, b, a;
+			JS_GetElement(cx, arr, 0, &jr);
+			JS_GetElement(cx, arr, 1, &jg);
+			JS_GetElement(cx, arr, 2, &jb);
+			JS_GetElement(cx, arr, 3, &ja);
+			JS_ValueToNumber(cx, jr, &r); JS_ValueToNumber(cx, jg, &g); JS_ValueToNumber(cx, jb, &b); JS_ValueToNumber(cx, ja, &a);
+			ccColor4F color = {r, g, b, a};
+			cobj->setEndColorVar(color);
+		} while (0);
 		break;
 	case kStartSpin:
 		do { double tmp; JS_ValueToNumber(cx, *val, &tmp); cobj->setStartSpin(tmp); } while (0);
@@ -10866,7 +10920,17 @@ JSBool S_CCMenuItemLabel::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kDisabledColor:
-				// don't know what this is (js ~> c)
+		do {
+			JSObject *arr = JSVAL_TO_OBJECT(*val);
+			jsval jr, jg, jb;
+			int32_t r, g, b;
+			JS_GetElement(cx, arr, 0, &jr);
+			JS_GetElement(cx, arr, 1, &jg);
+			JS_GetElement(cx, arr, 2, &jb);
+			JS_ValueToInt32(cx, jr, &r); JS_ValueToInt32(cx, jg, &g); JS_ValueToInt32(cx, jb, &b);
+			ccColor3B color = ccc3(r, g, b);
+			cobj->setDisabledColor(color);
+		} while (0);
 		break;
 	case kLabel:
 		do {
@@ -11385,7 +11449,17 @@ JSBool S_CCSprite::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setOpacity(tmp); } while (0);
 		break;
 	case kColor:
-				// don't know what this is (js ~> c)
+		do {
+			JSObject *arr = JSVAL_TO_OBJECT(*val);
+			jsval jr, jg, jb;
+			int32_t r, g, b;
+			JS_GetElement(cx, arr, 0, &jr);
+			JS_GetElement(cx, arr, 1, &jg);
+			JS_GetElement(cx, arr, 2, &jb);
+			JS_ValueToInt32(cx, jr, &r); JS_ValueToInt32(cx, jg, &g); JS_ValueToInt32(cx, jb, &b);
+			ccColor3B color = ccc3(r, g, b);
+			cobj->setColor(color);
+		} while (0);
 		break;
 	case kAtlasIndex:
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setAtlasIndex(tmp); } while (0);
@@ -11433,6 +11507,7 @@ void S_CCSprite::jsCreateClass(JSContext *cx, JSObject *globalObj, const char *n
 		static JSPropertySpec properties[] = {
 			{"opacity", kOpacity, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSprite::jsPropertyGet, S_CCSprite::jsPropertySet},
 			{"color", kColor, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSprite::jsPropertyGet, S_CCSprite::jsPropertySet},
+			{"textureAtlas", kTextureAtlas, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSprite::jsPropertyGet, S_CCSprite::jsPropertySet},
 			{"atlasIndex", kAtlasIndex, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSprite::jsPropertyGet, S_CCSprite::jsPropertySet},
 			{"batchNode", kBatchNode, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSprite::jsPropertyGet, S_CCSprite::jsPropertySet},
 			{"transform", kTransform, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSprite::jsPropertyGet, S_CCSprite::jsPropertySet},
