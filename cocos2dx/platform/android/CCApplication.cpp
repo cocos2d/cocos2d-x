@@ -30,11 +30,11 @@ CCApplication::~CCApplication()
 
 int CCApplication::run()
 {
-        // Initialize instance and cocos2d.
-        if (! initInstance() || ! applicationDidFinishLaunching())
-        {
-                return 0;
-        }
+    // Initialize instance and cocos2d.
+    if (! applicationDidFinishLaunching())
+    {
+        return 0;
+    }
     
     return -1;
 }
