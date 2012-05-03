@@ -43,7 +43,7 @@ int CCApplication::run()
     QueryPerformanceCounter(&nLast);
 
     // Initialize instance and cocos2d.
-    if (! initInstance() || ! applicationDidFinishLaunching())
+    if (!applicationDidFinishLaunching())
     {
         return 0;
     }
@@ -160,17 +160,17 @@ static void PVRFrameEnableControlWindow(bool bEnable)
         return;
     }
 
-    const wchar_t * wszValue = L"hide_gui";
-    const wchar_t * wszNewData = (bEnable) ? L"NO" : L"YES";
-    wchar_t wszOldData[256] = {0};
-    DWORD   dwSize = sizeof(wszOldData);
-    LSTATUS status = RegQueryValueExW(hKey, wszValue, 0, NULL, (LPBYTE)wszOldData, &dwSize);
+    const char * szValue = "hide_gui";
+    const char * szNewData = (bEnable) ? "NO" : "YES";
+    char szOldData[256] = {0};
+    DWORD   dwSize = sizeof(szOldData);
+    LSTATUS status = RegQueryValueEx(hKey, szValue, 0, NULL, (LPBYTE)szOldData, &dwSize);
     if (ERROR_FILE_NOT_FOUND == status              // the key not exist
         || (ERROR_SUCCESS == status                 // or the hide_gui value is exist
-        && 0 != wcscmp(wszNewData, wszOldData)))    // but new data and old data not equal
+        && 0 != strcmp(szNewData, szOldData)))    // but new data and old data not equal
     {
-        dwSize = sizeof(wchar_t) * (wcslen(wszNewData) + 1);
-        RegSetValueEx(hKey, wszValue, 0, REG_SZ, (const BYTE *)wszNewData, dwSize);
+        dwSize = sizeof(wchar_t) * (strlen(szNewData) + 1);
+        RegSetValueEx(hKey, szValue, 0, REG_SZ, (const BYTE *)szNewData, dwSize);
     }
 
     RegCloseKey(hKey);

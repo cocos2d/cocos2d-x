@@ -54,11 +54,6 @@ void SimpleAudioEngine::end()
     endJNI();
 }
 
-void SimpleAudioEngine::setResource(const char* pszZipFileName)
-{
-
-}
-
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
     preloadBackgroundMusicJNI(pszFilePath);
