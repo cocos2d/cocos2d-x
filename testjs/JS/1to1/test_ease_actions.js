@@ -157,7 +157,7 @@ scenes['test_bouncein'] = function () {
 	var move_ease_out = cocos.EaseBounceOut.actionWithAction( move2 );
 	var move_ease_out_back = move_ease_out.reverse();
 	
-	var seq1 = cocos.Sequence.actions( move, move_back );
+	var seq1 = cocos.Sequence.actions( move1, move1_back );
 	var seq2 = cocos.Sequence.actions( move_ease_in, move_ease_in_back );
 	var seq3 = cocos.Sequence.actions( move_ease_out, move_ease_out_back );
 	
