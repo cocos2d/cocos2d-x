@@ -90,10 +90,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
 
+//	pDirector->runWithScene(HelloWorld::scene());
 	// run the main script
-	ScriptingCore::getInstance().runScript("JS/1to1/test_ease_actions.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_ease_actions.js");
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_particles.js");
-//	ScriptingCore::getInstance().runScript("JS/1to1/test_actions.js");
+	ScriptingCore::getInstance().runScript("JS/1to1/test_actions.js");
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_layer.js");
 
 	return true;
