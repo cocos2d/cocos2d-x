@@ -60,6 +60,7 @@ ScriptingCore::ScriptingCore()
 	S_CCAction::jsCreateClass(this->cx, cocos, "Action");
 	S_CCActionInterval::jsCreateClass(this->cx, cocos, "ActionInterval");
 	S_CCFiniteTimeAction::jsCreateClass(this->cx, cocos, "FiniteTimeAction");
+	S_CCDelayTime::jsCreateClass(this->cx, cocos, "DelayTime");
 	S_CCAnimate::jsCreateClass(this->cx, cocos, "Animate");
 	S_CCMoveTo::jsCreateClass(this->cx, cocos, "MoveTo");
 	S_CCMoveBy::jsCreateClass(this->cx, cocos, "MoveBy");

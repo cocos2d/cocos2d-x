@@ -239,6 +239,26 @@ public:
 	void menuAction(cocos2d::CCObject *o);
 };
 
+class S_CCDelayTime : public CCDelayTime
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCDelayTime(JSObject *obj) : CCDelayTime(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCSequence : public CCSequence
 {
 	JSObject *m_jsobj;
