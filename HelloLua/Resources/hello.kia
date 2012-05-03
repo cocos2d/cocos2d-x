@@ -1,0 +1,181 @@
+
+// avoid memory leak
+collectgarbage("setpause", 100)
+collectgarbage("setstepmul", 5000)
+
+var cclog = function(...) {
+    print(string.format(...))
+}
+
+require("hello2")
+cclog("result is " .. myadd(3, 5))
+
+
+var winSize = CCDirector::sharedDirector()::getWinSize()
+
+// add the moving dog
+function creatDog() {
+    var frameWidth = 105
+    var frameHeight = 95
+
+    // create dog animate
+    var textureDog = CCTextureCache::sharedTextureCache()::addImage("dog.png")
+    var rect = CCRectMake(0, 0, frameWidth, frameHeight)
+    var frame0 = CCSpriteFrame::frameWithTexture(textureDog, rect)
+    rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)
+    var frame1 = CCSpriteFrame::frameWithTexture(textureDog, rect)
+
+    var spriteDog = CCSprite::spriteWithSpriteFrame(frame0)
+    spriteDog.isPaused = false 
+    spriteDog::setPosition(0, winSize.height / 4 * 3)
+
+    var ccma = global.CCMutableArray_CCSpriteFrame__
+    var animFrames = ccma["new"](ccma, 2)
+    animFrames::addObject(frame0)
+    animFrames::addObject(frame1)
+
+    var animation = CCAnimation::animationWithFrames(animFrames, 0.5)
+    var animate = CCAnimate::actionWithAnimation(animation, false);
+    spriteDog::runAction(CCRepeatForever::actionWithAction(animate))
+
+    // moving dog at every frame
+    function tick() {
+        if (spriteDog.isPaused) { return }
+        var x, y = spriteDog::getPosition()
+        if (x > winSize.width) {
+            x = 0
+        } else {
+            x = x + 1
+        }
+        spriteDog::setPositionX(x)
+    }
+
+    CCScheduler::sharedScheduler()::scheduleScriptFunc(tick, 0, false)
+
+    return spriteDog
+}
+
+// create farm
+function createLayerFram() {
+    var layerFarm = CCLayer::node()
+
+    // add in farm background
+    var bg = CCSprite::spriteWithFile("farm.jpg")
+    bg::setPosition(winSize.width / 2 + 80, winSize.height / 2)
+    layerFarm::addChild(bg)
+
+    // add land sprite
+    for each (var i = 0 to 3) {
+        for each (var j = 0 to 1) {
+            var spriteLand = CCSprite::spriteWithFile("land.png")
+            spriteLand::setPosition(200 + j * 180 - i % 2 * 90, 10 + i * 95 / 2)
+            layerFarm::addChild(spriteLand)
+        }
+    }
+
+    // add crop
+    var textureCrop = CCTextureCache::sharedTextureCache()::addImage("crop.png")
+    var frameCrop = CCSpriteFrame::frameWithTexture(textureCrop, CCRectMake(0, 0, 105, 95))
+    for each (var i = 0 to 3) {
+        for each (var j = 0 to 1) {
+            var spriteCrop = CCSprite::spriteWithSpriteFrame(frameCrop);
+            spriteCrop::setPosition(10 + 200 + j * 180 - i % 2 * 90, 30 + 10 + i * 95 / 2)
+            layerFarm::addChild(spriteCrop)
+        }
+    }
+
+    // add moving dog
+    var spriteDog = creatDog()
+    layerFarm::addChild(spriteDog)
+
+    // handing touch events
+    var touchBeginPoint = null
+
+    function onTouchBegan(x, y) {
+        cclog("onTouchBegan:: %0.2f, %0.2f", x, y)
+        touchBeginPoint = {x: x, y: y}
+        spriteDog.isPaused = true
+        // CCTOUCHBEGAN event must return true
+        return true
+    }
+
+    function onTouchMoved(x, y) {
+        cclog("onTouchMoved:: %0.2f, %0.2f", x, y)
+        if (touchBeginPoint) {
+            var cx, cy = layerFarm::getPosition()
+            layerFarm::setPosition(cx + x - touchBeginPoint.x,
+                                  cy + y - touchBeginPoint.y)
+            touchBeginPoint = {x: x, y: y}
+        }
+    }
+
+    function onTouchEnded(x, y) {
+        cclog("onTouchEnded")
+        touchBeginPoint = null
+        spriteDog.isPaused = false
+    }
+
+    function onTouch(eventType, x, y) {
+        if (eventType == global.CCTOUCHBEGAN) {
+            return onTouchBegan(x, y)
+        } else if (eventType == global.CCTOUCHMOVED) {
+            return onTouchMoved(x, y)
+        } else {
+            return onTouchEnded(x, y)
+        }
+    }
+
+    layerFarm::registerScriptTouchHandler(onTouch)
+    layerFarm::setIsTouchEnabled(true)
+
+    return layerFarm
+}
+
+
+// create menu
+function createLayerMenu() {
+    var layerMenu = CCLayer::node()
+
+    var menuPopup, menuTools, effectID
+
+    function menuCallbackClosePopup() {
+        // stop test sound effect
+        SimpleAudioEngine::sharedEngine()::stopEffect(effectID)
+        menuPopup::setIsVisible(false)
+    }
+
+    function menuCallbackOpenPopup() {
+        // loop test sound effect
+        effectID = SimpleAudioEngine::sharedEngine()::playEffect("effect1.wav")
+        menuPopup::setIsVisible(true)
+    }
+
+    // add a popup menu
+    var menuPopupItem = CCMenuItemImage::itemFromNormalImage("menu2.png", "menu2.png")
+    menuPopupItem::setPosition(0, 0)
+    menuPopupItem::registerScriptHandler(menuCallbackClosePopup)
+    menuPopup = CCMenu::menuWithItem(menuPopupItem)
+    menuPopup::setPosition(winSize.width / 2, winSize.height / 2)
+    menuPopup::setIsVisible(false)
+    layerMenu::addChild(menuPopup)
+
+    // add the left-bottom "tools" menu to invoke menuPopup
+    var menuToolsItem = CCMenuItemImage::itemFromNormalImage("menu1.png", "menu1.png")
+    menuToolsItem::setPosition(0, 0)
+    menuToolsItem::registerScriptHandler(menuCallbackOpenPopup)
+    menuTools = CCMenu::menuWithItem(menuToolsItem)
+    menuTools::setPosition(30, 40)
+    layerMenu::addChild(menuTools)
+
+    return layerMenu
+}
+
+// play background music, preload effect
+SimpleAudioEngine::sharedEngine()::playBackgroundMusic("background.mp3", true);
+SimpleAudioEngine::sharedEngine()::preloadEffect("effect1.wav");
+
+// run
+var sceneGame = CCScene::node()
+sceneGame::addChild(createLayerFram())
+sceneGame::addChild(createLayerMenu())
+CCDirector::sharedDirector()::runWithScene(sceneGame)
