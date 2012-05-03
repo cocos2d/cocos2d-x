@@ -85,17 +85,10 @@ scenes['test_manual'] = function () {
 	p1.endSpinVar = 0;
     
     // color of particles
-//    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-//    m_emitter->setStartColor(startColor);
-//    
-//    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-//    m_emitter->setStartColorVar(startColorVar);
-//    
-//    ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-//    m_emitter->setEndColor(endColor);
-//    
-//    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
-//    m_emitter->setEndColorVar(endColorVar);
+	p1.startColor = [0.5, 0.5, 0.5, 1.0];
+	p1.startColorVar = [0.5, 0.5, 0.5, 1.0];
+	p1.endColor = [0.1, 0.1, 0.1, 0.2];
+	p1.endColorVar = [0.1, 0.1, 0.1, 0.2];
     
     // size, in pixels
 	p1.startSize = 30;
