@@ -23,45 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-//
-//  CCBReader.cpp
-//  CocosBuilderTest
-//
-//  Created by 晓龙 张 on 12-2-15.
-//  Copyright (c) 2012年 chukong-inc. All rights reserved.
-//
 #include "CCBReader.h"
-//#include "CObject.h"
-//#include "HelloCocosBuilder.h"
 
 using namespace cocos2d ;
-
-/*
-CCBReader* CCBReader::static_bReader = 0;
-
-CCBReader::CCBReader()
-{
-}
-
-CCBReader::~CCBReader()
-{
-}
-
-CCBReader* CCBReader::sharedReader()
-{
-    if (!static_bReader)
-    {
-        static_bReader = new CCBReader();
-    }
-    
-    return static_bReader;
-}
-
-void CCBReader::dispose()
-{
-	CC_SAFE_DELETE(static_bReader);
-}
-*/
 
 #pragma mark -
 #pragma mark Read value from dictionary
