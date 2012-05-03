@@ -35,6 +35,88 @@ var scenes = {};
 scenes.currentScene = 1;
 
 /**
+ * Manual Particle
+ */
+scenes['test_manual'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+
+	var p1 = new cocos.ParticleSystem();
+	p1.initWithTotalParticles(250);
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	
+	scene.addChild(p1);
+
+//	p1.texture = cocos.TextureCache.sharedTextureCache.addImage( "stars2.png" );
+	
+	p1.duration = 3;
+    
+    // gravity
+	p1.gravity = cocos.Point.create(0, -5);
+    
+    // angle
+	p1.angle = 90;
+	p1.angleVar = 360;
+    
+    // speed of particles
+	p1.speed = 160;
+	p1.speedVar = 20;
+    
+    // radial
+	p1.radialAccel = -120;
+	p1.radialAccelVar = 0;
+    
+    // tagential
+	p1.tangentialAccel = 30;
+	p1.tangentialAccelVar = 0;
+    
+    // emitter position
+//	p1.position = cocos.Point.create(0, 0);
+	p1.posVar = cocos.Point.create(0, 0);
+    
+    // life of particles
+	p1.life = 4;
+	p1.lifeVar = 1;
+    
+    // spin of particles
+	p1.startSpin = 0;
+	p1.startSizeVar = 0;
+	p1.endSpin = 0;
+	p1.endSpinVar = 0;
+    
+    // color of particles
+//    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+//    m_emitter->setStartColor(startColor);
+//    
+//    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+//    m_emitter->setStartColorVar(startColorVar);
+//    
+//    ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+//    m_emitter->setEndColor(endColor);
+//    
+//    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
+//    m_emitter->setEndColorVar(endColorVar);
+    
+    // size, in pixels
+	p1.startSize = 30;
+	p1.startSizeVar = 0;
+//	p1.endSize = kParticleStartSizeEqualToEndSize;
+    
+    // emits per second
+	p1.emissionRate = 500;
+    
+    // additive
+	p1.isBlendAdditive = true;
+	
+	
+	// add the menu
+	var menu = createMenu("Particle: Manual Particle");
+	scene.addChild(menu, 1);
+	
+	return scene;
+}
+
+/**
  * test particle
  */
 scenes['test_lava_flow'] = function () {

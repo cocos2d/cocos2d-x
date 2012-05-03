@@ -342,6 +342,20 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 		return false;
 	}
 
+	m_pTexture = CCTextureCache::sharedTextureCache()->addImage( "stars2.png" );
+	m_pTexture->retain();
+	
+	m_tStartColor.r = 0.5;
+	m_tStartColor.g = 0.5;
+	m_tStartColor.b = 0.5;
+	m_tStartColor.a = 0.5;
+
+	m_tEndColor.r = 1.0;
+	m_tEndColor.g = 0.0;
+	m_tEndColor.b = 0.0;
+	m_tEndColor.a = 1.0;
+
+	
 	// default, active
 	m_bIsActive = true;
 
