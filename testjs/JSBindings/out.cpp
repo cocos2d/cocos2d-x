@@ -3342,18 +3342,6 @@ JSBool S_CCParticleSystem::jspostStep(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCParticleSystem::update(ccTime delta) {
-	if (m_jsobj) {
-		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
-		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
-		if (found == JS_TRUE) {
-			jsval rval, fval;
-			JS_GetProperty(cx, m_jsobj, "update", &fval);
-			jsval jsdelta; JS_NewNumberValue(cx, delta, &jsdelta);
-			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &jsdelta, &rval);
-		}
-	}
-}
 
 JSClass* S_CCEaseElasticIn::jsClass = NULL;
 JSObject* S_CCEaseElasticIn::jsObject = NULL;
