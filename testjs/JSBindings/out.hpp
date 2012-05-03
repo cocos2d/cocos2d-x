@@ -480,7 +480,6 @@ public:
 	static JSBool jsisFull(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsupdateQuadWithParticle(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jspostStep(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
 
 };
 
