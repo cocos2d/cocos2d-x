@@ -35,6 +35,7 @@ namespace cocos2d{
     {
     private:
         DECLARE_RUNTIME(HelloCocosBuilder) ;
+        
     public:
         SET(HelloCocosBuilder, CCSprite*, sprtBurst)
         SET(HelloCocosBuilder, CCSprite*, sprtIcon)
@@ -71,6 +72,7 @@ namespace cocos2d{
         // then dispatch the messages
         virtual void menuCallBack(CCObject *sender) ;
 
+    private:
         void pressedButton(CCObject*sender) ;
         void pressedButton2(CCObject*sender) ;
         
