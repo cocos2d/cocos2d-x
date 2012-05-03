@@ -1,31 +1,50 @@
-//
-//  CGenDynamic.h
-//  cocos2dXReflection
-//
-//  Created by 晓龙 张 on 12-2-17.
-//  Copyright (c) 2012年 chukong-inc. All rights reserved.
-//
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2012 XiaoLong Zhang, Chukong Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef cocos2dXReflection_CGenDynamic_h
 #define cocos2dXReflection_CGenDynamic_h
-//
+
 #include <iostream>
 #include "CClassFactory.h"
-using namespace std ;
-// 动态创建类 
+
+// use DECLARE_RUNTIME in headerfile, then use IMPLEMENT_RUNTIME in cpp file
+// then the class will be new as a static global object
+// during this phase, its creator will be called
 class CGenDynamic
 {
 public:
-    CGenDynamic(string name, createClass method) ;
+    CGenDynamic(std::string name, createClass method) ;
 } ;
 
 #define DECLARE_RUNTIME(class_name)     \
-string class_name##Name ;               \
+std::string class_name##Name ;               \
 static CGenDynamic* class_name##gd
-
 
 #define IMPLEMENT_RUNTIME(class_name)   \
 CGenDynamic* class_name::class_name##gd \
 = new CGenDynamic(#class_name, class_name::createInstance) ;
+
 
 #endif

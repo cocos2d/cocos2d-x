@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2012 Xiaolong Zhang, Chukong Inc.
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2012 XiaoLong Zhang, Chukong Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,12 +27,11 @@
 #define cocos2dXReflection_HelloCocosBuilder_h
 
 #include "cocos2d.h"
-//#include "CGenDynamic.h"
 #include "CObject.h"
 
-using namespace std ;
 namespace cocos2d{
-    class HelloCocosBuilder : public CObject
+    
+    class HelloCocosBuilder : public CObject, public CCLayer
     {
     private:
         DECLARE_RUNTIME(HelloCocosBuilder) ;
@@ -47,27 +47,33 @@ namespace cocos2d{
             return new HelloCocosBuilder ;
         }
     public:
-        //virtual method
+        // virtual method
         virtual void didLoadFromCCB() ;
-        //@1:注册函数
+        
+        // regist function
         virtual void registMethod()
         {
-//            REGISTMETHOD(pressedButton) ;
-//            methodMap.insert(pair<string, callBack>("pressedButton", HelloCocosBuilder::pressedButton)) ;
-//            methodMap["pressedButton"] = pressedButton ;
-//            REGISTMETHOD(pressedButton2) ;
+            /*
+            REGISTMETHOD(pressedButton) ;
+            methodMap.insert(pair<string, callBack>("pressedButton", HelloCocosBuilder::pressedButton)) ;
+            methodMap["pressedButton"] = pressedButton ;
+            REGISTMETHOD(pressedButton2) ;
+             */
         }
         virtual void registProperty() 
         {
             //propertyMap.insert(pair<string, setValue>("setSprtBurst", setSprtBurst)) ;
-            REGISTPROPERTY(setsprtBurst)
-            REGISTPROPERTY(setsprtIcon)
+            REGIST_PROPERTY(setsprtBurst)
+            REGIST_PROPERTY(setsprtIcon)
         }
-        //按钮点击首先会调到此处，然后分发给相应的消息
+        
+        // this function will be called when button pressed,
+        // then dispatch the messages
         virtual void menuCallBack(CCObject *sender) ;
-    //private:
+
         void pressedButton(CCObject*sender) ;
         void pressedButton2(CCObject*sender) ;
+        
     protected:
         static CCSprite* sprtBurst ;
         static CCSprite* sprtIcon ;

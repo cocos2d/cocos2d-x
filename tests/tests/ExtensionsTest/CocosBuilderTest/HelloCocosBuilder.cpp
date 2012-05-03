@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2012 Xiaolong Zhang, Chukong Inc.
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2012 XiaoLong Zhang, Chukong Inc.
  
  http://www.cocos2d-x.org
  
@@ -35,8 +36,8 @@ CCSprite* HelloCocosBuilder::sprtIcon = NULL ;
 void HelloCocosBuilder::didLoadFromCCB()
 {
     CCLOG("loading.....successed!") ;
-    id act = CCRotateBy::actionWithDuration(0.5f, 10) ;
-    id act1 = CCRepeatForever::actionWithAction((CCActionInterval*)act) ;
+    void* act = CCRotateBy::actionWithDuration(0.5f, 10) ;
+    void* act1 = CCRepeatForever::actionWithAction((CCActionInterval*)act) ;
     sprtBurst->runAction((CCAction*)act1) ;
 }
 
