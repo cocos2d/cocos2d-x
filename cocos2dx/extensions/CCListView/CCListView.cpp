@@ -1,3 +1,28 @@
+/****************************************************************************
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2012 NetGragon
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "CCListView.h"
 //#include "../cocos2dx_support/LuaEngineImpl.h"
 #include "cocos2d.h"
@@ -1296,7 +1321,7 @@ void CCListView::displayVisibleRows(void)
         ++rowCount;
     }
     m_drawedRows.length = rowCount - m_drawedRows.location;
-    // 设置可视范围
+    // set visible range
     m_visibleRows = m_drawedRows;
 
     if (lastCell)
@@ -1417,7 +1442,8 @@ CCListViewCell* CCListView::appendRowToFront(unsigned int nRow)
     }
     return cell;
 }
-// 对齐末行
+
+// align first row
 void CCListView::fixFirstRow(void)
 {
     unsigned int location = m_drawedRows.location;
@@ -1457,7 +1483,7 @@ void CCListView::fixFirstRow(void)
         this->finishFix();
     }
 }
-// 对齐首行
+// align last row
 void CCListView::fixLastRow(void)
 {
     unsigned int nLastRow = CCRange::CCMaxRange(m_drawedRows);
@@ -1496,7 +1522,7 @@ void CCListView::fixLastRow(void)
         finishFix();
     }
 }
-// 手势滑动界面，减速效果
+
 void CCListView::easeOutWithDistance(float dis)
 {
     float disX = 0;
@@ -2008,8 +2034,8 @@ void CCListView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 
     m_fActionDuration = ND_LISTVIEW_ACTION_INTERVAL;
     clock_t timeElapse = clock() - m_timeTouchBegan;
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_MAC
-    // 手机平台用时较长，此系数可能需要根据不同平台做相应调整
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+    // It will take more time on mobile platform, this parameter may need to be adjusted according to the platform you use.
     timeElapse /= 200;
 #endif
     if(CCListViewSlideDirLeft == m_nSlideDir || CCListViewSlideDirRight == m_nSlideDir)

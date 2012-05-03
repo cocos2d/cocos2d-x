@@ -1,8 +1,33 @@
+/****************************************************************************
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2012 NetGragon
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "CCTextureWatcher.h"
 #include "cocos2d.h"
 
 using namespace std;
-
+ 
 NS_CC_EXT_BEGIN
 
 #define NUM_PER_PAGE    4
@@ -23,16 +48,16 @@ CCTextureWatcher::CCTextureWatcher()
     size.height *= 0.6;
     m_pLayer->setContentSize(size);
 
-    // 屏蔽点击事件的menu
+    // the menu of disabling touch event
     //*
     CCLabelTTF *label = CCLabelTTF::labelWithString(" ", size, CCTextAlignmentLeft, "Arial", 12);
     CCMenuItemLabel *menuItem = CCMenuItemLabel::itemWithLabel(label);
-    menuItem->setAnchorPoint(CCPoint(0, 0));
-    menuItem->setPosition(CCPoint(0, 0));
+    menuItem->setAnchorPoint(ccp(0, 0));
+    menuItem->setPosition(ccp(0, 0));
         
     CCMenu *menu = CCMenu::menuWithItem(menuItem);
-    menu->setAnchorPoint(CCPoint(0, 0));
-    menu->setPosition(CCPoint(0, 0));
+    menu->setAnchorPoint(ccp(0, 0));
+    menu->setPosition(ccp(0, 0));
     m_pLayer->addChild(menu);
     //*/
 
@@ -45,37 +70,37 @@ CCTextureWatcher::CCTextureWatcher()
     m_pList = list;
 
 
-    // 隐藏按钮
+    // 'Hide' button
     CCLabelTTF *labelHide = CCLabelTTF::labelWithString("Hide  ", "Arial", 24);
     labelHide->setColor(ccc3(255, 0, 0));
     CCMenuItemLabel *menuItem2 = CCMenuItemLabel::itemWithLabel(labelHide, this, menu_selector(CCTextureWatcher::actionHide));
-    menuItem2->setAnchorPoint(CCPoint(0, 0));
-    menuItem2->setPosition(CCPoint(0, 0));
+    menuItem2->setAnchorPoint(ccp(0, 0));
+    menuItem2->setPosition(ccp(0, 0));
 
     CCMenu *menu2 = CCMenu::menuWithItem(menuItem2);
-    menu2->setAnchorPoint(CCPoint(0, 0));
-    menu2->setPosition(CCPoint(size.width - menuItem2->getContentSize().width, 0));
+    menu2->setAnchorPoint(ccp(0, 0));
+    menu2->setPosition(ccp(size.width - menuItem2->getContentSize().width, 0));
 
     m_labelHide = labelHide;
     m_menuHide = menu2;
     m_menuHide->retain();
 
-    // 更新按钮
+    // 'Fresh' button
     CCLabelTTF *labelFresh = CCLabelTTF::labelWithString("Fresh", "Arial", 24);
     labelFresh->setColor(ccc3(255, 0, 0));
     CCMenuItemLabel *menuItem1 = CCMenuItemLabel::itemWithLabel(labelFresh, this, menu_selector(CCTextureWatcher::actionFresh));
-    menuItem1->setAnchorPoint(CCPoint(0, 0));
-    menuItem1->setPosition(CCPoint(0, 0));
+    menuItem1->setAnchorPoint(ccp(0, 0));
+    menuItem1->setPosition(ccp(0, 0));
 
     CCMenu *menu1 = CCMenu::menuWithItem(menuItem1);
-    menu1->setAnchorPoint(CCPoint(0, 0));
-    menu1->setPosition(CCPoint(size.width - menuItem1->getContentSize().width - menuItem2->getContentSize().width * 1.5, 0));
+    menu1->setAnchorPoint(ccp(0, 0));
+    menu1->setPosition(ccp(size.width - menuItem1->getContentSize().width - menuItem2->getContentSize().width * 1.5, 0));
     m_pLayer->addChild(menu1);
     
     // label page
     m_labelPage = CCLabelTTF::labelWithString(" ", CCSizeMake(size.width * 0.1, labelFresh->getContentSize().height), CCTextAlignmentCenter, "Arial", 16);
-    m_labelPage->setAnchorPoint(CCPoint(0.5, 0));
-    m_labelPage->setPosition(CCPoint(size.width/2.0, 0));
+    m_labelPage->setAnchorPoint(ccp(0.5, 0));
+    m_labelPage->setPosition(ccp(size.width/2.0, 0));
     m_pLayer->addChild(m_labelPage, 0);
 }
 CCTextureWatcher::~CCTextureWatcher()
@@ -113,12 +138,12 @@ void CCTextureWatcher::hide()
     if (m_bHide)
     {
         m_labelHide->setString("Show");
-        m_pLayer->setPosition(CCPoint(0, -m_pLayer->getContentSize().height));
+        m_pLayer->setPosition(ccp(0, -m_pLayer->getContentSize().height));
     }
     else
     {
         m_labelHide->setString("Hide");
-        m_pLayer->setPosition(CCPoint(0, 0));
+        m_pLayer->setPosition(ccp(0, 0));
     }
 
 }
@@ -252,7 +277,7 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
             //textrue = m_pTextures->objectForKey(*it);
             if (textrue)
             {
-                // 引用数
+                // reference count
                 sprintf(m_pszString, "[%d]", textrue->retainCount() - 2);
                 CCLabelTTF *labelCount = CCLabelTTF::labelWithString(m_pszString, "Arial", 16);
                 if (textrue->retainCount() - 2 > 0)
@@ -265,41 +290,39 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
                 }
                 offX = offsetX + listItemSize.width * 0.5 - labelCount->getContentSize().width * 0.5;
                 offY = (listItemSize.height - size.height) * 0.5 - labelCount->getContentSize().height;
-                labelCount->setPosition(CCPoint(offX, offY));
-                labelCount->setAnchorPoint(CCPoint(0, 0));
+                labelCount->setPosition(ccp(offX, offY));
+                labelCount->setAnchorPoint(ccp(0, 0));
                 cell->addChild(labelCount);
 
-                // 大小
+                // texture size
                 sprintf(m_pszString, "%.0f*%.0f", textrue->getContentSize().width, textrue->getContentSize().height);
                 CCLabelTTF *labelSize = CCLabelTTF::labelWithString(m_pszString, "Arial", 16);
                 offX = offsetX + listItemSize.width * 0.5;
                 offY = (listItemSize.height - size.height) * 0.5 + size.height;
-                labelSize->setPosition(CCPoint(offX, offY));
-                labelSize->setAnchorPoint(CCPoint(0.5, 0));
+                labelSize->setPosition(ccp(offX, offY));
+                labelSize->setAnchorPoint(ccp(0.5, 0));
                 cell->addChild(labelSize);
 
-                // 名称
+                // texture name
                 int len = key.length();
                 int pos = 0;
-#if defined(ND_MAC) || defined(ND_IPHONE)
-                pos = key.rfind('/') + 1;
-#else
+
                 pos = key.rfind('\\') + 1;
                 int pos2 = key.rfind('/') + 1;
                 pos = pos > pos2 ? pos : pos2;
-#endif
+
                 string name = key.substr(pos, len - pos);
                 sprintf(m_pszString, "%s", name.c_str());
                 CCSize dimensions = CCSizeMake(listItemSize.width * 0.9, labelSize->getContentSize().height);
                 CCLabelTTF *labelName = CCLabelTTF::labelWithString(m_pszString, dimensions, CCTextAlignmentCenter, "Arial", 16);
                 offX = offsetX + listItemSize.width * 0.5;
                 offY = offY + labelName->getContentSize().height;
-                labelName->setPosition(CCPoint(offX, offY));
-                labelName->setAnchorPoint(CCPoint(0.5, 0));
+                labelName->setPosition(ccp(offX, offY));
+                labelName->setAnchorPoint(ccp(0.5, 0));
                 cell->addChild(labelName);
 
                 CCSprite *sprite = CCSprite::spriteWithTexture(textrue);
-                sprite->setAnchorPoint(CCPoint(0, 0));
+                sprite->setAnchorPoint(ccp(0, 0));
 
                 CCSize spriteSize = sprite->getContentSize();
                 float scale;
@@ -320,7 +343,7 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
                 spriteSize.height *= scale;
                 offX = offsetX + (listItemSize.width - spriteSize.width) * 0.5;
                 offY = (listItemSize.height - spriteSize.height) * 0.5;
-                sprite->setPosition(CCPoint(offX, offY));
+                sprite->setPosition(ccp(offX, offY));
                 cell->addChild(sprite);
                 offsetX += listItemSize.width;
             }
