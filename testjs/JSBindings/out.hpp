@@ -174,7 +174,6 @@ public:
 	static JSBool jsmenuWithItems(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsmenuWithItem(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinit(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsinitWithItems(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsalignItemsVertically(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsalignItemsVerticallyWithPadding(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsalignItemsHorizontally(JSContext *cx, uint32_t argc, jsval *vp);
@@ -182,6 +181,7 @@ public:
 	static JSBool jsalignItemsInColumns(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsalignItemsInRows(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsregisterWithTouchDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
+
 };
 
 class S_CCAction : public CCAction
@@ -237,6 +237,7 @@ public:
 	static JSBool jsselected(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsunselected(JSContext *cx, uint32_t argc, jsval *vp);
 	void menuAction(cocos2d::CCObject *o);
+
 };
 
 class S_CCDelayTime : public CCDelayTime
@@ -289,6 +290,46 @@ public:
 
 };
 
+class S_CCTexture2D : public CCTexture2D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTexture2D(JSObject *obj) : CCTexture2D(), m_jsobj(obj) {};
+	enum {
+		kEPixelFormat = 1,
+		kPixelsWide,
+		kPixelsHigh,
+		kName,
+		kContentSize,
+		kMaxS,
+		kMaxT,
+		kHasPremultipliedAlpha,
+		kPVRHaveAlphaPremultiplied,
+		kPixelFormat,
+		kContentSizeInPixels
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsdrawAtPoint(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdrawInRect(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithImage(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithPVRFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetAntiAliasTexParameters(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetAliasTexParameters(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsgenerateMipmap(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsbitsPerPixelForFormat(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdefaultAlphaPixelFormat(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCSpriteFrame : public CCSpriteFrame
 {
 	JSObject *m_jsobj;
@@ -302,7 +343,8 @@ public:
 		kRotated,
 		kRect,
 		kOffsetInPixels,
-		kOriginalSizeInPixels
+		kOriginalSizeInPixels,
+		kTexture
 	};
 
 	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -362,6 +404,7 @@ public:
 	static JSBool jsitemFromNormalImage(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinitFromNormalImage(JSContext *cx, uint32_t argc, jsval *vp);
 	void menuAction(cocos2d::CCObject *o);
+
 };
 
 class S_CCParticleSystem : public ARCH_OPTIMAL_PARTICLE_SYSTEM
@@ -401,6 +444,7 @@ public:
 		kEndSpinVar,
 		kEmissionRate,
 		kTotalParticles,
+		kTexture,
 		kBlendFunc,
 		kIsBlendAdditive,
 		kType,
@@ -1270,7 +1314,6 @@ public:
 	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
-	static JSBool jsitemWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinit(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsrect(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactivate(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1352,6 +1395,38 @@ public:
 
 };
 
+class S_CCTextureCache : public CCTextureCache
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	enum {
+		kTextures = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jssharedTextureCache(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jspurgeSharedTextureCache(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaddImage(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaddUIImage(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstextureForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveAllTextures(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveUnusedTextures(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveTexture(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveTextureForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdumpCachedTextureInfo(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaddPVRTCImage(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaddPVRImage(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreloadAllTextures(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCRepeatForever : public CCRepeatForever
 {
 	JSObject *m_jsobj;
@@ -1409,6 +1484,8 @@ public:
 		kSprite = 1,
 		kFBO,
 		kOldFBO,
+		kTexture,
+		kUITextureImage,
 		kEPixelFormat
 	};
 
@@ -1484,6 +1561,7 @@ public:
 	static JSBool jsselected(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsunselected(JSContext *cx, uint32_t argc, jsval *vp);
 	void menuAction(cocos2d::CCObject *o);
+
 };
 
 class S_CCSet : public CCSet
@@ -1510,7 +1588,6 @@ public:
 	static JSBool jscontainsObject(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsbegin(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsend(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsanyObject(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1556,6 +1633,7 @@ public:
 		kRecursiveDirty,
 		kHasChildren,
 		kBlendFunc,
+		kTexture,
 		kUsesBatchNode,
 		kRect,
 		kRectInPixels,
@@ -1567,7 +1645,6 @@ public:
 		kOpacityModifyRGB,
 		kFlipX,
 		kFlipY,
-		kSpriteBatchNode,
 		kHonorParentTransform,
 		kIsOpacityModifyRGB
 	};
