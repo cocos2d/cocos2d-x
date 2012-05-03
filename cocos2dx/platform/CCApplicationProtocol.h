@@ -14,11 +14,6 @@ public:
     virtual ~CCApplicationProtocol() {}
 
     /**
-    @brief    Implement for initialize OpenGL instance, set source path, etc...
-    */
-    virtual bool initInstance() = 0;
-
-    /**
     @brief    Implement CCDirector and CCScene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
