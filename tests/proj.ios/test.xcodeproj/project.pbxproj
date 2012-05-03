@@ -605,7 +605,6 @@
 		D41E60701551461A001A12E9 /* btn-test-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60611551461A001A12E9 /* btn-test-2.png */; };
 		D41E60711551461A001A12E9 /* burst.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60621551461A001A12E9 /* burst.png */; };
 		D41E60721551461A001A12E9 /* example.ccb in Resources */ = {isa = PBXBuildFile; fileRef = D41E60631551461A001A12E9 /* example.ccb */; };
-		D41E60731551461A001A12E9 /* example.plist in Resources */ = {isa = PBXBuildFile; fileRef = D41E60641551461A001A12E9 /* example.plist */; };
 		D41E60741551461A001A12E9 /* jungle.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60651551461A001A12E9 /* jungle.png */; };
 		D41E60751551461A001A12E9 /* logo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60661551461A001A12E9 /* logo-icon.png */; };
 		D41E60761551461A001A12E9 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60671551461A001A12E9 /* logo.png */; };
@@ -1377,7 +1376,6 @@
 		D41E60611551461A001A12E9 /* btn-test-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-test-2.png"; sourceTree = "<group>"; };
 		D41E60621551461A001A12E9 /* burst.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = burst.png; sourceTree = "<group>"; };
 		D41E60631551461A001A12E9 /* example.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = example.ccb; sourceTree = "<group>"; };
-		D41E60641551461A001A12E9 /* example.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = example.plist; sourceTree = "<group>"; };
 		D41E60651551461A001A12E9 /* jungle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jungle.png; sourceTree = "<group>"; };
 		D41E60661551461A001A12E9 /* logo-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-icon.png"; sourceTree = "<group>"; };
 		D41E60671551461A001A12E9 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
@@ -3129,7 +3127,6 @@
 				D41E60611551461A001A12E9 /* btn-test-2.png */,
 				D41E60621551461A001A12E9 /* burst.png */,
 				D41E60631551461A001A12E9 /* example.ccb */,
-				D41E60641551461A001A12E9 /* example.plist */,
 				D41E60651551461A001A12E9 /* jungle.png */,
 				D41E60661551461A001A12E9 /* logo-icon.png */,
 				D41E60671551461A001A12E9 /* logo.png */,
@@ -3590,7 +3587,6 @@
 				D41E60701551461A001A12E9 /* btn-test-2.png in Resources */,
 				D41E60711551461A001A12E9 /* burst.png in Resources */,
 				D41E60721551461A001A12E9 /* example.ccb in Resources */,
-				D41E60731551461A001A12E9 /* example.plist in Resources */,
 				D41E60741551461A001A12E9 /* jungle.png in Resources */,
 				D41E60751551461A001A12E9 /* logo-icon.png in Resources */,
 				D41E60761551461A001A12E9 /* logo.png in Resources */,

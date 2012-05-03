@@ -2,6 +2,7 @@
 #include "../testResource.h"
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
+#include "CocosBuilderTest/CocosBuilderTest.h"
 
 enum
 {
@@ -14,14 +15,16 @@ enum
     TEST_NOTIFICATIONCENTER = 0,
     TEST_CCCONTROLBUTTON,
     TEST_TEXTUREWATCHER,
-    TEST_MAX_COUNT
+    TEST_COCOSBUILDER,
+    TEST_MAX_COUNT,
 };
 
 static const std::string testsName[TEST_MAX_COUNT] = 
 {
     "NotificationCenterTest",
     "CCControlButtonTest",
-    "TextureWatcherTest"
+    "TextureWatcherTest",
+    "CocosBuilderTest",
 };
 
 ////////////////////////////////////////////////////////
@@ -74,6 +77,16 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             static bool s_bOpened = false;
             s_bOpened = !s_bOpened;
             CCTextureWatcher::sharedTextureWatcher()->setDisplayWatcher(s_bOpened);
+        }
+        break;
+    case TEST_COCOSBUILDER:
+        {
+            TestScene* pScene = new CocosBuilderTestScene();
+            if (pScene)
+            {
+                pScene->runThisTest();
+                pScene->release();
+            }
         }
         break;
     default:
