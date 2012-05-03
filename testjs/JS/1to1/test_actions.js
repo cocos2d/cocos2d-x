@@ -153,8 +153,9 @@ scenes['test_sequence'] = function () {
 	var moveBy = new cocos.MoveBy();
 	moveBy.initWithDuration(2.0, cocos.Point.create(100, 100));
 	var rotate2 = rotate1.reverse();
+	var delay = cocos.DelayTime.actionWithDuration(1.5);
 
-	var seq = cocos.Sequence.actions(rotate1, moveBy, rotate2);
+	var seq = cocos.Sequence.actions(rotate1, moveBy, delay, rotate2);
 	s1.runAction(seq);
 
 	var scene = new cocos.Scene(); scene.init();
