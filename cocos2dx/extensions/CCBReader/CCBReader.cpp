@@ -660,6 +660,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
 			CCLOG("WARNING! Failed to add child to node");
         }
     }
+    
     if ( !extraProps )
     {
         CCString* assignmentName = (CCString*)props->objectForKey("memberVarAssignmentName");
@@ -669,7 +670,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         if ( !assignmentName->m_sString.empty() &&
              assignmentType)
         {
-            CObject*assignTo = NULL ;
+            CObject* assignTo = NULL ;
             if ( assignmentType == kCCBMemberVarAssignmentTypeOwner )
                 assignTo = (CObject*)owner ;
             else if ( assignmentType == kCCBMemberVarAssignmentTypeDocumentRoot )
@@ -680,9 +681,9 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
                 //CCLOG("sprite;s position is %f", node->getPosition().x) ;
                 std::string spriteStr = "set" + assignmentName->m_sString ;
                 CCLOG("spriteStr is %s, sprite's position is %f", spriteStr.c_str(), node->getPosition().x);
-                assignTo->propertyMap[spriteStr](assignTo, node) ;
-                // @_@||
-                //无奈 T_T  可能问题：1、在ccb中定义了变量，可是没有在文件中声明。
+                assignTo->propertyMap[spriteStr](assignTo, node);
+                // @_@
+                // potential problem: 1、ccb defines a variable, but we cannot find in files
             }
         }
         if (!customClass->m_sString.empty())
