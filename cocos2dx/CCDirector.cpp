@@ -346,8 +346,6 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
     {
     case kCCDirectorProjection2D:
         {
-
-            
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             kmMat4 orthoMatrix;

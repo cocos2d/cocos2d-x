@@ -239,6 +239,8 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
         resize(w, h);
 
+        CCEGLViewProtocol::setFrameSize(w, h);
+
         // init egl
         m_pEGL = CCEGL::create(this);
 
@@ -266,7 +268,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_pDelegate && MK_LBUTTON == wParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             if (CCRect::CCRectContainsPoint(m_rcViewPort, pt))
             {
                 m_bCaptured = true;
@@ -281,7 +283,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (MK_LBUTTON == wParam && m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             int id = 0;
             handleTouchesMove(1, &id, &pt.x, &pt.y);
         }
@@ -291,7 +293,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             int id = 0;
             handleTouchesEnd(1, &id, &pt.x, &pt.y);
 
@@ -457,8 +459,6 @@ void CCEGLView::resize(int width, int height)
     {
         m_pEGL->resizeSurface();
     }
-
-    CCEGLViewProtocol::setFrameSize(width, height);
 }
 
 void CCEGLView::setFrameSize(float width, float height)
@@ -506,7 +506,6 @@ bool CCEGLView::canSetContentScaleFactor()
 void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     CCEGLViewProtocol::setContentScaleFactor(contentScaleFactor);
-
     resize((int)(m_sSizeInPixel.width * contentScaleFactor), (int)(m_sSizeInPixel.height * contentScaleFactor));
     centerWindow();
 }
