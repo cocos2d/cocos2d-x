@@ -29,7 +29,11 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCSet.h"
 
+#ifdef KILLA
+typedef struct killa_State lua_State;
+#else
 typedef struct lua_State lua_State;
+#endif
 
 NS_CC_BEGIN
 

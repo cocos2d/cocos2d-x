@@ -26,7 +26,11 @@
 #define __CC_LUA_ENGINE_H__
 
 extern "C" {
+#ifdef KILLA
+#include "klua.h"
+#else
 #include "lua.h"
+#endif
 }
 
 #include "ccTypes.h"

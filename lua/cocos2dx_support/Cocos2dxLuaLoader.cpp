@@ -31,7 +31,11 @@ extern "C"
 	int loader_Android(lua_State *L)
 	{
 		std::string filename(luaL_checkstring(L, 1));
+#ifdef KILLA
+		filename.append(".kia");
+#else
 		filename.append(".lua");
+#endif
 
 		unsigned long size;
 		char *pFileContent = (char*)CCFileUtils::getFileData(filename.c_str(), "r", &size);

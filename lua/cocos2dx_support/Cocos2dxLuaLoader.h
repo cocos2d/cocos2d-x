@@ -28,9 +28,13 @@ THE SOFTWARE.
 
 extern "C"
 {
+#ifdef KILLA
+#include "klua.h"
+#else
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+#endif
 
 extern int loader_Android(lua_State *L);
 }
