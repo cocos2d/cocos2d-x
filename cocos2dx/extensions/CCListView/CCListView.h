@@ -1,3 +1,28 @@
+/****************************************************************************
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2012 NetGragon
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #ifndef __CC_LIST_VIEW_H__
 #define __CC_LIST_VIEW_H__
 
@@ -44,7 +69,7 @@ public:
     unsigned int location;
 };
 
-#define CCRangeMake(__min__, __max__) CCRange((__min__), (__max__))
+#define CCRangeMake(__location__, __length__) CCRange((__location__), (__length__))
 
 typedef enum  
 {
@@ -162,27 +187,27 @@ protected:
     bool isMenuTouch(CCTouch *touch, CCNode *parent);
 
 private:
-    CCListViewState        m_nState;
+    CCListViewState       m_nState;
     CCListViewMode        m_nMode;
     CCListViewSlideDir    m_nSlideDir;
     CCListViewCellSeparatorStyle    m_nSeparatorStyle;
-    unsigned int        m_nNumberOfRows;
-    float                m_fActionDuration;
+    unsigned int           m_nNumberOfRows;
+    float                  m_fActionDuration;
     clock_t                m_timeTouchBegan;
-    CCRange                m_drawedRows;            //所有已绘制的cell
-    CCRange                m_visibleRows;            //所有可见的cell
+    CCRange                m_drawedRows;            // all drawed cell
+    CCRange                m_visibleRows;           // all visible cell
     CCPoint                m_ptTouchBegan;
     CCPoint                m_ptTouchEnd;
     CCPoint                m_ptPanelOffset;
     CCPoint                m_ptDestination; 
     std::string            m_strDeletegate;
     CCListViewDelegate*    m_pDelegate;
-    CCLayer*            m_layerPanel;
+    CCLayer*               m_layerPanel;
     CCListView*            m_pListViewParent;
     int                    m_nSelectedRow;
     int                    m_nCurrentRow;
-    bool                m_bIsEnabled;
-    bool                m_bIsOnTouch;
+    bool                   m_bIsEnabled;
+    bool                   m_bIsOnTouch;
 };
 
 NS_CC_EXT_END
