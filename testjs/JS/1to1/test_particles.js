@@ -35,9 +35,9 @@ var scenes = {};
 scenes.currentScene = 1;
 
 /**
- * tests the most basic function: moveTo and moveBy
+ * test particle
  */
-scenes['test_particle'] = function () {
+scenes['test_lava_flow'] = function () {
 
 	var scene = new cocos.Scene(); scene.init();
 	
@@ -46,13 +46,265 @@ scenes['test_particle'] = function () {
 	scene.addChild(p1);
 
 	// add the menu
-	var menu = createMenu("Test Particle Flower");
+	var menu = createMenu("Particle: Lave Flow");
 	scene.addChild(menu, 1);
 
 	return scene;
 };
 
 
+/**
+ * test particle
+ */
+scenes['test_forest_fire'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("ForestFire.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Forest Fire");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_boiling_foam'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("BoilingFoam.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Boiling Foam");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+
+/**
+ * test particle
+ */
+scenes['test_burst_pipe'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("BurstPipe.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Burst Pipe");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_comet'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("Comet.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Comet");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_debian'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("debian.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Debian");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_exploding_ring'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("ExplodingRing.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Exploding Ring");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_flower'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("Flower.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Flower");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_galaxy'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("Galaxy.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Galaxy");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_phoenix'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("Phoenix.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Phoenix");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_small_sun'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("SmallSun.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Small Sun");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_spinningpeas'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("SpinningPeas.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Spinning Peas");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_spiral'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("Spiral.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Spiral");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_sookypeas'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("SpookyPeas.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Spooky Peas");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
+
+/**
+ * test particle
+ */
+scenes['test_upsidedown'] = function () {
+	
+	var scene = new cocos.Scene(); scene.init();
+	
+	var p1 = cocos.ParticleSystem.particleWithFile("Upsidedown.plist");
+	p1.position = cocos.Point.create(winSize.width / 2, winSize.height / 2 );
+	scene.addChild(p1);
+	
+	// add the menu
+	var menu = createMenu("Particle: Upside Down test");
+	scene.addChild(menu, 1);
+	
+	return scene;
+};
 
 /**
  * from here on there's code that can be shared between different tests
