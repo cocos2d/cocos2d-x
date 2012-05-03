@@ -5,12 +5,19 @@
 
 enum
 {
-    MAX_COUNT = 3,
     LINE_SPACE = 40,
     kItemTagBasic = 1000,
 };
 
-static const std::string testsName[MAX_COUNT] = 
+enum
+{
+    TEST_NOTIFICATIONCENTER = 0,
+    TEST_CCCONTROLBUTTON,
+    TEST_TEXTUREWATCHER,
+    TEST_MAX_COUNT
+};
+
+static const std::string testsName[TEST_MAX_COUNT] = 
 {
     "NotificationCenterTest",
     "CCControlButtonTest",
@@ -32,7 +39,7 @@ void ExtensionsMainLayer::onEnter()
     pMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    for (int i = 0; i < MAX_COUNT; ++i)
+    for (int i = 0; i < TEST_MAX_COUNT; ++i)
     {
         CCMenuItemFont* pItem = CCMenuItemFont::itemWithString(testsName[i].c_str(), this,
                                                     menu_selector(ExtensionsMainLayer::menuCallback));
@@ -50,17 +57,19 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 
     switch (nIndex)
     {
-    case 0:
-        runNotificationCenterTest();
+    case TEST_NOTIFICATIONCENTER:
+        {
+            runNotificationCenterTest();
+        }
         break;
-    case 1:
+    case TEST_CCCONTROLBUTTON:
         {
             CCControlSceneManager* pManager = CCControlSceneManager::sharedControlSceneManager();
             CCScene* pScene = pManager->currentControlScene();
             CCDirector::sharedDirector()->replaceScene(pScene);
         }
         break;
-    case 2:
+    case TEST_TEXTUREWATCHER:
         {
             static bool s_bOpened = false;
             s_bOpened = !s_bOpened;
