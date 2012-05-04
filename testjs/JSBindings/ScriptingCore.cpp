@@ -41,6 +41,7 @@ ScriptingCore::ScriptingCore()
 	S_CCPoint::jsCreateClass(this->cx, cocos, "Point");
 	S_CCSize::jsCreateClass(this->cx, cocos, "Size");
 	S_CCRect::jsCreateClass(this->cx, cocos, "Rect");
+	S__ccGridSize::jsCreateClass(this->cx, cocos, "GridSize");
 	S_CCSet::jsCreateClass(this->cx, cocos, "Set");
 	S_CCTouch::jsCreateClass(this->cx, cocos, "Touch");
 	S_CCDirector::jsCreateClass(this->cx, cocos, "Director");
@@ -97,6 +98,15 @@ ScriptingCore::ScriptingCore()
 	S_CCFileUtils::jsCreateClass(this->cx, cocos, "FileUtils");
 	S_CCTexture2D::jsCreateClass(this->cx, cocos, "Texture2D");
 	S_CCTextureCache::jsCreateClass(this->cx, cocos, "TextureCache");
+	S_CCParallaxNode::jsCreateClass(this->cx, cocos, "ParallaxNode");
+	S_CCTintBy::jsCreateClass(this->cx, cocos, "TintBy");
+	S_CCTintTo::jsCreateClass(this->cx, cocos, "TintTo");
+	S_CCLayerColor::jsCreateClass(this->cx, cocos, "LayerColor");
+	S_CCBlink::jsCreateClass(this->cx, cocos, "Blink");
+	S_CCSpeed::jsCreateClass(this->cx, cocos, "Speed");
+	S_CCGridAction::jsCreateClass(this->cx, cocos, "GridAction");
+	S_CCGrid3DAction::jsCreateClass(this->cx, cocos, "Grid3DAction");
+	S_CCWaves3D::jsCreateClass(this->cx, cocos, "Waves3D");
 
 	// register some global functions
 	JS_DefineFunction(this->cx, cocos, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);

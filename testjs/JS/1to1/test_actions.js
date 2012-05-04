@@ -168,6 +168,40 @@ scenes['test_sequence'] = function () {
 	return scene;
 };
 
+scenes['test_wave3d'] = function () {
+	var node = new cocos.Node();
+	var s1 = new cocos.Sprite.create("grossini_dance_05.png");
+	s1.position = cocos.Point.create(winSize.width / 2 + 50, winSize.height / 2);
+
+	var rotate1 = new cocos.RotateBy();
+	rotate1.initWithDuration(1.0, 90);
+	var moveBy = new cocos.MoveBy();
+	moveBy.initWithDuration(2.0, cocos.Point.create(100, 100));
+	var rotate2 = rotate1.reverse();
+	var delay = cocos.DelayTime.actionWithDuration(1.5);
+	
+	var seq = cocos.Sequence.actions(rotate1, moveBy, delay, rotate2);
+	s1.runAction(seq);
+
+	var scene = new cocos.Scene(); scene.init();
+	node.addChild(s1);
+
+	// simple wave 3d
+	var gridSize = new cocos.GridSize;
+	gridSize.x = 15;
+	gridSize.y = 10;
+	var wave = cocos.Waves3D.actionWithWaves(5, 40, gridSize, 3);
+	scene.runAction(wave);
+
+	// add the menu
+	var menu = createMenu("Test Sequence");
+	scene.addChild(node);
+	scene.addChild(menu, 1);
+
+	return scene;
+};
+
+
 /**
  * from here on there's code that can be shared between different tests
  * basically is the hud and the scene handling
