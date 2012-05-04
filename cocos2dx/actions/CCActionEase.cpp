@@ -234,6 +234,11 @@ void CCEaseIn::update(ccTime time)
     m_pOther->update(powf(time, m_fRate));
 }
 
+CCActionInterval* CCEaseIn::reverse(void)
+{
+    return CCEaseIn::actionWithAction(m_pOther->reverse(), 1 / m_fRate);
+}
+
 //
 // EaseOut
 //
@@ -281,6 +286,11 @@ void CCEaseOut::update(ccTime time)
     m_pOther->update(powf(time, 1 / m_fRate));
 }
 
+CCActionInterval* CCEaseOut::reverse()
+{
+    return CCEaseOut::actionWithAction(m_pOther->reverse(), 1 / m_fRate);
+}
+
 //
 // EaseInOut
 //
@@ -325,14 +335,6 @@ CCObject* CCEaseInOut::copyWithZone(CCZone *pZone)
 
 void CCEaseInOut::update(ccTime time)
 {
-    int sign = 1;
-    int r = (int) m_fRate;
-
-    if (r % 2 == 0)
-    {
-        sign = -1;
-    }
-
     time *= 2;
     if (time < 1)
     {
@@ -340,7 +342,7 @@ void CCEaseInOut::update(ccTime time)
     }
     else
     {
-        m_pOther->update(sign * 0.5f * (powf(time - 2, m_fRate) + sign * 2));
+        m_pOther->update(1.0f - 0.5f * powf(2-time, m_fRate));
     }
 }
 
@@ -505,10 +507,15 @@ void CCEaseExponentialInOut::update(ccTime time)
     }
     else
     {
-        time = 0.5f * (-powf(2, 10 * (time - 1)) + 2);
+        time = 0.5f * (-powf(2, -10 * (time - 1)) + 2);
     }
 
     m_pOther->update(time);
+}
+
+CCActionInterval* CCEaseExponentialInOut::reverse()
+{
+    return CCEaseExponentialInOut::actionWithAction(m_pOther->reverse());
 }
 
 //
@@ -662,6 +669,11 @@ void CCEaseSineInOut::update(ccTime time)
     m_pOther->update(-0.5f * (cosf((float)M_PI * time) - 1));
 }
 
+CCActionInterval* CCEaseSineInOut::reverse()
+{
+    return CCEaseSineInOut::actionWithAction(m_pOther->reverse());
+}
+
 //
 // EaseElastic
 //
@@ -740,7 +752,7 @@ CCObject* CCEaseElastic::copyWithZone(CCZone *pZone)
 
 CCActionInterval* CCEaseElastic::reverse(void)
 {
-    CCAssert(0, "");
+    CCAssert(0, "Override me");
 
     return NULL;
 }
@@ -1002,7 +1014,7 @@ void CCEaseElasticInOut::update(ccTime time)
 
 CCActionInterval* CCEaseElasticInOut::reverse(void)
 {
-    return CCEaseInOut::actionWithAction(m_pOther->reverse(), m_fPeriod);
+    return CCEaseElasticInOut::actionWithAction(m_pOther->reverse(), m_fPeriod);
 }
 
 //
@@ -1066,6 +1078,11 @@ ccTime CCEaseBounce::bounceTime(ccTime time)
 
     time -= 2.625f / 2.75f;
     return 7.5625f * time * time + 0.984375f;
+}
+
+CCActionInterval* CCEaseBounce::reverse()
+{
+    return CCEaseBounce::actionWithAction(m_pOther->reverse());
 }
 
 //
@@ -1232,6 +1249,11 @@ void CCEaseBounceInOut::update(ccTime time)
     m_pOther->update(newT);
 }
 
+CCActionInterval* CCEaseBounceInOut::reverse()
+{
+    return CCEaseBounceInOut::actionWithAction(m_pOther->reverse());
+}
+
 //
 // EaseBackIn
 //
@@ -1396,6 +1418,11 @@ void CCEaseBackInOut::update(ccTime time)
         time = time - 2;
         m_pOther->update((time * time * ((overshoot + 1) * time + overshoot)) / 2 + 1);
     }
+}
+
+CCActionInterval* CCEaseBackInOut::reverse()
+{
+    return CCEaseBackInOut::actionWithAction(m_pOther->reverse());
 }
 
 NS_CC_END
