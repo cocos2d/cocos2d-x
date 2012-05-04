@@ -78,7 +78,7 @@ function CreateCustomProject(strProjectName, strProjectPath) {
         else
             strUserTarget = strProjectName + ".win32.vcproj.user";
 
-        var strUserPath = FileSys.BuildPath(strProjectPath, strUserTarget);
+        var strUserPath = FileSys.BuildPath(strProjectPath+"\\proj.win32", strUserTarget);
 
         var astrParentPath = new Array();
         astrParentPath[0] = strProjectPath;
@@ -92,7 +92,14 @@ function CreateCustomProject(strProjectName, strProjectPath) {
                 continue;
             }
             else {
-                FileSys.CreateFolder(strPath);
+                if (!FileSys.FolderExists(strPath)) {
+                    FileSys.CreateFolder(strPath);
+                }
+                var strWin32ProjectPath = strPath + "\\proj.win32";
+
+                if (!FileSys.FolderExists(strWin32ProjectPath)) {
+                    FileSys.CreateFolder(strWin32ProjectPath);
+                }
             }
         }
 
@@ -102,9 +109,9 @@ function CreateCustomProject(strProjectName, strProjectPath) {
             strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n"
                  + "<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n"
                  + "  <PropertyGroup>\r\n"
-                 + "    <ShowAllFiles>true</ShowAllFiles>\r\n"
-                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">$(ProjectDir)Resources</LocalDebuggerWorkingDirectory>\r\n"
-                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">$(ProjectDir)Resources</LocalDebuggerWorkingDirectory>\r\n"
+                 + "    <ShowAllFiles>false</ShowAllFiles>\r\n"
+                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">$(ProjectDir)..\\Resources</LocalDebuggerWorkingDirectory>\r\n"
+                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">$(ProjectDir)..\\Resources</LocalDebuggerWorkingDirectory>\r\n"
                  + "    <DebuggerFlavor Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">WindowsLocalDebugger</DebuggerFlavor>\r\n"
                  + "    <DebuggerFlavor Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">WindowsLocalDebugger</DebuggerFlavor>\r\n"
                  + "  </PropertyGroup>\r\n"
@@ -114,21 +121,21 @@ function CreateCustomProject(strProjectName, strProjectPath) {
                  + "<VisualStudioUserFile\r\n"
                  + "	ProjectType=\"Visual C++\"\r\n"
                  + "	Version=\"9.00\"\r\n"
-                 + "	ShowAllFiles=\"true\"\r\n"
+                 + "	ShowAllFiles=\"false\"\r\n"
                  + "	>\r\n"
                  + "	<Configurations>\r\n"
                  + "		<Configuration\r\n"
 			     + "			Name=\"Debug|Win32\"\r\n"
 			     + "			>\r\n"
 			     + "			<DebugSettings\r\n"
-			     + "				WorkingDirectory=\"$(ProjectDir)Resources\\\"\r\n"
+			     + "				WorkingDirectory=\"$(ProjectDir)..\\Resources\\\"\r\n"
 			     + "			/>\r\n"
 		         + "		</Configuration>\r\n"
 		         + "		<Configuration\r\n"
 			     + "			Name=\"Release|Win32\"\r\n"
 			     + "			>\r\n"
 			     + "			<DebugSettings\r\n"
-			     + "				WorkingDirectory=\"$(ProjectDir)Resources\\\"\r\n"
+			     + "				WorkingDirectory=\"$(ProjectDir)..\\Resources\\\"\r\n"
 			     + "			/>\r\n"
 		         + "		</Configuration>\r\n"
 			     + "    </Configurations>\r\n"
@@ -151,7 +158,7 @@ function CreateCustomProject(strProjectName, strProjectPath) {
             prj = prjItem.SubProject;
         }
         else {
-            prj = oTarget.AddFromTemplate(strProjTemplate, strProjectPath, strProjectNameWithExt);
+            prj = oTarget.AddFromTemplate(strProjTemplate, strProjectPath+"\\proj.win32\\", strProjectNameWithExt);
         }
         return prj;
     }
@@ -217,24 +224,46 @@ function AddConfigurations(proj, strProjectName) {
             var CLTool = config.Tools('VCCLCompilerTool');
 
             // Additional Inlcude Directories
-            var strAddIncludeDir = '.;.\\win32;.\\Classes';
-            strAddIncludeDir += ';..\\cocos2dx;..\\cocos2dx\\include';
-            strAddIncludeDir += ';..\\cocos2dx\\platform';
-            strAddIncludeDir += ';..\\cocos2dx\\platform\\third_party\\win32\\OGLES';
+            var strAddIncludeDir = '.;..\\Classes';
+            strAddIncludeDir += ';..\\..\\cocos2dx';
+            strAddIncludeDir += ';..\\..\\cocos2dx\\actions';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\base_nodes';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\cocoa';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\effects';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\include';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\kazmath\\include';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\keypad_dispatcher';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\label_nodes';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\layers_scenes_transitions_nodes';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\menu_nodes';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\misc_nodes';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\particle_nodes';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\script_support';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\shaders';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\sprite_nodes';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\support';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\text_input_node';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\textures';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\tileMap_parallax_nodes';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\touch_dispatcher';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\platform';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\win32';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\third_party\\win32';
+						strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\third_party\\win32\\OGLES';
             
             if (wizard.FindSymbol('CC_USE_BOX2D')) {
-                strAddIncludeDir += ';..\\';
+                strAddIncludeDir += ';..\\..\\';
             }
             if (wizard.FindSymbol('CC_USE_CHIPMUNK')) {
-                strAddIncludeDir += ';..\\chipmunk\\include\\chipmunk';
+                strAddIncludeDir += ';..\\..\\chipmunk\\include\\chipmunk';
             }
             if (wizard.FindSymbol('CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE')) {
-                strAddIncludeDir += ';..\\CocosDenshion\\Include';
+                strAddIncludeDir += ';..\\..\\CocosDenshion\\Include';
             }
             if (wizard.FindSymbol('CC_USE_LUA')) {
-                strAddIncludeDir += ';..\\lua\\cocos2dx_support';
-                strAddIncludeDir += ';..\\lua\\tolua';
-                strAddIncludeDir += ';..\\lua\\lua';
+                strAddIncludeDir += ';..\\..\\lua\\cocos2dx_support';
+                strAddIncludeDir += ';..\\..\\lua\\tolua';
+                strAddIncludeDir += ';..\\..\\lua\\lua';
             }
             CLTool.AdditionalIncludeDirectories = strAddIncludeDir;
 
@@ -277,7 +306,7 @@ function AddConfigurations(proj, strProjectName) {
             }
 
             // Additional Library Directories
-            var strAddDepends = 'libcocos2d.lib libgles_cm.lib';
+            var strAddDepends = 'libcocos2d.lib libGLESv2.lib';
             if (wizard.FindSymbol('CC_USE_BOX2D')) {
                 strAddDepends += ' libBox2d.lib';
             }
