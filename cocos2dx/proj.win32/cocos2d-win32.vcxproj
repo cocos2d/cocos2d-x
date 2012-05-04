@@ -19,11 +19,11 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -172,7 +172,10 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\extensions\CCControlExtension\CCMenuPassive.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCScale9Sprite.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCSpacer.cpp" />
+    <ClCompile Include="..\extensions\CCListView\CCListView.cpp" />
+    <ClCompile Include="..\extensions\CCListView\CCListViewCell.cpp" />
     <ClCompile Include="..\extensions\CCNotificationCenter\CCNotificationCenter.cpp" />
+    <ClCompile Include="..\extensions\CCTextureWatcher\CCTextureWatcher.cpp" />
     <ClCompile Include="..\kazmath\src\aabb.c" />
     <ClCompile Include="..\kazmath\src\GL\mat4stack.c" />
     <ClCompile Include="..\kazmath\src\GL\matrix.c" />
@@ -300,7 +303,11 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\extensions\CCControlExtension\CCMenuPassive.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCScale9Sprite.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCSpacer.h" />
+    <ClInclude Include="..\extensions\CCListView\CCControlDefine.h" />
+    <ClInclude Include="..\extensions\CCListView\CCListView.h" />
+    <ClInclude Include="..\extensions\CCListView\CCListViewCell.h" />
     <ClInclude Include="..\extensions\CCNotificationCenter\CCNotificationCenter.h" />
+    <ClInclude Include="..\extensions\CCTextureWatcher\CCTextureWatcher.h" />
     <ClInclude Include="..\include\ccConfig.h" />
     <ClInclude Include="..\include\CCEventType.h" />
     <ClInclude Include="..\include\ccMacros.h" />
