@@ -9,7 +9,8 @@
 #include <iostream>
 #include "cocos2d.h"
 #include "ScriptingCore.h"
-#include "out.hpp"
+#include "cocos2d_generated.hpp"
+#include "cocos_denshion_generated.hpp"
 
 using namespace cocos2d;
 
@@ -107,6 +108,8 @@ ScriptingCore::ScriptingCore()
 	S_CCGridAction::jsCreateClass(this->cx, cocos, "GridAction");
 	S_CCGrid3DAction::jsCreateClass(this->cx, cocos, "Grid3DAction");
 	S_CCWaves3D::jsCreateClass(this->cx, cocos, "Waves3D");
+
+	S_SimpleAudioEngine::jsCreateClass(this->cx, cocos, "SimpleAudioEngine");
 
 	// register some global functions
 	JS_DefineFunction(this->cx, cocos, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);

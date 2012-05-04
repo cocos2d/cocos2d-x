@@ -1,4 +1,4 @@
-#include "out.hpp"
+#include "cocos2d_generated.hpp"
 
 JSBool S_CCNode::jsaddChild(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
