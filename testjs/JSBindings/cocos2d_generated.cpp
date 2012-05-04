@@ -1,4 +1,4 @@
-#include "out.hpp"
+#include "cocos2d_generated.hpp"
 
 JSClass* S_CCAnimate::jsClass = NULL;
 JSObject* S_CCAnimate::jsObject = NULL;

@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00AA6832153F8060001AB56E /* out.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00AA682E153F8060001AB56E /* out.cpp */; };
+		007C32F615543D5900A51425 /* cocos_denshion_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 007C32F415543D5900A51425 /* cocos_denshion_generated.cpp */; };
+		007C32FA1554409C00A51425 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 007C32F81554409C00A51425 /* ballbounce.wav */; };
+		007C32FB1554409C00A51425 /* Silly Fun Theme A.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 007C32F91554409C00A51425 /* Silly Fun Theme A.mp3 */; };
+		00AA6832153F8060001AB56E /* cocos2d_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00AA682E153F8060001AB56E /* cocos2d_generated.cpp */; };
 		00AA6833153F8060001AB56E /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00AA6830153F8060001AB56E /* ScriptingCore.cpp */; };
 		00AA6846153F85A3001AB56E /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6834153F85A3001AB56E /* b1-hd.png */; };
 		00AA6847153F85A3001AB56E /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6835153F85A3001AB56E /* b1-ipad.png */; };
@@ -187,8 +190,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00AA682E153F8060001AB56E /* out.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = out.cpp; sourceTree = "<group>"; };
-		00AA682F153F8060001AB56E /* out.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = out.hpp; sourceTree = "<group>"; };
+		007C32F415543D5900A51425 /* cocos_denshion_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos_denshion_generated.cpp; sourceTree = "<group>"; };
+		007C32F515543D5900A51425 /* cocos_denshion_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos_denshion_generated.hpp; sourceTree = "<group>"; };
+		007C32F81554409C00A51425 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ballbounce.wav; path = Resources/ballbounce.wav; sourceTree = "<group>"; };
+		007C32F91554409C00A51425 /* Silly Fun Theme A.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Silly Fun Theme A.mp3"; path = "Resources/Silly Fun Theme A.mp3"; sourceTree = "<group>"; };
+		00AA682E153F8060001AB56E /* cocos2d_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_generated.cpp; sourceTree = "<group>"; };
+		00AA682F153F8060001AB56E /* cocos2d_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; path = cocos2d_generated.hpp; sourceTree = "<group>"; };
 		00AA6830153F8060001AB56E /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		00AA6831153F8060001AB56E /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		00AA6834153F85A3001AB56E /* b1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b1-hd.png"; path = "Resources/b1-hd.png"; sourceTree = "<group>"; };
@@ -535,9 +542,11 @@
 		00AA682D153F8060001AB56E /* JSBindings */ = {
 			isa = PBXGroup;
 			children = (
+				007C32F415543D5900A51425 /* cocos_denshion_generated.cpp */,
+				007C32F515543D5900A51425 /* cocos_denshion_generated.hpp */,
 				00DE251F15533AE00099AE9E /* cocos2d_manual_bindings.cpp */,
-				00AA682E153F8060001AB56E /* out.cpp */,
-				00AA682F153F8060001AB56E /* out.hpp */,
+				00AA682E153F8060001AB56E /* cocos2d_generated.cpp */,
+				00AA682F153F8060001AB56E /* cocos2d_generated.hpp */,
 				00AA6830153F8060001AB56E /* ScriptingCore.cpp */,
 				00AA6831153F8060001AB56E /* ScriptingCore.h */,
 			);
@@ -617,6 +626,8 @@
 		A92275521517C094001B78AA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				007C32F81554409C00A51425 /* ballbounce.wav */,
+				007C32F91554409C00A51425 /* Silly Fun Theme A.mp3 */,
 				A0371580154F845700081CBA /* Particles */,
 				A037152D154F7A1E00081CBA /* grossinis_sister2.png */,
 				00CD253315488CF900B91EB5 /* grossinis_sister1.png */,
@@ -1277,6 +1288,8 @@
 				A037157F154F845100081CBA /* Upsidedown.plist in Resources */,
 				00DE233C1551ED120099AE9E /* ForestFire.plist in Resources */,
 				A06FAAF9155335D000561245 /* stars2.png in Resources */,
+				007C32FA1554409C00A51425 /* ballbounce.wav in Resources */,
+				007C32FB1554409C00A51425 /* Silly Fun Theme A.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1401,9 +1414,10 @@
 				A92276F61517C097001B78AA /* RootViewController.mm in Sources */,
 				A92276FA1517C097001B78AA /* AppDelegate.cpp in Sources */,
 				A92276FD1517C097001B78AA /* HelloWorldScene.cpp in Sources */,
-				00AA6832153F8060001AB56E /* out.cpp in Sources */,
+				00AA6832153F8060001AB56E /* cocos2d_generated.cpp in Sources */,
 				00AA6833153F8060001AB56E /* ScriptingCore.cpp in Sources */,
 				00DE252015533AE00099AE9E /* cocos2d_manual_bindings.cpp in Sources */,
+				007C32F615543D5900A51425 /* cocos_denshion_generated.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
