@@ -124,7 +124,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..;..\kazmath\include"
+				AdditionalIncludeDirectories="..;..\platform;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;..\actions;..\base_nodes;..\cocoa;..\effects;..\extensions;..\keypad_dispatcher;..\label_nodes;..\layers_scenes_transitions_nodes;..\menu_nodes;..\misc_nodes;..\particle_nodes;..\script_support;..\shaders;..\sprite_nodes;..\text_input_node;..\textures;..\tileMap_parallax_nodes;..\touch_dispatcher;..\support"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
