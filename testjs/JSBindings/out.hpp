@@ -328,6 +328,95 @@ public:
 
 };
 
+class S_CCParallaxNode : public CCParallaxNode
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCParallaxNode(JSObject *obj) : CCParallaxNode(), m_jsobj(obj) {};
+	enum {
+		kParallaxArray = 1,
+		kLastPosition
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsremoveChild(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsvisit(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void update(ccTime delta);
+
+};
+
+class S_CCTintBy : public CCTintBy
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTintBy(JSObject *obj) : CCTintBy(), m_jsobj(obj) {};
+	enum {
+		kDeltaR = 1,
+		kDeltaG,
+		kDeltaB,
+		kFromR,
+		kFromG,
+		kFromB
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCLayerColor : public CCLayerColor
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCLayerColor(JSObject *obj) : CCLayerColor(), m_jsobj(obj) {};
+	enum {
+		kSquareVertices = 1,
+		kSquareColors,
+		kCOpacity,
+		kColor,
+		kBlendFunc,
+		kOpacity,
+		kIsOpacityModifyRGB
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jslayerWithColorWidthHeight(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jslayerWithColor(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithColorWidthHeight(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithColor(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jschangeWidth(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jschangeHeight(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jschangeWidthAndHeight(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCTexture2D : public CCTexture2D
 {
 	JSObject *m_jsobj;
@@ -442,6 +531,31 @@ public:
 	static JSBool jsitemFromNormalImage(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinitFromNormalImage(JSContext *cx, uint32_t argc, jsval *vp);
 	void menuAction(cocos2d::CCObject *o);
+
+};
+
+class S_CCTintTo : public CCTintTo
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTintTo(JSObject *obj) : CCTintTo(), m_jsobj(obj) {};
+	enum {
+		kTo = 1,
+		kFrom
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1489,6 +1603,33 @@ public:
 
 };
 
+class S_CCSpeed : public CCSpeed
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCSpeed(JSObject *obj) : CCSpeed(), m_jsobj(obj) {};
+	enum {
+		kSpeed = 1,
+		kInnerAction
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstop(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsisDone(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseSineInOut : public CCEaseSineInOut
 {
 	JSObject *m_jsobj;
@@ -1539,6 +1680,31 @@ public:
 	static JSBool jsclear(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jssaveBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 	virtual void update(ccTime delta);
+
+};
+
+class S_CCWaves3D : public CCWaves3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCWaves3D(JSObject *obj) : CCWaves3D(), m_jsobj(obj) {};
+	enum {
+		kWaves = 1,
+		kAmplitude,
+		kAmplitudeRate
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithWaves(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithWaves(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1597,6 +1763,30 @@ public:
 	static JSBool jsselected(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsunselected(JSContext *cx, uint32_t argc, jsval *vp);
 	void menuAction(cocos2d::CCObject *o);
+
+};
+
+class S_CCBlink : public CCBlink
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCBlink(JSObject *obj) : CCBlink(), m_jsobj(obj) {};
+	enum {
+		kTimes = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1762,6 +1952,31 @@ public:
 
 };
 
+class S_CCGridAction : public CCGridAction
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCGridAction(JSObject *obj) : CCGridAction(), m_jsobj(obj) {};
+	enum {
+		kGridSize = 1,
+		kGrid
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseRateAction : public CCEaseRateAction
 {
 	JSObject *m_jsobj;
@@ -1782,6 +1997,49 @@ public:
 	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCGrid3DAction : public CCGrid3DAction
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCGrid3DAction(JSObject *obj) : CCGrid3DAction(), m_jsobj(obj) {};
+	enum {
+		kGrid = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsvertex(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsoriginalVertex(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S__ccGridSize : public _ccGridSize
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S__ccGridSize(JSObject *obj) : _ccGridSize(), m_jsobj(obj) {};
+	enum {
+		kX = 1,
+		kY
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 
 };
 
