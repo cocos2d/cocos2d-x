@@ -45,6 +45,8 @@ ScriptingCore::ScriptingCore()
 	S_CCTouch::jsCreateClass(this->cx, cocos, "Touch");
 	S_CCDirector::jsCreateClass(this->cx, cocos, "Director");
 	S_CCNode::jsCreateClass(this->cx, cocos, "Node");
+	S_CCTextureAtlas::jsCreateClass(this->cx, cocos, "TextureAtlas");
+	S_CCSpriteBatchNode::jsCreateClass(this->cx, cocos, "SpriteBatchNode");
 	S_CCScene::jsCreateClass(this->cx, cocos, "Scene");
 	S_CCLayer::jsCreateClass(this->cx, cocos, "Layer");
 	S_CCSprite::jsCreateClass(this->cx, cocos, "Sprite");
