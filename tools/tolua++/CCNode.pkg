@@ -63,9 +63,14 @@ class CCNode : public CCObject
     void    setIsVisible(bool var);
     tolua_property__CCIsVisible     bool  isVisible;
 
-    CCPoint getAnchorPoint();
-    void    setAnchorPoint(CCPoint point);
-    tolua_property__CCAnchorPoint   CCPoint anchorPoint;
+    CCPoint getAnchorPointLua();
+    void    getAnchorPoint(float* x=0, float* y=0);
+    float   getAnchorPointX();
+    float   getAnchorPointY();
+    void    setAnchorPoint(float x, float y);
+    void    setAnchorPointX(float x);
+    void    setAnchorPointY(float y);
+    tolua_property__CCAnchorPoint	CCPoint anchorPoint;
 
     CCPoint getAnchorPointInPixels();
 

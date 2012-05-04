@@ -410,6 +410,42 @@ const CCPoint& CCNode::getAnchorPointInPixels()
 {
 	return m_tAnchorPointInPixels;
 }
+    
+const CCPoint& CCNode::getAnchorPointLua(void)
+{
+    return m_tAnchorPoint;
+}
+
+void CCNode::getAnchorPoint(float* x, float* y)
+{
+    *x = m_tAnchorPoint.x;
+    *y = m_tAnchorPoint.y;
+}
+
+float CCNode::getAnchorPointX(void)
+{
+    return m_tAnchorPoint.x;
+}
+
+float CCNode::getAnchorPointY(void)
+{
+    return m_tAnchorPoint.y;
+}
+
+void CCNode::setAnchorPointX(float x)
+{
+    setAnchorPoint(ccp(x, m_tAnchorPoint.y));
+}
+
+void CCNode::setAnchorPointY(float y)
+{
+    setAnchorPoint(ccp(m_tAnchorPoint.x, y));
+}
+
+void CCNode::setAnchorPoint(float x, float y)
+{
+    setAnchorPoint(ccp(x,y));
+}
 
 /// contentSize getter
 const CCSize& CCNode::getContentSize()

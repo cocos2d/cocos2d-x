@@ -208,6 +208,26 @@ namespace   cocos2d {
          */
         CC_PROPERTY_READONLY_PASS_BY_REF(CCPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
 
+        /** get/set AnchorPoint for Lua (uses the same style as Position for Lua)
+         
+         lua code:
+         local ap   = node:getAnchorPointLua()  -- return CCPoint object from C++
+         local x, y = node:getAnchorPoint()     -- return x, y values from C++
+         local x    = node:getAnchorPointX()
+         local y    = node:getAnchorPointY()
+         node:setAnchorPoint(x, y)              -- pass x, y values to C++
+         node:setAnchorPointX(x)
+         node:setAnchorPointY(y)
+         node:setAnchorPointInPixels(x, y)      -- pass x, y values to C++
+         */
+        const CCPoint& getAnchorPointLua(void);
+        void getAnchorPoint(float* x, float* y);
+        float getAnchorPointX(void);
+        float getAnchorPointY(void);
+        void setAnchorPointX(float x);
+        void setAnchorPointY(float y);
+        void setAnchorPoint(float x, float y);
+        
         /** The untransformed size of the node.
          The contentSize remains the same no matter the node is scaled or rotated.
          All nodes has a size. Layer and Scene has the same size of the screen.
