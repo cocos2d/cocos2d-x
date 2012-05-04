@@ -33,6 +33,8 @@ Resources/dog.png
 Resources/hello.lua
 Resources/hello2.lua
 Resources/menu1.png
+Resources/background.mp3
+Resources/effect1.wav
 [! else]
 Resources/CloseSelected.png
 Resources/CloseNormal.png

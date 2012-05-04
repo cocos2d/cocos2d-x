@@ -100,6 +100,12 @@
     <Filter Include="kazmath\src\GL">
       <UniqueIdentifier>{9e406a70-172f-4a39-95f8-e6d6cfe5ed1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extensions\CCListView">
+      <UniqueIdentifier>{4868137d-c099-49c7-a018-d6bcf9f9205c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions\CCTextureWatcher">
+      <UniqueIdentifier>{772b5d31-38b2-4f19-80da-4da6c37b58c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\effects\CCGrabber.cpp">
@@ -465,6 +471,15 @@
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
+    <ClCompile Include="..\extensions\CCTextureWatcher\CCTextureWatcher.cpp">
+      <Filter>extensions\CCTextureWatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extensions\CCListView\CCListView.cpp">
+      <Filter>extensions\CCListView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extensions\CCListView\CCListViewCell.cpp">
+      <Filter>extensions\CCListView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\effects\CCGrabber.h">
@@ -943,5 +958,17 @@
     <ClInclude Include="..\CCDrawingPrimitives.h" />
     <ClInclude Include="..\CCScheduler.h" />
     <ClInclude Include="..\CCCamera.h" />
+    <ClInclude Include="..\extensions\CCTextureWatcher\CCTextureWatcher.h">
+      <Filter>extensions\CCTextureWatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extensions\CCListView\CCControlDefine.h">
+      <Filter>extensions\CCListView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extensions\CCListView\CCListView.h">
+      <Filter>extensions\CCListView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extensions\CCListView\CCListViewCell.h">
+      <Filter>extensions\CCListView</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
