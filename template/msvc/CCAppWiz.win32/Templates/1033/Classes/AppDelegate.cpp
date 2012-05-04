@@ -46,23 +46,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    unsigned long size;
-    char *pFileContent = (char*)CCFileUtils::getFileData("hello.lua", "r", &size);
-
-    if (pFileContent)
+    CCString* pstrFileContent = CCString::stringWithContentsOfFile("hello.lua");
+    if (pstrFileContent)
     {
-        // copy the file contents and add '\0' at the end, or the lua parser can not parse it
-        char *pCodes = new char[size + 1];
-        pCodes[size] = '\0';
-        memcpy(pCodes, pFileContent, size);
-        delete[] pFileContent;
-
-        pEngine->executeString(pCodes);
-        delete []pCodes;
+        pEngine->executeString(pstrFileContent->getCString());
     }
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+#else
 	std::string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
