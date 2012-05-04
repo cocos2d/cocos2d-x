@@ -210,6 +210,44 @@ public:
 
 };
 
+class S_CCTextureAtlas : public CCTextureAtlas
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTextureAtlas(JSObject *obj) : CCTextureAtlas(), m_jsobj(obj) {};
+	enum {
+		kIndices = 1,
+		kBuffersVBO,
+		kDirty,
+		kTotalQuads,
+		kCapacity,
+		kTexture,
+		kQuads
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstextureAtlasWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstextureAtlasWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdateQuad(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinsertQuad(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinsertQuadFromIndex(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveQuadAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveAllQuads(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsresizeCapacity(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdrawNumberOfQuads(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdrawQuads(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCMenuItemSprite : public CCMenuItemSprite
 {
 	JSObject *m_jsobj;
@@ -1680,6 +1718,46 @@ public:
 	static JSBool jsuseBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsisFrameDisplayed(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsdisplayedFrame(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void update(ccTime delta);
+
+};
+
+class S_CCSpriteBatchNode : public CCSpriteBatchNode
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCSpriteBatchNode(JSObject *obj) : CCSpriteBatchNode(), m_jsobj(obj) {};
+	enum {
+		kTextureAtlas = 1,
+		kBlendFunc,
+		kDescendants
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsbatchNodeWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsbatchNodeWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsincreaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinsertChild(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsrebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jshighestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jslowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsatlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsvisit(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreorderChild(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveChild(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
 	virtual void update(ccTime delta);
 
 };

@@ -1397,6 +1397,346 @@ JSBool S_CCAction::jsaction(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+JSClass* S_CCTextureAtlas::jsClass = NULL;
+JSObject* S_CCTextureAtlas::jsObject = NULL;
+
+JSBool S_CCTextureAtlas::jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_NewObject(cx, S_CCTextureAtlas::jsClass, S_CCTextureAtlas::jsObject, NULL);
+	S_CCTextureAtlas *cobj = new S_CCTextureAtlas(obj);
+	pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+	pt->flags = 0; pt->data = cobj;
+	JS_SetPrivate(obj, pt);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+	return JS_TRUE;
+}
+
+void S_CCTextureAtlas::jsFinalize(JSContext *cx, JSObject *obj)
+{
+	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
+	if (pt) {
+		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTextureAtlas *)pt->data;
+		JS_free(cx, pt);
+	}
+}
+
+JSBool S_CCTextureAtlas::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCTextureAtlas *cobj; JSGET_PTRSHELL(S_CCTextureAtlas, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	case kTotalQuads:
+		do { jsval tmp; JS_NewNumberValue(cx, cobj->getTotalQuads(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
+		break;
+	case kCapacity:
+		do { jsval tmp; JS_NewNumberValue(cx, cobj->getCapacity(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
+		break;
+	case kTexture:
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCTexture2D::jsClass, S_CCTexture2D::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)cobj->getTexture();
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		break;
+	case kQuads:
+		do {
+			JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)cobj->getQuads();
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		break;
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+JSBool S_CCTextureAtlas::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCTextureAtlas *cobj; JSGET_PTRSHELL(S_CCTextureAtlas, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	case kTexture:
+		do {
+			CCTexture2D* tmp; JSGET_PTRSHELL(CCTexture2D, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setTexture(tmp); }
+		} while (0);
+		break;
+	case kQuads:
+		do {
+			ccV3F_C4B_T2F_Quad* tmp; JSGET_PTRSHELL(ccV3F_C4B_T2F_Quad, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setQuads(tmp); }
+		} while (0);
+		break;
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+void S_CCTextureAtlas::jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name)
+{
+	jsClass = (JSClass *)calloc(1, sizeof(JSClass));
+	jsClass->name = name;
+	jsClass->addProperty = JS_PropertyStub;
+	jsClass->delProperty = JS_PropertyStub;
+	jsClass->getProperty = JS_PropertyStub;
+	jsClass->setProperty = JS_StrictPropertyStub;
+	jsClass->enumerate = JS_EnumerateStub;
+	jsClass->resolve = JS_ResolveStub;
+	jsClass->convert = JS_ConvertStub;
+	jsClass->finalize = jsFinalize;
+	jsClass->flags = JSCLASS_HAS_PRIVATE;
+		static JSPropertySpec properties[] = {
+			{"indices", kIndices, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTextureAtlas::jsPropertyGet, S_CCTextureAtlas::jsPropertySet},
+			{"buffersVBO", kBuffersVBO, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTextureAtlas::jsPropertyGet, S_CCTextureAtlas::jsPropertySet},
+			{"dirty", kDirty, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTextureAtlas::jsPropertyGet, S_CCTextureAtlas::jsPropertySet},
+			{"totalQuads", kTotalQuads, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTextureAtlas::jsPropertyGet, S_CCTextureAtlas::jsPropertySet},
+			{"capacity", kCapacity, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTextureAtlas::jsPropertyGet, S_CCTextureAtlas::jsPropertySet},
+			{"texture", kTexture, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTextureAtlas::jsPropertyGet, S_CCTextureAtlas::jsPropertySet},
+			{"quads", kQuads, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTextureAtlas::jsPropertyGet, S_CCTextureAtlas::jsPropertySet},
+			{0, 0, 0, 0, 0}
+		};
+
+		static JSFunctionSpec funcs[] = {
+			JS_FN("initWithFile", S_CCTextureAtlas::jsinitWithFile, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("initWithTexture", S_CCTextureAtlas::jsinitWithTexture, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("updateQuad", S_CCTextureAtlas::jsupdateQuad, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("insertQuad", S_CCTextureAtlas::jsinsertQuad, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("insertQuadFromIndex", S_CCTextureAtlas::jsinsertQuadFromIndex, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("removeQuadAtIndex", S_CCTextureAtlas::jsremoveQuadAtIndex, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("removeAllQuads", S_CCTextureAtlas::jsremoveAllQuads, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("resizeCapacity", S_CCTextureAtlas::jsresizeCapacity, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("drawNumberOfQuads", S_CCTextureAtlas::jsdrawNumberOfQuads, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("drawQuads", S_CCTextureAtlas::jsdrawQuads, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+		static JSFunctionSpec st_funcs[] = {
+			JS_FN("textureAtlasWithFile", S_CCTextureAtlas::jstextureAtlasWithFile, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("textureAtlasWithTexture", S_CCTextureAtlas::jstextureAtlasWithTexture, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+	jsObject = JS_InitClass(cx,globalObj,NULL,jsClass,S_CCTextureAtlas::jsConstructor,0,properties,funcs,NULL,st_funcs);
+}
+
+JSBool S_CCTextureAtlas::jstextureAtlasWithFile(JSContext *cx, uint32_t argc, jsval *vp) {
+	if (argc == 2) {
+		JSString *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Si", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		CCTextureAtlas* ret = CCTextureAtlas::textureAtlasWithFile(narg0, arg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCTextureAtlas::jsClass, S_CCTextureAtlas::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsinitWithFile(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Si", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		bool ret = self->initWithFile(narg0, arg1);
+		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jstextureAtlasWithTexture(JSContext *cx, uint32_t argc, jsval *vp) {
+	if (argc == 2) {
+		JSObject *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		CCTexture2D* narg0; JSGET_PTRSHELL(CCTexture2D, narg0, arg0);
+		CCTextureAtlas* ret = CCTextureAtlas::textureAtlasWithTexture(narg0, arg1);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCTextureAtlas::jsClass, S_CCTextureAtlas::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsinitWithTexture(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		CCTexture2D* narg0; JSGET_PTRSHELL(CCTexture2D, narg0, arg0);
+		bool ret = self->initWithTexture(narg0, arg1);
+		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsupdateQuad(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		ccV3F_C4B_T2F_Quad* narg0; JSGET_PTRSHELL(ccV3F_C4B_T2F_Quad, narg0, arg0);
+		self->updateQuad(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsinsertQuad(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		ccV3F_C4B_T2F_Quad* narg0; JSGET_PTRSHELL(ccV3F_C4B_T2F_Quad, narg0, arg0);
+		self->insertQuad(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsinsertQuadFromIndex(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		unsigned int arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ii", &arg0, &arg1);
+		self->insertQuadFromIndex(arg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsremoveQuadAtIndex(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		unsigned int arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "i", &arg0);
+		self->removeQuadAtIndex(arg0);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsremoveAllQuads(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 0) {
+		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
+		self->removeAllQuads();
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsresizeCapacity(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		unsigned int arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "i", &arg0);
+		bool ret = self->resizeCapacity(arg0);
+		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsdrawNumberOfQuads(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		unsigned int arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "i", &arg0);
+		self->drawNumberOfQuads(arg0);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTextureAtlas::jsdrawQuads(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTextureAtlas* self = NULL; JSGET_PTRSHELL(S_CCTextureAtlas, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 0) {
+		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
+		self->drawQuads();
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 JSClass* S_CCMenuItemSprite::jsClass = NULL;
 JSObject* S_CCMenuItemSprite::jsObject = NULL;
 
@@ -12039,6 +12379,424 @@ JSBool S_CCSprite::jsdisplayedFrame(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 void S_CCSprite::update(ccTime delta) {
+	if (m_jsobj) {
+		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
+		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
+		if (found == JS_TRUE) {
+			jsval rval, fval;
+			JS_GetProperty(cx, m_jsobj, "update", &fval);
+			jsval jsdelta; JS_NewNumberValue(cx, delta, &jsdelta);
+			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &jsdelta, &rval);
+		}
+	}
+}
+
+JSClass* S_CCSpriteBatchNode::jsClass = NULL;
+JSObject* S_CCSpriteBatchNode::jsObject = NULL;
+
+JSBool S_CCSpriteBatchNode::jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_NewObject(cx, S_CCSpriteBatchNode::jsClass, S_CCSpriteBatchNode::jsObject, NULL);
+	S_CCSpriteBatchNode *cobj = new S_CCSpriteBatchNode(obj);
+	pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+	pt->flags = 0; pt->data = cobj;
+	JS_SetPrivate(obj, pt);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+	return JS_TRUE;
+}
+
+void S_CCSpriteBatchNode::jsFinalize(JSContext *cx, JSObject *obj)
+{
+	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
+	if (pt) {
+		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSpriteBatchNode *)pt->data;
+		JS_free(cx, pt);
+	}
+}
+
+JSBool S_CCSpriteBatchNode::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCSpriteBatchNode *cobj; JSGET_PTRSHELL(S_CCSpriteBatchNode, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	case kTextureAtlas:
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCTextureAtlas::jsClass, S_CCTextureAtlas::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)cobj->getTextureAtlas();
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		break;
+	case kBlendFunc:
+				// don't know what this is (c ~> js)
+		break;
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+JSBool S_CCSpriteBatchNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCSpriteBatchNode *cobj; JSGET_PTRSHELL(S_CCSpriteBatchNode, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	case kTextureAtlas:
+		do {
+			CCTextureAtlas* tmp; JSGET_PTRSHELL(CCTextureAtlas, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setTextureAtlas(tmp); }
+		} while (0);
+		break;
+	case kBlendFunc:
+				// don't know what this is (js ~> c)
+		break;
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+void S_CCSpriteBatchNode::jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name)
+{
+	jsClass = (JSClass *)calloc(1, sizeof(JSClass));
+	jsClass->name = name;
+	jsClass->addProperty = JS_PropertyStub;
+	jsClass->delProperty = JS_PropertyStub;
+	jsClass->getProperty = JS_PropertyStub;
+	jsClass->setProperty = JS_StrictPropertyStub;
+	jsClass->enumerate = JS_EnumerateStub;
+	jsClass->resolve = JS_ResolveStub;
+	jsClass->convert = JS_ConvertStub;
+	jsClass->finalize = jsFinalize;
+	jsClass->flags = JSCLASS_HAS_PRIVATE;
+		static JSPropertySpec properties[] = {
+			{"textureAtlas", kTextureAtlas, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSpriteBatchNode::jsPropertyGet, S_CCSpriteBatchNode::jsPropertySet},
+			{"blendFunc", kBlendFunc, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSpriteBatchNode::jsPropertyGet, S_CCSpriteBatchNode::jsPropertySet},
+			{"descendants", kDescendants, JSPROP_PERMANENT | JSPROP_SHARED, S_CCSpriteBatchNode::jsPropertyGet, S_CCSpriteBatchNode::jsPropertySet},
+			{0, 0, 0, 0, 0}
+		};
+
+		static JSFunctionSpec funcs[] = {
+			JS_FN("initWithTexture", S_CCSpriteBatchNode::jsinitWithTexture, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("initWithFile", S_CCSpriteBatchNode::jsinitWithFile, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("increaseAtlasCapacity", S_CCSpriteBatchNode::jsincreaseAtlasCapacity, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("removeChildAtIndex", S_CCSpriteBatchNode::jsremoveChildAtIndex, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("insertChild", S_CCSpriteBatchNode::jsinsertChild, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("removeSpriteFromAtlas", S_CCSpriteBatchNode::jsremoveSpriteFromAtlas, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("rebuildIndexInOrder", S_CCSpriteBatchNode::jsrebuildIndexInOrder, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("highestAtlasIndexInChild", S_CCSpriteBatchNode::jshighestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("lowestAtlasIndexInChild", S_CCSpriteBatchNode::jslowestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("atlasIndexForChild", S_CCSpriteBatchNode::jsatlasIndexForChild, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("visit", S_CCSpriteBatchNode::jsvisit, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("reorderChild", S_CCSpriteBatchNode::jsreorderChild, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("removeChild", S_CCSpriteBatchNode::jsremoveChild, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("removeAllChildrenWithCleanup", S_CCSpriteBatchNode::jsremoveAllChildrenWithCleanup, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("draw", S_CCSpriteBatchNode::jsdraw, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+		static JSFunctionSpec st_funcs[] = {
+			JS_FN("batchNodeWithTexture", S_CCSpriteBatchNode::jsbatchNodeWithTexture, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("batchNodeWithFile", S_CCSpriteBatchNode::jsbatchNodeWithFile, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+	jsObject = JS_InitClass(cx,globalObj,S_CCNode::jsObject,jsClass,S_CCSpriteBatchNode::jsConstructor,0,properties,funcs,NULL,st_funcs);
+}
+
+JSBool S_CCSpriteBatchNode::jsbatchNodeWithTexture(JSContext *cx, uint32_t argc, jsval *vp) {
+	if (argc == 1) {
+		JSObject *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
+		CCTexture2D* narg0; JSGET_PTRSHELL(CCTexture2D, narg0, arg0);
+		CCSpriteBatchNode* ret = CCSpriteBatchNode::batchNodeWithTexture(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCSpriteBatchNode::jsClass, S_CCSpriteBatchNode::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsbatchNodeWithFile(JSContext *cx, uint32_t argc, jsval *vp) {
+	if (argc == 1) {
+		JSString *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		CCSpriteBatchNode* ret = CCSpriteBatchNode::batchNodeWithFile(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCSpriteBatchNode::jsClass, S_CCSpriteBatchNode::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsinitWithTexture(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		CCTexture2D* narg0; JSGET_PTRSHELL(CCTexture2D, narg0, arg0);
+		bool ret = self->initWithTexture(narg0, arg1);
+		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsinitWithFile(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Si", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		bool ret = self->initWithFile(narg0, arg1);
+		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsincreaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 0) {
+		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
+		self->increaseAtlasCapacity();
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsremoveChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		unsigned int arg0;
+		bool arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ib", &arg0, &arg1);
+		self->removeChildAtIndex(arg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsinsertChild(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		CCSprite* narg0; JSGET_PTRSHELL(CCSprite, narg0, arg0);
+		self->insertChild(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsremoveSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSObject *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
+		CCSprite* narg0; JSGET_PTRSHELL(CCSprite, narg0, arg0);
+		self->removeSpriteFromAtlas(narg0);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsrebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		unsigned int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		CCSprite* narg0; JSGET_PTRSHELL(CCSprite, narg0, arg0);
+		unsigned int ret = self->rebuildIndexInOrder(narg0, arg1);
+		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jshighestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSObject *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
+		CCSprite* narg0; JSGET_PTRSHELL(CCSprite, narg0, arg0);
+		unsigned int ret = self->highestAtlasIndexInChild(narg0);
+		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jslowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSObject *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
+		CCSprite* narg0; JSGET_PTRSHELL(CCSprite, narg0, arg0);
+		unsigned int ret = self->lowestAtlasIndexInChild(narg0);
+		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsatlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		CCSprite* narg0; JSGET_PTRSHELL(CCSprite, narg0, arg0);
+		unsigned int ret = self->atlasIndexForChild(narg0, arg1);
+		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsvisit(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 0) {
+		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
+		self->visit();
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsreorderChild(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oi", &arg0, &arg1);
+		CCNode* narg0; JSGET_PTRSHELL(CCNode, narg0, arg0);
+		self->reorderChild(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsremoveChild(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSObject *arg0;
+		bool arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ob", &arg0, &arg1);
+		CCNode* narg0; JSGET_PTRSHELL(CCNode, narg0, arg0);
+		self->removeChild(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsremoveAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		bool arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
+		self->removeAllChildrenWithCleanup(arg0);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCSpriteBatchNode::jsdraw(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCSpriteBatchNode* self = NULL; JSGET_PTRSHELL(S_CCSpriteBatchNode, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 0) {
+		JS_ConvertArguments(cx, 0, JS_ARGV(cx, vp), "");
+		self->draw();
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+void S_CCSpriteBatchNode::update(ccTime delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
