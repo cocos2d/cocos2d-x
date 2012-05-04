@@ -13,7 +13,7 @@ Simple iOS (and soon Android) example of cocos2d-x game running javascript bindi
     CCEaseBounceIn CCEaseBounce CCEaseBounceInOut CCEaseBackIn CCEaseBounceOut CCEaseIn CCEaseOut
     CCEaseExponentialIn CCEaseInOut CCEaseExponentialOut CCEaseExponentialInOut CCEaseSineIn
     CCEaseSineOut CCEaseSineInOut CCActionEase CCEaseRateAction CCParticleSystem CCParticleSystemQuad
-    CCParticleSystemPoint
+    CCParticleSystemPoint CCDelayTime CCTexture2D CCTextureCache
 
 This is just a proof of concept and there are plans around this in order to make a more js-friendly API, right now
 the bindings were created automatically and the final idea is not to use them as they are but to create a higher
