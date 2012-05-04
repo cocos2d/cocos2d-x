@@ -42,7 +42,7 @@ bool HelloWorld::init()
         // 1. Add a menu item with "X" image, which is clicked to quit the program.
 
         // Create a "close" menu item with close icon, it's an auto release object.
-        CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
+        CCMenuItemImage *pCloseItem = CCMenuItemImage::itemWithNormalImage(
             "CloseNormal.png",
             "CloseSelected.png",
             this,
@@ -63,12 +63,12 @@ bool HelloWorld::init()
         // 2. Add a label shows "Hello World".
 
         // Create a label and initialize with string "Hello World".
-        CCLabelTTF* pLabel = CCLabelTTF::labelWithString("Hello World", "Thonburi", 64);
+        CCLabelTTF* pLabel = CCLabelTTF::labelWithString("Hello World", "Arial", 24);
         CC_BREAK_IF(! pLabel);
 
         // Get window size and place the label upper. 
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        pLabel->setPosition(ccp(size.width / 2, size.height - 20));
+        pLabel->setPosition(ccp(size.width / 2, size.height - 50));
 
         // Add the label to HelloWorld layer as a child layer.
         this->addChild(pLabel, 1);

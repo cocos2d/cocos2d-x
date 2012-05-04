@@ -148,6 +148,27 @@
     <Filter Include="classes\tests\ShaderTest">
       <UniqueIdentifier>{7c1797b3-c350-4e3c-a8ff-ec9352af2008}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\ControlExtensionTest">
+      <UniqueIdentifier>{4e012c1e-19a4-4518-b2bd-0672243e0d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\NotificationCenterTest">
+      <UniqueIdentifier>{b52aa727-6c0a-4b44-9302-c3fe0ecc195f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest">
+      <UniqueIdentifier>{d6da1b44-b0a4-4e6b-9edb-a281f888a6f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker">
+      <UniqueIdentifier>{d37f9662-a57d-4893-8d51-5013328c41dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest">
+      <UniqueIdentifier>{973e1104-799d-4287-92cc-3c728f4203d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest">
+      <UniqueIdentifier>{77f02d4b-1a54-48ec-bd7a-eb2a2710f1d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\MutiTouchTest">
+      <UniqueIdentifier>{5ea85c7b-9c54-4125-8b75-cf540df9cb0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -339,9 +360,6 @@
     <ClCompile Include="..\tests\ExtensionsTest\ExtensionsTest.cpp">
       <Filter>classes\tests\ExtensionsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest.cpp">
-      <Filter>classes\tests\ExtensionsTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.cpp">
       <Filter>classes\tests\ChipmunkAccelTouchTest</Filter>
     </ClCompile>
@@ -356,6 +374,30 @@
     </ClCompile>
     <ClCompile Include="..\tests\ShaderTest\ShaderTest.cpp">
       <Filter>classes\tests\ShaderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.cpp">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.cpp">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.cpp">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlScene.cpp">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.cpp">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp">
+      <Filter>classes\tests\ExtensionsTest\NotificationCenterTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\MutiTouchTest\MutiTouchTest.cpp">
+      <Filter>classes\tests\MutiTouchTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -662,9 +704,6 @@
     <ClInclude Include="..\tests\ExtensionsTest\ExtensionsTest.h">
       <Filter>classes\tests\ExtensionsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest.h">
-      <Filter>classes\tests\ExtensionsTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.h">
       <Filter>classes\tests\ChipmunkAccelTouchTest</Filter>
     </ClInclude>
@@ -679,6 +718,30 @@
     </ClInclude>
     <ClInclude Include="..\tests\ShaderTest\ShaderTest.h">
       <Filter>classes\tests\ShaderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.h">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.h">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.h">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.h">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlScene.h">
+      <Filter>classes\tests\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h">
+      <Filter>classes\tests\ExtensionsTest\NotificationCenterTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\MutiTouchTest\MutiTouchTest.h">
+      <Filter>classes\tests\MutiTouchTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
