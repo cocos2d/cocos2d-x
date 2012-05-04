@@ -14,7 +14,6 @@
 
 #include "tolua++.h"
 #include "tolua_event.h"
-#include "lauxlib.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -434,7 +433,11 @@ TOLUA_API void tolua_beginmodule (lua_State* L, const char* name)
         lua_rawget(L,-2);
     }
     else
+#ifdef KILLA
+        killa_pushglobaltable(L);
+#else
         lua_pushvalue(L,LUA_GLOBALSINDEX);
+#endif
 }
 
 /* End module
@@ -468,7 +471,11 @@ TOLUA_API void tolua_module (lua_State* L, const char* name, int hasvar)
     else
     {
         /* global table */
+#ifdef KILLA
+        killa_pushglobaltable(L);
+#else
         lua_pushvalue(L,LUA_GLOBALSINDEX);
+#endif
     }
     if (hasvar)
     {

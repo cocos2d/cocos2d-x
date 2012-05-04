@@ -31,6 +31,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloLua", "HelloLua\win32\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "lua\proj.win32\liblua.vcproj", "{DDC3E27F-004D-4DD4-9DD3-931A013D2159}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleGame", "SimpleGame\win32\SimpleGame.vcproj", "{CD8D72EC-EBD5-4884-B043-A79A1F49940D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libkilla", "lua\proj.win32\libkilla.vcproj", "{DDC3E27F-004D-4DD4-9DD3-931A013D215C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloKilla", "HelloLua\win32\HelloKilla.win32.vcproj", "{13E55395-94A2-4CD9-BFC2-1A051F80C17F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DDC3E27F-004D-4DD4-9DD3-931A013D215C} = {DDC3E27F-004D-4DD4-9DD3-931A013D215C}
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
+		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6} = {F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -69,6 +80,18 @@ Global
 		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Debug|Win32.Build.0 = Debug|Win32
 		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.ActiveCfg = Release|Win32
 		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.Build.0 = Release|Win32
+		{CD8D72EC-EBD5-4884-B043-A79A1F49940D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CD8D72EC-EBD5-4884-B043-A79A1F49940D}.Debug|Win32.Build.0 = Debug|Win32
+		{CD8D72EC-EBD5-4884-B043-A79A1F49940D}.Release|Win32.ActiveCfg = Release|Win32
+		{CD8D72EC-EBD5-4884-B043-A79A1F49940D}.Release|Win32.Build.0 = Release|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D215C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D215C}.Debug|Win32.Build.0 = Debug|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D215C}.Release|Win32.ActiveCfg = Release|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D215C}.Release|Win32.Build.0 = Release|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17F}.Debug|Win32.Build.0 = Debug|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17F}.Release|Win32.ActiveCfg = Release|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

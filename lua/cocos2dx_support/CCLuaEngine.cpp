@@ -26,8 +26,12 @@
 #include "tolua++.h"
 
 extern "C" {
+#ifdef KILLA
+#include "klua.h"
+#else
 #include "lualib.h"
 #include "lauxlib.h"
+#endif
 #include "tolua_fix.h"
 }
 
@@ -83,7 +87,11 @@ void CCLuaEngine::addSearchPath(const char* path)
     lua_getfield(m_state, -1, "path");            /* get package.path, stack: package path */
     const char* cur_path =  lua_tostring(m_state, -1);
     lua_pop(m_state, 1);                                            /* stack: package */
+#ifdef KILLA
+    lua_pushfstring(m_state, "%s;%s/?.kia", cur_path, path);        /* stack: package newpath */
+#else
     lua_pushfstring(m_state, "%s;%s/?.lua", cur_path, path);        /* stack: package newpath */
+#endif
     lua_setfield(m_state, -2, "path");      /* package.path = newpath, stack: package */
     lua_pop(m_state, 1);                                            /* stack: - */
 }
