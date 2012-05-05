@@ -30,12 +30,13 @@ local function creatDog()
     spriteDog.isPaused = false
     spriteDog:setPosition(0, winSize.height / 4 * 3)
 
-    local animFrames = CCMutableArray_CCSpriteFrame__:new(2)
+    local animFrames = CCArray:arrayWithCapacity(2)
+
     animFrames:addObject(frame0)
     animFrames:addObject(frame1)
 
-    local animation = CCAnimation:animationWithFrames(animFrames, 0.5)
-    local animate = CCAnimate:actionWithAnimation(animation, false);
+    local animation = CCAnimation:animationWithSpriteFrames(animFrames, 0.5)
+    local animate = CCAnimate:actionWithAnimation(animation);
     spriteDog:runAction(CCRepeatForever:actionWithAction(animate))
 
     -- moving dog at every frame
@@ -47,10 +48,11 @@ local function creatDog()
         else
             x = x + 1
         end
+
         spriteDog:setPositionX(x)
     end
 
-    CCScheduler:sharedScheduler():scheduleScriptFunc(tick, 0, false)
+    CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(tick, 0, false)
 
     return spriteDog
 end
@@ -110,7 +112,7 @@ local function createLayerFram()
     end
 
     local function onTouchEnded(x, y)
-        cclog("onTouchEnded")
+        cclog("onTouchEnded: %0.2f, %0.2f", x, y)
         touchBeginPoint = nil
         spriteDog.isPaused = false
     end
@@ -151,7 +153,7 @@ local function createLayerMenu()
     end
 
     -- add a popup menu
-    local menuPopupItem = CCMenuItemImage:itemFromNormalImage("menu2.png", "menu2.png")
+    local menuPopupItem = CCMenuItemImage:itemWithNormalImage("menu2.png", "menu2.png")
     menuPopupItem:setPosition(0, 0)
     menuPopupItem:registerScriptHandler(menuCallbackClosePopup)
     menuPopup = CCMenu:menuWithItem(menuPopupItem)
@@ -160,7 +162,7 @@ local function createLayerMenu()
     layerMenu:addChild(menuPopup)
 
     -- add the left-bottom "tools" menu to invoke menuPopup
-    local menuToolsItem = CCMenuItemImage:itemFromNormalImage("menu1.png", "menu1.png")
+    local menuToolsItem = CCMenuItemImage:itemWithNormalImage("menu1.png", "menu1.png")
     menuToolsItem:setPosition(0, 0)
     menuToolsItem:registerScriptHandler(menuCallbackOpenPopup)
     menuTools = CCMenu:menuWithItem(menuToolsItem)

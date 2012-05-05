@@ -76,9 +76,6 @@ CCObject* CCActionInterval::copyWithZone(CCZone *pZone)
     }
     else
     {
-        // action's base class , must be called using __super::copyWithZone(), after overriding from derived class
-        CCAssert(0, "");  
-
         pCopy = new CCActionInterval();
         pZone = pNewZone = new CCZone(pCopy);
     }
@@ -109,9 +106,13 @@ void CCActionInterval::step(ccTime dt)
     {
         m_elapsed += dt;
     }
-
-//    update(min(1, m_elapsed/m_fDuration));
-    update(1 > m_elapsed/m_fDuration ? m_elapsed/m_fDuration : 1);
+    
+    this->update(MAX (0,                                  // needed for rewind. elapsed could be negative
+                      MIN(1, m_elapsed /
+                          MAX(m_fDuration, FLT_EPSILON)   // division by 0
+                          )
+                      )
+                 );
 }
 
 void CCActionInterval::setAmplitudeRate(CCFloat amp)
@@ -138,13 +139,7 @@ void CCActionInterval::startWithTarget(CCNode *pTarget)
 
 CCActionInterval* CCActionInterval::reverse(void)
 {
-    /*
-     NSException* myException = [NSException
-                                exceptionWithName:@"ReverseActionNotImplemented"
-                                reason:@"Reverse Action not implemented"
-                                userInfo:nil];
-    @throw myException;    
-    */
+    CCAssert(false, "CCIntervalAction: reverse not implemented.");
     return NULL;
 }
 
