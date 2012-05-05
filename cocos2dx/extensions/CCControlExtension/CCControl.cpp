@@ -179,7 +179,7 @@ void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_Menu
     //remove all invocations if the target and action are null
     //TODO: should the invocations be deleted, or just removed from the array? Won't that cause issues if you add a single invocation for multiple events?
     bool bDeleteObjects=true;
-    if (target == NULL && action == NULL)
+    if (!target && !action)
     {
         //remove objects
         eventInvocationList->removeAllObjects();

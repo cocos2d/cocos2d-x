@@ -1086,7 +1086,7 @@ void CCLabelBMFont::updateLabel()
         vector<unsigned short> last_word;
         last_word.reserve( stringLength );
 
-        unsigned int line = 1, i = 0;
+        int line = 1, i = 0;
         bool start_line = false, start_word = false;
         float startOfLine = -1, startOfWord = -1;
         int skip = 0;

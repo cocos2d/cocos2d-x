@@ -157,7 +157,7 @@ void CCTimer::update(ccTime dt)
             m_fElapsed += dt;
             if (m_fElapsed >= m_fInterval)
             {
-                if (m_pTarget != NULL && m_pfnSelector != NULL)
+                if (m_pTarget && m_pfnSelector)
                 {
                     (m_pTarget->*m_pfnSelector)(m_fElapsed);
                 }
@@ -175,7 +175,7 @@ void CCTimer::update(ccTime dt)
             {
                 if( m_fElapsed >= m_fDelay )
                 {
-                    if (m_pTarget != NULL && m_pfnSelector != NULL)
+                    if (m_pTarget && m_pfnSelector)
                     {
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
@@ -192,7 +192,7 @@ void CCTimer::update(ccTime dt)
             {
                 if (m_fElapsed >= m_fInterval)
                 {
-                    if (m_pTarget != NULL && m_pfnSelector != NULL)
+                    if (m_pTarget && m_pfnSelector)
                     {
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
