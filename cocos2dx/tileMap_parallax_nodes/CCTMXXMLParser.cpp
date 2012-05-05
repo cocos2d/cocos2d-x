@@ -613,17 +613,17 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polygon") 
     {
         // find parent object's dict and add polygon-points to it
-        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
-        CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
- //TODO:       dict->setObject(attributeDict objectForKey:@"points"] forKey:@"polygonPoints"];
+        // CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        // CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
+        // TODO: dict->setObject(attributeDict objectForKey:@"points"] forKey:@"polygonPoints"];
 
     } 
     else if (elementName == "polyline")
     {
         // find parent object's dict and add polyline-points to it
-        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
-        CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
- //TODO:       dict->setObject:[attributeDict objectForKey:@"points"] forKey:@"polylinePoints"];
+        // CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        // CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
+        // TODO: dict->setObject:[attributeDict objectForKey:@"points"] forKey:@"polylinePoints"];
     }
 
     if (attributeDict)

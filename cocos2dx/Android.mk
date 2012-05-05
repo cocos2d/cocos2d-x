@@ -170,8 +170,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
 
 LOCAL_EXPORT_LDLIBS := -llog\
                        -lz \
-                       -lGLESv2 \
-                       -lEGL
+                       -lGLESv2
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/actions \
