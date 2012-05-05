@@ -1,22 +1,8 @@
-
 #include "cocos2d.h"
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
 #include "CCScriptSupport.h"
 #include "CCLuaEngine.h"
-
-#define IPAD        0
-
-#if IPAD
-#define CC_WIDTH    1024
-#define CC_HEIGHT    768
-#elif IPHONE_4
-#define CC_WIDTH    960
-#define CC_HEIGHT    640
-#else
-#define CC_WIDTH    480
-#define CC_HEIGHT    320
-#endif
 
 USING_NS_CC;
 using namespace std;
@@ -57,23 +43,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    unsigned long size;
-    char *pFileContent = (char*)CCFileUtils::getFileData("hello.lua", "r", &size);
-
-    if (pFileContent)
+    CCString* pstrFileContent = CCString::stringWithContentsOfFile("hello.lua");
+    if (pstrFileContent)
     {
-        // copy the file contents and add '\0' at the end, or the lua parser can not parse it
-        char *pCodes = new char[size + 1];
-        pCodes[size] = '\0';
-        memcpy(pCodes, pFileContent, size);
-        delete[] pFileContent;
-
-        pEngine->executeString(pCodes);
-        delete []pCodes;
+        pEngine->executeString(pstrFileContent->getCString());
     }
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+#else
     string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
