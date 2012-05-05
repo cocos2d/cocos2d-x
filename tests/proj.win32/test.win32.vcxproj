@@ -19,12 +19,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -55,7 +55,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir);$(SolutionDir)chipmunk\include\chipmunk;$(SolutionDir)CocosDenshion\include;..\tests;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;.\;$(SolutionDir)cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..;..\tests;..\..;..\..\chipmunk\include\chipmunk;..\..\cocos2dx;..\..\cocos2dx\actions;..\..\cocos2dx\base_nodes;..\..\cocos2dx\cocoa;..\..\cocos2dx\effects;..\..\cocos2dx\include;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\keypad_dispatcher;..\..\cocos2dx\label_nodes;..\..\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx\menu_nodes;..\..\cocos2dx\misc_nodes;..\..\cocos2dx\particle_nodes;..\..\cocos2dx\script_support;..\..\cocos2dx\shaders;..\..\cocos2dx\sprite_nodes;..\..\cocos2dx\support;..\..\cocos2dx\text_input_node;..\..\cocos2dx\textures;..\..\cocos2dx\tileMap_parallax_nodes;..\..\cocos2dx\touch_dispatcher;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir);$(SolutionDir)chipmunk\include\chipmunk;$(SolutionDir)CocosDenshion\include;..\tests;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..;..\tests;..\..;..\..\chipmunk\include\chipmunk;..\..\cocos2dx;..\..\cocos2dx\actions;..\..\cocos2dx\base_nodes;..\..\cocos2dx\cocoa;..\..\cocos2dx\effects;..\..\cocos2dx\include;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\keypad_dispatcher;..\..\cocos2dx\label_nodes;..\..\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx\menu_nodes;..\..\cocos2dx\misc_nodes;..\..\cocos2dx\particle_nodes;..\..\cocos2dx\script_support;..\..\cocos2dx\shaders;..\..\cocos2dx\sprite_nodes;..\..\cocos2dx\support;..\..\cocos2dx\text_input_node;..\..\cocos2dx\textures;..\..\cocos2dx\tileMap_parallax_nodes;..\..\cocos2dx\touch_dispatcher;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -126,9 +126,16 @@
     <ClCompile Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.cpp" />
     <ClCompile Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlScene.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.cpp" />
     <ClCompile Include="..\tests\ExtensionsTest\ExtensionsTest.cpp" />
-    <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp" />
     <ClCompile Include="..\tests\FontTest\FontTest.cpp" />
+    <ClCompile Include="..\tests\MutiTouchTest\MutiTouchTest.cpp" />
     <ClCompile Include="..\tests\NodeTest\NodeTest.cpp" />
     <ClCompile Include="..\tests\ShaderTest\ShaderTest.cpp" />
     <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp" />
@@ -197,9 +204,16 @@
     <ClInclude Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.h" />
     <ClInclude Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlScene.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.h" />
     <ClInclude Include="..\tests\ExtensionsTest\ExtensionsTest.h" />
-    <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h" />
     <ClInclude Include="..\tests\FontTest\FontTest.h" />
+    <ClInclude Include="..\tests\MutiTouchTest\MutiTouchTest.h" />
     <ClInclude Include="..\tests\NodeTest\NodeTest.h" />
     <ClInclude Include="..\tests\ShaderTest\ShaderTest.h" />
     <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h" />
