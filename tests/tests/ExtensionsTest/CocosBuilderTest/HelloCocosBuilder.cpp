@@ -67,18 +67,19 @@ void HelloCocosBuilder::callbackAfterCCBLoaded()
     m_pSpriteBurst->runAction((CCAction*)act1) ;
 }
 
-void HelloCocosBuilder::callbackInvokeMethods(CCNode *sender)
+SEL_MenuHandler HelloCocosBuilder::callbackGetSelectors(const char* selectorName)
 {
-    int tag = ((CCMenuItemImage*)sender)->getTag() ;
-    
-    switch (tag)
+    if (strcmp(selectorName, "pressedButton") == 0)
     {
-    case 100:
-            pressedButton(sender);
-            break;
-    case 101:
-            pressedButton2(sender);
-            break;
+        return menu_selector(HelloCocosBuilder::pressedButton);
+    }
+    else if (strcmp(selectorName, "pressedButton2") == 0)
+    {
+        return menu_selector(HelloCocosBuilder::pressedButton2);
+    }
+    else
+    {
+        return NULL;
     }
 }
 
