@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Fri Apr 20 15:40:59 2012.
+** Generated automatically by tolua++-1.0.92 on Sat Apr 28 16:39:09 2012.
 */
 
 #include <vector>
@@ -17823,6 +17823,37 @@ static int tolua_Cocos2d_CCSprite_getOpacity00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'getOpacity'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: opacity of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_get_CCSprite_opacity
+static int tolua_get_CCSprite_opacity(lua_State* tolua_S)
+{
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'opacity'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->getOpacity());
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: opacity of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_set_CCSprite_opacity
+static int tolua_set_CCSprite_opacity(lua_State* tolua_S)
+{
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'opacity'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->setOpacity(((float)  tolua_tonumber(tolua_S,2,0))
+)
+;
+ return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -35880,6 +35911,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"CCSprite");
    tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCSprite_setOpacity00);
    tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCSprite_getOpacity00);
+   tolua_variable(tolua_S,"opacity",tolua_get_CCSprite_opacity,tolua_set_CCSprite_opacity);
    tolua_function(tolua_S,"setColor",tolua_Cocos2d_CCSprite_setColor00);
    tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCSprite_getColor00);
    tolua_function(tolua_S,"isDirty",tolua_Cocos2d_CCSprite_isDirty00);
