@@ -23,46 +23,70 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include <iostream>
 #include "HelloCocosBuilder.h"
 
-using namespace cocos2d ;
+USING_NS_CC;
 
-IMPLEMENT_RUNTIME(HelloCocosBuilder)
+HelloCocosBuilder::HelloCocosBuilder()
+:m_pSpriteBurst(NULL)
+,m_pSpriteIcon(NULL)
+{
+}
 
-CCSprite* HelloCocosBuilder::sprtBurst =NULL;
-CCSprite* HelloCocosBuilder::sprtIcon = NULL ;
+HelloCocosBuilder::~HelloCocosBuilder()
+{
+    CC_SAFE_RELEASE_NULL(m_pSpriteBurst);
+    CC_SAFE_RELEASE_NULL(m_pSpriteIcon);
+}
 
-void HelloCocosBuilder::didLoadFromCCB()
+bool HelloCocosBuilder::callbackSetChildren(const char* name, CCObject* node)
+{
+    bool bRetVal = false;
+    
+    if (strcmp(name, "sprtBurst") == 0)
+    {
+        m_pSpriteBurst = dynamic_cast<CCSprite*>(node);
+        CC_ASSERT(m_pSpriteBurst);
+        m_pSpriteBurst->retain();
+    }
+    else if (strcmp(name, "sprtIcon") == 0)
+    {
+        m_pSpriteIcon = dynamic_cast<CCSprite*>(node);
+        CC_ASSERT(m_pSpriteIcon);
+        m_pSpriteIcon->retain();
+    }
+    
+    return bRetVal;
+};
+
+void HelloCocosBuilder::callbackAfterCCBLoaded()
 {
     CCLOG("loading.....successed!") ;
     void* act = CCRotateBy::actionWithDuration(0.5f, 10) ;
     void* act1 = CCRepeatForever::actionWithAction((CCActionInterval*)act) ;
-    sprtBurst->runAction((CCAction*)act1) ;
+    m_pSpriteBurst->runAction((CCAction*)act1) ;
 }
 
-void HelloCocosBuilder::menuCallBack(CCObject *sender)
+void HelloCocosBuilder::callbackInvokeMethods(CCNode *sender)
 {
     int tag = ((CCMenuItemImage*)sender)->getTag() ;
-    switch (tag) {
-        case 100:
-            // distribute msgs，@1.msg name  @2. param
-            //CALLBACKMETHOD(pressedButton, sender)
-            pressedButton(sender) ;
+    
+    switch (tag)
+    {
+    case 100:
+            pressedButton(sender);
             break;
-        case 101:
-            //CALLBACKMETHOD(pressedButton2, sender)
-            pressedButton2(sender) ;
-        default:
+    case 101:
+            pressedButton2(sender);
             break;
     }
 }
 
 void HelloCocosBuilder::pressedButton(CCObject*sender) 
 {
-    sprtIcon->stopAllActions() ;
-    void*rotAction = CCRotateBy::actionWithDuration(1, 360) ;
-    sprtIcon->runAction((CCAction*)rotAction) ;
+    m_pSpriteIcon->stopAllActions() ;
+    void* rotateAction = CCRotateBy::actionWithDuration(1, 360) ;
+    m_pSpriteIcon->runAction((CCAction*)rotateAction) ;
 }
 
 void HelloCocosBuilder::pressedButton2(CCObject*sender) 
