@@ -594,12 +594,6 @@
 		D41E604915514587001A12E9 /* HelloCocosBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E604615514587001A12E9 /* HelloCocosBuilder.cpp */; };
 		D41E6054155145AB001A12E9 /* CCBReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E604B155145AB001A12E9 /* CCBReader.cpp */; };
 		D41E6055155145AB001A12E9 /* CCBReader.h in Headers */ = {isa = PBXBuildFile; fileRef = D41E604C155145AB001A12E9 /* CCBReader.h */; };
-		D41E6056155145AB001A12E9 /* CClassFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E604E155145AB001A12E9 /* CClassFactory.cpp */; };
-		D41E6057155145AB001A12E9 /* CClassFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = D41E604F155145AB001A12E9 /* CClassFactory.h */; };
-		D41E6058155145AB001A12E9 /* CGenDynamic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E6050155145AB001A12E9 /* CGenDynamic.cpp */; };
-		D41E6059155145AB001A12E9 /* CGenDynamic.h in Headers */ = {isa = PBXBuildFile; fileRef = D41E6051155145AB001A12E9 /* CGenDynamic.h */; };
-		D41E605A155145AB001A12E9 /* CObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E6052155145AB001A12E9 /* CObject.cpp */; };
-		D41E605B155145AB001A12E9 /* CObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D41E6053155145AB001A12E9 /* CObject.h */; };
 		D41E606E1551461A001A12E9 /* btn-test-0.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E605F1551461A001A12E9 /* btn-test-0.png */; };
 		D41E606F1551461A001A12E9 /* btn-test-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60601551461A001A12E9 /* btn-test-1.png */; };
 		D41E60701551461A001A12E9 /* btn-test-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60611551461A001A12E9 /* btn-test-2.png */; };
@@ -614,6 +608,8 @@
 		D41E607A1551461A001A12E9 /* particle-smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E606B1551461A001A12E9 /* particle-smoke.png */; };
 		D41E607B1551461A001A12E9 /* particle-snow.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E606C1551461A001A12E9 /* particle-snow.png */; };
 		D41E607C1551461A001A12E9 /* particle-stars.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E606D1551461A001A12E9 /* particle-stars.png */; };
+		D41F7349155686AB00A475EA /* CCBCustomClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41F7347155686AB00A475EA /* CCBCustomClass.cpp */; };
+		D41F734A155686AB00A475EA /* CCBCustomClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D41F7348155686AB00A475EA /* CCBCustomClass.h */; };
 		D429012E13B1D16900A3772F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D429012D13B1D16900A3772F /* libcurl.a */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -1365,12 +1361,6 @@
 		D41E604715514587001A12E9 /* HelloCocosBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloCocosBuilder.h; sourceTree = "<group>"; };
 		D41E604B155145AB001A12E9 /* CCBReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBReader.cpp; sourceTree = "<group>"; };
 		D41E604C155145AB001A12E9 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
-		D41E604E155145AB001A12E9 /* CClassFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CClassFactory.cpp; sourceTree = "<group>"; };
-		D41E604F155145AB001A12E9 /* CClassFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CClassFactory.h; sourceTree = "<group>"; };
-		D41E6050155145AB001A12E9 /* CGenDynamic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGenDynamic.cpp; sourceTree = "<group>"; };
-		D41E6051155145AB001A12E9 /* CGenDynamic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGenDynamic.h; sourceTree = "<group>"; };
-		D41E6052155145AB001A12E9 /* CObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CObject.cpp; sourceTree = "<group>"; };
-		D41E6053155145AB001A12E9 /* CObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CObject.h; sourceTree = "<group>"; };
 		D41E605F1551461A001A12E9 /* btn-test-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-test-0.png"; sourceTree = "<group>"; };
 		D41E60601551461A001A12E9 /* btn-test-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-test-1.png"; sourceTree = "<group>"; };
 		D41E60611551461A001A12E9 /* btn-test-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-test-2.png"; sourceTree = "<group>"; };
@@ -1385,6 +1375,8 @@
 		D41E606B1551461A001A12E9 /* particle-smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particle-smoke.png"; sourceTree = "<group>"; };
 		D41E606C1551461A001A12E9 /* particle-snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particle-snow.png"; sourceTree = "<group>"; };
 		D41E606D1551461A001A12E9 /* particle-stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particle-stars.png"; sourceTree = "<group>"; };
+		D41F7347155686AB00A475EA /* CCBCustomClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBCustomClass.cpp; sourceTree = "<group>"; };
+		D41F7348155686AB00A475EA /* CCBCustomClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBCustomClass.h; sourceTree = "<group>"; };
 		D429012D13B1D16900A3772F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1600,7 +1592,6 @@
 			isa = PBXGroup;
 			children = (
 				D41E604A155145AB001A12E9 /* CCBReader */,
-				D41E604D155145AB001A12E9 /* CppReflection */,
 				781C37AB1547F9DC00633F88 /* CCControlExtension */,
 				78EE00E11550D18D004C84B0 /* CCListView */,
 				781C37C51547F9DC00633F88 /* CCNotificationCenter */,
@@ -3102,21 +3093,10 @@
 			children = (
 				D41E604B155145AB001A12E9 /* CCBReader.cpp */,
 				D41E604C155145AB001A12E9 /* CCBReader.h */,
+				D41F7347155686AB00A475EA /* CCBCustomClass.cpp */,
+				D41F7348155686AB00A475EA /* CCBCustomClass.h */,
 			);
 			path = CCBReader;
-			sourceTree = "<group>";
-		};
-		D41E604D155145AB001A12E9 /* CppReflection */ = {
-			isa = PBXGroup;
-			children = (
-				D41E604E155145AB001A12E9 /* CClassFactory.cpp */,
-				D41E604F155145AB001A12E9 /* CClassFactory.h */,
-				D41E6050155145AB001A12E9 /* CGenDynamic.cpp */,
-				D41E6051155145AB001A12E9 /* CGenDynamic.h */,
-				D41E6052155145AB001A12E9 /* CObject.cpp */,
-				D41E6053155145AB001A12E9 /* CObject.h */,
-			);
-			path = CppReflection;
 			sourceTree = "<group>";
 		};
 		D41E605E1551461A001A12E9 /* CocosBuilder */ = {
@@ -3335,9 +3315,7 @@
 				78EE00EE1550D18D004C84B0 /* CCListViewCell.h in Headers */,
 				78EE00F01550D18D004C84B0 /* CCTextureWatcher.h in Headers */,
 				D41E6055155145AB001A12E9 /* CCBReader.h in Headers */,
-				D41E6057155145AB001A12E9 /* CClassFactory.h in Headers */,
-				D41E6059155145AB001A12E9 /* CGenDynamic.h in Headers */,
-				D41E605B155145AB001A12E9 /* CObject.h in Headers */,
+				D41F734A155686AB00A475EA /* CCBCustomClass.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3833,9 +3811,7 @@
 				78EE00ED1550D18D004C84B0 /* CCListViewCell.cpp in Sources */,
 				78EE00EF1550D18D004C84B0 /* CCTextureWatcher.cpp in Sources */,
 				D41E6054155145AB001A12E9 /* CCBReader.cpp in Sources */,
-				D41E6056155145AB001A12E9 /* CClassFactory.cpp in Sources */,
-				D41E6058155145AB001A12E9 /* CGenDynamic.cpp in Sources */,
-				D41E605A155145AB001A12E9 /* CObject.cpp in Sources */,
+				D41F7349155686AB00A475EA /* CCBCustomClass.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

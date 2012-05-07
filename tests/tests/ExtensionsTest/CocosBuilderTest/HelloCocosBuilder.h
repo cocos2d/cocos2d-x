@@ -27,58 +27,35 @@
 #define cocos2dXReflection_HelloCocosBuilder_h
 
 #include "cocos2d.h"
-#include "CObject.h"
+#include "CCBCustomClass.h"
 
 namespace cocos2d{
-    
-    class HelloCocosBuilder : public CObject, public CCLayer
-    {
-    private:
-        DECLARE_RUNTIME(HelloCocosBuilder) ;
         
+    class HelloCocosBuilder : public extension::CCBCustomClass, public CCLayer
+    {        
     public:
-        SET(HelloCocosBuilder, CCSprite*, sprtBurst)
-        SET(HelloCocosBuilder, CCSprite*, sprtIcon)
+        HelloCocosBuilder();
+        ~HelloCocosBuilder();
         
-    public:
-        HelloCocosBuilder(){}
-        
-        static void* createInstance() 
+        static extension::CCBCustomClass* createInstance() 
         {
-            return new HelloCocosBuilder ;
-        }
-    public:
-        // virtual method
-        virtual void didLoadFromCCB() ;
-        
-        // regist function
-        virtual void registMethod()
-        {
-            /*
-            REGISTMETHOD(pressedButton) ;
-            methodMap.insert(pair<string, callBack>("pressedButton", HelloCocosBuilder::pressedButton)) ;
-            methodMap["pressedButton"] = pressedButton ;
-            REGISTMETHOD(pressedButton2) ;
-             */
-        }
-        virtual void registProperty() 
-        {
-            //propertyMap.insert(pair<string, setValue>("setSprtBurst", setSprtBurst)) ;
-            REGIST_PROPERTY(setsprtBurst)
-            REGIST_PROPERTY(setsprtIcon)
+            return new HelloCocosBuilder() ;
         }
         
-        // this function will be called when button pressed,
-        // then dispatch the messages
-        virtual void menuCallBack(CCObject *sender) ;
+    public:
+        // implement 3 pure virtual methods inherited from CCBCustomClass
+        virtual bool callbackSetChildren(const char* name, CCObject* node);
+        virtual void callbackAfterCCBLoaded();
+        virtual void callbackInvokeMethods(CCNode *sender);
+
 
     private:
         void pressedButton(CCObject*sender) ;
         void pressedButton2(CCObject*sender) ;
         
     protected:
-        static CCSprite* sprtBurst ;
-        static CCSprite* sprtIcon ;
+        CCSprite* m_pSpriteBurst ;
+        CCSprite* m_pSpriteIcon ;
 
     } ;
 }
