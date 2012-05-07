@@ -45,11 +45,10 @@ namespace cocos2d{
     public:
         // implement 3 pure virtual methods inherited from CCBCustomClass
         virtual bool callbackSetChildren(const char* name, CCObject* node);
+        virtual SEL_MenuHandler callbackGetSelectors(const char* selectorName);
         virtual void callbackAfterCCBLoaded();
-        virtual void callbackInvokeMethods(CCNode *sender);
 
 
-    private:
         void pressedButton(CCObject*sender) ;
         void pressedButton2(CCObject*sender) ;
         

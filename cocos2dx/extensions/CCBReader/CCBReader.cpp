@@ -424,12 +424,9 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         }
 		
 		//deallocate
-		delete spriteFileNormal;
-		spriteFileNormal = NULL;
-		delete spriteFileSelected;
-		spriteFileSelected = NULL;
-		delete spriteFileDisabled;
-		spriteFileDisabled = NULL;
+        CC_SAFE_DELETE(spriteFileNormal);
+        CC_SAFE_DELETE(spriteFileSelected);
+        CC_SAFE_DELETE(spriteFileDisabled);
         
         if (!spriteNormal) spriteNormal = CCSprite::spriteWithFile("missing-texture.png");
         if (!spriteSelected) spriteSelected = CCSprite::spriteWithFile("missing-texture.png");
@@ -445,17 +442,18 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
                 target = (CCNode*)owner ;
             
         }
-        CCString *selectorName = (CCString*)props->objectForKey("selector") ;
         
-        // TBD: not elegance here. If users want to call other methods, they should 
-        // add the method in CCBCustomClass
-        SEL_MenuHandler sel = menu_selector(CCBCustomClass::callbackInvokeMethods) ;
+        CCString *selectorName = (CCString*)props->objectForKey("selector") ;
+        SEL_MenuHandler sel = NULL;
 
-        if ( selectorName->m_sString.empty() )
+        if ( selectorName->length() )
+        {
+            sel = dynamic_cast<CCBCustomClass*>(target)->callbackGetSelectors(selectorName->getCString());
+        }
+        else
         {
             CCLOG("WARNING! CCMenuItemImage target doesn't respond to selector %@",selectorName) ;
             target = NULL ;
-            sel = NULL ;
         }
         
 		node = (CCNode*)CCMenuItemImage::itemWithNormalSprite((CCNode*) spriteNormal, (CCNode*) spriteSelected, (CCNode*) spriteDisabled, target, sel);
