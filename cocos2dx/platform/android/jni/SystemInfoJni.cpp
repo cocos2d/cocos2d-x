@@ -53,6 +53,7 @@ extern "C"
 			t.env->DeleteLocalRef(t.classID);
 			CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
 			ret->autorelease();
+			t.env->DeleteLocalRef(str);
 
 			LOGD("package name %s", ret->m_sString.c_str());
 
@@ -78,6 +79,7 @@ extern "C"
 			t.env->DeleteLocalRef(t.classID);
 	        CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
 			ret->autorelease();
+			t.env->DeleteLocalRef(str);
 
 	        LOGD("language name %s", ret.c_str());
 
