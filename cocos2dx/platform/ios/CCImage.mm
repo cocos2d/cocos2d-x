@@ -170,7 +170,7 @@ static bool _isValidFontName(const char *fontName)
     return ret;
 }
 
-static CGSize _caculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize *constrainSize, bool isZfont)
+static CGSize _calculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize *constrainSize, bool isZfont)
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
     CGSize dim = CGSizeZero;
@@ -186,7 +186,7 @@ static CGSize _caculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize 
         CGSize tmp;
         if (isZfont)
         {
-            tmp = [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font constrainedToSize:textRect];
+            tmp = [FontLabelStringDrawingHelper sizeWithZFont:s zfont:font constrainedToSize:textRect];
         }
         else
         {
@@ -222,7 +222,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         font = [UIFont fontWithName:fntName size:nSize];  
         if (font)
         {
-                dim = _caculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
+                dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
         }      
         
 #if CC_FONT_LABEL_SUPPORT
@@ -249,7 +249,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                 
                 if (font)
                 {
-                    dim = _caculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
+                    dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
                 }  
         }
 
