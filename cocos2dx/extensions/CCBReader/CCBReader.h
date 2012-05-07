@@ -40,20 +40,20 @@ class CCBReader : public CCObject
 {        
 public:
 #pragma mark - read property from dict    
-    static CCScene* sceneWithNodeGraphFromFile(const char* file);
     
-    static CCScene* sceneWithNodeGraphFromFile(const char* file, CCNode* owner);
-
-    static CCNode* nodeGraphFromFile(const char* file);
-    
-    static CCNode* nodeGraphFromFile(const char* file, CCNode* owner);
-    
-    static CCNode* nodeGraphFromDictionary(CCDictionary*dict) ;
-
-    static CCNode* nodeGraphFromDictionary(CCDictionary* dict, CCNode* owner);
-    
+    static CCNode* nodeGraphFromFile(const char* ccbFileName, CCNode* owner = NULL);
+            
 #pragma mark -  value from dict
 private:
+    static CCNode* nodeGraphFromDictionary(CCDictionary* dict, 
+                                           CCDictionary* extraProps, 
+                                           const char* ccbFilePath, 
+                                           CCNode* owner);    
+    static CCNode* createCustomClassWithName(CCString* className);
+    
+    static CCNode* ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extraProps, 
+                                          const char* assetsDir, CCNode* owner, CCNode* root);
+    
     static int intValFromDict(CCDictionary* dict, const std::string key);
     
     static float floatValFromDict(CCDictionary* dict, const std::string key);
@@ -74,18 +74,7 @@ private:
                                                      const std::string key);
     
 #pragma mark -    setExtraProp
-private:    
-    static CCNode* createCustomClassWithName(CCString* className);
-    
-    static CCNode* nodeGraphFromDictionary(CCDictionary* dict, CCDictionary* extraProps, 
-                                           const char* assetsDir, CCNode* owner);
-    
-    static CCNode* ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extraProps, 
-                                          const char* assetsDir, CCNode* owner);
-    
-    static CCNode* ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extraProps, 
-                                          const char* assetsDir, CCNode* owner, CCNode* root);
-    
+private:        
     static void setExtraProp(CCObject* prop, const char* key, int tag, CCDictionary* dict);
     
     static void setPropsForNode(CCNode* node, CCDictionary* props, CCDictionary* extraProps);
@@ -111,7 +100,8 @@ private:
     static void setPropsForLayerGradient(CCLayerGradient* node, CCDictionary* props, CCDictionary* extraProps);
     
 private:
-    enum {
+    enum 
+    {
         kCCBMemberVarAssignmentTypeNone = 0,
         kCCBMemberVarAssignmentTypeDocumentRoot = 1,
         kCCBMemberVarAssignmentTypeOwner = 2,

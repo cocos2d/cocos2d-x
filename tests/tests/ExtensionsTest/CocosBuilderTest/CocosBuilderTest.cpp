@@ -24,7 +24,7 @@
 
 #include "CocosBuilderTest.h"
 #include "../../testResource.h"
-#include "CCBReader.h"
+#include "extensions/CCBReader/CCBReader.h"
 #include "HelloCocosBuilder.h"
 
 USING_NS_CC;
@@ -35,7 +35,7 @@ void CocosBuilderTestScene::runThisTest()
                                 "HelloCocosBuilder", 
                                 HelloCocosBuilder::createInstance);
     
-    CCNode* node = CCBReader::nodeGraphFromFile("example.ccb") ;
+    CCNode* node = CCBReader::nodeGraphFromFile("CocosBuilder/example.ccb");
 	this->addChild(node) ;
     
     CCDirector::sharedDirector()->replaceScene(this);

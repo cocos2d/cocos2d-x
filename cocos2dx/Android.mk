@@ -56,6 +56,8 @@ extensions/CCControlExtension/CCSpacer.cpp \
 extensions/CCListView/CCListView.cpp \
 extensions/CCListView/CCListViewCell.cpp \
 extensions/CCTextureWatcher/CCTextureWatcher.cpp \
+extensions/CCBReader/CCBCustomClass.cpp \
+extensions/CCBReader/CCBReader.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
