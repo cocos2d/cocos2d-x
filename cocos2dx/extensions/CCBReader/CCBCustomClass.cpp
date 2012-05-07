@@ -1,6 +1,5 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2012 XiaoLong Zhang, Chukong Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,10 +22,57 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include <iostream>
-#include "CGenDynamic.h"
+#include "CCBCustomClass.h"
 
-CGenDynamic::CGenDynamic(std::string name, createClass method)
+USING_NS_CC_EXT;
+
+static CCBCustomClassFactory g_FactoryInstance;
+
+// CCBCustomClassFactory
+CCBCustomClassFactory::CCBCustomClassFactory()
 {
-    CClassFactory::sharedClassFactory().registClass(name, method) ;
+    m_pCustomCreatorsMap = new CUSTOM_CLASS_MAP;
 }
+
+CCBCustomClassFactory::~CCBCustomClassFactory()
+{
+    CC_SAFE_DELETE(m_pCustomCreatorsMap);
+}
+
+CCBCustomClassFactory* CCBCustomClassFactory::sharedFactory()
+{
+    // TBD: don't use static global variable, so ugly
+    return &g_FactoryInstance;
+}
+
+bool CCBCustomClassFactory::registCustomClass(const char* name, FUNC_CUSTON_CLASS_CREATOR pfnCreator)
+{
+    bool bRetVal = false;
+        
+    if (! (*m_pCustomCreatorsMap)[name] )
+    {
+        (*m_pCustomCreatorsMap)[name] = pfnCreator;
+        bRetVal = true;
+    }
+    else
+    {
+        CCLOG("CCB: key = [%s] in m_pCustomCreatorsMap is already registed", name);
+    }
+        
+    return bRetVal;
+}
+
+CCBCustomClass* CCBCustomClassFactory::createCustomClassWithName(const char* name)
+{
+    CCBCustomClass* pRetVal = NULL;
+    FUNC_CUSTON_CLASS_CREATOR pfnCreator = (*m_pCustomCreatorsMap)[name];
+    
+    if (pfnCreator)
+    {
+        CCLOG("CCB: creating [%s] object", name);
+        pRetVal = pfnCreator();
+    }
+    
+    return pRetVal;
+}
+

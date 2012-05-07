@@ -1,6 +1,5 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2012 XiaoLong Zhang, Chukong Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,28 +22,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef cocos2dXReflection_CGenDynamic_h
-#define cocos2dXReflection_CGenDynamic_h
+#ifndef _CC_CUSTOM_CLASS_H_
+#define _CC_CUSTOM_CLASS_H_
 
-#include <iostream>
-#include "CClassFactory.h"
+#include "cocos2d.h"
+#include <map>
 
-// use DECLARE_RUNTIME in headerfile, then use IMPLEMENT_RUNTIME in cpp file
-// then the class will be new as a static global object
-// during this phase, its creator will be called
-class CGenDynamic
+NS_CC_EXT_BEGIN
+    
+class CCBCustomClass;
+typedef CCBCustomClass* (*FUNC_CUSTON_CLASS_CREATOR)(void);
+typedef std::map<std::string, FUNC_CUSTON_CLASS_CREATOR> CUSTOM_CLASS_MAP;
+
+// This is a simple reflection implement for custom classes in CocosBuilder
+class CCBCustomClass : public cocos2d::CCNode
+{
+public:    
+    static CCBCustomClass* createInstance() { return NULL; }; // cannot create virual class here
+    
+    CCBCustomClass() {};
+    virtual ~CCBCustomClass() {};
+    
+    // implement 3 pure virtual methods inherited from CCBCustomClass
+    virtual bool callbackSetChildren(const char* name, cocos2d::CCObject* node) = 0;
+    virtual void callbackInvokeMethods(cocos2d::CCNode *sender) = 0;
+    virtual void callbackAfterCCBLoaded() = 0;
+};
+
+
+
+class CCBCustomClassFactory
 {
 public:
-    CGenDynamic(std::string name, createClass method) ;
-} ;
+    CCBCustomClassFactory();
+    virtual ~CCBCustomClassFactory();
+    
+    static CCBCustomClassFactory* sharedFactory();
 
-#define DECLARE_RUNTIME(class_name)     \
-std::string class_name##Name ;               \
-static CGenDynamic* class_name##gd
+    bool registCustomClass(const char* name, FUNC_CUSTON_CLASS_CREATOR pfnCreator);
+    CCBCustomClass* createCustomClassWithName(const char* name);
+    
+protected:
+    CUSTOM_CLASS_MAP* m_pCustomCreatorsMap;
+};
 
-#define IMPLEMENT_RUNTIME(class_name)   \
-CGenDynamic* class_name::class_name##gd \
-= new CGenDynamic(#class_name, class_name::createInstance) ;
+NS_CC_EXT_END;
 
-
-#endif
+#endif // _CC_CUSTOM_CLASS_H_

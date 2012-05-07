@@ -25,9 +25,16 @@
 #include "CocosBuilderTest.h"
 #include "../../testResource.h"
 #include "CCBReader.h"
+#include "HelloCocosBuilder.h"
+
+USING_NS_CC;
 
 void CocosBuilderTestScene::runThisTest()
 {
+    CCBCustomClassFactory::sharedFactory()->registCustomClass(
+                                "HelloCocosBuilder", 
+                                HelloCocosBuilder::createInstance);
+    
     CCNode* node = CCBReader::nodeGraphFromFile("example.ccb") ;
 	this->addChild(node) ;
     
