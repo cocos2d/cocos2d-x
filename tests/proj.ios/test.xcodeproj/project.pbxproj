@@ -594,22 +594,9 @@
 		D41E604915514587001A12E9 /* HelloCocosBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E604615514587001A12E9 /* HelloCocosBuilder.cpp */; };
 		D41E6054155145AB001A12E9 /* CCBReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E604B155145AB001A12E9 /* CCBReader.cpp */; };
 		D41E6055155145AB001A12E9 /* CCBReader.h in Headers */ = {isa = PBXBuildFile; fileRef = D41E604C155145AB001A12E9 /* CCBReader.h */; };
-		D41E606E1551461A001A12E9 /* btn-test-0.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E605F1551461A001A12E9 /* btn-test-0.png */; };
-		D41E606F1551461A001A12E9 /* btn-test-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60601551461A001A12E9 /* btn-test-1.png */; };
-		D41E60701551461A001A12E9 /* btn-test-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60611551461A001A12E9 /* btn-test-2.png */; };
-		D41E60711551461A001A12E9 /* burst.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60621551461A001A12E9 /* burst.png */; };
-		D41E60721551461A001A12E9 /* example.ccb in Resources */ = {isa = PBXBuildFile; fileRef = D41E60631551461A001A12E9 /* example.ccb */; };
-		D41E60741551461A001A12E9 /* jungle.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60651551461A001A12E9 /* jungle.png */; };
-		D41E60751551461A001A12E9 /* logo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60661551461A001A12E9 /* logo-icon.png */; };
-		D41E60761551461A001A12E9 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60671551461A001A12E9 /* logo.png */; };
-		D41E60771551461A001A12E9 /* markerfelt24shadow.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D41E60681551461A001A12E9 /* markerfelt24shadow.fnt */; };
-		D41E60781551461A001A12E9 /* markerfelt24shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E60691551461A001A12E9 /* markerfelt24shadow.png */; };
-		D41E60791551461A001A12E9 /* particle-fire.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E606A1551461A001A12E9 /* particle-fire.png */; };
-		D41E607A1551461A001A12E9 /* particle-smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E606B1551461A001A12E9 /* particle-smoke.png */; };
-		D41E607B1551461A001A12E9 /* particle-snow.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E606C1551461A001A12E9 /* particle-snow.png */; };
-		D41E607C1551461A001A12E9 /* particle-stars.png in Resources */ = {isa = PBXBuildFile; fileRef = D41E606D1551461A001A12E9 /* particle-stars.png */; };
 		D41F7349155686AB00A475EA /* CCBCustomClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41F7347155686AB00A475EA /* CCBCustomClass.cpp */; };
 		D41F734A155686AB00A475EA /* CCBCustomClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D41F7348155686AB00A475EA /* CCBCustomClass.h */; };
+		D41F735B15580AC600A475EA /* CocosBuilder in Resources */ = {isa = PBXBuildFile; fileRef = D41F735A15580AC600A475EA /* CocosBuilder */; };
 		D429012E13B1D16900A3772F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D429012D13B1D16900A3772F /* libcurl.a */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -1361,22 +1348,9 @@
 		D41E604715514587001A12E9 /* HelloCocosBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloCocosBuilder.h; sourceTree = "<group>"; };
 		D41E604B155145AB001A12E9 /* CCBReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBReader.cpp; sourceTree = "<group>"; };
 		D41E604C155145AB001A12E9 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
-		D41E605F1551461A001A12E9 /* btn-test-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-test-0.png"; sourceTree = "<group>"; };
-		D41E60601551461A001A12E9 /* btn-test-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-test-1.png"; sourceTree = "<group>"; };
-		D41E60611551461A001A12E9 /* btn-test-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-test-2.png"; sourceTree = "<group>"; };
-		D41E60621551461A001A12E9 /* burst.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = burst.png; sourceTree = "<group>"; };
-		D41E60631551461A001A12E9 /* example.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = example.ccb; sourceTree = "<group>"; };
-		D41E60651551461A001A12E9 /* jungle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jungle.png; sourceTree = "<group>"; };
-		D41E60661551461A001A12E9 /* logo-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-icon.png"; sourceTree = "<group>"; };
-		D41E60671551461A001A12E9 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		D41E60681551461A001A12E9 /* markerfelt24shadow.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markerfelt24shadow.fnt; sourceTree = "<group>"; };
-		D41E60691551461A001A12E9 /* markerfelt24shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = markerfelt24shadow.png; sourceTree = "<group>"; };
-		D41E606A1551461A001A12E9 /* particle-fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particle-fire.png"; sourceTree = "<group>"; };
-		D41E606B1551461A001A12E9 /* particle-smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particle-smoke.png"; sourceTree = "<group>"; };
-		D41E606C1551461A001A12E9 /* particle-snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particle-snow.png"; sourceTree = "<group>"; };
-		D41E606D1551461A001A12E9 /* particle-stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particle-stars.png"; sourceTree = "<group>"; };
 		D41F7347155686AB00A475EA /* CCBCustomClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBCustomClass.cpp; sourceTree = "<group>"; };
 		D41F7348155686AB00A475EA /* CCBCustomClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBCustomClass.h; sourceTree = "<group>"; };
+		D41F735A15580AC600A475EA /* CocosBuilder */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CocosBuilder; sourceTree = "<group>"; };
 		D429012D13B1D16900A3772F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2237,7 +2211,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D41E605E1551461A001A12E9 /* CocosBuilder */,
+				D41F735A15580AC600A475EA /* CocosBuilder */,
 				789B560C15197BE00038CD1E /* animations */,
 				78ED2F84153D5BC500330E29 /* extensions */,
 				789B560E15197BF30038CD1E /* fonts */,
@@ -3099,27 +3073,6 @@
 			path = CCBReader;
 			sourceTree = "<group>";
 		};
-		D41E605E1551461A001A12E9 /* CocosBuilder */ = {
-			isa = PBXGroup;
-			children = (
-				D41E605F1551461A001A12E9 /* btn-test-0.png */,
-				D41E60601551461A001A12E9 /* btn-test-1.png */,
-				D41E60611551461A001A12E9 /* btn-test-2.png */,
-				D41E60621551461A001A12E9 /* burst.png */,
-				D41E60631551461A001A12E9 /* example.ccb */,
-				D41E60651551461A001A12E9 /* jungle.png */,
-				D41E60661551461A001A12E9 /* logo-icon.png */,
-				D41E60671551461A001A12E9 /* logo.png */,
-				D41E60681551461A001A12E9 /* markerfelt24shadow.fnt */,
-				D41E60691551461A001A12E9 /* markerfelt24shadow.png */,
-				D41E606A1551461A001A12E9 /* particle-fire.png */,
-				D41E606B1551461A001A12E9 /* particle-smoke.png */,
-				D41E606C1551461A001A12E9 /* particle-snow.png */,
-				D41E606D1551461A001A12E9 /* particle-stars.png */,
-			);
-			path = CocosBuilder;
-			sourceTree = "<group>";
-		};
 		D4E39D2F1342E22F00EBA039 /* ZwoptexTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -3560,20 +3513,7 @@
 				78ED2F85153D5BC500330E29 /* extensions in Resources */,
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
 				7855E0E2153FEF240059DD9A /* Icon.png in Resources */,
-				D41E606E1551461A001A12E9 /* btn-test-0.png in Resources */,
-				D41E606F1551461A001A12E9 /* btn-test-1.png in Resources */,
-				D41E60701551461A001A12E9 /* btn-test-2.png in Resources */,
-				D41E60711551461A001A12E9 /* burst.png in Resources */,
-				D41E60721551461A001A12E9 /* example.ccb in Resources */,
-				D41E60741551461A001A12E9 /* jungle.png in Resources */,
-				D41E60751551461A001A12E9 /* logo-icon.png in Resources */,
-				D41E60761551461A001A12E9 /* logo.png in Resources */,
-				D41E60771551461A001A12E9 /* markerfelt24shadow.fnt in Resources */,
-				D41E60781551461A001A12E9 /* markerfelt24shadow.png in Resources */,
-				D41E60791551461A001A12E9 /* particle-fire.png in Resources */,
-				D41E607A1551461A001A12E9 /* particle-smoke.png in Resources */,
-				D41E607B1551461A001A12E9 /* particle-snow.png in Resources */,
-				D41E607C1551461A001A12E9 /* particle-stars.png in Resources */,
+				D41F735B15580AC600A475EA /* CocosBuilder in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3982,6 +3922,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../CocosDenshion/include \"$(SRCROOT)/../../chipmunk/include/constraints\" \"$(SRCROOT)/../../chipmunk/include/chipmunk\" \"$(SRCROOT)/../../cocos2dx/kazmath/include\" \"$(SRCROOT)/../..\" \"$(SRCROOT)/../../cocos2dx\" \"$(SRCROOT)/../../cocos2dx/include\" \"$(SRCROOT)/../../cocos2dx/platform/third_party/ios\"";
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Debug;
@@ -4023,6 +3964,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../CocosDenshion/include \"$(SRCROOT)/../../chipmunk/include/constraints\" \"$(SRCROOT)/../../chipmunk/include/chipmunk\" \"$(SRCROOT)/../../cocos2dx/kazmath/include\" \"$(SRCROOT)/../..\" \"$(SRCROOT)/../../cocos2dx\" \"$(SRCROOT)/../../cocos2dx/include\" \"$(SRCROOT)/../../cocos2dx/platform/third_party/ios\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -27,7 +27,7 @@
 #define cocos2dXReflection_HelloCocosBuilder_h
 
 #include "cocos2d.h"
-#include "CCBCustomClass.h"
+#include "extensions/CCBReader/CCBCustomClass.h"
 
 namespace cocos2d{
         

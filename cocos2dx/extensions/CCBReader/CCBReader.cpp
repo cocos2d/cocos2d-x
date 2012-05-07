@@ -360,16 +360,8 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
 	CCString* className = (CCString*) dict->objectForKey("class");
     CCDictionary* props = (CCDictionary*) dict->objectForKey("properties");
     CCArray* children = (CCArray*) dict->objectForKey("children");
-	//CCDictionary* children = (CCDictionary*) dict->objectForKey("children");
-	//std::vector<std::string> allKeys = dict->allKeysForObject(dict->objectForKey("children"));
-	//CCString* customString = props->objectForKey("memberVarAssignmentName");
+
     CCString* customClass = (CCString*)props->objectForKey("customClass");
-//    CCLOG("customClass is %s", customClass->toStdString().c_str()) ;
-    
-    //CObject*obj = (CObject*)createCustomClassWithName(customClass);
-//
-//	CCLOG("ccObjectFromDictionary className:%s customClassName:%s", className->m_sString.c_str(), (customClass ? customClass->m_sString.c_str() : "-"));
-//
 	
     if (extraProps) customClass = NULL;
     
@@ -510,8 +502,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             node = (CCNode*)CCSprite::spriteWithFile(spriteFile->m_sString.c_str());
         }
 		
-		delete spriteFile;
-		spriteFile = 0;
+        CC_SAFE_RELEASE_NULL(spriteFile);
         
         if (!node) node = (CCNode*)CCSprite::spriteWithFile("missing-texture.png");
         
@@ -666,15 +657,13 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
     return node;
 }
 
-CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extraProps, const char* assetsDir, CCNode* owner)
-{
-	 return ccObjectFromDictionary(dict, extraProps, assetsDir, owner, NULL);
-}
-
 #pragma mark -
 #pragma mark initialize ccbreader
 
-CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict, CCDictionary* extraProps, const char* assetsDir, CCNode* owner)
+CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict, 
+                                           CCDictionary* extraProps,
+                                           const char* assetsDir, 
+                                           CCNode* owner)
 {
 	if (!dict)
     {
@@ -697,45 +686,27 @@ CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict, CCDictionary* ext
     }
     
     CCDictionary* nodeGraph = (CCDictionary*) dict->objectForKey("nodeGraph");
-    return ccObjectFromDictionary(nodeGraph, extraProps, assetsDir, owner);
-}
-
-CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary*dict) 
-{
-    return nodeGraphFromDictionary(dict, NULL, "", NULL) ;
-}
-
-CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict, CCNode* owner)
-{
-	return nodeGraphFromDictionary(dict, NULL, "", owner);
-}
-
-CCNode* CCBReader::nodeGraphFromFile(const char* file)
-{
-    return nodeGraphFromFile(file, NULL) ;
+    return ccObjectFromDictionary(nodeGraph, extraProps, assetsDir, owner, NULL);
 }
 
 CCNode* CCBReader::nodeGraphFromFile(const char* file, CCNode* owner)
 {
-
 	CCLOG("CCBReader path is: %s", file);    
-	std::string xmlFile = CCFileUtils::fullPathFromRelativePath(file);    
-    CCDictionary* dict = (CCDictionary*) CCDictionary::dictionaryWithContentsOfFileThreadSafe(xmlFile.c_str());
+	std::string ccbFilePath(file);
+    std::string ccbFileDir;
+    
+    // find ccbFileDir before "/" or "\"
+    // for example, if ccbFilePath = "CocosBuilder/example.ccb", 
+    // then we should make ccbFileDir = "CocosBuilder/"
+    size_t lastSlash = ccbFilePath.find_last_of("/");
+    if (lastSlash != std::string::npos)
+    {
+        ccbFileDir = ccbFilePath.substr(0, lastSlash) + "/";
+    }
+    
+    CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(ccbFilePath.c_str());
 	CCAssert(dict != NULL, "CCBReader: file not found");
     
-	return nodeGraphFromDictionary(dict, owner);
+	return nodeGraphFromDictionary(dict, NULL, ccbFileDir.c_str(), owner);
 }
 
-CCScene* CCBReader::sceneWithNodeGraphFromFile(const char* file)
-{
-    return sceneWithNodeGraphFromFile(file, NULL) ;
-}
-
-CCScene* CCBReader::sceneWithNodeGraphFromFile(const char* file, CCNode* owner)
-{
-	CCNode* node = nodeGraphFromFile(file, owner);
-    CCScene* scene = CCScene::node();
-
-    scene->addChild(node);
-    return scene;	
-}
