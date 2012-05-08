@@ -49,6 +49,7 @@ void CCLog(const char * pszFormat, ...)
     MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
     OutputDebugStringA("\n");
+    printf("%s\n", szBuf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)

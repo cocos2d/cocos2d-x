@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Apr 17 15:56:14 2012.
+** Generated automatically by tolua++-1.0.92 on Tue May  8 10:33:03 2012.
 */
 
 #include <vector>
