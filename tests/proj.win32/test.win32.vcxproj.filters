@@ -169,6 +169,9 @@
     <Filter Include="classes\tests\MutiTouchTest">
       <UniqueIdentifier>{5ea85c7b-9c54-4125-8b75-cf540df9cb0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest">
+      <UniqueIdentifier>{2e6b7147-7836-4a98-a2f5-a00080e7ca23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -398,6 +401,12 @@
     </ClCompile>
     <ClCompile Include="..\tests\MutiTouchTest\MutiTouchTest.cpp">
       <Filter>classes\tests\MutiTouchTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.cpp">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -742,6 +751,12 @@
     </ClInclude>
     <ClInclude Include="..\tests\MutiTouchTest\MutiTouchTest.h">
       <Filter>classes\tests\MutiTouchTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
