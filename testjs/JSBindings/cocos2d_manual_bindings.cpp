@@ -10,6 +10,13 @@ JSBool S_CCNode::jsaddChild(JSContext *cx, uint32_t argc, jsval *vp) {
 		int tag = 0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o/ii", &arg0, &zorder, &tag);
 		CCNode* narg0; JSGET_PTRSHELL(CCNode, narg0, arg0);
+		// if no zorder / tag, then just get the values from the node
+		if (argc <= 1) {
+			zorder = narg0->getZOrder();
+		}
+		if (argc <= 2) {
+			tag = narg0->getTag();
+		}
 		self->addChild(narg0, zorder, tag);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
