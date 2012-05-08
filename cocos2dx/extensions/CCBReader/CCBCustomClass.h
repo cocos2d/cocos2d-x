@@ -37,17 +37,14 @@ NS_CC_EXT_BEGIN
  class MyCustomLayer : public CCBCustomClass, public CCLayer
  CCBCustomClass is a pure virtual class. It doesn't inherit CCObject to prevent dead-diamond.
 */
-class CCBCustomClass
+class CCBCustomClassProtocol
 {
 public:    
-    typedef CCBCustomClass* (*FUNC_CUSTON_CLASS_CREATOR)(void);
-    typedef std::map<std::string, FUNC_CUSTON_CLASS_CREATOR> CUSTOM_CLASS_MAP;
-    
     /** You should implement this static function in your custom class, and return a valid object */
-    static CCBCustomClass* createInstance() { return NULL; }; // cannot create virual class here
+    static CCBCustomClassProtocol* createInstance() { return NULL; }; // cannot create virual class here
     
-    CCBCustomClass() {};
-    virtual ~CCBCustomClass() {};
+    CCBCustomClassProtocol() {};
+    virtual ~CCBCustomClassProtocol() {};
     
     /** This pure virtual methods should be implemented in your custom class
         please refer to tests/ExtensionsTest/CocosBuilderTest as a sample */
@@ -67,9 +64,15 @@ public:
  
  See tests/Extensionstest/CocosBuilderTest/CocosBuilderTest.cpp as the reference
  */
-class CCBCustomClassFactory
+class CC_DLL CCBCustomClassFactory
 {
-public:
+private:    
+    /// a function pointer for CCCustomClassProtocol::createInstance
+    typedef CCBCustomClassProtocol* (*FUNC_CUSTON_CLASS_CREATOR)();  
+    typedef std::map<std::string, FUNC_CUSTON_CLASS_CREATOR> CUSTOM_CLASS_MAP;
+    CUSTOM_CLASS_MAP* m_pCustomCreatorsMap;
+    
+public:    
     CCBCustomClassFactory();
     virtual ~CCBCustomClassFactory();
     
@@ -81,13 +84,12 @@ public:
         CCBCustomClassFactory::sharedFactory()->registCustomClass("HelloCocosBuilder", 
                                                                   HelloCocosBuilder::createInstance);
      */
-    bool registCustomClass(const char* name, CCBCustomClass::FUNC_CUSTON_CLASS_CREATOR pfnCreator);
+    bool registCustomClass(const char* name, FUNC_CUSTON_CLASS_CREATOR pfnCreator);
     
     /** This function is only used in CCBReader. Developers don't need to know it */
-    CCBCustomClass* createCustomClassWithName(const char* name);
+    CCBCustomClassProtocol* createCustomClassWithName(const char* name);
     
-protected:
-    CCBCustomClass::CUSTOM_CLASS_MAP* m_pCustomCreatorsMap;
+
 };
 
 NS_CC_EXT_END;

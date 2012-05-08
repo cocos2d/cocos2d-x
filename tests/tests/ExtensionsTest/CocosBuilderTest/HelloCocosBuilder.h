@@ -31,13 +31,13 @@
 
 namespace cocos2d{
         
-    class HelloCocosBuilder : public extension::CCBCustomClass, public CCLayer
+    class HelloCocosBuilder : public extension::CCBCustomClassProtocol, public CCLayer
     {        
     public:
         HelloCocosBuilder();
         ~HelloCocosBuilder();
         
-        static extension::CCBCustomClass* createInstance() 
+        static extension::CCBCustomClassProtocol* createInstance() 
         {
             return new HelloCocosBuilder() ;
         }
