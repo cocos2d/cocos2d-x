@@ -77,6 +77,28 @@ int CCApplication::run()
             // Quit message loop.
             break;
         }
+        
+        if (WM_CHAR == msg.message)
+        {
+            // Press keyboard
+            TCHAR chCode = (TCHAR)msg.wParam;
+            if (chCode == 0x18 || chCode == 0x12) // CTRL+X = QUIT, CTRL+R = RESTART
+            {
+                SendMessage(msg.hwnd, WM_CLOSE, NULL, NULL);
+            }
+            if (chCode == 0x12) // CTRL+R = RESTART
+            {
+                TCHAR szAppPath[MAX_PATH] = {0};
+	            GetModuleFileName(NULL, szAppPath, MAX_PATH);
+
+	            STARTUPINFO si;
+	            PROCESS_INFORMATION pi;
+	            memset(&si, 0, sizeof(si));
+	            memset(&pi, 0, sizeof(pi));
+	            si.cb = sizeof(STARTUPINFO);
+	            CreateProcess(NULL, szAppPath, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
+            }
+        }
 
         // Deal with windows message.
         if (! m_hAccelTable || ! TranslateAccelerator(msg.hwnd, m_hAccelTable, &msg))
