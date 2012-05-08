@@ -119,19 +119,22 @@ ScriptingCore::ScriptingCore()
 	JS_DefineFunction(this->cx, cocos, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
-void ScriptingCore::evalString(const char *string)
+bool ScriptingCore::evalString(const char *string, jsval *outVal)
 {
 	jsval rval;
 	JSString *str;
 	JSBool ok;
 	const char *filename = "noname";
 	uint32_t lineno = 0;
-	ok = JS_EvaluateScript(cx, global, string, strlen(string), filename, lineno, &rval);
-	if (JSVAL_IS_NULL(rval) || rval == JSVAL_FALSE) {
+	if (outVal == NULL) {
+		outVal = &rval;
+	}
+	ok = JS_EvaluateScript(cx, global, string, strlen(string), filename, lineno, outVal);
+	if (ok == JS_FALSE) {
 		CCLog("error evaluating script:\n%s", string);
 	}
 	str = JS_ValueToString(cx, rval);
-	printf("js result: %s\n", JS_EncodeString(cx, str));
+	return ok;
 }
 
 void ScriptingCore::runScript(const char *path)
@@ -157,7 +160,7 @@ void ScriptingCore::runScript(const char *path)
 		JSBool ok;
 		jsval rval;
 		ok = JS_EvaluateScript(this->cx, this->global, (char *)content, contentSize, path, 1, &rval);
-		if (JSVAL_IS_NULL(rval) || rval == JSVAL_FALSE) {
+		if (ok == JS_FALSE) {
 			CCLog("error evaluating script:\n%s", content);
 		}
 		free(content);

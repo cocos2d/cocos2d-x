@@ -30,8 +30,10 @@ public:
 	/**
 	 * will eval the specified string
 	 * @param string The string with the javascript code to be evaluated
+	 * @param outVal The jsval that will hold the return value of the evaluation.
+	 * Can be NULL.
 	 */
-	void evalString(const char *string);
+	bool evalString(const char *string, jsval *outVal);
 
 	/**
 	 * will run the specified string
