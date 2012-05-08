@@ -106,6 +106,9 @@
     <Filter Include="extensions\CCTextureWatcher">
       <UniqueIdentifier>{772b5d31-38b2-4f19-80da-4da6c37b58c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extensions\CCBReader">
+      <UniqueIdentifier>{4647762c-52c3-475d-968a-96aa48dbcd0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\effects\CCGrabber.cpp">
@@ -479,6 +482,12 @@
     </ClCompile>
     <ClCompile Include="..\extensions\CCListView\CCListViewCell.cpp">
       <Filter>extensions\CCListView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extensions\CCBReader\CCBCustomClass.cpp">
+      <Filter>extensions\CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extensions\CCBReader\CCBReader.cpp">
+      <Filter>extensions\CCBReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -969,6 +978,12 @@
     </ClInclude>
     <ClInclude Include="..\extensions\CCListView\CCListViewCell.h">
       <Filter>extensions\CCListView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extensions\CCBReader\CCBReader.h">
+      <Filter>extensions\CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extensions\CCBReader\CCBCustomClass.h">
+      <Filter>extensions\CCBReader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

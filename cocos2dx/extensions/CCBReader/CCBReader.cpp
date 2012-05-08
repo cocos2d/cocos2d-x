@@ -29,8 +29,7 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-#pragma mark -
-#pragma mark Read value from dictionary
+// Read value from dictionary
 
 int CCBReader::intValFromDict(CCDictionary* dict, const std::string key)
 {
@@ -47,7 +46,7 @@ float CCBReader::floatValFromDict(CCDictionary* dict, const std::string key)
 bool CCBReader::boolValFromDict(CCDictionary* dict, const std::string key)
 {
 	CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-    return valueString->intValue();
+    return (bool) valueString->intValue();
 }
 
 CCPoint CCBReader::pointValFromDict(CCDictionary* dict, const std::string key)
@@ -116,8 +115,7 @@ ccBlendFunc CCBReader::blendFuncValFromDict(CCDictionary* dict, const std::strin
     return blendFunc;
 }
 
-#pragma mark -
-#pragma mark set extra properties
+// set extra properties
 
 void CCBReader::setExtraProp(CCObject* prop, const char* key, int tag, CCDictionary* dict)
 {
@@ -274,7 +272,7 @@ CCNode* CCBReader::createCustomClassWithName(CCString* className)
     
     if (className && className->length())
     {
-        CCBCustomClass* pNewClass = CCBCustomClassFactory::sharedFactory()->createCustomClassWithName(className->getCString());
+        CCBCustomClassProtocol* pNewClass = CCBCustomClassFactory::sharedFactory()->createCustomClassWithName(className->getCString());
         pRetVal = dynamic_cast<CCNode*>(pNewClass);
     }
     
@@ -440,7 +438,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
 
         if ( selectorName->length() )
         {
-            sel = dynamic_cast<CCBCustomClass*>(target)->callbackGetSelectors(selectorName->getCString());
+            sel = dynamic_cast<CCBCustomClassProtocol*>(target)->callbackGetSelectors(selectorName->getCString());
         }
         else
         {
@@ -601,7 +599,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
     if (!root) root = node;
     
     // Add children
-    for (int i = 0; i < children->count(); i++)
+    for (unsigned int i = 0; i < children->count(); i++)
     {
         CCDictionary* childDict = (CCDictionary*) children->objectAtIndex(i);
         CCNode* child = ccObjectFromDictionary(childDict, extraProps, assetsDir, owner, root);
@@ -626,27 +624,25 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         if ( !assignmentName->m_sString.empty() &&
              assignmentType)
         {
-            CCBCustomClass* assignTo = NULL ;
+            CCBCustomClassProtocol* assignTo = NULL ;
             if ( assignmentType == kCCBMemberVarAssignmentTypeOwner )
             {
-                assignTo = dynamic_cast<CCBCustomClass*>(owner);
+                assignTo = dynamic_cast<CCBCustomClassProtocol*>(owner);
             }
             else if ( assignmentType == kCCBMemberVarAssignmentTypeDocumentRoot )
             {
-                assignTo = dynamic_cast<CCBCustomClass*>(root);
+                assignTo = dynamic_cast<CCBCustomClassProtocol*>(root);
             }
             
             if ( assignTo != NULL )
             {
-                CCLOG("assign [%s] to [%s]", assignmentName->getCString(), "");
+                CCLOG("assign [%s]", assignmentName->getCString());
                 assignTo->callbackSetChildren(assignmentName->getCString(), node);
-                // @_@
-                // potential problem: 1、ccb defines a variable, but we cannot find in files
             }
         }
         if (customClass->length())
         {
-            CCBCustomClass* pCustom = dynamic_cast<CCBCustomClass*>(node);
+            CCBCustomClassProtocol* pCustom = dynamic_cast<CCBCustomClassProtocol*>(node);
             if (pCustom)
             {
                 pCustom->callbackAfterCCBLoaded();
@@ -657,8 +653,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
     return node;
 }
 
-#pragma mark -
-#pragma mark initialize ccbreader
+// initialize ccbreader
 
 CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict, 
                                            CCDictionary* extraProps,

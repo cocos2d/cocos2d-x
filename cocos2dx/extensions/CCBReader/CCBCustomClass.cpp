@@ -31,7 +31,7 @@ static CCBCustomClassFactory g_FactoryInstance;
 // CCBCustomClassFactory
 CCBCustomClassFactory::CCBCustomClassFactory()
 {
-    m_pCustomCreatorsMap = new CCBCustomClass::CUSTOM_CLASS_MAP;
+    m_pCustomCreatorsMap = new CUSTOM_CLASS_MAP;
 }
 
 CCBCustomClassFactory::~CCBCustomClassFactory()
@@ -45,7 +45,7 @@ CCBCustomClassFactory* CCBCustomClassFactory::sharedFactory()
     return &g_FactoryInstance;
 }
 
-bool CCBCustomClassFactory::registCustomClass(const char* name, CCBCustomClass::FUNC_CUSTON_CLASS_CREATOR pfnCreator)
+bool CCBCustomClassFactory::registCustomClass(const char* name, FUNC_CUSTON_CLASS_CREATOR pfnCreator)
 {
     bool bRetVal = false;
         
@@ -62,10 +62,10 @@ bool CCBCustomClassFactory::registCustomClass(const char* name, CCBCustomClass::
     return bRetVal;
 }
 
-CCBCustomClass* CCBCustomClassFactory::createCustomClassWithName(const char* name)
+CCBCustomClassProtocol* CCBCustomClassFactory::createCustomClassWithName(const char* name)
 {
-    CCBCustomClass* pRetVal = NULL;
-    CCBCustomClass::FUNC_CUSTON_CLASS_CREATOR pfnCreator = (*m_pCustomCreatorsMap)[name];
+    CCBCustomClassProtocol* pRetVal = NULL;
+    FUNC_CUSTON_CLASS_CREATOR pfnCreator = (*m_pCustomCreatorsMap)[name];
     
     if (pfnCreator)
     {
