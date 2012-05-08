@@ -52,6 +52,7 @@ public:
     virtual ~CCEGLView();
 
     CCSize  getSize();
+    CCSize  getScreenPropertyBufferSize();
     bool    isOpenGLReady();
     bool    isIpad();
 	/**
@@ -109,6 +110,7 @@ private:
 	bool		createNativeWindow(const EGLConfig &config);
 	void		showKeyboard(bool will);
 	void		hideKeyboard(bool will);
+	bool    rotateScreen(int angle);
 
 	CCSize  			m_sSizeInPixel;
 	CCSize 			 	m_sSizeInPoint;
