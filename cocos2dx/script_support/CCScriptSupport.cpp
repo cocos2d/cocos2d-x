@@ -131,6 +131,7 @@ CCScriptEngineManager* CCScriptEngineManager::sharedManager(void)
     if (!s_pSharedScriptEngineManager)
     {
         s_pSharedScriptEngineManager = new CCScriptEngineManager();
+		CCSharedFinalizer::atexit(CCScriptEngineManager::purgeSharedManager);
     }
     return s_pSharedScriptEngineManager;
 }

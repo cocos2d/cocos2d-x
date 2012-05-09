@@ -62,6 +62,15 @@ CCTouchDispatcher* CCTouchDispatcher::sharedDispatcher(void)
 	{
 		pSharedDispatcher = new CCTouchDispatcher();
 		pSharedDispatcher->init();
+
+		struct Lib {
+			static void destroy()
+			{
+				delete pSharedDispatcher;
+				pSharedDispatcher = NULL;
+			}
+		};
+		CCSharedFinalizer::atexit(Lib::destroy);
 	}
 
 	return pSharedDispatcher;
@@ -102,6 +111,8 @@ bool CCTouchDispatcher::init(void)
 
 CCTouchDispatcher::~CCTouchDispatcher(void)
 {
+	pSharedDispatcher = NULL;
+	
 	CC_SAFE_RELEASE(m_pTargetedHandlers);
 	CC_SAFE_RELEASE(m_pStandardHandlers);
 	CC_SAFE_RELEASE(m_pHandlersToAdd);

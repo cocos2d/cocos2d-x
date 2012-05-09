@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace cocos2d 
 {
 
-CCPoolManager	g_PoolManager;
+static CCPoolManager * g_PoolManager;
 
 CCAutoreleasePool::CCAutoreleasePool(void)
 {
@@ -88,7 +88,20 @@ void CCAutoreleasePool::clear()
 
 CCPoolManager* CCPoolManager::getInstance()
 {
-	return &g_PoolManager;
+	if(!g_PoolManager){
+		g_PoolManager = new CCPoolManager();
+		CCSharedFinalizer::atexit(CCPoolManager::deletePoolManager);
+	}
+	return g_PoolManager;
+}
+
+void CCPoolManager::deletePoolManager()
+{
+	if(g_PoolManager){
+		CCPoolManager * pool = g_PoolManager;
+		g_PoolManager = NULL;
+		delete pool;
+	}
 }
 
 CCPoolManager::CCPoolManager()

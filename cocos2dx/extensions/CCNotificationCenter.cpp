@@ -44,6 +44,7 @@ CCNotificationCenter *CCNotificationCenter::sharedNotifCenter(void)
     if (!s_sharedNotifCenter)
     {
         s_sharedNotifCenter = new CCNotificationCenter;
+		CCSharedFinalizer::atexit(CCNotificationCenter::purgeNotifCenter);
     }
     return s_sharedNotifCenter;
 }

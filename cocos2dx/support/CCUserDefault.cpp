@@ -307,6 +307,7 @@ CCUserDefault* CCUserDefault::sharedUserDefault()
 	if (! m_spUserDefault)
 	{
 		m_spUserDefault = new CCUserDefault();
+		CCSharedFinalizer::atexit(CCUserDefault::purgeSharedUserDefault);
 	}
 
 	return m_spUserDefault;

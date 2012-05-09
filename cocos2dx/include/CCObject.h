@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "CCCommon.h"
 #include "ccTypes.h"
+#include <vector>
 
 namespace   cocos2d {
 class CCZone;
@@ -34,6 +35,22 @@ class CCObject;
 class CCString;
 class CCNode;
 class CCEvent;
+
+class CC_DLL CCSharedFinalizer
+{
+protected:
+
+	std::vector<void(*)()> funcs;
+
+	static CCSharedFinalizer * getInstance();
+
+	~CCSharedFinalizer();
+
+public:
+
+	static void finalizeAll();
+	static void atexit(void(*func)());
+};
 
 class CC_DLL CCCopying
 {

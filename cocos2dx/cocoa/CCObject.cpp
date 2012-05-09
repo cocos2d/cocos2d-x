@@ -30,6 +30,49 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
+static CCSharedFinalizer * sharedFinalizer = NULL;
+
+struct __SharedFinalizer__
+{
+	~__SharedFinalizer__()
+	{
+		CCSharedFinalizer::finalizeAll();
+	}
+} __SharedFinalizer__;
+
+CCSharedFinalizer * CCSharedFinalizer::getInstance()
+{
+	if(!sharedFinalizer){
+		sharedFinalizer = new CCSharedFinalizer();
+	}
+	return sharedFinalizer;
+}
+
+CCSharedFinalizer::~CCSharedFinalizer()
+{
+	sharedFinalizer = NULL;
+	std::vector<void(*)()>::reverse_iterator it = funcs.rbegin();
+	for(; it != funcs.rend(); ++it){
+		(*it)();
+	}
+	funcs.clear();
+}
+
+void CCSharedFinalizer::finalizeAll()
+{
+	delete sharedFinalizer;
+	delete sharedFinalizer; // someone can create pool so try delete it again
+}
+
+void CCSharedFinalizer::atexit(void(*func)())
+{
+	CCSharedFinalizer * finalizer = getInstance();
+	if(std::find(finalizer->funcs.begin(), finalizer->funcs.end(), func) == finalizer->funcs.end()){
+		finalizer->funcs.push_back(func);
+	}
+}
+
+
 CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
     CC_UNUSED_PARAM(pZone);

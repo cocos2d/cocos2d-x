@@ -62,21 +62,32 @@ namespace  cocos2d
 {
 
 // singleton stuff
-static CCDisplayLinkDirector s_sharedDirector;
-static bool s_bFirstRun = true;
+static CCDisplayLinkDirector * s_sharedDirector;
+// static bool s_bFirstRun = true;
 
 #define kDefaultFPS		60  // 60 frames per second
 extern const char* cocos2dVersion(void);
 
 CCDirector* CCDirector::sharedDirector(void)
 {
-	if (s_bFirstRun)
+	if (!s_sharedDirector)
 	{
-		s_sharedDirector.init();
-        s_bFirstRun = false;
+		s_sharedDirector = new CCDisplayLinkDirector();
+		s_sharedDirector->init();
+		CCSharedFinalizer::atexit(CCDirector::deleteDirector);
 	}
 
-	return &s_sharedDirector;
+	return s_sharedDirector;
+}
+
+void CCDirector::deleteDirector()
+{
+	if(s_sharedDirector){
+		// CCPoolManager::deletePoolManager();
+		// s_sharedDirector->purgeDirector();
+		s_sharedDirector->release();
+		s_sharedDirector = NULL;
+	}
 }
 
 bool CCDirector::init(void)
@@ -103,6 +114,10 @@ bool CCDirector::init(void)
 	m_uTotalFrames = m_uFrames = 0;
 	m_pszFPS = new char[10];
 	m_pLastUpdate = new struct cc_timeval();
+
+#if CC_DIRECTOR_FAST_FPS
+	m_pFPSLabel = NULL;
+#endif
 
 	// paused ?
 	m_bPaused = false;
@@ -140,7 +155,8 @@ CCDirector::~CCDirector(void)
 	CC_SAFE_RELEASE(m_pobScenesStack);
 
 	// pop the autorelease pool
-	CCPoolManager::getInstance()->pop();
+	// CCPoolManager::getInstance()->pop();
+	// CCPoolManager::deletePoolManager();
 
 	// delete m_pLastUpdate
 	CC_SAFE_DELETE(m_pLastUpdate);
@@ -592,6 +608,8 @@ void CCDirector::resetDirector()
 
 void CCDirector::purgeDirector()
 {
+	CCPoolManager::deletePoolManager();
+
 	// don't release the event handlers
 	// They are needed in case the director is run again
 	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
@@ -630,9 +648,11 @@ void CCDirector::purgeDirector()
 	CCTextureCache::purgeSharedTextureCache();
 	CCUserDefault::purgeSharedUserDefault();
     CCNotificationCenter::purgeNotifCenter();
+
+	CCPoolManager::deletePoolManager();
+
 	// OpenGL view
-	m_pobOpenGLView->release();
-	m_pobOpenGLView = NULL;
+	CC_SAFE_RELEASE_NULL(m_pobOpenGLView);
 }
 
 void CCDirector::setNextScene(void)

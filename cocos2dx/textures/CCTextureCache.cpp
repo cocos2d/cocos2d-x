@@ -41,6 +41,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "support/ccUtils.h"
 #include "CCScheduler.h"
+#include "pthread.h"
 #include "CCThread.h"
 
 namespace   cocos2d {
@@ -160,9 +161,10 @@ static CCTextureCache *g_sharedTextureCache;
 
 CCTextureCache * CCTextureCache::sharedTextureCache()
 {
-	if (!g_sharedTextureCache)
+	if (!g_sharedTextureCache){
 		g_sharedTextureCache = new CCTextureCache();
-
+		CCSharedFinalizer::atexit(CCTextureCache::purgeSharedTextureCache);
+	}
 	return g_sharedTextureCache;
 }
 

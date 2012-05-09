@@ -33,6 +33,7 @@
 #include "IwUtil.h"
 #include "png.h"
 #include "ft2build.h"
+#include "CCObject.h"
 #include FT_FREETYPE_H 
 #define FONT_KERNING 2
 #define RSHIFT6(num) ((num)>>6)
@@ -55,7 +56,7 @@ extern "C"
 // }tImageSource;
 
 struct TextLine {
-	string sLineStr;
+	wstring sLineStr;
 	int iLineWidth;
 };
 
@@ -103,15 +104,15 @@ public:
 	int					m_iMaxLineHeight;
 
 private:
-	void buildLine(stringstream& ss, FT_Face face, int iCurXCursor, char cLastChar);
+	void buildLine(wstringstream& ss, FT_Face face, int iCurXCursor, wchar_t cLastChar);
 
-	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight);
+	bool divideString(FT_Face face, const wchar_t* sText, int iMaxWidth, int iMaxHeight);
 
 	/**
 	 * compute the start pos of every line
 	 * return value>0 represents the start x pos of the line, while -1 means fail
 	 */
-	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, char cText, int iLineIndex);
+	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, wchar_t cText, int iLineIndex);
 
 	bool startsWith(const std::string& str, const std::string& what);
 	bool endsWith(const std::string& str, const std::string& what);
@@ -200,10 +201,10 @@ void BitmapDC::reset()
 	m_vLines.clear();
 }
 
-void BitmapDC::buildLine( stringstream& ss, FT_Face face, int iCurXCursor, char cLastChar )
+void BitmapDC::buildLine( wstringstream& ss, FT_Face face, int iCurXCursor, wchar_t cLastChar )
 {
 	TextLine oTempLine;
-	ss << '\0';
+	ss << L'\0';
 	oTempLine.sLineStr = ss.str();
 	//get last glyph
 	FT_Load_Glyph(face, FT_Get_Char_Index(face, cLastChar), FT_LOAD_DEFAULT);
@@ -216,13 +217,15 @@ void BitmapDC::buildLine( stringstream& ss, FT_Face face, int iCurXCursor, char 
 
 	m_iMaxLineWidth = MAX(m_iMaxLineWidth, oTempLine.iLineWidth);
 	ss.clear();
-	ss.str("");
+	ss.str(L"");
 	m_vLines.push_back(oTempLine);
 }
 
-bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight )
+bool BitmapDC::divideString( FT_Face face, const wchar_t* sText, int iMaxWidth, int iMaxHeight )
 {
-	const char* pText = sText;
+	// const char* pText = sText;
+	const wchar_t* pText = sText;
+
 	int iError = 0;
 	int iCurXCursor;
 	iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_DEFAULT);
@@ -231,12 +234,12 @@ bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int
 	}
 	iCurXCursor = -RSHIFT6(face->glyph->metrics.horiBearingX);
 	//init stringstream
-	stringstream ss;
+	wstringstream ss;
 
-	int cLastCh = 0;
+	wchar_t cLastCh = 0;
 
-	while (*pText != '\0') {
-		if (*pText == '\n') {
+	while (*pText) {
+		if (*pText == L'\n') {
 			buildLine(ss, face, iCurXCursor, cLastCh);
 
 			pText++;
@@ -303,7 +306,7 @@ bool BitmapDC::divideString( FT_Face face, const char* sText, int iMaxWidth, int
 	return true;
 }
 
-int BitmapDC::computeLineStart( FT_Face face, CCImage::ETextAlign eAlignMask, char cText, int iLineIndex )
+int BitmapDC::computeLineStart( FT_Face face, CCImage::ETextAlign eAlignMask, wchar_t cText, int iLineIndex )
 {
 	int iRet;
 	int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText), FT_LOAD_DEFAULT);
@@ -397,7 +400,14 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 			CC_BREAK_IF(iError);
 		}
 
-		iError = divideString(m_face, text, nWidth, nHeight) ? 0 : 1 ;
+		CCAssert(sizeof(wchar_t) == sizeof(ucs2char), "");
+		int text_len = strlen(text);
+		wstring wtext;
+		wtext.reserve(text_len+1);
+		UTF8ToUCS2(text, text_len+1, (ucs2char*)wtext.c_str(), sizeof(wchar_t)*(text_len+1));
+		const wchar_t * pText = wtext.c_str();
+
+		iError = divideString(m_face, pText, nWidth, nHeight) ? 0 : 1 ;
 
 		//compute the final line width
 		m_iMaxLineWidth = MAX(m_iMaxLineWidth, nWidth);
@@ -416,7 +426,6 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 		m_pData = new unsigned char[bitmapSize];
 		memset(m_pData,0, bitmapSize);
 
-		const char* pText = text;
 		iCurYCursor = ascenderPixels;
 
 		for (size_t i = 0; i < m_vLines.size(); i++) {
@@ -485,19 +494,23 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 	return bRet;
 }
 
+static BitmapDC * s_BmpDC;
 
-
-
-
-
-
+void deleteBitmapDC()
+{
+	delete s_BmpDC;
+	s_BmpDC = NULL;
+}
 
 static BitmapDC& sharedBitmapDC()
 {
-	static BitmapDC s_BmpDC;
-	return s_BmpDC;
+	if(!s_BmpDC){
+		s_BmpDC = new BitmapDC;
+		CCSharedFinalizer::atexit(deleteBitmapDC);
+	}
+	return *s_BmpDC;
 }
- 
+
 //////////////////////////////////////////////////////////////////////////
 // Implement CCImage
 //////////////////////////////////////////////////////////////////////////
@@ -563,9 +576,8 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
 
 	bool bRet = false;
 
-	s3eFile* pFile = s3eFileOpenFromMemory(data, nSize);
-
-	IwAssert(GAME, pFile);
+	// s3eFile* pFile = s3eFileOpenFromMemory(data, nSize);
+	// IwAssert(GAME, pFile);
 
     jpeg_decompress_struct cinfo;
     bzero(&cinfo, sizeof(cinfo));
