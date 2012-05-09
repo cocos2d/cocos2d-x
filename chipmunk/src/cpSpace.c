@@ -385,19 +385,27 @@ contactSetFilterRemovedShape(cpArbiter *arb, removalContext *context)
 void
 cpSpaceRemoveShape(cpSpace *space, cpShape *shape)
 {
+	if (NULL == space || NULL == shape)
+	{
+		return;
+	}
+	
+
 	cpBody *body = shape->body;
-	if(cpBodyIsStatic(body)){
+	if(NULL != body && cpBodyIsStatic(body)){
 		cpSpaceRemoveStaticShape(space, shape);
 		return;
 	}
 
-	cpBodyActivate(body);
+	if (NULL != body)
+	{
+		cpBodyActivate(body);
+		cpBodyRemoveShape(body, shape);
+	}
 	
 	cpAssertSpaceUnlocked(space);
 	cpAssertWarn(cpHashSetFind(space->activeShapes->handleSet, shape->hashid, shape),
 		"Cannot remove a shape that was not added to the space. (Removed twice maybe?)");
-	
-	cpBodyRemoveShape(body, shape);
 	
 	removalContext context = {space, shape};
 	cpHashSetFilter(space->contactSet, (cpHashSetFilterFunc)contactSetFilterRemovedShape, &context);
