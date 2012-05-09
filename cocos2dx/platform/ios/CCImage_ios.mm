@@ -344,7 +344,7 @@ static CGSize _caculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize 
         CGSize tmp;
         if (isZfont)
         {
-            tmp = [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font constrainedToSize:textRect];
+            tmp = [FontLabelStringDrawingHelper sizeWithZFont:s zfont:font constrainedToSize:textRect];
         }
         else
         {
