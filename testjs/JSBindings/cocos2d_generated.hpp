@@ -1,9 +1,10 @@
 
-#ifndef __out__h
-#define __out__h
+#ifndef __cocos2d_generated__h
+#define __cocos2d_generated__h
 
 #include "ScriptingCore.h"
 #include "cocos2d.h"
+
 
 using namespace cocos2d;
 
@@ -40,7 +41,7 @@ void klass::menuAction(cocos2d::CCObject *o) \
 	} \
 }
 
-class S_CCAnimate : public CCAnimate
+class S_CCAnimate : public cocos2d::CCAnimate
 {
 	JSObject *m_jsobj;
 public:
@@ -70,7 +71,7 @@ public:
 
 };
 
-class S_CCLayer : public CCLayer
+class S_CCLayer : public cocos2d::CCLayer
 {
 	JSObject *m_jsobj;
 public:
@@ -110,7 +111,7 @@ public:
 
 };
 
-class S_CCEaseBackInOut : public CCEaseBackInOut
+class S_CCEaseBackInOut : public cocos2d::CCEaseBackInOut
 {
 	JSObject *m_jsobj;
 public:
@@ -129,7 +130,7 @@ public:
 
 };
 
-class S_CCEaseBackOut : public CCEaseBackOut
+class S_CCEaseBackOut : public cocos2d::CCEaseBackOut
 {
 	JSObject *m_jsobj;
 public:
@@ -149,7 +150,7 @@ public:
 
 };
 
-class S_CCMenu : public CCMenu
+class S_CCMenu : public cocos2d::CCMenu
 {
 	JSObject *m_jsobj;
 public:
@@ -184,7 +185,7 @@ public:
 
 };
 
-class S_CCAction : public CCAction
+class S_CCAction : public cocos2d::CCAction
 {
 	JSObject *m_jsobj;
 public:
@@ -210,7 +211,7 @@ public:
 
 };
 
-class S_CCTextureAtlas : public CCTextureAtlas
+class S_CCTextureAtlas : public cocos2d::CCTextureAtlas
 {
 	JSObject *m_jsobj;
 public:
@@ -248,7 +249,7 @@ public:
 
 };
 
-class S_CCMenuItemSprite : public CCMenuItemSprite
+class S_CCMenuItemSprite : public cocos2d::CCMenuItemSprite
 {
 	JSObject *m_jsobj;
 public:
@@ -278,7 +279,7 @@ public:
 
 };
 
-class S_CCDelayTime : public CCDelayTime
+class S_CCDelayTime : public cocos2d::CCDelayTime
 {
 	JSObject *m_jsobj;
 public:
@@ -298,7 +299,7 @@ public:
 
 };
 
-class S_CCSequence : public CCSequence
+class S_CCSequence : public cocos2d::CCSequence
 {
 	JSObject *m_jsobj;
 public:
@@ -328,7 +329,7 @@ public:
 
 };
 
-class S_CCParallaxNode : public CCParallaxNode
+class S_CCParallaxNode : public cocos2d::CCParallaxNode
 {
 	JSObject *m_jsobj;
 public:
@@ -353,7 +354,7 @@ public:
 
 };
 
-class S_CCTintBy : public CCTintBy
+class S_CCTintBy : public cocos2d::CCTintBy
 {
 	JSObject *m_jsobj;
 public:
@@ -383,7 +384,7 @@ public:
 
 };
 
-class S_CCLayerColor : public CCLayerColor
+class S_CCLayerColor : public cocos2d::CCLayerColor
 {
 	JSObject *m_jsobj;
 public:
@@ -417,7 +418,7 @@ public:
 
 };
 
-class S_CCTexture2D : public CCTexture2D
+class S_CCTexture2D : public cocos2d::CCTexture2D
 {
 	JSObject *m_jsobj;
 public:
@@ -457,7 +458,7 @@ public:
 
 };
 
-class S_CCSpriteFrame : public CCSpriteFrame
+class S_CCSpriteFrame : public cocos2d::CCSpriteFrame
 {
 	JSObject *m_jsobj;
 public:
@@ -485,7 +486,7 @@ public:
 
 };
 
-class S_CCAnimation : public CCAnimation
+class S_CCAnimation : public cocos2d::CCAnimation
 {
 	JSObject *m_jsobj;
 public:
@@ -514,7 +515,7 @@ public:
 
 };
 
-class S_CCMenuItemImage : public CCMenuItemImage
+class S_CCMenuItemImage : public cocos2d::CCMenuItemImage
 {
 	JSObject *m_jsobj;
 public:
@@ -534,7 +535,7 @@ public:
 
 };
 
-class S_CCTintTo : public CCTintTo
+class S_CCTintTo : public cocos2d::CCTintTo
 {
 	JSObject *m_jsobj;
 public:
@@ -559,7 +560,7 @@ public:
 
 };
 
-class S_CCParticleSystem : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class S_CCParticleSystem : public cocos2d::ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 	JSObject *m_jsobj;
 public:
@@ -635,7 +636,7 @@ public:
 
 };
 
-class S_CCEaseElasticIn : public CCEaseElasticIn
+class S_CCEaseElasticIn : public cocos2d::CCEaseElasticIn
 {
 	JSObject *m_jsobj;
 public:
@@ -655,7 +656,7 @@ public:
 
 };
 
-class S_CCRotateBy : public CCRotateBy
+class S_CCRotateBy : public cocos2d::CCRotateBy
 {
 	JSObject *m_jsobj;
 public:
@@ -681,7 +682,7 @@ public:
 
 };
 
-class S_CCPoint : public CCPoint
+class S_CCPoint : public cocos2d::CCPoint
 {
 	JSObject *m_jsobj;
 public:
@@ -703,7 +704,7 @@ public:
 
 };
 
-class S_CCEaseElastic : public CCEaseElastic
+class S_CCEaseElastic : public cocos2d::CCEaseElastic
 {
 	JSObject *m_jsobj;
 public:
@@ -726,7 +727,7 @@ public:
 
 };
 
-class S_CCSize : public CCSize
+class S_CCSize : public cocos2d::CCSize
 {
 	JSObject *m_jsobj;
 public:
@@ -748,7 +749,7 @@ public:
 
 };
 
-class S_CCMoveTo : public CCMoveTo
+class S_CCMoveTo : public cocos2d::CCMoveTo
 {
 	JSObject *m_jsobj;
 public:
@@ -774,7 +775,7 @@ public:
 
 };
 
-class S_CCRect : public CCRect
+class S_CCRect : public cocos2d::CCRect
 {
 	JSObject *m_jsobj;
 public:
@@ -804,7 +805,7 @@ public:
 
 };
 
-class S_CCEaseElasticOut : public CCEaseElasticOut
+class S_CCEaseElasticOut : public cocos2d::CCEaseElasticOut
 {
 	JSObject *m_jsobj;
 public:
@@ -824,7 +825,7 @@ public:
 
 };
 
-class S_CCRotateTo : public CCRotateTo
+class S_CCRotateTo : public cocos2d::CCRotateTo
 {
 	JSObject *m_jsobj;
 public:
@@ -850,7 +851,7 @@ public:
 
 };
 
-class S_CCEaseElasticInOut : public CCEaseElasticInOut
+class S_CCEaseElasticInOut : public cocos2d::CCEaseElasticInOut
 {
 	JSObject *m_jsobj;
 public:
@@ -870,7 +871,7 @@ public:
 
 };
 
-class S_CCEaseBounceIn : public CCEaseBounceIn
+class S_CCEaseBounceIn : public cocos2d::CCEaseBounceIn
 {
 	JSObject *m_jsobj;
 public:
@@ -890,7 +891,7 @@ public:
 
 };
 
-class S_CCSpriteFrameCache : public CCSpriteFrameCache
+class S_CCSpriteFrameCache : public cocos2d::CCSpriteFrameCache
 {
 	JSObject *m_jsobj;
 public:
@@ -921,7 +922,7 @@ public:
 
 };
 
-class S_CCEaseBounce : public CCEaseBounce
+class S_CCEaseBounce : public cocos2d::CCEaseBounce
 {
 	JSObject *m_jsobj;
 public:
@@ -940,7 +941,7 @@ public:
 
 };
 
-class S_CCEaseBounceInOut : public CCEaseBounceInOut
+class S_CCEaseBounceInOut : public cocos2d::CCEaseBounceInOut
 {
 	JSObject *m_jsobj;
 public:
@@ -959,7 +960,7 @@ public:
 
 };
 
-class S_CCEaseBackIn : public CCEaseBackIn
+class S_CCEaseBackIn : public cocos2d::CCEaseBackIn
 {
 	JSObject *m_jsobj;
 public:
@@ -979,7 +980,7 @@ public:
 
 };
 
-class S_CCEaseBounceOut : public CCEaseBounceOut
+class S_CCEaseBounceOut : public cocos2d::CCEaseBounceOut
 {
 	JSObject *m_jsobj;
 public:
@@ -999,7 +1000,7 @@ public:
 
 };
 
-class S_CCEaseIn : public CCEaseIn
+class S_CCEaseIn : public cocos2d::CCEaseIn
 {
 	JSObject *m_jsobj;
 public:
@@ -1018,7 +1019,7 @@ public:
 
 };
 
-class S_CCFiniteTimeAction : public CCFiniteTimeAction
+class S_CCFiniteTimeAction : public cocos2d::CCFiniteTimeAction
 {
 	JSObject *m_jsobj;
 public:
@@ -1039,7 +1040,7 @@ public:
 
 };
 
-class S_CCEaseOut : public CCEaseOut
+class S_CCEaseOut : public cocos2d::CCEaseOut
 {
 	JSObject *m_jsobj;
 public:
@@ -1058,7 +1059,7 @@ public:
 
 };
 
-class S_CCNode : public CCNode
+class S_CCNode : public cocos2d::CCNode
 {
 	JSObject *m_jsobj;
 public:
@@ -1146,7 +1147,7 @@ public:
 
 };
 
-class S_CCEaseExponentialIn : public CCEaseExponentialIn
+class S_CCEaseExponentialIn : public cocos2d::CCEaseExponentialIn
 {
 	JSObject *m_jsobj;
 public:
@@ -1166,7 +1167,7 @@ public:
 
 };
 
-class S_CCFileUtils : public CCFileUtils
+class S_CCFileUtils : public cocos2d::CCFileUtils
 {
 	JSObject *m_jsobj;
 public:
@@ -1186,7 +1187,7 @@ public:
 
 };
 
-class S_CCEaseInOut : public CCEaseInOut
+class S_CCEaseInOut : public cocos2d::CCEaseInOut
 {
 	JSObject *m_jsobj;
 public:
@@ -1206,7 +1207,7 @@ public:
 
 };
 
-class S_CCEaseExponentialOut : public CCEaseExponentialOut
+class S_CCEaseExponentialOut : public cocos2d::CCEaseExponentialOut
 {
 	JSObject *m_jsobj;
 public:
@@ -1226,7 +1227,7 @@ public:
 
 };
 
-class S_CCParticleSystemQuad : public CCParticleSystemQuad
+class S_CCParticleSystemQuad : public cocos2d::CCParticleSystemQuad
 {
 	JSObject *m_jsobj;
 public:
@@ -1255,7 +1256,7 @@ public:
 
 };
 
-class S_CCLabelTTF : public CCLabelTTF
+class S_CCLabelTTF : public cocos2d::CCLabelTTF
 {
 	JSObject *m_jsobj;
 public:
@@ -1281,7 +1282,7 @@ public:
 
 };
 
-class S_CCScene : public CCScene
+class S_CCScene : public cocos2d::CCScene
 {
 	JSObject *m_jsobj;
 public:
@@ -1300,7 +1301,7 @@ public:
 
 };
 
-class S_CCDirector : public CCDirector
+class S_CCDirector : public cocos2d::CCDirector
 {
 	JSObject *m_jsobj;
 public:
@@ -1378,7 +1379,7 @@ public:
 
 };
 
-class S_CCEaseExponentialInOut : public CCEaseExponentialInOut
+class S_CCEaseExponentialInOut : public cocos2d::CCEaseExponentialInOut
 {
 	JSObject *m_jsobj;
 public:
@@ -1397,7 +1398,7 @@ public:
 
 };
 
-class S_CCParticleSystemPoint : public CCParticleSystemPoint
+class S_CCParticleSystemPoint : public cocos2d::CCParticleSystemPoint
 {
 	JSObject *m_jsobj;
 public:
@@ -1423,7 +1424,7 @@ public:
 
 };
 
-class S_CCEaseSineIn : public CCEaseSineIn
+class S_CCEaseSineIn : public cocos2d::CCEaseSineIn
 {
 	JSObject *m_jsobj;
 public:
@@ -1443,7 +1444,7 @@ public:
 
 };
 
-class S_CCMenuItem : public CCMenuItem
+class S_CCMenuItem : public cocos2d::CCMenuItem
 {
 	JSObject *m_jsobj;
 public:
@@ -1476,7 +1477,7 @@ public:
 
 };
 
-class S_CCMoveBy : public CCMoveBy
+class S_CCMoveBy : public cocos2d::CCMoveBy
 {
 	JSObject *m_jsobj;
 public:
@@ -1497,7 +1498,7 @@ public:
 
 };
 
-class S_CCEaseSineOut : public CCEaseSineOut
+class S_CCEaseSineOut : public cocos2d::CCEaseSineOut
 {
 	JSObject *m_jsobj;
 public:
@@ -1517,7 +1518,7 @@ public:
 
 };
 
-class S_CCActionInterval : public CCActionInterval
+class S_CCActionInterval : public cocos2d::CCActionInterval
 {
 	JSObject *m_jsobj;
 public:
@@ -1545,7 +1546,7 @@ public:
 
 };
 
-class S_CCTextureCache : public CCTextureCache
+class S_CCTextureCache : public cocos2d::CCTextureCache
 {
 	JSObject *m_jsobj;
 public:
@@ -1577,7 +1578,7 @@ public:
 
 };
 
-class S_CCRepeatForever : public CCRepeatForever
+class S_CCRepeatForever : public cocos2d::CCRepeatForever
 {
 	JSObject *m_jsobj;
 public:
@@ -1603,7 +1604,7 @@ public:
 
 };
 
-class S_CCSpeed : public CCSpeed
+class S_CCSpeed : public cocos2d::CCSpeed
 {
 	JSObject *m_jsobj;
 public:
@@ -1630,7 +1631,7 @@ public:
 
 };
 
-class S_CCEaseSineInOut : public CCEaseSineInOut
+class S_CCEaseSineInOut : public cocos2d::CCEaseSineInOut
 {
 	JSObject *m_jsobj;
 public:
@@ -1649,7 +1650,7 @@ public:
 
 };
 
-class S_CCRenderTexture : public CCRenderTexture
+class S_CCRenderTexture : public cocos2d::CCRenderTexture
 {
 	JSObject *m_jsobj;
 public:
@@ -1683,7 +1684,7 @@ public:
 
 };
 
-class S_CCWaves3D : public CCWaves3D
+class S_CCWaves3D : public cocos2d::CCWaves3D
 {
 	JSObject *m_jsobj;
 public:
@@ -1708,7 +1709,7 @@ public:
 
 };
 
-class S_CCActionEase : public CCActionEase
+class S_CCActionEase : public cocos2d::CCActionEase
 {
 	JSObject *m_jsobj;
 public:
@@ -1734,7 +1735,7 @@ public:
 
 };
 
-class S_CCMenuItemLabel : public CCMenuItemLabel
+class S_CCMenuItemLabel : public cocos2d::CCMenuItemLabel
 {
 	JSObject *m_jsobj;
 public:
@@ -1766,7 +1767,7 @@ public:
 
 };
 
-class S_CCBlink : public CCBlink
+class S_CCBlink : public cocos2d::CCBlink
 {
 	JSObject *m_jsobj;
 public:
@@ -1790,7 +1791,7 @@ public:
 
 };
 
-class S_CCSet : public CCSet
+class S_CCSet : public cocos2d::CCSet
 {
 	JSObject *m_jsobj;
 public:
@@ -1817,7 +1818,7 @@ public:
 
 };
 
-class S_CCTouch : public CCTouch
+class S_CCTouch : public cocos2d::CCTouch
 {
 	JSObject *m_jsobj;
 public:
@@ -1841,7 +1842,7 @@ public:
 
 };
 
-class S_CCSprite : public CCSprite
+class S_CCSprite : public cocos2d::CCSprite
 {
 	JSObject *m_jsobj;
 public:
@@ -1912,7 +1913,7 @@ public:
 
 };
 
-class S_CCSpriteBatchNode : public CCSpriteBatchNode
+class S_CCSpriteBatchNode : public cocos2d::CCSpriteBatchNode
 {
 	JSObject *m_jsobj;
 public:
@@ -1952,7 +1953,7 @@ public:
 
 };
 
-class S_CCGridAction : public CCGridAction
+class S_CCGridAction : public cocos2d::CCGridAction
 {
 	JSObject *m_jsobj;
 public:
@@ -1977,7 +1978,7 @@ public:
 
 };
 
-class S_CCEaseRateAction : public CCEaseRateAction
+class S_CCEaseRateAction : public cocos2d::CCEaseRateAction
 {
 	JSObject *m_jsobj;
 public:
@@ -2000,7 +2001,7 @@ public:
 
 };
 
-class S_CCGrid3DAction : public CCGrid3DAction
+class S_CCGrid3DAction : public cocos2d::CCGrid3DAction
 {
 	JSObject *m_jsobj;
 public:
@@ -2022,7 +2023,7 @@ public:
 
 };
 
-class S__ccGridSize : public _ccGridSize
+class S__ccGridSize : public cocos2d::_ccGridSize
 {
 	JSObject *m_jsobj;
 public:
