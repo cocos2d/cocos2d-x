@@ -133,47 +133,44 @@ scenes['test_easeinout'] = function () {
 // Ease BounceIn / Out
 //
 scenes['test_bouncein'] = function () {
-	
 	var s1 = new cocos.Sprite.create("grossinis_sister1.png");
 	s1.position = cocos.Point.create(50, winSize.height * 3 / 4 );
-	
+
 	var s2 = new cocos.Sprite.create("grossini_dance_05.png");
 	s2.position = cocos.Point.create(50, winSize.height * 2 / 4);
-	
+
 	var s3 = new cocos.Sprite.create("grossinis_sister2.png");
 	s3.position = cocos.Point.create(50, winSize.height * 1 / 4);
-	
-	
+
 	var move1 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
 	var move2 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
 	var move3 = cocos.MoveBy.actionWithDuration(3, cocos.Point.create(winSize.width-130,0) );
 
 	var move1_back = move1.reverse();
-	
 
 	var move_ease_in = cocos.EaseBounceIn.actionWithAction( move2 );
 	var move_ease_in_back = move_ease_in.reverse();
-	
+
 	var move_ease_out = cocos.EaseBounceOut.actionWithAction( move3 );
 	var move_ease_out_back = move_ease_out.reverse();
-	
+
 	var seq1 = cocos.Sequence.actions( move1, move1_back );
 	var seq2 = cocos.Sequence.actions( move_ease_in, move_ease_in_back );
 	var seq3 = cocos.Sequence.actions( move_ease_out, move_ease_out_back );
-	
+
 	s1.runAction( cocos.RepeatForever.actionWithAction( seq1 ) );
 	s2.runAction( cocos.RepeatForever.actionWithAction( seq2 ) );
 	s3.runAction( cocos.RepeatForever.actionWithAction( seq3 ) );
-	
+
 	var scene = new cocos.Scene(); scene.init();
 	scene.addChild(s1);
 	scene.addChild(s2);
 	scene.addChild(s3);
-	
+
 	// add the menu
 	var menu = createMenu("Test EaseBounceIn / Out and reverse");
 	scene.addChild(menu, 1);
-	
+
 	return scene;
 };
 
