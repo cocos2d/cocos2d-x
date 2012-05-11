@@ -10,6 +10,8 @@
 		007C32F615543D5900A51425 /* cocos_denshion_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 007C32F415543D5900A51425 /* cocos_denshion_generated.cpp */; };
 		007C32FA1554409C00A51425 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 007C32F81554409C00A51425 /* ballbounce.wav */; };
 		007C32FB1554409C00A51425 /* Silly Fun Theme A.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 007C32F91554409C00A51425 /* Silly Fun Theme A.mp3 */; };
+		007C3304155D938000A51425 /* simple_class.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 007C32FF155D938000A51425 /* simple_class.cpp */; };
+		007C3305155D938000A51425 /* simple_native_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 007C3301155D938000A51425 /* simple_native_generated.cpp */; };
 		00AA6832153F8060001AB56E /* cocos2d_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00AA682E153F8060001AB56E /* cocos2d_generated.cpp */; };
 		00AA6833153F8060001AB56E /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00AA6830153F8060001AB56E /* ScriptingCore.cpp */; };
 		00AA6846153F85A3001AB56E /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6834153F85A3001AB56E /* b1-hd.png */; };
@@ -194,8 +196,12 @@
 		007C32F515543D5900A51425 /* cocos_denshion_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos_denshion_generated.hpp; sourceTree = "<group>"; };
 		007C32F81554409C00A51425 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ballbounce.wav; path = Resources/ballbounce.wav; sourceTree = "<group>"; };
 		007C32F91554409C00A51425 /* Silly Fun Theme A.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Silly Fun Theme A.mp3"; path = "Resources/Silly Fun Theme A.mp3"; sourceTree = "<group>"; };
+		007C32FF155D938000A51425 /* simple_class.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_class.cpp; sourceTree = "<group>"; };
+		007C3300155D938000A51425 /* simple_class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_class.h; sourceTree = "<group>"; };
+		007C3301155D938000A51425 /* simple_native_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_native_generated.cpp; sourceTree = "<group>"; };
+		007C3302155D938000A51425 /* simple_native_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_native_generated.hpp; sourceTree = "<group>"; };
 		00AA682E153F8060001AB56E /* cocos2d_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_generated.cpp; sourceTree = "<group>"; };
-		00AA682F153F8060001AB56E /* cocos2d_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; path = cocos2d_generated.hpp; sourceTree = "<group>"; };
+		00AA682F153F8060001AB56E /* cocos2d_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2d_generated.hpp; sourceTree = "<group>"; };
 		00AA6830153F8060001AB56E /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		00AA6831153F8060001AB56E /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		00AA6834153F85A3001AB56E /* b1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b1-hd.png"; path = "Resources/b1-hd.png"; sourceTree = "<group>"; };
@@ -539,6 +545,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		007C32FD155D938000A51425 /* BindingsExample */ = {
+			isa = PBXGroup;
+			children = (
+				007C32FF155D938000A51425 /* simple_class.cpp */,
+				007C3300155D938000A51425 /* simple_class.h */,
+				007C3301155D938000A51425 /* simple_native_generated.cpp */,
+				007C3302155D938000A51425 /* simple_native_generated.hpp */,
+			);
+			name = BindingsExample;
+			path = testjs/test_bindings;
+			sourceTree = "<group>";
+		};
 		00AA682D153F8060001AB56E /* JSBindings */ = {
 			isa = PBXGroup;
 			children = (
@@ -582,6 +600,7 @@
 			children = (
 				A92277071517C16A001B78AA /* JS */,
 				00AA682D153F8060001AB56E /* JSBindings */,
+				007C32FD155D938000A51425 /* BindingsExample */,
 				A92275511517C094001B78AA /* testjs */,
 				A92275401517C094001B78AA /* Frameworks */,
 				A922753E1517C094001B78AA /* Products */,
@@ -1418,6 +1437,8 @@
 				00AA6833153F8060001AB56E /* ScriptingCore.cpp in Sources */,
 				00DE252015533AE00099AE9E /* cocos2d_manual_bindings.cpp in Sources */,
 				007C32F615543D5900A51425 /* cocos_denshion_generated.cpp in Sources */,
+				007C3304155D938000A51425 /* simple_class.cpp in Sources */,
+				007C3305155D938000A51425 /* simple_native_generated.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

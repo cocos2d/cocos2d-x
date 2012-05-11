@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "HelloWorldScene.h"
+#include "simple_native_generated.hpp"
 
 USING_NS_CC;
 
@@ -90,13 +91,23 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
 
+	// add our generated bindings
+	JSContext *cx = ScriptingCore::getInstance().getGlobalContext();
+	JSObject *obj = JS_GetGlobalObject(cx);
+	// since we pass the global object as the second argument, so these classes
+	// will also be "global" much like properties added to "window" or "document"
+	// in a browser
+	S_SimpleNativeClass::jsCreateClass(cx, obj, "SimpleNativeClass");
+	S_AnotherClass::jsCreateClass(cx, obj, "AnotherClass");
+
 //	pDirector->runWithScene(HelloWorld::scene());
 	// run the main script
+	ScriptingCore::getInstance().runScript("JS/1to1/test_actions.js");
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_ease_actions.js");
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_particles.js");
-	ScriptingCore::getInstance().runScript("JS/1to1/test_actions.js");
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_layer.js");
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_sound.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_bindings.js");
 
 	return true;
 }
