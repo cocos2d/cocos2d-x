@@ -57,6 +57,19 @@ enum {
     kCCNodeOnExit
 };
 
+enum {
+    kInvalidRelativePosition = 0,
+    kBottomLeft = 1,
+    kBottom = 2,
+    kBottomRight = 3,
+    kCenterLeft = 4,
+    kCenter = 5,
+    kCenterRight = 6,
+    kTopLeft = 7,
+    kTop = 8,
+    kTopRight = 9,
+};
+
 #define arrayMakeObjectsPerformSelector(pArray, func, elementType)  \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
