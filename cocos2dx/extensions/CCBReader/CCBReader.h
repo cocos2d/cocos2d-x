@@ -106,6 +106,19 @@ private:
         kCCBMemberVarAssignmentTypeDocumentRoot = 1,
         kCCBMemberVarAssignmentTypeOwner = 2,
     };
+    
+    enum {
+        kInvalidRelativePosition = 0,
+        kBottomLeft = 1,
+        kBottom = 2,
+        kBottomRight = 3,
+        kCenterLeft = 4,
+        kCenter = 5,
+        kCenterRight = 6,
+        kTopLeft = 7,
+        kTop = 8,
+        kTopRight = 9,
+    };
 }; // end of class CCBReader
 
 NS_CC_EXT_END
