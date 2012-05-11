@@ -590,13 +590,14 @@
 		BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE9133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp */; };
 		BF3E8C77135C0B39001AE294 /* CurlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3E8C76135C0B39001AE294 /* CurlTest.cpp */; };
 		BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */; };
+		D4113B4C155D387800E42745 /* CocosBuilder_v1 in Resources */ = {isa = PBXBuildFile; fileRef = D4113B4B155D387800E42745 /* CocosBuilder_v1 */; };
+		D4113B4E155D388700E42745 /* CocosBuilder_v2 in Resources */ = {isa = PBXBuildFile; fileRef = D4113B4D155D388700E42745 /* CocosBuilder_v2 */; };
+		D4113B50155D38DE00E42745 /* CCBReader_v2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4113B4F155D38DE00E42745 /* CCBReader_v2.cpp */; };
 		D41E604815514587001A12E9 /* CocosBuilderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E604415514587001A12E9 /* CocosBuilderTest.cpp */; };
 		D41E604915514587001A12E9 /* HelloCocosBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E604615514587001A12E9 /* HelloCocosBuilder.cpp */; };
-		D41E6054155145AB001A12E9 /* CCBReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41E604B155145AB001A12E9 /* CCBReader.cpp */; };
 		D41E6055155145AB001A12E9 /* CCBReader.h in Headers */ = {isa = PBXBuildFile; fileRef = D41E604C155145AB001A12E9 /* CCBReader.h */; };
 		D41F7349155686AB00A475EA /* CCBCustomClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D41F7347155686AB00A475EA /* CCBCustomClass.cpp */; };
 		D41F734A155686AB00A475EA /* CCBCustomClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D41F7348155686AB00A475EA /* CCBCustomClass.h */; };
-		D41F735B15580AC600A475EA /* CocosBuilder in Resources */ = {isa = PBXBuildFile; fileRef = D41F735A15580AC600A475EA /* CocosBuilder */; };
 		D429012E13B1D16900A3772F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D429012D13B1D16900A3772F /* libcurl.a */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -1342,15 +1343,16 @@
 		BF3E8C76135C0B39001AE294 /* CurlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlTest.cpp; sourceTree = "<group>"; };
 		BF9935D91373EBF500197D1B /* UserDefaultTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultTest.h; sourceTree = "<group>"; };
 		BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultTest.cpp; sourceTree = "<group>"; };
+		D4113B4B155D387800E42745 /* CocosBuilder_v1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CocosBuilder_v1; sourceTree = "<group>"; };
+		D4113B4D155D388700E42745 /* CocosBuilder_v2 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CocosBuilder_v2; sourceTree = "<group>"; };
+		D4113B4F155D38DE00E42745 /* CCBReader_v2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBReader_v2.cpp; sourceTree = "<group>"; };
 		D41E604415514587001A12E9 /* CocosBuilderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosBuilderTest.cpp; sourceTree = "<group>"; };
 		D41E604515514587001A12E9 /* CocosBuilderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosBuilderTest.h; sourceTree = "<group>"; };
 		D41E604615514587001A12E9 /* HelloCocosBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCocosBuilder.cpp; sourceTree = "<group>"; };
 		D41E604715514587001A12E9 /* HelloCocosBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloCocosBuilder.h; sourceTree = "<group>"; };
-		D41E604B155145AB001A12E9 /* CCBReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBReader.cpp; sourceTree = "<group>"; };
 		D41E604C155145AB001A12E9 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
 		D41F7347155686AB00A475EA /* CCBCustomClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBCustomClass.cpp; sourceTree = "<group>"; };
 		D41F7348155686AB00A475EA /* CCBCustomClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBCustomClass.h; sourceTree = "<group>"; };
-		D41F735A15580AC600A475EA /* CocosBuilder */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CocosBuilder; sourceTree = "<group>"; };
 		D429012D13B1D16900A3772F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2211,7 +2213,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D41F735A15580AC600A475EA /* CocosBuilder */,
+				D4113B4D155D388700E42745 /* CocosBuilder_v2 */,
+				D4113B4B155D387800E42745 /* CocosBuilder_v1 */,
 				789B560C15197BE00038CD1E /* animations */,
 				78ED2F84153D5BC500330E29 /* extensions */,
 				789B560E15197BF30038CD1E /* fonts */,
@@ -3065,7 +3068,7 @@
 		D41E604A155145AB001A12E9 /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
-				D41E604B155145AB001A12E9 /* CCBReader.cpp */,
+				D4113B4F155D38DE00E42745 /* CCBReader_v2.cpp */,
 				D41E604C155145AB001A12E9 /* CCBReader.h */,
 				D41F7347155686AB00A475EA /* CCBCustomClass.cpp */,
 				D41F7348155686AB00A475EA /* CCBCustomClass.h */,
@@ -3513,7 +3516,8 @@
 				78ED2F85153D5BC500330E29 /* extensions in Resources */,
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
 				7855E0E2153FEF240059DD9A /* Icon.png in Resources */,
-				D41F735B15580AC600A475EA /* CocosBuilder in Resources */,
+				D4113B4C155D387800E42745 /* CocosBuilder_v1 in Resources */,
+				D4113B4E155D388700E42745 /* CocosBuilder_v2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3750,8 +3754,8 @@
 				78EE00EB1550D18D004C84B0 /* CCListView.cpp in Sources */,
 				78EE00ED1550D18D004C84B0 /* CCListViewCell.cpp in Sources */,
 				78EE00EF1550D18D004C84B0 /* CCTextureWatcher.cpp in Sources */,
-				D41E6054155145AB001A12E9 /* CCBReader.cpp in Sources */,
 				D41F7349155686AB00A475EA /* CCBCustomClass.cpp in Sources */,
+				D4113B50155D38DE00E42745 /* CCBReader_v2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
