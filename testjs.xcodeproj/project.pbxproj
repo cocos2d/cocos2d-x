@@ -34,6 +34,7 @@
 		00AA6857153F85A3001AB56E /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AA6845153F85A3001AB56E /* r2.png */; };
 		00CD253115488C8D00B91EB5 /* grossini_dance_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 00CD253015488C8D00B91EB5 /* grossini_dance_05.png */; };
 		00CD253415488CF900B91EB5 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 00CD253315488CF900B91EB5 /* grossinis_sister1.png */; };
+		00D50219156193F3003A2D62 /* JS in Resources */ = {isa = PBXBuildFile; fileRef = 00D50218156193F3003A2D62 /* JS */; };
 		00DE233C1551ED120099AE9E /* ForestFire.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00DE233B1551ED120099AE9E /* ForestFire.plist */; };
 		00DE252015533AE00099AE9E /* cocos2d_manual_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00DE251F15533AE00099AE9E /* cocos2d_manual_bindings.cpp */; };
 		00F9469B152E0D3D007EB065 /* tank.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00F94699152E0D3D007EB065 /* tank.plist */; };
@@ -187,7 +188,6 @@
 		A92276F61517C097001B78AA /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A92276F51517C097001B78AA /* RootViewController.mm */; };
 		A92276FA1517C097001B78AA /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A92276F91517C097001B78AA /* AppDelegate.cpp */; };
 		A92276FD1517C097001B78AA /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A92276FC1517C097001B78AA /* HelloWorldScene.cpp */; };
-		A92277081517C16A001B78AA /* JS in Resources */ = {isa = PBXBuildFile; fileRef = A92277071517C16A001B78AA /* JS */; };
 		A9F1763D152D013F00A6DB1E /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F1763C152D013F00A6DB1E /* background.png */; };
 /* End PBXBuildFile section */
 
@@ -224,6 +224,7 @@
 		00AA6845153F85A3001AB56E /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = r2.png; path = Resources/r2.png; sourceTree = "<group>"; };
 		00CD253015488C8D00B91EB5 /* grossini_dance_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossini_dance_05.png; path = Resources/grossini_dance_05.png; sourceTree = "<group>"; };
 		00CD253315488CF900B91EB5 /* grossinis_sister1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossinis_sister1.png; path = Resources/grossinis_sister1.png; sourceTree = "<group>"; };
+		00D50218156193F3003A2D62 /* JS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JS; path = testjs/JS; sourceTree = "<group>"; };
 		00DE233B1551ED120099AE9E /* ForestFire.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ForestFire.plist; path = Resources/ForestFire.plist; sourceTree = "<group>"; };
 		00DE251F15533AE00099AE9E /* cocos2d_manual_bindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_manual_bindings.cpp; sourceTree = "<group>"; };
 		00F94699152E0D3D007EB065 /* tank.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = tank.plist; path = Resources/tank.plist; sourceTree = "<group>"; };
@@ -522,7 +523,6 @@
 		A92276F91517C097001B78AA /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		A92276FB1517C097001B78AA /* HelloWorldScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
 		A92276FC1517C097001B78AA /* HelloWorldScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
-		A92277071517C16A001B78AA /* JS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JS; path = testjs/JS; sourceTree = "<group>"; };
 		A9F1763C152D013F00A6DB1E /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Resources/background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -598,7 +598,7 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
-				A92277071517C16A001B78AA /* JS */,
+				00D50218156193F3003A2D62 /* JS */,
 				00AA682D153F8060001AB56E /* JSBindings */,
 				007C32FD155D938000A51425 /* BindingsExample */,
 				A92275511517C094001B78AA /* testjs */,
@@ -1266,7 +1266,6 @@
 				A92275641517C094001B78AA /* Icon.png in Resources */,
 				A92275661517C094001B78AA /* Icon@2x.png in Resources */,
 				A92275691517C094001B78AA /* iTunesArtwork in Resources */,
-				A92277081517C16A001B78AA /* JS in Resources */,
 				A9F1763D152D013F00A6DB1E /* background.png in Resources */,
 				00F9469B152E0D3D007EB065 /* tank.plist in Resources */,
 				00F9469C152E0D3D007EB065 /* tank.png in Resources */,
@@ -1309,6 +1308,7 @@
 				A06FAAF9155335D000561245 /* stars2.png in Resources */,
 				007C32FA1554409C00A51425 /* ballbounce.wav in Resources */,
 				007C32FB1554409C00A51425 /* Silly Fun Theme A.mp3 in Resources */,
+				00D50219156193F3003A2D62 /* JS in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
