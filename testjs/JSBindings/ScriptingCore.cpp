@@ -201,6 +201,8 @@ ScriptingCore::ScriptingCore()
 	S_CCScaleBy::jsCreateClass(this->cx, cocos, "ScaleBy");
 	S_CCScaleTo::jsCreateClass(this->cx, cocos, "ScaleTo");
 	S_CCBezierTo::jsCreateClass(this->cx, cocos, "BezierTo");
+	S_CCTMXTiledMap::jsCreateClass(this->cx, cocos, "TMXTiledMap");
+	S_CCTMXLayer::jsCreateClass(this->cx, cocos, "TMXLayer");
 
 	S_SimpleAudioEngine::jsCreateClass(this->cx, cocos, "SimpleAudioEngine");
 

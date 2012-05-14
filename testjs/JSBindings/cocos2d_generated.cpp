@@ -21286,6 +21286,227 @@ JSBool S_CCEaseSineOut::jsactionWithAction(JSContext *cx, uint32_t argc, jsval *
 	return JS_TRUE;
 }
 
+JSClass* S_CCTMXTiledMap::jsClass = NULL;
+JSObject* S_CCTMXTiledMap::jsObject = NULL;
+
+JSBool S_CCTMXTiledMap::jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_NewObject(cx, S_CCTMXTiledMap::jsClass, S_CCTMXTiledMap::jsObject, NULL);
+	S_CCTMXTiledMap *cobj = new S_CCTMXTiledMap(obj);
+	pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+	pt->flags = 0; pt->data = cobj;
+	JS_SetPrivate(obj, pt);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+	return JS_TRUE;
+}
+
+void S_CCTMXTiledMap::jsFinalize(JSContext *cx, JSObject *obj)
+{
+	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
+	if (pt) {
+		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTMXTiledMap *)pt->data;
+		JS_free(cx, pt);
+	}
+}
+
+JSBool S_CCTMXTiledMap::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCTMXTiledMap *cobj; JSGET_PTRSHELL(S_CCTMXTiledMap, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	case kMapSize:
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCSize::jsClass, S_CCSize::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			CCSize* ctmp = new CCSize(cobj->getMapSize());
+			pt->flags = 0;
+			pt->data = (void *)ctmp;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		break;
+	case kTileSize:
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCSize::jsClass, S_CCSize::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			CCSize* ctmp = new CCSize(cobj->getTileSize());
+			pt->flags = 0;
+			pt->data = (void *)ctmp;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		break;
+	case kMapOrientation:
+		do { jsval tmp; JS_NewNumberValue(cx, cobj->getMapOrientation(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
+		break;
+	case kProperties:
+		do {
+			JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)cobj->getProperties();
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		break;
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+JSBool S_CCTMXTiledMap::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCTMXTiledMap *cobj; JSGET_PTRSHELL(S_CCTMXTiledMap, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	case kMapSize:
+		do {
+			CCSize* tmp; JSGET_PTRSHELL(CCSize, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setMapSize(*tmp); }
+		} while (0);
+		break;
+	case kTileSize:
+		do {
+			CCSize* tmp; JSGET_PTRSHELL(CCSize, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setTileSize(*tmp); }
+		} while (0);
+		break;
+	case kMapOrientation:
+		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setMapOrientation(tmp); } while (0);
+		break;
+	case kProperties:
+		do {
+			CCStringToStringDictionary* tmp; JSGET_PTRSHELL(CCStringToStringDictionary, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setProperties(tmp); }
+		} while (0);
+		break;
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+void S_CCTMXTiledMap::jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name)
+{
+	jsClass = (JSClass *)calloc(1, sizeof(JSClass));
+	jsClass->name = name;
+	jsClass->addProperty = JS_PropertyStub;
+	jsClass->delProperty = JS_PropertyStub;
+	jsClass->getProperty = JS_PropertyStub;
+	jsClass->setProperty = JS_StrictPropertyStub;
+	jsClass->enumerate = JS_EnumerateStub;
+	jsClass->resolve = JS_ResolveStub;
+	jsClass->convert = JS_ConvertStub;
+	jsClass->finalize = jsFinalize;
+	jsClass->flags = JSCLASS_HAS_PRIVATE;
+		static JSPropertySpec properties[] = {
+			{"mapSize", kMapSize, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXTiledMap::jsPropertyGet, S_CCTMXTiledMap::jsPropertySet},
+			{"tileSize", kTileSize, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXTiledMap::jsPropertyGet, S_CCTMXTiledMap::jsPropertySet},
+			{"mapOrientation", kMapOrientation, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXTiledMap::jsPropertyGet, S_CCTMXTiledMap::jsPropertySet},
+			{"objectGroups", kObjectGroups, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXTiledMap::jsPropertyGet, S_CCTMXTiledMap::jsPropertySet},
+			{"properties", kProperties, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXTiledMap::jsPropertyGet, S_CCTMXTiledMap::jsPropertySet},
+			{"tileProperties", kTileProperties, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXTiledMap::jsPropertyGet, S_CCTMXTiledMap::jsPropertySet},
+			{"tMXLayers", kTMXLayers, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXTiledMap::jsPropertyGet, S_CCTMXTiledMap::jsPropertySet},
+			{0, 0, 0, 0, 0}
+		};
+
+		static JSFunctionSpec funcs[] = {
+			JS_FN("initWithTMXFile", S_CCTMXTiledMap::jsinitWithTMXFile, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("layerNamed", S_CCTMXTiledMap::jslayerNamed, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+		static JSFunctionSpec st_funcs[] = {
+			JS_FN("tiledMapWithTMXFile", S_CCTMXTiledMap::jstiledMapWithTMXFile, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+	jsObject = JS_InitClass(cx,globalObj,S_CCNode::jsObject,jsClass,S_CCTMXTiledMap::jsConstructor,0,properties,funcs,NULL,st_funcs);
+}
+
+JSBool S_CCTMXTiledMap::jstiledMapWithTMXFile(JSContext *cx, uint32_t argc, jsval *vp) {
+	if (argc == 1) {
+		JSString *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		CCTMXTiledMap* ret = CCTMXTiledMap::tiledMapWithTMXFile(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCTMXTiledMap::jsClass, S_CCTMXTiledMap::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTMXTiledMap::jsinitWithTMXFile(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTMXTiledMap* self = NULL; JSGET_PTRSHELL(S_CCTMXTiledMap, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSString *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		bool ret = self->initWithTMXFile(narg0);
+		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTMXTiledMap::jslayerNamed(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTMXTiledMap* self = NULL; JSGET_PTRSHELL(S_CCTMXTiledMap, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSString *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		CCTMXLayer* ret = self->layerNamed(narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCTMXLayer::jsClass, S_CCTMXLayer::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+void S_CCTMXTiledMap::update(ccTime delta) {
+	if (m_jsobj) {
+		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
+		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
+		if (found == JS_TRUE) {
+			jsval rval, fval;
+			JS_GetProperty(cx, m_jsobj, "update", &fval);
+			jsval jsdelta; JS_NewNumberValue(cx, delta, &jsdelta);
+			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &jsdelta, &rval);
+		}
+	}
+}
+
 JSClass* S_CCAccelAmplitude::jsClass = NULL;
 JSObject* S_CCAccelAmplitude::jsObject = NULL;
 
@@ -21458,6 +21679,248 @@ JSBool S_CCAccelAmplitude::jsactionWithAction(JSContext *cx, uint32_t argc, jsva
 		}
 		do {
 			JSObject *tmp = JS_NewObject(cx, S_CCAccelAmplitude::jsClass, S_CCAccelAmplitude::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+JSClass* S_CCTMXLayer::jsClass = NULL;
+JSObject* S_CCTMXLayer::jsObject = NULL;
+
+JSBool S_CCTMXLayer::jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_NewObject(cx, S_CCTMXLayer::jsClass, S_CCTMXLayer::jsObject, NULL);
+	S_CCTMXLayer *cobj = new S_CCTMXLayer(obj);
+	pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+	pt->flags = 0; pt->data = cobj;
+	JS_SetPrivate(obj, pt);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
+	return JS_TRUE;
+}
+
+void S_CCTMXLayer::jsFinalize(JSContext *cx, JSObject *obj)
+{
+	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
+	if (pt) {
+		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTMXLayer *)pt->data;
+		JS_free(cx, pt);
+	}
+}
+
+JSBool S_CCTMXLayer::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCTMXLayer *cobj; JSGET_PTRSHELL(S_CCTMXLayer, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	case kLayerSize:
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCSize::jsClass, S_CCSize::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			CCSize* ctmp = new CCSize(cobj->getLayerSize());
+			pt->flags = 0;
+			pt->data = (void *)ctmp;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		break;
+	case kMapTileSize:
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCSize::jsClass, S_CCSize::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			CCSize* ctmp = new CCSize(cobj->getMapTileSize());
+			pt->flags = 0;
+			pt->data = (void *)ctmp;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		break;
+	case kLayerOrientation:
+		do { jsval tmp; JS_NewNumberValue(cx, cobj->getLayerOrientation(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
+		break;
+	case kLayerName:
+				// don't know what this is (c ~> js)
+		break;
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+JSBool S_CCTMXLayer::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCTMXLayer *cobj; JSGET_PTRSHELL(S_CCTMXLayer, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	case kLayerSize:
+		do {
+			CCSize* tmp; JSGET_PTRSHELL(CCSize, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setLayerSize(*tmp); }
+		} while (0);
+		break;
+	case kMapTileSize:
+		do {
+			CCSize* tmp; JSGET_PTRSHELL(CCSize, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setMapTileSize(*tmp); }
+		} while (0);
+		break;
+	case kTiles:
+		do {
+			unsigned int* tmp; JSGET_PTRSHELL(unsigned int, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setTiles(tmp); }
+		} while (0);
+		break;
+	case kTileSet:
+		do {
+			CCTMXTilesetInfo* tmp; JSGET_PTRSHELL(CCTMXTilesetInfo, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setTileSet(tmp); }
+		} while (0);
+		break;
+	case kLayerOrientation:
+		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setLayerOrientation(tmp); } while (0);
+		break;
+	case kProperties:
+		do {
+			CCStringToStringDictionary* tmp; JSGET_PTRSHELL(CCStringToStringDictionary, tmp, JSVAL_TO_OBJECT(*val));
+			if (tmp) { cobj->setProperties(tmp); }
+		} while (0);
+		break;
+	case kLayerName:
+				// don't know what this is (js ~> c)
+		break;
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+void S_CCTMXLayer::jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name)
+{
+	jsClass = (JSClass *)calloc(1, sizeof(JSClass));
+	jsClass->name = name;
+	jsClass->addProperty = JS_PropertyStub;
+	jsClass->delProperty = JS_PropertyStub;
+	jsClass->getProperty = JS_PropertyStub;
+	jsClass->setProperty = JS_StrictPropertyStub;
+	jsClass->enumerate = JS_EnumerateStub;
+	jsClass->resolve = JS_ResolveStub;
+	jsClass->convert = JS_ConvertStub;
+	jsClass->finalize = jsFinalize;
+	jsClass->flags = JSCLASS_HAS_PRIVATE;
+		static JSPropertySpec properties[] = {
+			{"layerSize", kLayerSize, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"mapTileSize", kMapTileSize, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"tiles", kTiles, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"tileSet", kTileSet, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"layerOrientation", kLayerOrientation, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"properties", kProperties, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"layerName", kLayerName, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"cOpacity", kCOpacity, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"minGID", kMinGID, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"maxGID", kMaxGID, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"vertexZvalue", kVertexZvalue, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"useAutomaticVertexZ", kUseAutomaticVertexZ, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"alphaFuncValue", kAlphaFuncValue, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"reusedTile", kReusedTile, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"atlasIndexArray", kAtlasIndexArray, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{"contentScaleFactor", kContentScaleFactor, JSPROP_PERMANENT | JSPROP_SHARED, S_CCTMXLayer::jsPropertyGet, S_CCTMXLayer::jsPropertySet},
+			{0, 0, 0, 0, 0}
+		};
+
+		static JSFunctionSpec funcs[] = {
+			JS_FN("tileAt", S_CCTMXLayer::jstileAt, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("tileGIDAt", S_CCTMXLayer::jstileGIDAt, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("removeTileAt", S_CCTMXLayer::jsremoveTileAt, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("positionAt", S_CCTMXLayer::jspositionAt, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+		static JSFunctionSpec st_funcs[] = {
+			JS_FS_END
+		};
+
+	jsObject = JS_InitClass(cx,globalObj,S_CCSpriteBatchNode::jsObject,jsClass,S_CCTMXLayer::jsConstructor,0,properties,funcs,NULL,st_funcs);
+}
+
+JSBool S_CCTMXLayer::jstileAt(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTMXLayer* self = NULL; JSGET_PTRSHELL(S_CCTMXLayer, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSObject *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
+		CCPoint* narg0; JSGET_PTRSHELL(CCPoint, narg0, arg0);
+		CCSprite* ret = self->tileAt(*narg0);
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCSprite::jsClass, S_CCSprite::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTMXLayer::jstileGIDAt(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTMXLayer* self = NULL; JSGET_PTRSHELL(S_CCTMXLayer, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSObject *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
+		CCPoint* narg0; JSGET_PTRSHELL(CCPoint, narg0, arg0);
+		unsigned int ret = self->tileGIDAt(*narg0);
+		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTMXLayer::jsremoveTileAt(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTMXLayer* self = NULL; JSGET_PTRSHELL(S_CCTMXLayer, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSObject *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
+		CCPoint* narg0; JSGET_PTRSHELL(CCPoint, narg0, arg0);
+		self->removeTileAt(*narg0);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCTMXLayer::jspositionAt(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCTMXLayer* self = NULL; JSGET_PTRSHELL(S_CCTMXLayer, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 1) {
+		JSObject *arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
+		CCPoint* narg0; JSGET_PTRSHELL(CCPoint, narg0, arg0);
+		CCPoint* ret = new CCPoint(self->positionAt(*narg0));
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCPoint::jsClass, S_CCPoint::jsObject, NULL);
 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
 			pt->flags = kPointerTemporary;
 			pt->data = (void *)ret;

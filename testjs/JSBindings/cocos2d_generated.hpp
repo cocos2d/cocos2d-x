@@ -3169,6 +3169,36 @@ public:
 
 };
 
+class S_CCTMXTiledMap : public cocos2d::CCTMXTiledMap
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTMXTiledMap(JSObject *obj) : CCTMXTiledMap(), m_jsobj(obj) {};
+	enum {
+		kMapSize = 1,
+		kTileSize,
+		kMapOrientation,
+		kObjectGroups,
+		kProperties,
+		kTileProperties,
+		kTMXLayers
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstiledMapWithTMXFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTMXFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jslayerNamed(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void update(ccTime delta);
+
+};
+
 class S_CCAccelAmplitude : public cocos2d::CCAccelAmplitude
 {
 	JSObject *m_jsobj;
@@ -3192,6 +3222,45 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTMXLayer : public cocos2d::CCTMXLayer
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTMXLayer(JSObject *obj) : CCTMXLayer(), m_jsobj(obj) {};
+	enum {
+		kLayerSize = 1,
+		kMapTileSize,
+		kTiles,
+		kTileSet,
+		kLayerOrientation,
+		kProperties,
+		kLayerName,
+		kCOpacity,
+		kMinGID,
+		kMaxGID,
+		kVertexZvalue,
+		kUseAutomaticVertexZ,
+		kAlphaFuncValue,
+		kReusedTile,
+		kAtlasIndexArray,
+		kContentScaleFactor
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstileAt(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstileGIDAt(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveTileAt(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jspositionAt(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
