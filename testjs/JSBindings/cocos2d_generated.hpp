@@ -41,6 +41,28 @@ void klass::menuAction(cocos2d::CCObject *o) \
 	} \
 }
 
+class S_CCTransitionMoveInL : public cocos2d::CCTransitionMoveInL
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionMoveInL(JSObject *obj) : CCTransitionMoveInL(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jseaseActionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCAnimate : public cocos2d::CCAnimate
 {
 	JSObject *m_jsobj;
@@ -354,6 +376,25 @@ public:
 
 };
 
+class S_CCTransitionSplitRows : public cocos2d::CCTransitionSplitRows
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionSplitRows(JSObject *obj) : CCTransitionSplitRows(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCTintBy : public cocos2d::CCTintBy
 {
 	JSObject *m_jsobj;
@@ -515,6 +556,44 @@ public:
 
 };
 
+class S_CCTransitionFadeBL : public cocos2d::CCTransitionFadeBL
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionFadeBL(JSObject *obj) : CCTransitionFadeBL(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionFadeUp : public cocos2d::CCTransitionFadeUp
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionFadeUp(JSObject *obj) : CCTransitionFadeUp(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCMenuItemImage : public cocos2d::CCMenuItemImage
 {
 	JSObject *m_jsobj;
@@ -636,6 +715,30 @@ public:
 
 };
 
+class S_CCTransitionFade : public cocos2d::CCTransitionFade
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionFade(JSObject *obj) : CCTransitionFade(), m_jsobj(obj) {};
+	enum {
+		kColor = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void onEnter();
+	virtual void onExit();
+
+};
+
 class S_CCEaseElasticIn : public cocos2d::CCEaseElasticIn
 {
 	JSObject *m_jsobj;
@@ -704,6 +807,45 @@ public:
 
 };
 
+class S_CCTransitionTurnOffTiles : public cocos2d::CCTransitionTurnOffTiles
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionTurnOffTiles(JSObject *obj) : CCTransitionTurnOffTiles(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jseaseActionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionZoomFlipAngular : public cocos2d::CCTransitionZoomFlipAngular
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionZoomFlipAngular(JSObject *obj) : CCTransitionZoomFlipAngular(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseElastic : public cocos2d::CCEaseElastic
 {
 	JSObject *m_jsobj;
@@ -724,6 +866,44 @@ public:
 	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionFadeDown : public cocos2d::CCTransitionFadeDown
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionFadeDown(JSObject *obj) : CCTransitionFadeDown(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionFlipY : public cocos2d::CCTransitionFlipY
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionFlipY(JSObject *obj) : CCTransitionFlipY(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -775,6 +955,25 @@ public:
 
 };
 
+class S_CCTransitionFlipX : public cocos2d::CCTransitionFlipX
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionFlipX(JSObject *obj) : CCTransitionFlipX(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCRect : public cocos2d::CCRect
 {
 	JSObject *m_jsobj;
@@ -802,6 +1001,47 @@ public:
 	static JSBool jsCCRectEqualToRect(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsCCRectContainsPoint(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsCCRectIntersectsRect(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionShrinkGrow : public cocos2d::CCTransitionShrinkGrow
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionShrinkGrow(JSObject *obj) : CCTransitionShrinkGrow(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jseaseActionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionSplitCols : public cocos2d::CCTransitionSplitCols
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionSplitCols(JSObject *obj) : CCTransitionSplitCols(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void onEnter();
+	static JSBool jseaseActionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -871,6 +1111,28 @@ public:
 
 };
 
+class S_CCTransitionSlideInL : public cocos2d::CCTransitionSlideInL
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionSlideInL(JSObject *obj) : CCTransitionSlideInL(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void onEnter();
+	static JSBool jseaseActionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseBounceIn : public cocos2d::CCEaseBounceIn
 {
 	JSObject *m_jsobj;
@@ -888,6 +1150,26 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionSlideInR : public cocos2d::CCTransitionSlideInR
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionSlideInR(JSObject *obj) : CCTransitionSlideInR(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -980,6 +1262,25 @@ public:
 
 };
 
+class S_CCTransitionMoveInT : public cocos2d::CCTransitionMoveInT
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionMoveInT(JSObject *obj) : CCTransitionMoveInT(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseBounceOut : public cocos2d::CCEaseBounceOut
 {
 	JSObject *m_jsobj;
@@ -997,6 +1298,44 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionMoveInR : public cocos2d::CCTransitionMoveInR
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionMoveInR(JSObject *obj) : CCTransitionMoveInR(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionMoveInB : public cocos2d::CCTransitionMoveInB
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionMoveInB(JSObject *obj) : CCTransitionMoveInB(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1037,6 +1376,27 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionFadeTR : public cocos2d::CCTransitionFadeTR
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionFadeTR(JSObject *obj) : CCTransitionFadeTR(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void onEnter();
+	static JSBool jseaseActionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1546,6 +1906,25 @@ public:
 
 };
 
+class S_CCTransitionZoomFlipY : public cocos2d::CCTransitionZoomFlipY
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionZoomFlipY(JSObject *obj) : CCTransitionZoomFlipY(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCTextureCache : public cocos2d::CCTextureCache
 {
 	JSObject *m_jsobj;
@@ -1631,6 +2010,25 @@ public:
 
 };
 
+class S_CCTransitionZoomFlipX : public cocos2d::CCTransitionZoomFlipX
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionZoomFlipX(JSObject *obj) : CCTransitionZoomFlipX(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseSineInOut : public cocos2d::CCEaseSineInOut
 {
 	JSObject *m_jsobj;
@@ -1681,6 +2079,27 @@ public:
 	static JSBool jsclear(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jssaveBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 	virtual void update(ccTime delta);
+
+};
+
+class S_CCTransitionCrossFade : public cocos2d::CCTransitionCrossFade
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionCrossFade(JSObject *obj) : CCTransitionCrossFade(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void onEnter();
+	virtual void onExit();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1767,6 +2186,25 @@ public:
 
 };
 
+class S_CCTransitionJumpZoom : public cocos2d::CCTransitionJumpZoom
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionJumpZoom(JSObject *obj) : CCTransitionJumpZoom(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCBlink : public cocos2d::CCBlink
 {
 	JSObject *m_jsobj;
@@ -1788,6 +2226,86 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionFlipAngular : public cocos2d::CCTransitionFlipAngular
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionFlipAngular(JSObject *obj) : CCTransitionFlipAngular(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionRotoZoom : public cocos2d::CCTransitionRotoZoom
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionRotoZoom(JSObject *obj) : CCTransitionRotoZoom(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionSlideInB : public cocos2d::CCTransitionSlideInB
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionSlideInB(JSObject *obj) : CCTransitionSlideInB(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionSceneOriented : public cocos2d::CCTransitionSceneOriented
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionSceneOriented(JSObject *obj) : CCTransitionSceneOriented(), m_jsobj(obj) {};
+	enum {
+		kEOrientation = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1839,6 +2357,26 @@ public:
 	static JSBool jslocationInView(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jspreviousLocationInView(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsSetTouchInfo(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionSlideInT : public cocos2d::CCTransitionSlideInT
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionSlideInT(JSObject *obj) : CCTransitionSlideInT(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1910,6 +2448,38 @@ public:
 	static JSBool jsisFrameDisplayed(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsdisplayedFrame(JSContext *cx, uint32_t argc, jsval *vp);
 	virtual void update(ccTime delta);
+
+};
+
+class S_CCTransitionScene : public cocos2d::CCTransitionScene
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionScene(JSObject *obj) : CCTransitionScene(), m_jsobj(obj) {};
+	enum {
+		kInScene = 1,
+		kOutScene,
+		kDuration,
+		kIsInSceneOnTop,
+		kIsSendCleanupToScene
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void onEnter();
+	virtual void onExit();
+	static JSBool jscleanup(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsfinish(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jshideOutShowIn(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 

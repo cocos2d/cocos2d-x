@@ -108,6 +108,34 @@ ScriptingCore::ScriptingCore()
 	S_CCGridAction::jsCreateClass(this->cx, cocos, "GridAction");
 	S_CCGrid3DAction::jsCreateClass(this->cx, cocos, "Grid3DAction");
 	S_CCWaves3D::jsCreateClass(this->cx, cocos, "Waves3D");
+	S_CCTransitionScene::jsCreateClass(this->cx, cocos, "TransitionScene");
+	S_CCTransitionSceneOriented::jsCreateClass(this->cx, cocos, "TransitionSceneOriented");
+	S_CCTransitionRotoZoom::jsCreateClass(this->cx, cocos, "TransitionRotoZoom");
+	S_CCTransitionFadeDown::jsCreateClass(this->cx, cocos, "TransitionFadeDown");
+	S_CCTransitionJumpZoom::jsCreateClass(this->cx, cocos, "TransitionJumpZoom");
+	S_CCTransitionMoveInL::jsCreateClass(this->cx, cocos, "TransitionMoveInL");
+	S_CCTransitionMoveInR::jsCreateClass(this->cx, cocos, "TransitionMoveInR");
+	S_CCTransitionMoveInT::jsCreateClass(this->cx, cocos, "TransitionMoveInT");
+	S_CCTransitionMoveInB::jsCreateClass(this->cx, cocos, "TransitionMoveInB");
+	S_CCTransitionSlideInL::jsCreateClass(this->cx, cocos, "TransitionSlideInL");
+	S_CCTransitionSlideInR::jsCreateClass(this->cx, cocos, "TransitionSlideInR");
+	S_CCTransitionSlideInB::jsCreateClass(this->cx, cocos, "TransitionSlideInB");
+	S_CCTransitionSlideInT::jsCreateClass(this->cx, cocos, "TransitionSlideInT");
+	S_CCTransitionShrinkGrow::jsCreateClass(this->cx, cocos, "TransitionShrinkGrow");
+	S_CCTransitionFlipX::jsCreateClass(this->cx, cocos, "TransitionFlipX");
+	S_CCTransitionFlipY::jsCreateClass(this->cx, cocos, "TransitionFlipY");
+	S_CCTransitionFlipAngular::jsCreateClass(this->cx, cocos, "TransitionFlipAngular");
+	S_CCTransitionZoomFlipX::jsCreateClass(this->cx, cocos, "TransitionZoomFlipX");
+	S_CCTransitionZoomFlipY::jsCreateClass(this->cx, cocos, "TransitionZoomFlipY");
+	S_CCTransitionZoomFlipAngular::jsCreateClass(this->cx, cocos, "TransitionZoomFlipAngular");
+	S_CCTransitionFade::jsCreateClass(this->cx, cocos, "TransitionFade");
+	S_CCTransitionCrossFade::jsCreateClass(this->cx, cocos, "TransitionCrossFade");
+	S_CCTransitionTurnOffTiles::jsCreateClass(this->cx, cocos, "TransitionTurnOffTiles");
+	S_CCTransitionSplitCols::jsCreateClass(this->cx, cocos, "TransitionSplitCols");
+	S_CCTransitionSplitRows::jsCreateClass(this->cx, cocos, "TransitionSplitRows");
+	S_CCTransitionFadeTR::jsCreateClass(this->cx, cocos, "TransitionFadeTR");
+	S_CCTransitionFadeBL::jsCreateClass(this->cx, cocos, "TransitionFadeBL");
+	S_CCTransitionFadeUp::jsCreateClass(this->cx, cocos, "TransitionFadeUp");
 
 	S_SimpleAudioEngine::jsCreateClass(this->cx, cocos, "SimpleAudioEngine");
 
