@@ -4,7 +4,7 @@ Simple iOS (and soon Android) example of cocos2d-x game running javascript bindi
 
 *NOTE* This is a WIP and the bindings are not yet complete! What's working:
 
-    CCPoint CCSize CCRect CCDirector CCNode CCSprite CCScene CCSpriteFrameCache
+    CCPoint CCSize _ccGridSize CCRect CCDirector CCNode CCSprite CCScene CCSpriteFrameCache
     CCSpriteFrame CCAction CCAnimate CCAnimation CCRepeatForever CCLayer CCTouch
     CCSet CCMoveBy CCMoveTo CCRotateTo CCRotateBy CCRenderTexture CCMenu CCMenuItem
     CCMenuItemLabel CCMenuItemSprite CCMenuItemImage CCLabelTTF CCSequence
@@ -13,7 +13,23 @@ Simple iOS (and soon Android) example of cocos2d-x game running javascript bindi
     CCEaseBounceIn CCEaseBounce CCEaseBounceInOut CCEaseBackIn CCEaseBounceOut CCEaseIn CCEaseOut
     CCEaseExponentialIn CCEaseInOut CCEaseExponentialOut CCEaseExponentialInOut CCEaseSineIn
     CCEaseSineOut CCEaseSineInOut CCActionEase CCEaseRateAction CCParticleSystem CCParticleSystemQuad
-    CCParticleSystemPoint CCDelayTime CCTexture2D CCTextureCache
+    CCParticleSystemPoint CCDelayTime CCTexture2D CCTextureCache CCSpriteBatchNode CCTextureAtlas
+    CCParallaxNode CCTintTo CCTintBy CCLayerColor CCBlink CCSpeed CCWaves3D CCGridAction CCGrid3DAction
+    CCTransitionScene CCTransitionSceneOriented CCTransitionRotoZoom CCTransitionFadeDown
+    CCTransitionJumpZoom CCTransitionMoveInL CCTransitionMoveInR CCTransitionMoveInT CCTransitionMoveInB
+    CCTransitionSlideInL CCTransitionSlideInR CCTransitionSlideInB CCTransitionSlideInT CCTransitionShrinkGrow
+    CCTransitionFlipX CCTransitionFlipY CCTransitionFlipAngular CCTransitionZoomFlipX CCTransitionZoomFlipY
+    CCTransitionZoomFlipAngular CCTransitionFade CCTransitionCrossFade CCTransitionTurnOffTiles
+    CCTransitionSplitCols CCTransitionSplitRows CCTransitionFadeTR CCTransitionFadeBL CCTransitionFadeUp
+    CCFadeOutBLTiles CCProgressFromTo CCFadeOutUpTiles CCAnimationCache CCPlace CCLabelBMFont CCReverseTime
+    CCFadeOutTRTiles CCCamera CCProgressTo CCWavesTiles3D CCMotionStreak CCTransitionRadialCCW CCFadeOutDownTiles
+    CCTurnOffTiles CCDeccelAmplitude CCProgressTimer CCActionInstant CCReuseGrid CCStopGrid CCTwirl
+    CCShakyTiles3D CCTransitionRadialCW CCAtlasNode CCWaves CCShow CCOrbitCamera CCShatteredTiles3D CCHide
+    CCToggleVisibility CCActionCamera CCShuffleTiles CCLayerGradient CCFlipX CCRepeat CCFlipY CCBezierBy
+    CCPageTurn3D CCLens3D CCRipple3D CCApplication CCFlipX3D CCJumpTo CCTransitionPageTurn CCFlipY3D
+    CCLiquid CCTiledGrid3DAction CCJumpBy CCFollow CCSkewBy CCAccelDeccelAmplitude CCLabelAtlas CCAccelAmplitude
+    CCSkewTo CCShaky3D CCSplitCols CCFadeOut CCTileMapAtlas CCFadeTo CCJumpTiles3D CCFadeIn CCSplitRows
+    CCScaleBy CCScaleTo CCBezierTo CCTMXTiledMap CCTMXLayer
 
 This is just a proof of concept and there are plans around this in order to make a more js-friendly API, right now
 the bindings were created automatically and the final idea is not to use them as they are but to create a higher
