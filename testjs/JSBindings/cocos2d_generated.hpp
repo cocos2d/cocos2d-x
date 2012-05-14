@@ -93,6 +93,51 @@ public:
 
 };
 
+class S_CCFadeOutBLTiles : public cocos2d::CCFadeOutBLTiles
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFadeOutBLTiles(JSObject *obj) : CCFadeOutBLTiles(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstestFunc(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCProgressFromTo : public cocos2d::CCProgressFromTo
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCProgressFromTo(JSObject *obj) : CCProgressFromTo(), m_jsobj(obj) {};
+	enum {
+		kTo = 1,
+		kFrom
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCLayer : public cocos2d::CCLayer
 {
 	JSObject *m_jsobj;
@@ -152,6 +197,74 @@ public:
 
 };
 
+class S_CCFadeOutUpTiles : public cocos2d::CCFadeOutUpTiles
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFadeOutUpTiles(JSObject *obj) : CCFadeOutUpTiles(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstestFunc(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransformTile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCAnimationCache : public cocos2d::CCAnimationCache
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	enum {
+		kAnimations = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jssharedAnimationCache(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jspurgeSharedAnimationCache(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaddAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsremoveAnimationByName(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsanimationByName(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinit(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCPlace : public cocos2d::CCPlace
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCPlace(JSObject *obj) : CCPlace(), m_jsobj(obj) {};
+	enum {
+		kPosition = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsactionWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseBackOut : public cocos2d::CCEaseBackOut
 {
 	JSObject *m_jsobj;
@@ -169,6 +282,117 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCLabelBMFont : public cocos2d::CCLabelBMFont
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCLabelBMFont(JSObject *obj) : CCLabelBMFont(), m_jsobj(obj) {};
+	enum {
+		kCOpacity = 1,
+		kColor,
+		kIsOpacityModifyRGB,
+		kString,
+		kConfiguration,
+		kOpacity
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jspurgeCachedData(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jslabelWithString(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithString(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jscreateFontChars(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCReverseTime : public cocos2d::CCReverseTime
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCReverseTime(JSObject *obj) : CCReverseTime(), m_jsobj(obj) {};
+	enum {
+		kOther = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstop(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFadeOutTRTiles : public cocos2d::CCFadeOutTRTiles
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFadeOutTRTiles(JSObject *obj) : CCFadeOutTRTiles(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstestFunc(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsturnOnTile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsturnOffTile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstransformTile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCCamera : public cocos2d::CCCamera
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCCamera(JSObject *obj) : CCCamera(), m_jsobj(obj) {};
+	enum {
+		kEyeX = 1,
+		kEyeY,
+		kEyeZ,
+		kCenterX,
+		kCenterY,
+		kCenterZ,
+		kUpX,
+		kUpY,
+		kUpZ,
+		kDirty
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinit(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsrestore(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jslocate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsgetZEye(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -301,6 +525,31 @@ public:
 
 };
 
+class S_CCProgressTo : public cocos2d::CCProgressTo
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCProgressTo(JSObject *obj) : CCProgressTo(), m_jsobj(obj) {};
+	enum {
+		kTo = 1,
+		kFrom
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCDelayTime : public cocos2d::CCDelayTime
 {
 	JSObject *m_jsobj;
@@ -348,6 +597,31 @@ public:
 	static JSBool jsactions(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionsWithArray(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionOneTwo(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCWavesTiles3D : public cocos2d::CCWavesTiles3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCWavesTiles3D(JSObject *obj) : CCWavesTiles3D(), m_jsobj(obj) {};
+	enum {
+		kWaves = 1,
+		kAmplitude,
+		kAmplitudeRate
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithWaves(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithWaves(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -422,6 +696,55 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCMotionStreak : public cocos2d::CCMotionStreak
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCMotionStreak(JSObject *obj) : CCMotionStreak(), m_jsobj(obj) {};
+	enum {
+		kRibbon = 1,
+		kTexture,
+		kBlendFunc,
+		kSegThreshold,
+		kWidth,
+		kLastLocation
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstreakWithFade(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithFade(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void update(ccTime delta);
+
+};
+
+class S_CCTransitionRadialCCW : public cocos2d::CCTransitionRadialCCW
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionRadialCCW(JSObject *obj) : CCTransitionRadialCCW(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	virtual void onEnter();
+	virtual void onExit();
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -572,6 +895,54 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFadeOutDownTiles : public cocos2d::CCFadeOutDownTiles
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFadeOutDownTiles(JSObject *obj) : CCFadeOutDownTiles(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstestFunc(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTurnOffTiles : public cocos2d::CCTurnOffTiles
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTurnOffTiles(JSObject *obj) : CCTurnOffTiles(), m_jsobj(obj) {};
+	enum {
+		kSeed = 1,
+		kTilesCount,
+		kTilesOrder
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithSeed(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsturnOnTile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsturnOffTile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSeed(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -739,6 +1110,32 @@ public:
 
 };
 
+class S_CCDeccelAmplitude : public cocos2d::CCDeccelAmplitude
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCDeccelAmplitude(JSObject *obj) : CCDeccelAmplitude(), m_jsobj(obj) {};
+	enum {
+		kRate = 1,
+		kOther
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseElasticIn : public cocos2d::CCEaseElasticIn
 {
 	JSObject *m_jsobj;
@@ -756,6 +1153,37 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCProgressTimer : public cocos2d::CCProgressTimer
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCProgressTimer(JSObject *obj) : CCProgressTimer(), m_jsobj(obj) {};
+	enum {
+		kEType = 1,
+		kPercentage,
+		kSprite,
+		kVertexDataCount,
+		kVertexData,
+		kType
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsprogressWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsprogressWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void update(ccTime delta);
 
 };
 
@@ -827,6 +1255,27 @@ public:
 
 };
 
+class S_CCActionInstant : public cocos2d::CCActionInstant
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCActionInstant(JSObject *obj) : CCActionInstant(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsisDone(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstep(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCTransitionZoomFlipAngular : public cocos2d::CCTransitionZoomFlipAngular
 {
 	JSObject *m_jsobj;
@@ -843,6 +1292,29 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	virtual void onEnter();
 	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCReuseGrid : public cocos2d::CCReuseGrid
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCReuseGrid(JSObject *obj) : CCReuseGrid(), m_jsobj(obj) {};
+	enum {
+		kTimes = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithTimes(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithTimes(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -907,6 +1379,25 @@ public:
 
 };
 
+class S_CCStopGrid : public cocos2d::CCStopGrid
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCStopGrid(JSObject *obj) : CCStopGrid(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCSize : public cocos2d::CCSize
 {
 	JSObject *m_jsobj;
@@ -926,6 +1417,33 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsCCSizeEqualToSize(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTwirl : public cocos2d::CCTwirl
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTwirl(JSObject *obj) : CCTwirl(), m_jsobj(obj) {};
+	enum {
+		kPosition = 1,
+		kTwirls,
+		kAmplitude,
+		kAmplitudeRate,
+		kInPixels
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1045,6 +1563,30 @@ public:
 
 };
 
+class S_CCShakyTiles3D : public cocos2d::CCShakyTiles3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCShakyTiles3D(JSObject *obj) : CCShakyTiles3D(), m_jsobj(obj) {};
+	enum {
+		kRandrange = 1,
+		kShakeZ
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithRange(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithRange(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseElasticOut : public cocos2d::CCEaseElasticOut
 {
 	JSObject *m_jsobj;
@@ -1091,6 +1633,107 @@ public:
 
 };
 
+class S_CCTransitionRadialCW : public cocos2d::CCTransitionRadialCW
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionRadialCW(JSObject *obj) : CCTransitionRadialCW(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCAtlasNode : public cocos2d::CCAtlasNode
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCAtlasNode(JSObject *obj) : CCAtlasNode(), m_jsobj(obj) {};
+	enum {
+		kItemsPerRow = 1,
+		kItemsPerColumn,
+		kItemWidth,
+		kItemHeight,
+		kColorUnmodified,
+		kTextureAtlas,
+		kIsOpacityModifyRGB,
+		kBlendFunc,
+		kCOpacity,
+		kColor,
+		kQuadsToDraw,
+		kOpacity
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsatlasWithTileFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTileFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdateAtlasValues(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void update(ccTime delta);
+
+};
+
+class S_CCWaves : public cocos2d::CCWaves
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCWaves(JSObject *obj) : CCWaves(), m_jsobj(obj) {};
+	enum {
+		kWaves = 1,
+		kAmplitude,
+		kAmplitudeRate,
+		kVertical,
+		kHorizontal
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithWaves(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithWaves(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCShow : public cocos2d::CCShow
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCShow(JSObject *obj) : CCShow(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseElasticInOut : public cocos2d::CCEaseElasticInOut
 {
 	JSObject *m_jsobj;
@@ -1108,6 +1751,39 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCOrbitCamera : public cocos2d::CCOrbitCamera
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCOrbitCamera(JSObject *obj) : CCOrbitCamera(), m_jsobj(obj) {};
+	enum {
+		kRadius = 1,
+		kDeltaRadius,
+		kAngleZ,
+		kDeltaAngleZ,
+		kAngleX,
+		kDeltaAngleX,
+		kRadZ,
+		kRadDeltaZ,
+		kRadX,
+		kRadDeltaX
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1153,6 +1829,51 @@ public:
 
 };
 
+class S_CCShatteredTiles3D : public cocos2d::CCShatteredTiles3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCShatteredTiles3D(JSObject *obj) : CCShatteredTiles3D(), m_jsobj(obj) {};
+	enum {
+		kRandrange = 1,
+		kOnce,
+		kShatterZ
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithRange(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithRange(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCHide : public cocos2d::CCHide
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCHide(JSObject *obj) : CCHide(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCTransitionSlideInR : public cocos2d::CCTransitionSlideInR
 {
 	JSObject *m_jsobj;
@@ -1170,6 +1891,55 @@ public:
 	static JSBool jsinitScenes(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCToggleVisibility : public cocos2d::CCToggleVisibility
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCToggleVisibility(JSObject *obj) : CCToggleVisibility(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsaction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCActionCamera : public cocos2d::CCActionCamera
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCActionCamera(JSObject *obj) : CCActionCamera(), m_jsobj(obj) {};
+	enum {
+		kCenterXOrig = 1,
+		kCenterYOrig,
+		kCenterZOrig,
+		kEyeXOrig,
+		kEyeYOrig,
+		kEyeZOrig,
+		kUpXOrig,
+		kUpYOrig,
+		kUpZOrig
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1204,6 +1974,33 @@ public:
 
 };
 
+class S_CCShuffleTiles : public cocos2d::CCShuffleTiles
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCShuffleTiles(JSObject *obj) : CCShuffleTiles(), m_jsobj(obj) {};
+	enum {
+		kSeed = 1,
+		kTilesCount,
+		kTilesOrder,
+		kTiles
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithSeed(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSeed(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseBounce : public cocos2d::CCEaseBounce
 {
 	JSObject *m_jsobj;
@@ -1223,6 +2020,62 @@ public:
 
 };
 
+class S_CCLayerGradient : public cocos2d::CCLayerGradient
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCLayerGradient(JSObject *obj) : CCLayerGradient(), m_jsobj(obj) {};
+	enum {
+		kColor = 1,
+		kEndColor,
+		kOpacity,
+		kCEndOpacity,
+		kAlongVector,
+		kCompressedInterpolation,
+		kStartColor,
+		kStartOpacity,
+		kEndOpacity,
+		kVector,
+		kIsCompressedInterpolation
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jslayerWithColor(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithColor(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFlipX : public cocos2d::CCFlipX
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFlipX(JSObject *obj) : CCFlipX(), m_jsobj(obj) {};
+	enum {
+		kFlipX = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsactionWithFlipX(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithFlipX(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseBounceInOut : public cocos2d::CCEaseBounceInOut
 {
 	JSObject *m_jsobj;
@@ -1239,6 +2092,59 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCRepeat : public cocos2d::CCRepeat
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCRepeat(JSObject *obj) : CCRepeat(), m_jsobj(obj) {};
+	enum {
+		kTimes = 1,
+		kTotal,
+		kInnerAction
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstop(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsisDone(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFlipY : public cocos2d::CCFlipY
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFlipY(JSObject *obj) : CCFlipY(), m_jsobj(obj) {};
+	enum {
+		kFlipY = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsactionWithFlipY(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithFlipY(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1339,6 +2245,32 @@ public:
 
 };
 
+class S_CCBezierBy : public cocos2d::CCBezierBy
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCBezierBy(JSObject *obj) : CCBezierBy(), m_jsobj(obj) {};
+	enum {
+		kConfig = 1,
+		kPosition
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseIn : public cocos2d::CCEaseIn
 {
 	JSObject *m_jsobj;
@@ -1379,6 +2311,25 @@ public:
 
 };
 
+class S_CCPageTurn3D : public cocos2d::CCPageTurn3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCPageTurn3D(JSObject *obj) : CCPageTurn3D(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCTransitionFadeTR : public cocos2d::CCTransitionFadeTR
 {
 	JSObject *m_jsobj;
@@ -1397,6 +2348,84 @@ public:
 	virtual void onEnter();
 	static JSBool jseaseActionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCLens3D : public cocos2d::CCLens3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCLens3D(JSObject *obj) : CCLens3D(), m_jsobj(obj) {};
+	enum {
+		kPosition = 1,
+		kRadius,
+		kLensEffect,
+		kInPixels,
+		kDirty
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCRipple3D : public cocos2d::CCRipple3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCRipple3D(JSObject *obj) : CCRipple3D(), m_jsobj(obj) {};
+	enum {
+		kPosition = 1,
+		kRadius,
+		kWaves,
+		kAmplitude,
+		kAmplitudeRate,
+		kInPixels
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCApplication : public cocos2d::CCApplication
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitInstance(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsapplicationDidFinishLaunching(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsapplicationDidEnterBackground(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsapplicationWillEnterForeground(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstatusBarFrame(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsrun(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsgetCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1547,6 +2576,27 @@ public:
 
 };
 
+class S_CCFlipX3D : public cocos2d::CCFlipX3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFlipX3D(JSObject *obj) : CCFlipX3D(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseInOut : public cocos2d::CCEaseInOut
 {
 	JSObject *m_jsobj;
@@ -1584,6 +2634,49 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCJumpTo : public cocos2d::CCJumpTo
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCJumpTo(JSObject *obj) : CCJumpTo(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTransitionPageTurn : public cocos2d::CCTransitionPageTurn
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTransitionPageTurn(JSObject *obj) : CCTransitionPageTurn(), m_jsobj(obj) {};
+	enum {
+		kBack = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithSize(JSContext *cx, uint32_t argc, jsval *vp);
+	virtual void onEnter();
 
 };
 
@@ -1739,6 +2832,50 @@ public:
 
 };
 
+class S_CCFlipY3D : public cocos2d::CCFlipY3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFlipY3D(JSObject *obj) : CCFlipY3D(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCLiquid : public cocos2d::CCLiquid
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCLiquid(JSObject *obj) : CCLiquid(), m_jsobj(obj) {};
+	enum {
+		kWaves = 1,
+		kAmplitude,
+		kAmplitudeRate
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithWaves(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithWaves(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseExponentialInOut : public cocos2d::CCEaseExponentialInOut
 {
 	JSObject *m_jsobj;
@@ -1755,6 +2892,28 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTiledGrid3DAction : public cocos2d::CCTiledGrid3DAction
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTiledGrid3DAction(JSObject *obj) : CCTiledGrid3DAction(), m_jsobj(obj) {};
+	enum {
+		kGrid = 1
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsoriginalTile(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1784,6 +2943,114 @@ public:
 
 };
 
+class S_CCJumpBy : public cocos2d::CCJumpBy
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCJumpBy(JSObject *obj) : CCJumpBy(), m_jsobj(obj) {};
+	enum {
+		kPosition = 1,
+		kDelta,
+		kHeight,
+		kJumps
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFollow : public cocos2d::CCFollow
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFollow(JSObject *obj) : CCFollow(), m_jsobj(obj) {};
+	enum {
+		kFollowedNode = 1,
+		kBoundarySet,
+		kBoundaryFullyCovered,
+		kHalfScreenSize,
+		kFullScreenSize,
+		kLeftBoundary,
+		kRightBoundary,
+		kTopBoundary,
+		kBottomBoundary
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsisBoundarySet(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsisDone(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstop(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCSkewBy : public cocos2d::CCSkewBy
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCSkewBy(JSObject *obj) : CCSkewBy(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCAccelDeccelAmplitude : public cocos2d::CCAccelDeccelAmplitude
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCAccelDeccelAmplitude(JSObject *obj) : CCAccelDeccelAmplitude(), m_jsobj(obj) {};
+	enum {
+		kRate = 1,
+		kOther
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseSineIn : public cocos2d::CCEaseSineIn
 {
 	JSObject *m_jsobj;
@@ -1801,6 +3068,30 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCLabelAtlas : public cocos2d::CCLabelAtlas
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCLabelAtlas(JSObject *obj) : CCLabelAtlas(), m_jsobj(obj) {};
+	enum {
+		kString = 1,
+		kStartChar
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jslabelWithString(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithString(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdateAtlasValues(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -1875,6 +3166,87 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCAccelAmplitude : public cocos2d::CCAccelAmplitude
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCAccelAmplitude(JSObject *obj) : CCAccelAmplitude(), m_jsobj(obj) {};
+	enum {
+		kRate = 1,
+		kOther
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCSkewTo : public cocos2d::CCSkewTo
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCSkewTo(JSObject *obj) : CCSkewTo(), m_jsobj(obj) {};
+	enum {
+		kSkewX = 1,
+		kSkewY,
+		kStartSkewX,
+		kStartSkewY,
+		kEndSkewX,
+		kEndSkewY,
+		kDeltaX,
+		kDeltaY
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCShaky3D : public cocos2d::CCShaky3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCShaky3D(JSObject *obj) : CCShaky3D(), m_jsobj(obj) {};
+	enum {
+		kRandrange = 1,
+		kShakeZ
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithRange(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithRange(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -2048,6 +3420,77 @@ public:
 
 };
 
+class S_CCSplitCols : public cocos2d::CCSplitCols
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCSplitCols(JSObject *obj) : CCSplitCols(), m_jsobj(obj) {};
+	enum {
+		kCols = 1,
+		kSize
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithCols(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithCols(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFadeOut : public cocos2d::CCFadeOut
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFadeOut(JSObject *obj) : CCFadeOut(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCTileMapAtlas : public cocos2d::CCTileMapAtlas
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCTileMapAtlas(JSObject *obj) : CCTileMapAtlas(), m_jsobj(obj) {};
+	enum {
+		kTGAInfo = 1,
+		kPosToAtlasIndex,
+		kItemsToRender
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jstileMapAtlasWithTileFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsinitWithTileFile(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jstileAt(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreleaseMap(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCRenderTexture : public cocos2d::CCRenderTexture
 {
 	JSObject *m_jsobj;
@@ -2151,6 +3594,31 @@ public:
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsactionWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFadeTo : public cocos2d::CCFadeTo
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFadeTo(JSObject *obj) : CCFadeTo(), m_jsobj(obj) {};
+	enum {
+		kToOpacity = 1,
+		kFromOpacity
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -2264,6 +3732,76 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	virtual void onEnter();
 	static JSBool jstransitionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCJumpTiles3D : public cocos2d::CCJumpTiles3D
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCJumpTiles3D(JSObject *obj) : CCJumpTiles3D(), m_jsobj(obj) {};
+	enum {
+		kJumps = 1,
+		kAmplitude,
+		kAmplitudeRate
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithJumps(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithJumps(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCFadeIn : public cocos2d::CCFadeIn
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCFadeIn(JSObject *obj) : CCFadeIn(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCSplitRows : public cocos2d::CCSplitRows
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCSplitRows(JSObject *obj) : CCSplitRows(), m_jsobj(obj) {};
+	enum {
+		kRows = 1,
+		kSize
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithRows(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithRows(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
@@ -2483,6 +4021,26 @@ public:
 
 };
 
+class S_CCScaleBy : public cocos2d::CCScaleBy
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCScaleBy(JSObject *obj) : CCScaleBy(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsreverse(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCSpriteBatchNode : public cocos2d::CCSpriteBatchNode
 {
 	JSObject *m_jsobj;
@@ -2548,6 +4106,37 @@ public:
 
 };
 
+class S_CCScaleTo : public cocos2d::CCScaleTo
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCScaleTo(JSObject *obj) : CCScaleTo(), m_jsobj(obj) {};
+	enum {
+		kScaleX = 1,
+		kScaleY,
+		kStartScaleX,
+		kStartScaleY,
+		kEndScaleX,
+		kEndScaleY,
+		kDeltaX,
+		kDeltaY
+	};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsinitWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCEaseRateAction : public cocos2d::CCEaseRateAction
 {
 	JSObject *m_jsobj;
@@ -2590,6 +4179,25 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsvertex(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsoriginalVertex(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
+class S_CCBezierTo : public cocos2d::CCBezierTo
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+	S_CCBezierTo(JSObject *obj) : CCBezierTo(), m_jsobj(obj) {};
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsstartWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
 
