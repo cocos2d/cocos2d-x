@@ -25,6 +25,8 @@ THE SOFTWARE.
 #ifndef __COCOS_CGGEMETRY_H__
 #define __COCOS_CGGEMETRY_H__
 
+#include <cmath>
+
 #include "CCCommon.h"
 
 namespace   cocos2d {
@@ -100,6 +102,37 @@ inline CCPoint& operator/=( CCPoint& a, const float factor )
     a = a / factor;
     return a;
 }
+
+
+inline float length( const cocos2d::CCPoint& vec )
+{
+    return std::sqrt( vec.x * vec.x + vec.y * vec.y);
+}
+
+inline float distance( const cocos2d::CCPoint& a, const cocos2d::CCPoint& b )
+{
+    return length( b - a );
+}
+
+inline CCPoint normalize( cocos2d::CCPoint point )
+{
+    // this code is rewritten from normalise function from https://bitbucket.org/sinbad/ogre/src/fa19923409ee/OgreMain/include/OgreVector2.h
+    
+    float fLength = length( point );
+    
+    if ( fLength > 0.0f )
+    {
+        float fInvLength = 1.0f / fLength;
+        point.x *= fInvLength;
+        point.y *= fInvLength;
+    }
+    
+    assert( point.x <= 1.f );
+    assert( point.y <= 1.f );
+    
+    return point;
+}
+
 
 
 class CC_DLL CCSize
