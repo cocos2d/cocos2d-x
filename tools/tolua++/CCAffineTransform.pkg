@@ -1,5 +1,6 @@
 
-struct CCAffineTransform {
+class CCAffineTransform {
+    CCAffineTransform(void);
     CGFloat a, b, c, d;
     CGFloat tx, ty;
 };

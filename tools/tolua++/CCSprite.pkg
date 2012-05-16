@@ -18,6 +18,9 @@ class CCSprite : public CCNode
 {
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
+
+    tolua_property__CCOpacity   float opacity;
+
     void setColor(ccColor3B color);
     ccColor3B getColor();
 

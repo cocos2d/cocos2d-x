@@ -37,12 +37,14 @@ typedef enum {
 
 } CCTexture2DPixelFormat;
 
-typedef struct _ccTexParams {
+class ccTexParams
+{
+    ccTexParams(void);
     GLuint  minFilter;
     GLuint  magFilter;
     GLuint  wrapS;
     GLuint  wrapT;
-} ccTexParams;
+};
 
 class CCTexture2D : public CCObject
 {
