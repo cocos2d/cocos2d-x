@@ -24,7 +24,7 @@ typedef struct _ccColor4B
     GLubyte a;
 } ccColor4B;
 //! helper macro that creates an ccColor4B type
-static  ccColor4B ccc4f(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o);
+ccColor4B ccc4f(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o);
 
 typedef struct _ccColor4F {
     GLfloat r;
@@ -43,11 +43,12 @@ typedef struct _ccGridSize
 } ccGridSize;
 ccGridSize ccg(int x, int y);
 
-typedef struct _ccBlendFunc
+class ccBlendFunc
 {
+    ccBlendFunc(void);
     GLenum src;
     GLenum dst;
-} ccBlendFunc;
+};
 
 typedef enum
 {
