@@ -6,8 +6,8 @@
 #define CC_ASSERT(cond) \
 if (! (cond)) \
 { \
-    char content[100]; \
-    sprintf(content, "%s function:%s line:%d", __FILE__, __FUNCTION__, __LINE__ - 3);  \
+    char content[256]; \
+    sprintf(content, "%s function:%s line:%d", __FILE__, __FUNCTION__, __LINE__);  \
     CCMessageBox(content, "Assert error"); \
 }
 
