@@ -1,6 +1,7 @@
 
 class CCObject
 {
+    void autorelease(void);
     void release(void);
     void retain(void);
     bool isSingleRefrence(void);

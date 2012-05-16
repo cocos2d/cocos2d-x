@@ -210,7 +210,9 @@ public:
 
 	virtual void setDirtyRecursively(bool bValue);
 	virtual void setPosition(const CCPoint& pos);
+	virtual void setPosition(float x, float y);
 	virtual void setPositionInPixels(const CCPoint& pos);
+	virtual void setPositionInPixels(float x, float y);
 	virtual void setRotation(float fRotation);
     virtual void setSkewX(float sx);
     virtual void setSkewY(float sy);

@@ -72,7 +72,7 @@ void CCLuaEngine::removeCCObjectByID(int nLuaID)
     tolua_remove_ccobject_by_refid(m_state, nLuaID);
 }
 
-void CCLuaEngine::removeLuaHandler(int nHandler)
+void CCLuaEngine::removeLuaHandler(LUA_HANDLE nHandler)
 {
     tolua_remove_function_by_refid(m_state, nHandler);
 }
@@ -148,7 +148,7 @@ int	CCLuaEngine::executeGlobalFunction(const char* functionName)
     return ret;
 }
 
-int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
+int CCLuaEngine::executeFunctionByHandler(LUA_HANDLE nHandler, int numArgs)
 {
     if (pushFunctionByHandler(nHandler))
     {
@@ -202,25 +202,25 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
     }
 }
 
-int CCLuaEngine::executeFunctionWithIntegerData(int nHandler, int data)
+int CCLuaEngine::executeFunctionWithIntegerData(LUA_HANDLE nHandler, int data)
 {
     lua_pushinteger(m_state, data);
     return executeFunctionByHandler(nHandler, 1);
 }
 
-int CCLuaEngine::executeFunctionWithFloatData(int nHandler, float data)
+int CCLuaEngine::executeFunctionWithFloatData(LUA_HANDLE nHandler, float data)
 {
     lua_pushnumber(m_state, data);
     return executeFunctionByHandler(nHandler, 1);
 }
 
-int CCLuaEngine::executeFunctionWithBooleanData(int nHandler, bool data)
+int CCLuaEngine::executeFunctionWithBooleanData(LUA_HANDLE nHandler, bool data)
 {
     lua_pushboolean(m_state, data);
     return executeFunctionByHandler(nHandler, 1);
 }
 
-int CCLuaEngine::executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName)
+int CCLuaEngine::executeFunctionWithCCObject(LUA_HANDLE nHandler, CCObject* pObject, const char* typeName)
 {
     tolua_pushusertype_ccobject(m_state, pObject->m_uID, &pObject->m_nLuaID, pObject, typeName);
     return executeFunctionByHandler(nHandler, 1);
@@ -251,7 +251,7 @@ int CCLuaEngine::pushCCObjectToLuaStack(CCObject* pObject, const char* typeName)
 }
 
 // functions for excute touch event
-int CCLuaEngine::executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch)
+int CCLuaEngine::executeTouchEvent(LUA_HANDLE nHandler, int eventType, CCTouch *pTouch)
 {
     CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->locationInView());
     lua_pushinteger(m_state, eventType);
@@ -260,7 +260,7 @@ int CCLuaEngine::executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch)
     return executeFunctionByHandler(nHandler, 3);
 }
 
-int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches)
+int CCLuaEngine::executeTouchesEvent(LUA_HANDLE nHandler, int eventType, CCSet *pTouches)
 {
     lua_pushinteger(m_state, eventType);
     lua_newtable(m_state);
@@ -283,7 +283,7 @@ int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouche
     return executeFunctionByHandler(nHandler, 2);
 }
 
-int CCLuaEngine::executeSchedule(int nHandler, ccTime dt)
+int CCLuaEngine::executeSchedule(LUA_HANDLE nHandler, ccTime dt)
 {
     return executeFunctionWithFloatData(nHandler, dt);
 }
@@ -313,7 +313,7 @@ void CCLuaEngine::addLuaLoader(lua_CFunction func)
     lua_pop(m_state, 1);
 }
 
-bool CCLuaEngine::pushFunctionByHandler(int nHandler)
+bool CCLuaEngine::pushFunctionByHandler(LUA_HANDLE nHandler)
 {
     lua_rawgeti(m_state, LUA_REGISTRYINDEX, nHandler);  /* stack: ... func */
     if (!lua_isfunction(m_state, -1))
