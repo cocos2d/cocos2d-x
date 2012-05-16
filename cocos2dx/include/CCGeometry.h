@@ -46,6 +46,62 @@ public:
 	static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
 
+    
+inline bool operator==( const CCPoint a, const CCPoint b )
+{
+    return CCPoint::CCPointEqualToPoint( a, b );
+}
+
+inline bool operator!=( const CCPoint a, const CCPoint b )
+{
+    return !( a==b );
+}
+
+inline CCPoint operator+( const CCPoint a, const CCPoint b )
+{
+    return CCPoint( a.x + b.x, a.y + b.y );
+}
+
+inline CCPoint operator-( const CCPoint a, const CCPoint b )
+{
+    return CCPoint( a.x - b.x, a.y - b.y );
+}
+    
+inline CCPoint operator*( const CCPoint a, const float factor )
+{
+    return CCPoint( a.x * factor, a.y * factor );
+}
+
+inline CCPoint operator/( const CCPoint a, const float factor )
+{
+    return CCPoint( a.x / factor, a.y / factor );
+}
+    
+inline CCPoint& operator+=( CCPoint& a, const CCPoint b )
+{
+    a = a + b;
+    return a;
+}
+
+inline CCPoint& operator-=( CCPoint& a, const CCPoint b )
+{
+    a = a + b;
+    return a;
+}
+
+inline CCPoint& operator*=( CCPoint& a, const float factor )
+{
+    a = a * factor;
+    return a;
+}
+
+inline CCPoint& operator/=( CCPoint& a, const float factor )
+{
+    a = a / factor;
+    return a;
+}
+
+
 class CC_DLL CCSize
 {
 public:
