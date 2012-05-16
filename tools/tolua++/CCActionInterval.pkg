@@ -65,11 +65,13 @@ class CCJumpTo : public CCJumpBy
     static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
 };
 
-typedef struct _ccBezierConfig {
+class ccBezierConfig
+{
+    ccBezierConfig(void);
     CCPoint endPosition;
     CCPoint controlPoint_1;
     CCPoint controlPoint_2;
-} ccBezierConfig;
+};
 
 class CCBezierBy : public CCActionInterval
 {
