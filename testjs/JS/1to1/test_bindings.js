@@ -34,3 +34,9 @@ cocos.log("aPublicField: " + another.aPublicField);
 
 // should print something in stderr
 another.doSomethingSimple();
+
+//should print the enum
+cocos.log("enum: " + someThingEnumerated.kValue1);
+cocos.log("enum: " + someThingEnumerated.kValue2);
+cocos.log("enum: " + someThingEnumerated.kValue3);
+cocos.log("enum: " + someThingEnumerated.kValue4);
