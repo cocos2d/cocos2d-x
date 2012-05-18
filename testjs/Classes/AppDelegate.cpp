@@ -99,6 +99,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// in a browser
 	S_SimpleNativeClass::jsCreateClass(cx, obj, "SimpleNativeClass");
 	S_AnotherClass::jsCreateClass(cx, obj, "AnotherClass");
+	register_enums_simple_native_generated(obj);
 
 //	pDirector->runWithScene(HelloWorld::scene());
 	// run the main script
