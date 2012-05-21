@@ -16066,12 +16066,9 @@ void S_CCApplication::jsCreateClass(JSContext *cx, JSObject *globalObj, const ch
 		};
 
 		static JSFunctionSpec funcs[] = {
-			JS_FN("initInstance", S_CCApplication::jsinitInstance, 0, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("applicationDidFinishLaunching", S_CCApplication::jsapplicationDidFinishLaunching, 0, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("applicationDidEnterBackground", S_CCApplication::jsapplicationDidEnterBackground, 0, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("applicationWillEnterForeground", S_CCApplication::jsapplicationWillEnterForeground, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("setAnimationInterval", S_CCApplication::jssetAnimationInterval, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("setOrientation", S_CCApplication::jssetOrientation, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 			JS_FN("statusBarFrame", S_CCApplication::jsstatusBarFrame, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("run", S_CCApplication::jsrun, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 			JS_FS_END
 		};
 
@@ -16083,38 +16080,14 @@ void S_CCApplication::jsCreateClass(JSContext *cx, JSObject *globalObj, const ch
 	jsObject = JS_InitClass(cx,globalObj,NULL,jsClass,S_CCApplication::jsConstructor,0,properties,funcs,NULL,st_funcs);
 }
 
-JSBool S_CCApplication::jsinitInstance(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool S_CCApplication::jssetAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	S_CCApplication* self = NULL; JSGET_PTRSHELL(S_CCApplication, self, obj);
 	if (self == NULL) return JS_FALSE;
-	if (argc == 0) {
-		bool ret = self->initInstance();
-		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
-		
-		return JS_TRUE;
-	}
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-JSBool S_CCApplication::jsapplicationDidFinishLaunching(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	S_CCApplication* self = NULL; JSGET_PTRSHELL(S_CCApplication, self, obj);
-	if (self == NULL) return JS_FALSE;
-	if (argc == 0) {
-		bool ret = self->applicationDidFinishLaunching();
-		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
-		
-		return JS_TRUE;
-	}
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-JSBool S_CCApplication::jsapplicationDidEnterBackground(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	S_CCApplication* self = NULL; JSGET_PTRSHELL(S_CCApplication, self, obj);
-	if (self == NULL) return JS_FALSE;
-	if (argc == 0) {
-		self->applicationDidEnterBackground();
+	if (argc == 1) {
+		double arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "d", &arg0);
+		self->setAnimationInterval(arg0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -16122,14 +16095,14 @@ JSBool S_CCApplication::jsapplicationDidEnterBackground(JSContext *cx, uint32_t 
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-JSBool S_CCApplication::jsapplicationWillEnterForeground(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool S_CCApplication::jssetOrientation(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	S_CCApplication* self = NULL; JSGET_PTRSHELL(S_CCApplication, self, obj);
 	if (self == NULL) return JS_FALSE;
-	if (argc == 0) {
-		self->applicationWillEnterForeground();
-		
-		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	if (argc == 1) {
+		Orientation arg0;
+		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "i", &arg0);
+		//INVALID RETURN TYPE _41C5
 		return JS_TRUE;
 	}
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
@@ -16146,27 +16119,6 @@ JSBool S_CCApplication::jsstatusBarFrame(JSContext *cx, uint32_t argc, jsval *vp
 		self->statusBarFrame(narg0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-		return JS_TRUE;
-	}
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-JSBool S_CCApplication::jsrun(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	S_CCApplication* self = NULL; JSGET_PTRSHELL(S_CCApplication, self, obj);
-	if (self == NULL) return JS_FALSE;
-	if (argc == 0) {
-		int ret = self->run();
-		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
-		
-		return JS_TRUE;
-	}
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-JSBool S_CCApplication::jsgetCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp) {
-	if (argc == 0) {
-		//INVALID RETURN TYPE _379
 		return JS_TRUE;
 	}
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
@@ -25809,6 +25761,269 @@ JSBool S_CCFadeIn::jsactionWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
+JSClass* S_CCUserDefault::jsClass = NULL;
+JSObject* S_CCUserDefault::jsObject = NULL;
+
+JSBool S_CCUserDefault::jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	return JS_FALSE;
+};
+
+void S_CCUserDefault::jsFinalize(JSContext *cx, JSObject *obj)
+{
+	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
+	if (pt) {
+		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCUserDefault *)pt->data;
+		JS_free(cx, pt);
+	}
+}
+
+JSBool S_CCUserDefault::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCUserDefault *cobj; JSGET_PTRSHELL(S_CCUserDefault, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+JSBool S_CCUserDefault::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val)
+{
+	int32_t propId = JSID_TO_INT(_id);
+	S_CCUserDefault *cobj; JSGET_PTRSHELL(S_CCUserDefault, cobj, obj);
+	if (!cobj) return JS_FALSE;
+	switch(propId) {
+	default:
+		break;
+	}
+	return JS_TRUE;
+}
+
+void S_CCUserDefault::jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name)
+{
+	jsClass = (JSClass *)calloc(1, sizeof(JSClass));
+	jsClass->name = name;
+	jsClass->addProperty = JS_PropertyStub;
+	jsClass->delProperty = JS_PropertyStub;
+	jsClass->getProperty = JS_PropertyStub;
+	jsClass->setProperty = JS_StrictPropertyStub;
+	jsClass->enumerate = JS_EnumerateStub;
+	jsClass->resolve = JS_ResolveStub;
+	jsClass->convert = JS_ConvertStub;
+	jsClass->finalize = jsFinalize;
+	jsClass->flags = JSCLASS_HAS_PRIVATE;
+		static JSPropertySpec properties[] = {
+			{0, 0, 0, 0, 0}
+		};
+
+		static JSFunctionSpec funcs[] = {
+			JS_FN("getBoolForKey", S_CCUserDefault::jsgetBoolForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getIntegerForKey", S_CCUserDefault::jsgetIntegerForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getFloatForKey", S_CCUserDefault::jsgetFloatForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getDoubleForKey", S_CCUserDefault::jsgetDoubleForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getStringForKey", S_CCUserDefault::jsgetStringForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("setBoolForKey", S_CCUserDefault::jssetBoolForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("setIntegerForKey", S_CCUserDefault::jssetIntegerForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("setFloatForKey", S_CCUserDefault::jssetFloatForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("setDoubleForKey", S_CCUserDefault::jssetDoubleForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("setStringForKey", S_CCUserDefault::jssetStringForKey, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("flush", S_CCUserDefault::jsflush, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+		static JSFunctionSpec st_funcs[] = {
+			JS_FN("sharedUserDefault", S_CCUserDefault::jssharedUserDefault, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("purgeSharedUserDefault", S_CCUserDefault::jspurgeSharedUserDefault, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FS_END
+		};
+
+	jsObject = JS_InitClass(cx,globalObj,NULL,jsClass,S_CCUserDefault::jsConstructor,0,properties,funcs,NULL,st_funcs);
+}
+
+JSBool S_CCUserDefault::jsgetBoolForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		JSBool arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sb", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		bool ret = self->getBoolForKey(narg0, arg1);
+		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jsgetIntegerForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Si", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		int ret = self->getIntegerForKey(narg0, arg1);
+		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jsgetFloatForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		double arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sd", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		float ret = self->getFloatForKey(narg0, arg1);
+		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jsgetDoubleForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		double arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sd", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		double ret = self->getDoubleForKey(narg0, arg1);
+		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jssetBoolForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		JSBool arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sb", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		self->setBoolForKey(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jssetIntegerForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		int arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Si", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		self->setIntegerForKey(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jssetFloatForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		double arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sd", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		self->setFloatForKey(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jssetDoubleForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		double arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sd", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		self->setDoubleForKey(narg0, arg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jsflush(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 0) {
+		self->flush();
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jssharedUserDefault(JSContext *cx, uint32_t argc, jsval *vp) {
+	if (argc == 0) {
+		CCUserDefault* ret = CCUserDefault::sharedUserDefault();
+		if (ret == NULL) {
+			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+			return JS_TRUE;
+		}
+		do {
+			JSObject *tmp = JS_NewObject(cx, S_CCUserDefault::jsClass, S_CCUserDefault::jsObject, NULL);
+			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+			pt->flags = kPointerTemporary;
+			pt->data = (void *)ret;
+			JS_SetPrivate(tmp, pt);
+			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+		} while (0);
+		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+JSBool S_CCUserDefault::jspurgeSharedUserDefault(JSContext *cx, uint32_t argc, jsval *vp) {
+	if (argc == 0) {
+		CCUserDefault::purgeSharedUserDefault();
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 JSClass* S_CCSplitRows::jsClass = NULL;
 JSObject* S_CCSplitRows::jsObject = NULL;
 
@@ -28925,3 +29140,6 @@ void S__ccGridSize::jsCreateClass(JSContext *cx, JSObject *globalObj, const char
 }
 
 
+void register_enums_cocos2d_generated(JSObject *global) {
+	JSContext *cx = ScriptingCore::getInstance().getGlobalContext();
+}

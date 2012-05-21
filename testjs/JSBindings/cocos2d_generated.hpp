@@ -2419,12 +2419,9 @@ public:
 	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
-	static JSBool jsinitInstance(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsapplicationDidFinishLaunching(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsapplicationDidEnterBackground(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsapplicationWillEnterForeground(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstatusBarFrame(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jsrun(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsgetCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp);
 
 };
@@ -3849,6 +3846,35 @@ public:
 
 };
 
+class S_CCUserDefault : public cocos2d::CCUserDefault
+{
+	JSObject *m_jsobj;
+public:
+	static JSClass *jsClass;
+	static JSObject *jsObject;
+
+
+	static JSBool jsConstructor(JSContext *cx, uint32_t argc, jsval *vp);
+	static void jsFinalize(JSContext *cx, JSObject *obj);
+	static JSBool jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val);
+	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
+	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
+	static JSBool jsgetBoolForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsgetIntegerForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsgetFloatForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsgetDoubleForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsgetStringForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetBoolForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetIntegerForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetFloatForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetDoubleForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssetStringForKey(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jsflush(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jssharedUserDefault(JSContext *cx, uint32_t argc, jsval *vp);
+	static JSBool jspurgeSharedUserDefault(JSContext *cx, uint32_t argc, jsval *vp);
+
+};
+
 class S_CCSplitRows : public cocos2d::CCSplitRows
 {
 	JSObject *m_jsobj;
@@ -4290,6 +4316,8 @@ public:
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 
 };
+
+void register_enums_cocos2d_generated(JSObject *global);
 
 #endif
 

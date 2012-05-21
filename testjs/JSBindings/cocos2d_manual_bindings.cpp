@@ -10,15 +10,15 @@ JSBool S_CCNode::jsaddChild(JSContext *cx, uint32_t argc, jsval *vp) {
 		int tag = 0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o/ii", &arg0, &zorder, &tag);
 		CCNode* narg0; JSGET_PTRSHELL(CCNode, narg0, arg0);
-		// if no zorder / tag, then just get the values from the node
-		if (argc <= 1) {
-			zorder = narg0->getZOrder();
+		// call the proper method
+		if (argc == 1) {
+			self->addChild(narg0);
+		} else if (argc == 2) {
+			self->addChild(narg0, zorder);
+		} else {
+			self->addChild(narg0, zorder, tag);
 		}
-		if (argc <= 2) {
-			tag = narg0->getTag();
-		}
-		self->addChild(narg0, zorder, tag);
-		
+
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
 	}
@@ -325,6 +325,53 @@ JSBool S_CCMenuItemLabel::jsinitWithLabel(JSContext *cx, uint32_t argc, jsval *v
 		bool ret = self->initWithLabel(narg0, self, menu_selector(S_CCMenuItemLabel::menuAction));
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+JSBool S_CCApplication::jsgetCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	CCApplication* self = NULL; JSGET_PTRSHELL(CCApplication, self, obj);
+	if (self == NULL) return JS_FALSE;
+	jsval result; JS_NewNumberValue(cx, self->getCurrentLanguage(), &result);
+	JS_SET_RVAL(cx, vp, result);
+	return JS_TRUE;
+}
+
+JSBool S_CCUserDefault::jsgetStringForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		JSString *arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "SS", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		std::string narg1(JS_EncodeString(cx, arg1));
+		std::string ret = self->getStringForKey(narg0, narg1);
+		JSString *jsret = JS_NewStringCopyZ(cx, ret.c_str());
+		JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(jsret));
+		return JS_TRUE;
+	}
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+JSBool S_CCUserDefault::jssetStringForKey(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	S_CCUserDefault* self = NULL; JSGET_PTRSHELL(S_CCUserDefault, self, obj);
+	if (self == NULL) return JS_FALSE;
+	if (argc == 2) {
+		JSString *arg0;
+		JSString *arg1;
+		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "SS", &arg0, &arg1);
+		char *narg0 = JS_EncodeString(cx, arg0);
+		std::string narg1(JS_EncodeString(cx, arg1));
+		self->setStringForKey(narg0, narg1);
+		
+		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
 	}
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
