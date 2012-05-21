@@ -29,7 +29,7 @@ Simple iOS (and soon Android) example of cocos2d-x game running javascript bindi
     CCPageTurn3D CCLens3D CCRipple3D CCApplication CCFlipX3D CCJumpTo CCTransitionPageTurn CCFlipY3D
     CCLiquid CCTiledGrid3DAction CCJumpBy CCFollow CCSkewBy CCAccelDeccelAmplitude CCLabelAtlas CCAccelAmplitude
     CCSkewTo CCShaky3D CCSplitCols CCFadeOut CCTileMapAtlas CCFadeTo CCJumpTiles3D CCFadeIn CCSplitRows
-    CCScaleBy CCScaleTo CCBezierTo CCTMXTiledMap CCTMXLayer
+    CCScaleBy CCScaleTo CCBezierTo CCTMXTiledMap CCTMXLayer CCApplication CCUserDefault
 
 This is just a proof of concept and there are plans around this in order to make a more js-friendly API, right now
 the bindings were created automatically and the final idea is not to use them as they are but to create a higher
