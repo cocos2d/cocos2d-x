@@ -110,6 +110,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_sound.js");
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_bindings.js");
 //	ScriptingCore::getInstance().runScript("JS/1to1/test_transitions.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_require.js");
 
 	return true;
 }
