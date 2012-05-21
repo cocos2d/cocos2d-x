@@ -34,19 +34,19 @@ USING_NS_CC_EXT;
 int CCBReader::intValFromDict(CCDictionary* dict, const std::string key)
 {
 	CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-	return valueString->intValue();
+	return valueString? valueString->intValue() : 0;
 }
 
 float CCBReader::floatValFromDict(CCDictionary* dict, const std::string key)
 {
 	CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-    return valueString->floatValue();
+    return valueString? valueString->floatValue() : 0;
 }
 
 bool CCBReader::boolValFromDict(CCDictionary* dict, const std::string key)
 {
 	CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-    return (bool) valueString->intValue();
+    return valueString? ((bool)(valueString->intValue())) : false;
 }
 
 CCPoint CCBReader::pointValFromDict(CCDictionary* dict, const std::string key)

@@ -486,7 +486,7 @@
     <ClCompile Include="..\extensions\CCBReader\CCBCustomClass.cpp">
       <Filter>extensions\CCBReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\extensions\CCBReader\CCBReader.cpp">
+    <ClCompile Include="..\extensions\CCBReader\CCBReader_v2.cpp">
       <Filter>extensions\CCBReader</Filter>
     </ClCompile>
   </ItemGroup>
