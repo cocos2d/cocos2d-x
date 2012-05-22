@@ -44,7 +44,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     CCMenuItem* item2 = CCMenuItemImage::itemWithNormalImage(s_SendScore, s_PressSendScore, this, menu_selector(MenuLayerMainMenu::menuCallback2) );
 
     // Label Item (LabelAtlas)
-    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0123456789", "fonts/fps_images.png", 16, 24, '.');
+    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0123456789", "fonts/labelatlas.png", 16, 24, '.');
     CCMenuItemLabel* item3 = CCMenuItemLabel::itemWithLabel(labelAtlas, this, menu_selector(MenuLayerMainMenu::menuCallbackDisabled) );
     item3->setDisabledColor( ccc3(32,32,64) );
     item3->setColor( ccc3(200,200,255) );
