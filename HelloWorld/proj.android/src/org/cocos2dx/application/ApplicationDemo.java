@@ -45,9 +45,9 @@ public class ApplicationDemo extends Cocos2dxActivity{
 			String packageName = getApplication().getPackageName();
 			super.setPackageName(packageName);
 			
-			setContentView(R.layout.helloworld_demo);
-	        mGLView = (Cocos2dxGLSurfaceView) findViewById(R.id.helloworld_gl_surfaceview);
-	        mGLView.setTextField((Cocos2dxEditText)findViewById(R.id.textField));
+			setContentView(R.layout.cocos2dx_default_screen_layout);
+	        mGLView = (Cocos2dxGLSurfaceView) findViewById(R.id.cocos2dx_default_gl_surfaceview);
+	        mGLView.setTextField((Cocos2dxEditText)findViewById(R.id.cocos2dx_default_textField));
 	        mGLView.setEGLContextClientVersion(2);
 	        mGLView.setCocos2dxRenderer(new Cocos2dxRenderer());
 		}
