@@ -40,7 +40,6 @@ THE SOFTWARE.
 #include "CCApplication.h"
 #include "CCLabelBMFont.h"
 #include "CCActionManager.h"
-#include "CCLabelTTF.h"
 #include "CCConfiguration.h"
 #include "CCKeypadDispatcher.h"
 #include "CCAccelerometer.h"
@@ -719,9 +718,9 @@ void CCDirector::createStatsLabel()
     CC_SAFE_RELEASE_NULL(m_pSPFLabel);
     CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
     
-    m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 16);
-    m_pSPFLabel = CCLabelTTF::labelWithString("0.000", "Arial", 16);
-    m_pDrawsLabel = CCLabelTTF::labelWithString("000", "Arial", 16);
+    m_pFPSLabel = CCLabelBMFont::labelWithString("00.0", "fonts/fps_images.fnt");
+    m_pSPFLabel = CCLabelBMFont::labelWithString("0.000", "fonts/fps_images.fnt");
+    m_pDrawsLabel = CCLabelBMFont::labelWithString("000", "fonts/fps_images.fnt");
     
     m_pFPSLabel->retain();
     m_pSPFLabel->retain();
