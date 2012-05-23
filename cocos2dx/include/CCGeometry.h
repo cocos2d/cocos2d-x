@@ -76,6 +76,7 @@ inline CCPoint operator*( const CCPoint a, const float factor )
 
 inline CCPoint operator/( const CCPoint a, const float factor )
 {
+    assert( factor != 0.f );
     return CCPoint( a.x / factor, a.y / factor );
 }
     
@@ -99,6 +100,7 @@ inline CCPoint& operator*=( CCPoint& a, const float factor )
 
 inline CCPoint& operator/=( CCPoint& a, const float factor )
 {
+    assert( factor != 0.f );
     a = a / factor;
     return a;
 }
