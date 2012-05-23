@@ -17,24 +17,6 @@ convert_package_path_to_dir(){
     PACKAGE_PATH_DIR=`echo $1 | sed -e "s/\./\//g"`
 }
 
-# make director andorid and copy all files and directories into it
-move_files_into_android(){
-    mkdir $APP_DIR/proj.android
-
-    for file in $APP_DIR/*
-    do
-        if [ -d $file ]; then
-            if [ $file != $APP_DIR/proj.android ]; then
-                mv -f $file $APP_DIR/proj.android
-            fi
-        fi
-
-        if [ -f $file ]; then
-            mv $file $APP_DIR/proj.android
-        fi
-    done
-}
-
 copy_cpp_h_from_helloworld(){
     mkdir $APP_DIR/Classes
     for file in `ls $HELLOWORLD_ROOT/Classes/* | grep -E '.*\.(cpp|h|mk)' `
@@ -64,6 +46,10 @@ copy_src_and_jni(){
     sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/proj.android/jni/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 }
 
+copy_library_src(){
+    cp -rf $COCOSJAVALIB_ROOT/src/* $APP_DIR/proj.android/src/
+}
+
 # copy build_native.sh and replace something
 copy_build_native(){
     # here should use # instead of /, why??
@@ -88,10 +74,7 @@ modify_applicationdemo(){
 }
 
 modify_layout(){
-    cp $HELLOWORLD_ROOT/proj.android/res/layout/helloworld_demo.xml $APP_DIR/proj.android/res/layout
-    sed "s/helloworld_gl_surfaceview/game_gl_surfaceview/" $APP_DIR/proj.android/res/layout/helloworld_demo.xml > $APP_DIR/proj.android/res/layout/game_demo.xml
     rm -f $APP_DIR/proj.android/res/layout/main.xml
-    rm -f $APP_DIR/proj.android/res/layout/helloworld_demo.xml
 }
 
 # android.bat of android 4.0 don't create res/drawable-hdpi res/drawable-ldpi and res/drawable-mdpi.
@@ -104,11 +87,10 @@ copy_icon(){
     fi
 }
 
-
-move_files_into_android
 copy_cpp_h_from_helloworld
 copy_resouces
 copy_src_and_jni
+copy_library_src
 copy_build_native
 modify_androidmanifest
 modify_applicationdemo
