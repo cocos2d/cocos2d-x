@@ -112,8 +112,6 @@ public:
     bool hasAlpha()                     { return m_bHasAlpha; }
     bool isPremultipliedAlpha()         { return m_bPreMulti; }
 
-    void release();
-
     /**
     @brief    Save the CCImage data to specified file with specified format.
     @param    pszFilePath        the file's absolute path, including file subfix
