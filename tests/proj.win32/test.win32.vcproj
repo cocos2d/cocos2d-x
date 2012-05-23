@@ -914,6 +914,26 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="CocosBuilderTest"
+						>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="NodeTest"
