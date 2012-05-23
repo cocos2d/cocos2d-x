@@ -25,6 +25,7 @@ public:
     virtual CCRect  getViewPort();
     virtual CCSize  getSize();
     virtual void    setFrameSize(float width, float height);
+    virtual CCSize  getFrameSize();
     virtual void    setDesignResolutionSize(float width, float height);
     virtual void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     virtual float   getScreenScaleFactor();
