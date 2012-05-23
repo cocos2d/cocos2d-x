@@ -583,10 +583,11 @@ void CCDirector::purgeDirector()
 
     // purge all managers ／ caches
     CCAnimationCache::purgeSharedAnimationCache();
-     CCSpriteFrameCache::purgeSharedSpriteFrameCache();
+    CCSpriteFrameCache::purgeSharedSpriteFrameCache();
     CCTextureCache::purgeSharedTextureCache();
     CCShaderCache::purgeSharedShaderCache();
-    
+    CCConfiguration::purgeConfiguration();
+
     // cocos2d-x specific data structures
     CCUserDefault::purgeSharedUserDefault();
     extension::CCNotificationCenter::purgeNotificationCenter();
