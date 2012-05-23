@@ -32,6 +32,8 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "png.h"
 #include "jpeglib.h"
+#include "tiffio.h"
+#include "tiffiop.h"
 #include <string>
 #include <ctype.h>
 
@@ -116,6 +118,11 @@ bool CCImage::initWithImageData(void * pData,
         else if (kFmtJpg == eFmt)
         {
             bRet = _initWithJpgData(pData, nDataLen);
+            break;
+        }
+        else if (kFmtTiff == eFmt)
+        {
+            bRet = _initWithTiffData(pData, nDataLen);
             break;
         }
         else if (kFmtRawData == eFmt)
@@ -334,6 +341,55 @@ out:
     {
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
     }
+    return bRet;
+}
+
+bool CCImage::_initWithTiffData(void* pData, int nDataLen)
+{
+    bool bRet = false;
+    do 
+    {
+        // FIXME: I didn't find an api to decode tiff file from memory, so I save the memory to a temp file.
+        std::string strWritablePath = CCFileUtils::getWriteablePath();
+        std::string strTiffTempFile = strWritablePath + "temp.tif";
+        FILE* fp = fopen(strTiffTempFile.c_str(), "wb");
+        CC_BREAK_IF(NULL == fp);
+        fwrite(pData, nDataLen, 1, fp);
+        fclose(fp);
+
+        TIFF* tif = TIFFOpen(strTiffTempFile.c_str(), "r");
+        CC_BREAK_IF(NULL == tif);
+
+        uint32 w, h;
+        uint16 bitsPerSample, samplePerPixel;
+        size_t npixels;
+        uint32* raster;
+        
+        TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
+        TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);
+        TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bitsPerSample);
+        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samplePerPixel);
+        npixels = w * h;
+        
+        m_bHasAlpha = true;
+        m_nWidth = w;
+        m_nHeight = h;
+        m_nBitsPerComponent = 8;
+
+        m_pData = new unsigned char[npixels*sizeof (uint32)];
+        raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
+        if (raster != NULL) 
+        {
+            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
+            {
+                memcpy(m_pData, raster, npixels * sizeof (uint32));
+            }
+            _TIFFfree(raster);
+        }
+        TIFFClose(tif);
+
+        bRet = true;
+    } while (0);
     return bRet;
 }
 

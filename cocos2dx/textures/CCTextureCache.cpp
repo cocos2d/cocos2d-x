@@ -85,7 +85,11 @@ static CCImage::EImageFormat computeImageFormatType(string& filename)
     {
         ret = CCImage::kFmtPng;
     }
-
+    else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
+    {
+        ret = CCImage::kFmtTiff;
+    }
+    
     return ret;
 }
 
@@ -378,6 +382,33 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
                     // cache the texture file name
                     VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtJpg);
+#endif
+
+                    m_pTextures->setObject(texture, pathKey.c_str());
+                    // autorelease prevents possible crash in multithreaded environments
+                    texture->autorelease();
+                }
+                else
+                {
+                    CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
+                }
+            }
+            else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
+            {
+                CCImage image;
+                CCFileData data(fullpath.c_str(), "rb");
+                unsigned long nSize  = data.getSize();
+                unsigned char* pBuffer = data.getBuffer();
+                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtTiff));
+
+                texture = new CCTexture2D();
+                texture->initWithImage(&image, resolution);
+
+                if( texture )
+                {
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+                    // cache the texture file name
+                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtTiff);
 #endif
 
                     m_pTextures->setObject(texture, pathKey.c_str());
