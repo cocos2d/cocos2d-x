@@ -1231,6 +1231,26 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="CCBReader"
+				>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBCustomClass.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBCustomClass.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBReader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBReader_v2.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="kazmath"
