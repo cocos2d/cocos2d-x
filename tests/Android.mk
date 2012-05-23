@@ -45,6 +45,8 @@ tests/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTes
 tests/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp \
 tests/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
 tests/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
+tests/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
+tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder.cpp \
 tests/FontTest/FontTest.cpp \
 tests/HiResTest/HiResTest.cpp \
 tests/IntervalTest/IntervalTest.cpp \

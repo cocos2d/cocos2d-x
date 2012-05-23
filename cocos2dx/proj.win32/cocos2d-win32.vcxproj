@@ -160,6 +160,8 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\effects\CCGrabber.cpp" />
     <ClCompile Include="..\effects\CCGrid.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCBCustomClass.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCBReader_v2.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControlColourPicker.cpp" />
@@ -290,6 +292,8 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\cocoa\CCZone.h" />
     <ClInclude Include="..\effects\CCGrabber.h" />
     <ClInclude Include="..\effects\CCGrid.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCBCustomClass.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCBReader.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControlButton.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControlColourPicker.h" />
