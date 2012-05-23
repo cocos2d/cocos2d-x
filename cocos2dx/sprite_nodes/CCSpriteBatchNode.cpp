@@ -129,8 +129,6 @@ void CCSpriteBatchNode::visit(void)
 {
     CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
-    CCAssert(m_pParent != NULL, "CCSpriteBatchNode should NOT be root node");
-
     // CAREFUL:
     // This visit is almost identical to CocosNode#visit
     // with the exception that it doesn't call visit on it's children

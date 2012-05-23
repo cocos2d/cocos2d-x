@@ -54,7 +54,8 @@ typedef enum {
     kCCDirectorProjectionDefault = kCCDirectorProjection3D,
 } ccDirectorProjection;
 
-class CCLabelTTF;
+/* Forward declarations. */
+class CCLabelBMFont;
 class CCScene;
 class CCEGLView;
 class CCDirectorDelegate;
@@ -334,9 +335,9 @@ protected:
     ccTime m_fAccumDt;
     ccTime m_fFrameRate;
     
-    CCLabelTTF *m_pFPSLabel;
-    CCLabelTTF *m_pSPFLabel;
-    CCLabelTTF *m_pDrawsLabel;
+    CCLabelBMFont *m_pFPSLabel;
+    CCLabelBMFont *m_pSPFLabel;
+    CCLabelBMFont *m_pDrawsLabel;
     
     /* is the running scene paused */
     bool m_bPaused;
