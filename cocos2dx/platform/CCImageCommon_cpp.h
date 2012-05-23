@@ -344,21 +344,139 @@ out:
     return bRet;
 }
 
+static tmsize_t
+_tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
+{
+    tImageSource* isource = (tImageSource*)fd;
+	uint8* ma;
+	uint64 mb;
+	unsigned long n;
+	unsigned long o;
+	tmsize_t p;
+	ma=(uint8*)buf;
+	mb=size;
+	p=0;
+	while (mb>0)
+	{
+		n=0x80000000UL;
+		if ((uint64)n>mb)
+			n=(unsigned long)mb;
+
+
+        if((int)(isource->offset + n) <= isource->size)
+        {
+            memcpy(ma, isource->data+isource->offset, n);
+            isource->offset += n;
+            o = n;
+        }
+        else
+        {
+            return 0;
+        }
+
+		ma+=o;
+		mb-=o;
+		p+=o;
+		if (o!=n)
+			break;
+	}
+	return p;
+}
+
+static tmsize_t
+_tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
+{
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(buf);
+    CC_UNUSED_PARAM(size);
+	return 0;
+}
+
+
+static uint64
+_tiffSeekProc(thandle_t fd, uint64 off, int whence)
+{
+    tImageSource* isource = (tImageSource*)fd;
+    uint64 ret = -1;
+    do 
+    {
+	    if (whence == SEEK_SET)
+        {
+            CC_BREAK_IF(off > isource->size-1);
+            ret = isource->offset = off;
+        }
+        else if (whence == SEEK_CUR)
+        {
+            CC_BREAK_IF(isource->offset + off > isource->size-1);
+            ret = isource->offset += off;
+        }
+        else if (whence == SEEK_END)
+        {
+            CC_BREAK_IF(off > isource->size-1);
+            ret = isource->offset = isource->size-1 - off;
+        }
+        else
+        {
+            CC_BREAK_IF(off > isource->size-1);
+            ret = isource->offset = off;
+        }
+    } while (0);
+
+    return ret;
+}
+
+static uint64
+_tiffSizeProc(thandle_t fd)
+{
+    tImageSource* pImageSrc = (tImageSource*)fd;
+    return pImageSrc->size;
+}
+
+static int
+_tiffCloseProc(thandle_t fd)
+{
+    CC_UNUSED_PARAM(fd);
+    return 0;
+}
+
+static int
+_tiffMapProc(thandle_t fd, void** pbase, toff_t* psize)
+{
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(pbase);
+    CC_UNUSED_PARAM(psize);
+    return 0;
+}
+
+static void
+_tiffUnmapProc(thandle_t fd, void* base, toff_t size)
+{
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(base);
+    CC_UNUSED_PARAM(size);
+}
+
 bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 {
     bool bRet = false;
     do 
     {
-        // FIXME: I didn't find an api to decode tiff file from memory, so I save the memory to a temp file.
-        std::string strWritablePath = CCFileUtils::getWriteablePath();
-        std::string strTiffTempFile = strWritablePath + "temp.tif";
-        FILE* fp = fopen(strTiffTempFile.c_str(), "wb");
-        CC_BREAK_IF(NULL == fp);
-        fwrite(pData, nDataLen, 1, fp);
-        fclose(fp);
 
-        TIFF* tif = TIFFOpen(strTiffTempFile.c_str(), "r");
+        // set the read call back function
+        tImageSource imageSource;
+        imageSource.data    = (unsigned char*)pData;
+        imageSource.size    = nDataLen;
+        imageSource.offset  = 0;
+
+        TIFF* tif = TIFFClientOpen("file.tif", "r", (thandle_t)&imageSource, 
+            _tiffReadProc, _tiffWriteProc,
+            _tiffSeekProc, _tiffCloseProc, _tiffSizeProc,
+            _tiffMapProc,
+            _tiffUnmapProc);
+
         CC_BREAK_IF(NULL == tif);
+
+        tif->tif_fd = (int)&imageSource;
 
         uint32 w, h;
         uint16 bitsPerSample, samplePerPixel;
