@@ -315,6 +315,8 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                         CC_BREAK_IF(!isOK);
                         
                         setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str()));
+
+                        image->release();
                     }
                 }
                 CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
