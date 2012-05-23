@@ -66,6 +66,11 @@ void CCEGLViewProtocol::setFrameSize(float width, float height)
     m_rcViewPort.size.setSize(width, height);
 }
 
+CCSize CCEGLViewProtocol::getFrameSize()
+{
+    return m_sSizeInPixel;
+}
+
 void CCEGLViewProtocol::setDesignResolutionSize(float width, float height)
 {
     if (width == 0.0f || height == 0.0f)
