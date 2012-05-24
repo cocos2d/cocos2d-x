@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		15DC5D2315340C72009A99D4 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 15DC5D2215340C72009A99D4 /* Shaders */; };
+		15DD6D8E156DD2E6003E7567 /* fps_images.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8C156DD2E6003E7567 /* fps_images.fnt */; };
+		15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8D156DD2E6003E7567 /* fps_images.png */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -638,6 +640,8 @@
 
 /* Begin PBXFileReference section */
 		15DC5D2215340C72009A99D4 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = "../../../cocos2d-x/tests/Resources/Shaders"; sourceTree = "<group>"; };
+		15DD6D8C156DD2E6003E7567 /* fps_images.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fps_images.fnt; sourceTree = "<group>"; };
+		15DD6D8D156DD2E6003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
@@ -2213,6 +2217,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15DD6D8C156DD2E6003E7567 /* fps_images.fnt */,
+				15DD6D8D156DD2E6003E7567 /* fps_images.png */,
 				D4113B4D155D388700E42745 /* CocosBuilder_v2 */,
 				D4113B4B155D387800E42745 /* CocosBuilder_v1 */,
 				789B560C15197BE00038CD1E /* animations */,
@@ -3518,6 +3524,8 @@
 				7855E0E2153FEF240059DD9A /* Icon.png in Resources */,
 				D4113B4C155D387800E42745 /* CocosBuilder_v1 in Resources */,
 				D4113B4E155D388700E42745 /* CocosBuilder_v2 in Resources */,
+				15DD6D8E156DD2E6003E7567 /* fps_images.fnt in Resources */,
+				15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
