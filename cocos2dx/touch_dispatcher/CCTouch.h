@@ -40,7 +40,7 @@ public:
     CCPoint locationInView() { return m_point; }
     CCPoint previousLocationInView() { return m_prevPoint; }
 
-    void SetTouchInfo(int id, float x, float y)
+    void setTouchInfo(int id, float x, float y)
     {
         m_nId = id;
         m_prevPoint = m_point;
