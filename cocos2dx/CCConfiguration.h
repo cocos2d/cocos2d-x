@@ -39,9 +39,10 @@ NS_CC_BEGIN
 class CC_DLL CCConfiguration : public CCObject
 {
 public:
-    /** returns a shared instance of the CCConfiguration */
+    /** returns a shared instance of CCConfiguration */
     static CCConfiguration *sharedConfiguration(void);
-    
+    /** purge the shared instance of CCConfiguration */
+    static void purgeConfiguration(void);
 public:    
     
     /** OpenGL Max texture size. */

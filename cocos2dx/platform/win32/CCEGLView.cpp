@@ -239,8 +239,6 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
         resize(w, h);
 
-        CCEGLViewProtocol::setFrameSize(w, h);
-
         // init egl
         m_pEGL = CCEGL::create(this);
 
@@ -464,6 +462,7 @@ void CCEGLView::resize(int width, int height)
 void CCEGLView::setFrameSize(float width, float height)
 {
     Create((LPCTSTR)m_szViewName, width, height);
+    CCEGLViewProtocol::setFrameSize(width, height);
 }
 
 void CCEGLView::centerWindow()
