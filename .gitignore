@@ -1,4 +1,3 @@
-
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
@@ -54,6 +53,7 @@ build_*_xcode/
 xcschememanagement.plist
 build/
 .DS_Store
+xcuserdata/
 
 # Ignore files built by bada
 .Simulator-Debug/
@@ -67,3 +67,7 @@ Device-Release/
 
 # Ignore vim swaps
 *.swp
+=======
+.DS_Store
+xcuserdata/
+>>>>>>> aab237ff6cf3688199bccc9ec65330b0d8505356
