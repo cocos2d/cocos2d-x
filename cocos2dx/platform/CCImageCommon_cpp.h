@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "png.h"
 #include "jpeglib.h"
 #include "tiffio.h"
-#include "tiffiop.h"
 #include <string>
 #include <ctype.h>
 
@@ -344,8 +343,7 @@ out:
     return bRet;
 }
 
-static tmsize_t
-_tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
+static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
 {
     tImageSource* isource = (tImageSource*)fd;
 	uint8* ma;
@@ -383,8 +381,7 @@ _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
 	return p;
 }
 
-static tmsize_t
-_tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
+static tmsize_t _tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
 {
     CC_UNUSED_PARAM(fd);
     CC_UNUSED_PARAM(buf);
@@ -393,8 +390,7 @@ _tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
 }
 
 
-static uint64
-_tiffSeekProc(thandle_t fd, uint64 off, int whence)
+static uint64 _tiffSeekProc(thandle_t fd, uint64 off, int whence)
 {
     tImageSource* isource = (tImageSource*)fd;
     uint64 ret = -1;
@@ -425,22 +421,19 @@ _tiffSeekProc(thandle_t fd, uint64 off, int whence)
     return ret;
 }
 
-static uint64
-_tiffSizeProc(thandle_t fd)
+static uint64 _tiffSizeProc(thandle_t fd)
 {
     tImageSource* pImageSrc = (tImageSource*)fd;
     return pImageSrc->size;
 }
 
-static int
-_tiffCloseProc(thandle_t fd)
+static int _tiffCloseProc(thandle_t fd)
 {
     CC_UNUSED_PARAM(fd);
     return 0;
 }
 
-static int
-_tiffMapProc(thandle_t fd, void** pbase, toff_t* psize)
+static int _tiffMapProc(thandle_t fd, void** pbase, toff_t* psize)
 {
     CC_UNUSED_PARAM(fd);
     CC_UNUSED_PARAM(pbase);
@@ -448,8 +441,7 @@ _tiffMapProc(thandle_t fd, void** pbase, toff_t* psize)
     return 0;
 }
 
-static void
-_tiffUnmapProc(thandle_t fd, void* base, toff_t size)
+static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
 {
     CC_UNUSED_PARAM(fd);
     CC_UNUSED_PARAM(base);
@@ -475,8 +467,6 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
             _tiffUnmapProc);
 
         CC_BREAK_IF(NULL == tif);
-
-        tif->tif_fd = (int)&imageSource;
 
         uint32 w, h;
         uint16 bitsPerSample, samplePerPixel;
