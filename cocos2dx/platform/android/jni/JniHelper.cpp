@@ -159,6 +159,11 @@ extern "C"
 
     static string jstring2string_(jstring jstr)
     {
+        if (jstr == NULL)
+        {
+            return "";
+        }
+        
         JNIEnv *env = 0;
 
         if (! getEnv(&env))
