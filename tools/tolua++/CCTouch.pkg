@@ -8,9 +8,9 @@ enum {
 
 class CCTouch : public CCObject
 {
-    CCPoint locationInView(int nViewId);
-    CCPoint previousLocationInView(int nViewId);
-    int view();
+    CCPoint locationInView();
+    CCPoint previousLocationInView();
+    int getID();
 };
 
 class CCEvent : public CCObject

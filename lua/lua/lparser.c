@@ -27,11 +27,11 @@
 
 
 
-#define hasmultret(k)		((k) == VCALL || (k) == VVARARG)
+#define hasmultret(k)        ((k) == VCALL || (k) == VVARARG)
 
-#define getlocvar(fs, i)	((fs)->f->locvars[(fs)->actvar[i]])
+#define getlocvar(fs, i)    ((fs)->f->locvars[(fs)->actvar[i]])
 
-#define luaY_checklimit(fs,v,l,m)	if ((v)>(l)) errorlimit(fs,l,m)
+#define luaY_checklimit(fs,v,l,m)    if ((v)>(l)) errorlimit(fs,l,m)
 
 
 /*
@@ -97,7 +97,7 @@ static void checknext (LexState *ls, int c) {
 }
 
 
-#define check_condition(ls,c,msg)	{ if (!(c)) luaX_syntaxerror(ls, msg); }
+#define check_condition(ls,c,msg)    { if (!(c)) luaX_syntaxerror(ls, msg); }
 
 
 
@@ -275,11 +275,11 @@ static void adjust_assign (LexState *ls, int nvars, int nexps, expdesc *e) {
 
 static void enterlevel (LexState *ls) {
   if (++ls->L->nCcalls > LUAI_MAXCCALLS)
-	luaX_lexerror(ls, "chunk has too many syntax levels", 0);
+    luaX_lexerror(ls, "chunk has too many syntax levels", 0);
 }
 
 
-#define leavelevel(ls)	((ls)->L->nCcalls--)
+#define leavelevel(ls)    ((ls)->L->nCcalls--)
 
 
 static void enterblock (FuncState *fs, BlockCnt *bl, lu_byte isbreakable) {
@@ -818,7 +818,7 @@ static const struct {
    {2, 2}, {1, 1}                   /* logical (and/or) */
 };
 
-#define UNARY_PRIORITY	8  /* priority for unary operators */
+#define UNARY_PRIORITY    8  /* priority for unary operators */
 
 
 /*

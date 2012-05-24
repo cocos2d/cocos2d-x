@@ -9,15 +9,15 @@
 class TextureCacheTest : public CCLayer
 {
 public:
-	TextureCacheTest();
-	void addSprite();
-	void loadingCallBack(cocos2d::CCObject *obj);
+    TextureCacheTest();
+    void addSprite();
+    void loadingCallBack(cocos2d::CCObject *obj);
 
 private:
-	cocos2d::CCLabelTTF *m_pLabelLoading;
-	cocos2d::CCLabelTTF *m_pLabelPercent;
-	int m_nNumberOfSprites;
-	int m_nNumberOfLoadedSprites;
+    cocos2d::CCLabelTTF *m_pLabelLoading;
+    cocos2d::CCLabelTTF *m_pLabelPercent;
+    int m_nNumberOfSprites;
+    int m_nNumberOfLoadedSprites;
 };
 
 class TextureCacheTestScene : public TestScene

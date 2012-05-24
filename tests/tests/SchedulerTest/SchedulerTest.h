@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
-//#import "cocos2d.h"
 
 
 class SchedulerTestLayer : public CCLayer
@@ -40,7 +39,7 @@ public:
     void autoremove(ccTime dt);
     void tick(ccTime dt);
 private:
-	ccTime accum;
+    ccTime accum;
 };
 
 class SchedulerPauseResume : public SchedulerTestLayer
@@ -153,6 +152,47 @@ private:
     float m_fInterval;
     int   m_nTicks;
 };
+
+class SchedulerDelayAndRepeat : public SchedulerTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void update(ccTime dt);
+};
+
+class SchedulerTimeScale : public SchedulerTestLayer
+{
+public:
+    void onEnter();
+    void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+    CCControlSlider* sliderCtl();
+    void sliderAction(CCObject* pSender);
+    CCControlSlider* m_pSliderCtl;
+};
+
+
+class TwoSchedulers : public SchedulerTestLayer
+{
+public:
+    virtual ~TwoSchedulers();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void onEnter();
+    CCControlSlider* sliderCtl();
+    void sliderAction(CCObject* sender);
+    CCScheduler *sched1;
+    CCScheduler *sched2;
+    CCActionManager *actionManager1;
+    CCActionManager *actionManager2;
+
+    CCControlSlider    *sliderCtl1;
+    CCControlSlider    *sliderCtl2;
+};
+
 
 class SchedulerTestScene : public TestScene
 {

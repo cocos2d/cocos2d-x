@@ -19,19 +19,28 @@
  * SOFTWARE.
  */
 
-const cpConstraintClass *cpSimpleMotorGetClass();
+/// @defgroup cpSimpleMotor cpSimpleMotor
+/// @{
 
+const cpConstraintClass *cpSimpleMotorGetClass(void);
+
+/// @private
 typedef struct cpSimpleMotor {
-	cpConstraint constraint;
-	cpFloat rate;
-	
-	cpFloat iSum;
-		
-	cpFloat jAcc, jMax;
+    cpConstraint constraint;
+    cpFloat rate;
+    
+    cpFloat iSum;
+        
+    cpFloat jAcc, jMax;
 } cpSimpleMotor;
 
-cpSimpleMotor *cpSimpleMotorAlloc(void);
-cpSimpleMotor *cpSimpleMotorInit(cpSimpleMotor *joint, cpBody *a, cpBody *b, cpFloat rate);
-cpConstraint *cpSimpleMotorNew(cpBody *a, cpBody *b, cpFloat rate);
+/// Allocate a simple motor.
+cpSimpleMotor* cpSimpleMotorAlloc(void);
+/// initialize a simple motor.
+cpSimpleMotor* cpSimpleMotorInit(cpSimpleMotor *joint, cpBody *a, cpBody *b, cpFloat rate);
+/// Allocate and initialize a simple motor.
+cpConstraint* cpSimpleMotorNew(cpBody *a, cpBody *b, cpFloat rate);
 
 CP_DefineConstraintProperty(cpSimpleMotor, cpFloat, rate, Rate);
+
+/// @}

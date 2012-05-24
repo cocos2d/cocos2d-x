@@ -53,7 +53,7 @@ CCLayer* backTextInputTest()
     testIdx--;
     int total = kTextInputTestsCount;
     if( testIdx < 0 )
-        testIdx += total;	
+        testIdx += total;    
 
     return restartTextInputTest();
 }
@@ -132,9 +132,9 @@ void TextInputTest::onEnter()
         l->setPosition(ccp(s.width/2, s.height-80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(TextInputTest::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(TextInputTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(TextInputTest::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(TextInputTest::backCallback));
+    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(TextInputTest::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(TextInputTest::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
@@ -157,7 +157,8 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, false);
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
 void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
@@ -203,7 +204,7 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
 bool KeyboardNotificationLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCLOG("++++++++++++++++++++++++++++++++++++++++++++");
-    m_beginPos = pTouch->locationInView();	
+    m_beginPos = pTouch->locationInView();    
     m_beginPos = CCDirector::sharedDirector()->convertToGL(m_beginPos);
     return true;
 }
@@ -215,7 +216,7 @@ void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         return;
     }
     
-    CCPoint endPos = pTouch->locationInView();	
+    CCPoint endPos = pTouch->locationInView();    
     endPos = CCDirector::sharedDirector()->convertToGL(endPos);
 
     float delta = 5.0f;
@@ -278,12 +279,12 @@ void TextFieldTTFDefaultTest::onEnter()
         FONT_SIZE);
     addChild(pTextField);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)	
-	// on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
-	// so we had to set a higher position to make it visable
-	pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
+    // on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position to make it visable
+    pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
 #else
-	pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+    pTextField->setPosition(ccp(s.width / 2, s.height / 2));
 #endif
 
     m_pTrackNode = pTextField;
@@ -339,13 +340,13 @@ void TextFieldTTFActionTest::onEnter()
     addChild(m_pTextField);
 
     m_pTextField->setDelegate(this);
-	
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)	
-	// on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
-	// so we had to set a higher position
-	m_pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
+    // on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position
+    m_pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
 #else
-	m_pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+    m_pTextField->setPosition(ccp(s.width / 2, s.height / 2));
 #endif
 
     m_pTrackNode = m_pTextField;

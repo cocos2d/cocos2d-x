@@ -53,15 +53,15 @@ class CCNode : public CCObject
     tolua_property__CCContentSize   CCSize contentSize;
     tolua_property__CCTag           int tag;
 
-    CCMutableArray<CCNode*>* getChildren();
+    CCArray* getChildren();
     unsigned int getChildrenCount(void);
 
     CCCamera*   getCamera();
     CCGridBase* getGrid();
     void    setGrid(CCGridBase* pGrid);
-    CCPoint getAnchorPointInPixels();
-    CCSize  getContentSizeInPixels();
-    void    setContentSizeInPixels(CCSize sz);
+    //CCPoint getAnchorPointInPixels();
+    //CCSize  getContentSizeInPixels();
+    //void    setContentSizeInPixels(CCSize sz);
     bool    getIsRunning();
     CCNode* getParent();
     void    setParent(CCNode * var);

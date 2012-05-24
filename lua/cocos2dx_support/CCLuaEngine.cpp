@@ -90,8 +90,8 @@ void CCLuaEngine::addSearchPath(const char* path)
 
 int CCLuaEngine::executeString(const char *codes)
 {
-	int nRet =	luaL_dostring(m_state, codes);
-	lua_gc(m_state, LUA_GCCOLLECT, 0);
+    int nRet =    luaL_dostring(m_state, codes);
+    lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (nRet != 0)
     {
@@ -116,7 +116,7 @@ int CCLuaEngine::executeScriptFile(const char* filename)
     return 0;
 }
 
-int	CCLuaEngine::executeGlobalFunction(const char* functionName)
+int    CCLuaEngine::executeGlobalFunction(const char* functionName)
 {
     lua_getglobal(m_state, functionName);  /* query function by name, stack: function */
     if (!lua_isfunction(m_state, -1))
@@ -252,7 +252,7 @@ int CCLuaEngine::pushCCObjectToLuaStack(CCObject* pObject, const char* typeName)
 // functions for excute touch event
 int CCLuaEngine::executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch)
 {
-    CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->locationInView(pTouch->view()));
+    CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->locationInView());
     lua_pushinteger(m_state, eventType);
     lua_pushnumber(m_state, pt.x);
     lua_pushnumber(m_state, pt.y);
@@ -271,7 +271,7 @@ int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouche
     while (it != pTouches->end())
     {
         pTouch = (CCTouch*)*it;
-        CCPoint pt = pDirector->convertToGL(pTouch->locationInView(pTouch->view()));
+        CCPoint pt = pDirector->convertToGL(pTouch->locationInView());
         lua_pushnumber(m_state, pt.x);
         lua_rawseti(m_state, -2, n++);
         lua_pushnumber(m_state, pt.y);

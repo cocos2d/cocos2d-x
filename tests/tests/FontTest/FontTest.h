@@ -13,15 +13,15 @@ public:
 class FontTest : public cocos2d::CCLayer
 {
 public:
-	FontTest();
-	void showFont(const char *pFont);
+    FontTest();
+    void showFont(const char *pFont);
 
-	void restartCallback(CCObject* pSender);
-	void nextCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
-	virtual std::string title();
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
+    virtual std::string title();
 
-	LAYER_NODE_FUNC(FontTest);
+    LAYER_NODE_FUNC(FontTest);
 };
 
 #endif // _FONT_TEST_H_

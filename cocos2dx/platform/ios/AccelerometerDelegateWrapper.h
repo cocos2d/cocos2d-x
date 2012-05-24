@@ -28,8 +28,8 @@
 
 @interface AccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
-	cocos2d::CCAccelerometerDelegate *delegate_;
-	cocos2d::CCAcceleration *acceleration_;
+    cocos2d::CCAccelerometerDelegate *delegate_;
+    cocos2d::CCAcceleration *acceleration_;
 }
 
 @property(readwrite) cocos2d::CCAccelerometerDelegate *delegate_;

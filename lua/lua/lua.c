@@ -255,7 +255,7 @@ static int handle_script (lua_State *L, char **argv, int n) {
 
 
 /* check that argument has no extra characters at the end */
-#define notail(x)	{if ((x)[2] != '\0') return -1;}
+#define notail(x)    {if ((x)[2] != '\0') return -1;}
 
 
 static int collectargs (char **argv, int *pi, int *pv, int *pe) {

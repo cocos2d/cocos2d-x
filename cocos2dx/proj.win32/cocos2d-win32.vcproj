@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -42,8 +42,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
+				AdditionalIncludeDirectories="..;..\platform;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;..\actions;..\base_nodes;..\cocoa;..\effects;..\extensions;..\keypad_dispatcher;..\label_nodes;..\layers_scenes_transitions_nodes;..\menu_nodes;..\misc_nodes;..\particle_nodes;..\script_support;..\shaders;..\sprite_nodes;..\text_input_node;..\textures;..\tileMap_parallax_nodes;..\touch_dispatcher;..\support"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="libEGL.lib libGLESv2.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -104,7 +104,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -124,7 +124,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;.."
+				AdditionalIncludeDirectories="..;..\platform;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;..\actions;..\base_nodes;..\cocoa;..\effects;..\extensions;..\keypad_dispatcher;..\label_nodes;..\layers_scenes_transitions_nodes;..\menu_nodes;..\misc_nodes;..\particle_nodes;..\script_support;..\shaders;..\sprite_nodes;..\text_input_node;..\textures;..\tileMap_parallax_nodes;..\touch_dispatcher;..\support"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="libEGL.lib libGLESv2.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -192,7 +192,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\base_nodes\CCAtlasNode.h"
+				>
+			</File>
+			<File
 				RelativePath="..\base_nodes\CCNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\base_nodes\CCNode.h"
 				>
 			</File>
 		</Filter>
@@ -204,7 +212,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCAffineTransform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCArray.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCArray.h"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCAutoreleasePool.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCAutoreleasePool.h"
 				>
 			</File>
 			<File
@@ -212,7 +236,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCDictionary.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCDictionary.h"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCGeometry.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCGeometry.h"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCInteger.h"
 				>
 			</File>
 			<File
@@ -228,11 +272,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCObject.h"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCSet.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCSet.h"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCString.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCString.h"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCZone.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCZone.h"
 				>
 			</File>
 		</Filter>
@@ -264,7 +328,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCAction.h"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionCamera.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionCamera.h"
 				>
 			</File>
 			<File
@@ -272,7 +344,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCActionEase.h"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionGrid.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionGrid.h"
 				>
 			</File>
 			<File
@@ -280,7 +360,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCActionGrid3D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionInstant.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionInstant.h"
 				>
 			</File>
 			<File
@@ -288,7 +376,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCActionInterval.h"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionManager.h"
 				>
 			</File>
 			<File
@@ -296,11 +392,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCActionPageTurn3D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionProgressTimer.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCActionProgressTimer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionTiledGrid.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionTiledGrid.h"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionTween.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionTween.h"
 				>
 			</File>
 		</Filter>
@@ -308,147 +424,11 @@
 			Name="include"
 			>
 			<File
-				RelativePath="..\include\CCAccelerometer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCAccelerometerDelegate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionCamera.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionEase.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionGrid.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionGrid3D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionInstant.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionInterval.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionManager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionPageTurn3D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionProgressTimer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCActionTiledGrid.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCAffineTransform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCAnimation.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCAnimationCache.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCApplication.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCArray.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCAtlasNode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCAutoreleasePool.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCCamera.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\ccConfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCData.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCDirector.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCDrawingPrimitives.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCEGLView.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCGeometry.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCGL.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCIMEDelegate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCIMEDispatcher.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCKeypadDelegate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCKeypadDispatcher.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCLabelAtlas.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCLabelBMFont.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCLabelTTF.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCLayer.h"
+				RelativePath="..\include\CCEventType.h"
 				>
 			</File>
 			<File
@@ -456,175 +436,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCMenu.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCMenuItem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCMotionStreak.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCMutableArray.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCMutableDictionary.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCNode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCObject.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCParallaxNode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCParticleExamples.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCParticleSystem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCParticleSystemPoint.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCParticleSystemQuad.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCPointExtension.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCProgressTimer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCProtocols.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCRenderTexture.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCRibbon.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCScene.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCScheduler.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCScriptSupport.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCSet.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCSprite.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCSpriteBatchNode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCSpriteFrame.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCSpriteFrameCache.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCString.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTextFieldTTF.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTexture2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTextureAtlas.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTextureCache.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTexturePVR.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTileMapAtlas.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTMXLayer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTMXObjectGroup.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTMXTiledMap.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTMXXMLParser.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTouch.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTouchDelegateProtocol.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTouchDispatcher.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTouchHandler.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTransition.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTransitionPageTurn.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTransitionRadial.h"
 				>
 			</File>
 			<File
@@ -632,15 +444,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCUserDefault.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCZone.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\cocos2d.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\cocos2dExt.h"
 				>
 			</File>
 		</Filter>
@@ -652,11 +460,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\label_nodes\CCLabelAtlas.h"
+				>
+			</File>
+			<File
 				RelativePath="..\label_nodes\CCLabelBMFont.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\label_nodes\CCLabelBMFont.h"
+				>
+			</File>
+			<File
 				RelativePath="..\label_nodes\CCLabelTTF.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\label_nodes\CCLabelTTF.h"
 				>
 			</File>
 		</Filter>
@@ -668,7 +488,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCLayer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\layers_scenes_transitions_nodes\CCScene.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCScene.h"
 				>
 			</File>
 			<File
@@ -676,11 +504,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransition.h"
+				>
+			</File>
+			<File
 				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp"
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h"
+				>
+			</File>
+			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionProgress.h"
 				>
 			</File>
 		</Filter>
@@ -692,7 +532,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\menu_nodes\CCMenu.h"
+				>
+			</File>
+			<File
 				RelativePath="..\menu_nodes\CCMenuItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\menu_nodes\CCMenuItem.h"
 				>
 			</File>
 		</Filter>
@@ -704,7 +552,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\misc_nodes\CCMotionStreak.h"
+				>
+			</File>
+			<File
 				RelativePath="..\misc_nodes\CCProgressTimer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\misc_nodes\CCProgressTimer.h"
 				>
 			</File>
 			<File
@@ -712,7 +568,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\misc_nodes\CCRibbon.cpp"
+				RelativePath="..\misc_nodes\CCRenderTexture.h"
 				>
 			</File>
 		</Filter>
@@ -720,7 +576,19 @@
 			Name="particle_nodes"
 			>
 			<File
+				RelativePath="..\particle_nodes\CCParticleBatchNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\particle_nodes\CCParticleBatchNode.h"
+				>
+			</File>
+			<File
 				RelativePath="..\particle_nodes\CCParticleExamples.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\particle_nodes\CCParticleExamples.h"
 				>
 			</File>
 			<File
@@ -728,11 +596,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\particle_nodes\CCParticleSystemPoint.cpp"
+				RelativePath="..\particle_nodes\CCParticleSystem.h"
 				>
 			</File>
 			<File
 				RelativePath="..\particle_nodes\CCParticleSystemQuad.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\particle_nodes\CCParticleSystemQuad.h"
 				>
 			</File>
 		</Filter>
@@ -740,19 +612,11 @@
 			Name="platform"
 			>
 			<File
-				RelativePath="..\platform\CCAccelerometer_platform.h"
+				RelativePath="..\platform\CCAccelerometerDelegate.h"
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCApplication_platform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCArchOptimalParticleSystem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCCommon.cpp"
+				RelativePath="..\platform\CCApplicationProtocol.h"
 				>
 			</File>
 			<File
@@ -760,11 +624,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCEGLView_platform.h"
+				RelativePath="..\platform\CCEGLViewProtocol.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCFileUtils.cpp"
+				RelativePath="..\platform\CCEGLViewProtocol.h"
 				>
 			</File>
 			<File
@@ -772,15 +636,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCGL.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCGL.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCImage.cpp"
+				RelativePath="..\platform\CCFileUtilsCommon_cpp.h"
 				>
 			</File>
 			<File
@@ -788,7 +644,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCLibxml2.h"
+				RelativePath="..\platform\CCImageCommon_cpp.h"
 				>
 			</File>
 			<File
@@ -835,27 +691,47 @@
 				Name="win32"
 				>
 				<File
-					RelativePath="..\platform\win32\CCAccelerometer_win32.cpp"
+					RelativePath="..\platform\win32\CCAccelerometer.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\platform\win32\CCAccelerometer_win32.h"
+					RelativePath="..\platform\win32\CCAccelerometer.h"
 					>
 				</File>
 				<File
-					RelativePath="..\platform\win32\CCApplication_win32.cpp"
+					RelativePath="..\platform\win32\CCApplication.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\platform\win32\CCApplication_win32.h"
+					RelativePath="..\platform\win32\CCApplication.h"
 					>
 				</File>
 				<File
-					RelativePath="..\platform\win32\CCEGLView_win32.cpp"
+					RelativePath="..\platform\win32\CCCommon.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\platform\win32\CCEGLView_win32.h"
+					RelativePath="..\platform\win32\CCEGLView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCEGLView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCFileUtils.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCGL.h"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCPlatformDefine.h"
 					>
 				</File>
 			</Filter>
@@ -868,7 +744,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\sprite_nodes\CCAnimation.h"
+				>
+			</File>
+			<File
 				RelativePath="..\sprite_nodes\CCAnimationCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sprite_nodes\CCAnimationCache.h"
 				>
 			</File>
 			<File
@@ -876,7 +760,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\sprite_nodes\CCSprite.h"
+				>
+			</File>
+			<File
 				RelativePath="..\sprite_nodes\CCSpriteBatchNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sprite_nodes\CCSpriteBatchNode.h"
 				>
 			</File>
 			<File
@@ -884,7 +776,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\sprite_nodes\CCSpriteFrame.h"
+				>
+			</File>
+			<File
 				RelativePath="..\sprite_nodes\CCSpriteFrameCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sprite_nodes\CCSpriteFrameCache.h"
 				>
 			</File>
 		</Filter>
@@ -900,11 +800,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\support\CCArray.cpp"
+				RelativePath="..\support\CCPointExtension.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\support\CCPointExtension.cpp"
+				RelativePath="..\support\CCPointExtension.h"
 				>
 			</File>
 			<File
@@ -920,11 +820,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\support\CCUserDefault.h"
+				>
+			</File>
+			<File
 				RelativePath="..\support\ccUtils.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\support\ccUtils.h"
+				>
+			</File>
+			<File
+				RelativePath="..\support\CCVertex.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\support\CCVertex.h"
 				>
 			</File>
 			<File
@@ -1000,7 +912,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\textures\CCTexture2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\textures\CCTextureAtlas.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\textures\CCTextureAtlas.h"
 				>
 			</File>
 			<File
@@ -1008,7 +928,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\textures\CCTextureCache.h"
+				>
+			</File>
+			<File
 				RelativePath="..\textures\CCTexturePVR.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\textures\CCTexturePVR.h"
 				>
 			</File>
 		</Filter>
@@ -1020,7 +948,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\tileMap_parallax_nodes\CCParallaxNode.h"
+				>
+			</File>
+			<File
 				RelativePath="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\tileMap_parallax_nodes\CCTileMapAtlas.h"
 				>
 			</File>
 			<File
@@ -1028,7 +964,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\tileMap_parallax_nodes\CCTMXLayer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\tileMap_parallax_nodes\CCTMXObjectGroup.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\tileMap_parallax_nodes\CCTMXObjectGroup.h"
 				>
 			</File>
 			<File
@@ -1036,7 +980,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\tileMap_parallax_nodes\CCTMXTiledMap.h"
+				>
+			</File>
+			<File
 				RelativePath="..\tileMap_parallax_nodes\CCTMXXMLParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\tileMap_parallax_nodes\CCTMXXMLParser.h"
 				>
 			</File>
 		</Filter>
@@ -1044,11 +996,27 @@
 			Name="touch_dispatcher"
 			>
 			<File
+				RelativePath="..\touch_dispatcher\CCTouch.h"
+				>
+			</File>
+			<File
+				RelativePath="..\touch_dispatcher\CCTouchDelegateProtocol.h"
+				>
+			</File>
+			<File
 				RelativePath="..\touch_dispatcher\CCTouchDispatcher.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\touch_dispatcher\CCTouchDispatcher.h"
+				>
+			</File>
+			<File
 				RelativePath="..\touch_dispatcher\CCTouchHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\touch_dispatcher\CCTouchHandler.h"
 				>
 			</File>
 		</Filter>
@@ -1060,7 +1028,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\keypad_dispatcher\CCKeypadDelegate.h"
+				>
+			</File>
+			<File
 				RelativePath="..\keypad_dispatcher\CCKeypadDispatcher.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\keypad_dispatcher\CCKeypadDispatcher.h"
 				>
 			</File>
 		</Filter>
@@ -1068,11 +1044,23 @@
 			Name="text_input_node"
 			>
 			<File
+				RelativePath="..\text_input_node\CCIMEDelegate.h"
+				>
+			</File>
+			<File
 				RelativePath="..\text_input_node\CCIMEDispatcher.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\text_input_node\CCIMEDispatcher.h"
+				>
+			</File>
+			<File
 				RelativePath="..\text_input_node\CCTextFieldTTF.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\text_input_node\CCTextFieldTTF.h"
 				>
 			</File>
 		</Filter>
@@ -1083,21 +1071,417 @@
 				RelativePath="..\script_support\CCScriptSupport.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\script_support\CCScriptSupport.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="extensions"
 			>
+			<Filter
+				Name="CCControlExtension"
+				>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControl.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControl.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlButton.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlButton.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlColourPicker.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlColourPicker.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlExtensions.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlHuePicker.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlHuePicker.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlSaturationBrightnessPicker.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlSaturationBrightnessPicker.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlSlider.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlSlider.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlSwitch.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlSwitch.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlUtils.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCControlUtils.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCInvocation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCInvocation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCMenuPassive.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCMenuPassive.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCScale9Sprite.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCScale9Sprite.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCSpacer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCControlExtension\CCSpacer.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCNotificationCenter"
+				>
+				<File
+					RelativePath="..\extensions\CCNotificationCenter\CCNotificationCenter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCNotificationCenter\CCNotificationCenter.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCTextureWatcher"
+				>
+				<File
+					RelativePath="..\extensions\CCTextureWatcher\CCTextureWatcher.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCTextureWatcher\CCTextureWatcher.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCListView"
+				>
+				<File
+					RelativePath="..\extensions\CCListView\CCControlDefine.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCListView\CCListView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCListView\CCListView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCListView\CCListViewCell.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCListView\CCListViewCell.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCBReader"
+				>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBCustomClass.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBCustomClass.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBReader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBReader_v2.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="kazmath"
+			>
+			<Filter
+				Name="include"
+				>
+				<Filter
+					Name="kazmath"
+					>
+					<File
+						RelativePath="..\kazmath\include\kazmath\aabb.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\kazmath.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\mat3.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\mat4.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\neon_matrix_impl.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\plane.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\quaternion.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\ray2.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\utility.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\vec2.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\vec3.h"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\include\kazmath\vec4.h"
+						>
+					</File>
+					<Filter
+						Name="GL"
+						>
+						<File
+							RelativePath="..\kazmath\include\kazmath\GL\mat4stack.h"
+							>
+						</File>
+						<File
+							RelativePath="..\kazmath\include\kazmath\GL\matrix.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="src"
+				>
+				<File
+					RelativePath="..\kazmath\src\aabb.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\mat3.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\mat4.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\neon_matrix_impl.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\plane.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\quaternion.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\ray2.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\utility.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\vec2.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\vec3.c"
+					>
+				</File>
+				<File
+					RelativePath="..\kazmath\src\vec4.c"
+					>
+				</File>
+				<Filter
+					Name="GL"
+					>
+					<File
+						RelativePath="..\kazmath\src\GL\mat4stack.c"
+						>
+					</File>
+					<File
+						RelativePath="..\kazmath\src\GL\matrix.c"
+						>
+					</File>
+				</Filter>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="shaders"
+			>
 			<File
-				RelativePath="..\extensions\CCNotificationCenter.cpp"
+				RelativePath="..\shaders\CCGLProgram.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\extensions\CCNotificationCenter.h"
+				RelativePath="..\shaders\CCGLProgram.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccGLStateCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccGLStateCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_Position_uColor_frag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_Position_uColor_vert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionColor_frag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionColor_vert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTexture_frag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTexture_uColor_frag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTexture_uColor_vert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTexture_vert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTextureA8Color_frag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTextureA8Color_vert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTextureColor_frag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTextureColor_vert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShader_PositionTextureColorAlphaTest_frag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\CCShaderCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\CCShaderCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShaderEx_SwitchMask_frag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShaders.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shaders\ccShaders.h"
 				>
 			</File>
 		</Filter>
 		<File
 			RelativePath="..\CCCamera.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\CCCamera.h"
 			>
 		</File>
 		<File
@@ -1113,11 +1497,23 @@
 			>
 		</File>
 		<File
+			RelativePath="..\CCDirector.h"
+			>
+		</File>
+		<File
 			RelativePath="..\CCDrawingPrimitives.cpp"
 			>
 		</File>
 		<File
+			RelativePath="..\CCDrawingPrimitives.h"
+			>
+		</File>
+		<File
 			RelativePath="..\CCScheduler.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\CCScheduler.h"
 			>
 		</File>
 		<File

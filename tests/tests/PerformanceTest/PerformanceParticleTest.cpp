@@ -79,9 +79,9 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     quantityParticles = particles;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::itemFromString(" - ", this, menu_selector(ParticleMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::itemWithString(" - ", this, menu_selector(ParticleMainScene::onDecrease));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::itemFromString(" + ", this, menu_selector(ParticleMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::itemWithString(" + ", this, menu_selector(ParticleMainScene::onIncrease));
     increase->setColor(ccc3(0,200,20));
 
     CCMenu *menu = CCMenu::menuWithItems(decrease, increase, NULL);
@@ -111,7 +111,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::itemFromString(str, this, menu_selector(ParticleMainScene::testNCallback));
+        CCMenuItemFont* itemFont = CCMenuItemFont::itemWithString(str, this, menu_selector(ParticleMainScene::testNCallback));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
@@ -176,11 +176,11 @@ void ParticleMainScene::createParticleSystem()
     CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage("Images/fire.png");
     CCTextureCache::sharedTextureCache()->removeTexture(texture);
 
-    if (subtestNumber <= 3)
-    {
-        particleSystem = new CCParticleSystemPoint();
-    }
-    else
+//TODO:     if (subtestNumber <= 3)
+//     {
+//         particleSystem = new CCParticleSystemPoint();
+//     }
+//     else
     {
         particleSystem = new CCParticleSystemQuad();
     }
@@ -196,12 +196,12 @@ void ParticleMainScene::createParticleSystem()
         CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-        break;			
+        break;            
     case 3:
         CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-        break;						
+        break;                        
 //     case 4:
 //         particleSystem->initWithTotalParticles(quantityParticles);
 //         ////---- particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
@@ -216,12 +216,12 @@ void ParticleMainScene::createParticleSystem()
         CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-        break;			
+        break;            
     case 6:
         CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-        break;						
+        break;                        
 //     case 8:
 //         particleSystem->initWithTotalParticles(quantityParticles);
 //         ////---- particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
@@ -237,8 +237,8 @@ void ParticleMainScene::createParticleSystem()
 
     doTest();
 
-	// restore the default pixel format
-	CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+    // restore the default pixel format
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
 }
 
 void ParticleMainScene::testNCallback(CCObject* pSender)
@@ -339,7 +339,7 @@ void ParticlePerformTest1::doTest()
     ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
     particleSystem->setEndColor(endColor);
 
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
     particleSystem->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -409,7 +409,7 @@ void ParticlePerformTest2::doTest()
     ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
     particleSystem->setEndColor(endColor);
 
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
     particleSystem->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -479,7 +479,7 @@ void ParticlePerformTest3::doTest()
     ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
     particleSystem->setEndColor(endColor);
 
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
     particleSystem->setEndColorVar(endColorVar);
 
     // size, in pixels
@@ -549,7 +549,7 @@ void ParticlePerformTest4::doTest()
     ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
     particleSystem->setEndColor(endColor);
 
-    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};    
     particleSystem->setEndColorVar(endColorVar);
 
     // size, in pixels

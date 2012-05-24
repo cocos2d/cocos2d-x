@@ -265,11 +265,11 @@ LUA_API int lua_getinfo (lua_State *L, const char *what, lua_Debug *ar) {
 ** =======================================================
 */
 
-#define check(x)		if (!(x)) return 0;
+#define check(x)        if (!(x)) return 0;
 
-#define checkjump(pt,pc)	check(0 <= pc && pc < pt->sizecode)
+#define checkjump(pt,pc)    check(0 <= pc && pc < pt->sizecode)
 
-#define checkreg(pt,reg)	check((reg) < (pt)->maxstacksize)
+#define checkreg(pt,reg)    check((reg) < (pt)->maxstacksize)
 
 
 
@@ -285,7 +285,7 @@ static int precheck (const Proto *pt) {
 }
 
 
-#define checkopenop(pt,pc)	luaG_checkopenop((pt)->code[(pc)+1])
+#define checkopenop(pt,pc)    luaG_checkopenop((pt)->code[(pc)+1])
 
 int luaG_checkopenop (Instruction i) {
   switch (GET_OPCODE(i)) {

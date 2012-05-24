@@ -32,8 +32,14 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCPointExtension.h"
 #include "CCScriptSupport.h"
+#include "CCShaderCache.h"
+#include "CCGLProgram.h"
+#include "ccGLStateCache.h"
+#include "support/TransformUtils.h"
+// extern
+#include "kazmath/GL/matrix.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 // CCLayer
 CCLayer::CCLayer()
@@ -42,8 +48,8 @@ CCLayer::CCLayer()
 ,m_bIsKeypadEnabled(false)
 ,m_pScriptHandlerEntry(NULL)
 {
-	setAnchorPoint(ccp(0.5f, 0.5f));
-	m_bIsRelativeAnchorPoint = false;
+    setAnchorPoint(ccp(0.5f, 0.5f));
+    m_bIsRelativeAnchorPoint = false;
 }
 
 CCLayer::~CCLayer()
@@ -53,32 +59,32 @@ CCLayer::~CCLayer()
 
 bool CCLayer::init()
 {
-	bool bRet = false;
-	do 
-	{
-		CCDirector * pDirector;
-		CC_BREAK_IF(!(pDirector = CCDirector::sharedDirector()));
-		this->setContentSize(pDirector->getWinSize());
+    bool bRet = false;
+    do 
+    {
+        CCDirector * pDirector;
+        CC_BREAK_IF(!(pDirector = CCDirector::sharedDirector()));
+        this->setContentSize(pDirector->getWinSize());
         m_bIsTouchEnabled = false;
         m_bIsAccelerometerEnabled = false;
-		// success
-		bRet = true;
-	} while(0);
-	return bRet;
+        // success
+        bRet = true;
+    } while(0);
+    return bRet;
 }
 
 CCLayer *CCLayer::node()
 {
-	CCLayer *pRet = new CCLayer();
-	if (pRet && pRet->init())
-	{
-		pRet->autorelease();
-		return pRet;
-	}
+    CCLayer *pRet = new CCLayer();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
     else
     {
-	    CC_SAFE_DELETE(pRet)
-	    return NULL;
+        CC_SAFE_DELETE(pRet);
+        return NULL;
     }
 }
 
@@ -86,23 +92,24 @@ CCLayer *CCLayer::node()
 
 void CCLayer::registerWithTouchDispatcher()
 {
+    CCDirector* pDirector = CCDirector::sharedDirector();
     if (m_pScriptHandlerEntry)
     {
         if (m_pScriptHandlerEntry->getIsMultiTouches())
         {
-            CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this, 0);
+            pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
             LUALOG("[LUA] Add multi-touches event handler: %d", m_pScriptHandlerEntry->getHandler());
         }
         else
         {
-            CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,
+            pDirector->getTouchDispatcher()->addTargetedDelegate(this,
                                                                        m_pScriptHandlerEntry->getPriority(),
                                                                        m_pScriptHandlerEntry->getSwallowsTouches());
             LUALOG("[LUA] Add touch event handler: %d", m_pScriptHandlerEntry->getHandler());
         }
         return;
     }
-	CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0);
+    pDirector->getTouchDispatcher()->addStandardDelegate(this,0);
 }
 
 void CCLayer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
@@ -134,33 +141,34 @@ int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 /// isTouchEnabled getter
 bool CCLayer::getIsTouchEnabled()
 {
-	return m_bIsTouchEnabled;
+    return m_bIsTouchEnabled;
 }
 /// isTouchEnabled setter
 void CCLayer::setIsTouchEnabled(bool enabled)
 {
-	if (m_bIsTouchEnabled != enabled)
-	{
-		m_bIsTouchEnabled = enabled;
-		if (m_bIsRunning)
-		{
-			if (enabled)
-			{
-				this->registerWithTouchDispatcher();
-			}
-			else
-			{
-				// have problems?
-				CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
-			}
-		}
-	}
+    if (m_bIsTouchEnabled != enabled)
+    {
+        m_bIsTouchEnabled = enabled;
+        if (m_bIsRunning)
+        {
+            if (enabled)
+            {
+                this->registerWithTouchDispatcher();
+            }
+            else
+            {
+                // have problems?
+                CCDirector* pDirector = CCDirector::sharedDirector();
+                pDirector->getTouchDispatcher()->removeDelegate(this);
+            }
+        }
+    }
 }
 
 /// isAccelerometerEnabled getter
 bool CCLayer::getIsAccelerometerEnabled()
 {
-	return m_bIsAccelerometerEnabled;
+    return m_bIsAccelerometerEnabled;
 }
 /// isAccelerometerEnabled setter
 void CCLayer::setIsAccelerometerEnabled(bool enabled)
@@ -171,13 +179,14 @@ void CCLayer::setIsAccelerometerEnabled(bool enabled)
 
         if (m_bIsRunning)
         {
+            CCDirector* pDirector = CCDirector::sharedDirector();
             if (enabled)
             {
-                CCAccelerometer::sharedAccelerometer()->setDelegate(this);
+                pDirector->getAccelerometer()->setDelegate(this);
             }
             else
             {
-                CCAccelerometer::sharedAccelerometer()->setDelegate(NULL);
+                pDirector->getAccelerometer()->setDelegate(NULL);
             }
         }
     }
@@ -197,13 +206,14 @@ void CCLayer::setIsKeypadEnabled(bool enabled)
 
         if (m_bIsRunning)
         {
+            CCDirector* pDirector = CCDirector::sharedDirector();
             if (enabled)
             {
-                CCKeypadDispatcher::sharedDispatcher()->addDelegate(this);
+                pDirector->getKeypadDispatcher()->addDelegate(this);
             }
             else
             {
-                CCKeypadDispatcher::sharedDispatcher()->removeDelegate(this);
+                pDirector->getKeypadDispatcher()->removeDelegate(this);
             }
         }
     }
@@ -212,57 +222,60 @@ void CCLayer::setIsKeypadEnabled(bool enabled)
 /// Callbacks
 void CCLayer::onEnter()
 {
-	// register 'parent' nodes first
-	// since events are propagated in reverse order
-	if (m_bIsTouchEnabled)
-	{
-		this->registerWithTouchDispatcher();
-	}
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    // register 'parent' nodes first
+    // since events are propagated in reverse order
+    if (m_bIsTouchEnabled)
+    {
+        this->registerWithTouchDispatcher();
+    }
 
-	// then iterate over all the children
-	CCNode::onEnter();
+    // then iterate over all the children
+    CCNode::onEnter();
 
     // add this layer to concern the Accelerometer Sensor
     if (m_bIsAccelerometerEnabled)
     {
-        CCAccelerometer::sharedAccelerometer()->setDelegate(this);
+        pDirector->getAccelerometer()->setDelegate(this);
     }
 
     // add this layer to concern the kaypad msg
     if (m_bIsKeypadEnabled)
     {
-        CCKeypadDispatcher::sharedDispatcher()->addDelegate(this);
+        pDirector->getKeypadDispatcher()->addDelegate(this);
     }
 }
 
 void CCLayer::onExit()
 {
-	if( m_bIsTouchEnabled )
-	{
-		CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    if( m_bIsTouchEnabled )
+    {
+        pDirector->getTouchDispatcher()->removeDelegate(this);
         unregisterScriptTouchHandler();
-	}
+    }
 
     // remove this layer from the delegates who concern Accelerometer Sensor
     if (m_bIsAccelerometerEnabled)
     {
-        CCAccelerometer::sharedAccelerometer()->setDelegate(NULL);
+        pDirector->getAccelerometer()->setDelegate(NULL);
     }
 
     // remove this layer from the delegates who concern the kaypad msg
     if (m_bIsKeypadEnabled)
     {
-        CCKeypadDispatcher::sharedDispatcher()->removeDelegate(this);
+        pDirector->getKeypadDispatcher()->removeDelegate(this);
     }
 
-	CCNode::onExit();
+    CCNode::onExit();
 }
 
 void CCLayer::onEnterTransitionDidFinish()
 {
     if (m_bIsAccelerometerEnabled)
     {
-        CCAccelerometer::sharedAccelerometer()->setDelegate(this);
+        CCDirector* pDirector = CCDirector::sharedDirector();
+        pDirector->getAccelerometer()->setDelegate(this);
     }
     
     CCNode::onEnterTransitionDidFinish();
@@ -276,8 +289,8 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     }
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
-	CCAssert(false, "Layer#ccTouchBegan override me");
-	return true;
+    CCAssert(false, "Layer#ccTouchBegan override me");
+    return true;
 }
 
 void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
@@ -362,8 +375,8 @@ CCLayerColor::CCLayerColor()
 , m_tColor( ccc3(0,0,0) )
 {
     // default blend function
-	m_tBlendFunc.src = CC_BLEND_SRC;
-	m_tBlendFunc.dst = CC_BLEND_DST;
+    m_tBlendFunc.src = CC_BLEND_SRC;
+    m_tBlendFunc.dst = CC_BLEND_DST;
 }
     
 CCLayerColor::~CCLayerColor()
@@ -374,161 +387,157 @@ CCLayerColor::~CCLayerColor()
 /// opacity getter
 GLubyte CCLayerColor::getOpacity()
 {
-	return m_cOpacity;
+    return m_cOpacity;
 }
 /// opacity setter
 void CCLayerColor::setOpacity(GLubyte var)
 {
-	m_cOpacity = var;
-	updateColor();
+    m_cOpacity = var;
+    updateColor();
 }
 
 /// color getter
 const ccColor3B& CCLayerColor::getColor()
 {
-	return m_tColor;
+    return m_tColor;
 }
 
 /// color setter
 void CCLayerColor::setColor(const ccColor3B& var)
 {
-	m_tColor = var;
-	updateColor();
+    m_tColor = var;
+    updateColor();
 }
 
 
 /// blendFunc getter
 ccBlendFunc CCLayerColor::getBlendFunc()
 {
-	return m_tBlendFunc;
+    return m_tBlendFunc;
 }
 /// blendFunc setter
 void CCLayerColor::setBlendFunc(ccBlendFunc var)
 {
-	m_tBlendFunc = var;
+    m_tBlendFunc = var;
 }
 
 
-CCLayerColor * CCLayerColor::layerWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height)
+CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height)
 {
-	CCLayerColor * pLayer = new CCLayerColor();
-	if( pLayer && pLayer->initWithColorWidthHeight(color,width,height))
-	{
-		pLayer->autorelease();
-		return pLayer;
-	}
-	CC_SAFE_DELETE(pLayer);
-	return NULL;
+    CCLayerColor * pLayer = new CCLayerColor();
+    if( pLayer && pLayer->initWithColor(color,width,height))
+    {
+        pLayer->autorelease();
+        return pLayer;
+    }
+    CC_SAFE_DELETE(pLayer);
+    return NULL;
 }
 CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color)
 {
-	CCLayerColor * pLayer = new CCLayerColor();
-	if(pLayer && pLayer->initWithColor(color))
-	{
-		pLayer->autorelease();
-		return pLayer;
-	}
-	CC_SAFE_DELETE(pLayer);
-	return NULL;
+    CCLayerColor * pLayer = new CCLayerColor();
+    if(pLayer && pLayer->initWithColor(color))
+    {
+        pLayer->autorelease();
+        return pLayer;
+    }
+    CC_SAFE_DELETE(pLayer);
+    return NULL;
 }
 
-bool CCLayerColor::initWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height)
+bool CCLayerColor::init()
 {
-	// default blend function
-	m_tBlendFunc.src = CC_BLEND_SRC;
-	m_tBlendFunc.dst = CC_BLEND_DST;
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    return initWithColor(ccc4(0,0,0,0), s.width, s.height);
+}
 
-	m_tColor.r = color.r;
-	m_tColor.g = color.g;
-	m_tColor.b = color.b;
-	m_cOpacity = color.a;
+bool CCLayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
+{
+    if( CCLayer::init() ) {
 
-	for (unsigned int i=0; i<sizeof(m_pSquareVertices) / sizeof(m_pSquareVertices[0]); i++ )
-	{
-		m_pSquareVertices[i].x = 0.0f;
-        m_pSquareVertices[i].y = 0.0f;
-	}
+        // default blend function
+        m_tBlendFunc.src = GL_SRC_ALPHA;
+        m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
-	this->updateColor();
-	this->setContentSize(CCSizeMake(width,height));
-	return true;
+        m_tColor.r = color.r;
+        m_tColor.g = color.g;
+        m_tColor.b = color.b;
+        m_cOpacity = color.a;
+
+        for (int i = 0; i<sizeof(m_pSquareVertices) / sizeof( m_pSquareVertices[0]); i++ ) {
+            m_pSquareVertices[i].x = 0.0f;
+            m_pSquareVertices[i].y = 0.0f;
+        }
+
+        updateColor();
+        setContentSize(CCSizeMake(w, h));
+
+        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
+    }
+    return true;
 }
 
 bool CCLayerColor::initWithColor(const ccColor4B& color)
 {
-	CCSize s = CCDirector::sharedDirector()->getWinSize();
-	this->initWithColorWidthHeight(color, s.width, s.height);
-	return true;
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    this->initWithColor(color, s.width, s.height);
+    return true;
 }
 
 /// override contentSize
 void CCLayerColor::setContentSize(const CCSize& size)
 {
-	m_pSquareVertices[1].x = size.width * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[2].y = size.height * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[3].x = size.width * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[3].y = size.height * CC_CONTENT_SCALE_FACTOR();
+    m_pSquareVertices[1].x = size.width;
+    m_pSquareVertices[2].y = size.height;
+    m_pSquareVertices[3].x = size.width;
+    m_pSquareVertices[3].y = size.height;
 
-	CCLayer::setContentSize(size);
+    CCLayer::setContentSize(size);
 }
 
 void CCLayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
 {
-	this->setContentSize(CCSizeMake(w, h));
+    this->setContentSize(CCSizeMake(w, h));
 }
 
 void CCLayerColor::changeWidth(GLfloat w)
 {
-	this->setContentSize(CCSizeMake(w, m_tContentSize.height));
+    this->setContentSize(CCSizeMake(w, m_tContentSize.height));
 }
 
 void CCLayerColor::changeHeight(GLfloat h)
 {
-	this->setContentSize(CCSizeMake(m_tContentSize.width, h));
+    this->setContentSize(CCSizeMake(m_tContentSize.width, h));
 }
 
 void CCLayerColor::updateColor()
 {
-	for( unsigned int i=0; i < 4; i++ )
-	{
-		m_pSquareColors[i].r = m_tColor.r;
-		m_pSquareColors[i].g = m_tColor.g;
-		m_pSquareColors[i].b = m_tColor.b;
-		m_pSquareColors[i].a = m_cOpacity;
-	}
+    for( unsigned int i=0; i < 4; i++ )
+    {
+        m_pSquareColors[i].r = m_tColor.r / 255.0f;
+        m_pSquareColors[i].g = m_tColor.g / 255.0f;
+        m_pSquareColors[i].b = m_tColor.b / 255.0f;
+        m_pSquareColors[i].a = m_cOpacity / 255.0f;
+    }
 }
 
 void CCLayerColor::draw()
 {
-	CCLayer::draw();
+    CC_NODE_DRAW_SETUP();
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, GL_COLOR_ARRAY
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_2D);
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
 
-	glVertexPointer(2, GL_FLOAT, 0, m_pSquareVertices);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, m_pSquareColors);
+    //
+    // Attributes
+    //
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, m_pSquareVertices);
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, m_pSquareColors);
 
-	bool newBlend = false;
-	if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) {
-		newBlend = true;
-		glBlendFunc(m_tBlendFunc.src, m_tBlendFunc.dst);
-	}
-	else if( m_cOpacity != 255 ) {
-		newBlend = true;
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
+    ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-
-	// restore default GL state
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);
+    CC_INCREMENT_GL_DRAWS(1);
 }
 
 //
@@ -570,7 +579,7 @@ bool CCLayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end
     m_endColor.b  = end.b;
 
     m_cEndOpacity   = end.a;
-    m_cStartOpacity	= start.a;
+    m_cStartOpacity    = start.a;
     m_AlongVector   = v;
 
     m_bCompressedInterpolation = true;
@@ -586,7 +595,7 @@ void CCLayerGradient::updateColor()
     if (h == 0)
         return;
 
-    double c = sqrt(2.0);
+    float c = sqrtf(2.0f);
     CCPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
 
     // Compressed Interpolation mode
@@ -598,40 +607,40 @@ void CCLayerGradient::updateColor()
 
     float opacityf = (float)m_cOpacity / 255.0f;
 
-    ccColor4B S = {
-        (unsigned char) m_tColor.r,
-        (unsigned char) m_tColor.g,
-        (unsigned char) m_tColor.b,
-        (unsigned char) (m_cStartOpacity * opacityf)
+    ccColor4F S = {
+        m_tColor.r / 255.0f,
+        m_tColor.g / 255.0f,
+        m_tColor.b / 255.0f,
+        m_cStartOpacity * opacityf / 255.0f
     };
 
-    ccColor4B E = {
-        (unsigned char) m_endColor.r,
-        (unsigned char) m_endColor.g,
-        (unsigned char) m_endColor.b,
-        (unsigned char) (m_cEndOpacity * opacityf)
+    ccColor4F E = {
+        m_endColor.r / 255.0f,
+        m_endColor.g / 255.0f,
+        m_endColor.b / 255.0f,
+        m_cEndOpacity * opacityf / 255.0f
     };
 
     // (-1, -1)
-    m_pSquareColors[0].r = (GLubyte) (E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[0].g = (GLubyte) (E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[0].b = (GLubyte) (E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[0].a = (GLubyte) (E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
+    m_pSquareColors[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
+    m_pSquareColors[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
+    m_pSquareColors[0].a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
     // (1, -1)
-    m_pSquareColors[1].r = (GLubyte) (E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[1].g = (GLubyte) (E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[1].b = (GLubyte) (E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[1].a = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[1].r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
+    m_pSquareColors[1].g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
+    m_pSquareColors[1].b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
+    m_pSquareColors[1].a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
     // (-1, 1)
-    m_pSquareColors[2].r = (GLubyte) (E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[2].g = (GLubyte) (E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[2].b = (GLubyte) (E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[2].a = (GLubyte) (E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[2].r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
+    m_pSquareColors[2].g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
+    m_pSquareColors[2].b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
+    m_pSquareColors[2].a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
     // (1, 1)
-    m_pSquareColors[3].r = (GLubyte) (E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[3].g = (GLubyte) (E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[3].b = (GLubyte) (E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[3].a = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[3].r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
+    m_pSquareColors[3].g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
+    m_pSquareColors[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
+    m_pSquareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
 const ccColor3B& CCLayerGradient::getStartColor()
@@ -708,90 +717,92 @@ CCLayerMultiplex::CCLayerMultiplex()
 }
 CCLayerMultiplex::~CCLayerMultiplex()
 {
-	CC_SAFE_RELEASE(m_pLayers);
+    CC_SAFE_RELEASE(m_pLayers);
 }
 
 CCLayerMultiplex * CCLayerMultiplex::layerWithLayers(CCLayer * layer, ...)
 {
-	va_list args;
-	va_start(args,layer);
+    va_list args;
+    va_start(args,layer);
 
-	CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
-	if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
-	{
-		pMultiplexLayer->autorelease();
-		va_end(args);
-		return pMultiplexLayer;
-	}
-	va_end(args);
-	CC_SAFE_DELETE(pMultiplexLayer);
-	return NULL;
+    CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
+    if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
+    {
+        pMultiplexLayer->autorelease();
+        va_end(args);
+        return pMultiplexLayer;
+    }
+    va_end(args);
+    CC_SAFE_DELETE(pMultiplexLayer);
+    return NULL;
 }
 
 CCLayerMultiplex * CCLayerMultiplex::layerWithLayer(CCLayer* layer)
 {
-	CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
-	pMultiplexLayer->initWithLayer(layer);
-	pMultiplexLayer->autorelease();
-	return pMultiplexLayer;
+    CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
+    pMultiplexLayer->initWithLayer(layer);
+    pMultiplexLayer->autorelease();
+    return pMultiplexLayer;
 }
 void CCLayerMultiplex::addLayer(CCLayer* layer)
 {
-	CCAssert(m_pLayers, "");
-	m_pLayers->addObject(layer);
+    CCAssert(m_pLayers, "");
+    m_pLayers->addObject(layer);
 }
 
 bool CCLayerMultiplex::initWithLayer(CCLayer* layer)
 {
-	m_pLayers = new CCMutableArray<CCLayer*>(1);
-	m_pLayers->addObject(layer);
-	m_nEnabledLayer = 0;
-	this->addChild(layer);
-	return true;
+    m_pLayers = CCArray::array();
+    m_pLayers->retain();
+    m_pLayers->addObject(layer);
+    m_nEnabledLayer = 0;
+    this->addChild(layer);
+    return true;
 }
 
 bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 {
-	m_pLayers = new CCMutableArray<CCLayer*>(5);
-	//m_pLayers->retain();
+    m_pLayers = CCArray::arrayWithCapacity(5);
+    m_pLayers->retain();
 
-	m_pLayers->addObject(layer);
+    m_pLayers->addObject(layer);
 
-	CCLayer *l = va_arg(params,CCLayer*);
-	while( l ) {
-		m_pLayers->addObject(l);
-		l = va_arg(params,CCLayer*);
-	}
+    CCLayer *l = va_arg(params,CCLayer*);
+    while( l ) {
+        m_pLayers->addObject(l);
+        l = va_arg(params,CCLayer*);
+    }
 
-	m_nEnabledLayer = 0;
-	this->addChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer));
+    m_nEnabledLayer = 0;
+    this->addChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer));
 
-	return true;
+    return true;
 }
 
 
 void CCLayerMultiplex::switchTo(unsigned int n)
 {
-	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
+    CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
+    this->removeChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer), true);
 
-	m_nEnabledLayer = n;
+    m_nEnabledLayer = n;
 
-	this->addChild(m_pLayers->getObjectAtIndex(n));
+    this->addChild((CCNode*)m_pLayers->objectAtIndex(n));
 }
 
 void CCLayerMultiplex::switchToAndReleaseMe(unsigned int n)
 {
-	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
+    CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
+    this->removeChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer), true);
 
-	//[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
-	m_pLayers->replaceObjectAtIndex(m_nEnabledLayer, NULL);
+    //[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
+    m_pLayers->replaceObjectAtIndex(m_nEnabledLayer, NULL);
 
-	m_nEnabledLayer = n;
+    m_nEnabledLayer = n;
 
-	this->addChild(m_pLayers->getObjectAtIndex(n));
+    this->addChild((CCNode*)m_pLayers->objectAtIndex(n));
 }
-}//namespace   cocos2d 
+
+NS_CC_END

@@ -1,11 +1,11 @@
 
 struct CCAffineTransform {
-    CGFloat a, b, c, d;
-    CGFloat tx, ty;
+    CCFloat a, b, c, d;
+    CCFloat tx, ty;
 };
 
-CCAffineTransform __CCAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
-CCAffineTransform CCAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
+CCAffineTransform __CCAffineTransformMake(CCFloat a, CCFloat b, CCFloat c, CCFloat d, CCFloat tx, CCFloat ty);
+CCAffineTransform CCAffineTransformMake(CCFloat a, CCFloat b, CCFloat c, CCFloat d, CCFloat tx, CCFloat ty);
 
 CCPoint __CCPointApplyAffineTransform(CCPoint point, CCAffineTransform t);
 CCPoint CCPointApplyAffineTransform(CCPoint point, CCAffineTransform t);
@@ -17,8 +17,8 @@ CCAffineTransform CCAffineTransformMakeIdentity();
 CCRect CCRectApplyAffineTransform(CCRect rect, CCAffineTransform anAffineTransform);
 
 CCAffineTransform CCAffineTransformTranslate(CCAffineTransform t, float tx, float ty);
-CCAffineTransform CCAffineTransformRotate(CCAffineTransform aTransform, CGFloat anAngle);
-CCAffineTransform CCAffineTransformScale(CCAffineTransform t, CGFloat sx, CGFloat sy);
+CCAffineTransform CCAffineTransformRotate(CCAffineTransform aTransform, CCFloat anAngle);
+CCAffineTransform CCAffineTransformScale(CCAffineTransform t, CCFloat sx, CCFloat sy);
 CCAffineTransform CCAffineTransformConcat(CCAffineTransform t1,CCAffineTransform t2);
 bool CCAffineTransformEqualToTransform(CCAffineTransform t1,CCAffineTransform t2);
 CCAffineTransform CCAffineTransformInvert(CCAffineTransform t);

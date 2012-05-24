@@ -23,8 +23,8 @@ typedef struct {
  int status;
 } DumpState;
 
-#define DumpMem(b,n,size,D)	DumpBlock(b,(n)*(size),D)
-#define DumpVar(x,D)	 	DumpMem(&x,1,sizeof(x),D)
+#define DumpMem(b,n,size,D)    DumpBlock(b,(n)*(size),D)
+#define DumpVar(x,D)         DumpMem(&x,1,sizeof(x),D)
 
 static void DumpBlock(const void* b, size_t size, DumpState* D)
 {
@@ -67,13 +67,13 @@ static void DumpString(const TString* s, DumpState* D)
  }
  else
  {
-  size_t size=s->tsv.len+1;		/* include trailing '\0' */
+  size_t size=s->tsv.len+1;        /* include trailing '\0' */
   DumpVar(size,D);
   DumpBlock(getstr(s),size,D);
  }
 }
 
-#define DumpCode(f,D)	 DumpVector(f->code,f->sizecode,sizeof(Instruction),D)
+#define DumpCode(f,D)     DumpVector(f->code,f->sizecode,sizeof(Instruction),D)
 
 static void DumpFunction(const Proto* f, const TString* p, DumpState* D);
 
@@ -88,19 +88,19 @@ static void DumpConstants(const Proto* f, DumpState* D)
   switch (ttype(o))
   {
    case LUA_TNIL:
-	break;
+    break;
    case LUA_TBOOLEAN:
-	DumpChar(bvalue(o),D);
-	break;
+    DumpChar(bvalue(o),D);
+    break;
    case LUA_TNUMBER:
-	DumpNumber(nvalue(o),D);
-	break;
+    DumpNumber(nvalue(o),D);
+    break;
    case LUA_TSTRING:
-	DumpString(rawtsvalue(o),D);
-	break;
+    DumpString(rawtsvalue(o),D);
+    break;
    default:
-	lua_assert(0);			/* cannot happen */
-	break;
+    lua_assert(0);            /* cannot happen */
+    break;
   }
  }
  n=f->sizep;

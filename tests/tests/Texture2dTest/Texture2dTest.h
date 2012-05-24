@@ -3,6 +3,7 @@
 
 #include "../testBasic.h"
 
+
 class TextureDemo : public CCLayer
 {
 public:
@@ -119,6 +120,13 @@ public:
     virtual void onEnter();
 };
 
+class TexturePVRRGB888 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual void onEnter();
+};
+
 class TexturePVRA8 : public TextureDemo
 {
 public:
@@ -191,14 +199,6 @@ public:
     virtual void onEnter();
 };
 
-class TexturePVRRaw : public TextureDemo
-{
-public:
-    virtual std::string title();
-
-    virtual void onEnter();
-};
-
 class TextureAlias : public TextureDemo
 {
 public:
@@ -221,6 +221,19 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual void onEnter();
+};
+
+class TextureAsync : public TextureDemo
+{
+public:
+    virtual ~TextureAsync();
+    void loadImages(ccTime dt);
+    void imageLoaded(CCObject* pObj);
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+private:
+    int m_nImageOffset;
 };
 
 class TextureGlRepeat : public TextureDemo
@@ -255,6 +268,38 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual void onEnter();
+};
+
+class FileUtilsTest : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TextureDrawAtPoint : public TextureDemo
+{
+public:
+    ~TextureDrawAtPoint();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+    virtual void draw();
+private:
+    CCTexture2D* m_pTex1, *m_pTex2;
+};
+
+class TextureDrawInRect : public TextureDemo
+{
+public:
+    ~TextureDrawInRect();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+    virtual void draw();
+private:
+    CCTexture2D* m_pTex1, *m_pTex2;
 };
 
 class TextureTestScene : public TestScene

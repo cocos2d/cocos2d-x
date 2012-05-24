@@ -40,7 +40,7 @@
 
 
 
-#define MINSIZEARRAY	4
+#define MINSIZEARRAY    4
 
 
 void *luaM_growaux_ (lua_State *L, void *block, int *size, size_t size_elems,

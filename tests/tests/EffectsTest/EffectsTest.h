@@ -12,24 +12,23 @@ public:
 class TextLayer : public CCLayerColor
 {
 protected:
-	//UxString	m_strTitle;
+    //UxString    m_strTitle;
 
 public:
-	TextLayer(void);
-	~TextLayer(void);
+    TextLayer(void);
+    ~TextLayer(void);
 
-	void checkAnim(ccTime dt);
+    void checkAnim(ccTime dt);
 
-	virtual void onEnter();
+    virtual void onEnter();
 
-	void restartCallback(CCObject* pSender);
-	void nextCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 
-	void newOrientation();
-	void newScene();
+    void newScene();
 
-	static TextLayer* node();
+    static TextLayer* node();
 };
 
 #endif

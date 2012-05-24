@@ -12,9 +12,9 @@ public:
     void initWithSubTest(int nSubTest, CCNode* parent);
 
 protected:
-    int					subtestNumber;
-    CCSpriteBatchNode	*batchNode;
-    CCNode* 			parent;
+    int                    subtestNumber;
+    CCSpriteBatchNode    *batchNode;
+    CCNode*             parent;
 };
 
 class SpriteMenuLayer : public PerformBasicLayer
@@ -47,10 +47,10 @@ public:
     int getNodesNum() { return quantityNodes; }
 
 protected:
-    int			lastRenderedCount;
-    int			quantityNodes;
-    SubTest		*m_pSubTest;
-    int			subtestNumber;
+    int            lastRenderedCount;
+    int            quantityNodes;
+    SubTest        *m_pSubTest;
+    int            subtestNumber;
 };
 
 class SpritePerformTest1 : public SpriteMainScene

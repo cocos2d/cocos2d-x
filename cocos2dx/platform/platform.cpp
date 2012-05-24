@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 int CCTime::gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp)
 {
@@ -38,14 +38,14 @@ int CCTime::gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp)
     return 0;
 }
 
-void CCTime::timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end)
+double CCTime::timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end)
 {
-    if (! out || ! start || ! end)
+    if (! start || ! end)
     {
-        return;
+        return 0;
     }
-    out->tv_sec = end->tv_sec - start->tv_sec;
-    out->tv_usec = end->tv_usec - start->tv_usec;
+    
+    return ((end->tv_sec*1000.0+end->tv_usec/1000.0) - (start->tv_sec*1000.0+start->tv_usec/1000.0));
 }
 
-NS_CC_END;
+NS_CC_END
