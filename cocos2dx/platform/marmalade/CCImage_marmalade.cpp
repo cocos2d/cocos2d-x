@@ -602,7 +602,7 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
     int copy_rows  = (int)cinfo.output_height;
     int copy_width = (int)cinfo.output_width;
 
-   if (copy_width < 0 || copy_rows < 0)
+	if (copy_width < 0 || copy_rows < 0)
     {
         printf("jpeg is fully off screen\n");
         return bRet;
@@ -650,6 +650,8 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
 
     (void) jpeg_finish_decompress(&cinfo);
     jpeg_destroy_decompress(&cinfo);
+
+	s3eFileClose(pFile) ;
 
     printf("jpeg display done\n");
 
