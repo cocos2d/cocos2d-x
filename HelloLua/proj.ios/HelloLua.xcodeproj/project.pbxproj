@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15DD6D82156DD1EF003E7567 /* fps_images.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D80156DD1EF003E7567 /* fps_images.fnt */; };
+		15DD6D83156DD1EF003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D81156DD1EF003E7567 /* fps_images.png */; };
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		78947C6D14EBB9B100DBD5A6 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78947C5E14EBB9B000DBD5A6 /* background.mp3 */; };
@@ -222,6 +224,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15DD6D80156DD1EF003E7567 /* fps_images.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fps_images.fnt; sourceTree = "<group>"; };
+		15DD6D81156DD1EF003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* HelloLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -742,6 +746,8 @@
 		78947C5C14EBB9B000DBD5A6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15DD6D80156DD1EF003E7567 /* fps_images.fnt */,
+				15DD6D81156DD1EF003E7567 /* fps_images.png */,
 				78947C5E14EBB9B000DBD5A6 /* background.mp3 */,
 				78947C5F14EBB9B000DBD5A6 /* crop.png */,
 				78DC4C9815490B9500317402 /* Default.png */,
@@ -1593,6 +1599,8 @@
 				78DC4C0515490AF400317402 /* CMakeLists.txt in Resources */,
 				78DC4C9A15490B9500317402 /* Default.png in Resources */,
 				78DC4C9B15490B9500317402 /* Icon.png in Resources */,
+				15DD6D82156DD1EF003E7567 /* fps_images.fnt in Resources */,
+				15DD6D83156DD1EF003E7567 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

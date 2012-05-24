@@ -718,9 +718,9 @@ void CCDirector::createStatsLabel()
     CC_SAFE_RELEASE_NULL(m_pSPFLabel);
     CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
     
-    m_pFPSLabel = CCLabelBMFont::labelWithString("00.0", "fonts/fps_images.fnt");
-    m_pSPFLabel = CCLabelBMFont::labelWithString("0.000", "fonts/fps_images.fnt");
-    m_pDrawsLabel = CCLabelBMFont::labelWithString("000", "fonts/fps_images.fnt");
+    m_pFPSLabel = CCLabelBMFont::labelWithString("00.0", "fps_images.fnt");
+    m_pSPFLabel = CCLabelBMFont::labelWithString("0.000", "fps_images.fnt");
+    m_pDrawsLabel = CCLabelBMFont::labelWithString("000", "fps_images.fnt");
     
     m_pFPSLabel->retain();
     m_pSPFLabel->retain();
