@@ -67,7 +67,3 @@ Device-Release/
 
 # Ignore vim swaps
 *.swp
-=======
-.DS_Store
-xcuserdata/
->>>>>>> aab237ff6cf3688199bccc9ec65330b0d8505356

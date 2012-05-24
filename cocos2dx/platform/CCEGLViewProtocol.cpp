@@ -213,12 +213,12 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
             if (m_bNeedScale)
             {
-                pTouch->SetTouchInfo(nUnusedIndex, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
+                pTouch->setTouchInfo(nUnusedIndex, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
                     (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
             }
             else
             {
-                pTouch->SetTouchInfo(nUnusedIndex, x, y);
+                pTouch->setTouchInfo(nUnusedIndex, x, y);
             }
             CCInteger* pInterObj = new CCInteger(nUnusedIndex);
             s_TouchesIntergerDict.setObject(pInterObj, id);
@@ -257,12 +257,12 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         {
             if (m_bNeedScale)
             {
-                pTouch->SetTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
                     (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
             }
             else
             {
-                pTouch->SetTouchInfo(pIndex->getValue(), x, y);
+                pTouch->setTouchInfo(pIndex->getValue(), x, y);
             }
             set.addObject(pTouch);
         }
@@ -305,12 +305,12 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
 
             if (m_bNeedScale)
             {
-                pTouch->SetTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
                     (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
             }
             else
             {
-                pTouch->SetTouchInfo(pIndex->getValue(), x, y);
+                pTouch->setTouchInfo(pIndex->getValue(), x, y);
             }
             
             set.addObject(pTouch);
