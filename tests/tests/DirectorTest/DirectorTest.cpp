@@ -1,14 +1,14 @@
 #include "DirectorTest.h"
 #include "../testResource.h"
 
-#define MAX_LAYER	1
+#define MAX_LAYER    1
 
 CCLayer* nextDirectorTestCase();
 CCLayer* backDirectorTestCase();
 CCLayer* restartDirectorTestCase();
 
 static int sceneIdx=-1;
-static ccDeviceOrientation s_currentOrientation = CCDeviceOrientationPortrait;
+//static ccDeviceOrientation s_currentOrientation = CCDeviceOrientationPortrait;
 
 CCLayer* createTestCaseLayer(int index)
 {
@@ -27,18 +27,18 @@ CCLayer* createTestCaseLayer(int index)
 }
 
 CCLayer* nextDirectorTestCase()
-{	
-	sceneIdx++;
-	sceneIdx = sceneIdx % MAX_LAYER;
+{    
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
 
-	return createTestCaseLayer(sceneIdx);
+    return createTestCaseLayer(sceneIdx);
 }
 
 CCLayer* backDirectorTestCase()
 {
-	sceneIdx--;
-	if( sceneIdx < 0 )
-		sceneIdx += MAX_LAYER;
+    sceneIdx--;
+    if( sceneIdx < 0 )
+        sceneIdx += MAX_LAYER;
 
     return createTestCaseLayer(sceneIdx);
 }
@@ -73,9 +73,9 @@ bool DirectorTest::init()
             l->setPosition(ccp(s.width/2, s.height-80));
         }
 
-        CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(DirectorTest::backCallback));
-        CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(DirectorTest::restartCallback));
-        CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(DirectorTest::nextCallback));
+        CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(DirectorTest::backCallback));
+        CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(DirectorTest::restartCallback));
+        CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(DirectorTest::nextCallback));
 
         CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
         menu->setPosition(CCPointZero);
@@ -92,7 +92,7 @@ bool DirectorTest::init()
 void DirectorTest::restartCallback(CCObject* pSender)
 {
     CCScene *s = new DirectorTestScene();
-	s->addChild(restartDirectorTestCase());
+    s->addChild(restartDirectorTestCase());
     CCDirector::sharedDirector()->replaceScene(s);
     s->autorelease();
 }
@@ -115,12 +115,12 @@ void DirectorTest::backCallback(CCObject* pSender)
 
 std::string DirectorTest::title()
 {
-	return "No title";
+    return "No title";
 }
 
 std::string DirectorTest::subtitle()
 {
-	return "";
+    return "";
 }
 
 ///---------------------------------------
@@ -136,43 +136,28 @@ bool Director1::init()
     {
         CC_BREAK_IF(! DirectorTest::init());
 
-		setIsTouchEnabled(true);
+        setIsTouchEnabled(true);
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        CCMenuItem *item = CCMenuItemFont::itemFromString("Rotate Device", this, menu_selector(Director1::rotateDevice));
+        CCMenuItem *item = CCMenuItemFont::itemWithString("Rotate Device", this, menu_selector(Director1::rotateDevice));
         CCMenu *menu = CCMenu::menuWithItems(item, NULL);
-		menu->setPosition(ccp( s.width/2, s.height/2));
-		addChild(menu);
+        menu->setPosition(ccp( s.width/2, s.height/2));
+        addChild(menu);
 
         bRet = true;
-	} while (0);
+    } while (0);
 
-	return bRet;
+    return bRet;
 }
 
 void Director1::newOrientation()
 {
-	switch (s_currentOrientation)
-    {
-		case CCDeviceOrientationLandscapeLeft:
-			s_currentOrientation = CCDeviceOrientationPortrait;
-			break;
-		case CCDeviceOrientationPortrait:
-			s_currentOrientation = CCDeviceOrientationLandscapeRight;
-			break;						
-		case CCDeviceOrientationLandscapeRight:
-			s_currentOrientation = CCDeviceOrientationPortraitUpsideDown;
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			s_currentOrientation = CCDeviceOrientationLandscapeLeft;
-			break;
-	}
-    CCDirector::sharedDirector()->setDeviceOrientation(s_currentOrientation);
+    
 }
 
 void Director1::rotateDevice(CCObject* pSender)
 {
-	newOrientation();
+    newOrientation();
     restartCallback(NULL);
 }
 
@@ -187,22 +172,22 @@ void Director1::ccTouchesEnded(CCSet * touches, CCEvent* event)
 
         if(!touch)
             break;
-		CCPoint a = touch->locationInView();
+        CCPoint a = touch->locationInView();
 
         CCDirector *director = CCDirector::sharedDirector();
-		CCPoint b = director->convertToUI(director->convertToGL(a));
-		CCLog("(%d,%d) == (%d,%d)", (int) a.x, (int)a.y, (int)b.x, (int)b.y );
-	}
+        CCPoint b = director->convertToUI(director->convertToGL(a));
+        CCLog("(%d,%d) == (%d,%d)", (int) a.x, (int)a.y, (int)b.x, (int)b.y );
+    }
 }
 
 std::string Director1::title()
 {
-	return "Testing conversion";
+    return "Testing conversion";
 }
 
 std::string Director1::subtitle()
 {
-	return "Tap screen and see the debug console";
+    return "Tap screen and see the debug console";
 }
 
 ///---------------------------------------
@@ -212,7 +197,7 @@ std::string Director1::subtitle()
 ///---------------------------------------
 void DirectorTestScene::runThisTest()
 {
-    s_currentOrientation = CCDeviceOrientationPortrait;
+    //s_currentOrientation = CCDeviceOrientationPortrait;
     CCLayer* pLayer = nextDirectorTestCase();
     addChild(pLayer);
 
@@ -221,6 +206,6 @@ void DirectorTestScene::runThisTest()
 
 void DirectorTestScene::MainMenuCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+    //CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
     TestScene::MainMenuCallback(pSender);
 }

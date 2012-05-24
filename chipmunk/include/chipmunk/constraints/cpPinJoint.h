@@ -19,25 +19,34 @@
  * SOFTWARE.
  */
  
-const cpConstraintClass *cpPinJointGetClass();
+/// @defgroup cpPinJoint cpPinJoint
+/// @{
 
+const cpConstraintClass *cpPinJointGetClass(void);
+
+/// @private
 typedef struct cpPinJoint {
-	cpConstraint constraint;
-	cpVect anchr1, anchr2;
-	cpFloat dist;
-	
-	cpVect r1, r2;
-	cpVect n;
-	cpFloat nMass;
-	
-	cpFloat jnAcc, jnMax;
-	cpFloat bias;
+    cpConstraint constraint;
+    cpVect anchr1, anchr2;
+    cpFloat dist;
+    
+    cpVect r1, r2;
+    cpVect n;
+    cpFloat nMass;
+    
+    cpFloat jnAcc, jnMax;
+    cpFloat bias;
 } cpPinJoint;
 
-cpPinJoint *cpPinJointAlloc(void);
-cpPinJoint *cpPinJointInit(cpPinJoint *joint, cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2);
-cpConstraint *cpPinJointNew(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2);
+/// Allocate a pin joint.
+cpPinJoint* cpPinJointAlloc(void);
+/// Initialize a pin joint.
+cpPinJoint* cpPinJointInit(cpPinJoint *joint, cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2);
+/// Allocate and initialize a pin joint.
+cpConstraint* cpPinJointNew(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2);
 
 CP_DefineConstraintProperty(cpPinJoint, cpVect, anchr1, Anchr1);
 CP_DefineConstraintProperty(cpPinJoint, cpVect, anchr2, Anchr2);
 CP_DefineConstraintProperty(cpPinJoint, cpFloat, dist, Dist);
+
+///@}

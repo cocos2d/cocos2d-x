@@ -20,16 +20,16 @@ class CCTMXTiledMap : public CCNode
     void setMapOrientation(int val);
     int getMapOrientation();
 
-    void  setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* pval);
-    CCMutableArray<CCTMXObjectGroup*>* getObjectGroups();
+    void  setObjectGroups(CCArray* pval);
+    CCArray* getObjectGroups();
 
-    void setProperties(CCStringToStringDictionary* pval);
-    CCStringToStringDictionary* getProperties();
+    void setProperties(CCDictionary* pval);
+    CCDictionary* getProperties();
 
     CCTMXLayer* layerNamed(const char *layerName);
     CCTMXObjectGroup* objectGroupNamed(const char *groupName);
     CCString *propertyNamed(const char *propertyName);
-    CCDictionary<std::string, CCString*> *propertiesForGID(int GID);
+    CCDictionary *propertiesForGID(int GID);
 
     static CCTMXTiledMap * tiledMapWithTMXFile(const char *tmxFile);
 };

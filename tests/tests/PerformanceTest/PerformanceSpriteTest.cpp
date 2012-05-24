@@ -54,7 +54,7 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
 
     // purge textures
     CCTextureCache *mgr = CCTextureCache::sharedTextureCache();
-    //		[mgr removeAllTextures];
+    //        [mgr removeAllTextures];
     mgr->removeTexture(mgr->addImage("Images/grossinis_sister1.png"));
     mgr->removeTexture(mgr->addImage("Images/grossini_dance_atlas.png"));
     mgr->removeTexture(mgr->addImage("Images/spritesheet1.png"));
@@ -82,7 +82,7 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
             batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
-            break;				
+            break;                
         case 6:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
             batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
@@ -130,7 +130,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
         case 2:
         case 3: 
             {
-                sprite = CCSprite::spriteWithBatchNode(batchNode, CCRectMake(0, 0, 52, 139));
+                sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 52, 139));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -154,7 +154,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 85;
                 y *= 121;
-                sprite = CCSprite::spriteWithBatchNode(batchNode, CCRectMake(x,y,85,121));
+                sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(x,y,85,121));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -185,7 +185,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 32;
                 y *= 32;
-                sprite = CCSprite::spriteWithBatchNode(batchNode, CCRectMake(x,y,32,32));
+                sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(x,y,32,32));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -215,7 +215,7 @@ void SubTest::removeByTag(int tag)
         case 8:
         case 9:
             batchNode->removeChildAtIndex(tag, true);
-            //			[batchNode removeChildByTag:tag+100 cleanup:YES];
+            //            [batchNode removeChildByTag:tag+100 cleanup:YES];
             break;
         default:
             break;
@@ -287,9 +287,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     quantityNodes = 0;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::itemFromString(" - ", this, menu_selector(SpriteMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::itemWithString(" - ", this, menu_selector(SpriteMainScene::onDecrease));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::itemFromString(" + ", this, menu_selector(SpriteMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::itemWithString(" + ", this, menu_selector(SpriteMainScene::onIncrease));
     increase->setColor(ccc3(0,200,20));
 
     CCMenu *menu = CCMenu::menuWithItems(decrease, increase, NULL);
@@ -314,7 +314,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::itemFromString(str, this, menu_selector(SpriteMainScene::testNCallback));
+        CCMenuItemFont* itemFont = CCMenuItemFont::itemWithString(str, this, menu_selector(SpriteMainScene::testNCallback));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 

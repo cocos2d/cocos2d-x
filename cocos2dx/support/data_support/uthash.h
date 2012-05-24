@@ -1,26 +1,25 @@
-/****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+/*
+Copyright (c) 2003-2010, Troy D. Hanson     http://uthash.sourceforge.net
+All rights reserved.
 
-http://www.cocos2d-x.org
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 
 #ifndef __SUPPORT_DATA_SUPPORT_UTHASH_H__
 #define __SUPPORT_DATA_SUPPORT_UTHASH_H__
@@ -46,6 +45,12 @@ namespace   cocos2d {
 #define DECLTYPE(x) (__typeof(x))
 #endif
 
+#ifdef ANDROID
+#define NO_DECLTYPE
+#undef  DECLTYPE
+#define DECLTYPE(x)
+#endif
+
 #ifdef NO_DECLTYPE
 #define DECLTYPE_ASSIGN(dst,src)                                                 \
 do {                                                                             \
@@ -61,11 +66,11 @@ do {                                                                            
 
 /* a number of the hash function use uint32_t which isn't defined on win32 */
 #ifdef _MSC_VER
-	typedef unsigned int uint32_t;
+    typedef unsigned int uint32_t;
 #else
-	#ifndef __QNX__
-	#include <inttypes.h>   /* uint32_t */
-	#endif /* __QNX__ */
+    #ifndef __QNX__
+    #include <inttypes.h>   /* uint32_t */
+    #endif /* __QNX__ */
 #endif /* _MSC_VER */
 
 #define UTHASH_VERSION 1.9.3

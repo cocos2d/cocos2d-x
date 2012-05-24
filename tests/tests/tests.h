@@ -3,15 +3,14 @@
 
 #include "ActionsTest/ActionsTest.h"
 #include "TransitionsTest/TransitionsTest.h"
-#include "ProgressActionsTest/ProgressActionsTest.h"
+#include "ActionsProgressTest/ActionsProgressTest.h"
 #include "EffectsTest/EffectsTest.h"
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
 #include "RotateWorldTest/RotateWorldTest.h"
 #include "ParticleTest/ParticleTest.h"
-#include "EaseActionsTest/EaseActionsTest.h"
+#include "ActionsEaseTest/ActionsEaseTest.h"
 #include "MotionStreakTest/MotionStreakTest.h"
 #include "DrawPrimitivesTest/DrawPrimitivesTest.h"
-#include "CocosNodeTest/CocosNodeTest.h"
 #include "TouchesTest/TouchesTest.h"
 #include "MenuTest/MenuTest.h"
 #include "ActionManagerTest/ActionManagerTest.h"
@@ -21,10 +20,7 @@
 #include "TileMapTest/TileMapTest.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
-// havn't implement on marmalade
-//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "TextInputTest/TextInputTest.h"
-//#endif
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
@@ -45,18 +41,21 @@
 #include "FontTest/FontTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
 #include "TextureCacheTest/TextureCacheTest.h"
+#include "NodeTest/NodeTest.h"
+#include "ShaderTest/ShaderTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
+    #include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
 #else
 #ifdef MARMALADEUSECHIPMUNK
-#if	(MARMALADEUSECHIPMUNK == 1)
-	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
+#if    (MARMALADEUSECHIPMUNK == 1)
+    #include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
 #endif
 #endif
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 
 #include "ExtensionsTest/ExtensionsTest.h"
+#include "MutiTouchTest/MutiTouchTest.h"
 
 enum
 {
@@ -79,7 +78,7 @@ enum
     TEST_PARALLAX,
     TEST_TILE_MAP,
     TEST_INTERVAL,
-    TEST_CHIPMUNK,
+    TEST_CHIPMUNKACCELTOUCH,
     TEST_LABEL,
     TEST_TEXT_INPUT,
     TEST_SPRITE,
@@ -92,32 +91,34 @@ enum
     TEST_HIRES,
     TEST_ACCELEROMRTER,
     TEST_KEYPAD,
-	TEST_COCOSDENSHION,
+    TEST_COCOSDENSHION,
     TEST_PERFORMANCE,
     TEST_ZWOPTEX,
-	TEST_CURL,
-	TEST_USERDEFAULT,
+    TEST_CURL,
+    TEST_USERDEFAULT,
     TEST_DIRECTOR,
     TEST_BUGS,
-	TEST_FONTS,
-	TEST_CURRENT_LANGUAGE,
-	TEST_TEXTURECACHE,
+    TEST_FONTS,
+    TEST_CURRENT_LANGUAGE,
+    TEST_TEXTURECACHE,
     TEST_EXTENSIONS,
-    TESTS_COUNT,
+    TEST_SHADER,
+    TEST_MUTITOUCH,
+    TESTS_COUNT,    
 };
 
 const std::string g_aTestNames[TESTS_COUNT] = {
     "ActionsTest",
     "TransitionsTest",
-    "ProgressActionsTest",
+    "ActionsProgressTest",
     "EffectsTest",
     "ClickAndMoveTest",
     "RotateWorldTest",
     "ParticleTest",
-    "EaseActionsTest",
+    "ActionsEaseTest",
     "MotionStreakTest",
     "DrawPrimitivesTest",
-    "CocosNodeTest",
+    "NodeTest",
     "TouchesTest",
     "MenuTest",
     "ActionManagerTest",
@@ -126,7 +127,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ParallaxTest",
     "TileMapTest",
     "IntervalTest",
-    "ChipmunkTest",
+    "ChipmunkAccelTouchTest",
     "LabelTest",
     "TextInputTest",
     "SpriteTest",
@@ -139,17 +140,19 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "HiResTest",
     "Accelerometer",
     "KeypadTest",
-	"CocosDenshionTest",
+    "CocosDenshionTest",
     "PerformanceTest",
     "ZwoptexTest",
-	"CurlTest",
-	"UserDefaultTest",
+    "CurlTest",
+    "UserDefaultTest",
     "DirectorTest",
     "BugsTest",
-	"FontTest",
-	"CurrentLanguageTest",
-	"TextureCacheTest",
-    "ExtensionsTest"
+    "FontTest",
+    "CurrentLanguageTest",
+    "TextureCacheTest",
+    "ExtensionsTest",
+    "ShaderTest",
+    "MutiTouchTest"
 };
 
 #endif

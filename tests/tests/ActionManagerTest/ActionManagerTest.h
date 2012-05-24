@@ -8,42 +8,42 @@ class ActionManagerTest: public CCLayer
 protected:
     CCTextureAtlas* m_atlas;
 
-	std::string	m_strTitle;
+    std::string    m_strTitle;
 
 public:
-	ActionManagerTest(void);
-	~ActionManagerTest(void);
+    ActionManagerTest(void);
+    ~ActionManagerTest(void);
 
-	virtual std::string title();
-	virtual void onEnter();
+    virtual std::string title();
+    virtual void onEnter();
 
-	void restartCallback(CCObject* pSender);
-	void nextCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 };
 
 class CrashTest : public ActionManagerTest
 {
 public:
-	virtual std::string title();
-	virtual void onEnter();
-	void removeThis();
+    virtual std::string title();
+    virtual void onEnter();
+    void removeThis();
 };
 
 class LogicTest : public ActionManagerTest
 {
 public:
-	virtual std::string title();
-	virtual void onEnter();
-	void bugMe(CCNode* node);
+    virtual std::string title();
+    virtual void onEnter();
+    void bugMe(CCNode* node);
 };
 
 class PauseTest : public ActionManagerTest
 {
 public:
-	virtual std::string title();
-	virtual void onEnter();
-	void unpause(ccTime dt);
+    virtual std::string title();
+    virtual void onEnter();
+    void unpause(ccTime dt);
 };
 
 class RemoveTest : public ActionManagerTest

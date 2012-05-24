@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <list>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
 // add/remove delegate in CCIMEDelegate Cons/Destructor
@@ -336,4 +336,4 @@ CCIMEDispatcher* CCIMEDispatcher::sharedDispatcher()
     return &s_instance;
 }
 
-NS_CC_END;
+NS_CC_END

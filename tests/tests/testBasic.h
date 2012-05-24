@@ -3,7 +3,9 @@
 
 #include "cocos2d.h"
 
-using namespace cocos2d;
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace std;
 
 class TestScene : public CCScene
 {
@@ -15,9 +17,6 @@ public:
 
     // The CallBack for back to the main menu scene
     virtual void MainMenuCallback(CCObject* pSender);
-
-protected:
-    bool m_bPortrait; // indicate if this test case requires portrait mode
 };
 
 #endif

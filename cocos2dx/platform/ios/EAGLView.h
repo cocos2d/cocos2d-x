@@ -64,11 +64,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
 #import <CoreFoundation/CoreFoundation.h>
 
-#import "ESRenderer.h"
+#import "CCESRenderer.h"
 
 //CLASS INTERFACE:
 
@@ -79,22 +79,20 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface EAGLView : UIView <UIKeyInput, UITextInput>
 {
-    id						<ESRenderer> renderer_;	
-	EAGLContext				*context_; // weak ref
+    id                        <CCESRenderer> renderer_;    
+    EAGLContext                *context_; // weak ref
 
-	NSString				*pixelformat_;
-	GLuint					depthFormat_;
-	BOOL					preserveBackbuffer_;
+    NSString                *pixelformat_;
+    GLuint                    depthFormat_;
+    BOOL                    preserveBackbuffer_;
 
-	CGSize					size_;
-	BOOL					discardFramebufferSupported_;
+    CGSize                    size_;
+    BOOL                    discardFramebufferSupported_;
 
-	//fsaa addition
-	BOOL					multisampling_;
-	unsigned int               requestedSamples_;
+    //fsaa addition
+    BOOL                    multisampling_;
+    unsigned int               requestedSamples_;
 @private
-    CFMutableDictionaryRef  touchesIntergerDict;
-    unsigned int               indexBitsUsed;
     NSString *              markedText_;
     CGRect                  caretRect_;
 }
@@ -139,8 +137,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @property(nonatomic,readwrite) BOOL multiSampling;
 
-@property(readonly) CFMutableDictionaryRef touchesIntergerDict;
-@property(readwrite) unsigned int indexBitsUsed;
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
@@ -150,7 +146,5 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(int) getWidth;
 -(int) getHeight;
--(int) getUnUsedIndex;
--(void) removeUsedIndexBit:(int) index;
 
 @end

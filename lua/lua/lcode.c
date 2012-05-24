@@ -24,7 +24,7 @@
 #include "ltable.h"
 
 
-#define hasjumps(e)	((e)->t != (e)->f)
+#define hasjumps(e)    ((e)->t != (e)->f)
 
 
 static int isnumeral(expdesc *e) {

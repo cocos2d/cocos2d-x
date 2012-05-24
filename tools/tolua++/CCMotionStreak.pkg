@@ -1,11 +1,23 @@
-
 class CCMotionStreak : public CCNode
 {
-    CCRibbon* getRibbon(void);
-    void setTexture(CCTexture2D* var);
-    CCTexture2D* getTexture(void);
-    void setBlendFunc(ccBlendFunc var);
-    ccBlendFunc getBlendFunc(void);
+    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
 
-    static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
+    void tintWithColor(ccColor3B colors);
+    void reset();
+
+    void setPosition(CCPoint& position);
+
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D *texture);
+    void setBlendFunc(ccBlendFunc blendFunc);
+    ccBlendFunc getBlendFunc(void);
+    void setColor(const ccColor3B& color);
+    const ccColor3B& getColor(void);
+    GLubyte getOpacity(void);
+    void setOpacity(GLubyte opacity);
+    void setIsOpacityModifyRGB(bool bValue);
+    bool getIsOpacityModifyRGB(void);
+    bool getIsFastMode();
+    void setIsFastMode(bool mode);
 };

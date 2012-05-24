@@ -1,9 +1,9 @@
-win32/res/root.ico
-win32/root.rc
-win32/resource.h
+proj.win32/res/root.ico
+proj.win32/root.rc
+proj.win32/resource.h
 
-win32/main.h
-win32/main.cpp
+proj.win32/main.h
+proj.win32/main.cpp
 
 Classes/AppDelegate.h
 Classes/AppDelegate.cpp
@@ -33,6 +33,8 @@ Resources/dog.png
 Resources/hello.lua
 Resources/hello2.lua
 Resources/menu1.png
+Resources/background.mp3
+Resources/effect1.wav
 [! else]
 Resources/CloseSelected.png
 Resources/CloseNormal.png

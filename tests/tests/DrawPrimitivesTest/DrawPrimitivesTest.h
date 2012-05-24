@@ -7,8 +7,8 @@
 class DrawPrimitivesTest : public CCLayer
 {
 public:
-	DrawPrimitivesTest();
-	virtual void draw();
+    DrawPrimitivesTest();
+    virtual void draw();
 };
 
 class DrawPrimitivesTestScene : public TestScene

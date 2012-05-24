@@ -1,9 +1,9 @@
-
+/*
 enum {
     //* priority used by the menu
     kCCMenuTouchPriority = -128,
 };
-
+*/
 class CCMenu : public CCLayer
 {
     void alignItemsVertically();

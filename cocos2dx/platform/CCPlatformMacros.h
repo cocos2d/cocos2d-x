@@ -29,9 +29,7 @@
  */
 #include "ccConfig.h"
 #include "CCPlatformConfig.h"
-
-#define MacGLView					void
-#define NSWindow					        void
+#include "CCPlatformDefine.h"
 
 /** @def CC_ENABLE_CACHE_TEXTTURE_DATA
 Enable it if you want to cache the texture data.
@@ -45,13 +43,33 @@ It's new in cocos2d-x since v0.99.5
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       0
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    /* Application will crash in glDrawElements function on some win32 computers and some android devices.
+       Indices should be bound again while drawing to avoid this bug.
+     */
+    #define CC_REBIND_INDICES_BUFFER  1
+#else
+    #define CC_REBIND_INDICES_BUFFER  0
+#endif
 
 // generic macros
 
 // namespace cocos2d {}
-#define NS_CC_BEGIN                     namespace cocos2d {
-#define NS_CC_END                       }
-#define USING_NS_CC                     using namespace cocos2d
+#ifdef __cplusplus
+    #define NS_CC_BEGIN                     namespace cocos2d {
+    #define NS_CC_END                       }
+    #define USING_NS_CC                     using namespace cocos2d
+    #define NS_CC_EXT_BEGIN                 namespace cocos2d { namespace extension { 
+    #define NS_CC_EXT_END                   }} 
+    #define USING_NS_CC_EXT                 using namespace cocos2d::extension
+#else
+    #define NS_CC_BEGIN                     
+    #define NS_CC_END
+    #define USING_NS_CC                     
+    #define NS_CC_EXT_BEGIN                 
+    #define NS_CC_EXT_END    
+    #define USING_NS_CC_EXT 
+#endif 
 
 /** CC_PROPERTY_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
@@ -128,22 +146,25 @@ public: virtual const varType& get##funName(void) const { return varName; }\
 public: virtual void set##funName(const varType& var){ varName = var; }
 
 #define CC_SYNTHESIZE_RETAIN(varType, varName, funName)    \
-protected: varType varName; \
+private: varType varName; \
 public: virtual varType get##funName(void) const { return varName; } \
 public: virtual void set##funName(varType var)   \
 { \
-    CC_SAFE_RETAIN(var); \
-    CC_SAFE_RELEASE(varName); \
-    varName = var; \
+    if (varName != var) \
+    { \
+        CC_SAFE_RETAIN(var); \
+        CC_SAFE_RELEASE(varName); \
+        varName = var; \
+    } \
 } 
 
-#define CC_SAFE_DELETE(p)			if(p) { delete (p); (p) = 0; }
-#define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] (p); (p) = 0; }
-#define CC_SAFE_FREE(p)			if(p) { free(p); (p) = 0; }
-#define CC_SAFE_RELEASE(p)			if(p) { (p)->release(); }
-#define CC_SAFE_RELEASE_NULL(p)	if(p) { (p)->release(); (p) = 0; }
-#define CC_SAFE_RETAIN(p)			if(p) { (p)->retain(); }
-#define CC_BREAK_IF(cond)			if(cond) break;
+#define CC_SAFE_DELETE(p)            do { if(p) { delete (p); (p) = 0; } } while(0)
+#define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
+#define CC_SAFE_FREE(p)                do { if(p) { free(p); (p) = 0; } } while(0)
+#define CC_SAFE_RELEASE(p)            do { if(p) { (p)->release(); } } while(0)
+#define CC_SAFE_RELEASE_NULL(p)        do { if(p) { (p)->release(); (p) = 0; } } while(0)
+#define CC_SAFE_RETAIN(p)            do { if(p) { (p)->retain(); } } while(0)
+#define CC_BREAK_IF(cond)            if(cond) break
 
 
 // cocos2d debug
@@ -170,61 +191,5 @@ public: virtual void set##funName(varType var)   \
 #define LUALOG(format, ...)     cocos2d::CCLog(format, ##__VA_ARGS__)
 #endif // Lua engine debug
 
-// shared library declartor
-#define CC_DLL 
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-// assertion
-#include <assert.h>
-#define CC_ASSERT(cond)                assert(cond)
-#else
-// bada platform
-
-#include <FBaseConfig.h>
-#include <FBaseSys.h>
-
-#undef CC_DLL
-#define CC_DLL  _EXPORT_
-
-#include "CCPlatformFunc_bada.h"
-
-#ifdef _DEBUG
-#define CC_ASSERT(cond)  (void)( (!!(cond)) || (badaAssert(__PRETTY_FUNCTION__ , __LINE__ , #cond),0) )
-#else
-#define CC_ASSERT(cond)  void(0)
-#endif /* _DEBUG */
-#endif
-
-#define CC_UNUSED_PARAM(unusedparam)   (void)unusedparam
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#undef CC_UNUSED_PARAM
-#define CC_UNUSED_PARAM(unusedparam)   //unusedparam
-#endif
-
-
-// platform depended macros
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
-    #undef CC_DLL
-    #if defined(_USRDLL)
-        #define CC_DLL     __declspec(dllexport)
-    #else 		/* use a DLL library */
-        #define CC_DLL     __declspec(dllimport)
-    #endif
-
-#endif  // CC_PLATFORM_WIN32
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_))
-
-    #undef CC_DLL
-    #if defined(SS_MAKEDLL)
-        #define CC_DLL     __declspec(dllexport)
-    #else 		/* use a DLL library */
-        #define CC_DLL     __declspec(dllimport)
-    #endif
-
-#endif  // wophone VM
 
 #endif // __CC_PLATFORM_MACROS_H__

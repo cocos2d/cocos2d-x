@@ -23,7 +23,7 @@
 
 
 /* Create metatable
-	* Create and register new metatable
+    * Create and register new metatable
 */
 static int tolua_newmetatable (lua_State* L, const char* name)
 {
@@ -44,7 +44,7 @@ static int tolua_newmetatable (lua_State* L, const char* name)
 }
 
 /* Map super classes
-	* It sets 'name' as being also a 'base', mapping all super classes of 'base' in 'name'
+    * It sets 'name' as being also a 'base', mapping all super classes of 'base' in 'name'
 */
 static void mapsuper (lua_State* L, const char* name, const char* base)
 {
@@ -122,7 +122,7 @@ static void set_ubox(lua_State* L) {
 };
 
 /* Map inheritance
-	* It sets 'name' as derived from 'base' by setting 'base' as metatable of 'name'
+    * It sets 'name' as derived from 'base' by setting 'base' as metatable of 'name'
 */
 static void mapinheritance (lua_State* L, const char* name, const char* base)
 {
@@ -409,8 +409,8 @@ TOLUA_API int tolua_register_gc (lua_State* L, int lo)
 }
 
 /* Register a usertype
-	* It creates the correspoding metatable in the registry, for both 'type' and 'const type'.
-	* It maps 'const type' as being also a 'type'
+    * It creates the correspoding metatable in the registry, for both 'type' and 'const type'.
+    * It maps 'const type' as being also a 'type'
 */
 TOLUA_API void tolua_usertype (lua_State* L, const char* type)
 {
@@ -424,7 +424,7 @@ TOLUA_API void tolua_usertype (lua_State* L, const char* type)
 
 
 /* Begin module
-	* It pushes the module (or class) table on the stack
+    * It pushes the module (or class) table on the stack
 */
 TOLUA_API void tolua_beginmodule (lua_State* L, const char* name)
 {
@@ -438,7 +438,7 @@ TOLUA_API void tolua_beginmodule (lua_State* L, const char* name)
 }
 
 /* End module
-	* It pops the module (or class) from the stack
+    * It pops the module (or class) from the stack
 */
 TOLUA_API void tolua_endmodule (lua_State* L)
 {
@@ -446,7 +446,7 @@ TOLUA_API void tolua_endmodule (lua_State* L)
 }
 
 /* Map module
-	* It creates a new module
+    * It creates a new module
 */
 #if 1
 TOLUA_API void tolua_module (lua_State* L, const char* name, int hasvar)
@@ -523,15 +523,15 @@ static void push_collector(lua_State* L, const char* type, lua_CFunction col) {
     lua_pushstring(L,".collector");
     /*
     if (!col) {
-    	lua_pushvalue(L, -1);
-    	lua_rawget(L, -3);
-    	if (!lua_isnil(L, -1)) {
-    		lua_pop(L, 3);
-    		return;
-    	};
-    	lua_pop(L, 1);
+        lua_pushvalue(L, -1);
+        lua_rawget(L, -3);
+        if (!lua_isnil(L, -1)) {
+            lua_pop(L, 3);
+            return;
+        };
+        lua_pop(L, 1);
     };
-    //	*/
+    //    */
     lua_pushcfunction(L,col);
 
     lua_rawset(L,-3);
@@ -539,7 +539,7 @@ static void push_collector(lua_State* L, const char* type, lua_CFunction col) {
 };
 
 /* Map C class
-	* It maps a C class, setting the appropriate inheritance and super classes.
+    * It maps a C class, setting the appropriate inheritance and super classes.
 */
 TOLUA_API void tolua_cclass (lua_State* L, const char* lname, const char* name, const char* base, lua_CFunction col)
 {
@@ -583,9 +583,9 @@ TOLUA_API void tolua_cclass (lua_State* L, const char* lname, const char* name, 
 }
 
 /* Add base
-	* It adds additional base classes to a class (for multiple inheritance)
-	* (not for now)
-	*/
+    * It adds additional base classes to a class (for multiple inheritance)
+    * (not for now)
+    */
 TOLUA_API void tolua_addbase(lua_State* L, char* name, char* base) {
 
     char cname[128] = "const ";
@@ -599,7 +599,7 @@ TOLUA_API void tolua_addbase(lua_State* L, char* name, char* base) {
 
 
 /* Map function
-	* It assigns a function into the current module (or class)
+    * It assigns a function into the current module (or class)
 */
 TOLUA_API void tolua_function (lua_State* L, const char* name, lua_CFunction func)
 {
@@ -609,20 +609,20 @@ TOLUA_API void tolua_function (lua_State* L, const char* name, lua_CFunction fun
 }
 
 /* sets the __call event for the class (expects the class' main table on top) */
-/*	never really worked :(
+/*    never really worked :(
 TOLUA_API void tolua_set_call_event(lua_State* L, lua_CFunction func, char* type) {
 
-	lua_getmetatable(L, -1);
-	//luaL_getmetatable(L, type);
-	lua_pushstring(L,"__call");
-	lua_pushcfunction(L,func);
-	lua_rawset(L,-3);
-	lua_pop(L, 1);
+    lua_getmetatable(L, -1);
+    //luaL_getmetatable(L, type);
+    lua_pushstring(L,"__call");
+    lua_pushcfunction(L,func);
+    lua_rawset(L,-3);
+    lua_pop(L, 1);
 };
 */
 
 /* Map constant number
-	* It assigns a constant number into the current module (or class)
+    * It assigns a constant number into the current module (or class)
 */
 TOLUA_API void tolua_constant (lua_State* L, const char* name, lua_Number value)
 {
@@ -633,7 +633,7 @@ TOLUA_API void tolua_constant (lua_State* L, const char* name, lua_Number value)
 
 
 /* Map variable
-	* It assigns a variable into the current module (or class)
+    * It assigns a variable into the current module (or class)
 */
 TOLUA_API void tolua_variable (lua_State* L, const char* name, lua_CFunction get, lua_CFunction set)
 {
@@ -676,7 +676,7 @@ TOLUA_API void tolua_variable (lua_State* L, const char* name, lua_CFunction get
 }
 
 /* Access const array
-	* It reports an error when trying to write into a const array
+    * It reports an error when trying to write into a const array
 */
 static int const_array (lua_State* L)
 {
@@ -685,7 +685,7 @@ static int const_array (lua_State* L)
 }
 
 /* Map an array
-	* It assigns an array into the current module (or class)
+    * It assigns an array into the current module (or class)
 */
 TOLUA_API void tolua_array (lua_State* L, const char* name, lua_CFunction get, lua_CFunction set)
 {

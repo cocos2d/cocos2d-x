@@ -25,5 +25,4 @@ class CCScheduler : public CCObject
     void resumeTarget(CCObject *pTarget);
     bool isTargetPaused(CCObject *pTarget);
 
-    static CCScheduler* sharedScheduler(void);
 };
