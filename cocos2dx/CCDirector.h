@@ -262,9 +262,6 @@ public:
 
     virtual void mainLoop(void) = 0;
 
-    /** rotates the screen if an orientation different than Portrait is used */
-    void applyOrientation(void);
-
     /** The size in pixels of the surface. It could be different than the screen size.
     High-res devices might have a higher surface size than the screen size.
     Only available when compiled using SDK >= 4.0.
