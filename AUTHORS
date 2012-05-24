@@ -21,6 +21,9 @@ Developers:
 
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
+
+    Nicolas Gramlich (nicolasgramlich, Zynga)
+        fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         
     Jianfeng Zhou (NetGragon Inc)
         contributes CCListView and CCTextureWatcher.
