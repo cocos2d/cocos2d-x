@@ -422,6 +422,8 @@
 		D454520C156E22BD00887EB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D454520B156E22BD00887EB5 /* libz.dylib */; };
 		D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4545215156E28EF00887EB5 /* AppDelegate.cpp */; };
 		D4545237156E294C00887EB5 /* Javascript in Resources */ = {isa = PBXBuildFile; fileRef = D4545236156E294C00887EB5 /* Javascript */; };
+		D454524A156E449500887EB5 /* simple_class.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4545245156E449500887EB5 /* simple_class.cpp */; };
+		D454524B156E449500887EB5 /* simple_native_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4545247156E449500887EB5 /* simple_native_generated.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -849,6 +851,10 @@
 		D4545215156E28EF00887EB5 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		D4545216156E28EF00887EB5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D4545236156E294C00887EB5 /* Javascript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Javascript; path = ../Javascript; sourceTree = "<group>"; };
+		D4545245156E449500887EB5 /* simple_class.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_class.cpp; sourceTree = "<group>"; };
+		D4545246156E449500887EB5 /* simple_class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_class.h; sourceTree = "<group>"; };
+		D4545247156E449500887EB5 /* simple_native_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_native_generated.cpp; sourceTree = "<group>"; };
+		D4545248156E449500887EB5 /* simple_native_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_native_generated.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -899,7 +905,7 @@
 				D4544C69156E03D000887EB5 /* cocos2dx */,
 				D45446D8156DE7F300887EB5 /* Resources */,
 				D45446CC156DE73F00887EB5 /* ios */,
-				D45440AC156DE56B00887EB5 /* jsbinding */,
+				D45440AC156DE56B00887EB5 /* JS */,
 				A92275401517C094001B78AA /* Frameworks */,
 				A922753E1517C094001B78AA /* Products */,
 			);
@@ -932,12 +938,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D45440AC156DE56B00887EB5 /* jsbinding */ = {
+		D45440AC156DE56B00887EB5 /* JS */ = {
 			isa = PBXGroup;
 			children = (
+				D4545243156E449500887EB5 /* BindingsExample */,
 				D45440B3156DE56B00887EB5 /* JSBindings */,
 			);
-			name = jsbinding;
+			name = JS;
 			path = ../../js;
 			sourceTree = "<group>";
 		};
@@ -1725,6 +1732,17 @@
 			path = ../Classes;
 			sourceTree = "<group>";
 		};
+		D4545243156E449500887EB5 /* BindingsExample */ = {
+			isa = PBXGroup;
+			children = (
+				D4545245156E449500887EB5 /* simple_class.cpp */,
+				D4545246156E449500887EB5 /* simple_class.h */,
+				D4545247156E449500887EB5 /* simple_native_generated.cpp */,
+				D4545248156E449500887EB5 /* simple_native_generated.hpp */,
+			);
+			path = BindingsExample;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2091,6 +2109,8 @@
 				D45446D4156DE74F00887EB5 /* main.m in Sources */,
 				D45446D5156DE74F00887EB5 /* RootViewController.mm in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
+				D454524A156E449500887EB5 /* simple_class.cpp in Sources */,
+				D454524B156E449500887EB5 /* simple_native_generated.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

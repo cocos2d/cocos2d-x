@@ -157,8 +157,10 @@ var createMenu = function (labelText) {
 		var label = new cocos.LabelTTF();
 		// initWithString: text, size, alignment, font, fontSize
 		label.initWithString(labelText, sizeZero, 0, "Arial", 18.0);
-		label.position = cocos.Point.create(winSize.width / 2, winSize.height - 30);
-		hudMenu.addChild(label);
+        var menuLabel = new cocos.MenuItemLabel();
+        menuLabel.initWithLabel(label);
+		menuLabel.position = cocos.Point.create(winSize.width / 2, winSize.height - 30);
+		hudMenu.addChild(menuLabel);
 	}
 
 	// just to avoid GC
