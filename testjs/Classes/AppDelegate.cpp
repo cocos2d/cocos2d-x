@@ -9,7 +9,7 @@
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
-// #include "simple_native_generated.hpp"
+#include "simple_native_generated.hpp"
 
 USING_NS_CC;
 
@@ -100,6 +100,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	S_SimpleNativeClass::jsCreateClass(cx, obj, "SimpleNativeClass");
 	S_AnotherClass::jsCreateClass(cx, obj, "AnotherClass");
 	register_enums_simple_native_generated(obj);
+    ScriptingCore::getInstance().runScript("Javascript/1to1/test_bindings.js");
      */
     
 	// run the main script
@@ -108,7 +109,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 //	ScriptingCore::getInstance().runScript("Javascript/1to1/test_particles.js");
 //	ScriptingCore::getInstance().runScript("Javascript/1to1/test_layer.js");
 //	ScriptingCore::getInstance().runScript("Javascript/1to1/test_sound.js");
-//	ScriptingCore::getInstance().runScript("Javascript/1to1/test_bindings.js");
 //	ScriptingCore::getInstance().runScript("Javascript/1to1/test_transitions.js");
 //	ScriptingCore::getInstance().runScript("Javascript/1to1/test_require.js");
 
