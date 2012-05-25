@@ -416,6 +416,7 @@
 		78C7E03E14EBA5B90085D0C2 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78C7E03414EBA5B90085D0C2 /* SimpleAudioEngine.mm */; };
 		78C7E03F14EBA5B90085D0C2 /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 78C7E03514EBA5B90085D0C2 /* SimpleAudioEngine_objc.h */; };
 		78C7E04014EBA5B90085D0C2 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C7E03614EBA5B90085D0C2 /* SimpleAudioEngine_objc.m */; };
+		78CAE769156F8124002A7A68 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 78CAE768156F8124002A7A68 /* Particles */; };
 		78ED2F85153D5BC500330E29 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 78ED2F84153D5BC500330E29 /* extensions */; };
 		78ED2F9A153D5BE800330E29 /* CCControlButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78ED2F88153D5BE800330E29 /* CCControlButtonTest.cpp */; };
 		78ED2F9B153D5BE800330E29 /* CCControlColourPickerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78ED2F8B153D5BE800330E29 /* CCControlColourPickerTest.cpp */; };
@@ -1110,6 +1111,7 @@
 		78C7E03414EBA5B90085D0C2 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		78C7E03514EBA5B90085D0C2 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		78C7E03614EBA5B90085D0C2 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		78CAE768156F8124002A7A68 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Particles; sourceTree = "<group>"; };
 		78ED2F84153D5BC500330E29 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = extensions; sourceTree = "<group>"; };
 		78ED2F88153D5BE800330E29 /* CCControlButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButtonTest.cpp; sourceTree = "<group>"; };
 		78ED2F89153D5BE800330E29 /* CCControlButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonTest.h; sourceTree = "<group>"; };
@@ -2217,26 +2219,27 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				15DD6D8C156DD2E6003E7567 /* fps_images.fnt */,
-				15DD6D8D156DD2E6003E7567 /* fps_images.png */,
-				D4113B4D155D388700E42745 /* CocosBuilder_v2 */,
-				D4113B4B155D387800E42745 /* CocosBuilder_v1 */,
 				789B560C15197BE00038CD1E /* animations */,
+				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
+				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
+				D4113B4B155D387800E42745 /* CocosBuilder_v1 */,
+				D4113B4D155D388700E42745 /* CocosBuilder_v2 */,
+				7855E0DF153FEF240059DD9A /* Default.png */,
+				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
+				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
+				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
 				78ED2F84153D5BC500330E29 /* extensions */,
 				789B560E15197BF30038CD1E /* fonts */,
+				15DD6D8C156DD2E6003E7567 /* fps_images.fnt */,
+				15DD6D8D156DD2E6003E7567 /* fps_images.png */,
+				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
+				7855E0E0153FEF240059DD9A /* Icon.png */,
 				789B561015197BFB0038CD1E /* Images */,
+				78C7DEBD14EBA5060085D0C2 /* music.mid */,
+				78CAE768156F8124002A7A68 /* Particles */,
 				15DC5D2215340C72009A99D4 /* Shaders */,
 				789B561215197C040038CD1E /* TileMaps */,
 				789B561315197C040038CD1E /* zwoptex */,
-				78C7DEBD14EBA5060085D0C2 /* music.mid */,
-				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
-				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
-				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
-				7855E0DF153FEF240059DD9A /* Default.png */,
-				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
-				7855E0E0153FEF240059DD9A /* Icon.png */,
-				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
-				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -3526,6 +3529,7 @@
 				D4113B4E155D388700E42745 /* CocosBuilder_v2 in Resources */,
 				15DD6D8E156DD2E6003E7567 /* fps_images.fnt in Resources */,
 				15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */,
+				78CAE769156F8124002A7A68 /* Particles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
