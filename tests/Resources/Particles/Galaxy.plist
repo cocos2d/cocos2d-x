@@ -6,8 +6,6 @@
 	<real>90</real>
 	<key>angleVariance</key>
 	<real>360</real>
-	<key>blendAdditive</key>
-	<real>1</real>
 	<key>blendFuncDestination</key>
 	<integer>1</integer>
 	<key>blendFuncSource</key>
