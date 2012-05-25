@@ -376,7 +376,9 @@ static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
 		mb-=o;
 		p+=o;
 		if (o!=n)
+        {
 			break;
+        }
 	}
 	return p;
 }
@@ -399,22 +401,22 @@ static uint64 _tiffSeekProc(thandle_t fd, uint64 off, int whence)
 	    if (whence == SEEK_SET)
         {
             CC_BREAK_IF(off > isource->size-1);
-            ret = isource->offset = off;
+            ret = isource->offset = (uint32)off;
         }
         else if (whence == SEEK_CUR)
         {
             CC_BREAK_IF(isource->offset + off > isource->size-1);
-            ret = isource->offset += off;
+            ret = isource->offset += (uint32)off;
         }
         else if (whence == SEEK_END)
         {
             CC_BREAK_IF(off > isource->size-1);
-            ret = isource->offset = isource->size-1 - off;
+            ret = isource->offset = (uint32)(isource->size-1 - off);
         }
         else
         {
             CC_BREAK_IF(off > isource->size-1);
-            ret = isource->offset = off;
+            ret = isource->offset = (uint32)off;
         }
     } while (0);
 
