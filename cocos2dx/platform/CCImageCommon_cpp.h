@@ -37,6 +37,17 @@ THE SOFTWARE.
 #include <ctype.h>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) 
+
+NS_CC_BEGIN
+
+// premultiply alpha, or the effect will wrong when want to use other pixel format in CCTexture2D,
+// such as RGB888, RGB5A1
+#define CC_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
+    (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
+    ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
+    ((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
+    ((unsigned)(unsigned char)(va) << 24))
+
 // on ios, we should use platform/ios/CCImage_ios.mm instead
 
 typedef struct 
@@ -60,8 +71,6 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
         png_error(png_ptr, "pngReaderCallback failed");
     }
 }
-
-NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
 // Impliment CCImage
@@ -128,6 +137,51 @@ bool CCImage::initWithImageData(void * pData,
         {
             bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
             break;
+        }
+        else
+        {
+            // if it is a png file buffer.
+            if (nDataLen > 8)
+            {
+                unsigned char* pHead = (unsigned char*)pData;
+                if (   pHead[0] == 0x89
+                    && pHead[1] == 0x50
+                    && pHead[2] == 0x4E
+                    && pHead[3] == 0x47
+                    && pHead[4] == 0x0D
+                    && pHead[5] == 0x0A
+                    && pHead[6] == 0x1A
+                    && pHead[7] == 0x0A)
+                {
+                    bRet = _initWithPngData(pData, nDataLen);
+                    break;
+                }
+            }
+
+            // if it is a tiff file buffer.
+            if (nDataLen > 2)
+            {
+                unsigned char* pHead = (unsigned char*)pData;
+                if (  (pHead[0] == 0x49 && pHead[1] == 0x49)
+                    || (pHead[0] == 0x4d && pHead[1] == 0x4d)
+                    )
+                {
+                    bRet = _initWithTiffData(pData, nDataLen);
+                    break;
+                }
+            }
+
+            // if it is a jpeg file buffer.
+            if (nDataLen > 2)
+            {
+                unsigned char* pHead = (unsigned char*)pData;
+                if (   pHead[0] == 0xff
+                    && pHead[1] == 0xd8)
+                {
+                    bRet = _initWithJpgData(pData, nDataLen);
+                    break;
+                }
+            }
         }
     } while (0);
     return bRet;
@@ -309,14 +363,6 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
             
             if (m_bHasAlpha)
             {
-                // premultiply alpha, or the effect will wrong when want to use other pixel format in CCTexture2D,
-                // such as RGB888, RGB5A1
-#define CC_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
-(unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
-((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
-((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
-((unsigned)(unsigned char)(va) << 24))
-                
                 unsigned int *tmp = (unsigned int *)m_pData;
                 for(unsigned int i = 0; i < m_nHeight; i++)
                 {
@@ -455,7 +501,6 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
     bool bRet = false;
     do 
     {
-
         // set the read call back function
         tImageSource imageSource;
         imageSource.data    = (unsigned char*)pData;
@@ -471,14 +516,15 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
         CC_BREAK_IF(NULL == tif);
 
         uint32 w, h;
-        uint16 bitsPerSample, samplePerPixel;
+        uint16 bitsPerSample, samplePerPixel, planarConfig, extraSample;
         size_t npixels;
-        uint32* raster;
         
         TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
         TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);
         TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bitsPerSample);
         TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samplePerPixel);
+        TIFFGetField(tif, TIFFTAG_PLANARCONFIG, &planarConfig);
+
         npixels = w * h;
         
         m_bHasAlpha = true;
@@ -486,16 +532,33 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
         m_nHeight = h;
         m_nBitsPerComponent = 8;
 
-        m_pData = new unsigned char[npixels*sizeof (uint32)];
-        raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
+        m_pData = new unsigned char[npixels * sizeof (uint32)];
+
+        uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
         if (raster != NULL) 
         {
-            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
-            {
-                memcpy(m_pData, raster, npixels * sizeof (uint32));
-            }
-            _TIFFfree(raster);
+           if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
+           {
+                unsigned char* src = (unsigned char*)raster;
+                unsigned int* tmp = (unsigned int*)m_pData;
+
+                /* the raster data is pre-multiplied by the alpha component 
+                   after invoking TIFFReadRGBAImageOriented
+                for(int j = 0; j < m_nWidth * m_nHeight * 4; j += 4)
+                {
+                    *tmp++ = CC_RGB_PREMULTIPLY_APLHA( src[j], src[j + 1], 
+                        src[j + 2], src[j + 3] );
+                }
+                */
+                m_bPreMulti = true;
+
+               memcpy(m_pData, raster, npixels*sizeof (uint32));
+           }
+
+          _TIFFfree(raster);
         }
+        
+
         TIFFClose(tif);
 
         bRet = true;

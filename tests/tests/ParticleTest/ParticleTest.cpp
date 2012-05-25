@@ -905,7 +905,7 @@ void Issue870::onEnter()
     m_background = NULL;
 
     CCParticleSystemQuad *system = new CCParticleSystemQuad();
-    system->initWithFile("Images/SpinningPeas.plist");
+    system->initWithFile("Particles/SpinningPeas.plist");
     system->setTextureWithRect(CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"), CCRectMake(0,0,32,32));
     addChild(system, 10);
     m_emitter = system;
@@ -946,7 +946,7 @@ void DemoParticleFromFile::onEnter()
     m_background = NULL;
 
     m_emitter = new CCParticleSystemQuad();
-    std::string filename = "Images/" + m_title + ".plist";
+    std::string filename = "Particles/" + m_title + ".plist";
     m_emitter->initWithFile(filename.c_str());
     addChild(m_emitter, 10);
 
@@ -1235,7 +1235,7 @@ void ParticleBatchHybrid::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = CCParticleSystemQuad::particleWithFile("Images/LavaFlow.plist");
+    m_emitter = CCParticleSystemQuad::particleWithFile("Particles/LavaFlow.plist");
     m_emitter->retain();
     CCParticleBatchNode *batch = CCParticleBatchNode::batchNodeWithTexture(m_emitter->getTexture());
 
@@ -1283,11 +1283,11 @@ void ParticleBatchMultipleEmitters::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::particleWithFile("Images/LavaFlow.plist");
+    CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::particleWithFile("Particles/LavaFlow.plist");
     emitter1->setStartColor(ccc4f(1,0,0,1));
-    CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::particleWithFile("Images/LavaFlow.plist");
+    CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::particleWithFile("Particles/LavaFlow.plist");
     emitter2->setStartColor(ccc4f(0,1,0,1));
-    CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::particleWithFile("Images/LavaFlow.plist");
+    CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::particleWithFile("Particles/LavaFlow.plist");
     emitter3->setStartColor(ccc4f(0,0,1,1));
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1326,7 +1326,7 @@ void ParticleReorder::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    CCParticleSystem* ignore = CCParticleSystemQuad::particleWithFile("Images/SmallSun.plist");
+    CCParticleSystem* ignore = CCParticleSystemQuad::particleWithFile("Particles/SmallSun.plist");
     CCNode *parent1 = CCNode::node();
     CCNode *parent2 = CCParticleBatchNode::batchNodeWithTexture(ignore->getTexture());
     ignore->unscheduleUpdate();
@@ -1335,13 +1335,13 @@ void ParticleReorder::onEnter()
     {
         CCNode *parent = ( i==0 ? parent1 : parent2 );
 
-        CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::particleWithFile("Images/SmallSun.plist");
+        CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::particleWithFile("Particles/SmallSun.plist");
         emitter1->setStartColor(ccc4f(1,0,0,1));
         emitter1->setIsBlendAdditive(false);
-        CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::particleWithFile("Images/SmallSun.plist");
+        CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::particleWithFile("Particles/SmallSun.plist");
         emitter2->setStartColor(ccc4f(0,1,0,1));
         emitter2->setIsBlendAdditive(false);
-        CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::particleWithFile("Images/SmallSun.plist");
+        CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::particleWithFile("Particles/SmallSun.plist");
         emitter3->setStartColor(ccc4f(0,0,1,1));
         emitter3->setIsBlendAdditive(false);
 
@@ -1529,7 +1529,7 @@ void MultipleParticleSystems::onEnter()
     CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"); 
 
     for (int i = 0; i<5; i++) {
-        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Images/SpinningPeas.plist");
+        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Particles/SpinningPeas.plist");
 
         particleSystem->setPosition(ccp(i*50 ,i*50));
 
@@ -1588,7 +1588,7 @@ void MultipleParticleSystemsBatched::onEnter()
 
     for (int i = 0; i<5; i++) {
 
-        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Images/SpinningPeas.plist");
+        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Particles/SpinningPeas.plist");
 
         particleSystem->setPositionType(kCCPositionTypeGrouped);         
         particleSystem->setPosition(ccp(i*50 ,i*50));
@@ -1650,7 +1650,7 @@ void AddAndDeleteParticleSystems::onEnter()
 
     for (int i = 0; i<6; i++) {
 
-        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Images/Spiral.plist");
+        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Particles/Spiral.plist");
         m_pBatchNode->setTexture(particleSystem->getTexture());
 
         particleSystem->setPositionType(kCCPositionTypeGrouped);         
@@ -1677,7 +1677,7 @@ void AddAndDeleteParticleSystems::removeSystem(ccTime dt)
         unsigned int uRand = rand() % (nChildrenCount - 1);
         m_pBatchNode->removeChild((CCNode*)m_pBatchNode->getChildren()->objectAtIndex(uRand), true);
 
-        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Images/Spiral.plist");
+        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Particles/Spiral.plist");
         //add new
 
         particleSystem->setPositionType(kCCPositionTypeGrouped);         
