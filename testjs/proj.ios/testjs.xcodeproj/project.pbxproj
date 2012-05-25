@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15DD7075156F2C6A003E7567 /* fps_images.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 15DD7073156F2C6A003E7567 /* fps_images.fnt */; };
+		15DD7076156F2C6A003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD7074156F2C6A003E7567 /* fps_images.png */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -427,6 +429,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15DD7073156F2C6A003E7567 /* fps_images.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fps_images.fnt; sourceTree = "<group>"; };
+		15DD7074156F2C6A003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* testjs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testjs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -979,6 +983,8 @@
 		D45446D8156DE7F300887EB5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15DD7073156F2C6A003E7567 /* fps_images.fnt */,
+				15DD7074156F2C6A003E7567 /* fps_images.png */,
 				D4544747156DE80400887EB5 /* Particles */,
 				D45446D9156DE7F300887EB5 /* b1-hd.png */,
 				D45446DA156DE7F300887EB5 /* b1-ipad.png */,
@@ -2091,6 +2097,8 @@
 				D4544745156DE7F300887EB5 /* tank1.png in Resources */,
 				D4544746156DE7F300887EB5 /* Upsidedown.plist in Resources */,
 				D4545237156E294C00887EB5 /* Javascript in Resources */,
+				15DD7075156F2C6A003E7567 /* fps_images.fnt in Resources */,
+				15DD7076156F2C6A003E7567 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
