@@ -8,6 +8,10 @@ Core Developers:
     JianHua Chen (Dumganhar)
 
 Developers:
+    Ricardo Quesada
+    Rolando Abarca
+        Javascript Binding and testjs
+
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
     Di Wu
@@ -21,6 +25,9 @@ Developers:
 
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
+
+    Nicolas Gramlich (nicolasgramlich, Zynga)
+        fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         
     Jianfeng Zhou (NetGragon Inc)
         contributes CCListView and CCTextureWatcher.

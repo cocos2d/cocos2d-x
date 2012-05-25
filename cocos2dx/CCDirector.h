@@ -54,7 +54,8 @@ typedef enum {
     kCCDirectorProjectionDefault = kCCDirectorProjection3D,
 } ccDirectorProjection;
 
-class CCLabelTTF;
+/* Forward declarations. */
+class CCLabelBMFont;
 class CCScene;
 class CCEGLView;
 class CCDirectorDelegate;
@@ -262,9 +263,6 @@ public:
 
     virtual void mainLoop(void) = 0;
 
-    /** rotates the screen if an orientation different than Portrait is used */
-    void applyOrientation(void);
-
     /** The size in pixels of the surface. It could be different than the screen size.
     High-res devices might have a higher surface size than the screen size.
     Only available when compiled using SDK >= 4.0.
@@ -334,9 +332,9 @@ protected:
     ccTime m_fAccumDt;
     ccTime m_fFrameRate;
     
-    CCLabelTTF *m_pFPSLabel;
-    CCLabelTTF *m_pSPFLabel;
-    CCLabelTTF *m_pDrawsLabel;
+    CCLabelBMFont *m_pFPSLabel;
+    CCLabelBMFont *m_pSPFLabel;
+    CCLabelBMFont *m_pDrawsLabel;
     
     /* is the running scene paused */
     bool m_bPaused;
