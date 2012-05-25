@@ -85,7 +85,7 @@ public:
     */
     bool initWithImageData(void * pData, 
                            int nDataLen, 
-                           EImageFormat eFmt = kFmtPng,
+                           EImageFormat eFmt = kFmtUnKnown,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);

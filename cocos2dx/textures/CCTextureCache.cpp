@@ -365,69 +365,27 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
             {
                 texture = this->addPVRImage(fullpath.c_str());
             }
-            // Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
-            else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
-            {
-                CCImage image;
-                CCFileData data(fullpath.c_str(), "rb");
-                unsigned long nSize  = data.getSize();
-                unsigned char* pBuffer = data.getBuffer();
-                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtJpg));
-
-                texture = new CCTexture2D();
-                texture->initWithImage(&image, resolution);
-
-                if( texture )
-                {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
-                    // cache the texture file name
-                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtJpg);
-#endif
-
-                    m_pTextures->setObject(texture, pathKey.c_str());
-                    // autorelease prevents possible crash in multithreaded environments
-                    texture->autorelease();
-                }
-                else
-                {
-                    CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
-                }
-            }
-            else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
-            {
-                CCImage image;
-                CCFileData data(fullpath.c_str(), "rb");
-                unsigned long nSize  = data.getSize();
-                unsigned char* pBuffer = data.getBuffer();
-                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtTiff));
-
-                texture = new CCTexture2D();
-                texture->initWithImage(&image, resolution);
-
-                if( texture )
-                {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
-                    // cache the texture file name
-                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtTiff);
-#endif
-
-                    m_pTextures->setObject(texture, pathKey.c_str());
-                    // autorelease prevents possible crash in multithreaded environments
-                    texture->autorelease();
-                }
-                else
-                {
-                    CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
-                }
-            }
             else
             {
-                // prevents overloading the autorelease pool
+                CCImage::EImageFormat eImageFormat = CCImage::kFmtUnKnown;
+                if (std::string::npos != lowerCase.find(".png"))
+                {
+                    eImageFormat = CCImage::kFmtPng;
+                }
+                else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
+                {
+                    eImageFormat = CCImage::kFmtJpg;
+                }
+                else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
+                {
+                    eImageFormat = CCImage::kFmtTiff;
+                }
+                
                 CCImage image;
                 CCFileData data(fullpath.c_str(), "rb");
                 unsigned long nSize  = data.getSize();
                 unsigned char* pBuffer = data.getBuffer();
-                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtPng));
+                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, eImageFormat));
 
                 texture = new CCTexture2D();
                 texture->initWithImage(&image, resolution);
@@ -436,7 +394,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 {
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
                     // cache the texture file name
-                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtPng);
+                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
 #endif
 
                     m_pTextures->setObject(texture, pathKey.c_str());
@@ -448,7 +406,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                     CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
                 }
             }
-
         } while (0);
     }
 
