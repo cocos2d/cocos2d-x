@@ -259,4 +259,8 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_LUA_ENGINE_DEBUG 0
 #endif
 
+#ifndef CC_ENABLE_COCOS_DENSHION
+#define CC_ENABLE_COCOS_DENSHION 1
+#endif
+
 #endif // __CCCONFIG_H__
