@@ -19,15 +19,9 @@ The reason for implement as private inheritance is to hide some interface call b
 */
 class  AppDelegate : private cocos2d::CCApplication
 {
-	ScriptingCore *m_scripting;
 public:
 	AppDelegate();
 	virtual ~AppDelegate();
-
-    /**
-    @brief	Implement for initialize OpenGL instance, set source path, etc...
-    */
-    virtual bool initInstance();
 
     /**
     @brief	Implement CCDirector and CCScene init code here.
