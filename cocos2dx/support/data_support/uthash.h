@@ -66,7 +66,7 @@ do {                                                                            
 
 /* a number of the hash function use uint32_t which isn't defined on win32 */
 #ifdef _MSC_VER
-    typedef unsigned int uint32_t;
+//cjh    typedef unsigned int uint32_t;
 #else
     #ifndef __QNX__
     #include <inttypes.h>   /* uint32_t */
@@ -450,7 +450,7 @@ do {                                                                            
 #define HASH_SFH(key,keylen,num_bkts,hashv,bkt)                                  \
 do {                                                                             \
   char *_sfh_key=(char*)(key);                                                     \
-  uint32_t _sfh_tmp, _sfh_len = keylen;                                          \
+  unsigned int _sfh_tmp, _sfh_len = keylen;                                          \
                                                                                  \
   int _sfh_rem = _sfh_len & 3;                                                   \
   _sfh_len >>= 2;                                                                \
@@ -960,9 +960,9 @@ typedef struct UT_hash_table {
     * the hash will still work, albeit no longer in constant time. */
    unsigned ineff_expands, noexpand;
 
-   uint32_t signature; /* used only to find hash tables in external analysis */
+   unsigned int signature; /* used only to find hash tables in external analysis */
 #ifdef HASH_BLOOM
-   uint32_t bloom_sig; /* used only to test bloom exists in external analysis */
+   unsigned int bloom_sig; /* used only to test bloom exists in external analysis */
    uint8_t *bloom_bv;
    char bloom_nbits;
 #endif

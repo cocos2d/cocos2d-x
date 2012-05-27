@@ -15992,8 +15992,8 @@ JSBool S_CCApplication::jssetOrientation(JSContext *cx, uint32_t argc, jsval *vp
 	S_CCApplication* self = NULL; JSGET_PTRSHELL(S_CCApplication, self, obj);
 	if (self == NULL) return JS_FALSE;
 	if (argc == 1) {
-		Orientation arg0;
-		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "i", &arg0);
+//cjh 		Orientation arg0;
+//cjh 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "i", &arg0);
 		//INVALID RETURN TYPE _41C5
 		return JS_TRUE;
 	}
@@ -22523,33 +22523,33 @@ JSBool S_CCTextureCache::jsdumpCachedTextureInfo(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 JSBool S_CCTextureCache::jsaddPVRTCImage(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	S_CCTextureCache* self = NULL; JSGET_PTRSHELL(S_CCTextureCache, self, obj);
-	if (self == NULL) return JS_FALSE;
-	if (argc == 4) {
-		JSString *arg0;
-		int arg1;
-		JSBool arg2;
-		int arg3;
-		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "Sibi", &arg0, &arg1, &arg2, &arg3);
-		char *narg0 = JS_EncodeString(cx, arg0);
-		CCTexture2D* ret = self->addPVRTCImage(narg0, arg1, arg2, arg3);
-		if (ret == NULL) {
-			JS_SET_RVAL(cx, vp, JSVAL_NULL);
-			return JS_TRUE;
-		}
-		do {
-			JSObject *tmp = JS_NewObject(cx, S_CCTexture2D::jsClass, S_CCTexture2D::jsObject, NULL);
-			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
-			pt->flags = kPointerTemporary;
-			pt->data = (void *)ret;
-			JS_SetPrivate(tmp, pt);
-			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
-		} while (0);
-		
-		return JS_TRUE;
-	}
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+//cjh 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+// 	S_CCTextureCache* self = NULL; JSGET_PTRSHELL(S_CCTextureCache, self, obj);
+// 	if (self == NULL) return JS_FALSE;
+// 	if (argc == 4) {
+// 		JSString *arg0;
+// 		int arg1;
+// 		JSBool arg2;
+// 		int arg3;
+// 		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "Sibi", &arg0, &arg1, &arg2, &arg3);
+// 		char *narg0 = JS_EncodeString(cx, arg0);
+// 		CCTexture2D* ret = self->addPVRTCImage(narg0, arg1, arg2, arg3);
+// 		if (ret == NULL) {
+// 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
+// 			return JS_TRUE;
+// 		}
+// 		do {
+// 			JSObject *tmp = JS_NewObject(cx, S_CCTexture2D::jsClass, S_CCTexture2D::jsObject, NULL);
+// 			pointerShell_t *pt = (pointerShell_t *)JS_malloc(cx, sizeof(pointerShell_t));
+// 			pt->flags = kPointerTemporary;
+// 			pt->data = (void *)ret;
+// 			JS_SetPrivate(tmp, pt);
+// 			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
+// 		} while (0);
+// 		
+// 		return JS_TRUE;
+// 	}
+// 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 JSBool S_CCTextureCache::jsaddPVRImage(JSContext *cx, uint32_t argc, jsval *vp) {
