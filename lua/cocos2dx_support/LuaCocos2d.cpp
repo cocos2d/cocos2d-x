@@ -9,11 +9,14 @@
 #include "tolua_fix.h"
 #include "cocos2d.h"
 //#include "CCRibbon.h"
+#if CC_ENABLE_COCOS_DENSHION
 #include "SimpleAudioEngine.h"
+#endif
 
 using namespace cocos2d;
-using namespace CocosDenshion;
-
+#if CC_ENABLE_COCOS_DENSHION
+    using namespace CocosDenshion;
+#endif
 
 #include "LuaCocos2d.h"
 
@@ -35757,6 +35760,8 @@ static int tolua_Cocos2d_CCUserDefault_getXMLFilePath00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+#if CC_ENABLE_COCOS_DENSHION
+
 /* method: sharedEngine of class  SimpleAudioEngine */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_SimpleAudioEngine_sharedEngine00
 static int tolua_Cocos2d_SimpleAudioEngine_sharedEngine00(lua_State* tolua_S)
@@ -36307,6 +36312,8 @@ static int tolua_Cocos2d_SimpleAudioEngine_unloadEffect00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+
+#endif //#if CC_ENABLE_COCOS_DENSHION
 
 /* Open function */
 TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
@@ -38098,6 +38105,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"purgeSharedUserDefault",tolua_Cocos2d_CCUserDefault_purgeSharedUserDefault00);
    tolua_function(tolua_S,"getXMLFilePath",tolua_Cocos2d_CCUserDefault_getXMLFilePath00);
   tolua_endmodule(tolua_S);
+#if CC_ENABLE_COCOS_DENSHION
   tolua_cclass(tolua_S,"SimpleAudioEngine","SimpleAudioEngine","",NULL);
   tolua_beginmodule(tolua_S,"SimpleAudioEngine");
    tolua_function(tolua_S,"sharedEngine",tolua_Cocos2d_SimpleAudioEngine_sharedEngine00);
@@ -38118,6 +38126,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"preloadEffect",tolua_Cocos2d_SimpleAudioEngine_preloadEffect00);
    tolua_function(tolua_S,"unloadEffect",tolua_Cocos2d_SimpleAudioEngine_unloadEffect00);
   tolua_endmodule(tolua_S);
+#endif
  tolua_endmodule(tolua_S);
  return 1;
 }
