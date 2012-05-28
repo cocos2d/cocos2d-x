@@ -55,13 +55,13 @@ bool AppDelegate::applicationDidFinishLaunching()
      */
     
 	// run the main script
-	ScriptingCore::getInstance().runScript("Javascript/1to1/test_actions.js");
-//	ScriptingCore::getInstance().runScript("Javascript/1to1/test_ease_actions.js");
-//	ScriptingCore::getInstance().runScript("Javascript/1to1/test_particles.js");
-//	ScriptingCore::getInstance().runScript("Javascript/1to1/test_layer.js");
-//	ScriptingCore::getInstance().runScript("Javascript/1to1/test_sound.js");
-//	ScriptingCore::getInstance().runScript("Javascript/1to1/test_transitions.js");
-//	ScriptingCore::getInstance().runScript("Javascript/1to1/test_require.js");
+	ScriptingCore::getInstance().runScript("JS/1to1/test_actions.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_ease_actions.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_particles.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_layer.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_sound.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_transitions.js");
+//	ScriptingCore::getInstance().runScript("JS/1to1/test_require.js");
 
 	return true;
 }
