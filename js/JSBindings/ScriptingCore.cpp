@@ -250,17 +250,14 @@ void ScriptingCore::runScript(const char *path)
 #else
 	const char *realPath = CCFileUtils::fullPathFromRelativePath(path);
 #endif
-	const char *content = NULL;
-//cjh	size_t contentSize = CCFileUtils::ccLoadFileIntoMemory(realPath, &content);
-	content = CCString::stringWithContentsOfFile(realPath)->getCString();
-	if (content/* && contentSize*/) {
+	const char* content = CCString::stringWithContentsOfFile(realPath)->getCString();
+	if (content && strlen(content) > 0) {
 		JSBool ok;
 		jsval rval;
 		ok = JS_EvaluateScript(this->cx, this->global, (char *)content, strlen(content), path, 1, &rval);
 		if (ok == JS_FALSE) {
 			CCLog("error evaluating script:\n%s", content);
 		}
-//cjh		free(content);
 	}
 }
 
