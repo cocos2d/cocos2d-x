@@ -15960,7 +15960,6 @@ void S_CCApplication::jsCreateClass(JSContext *cx, JSObject *globalObj, const ch
 
 		static JSFunctionSpec funcs[] = {
 			JS_FN("setAnimationInterval", S_CCApplication::jssetAnimationInterval, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("setOrientation", S_CCApplication::jssetOrientation, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 			JS_FS_END
 		};
 
@@ -15982,19 +15981,6 @@ JSBool S_CCApplication::jssetAnimationInterval(JSContext *cx, uint32_t argc, jsv
 		self->setAnimationInterval(arg0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-		return JS_TRUE;
-	}
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-JSBool S_CCApplication::jssetOrientation(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	S_CCApplication* self = NULL; JSGET_PTRSHELL(S_CCApplication, self, obj);
-	if (self == NULL) return JS_FALSE;
-	if (argc == 1) {
-		Orientation arg0;
-		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "i", &arg0);
-		//INVALID RETURN TYPE _41C5
 		return JS_TRUE;
 	}
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
@@ -22522,8 +22508,11 @@ JSBool S_CCTextureCache::jsdumpCachedTextureInfo(JSContext *cx, uint32_t argc, j
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
+
+
 JSBool S_CCTextureCache::jsaddPVRTCImage(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+#ifdef CC_SUPPORT_PVRTC
+ 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	S_CCTextureCache* self = NULL; JSGET_PTRSHELL(S_CCTextureCache, self, obj);
 	if (self == NULL) return JS_FALSE;
 	if (argc == 4) {
@@ -22550,6 +22539,7 @@ JSBool S_CCTextureCache::jsaddPVRTCImage(JSContext *cx, uint32_t argc, jsval *vp
 		return JS_TRUE;
 	}
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+#endif
 	return JS_TRUE;
 }
 JSBool S_CCTextureCache::jsaddPVRImage(JSContext *cx, uint32_t argc, jsval *vp) {

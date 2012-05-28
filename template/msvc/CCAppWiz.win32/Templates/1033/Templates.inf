@@ -40,3 +40,5 @@ Resources/CloseSelected.png
 Resources/CloseNormal.png
 Resources/HelloWorld.png
 [! endif]
+Resources/fps_images.fnt
+Resources/fps_images.png
