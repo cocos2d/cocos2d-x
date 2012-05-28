@@ -15960,7 +15960,6 @@ void S_CCApplication::jsCreateClass(JSContext *cx, JSObject *globalObj, const ch
 
 		static JSFunctionSpec funcs[] = {
 			JS_FN("setAnimationInterval", S_CCApplication::jssetAnimationInterval, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("setOrientation", S_CCApplication::jssetOrientation, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 			JS_FS_END
 		};
 
