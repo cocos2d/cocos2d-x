@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "CCCamera.h"
 #include "CCStdC.h"
 
+using namespace std;
+
 namespace cocos2d{
 	//
 	// CameraAction
@@ -104,11 +106,11 @@ namespace cocos2d{
 		CCActionInterval::startWithTarget(pTarget);
 		float r, zenith, azimuth;
 		this->sphericalRadius(&r, &zenith, &azimuth);
-		if( std::isnan(m_fRadius) )
+		if( isnan(m_fRadius) )
 			m_fRadius = r;
-		if( std::isnan(m_fAngleZ) )
+		if( isnan(m_fAngleZ) )
 			m_fAngleZ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
-		if( std::isnan(m_fAngleX) )
+		if( isnan(m_fAngleX) )
 			m_fAngleX = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
 
 		m_fRadZ = (CGFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);
