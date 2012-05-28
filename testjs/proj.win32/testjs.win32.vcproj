@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="testjs.win32"
+	Name="testjs"
 	ProjectGUID="{D0F06A44-A245-4D13-A498-0120C203B539}"
 	TargetFrameworkVersion="196613"
 	>
@@ -69,12 +69,13 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)js\spidermonkey-win32\lib\*.*&quot; &quot;$(OutDir)&quot;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libcocos2d.lib libGLESv2.lib libCocosDenshion.lib js.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;&quot;..\..\js\spidermonkey-win32\lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
