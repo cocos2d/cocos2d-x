@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1554941A15737858009041F8 /* JS in Resources */ = {isa = PBXBuildFile; fileRef = 1554941915737858009041F8 /* JS */; };
+		1554941F15737A4D009041F8 /* simple_class.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1554941B15737A4D009041F8 /* simple_class.cpp */; };
+		1554942015737A4D009041F8 /* simple_native_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1554941D15737A4D009041F8 /* simple_native_generated.cpp */; };
 		15DD7075156F2C6A003E7567 /* fps_images.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 15DD7073156F2C6A003E7567 /* fps_images.fnt */; };
 		15DD7076156F2C6A003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD7074156F2C6A003E7567 /* fps_images.png */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
@@ -423,12 +426,14 @@
 		D454520A156E22B400887EB5 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4545209156E22B400887EB5 /* libxml2.dylib */; };
 		D454520C156E22BD00887EB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D454520B156E22BD00887EB5 /* libz.dylib */; };
 		D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4545215156E28EF00887EB5 /* AppDelegate.cpp */; };
-		D4545237156E294C00887EB5 /* Javascript in Resources */ = {isa = PBXBuildFile; fileRef = D4545236156E294C00887EB5 /* Javascript */; };
-		D454524A156E449500887EB5 /* simple_class.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4545245156E449500887EB5 /* simple_class.cpp */; };
-		D454524B156E449500887EB5 /* simple_native_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4545247156E449500887EB5 /* simple_native_generated.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1554941915737858009041F8 /* JS */ = {isa = PBXFileReference; lastKnownFileType = folder; path = JS; sourceTree = "<group>"; };
+		1554941B15737A4D009041F8 /* simple_class.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_class.cpp; sourceTree = "<group>"; };
+		1554941C15737A4D009041F8 /* simple_class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_class.h; sourceTree = "<group>"; };
+		1554941D15737A4D009041F8 /* simple_native_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_native_generated.cpp; sourceTree = "<group>"; };
+		1554941E15737A4D009041F8 /* simple_native_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_native_generated.hpp; sourceTree = "<group>"; };
 		15DD7073156F2C6A003E7567 /* fps_images.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fps_images.fnt; sourceTree = "<group>"; };
 		15DD7074156F2C6A003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* testjs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testjs.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -854,11 +859,6 @@
 		D454520B156E22BD00887EB5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D4545215156E28EF00887EB5 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		D4545216156E28EF00887EB5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D4545236156E294C00887EB5 /* Javascript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Javascript; path = ../Javascript; sourceTree = "<group>"; };
-		D4545245156E449500887EB5 /* simple_class.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_class.cpp; sourceTree = "<group>"; };
-		D4545246156E449500887EB5 /* simple_class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_class.h; sourceTree = "<group>"; };
-		D4545247156E449500887EB5 /* simple_native_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_native_generated.cpp; sourceTree = "<group>"; };
-		D4545248156E449500887EB5 /* simple_native_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_native_generated.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -903,7 +903,6 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
-				D4545236156E294C00887EB5 /* Javascript */,
 				D4545214156E28EF00887EB5 /* Classes */,
 				D45451BD156E072400887EB5 /* CocosDenshion */,
 				D4544C69156E03D000887EB5 /* cocos2dx */,
@@ -945,7 +944,6 @@
 		D45440AC156DE56B00887EB5 /* JS */ = {
 			isa = PBXGroup;
 			children = (
-				D4545243156E449500887EB5 /* BindingsExample */,
 				D45440B3156DE56B00887EB5 /* JSBindings */,
 			);
 			name = JS;
@@ -983,6 +981,7 @@
 		D45446D8156DE7F300887EB5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1554941915737858009041F8 /* JS */,
 				15DD7073156F2C6A003E7567 /* fps_images.fnt */,
 				15DD7074156F2C6A003E7567 /* fps_images.png */,
 				D4544747156DE80400887EB5 /* Particles */,
@@ -1731,22 +1730,15 @@
 		D4545214156E28EF00887EB5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1554941B15737A4D009041F8 /* simple_class.cpp */,
+				1554941C15737A4D009041F8 /* simple_class.h */,
+				1554941D15737A4D009041F8 /* simple_native_generated.cpp */,
+				1554941E15737A4D009041F8 /* simple_native_generated.hpp */,
 				D4545215156E28EF00887EB5 /* AppDelegate.cpp */,
 				D4545216156E28EF00887EB5 /* AppDelegate.h */,
 			);
 			name = Classes;
 			path = ../Classes;
-			sourceTree = "<group>";
-		};
-		D4545243156E449500887EB5 /* BindingsExample */ = {
-			isa = PBXGroup;
-			children = (
-				D4545245156E449500887EB5 /* simple_class.cpp */,
-				D4545246156E449500887EB5 /* simple_class.h */,
-				D4545247156E449500887EB5 /* simple_native_generated.cpp */,
-				D4545248156E449500887EB5 /* simple_native_generated.hpp */,
-			);
-			path = BindingsExample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2096,9 +2088,9 @@
 				D4544744156DE7F300887EB5 /* tank.tps in Resources */,
 				D4544745156DE7F300887EB5 /* tank1.png in Resources */,
 				D4544746156DE7F300887EB5 /* Upsidedown.plist in Resources */,
-				D4545237156E294C00887EB5 /* Javascript in Resources */,
 				15DD7075156F2C6A003E7567 /* fps_images.fnt in Resources */,
 				15DD7076156F2C6A003E7567 /* fps_images.png in Resources */,
+				1554941A15737858009041F8 /* JS in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2117,8 +2109,8 @@
 				D45446D4156DE74F00887EB5 /* main.m in Sources */,
 				D45446D5156DE74F00887EB5 /* RootViewController.mm in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
-				D454524A156E449500887EB5 /* simple_class.cpp in Sources */,
-				D454524B156E449500887EB5 /* simple_native_generated.cpp in Sources */,
+				1554941F15737A4D009041F8 /* simple_class.cpp in Sources */,
+				1554942015737A4D009041F8 /* simple_native_generated.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
