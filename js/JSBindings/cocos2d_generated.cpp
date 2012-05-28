@@ -22511,7 +22511,7 @@ JSBool S_CCTextureCache::jsdumpCachedTextureInfo(JSContext *cx, uint32_t argc, j
 
 
 JSBool S_CCTextureCache::jsaddPVRTCImage(JSContext *cx, uint32_t argc, jsval *vp) {
-#if CC_SUPPORT_PVRTC
+#ifdef CC_SUPPORT_PVRTC
  	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	S_CCTextureCache* self = NULL; JSGET_PTRSHELL(S_CCTextureCache, self, obj);
 	if (self == NULL) return JS_FALSE;
