@@ -2415,7 +2415,6 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jssetAnimationInterval(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool jssetOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsstatusBarFrame(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsgetCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp);
 
