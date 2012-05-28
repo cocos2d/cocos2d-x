@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="gb2312"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
@@ -69,7 +69,7 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)js\spidermonkey-win32\lib\*.*&quot; &quot;$(OutDir)&quot;"
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)js\spidermonkey-win32\lib\*.*&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
@@ -223,26 +223,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="BindingsExample"
-			>
-			<File
-				RelativePath="..\..\js\BindingsExample\simple_class.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\js\BindingsExample\simple_class.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\js\BindingsExample\simple_native_generated.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\js\BindingsExample\simple_native_generated.hpp"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="resource"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;png;manifest"
 			>
@@ -292,6 +272,22 @@
 			</File>
 			<File
 				RelativePath="..\Classes\AppDelegate.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Classes\simple_class.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Classes\simple_class.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Classes\simple_native_generated.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Classes\simple_native_generated.hpp"
 				>
 			</File>
 		</Filter>
