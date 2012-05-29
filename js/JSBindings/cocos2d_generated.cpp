@@ -938,7 +938,7 @@ void S_CCLayer::ccTouchesBegan(CCSet* pTouches, CCEvent* pEvent) {
 			JSObject *array = JS_NewArrayObject(cx, pTouches->count(), touches);
 			jsval arg = OBJECT_TO_JSVAL(array);
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
-			delete touches;
+			delete[] touches;
 		}
 	}
 }
@@ -968,7 +968,7 @@ void S_CCLayer::ccTouchesMoved(CCSet* pTouches, CCEvent* pEvent) {
 			JSObject *array = JS_NewArrayObject(cx, pTouches->count(), touches);
 			jsval arg = OBJECT_TO_JSVAL(array);
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
-			delete touches;
+			delete[] touches;
 		}
 	}
 }
@@ -998,7 +998,7 @@ void S_CCLayer::ccTouchesEnded(CCSet* pTouches, CCEvent* pEvent) {
 			JSObject *array = JS_NewArrayObject(cx, pTouches->count(), touches);
 			jsval arg = OBJECT_TO_JSVAL(array);
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
-			delete touches;
+			delete[] touches;
 		}
 	}
 }
@@ -1028,7 +1028,7 @@ void S_CCLayer::ccTouchesCancelled(CCSet* pTouches, CCEvent* pEvent) {
 			JSObject *array = JS_NewArrayObject(cx, pTouches->count(), touches);
 			jsval arg = OBJECT_TO_JSVAL(array);
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
-			delete touches;
+			delete[] touches;
 		}
 	}
 }
