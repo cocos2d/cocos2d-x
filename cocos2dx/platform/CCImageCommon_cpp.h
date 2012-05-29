@@ -354,7 +354,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         if (row_pointers)
         {
             const unsigned int stride = m_nWidth * channels;
-            for (size_t i = 0; i < m_nHeight; ++i)
+            for (unsigned short i = 0; i < m_nHeight; ++i)
             {
                 png_uint_32 q = i * stride;
                 row_pointers[i] = (png_bytep)m_pData + q;
@@ -364,9 +364,9 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
             if (m_bHasAlpha)
             {
                 unsigned int *tmp = (unsigned int *)m_pData;
-                for(unsigned int i = 0; i < m_nHeight; i++)
+                for(unsigned short i = 0; i < m_nHeight; i++)
                 {
-                    for(int j = 0; j < m_nWidth * channels; j += 4)
+                    for(unsigned int j = 0; j < m_nWidth * channels; j += 4)
                     {
                         *tmp++ = CC_RGB_PREMULTIPLY_APLHA( row_pointers[i][j], row_pointers[i][j + 1], 
                                                           row_pointers[i][j + 2], row_pointers[i][j + 3] );
@@ -515,9 +515,9 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 
         CC_BREAK_IF(NULL == tif);
 
-        uint32 w, h;
-        uint16 bitsPerSample, samplePerPixel, planarConfig, extraSample;
-        size_t npixels;
+        uint32 w = 0, h = 0;
+        uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
+        size_t npixels = 0;
         
         TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
         TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);

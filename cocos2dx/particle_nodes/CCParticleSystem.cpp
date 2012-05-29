@@ -347,7 +347,7 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
     if (m_pBatchNode)
     {
-        for (int i = 0; i < m_uTotalParticles; i++)
+        for (unsigned int i = 0; i < m_uTotalParticles; i++)
         {
             m_pParticles[i].atlasIndex=i;
         }
@@ -1203,7 +1203,7 @@ void CCParticleSystem::setBatchNode(CCParticleBatchNode* batchNode)
 
         if( batchNode ) {
             //each particle needs a unique index
-            for (int i = 0; i < m_uTotalParticles; i++)
+            for (unsigned int i = 0; i < m_uTotalParticles; i++)
             {
                 m_pParticles[i].atlasIndex=i;
             }
