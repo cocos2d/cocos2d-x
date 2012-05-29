@@ -345,9 +345,6 @@
     <ClCompile Include="..\platform\CCSAXParser.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCStdC.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CCThread.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -488,6 +485,9 @@
     </ClCompile>
     <ClCompile Include="..\extensions\CCBReader\CCBReader_v2.cpp">
       <Filter>extensions\CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCStdC.cpp">
+      <Filter>platform\win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -791,9 +791,6 @@
     <ClInclude Include="..\platform\CCSAXParser.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCStdC.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCThread.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -984,6 +981,9 @@
     </ClInclude>
     <ClInclude Include="..\extensions\CCBReader\CCBCustomClass.h">
       <Filter>extensions\CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCStdC.h">
+      <Filter>platform\win32</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
