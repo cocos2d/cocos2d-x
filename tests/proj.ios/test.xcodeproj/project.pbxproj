@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		158F259C1574BDE20092E383 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 158F259B1574BDE20092E383 /* CCStdC.h */; };
 		15DC5D2315340C72009A99D4 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 15DC5D2215340C72009A99D4 /* Shaders */; };
+		15DD6D8E156DD2E6003E7567 /* fps_images.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8C156DD2E6003E7567 /* fps_images.fnt */; };
+		15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8D156DD2E6003E7567 /* fps_images.png */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -281,8 +284,6 @@
 		781C399F1547F9FA00633F88 /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 781C398F1547F9FA00633F88 /* CCPlatformMacros.h */; };
 		781C39A01547F9FA00633F88 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C39901547F9FA00633F88 /* CCSAXParser.cpp */; };
 		781C39A11547F9FA00633F88 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 781C39911547F9FA00633F88 /* CCSAXParser.h */; };
-		781C39A21547F9FA00633F88 /* CCStdC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C39921547F9FA00633F88 /* CCStdC.cpp */; };
-		781C39A31547F9FA00633F88 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 781C39931547F9FA00633F88 /* CCStdC.h */; };
 		781C39A41547F9FA00633F88 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 781C39941547F9FA00633F88 /* CCThread.h */; };
 		781C39A51547F9FA00633F88 /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C39951547F9FA00633F88 /* platform.cpp */; };
 		781C39A61547F9FA00633F88 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 781C39961547F9FA00633F88 /* platform.h */; };
@@ -414,6 +415,7 @@
 		78C7E03E14EBA5B90085D0C2 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78C7E03414EBA5B90085D0C2 /* SimpleAudioEngine.mm */; };
 		78C7E03F14EBA5B90085D0C2 /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 78C7E03514EBA5B90085D0C2 /* SimpleAudioEngine_objc.h */; };
 		78C7E04014EBA5B90085D0C2 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C7E03614EBA5B90085D0C2 /* SimpleAudioEngine_objc.m */; };
+		78CAE769156F8124002A7A68 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 78CAE768156F8124002A7A68 /* Particles */; };
 		78ED2F85153D5BC500330E29 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 78ED2F84153D5BC500330E29 /* extensions */; };
 		78ED2F9A153D5BE800330E29 /* CCControlButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78ED2F88153D5BE800330E29 /* CCControlButtonTest.cpp */; };
 		78ED2F9B153D5BE800330E29 /* CCControlColourPickerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78ED2F8B153D5BE800330E29 /* CCControlColourPickerTest.cpp */; };
@@ -637,7 +639,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		158F259B1574BDE20092E383 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		15DC5D2215340C72009A99D4 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = "../../../cocos2d-x/tests/Resources/Shaders"; sourceTree = "<group>"; };
+		15DD6D8C156DD2E6003E7567 /* fps_images.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fps_images.fnt; sourceTree = "<group>"; };
+		15DD6D8D156DD2E6003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
@@ -916,8 +921,6 @@
 		781C398F1547F9FA00633F88 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		781C39901547F9FA00633F88 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		781C39911547F9FA00633F88 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
-		781C39921547F9FA00633F88 /* CCStdC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
-		781C39931547F9FA00633F88 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		781C39941547F9FA00633F88 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		781C39951547F9FA00633F88 /* platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
 		781C39961547F9FA00633F88 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
@@ -1106,6 +1109,7 @@
 		78C7E03414EBA5B90085D0C2 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		78C7E03514EBA5B90085D0C2 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		78C7E03614EBA5B90085D0C2 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		78CAE768156F8124002A7A68 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Particles; sourceTree = "<group>"; };
 		78ED2F84153D5BC500330E29 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = extensions; sourceTree = "<group>"; };
 		78ED2F88153D5BE800330E29 /* CCControlButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButtonTest.cpp; sourceTree = "<group>"; };
 		78ED2F89153D5BE800330E29 /* CCControlButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButtonTest.h; sourceTree = "<group>"; };
@@ -2213,24 +2217,27 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D4113B4D155D388700E42745 /* CocosBuilder_v2 */,
-				D4113B4B155D387800E42745 /* CocosBuilder_v1 */,
 				789B560C15197BE00038CD1E /* animations */,
+				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
+				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
+				D4113B4B155D387800E42745 /* CocosBuilder_v1 */,
+				D4113B4D155D388700E42745 /* CocosBuilder_v2 */,
+				7855E0DF153FEF240059DD9A /* Default.png */,
+				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
+				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
+				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
 				78ED2F84153D5BC500330E29 /* extensions */,
 				789B560E15197BF30038CD1E /* fonts */,
+				15DD6D8C156DD2E6003E7567 /* fps_images.fnt */,
+				15DD6D8D156DD2E6003E7567 /* fps_images.png */,
+				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
+				7855E0E0153FEF240059DD9A /* Icon.png */,
 				789B561015197BFB0038CD1E /* Images */,
+				78C7DEBD14EBA5060085D0C2 /* music.mid */,
+				78CAE768156F8124002A7A68 /* Particles */,
 				15DC5D2215340C72009A99D4 /* Shaders */,
 				789B561215197C040038CD1E /* TileMaps */,
 				789B561315197C040038CD1E /* zwoptex */,
-				78C7DEBD14EBA5060085D0C2 /* music.mid */,
-				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
-				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
-				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
-				7855E0DF153FEF240059DD9A /* Default.png */,
-				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
-				7855E0E0153FEF240059DD9A /* Icon.png */,
-				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
-				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -3002,8 +3009,6 @@
 				781C398F1547F9FA00633F88 /* CCPlatformMacros.h */,
 				781C39901547F9FA00633F88 /* CCSAXParser.cpp */,
 				781C39911547F9FA00633F88 /* CCSAXParser.h */,
-				781C39921547F9FA00633F88 /* CCStdC.cpp */,
-				781C39931547F9FA00633F88 /* CCStdC.h */,
 				781C39941547F9FA00633F88 /* CCThread.h */,
 				781C39951547F9FA00633F88 /* platform.cpp */,
 				781C39961547F9FA00633F88 /* platform.h */,
@@ -3015,6 +3020,7 @@
 		BF83594513276C7700F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				158F259B1574BDE20092E383 /* CCStdC.h */,
 				781C39A71547FA0800633F88 /* AccelerometerDelegateWrapper.h */,
 				781C39A81547FA0800633F88 /* AccelerometerDelegateWrapper.mm */,
 				781C39A91547FA0800633F88 /* CCAccelerometer.h */,
@@ -3244,7 +3250,6 @@
 				781C399E1547F9FA00633F88 /* CCPlatformConfig.h in Headers */,
 				781C399F1547F9FA00633F88 /* CCPlatformMacros.h in Headers */,
 				781C39A11547F9FA00633F88 /* CCSAXParser.h in Headers */,
-				781C39A31547F9FA00633F88 /* CCStdC.h in Headers */,
 				781C39A41547F9FA00633F88 /* CCThread.h in Headers */,
 				781C39A61547F9FA00633F88 /* platform.h in Headers */,
 				781C39CE1547FA0800633F88 /* AccelerometerDelegateWrapper.h in Headers */,
@@ -3272,6 +3277,7 @@
 				78EE00F01550D18D004C84B0 /* CCTextureWatcher.h in Headers */,
 				D41E6055155145AB001A12E9 /* CCBReader.h in Headers */,
 				D41F734A155686AB00A475EA /* CCBCustomClass.h in Headers */,
+				158F259C1574BDE20092E383 /* CCStdC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3518,6 +3524,9 @@
 				7855E0E2153FEF240059DD9A /* Icon.png in Resources */,
 				D4113B4C155D387800E42745 /* CocosBuilder_v1 in Resources */,
 				D4113B4E155D388700E42745 /* CocosBuilder_v2 in Resources */,
+				15DD6D8E156DD2E6003E7567 /* fps_images.fnt in Resources */,
+				15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */,
+				78CAE769156F8124002A7A68 /* Particles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3731,7 +3740,6 @@
 				781C39851547F9DD00633F88 /* CCTouchHandler.cpp in Sources */,
 				781C399A1547F9FA00633F88 /* CCEGLViewProtocol.cpp in Sources */,
 				781C39A01547F9FA00633F88 /* CCSAXParser.cpp in Sources */,
-				781C39A21547F9FA00633F88 /* CCStdC.cpp in Sources */,
 				781C39A51547F9FA00633F88 /* platform.cpp in Sources */,
 				781C39CF1547FA0800633F88 /* AccelerometerDelegateWrapper.mm in Sources */,
 				781C39D11547FA0800633F88 /* CCAccelerometer.mm in Sources */,

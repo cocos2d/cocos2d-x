@@ -14,7 +14,7 @@ Developers:
 
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
-    Di Wu
+    Di Wu (Zynga China)
         CCBReader and cpp reflection mechanic  
 
     Angus Comrie
@@ -25,6 +25,9 @@ Developers:
 
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
+
+    Nicolas Gramlich (nicolasgramlich, Zynga)
+        fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         
     Jianfeng Zhou (NetGragon Inc)
         contributes CCListView and CCTextureWatcher.
@@ -79,6 +82,9 @@ Developers:
         
     YuLei Liao(dualface)
         contribute the factor of lua binding
+
+    jreitman
+        fix the bug of asynchronous loading resources for iOS
 
 Retired Core Developers:
     WenSheng Yang

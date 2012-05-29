@@ -18,7 +18,7 @@ void S_CCTransitionMoveInL::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionMoveInL *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionMoveInL *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -199,7 +199,7 @@ void S_CCAnimate::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCAnimate *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCAnimate *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -407,7 +407,7 @@ void S_CCFadeOutBLTiles::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFadeOutBLTiles *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFadeOutBLTiles *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -527,7 +527,7 @@ void S_CCProgressFromTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCProgressFromTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCProgressFromTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -706,7 +706,7 @@ void S_CCLayer::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCLayer *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCLayer *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -938,7 +938,7 @@ void S_CCLayer::ccTouchesBegan(CCSet* pTouches, CCEvent* pEvent) {
 			JSObject *array = JS_NewArrayObject(cx, pTouches->count(), touches);
 			jsval arg = OBJECT_TO_JSVAL(array);
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
-			delete touches;
+			delete[] touches;
 		}
 	}
 }
@@ -968,7 +968,7 @@ void S_CCLayer::ccTouchesMoved(CCSet* pTouches, CCEvent* pEvent) {
 			JSObject *array = JS_NewArrayObject(cx, pTouches->count(), touches);
 			jsval arg = OBJECT_TO_JSVAL(array);
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
-			delete touches;
+			delete[] touches;
 		}
 	}
 }
@@ -998,7 +998,7 @@ void S_CCLayer::ccTouchesEnded(CCSet* pTouches, CCEvent* pEvent) {
 			JSObject *array = JS_NewArrayObject(cx, pTouches->count(), touches);
 			jsval arg = OBJECT_TO_JSVAL(array);
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
-			delete touches;
+			delete[] touches;
 		}
 	}
 }
@@ -1028,7 +1028,7 @@ void S_CCLayer::ccTouchesCancelled(CCSet* pTouches, CCEvent* pEvent) {
 			JSObject *array = JS_NewArrayObject(cx, pTouches->count(), touches);
 			jsval arg = OBJECT_TO_JSVAL(array);
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
-			delete touches;
+			delete[] touches;
 		}
 	}
 }
@@ -1123,7 +1123,7 @@ void S_CCEaseBackInOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseBackInOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseBackInOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -1239,7 +1239,7 @@ void S_CCFadeOutUpTiles::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFadeOutUpTiles *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFadeOutUpTiles *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -1371,7 +1371,7 @@ void S_CCAnimationCache::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCAnimationCache *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCAnimationCache *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -1559,7 +1559,7 @@ void S_CCPlace::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCPlace *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCPlace *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -1695,7 +1695,7 @@ void S_CCEaseBackOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseBackOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseBackOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -1836,7 +1836,7 @@ void S_CCLabelBMFont::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCLabelBMFont *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCLabelBMFont *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -2023,7 +2023,7 @@ void S_CCReverseTime::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCReverseTime *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCReverseTime *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -2213,7 +2213,7 @@ void S_CCFadeOutTRTiles::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFadeOutTRTiles *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFadeOutTRTiles *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -2400,7 +2400,7 @@ void S_CCCamera::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCCamera *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCCamera *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -2545,7 +2545,7 @@ void S_CCMenu::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCMenu *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCMenu *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -2822,7 +2822,7 @@ void S_CCAction::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCAction *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCAction *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -3006,7 +3006,7 @@ void S_CCTextureAtlas::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTextureAtlas *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTextureAtlas *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -3344,7 +3344,7 @@ void S_CCMenuItemSprite::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCMenuItemSprite *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCMenuItemSprite *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -3550,7 +3550,7 @@ void S_CCProgressTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCProgressTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCProgressTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -3702,7 +3702,7 @@ void S_CCDelayTime::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCDelayTime *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCDelayTime *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -3842,7 +3842,7 @@ void S_CCSequence::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSequence *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSequence *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -4064,7 +4064,7 @@ void S_CCWavesTiles3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCWavesTiles3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCWavesTiles3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -4218,7 +4218,7 @@ void S_CCParallaxNode::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCParallaxNode *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCParallaxNode *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -4356,7 +4356,7 @@ void S_CCTransitionSplitRows::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionSplitRows *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionSplitRows *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -4483,7 +4483,7 @@ void S_CCTintBy::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTintBy *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTintBy *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -4668,7 +4668,7 @@ void S_CCMotionStreak::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCMotionStreak *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCMotionStreak *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -4855,7 +4855,7 @@ void S_CCTransitionProgressRadialCCW::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionProgressRadialCCW *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionProgressRadialCCW *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -4981,7 +4981,7 @@ void S_CCLayerColor::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCLayerColor *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCLayerColor *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -5233,7 +5233,7 @@ void S_CCTexture2D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTexture2D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTexture2D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -5503,7 +5503,7 @@ void S_CCSpriteFrame::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSpriteFrame *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSpriteFrame *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -5732,7 +5732,7 @@ void S_CCAnimation::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCAnimation *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCAnimation *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -5948,7 +5948,7 @@ void S_CCTransitionFadeBL::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionFadeBL *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionFadeBL *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -6078,7 +6078,7 @@ void S_CCFadeOutDownTiles::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFadeOutDownTiles *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFadeOutDownTiles *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -6198,7 +6198,7 @@ void S_CCTurnOffTiles::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTurnOffTiles *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTurnOffTiles *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -6415,7 +6415,7 @@ void S_CCTransitionFadeUp::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionFadeUp *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionFadeUp *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -6545,7 +6545,7 @@ void S_CCMenuItemImage::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCMenuItemImage *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCMenuItemImage *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -6650,7 +6650,7 @@ void S_CCTintTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTintTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTintTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -6806,7 +6806,7 @@ void S_CCParticleSystem::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCParticleSystem *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCParticleSystem *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -7389,7 +7389,7 @@ void S_CCTransitionFade::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionFade *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionFade *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -7538,7 +7538,7 @@ void S_CCDeccelAmplitude::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCDeccelAmplitude *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCDeccelAmplitude *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -7723,7 +7723,7 @@ void S_CCEaseElasticIn::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseElasticIn *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseElasticIn *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -7864,7 +7864,7 @@ void S_CCProgressTimer::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCProgressTimer *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCProgressTimer *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -8041,7 +8041,7 @@ void S_CCRotateBy::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCRotateBy *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCRotateBy *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -8324,7 +8324,7 @@ void S_CCTransitionTurnOffTiles::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionTurnOffTiles *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionTurnOffTiles *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -8466,7 +8466,7 @@ void S_CCActionInstant::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCActionInstant *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCActionInstant *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -8612,7 +8612,7 @@ void S_CCTransitionZoomFlipAngular::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionZoomFlipAngular *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionZoomFlipAngular *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -8727,7 +8727,7 @@ void S_CCReuseGrid::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCReuseGrid *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCReuseGrid *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -8861,7 +8861,7 @@ void S_CCEaseElastic::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseElastic *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseElastic *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -9012,7 +9012,7 @@ void S_CCTransitionFadeDown::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionFadeDown *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionFadeDown *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -9142,7 +9142,7 @@ void S_CCTransitionFlipY::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionFlipY *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionFlipY *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -9257,7 +9257,7 @@ void S_CCStopGrid::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCStopGrid *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCStopGrid *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -9478,7 +9478,7 @@ void S_CCTwirl::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTwirl *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTwirl *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -9655,7 +9655,7 @@ void S_CCMoveTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCMoveTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCMoveTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -9810,7 +9810,7 @@ void S_CCTransitionFlipX::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionFlipX *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionFlipX *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -10169,7 +10169,7 @@ void S_CCTransitionShrinkGrow::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionShrinkGrow *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionShrinkGrow *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -10311,7 +10311,7 @@ void S_CCTransitionSplitCols::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionSplitCols *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionSplitCols *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -10478,7 +10478,7 @@ void S_CCShakyTiles3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCShakyTiles3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCShakyTiles3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -10619,7 +10619,7 @@ void S_CCEaseElasticOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseElasticOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseElasticOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -10760,7 +10760,7 @@ void S_CCRotateTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCRotateTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCRotateTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -10913,7 +10913,7 @@ void S_CCTransitionProgressRadialCW::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionProgressRadialCW *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionProgressRadialCW *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -11015,7 +11015,7 @@ void S_CCAtlasNode::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCAtlasNode *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCAtlasNode *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -11247,7 +11247,7 @@ void S_CCWaves::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCWaves *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCWaves *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -11407,7 +11407,7 @@ void S_CCShow::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCShow *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCShow *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -11547,7 +11547,7 @@ void S_CCEaseElasticInOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseElasticInOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseElasticInOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -11688,7 +11688,7 @@ void S_CCOrbitCamera::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCOrbitCamera *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCOrbitCamera *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -11858,7 +11858,7 @@ void S_CCTransitionSlideInL::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionSlideInL *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionSlideInL *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -12039,7 +12039,7 @@ void S_CCEaseBounceIn::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseBounceIn *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseBounceIn *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -12180,7 +12180,7 @@ void S_CCShatteredTiles3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCShatteredTiles3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCShatteredTiles3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -12322,7 +12322,7 @@ void S_CCHide::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCHide *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCHide *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -12462,7 +12462,7 @@ void S_CCTransitionSlideInR::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionSlideInR *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionSlideInR *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -12603,7 +12603,7 @@ void S_CCToggleVisibility::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCToggleVisibility *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCToggleVisibility *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -12718,7 +12718,7 @@ void S_CCActionCamera::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCActionCamera *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCActionCamera *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -12839,7 +12839,7 @@ void S_CCSpriteFrameCache::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSpriteFrameCache *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSpriteFrameCache *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -13107,7 +13107,7 @@ void S_CCShuffleTiles::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCShuffleTiles *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCShuffleTiles *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -13265,7 +13265,7 @@ void S_CCEaseBounce::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseBounce *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseBounce *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -13382,7 +13382,7 @@ void S_CCLayerGradient::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCLayerGradient *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCLayerGradient *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -13590,7 +13590,7 @@ void S_CCFlipX::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFlipX *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFlipX *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -13749,7 +13749,7 @@ void S_CCEaseBounceInOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseBounceInOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseBounceInOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -13865,7 +13865,7 @@ void S_CCRepeat::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCRepeat *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCRepeat *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -14089,7 +14089,7 @@ void S_CCFlipY::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFlipY *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFlipY *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -14248,7 +14248,7 @@ void S_CCEaseBackIn::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseBackIn *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseBackIn *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -14389,7 +14389,7 @@ void S_CCTransitionMoveInT::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionMoveInT *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionMoveInT *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -14505,7 +14505,7 @@ void S_CCEaseBounceOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseBounceOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseBounceOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -14646,7 +14646,7 @@ void S_CCTransitionMoveInR::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionMoveInR *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionMoveInR *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -14762,7 +14762,7 @@ void S_CCTransitionMoveInB::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionMoveInB *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionMoveInB *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -14878,7 +14878,7 @@ void S_CCBezierBy::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCBezierBy *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCBezierBy *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -15057,7 +15057,7 @@ void S_CCEaseIn::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseIn *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseIn *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -15174,7 +15174,7 @@ void S_CCFiniteTimeAction::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFiniteTimeAction *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFiniteTimeAction *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -15282,7 +15282,7 @@ void S_CCPageTurn3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCPageTurn3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCPageTurn3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -15399,7 +15399,7 @@ void S_CCTransitionFadeTR::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionFadeTR *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionFadeTR *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -15569,7 +15569,7 @@ void S_CCLens3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCLens3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCLens3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -15738,7 +15738,7 @@ void S_CCRipple3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCRipple3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCRipple3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -15960,7 +15960,6 @@ void S_CCApplication::jsCreateClass(JSContext *cx, JSObject *globalObj, const ch
 
 		static JSFunctionSpec funcs[] = {
 			JS_FN("setAnimationInterval", S_CCApplication::jssetAnimationInterval, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("setOrientation", S_CCApplication::jssetOrientation, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 			JS_FS_END
 		};
 
@@ -15987,19 +15986,6 @@ JSBool S_CCApplication::jssetAnimationInterval(JSContext *cx, uint32_t argc, jsv
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-JSBool S_CCApplication::jssetOrientation(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	S_CCApplication* self = NULL; JSGET_PTRSHELL(S_CCApplication, self, obj);
-	if (self == NULL) return JS_FALSE;
-	if (argc == 1) {
-		Orientation arg0;
-		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "i", &arg0);
-		//INVALID RETURN TYPE _41C5
-		return JS_TRUE;
-	}
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
 
 JSClass* S_CCEaseOut::jsClass = NULL;
 JSObject* S_CCEaseOut::jsObject = NULL;
@@ -16019,7 +16005,7 @@ void S_CCEaseOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -16136,7 +16122,7 @@ void S_CCNode::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCNode *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCNode *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -16984,7 +16970,7 @@ void S_CCEaseExponentialIn::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseExponentialIn *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseExponentialIn *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -17204,7 +17190,7 @@ void S_CCFlipX3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFlipX3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFlipX3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -17353,7 +17339,7 @@ void S_CCEaseInOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseInOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseInOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -17495,7 +17481,7 @@ void S_CCEaseExponentialOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseExponentialOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseExponentialOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -17636,7 +17622,7 @@ void S_CCJumpTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCJumpTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCJumpTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -17757,7 +17743,7 @@ void S_CCTransitionPageTurn::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionPageTurn *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionPageTurn *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -17920,7 +17906,7 @@ void S_CCParticleSystemQuad::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCParticleSystemQuad *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCParticleSystemQuad *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -18118,7 +18104,7 @@ void S_CCLabelTTF::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCLabelTTF *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCLabelTTF *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -18201,7 +18187,7 @@ void S_CCScene::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCScene *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCScene *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -18297,7 +18283,7 @@ void S_CCDirector::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCDirector *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCDirector *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -18859,7 +18845,7 @@ void S_CCFlipY3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFlipY3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFlipY3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -18974,7 +18960,7 @@ void S_CCLiquid::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCLiquid *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCLiquid *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -19128,7 +19114,7 @@ void S_CCEaseExponentialInOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseExponentialInOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseExponentialInOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -19244,7 +19230,7 @@ void S_CCTiledGrid3DAction::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTiledGrid3DAction *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTiledGrid3DAction *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -19352,7 +19338,7 @@ void S_CCParticleSystemPoint::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCParticleSystemPoint *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCParticleSystemPoint *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -19519,7 +19505,7 @@ void S_CCJumpBy::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCJumpBy *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCJumpBy *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -19704,7 +19690,7 @@ void S_CCFollow::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFollow *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFollow *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -19873,7 +19859,7 @@ void S_CCSkewBy::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSkewBy *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSkewBy *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -20035,7 +20021,7 @@ void S_CCAccelDeccelAmplitude::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCAccelDeccelAmplitude *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCAccelDeccelAmplitude *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -20220,7 +20206,7 @@ void S_CCEaseSineIn::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseSineIn *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseSineIn *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -20361,7 +20347,7 @@ void S_CCLabelAtlas::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCLabelAtlas *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCLabelAtlas *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -20511,7 +20497,7 @@ void S_CCMenuItem::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCMenuItem *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCMenuItem *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -20708,7 +20694,7 @@ void S_CCMoveBy::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCMoveBy *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCMoveBy *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -20870,7 +20856,7 @@ void S_CCEaseSineOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseSineOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseSineOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -21011,7 +20997,7 @@ void S_CCTMXTiledMap::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTMXTiledMap *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTMXTiledMap *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -21232,7 +21218,7 @@ void S_CCAccelAmplitude::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCAccelAmplitude *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCAccelAmplitude *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -21417,7 +21403,7 @@ void S_CCTMXLayer::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTMXLayer *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTMXLayer *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -21659,7 +21645,7 @@ void S_CCSkewTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSkewTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSkewTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -21819,7 +21805,7 @@ void S_CCShaky3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCShaky3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCShaky3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -21960,7 +21946,7 @@ void S_CCActionInterval::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCActionInterval *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCActionInterval *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -22157,7 +22143,7 @@ void S_CCTransitionZoomFlipY::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionZoomFlipY *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionZoomFlipY *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -22266,7 +22252,7 @@ void S_CCTextureCache::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTextureCache *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTextureCache *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -22522,8 +22508,11 @@ JSBool S_CCTextureCache::jsdumpCachedTextureInfo(JSContext *cx, uint32_t argc, j
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
+
+
 JSBool S_CCTextureCache::jsaddPVRTCImage(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+#ifdef CC_SUPPORT_PVRTC
+ 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	S_CCTextureCache* self = NULL; JSGET_PTRSHELL(S_CCTextureCache, self, obj);
 	if (self == NULL) return JS_FALSE;
 	if (argc == 4) {
@@ -22550,6 +22539,7 @@ JSBool S_CCTextureCache::jsaddPVRTCImage(JSContext *cx, uint32_t argc, jsval *vp
 		return JS_TRUE;
 	}
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+#endif
 	return JS_TRUE;
 }
 JSBool S_CCTextureCache::jsaddPVRImage(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -22608,7 +22598,7 @@ void S_CCRepeatForever::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCRepeatForever *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCRepeatForever *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -22815,7 +22805,7 @@ void S_CCSpeed::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSpeed *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSpeed *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -23029,7 +23019,7 @@ void S_CCTransitionZoomFlipX::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionZoomFlipX *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionZoomFlipX *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -23144,7 +23134,7 @@ void S_CCEaseSineInOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseSineInOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseSineInOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -23260,7 +23250,7 @@ void S_CCSplitCols::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSplitCols *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSplitCols *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -23412,7 +23402,7 @@ void S_CCFadeOut::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFadeOut *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFadeOut *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -23552,7 +23542,7 @@ void S_CCTileMapAtlas::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTileMapAtlas *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTileMapAtlas *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -23710,7 +23700,7 @@ void S_CCRenderTexture::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCRenderTexture *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCRenderTexture *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -23921,7 +23911,7 @@ void S_CCTransitionCrossFade::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionCrossFade *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionCrossFade *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -24061,7 +24051,7 @@ void S_CCWaves3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCWaves3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCWaves3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -24215,7 +24205,7 @@ void S_CCActionEase::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCActionEase *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCActionEase *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -24405,7 +24395,7 @@ void S_CCFadeTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFadeTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFadeTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -24557,7 +24547,7 @@ void S_CCMenuItemLabel::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCMenuItemLabel *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCMenuItemLabel *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -24734,7 +24724,7 @@ void S_CCTransitionJumpZoom::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionJumpZoom *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionJumpZoom *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -24848,7 +24838,7 @@ void S_CCBlink::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCBlink *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCBlink *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -25007,7 +24997,7 @@ void S_CCTransitionFlipAngular::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionFlipAngular *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionFlipAngular *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -25122,7 +25112,7 @@ void S_CCTransitionRotoZoom::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionRotoZoom *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionRotoZoom *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -25236,7 +25226,7 @@ void S_CCJumpTiles3D::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCJumpTiles3D *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCJumpTiles3D *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -25390,7 +25380,7 @@ void S_CCFadeIn::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCFadeIn *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCFadeIn *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -25793,7 +25783,7 @@ void S_CCSplitRows::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSplitRows *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSplitRows *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -25945,7 +25935,7 @@ void S_CCTransitionSlideInB::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionSlideInB *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionSlideInB *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -26086,7 +26076,7 @@ void S_CCTransitionSceneOriented::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionSceneOriented *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionSceneOriented *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -26209,7 +26199,7 @@ void S_CCSet::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSet *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSet *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -26400,7 +26390,7 @@ void S_CCTouch::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTouch *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTouch *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -26538,7 +26528,7 @@ void S_CCTransitionSlideInT::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionSlideInT *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionSlideInT *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -26679,7 +26669,7 @@ void S_CCSprite::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSprite *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSprite *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -27235,7 +27225,7 @@ void S_CCTransitionScene::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCTransitionScene *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCTransitionScene *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -27440,7 +27430,7 @@ void S_CCScaleBy::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCScaleBy *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCScaleBy *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -27583,7 +27573,7 @@ void S_CCSpriteBatchNode::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCSpriteBatchNode *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCSpriteBatchNode *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -27998,7 +27988,7 @@ void S_CCGridAction::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCGridAction *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCGridAction *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -28162,7 +28152,7 @@ void S_CCScaleTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCScaleTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCScaleTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -28320,7 +28310,7 @@ void S_CCEaseRateAction::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCEaseRateAction *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCEaseRateAction *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -28472,7 +28462,7 @@ void S_CCGrid3DAction::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCGrid3DAction *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCGrid3DAction *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
@@ -28579,7 +28569,7 @@ void S_CCBezierTo::jsFinalize(JSContext *cx, JSObject *obj)
 {
 	pointerShell_t *pt = (pointerShell_t *)JS_GetPrivate(obj);
 	if (pt) {
-		if (!(pt->flags & kPointerTemporary) && pt->data) delete (S_CCBezierTo *)pt->data;
+		if (!(pt->flags & kPointerTemporary) && pt->data) ((S_CCBezierTo *)pt->data)->release();
 		JS_free(cx, pt);
 	}
 }
