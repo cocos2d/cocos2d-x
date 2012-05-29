@@ -144,7 +144,6 @@
 		78DC4C4815490AF400317402 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4BD315490AF400317402 /* CCTouchHandler.cpp */; };
 		78DC4C5B15490B1A00317402 /* CCEGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4C4C15490B1A00317402 /* CCEGLViewProtocol.cpp */; };
 		78DC4C5C15490B1A00317402 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4C5415490B1A00317402 /* CCSAXParser.cpp */; };
-		78DC4C5D15490B1A00317402 /* CCStdC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4C5615490B1A00317402 /* CCStdC.cpp */; };
 		78DC4C5E15490B1A00317402 /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4C5915490B1A00317402 /* platform.cpp */; };
 		78DC4C8615490B7300317402 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4C6015490B7300317402 /* AccelerometerDelegateWrapper.mm */; };
 		78DC4C8715490B7300317402 /* CCAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4C6215490B7300317402 /* CCAccelerometer.mm */; };
@@ -224,6 +223,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		158F25951574BD920092E383 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		15DD6D80156DD1EF003E7567 /* fps_images.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fps_images.fnt; sourceTree = "<group>"; };
 		15DD6D81156DD1EF003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* HelloLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -521,8 +521,6 @@
 		78DC4C5315490B1A00317402 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		78DC4C5415490B1A00317402 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		78DC4C5515490B1A00317402 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
-		78DC4C5615490B1A00317402 /* CCStdC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
-		78DC4C5715490B1A00317402 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		78DC4C5815490B1A00317402 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		78DC4C5915490B1A00317402 /* platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
 		78DC4C5A15490B1A00317402 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
@@ -1373,8 +1371,6 @@
 				78DC4C5315490B1A00317402 /* CCPlatformMacros.h */,
 				78DC4C5415490B1A00317402 /* CCSAXParser.cpp */,
 				78DC4C5515490B1A00317402 /* CCSAXParser.h */,
-				78DC4C5615490B1A00317402 /* CCStdC.cpp */,
-				78DC4C5715490B1A00317402 /* CCStdC.h */,
 				78DC4C5815490B1A00317402 /* CCThread.h */,
 				78DC4C5915490B1A00317402 /* platform.cpp */,
 				78DC4C5A15490B1A00317402 /* platform.h */,
@@ -1386,6 +1382,7 @@
 		F4807EBB14E3CB660021A5F8 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				158F25951574BD920092E383 /* CCStdC.h */,
 				78DC4C5F15490B7300317402 /* AccelerometerDelegateWrapper.h */,
 				78DC4C6015490B7300317402 /* AccelerometerDelegateWrapper.mm */,
 				78DC4C6115490B7300317402 /* CCAccelerometer.h */,
@@ -1776,7 +1773,6 @@
 				78DC4C4815490AF400317402 /* CCTouchHandler.cpp in Sources */,
 				78DC4C5B15490B1A00317402 /* CCEGLViewProtocol.cpp in Sources */,
 				78DC4C5C15490B1A00317402 /* CCSAXParser.cpp in Sources */,
-				78DC4C5D15490B1A00317402 /* CCStdC.cpp in Sources */,
 				78DC4C5E15490B1A00317402 /* platform.cpp in Sources */,
 				78DC4C8615490B7300317402 /* AccelerometerDelegateWrapper.mm in Sources */,
 				78DC4C8715490B7300317402 /* CCAccelerometer.mm in Sources */,
