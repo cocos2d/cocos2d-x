@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "CCThread.h"
 #include "semaphore.h"
 #include "CCString.h"
+#include <errno.h>
 
 using namespace std;
 
@@ -67,7 +68,22 @@ static pthread_t s_loadingThread;
 static pthread_mutex_t        s_asyncStructQueueMutex;
 static pthread_mutex_t      s_ImageInfoMutex;
 
-static sem_t s_sem;
+static sem_t* s_pSem = NULL;
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    #define CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE 1
+#else
+    #define CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE 0
+#endif
+    
+
+#if CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE
+    #define CC_ASYNC_TEXTURE_CACHE_SEMAPHORE "ccAsync"
+#else
+    static sem_t s_sem;
+#endif
+
+
 static bool need_quit;
 
 static std::queue<AsyncStruct*>        *s_pAsyncStructQueue;
@@ -104,7 +120,12 @@ static void* loadImage(void* data)
     while (true)
     {
         // wait for rendering thread to ask for loading if s_pAsyncStructQueue is empty
-        sem_wait(&s_sem);
+        int semWaitRet = sem_wait(s_pSem);
+        if( semWaitRet < 0 )
+        {
+            CCLOG( "CCTextureCache async thread semaphore error: %s\n", strerror( errno ) );
+            break;
+        }
 
         std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
 
@@ -112,10 +133,10 @@ static void* loadImage(void* data)
         if (pQueue->empty())
         {
             pthread_mutex_unlock(&s_asyncStructQueueMutex);
-    if (need_quit)
-        break;
-    else
-        continue;
+            if (need_quit)
+                break;
+            else
+                continue;
         }
         else
         {
@@ -157,6 +178,17 @@ static void* loadImage(void* data)
         pthread_mutex_unlock(&s_ImageInfoMutex);    
     }
     
+    if( s_pSem != NULL )
+    {
+    #if CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE
+        sem_unlink(CC_ASYNC_TEXTURE_CACHE_SEMAPHORE);
+        sem_close(s_pSem);
+    #else
+        sem_destroy(s_pSem);
+    #endif
+        s_pSem = NULL;
+    }
+    
     return 0;
 }
 
@@ -184,7 +216,7 @@ CCTextureCache::~CCTextureCache()
 {
     CCLOGINFO("cocos2d: deallocing CCTextureCache.");
     need_quit = true;
-    sem_post(&s_sem);
+    sem_post(s_pSem);
     CC_SAFE_RELEASE(m_pTextures);
 }
 
@@ -235,27 +267,41 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
         return;
     }
 
-    if (target)
-    {
-        target->retain();
-    }
-
     // lazy init
-    static bool firstRun = true;
-    if (firstRun)
+    if (s_pSem == NULL)
     {             
+#if CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE
+        s_pSem = sem_open(CC_ASYNC_TEXTURE_CACHE_SEMAPHORE, O_CREAT | O_EXCL, 0644, 0);
+        if( s_pSem == SEM_FAILED )
+        {
+            CCLOG( "CCTextureCache async thread semaphore init error: %s\n", strerror( errno ) );
+            s_pSem = NULL;
+            return;
+        }
+#else
+        int semInitRet = sem_init(&s_sem, 0, 0);
+        if( semInitRet < 0 )
+        {
+            CCLOG( "CCTextureCache async thread semaphore init error: %s\n", strerror( errno ) );
+            return;
+        }
+        s_pSem = &s_sem;
+#endif
         s_pAsyncStructQueue = new queue<AsyncStruct*>();
         s_pImageQueue = new queue<ImageInfo*>();        
-
+        
         pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
-        sem_init(&s_sem, 0, 0);
         pthread_mutex_init(&s_ImageInfoMutex, NULL);
         pthread_create(&s_loadingThread, NULL, loadImage, NULL);
 
         CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
 
         need_quit = false;
-        firstRun = false;
+    }
+
+    if (target)
+    {
+        target->retain();
     }
 
     // generate async struct
@@ -269,7 +315,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     s_pAsyncStructQueue->push(data);
     pthread_mutex_unlock(&s_asyncStructQueueMutex);
 
-    sem_post(&s_sem);
+    sem_post(s_pSem);
 }
 
 void CCTextureCache::addImageAsyncCallBack(ccTime dt)
