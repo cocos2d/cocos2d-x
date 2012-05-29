@@ -36,7 +36,7 @@ void CocosBuilderTestScene::runThisTest()
                                 HelloCocosBuilder::createInstance);
     
     CCNode* node = CCBReader::nodeGraphFromFile("CocosBuilder_v2/example_relativeposition.ccb");
-	this->addChild(node) ;
+    this->addChild(node) ;
     
     CCDirector::sharedDirector()->replaceScene(this);
 }
