@@ -90,7 +90,6 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
-platform/CCStdC.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/platform.cpp \
@@ -208,6 +207,8 @@ LOCAL_LDLIBS := -lGLESv2 \
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
+
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
@@ -217,4 +218,5 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libxml2)
+$(call import-module,libtiff)
 
