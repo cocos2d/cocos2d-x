@@ -6,57 +6,57 @@
 class SimpleNativeClass
 {
 protected:
-	int m_someField;
-	int m_someOtherField;
-	char* m_anotherMoreComplexField;
+    int m_someField;
+    int m_someOtherField;
+    char* m_anotherMoreComplexField;
 
 public:
-	SimpleNativeClass();
-	~SimpleNativeClass();
+    SimpleNativeClass();
+    ~SimpleNativeClass();
 
-	// these methods are simple, can be defined inline
-	int getSomeField() {
-		return m_someField;
-	};
-	int getSomeOtherField() {
-		return m_someOtherField;
-	};
-	char *getAnotherMoreComplexField() {
-		return m_anotherMoreComplexField;
-	}
-	void setSomeField(int f) {
-		m_someField = f;
-	}
-	void setSomeOtherField(int f) {
-		m_someOtherField = f;
-	}
-	void setAnotherMoreComplexField(const char *str);
+    // these methods are simple, can be defined inline
+    int getSomeField() {
+        return m_someField;
+    };
+    int getSomeOtherField() {
+        return m_someOtherField;
+    };
+    char *getAnotherMoreComplexField() {
+        return m_anotherMoreComplexField;
+    }
+    void setSomeField(int f) {
+        m_someField = f;
+    }
+    void setSomeOtherField(int f) {
+        m_someOtherField = f;
+    }
+    void setAnotherMoreComplexField(const char *str);
 
-	// std::string not working yet!
-	int doSomeProcessing(std::string arg1, std::string arg2);
+    // std::string not working yet!
+    int doSomeProcessing(std::string arg1, std::string arg2);
 };
 
 namespace SomeNamespace {
 class AnotherClass {
 protected:
-	int justOneField;
+    int justOneField;
 
 public:
-	int aPublicField;
+    int aPublicField;
 
-	AnotherClass();
-	~AnotherClass();
+    AnotherClass();
+    ~AnotherClass();
 
-	// also simple methods, can be defined inline
-	int getJustOneField() {
-		return justOneField;
-	}
-	// wrong setter - won't work (needs ONLY one parameter in order to work)
-	void setJustOneField() {
-		justOneField = 999;
-	}
+    // also simple methods, can be defined inline
+    int getJustOneField() {
+        return justOneField;
+    }
+    // wrong setter - won't work (needs ONLY one parameter in order to work)
+    void setJustOneField() {
+        justOneField = 999;
+    }
 
-	void doSomethingSimple();
+    void doSomethingSimple();
 };
 };
 

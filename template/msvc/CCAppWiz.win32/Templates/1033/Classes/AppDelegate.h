@@ -4,7 +4,7 @@
 #include "CCApplication.h"
 
 /**
-@brief	The cocos2d Application.
+@brief    The cocos2d Application.
 
 The reason for implement as private inheritance is to hide some interface call by CCDirector.
 */
@@ -15,7 +15,7 @@ public:
     virtual ~AppDelegate();
 
     /**
-    @brief	Implement CCDirector and CCScene init code here.
+    @brief    Implement CCDirector and CCScene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
