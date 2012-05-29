@@ -31,7 +31,7 @@ using namespace std;
 
 NS_CC_EXT_BEGIN
 
-#define ND_LISTVIEW_ACTION_INTERVAL        0.6666
+#define ND_LISTVIEW_ACTION_INTERVAL        0.6666f
 /******************************************
 **************Public Functions*************
 *******************************************/
@@ -1142,6 +1142,9 @@ unsigned int CCListView::triggerNumberOfCells(void)
 {
     unsigned int nRow = 0;
     CCListViewProtrolData data;
+    data.nNumberOfRows = 0;
+    data.nRow = 0;
+    data.cell = NULL;
 
     if (m_strDeletegate.size() > 0)
     {
@@ -2151,7 +2154,7 @@ bool CCListView::isMenuTouch(CCTouch *touch, CCNode *parent)
         CCArray *pChildrens = parent->getChildren();
         if (pChildrens && pChildrens->count() > 0)
         {
-            for (int i = 0; i < pChildrens->count(); i++)
+            for (unsigned int i = 0; i < pChildrens->count(); i++)
             {
                 CCNode *pChildren = (CCNode*)pChildrens->objectAtIndex(i);
                 if (this->isMenuTouch(touch, pChildren))

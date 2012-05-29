@@ -40,13 +40,13 @@ int CCBReader::intValFromDict(CCDictionary* dict, const std::string key)
 float CCBReader::floatValFromDict(CCDictionary* dict, const std::string key)
 {
     CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-    return valueString? valueString->floatValue() : 0;
+    return valueString? valueString->floatValue() : 0.0f;
 }
 
 bool CCBReader::boolValFromDict(CCDictionary* dict, const std::string key)
 {
     CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-    return valueString? ((bool)(valueString->intValue())) : false;
+    return (valueString && valueString->intValue()) ? true : false;
 }
 
 CCPoint CCBReader::pointValFromDict(CCDictionary* dict, const std::string key)

@@ -461,7 +461,7 @@ void CCEGLView::resize(int width, int height)
 
 void CCEGLView::setFrameSize(float width, float height)
 {
-    Create((LPCTSTR)m_szViewName, width, height);
+    Create((LPCTSTR)m_szViewName, (int)width, (int)height);
     CCEGLViewProtocol::setFrameSize(width, height);
 }
 
