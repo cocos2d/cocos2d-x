@@ -51,7 +51,7 @@ private:
     static CCNode* ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extraProps, 
                                           const char* assetsDir, CCNode* owner, CCNode* root);
     
-	// read different types of values from dict
+    // read different types of values from dict
 
     static int intValFromDict(CCDictionary* dict, const std::string key);
     
@@ -73,7 +73,7 @@ private:
                                                      const std::string key);
     
 private: 
-	// set properties
+    // set properties
 
     static void setExtraProp(CCObject* prop, const char* key, int tag, CCDictionary* dict);
     
