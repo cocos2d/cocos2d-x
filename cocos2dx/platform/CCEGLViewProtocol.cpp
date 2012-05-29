@@ -83,8 +83,8 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height)
     // calculate the factor and the rect of viewport    
     m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-    int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
-    int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
+    float viewPortW = m_sSizeInPoint.width * m_fScreenScaleFactor;
+    float viewPortH = m_sSizeInPoint.height * m_fScreenScaleFactor;
 
     m_rcViewPort.setRect((m_sSizeInPixel.width - viewPortW) / 2, (m_sSizeInPixel.height - viewPortH) / 2, viewPortW, viewPortH);
 
@@ -136,8 +136,8 @@ void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float 
     if (m_bNeedScale)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
-            (GLint)(y * factor) + m_rcViewPort.origin.y,
+        glViewport((GLint)(x * factor + m_rcViewPort.origin.x),
+            (GLint)(y * factor + m_rcViewPort.origin.y),
             (GLsizei)(w * factor),
             (GLsizei)(h * factor));
     }
@@ -155,8 +155,8 @@ void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h
     if (m_bNeedScale)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
-            (GLint)(y * factor) + m_rcViewPort.origin.y,
+        glScissor((GLint)(x * factor + m_rcViewPort.origin.x),
+            (GLint)(y * factor + m_rcViewPort.origin.y),
             (GLsizei)(w * factor),
             (GLsizei)(h * factor));
     }

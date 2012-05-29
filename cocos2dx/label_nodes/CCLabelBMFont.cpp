@@ -864,7 +864,7 @@ void CCLabelBMFont::createFontChars()
     }
 
     totalHeight = m_pConfiguration->m_uCommonHeight * quantityOfLines;
-    nextFontPositionY = -(m_pConfiguration->m_uCommonHeight - m_pConfiguration->m_uCommonHeight * quantityOfLines);
+    nextFontPositionY = 0-(m_pConfiguration->m_uCommonHeight - m_pConfiguration->m_uCommonHeight * quantityOfLines);
 
     for (unsigned int i= 0; i < stringLen; i++)
     {
@@ -1086,7 +1086,7 @@ void CCLabelBMFont::updateLabel()
         vector<unsigned short> last_word;
         last_word.reserve( stringLength );
 
-        int line = 1, i = 0;
+        unsigned int line = 1, i = 0;
         bool start_line = false, start_word = false;
         float startOfLine = -1, startOfWord = -1;
         int skip = 0;
@@ -1101,7 +1101,7 @@ void CCLabelBMFont::updateLabel()
 
             if (!characterSprite->getIsVisible()) continue;
 
-            if (i >= stringLength || i < 0)
+            if (i >= stringLength)
                 break;
 
             unsigned short character = str_whole[i];
@@ -1132,7 +1132,7 @@ void CCLabelBMFont::updateLabel()
                 i++;
                 line++;
 
-                if (i >= stringLength || i < 0)
+                if (i >= stringLength)
                     break;
 
                 character = str_whole[i];
@@ -1195,7 +1195,7 @@ void CCLabelBMFont::updateLabel()
                     startOfLine = -1;
                     line++;
 
-                    if (i >= stringLength || i < 0)
+                    if (i >= stringLength)
                         break;
 
                     if (!startOfWord)
@@ -1229,7 +1229,9 @@ void CCLabelBMFont::updateLabel()
         unsigned short* str_new = new unsigned short[size + 1];
 
         for (int i = 0; i < size; ++i)
+        {
             str_new[i] = multiline_string[i];
+        }
 
         str_new[size] = 0;
 
