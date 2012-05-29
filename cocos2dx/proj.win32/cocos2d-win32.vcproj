@@ -664,14 +664,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCStdC.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCStdC.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCThread.cpp"
 				>
 			</File>
@@ -732,6 +724,14 @@
 				</File>
 				<File
 					RelativePath="..\platform\win32\CCPlatformDefine.h"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCStdC.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCStdC.h"
 					>
 				</File>
 			</Filter>
