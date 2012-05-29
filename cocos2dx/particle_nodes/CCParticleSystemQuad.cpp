@@ -416,7 +416,7 @@ void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
         // Init particles
         if (m_pBatchNode)
         {
-            for (int i = 0; i < m_uTotalParticles; i++)
+            for (unsigned int i = 0; i < m_uTotalParticles; i++)
             {
                 m_pParticles[i].atlasIndex=i;
             }

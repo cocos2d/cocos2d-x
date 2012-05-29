@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 05/02/12 17:22:41.
+** Generated automatically by tolua++-1.0.92 on 05/29/12 17:22:57.
 */
 
 #include <vector>
@@ -23,120 +23,120 @@ using namespace CocosDenshion;
 static int tolua_collect_CCPoint (lua_State* tolua_S)
 {
  CCPoint* self = (CCPoint*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccV3F_C4B_T2F_Quad (lua_State* tolua_S)
 {
  ccV3F_C4B_T2F_Quad* self = (ccV3F_C4B_T2F_Quad*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_CCAnimation (lua_State* tolua_S)
 {
  CCAnimation* self = (CCAnimation*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccGridSize (lua_State* tolua_S)
 {
  ccGridSize* self = (ccGridSize*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccColor4F (lua_State* tolua_S)
 {
  ccColor4F* self = (ccColor4F*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_CCSize (lua_State* tolua_S)
 {
  CCSize* self = (CCSize*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_CCFloat (lua_State* tolua_S)
 {
  CCFloat* self = (CCFloat*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccColor4B (lua_State* tolua_S)
 {
  ccColor4B* self = (ccColor4B*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccTex2F (lua_State* tolua_S)
 {
  ccTex2F* self = (ccTex2F*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
 {
  CCAffineTransform* self = (CCAffineTransform*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
 {
  ccBlendFunc* self = (ccBlendFunc*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccVertex2F (lua_State* tolua_S)
 {
  ccVertex2F* self = (ccVertex2F*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccColor3B (lua_State* tolua_S)
 {
  ccColor3B* self = (ccColor3B*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_ccVertex3F (lua_State* tolua_S)
 {
  ccVertex3F* self = (ccVertex3F*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_CCRect (lua_State* tolua_S)
 {
  CCRect* self = (CCRect*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_CCAnimationFrame (lua_State* tolua_S)
 {
  CCAnimationFrame* self = (CCAnimationFrame*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 
 static int tolua_collect_CCCamera (lua_State* tolua_S)
 {
  CCCamera* self = (CCCamera*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
+	Mtolua_delete(self);
+	return 0;
 }
 #endif
 
@@ -10482,7 +10482,7 @@ static int tolua_Cocos2d_ccDrawCircle00(lua_State* tolua_S)
   CCPoint center = *((CCPoint*)  tolua_tousertype(tolua_S,1,0));
   float radius = ((float)  tolua_tonumber(tolua_S,2,0));
   float angle = ((float)  tolua_tonumber(tolua_S,3,0));
-  int segments = ((int)  tolua_tonumber(tolua_S,4,0));
+  unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
   bool drawLineToCenter = ((bool)  tolua_toboolean(tolua_S,5,0));
   {
    ccDrawCircle(center,radius,angle,segments,drawLineToCenter);
@@ -10517,7 +10517,7 @@ static int tolua_Cocos2d_ccDrawQuadBezier00(lua_State* tolua_S)
   CCPoint origin = *((CCPoint*)  tolua_tousertype(tolua_S,1,0));
   CCPoint control = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
   CCPoint destination = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
-  int segments = ((int)  tolua_tonumber(tolua_S,4,0));
+  unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
   {
    ccDrawQuadBezier(origin,control,destination,segments);
   }
@@ -10553,7 +10553,7 @@ static int tolua_Cocos2d_ccDrawCubicBezier00(lua_State* tolua_S)
   CCPoint control1 = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
   CCPoint control2 = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
   CCPoint destination = *((CCPoint*)  tolua_tousertype(tolua_S,4,0));
-  int segments = ((int)  tolua_tonumber(tolua_S,5,0));
+  unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,5,0));
   {
    ccDrawCubicBezier(origin,control1,control2,destination,segments);
   }

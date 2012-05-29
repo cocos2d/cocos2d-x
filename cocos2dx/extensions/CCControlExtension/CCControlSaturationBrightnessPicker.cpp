@@ -94,8 +94,8 @@ void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPos
     // Clamp the position of the icon within the circle
     
     // Get the center point of the bkgd image
-    float centerX           = m_startPos.x + m_background->boundingBox().size.width*.5;
-    float centerY           = m_startPos.y + m_background->boundingBox().size.height*.5;
+    float centerX           = m_startPos.x + m_background->boundingBox().size.width*0.5f;
+    float centerY           = m_startPos.y + m_background->boundingBox().size.height*0.5f;
     
     // Work out the distance difference between the location and center
     float dx                = sliderPosition.x - centerX;
@@ -106,7 +106,7 @@ void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPos
     float angle             = atan2f(dy, dx);
     
     // Set the limit to the slider movement within the colour picker
-    float limit             = m_background->boundingBox().size.width*.5;
+    float limit             = m_background->boundingBox().size.width*0.5f;
     
     // Check distance doesn't exceed the bounds of the circle
     if (dist > limit)
@@ -126,7 +126,7 @@ void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPos
     else if (sliderPosition.y > m_startPos.y + boxPos + boxSize)        sliderPosition.y = m_startPos.y + boxPos + boxSize;
     
     // Use the position / slider width to determin the percentage the dragger is at
-    m_saturation = 1.0 - fabs((m_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
+    m_saturation = 1.0f - fabs((m_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
     m_brightness = fabs((m_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
 }
 
@@ -135,8 +135,8 @@ bool CCControlSaturationBrightnessPicker::checkSliderPosition(CCPoint location)
     // Clamp the position of the icon within the circle
     
     // get the center point of the bkgd image
-    float centerX           = m_startPos.x + m_background->boundingBox().size.width*.5;
-    float centerY           = m_startPos.y + m_background->boundingBox().size.height*.5;
+    float centerX           = m_startPos.x + m_background->boundingBox().size.width*0.5f;
+    float centerY           = m_startPos.y + m_background->boundingBox().size.height*0.5f;
     
     // work out the distance difference between the location and center
     float dx                = location.x - centerX;

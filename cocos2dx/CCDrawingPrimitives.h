@@ -73,17 +73,17 @@ void CC_DLL ccDrawPoly( const CCPoint *vertices, unsigned int numOfVertices, boo
 void CC_DLL ccDrawFilledPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4F color );
 
 /** draws a circle given the center, radius and number of segments. */
-void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, int segments, bool drawLineToCenter);
+void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
 
 /** draws a quad bezier path
  @since v0.8
  */
-void CC_DLL ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, int segments);
+void CC_DLL ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, unsigned int segments);
 
 /** draws a cubic bezier path
  @since v0.8
  */
-void CC_DLL ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments);
+void CC_DLL ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, unsigned int segments);
 
 /** set the drawing color with 4 unsigned bytes
  @since v2.0
