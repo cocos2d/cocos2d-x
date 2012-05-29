@@ -244,7 +244,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
      It means that image is compressed as flipped. We don't
      support automatic flipping.
      */
-    bool flipped = (bool)(flags & kPVRTextureFlagVerticalFlip);
+    bool flipped = (flags & kPVRTextureFlagVerticalFlip) ? true : false;
     if ( flipped )
     {
         CCLOG("cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
