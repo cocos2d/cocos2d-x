@@ -83,6 +83,9 @@ Developers:
     YuLei Liao(dualface)
         contribute the factor of lua binding
 
+    jreitman
+        fix the bug of asynchronous loading resources for iOS
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
