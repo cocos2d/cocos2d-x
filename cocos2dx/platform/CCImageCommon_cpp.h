@@ -392,19 +392,19 @@ out:
 static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
 {
     tImageSource* isource = (tImageSource*)fd;
-	uint8* ma;
-	uint64 mb;
-	unsigned long n;
-	unsigned long o;
-	tmsize_t p;
-	ma=(uint8*)buf;
-	mb=size;
-	p=0;
-	while (mb>0)
-	{
-		n=0x80000000UL;
-		if ((uint64)n>mb)
-			n=(unsigned long)mb;
+    uint8* ma;
+    uint64 mb;
+    unsigned long n;
+    unsigned long o;
+    tmsize_t p;
+    ma=(uint8*)buf;
+    mb=size;
+    p=0;
+    while (mb>0)
+    {
+        n=0x80000000UL;
+        if ((uint64)n>mb)
+            n=(unsigned long)mb;
 
 
         if((int)(isource->offset + n) <= isource->size)
@@ -418,15 +418,15 @@ static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
             return 0;
         }
 
-		ma+=o;
-		mb-=o;
-		p+=o;
-		if (o!=n)
+        ma+=o;
+        mb-=o;
+        p+=o;
+        if (o!=n)
         {
-			break;
+            break;
         }
-	}
-	return p;
+    }
+    return p;
 }
 
 static tmsize_t _tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
@@ -434,7 +434,7 @@ static tmsize_t _tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
     CC_UNUSED_PARAM(fd);
     CC_UNUSED_PARAM(buf);
     CC_UNUSED_PARAM(size);
-	return 0;
+    return 0;
 }
 
 
@@ -444,7 +444,7 @@ static uint64 _tiffSeekProc(thandle_t fd, uint64 off, int whence)
     uint64 ret = -1;
     do 
     {
-	    if (whence == SEEK_SET)
+        if (whence == SEEK_SET)
         {
             CC_BREAK_IF(off > isource->size-1);
             ret = isource->offset = (uint32)off;

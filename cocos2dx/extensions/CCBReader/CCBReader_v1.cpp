@@ -33,31 +33,31 @@ USING_NS_CC_EXT;
 
 int CCBReader::intValFromDict(CCDictionary* dict, const std::string key)
 {
-	CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-	return valueString->intValue();
+    CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
+    return valueString->intValue();
 }
 
 float CCBReader::floatValFromDict(CCDictionary* dict, const std::string key)
 {
-	CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
+    CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
     return valueString->floatValue();
 }
 
 bool CCBReader::boolValFromDict(CCDictionary* dict, const std::string key)
 {
-	CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
+    CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
     return (bool) valueString->intValue();
 }
 
 CCPoint CCBReader::pointValFromDict(CCDictionary* dict, const std::string key)
 {
-	CCArray* arr = (CCArray*)dict->objectForKey(key.c_str());
-	
+    CCArray* arr = (CCArray*)dict->objectForKey(key.c_str());
+    
     if (!arr) 
-	{
-		return ccp(0,0);
-	}
-	
+    {
+        return ccp(0,0);
+    }
+    
     float x = ((CCString*)arr->objectAtIndex(0))->floatValue();
     float y = ((CCString*)arr->objectAtIndex(1))->floatValue();
     return ccp(x, y);
@@ -65,13 +65,13 @@ CCPoint CCBReader::pointValFromDict(CCDictionary* dict, const std::string key)
 
 CCSize CCBReader::sizeValFromDict(CCDictionary* dict, const std::string key)
 {
-	CCArray* arr = (CCArray*) dict->objectForKey(key.c_str());
-	
+    CCArray* arr = (CCArray*) dict->objectForKey(key.c_str());
+    
     if (!arr) 
-	{
-		return CCSize(0, 0);
-	}
-	
+    {
+        return CCSize(0, 0);
+    }
+    
     float w = ((CCString*)arr->objectAtIndex(0))->floatValue();
     float h = ((CCString*)arr->objectAtIndex(1))->floatValue();
     return CCSize(w, h);
@@ -79,39 +79,39 @@ CCSize CCBReader::sizeValFromDict(CCDictionary* dict, const std::string key)
 
 ccColor3B CCBReader::ccColor3ValFromDict(CCDictionary* dict, const std::string key)
 {
-	CCArray* arr = (CCArray*) dict->objectForKey(key.c_str());
-	
+    CCArray* arr = (CCArray*) dict->objectForKey(key.c_str());
+    
     int r = ((CCString*)arr->objectAtIndex(0))->intValue();
     int g = ((CCString*)arr->objectAtIndex(1))->intValue();
     int b = ((CCString*)arr->objectAtIndex(2))->intValue();
-	
+    
     return ccc3(r, g, b);
 }
 
 ccColor4F CCBReader::ccColor4fValFromDict(CCDictionary* dict, const std::string key)
 {
-	CCArray* arr = (CCArray*) dict->objectForKey(key.c_str());
-	
+    CCArray* arr = (CCArray*) dict->objectForKey(key.c_str());
+    
     ccColor4F color;
     color.r = ((CCString*)arr->objectAtIndex(0))->floatValue();
     color.g = ((CCString*)arr->objectAtIndex(1))->floatValue();
     color.b = ((CCString*)arr->objectAtIndex(2))->floatValue();
     color.a = ((CCString*)arr->objectAtIndex(3))->floatValue();
-	
+    
     return color;
 }
 
 ccBlendFunc CCBReader::blendFuncValFromDict(CCDictionary* dict, const std::string key)
 {
-	CCArray* arr = (CCArray*) dict->objectForKey(key.c_str());
-	
+    CCArray* arr = (CCArray*) dict->objectForKey(key.c_str());
+    
     int src = ((CCString*)arr->objectAtIndex(0))->intValue();
     int dst = ((CCString*)arr->objectAtIndex(1))->intValue();
-	
+    
     ccBlendFunc blendFunc;
     blendFunc.src = src;
     blendFunc.dst = dst;
-	
+    
     return blendFunc;
 }
 
@@ -119,10 +119,10 @@ ccBlendFunc CCBReader::blendFuncValFromDict(CCDictionary* dict, const std::strin
 
 void CCBReader::setExtraProp(CCObject* prop, const char* key, int tag, CCDictionary* dict)
 {
-	std::string tagString;
-	tagString += tag;
+    std::string tagString;
+    tagString += tag;
     CCDictionary* props = (CCDictionary*) dict->objectForKey(tagString.c_str());
-	
+    
     if (!props)
     {
         props = new CCDictionary();
@@ -140,7 +140,7 @@ void CCBReader::setPropsForMenuItem(CCMenuItem* node, CCDictionary* props, CCDic
         setExtraProp((CCDictionary*) props->objectForKey("selector"), "selector", node->getTag(), extraProps);
         setExtraProp((CCDictionary*) props->objectForKey("target"), "target", node->getTag(), extraProps);
         CCString* spriteFramesFile = (CCString*) props->objectForKey("spriteFramesFile");
-		
+        
         if (spriteFramesFile)
         {
             setExtraProp(spriteFramesFile, "spriteSheetFile", node->getTag(), extraProps);
@@ -193,7 +193,7 @@ void CCBReader::setPropsForLabelBMFont(CCLabelBMFont* node, CCDictionary* props,
 {
     node->setOpacity(intValFromDict(props, "opacity"));
     node->setColor(ccColor3ValFromDict(props, "color"));
-	
+    
     if (extraProps)
     {
         setExtraProp(props->objectForKey("fontFile"), "fontFile", node->getTag(), extraProps);
@@ -221,7 +221,7 @@ void CCBReader::setPropsForParticleSystem(CCParticleSystem* node, CCDictionary* 
         node->setEndSpin(intValFromDict(props, "endSpin"));
         node->setEndSpinVar(intValFromDict(props, "endSpinVar"));
     }
-	
+    
     node->setStartColor(ccColor4fValFromDict(props, "startColor"));
     node->setStartColorVar(ccColor4fValFromDict(props, "startColorVar"));
     node->setEndColor(ccColor4fValFromDict(props, "endColor"));
@@ -286,12 +286,12 @@ void CCBReader::setPropsForSprite(CCSprite* node, CCDictionary* props, CCDiction
     node->setFlipX(boolValFromDict(props, "flipX"));
     node->setFlipY(boolValFromDict(props, "flipY"));
     node->setBlendFunc(blendFuncValFromDict(props, "blendFunc"));
-	
+    
     if (extraProps)
     {
         setExtraProp(props->objectForKey("spriteFile"), "spriteFile", node->getTag(), extraProps);
         CCString* spriteFramesFile = (CCString*) props->objectForKey("spriteFramesFile");
-		
+        
         if (spriteFramesFile)
         {
             setExtraProp(spriteFramesFile, "spriteSheetFile", node->getTag(), extraProps);
@@ -301,17 +301,17 @@ void CCBReader::setPropsForSprite(CCSprite* node, CCDictionary* props, CCDiction
 
 void CCBReader::setPropsForNode(CCNode* node, CCDictionary* props, CCDictionary* extraProps)
 {
-	CCPoint position = pointValFromDict(props, "position");
-	node->setPosition(position);
+    CCPoint position = pointValFromDict(props, "position");
+    node->setPosition(position);
 
     if (dynamic_cast<CCSprite*>(node) == NULL &&
         dynamic_cast<CCMenuItemImage*>(node) == NULL &&
         dynamic_cast<CCLabelBMFont*>(node) == NULL)
     {
-		CCSize size = sizeValFromDict(props, "contentSize");
-		//node->setContentSize(size);
+        CCSize size = sizeValFromDict(props, "contentSize");
+        //node->setContentSize(size);
     }
-	
+    
     node->setScaleX(floatValFromDict(props, "scaleX"));
     node->setScaleY(floatValFromDict(props, "scaleY"));
     node->setAnchorPoint(pointValFromDict(props, "anchorPoint"));
@@ -330,20 +330,20 @@ void CCBReader::setPropsForNode(CCNode* node, CCDictionary* props, CCDictionary*
         
         setExtraProp((CCDictionary*) props->objectForKey("customClass"), "customClass", node->getTag(), extraProps);
         setExtraProp((CCDictionary*) props->objectForKey("memberVarAssignmentType"), "memberVarAssignmentType", node->getTag(), extraProps);
-		setExtraProp((CCDictionary*) props->objectForKey("memberVarAssignmentName"), "memberVarAssignmentName", node->getTag(), extraProps);
+        setExtraProp((CCDictionary*) props->objectForKey("memberVarAssignmentName"), "memberVarAssignmentName", node->getTag(), extraProps);
         setExtraProp((CCDictionary*) props->objectForKey("lockedScaleRatio"), "lockedScaleRatio", node->getTag(), extraProps);
         
         // Expanded nodes
         bool isExpanded;
         CCString* isExpandedObj = (CCString*) props->objectForKey("isExpanded");
-		
+        
         if (isExpandedObj) {
-			isExpanded = !isExpandedObj->m_sString.empty();
-		} else {
-			isExpanded = true;
-		}
-				
-		setExtraProp(isExpandedObj, "isExpanded", node->getTag(), extraProps);
+            isExpanded = !isExpandedObj->m_sString.empty();
+        } else {
+            isExpanded = true;
+        }
+                
+        setExtraProp(isExpandedObj, "isExpanded", node->getTag(), extraProps);
     }
     else
     {
@@ -355,38 +355,38 @@ void CCBReader::setPropsForNode(CCNode* node, CCDictionary* props, CCDictionary*
 CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extraProps, 
                                           const char* assetsDir, CCNode* owner, CCNode* root)
 {
-	CCString* className = (CCString*) dict->objectForKey("class");
+    CCString* className = (CCString*) dict->objectForKey("class");
     CCDictionary* props = (CCDictionary*) dict->objectForKey("properties");
     CCArray* children = (CCArray*) dict->objectForKey("children");
 
     CCString* customClass = (CCString*)props->objectForKey("customClass");
-	
+    
     if (extraProps) customClass = NULL;
     
     CCNode* node = NULL;
 
-	if (className->m_sString.compare("CCParticleSystem") == 0)
+    if (className->m_sString.compare("CCParticleSystem") == 0)
     {
         CCString* spriteFile = new CCString(assetsDir);
-		spriteFile->m_sString += ((CCString*)props->objectForKey("spriteFile"))->m_sString;
-		
+        spriteFile->m_sString += ((CCString*)props->objectForKey("spriteFile"))->m_sString;
+        
         CCParticleSystem* sys = new CCParticleSystemQuad();
-		sys->initWithTotalParticles(2048);
+        sys->initWithTotalParticles(2048);
         sys->setTexture(CCTextureCache::sharedTextureCache()->addImage(spriteFile->m_sString.c_str()));
-		delete spriteFile;
+        delete spriteFile;
         node = (CCNode*)sys;
-		
+        
         setPropsForNode((CCNode*)node, (CCDictionary*) props, extraProps);
         setPropsForParticleSystem((CCParticleSystem*) node, (CCDictionary*) props, extraProps);
     }
     else if (className->m_sString.compare("CCMenuItemImage") == 0)
     {
         CCString* spriteFileNormal = new CCString(assetsDir);
-		spriteFileNormal->m_sString += ((CCString*)props->objectForKey("spriteFileNormal"))->getCString();
+        spriteFileNormal->m_sString += ((CCString*)props->objectForKey("spriteFileNormal"))->getCString();
         CCString* spriteFileSelected = new CCString(assetsDir);
-		spriteFileSelected->m_sString += ((CCString*)props->objectForKey("spriteFileSelected"))->getCString();
+        spriteFileSelected->m_sString += ((CCString*)props->objectForKey("spriteFileSelected"))->getCString();
         CCString* spriteFileDisabled = new CCString(assetsDir);
-		spriteFileDisabled->m_sString += ((CCString*)props->objectForKey("spriteFileDisabled"))->getCString();
+        spriteFileDisabled->m_sString += ((CCString*)props->objectForKey("spriteFileDisabled"))->getCString();
         
         CCSprite* spriteNormal = NULL;
         CCSprite* spriteSelected = NULL;
@@ -394,12 +394,12 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         
         CCString* spriteSheetFile = (CCString*)props->objectForKey("spriteFramesFile");
         if (spriteSheetFile  && !spriteSheetFile->length()) {
-			spriteSheetFile->m_sString.insert(0, assetsDir);
-		}
+            spriteSheetFile->m_sString.insert(0, assetsDir);
+        }
         
         if (spriteSheetFile && !spriteSheetFile->length())
         {
-			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spriteSheetFile->m_sString.c_str());
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spriteSheetFile->m_sString.c_str());
             
             spriteNormal = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileNormal"))->getCString());
             spriteSelected = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileSelected"))->getCString());
@@ -412,16 +412,16 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             spriteSelected = CCSprite::spriteWithFile(spriteFileSelected->m_sString.c_str());
             spriteDisabled = CCSprite::spriteWithFile(spriteFileDisabled->m_sString.c_str());
         }
-		
-		//deallocate
+        
+        //deallocate
         CC_SAFE_DELETE(spriteFileNormal);
         CC_SAFE_DELETE(spriteFileSelected);
         CC_SAFE_DELETE(spriteFileDisabled);
         
         if (!spriteNormal) spriteNormal = CCSprite::spriteWithFile("missing-texture.png");
         if (!spriteSelected) spriteSelected = CCSprite::spriteWithFile("missing-texture.png");
-		if (!spriteDisabled) spriteDisabled = CCSprite::spriteWithFile("missing-texture.png");
-		
+        if (!spriteDisabled) spriteDisabled = CCSprite::spriteWithFile("missing-texture.png");
+        
         CCNode *target = NULL ;
         if ( extraProps == NULL )
         {
@@ -446,7 +446,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             target = NULL ;
         }
         
-		node = (CCNode*)CCMenuItemImage::itemWithNormalSprite((CCNode*) spriteNormal, (CCNode*) spriteSelected, (CCNode*) spriteDisabled, target, sel);
+        node = (CCNode*)CCMenuItemImage::itemWithNormalSprite((CCNode*) spriteNormal, (CCNode*) spriteSelected, (CCNode*) spriteDisabled, target, sel);
         
         setPropsForNode(node, (CCDictionary*) props, extraProps);
         setPropsForMenuItem((CCMenuItem*) node, (CCDictionary*) props, extraProps);
@@ -455,38 +455,38 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
     else if (className->m_sString.compare("CCMenu") == 0)
     {
         node = (CCNode*)CCMenu::menuWithItems(NULL);
-		setPropsForNode(node, (CCDictionary*) props, extraProps);
+        setPropsForNode(node, (CCDictionary*) props, extraProps);
         setPropsForLayer((CCLayer*) node, (CCDictionary*) props, extraProps);
         setPropsForMenu((CCMenu*)node, (CCDictionary*) props, extraProps);
     }
-	else if (className->m_sString.compare("CCLabelBMFont") == 0)
+    else if (className->m_sString.compare("CCLabelBMFont") == 0)
     {
         CCString* fontFile = new CCString(assetsDir);
-		fontFile->m_sString += ((CCString*)props->objectForKey("fontFile"))->m_sString;
+        fontFile->m_sString += ((CCString*)props->objectForKey("fontFile"))->m_sString;
         CCString* stringText = ((CCString*)props->objectForKey("string"));
-		
+        
         node = (CCNode*)CCLabelBMFont::labelWithString(stringText->m_sString.c_str(), 
                                                         fontFile->m_sString.c_str() );
 
-		
-		delete fontFile;
-		fontFile = 0;
-		
+        
+        delete fontFile;
+        fontFile = 0;
+        
         if (!node) node = (CCNode*)CCLabelBMFont::labelWithString(stringText->m_sString.c_str(), "missing-font.fnt");
         
         setPropsForNode(node, (CCDictionary*) props, extraProps);
-		setPropsForLabelBMFont((CCLabelBMFont*) node, (CCDictionary*) props, extraProps);
+        setPropsForLabelBMFont((CCLabelBMFont*) node, (CCDictionary*) props, extraProps);
     }
-	else if (className->m_sString.compare("CCSprite") == 0)
+    else if (className->m_sString.compare("CCSprite") == 0)
     {
         CCString* spriteFile = new CCString(assetsDir);
-		spriteFile->m_sString += ((CCString*)props->objectForKey("spriteFile"))->m_sString;
+        spriteFile->m_sString += ((CCString*)props->objectForKey("spriteFile"))->m_sString;
         CCString* spriteSheetFile = (CCString*)props->objectForKey("spriteFramesFile");
-		
+        
         if (spriteSheetFile && !spriteSheetFile->length())
-		{
-			spriteSheetFile->m_sString.insert(0, assetsDir);
-		}
+        {
+            spriteSheetFile->m_sString.insert(0, assetsDir);
+        }
         
         if (spriteSheetFile && !spriteSheetFile->length())
         {
@@ -499,7 +499,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             printf("spriteFile->m_string.cstr is %s\n", spriteFile->m_sString.c_str()) ;
             node = (CCNode*)CCSprite::spriteWithFile(spriteFile->m_sString.c_str());
         }
-		
+        
         CC_SAFE_RELEASE_NULL(spriteFile);
         
         if (!node) node = (CCNode*)CCSprite::spriteWithFile("missing-texture.png");
@@ -515,7 +515,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             if (dynamic_cast<CCLayerGradient*>(node) == NULL)
             {
                 CCLOG("WARNING! %s is not subclass of CCNode", customClass);
-				delete node;
+                delete node;
                 node = NULL;
             }
         }
@@ -538,7 +538,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             if (dynamic_cast<CCLayerColor*>(node) == NULL)
             {
                 CCLOG("WARNING! %s is not subclass of CCNode", customClass);
-				delete node;
+                delete node;
                 node = NULL;
             }
         }
@@ -558,7 +558,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             if (dynamic_cast<CCLayer*>(node) == NULL)
             {
                 CCLOG("WARNING! %s is not subclass of CCNode", customClass);
-				delete node;
+                delete node;
                 node = NULL;
             }
         }
@@ -579,7 +579,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             if (dynamic_cast<CCNode*>(node) == NULL)
             {
                 CCLOG("WARNING! %s is not subclass of CCNode", customClass);
-				delete node;
+                delete node;
                 node = NULL;
             }
         }
@@ -587,12 +587,12 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         {
             node = (CCNode*)CCNode::node();
         }
-		
+        
         setPropsForNode(node, (CCDictionary*) props, extraProps);
     }
     else
     {
-		CCLOG("WARNING! Class of type %@ couldn't be found", className);
+        CCLOG("WARNING! Class of type %@ couldn't be found", className);
         return NULL;
     }
     
@@ -604,14 +604,14 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         CCDictionary* childDict = (CCDictionary*) children->objectAtIndex(i);
         CCNode* child = ccObjectFromDictionary(childDict, extraProps, assetsDir, owner, root);
         int zOrder = intValFromDict((CCDictionary*) childDict->objectForKey("properties"), "zOrder");
-		
+        
         if (child && node)
         {
             node->addChild(child, zOrder);
         }
         else
         {
-			CCLOG("WARNING! Failed to add child to node");
+            CCLOG("WARNING! Failed to add child to node");
         }
     }
     
@@ -660,12 +660,12 @@ CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict,
                                            const char* assetsDir, 
                                            CCNode* owner)
 {
-	if (!dict)
+    if (!dict)
     {
         CCLOG("WARNING! Trying to load invalid file type");
         return NULL;
     }
-	
+    
     CCString* fileType = (CCString*) dict->objectForKey("fileType");
     int fileVersion = ((CCString*) dict->objectForKey("fileVersion"))->intValue();
     
@@ -686,8 +686,8 @@ CCNode* CCBReader::nodeGraphFromDictionary(CCDictionary* dict,
 
 CCNode* CCBReader::nodeGraphFromFile(const char* file, CCNode* owner)
 {
-	CCLOG("CCBReader path is: %s", file);    
-	std::string ccbFilePath(file);
+    CCLOG("CCBReader path is: %s", file);    
+    std::string ccbFilePath(file);
     std::string ccbFileDir;
     
     // find ccbFileDir before "/" or "\"
@@ -700,8 +700,8 @@ CCNode* CCBReader::nodeGraphFromFile(const char* file, CCNode* owner)
     }
     
     CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(ccbFilePath.c_str());
-	CCAssert(dict != NULL, "CCBReader: file not found");
+    CCAssert(dict != NULL, "CCBReader: file not found");
     
-	return nodeGraphFromDictionary(dict, NULL, ccbFileDir.c_str(), owner);
+    return nodeGraphFromDictionary(dict, NULL, ccbFileDir.c_str(), owner);
 }
 
