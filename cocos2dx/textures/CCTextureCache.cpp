@@ -216,7 +216,11 @@ CCTextureCache::~CCTextureCache()
 {
     CCLOGINFO("cocos2d: deallocing CCTextureCache.");
     need_quit = true;
-    sem_post(s_pSem);
+    if (s_pSem != NULL)
+    {
+        sem_post(s_pSem);
+    }
+    
     CC_SAFE_RELEASE(m_pTextures);
 }
 
