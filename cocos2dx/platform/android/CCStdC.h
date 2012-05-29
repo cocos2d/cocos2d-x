@@ -22,38 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCStdC.h"
+#ifndef __CC_STD_C_H__
+#define __CC_STD_C_H__
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "CCPlatformMacros.h"
+#include <float.h>
+#include <math.h>
+#include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/time.h>
 
-int CC_DLL gettimeofday(struct timeval * val, struct timezone *)
-{
-    if (val)
-    {
-        LARGE_INTEGER liTime, liFreq;
-        QueryPerformanceFrequency( &liFreq );
-        QueryPerformanceCounter( &liTime );
-        val->tv_sec     = (long)( liTime.QuadPart / liFreq.QuadPart );
-        val->tv_usec    = (long)( liTime.QuadPart * 1000000.0 / liFreq.QuadPart - val->tv_sec * 1000000.0 );
-    }
-    return 0;
-}
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#ifndef MIN
+#define MIN(x,y) (((x) > (y)) ? (y) : (x))
+#endif  // MIN
 
-using namespace Osp::System;
+#ifndef MAX
+#define MAX(x,y) (((x) < (y)) ? (y) : (x))
+#endif  // MAX
 
-int CC_DLL gettimeofday(struct timeval * val, struct timezone *)
-{
-    if (val)
-    {
-        long long curTick = 0;
-        SystemTime::GetTicks(curTick);
-        unsigned int ms = curTick;
-        val->tv_sec = ms / 1000;
-        val->tv_usec = (ms % 1000) * 1000;
-    }
-    return 0;
-}
-
-
-#endif  // CC_PLATFORM_WIN32
+#endif  // __CC_STD_C_H__
