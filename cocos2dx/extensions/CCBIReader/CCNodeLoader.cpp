@@ -203,6 +203,13 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 }
                 break;
             }
+            case kCCBPropTypeFontTTF: {
+                std::string fontTTF = this->parsePropTypeFontTTF(pNode, pParent, pCCBReader);
+                if(setProp) {
+                    this->onHandlePropTypeFontTTF(pNode, pParent, propertyName, fontTTF, pCCBReader);
+                }
+                break;
+            }
             case kCCBPropTypeString: {
                 std::string string = this->parsePropTypeString(pNode, pParent, pCCBReader);
                 if(setProp) {
@@ -766,7 +773,7 @@ void CCNodeLoader::onHandlePropTypeString(CCNode * pNode, CCNode * pParent, std:
     ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-void CCNodeLoader::onHandlePropTypeText(CCNode * pNode, CCNode * pParent, std::string pPropertyName, std::string pString, CCBReader * pCCBReader) {
+void CCNodeLoader::onHandlePropTypeText(CCNode * pNode, CCNode * pParent, std::string pPropertyName, std::string pText, CCBReader * pCCBReader) {
     ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
