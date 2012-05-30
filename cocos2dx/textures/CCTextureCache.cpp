@@ -275,7 +275,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     if (s_pSem == NULL)
     {             
 #if CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE
-        s_pSem = sem_open(CC_ASYNC_TEXTURE_CACHE_SEMAPHORE, O_CREAT | O_EXCL, 0644, 0);
+        s_pSem = sem_open(CC_ASYNC_TEXTURE_CACHE_SEMAPHORE, O_CREAT, 0644, 0);
         if( s_pSem == SEM_FAILED )
         {
             CCLOG( "CCTextureCache async thread semaphore init error: %s\n", strerror( errno ) );
