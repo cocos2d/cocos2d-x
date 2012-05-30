@@ -15,6 +15,8 @@ class CCLabelBMFontLoader : public CCNodeLoader {
         virtual void onHandlePropTypeColor3(cocos2d::CCNode *, cocos2d::CCNode *, std::string, cocos2d::ccColor3B, CCBReader *);
         virtual void onHandlePropTypeByte(CCNode *, CCNode *, std::string, unsigned char, CCBReader *);
         virtual void onHandlePropTypeBlendFunc(CCNode *, CCNode *, std::string, ccBlendFunc, CCBReader *);
+        virtual void onHandlePropTypeFntFile(CCNode *, CCNode *, std::string, std::string, CCBReader *);
+        virtual void onHandlePropTypeText(CCNode *, CCNode *, std::string, std::string, CCBReader *);
 };
 
 NS_CC_EXT_END
