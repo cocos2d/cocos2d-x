@@ -26,7 +26,7 @@
 
 USING_NS_CC_EXT;
 
-static CCBCustomClassFactory g_FactoryInstance;
+static CCBCustomClassFactory* g_pFactoryInstance = NULL;
 
 // CCBCustomClassFactory
 CCBCustomClassFactory::CCBCustomClassFactory()
@@ -41,8 +41,16 @@ CCBCustomClassFactory::~CCBCustomClassFactory()
 
 CCBCustomClassFactory* CCBCustomClassFactory::sharedFactory()
 {
-    // TBD: don't use static global variable, so ugly
-    return &g_FactoryInstance;
+    if (g_pFactoryInstance == NULL)
+    {
+        g_pFactoryInstance = new CCBCustomClassFactory();
+    }
+    return g_pFactoryInstance;
+}
+
+void CCBCustomClassFactory::purgeFactory()
+{
+    CC_SAFE_DELETE(g_pFactoryInstance);
 }
 
 bool CCBCustomClassFactory::registCustomClass(const char* name, FUNC_CUSTON_CLASS_CREATOR pfnCreator)
