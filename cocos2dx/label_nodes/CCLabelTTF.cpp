@@ -152,6 +152,15 @@ void CCLabelTTF::setFontSize(float fontSize)
         this->setString(this->m_pString->c_str());
     }
 }
+void CCLabelTTF::setDimensions(CCSize dimensions)
+{
+    if(this->m_tDimensions.width != dimensions.width || this->m_tDimensions.height != dimensions.height)
+    {
+        this->m_tDimensions = dimensions;
+        
+        this->setString(this->m_pString->c_str());
+    }
+}
 void CCLabelTTF::setHorizontalAlignment(CCTextAlignment pCCTextAlignment)
 {
     if(this->m_eAlignment != pCCTextAlignment)

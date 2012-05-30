@@ -62,6 +62,7 @@ public:
     virtual const char* getString(void);
     virtual void setFontName(const char *fontName);
     virtual void setFontSize(float fontSize);
+    virtual void setDimensions(CCSize dim);
     virtual void setHorizontalAlignment(CCTextAlignment);
 //  virtual void setVerticalAlignment(...); // ( See: 63d9724ac4d81a05c6ec7feea0c01bcd27c8fc6b )
 
