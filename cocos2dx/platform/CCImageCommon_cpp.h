@@ -244,8 +244,10 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         while( cinfo.output_scanline < cinfo.image_height )
         {
             jpeg_read_scanlines( &cinfo, row_pointer, 1 );
-            for( i=0; i<cinfo.image_width*cinfo.num_components;i++) 
+            for( i=0; i<cinfo.image_width*cinfo.output_components;i++) 
+            {
                 m_pData[location++] = row_pointer[0][i];
+            }
         }
 
         jpeg_finish_decompress( &cinfo );
