@@ -3,6 +3,7 @@
 #include "CCLayerColorLoader.h"
 #include "CCLayerGradientLoader.h"
 #include "CCLabelBMFontLoader.h"
+#include "CCLabelTTFLoader.h"
 #include "CCSpriteLoader.h"
 #include "CCBReader.h"
 #include <string>
@@ -17,6 +18,7 @@ CCBReader::CCBReader() {
     this->registerCCNodeLoader("CCLayerGradient", new CCLayerGradientLoader());
     this->registerCCNodeLoader("CCSprite", new CCSpriteLoader());
     this->registerCCNodeLoader("CCLabelBMFont", new CCLabelBMFontLoader());
+    this->registerCCNodeLoader("CCLabelTTF", new CCLabelTTFLoader());
 }
 
 void CCBReader::registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader) {
