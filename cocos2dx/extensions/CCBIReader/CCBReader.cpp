@@ -1,3 +1,5 @@
+#include "CCBReader.h"
+
 #include "CCNodeLoader.h"
 #include "CCLayerLoader.h"
 #include "CCLayerColorLoader.h"
@@ -5,8 +7,7 @@
 #include "CCLabelBMFontLoader.h"
 #include "CCLabelTTFLoader.h"
 #include "CCSpriteLoader.h"
-#include "CCBReader.h"
-#include <string>
+#include "CCScale9SpriteLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -19,6 +20,7 @@ CCBReader::CCBReader() {
     this->registerCCNodeLoader("CCSprite", new CCSpriteLoader());
     this->registerCCNodeLoader("CCLabelBMFont", new CCLabelBMFontLoader());
     this->registerCCNodeLoader("CCLabelTTF", new CCLabelTTFLoader());
+    this->registerCCNodeLoader("CCScale9Sprite", new CCScale9SpriteLoader());
 }
 
 void CCBReader::registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader) {

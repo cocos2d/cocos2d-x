@@ -10,15 +10,16 @@ class CCBReader;
 
 class CCLabelTTFLoader : public CCNodeLoader {
     protected:
-        virtual cocos2d::CCLabelTTF * createCCNode(cocos2d::CCNode *, CCBReader *);
+        virtual CCLabelTTF * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeColor3(cocos2d::CCNode *, cocos2d::CCNode *, std::string, cocos2d::ccColor3B, CCBReader *);
+        virtual void onHandlePropTypeColor3(CCNode *, CCNode *, std::string, ccColor3B, CCBReader *);
         virtual void onHandlePropTypeByte(CCNode *, CCNode *, std::string, unsigned char, CCBReader *);
         virtual void onHandlePropTypeBlendFunc(CCNode *, CCNode *, std::string, ccBlendFunc, CCBReader *);
         virtual void onHandlePropTypeFontTTF(CCNode *, CCNode *, std::string, std::string, CCBReader *);
         virtual void onHandlePropTypeText(CCNode *, CCNode *, std::string, std::string, CCBReader *);
         virtual void onHandlePropTypeFloatScale(CCNode *, CCNode *, std::string, float, CCBReader *);
         virtual void onHandlePropTypeIntegerLabeled(CCNode *, CCNode *, std::string, int, CCBReader *);
+        virtual void onHandlePropTypeSize(CCNode *, CCNode *, std::string, CCSize, CCBReader *);
 };
 
 NS_CC_EXT_END
