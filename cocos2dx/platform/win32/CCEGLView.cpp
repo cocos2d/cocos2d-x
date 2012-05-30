@@ -191,6 +191,7 @@ CCEGLView::CCEGLView()
 
 CCEGLView::~CCEGLView()
 {
+    CC_SAFE_DELETE(m_pEGL);
 }
 
 bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
