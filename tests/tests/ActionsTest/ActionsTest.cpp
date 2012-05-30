@@ -1260,6 +1260,7 @@ void Issue1305::log(CCNode* pSender)
 void Issue1305::onExit()
 {
     m_pSpriteTmp->release();
+    ActionsDemo::onExit();
 }
 
 void Issue1305::addSprite(ccTime dt)
