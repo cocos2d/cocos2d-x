@@ -9,8 +9,8 @@
 #define PROPERTY_IGNOREANCHORPOINTFORPOSITION "ignoreAnchorPointForPosition"
 #define PROPERTY_VISIBLE "visible"
 
-#define ASSERT_UNEXPECTED_PROPERTY(PROPERTY) printf("Unexpected property type: '%s'!\n", PROPERTY.c_str()); assert(false)
-#define ASSERT_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) printf("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
+#define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) printf("Unexpected property type: '%s'!\n", PROPERTY.c_str()); assert(false)
+#define ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) printf("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -248,7 +248,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 break;
             }
             default:
-                ASSERT_UNEXPECTED_PROPERTYTYPE(type);
+                ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(type);
                 break;
         }
     }
@@ -660,7 +660,7 @@ void CCNodeLoader::onHandlePropTypePosition(CCNode * pNode, CCNode * pParent, st
     if(pPropertyName.compare(PROPERTY_POSITION) == 0) {
         pNode->setPosition(pPosition);
     } else {
-        ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }
 
@@ -668,17 +668,19 @@ void CCNodeLoader::onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, std::
     if(pPropertyName.compare(PROPERTY_ANCHORPOINT) == 0) {
         pNode->setAnchorPoint(pPoint);
     } else {
-        ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }
 
 void CCNodeLoader::onHandlePropTypePointLock(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCPoint pPointLock, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCSize pSize, CCBReader * pCCBReader) {
     if(pPropertyName.compare(PROPERTY_CONTENTSIZE) == 0) {
         pNode->setContentSize(pSize);
+    } else {
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }
 
@@ -687,40 +689,40 @@ void CCNodeLoader::onHandlePropTypeScaleLock(CCNode * pNode, CCNode * pParent, s
         pNode->setScaleX(pScaleLock[0]);
         pNode->setScaleX(pScaleLock[1]);
     } else {
-        ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }
 
 void CCNodeLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, std::string pPropertyName, float pFloat, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeDegrees(CCNode * pNode, CCNode * pParent, std::string pPropertyName, float pDegrees, CCBReader * pCCBReader) {
     if(pPropertyName.compare(PROPERTY_ROTATION) == 0) {
         pNode->setRotation(pDegrees);
     } else {
-        ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }
 
 void CCNodeLoader::onHandlePropTypeFloatScale(CCNode * pNode, CCNode * pParent, std::string pPropertyName, float pFloatScale, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, std::string pPropertyName, int pInteger, CCBReader * pCCBReader) {
     if(pPropertyName.compare(PROPERTY_TAG) == 0) {
         pNode->setTag(pInteger);
     } else {
-        ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }
 
 void CCNodeLoader::onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, std::string pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeFloatVar(CCNode * pNode, CCNode * pParent, std::string pPropertyName, float * pFloatVar, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, std::string pPropertyName, bool pCheck, CCBReader * pCCBReader) {
@@ -729,64 +731,64 @@ void CCNodeLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, std::
     } else if(pPropertyName.compare(PROPERTY_IGNOREANCHORPOINTFORPOSITION) == 0) {
         pNode->setIsRelativeAnchorPoint(!pCheck);
     } else {
-        ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }
 
 void CCNodeLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeAnimation(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCAnimation * pCCAnimation, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeTexture(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCTexture2D * pCCTexture2D, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, std::string pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, std::string pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeColor4FVar(CCNode * pNode, CCNode * pParent, std::string pPropertyName, ccColor4F * pCCColor4FVar, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeFlip(CCNode * pNode, CCNode * pParent, std::string pPropertyName, bool * pFlip, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, std::string pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeFntFile(CCNode * pNode, CCNode * pParent, std::string pPropertyName, std::string pFntFile, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeString(CCNode * pNode, CCNode * pParent, std::string pPropertyName, std::string pString, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeText(CCNode * pNode, CCNode * pParent, std::string pPropertyName, std::string pText, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeFontTTF(CCNode * pNode, CCNode * pParent, std::string pPropertyName, std::string pFontTTF, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlock, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlock, CCBReader * pCCBReader) {
-    ASSERT_UNEXPECTED_PROPERTY(pPropertyName);
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, std::string pPropertyName, std::string pCCBFileName, CCBReader * pCCBReader) {
