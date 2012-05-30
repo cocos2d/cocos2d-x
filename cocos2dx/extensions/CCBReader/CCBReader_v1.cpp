@@ -34,19 +34,19 @@ USING_NS_CC_EXT;
 int CCBReader::intValFromDict(CCDictionary* dict, const std::string key)
 {
     CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-    return valueString->intValue();
+    return valueString? valueString->intValue() : 0;
 }
 
 float CCBReader::floatValFromDict(CCDictionary* dict, const std::string key)
 {
     CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-    return valueString->floatValue();
+    return valueString? valueString->floatValue() : 0.0f;
 }
 
 bool CCBReader::boolValFromDict(CCDictionary* dict, const std::string key)
 {
     CCString* valueString = (CCString*) dict->objectForKey(key.c_str());
-    return (bool) valueString->intValue();
+    return (valueString && valueString->intValue()) ? true : false;
 }
 
 CCPoint CCBReader::pointValFromDict(CCDictionary* dict, const std::string key)
@@ -274,6 +274,7 @@ CCNode* CCBReader::createCustomClassWithName(CCString* className)
     {
         CCBCustomClassProtocol* pNewClass = CCBCustomClassFactory::sharedFactory()->createCustomClassWithName(className->getCString());
         pRetVal = dynamic_cast<CCNode*>(pNewClass);
+        pRetVal->autorelease();
     }
     
     return pRetVal;
@@ -371,9 +372,11 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         spriteFile->m_sString += ((CCString*)props->objectForKey("spriteFile"))->m_sString;
         
         CCParticleSystem* sys = new CCParticleSystemQuad();
+        sys->autorelease();
         sys->initWithTotalParticles(2048);
         sys->setTexture(CCTextureCache::sharedTextureCache()->addImage(spriteFile->m_sString.c_str()));
-        delete spriteFile;
+        CC_SAFE_RELEASE_NULL(spriteFile);
+
         node = (CCNode*)sys;
         
         setPropsForNode((CCNode*)node, (CCDictionary*) props, extraProps);
@@ -414,9 +417,9 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         }
         
         //deallocate
-        CC_SAFE_DELETE(spriteFileNormal);
-        CC_SAFE_DELETE(spriteFileSelected);
-        CC_SAFE_DELETE(spriteFileDisabled);
+        CC_SAFE_RELEASE_NULL(spriteFileNormal);
+        CC_SAFE_RELEASE_NULL(spriteFileSelected);
+        CC_SAFE_RELEASE_NULL(spriteFileDisabled);
         
         if (!spriteNormal) spriteNormal = CCSprite::spriteWithFile("missing-texture.png");
         if (!spriteSelected) spriteSelected = CCSprite::spriteWithFile("missing-texture.png");
@@ -468,9 +471,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         node = (CCNode*)CCLabelBMFont::labelWithString(stringText->m_sString.c_str(), 
                                                         fontFile->m_sString.c_str() );
 
-        
-        delete fontFile;
-        fontFile = 0;
+        CC_SAFE_RELEASE_NULL(fontFile);
         
         if (!node) node = (CCNode*)CCLabelBMFont::labelWithString(stringText->m_sString.c_str(), "missing-font.fnt");
         
@@ -496,7 +497,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         }
         else
         {
-            printf("spriteFile->m_string.cstr is %s\n", spriteFile->m_sString.c_str()) ;
+            CCLOG("spriteFile->m_string.cstr is %s\n", spriteFile->m_sString.c_str()) ;
             node = (CCNode*)CCSprite::spriteWithFile(spriteFile->m_sString.c_str());
         }
         
@@ -699,9 +700,8 @@ CCNode* CCBReader::nodeGraphFromFile(const char* file, CCNode* owner)
         ccbFileDir = ccbFilePath.substr(0, lastSlash) + "/";
     }
     
-    CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(ccbFilePath.c_str());
+    CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFile(ccbFilePath.c_str());
     CCAssert(dict != NULL, "CCBReader: file not found");
-    
     return nodeGraphFromDictionary(dict, NULL, ccbFileDir.c_str(), owner);
 }
 

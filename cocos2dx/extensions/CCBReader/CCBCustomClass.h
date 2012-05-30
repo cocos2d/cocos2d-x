@@ -79,6 +79,9 @@ public:
     /** get the singleton */
     static CCBCustomClassFactory* sharedFactory();
 
+    /** purge the singleton */
+    static void purgeFactory();
+
     /** Note that you should regist custom class before invoke CCBReader::nodeGraphFromFile 
         For example:
         CCBCustomClassFactory::sharedFactory()->registCustomClass("HelloCocosBuilder", 
