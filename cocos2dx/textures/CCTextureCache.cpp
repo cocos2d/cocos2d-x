@@ -383,7 +383,7 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
         --s_nAsyncRefCount;
         if (0 == s_nAsyncRefCount)
         {
-            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), g_sharedTextureCache);
+            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this);
         }
     }
 }
