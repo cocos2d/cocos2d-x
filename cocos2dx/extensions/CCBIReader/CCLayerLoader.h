@@ -10,7 +10,7 @@ class CCBReader;
 
 class CCLayerLoader : public CCNodeLoader {
     protected:
-        virtual cocos2d::CCLayer * createCCNode(cocos2d::CCNode *, CCBReader *);
+        virtual CCLayer * createCCNode(CCNode *, CCBReader *);
 
         virtual void onHandlePropTypeCheck(CCNode *, CCNode *, std::string, bool, CCBReader *);
 };

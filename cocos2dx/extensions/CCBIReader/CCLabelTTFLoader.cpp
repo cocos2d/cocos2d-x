@@ -11,6 +11,7 @@ using namespace cocos2d::extension;
 #define PROPERTY_HORIZONTALALIGNMENT "horizontalAlignment"
 #define PROPERTY_VERTICALALIGNMENT "verticalAlignment"
 #define PROPERTY_STRING "string"
+#define PROPERTY_DIMENSIONS "dimensions"
 
 CCLabelTTF * CCLabelTTFLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
     return CCLabelTTF::node();
@@ -72,5 +73,13 @@ void CCLabelTTFLoader::onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * p
         // ((CCLabelTTF *)pNode)->setVerticalAlignment(pIntegerLabeled);
     } else {
         CCNodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
+    }
+}
+
+void CCLabelTTFLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCSize pSize, CCBReader * pCCBReader) {
+    if(pPropertyName.compare(PROPERTY_DIMENSIONS) == 0) {
+        ((CCLabelTTF *)pNode)->setDimensions(pSize);
+    } else {
+        CCNodeLoader::onHandlePropTypeSize(pNode, pParent, pPropertyName, pSize, pCCBReader);
     }
 }
