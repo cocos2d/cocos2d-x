@@ -19,9 +19,11 @@ public:
 class Ball;
 class PongLayer : public CCLayer
 {
-    Ball*        m_ball;
+private:
+    CCSize      m_tWinSize;
+    Ball*       m_ball;
     CCArray*    m_paddles;
-    CCPoint        m_ballStartingVelocity; 
+    CCPoint     m_ballStartingVelocity; 
 public:
     PongLayer();
     ~PongLayer();
