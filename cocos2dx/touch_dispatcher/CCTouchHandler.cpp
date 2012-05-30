@@ -40,8 +40,6 @@ void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
         dynamic_cast<CCObject*>(pDelegate)->retain();
     }
 
-    dynamic_cast<CCObject*>(pDelegate)->retain();
-
     if (m_pDelegate)
     {
         dynamic_cast<CCObject*>(m_pDelegate)->release();
