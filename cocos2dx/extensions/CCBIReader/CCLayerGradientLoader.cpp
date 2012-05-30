@@ -1,0 +1,55 @@
+#import "CCLayerGradientLoader.h"
+
+using namespace cocos2d;
+using namespace cocos2d::extension;
+
+#define PROPERTY_STARTCOLOR "startColor"
+#define PROPERTY_ENDCOLOR "endColor"
+#define PROPERTY_STARTOPACITY "startOpacity"
+#define PROPERTY_ENDOPACITY "endOpacity"
+#define PROPERTY_VECTOR "vector"
+#define PROPERTY_BLENDFUNC "blendFunc"
+
+CCLayerGradient * CCLayerGradientLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
+    return CCLayerGradient::node();
+}
+
+void CCLayerGradientLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, std::string pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
+    if(pPropertyName.compare(PROPERTY_STARTCOLOR) == 0) {
+        ((CCLayerGradient *)pNode)->setStartColor(pCCColor3B);
+    } else if(pPropertyName.compare(PROPERTY_ENDCOLOR) == 0) {
+        ((CCLayerGradient *)pNode)->setEndColor(pCCColor3B);
+    } else {
+        CCLayerLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pCCColor3B, pCCBReader);
+    }
+}
+
+void CCLayerGradientLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, std::string pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
+    if(pPropertyName.compare(PROPERTY_STARTOPACITY) == 0) {
+        ((CCLayerGradient *)pNode)->setStartOpacity(pByte);
+    } else if(pPropertyName.compare(PROPERTY_ENDOPACITY) == 0) {
+        ((CCLayerGradient *)pNode)->setEndOpacity(pByte);
+    } else {
+        CCLayerLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, pCCBReader);
+    }
+}
+
+void CCLayerGradientLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, std::string pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
+    if(pPropertyName.compare(PROPERTY_BLENDFUNC) == 0) {
+        ((CCLayerGradient *)pNode)->setBlendFunc(pCCBlendFunc);
+    } else {
+        CCLayerLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pCCBlendFunc, pCCBReader);
+    }
+}
+
+
+void CCLayerGradientLoader::onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCPoint pPoint, CCBReader * pCCBReader) {
+    if(pPropertyName.compare(PROPERTY_VECTOR) == 0) {
+        ((CCLayerGradient *)pNode)->setVector(pPoint);
+
+        // TODO Not passed along the ccbi file.
+        // ((CCLayerGradient *)pNode)->setIsCompressedInterpolation(true);
+    } else {
+        CCLayerLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, pCCBReader);
+    }
+}
