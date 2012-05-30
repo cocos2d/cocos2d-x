@@ -35,6 +35,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "platform/platform.h"
 #include "CCDictionary.h"
 #include "CCConfiguration.h"
+#include "CCTextureCache.h"
 #include "CCDrawingPrimitives.h"
 #include "CCSprite.h"
 #include "CCPointExtension.h"
@@ -727,6 +728,20 @@ void CCLabelBMFont::purgeCachedData()
     FNTConfigRemoveCache();
 }
 
+CCLabelBMFont * CCLabelBMFont::node()
+{
+    CCLabelBMFont * pRet = new CCLabelBMFont();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 //LabelBMFont - Creation & Init
 CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
 {
@@ -766,6 +781,11 @@ CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFi
     return NULL;
 }
 
+bool CCLabelBMFont::init()
+{
+    return initWithString(NULL, NULL, kCCLabelAutomaticWidth, CCTextAlignmentLeft, CCPointZero);
+}
+
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 {
     return initWithString(theString, fntFile, kCCLabelAutomaticWidth, CCTextAlignmentLeft, CCPointZero);
@@ -778,25 +798,45 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset)
 {
-    CCAssert(theString != NULL, "");
-    CC_SAFE_RELEASE(m_pConfiguration);// allow re-init
-    m_pConfiguration = FNTConfigLoadFile(fntFile);
-    m_pConfiguration->retain();
-    CCAssert( m_pConfiguration, "Error creating config for LabelBMFont");
+    CCAssert(!this->m_pConfiguration, "re-init is no longer supported");
+    
+    CCAssert((theString != NULL && fntFile != NULL) || (theString == NULL && fntFile == NULL), "Invalid params for CCLabelBMFont");
 
-    if (CCSpriteBatchNode::initWithFile(m_pConfiguration->m_sAtlasName.c_str(), strlen(theString)))
+    CCTexture2D * texture;
+
+    if(fntFile != NULL)
     {
-        m_pAlignment = alignment;
-        m_tImageOffset = imageOffset;
+        m_pConfiguration = FNTConfigLoadFile(fntFile);
+        m_pConfiguration->retain();
+        CCAssert( m_pConfiguration, "Error creating config for LabelBMFont");
+
+        texture = CCTextureCache::sharedTextureCache()->addImage(this->m_pConfiguration->m_sAtlasName.c_str());
+    }
+    else
+    {
+        texture = new CCTexture2D();
+        texture->autorelease();
+    }
+    
+
+    if (CCSpriteBatchNode::initWithTexture(texture, (theString == NULL) ? 0 : strlen(theString)))
+    {
         m_fWidth = width;
-        CC_SAFE_DELETE_ARRAY(m_sString);
-        m_sString = cc_utf8_from_cstr(theString);
+        m_pAlignment = alignment;
+
         m_cOpacity = 255;
         m_tColor = ccWHITE;
+
         m_tContentSize = CCSizeZero;
+
         m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
-        this->setString(theString);
+        
         setAnchorPoint(ccp(0.5f, 0.5f));
+
+        m_tImageOffset = imageOffset;
+
+        this->setString((theString == NULL) ? "" : theString);
+
         return true;
     }
     return false;
@@ -1308,6 +1348,18 @@ void CCLabelBMFont::setWidth(float width)
 {
     this->m_fWidth = width;
     updateLabel();
+}
+
+void CCLabelBMFont::setFntFile(const char *fntFile)
+{
+    CCBMFontConfiguration * newConfiguration = FNTConfigLoadFile(fntFile);
+    
+    CCAssert(newConfiguration, printf("CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile) );
+    CC_SAFE_RELEASE(this->m_pConfiguration);
+    this->m_pConfiguration = newConfiguration;
+    this->m_pConfiguration->retain();
+    this->setTexture(CCTextureCache::sharedTextureCache()->addImage(this->m_pConfiguration->m_sAtlasName.c_str()));
+    this->createFontChars();
 }
 
 void CCLabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
