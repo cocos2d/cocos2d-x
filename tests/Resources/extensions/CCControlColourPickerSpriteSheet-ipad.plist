@@ -103,7 +103,7 @@
 		<key>realTextureFileName</key>
 		<string>CCControlColourPickerSpriteSheet-ipad.png</string>
 		<key>size</key>
-		<string>{979,530}</string>
+		<string>{1024,1024}</string>
 		<key>smartupdate</key>
 		<string>$TexturePacker:SmartUpdate:b0f145802397a74846afb8535dc6c069$</string>
 		<key>textureFileName</key>
