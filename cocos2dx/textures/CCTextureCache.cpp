@@ -65,10 +65,11 @@ typedef struct _ImageInfo
 
 static pthread_t s_loadingThread;
 
-static pthread_mutex_t        s_asyncStructQueueMutex;
+static pthread_mutex_t      s_asyncStructQueueMutex;
 static pthread_mutex_t      s_ImageInfoMutex;
 
 static sem_t* s_pSem = NULL;
+static unsigned long s_nAsyncRefCount = 0;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     #define CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE 1
@@ -84,10 +85,10 @@ static sem_t* s_pSem = NULL;
 #endif
 
 
-static bool need_quit;
+static bool need_quit = false;
 
-static std::queue<AsyncStruct*>        *s_pAsyncStructQueue;
-static std::queue<ImageInfo*>        *s_pImageQueue;
+static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
+static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
 
 static CCImage::EImageFormat computeImageFormatType(string& filename)
 {
@@ -187,6 +188,8 @@ static void* loadImage(void* data)
         sem_destroy(s_pSem);
     #endif
         s_pSem = NULL;
+        delete s_pAsyncStructQueue;
+        delete s_pImageQueue;
     }
     
     return 0;
@@ -195,13 +198,14 @@ static void* loadImage(void* data)
 // implementation CCTextureCache
 
 // TextureCache - Alloc, Init & Dealloc
-static CCTextureCache *g_sharedTextureCache;
+static CCTextureCache *g_sharedTextureCache = NULL;
 
 CCTextureCache * CCTextureCache::sharedTextureCache()
 {
     if (!g_sharedTextureCache)
+    {
         g_sharedTextureCache = new CCTextureCache();
-
+    }
     return g_sharedTextureCache;
 }
 
@@ -228,7 +232,6 @@ void CCTextureCache::purgeSharedTextureCache()
 {
     CC_SAFE_RELEASE_NULL(g_sharedTextureCache);
 }
-
 
 const char* CCTextureCache::description()
 {
@@ -298,10 +301,15 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
         pthread_mutex_init(&s_ImageInfoMutex, NULL);
         pthread_create(&s_loadingThread, NULL, loadImage, NULL);
 
-        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
-
         need_quit = false;
     }
+
+    if (0 == s_nAsyncRefCount)
+    {
+        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
+    }
+
+    ++s_nAsyncRefCount;
 
     if (target)
     {
@@ -354,15 +362,8 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 #endif
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-        // cache the texture file name
-        if (pImageInfo->imageType == CCImage::kFmtJpg)
-        {
-            VolatileTexture::addImageTexture(texture, filename, CCImage::kFmtJpg);
-        }
-        else
-        {
-            VolatileTexture::addImageTexture(texture, filename, CCImage::kFmtPng);
-        }
+       // cache the texture file name
+       VolatileTexture::addImageTexture(texture, filename, pImageInfo->imageType);
 #endif
 
         // cache the texture
@@ -375,9 +376,15 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
             target->release();
         }        
 
-        delete pImage;
+        pImage->release();
         delete pAsyncStruct;
         delete pImageInfo;
+
+        --s_nAsyncRefCount;
+        if (0 == s_nAsyncRefCount)
+        {
+            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this);
+        }
     }
 }
 
