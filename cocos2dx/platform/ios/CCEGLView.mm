@@ -83,6 +83,10 @@ void CCEGLView::swapBuffers()
     [[EAGLView sharedEGLView] swapBuffers];
 }
 
+CCSize  CCEGLView::getFrameSize()
+{
+    assert(false);
+}
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
