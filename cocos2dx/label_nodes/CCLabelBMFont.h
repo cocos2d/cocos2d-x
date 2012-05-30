@@ -181,7 +181,12 @@ public:
     static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
     static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
 
+    /** Creates an label.
+     */
+    static CCLabelBMFont * node();
+
     /** init a bitmap font altas with an initial string and the FNT file */
+    bool init();
     bool initWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
     bool initWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
     bool initWithString(const char *str, const char *fntFile);
@@ -197,6 +202,7 @@ public:
     virtual void updateLabel();
     virtual void setAlignment(CCTextAlignment alignment);
     virtual void setWidth(float width);
+    virtual void setFntFile(const char *fntFile);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     virtual void setScale(float scale);
     virtual void setScaleX(float scaleX);

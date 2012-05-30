@@ -108,6 +108,13 @@ bool CCSpriteBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacity)
     return true;
 }
 
+bool CCSpriteBatchNode::init()
+{
+    CCTexture2D * texture = new CCTexture2D();
+    texture->autorelease();
+    return this->initWithTexture(texture, 0);
+}
+
 /*
 * init with FileImage
 */
