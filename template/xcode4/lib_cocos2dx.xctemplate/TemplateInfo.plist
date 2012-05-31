@@ -793,6 +793,58 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBReader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBReader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBReader_v2.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBReader_v2.cpp</string>
+		</dict>
 		<key>libs/cocos2dx/extensions/CCControlExtension/CCControl.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -2319,30 +2371,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/platform/CCStdC.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>platform</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/platform/CCStdC.cpp</string>
-		</dict>
-		<key>libs/cocos2dx/platform/CCStdC.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>platform</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/platform/CCStdC.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2dx/platform/CCThread.h</key>
 		<dict>
 			<key>Group</key>
@@ -2613,6 +2641,20 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/platform/ios/CCPlatformDefine.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/CCStdC.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/CCStdC.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -4079,6 +4121,10 @@
 		<string>libs/cocos2dx/effects/CCGrabber.h</string>
 		<string>libs/cocos2dx/effects/CCGrid.cpp</string>
 		<string>libs/cocos2dx/effects/CCGrid.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBReader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBReader_v2.cpp</string>
 		<string>libs/cocos2dx/extensions/CCControlExtension/CCControl.cpp</string>
 		<string>libs/cocos2dx/extensions/CCControlExtension/CCControl.h</string>
 		<string>libs/cocos2dx/extensions/CCControlExtension/CCControlButton.cpp</string>
@@ -4198,8 +4244,6 @@
 		<string>libs/cocos2dx/platform/CCPlatformMacros.h</string>
 		<string>libs/cocos2dx/platform/CCSAXParser.cpp</string>
 		<string>libs/cocos2dx/platform/CCSAXParser.h</string>
-		<string>libs/cocos2dx/platform/CCStdC.cpp</string>
-		<string>libs/cocos2dx/platform/CCStdC.h</string>
 		<string>libs/cocos2dx/platform/CCThread.h</string>
 		<string>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.h</string>
 		<string>libs/cocos2dx/platform/ios/AccelerometerDelegateWrapper.mm</string>
@@ -4221,6 +4265,7 @@
 		<string>libs/cocos2dx/platform/ios/CCLock.cpp</string>
 		<string>libs/cocos2dx/platform/ios/CCLock.h</string>
 		<string>libs/cocos2dx/platform/ios/CCPlatformDefine.h</string>
+		<string>libs/cocos2dx/platform/ios/CCStdC.h</string>
 		<string>libs/cocos2dx/platform/ios/CCThread.mm</string>
 		<string>libs/cocos2dx/platform/ios/EAGLView.h</string>
 		<string>libs/cocos2dx/platform/ios/EAGLView.mm</string>
