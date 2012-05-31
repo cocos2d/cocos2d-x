@@ -16,8 +16,12 @@
 NS_CC_EXT_BEGIN
 
 CCScale9Sprite::CCScale9Sprite()
+: m_insetLeft(0)
+, m_insetTop(0)
+, m_insetRight(0)
+, m_insetBottom(0)
 {
-    
+    this->setAnchorPoint(ccp(0.5f, 0.5f));
 }
 
 CCScale9Sprite::~CCScale9Sprite()
@@ -35,7 +39,6 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     if(batchnode)
     {
         this->updateWithBatchNode(batchnode, rect, capInsets);
-        this->setAnchorPoint(ccp(0.5f,0.5f));
     }
     this->m_positionsAreDirty = true;
     
@@ -47,7 +50,9 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     // Release old sprites
     this->removeAllChildrenWithCleanup(true);
 
-    if(this->topLeft)
+    // TODO Is this needed?
+    /*
+    if(this->topLeft != NULL)
     {
         CC_SAFE_RELEASE(this->topLeft);
         CC_SAFE_RELEASE(this->top);
@@ -59,10 +64,17 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
         CC_SAFE_RELEASE(this->bottom);
         CC_SAFE_RELEASE(this->bottomRight);
     }
+    */
     
     if(this->scale9Image != batchnode)
     {
-        CC_SAFE_RELEASE(this->scale9Image);
+        // TODO Is this needed?
+        /*
+        if(this->scale9Image != NULL)
+        {
+            CC_SAFE_RELEASE(this->scale9Image);
+        }
+        */
         scale9Image = batchnode; // TODO No retain on purpose?
     }
 
@@ -109,7 +121,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     
     // Centre
     centre = CCSprite::spriteWithTexture(scale9Image->getTexture(), m_capInsetsInternal);
-    scale9Image->addChild(centre ,0 ,pCentre);
+    scale9Image->addChild(centre, 0, pCentre);
     
     // Top
     top = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsetsInternal.origin.x,
