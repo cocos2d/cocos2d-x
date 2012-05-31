@@ -44,7 +44,7 @@ public:
     /** Prefered sprite's size. By default the prefered size is the original size. */
 
     //if the preferredSize component is given as -1, it is ignored
-    CC_SYNTHESIZE(CCSize, m_preferredSize, PreferredSize); 
+    CC_PROPERTY(CCSize, m_preferredSize, PreferredSize); 
     /** 
      * The end-cap insets. 
      * On a non-resizeable sprite, this property is set to CGRectZero; the sprite 
@@ -56,10 +56,15 @@ public:
     /** Color: conforms to CCRGBAProtocol protocol */
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
     CC_PROPERTY(CCRect, m_capInsets, CapInsets);
-    
+    CC_PROPERTY(float, m_insetLeft, InsetLeft);
+    CC_PROPERTY(float, m_insetTop, InsetTop);
+    CC_PROPERTY(float, m_insetRight, InsetRight);
+    CC_PROPERTY(float, m_insetBottom, InsetBottom);
     
 protected:
     CCRect m_spriteRect;
+    CCRect m_capInsetsInternal;
+    bool m_positionsAreDirty;
     
     CCSpriteBatchNode* scale9Image;
     CCSprite* topLeft;
@@ -75,11 +80,17 @@ protected:
     /** Conforms to CocosNodeRGBA protocol. */
     ccColor3B m_sColorUnmodified;
     bool m_bIsOpacityModifyRGB;
-    
+
+    void updateCapInset();
+    void updatePositions();
+
 public:
     
-    void virtual setContentSize(const CCSize &size);
+    virtual void setContentSize(const CCSize &size);
+    virtual void visit();
     
+    virtual bool init();
+
     virtual bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets);
     /**
      * Initializes a 9-slice sprite with a texture file, a delimitation zone and
@@ -273,7 +284,10 @@ public:
      @since v0.8
      */
     virtual bool getIsOpacityModifyRGB(void);
-    
+
+    virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets);
+
+    virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
 };
 
 NS_CC_EXT_END
