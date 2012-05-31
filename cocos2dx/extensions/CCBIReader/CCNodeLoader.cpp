@@ -138,9 +138,11 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 break;
             }
             case kCCBPropTypeSpriteFrame: {
+                CCSpriteFrame * ccSpriteFrame = this->parsePropTypeSpriteFrame(pNode, pParent, pCCBReader);
                 if(setProp) {
-                    this->onHandlePropTypeSpriteFrame(pNode, pParent, propertyName, this->parsePropTypeSpriteFrame(pNode, pParent, pCCBReader), pCCBReader);
+                    this->onHandlePropTypeSpriteFrame(pNode, pParent, propertyName, ccSpriteFrame, pCCBReader);
                 }
+                // TODO delete ccSpriteFrame; ???
                 break;
             }
             case kCCBPropTypeAnimation: {
@@ -156,7 +158,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeTexture(pNode, pParent, propertyName, ccTexture2D, pCCBReader);
                 }
-
+                // TODO delete ccTexture2D; ???
                 break;
             }
             case kCCBPropTypeByte: {
