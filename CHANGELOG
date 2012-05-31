@@ -1,3 +1,90 @@
+cocos2d-2.0-rc0a-x-2.0 @May.31 2012
+ [all platforms]
+    Bug       #1094: fix a bug that nothing will be shown when using CCParticleBatchNode
+    Bug       #1115: fix a bug that CCFileUtils::fullPathFromRelativePath() with resolution parameter return error value with empty string
+    Bug       #1137: fix a memory leak in CCLabelBMFont and sync the implementation of CCLabelBMFont to gles20 branch
+    Bug       #1138: fix a memory leak in CCTextureCache::addPVRImage.
+    Bug       #1155: revert CCDirector singleton to original implementation
+    Bug       #1157: fix a bug that nothing is shown in TMX Orthogonal Test
+    Bug       #1158: fix a bug in CCParticleSystemQuad
+    Bug       #1159: update "CallFuncND + auto remove" test demo
+    Bug       #1160: rename 'CGFloat' to 'CCFloat'
+    Bug       #1164: add the render mode which uses VBO without VAO in CCParticleSystemQuad
+    Bug       #1165: merge pull request #842
+    Bug       #1187: fix a bug that spanish(Buen día) cannot be shown completely in CCLabelBMFont unicode test
+    Bug       #1189: CCLabelBMFont updateLabel() optimizations and fixes
+    Bug       #1212: fix a bug that TMXBug787Test crash.
+    Bug       #1217: fix a bug that EaseActions reverse broken
+    Bug       #1232: fix a bug that CCLayerGradient::updateColor() assign wrong value to m_pSquareColors
+    Bug       #1244: fix memory leak in CCParticleSystem::initWithDictionary()
+    Bug       #1273: fix a bug that app will crash after clicking closed button in TextureCacheTest
+    Bug       #1275: fix memory leaks in tests project
+    Bug       #1277: implement CCToggleVisibility::copyWithZone()
+    Feature   #1114: integrate CCControlExtension and implement corresponding tests
+    Feature   #1180: synchronize CCConfiguration
+    Feature   #1194: merge texturewatcher contributed by NetGragon
+    Feature   #1205: add ccbreader and test case for CocosBuilder
+    Feature   #1240: support TIFF format picture
+    Feature   #1258: merge Rolando's testjs into gles20 branch
+    Refactor  #1156: synchronize CCDirector
+    Refactor  #1166: improve CCString and CCArray, optimize CCDictionary
+    Refactor  #1176: change linebreak symbol to UNIX format ('\n'), replace 'tab' with four spaces
+    Refactor  #1177: refactor platform
+    Refactor  #1178: use macro NS_CC_BEGIN instead of "namespace cocos2d {", NS_CC_END instead of "}"
+    Refactor  #1188: refactor directory structure
+    Refactor  #1191: update templates for all platforms
+    Refactor  #1198: optimize CCTextureCache::removeUnusedTextures()
+    Refactor  #1203: remove CCFileUtils::setResource(const char* pszZipFileName) and SimpleAudioEngine::setResource
+    Refactor  #1204: refactor AppDelegate::initInstance()
+    Refactor  #1206: remove some unused files, only supports iOS, win32 and android
+    Refactor  #1211: translate Chinese comments to English for CCTextureWatcher and CCListView
+    Refactor  #1246: fix CCDirector using CCLabelBMFont instead of CCLabelTTF
+    Refactor  #1252: add CCEGLViewProtocol::getFrameSize() method for getting the real screen size of device
+    Refactor  #1253: add static method "purgeConfiguration" for CCConfiguration to avoid memory leak
+ [iOS]   
+    Bug       #1109: add parentheses to remove Xcode warnings 
+    Bug       #1230: fix a bug that Calculation of string width may be wrong on iOS
+    Bug       #1266: fix a bug that CCTextureCahce::addImageAsync() don't work correctly on iOS
+    Feature   #1095: IOS screen resolution support
+ [android]
+    Bug       #1139: fix a bug that screen becomes black when backing from background
+    Bug       #1140: fix a bug that ParticleTest crashed
+    Bug       #1141: fix a bug that NodeTest crashed in StressTest1 and StressTest2
+    Bug       #1142: fix a bug that TouchesTest crashed
+    Bug       #1143: fix a bug that MenuTest crashed
+    Bug       #1144: fix a bug that ParallaxTest crashed
+    Bug       #1145: fix a bug that TileMap crashed
+    Bug       #1146: fix a bug that IntervalTest crashed
+    Bug       #1147: fix a bug that ChipmunkAccelTouchTest crashed
+    Bug       #1148: fix a bug that LabelTest crashed
+    Bug       #1149: fix a bug that SpriteTest crashed when go to second test case
+    Bug       #1150: fix a bug that RenderTextureTest crashed at second test case
+    Bug       #1151: fix a bug that Box2DTest crashed
+    Bug       #1152: fix a bug that PerformanceTest crashed at 1, 2, 5 test cases
+    Bug       #1185: fix a bug that when backing to foreground, will lost texture if it uses sprite batch node
+    Bug       #1216: fix JNI memory leaks
+    Bug       #1229: fix a bug that android port can not be compiled on ndk android-8 level
+    Bug       #1236: fix a bug that JniHelper::jstring2string may crash when parameter is null
+    Bug       #1237: fix a bug that line number message printed by CCAssert is wrong
+    Bug       #1279: fix a bug that NodeNonOpaqueTest can't be shown correctly
+    Feature   #1247: add profiler support for android
+    Feature   #1265: build dynamic library of spidermonkey for Android, and implement testjs for android
+    Refactor  #1179: popup a message box when invoking CCAssert() on Android
+    Refactor  #1201: simplify the usage of writing Android.mk
+ [windows]
+    Bug       #1215: fix a bug that Win32 retina cannot work
+    Bug       #1251: add CocosBuilderTest to the test project for VS2008
+    Bug       #1264: fix wrong string alignment when using utf-8 encoded text with CCLabelTTF
+    Bug       #1268: fix a bug that Testjs will crash after clicking the close button on win32
+    Bug       #1270: fix some warning on win32
+    Feature   #1186: add console window for Win32 application, all debug message output to this console window
+    Feature   #1263: build dynamic library of spidermonkey for win32, and add testjs project to solution
+    Refactor  #1170: remove win32 template of wophone
+ [lua]
+    Refactor  #1190: update lua binding to 2.0
+    Refactor  #1220: using CCString::stringWithContentsOfFile to get string from lua script files
+    
+
 cocos2d-1.0.1-x-0.12.0 @ Mar.5 2012
  [all platforms]
      Bug      #925: rename HelloWorld/Resource to HelloWorld/Resources
