@@ -243,9 +243,9 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 break;
             }
             case kCCBPropTypeCCBFile: {
-                std::string ccbFile = this->parsePropTypeCCBFile(pNode, pParent, pCCBReader);
+                CCNode * ccbFileNode = this->parsePropTypeCCBFile(pNode, pParent, pCCBReader);
                 if(setProp) {
-                    this->onHandlePropTypeCCBFile(pNode, pParent, propertyName, ccbFile, pCCBReader);
+                    this->onHandlePropTypeCCBFile(pNode, pParent, propertyName, ccbFileNode, pCCBReader);
                 }
                 break;
             }
@@ -649,11 +649,19 @@ void * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, CCNode * pParen
     return NULL;
 }
 
-std::string CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
+CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     std::string ccbFileName = pCCBReader->readCachedString();
-    
+
     /* Change path extension to .ccbi. */
-    return pCCBReader->deletePathExtension(ccbFileName) + std::string(".ccbi");
+    std::string ccbiFileName = pCCBReader->deletePathExtension(ccbFileName) + std::string(".ccbi");
+
+    CCBReader * ccbReader = new CCBReader(pCCBReader);
+
+    CCNode * ccbFileNode = ccbReader->readNodeGraphFromFile(ccbiFileName.c_str(), pCCBReader->getOwner(), pParent->getContentSize());
+
+    delete ccbReader;
+
+    return ccbFileNode;
 }
 
 
@@ -689,7 +697,7 @@ void CCNodeLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, std::s
 void CCNodeLoader::onHandlePropTypeScaleLock(CCNode * pNode, CCNode * pParent, std::string pPropertyName, float * pScaleLock, CCBReader * pCCBReader) {
     if(pPropertyName.compare(PROPERTY_SCALE) == 0) {
         pNode->setScaleX(pScaleLock[0]);
-        pNode->setScaleX(pScaleLock[1]);
+        pNode->setScaleY(pScaleLock[1]);
     } else {
         ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
@@ -793,10 +801,6 @@ void CCNodeLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pPare
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-void CCNodeLoader::onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, std::string pPropertyName, std::string pCCBFileName, CCBReader * pCCBReader) {
-    // TODO check pPropertyName?
-    CCBReader * ccbReader = new CCBReader();
-    CCNode * ccNode = ccbReader->readNodeGraphFromFile(pCCBFileName.c_str(), pCCBReader->getOwner(), pParent->getContentSize());
-    
-    pNode->addChild(ccNode); // TODO will this work in all cases?
+void CCNodeLoader::onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader) {
+    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }

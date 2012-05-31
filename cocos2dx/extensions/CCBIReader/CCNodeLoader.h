@@ -43,7 +43,7 @@ class CC_DLL CCNodeLoader {
         virtual std::string parsePropTypeFontTTF(CCNode *, CCNode *, CCBReader *);
         virtual void * parsePropTypeBlock(CCNode *, CCNode *, CCBReader *);
         virtual void * parsePropTypeBlockCCControl(CCNode *, CCNode *, CCBReader *);
-        virtual std::string parsePropTypeCCBFile(CCNode *, CCNode *, CCBReader *);
+        virtual CCNode * parsePropTypeCCBFile(CCNode *, CCNode *, CCBReader *);
 
 
         virtual void onHandlePropTypePosition(CCNode *, CCNode *, std::string, CCPoint, CCBReader *);
@@ -72,7 +72,7 @@ class CC_DLL CCNodeLoader {
         virtual void onHandlePropTypeFontTTF(CCNode *, CCNode *, std::string, std::string, CCBReader *);
         virtual void onHandlePropTypeBlock(CCNode *, CCNode *, std::string, void *, CCBReader *);
         virtual void onHandlePropTypeBlockCCControl(CCNode *, CCNode *, std::string, void *, CCBReader *);
-        virtual void onHandlePropTypeCCBFile(CCNode *, CCNode *, std::string, std::string, CCBReader *);
+        virtual void onHandlePropTypeCCBFile(CCNode *, CCNode *, std::string, CCNode *, CCBReader *);
 };
 
 NS_CC_EXT_END

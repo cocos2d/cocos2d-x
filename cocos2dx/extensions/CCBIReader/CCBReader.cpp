@@ -8,6 +8,7 @@
 #include "CCLabelTTFLoader.h"
 #include "CCSpriteLoader.h"
 #include "CCScale9SpriteLoader.h"
+#include "CCBFileLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -21,6 +22,22 @@ CCBReader::CCBReader() {
     this->registerCCNodeLoader("CCLabelBMFont", new CCLabelBMFontLoader());
     this->registerCCNodeLoader("CCLabelTTF", new CCLabelTTFLoader());
     this->registerCCNodeLoader("CCScale9Sprite", new CCScale9SpriteLoader());
+    this->registerCCNodeLoader("CCBFile", new CCBFileLoader());
+}
+
+CCBReader::~CCBReader() {
+    if(this->mBytes) {
+        delete this->mBytes;
+        this->mBytes = NULL;
+    }
+
+    // TODO Also delete mCCNodeLoaders, mLoadedSpritesheets, etc... ? (Keep in mind they might be copied/inherited from another CCBReader through the copy constructor!)
+}
+
+CCBReader::CCBReader(CCBReader * pCCBReader) {
+    /* Borrow CCNodeLoaders and LoadedSpriteSheets. */
+    this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
+    this->mCCNodeLoaders = pCCBReader->mCCNodeLoaders;
 }
 
 void CCBReader::registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader) {
@@ -33,13 +50,6 @@ CCNodeLoader * CCBReader::getCCNodeLoader(std::string pClassName) {
     return ccNodeLoadersIterator->second;
 }
 
-CCBReader::~CCBReader() {
-    if(this->mBytes) {
-        delete this->mBytes;
-        this->mBytes = NULL;
-    }
-}
-
 CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCNode * pOwner) {
     return this->readNodeGraphFromFile(pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
 }
@@ -47,7 +57,8 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCNode * pO
 CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCNode * pOwner, CCSize pParentSize) {
     const char * path = CCFileUtils::fullPathFromRelativePath(pCCBFileName);
     
-    CCFileUtils::ccLoadFileIntoMemory(path, &this->mBytes);
+    unsigned long size = 0;
+    this->mBytes = CCFileUtils::getFileData(path, "r", &size);
 
     this->mCurrentByte = 0;
     this->mCurrentBit = 0;
