@@ -21,7 +21,7 @@ CCScale9Sprite::CCScale9Sprite()
 , m_insetRight(0)
 , m_insetBottom(0)
 {
-    this->setAnchorPoint(ccp(0.5f, 0.5f));
+
 }
 
 CCScale9Sprite::~CCScale9Sprite()
@@ -39,6 +39,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     if(batchnode)
     {
         this->updateWithBatchNode(batchnode, rect, capInsets);
+        this->setAnchorPoint(ccp(0.5f, 0.5f));
     }
     this->m_positionsAreDirty = true;
     
@@ -96,7 +97,6 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     m_originalSize = rect.size;
     m_preferredSize = m_originalSize;
     m_capInsetsInternal = capInsets;
-    this->setAnchorPoint(ccp(0.5f, 0.5f));
     
     // If there is no specified center region
     if ( CCRect::CCRectEqualToRect(m_capInsetsInternal, CCRectZero) )
