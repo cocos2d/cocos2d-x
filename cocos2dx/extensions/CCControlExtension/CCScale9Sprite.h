@@ -86,7 +86,7 @@ protected:
 
 public:
     
-    virtual void setContentSize(const CCSize &size);
+    virtual void setContentSize(const CCSize & size);
     virtual void visit();
     
     virtual bool init();
