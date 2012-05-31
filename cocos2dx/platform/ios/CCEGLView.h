@@ -43,6 +43,7 @@ public:
     bool    canSetContentScaleFactor();
     bool    isIpad();
     void    setContentScaleFactor(float contentScaleFactor);
+    virtual CCSize  getFrameSize();
     
     // keep compatible
     void    end();

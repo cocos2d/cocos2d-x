@@ -191,6 +191,7 @@ CCEGLView::CCEGLView()
 
 CCEGLView::~CCEGLView()
 {
+    CC_SAFE_DELETE(m_pEGL);
 }
 
 bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
@@ -238,8 +239,6 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
         CC_BREAK_IF(! m_hWnd);
 
         resize(w, h);
-
-        CCEGLViewProtocol::setFrameSize(w, h);
 
         // init egl
         m_pEGL = CCEGL::create(this);
@@ -463,7 +462,8 @@ void CCEGLView::resize(int width, int height)
 
 void CCEGLView::setFrameSize(float width, float height)
 {
-    Create((LPCTSTR)m_szViewName, width, height);
+    Create((LPCTSTR)m_szViewName, (int)width, (int)height);
+    CCEGLViewProtocol::setFrameSize(width, height);
 }
 
 void CCEGLView::centerWindow()

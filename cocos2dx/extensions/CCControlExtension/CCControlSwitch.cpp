@@ -206,7 +206,7 @@ void CCControlSwitchSprite::needsLayout()
             m_pOffSprite->getContentSize().height / 2));
     }
 
-    CCRenderTexture *rt     = CCRenderTexture::renderTextureWithWidthAndHeight(m_pMaskTexture->getContentSize().width, m_pMaskTexture->getContentSize().height);
+    CCRenderTexture *rt = CCRenderTexture::renderTextureWithWidthAndHeight((int)m_pMaskTexture->getContentSize().width, (int)m_pMaskTexture->getContentSize().height);
 
     rt->begin();
     m_pOnSprite->visit();
@@ -358,7 +358,7 @@ void CCControlSwitch::setIsEnabled(bool enabled)
 {
     m_bEnabled = enabled;
 
-    m_pSwitchSprite->setOpacity((enabled) ? 255.0f : 128.0f);
+    m_pSwitchSprite->setOpacity((enabled) ? 255 : 128);
 }
 
 CCPoint CCControlSwitch::locationFromTouch(CCTouch* pTouch)

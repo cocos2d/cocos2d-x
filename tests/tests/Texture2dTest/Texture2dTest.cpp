@@ -8,7 +8,7 @@ enum {
     kTagSprite2 = 3,
 };
 
-#define TEST_CASE_COUNT     34
+#define TEST_CASE_COUNT     35
 
 static int sceneIdx=-1;
 CCLayer* createTextureTest(int index)
@@ -60,30 +60,32 @@ CCLayer* createTextureTest(int index)
     case 20:
         pLayer = new TexturePVRBadEncoding(); break;
     case 21:
-        pLayer = new TexturePNG(); break;
+        pLayer = new TextureTIFF(); break;
     case 22:
-        pLayer = new TextureJPEG(); break;
+        pLayer = new TexturePNG(); break;
     case 23:
-        pLayer = new TexturePixelFormat(); break;
+        pLayer = new TextureJPEG(); break;
     case 24:
-        pLayer = new TextureBlend(); break;
+        pLayer = new TexturePixelFormat(); break;
     case 25:
-        pLayer = new TextureGlClamp(); break;
+        pLayer = new TextureBlend(); break;
     case 26:
-        pLayer = new TextureGlRepeat(); break;
+        pLayer = new TextureGlClamp(); break;
     case 27:
-        pLayer = new TextureSizeTest(); break;
+        pLayer = new TextureGlRepeat(); break;
     case 28:
-        pLayer = new TextureCache1(); break;
+        pLayer = new TextureSizeTest(); break;
     case 29:
-        pLayer = new TexturePVRRGB888(); break;
+        pLayer = new TextureCache1(); break;
     case 30:
-        pLayer = new TextureAsync(); break;
+        pLayer = new TexturePVRRGB888(); break;
     case 31:
-        pLayer = new TextureDrawAtPoint(); break;
+        pLayer = new TextureAsync(); break;
     case 32:
-        pLayer = new TextureDrawInRect(); break;
+        pLayer = new TextureDrawAtPoint(); break;
     case 33:
+        pLayer = new TextureDrawInRect(); break;
+    case 34:
         pLayer = new FileUtilsTest(); break;
     default:
         break;
@@ -197,6 +199,28 @@ std::string TextureDemo::title()
 std::string TextureDemo::subtitle()
 {
     return "";
+}
+
+//------------------------------------------------------------------
+//
+// TextureTIFF
+//
+//------------------------------------------------------------------
+
+void TextureTIFF::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSprite *img = CCSprite::spriteWithFile("Images/test_image.tiff");
+    img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
+    this->addChild(img);
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+std::string TextureTIFF::title()
+{
+    return "TIFF Test";
 }
 
 //------------------------------------------------------------------

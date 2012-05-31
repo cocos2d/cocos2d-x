@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 05/02/12 17:22:41.
+** Generated automatically by tolua++-1.0.92 on 05/29/12 17:22:57.
 */
 
 #include <vector>
@@ -10482,7 +10482,7 @@ static int tolua_Cocos2d_ccDrawCircle00(lua_State* tolua_S)
   CCPoint center = *((CCPoint*)  tolua_tousertype(tolua_S,1,0));
   float radius = ((float)  tolua_tonumber(tolua_S,2,0));
   float angle = ((float)  tolua_tonumber(tolua_S,3,0));
-  int segments = ((int)  tolua_tonumber(tolua_S,4,0));
+  unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
   bool drawLineToCenter = ((bool)  tolua_toboolean(tolua_S,5,0));
   {
    ccDrawCircle(center,radius,angle,segments,drawLineToCenter);
@@ -10517,7 +10517,7 @@ static int tolua_Cocos2d_ccDrawQuadBezier00(lua_State* tolua_S)
   CCPoint origin = *((CCPoint*)  tolua_tousertype(tolua_S,1,0));
   CCPoint control = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
   CCPoint destination = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
-  int segments = ((int)  tolua_tonumber(tolua_S,4,0));
+  unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
   {
    ccDrawQuadBezier(origin,control,destination,segments);
   }
@@ -10553,7 +10553,7 @@ static int tolua_Cocos2d_ccDrawCubicBezier00(lua_State* tolua_S)
   CCPoint control1 = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
   CCPoint control2 = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
   CCPoint destination = *((CCPoint*)  tolua_tousertype(tolua_S,4,0));
-  int segments = ((int)  tolua_tonumber(tolua_S,5,0));
+  unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,5,0));
   {
    ccDrawCubicBezier(origin,control1,control2,destination,segments);
   }

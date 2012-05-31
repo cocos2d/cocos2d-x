@@ -226,7 +226,7 @@ void ccDrawFilledPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCircle( const CCPoint& center, float radius, float angle, int segments, bool drawLineToCenter)
+void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
     lazy_init();
 
@@ -265,7 +265,7 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, int segment
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, int segments)
+void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, unsigned int segments)
 {
     lazy_init();
 
@@ -294,7 +294,7 @@ void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoi
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments)
+void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, unsigned int segments)
 {
     lazy_init();
 

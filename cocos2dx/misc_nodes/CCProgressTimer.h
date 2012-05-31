@@ -48,6 +48,7 @@ typedef enum {
 class CC_DLL CCProgressTimer : public CCNode, public CCRGBAProtocol
 {
 public:
+    CCProgressTimer();
     ~CCProgressTimer(void);
 
     /**    Change the percentage to change progress. */
@@ -118,9 +119,6 @@ protected:
     CC_SYNTHESIZE(CCPoint, m_tBarChangeRate, BarChangeRate);
 
     CC_SYNTHESIZE(bool ,m_bReverseDirection, IsReverseDirection);
-
-private:
-    CCProgressTimer();
 };
 
 NS_CC_END
