@@ -88,6 +88,7 @@ class CC_DLL CCBReader : public CCObject { // TODO Why extend CCObject? -> Also 
     public:   
         /* Constructor. */
         CCBReader();
+        CCBReader(CCBReader *);
         /* Destructor. */
         ~CCBReader();
 
