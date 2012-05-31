@@ -216,7 +216,6 @@ static bool isspace_unicode(unsigned short ch)
 
 static void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 {
-    using namespace std;
     int len = str->size();
 
     if ( len <= 0 )
@@ -321,14 +320,14 @@ cc_utf8_get_char (const char * p)
 }
 
 /*
- * cc_utf8_from_cstr:
+ * cc_utf16_from_utf8:
  * @str_old: pointer to the start of a C string.
  * 
  * Creates a utf8 string from a cstring.
  * 
  * Return value: the newly created utf8 string.
  * */
-static unsigned short* cc_utf8_from_cstr(const char* str_old)
+static unsigned short* cc_utf16_from_utf8(const char* str_old)
 {
     int len = cc_utf8_strlen(str_old, -1);
 
@@ -344,14 +343,15 @@ static unsigned short* cc_utf8_from_cstr(const char* str_old)
     return str_new;
 }
 
-static std::vector<unsigned short> cc_utf8_vec_from_cstr(const unsigned short* str)
+static std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str)
 {
     int len = cc_wcslen(str);
     std::vector<unsigned short> str_new;
 
     for (int i = 0; i < len; ++i)
+    {
         str_new.push_back(str[i]);
-
+    }
     return str_new;
 }
 
@@ -790,7 +790,7 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         m_tImageOffset = imageOffset;
         m_fWidth = width;
         CC_SAFE_DELETE_ARRAY(m_sString);
-        m_sString = cc_utf8_from_cstr(theString);
+        m_sString = cc_utf16_from_utf8(theString);
         m_cOpacity = 255;
         m_tColor = ccWHITE;
         m_tContentSize = CCSizeZero;
@@ -943,7 +943,7 @@ void CCLabelBMFont::createFontChars()
     tmpSize.height = (float) totalHeight;
 
     this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
-
+    
 }
 
 //LabelBMFont - CCLabelProtocol protocol
@@ -955,7 +955,7 @@ void CCLabelBMFont::setString(const char *newString)
 void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
 {
     CC_SAFE_DELETE_ARRAY(m_sString);
-    m_sString = cc_utf8_from_cstr(newString);
+    m_sString = cc_utf16_from_utf8(newString);
     m_sString_initial = newString;
 
     updateString(fromUpdate);
@@ -963,7 +963,6 @@ void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
 
 void CCLabelBMFont::updateString(bool fromUpdate)
 {
-
     if (m_pChildren && m_pChildren->count() != 0)
     {
         CCObject* child;
@@ -1076,11 +1075,12 @@ void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 // LabelBMFont - Alignment
 void CCLabelBMFont::updateLabel()
 {
-	this->setString(m_sString_initial.c_str(), true);
+    this->setString(m_sString_initial.c_str(), true);
+
     if (m_fWidth > 0)
     {
         // Step 1: Make multiline
-        vector<unsigned short> str_whole = cc_utf8_vec_from_cstr(m_sString);
+        vector<unsigned short> str_whole = cc_utf16_vec_from_utf16_str(m_sString);
         unsigned int stringLength = str_whole.size();
         vector<unsigned short> multiline_string;
         multiline_string.reserve( stringLength );
