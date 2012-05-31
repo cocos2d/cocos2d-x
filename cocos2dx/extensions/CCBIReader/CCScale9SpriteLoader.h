@@ -17,6 +17,7 @@ class CCScale9SpriteLoader : public CCNodeLoader {
         virtual void onHandlePropTypeBlendFunc(CCNode *, CCNode *, std::string, ccBlendFunc, CCBReader *);
         virtual void onHandlePropTypeSpriteFrame(CCNode *, CCNode *, std::string, CCSpriteFrame *, CCBReader *);
         virtual void onHandlePropTypeSize(CCNode *, CCNode *, std::string, CCSize, CCBReader *);
+        virtual void onHandlePropTypeFloat(CCNode *, CCNode *, std::string, float, CCBReader *);
 };
 
 NS_CC_EXT_END
