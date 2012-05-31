@@ -563,7 +563,7 @@ void CCTextureAtlas::fillWithEmptyQuadsFromIndex(unsigned int index, unsigned in
     memset(&quad, 0, sizeof(quad));
 
     unsigned int to = index + amount;
-    for (int i = index ; i < to ; i++)
+    for (unsigned int i = index ; i < to ; i++)
     {
         m_pQuads[i] = quad;
     }

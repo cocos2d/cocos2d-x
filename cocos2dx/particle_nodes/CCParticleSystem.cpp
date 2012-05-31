@@ -308,13 +308,15 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                         CCAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
-                        // don't delete image, VolatileTexture use it in CCTextureCache::sharedTextureCache()->addUIImage()
+                        // For android, we should retain it in VolatileTexture::addCCImage which invoked in CCTextureCache::sharedTextureCache()->addUIImage()
                         image = new CCImage();
                         bool isOK = image->initWithImageData(deflated, deflatedLen);
                         CCAssert(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
                         setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str()));
+
+                        image->release();
                     }
                 }
                 CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
@@ -345,7 +347,7 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
     if (m_pBatchNode)
     {
-        for (int i = 0; i < m_uTotalParticles; i++)
+        for (unsigned int i = 0; i < m_uTotalParticles; i++)
         {
             m_pParticles[i].atlasIndex=i;
         }
@@ -1201,7 +1203,7 @@ void CCParticleSystem::setBatchNode(CCParticleBatchNode* batchNode)
 
         if( batchNode ) {
             //each particle needs a unique index
-            for (int i = 0; i < m_uTotalParticles; i++)
+            for (unsigned int i = 0; i < m_uTotalParticles; i++)
             {
                 m_pParticles[i].atlasIndex=i;
             }

@@ -285,7 +285,7 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (m_pScriptHandlerEntry)
     {
-        return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch);
+        return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
     }
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);

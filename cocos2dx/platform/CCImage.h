@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __CC_IMAGE_H__
 #define __CC_IMAGE_H__
 
-#include "CCCommon.h"
+#include "CCObject.h"
 
 NS_CC_BEGIN
 
-class CC_DLL CCImage
+class CC_DLL CCImage : public CCObject
 {
 public:
     CCImage();
@@ -39,6 +39,7 @@ public:
     {
         kFmtJpg = 0,
         kFmtPng,
+        kFmtTiff,
         kFmtRawData,
         kFmtUnKnown
     }EImageFormat;
@@ -84,7 +85,7 @@ public:
     */
     bool initWithImageData(void * pData, 
                            int nDataLen, 
-                           EImageFormat eFmt = kFmtPng,
+                           EImageFormat eFmt = kFmtUnKnown,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
@@ -112,8 +113,6 @@ public:
     bool hasAlpha()                     { return m_bHasAlpha; }
     bool isPremultipliedAlpha()         { return m_bPreMulti; }
 
-    void release();
-
     /**
     @brief    Save the CCImage data to specified file with specified format.
     @param    pszFilePath        the file's absolute path, including file subfix
@@ -121,14 +120,14 @@ public:
     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
-    CC_SYNTHESIZE_READONLY(short,   m_nWidth,       Width);
-    CC_SYNTHESIZE_READONLY(short,   m_nHeight,      Height);
+    CC_SYNTHESIZE_READONLY(unsigned short,   m_nWidth,       Width);
+    CC_SYNTHESIZE_READONLY(unsigned short,   m_nHeight,      Height);
     CC_SYNTHESIZE_READONLY(int,     m_nBitsPerComponent,   BitsPerComponent);
 
 protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);
-
+    bool _initWithTiffData(void* pData, int nDataLen);
     // @warning kFmtRawData only support RGBA8888
     bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent);
 

@@ -45,7 +45,7 @@ CCTextureWatcher::CCTextureWatcher()
 
     // layer
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    size.height *= 0.6;
+    size.height *= 0.6f;
     m_pLayer->setContentSize(size);
 
     // the menu of disabling touch event
@@ -256,12 +256,12 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
 
     CCSize listItemSize = CCSize(m_pList->getContentSize().width / NUM_PER_PAGE, m_pList->getContentSize().height);
 
-    CCSize size = CCSize(listItemSize.width * 0.9, listItemSize.height * 0.6);
+    CCSize size = CCSize(listItemSize.width * 0.9f, listItemSize.height * 0.6f);
 
     sprintf(m_pszString, "%d/%d", m_nCurrnetPage, m_nTotalPage);
     m_labelPage->setString(m_pszString);
 
-    float offX = 0, offY = 0, offsetX = 0, offsetY = 0;
+    float offX = 0.0f, offY = 0.0f, offsetX = 0.0f, offsetY = 0.0f;
     CC_UNUSED_PARAM(offsetY);
     int nCount = 0;
     int nStart = (m_nCurrnetPage - 1) * NUM_PER_PAGE;
@@ -288,8 +288,8 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
                 {
                     labelCount->setColor(ccc3(255, 0, 0));
                 }
-                offX = offsetX + listItemSize.width * 0.5 - labelCount->getContentSize().width * 0.5;
-                offY = (listItemSize.height - size.height) * 0.5 - labelCount->getContentSize().height;
+                offX = offsetX + listItemSize.width * 0.5f - labelCount->getContentSize().width * 0.5f;
+                offY = (listItemSize.height - size.height) * 0.5f - labelCount->getContentSize().height;
                 labelCount->setPosition(ccp(offX, offY));
                 labelCount->setAnchorPoint(ccp(0, 0));
                 cell->addChild(labelCount);
@@ -297,10 +297,10 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
                 // texture size
                 sprintf(m_pszString, "%.0f*%.0f", textrue->getContentSize().width, textrue->getContentSize().height);
                 CCLabelTTF *labelSize = CCLabelTTF::labelWithString(m_pszString, "Arial", 16);
-                offX = offsetX + listItemSize.width * 0.5;
-                offY = (listItemSize.height - size.height) * 0.5 + size.height;
+                offX = offsetX + listItemSize.width * 0.5f;
+                offY = (listItemSize.height - size.height) * 0.5f + size.height;
                 labelSize->setPosition(ccp(offX, offY));
-                labelSize->setAnchorPoint(ccp(0.5, 0));
+                labelSize->setAnchorPoint(ccp(0.5f, 0));
                 cell->addChild(labelSize);
 
                 // texture name
@@ -313,12 +313,12 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
 
                 string name = key.substr(pos, len - pos);
                 sprintf(m_pszString, "%s", name.c_str());
-                CCSize dimensions = CCSizeMake(listItemSize.width * 0.9, labelSize->getContentSize().height);
+                CCSize dimensions = CCSizeMake(listItemSize.width * 0.9f, labelSize->getContentSize().height);
                 CCLabelTTF *labelName = CCLabelTTF::labelWithString(m_pszString, dimensions, CCTextAlignmentCenter, "Arial", 16);
-                offX = offsetX + listItemSize.width * 0.5;
+                offX = offsetX + listItemSize.width * 0.5f;
                 offY = offY + labelName->getContentSize().height;
                 labelName->setPosition(ccp(offX, offY));
-                labelName->setAnchorPoint(ccp(0.5, 0));
+                labelName->setAnchorPoint(ccp(0.5f, 0));
                 cell->addChild(labelName);
 
                 CCSprite *sprite = CCSprite::spriteWithTexture(textrue);
@@ -341,8 +341,8 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
                 sprite->setScale(scale);
                 spriteSize.width *= scale;
                 spriteSize.height *= scale;
-                offX = offsetX + (listItemSize.width - spriteSize.width) * 0.5;
-                offY = (listItemSize.height - spriteSize.height) * 0.5;
+                offX = offsetX + (listItemSize.width - spriteSize.width) * 0.5f;
+                offY = (listItemSize.height - spriteSize.height) * 0.5f;
                 sprite->setPosition(ccp(offX, offY));
                 cell->addChild(sprite);
                 offsetX += listItemSize.width;
