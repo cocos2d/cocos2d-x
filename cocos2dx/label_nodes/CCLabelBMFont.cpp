@@ -1076,6 +1076,7 @@ void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 // LabelBMFont - Alignment
 void CCLabelBMFont::updateLabel()
 {
+	this->setString(m_sString_initial.c_str(), true);
     if (m_fWidth > 0)
     {
         // Step 1: Make multiline
