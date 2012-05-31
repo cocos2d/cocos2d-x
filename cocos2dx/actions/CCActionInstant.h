@@ -96,6 +96,7 @@ public:
     virtual ~CCToggleVisibility(){}
     //super method
     virtual void update(ccTime time);
+    virtual CCObject* copyWithZone(CCZone *pZone);
 public:
     //override static method
     /** Allocates and initializes the action */

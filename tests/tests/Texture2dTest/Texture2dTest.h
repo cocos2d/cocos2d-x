@@ -17,6 +17,13 @@ public:
     void backCallback(CCObject* pSender);
 };
 
+class TextureTIFF : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual void onEnter();
+};
+
 class TexturePNG : public TextureDemo
 {
 public:

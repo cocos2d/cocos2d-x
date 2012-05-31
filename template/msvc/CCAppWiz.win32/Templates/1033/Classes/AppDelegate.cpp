@@ -31,7 +31,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
 
-	// enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
+    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
 //     pDirector->enableRetinaDisplay(true);
 
     // turn on display FPS
@@ -52,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         pEngine->executeString(pstrFileContent->getCString());
     }
 #else
-	std::string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+    std::string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif

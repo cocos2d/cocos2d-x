@@ -103,7 +103,7 @@ CCObject* CCShow::copyWithZone(CCZone *pZone) {
         pZone = pNewZone = new CCZone(pRet);
     }
 
-    CCFiniteTimeAction::copyWithZone(pZone);
+    CCActionInstant::copyWithZone(pZone);
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
@@ -141,7 +141,7 @@ CCObject* CCHide::copyWithZone(CCZone *pZone) {
         pZone = pNewZone = new CCZone(pRet);
     }
 
-    CCFiniteTimeAction::copyWithZone(pZone);
+    CCActionInstant::copyWithZone(pZone);
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
@@ -149,19 +149,39 @@ CCObject* CCHide::copyWithZone(CCZone *pZone) {
 //
 // ToggleVisibility
 //
-CCToggleVisibility * CCToggleVisibility::action() {
+CCToggleVisibility * CCToggleVisibility::action()
+{
     CCToggleVisibility *pRet = new CCToggleVisibility();
 
-    if (pRet) {
+    if (pRet)
+    {
         pRet->autorelease();
     }
 
     return pRet;
 }
 
-void CCToggleVisibility::update(ccTime time) {
+void CCToggleVisibility::update(ccTime time) 
+{
     CC_UNUSED_PARAM(time);
     m_pTarget->setIsVisible(!m_pTarget->getIsVisible());
+}
+
+CCObject* CCToggleVisibility::copyWithZone(CCZone *pZone)
+{
+    CCZone *pNewZone = NULL;
+    CCToggleVisibility *pRet = NULL;
+
+    if (pZone && pZone->m_pCopyObject) {
+        pRet = (CCToggleVisibility*) (pZone->m_pCopyObject);
+    } else {
+        pRet = new CCToggleVisibility();
+        pZone = pNewZone = new CCZone(pRet);
+    }
+
+    CCActionInstant::copyWithZone(pZone);
+    CC_SAFE_DELETE(pNewZone);
+    return pRet;
 }
 
 //

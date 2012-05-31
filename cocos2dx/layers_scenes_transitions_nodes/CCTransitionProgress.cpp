@@ -62,7 +62,7 @@ void CCTransitionProgress::onEnter()
     CCSize size = CCDirector::sharedDirector()->getWinSize();
 
     // create the second render texture for outScene
-    CCRenderTexture *texture = CCRenderTexture::renderTextureWithWidthAndHeight(size.width, size.height);
+    CCRenderTexture *texture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
     texture->getSprite()->setAnchorPoint(ccp(0.5f,0.5f));
     texture->setPosition(ccp(size.width/2, size.height/2));
     texture->setAnchorPoint(ccp(0.5f,0.5f));
