@@ -103,7 +103,7 @@
             <key>realTextureFileName</key>
             <string>CCControlColourPickerSpriteSheet.png</string>
             <key>size</key>
-            <string>{501,270}</string>
+            <string>{512,512}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:d2864960f8710950545c0c206dff4f61$</string>
             <key>textureFileName</key>

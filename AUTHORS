@@ -8,9 +8,13 @@ Core Developers:
     JianHua Chen (Dumganhar)
 
 Developers:
+    Ricardo Quesada
+    Rolando Abarca
+        Javascript Binding and testjs
+
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
-    Di Wu
+    Di Wu (Zynga China)
         CCBReader and cpp reflection mechanic  
 
     Angus Comrie
@@ -78,6 +82,9 @@ Developers:
         
     YuLei Liao(dualface)
         contribute the factor of lua binding
+
+    jreitman
+        fix the bug of asynchronous loading resources for iOS
 
 Retired Core Developers:
     WenSheng Yang

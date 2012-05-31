@@ -145,7 +145,7 @@ public:
         return bRet;
     }
 
-    SIZE sizeWithText(const char * pszText, int nLen, DWORD dwFmt, LONG nWidthLimit)
+    SIZE sizeWithText(const wchar_t * pszText, int nLen, DWORD dwFmt, LONG nWidthLimit)
     {
         SIZE tRet = {0};
         do 
@@ -166,7 +166,7 @@ public:
             HGDIOBJ hOld = SelectObject(m_hDC, m_hFont);
 
             // measure text size
-            DrawTextA(m_hDC, pszText, nLen, &rc, dwCalcFmt);
+            DrawTextW(m_hDC, pszText, nLen, &rc, dwCalcFmt);
             SelectObject(m_hDC, hOld);
 
             tRet.cx = rc.right;
@@ -221,7 +221,15 @@ public:
             }
 
             int nLen = strlen(pszText);
-            SIZE newSize = sizeWithText(pszText, nLen, dwFmt, tSize.cx);
+            // utf-8 to utf-16
+            int nBufLen  = nLen + 1;
+            pwszBuffer = new wchar_t[nBufLen];
+            CC_BREAK_IF(! pwszBuffer);
+
+            memset(pwszBuffer, 0, sizeof(wchar_t)*nBufLen);
+            nLen = MultiByteToWideChar(CP_UTF8, 0, pszText, nLen, pwszBuffer, nBufLen);
+
+            SIZE newSize = sizeWithText(pwszBuffer, nLen, dwFmt, tSize.cx);
 
             RECT rcText = {0};
             // if content width is 0, use text size as content size
@@ -286,12 +294,6 @@ public:
             
             SetBkMode(m_hDC, TRANSPARENT);
             SetTextColor(m_hDC, RGB(255, 255, 255)); // white color
-
-            // utf-8 to utf-16
-            int nBufLen  = nLen + 1;
-            pwszBuffer = new wchar_t[nBufLen];
-            CC_BREAK_IF(! pwszBuffer);
-            nLen = MultiByteToWideChar(CP_UTF8, 0, pszText, nLen, pwszBuffer, nBufLen);
 
             // draw text
             nRet = DrawTextW(m_hDC, pwszBuffer, nLen, &rcText, dwFmt);

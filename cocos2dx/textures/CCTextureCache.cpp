@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "CCThread.h"
 #include "semaphore.h"
 #include "CCString.h"
+#include <errno.h>
 
 using namespace std;
 
@@ -64,14 +65,30 @@ typedef struct _ImageInfo
 
 static pthread_t s_loadingThread;
 
-static pthread_mutex_t        s_asyncStructQueueMutex;
+static pthread_mutex_t      s_asyncStructQueueMutex;
 static pthread_mutex_t      s_ImageInfoMutex;
 
-static sem_t s_sem;
-static bool need_quit;
+static sem_t* s_pSem = NULL;
+static unsigned long s_nAsyncRefCount = 0;
 
-static std::queue<AsyncStruct*>        *s_pAsyncStructQueue;
-static std::queue<ImageInfo*>        *s_pImageQueue;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    #define CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE 1
+#else
+    #define CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE 0
+#endif
+    
+
+#if CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE
+    #define CC_ASYNC_TEXTURE_CACHE_SEMAPHORE "ccAsync"
+#else
+    static sem_t s_sem;
+#endif
+
+
+static bool need_quit = false;
+
+static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
+static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
 
 static CCImage::EImageFormat computeImageFormatType(string& filename)
 {
@@ -85,7 +102,11 @@ static CCImage::EImageFormat computeImageFormatType(string& filename)
     {
         ret = CCImage::kFmtPng;
     }
-
+    else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
+    {
+        ret = CCImage::kFmtTiff;
+    }
+    
     return ret;
 }
 
@@ -100,7 +121,12 @@ static void* loadImage(void* data)
     while (true)
     {
         // wait for rendering thread to ask for loading if s_pAsyncStructQueue is empty
-        sem_wait(&s_sem);
+        int semWaitRet = sem_wait(s_pSem);
+        if( semWaitRet < 0 )
+        {
+            CCLOG( "CCTextureCache async thread semaphore error: %s\n", strerror( errno ) );
+            break;
+        }
 
         std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
 
@@ -108,10 +134,10 @@ static void* loadImage(void* data)
         if (pQueue->empty())
         {
             pthread_mutex_unlock(&s_asyncStructQueueMutex);
-    if (need_quit)
-        break;
-    else
-        continue;
+            if (need_quit)
+                break;
+            else
+                continue;
         }
         else
         {
@@ -153,19 +179,33 @@ static void* loadImage(void* data)
         pthread_mutex_unlock(&s_ImageInfoMutex);    
     }
     
+    if( s_pSem != NULL )
+    {
+    #if CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE
+        sem_unlink(CC_ASYNC_TEXTURE_CACHE_SEMAPHORE);
+        sem_close(s_pSem);
+    #else
+        sem_destroy(s_pSem);
+    #endif
+        s_pSem = NULL;
+        delete s_pAsyncStructQueue;
+        delete s_pImageQueue;
+    }
+    
     return 0;
 }
 
 // implementation CCTextureCache
 
 // TextureCache - Alloc, Init & Dealloc
-static CCTextureCache *g_sharedTextureCache;
+static CCTextureCache *g_sharedTextureCache = NULL;
 
 CCTextureCache * CCTextureCache::sharedTextureCache()
 {
     if (!g_sharedTextureCache)
+    {
         g_sharedTextureCache = new CCTextureCache();
-
+    }
     return g_sharedTextureCache;
 }
 
@@ -180,7 +220,11 @@ CCTextureCache::~CCTextureCache()
 {
     CCLOGINFO("cocos2d: deallocing CCTextureCache.");
     need_quit = true;
-    sem_post(&s_sem);
+    if (s_pSem != NULL)
+    {
+        sem_post(s_pSem);
+    }
+    
     CC_SAFE_RELEASE(m_pTextures);
 }
 
@@ -188,7 +232,6 @@ void CCTextureCache::purgeSharedTextureCache()
 {
     CC_SAFE_RELEASE_NULL(g_sharedTextureCache);
 }
-
 
 const char* CCTextureCache::description()
 {
@@ -231,27 +274,46 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
         return;
     }
 
-    if (target)
-    {
-        target->retain();
-    }
-
     // lazy init
-    static bool firstRun = true;
-    if (firstRun)
+    if (s_pSem == NULL)
     {             
+#if CC_ASYNC_TEXTURE_CACHE_USE_NAMED_SEMAPHORE
+        s_pSem = sem_open(CC_ASYNC_TEXTURE_CACHE_SEMAPHORE, O_CREAT, 0644, 0);
+        if( s_pSem == SEM_FAILED )
+        {
+            CCLOG( "CCTextureCache async thread semaphore init error: %s\n", strerror( errno ) );
+            s_pSem = NULL;
+            return;
+        }
+#else
+        int semInitRet = sem_init(&s_sem, 0, 0);
+        if( semInitRet < 0 )
+        {
+            CCLOG( "CCTextureCache async thread semaphore init error: %s\n", strerror( errno ) );
+            return;
+        }
+        s_pSem = &s_sem;
+#endif
         s_pAsyncStructQueue = new queue<AsyncStruct*>();
         s_pImageQueue = new queue<ImageInfo*>();        
-
+        
         pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
-        sem_init(&s_sem, 0, 0);
         pthread_mutex_init(&s_ImageInfoMutex, NULL);
         pthread_create(&s_loadingThread, NULL, loadImage, NULL);
 
-        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
-
         need_quit = false;
-        firstRun = false;
+    }
+
+    if (0 == s_nAsyncRefCount)
+    {
+        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this, 0, false);
+    }
+
+    ++s_nAsyncRefCount;
+
+    if (target)
+    {
+        target->retain();
     }
 
     // generate async struct
@@ -265,7 +327,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     s_pAsyncStructQueue->push(data);
     pthread_mutex_unlock(&s_asyncStructQueueMutex);
 
-    sem_post(&s_sem);
+    sem_post(s_pSem);
 }
 
 void CCTextureCache::addImageAsyncCallBack(ccTime dt)
@@ -300,15 +362,8 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 #endif
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-        // cache the texture file name
-        if (pImageInfo->imageType == CCImage::kFmtJpg)
-        {
-            VolatileTexture::addImageTexture(texture, filename, CCImage::kFmtJpg);
-        }
-        else
-        {
-            VolatileTexture::addImageTexture(texture, filename, CCImage::kFmtPng);
-        }
+       // cache the texture file name
+       VolatileTexture::addImageTexture(texture, filename, pImageInfo->imageType);
 #endif
 
         // cache the texture
@@ -321,9 +376,15 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
             target->release();
         }        
 
-        delete pImage;
+        pImage->release();
         delete pAsyncStruct;
         delete pImageInfo;
+
+        --s_nAsyncRefCount;
+        if (0 == s_nAsyncRefCount)
+        {
+            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this);
+        }
     }
 }
 
@@ -361,42 +422,27 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
             {
                 texture = this->addPVRImage(fullpath.c_str());
             }
-            // Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
-            else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
-            {
-                CCImage image;
-                CCFileData data(fullpath.c_str(), "rb");
-                unsigned long nSize  = data.getSize();
-                unsigned char* pBuffer = data.getBuffer();
-                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtJpg));
-
-                texture = new CCTexture2D();
-                texture->initWithImage(&image, resolution);
-
-                if( texture )
-                {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
-                    // cache the texture file name
-                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtJpg);
-#endif
-
-                    m_pTextures->setObject(texture, pathKey.c_str());
-                    // autorelease prevents possible crash in multithreaded environments
-                    texture->autorelease();
-                }
-                else
-                {
-                    CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
-                }
-            }
             else
             {
-                // prevents overloading the autorelease pool
+                CCImage::EImageFormat eImageFormat = CCImage::kFmtUnKnown;
+                if (std::string::npos != lowerCase.find(".png"))
+                {
+                    eImageFormat = CCImage::kFmtPng;
+                }
+                else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
+                {
+                    eImageFormat = CCImage::kFmtJpg;
+                }
+                else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
+                {
+                    eImageFormat = CCImage::kFmtTiff;
+                }
+                
                 CCImage image;
                 CCFileData data(fullpath.c_str(), "rb");
                 unsigned long nSize  = data.getSize();
                 unsigned char* pBuffer = data.getBuffer();
-                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtPng));
+                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, eImageFormat));
 
                 texture = new CCTexture2D();
                 texture->initWithImage(&image, resolution);
@@ -405,7 +451,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 {
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
                     // cache the texture file name
-                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtPng);
+                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
 #endif
 
                     m_pTextures->setObject(texture, pathKey.c_str());
@@ -417,7 +463,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                     CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
                 }
             }
-
         } while (0);
     }
 
@@ -679,7 +724,7 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 VolatileTexture::~VolatileTexture()
 {
     textures.remove(this);
-    CC_SAFE_FREE(uiImage);
+    CC_SAFE_RELEASE(uiImage);
 }
 
 void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format)
@@ -700,7 +745,7 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
 void VolatileTexture::addCCImage(CCTexture2D *tt, CCImage *image)
 {
     VolatileTexture *vt = findVolotileTexture(tt);
-    
+    image->retain();
     vt->uiImage = image;
     vt->m_eCashedImageType = kImage;
 }
