@@ -734,12 +734,10 @@ CCLabelBMFont * CCLabelBMFont::node()
     if (pRet && pRet->init())
     {
         pRet->autorelease();
+        return pRet;
     }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
+    CC_SAFE_DELETE(pRet);
+    return NULL;
 }
 
 //LabelBMFont - Creation & Init
