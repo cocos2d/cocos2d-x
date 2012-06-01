@@ -144,12 +144,10 @@ CCSprite* CCSprite::node()
     if (pSprite && pSprite->init())
     {
         pSprite->autorelease();
+        return pSprite;
     }
-    else
-    {
-        CC_SAFE_DELETE(pSprite);
-    }
-    return pSprite;
+    CC_SAFE_DELETE(pSprite);
+    return NULL;
 }
 
 bool CCSprite::init(void)
