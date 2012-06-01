@@ -86,6 +86,9 @@ Developers:
     jreitman
         fix the bug of asynchronous loading resources for iOS
 
+    Nat Weiss
+        Fixes the declaration of tgaLoadRLEImageData()
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
