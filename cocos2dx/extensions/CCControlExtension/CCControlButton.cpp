@@ -70,6 +70,9 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         // Adjust the background image by default
         m_adjustBackgroundImage=true;
 
+        // Zooming button by default
+        m_zoomOnTouchDown = true;
+
         // Set the default anchor point
         setIsRelativeAnchorPoint(true);
         setAnchorPoint(ccp(0.5f, 0.5f));
@@ -185,12 +188,51 @@ void CCControlButton::setIsHighlighted(bool enabled)
         stopAction(action);        
     }
     needsLayout();
-
-    float scaleValue = (getIsHighlighted() && getIsEnabled() && !getIsSelected()) ? 1.1f : 1.0f;
-    CCAction *zoomAction =CCScaleTo::actionWithDuration(0.05f, scaleValue);
-    zoomAction->setTag(kZoomActionTag);
-    runAction(zoomAction);
+    if( m_zoomOnTouchDown )
+    {
+        float scaleValue = (getIsHighlighted() && getIsEnabled() && !getIsSelected()) ? 1.1f : 1.0f;
+        CCAction *zoomAction =CCScaleTo::actionWithDuration(0.05f, scaleValue);
+        zoomAction->setTag(kZoomActionTag);
+        runAction(zoomAction);
+    }
 }
+
+void CCControlButton::setZoomOnTouchDown(bool zoomOnTouchDown)
+{
+    m_zoomOnTouchDown = zoomOnTouchDown;
+}
+
+bool CCControlButton::getZoomOnTouchDown()
+{
+    return m_zoomOnTouchDown;
+}
+
+void CCControlButton::setPreferredSize(CCSize size)
+{
+    if(size.width == 0 && size.height == 0)
+    {
+        m_adjustBackgroundImage = true;
+    }
+    else
+    {
+        m_adjustBackgroundImage = false;
+        CCDictElement * item = NULL;
+        CCDICT_FOREACH(m_backgroundSpriteDispatchTable, item)
+        {
+            CCScale9Sprite* sprite = (CCScale9Sprite*)item->getObject();
+            sprite->setPreferredSize(size);
+        }
+        
+        m_preferredSize = size;
+    }
+    needsLayout();
+}
+
+CCSize CCControlButton::getPreferredSize()
+{
+    return m_preferredSize;
+}
+
 void CCControlButton::setAdjustBackgroundImage(bool adjustBackgroundImage)
 {
     m_adjustBackgroundImage=adjustBackgroundImage;
