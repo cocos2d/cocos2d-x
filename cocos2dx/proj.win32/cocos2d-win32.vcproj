@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libGLESv2.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="opengl32.lib glew32.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -104,7 +104,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libGLESv2.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="opengl32.lib glew32.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
