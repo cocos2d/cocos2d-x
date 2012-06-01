@@ -239,6 +239,8 @@ public:
     
     virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool getIsOpacityModifyRGB(void) { return false;}
+
+    virtual void updateImagesVisibility();
 };
 
 /** @brief CCMenuItemImage accepts images as items.
@@ -262,6 +264,7 @@ public:
     static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
     static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
+    bool init();
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
     /** sets the sprite frame for the normal image */
@@ -270,6 +273,9 @@ public:
     void setSelectedSpriteFrame(CCSpriteFrame* frame);
     /** sets the sprite frame for the disabled image */
     void setDisabledSpriteFrame(CCSpriteFrame* frame);
+    /** Creates an CCMenuItemImage.
+     */
+    static CCMenuItemImage* node();
 };
 
 /** @brief A CCMenuItemToggle
