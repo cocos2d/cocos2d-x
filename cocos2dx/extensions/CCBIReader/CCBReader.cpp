@@ -9,6 +9,9 @@
 #include "CCSpriteLoader.h"
 #include "CCScale9SpriteLoader.h"
 #include "CCBFileLoader.h"
+#include "CCMenuLoader.h"
+#include "CCMenuItemLoader.h"
+#include "CCMenuItemImageLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -23,6 +26,8 @@ CCBReader::CCBReader() {
     this->registerCCNodeLoader("CCLabelTTF", new CCLabelTTFLoader());
     this->registerCCNodeLoader("CCScale9Sprite", new CCScale9SpriteLoader());
     this->registerCCNodeLoader("CCBFile", new CCBFileLoader());
+    this->registerCCNodeLoader("CCMenu", new CCMenuLoader());
+    this->registerCCNodeLoader("CCMenuItemImage", new CCMenuItemImageLoader());
 }
 
 CCBReader::~CCBReader() {
