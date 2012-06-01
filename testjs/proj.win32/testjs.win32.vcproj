@@ -73,7 +73,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libGLESv2.lib libCocosDenshion.lib js.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib js.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
@@ -155,11 +155,11 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)js\spidermonkey-win32\lib\*.*&quot; &quot;$(OutDir)&quot;"
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)js\spidermonkey-win32\lib\*.*&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libGLESv2.lib libCocosDenshion.lib js.lib"
+				AdditionalDependencies="libcocos2d.lib opengl32.lib glew32.lib libCocosDenshion.lib js.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				SubSystem="2"
