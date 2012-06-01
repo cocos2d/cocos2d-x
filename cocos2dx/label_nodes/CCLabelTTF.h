@@ -60,7 +60,9 @@ public:
     */
     virtual void setString(const char *label);
     virtual const char* getString(void);
+    virtual const char* getFontName();
     virtual void setFontName(const char *fontName);
+    virtual float getFontSize();
     virtual void setFontSize(float fontSize);
     virtual void setDimensions(CCSize dim);
     virtual void setHorizontalAlignment(CCTextAlignment);

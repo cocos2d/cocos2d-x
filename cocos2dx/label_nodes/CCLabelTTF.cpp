@@ -133,6 +133,10 @@ bool CCLabelTTF::initWithString(const char *label, const char *fontName, float f
     }
     return false;
 }
+const char * CCLabelTTF::getFontName()
+{
+    return this->m_pFontName->c_str();
+}
 void CCLabelTTF::setFontName(const char *fontName)
 {
     if(this->m_pFontName == NULL || strcmp(this->m_pFontName->c_str(), fontName))
@@ -142,6 +146,10 @@ void CCLabelTTF::setFontName(const char *fontName)
         
         this->setString(this->m_pString->c_str());
     }
+}
+float CCLabelTTF::getFontSize()
+{
+    return this->m_fFontSize;
 }
 void CCLabelTTF::setFontSize(float fontSize)
 {
