@@ -2,7 +2,7 @@
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Leonardo Kasperavičius
-Copyright (c) 2011      ynga Inc.
+Copyright (c) 2011      Zynga Inc.
  
 http://www.cocos2d-x.org
 
@@ -96,6 +96,8 @@ public:
     /** listen the event that coming to foreground on Android
      */
     void listenBackToForeground(CCObject *obj);
+
+    static CCParticleSystemQuad * node();
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();
