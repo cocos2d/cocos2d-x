@@ -13,6 +13,7 @@
 #include "CCMenuItemLoader.h"
 #include "CCMenuItemImageLoader.h"
 #include "CCControlButtonLoader.h"
+#include "CCParticleSystemQuadLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -30,6 +31,7 @@ CCBReader::CCBReader() {
     this->registerCCNodeLoader("CCMenu", new CCMenuLoader());
     this->registerCCNodeLoader("CCMenuItemImage", new CCMenuItemImageLoader());
     this->registerCCNodeLoader("CCControlButton", new CCControlButtonLoader());
+    this->registerCCNodeLoader("CCParticleSystemQuad", new CCParticleSystemQuadLoader());
 }
 
 CCBReader::~CCBReader() {

@@ -9,7 +9,7 @@
 #define PROPERTY_IGNOREANCHORPOINTFORPOSITION "ignoreAnchorPointForPosition"
 #define PROPERTY_VISIBLE "visible"
 
-#define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) printf("Unexpected property type: '%s'!\n", PROPERTY.c_str()); assert(false)
+#define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) printf("Unexpected property: '%s'!\n", PROPERTY.c_str()); assert(false)
 #define ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) printf("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
 
 using namespace cocos2d;
@@ -463,7 +463,7 @@ CCAnimation * CCNodeLoader::parsePropTypeAnimation(CCNode * pNode, CCNode * pPar
 
 CCTexture2D * CCNodeLoader::parsePropTypeTexture(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     std::string spriteFile = pCCBReader->readCachedString();
-    
+
     return CCTextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
 }
 
