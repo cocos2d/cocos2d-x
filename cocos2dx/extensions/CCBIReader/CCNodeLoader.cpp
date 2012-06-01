@@ -418,6 +418,9 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
     
     CCSpriteFrame * spriteFrame;
     if (spriteSheet.compare("") == 0) {
+        if (spriteFile.compare("") == 0) {
+            return NULL;
+        }
         CCTexture2D * texture = CCTextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
         CCRect bounds = CCRect::CCRect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
         spriteFrame = CCSpriteFrame::frameWithTexture(texture, bounds);
@@ -797,7 +800,7 @@ void CCNodeLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, std::
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-void CCNodeLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlock, CCBReader * pCCBReader) {
+void CCNodeLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlockCCControl, CCBReader * pCCBReader) {
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
