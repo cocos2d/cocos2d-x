@@ -27,4 +27,4 @@ THE SOFTWARE.
 
 #include "GL/glew.h"
 
-#endif // __PLATFOMR_CCGL_H__
+#endif // __CCGL_H__
