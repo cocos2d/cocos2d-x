@@ -116,6 +116,8 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         m_marginH=24;    
         m_marginV=12;
 
+        this->m_labelAnchorPoint = CCPoint(0.5f, 0.5f);
+
         // Layout update
         needsLayout();
 
@@ -228,18 +230,29 @@ void CCControlButton::setPreferredSize(CCSize preferredSize)
         this->m_adjustBackgroundImage = false;
 
         // TODO Was: "for (id key in backgroundSpriteDispatchTable_)"
-        CCDictElement * key = NULL;
-        CCDICT_FOREACH(m_backgroundSpriteDispatchTable, key)
+        CCDictElement * element = NULL;
+        CCDICT_FOREACH(m_backgroundSpriteDispatchTable, element)
         {
-            int i = 0; // TODO
-            //CCScale9Sprite * sprite = m_backgroundSpriteDispatchTable->objectForKey(key);
-            //sprite->setPreferredSize(preferredSize);
+            CCScale9Sprite * sprite = dynamic_cast<CCScale9Sprite *>(m_backgroundSpriteDispatchTable->objectForKey(element->getIntKey()));
+            sprite->setPreferredSize(preferredSize);
         }
     }
 
     this->m_preferredSize = preferredSize;
 
     this->needsLayout();
+}
+
+CCPoint CCControlButton::getLabelAnchorPoint()
+{
+    return this->m_labelAnchorPoint;
+}
+
+void CCControlButton::setLabelAnchorPoint(CCPoint labelAnchorPoint)
+{
+    this->m_labelAnchorPoint = labelAnchorPoint;
+
+    this->m_titleLabel->setAnchorPoint(labelAnchorPoint);
 }
 
 CCString* CCControlButton::getTitleForState(CCControlState state)
@@ -448,6 +461,9 @@ void CCControlButton::needsLayout()
     // Hide the background and the label
     m_titleLabel->setIsVisible(false);
     m_backgroundSprite->setIsVisible(false);
+
+    // Update anchor of all labels
+    this->setLabelAnchorPoint(this->m_labelAnchorPoint);
     
     // Update the label to match with the current state
     //CC_SAFE_RELEASE(m_currentTitle)
