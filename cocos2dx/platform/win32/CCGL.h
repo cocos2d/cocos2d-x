@@ -25,13 +25,6 @@ THE SOFTWARE.
 #ifndef __CCGL_H__
 #define __CCGL_H__
 
-#define glClearDepth                glClearDepthf
-#define glDeleteVertexArrays        glDeleteVertexArraysOES
-#define glGenVertexArrays           glGenVertexArraysOES
-#define glBindVertexArray           glBindVertexArrayOES
-
-#include "GLES2/gl2.h"
-#include "GLES2/gl2ext.h"
-
+#include "GL/glew.h"
 
 #endif // __PLATFOMR_CCGL_H__
