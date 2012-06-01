@@ -167,6 +167,7 @@ protected:
     bool m_bLineBreakWithoutSpaces;
     // offset of the texture atlas
     CCPoint    m_tImageOffset;
+    const char * m_pFntFile;
 public:
     CCLabelBMFont();
 
@@ -207,6 +208,8 @@ public:
     virtual void setScale(float scale);
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
+
+    virtual const char * getFntFile();
 
 #if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw();
