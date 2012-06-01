@@ -54,6 +54,7 @@ protected:
     CC_PROPERTY(bool, m_adjustBackgroundImage, AdjustBackgroundImage);
 
     CC_PROPERTY(CCSize, m_preferredSize, PreferredSize);
+    CC_PROPERTY(CCPoint, m_labelAnchorPoint, LabelAnchorPoint);
 
     CC_SYNTHESIZE(bool, m_zoomOnTouchDown, ZoomOnTouchDown);
 
