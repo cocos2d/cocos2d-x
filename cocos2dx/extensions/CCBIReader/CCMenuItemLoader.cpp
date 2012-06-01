@@ -8,6 +8,7 @@ using namespace cocos2d::extension;
 
 void CCMenuItemLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlock, CCBReader * pCCBReader) {
     if(pPropertyName.compare(PROPERTY_BLOCK) == 0) {
+        // TODO selector thingy...
         // ((CCMenuItem *)pNode)->setTarget(???, ???);
     } else {
         CCNodeLoader::onHandlePropTypeBlock(pNode, pParent, pPropertyName, pBlock, pCCBReader);
