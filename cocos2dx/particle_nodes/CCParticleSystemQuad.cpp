@@ -562,4 +562,15 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
     }
 }
 
+CCParticleSystemQuad * CCParticleSystemQuad::node() {
+    CCParticleSystemQuad *pParticleSystemQuad = new CCParticleSystemQuad();
+    if (pParticleSystemQuad && pParticleSystemQuad->init())
+    {
+        pParticleSystemQuad->autorelease();
+        return pParticleSystemQuad;
+    }
+    CC_SAFE_DELETE(pParticleSystemQuad);
+    return NULL;
+}
+
 NS_CC_END
