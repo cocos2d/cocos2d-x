@@ -87,7 +87,7 @@ Developers:
         fix the bug of asynchronous loading resources for iOS
 
     Nat Weiss
-        Fixes the declaration of tgaLoadRLEImageData()
+        Minor enhancements to the Cocos2D-X codebase and Android build scripts
 
 Retired Core Developers:
     WenSheng Yang
