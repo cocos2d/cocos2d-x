@@ -50,6 +50,21 @@ do
     fi
 done
 
+# copy icons (if they exist)
+file=$GAME_ANDROID_ROOT/assets/Icon-72.png
+if [ -f "$file" ]; then
+	cp $file $GAME_ANDROID_ROOT/res/drawable-hdpi/icon.png
+fi
+file=$GAME_ANDROID_ROOT/assets/Icon-48.png
+if [ -f "$file" ]; then
+	cp $file $GAME_ANDROID_ROOT/res/drawable-mdpi/icon.png
+fi
+file=$GAME_ANDROID_ROOT/assets/Icon-32.png
+if [ -f "$file" ]; then
+	cp $file $GAME_ANDROID_ROOT/res/drawable-ldpi/icon.png
+fi
+
+
 if [[ $buildexternalsfromsource ]]; then
     echo "Building external dependencies from source"
     $NDK_ROOT/ndk-build -C $GAME_ANDROID_ROOT \
