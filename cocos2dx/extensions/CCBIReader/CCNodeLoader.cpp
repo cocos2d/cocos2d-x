@@ -231,7 +231,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeBlock(pNode, pParent, propertyName, blockData, pCCBReader);
                 }
-                // TODO delete block; ???
+                delete blockData;
                 break;
             }
             case kCCBPropTypeBlockCCControl: {
