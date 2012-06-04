@@ -12,7 +12,7 @@ class CCMenuItemLoader : public CCNodeLoader {
     protected:
         virtual CCMenuItem * createCCNode(CCNode *, CCBReader *) = 0;
 
-        virtual void onHandlePropTypeBlock(CCNode *, CCNode *, std::string, void *, CCBReader *);
+        virtual void onHandlePropTypeBlock(CCNode *, CCNode *, std::string, BlockData *, CCBReader *);
         virtual void onHandlePropTypeCheck(CCNode *, CCNode *, std::string, bool, CCBReader *);
 };
 

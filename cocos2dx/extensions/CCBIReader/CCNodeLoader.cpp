@@ -188,7 +188,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeFlip(pNode, pParent, propertyName, flip, pCCBReader);
                 }
-                delete flip; // TODO Can this just be deleted?
+                delete flip;
                 break;
             }
             case kCCBPropTypeBlendFunc: {
@@ -227,19 +227,19 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 break;
             }
             case kCCBPropTypeBlock: {
-                void * block = this->parsePropTypeBlock(pNode, pParent, pCCBReader);
+                BlockData * blockData = this->parsePropTypeBlock(pNode, pParent, pCCBReader);
                 if(setProp) {
-                    this->onHandlePropTypeBlock(pNode, pParent, propertyName, block, pCCBReader);
+                    this->onHandlePropTypeBlock(pNode, pParent, propertyName, blockData, pCCBReader);
                 }
                 // TODO delete block; ???
                 break;
             }
             case kCCBPropTypeBlockCCControl: {
-                void * blockCCControl = this->parsePropTypeBlockCCControl(pNode, pParent, pCCBReader);
-                if(setProp) {
-                    this->onHandlePropTypeBlockCCControl(pNode, pParent, propertyName, blockCCControl, pCCBReader);
+                BlockCCControlData * blockCCControlData = this->parsePropTypeBlockCCControl(pNode, pParent, pCCBReader);
+                if(setProp && blockCCControlData != NULL) {
+                    this->onHandlePropTypeBlockCCControl(pNode, pParent, propertyName, blockCCControlData, pCCBReader);
                 }
-                // TODO delete blockCCControl; ???
+                delete blockCCControlData;
                 break;
             }
             case kCCBPropTypeCCBFile: {
@@ -550,105 +550,77 @@ std::string CCNodeLoader::parsePropTypeFontTTF(CCNode * pNode, CCNode * pParent,
     return fnt;
 }
 
-void * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
+BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     std::string selectorName = pCCBReader->readCachedString();
     int selectorTarget = pCCBReader->readInt(false);
 
-    // TODO Selectors?
-    /*
-#ifdef CCB_ENABLE_JAVASCRIPT
-    if (selectorTarget && selectorName && ![selectorName isEqualToString:@""])
-    {
-        void (^block)(id sender);
-        block = ^(id sender) {
-            [[JSCocoa sharedController] eval:[NSString stringWithFormat:@"%@();",selectorName]];
-        };
-        
-        NSString* setSelectorName = [NSString stringWithFormat:@"set%@:",[name capitalizedString]];
-        SEL setSelector = NSSelectorFromString(setSelectorName);
-        
-        if ([node respondsToSelector:setSelector])
-        {
-            [node performSelector:setSelector withObject:block];
+    if(selectorTarget != kCCBTargetTypeNone) {
+        CCObject * target = NULL;
+        if(selectorTarget == kCCBTargetTypeDocumentRoot) {
+            target = pCCBReader->getRootNode();
+        } else if (selectorTarget == kCCBTargetTypeOwner) {
+            target = pCCBReader->getOwner();
         }
-        else
-        {
-            NSLog(@"CCBReader: Failed to set selector/target block for %@",selectorName);
+
+        if(target != NULL) {
+            if(selectorName.length() > 0) {
+                CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
+                if(ccbSelectorResolver != NULL) {
+                    BlockData * blockData = new BlockData();
+                    blockData->mSELMenuHandler = ccbSelectorResolver->onResolveCCBSelector(target, selectorName);
+
+                    blockData->mTarget = target;
+
+                    return blockData;
+                } else {
+                    CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName.c_str());
+                }
+            } else {
+                CCLOG("Unexpected empty selector.");
+            }
+        } else {
+            CCLOG("Unexpected NULL target for selector.");
         }
     }
-#else
-    if (selectorTarget)
-    {
-        id target = NULL;
-        if (selectorTarget == kCCBTargetTypeDocumentRoot) target = rootNode;
-        else if (selectorTarget == kCCBTargetTypeOwner) target = owner;
-        
-        if (target)
-        {
-            SEL selector = NSSelectorFromString(selectorName);
-            __block id t = target;
-            
-            void (^block)(id sender);
-            block = ^(id sender) {
-                [t performSelector:selector withObject:sender];
-            };
-            
-            NSString* setSelectorName = [NSString stringWithFormat:@"set%@:",[name capitalizedString]];
-            SEL setSelector = NSSelectorFromString(setSelectorName);
-            
-            if ([node respondsToSelector:setSelector])
-            {
-                [node performSelector:setSelector withObject:block];
-            }
-            else
-            {
-                NSLog(@"CCBReader: Failed to set selector/target block for %@",selectorName);
-            }
-        }
-        else
-        {
-            NSLog(@"CCBReader: Failed to find target for block");
-        }
-    }
-#endif
-     */
+
     return NULL;
 }
 
-void * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
+BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     std::string selectorName = pCCBReader->readCachedString();
     int selectorTarget = pCCBReader->readInt(false);
-    int ctrlEvts = pCCBReader->readInt(false);
-    
-    // TODO
-    /*
-    // Since we do not know for sure that CCControl is available, use
-    // NSInvocation to call it's addTarget:action:forControlEvents: method
-    NSMethodSignature* sig = [node methodSignatureForSelector:@selector(addTarget:action:forControlEvents:)];
-    if (sig)
-    {
-        SEL selector = NSSelectorFromString(selectorName);
-        id target = NULL;
-        if (selectorTarget == kCCBTargetTypeDocumentRoot) target = rootNode;
-        else if (selectorTarget == kCCBTargetTypeOwner) target = owner;
-        
-        if (selector && target)
-        {
-            NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
-            [invocation setTarget:node];
-            [invocation setSelector:@selector(addTarget:action:forControlEvents:)];
-            [invocation setArgument:&target atIndex:2];
-            [invocation setArgument:&selector atIndex:3];
-            [invocation setArgument:&ctrlEvts atIndex:4];
-            
-            [invocation invoke];
+    int controlEvents = pCCBReader->readInt(false);
+
+    if(selectorTarget != kCCBTargetTypeNone) {
+        CCObject * target = NULL;
+        if(selectorTarget == kCCBTargetTypeDocumentRoot) {
+            target = pCCBReader->getRootNode();
+        } else if (selectorTarget == kCCBTargetTypeOwner) {
+            target = pCCBReader->getOwner();
+        }
+
+        if(target != NULL) {
+            if(selectorName.length() > 0) {
+                CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
+                if(ccbSelectorResolver != NULL) {
+                    BlockCCControlData * blockCCControlData = new BlockCCControlData();
+                    blockCCControlData->mSELMenuHandler = ccbSelectorResolver->onResolveCCBSelector(target, selectorName);
+
+                    blockCCControlData->mTarget = target;
+                    blockCCControlData->mControlEvents = controlEvents;
+
+                    return blockCCControlData;
+                } else {
+                    CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName.c_str());
+                }
+            } else {
+                CCLOG("Unexpected empty selector.");
+            }
+        } else {
+            CCLOG("Unexpected NULL target for selector.");
         }
     }
-    else
-    {
-        NSLog(@"CCBReader: Failed to add selector/target block for CCControl");
-    }
-    */
+
     return NULL;
 }
 
@@ -796,11 +768,11 @@ void CCNodeLoader::onHandlePropTypeFontTTF(CCNode * pNode, CCNode * pParent, std
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-void CCNodeLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlock, CCBReader * pCCBReader) {
+void CCNodeLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, std::string pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader) {
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 
-void CCNodeLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlockCCControl, CCBReader * pCCBReader) {
+void CCNodeLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, std::string pPropertyName, BlockCCControlData * pBlockCCControlData, CCBReader * pCCBReader) {
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 

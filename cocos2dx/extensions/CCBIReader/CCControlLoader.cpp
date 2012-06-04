@@ -17,11 +17,11 @@ void CCControlLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, st
     }
 }
 
-void CCControlLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlockCCControl, CCBReader * pCCBReader) {
+void CCControlLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, std::string pPropertyName, BlockCCControlData * pBlockCCControlData, CCBReader * pCCBReader) {
     if(pPropertyName.compare(PROPERTY_CCCONTROL) == 0) {
         // TODO selector thingy...
-        // ((CCControl *)pNode)->setTarget(???, ???);
+        ((CCControl *)pNode)->addTargetWithActionForControlEvents(pBlockCCControlData->mTarget, pBlockCCControlData->mSELMenuHandler, pBlockCCControlData->mControlEvents); // TODO First paramater is wrong!
     } else {
-        CCNodeLoader::onHandlePropTypeBlockCCControl(pNode, pParent, pPropertyName, pBlockCCControl, pCCBReader);
+        CCNodeLoader::onHandlePropTypeBlockCCControl(pNode, pParent, pPropertyName, pBlockCCControlData, pCCBReader);
     }
 }

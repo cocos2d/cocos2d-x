@@ -2,6 +2,8 @@
 #define _CCB_READER_H_
 
 #include "cocos2d.h"
+#include "CCBMemberVariableAssigner.h"
+#include "CCBSelectorResolver.h"
 
 #define kCCBVersion 2
 
@@ -77,27 +79,33 @@ class CC_DLL CCBReader : public CCObject { // TODO Why extend CCObject? -> Also 
         unsigned char * mBytes;
         int mCurrentByte;
         int mCurrentBit;
-        CCNode * mOwner; /* TODO Should that be any 'Object'? */
+        CCObject * mOwner;
         CCNode * mRootNode;
         CCSize mRootContainerSize;
-    
+
+        CCBMemberVariableAssigner * mCCBMemberVariableAssigner;
+        CCBSelectorResolver * mCCBSelectorResolver;
+
         std::vector<std::string> mStringCache;
         std::map<std::string, CCNodeLoader *> mCCNodeLoaders;
         std::set<std::string> mLoadedSpriteSheets;
 
     public:   
         /* Constructor. */
-        CCBReader();
+        CCBReader(CCBMemberVariableAssigner * = NULL, CCBSelectorResolver * = NULL);
         CCBReader(CCBReader *);
         /* Destructor. */
         ~CCBReader();
 
-        CCNode * readNodeGraphFromFile(const char *, CCNode * = NULL);
-        CCNode * readNodeGraphFromFile(const char *, CCNode *, CCSize);
-        void registerCCNodeLoader(std::string, CCNodeLoader *);
-        CCNodeLoader * getCCNodeLoader(std::string);
+        CCNode * readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner = NULL);
+        CCNode * readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize);
+        void registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader);
+        CCNodeLoader * getCCNodeLoader(std::string pClassName);
+        CCBMemberVariableAssigner * getCCBMemberVariableAssigner();
+        CCBSelectorResolver * getCCBSelectorResolver();
 
-        CCNode * getOwner();
+        CCObject * getOwner();
+        CCNode * getRootNode();
         CCSize getContainerSize(CCNode *);
         std::string lastPathComponent(std::string);
         std::string deletePathExtension(std::string);
