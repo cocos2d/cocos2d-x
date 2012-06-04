@@ -18,23 +18,47 @@
 
         <!-- fix push ccobject -->
         <replace file="LuaCocos2d.cpp">
-            <replacetoken><![CDATA[tolua_pushusertype_ccobject(tolua_S,(void*)tolua_ret]]></replacetoken>
+            <replacetoken><![CDATA[toluafix_pushusertype_ccobject(tolua_S,(void*)tolua_ret]]></replacetoken>
             <replacevalue><![CDATA[int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret]]></replacevalue>
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret]]></replacevalue>
+        </replace>
+
+        <!-- fix LUA_FUNCTION -->
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[*((LUA_FUNCTION*)]]></replacetoken>
+            <replacevalue><![CDATA[(]]></replacevalue>
+        </replace>
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[tolua_usertype(tolua_S,"LUA_FUNCTION");]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
+
+        <!-- fix LUA_TABLE -->
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[*((LUA_TABLE*)]]></replacetoken>
+            <replacevalue><![CDATA[(]]></replacevalue>
+        </replace>
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[tolua_usertype(tolua_S,"LUA_TABLE");]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
         </replace>
 
         <!-- remove unused header -->
         <replace file="LuaCocos2d.cpp">
             <replacetoken><![CDATA[#ifndef __cplusplus
-                #include "stdlib.h"
-                #endif
-                #include "string.h"
+#include "stdlib.h"
+#endif
+#include "string.h"
 
-                #include "tolua++.h"
+#include "tolua++.h"]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
 
-                /* Exported function */
-                TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]]></replacetoken>
+        <!-- remove unused functions -->
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[/* Exported function */
+TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]]></replacetoken>
             <replacevalue><![CDATA[]]></replacevalue>
         </replace>
 
