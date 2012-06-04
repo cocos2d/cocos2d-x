@@ -6,6 +6,17 @@
 
 NS_CC_EXT_BEGIN
 
+struct BlockData {
+    SEL_MenuHandler mSELMenuHandler;
+    CCObject * mTarget;
+};
+
+struct BlockCCControlData {
+    SEL_MenuHandler mSELMenuHandler;
+    CCObject * mTarget;
+    int mControlEvents;
+};
+
 /* Forward declaration. */
 class CCBReader;
 
@@ -41,8 +52,8 @@ class CC_DLL CCNodeLoader {
         virtual std::string parsePropTypeString(CCNode *, CCNode *, CCBReader *);
         virtual std::string parsePropTypeText(CCNode *, CCNode *, CCBReader *);
         virtual std::string parsePropTypeFontTTF(CCNode *, CCNode *, CCBReader *);
-        virtual void * parsePropTypeBlock(CCNode *, CCNode *, CCBReader *);
-        virtual void * parsePropTypeBlockCCControl(CCNode *, CCNode *, CCBReader *);
+        virtual BlockData * parsePropTypeBlock(CCNode *, CCNode *, CCBReader *);
+        virtual BlockCCControlData * parsePropTypeBlockCCControl(CCNode *, CCNode *, CCBReader *);
         virtual CCNode * parsePropTypeCCBFile(CCNode *, CCNode *, CCBReader *);
 
 
@@ -70,8 +81,8 @@ class CC_DLL CCNodeLoader {
         virtual void onHandlePropTypeString(CCNode *, CCNode *, std::string, std::string, CCBReader *);
         virtual void onHandlePropTypeText(CCNode *, CCNode *, std::string, std::string, CCBReader *);
         virtual void onHandlePropTypeFontTTF(CCNode *, CCNode *, std::string, std::string, CCBReader *);
-        virtual void onHandlePropTypeBlock(CCNode *, CCNode *, std::string, void *, CCBReader *);
-        virtual void onHandlePropTypeBlockCCControl(CCNode *, CCNode *, std::string, void *, CCBReader *);
+        virtual void onHandlePropTypeBlock(CCNode *, CCNode *, std::string, BlockData *, CCBReader *);
+        virtual void onHandlePropTypeBlockCCControl(CCNode *, CCNode *, std::string, BlockCCControlData *, CCBReader *);
         virtual void onHandlePropTypeCCBFile(CCNode *, CCNode *, std::string, CCNode *, CCBReader *);
 };
 

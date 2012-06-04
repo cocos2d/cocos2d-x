@@ -6,12 +6,11 @@ using namespace cocos2d::extension;
 #define PROPERTY_BLOCK "block"
 #define PROPERTY_ISENABLED "isEnabled"
 
-void CCMenuItemLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, std::string pPropertyName, void * pBlock, CCBReader * pCCBReader) {
+void CCMenuItemLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, std::string pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader) {
     if(pPropertyName.compare(PROPERTY_BLOCK) == 0) {
-        // TODO selector thingy...
-        // ((CCMenuItem *)pNode)->setTarget(???, ???);
+        ((CCMenuItem *)pNode)->setTarget(pBlockData->mTarget, pBlockData->mSELMenuHandler);
     } else {
-        CCNodeLoader::onHandlePropTypeBlock(pNode, pParent, pPropertyName, pBlock, pCCBReader);
+        CCNodeLoader::onHandlePropTypeBlock(pNode, pParent, pPropertyName, pBlockData, pCCBReader);
     }
 }
 

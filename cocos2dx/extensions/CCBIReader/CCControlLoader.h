@@ -12,7 +12,7 @@ class CCControlLoader : public CCNodeLoader {
     protected:
         virtual CCControl * createCCNode(CCNode *, CCBReader *) = 0;
 
-        virtual void onHandlePropTypeBlockCCControl(CCNode *, CCNode *, std::string, void *, CCBReader *);
+        virtual void onHandlePropTypeBlockCCControl(CCNode *, CCNode *, std::string, BlockCCControlData *, CCBReader *);
         virtual void onHandlePropTypeCheck(CCNode *, CCNode *, std::string, bool, CCBReader *);
 };
 

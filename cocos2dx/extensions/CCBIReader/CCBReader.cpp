@@ -18,7 +18,10 @@
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-CCBReader::CCBReader() {
+CCBReader::CCBReader(CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver) {
+    this->mCCBMemberVariableAssigner = pCCBMemberVariableAssigner;
+    this->mCCBSelectorResolver = pCCBSelectorResolver;
+
     this->registerCCNodeLoader("CCNode", new CCNodeLoader());
     this->registerCCNodeLoader("CCLayer", new CCLayerLoader());
     this->registerCCNodeLoader("CCLayerColor", new CCLayerColorLoader());
@@ -47,10 +50,20 @@ CCBReader::CCBReader(CCBReader * pCCBReader) {
     /* Borrow CCNodeLoaders and LoadedSpriteSheets. */
     this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
     this->mCCNodeLoaders = pCCBReader->mCCNodeLoaders;
+    this->mCCBMemberVariableAssigner = pCCBReader->mCCBMemberVariableAssigner;
+    this->mCCBSelectorResolver = pCCBReader->mCCBSelectorResolver;
 }
 
 void CCBReader::registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader) {
     this->mCCNodeLoaders.insert(std::pair<std::string, CCNodeLoader *>(pClassName, pCCNodeLoader));
+}
+
+CCBMemberVariableAssigner * CCBReader::getCCBMemberVariableAssigner() {
+    return this->mCCBMemberVariableAssigner;
+}
+
+CCBSelectorResolver * CCBReader::getCCBSelectorResolver() {
+    return this->mCCBSelectorResolver;
 }
 
 CCNodeLoader * CCBReader::getCCNodeLoader(std::string pClassName) {
@@ -59,11 +72,11 @@ CCNodeLoader * CCBReader::getCCNodeLoader(std::string pClassName) {
     return ccNodeLoadersIterator->second;
 }
 
-CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCNode * pOwner) {
+CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner) {
     return this->readNodeGraphFromFile(pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
 }
 
-CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCNode * pOwner, CCSize pParentSize) {
+CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
     const char * path = CCFileUtils::fullPathFromRelativePath(pCCBFileName);
     
     unsigned long size = 0;
@@ -72,7 +85,7 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCNode * pO
     this->mCurrentByte = 0;
     this->mCurrentBit = 0;
     this->mOwner = pOwner;
-    this->mRootContainerSize = pParentSize;
+    this->mRootContainerSize = pRootContainerSize;
     
     if(!this->readHeader()) {
         return NULL;
@@ -235,60 +248,48 @@ std::string CCBReader::readCachedString() {
 }
 
 CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
-    // Read class name
+    /* Read class name. */
     std::string className = this->readCachedString();
 
     int memberVarAssignmentType = this->readInt(false);
     std::string memberVarAssignmentName;
-    if(memberVarAssignmentType) {
+    if(memberVarAssignmentType != kCCBTargetTypeNone) {
         memberVarAssignmentName = this->readCachedString();
     }
-    
+
     CCNodeLoader * ccNodeLoader = this->getCCNodeLoader(className);
     CCNode * node = ccNodeLoader->loadCCNode(pParent, this);
-    
-    // Set root node
-    if(!this->mRootNode) {
+
+    /* Set root node, if not set yet. */
+    if(this->mRootNode == NULL) {
         this->mRootNode = node; // TODO retain?
     }
 
-    // TODO
-    /*    
-    // Assign to variable (if applicable)
-    if (memberVarAssignmentType)
-    {
-        id target = NULL;
-        if (memberVarAssignmentType == kCCBTargetTypeDocumentRoot) target = rootNode;
-        else if (memberVarAssignmentType == kCCBTargetTypeOwner) target = owner;
-        
-        if (target)
-        {
-            Ivar ivar = class_getInstanceVariable([target class],[memberVarAssignmentName UTF8String]);
-            if (ivar)
-            {
-                object_setIvar(target,ivar,node);
-            }
-            else
-            {
-                NSLog(@"CCBReader: Couldn't find member variable: %@", memberVarAssignmentName);
+    if(memberVarAssignmentType != kCCBTargetTypeNone) {
+        CCObject * target = NULL;
+        if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) {
+            target = this->getRootNode();
+        } else if (memberVarAssignmentType == kCCBTargetTypeOwner) {
+            target = this->getOwner();
+        }
+
+        if (target != NULL) {
+            if(this->mCCBMemberVariableAssigner != NULL) {
+                this->mCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName, node);
             }
         }
     }
-     */
-    
-    // Read and add children
+
+    /* Read and add children. */
     int numChildren = this->readInt(false);
     for(int i = 0; i < numChildren; i++) {
         CCNode * child = this->readNodeGraph(node);
         node->addChild(child);
     }
     
-    
     // TODO
     /*
-    // Call didLoadFromCCB
-    if ([node respondsToSelector:@selector(didLoadFromCCB)])
-    {
+    if([node respondsToSelector:@selector(didLoadFromCCB)]) {
         [node performSelector:@selector(didLoadFromCCB)];
     }
     */
@@ -300,8 +301,12 @@ CCNode * CCBReader::readNodeGraph() {
     return this->readNodeGraph(NULL);
 }
 
-CCNode * CCBReader::getOwner() {
+CCObject * CCBReader::getOwner() {
     return this->mOwner;
+}
+
+CCNode * CCBReader::getRootNode() {
+    return this->mRootNode;
 }
 
 CCSize CCBReader::getContainerSize(CCNode * pNode) {
