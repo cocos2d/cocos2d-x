@@ -33,6 +33,7 @@ typedef struct lua_State lua_State;
 
 typedef int LUA_FUNCTION;
 typedef int LUA_HANDLE;
+typedef int LUA_TABLE;
 
 NS_CC_BEGIN
 
