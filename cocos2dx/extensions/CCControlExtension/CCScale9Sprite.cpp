@@ -204,9 +204,6 @@ void CCScale9Sprite::updatePositions()
 {
     CCSize size = this->m_tContentSize;
 
-    CCLOG("scale9 set content size %0.2f %0.2f",size.width,size.height);
-    CCLOG("leftCap %0.2f rightCap %0.2f",topLeft->getContentSize().width,topRight->getContentSize().width);
-
     float sizableWidth = size.width - topLeft->getContentSize().width - topRight->getContentSize().width;
     float sizableHeight = size.height - topLeft->getContentSize().height - bottomRight->getContentSize().height;
     float horizontalScale = sizableWidth/centre->getContentSize().width;
@@ -247,8 +244,6 @@ void CCScale9Sprite::updatePositions()
 
     // Position centre
     centre->setPosition(ccp(leftWidth, bottomHeight));
-
-    CCLOG("Scale9 setContentSize %02.f x %02.f <%0.2f x %0.2f>",sizableWidth,sizableHeight,horizontalScale,verticalScale);
 }
 
 bool CCScale9Sprite::initWithFile(const char* file, CCRect rect,  CCRect capInsets)
