@@ -15,12 +15,25 @@
 #include "CCControlButtonLoader.h"
 #include "CCParticleSystemQuadLoader.h"
 
+#ifdef __CC_PLATFORM_IOS
+#import <UIKit/UIDevice.h>
+#endif
+
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
 CCBReader::CCBReader(CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver) {
     this->mCCBMemberVariableAssigner = pCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBSelectorResolver;
+
+    this->mResolutionScale = 1;
+    
+#ifdef __CC_PLATFORM_IOS
+    /* iPad */
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        this->mResolutionScale = 2;
+    }
+#endif
 
     this->registerCCNodeLoader("CCNode", new CCNodeLoader());
     this->registerCCNodeLoader("CCLayer", new CCLayerLoader());
@@ -47,7 +60,8 @@ CCBReader::~CCBReader() {
 }
 
 CCBReader::CCBReader(CCBReader * pCCBReader) {
-    /* Borrow CCNodeLoaders and LoadedSpriteSheets. */
+    /* Borrow data from the 'parent' CCBLoader. */
+    this->mResolutionScale = pCCBReader->mResolutionScale;
     this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
     this->mCCNodeLoaders = pCCBReader->mCCNodeLoaders;
     this->mCCBMemberVariableAssigner = pCCBReader->mCCBMemberVariableAssigner;
@@ -64,6 +78,10 @@ CCBMemberVariableAssigner * CCBReader::getCCBMemberVariableAssigner() {
 
 CCBSelectorResolver * CCBReader::getCCBSelectorResolver() {
     return this->mCCBSelectorResolver;
+}
+
+float CCBReader::getResolutionScale() {
+    return this->mResolutionScale;
 }
 
 CCNodeLoader * CCBReader::getCCNodeLoader(std::string pClassName) {

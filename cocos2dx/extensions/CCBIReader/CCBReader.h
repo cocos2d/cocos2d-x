@@ -82,6 +82,7 @@ class CC_DLL CCBReader : public CCObject { // TODO Why extend CCObject? -> Also 
         CCObject * mOwner;
         CCNode * mRootNode;
         CCSize mRootContainerSize;
+        float mResolutionScale;
 
         CCBMemberVariableAssigner * mCCBMemberVariableAssigner;
         CCBSelectorResolver * mCCBSelectorResolver;
@@ -107,14 +108,18 @@ class CC_DLL CCBReader : public CCObject { // TODO Why extend CCObject? -> Also 
         CCObject * getOwner();
         CCNode * getRootNode();
         CCSize getContainerSize(CCNode *);
+        float getResolutionScale();
+
+        bool isSpriteSheetLoaded(std::string);
+        void addLoadedSpriteSheet(std::string);
+    
+        /* Utility methods. */
         std::string lastPathComponent(std::string);
         std::string deletePathExtension(std::string);
         std::string toLowerCase(std::string);
         bool endsWith(std::string, std::string);
-        bool isSpriteSheetLoaded(std::string);
-        void addLoadedSpriteSheet(std::string);
 
-        /* Parse methods */
+        /* Parse methods. */
         int readInt(bool pSign);
         unsigned char readByte();
         bool readBool();
