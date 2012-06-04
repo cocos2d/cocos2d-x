@@ -55,5 +55,4 @@ using namespace CocosDenshion;
 
 int  tolua_Cocos2d_open(lua_State* tolua_S);
 
-
 #endif // __LUACOCOS2D_H

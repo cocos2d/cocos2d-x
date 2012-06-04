@@ -52,7 +52,7 @@ bool CCLuaEngine::init(void)
     m_state = lua_open();
     luaL_openlibs(m_state);
     tolua_Cocos2d_open(m_state);
-    tolua_prepare_ccobject_table(m_state);
+    toluafix_prepare_ccobject_table(m_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     addLuaLoader(loader_Android);
 #endif
@@ -69,12 +69,12 @@ CCLuaEngine* CCLuaEngine::engine()
 
 void CCLuaEngine::removeCCObjectByID(int nLuaID)
 {
-    tolua_remove_ccobject_by_refid(m_state, nLuaID);
+    toluafix_remove_ccobject_by_refid(m_state, nLuaID);
 }
 
 void CCLuaEngine::removeLuaHandler(LUA_HANDLE nHandler)
 {
-    tolua_remove_function_by_refid(m_state, nHandler);
+    toluafix_remove_function_by_refid(m_state, nHandler);
 }
 
 void CCLuaEngine::addSearchPath(const char* path)
@@ -222,7 +222,7 @@ int CCLuaEngine::executeFunctionWithBooleanData(LUA_HANDLE nHandler, bool data)
 
 int CCLuaEngine::executeFunctionWithCCObject(LUA_HANDLE nHandler, CCObject* pObject, const char* typeName)
 {
-    tolua_pushusertype_ccobject(m_state, pObject->m_uID, &pObject->m_nLuaID, pObject, typeName);
+    toluafix_pushusertype_ccobject(m_state, pObject->m_uID, &pObject->m_nLuaID, pObject, typeName);
     return executeFunctionByHandler(nHandler, 1);
 }
 
@@ -246,7 +246,7 @@ int CCLuaEngine::pushBooleanToLuaStack(int data)
 
 int CCLuaEngine::pushCCObjectToLuaStack(CCObject* pObject, const char* typeName)
 {
-    tolua_pushusertype_ccobject(m_state, pObject->m_uID, &pObject->m_nLuaID, pObject, typeName);
+    toluafix_pushusertype_ccobject(m_state, pObject->m_uID, &pObject->m_nLuaID, pObject, typeName);
     return lua_gettop(m_state);
 }
 

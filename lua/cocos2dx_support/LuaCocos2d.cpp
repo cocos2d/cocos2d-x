@@ -1,17 +1,11 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Jun  4 15:27:29 2012.
+** Generated automatically by tolua++-1.0.92 on Mon Jun  4 16:28:40 2012.
 */
 
-#ifndef __cplusplus
-#include "stdlib.h"
-#endif
-#include "string.h"
 
-#include "tolua++.h"
 
-/* Exported function */
-TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);
+
 
 #include "LuaCocos2d.h"
 
@@ -353,7 +347,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCMutableDictionary<std::string,CCObject*>");
  tolua_usertype(tolua_S,"CCActionInterval");
  tolua_usertype(tolua_S,"CCEaseBounceInOut");
- tolua_usertype(tolua_S,"LUA_FUNCTION");
+ 
  tolua_usertype(tolua_S,"CCObject");
  tolua_usertype(tolua_S,"CCEaseExponentialOut");
  tolua_usertype(tolua_S,"CCEaseBackInOut");
@@ -3440,8 +3434,8 @@ static int tolua_Cocos2d_CCArray_objectAtIndex00(lua_State* tolua_S)
   {
    CCObject* tolua_ret = (CCObject*)  self->objectAtIndex(index);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
  return 1;
@@ -3474,8 +3468,8 @@ static int tolua_Cocos2d_CCArray_lastObject00(lua_State* tolua_S)
   {
    CCObject* tolua_ret = (CCObject*)  self->lastObject();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
  return 1;
@@ -3508,8 +3502,8 @@ static int tolua_Cocos2d_CCArray_randomObject00(lua_State* tolua_S)
   {
    CCObject* tolua_ret = (CCObject*)  self->randomObject();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
  return 1;
@@ -4032,8 +4026,8 @@ static int tolua_Cocos2d_CCArray_array00(lua_State* tolua_S)
   {
    CCArray* tolua_ret = (CCArray*)  CCArray::array();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
   }
  }
  return 1;
@@ -4064,8 +4058,8 @@ static int tolua_Cocos2d_CCArray_arrayWithCapacity00(lua_State* tolua_S)
   {
    CCArray* tolua_ret = (CCArray*)  CCArray::arrayWithCapacity(capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
   }
  }
  return 1;
@@ -4096,8 +4090,8 @@ static int tolua_Cocos2d_CCArray_arrayWithArray00(lua_State* tolua_S)
   {
    CCArray* tolua_ret = (CCArray*)  CCArray::arrayWithArray(otherArray);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
   }
  }
  return 1;
@@ -4257,8 +4251,8 @@ static int tolua_Cocos2d_CCMutableArray_CCObject___getLastObject00(lua_State* to
   {
    CCObject* tolua_ret = (CCObject*)  self->getLastObject();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
  return 1;
@@ -4293,8 +4287,8 @@ static int tolua_Cocos2d_CCMutableArray_CCObject___getObjectAtIndex00(lua_State*
   {
    CCObject* tolua_ret = (CCObject*)  self->getObjectAtIndex(uIndex);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
  return 1;
@@ -4991,8 +4985,8 @@ static int tolua_Cocos2d_CCMutableArray_CCSpriteFrame___getLastObject00(lua_Stat
   {
    CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  self->getLastObject();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
   }
  }
  return 1;
@@ -5027,8 +5021,8 @@ static int tolua_Cocos2d_CCMutableArray_CCSpriteFrame___getObjectAtIndex00(lua_S
   {
    CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  self->getObjectAtIndex(uIndex);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
   }
  }
  return 1;
@@ -5725,8 +5719,8 @@ static int tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___getLastObject00(lua
   {
    CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  self->getLastObject();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
   }
  }
  return 1;
@@ -5761,8 +5755,8 @@ static int tolua_Cocos2d_CCMutableArray_CCFiniteTimeAction___getObjectAtIndex00(
   {
    CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  self->getObjectAtIndex(uIndex);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
   }
  }
  return 1;
@@ -6452,8 +6446,8 @@ static int tolua_Cocos2d_CCMutableDictionary_std__string_CCObject___objectForKey
   {
    CCObject* tolua_ret = (CCObject*)  self->objectForKey(key);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
  return 1;
@@ -6620,8 +6614,8 @@ static int tolua_Cocos2d_CCMutableDictionary_std__string_CCObject___next00(lua_S
   {
    CCObject* tolua_ret = (CCObject*)  self->next(&key);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
    tolua_pushcppstring(tolua_S,(const char*)key);
   }
  }
@@ -7415,8 +7409,8 @@ static int tolua_Cocos2d_CCConfiguration_sharedConfiguration00(lua_State* tolua_
   {
    CCConfiguration* tolua_ret = (CCConfiguration*)  CCConfiguration::sharedConfiguration();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCConfiguration");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCConfiguration");
   }
  }
  return 1;
@@ -7449,8 +7443,8 @@ static int tolua_Cocos2d_CCDirector_getRunningScene00(lua_State* tolua_S)
   {
    CCScene* tolua_ret = (CCScene*)  self->getRunningScene();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScene");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScene");
   }
  }
  return 1;
@@ -7709,8 +7703,8 @@ static int tolua_Cocos2d_CCDirector_getNotificationNode00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  self->getNotificationNode();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -8339,8 +8333,8 @@ static int tolua_Cocos2d_CCDirector_sharedDirector00(lua_State* tolua_S)
   {
    CCDirector* tolua_ret = (CCDirector*)  CCDirector::sharedDirector();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDirector");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDirector");
   }
  }
  return 1;
@@ -8360,7 +8354,7 @@ static int tolua_Cocos2d_CCTimer_timerWithScriptHandler00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCTimer",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -8368,13 +8362,13 @@ static int tolua_Cocos2d_CCTimer_timerWithScriptHandler00(lua_State* tolua_S)
  else
 #endif
  {
-  LUA_FUNCTION nHandler = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,2,0));
+  LUA_FUNCTION nHandler = (  toluafix_ref_function(tolua_S,2,0));
    float fSeconds = ((  float)  tolua_tonumber(tolua_S,3,0));
   {
    CCTimer* tolua_ret = (CCTimer*)  CCTimer::timerWithScriptHandler(nHandler,fSeconds);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTimer");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTimer");
   }
  }
  return 1;
@@ -8556,7 +8550,7 @@ static int tolua_Cocos2d_CCScheduler_scheduleScriptFunc00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCScheduler",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isboolean(tolua_S,4,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
@@ -8566,7 +8560,7 @@ static int tolua_Cocos2d_CCScheduler_scheduleScriptFunc00(lua_State* tolua_S)
 #endif
  {
   CCScheduler* self = (CCScheduler*)  tolua_tousertype(tolua_S,1,0);
-  LUA_FUNCTION nHandler = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,2,0));
+  LUA_FUNCTION nHandler = (  toluafix_ref_function(tolua_S,2,0));
    float fInterval = ((  float)  tolua_tonumber(tolua_S,3,0));
   bool bPaused = ((bool)  tolua_toboolean(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
@@ -8736,8 +8730,8 @@ static int tolua_Cocos2d_CCScheduler_sharedScheduler00(lua_State* tolua_S)
   {
    CCScheduler* tolua_ret = (CCScheduler*)  CCScheduler::sharedScheduler();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScheduler");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScheduler");
   }
  }
  return 1;
@@ -8943,8 +8937,8 @@ static int tolua_Cocos2d_CCActionManager_getActionByTag00(lua_State* tolua_S)
   {
    CCAction* tolua_ret = (CCAction*)  self->getActionByTag(tag,pTarget);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
   }
  }
  return 1;
@@ -9073,8 +9067,8 @@ static int tolua_Cocos2d_CCActionManager_sharedManager00(lua_State* tolua_S)
   {
    CCActionManager* tolua_ret = (CCActionManager*)  CCActionManager::sharedManager();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionManager");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionManager");
   }
  }
  return 1;
@@ -9107,8 +9101,8 @@ static int tolua_Cocos2d_CCAction_getTarget00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  self->getTarget();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -9488,8 +9482,8 @@ static int tolua_Cocos2d_CCSequence_actionsWithArrayLua00(lua_State* tolua_S)
   {
    CCSequence* tolua_ret = (CCSequence*)  CCSequence::actionsWithArrayLua(actions);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSequence");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSequence");
   }
  }
  return 1;
@@ -9522,8 +9516,8 @@ static int tolua_Cocos2d_CCSequence_actionOneTwo00(lua_State* tolua_S)
   {
    CCSequence* tolua_ret = (CCSequence*)  CCSequence::actionOneTwo(pActionOne,pActionTwo);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSequence");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSequence");
   }
  }
  return 1;
@@ -9556,8 +9550,8 @@ static int tolua_Cocos2d_CCRepeat_actionWithAction00(lua_State* tolua_S)
   {
    CCRepeat* tolua_ret = (CCRepeat*)  CCRepeat::actionWithAction(pAction,times);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRepeat");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRepeat");
   }
  }
  return 1;
@@ -9588,8 +9582,8 @@ static int tolua_Cocos2d_CCRepeatForever_actionWithAction00(lua_State* tolua_S)
   {
    CCRepeatForever* tolua_ret = (CCRepeatForever*)  CCRepeatForever::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRepeatForever");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRepeatForever");
   }
  }
  return 1;
@@ -9620,8 +9614,8 @@ static int tolua_Cocos2d_CCSpawn_actionsWithArrayLua00(lua_State* tolua_S)
   {
    CCSpawn* tolua_ret = (CCSpawn*)  CCSpawn::actionsWithArrayLua(actions);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpawn");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpawn");
   }
  }
  return 1;
@@ -9654,8 +9648,8 @@ static int tolua_Cocos2d_CCSpawn_actionOneTwo00(lua_State* tolua_S)
   {
    CCSpawn* tolua_ret = (CCSpawn*)  CCSpawn::actionOneTwo(pAction1,pAction2);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpawn");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpawn");
   }
  }
  return 1;
@@ -9688,8 +9682,8 @@ static int tolua_Cocos2d_CCRotateTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCRotateTo* tolua_ret = (CCRotateTo*)  CCRotateTo::actionWithDuration(duration,fDeltaAngle);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRotateTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRotateTo");
   }
  }
  return 1;
@@ -9722,8 +9716,8 @@ static int tolua_Cocos2d_CCRotateBy_actionWithDuration00(lua_State* tolua_S)
   {
    CCRotateBy* tolua_ret = (CCRotateBy*)  CCRotateBy::actionWithDuration(duration,fDeltaAngle);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRotateBy");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRotateBy");
   }
  }
  return 1;
@@ -9756,8 +9750,8 @@ static int tolua_Cocos2d_CCMoveTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCMoveTo* tolua_ret = (CCMoveTo*)  CCMoveTo::actionWithDuration(duration,position);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMoveTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMoveTo");
   }
  }
  return 1;
@@ -9790,8 +9784,8 @@ static int tolua_Cocos2d_CCMoveBy_actionWithDuration00(lua_State* tolua_S)
   {
    CCMoveBy* tolua_ret = (CCMoveBy*)  CCMoveBy::actionWithDuration(duration,position);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMoveBy");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMoveBy");
   }
  }
  return 1;
@@ -9826,8 +9820,8 @@ static int tolua_Cocos2d_CCSkewTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCSkewTo* tolua_ret = (CCSkewTo*)  CCSkewTo::actionWithDuration(t,sx,sy);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSkewTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSkewTo");
   }
  }
  return 1;
@@ -9862,8 +9856,8 @@ static int tolua_Cocos2d_CCSkewBy_actionWithDuration00(lua_State* tolua_S)
   {
    CCSkewBy* tolua_ret = (CCSkewBy*)  CCSkewBy::actionWithDuration(t,deltaSkewX,deltaSkewY);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSkewBy");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSkewBy");
   }
  }
  return 1;
@@ -9900,8 +9894,8 @@ static int tolua_Cocos2d_CCJumpBy_actionWithDuration00(lua_State* tolua_S)
   {
    CCJumpBy* tolua_ret = (CCJumpBy*)  CCJumpBy::actionWithDuration(duration,position,height,jumps);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCJumpBy");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCJumpBy");
   }
  }
  return 1;
@@ -9938,8 +9932,8 @@ static int tolua_Cocos2d_CCJumpTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCJumpTo* tolua_ret = (CCJumpTo*)  CCJumpTo::actionWithDuration(duration,position,height,jumps);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCJumpTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCJumpTo");
   }
  }
  return 1;
@@ -10119,8 +10113,8 @@ static int tolua_Cocos2d_CCBezierBy_actionWithDuration00(lua_State* tolua_S)
   {
    CCBezierBy* tolua_ret = (CCBezierBy*)  CCBezierBy::actionWithDuration(t,c);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBezierBy");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBezierBy");
   }
  }
  return 1;
@@ -10153,8 +10147,8 @@ static int tolua_Cocos2d_CCBezierTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCBezierTo* tolua_ret = (CCBezierTo*)  CCBezierTo::actionWithDuration(t,c);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBezierTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBezierTo");
   }
  }
  return 1;
@@ -10187,8 +10181,8 @@ static int tolua_Cocos2d_CCScaleTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCScaleTo* tolua_ret = (CCScaleTo*)  CCScaleTo::actionWithDuration(duration,s);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScaleTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScaleTo");
   }
  }
  return 1;
@@ -10221,8 +10215,8 @@ static int tolua_Cocos2d_CCScaleTo_actionWithDuration01(lua_State* tolua_S)
   {
    CCScaleTo* tolua_ret = (CCScaleTo*)  CCScaleTo::actionWithDuration(duration,sx,sy);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScaleTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScaleTo");
   }
  }
  return 1;
@@ -10252,8 +10246,8 @@ static int tolua_Cocos2d_CCScaleBy_actionWithDuration00(lua_State* tolua_S)
   {
    CCScaleBy* tolua_ret = (CCScaleBy*)  CCScaleBy::actionWithDuration(duration,s);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScaleBy");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScaleBy");
   }
  }
  return 1;
@@ -10286,8 +10280,8 @@ static int tolua_Cocos2d_CCScaleBy_actionWithDuration01(lua_State* tolua_S)
   {
    CCScaleBy* tolua_ret = (CCScaleBy*)  CCScaleBy::actionWithDuration(duration,sx,sy);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScaleBy");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScaleBy");
   }
  }
  return 1;
@@ -10317,8 +10311,8 @@ static int tolua_Cocos2d_CCBlink_actionWithDuration00(lua_State* tolua_S)
   {
    CCBlink* tolua_ret = (CCBlink*)  CCBlink::actionWithDuration(duration,uBlinks);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBlink");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBlink");
   }
  }
  return 1;
@@ -10349,8 +10343,8 @@ static int tolua_Cocos2d_CCFadeIn_actionWithDuration00(lua_State* tolua_S)
   {
    CCFadeIn* tolua_ret = (CCFadeIn*)  CCFadeIn::actionWithDuration(d);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFadeIn");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFadeIn");
   }
  }
  return 1;
@@ -10381,8 +10375,8 @@ static int tolua_Cocos2d_CCFadeOut_actionWithDuration00(lua_State* tolua_S)
   {
    CCFadeOut* tolua_ret = (CCFadeOut*)  CCFadeOut::actionWithDuration(d);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFadeOut");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFadeOut");
   }
  }
  return 1;
@@ -10415,8 +10409,8 @@ static int tolua_Cocos2d_CCFadeTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCFadeTo* tolua_ret = (CCFadeTo*)  CCFadeTo::actionWithDuration(duration,opacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFadeTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFadeTo");
   }
  }
  return 1;
@@ -10453,8 +10447,8 @@ static int tolua_Cocos2d_CCTintTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCTintTo* tolua_ret = (CCTintTo*)  CCTintTo::actionWithDuration(duration,red,green,blue);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTintTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTintTo");
   }
  }
  return 1;
@@ -10491,8 +10485,8 @@ static int tolua_Cocos2d_CCTintBy_actionWithDuration00(lua_State* tolua_S)
   {
    CCTintBy* tolua_ret = (CCTintBy*)  CCTintBy::actionWithDuration(duration,deltaRed,deltaGreen,deltaBlue);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTintBy");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTintBy");
   }
  }
  return 1;
@@ -10523,8 +10517,8 @@ static int tolua_Cocos2d_CCDelayTime_actionWithDuration00(lua_State* tolua_S)
   {
    CCDelayTime* tolua_ret = (CCDelayTime*)  CCDelayTime::actionWithDuration(d);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDelayTime");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDelayTime");
   }
  }
  return 1;
@@ -10555,8 +10549,8 @@ static int tolua_Cocos2d_CCReverseTime_actionWithAction00(lua_State* tolua_S)
   {
    CCReverseTime* tolua_ret = (CCReverseTime*)  CCReverseTime::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCReverseTime");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCReverseTime");
   }
  }
  return 1;
@@ -10589,8 +10583,8 @@ static int tolua_Cocos2d_CCAnimate_getAnimation00(lua_State* tolua_S)
   {
    CCAnimation* tolua_ret = (CCAnimation*)  self->getAnimation();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
   }
  }
  return 1;
@@ -10654,8 +10648,8 @@ static int tolua_Cocos2d_CCAnimate_actionWithAnimation00(lua_State* tolua_S)
   {
    CCAnimate* tolua_ret = (CCAnimate*)  CCAnimate::actionWithAnimation(pAnimation);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimate");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimate");
   }
  }
  return 1;
@@ -10686,8 +10680,8 @@ static int tolua_Cocos2d_CCAnimate_actionWithAnimation01(lua_State* tolua_S)
   {
    CCAnimate* tolua_ret = (CCAnimate*)  CCAnimate::actionWithAnimation(pAnimation,bRestoreOriginalFrame);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimate");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimate");
   }
  }
  return 1;
@@ -10719,8 +10713,8 @@ static int tolua_Cocos2d_CCAnimate_actionWithDuration00(lua_State* tolua_S)
   {
    CCAnimate* tolua_ret = (CCAnimate*)  CCAnimate::actionWithDuration(duration,pAnimation,bRestoreOriginalFrame);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimate");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimate");
   }
  }
  return 1;
@@ -10749,8 +10743,8 @@ static int tolua_Cocos2d_CCShow_action00(lua_State* tolua_S)
   {
    CCShow* tolua_ret = (CCShow*)  CCShow::action();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShow");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShow");
   }
  }
  return 1;
@@ -10779,8 +10773,8 @@ static int tolua_Cocos2d_CCHide_action00(lua_State* tolua_S)
   {
    CCHide* tolua_ret = (CCHide*)  CCHide::action();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCHide");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCHide");
   }
  }
  return 1;
@@ -10809,8 +10803,8 @@ static int tolua_Cocos2d_CCToggleVisibility_action00(lua_State* tolua_S)
   {
    CCToggleVisibility* tolua_ret = (CCToggleVisibility*)  CCToggleVisibility::action();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCToggleVisibility");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCToggleVisibility");
   }
  }
  return 1;
@@ -10841,8 +10835,8 @@ static int tolua_Cocos2d_CCFlipX_actionWithFlipX00(lua_State* tolua_S)
   {
    CCFlipX* tolua_ret = (CCFlipX*)  CCFlipX::actionWithFlipX(x);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFlipX");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFlipX");
   }
  }
  return 1;
@@ -10873,8 +10867,8 @@ static int tolua_Cocos2d_CCFlipY_actionWithFlipY00(lua_State* tolua_S)
   {
    CCFlipY* tolua_ret = (CCFlipY*)  CCFlipY::actionWithFlipY(y);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFlipY");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFlipY");
   }
  }
  return 1;
@@ -10905,8 +10899,8 @@ static int tolua_Cocos2d_CCPlace_actionWithPosition00(lua_State* tolua_S)
   {
    CCPlace* tolua_ret = (CCPlace*)  CCPlace::actionWithPosition(pos);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCPlace");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCPlace");
   }
  }
  return 1;
@@ -10939,8 +10933,8 @@ static int tolua_Cocos2d_CCActionCamera_reverse00(lua_State* tolua_S)
   {
    CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
   }
  }
  return 1;
@@ -10983,8 +10977,8 @@ static int tolua_Cocos2d_CCOrbitCamera_actionWithDuration00(lua_State* tolua_S)
   {
    CCOrbitCamera* tolua_ret = (CCOrbitCamera*)  CCOrbitCamera::actionWithDuration(t,radius,deltaRadius,angleZ,deltaAngleZ,angleX,deltaAngleX);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCOrbitCamera");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCOrbitCamera");
   }
  }
  return 1;
@@ -11015,8 +11009,8 @@ static int tolua_Cocos2d_CCActionEase_actionWithAction00(lua_State* tolua_S)
   {
    CCActionEase* tolua_ret = (CCActionEase*)  CCActionEase::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionEase");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionEase");
   }
  }
  return 1;
@@ -11114,8 +11108,8 @@ static int tolua_Cocos2d_CCEaseRateAction_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseRateAction* tolua_ret = (CCEaseRateAction*)  CCEaseRateAction::actionWithAction(pAction,fRate);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseRateAction");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseRateAction");
   }
  }
  return 1;
@@ -11242,8 +11236,8 @@ static int tolua_Cocos2d_CCEaseExponentialIn_actionWithAction00(lua_State* tolua
   {
    CCEaseExponentialIn* tolua_ret = (CCEaseExponentialIn*)  CCEaseExponentialIn::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialIn");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialIn");
   }
  }
  return 1;
@@ -11274,8 +11268,8 @@ static int tolua_Cocos2d_CCEaseExponentialOut_actionWithAction00(lua_State* tolu
   {
    CCEaseExponentialOut* tolua_ret = (CCEaseExponentialOut*)  CCEaseExponentialOut::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialOut");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialOut");
   }
  }
  return 1;
@@ -11306,8 +11300,8 @@ static int tolua_Cocos2d_CCEaseExponentialInOut_actionWithAction00(lua_State* to
   {
    CCEaseExponentialInOut* tolua_ret = (CCEaseExponentialInOut*)  CCEaseExponentialInOut::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialInOut");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialInOut");
   }
  }
  return 1;
@@ -11338,8 +11332,8 @@ static int tolua_Cocos2d_CCEaseSineIn_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseSineIn* tolua_ret = (CCEaseSineIn*)  CCEaseSineIn::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineIn");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineIn");
   }
  }
  return 1;
@@ -11370,8 +11364,8 @@ static int tolua_Cocos2d_CCEaseSineOut_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseSineOut* tolua_ret = (CCEaseSineOut*)  CCEaseSineOut::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineOut");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineOut");
   }
  }
  return 1;
@@ -11402,8 +11396,8 @@ static int tolua_Cocos2d_CCEaseSineInOut_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseSineInOut* tolua_ret = (CCEaseSineInOut*)  CCEaseSineInOut::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineInOut");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineInOut");
   }
  }
  return 1;
@@ -11499,8 +11493,8 @@ static int tolua_Cocos2d_CCEaseElastic_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseElastic* tolua_ret = (CCEaseElastic*)  CCEaseElastic::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseElastic");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseElastic");
   }
  }
  return 1;
@@ -11531,8 +11525,8 @@ static int tolua_Cocos2d_CCEaseElastic_actionWithAction01(lua_State* tolua_S)
   {
    CCEaseElastic* tolua_ret = (CCEaseElastic*)  CCEaseElastic::actionWithAction(pAction,fPeriod);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseElastic");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseElastic");
   }
  }
  return 1;
@@ -11765,8 +11759,8 @@ static int tolua_Cocos2d_CCEaseBounce_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseBounce* tolua_ret = (CCEaseBounce*)  CCEaseBounce::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBounce");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBounce");
   }
  }
  return 1;
@@ -11887,8 +11881,8 @@ static int tolua_Cocos2d_CCEaseBackIn_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseBackIn* tolua_ret = (CCEaseBackIn*)  CCEaseBackIn::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackIn");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackIn");
   }
  }
  return 1;
@@ -11919,8 +11913,8 @@ static int tolua_Cocos2d_CCEaseBackOut_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseBackOut* tolua_ret = (CCEaseBackOut*)  CCEaseBackOut::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackOut");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackOut");
   }
  }
  return 1;
@@ -11951,8 +11945,8 @@ static int tolua_Cocos2d_CCEaseBackInOut_actionWithAction00(lua_State* tolua_S)
   {
    CCEaseBackInOut* tolua_ret = (CCEaseBackInOut*)  CCEaseBackInOut::actionWithAction(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackInOut");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackInOut");
   }
  }
  return 1;
@@ -11985,8 +11979,8 @@ static int tolua_Cocos2d_CCGridAction_actionWithSize00(lua_State* tolua_S)
   {
    CCGridAction* tolua_ret = (CCGridAction*)  CCGridAction::actionWithSize(gridSize,duration);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCGridAction");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCGridAction");
   }
  }
  return 1;
@@ -12019,8 +12013,8 @@ static int tolua_Cocos2d_CCAccelDeccelAmplitude_actionWithAction00(lua_State* to
   {
    CCAccelDeccelAmplitude* tolua_ret = (CCAccelDeccelAmplitude*)  CCAccelDeccelAmplitude::actionWithAction(pAction,duration);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAccelDeccelAmplitude");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAccelDeccelAmplitude");
   }
  }
  return 1;
@@ -12053,8 +12047,8 @@ static int tolua_Cocos2d_CCAccelAmplitude_actionWithAction00(lua_State* tolua_S)
   {
    CCAccelAmplitude* tolua_ret = (CCAccelAmplitude*)  CCAccelAmplitude::actionWithAction(pAction,duration);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAccelAmplitude");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAccelAmplitude");
   }
  }
  return 1;
@@ -12087,8 +12081,8 @@ static int tolua_Cocos2d_CCDeccelAmplitude_actionWithAction00(lua_State* tolua_S
   {
    CCDeccelAmplitude* tolua_ret = (CCDeccelAmplitude*)  CCDeccelAmplitude::actionWithAction(pAction,duration);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDeccelAmplitude");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDeccelAmplitude");
   }
  }
  return 1;
@@ -12117,8 +12111,8 @@ static int tolua_Cocos2d_CCStopGrid_action00(lua_State* tolua_S)
   {
    CCStopGrid* tolua_ret = (CCStopGrid*)  CCStopGrid::action();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCStopGrid");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCStopGrid");
   }
  }
  return 1;
@@ -12149,8 +12143,8 @@ static int tolua_Cocos2d_CCReuseGrid_actionWithTimes00(lua_State* tolua_S)
   {
    CCReuseGrid* tolua_ret = (CCReuseGrid*)  CCReuseGrid::actionWithTimes(times);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCReuseGrid");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCReuseGrid");
   }
  }
  return 1;
@@ -13477,8 +13471,8 @@ static int tolua_Cocos2d_CCProgressTo_actionWithDuration00(lua_State* tolua_S)
   {
    CCProgressTo* tolua_ret = (CCProgressTo*)  CCProgressTo::actionWithDuration(duration,fPercent);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressTo");
   }
  }
  return 1;
@@ -13513,8 +13507,8 @@ static int tolua_Cocos2d_CCProgressFromTo_actionWithDuration00(lua_State* tolua_
   {
    CCProgressFromTo* tolua_ret = (CCProgressFromTo*)  CCProgressFromTo::actionWithDuration(duration,fFromPercentage,fToPercentage);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressFromTo");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressFromTo");
   }
  }
  return 1;
@@ -15549,8 +15543,8 @@ static int tolua_Cocos2d_CCNode_getChildren00(lua_State* tolua_S)
   {
    CCArray* tolua_ret = (CCArray*)  self->getChildren();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
   }
  }
  return 1;
@@ -15615,8 +15609,8 @@ static int tolua_Cocos2d_CCNode_getCamera00(lua_State* tolua_S)
   {
    CCCamera* tolua_ret = (CCCamera*)  self->getCamera();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCCamera");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCCamera");
   }
  }
  return 1;
@@ -16171,8 +16165,8 @@ static int tolua_Cocos2d_CCNode_getParent00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  self->getParent();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -16386,7 +16380,7 @@ static int tolua_Cocos2d_CCNode_registerScriptHandler00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -16394,7 +16388,7 @@ static int tolua_Cocos2d_CCNode_registerScriptHandler00(lua_State* tolua_S)
 #endif
  {
   CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
-  LUA_FUNCTION nHandler = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,2,0));
+  LUA_FUNCTION nHandler = (  toluafix_ref_function(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerScriptHandler'", NULL);
 #endif
@@ -16696,8 +16690,8 @@ static int tolua_Cocos2d_CCNode_getChildByTag00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  self->getChildByTag(tag);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -17006,8 +17000,8 @@ static int tolua_Cocos2d_CCNode_runAction00(lua_State* tolua_S)
   {
    CCAction* tolua_ret = (CCAction*)  self->runAction(action);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
   }
  }
  return 1;
@@ -17139,8 +17133,8 @@ static int tolua_Cocos2d_CCNode_getActionByTag00(lua_State* tolua_S)
   {
    CCAction* tolua_ret = (CCAction*)  self->getActionByTag(tag);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
   }
  }
  return 1;
@@ -17821,8 +17815,8 @@ static int tolua_Cocos2d_CCNode_node00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  CCNode::node();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -17859,8 +17853,8 @@ static int tolua_Cocos2d_CCAtlasNode_atlasWithTileFile00(lua_State* tolua_S)
   {
    CCAtlasNode* tolua_ret = (CCAtlasNode*)  CCAtlasNode::atlasWithTileFile(tile,tileWidth,tileHeight,itemsToRender);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAtlasNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAtlasNode");
   }
  }
  return 1;
@@ -17893,8 +17887,8 @@ static int tolua_Cocos2d_CCAtlasNode_getTexture00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->getTexture();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -18400,8 +18394,8 @@ static int tolua_Cocos2d_CCSprite_getTextureAtlas00(lua_State* tolua_S)
   {
    CCTextureAtlas* tolua_ret = (CCTextureAtlas*)  self->getTextureAtlas();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
   }
  }
  return 1;
@@ -18467,8 +18461,8 @@ static int tolua_Cocos2d_CCSprite_getSpriteBatchNode00(lua_State* tolua_S)
   {
    CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  self->getSpriteBatchNode();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
   }
  }
  return 1;
@@ -18714,8 +18708,8 @@ static int tolua_Cocos2d_CCSprite_spriteWithTexture00(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithTexture(pTexture);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -18746,8 +18740,8 @@ static int tolua_Cocos2d_CCSprite_spriteWithTexture01(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithTexture(pTexture,rect);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -18777,8 +18771,8 @@ static int tolua_Cocos2d_CCSprite_spriteWithTexture02(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithTexture(pTexture,rect,offset);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -18806,8 +18800,8 @@ static int tolua_Cocos2d_CCSprite_spriteWithSpriteFrame00(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithSpriteFrame(pSpriteFrame);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -18838,8 +18832,8 @@ static int tolua_Cocos2d_CCSprite_spriteWithSpriteFrameName00(lua_State* tolua_S
   {
    CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithSpriteFrameName(pszSpriteFrameName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -18870,8 +18864,8 @@ static int tolua_Cocos2d_CCSprite_spriteWithFile00(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithFile(pszFileName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -18902,8 +18896,8 @@ static int tolua_Cocos2d_CCSprite_spriteWithFile01(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithFile(pszFileName,rect);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -18933,8 +18927,8 @@ static int tolua_Cocos2d_CCSprite_spriteWithBatchNode00(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithBatchNode(batchNode,rect);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -19194,8 +19188,8 @@ static int tolua_Cocos2d_CCSprite_getTexture00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->getTexture();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -19460,8 +19454,8 @@ static int tolua_Cocos2d_CCSprite_displayedFrame00(lua_State* tolua_S)
   {
    CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  self->displayedFrame();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
   }
  }
  return 1;
@@ -19894,8 +19888,8 @@ static int tolua_Cocos2d_CCSpriteFrame_getTexture00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->getTexture();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -19961,8 +19955,8 @@ static int tolua_Cocos2d_CCSpriteFrame_frameWithTexture00(lua_State* tolua_S)
   {
    CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::frameWithTexture(pobTexture,rect);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
   }
  }
  return 1;
@@ -19999,8 +19993,8 @@ static int tolua_Cocos2d_CCSpriteFrame_frameWithTexture01(lua_State* tolua_S)
   {
    CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::frameWithTexture(pobTexture,rect,rotated,offset,originalSize);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
   }
  }
  return 1;
@@ -20321,8 +20315,8 @@ static int tolua_Cocos2d_CCSpriteFrameCache_spriteFrameByName00(lua_State* tolua
   {
    CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  self->spriteFrameByName(pszName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
   }
  }
  return 1;
@@ -20351,8 +20345,8 @@ static int tolua_Cocos2d_CCSpriteFrameCache_sharedSpriteFrameCache00(lua_State* 
   {
    CCSpriteFrameCache* tolua_ret = (CCSpriteFrameCache*)  CCSpriteFrameCache::sharedSpriteFrameCache();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrameCache");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrameCache");
   }
  }
  return 1;
@@ -20412,8 +20406,8 @@ static int tolua_Cocos2d_CCSpriteBatchNode_getTextureAtlas00(lua_State* tolua_S)
   {
    CCTextureAtlas* tolua_ret = (CCTextureAtlas*)  self->getTextureAtlas();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
   }
  }
  return 1;
@@ -20479,8 +20473,8 @@ static int tolua_Cocos2d_CCSpriteBatchNode_getDescendants00(lua_State* tolua_S)
   {
    CCArray* tolua_ret = (CCArray*)  self->getDescendants();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
   }
  }
  return 1;
@@ -20787,8 +20781,8 @@ static int tolua_Cocos2d_CCSpriteBatchNode_getTexture00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->getTexture();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -20927,8 +20921,8 @@ static int tolua_Cocos2d_CCSpriteBatchNode_batchNodeWithTexture00(lua_State* tol
   {
    CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  CCSpriteBatchNode::batchNodeWithTexture(tex);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
   }
  }
  return 1;
@@ -20959,8 +20953,8 @@ static int tolua_Cocos2d_CCSpriteBatchNode_batchNodeWithTexture01(lua_State* tol
   {
    CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  CCSpriteBatchNode::batchNodeWithTexture(tex,capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
   }
  }
  return 1;
@@ -20988,8 +20982,8 @@ static int tolua_Cocos2d_CCSpriteBatchNode_batchNodeWithFile00(lua_State* tolua_
   {
    CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  CCSpriteBatchNode::batchNodeWithFile(fileImage);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
   }
  }
  return 1;
@@ -21020,8 +21014,8 @@ static int tolua_Cocos2d_CCSpriteBatchNode_batchNodeWithFile01(lua_State* tolua_
   {
    CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  CCSpriteBatchNode::batchNodeWithFile(fileImage,capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
   }
  }
  return 1;
@@ -21278,8 +21272,8 @@ static int tolua_Cocos2d_CCAnimation_animation00(lua_State* tolua_S)
   {
    CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::animation();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
   }
  }
  return 1;
@@ -21310,8 +21304,8 @@ static int tolua_Cocos2d_CCAnimation_animationWithFrames00(lua_State* tolua_S)
   {
    CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::animationWithFrames(frames);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
   }
  }
  return 1;
@@ -21342,8 +21336,8 @@ static int tolua_Cocos2d_CCAnimation_animationWithFrames01(lua_State* tolua_S)
   {
    CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::animationWithFrames(frames,delay);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
   }
  }
  return 1;
@@ -21443,8 +21437,8 @@ static int tolua_Cocos2d_CCAnimationCache_animationByName00(lua_State* tolua_S)
   {
    CCAnimation* tolua_ret = (CCAnimation*)  self->animationByName(name);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
   }
  }
  return 1;
@@ -21473,8 +21467,8 @@ static int tolua_Cocos2d_CCAnimationCache_sharedAnimationCache00(lua_State* tolu
   {
    CCAnimationCache* tolua_ret = (CCAnimationCache*)  CCAnimationCache::sharedAnimationCache();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimationCache");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimationCache");
   }
  }
  return 1;
@@ -21540,8 +21534,8 @@ static int tolua_Cocos2d_CCLabelAtlas_labelWithString00(lua_State* tolua_S)
   {
    CCLabelAtlas* tolua_ret = (CCLabelAtlas*)  CCLabelAtlas::labelWithString(label,charMapFile,itemWidth,itemHeight,startCharMap);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelAtlas");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelAtlas");
   }
  }
  return 1;
@@ -22193,8 +22187,8 @@ static int tolua_Cocos2d_CCLabelBMFont_labelWithString00(lua_State* tolua_S)
   {
    CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  CCLabelBMFont::labelWithString(str,fntFile);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
   }
  }
  return 1;
@@ -22229,8 +22223,8 @@ static int tolua_Cocos2d_CCLabelBMFont_labelWithString01(lua_State* tolua_S)
   {
    CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  CCLabelBMFont::labelWithString(str,fntFile,width,alignment);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
   }
  }
  return 1;
@@ -22264,8 +22258,8 @@ static int tolua_Cocos2d_CCLabelBMFont_labelWithString02(lua_State* tolua_S)
   {
    CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  CCLabelBMFont::labelWithString(str,fntFile,width,alignment,imageOffset);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
   }
  }
  return 1;
@@ -22366,8 +22360,8 @@ static int tolua_Cocos2d_CCLabelTTF_labelWithString00(lua_State* tolua_S)
   {
    CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::labelWithString(label,dimensions,alignment,fontName,fontSize);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
   }
  }
  return 1;
@@ -22400,8 +22394,8 @@ static int tolua_Cocos2d_CCLabelTTF_labelWithString01(lua_State* tolua_S)
   {
    CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::labelWithString(label,fontName,fontSize);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
   }
  }
  return 1;
@@ -22613,7 +22607,7 @@ static int tolua_Cocos2d_CCLayer_registerScriptTouchHandler00(lua_State* tolua_S
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayer",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isboolean(tolua_S,3,1,&tolua_err) ||
      !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
      !tolua_isboolean(tolua_S,5,1,&tolua_err) ||
@@ -22624,7 +22618,7 @@ static int tolua_Cocos2d_CCLayer_registerScriptTouchHandler00(lua_State* tolua_S
 #endif
  {
   CCLayer* self = (CCLayer*)  tolua_tousertype(tolua_S,1,0);
-  LUA_FUNCTION nHandler = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,2,0));
+  LUA_FUNCTION nHandler = (  toluafix_ref_function(tolua_S,2,0));
   bool bIsMultiTouches = ((bool)  tolua_toboolean(tolua_S,3,false));
   int nPriority = ((int)  tolua_tonumber(tolua_S,4,0));
   bool bSwallowsTouches = ((bool)  tolua_toboolean(tolua_S,5,false));
@@ -22692,8 +22686,8 @@ static int tolua_Cocos2d_CCLayer_node00(lua_State* tolua_S)
   {
    CCLayer* tolua_ret = (CCLayer*)  CCLayer::node();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayer");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayer");
   }
  }
  return 1;
@@ -23044,8 +23038,8 @@ static int tolua_Cocos2d_CCLayerColor_layerWithColorWidthHeight00(lua_State* tol
   {
    CCLayerColor* tolua_ret = (CCLayerColor*)  CCLayerColor::layerWithColorWidthHeight(color,width,height);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerColor");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerColor");
   }
  }
  return 1;
@@ -23076,8 +23070,8 @@ static int tolua_Cocos2d_CCLayerColor_layerWithColor00(lua_State* tolua_S)
   {
    CCLayerColor* tolua_ret = (CCLayerColor*)  CCLayerColor::layerWithColor(color);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerColor");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerColor");
   }
  }
  return 1;
@@ -23106,8 +23100,8 @@ static int tolua_Cocos2d_CCLayerColor_node00(lua_State* tolua_S)
   {
    CCLayerColor* tolua_ret = (CCLayerColor*)  CCLayerColor::node();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerColor");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerColor");
   }
  }
  return 1;
@@ -23560,8 +23554,8 @@ static int tolua_Cocos2d_CCLayerGradient_layerWithColor00(lua_State* tolua_S)
   {
    CCLayerGradient* tolua_ret = (CCLayerGradient*)  CCLayerGradient::layerWithColor(start,end);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerGradient");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerGradient");
   }
  }
  return 1;
@@ -23594,8 +23588,8 @@ static int tolua_Cocos2d_CCLayerGradient_layerWithColor01(lua_State* tolua_S)
   {
    CCLayerGradient* tolua_ret = (CCLayerGradient*)  CCLayerGradient::layerWithColor(start,end,v);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerGradient");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerGradient");
   }
  }
  return 1;
@@ -23621,8 +23615,8 @@ static int tolua_Cocos2d_CCLayerGradient_node00(lua_State* tolua_S)
   {
    CCLayerGradient* tolua_ret = (CCLayerGradient*)  CCLayerGradient::node();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerGradient");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerGradient");
   }
  }
  return 1;
@@ -23752,8 +23746,8 @@ static int tolua_Cocos2d_CCLayerMultiplex_layerWithLayer00(lua_State* tolua_S)
   {
    CCLayerMultiplex* tolua_ret = (CCLayerMultiplex*)  CCLayerMultiplex::layerWithLayer(layer);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerMultiplex");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerMultiplex");
   }
  }
  return 1;
@@ -23782,8 +23776,8 @@ static int tolua_Cocos2d_CCScene_node00(lua_State* tolua_S)
   {
    CCScene* tolua_ret = (CCScene*)  CCScene::node();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScene");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScene");
   }
  }
  return 1;
@@ -23818,8 +23812,8 @@ static int tolua_Cocos2d_CCTransitionEaseScene_easeActionWithAction00(lua_State*
   {
    CCActionInterval* tolua_ret = (CCActionInterval*)  self->easeActionWithAction(action);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
   }
  }
  return 1;
@@ -23852,8 +23846,8 @@ static int tolua_Cocos2d_CCTransitionScene_transitionWithDuration00(lua_State* t
   {
    CCTransitionScene* tolua_ret = (CCTransitionScene*)  CCTransitionScene::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionScene");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionScene");
   }
  }
  return 1;
@@ -23888,8 +23882,8 @@ static int tolua_Cocos2d_CCTransitionSceneOriented_transitionWithDuration00(lua_
   {
    CCTransitionSceneOriented* tolua_ret = (CCTransitionSceneOriented*)  CCTransitionSceneOriented::transitionWithDuration(t,scene,orientation);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSceneOriented");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSceneOriented");
   }
  }
  return 1;
@@ -23922,8 +23916,8 @@ static int tolua_Cocos2d_CCTransitionRotoZoom_transitionWithDuration00(lua_State
   {
    CCTransitionRotoZoom* tolua_ret = (CCTransitionRotoZoom*)  CCTransitionRotoZoom::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionRotoZoom");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionRotoZoom");
   }
  }
  return 1;
@@ -23956,8 +23950,8 @@ static int tolua_Cocos2d_CCTransitionJumpZoom_transitionWithDuration00(lua_State
   {
    CCTransitionJumpZoom* tolua_ret = (CCTransitionJumpZoom*)  CCTransitionJumpZoom::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionJumpZoom");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionJumpZoom");
   }
  }
  return 1;
@@ -23990,8 +23984,8 @@ static int tolua_Cocos2d_CCTransitionMoveInL_transitionWithDuration00(lua_State*
   {
    CCTransitionMoveInL* tolua_ret = (CCTransitionMoveInL*)  CCTransitionMoveInL::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInL");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInL");
   }
  }
  return 1;
@@ -24041,8 +24035,8 @@ static int tolua_Cocos2d_CCTransitionMoveInR_transitionWithDuration00(lua_State*
   {
    CCTransitionMoveInR* tolua_ret = (CCTransitionMoveInR*)  CCTransitionMoveInR::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInR");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInR");
   }
  }
  return 1;
@@ -24075,8 +24069,8 @@ static int tolua_Cocos2d_CCTransitionMoveInT_transitionWithDuration00(lua_State*
   {
    CCTransitionMoveInT* tolua_ret = (CCTransitionMoveInT*)  CCTransitionMoveInT::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInT");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInT");
   }
  }
  return 1;
@@ -24109,8 +24103,8 @@ static int tolua_Cocos2d_CCTransitionMoveInB_transitionWithDuration00(lua_State*
   {
    CCTransitionMoveInB* tolua_ret = (CCTransitionMoveInB*)  CCTransitionMoveInB::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInB");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInB");
   }
  }
  return 1;
@@ -24143,8 +24137,8 @@ static int tolua_Cocos2d_CCTransitionSlideInL_transitionWithDuration00(lua_State
   {
    CCTransitionSlideInL* tolua_ret = (CCTransitionSlideInL*)  CCTransitionSlideInL::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInL");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInL");
   }
  }
  return 1;
@@ -24194,8 +24188,8 @@ static int tolua_Cocos2d_CCTransitionSlideInR_transitionWithDuration00(lua_State
   {
    CCTransitionSlideInR* tolua_ret = (CCTransitionSlideInR*)  CCTransitionSlideInR::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInR");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInR");
   }
  }
  return 1;
@@ -24228,8 +24222,8 @@ static int tolua_Cocos2d_CCTransitionSlideInB_transitionWithDuration00(lua_State
   {
    CCTransitionSlideInB* tolua_ret = (CCTransitionSlideInB*)  CCTransitionSlideInB::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInB");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInB");
   }
  }
  return 1;
@@ -24262,8 +24256,8 @@ static int tolua_Cocos2d_CCTransitionSlideInT_transitionWithDuration00(lua_State
   {
    CCTransitionSlideInT* tolua_ret = (CCTransitionSlideInT*)  CCTransitionSlideInT::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInT");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInT");
   }
  }
  return 1;
@@ -24296,8 +24290,8 @@ static int tolua_Cocos2d_CCTransitionShrinkGrow_transitionWithDuration00(lua_Sta
   {
    CCTransitionShrinkGrow* tolua_ret = (CCTransitionShrinkGrow*)  CCTransitionShrinkGrow::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionShrinkGrow");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionShrinkGrow");
   }
  }
  return 1;
@@ -24349,8 +24343,8 @@ static int tolua_Cocos2d_CCTransitionFlipX_transitionWithDuration00(lua_State* t
   {
    CCTransitionFlipX* tolua_ret = (CCTransitionFlipX*)  CCTransitionFlipX::transitionWithDuration(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipX");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipX");
   }
  }
  return 1;
@@ -24385,8 +24379,8 @@ static int tolua_Cocos2d_CCTransitionFlipY_transitionWithDuration00(lua_State* t
   {
    CCTransitionFlipY* tolua_ret = (CCTransitionFlipY*)  CCTransitionFlipY::transitionWithDuration(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipY");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipY");
   }
  }
  return 1;
@@ -24421,8 +24415,8 @@ static int tolua_Cocos2d_CCTransitionFlipAngular_transitionWithDuration00(lua_St
   {
    CCTransitionFlipAngular* tolua_ret = (CCTransitionFlipAngular*)  CCTransitionFlipAngular::transitionWithDuration(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipAngular");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipAngular");
   }
  }
  return 1;
@@ -24457,8 +24451,8 @@ static int tolua_Cocos2d_CCTransitionZoomFlipX_transitionWithDuration00(lua_Stat
   {
    CCTransitionZoomFlipX* tolua_ret = (CCTransitionZoomFlipX*)  CCTransitionZoomFlipX::transitionWithDuration(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipX");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipX");
   }
  }
  return 1;
@@ -24493,8 +24487,8 @@ static int tolua_Cocos2d_CCTransitionZoomFlipY_transitionWithDuration00(lua_Stat
   {
    CCTransitionZoomFlipY* tolua_ret = (CCTransitionZoomFlipY*)  CCTransitionZoomFlipY::transitionWithDuration(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipY");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipY");
   }
  }
  return 1;
@@ -24529,8 +24523,8 @@ static int tolua_Cocos2d_CCTransitionZoomFlipAngular_transitionWithDuration00(lu
   {
    CCTransitionZoomFlipAngular* tolua_ret = (CCTransitionZoomFlipAngular*)  CCTransitionZoomFlipAngular::transitionWithDuration(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipAngular");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipAngular");
   }
  }
  return 1;
@@ -24565,8 +24559,8 @@ static int tolua_Cocos2d_CCTransitionFade_transitionWithDuration00(lua_State* to
   {
    CCTransitionFade* tolua_ret = (CCTransitionFade*)  CCTransitionFade::transitionWithDuration(duration,scene,color);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFade");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFade");
   }
  }
  return 1;
@@ -24599,8 +24593,8 @@ static int tolua_Cocos2d_CCTransitionCrossFade_transitionWithDuration00(lua_Stat
   {
    CCTransitionCrossFade* tolua_ret = (CCTransitionCrossFade*)  CCTransitionCrossFade::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionCrossFade");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionCrossFade");
   }
  }
  return 1;
@@ -24633,8 +24627,8 @@ static int tolua_Cocos2d_CCTransitionTurnOffTiles_transitionWithDuration00(lua_S
   {
    CCTransitionTurnOffTiles* tolua_ret = (CCTransitionTurnOffTiles*)  CCTransitionTurnOffTiles::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionTurnOffTiles");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionTurnOffTiles");
   }
  }
  return 1;
@@ -24684,8 +24678,8 @@ static int tolua_Cocos2d_CCTransitionSplitCols_transitionWithDuration00(lua_Stat
   {
    CCTransitionSplitCols* tolua_ret = (CCTransitionSplitCols*)  CCTransitionSplitCols::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSplitCols");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSplitCols");
   }
  }
  return 1;
@@ -24735,8 +24729,8 @@ static int tolua_Cocos2d_CCTransitionSplitRows_transitionWithDuration00(lua_Stat
   {
    CCTransitionSplitRows* tolua_ret = (CCTransitionSplitRows*)  CCTransitionSplitRows::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSplitRows");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSplitRows");
   }
  }
  return 1;
@@ -24769,8 +24763,8 @@ static int tolua_Cocos2d_CCTransitionFadeTR_transitionWithDuration00(lua_State* 
   {
    CCTransitionFadeTR* tolua_ret = (CCTransitionFadeTR*)  CCTransitionFadeTR::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeTR");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeTR");
   }
  }
  return 1;
@@ -24820,8 +24814,8 @@ static int tolua_Cocos2d_CCTransitionFadeBL_transitionWithDuration00(lua_State* 
   {
    CCTransitionFadeBL* tolua_ret = (CCTransitionFadeBL*)  CCTransitionFadeBL::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeBL");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeBL");
   }
  }
  return 1;
@@ -24854,8 +24848,8 @@ static int tolua_Cocos2d_CCTransitionFadeUp_transitionWithDuration00(lua_State* 
   {
    CCTransitionFadeUp* tolua_ret = (CCTransitionFadeUp*)  CCTransitionFadeUp::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeUp");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeUp");
   }
  }
  return 1;
@@ -24888,8 +24882,8 @@ static int tolua_Cocos2d_CCTransitionFadeDown_transitionWithDuration00(lua_State
   {
    CCTransitionFadeDown* tolua_ret = (CCTransitionFadeDown*)  CCTransitionFadeDown::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeDown");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeDown");
   }
  }
  return 1;
@@ -24924,8 +24918,8 @@ static int tolua_Cocos2d_CCTransitionPageTurn_transitionWithDuration00(lua_State
   {
    CCTransitionPageTurn* tolua_ret = (CCTransitionPageTurn*)  CCTransitionPageTurn::transitionWithDuration(t,scene,backwards);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionPageTurn");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionPageTurn");
   }
  }
  return 1;
@@ -24958,8 +24952,8 @@ static int tolua_Cocos2d_CCTransitionRadialCCW_transitionWithDuration00(lua_Stat
   {
    CCTransitionRadialCCW* tolua_ret = (CCTransitionRadialCCW*)  CCTransitionRadialCCW::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionRadialCCW");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionRadialCCW");
   }
  }
  return 1;
@@ -24992,8 +24986,8 @@ static int tolua_Cocos2d_CCTransitionRadialCW_transitionWithDuration00(lua_State
   {
    CCTransitionRadialCW* tolua_ret = (CCTransitionRadialCW*)  CCTransitionRadialCW::transitionWithDuration(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionRadialCW");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionRadialCW");
   }
  }
  return 1;
@@ -25422,8 +25416,8 @@ static int tolua_Cocos2d_CCMenu_node00(lua_State* tolua_S)
   {
    CCMenu* tolua_ret = (CCMenu*)  CCMenu::node();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenu");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenu");
   }
  }
  return 1;
@@ -25454,8 +25448,8 @@ static int tolua_Cocos2d_CCMenu_menuWithItem00(lua_State* tolua_S)
   {
    CCMenu* tolua_ret = (CCMenu*)  CCMenu::menuWithItem(item);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenu");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenu");
   }
  }
  return 1;
@@ -25707,7 +25701,7 @@ static int tolua_Cocos2d_CCMenuItem_registerScriptHandler00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCMenuItem",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -25715,7 +25709,7 @@ static int tolua_Cocos2d_CCMenuItem_registerScriptHandler00(lua_State* tolua_S)
 #endif
  {
   CCMenuItem* self = (CCMenuItem*)  tolua_tousertype(tolua_S,1,0);
-  LUA_FUNCTION nHandler = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,2,0));
+  LUA_FUNCTION nHandler = (  toluafix_ref_function(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerScriptHandler'", NULL);
 #endif
@@ -25999,8 +25993,8 @@ static int tolua_Cocos2d_CCMenuItemLabel_getLabel00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  self->getLabel();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -26064,8 +26058,8 @@ static int tolua_Cocos2d_CCMenuItemLabel_itemWithLabel00(lua_State* tolua_S)
   {
    CCMenuItemLabel* tolua_ret = (CCMenuItemLabel*)  CCMenuItemLabel::itemWithLabel(label);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemLabel");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemLabel");
   }
  }
  return 1;
@@ -26202,8 +26196,8 @@ static int tolua_Cocos2d_CCMenuItemAtlasFont_itemFromString00(lua_State* tolua_S
   {
    CCMenuItemAtlasFont* tolua_ret = (CCMenuItemAtlasFont*)  CCMenuItemAtlasFont::itemFromString(value,charMapFile,itemWidth,itemHeight,startCharMap);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemAtlasFont");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemAtlasFont");
   }
  }
  return 1;
@@ -26348,8 +26342,8 @@ static int tolua_Cocos2d_CCMenuItemFont_itemFromString00(lua_State* tolua_S)
   {
    CCMenuItemFont* tolua_ret = (CCMenuItemFont*)  CCMenuItemFont::itemFromString(value);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemFont");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemFont");
   }
  }
  return 1;
@@ -26512,8 +26506,8 @@ static int tolua_Cocos2d_CCMenuItemSprite_getNormalImage00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  self->getNormalImage();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -26579,8 +26573,8 @@ static int tolua_Cocos2d_CCMenuItemSprite_getSelectedImage00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  self->getSelectedImage();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -26646,8 +26640,8 @@ static int tolua_Cocos2d_CCMenuItemSprite_getDisabledImage00(lua_State* tolua_S)
   {
    CCNode* tolua_ret = (CCNode*)  self->getDisabledImage();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
   }
  }
  return 1;
@@ -26715,8 +26709,8 @@ static int tolua_Cocos2d_CCMenuItemSprite_itemFromNormalSprite00(lua_State* tolu
   {
    CCMenuItemSprite* tolua_ret = (CCMenuItemSprite*)  CCMenuItemSprite::itemFromNormalSprite(normalSprite,selectedSprite,disabledSprite);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemSprite");
   }
  }
  return 1;
@@ -26956,8 +26950,8 @@ static int tolua_Cocos2d_CCMenuItemImage_itemFromNormalImage00(lua_State* tolua_
   {
    CCMenuItemImage* tolua_ret = (CCMenuItemImage*)  CCMenuItemImage::itemFromNormalImage(normalImage,selectedImage,disabledImage);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemImage");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemImage");
   }
  }
  return 1;
@@ -27193,8 +27187,8 @@ static int tolua_Cocos2d_CCMenuItemToggle_itemWithItem00(lua_State* tolua_S)
   {
    CCMenuItemToggle* tolua_ret = (CCMenuItemToggle*)  CCMenuItemToggle::itemWithItem(item);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemToggle");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemToggle");
   }
  }
  return 1;
@@ -27260,8 +27254,8 @@ static int tolua_Cocos2d_CCMenuItemToggle_selectedItem00(lua_State* tolua_S)
   {
    CCMenuItem* tolua_ret = (CCMenuItem*)  self->selectedItem();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItem");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItem");
   }
  }
  return 1;
@@ -27359,8 +27353,8 @@ static int tolua_Cocos2d_CCMotionStreak_getRibbon00(lua_State* tolua_S)
   {
    CCRibbon* tolua_ret = (CCRibbon*)  self->getRibbon();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRibbon");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRibbon");
   }
  }
  return 1;
@@ -27393,8 +27387,8 @@ static int tolua_Cocos2d_CCMotionStreak_getTexture00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->getTexture();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -27543,8 +27537,8 @@ static int tolua_Cocos2d_CCMotionStreak_streakWithFade00(lua_State* tolua_S)
   {
    CCMotionStreak* tolua_ret = (CCMotionStreak*)  CCMotionStreak::streakWithFade(fade,seg,imagePath,width,length,color);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMotionStreak");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMotionStreak");
   }
  }
  return 1;
@@ -27641,8 +27635,8 @@ static int tolua_Cocos2d_CCProgressTimer_getSprite00(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  self->getSprite();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -27772,8 +27766,8 @@ static int tolua_Cocos2d_CCProgressTimer_progressWithFile00(lua_State* tolua_S)
   {
    CCProgressTimer* tolua_ret = (CCProgressTimer*)  CCProgressTimer::progressWithFile(pszFileName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressTimer");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressTimer");
   }
  }
  return 1;
@@ -27804,8 +27798,8 @@ static int tolua_Cocos2d_CCProgressTimer_progressWithTexture00(lua_State* tolua_
   {
    CCProgressTimer* tolua_ret = (CCProgressTimer*)  CCProgressTimer::progressWithTexture(pTexture);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressTimer");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressTimer");
   }
  }
  return 1;
@@ -27838,8 +27832,8 @@ static int tolua_Cocos2d_CCRenderTexture_getSprite00(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  self->getSprite();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -28170,8 +28164,8 @@ static int tolua_Cocos2d_CCRenderTexture_renderTextureWithWidthAndHeight00(lua_S
   {
    CCRenderTexture* tolua_ret = (CCRenderTexture*)  CCRenderTexture::renderTextureWithWidthAndHeight(w,h,eFormat);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRenderTexture");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRenderTexture");
   }
  }
  return 1;
@@ -28202,8 +28196,8 @@ static int tolua_Cocos2d_CCRenderTexture_renderTextureWithWidthAndHeight01(lua_S
   {
    CCRenderTexture* tolua_ret = (CCRenderTexture*)  CCRenderTexture::renderTextureWithWidthAndHeight(w,h);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRenderTexture");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRenderTexture");
   }
  }
  return 1;
@@ -28233,8 +28227,8 @@ static int tolua_Cocos2d_CCRibbon_getTexture00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->getTexture();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -28594,8 +28588,8 @@ static int tolua_Cocos2d_CCRibbon_ribbonWithWidth00(lua_State* tolua_S)
   {
    CCRibbon* tolua_ret = (CCRibbon*)  CCRibbon::ribbonWithWidth(w,path,length,color,fade);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRibbon");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRibbon");
   }
  }
  return 1;
@@ -29030,8 +29024,8 @@ static int tolua_Cocos2d_CCParticleSystem_getTexture00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->getTexture();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -29170,8 +29164,8 @@ static int tolua_Cocos2d_CCParticleSystem_particleWithFile00(lua_State* tolua_S)
   {
    CCParticleSystem* tolua_ret = (CCParticleSystem*)  CCParticleSystem::particleWithFile(plistFile);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleSystem");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleSystem");
   }
  }
  return 1;
@@ -29202,8 +29196,8 @@ static int tolua_Cocos2d_CCParticleSystemPoint_particleWithFile00(lua_State* tol
   {
    CCParticleSystemPoint* tolua_ret = (CCParticleSystemPoint*)  CCParticleSystemPoint::particleWithFile(plistFile);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleSystemPoint");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleSystemPoint");
   }
  }
  return 1;
@@ -29234,8 +29228,8 @@ static int tolua_Cocos2d_CCParticleSystemQuad_particleWithFile00(lua_State* tolu
   {
    CCParticleSystemQuad* tolua_ret = (CCParticleSystemQuad*)  CCParticleSystemQuad::particleWithFile(plistFile);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleSystemQuad");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleSystemQuad");
   }
  }
  return 1;
@@ -30127,8 +30121,8 @@ static int tolua_Cocos2d_CCTextureAtlas_getTexture00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->getTexture();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -30194,8 +30188,8 @@ static int tolua_Cocos2d_CCTextureAtlas_textureAtlasWithFile00(lua_State* tolua_
   {
    CCTextureAtlas* tolua_ret = (CCTextureAtlas*)  CCTextureAtlas::textureAtlasWithFile(file,capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
   }
  }
  return 1;
@@ -30228,8 +30222,8 @@ static int tolua_Cocos2d_CCTextureAtlas_textureAtlasWithTexture00(lua_State* tol
   {
    CCTextureAtlas* tolua_ret = (CCTextureAtlas*)  CCTextureAtlas::textureAtlasWithTexture(texture,capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
   }
  }
  return 1;
@@ -30485,8 +30479,8 @@ static int tolua_Cocos2d_CCTextureCache_sharedTextureCache00(lua_State* tolua_S)
   {
    CCTextureCache* tolua_ret = (CCTextureCache*)  CCTextureCache::sharedTextureCache();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureCache");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureCache");
   }
  }
  return 1;
@@ -30548,8 +30542,8 @@ static int tolua_Cocos2d_CCTextureCache_addImage00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->addImage(fileimage);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -30586,8 +30580,8 @@ static int tolua_Cocos2d_CCTextureCache_addUIImage00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->addUIImage(image,key);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -30622,8 +30616,8 @@ static int tolua_Cocos2d_CCTextureCache_textureForKey00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->textureForKey(key);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -30817,8 +30811,8 @@ static int tolua_Cocos2d_CCTextureCache_addPVRImage00(lua_State* tolua_S)
   {
    CCTexture2D* tolua_ret = (CCTexture2D*)  self->addPVRImage(filename);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
   }
  }
  return 1;
@@ -32554,8 +32548,8 @@ static int tolua_Cocos2d_CCParallaxNode_node00(lua_State* tolua_S)
   {
    CCParallaxNode* tolua_ret = (CCParallaxNode*)  CCParallaxNode::node();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParallaxNode");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParallaxNode");
   }
  }
  return 1;
@@ -32631,8 +32625,8 @@ static int tolua_Cocos2d_CCTileMapAtlas_tileMapAtlasWithTileFile00(lua_State* to
   {
    CCTileMapAtlas* tolua_ret = (CCTileMapAtlas*)  CCTileMapAtlas::tileMapAtlasWithTileFile(tile,mapFile,tileWidth,tileHeight);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTileMapAtlas");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTileMapAtlas");
   }
  }
  return 1;
@@ -33023,8 +33017,8 @@ static int tolua_Cocos2d_CCTMXLayer_tileAt00(lua_State* tolua_S)
   {
    CCSprite* tolua_ret = (CCSprite*)  self->tileAt(tileCoordinate);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
   }
  }
  return 1;
@@ -33205,8 +33199,8 @@ static int tolua_Cocos2d_CCTMXLayer_propertyNamed00(lua_State* tolua_S)
   {
    CCString* tolua_ret = (CCString*)  self->propertyNamed(propertyName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
   }
  }
  return 1;
@@ -33548,8 +33542,8 @@ static int tolua_Cocos2d_CCTMXTiledMap_tiledMapWithTMXFile00(lua_State* tolua_S)
   {
    CCTMXTiledMap* tolua_ret = (CCTMXTiledMap*)  CCTMXTiledMap::tiledMapWithTMXFile(tmxFile);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTMXTiledMap");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTMXTiledMap");
   }
  }
  return 1;
@@ -33584,8 +33578,8 @@ static int tolua_Cocos2d_CCTMXTiledMap_layerNamed00(lua_State* tolua_S)
   {
    CCTMXLayer* tolua_ret = (CCTMXLayer*)  self->layerNamed(layerName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTMXLayer");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTMXLayer");
   }
  }
  return 1;
@@ -33620,8 +33614,8 @@ static int tolua_Cocos2d_CCTMXTiledMap_propertyNamed00(lua_State* tolua_S)
   {
    CCString* tolua_ret = (CCString*)  self->propertyNamed(propertyName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
   }
  }
  return 1;
@@ -33660,8 +33654,8 @@ static int tolua_Cocos2d_CCTextFieldTTF_textFieldWithPlaceHolder00(lua_State* to
   {
    CCTextFieldTTF* tolua_ret = (CCTextFieldTTF*)  CCTextFieldTTF::textFieldWithPlaceHolder(placeholder,dimensions,alignment,fontName,fontSize);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextFieldTTF");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextFieldTTF");
   }
  }
  return 1;
@@ -33694,8 +33688,8 @@ static int tolua_Cocos2d_CCTextFieldTTF_textFieldWithPlaceHolder01(lua_State* to
   {
    CCTextFieldTTF* tolua_ret = (CCTextFieldTTF*)  CCTextFieldTTF::textFieldWithPlaceHolder(placeholder,fontName,fontSize);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-                int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-                tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextFieldTTF");
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextFieldTTF");
   }
  }
  return 1;
