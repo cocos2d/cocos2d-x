@@ -350,13 +350,10 @@ float * CCNodeLoader::parsePropTypeScaleLock(CCNode * pNode, CCNode * pParent, C
     
     int type = pCCBReader->readInt(false);
     
-    // TODO
-    /*
     if (type == kCCBScaleTypeMultiplyResolution) {
-        x *= resolutionScale;
-        y *= resolutionScale;
+        x *= pCCBReader->getResolutionScale();
+        y *= pCCBReader->getResolutionScale();
     }
-    */
     
     float * scaleLock = new float[2];
     scaleLock[0] = x;
@@ -378,13 +375,10 @@ float CCNodeLoader::parsePropTypeFloatScale(CCNode * pNode, CCNode * pParent, CC
 
     int type = pCCBReader->readInt(false);
     
-    // TODO
-    /*
     if (type == kCCBScaleTypeMultiplyResolution) {
-        x *= resolutionScale;
-        y *= resolutionScale;
+        f *= pCCBReader->getResolutionScale();
     }
-    */
+
     return f;
 }
 
