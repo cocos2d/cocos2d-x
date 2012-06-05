@@ -146,7 +146,7 @@ CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCT
     {
         CCTMXTilesetInfo* tileset = NULL;
         CCObject* pObj = NULL;
-        CCARRAY_FOREACH_REVERSE(tilesets, pObj);
+        CCARRAY_FOREACH_REVERSE(tilesets, pObj)
         {
             tileset = (CCTMXTilesetInfo*)pObj;
             if (tileset)
