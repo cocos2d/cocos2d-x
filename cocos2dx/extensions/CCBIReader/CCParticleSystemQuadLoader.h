@@ -12,14 +12,14 @@ class CCParticleSystemQuadLoader : public CCNodeLoader {
     protected:
         virtual CCParticleSystemQuad * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeIntegerLabeled(CCNode *, CCNode *, std::string, int, CCBReader *);
-        virtual void onHandlePropTypePoint(CCNode *, CCNode *, std::string, CCPoint, CCBReader *);
-        virtual void onHandlePropTypeFloat(CCNode *, CCNode *, std::string, float, CCBReader *);
-        virtual void onHandlePropTypeInteger(CCNode *, CCNode *, std::string, int, CCBReader *);
-        virtual void onHandlePropTypeFloatVar(CCNode *, CCNode *, std::string, float *, CCBReader *);
-        virtual void onHandlePropTypeColor4FVar(CCNode *, CCNode *, std::string, ccColor4F *, CCBReader *);
-        virtual void onHandlePropTypeBlendFunc(CCNode *, CCNode *, std::string, ccBlendFunc, CCBReader *);
-        virtual void onHandlePropTypeTexture(CCNode *, CCNode *, std::string, CCTexture2D *, CCBReader *);
+        virtual void onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, const char * pPropertyName, int, CCBReader *);
+        virtual void onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCPoint, CCBReader *);
+        virtual void onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float, CCBReader *);
+        virtual void onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, const char * pPropertyName, int, CCBReader *);
+        virtual void onHandlePropTypeFloatVar(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float *, CCBReader *);
+        virtual void onHandlePropTypeColor4FVar(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor4F *, CCBReader *);
+        virtual void onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc, CCBReader *);
+        virtual void onHandlePropTypeTexture(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCTexture2D *, CCBReader *);
 };
 
 NS_CC_EXT_END

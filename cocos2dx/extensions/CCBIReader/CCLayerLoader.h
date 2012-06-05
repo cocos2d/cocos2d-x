@@ -12,7 +12,7 @@ class CCLayerLoader : public CCNodeLoader {
     protected:
         virtual CCLayer * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeCheck(CCNode *, CCNode *, std::string, bool, CCBReader *);
+        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool, CCBReader *);
 };
 
 NS_CC_EXT_END

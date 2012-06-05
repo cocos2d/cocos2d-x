@@ -11,12 +11,12 @@ CCMenuItemImage * CCMenuItemImageLoader::createCCNode(CCNode * pParent, CCBReade
     return CCMenuItemImage::node();
 }
 
-void CCMenuItemImageLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, std::string pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
-    if(pPropertyName.compare(PROPERTY_NORMALDISPLAYFRAME) == 0) {
+void CCMenuItemImageLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_NORMALDISPLAYFRAME) == 0) {
         ((CCMenuItemImage *)pNode)->setNormalSpriteFrame(pCCSpriteFrame);
-    } else if(pPropertyName.compare(PROPERTY_SELECTEDDISPLAYFRAME) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_SELECTEDDISPLAYFRAME) == 0) {
         ((CCMenuItemImage *)pNode)->setSelectedSpriteFrame(pCCSpriteFrame);
-    } else if(pPropertyName.compare(PROPERTY_DISABLEDDISPLAYFRAME) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_DISABLEDDISPLAYFRAME) == 0) {
         ((CCMenuItemImage *)pNode)->setDisabledSpriteFrame(pCCSpriteFrame);
     } else {
         CCMenuItemLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pCCSpriteFrame, pCCBReader);

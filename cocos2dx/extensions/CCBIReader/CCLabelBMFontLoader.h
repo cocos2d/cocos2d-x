@@ -12,11 +12,11 @@ class CCLabelBMFontLoader : public CCNodeLoader {
     protected:
         virtual CCLabelBMFont * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeColor3(CCNode *, CCNode *, std::string, ccColor3B, CCBReader *);
-        virtual void onHandlePropTypeByte(CCNode *, CCNode *, std::string, unsigned char, CCBReader *);
-        virtual void onHandlePropTypeBlendFunc(CCNode *, CCNode *, std::string, ccBlendFunc, CCBReader *);
-        virtual void onHandlePropTypeFntFile(CCNode *, CCNode *, std::string, std::string, CCBReader *);
-        virtual void onHandlePropTypeText(CCNode *, CCNode *, std::string, std::string, CCBReader *);
+        virtual void onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor3B, CCBReader *);
+        virtual void onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, const char * pPropertyName, unsigned char, CCBReader *);
+        virtual void onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc, CCBReader *);
+        virtual void onHandlePropTypeFntFile(CCNode * pNode, CCNode * pParent, const char * pPropertyName, const char *, CCBReader *);
+        virtual void onHandlePropTypeText(CCNode * pNode, CCNode * pParent, const char * pPropertyName, const char *, CCBReader *);
 };
 
 NS_CC_EXT_END
