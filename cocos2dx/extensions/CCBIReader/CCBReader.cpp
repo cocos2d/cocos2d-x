@@ -68,8 +68,8 @@ CCBReader::CCBReader(CCBReader * pCCBReader) {
     this->mCCBSelectorResolver = pCCBReader->mCCBSelectorResolver;
 }
 
-void CCBReader::registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader) {
-    this->mCCNodeLoaders.insert(std::pair<std::string, CCNodeLoader *>(pClassName, pCCNodeLoader));
+void CCBReader::registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader) {
+    this->mCCNodeLoaders.insert(std::pair<const char *, CCNodeLoader *>(pClassName, pCCNodeLoader));
 }
 
 CCBMemberVariableAssigner * CCBReader::getCCBMemberVariableAssigner() {
@@ -84,8 +84,8 @@ float CCBReader::getResolutionScale() {
     return this->mResolutionScale;
 }
 
-CCNodeLoader * CCBReader::getCCNodeLoader(std::string pClassName) {
-    std::map<std::string, CCNodeLoader *>::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
+CCNodeLoader * CCBReader::getCCNodeLoader(const char * pClassName) {
+    std::map<const char *, CCNodeLoader *>::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
     assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
     return ccNodeLoadersIterator->second;
 }
@@ -144,25 +144,26 @@ bool CCBReader::readStringCache() {
     int numStrings = this->readInt(false);
 
     for(int i = 0; i < numStrings; i++) {
-        std::string string = this->readUTF8();
-        this->mStringCache.push_back(string);
+        this->readStringCacheEntry();
     }
 
     return true;
 }
 
-std::string CCBReader::readUTF8() {
+void CCBReader::readStringCacheEntry() {
     int b0 = this->readByte();
     int b1 = this->readByte();
 
     int numBytes = b0 << 8 | b1;
 
-    const char * ptr = (const char*) (this->mBytes + this->mCurrentByte);
-    std::string str(ptr, numBytes);
+    const char * src = (const char *) (this->mBytes + this->mCurrentByte);
+    char * ptr = new char[numBytes + 1]; // TODO I'm most likely leaking memory here. Unfortunately I'm not sure if I can safely delete the items in the mStringCache in ~CCBReader. =(
+    strncpy(ptr, src, numBytes);
+    ptr[numBytes] = '\0';
 
     this->mCurrentByte += numBytes;
 
-    return str;
+    this->mStringCache.push_back(ptr);
 }
 
 unsigned char CCBReader::readByte() {
@@ -260,17 +261,17 @@ void CCBReader::alignBits() {
     }
 }
 
-std::string CCBReader::readCachedString() {
+const char * CCBReader::readCachedString() {
     int i = this->readInt(false);
     return this->mStringCache[i];
 }
 
 CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     /* Read class name. */
-    std::string className = this->readCachedString();
+    const char * className = this->readCachedString();
 
     int memberVarAssignmentType = this->readInt(false);
-    std::string memberVarAssignmentName;
+    const char * memberVarAssignmentName;
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
         memberVarAssignmentName = this->readCachedString();
     }
@@ -335,39 +336,47 @@ CCSize CCBReader::getContainerSize(CCNode * pNode) {
     }
 }
 
-std::string CCBReader::lastPathComponent(std::string pPath) {
-    int slashPos = pPath.find_last_of("/");
-    if (slashPos != std::string::npos) {
-        return pPath.substr(slashPos + 1, pPath.length() - slashPos);
-    }
-    return pPath;
-}
-
-std::string CCBReader::deletePathExtension(std::string pPath) {
-    int dotPos = pPath.find_last_of(".");
-    if (dotPos != std::string::npos) {
-        return pPath.substr(0, dotPos);
-    }
-    return pPath;
-}
-
-bool CCBReader::isSpriteSheetLoaded(std::string pSpriteSheet) {
+bool CCBReader::isSpriteSheetLoaded(const char * pSpriteSheet) {
     return this->mLoadedSpriteSheets.find(pSpriteSheet) != this->mLoadedSpriteSheets.end();
 }
 
-void CCBReader::addLoadedSpriteSheet(std::string pSpriteSheet) {
+void CCBReader::addLoadedSpriteSheet(const char * pSpriteSheet) {
     this->mLoadedSpriteSheets.insert(pSpriteSheet);
 }
 
-std::string CCBReader::toLowerCase(std::string pString) {
-    std::string copy(pString);
-    std::transform(copy.begin(), copy.end(), copy.begin(), ::tolower);
-    return copy;
+const char * CCBReader::lastPathComponent(const char * pPath) {
+    // TODO Memory leaks?
+    std::string path(pPath);
+    int slashPos = path.find_last_of("/");
+    if (slashPos != std::string::npos) {
+        return path.substr(slashPos + 1, path.length() - slashPos).c_str();
+    }
+    return pPath;
 }
 
-bool CCBReader::endsWith(std::string pString, std::string pEnding) {
-    if (pString.length() >= pEnding.length()) {
-        return (pString.compare(pString.length() - pEnding.length(), pEnding.length(), pEnding) == 0);
+const char * CCBReader::deletePathExtension(const char * pPath) {
+    // TODO Memory leaks?
+    std::string path(pPath);
+    int dotPos = path.find_last_of(".");
+    if (dotPos != std::string::npos) {
+        return path.substr(0, dotPos).c_str();
+    }
+    return pPath;
+}
+
+const char * CCBReader::toLowerCase(const char * pString) {
+    // TODO Memory leaks?
+    std::string copy(pString);
+    std::transform(copy.begin(), copy.end(), copy.begin(), ::tolower);
+    return copy.c_str();
+}
+
+bool CCBReader::endsWith(const char * pString, const char * pEnding) {
+    // TODO Memory leaks?
+    std::string string(pString);
+    std::string ending(pEnding);
+    if (string.length() >= ending.length()) {
+        return (string.compare(string.length() - ending.length(), ending.length(), ending) == 0);
     } else {
         return false;
     }

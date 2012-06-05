@@ -12,7 +12,7 @@ class CCBFileLoader : public CCNodeLoader {
     protected:
         virtual CCNode * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeCCBFile(CCNode *, CCNode *, std::string, CCNode *, CCBReader *);
+        virtual void onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCNode *, CCBReader *);
 };
 
 NS_CC_EXT_END

@@ -68,6 +68,12 @@
 
 NS_CC_EXT_BEGIN
 
+struct cmp_str {
+    bool operator() (char const *a, char const *b) {
+        return std::strcmp(a, b) < 0;
+    }
+};
+
 /* Forward declaration. */
 class CCNodeLoader;
 
@@ -87,9 +93,9 @@ class CC_DLL CCBReader : public CCObject { // TODO Why extend CCObject? -> Also 
         CCBMemberVariableAssigner * mCCBMemberVariableAssigner;
         CCBSelectorResolver * mCCBSelectorResolver;
 
-        std::vector<std::string> mStringCache;
-        std::map<std::string, CCNodeLoader *> mCCNodeLoaders;
-        std::set<std::string> mLoadedSpriteSheets;
+        std::vector<const char *> mStringCache;
+        std::map<const char *, CCNodeLoader *, cmp_str> mCCNodeLoaders;
+        std::set<const char *, cmp_str> mLoadedSpriteSheets;
 
     public:   
         /* Constructor. */
@@ -100,8 +106,8 @@ class CC_DLL CCBReader : public CCObject { // TODO Why extend CCObject? -> Also 
 
         CCNode * readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner = NULL);
         CCNode * readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize);
-        void registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader);
-        CCNodeLoader * getCCNodeLoader(std::string pClassName);
+        void registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader);
+        CCNodeLoader * getCCNodeLoader(const char * pClassName);
         CCBMemberVariableAssigner * getCCBMemberVariableAssigner();
         CCBSelectorResolver * getCCBSelectorResolver();
 
@@ -110,31 +116,32 @@ class CC_DLL CCBReader : public CCObject { // TODO Why extend CCObject? -> Also 
         CCSize getContainerSize(CCNode *);
         float getResolutionScale();
 
-        bool isSpriteSheetLoaded(std::string);
-        void addLoadedSpriteSheet(std::string);
+        bool isSpriteSheetLoaded(const char *);
+        void addLoadedSpriteSheet(const char *);
     
         /* Utility methods. */
-        std::string lastPathComponent(std::string);
-        std::string deletePathExtension(std::string);
-        std::string toLowerCase(std::string);
-        bool endsWith(std::string, std::string);
+        const char * lastPathComponent(const char *);
+        const char * deletePathExtension(const char *);
+        const char * toLowerCase(const char *);
+        bool endsWith(const char *, const char *);
 
         /* Parse methods. */
         int readInt(bool pSign);
         unsigned char readByte();
         bool readBool();
         float readFloat();
-        std::string readCachedString();
+        const char * readCachedString();
             
     private:
         bool readHeader();
         bool readStringCache();
+        void readStringCacheEntry();
         CCNode * readNodeGraph();
         CCNode * readNodeGraph(CCNode *);
     
         bool getBit();
         void alignBits();
-        std::string readUTF8();
+        const char * readUTF8();
 };
 
 NS_CC_EXT_END

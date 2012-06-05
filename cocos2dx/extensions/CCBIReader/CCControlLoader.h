@@ -12,8 +12,8 @@ class CCControlLoader : public CCNodeLoader {
     protected:
         virtual CCControl * createCCNode(CCNode *, CCBReader *) = 0;
 
-        virtual void onHandlePropTypeBlockCCControl(CCNode *, CCNode *, std::string, BlockCCControlData *, CCBReader *);
-        virtual void onHandlePropTypeCheck(CCNode *, CCNode *, std::string, bool, CCBReader *);
+        virtual void onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, const char * pPropertyName, BlockCCControlData *, CCBReader *);
+        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool, CCBReader *);
 };
 
 NS_CC_EXT_END

@@ -12,7 +12,7 @@ class CCMenuItemImageLoader : public CCMenuItemLoader {
     protected:
         virtual CCMenuItemImage * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeSpriteFrame(CCNode *, CCNode *, std::string, CCSpriteFrame *, CCBReader *);
+        virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame *, CCBReader *);
 };
 
 NS_CC_EXT_END
