@@ -43,6 +43,24 @@
             <replacetoken><![CDATA[tolua_usertype(tolua_S,"LUA_TABLE");]]></replacetoken>
             <replacevalue><![CDATA[]]></replacevalue>
         </replace>
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[{
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((LUA_TABLE)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"LUA_TABLE");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(LUA_TABLE));
+     tolua_pushusertype(tolua_S,tolua_obj,"LUA_TABLE");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[LUA_TABLE tolua_ret = (LUA_TABLE)]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
 
         <!-- remove unused header -->
         <replace file="LuaCocos2d.cpp">
