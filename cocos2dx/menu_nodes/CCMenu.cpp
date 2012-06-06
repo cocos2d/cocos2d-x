@@ -178,7 +178,7 @@ void CCMenu::onExit()
 
 //Menu - Events
 
-void CCMenu::setHandlerPriority(unsigned int newPriority)
+void CCMenu::setHandlerPriority(int newPriority)
 {
     CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
     pDispatcher->setPriority(newPriority, this);
