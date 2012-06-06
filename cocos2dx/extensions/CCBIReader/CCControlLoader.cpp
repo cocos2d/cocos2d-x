@@ -19,7 +19,7 @@ void CCControlLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, co
 
 void CCControlLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, const char * pPropertyName, BlockCCControlData * pBlockCCControlData, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_CCCONTROL) == 0) {
-        ((CCControl *)pNode)->addTargetWithActionForControlEvents(pBlockCCControlData->mTarget, pBlockCCControlData->mSELMenuHandler, pBlockCCControlData->mControlEvents);
+        ((CCControl *)pNode)->addTargetWithActionForControlEvents(pBlockCCControlData->mTarget, pBlockCCControlData->mSELCCControlHandler, pBlockCCControlData->mControlEvents);
     } else {
         CCNodeLoader::onHandlePropTypeBlockCCControl(pNode, pParent, pPropertyName, pBlockCCControlData, pCCBReader);
     }
