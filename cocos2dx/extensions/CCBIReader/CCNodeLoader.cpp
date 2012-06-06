@@ -84,7 +84,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeScaleLock(pNode, pParent, propertyName, scaleLock, pCCBReader);
                 }
-                delete scaleLock; // TODO Can this just be deleted?
+                delete scaleLock;
                 break;
             }
             case kCCBPropTypeFloat: {
@@ -127,7 +127,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeFloatVar(pNode, pParent, propertyName, floatVar, pCCBReader);
                 }
-                delete floatVar; // TODO Can this just be deleted?
+                delete floatVar;
                 break;
             }
             case kCCBPropTypeCheck: {
@@ -142,7 +142,6 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeSpriteFrame(pNode, pParent, propertyName, ccSpriteFrame, pCCBReader);
                 }
-                // TODO delete ccSpriteFrame; ???
                 break;
             }
             case kCCBPropTypeAnimation: {
@@ -150,7 +149,6 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeAnimation(pNode, pParent, propertyName, ccAnimation, pCCBReader);
                 }
-                // TODO delete ccAnimation; ???
                 break;
             }
             case kCCBPropTypeTexture: {
@@ -158,7 +156,6 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeTexture(pNode, pParent, propertyName, ccTexture2D, pCCBReader);
                 }
-                // TODO delete ccTexture2D; ???
                 break;
             }
             case kCCBPropTypeByte: {
@@ -180,7 +177,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeColor4FVar(pNode, pParent, propertyName, color4FVar, pCCBReader);
                 }
-                delete color4FVar; // TODO Can this just be deleted?
+                delete color4FVar;
                 break;
             }
             case kCCBPropTypeFlip: {
@@ -624,16 +621,15 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     /* Change path extension to .ccbi. */
     const char * ccbFileWithoutPathExtension = pCCBReader->deletePathExtension(ccbFileName);
     int ccbiFileNameLenght = strlen(ccbFileWithoutPathExtension) + strlen(".ccbi");
-    char * ccbiFileName = new char[ccbiFileNameLenght + 1]; // TODO Memory leak?
+    char ccbiFileName[ccbiFileNameLenght + 1];
     strcpy(ccbiFileName, ccbFileWithoutPathExtension);
     strcat(ccbiFileName, ".ccbi");
     ccbiFileName[ccbiFileNameLenght] = '\0';
 
     CCBReader * ccbReader = new CCBReader(pCCBReader);
+    ccbReader->autorelease();
 
     CCNode * ccbFileNode = ccbReader->readNodeGraphFromFile(ccbiFileName, pCCBReader->getOwner(), pParent->getContentSize());
-
-    delete ccbReader;
 
     return ccbFileNode;
 }

@@ -9,6 +9,9 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class CCLayerLoader : public CCNodeLoader {
+    public:
+        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerLoader, loader);
+
     protected:
         virtual CCLayer * createCCNode(CCNode *, CCBReader *);
 

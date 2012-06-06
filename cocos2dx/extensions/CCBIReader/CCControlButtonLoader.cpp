@@ -36,11 +36,17 @@ void CCControlButtonLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pPare
 
 void CCControlButtonLoader::onHandlePropTypeString(CCNode * pNode, CCNode * pParent, const char * pPropertyName, const char * pString, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TITLE_NORMAL) == 0) {
-        ((CCControlButton *)pNode)->setTitleForState(new CCString(pString), CCControlStateNormal); // TODO Leak?
+        CCString * ccString = new CCString(pString);
+        ccString->autorelease();
+        ((CCControlButton *)pNode)->setTitleForState(ccString, CCControlStateNormal);
     } else if(strcmp(pPropertyName, PROPERTY_TITLE_HIGHLIGHTED) == 0) {
-        ((CCControlButton *)pNode)->setTitleForState(new CCString(pString), CCControlStateHighlighted); // TODO Leak?
+        CCString * ccString = new CCString(pString);
+        ccString->autorelease();
+        ((CCControlButton *)pNode)->setTitleForState(ccString, CCControlStateHighlighted);
     } else if(strcmp(pPropertyName, PROPERTY_TITLE_DISABLED) == 0) {
-        ((CCControlButton *)pNode)->setTitleForState(new CCString(pString), CCControlStateDisabled); // TODO Leak?
+        CCString * ccString = new CCString(pString);
+        ccString->autorelease();
+        ((CCControlButton *)pNode)->setTitleForState(ccString, CCControlStateDisabled);
     } else {
         CCControlLoader::onHandlePropTypeString(pNode, pParent, pPropertyName, pString, pCCBReader);
     }

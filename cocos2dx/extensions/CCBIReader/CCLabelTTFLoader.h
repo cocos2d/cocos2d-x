@@ -9,6 +9,9 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class CCLabelTTFLoader : public CCNodeLoader {
+    public:
+        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelTTFLoader, loader);
+
     protected:
         virtual CCLabelTTF * createCCNode(CCNode *, CCBReader *);
 

@@ -9,6 +9,9 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class CCScale9SpriteLoader : public CCNodeLoader {
+    public:
+        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCScale9SpriteLoader, loader);
+
     protected:
         virtual CCScale9Sprite * createCCNode(CCNode *, CCBReader *);
 

@@ -9,6 +9,9 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class CCLabelBMFontLoader : public CCNodeLoader {
+    public:
+        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelBMFontLoader, loader);
+
     protected:
         virtual CCLabelBMFont * createCCNode(CCNode *, CCBReader *);
 

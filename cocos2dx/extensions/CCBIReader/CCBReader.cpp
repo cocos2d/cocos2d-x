@@ -1,19 +1,7 @@
 #include "CCBReader.h"
 
 #include "CCNodeLoader.h"
-#include "CCLayerLoader.h"
-#include "CCLayerColorLoader.h"
-#include "CCLayerGradientLoader.h"
-#include "CCLabelBMFontLoader.h"
-#include "CCLabelTTFLoader.h"
-#include "CCSpriteLoader.h"
-#include "CCScale9SpriteLoader.h"
-#include "CCBFileLoader.h"
-#include "CCMenuLoader.h"
-#include "CCMenuItemLoader.h"
-#include "CCMenuItemImageLoader.h"
-#include "CCControlButtonLoader.h"
-#include "CCParticleSystemQuadLoader.h"
+#include "CCNodeLoaderLibrary.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIDevice.h>
@@ -22,54 +10,53 @@
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-CCBReader::CCBReader(CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver) {
+CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver) {
+    this->mRootNode = NULL;
+    this->mRootCCBReader = true;
+
+    this->mCCNodeLoaderLibrary = pCCNodeLoaderLibrary;
     this->mCCBMemberVariableAssigner = pCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBSelectorResolver;
 
     this->mResolutionScale = 1;
-    
+
 #ifdef __CC_PLATFORM_IOS
     /* iPad */
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         this->mResolutionScale = 2;
     }
 #endif
-
-    this->registerCCNodeLoader("CCNode", new CCNodeLoader());
-    this->registerCCNodeLoader("CCLayer", new CCLayerLoader());
-    this->registerCCNodeLoader("CCLayerColor", new CCLayerColorLoader());
-    this->registerCCNodeLoader("CCLayerGradient", new CCLayerGradientLoader());
-    this->registerCCNodeLoader("CCSprite", new CCSpriteLoader());
-    this->registerCCNodeLoader("CCLabelBMFont", new CCLabelBMFontLoader());
-    this->registerCCNodeLoader("CCLabelTTF", new CCLabelTTFLoader());
-    this->registerCCNodeLoader("CCScale9Sprite", new CCScale9SpriteLoader());
-    this->registerCCNodeLoader("CCBFile", new CCBFileLoader());
-    this->registerCCNodeLoader("CCMenu", new CCMenuLoader());
-    this->registerCCNodeLoader("CCMenuItemImage", new CCMenuItemImageLoader());
-    this->registerCCNodeLoader("CCControlButton", new CCControlButtonLoader());
-    this->registerCCNodeLoader("CCParticleSystemQuad", new CCParticleSystemQuadLoader());
 }
 
 CCBReader::~CCBReader() {
-    if(this->mBytes) {
+    if(this->mBytes != NULL) {
         delete this->mBytes;
         this->mBytes = NULL;
     }
 
-    // TODO Also delete mCCNodeLoaders, mLoadedSpritesheets, etc... ? (Keep in mind they might be copied/inherited from another CCBReader through the copy constructor!)
+    /* Clear string cache. */
+    this->mStringCache.clear();
+
+    if(this->mRootCCBReader) {
+        /* Clear loaded spritesheets. */
+        this->mLoadedSpriteSheets.clear();
+    }
+
+    if(this->mRootNode != NULL) {
+        this->mRootNode->release();
+    }
 }
 
 CCBReader::CCBReader(CCBReader * pCCBReader) {
-    /* Borrow data from the 'parent' CCBLoader. */
+    this->mRootNode = NULL;
+    this->mRootCCBReader = false;
+
+    /* Borrow data from the 'parent' CCBReader. */
     this->mResolutionScale = pCCBReader->mResolutionScale;
     this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
-    this->mCCNodeLoaders = pCCBReader->mCCNodeLoaders;
+    this->mCCNodeLoaderLibrary = pCCBReader->mCCNodeLoaderLibrary;
     this->mCCBMemberVariableAssigner = pCCBReader->mCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBReader->mCCBSelectorResolver;
-}
-
-void CCBReader::registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader) {
-    this->mCCNodeLoaders.insert(std::pair<const char *, CCNodeLoader *>(pClassName, pCCNodeLoader));
 }
 
 CCBMemberVariableAssigner * CCBReader::getCCBMemberVariableAssigner() {
@@ -84,19 +71,13 @@ float CCBReader::getResolutionScale() {
     return this->mResolutionScale;
 }
 
-CCNodeLoader * CCBReader::getCCNodeLoader(const char * pClassName) {
-    std::map<const char *, CCNodeLoader *>::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
-    assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
-    return ccNodeLoadersIterator->second;
-}
-
 CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner) {
     return this->readNodeGraphFromFile(pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
 }
 
 CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
     const char * path = CCFileUtils::fullPathFromRelativePath(pCCBFileName);
-    
+
     unsigned long size = 0;
     this->mBytes = CCFileUtils::getFileData(path, "r", &size);
 
@@ -104,15 +85,15 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCObject * 
     this->mCurrentBit = 0;
     this->mOwner = pOwner;
     this->mRootContainerSize = pRootContainerSize;
-    
+
     if(!this->readHeader()) {
         return NULL;
     }
-    
+
     if(!this->readStringCache()) {
         return NULL;
     }
-    
+
     return this->readNodeGraph();
 }
 
@@ -157,13 +138,11 @@ void CCBReader::readStringCacheEntry() {
     int numBytes = b0 << 8 | b1;
 
     const char * src = (const char *) (this->mBytes + this->mCurrentByte);
-    char * ptr = new char[numBytes + 1]; // TODO I'm most likely leaking memory here. Unfortunately I'm not sure if I can safely delete the items in the mStringCache in ~CCBReader. =(
-    strncpy(ptr, src, numBytes);
-    ptr[numBytes] = '\0';
+    std::string string(src, numBytes);
 
     this->mCurrentByte += numBytes;
 
-    this->mStringCache.push_back(ptr);
+    this->mStringCache.push_back(string);
 }
 
 unsigned char CCBReader::readByte() {
@@ -263,7 +242,7 @@ void CCBReader::alignBits() {
 
 const char * CCBReader::readCachedString() {
     int i = this->readInt(false);
-    return this->mStringCache[i];
+    return this->mStringCache[i].c_str();
 }
 
 CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
@@ -276,23 +255,24 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         memberVarAssignmentName = this->readCachedString();
     }
 
-    CCNodeLoader * ccNodeLoader = this->getCCNodeLoader(className);
+    CCNodeLoader * ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className);
     CCNode * node = ccNodeLoader->loadCCNode(pParent, this);
 
     /* Set root node, if not set yet. */
     if(this->mRootNode == NULL) {
-        this->mRootNode = node; // TODO retain?
+        this->mRootNode = node;
+        this->mRootNode->retain();
     }
 
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
         CCObject * target = NULL;
         if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) {
-            target = this->getRootNode();
-        } else if (memberVarAssignmentType == kCCBTargetTypeOwner) {
-            target = this->getOwner();
+            target = this->mRootNode;
+        } else if(memberVarAssignmentType == kCCBTargetTypeOwner) {
+            target = this->mOwner;
         }
 
-        if (target != NULL) {
+        if(target != NULL) {
             if(this->mCCBMemberVariableAssigner != NULL) {
                 this->mCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName, node);
             }
@@ -305,7 +285,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         CCNode * child = this->readNodeGraph(node);
         node->addChild(child);
     }
-    
+
     // TODO
     /*
     if([node respondsToSelector:@selector(didLoadFromCCB)]) {
@@ -345,37 +325,33 @@ void CCBReader::addLoadedSpriteSheet(const char * pSpriteSheet) {
 }
 
 const char * CCBReader::lastPathComponent(const char * pPath) {
-    // TODO Memory leaks?
     std::string path(pPath);
     int slashPos = path.find_last_of("/");
-    if (slashPos != std::string::npos) {
+    if(slashPos != std::string::npos) {
         return path.substr(slashPos + 1, path.length() - slashPos).c_str();
     }
     return pPath;
 }
 
 const char * CCBReader::deletePathExtension(const char * pPath) {
-    // TODO Memory leaks?
     std::string path(pPath);
     int dotPos = path.find_last_of(".");
-    if (dotPos != std::string::npos) {
+    if(dotPos != std::string::npos) {
         return path.substr(0, dotPos).c_str();
     }
     return pPath;
 }
 
 const char * CCBReader::toLowerCase(const char * pString) {
-    // TODO Memory leaks?
     std::string copy(pString);
     std::transform(copy.begin(), copy.end(), copy.begin(), ::tolower);
     return copy.c_str();
 }
 
 bool CCBReader::endsWith(const char * pString, const char * pEnding) {
-    // TODO Memory leaks?
     std::string string(pString);
     std::string ending(pEnding);
-    if (string.length() >= ending.length()) {
+    if(string.length() >= ending.length()) {
         return (string.compare(string.length() - ending.length(), ending.length(), ending) == 0);
     } else {
         return false;
