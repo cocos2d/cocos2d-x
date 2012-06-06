@@ -107,8 +107,8 @@ private:
 	EGLConfig   chooseConfig(const EGLDisplay &eglDisplay, const char* str);
 	int         chooseFormat(const EGLDisplay &eglDisplay, const EGLConfig &config);
 	bool		createNativeWindow(const EGLConfig &config);
-	void		showKeyboard();
-	void		hideKeyboard();
+	void		showKeyboard(bool will);
+	void		hideKeyboard(bool will);
 
 	CCSize  			m_sSizeInPixel;
 	CCSize 			 	m_sSizeInPoint;
