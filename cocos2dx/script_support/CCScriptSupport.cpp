@@ -102,6 +102,81 @@ bool CCTouchScriptHandlerEntry::initWithHandler(int nHandler, bool bIsMultiTouch
 // ----------------------------
 
 
+CCLuaValue* CCLuaValue::valueWithInt(int intValue)
+{
+    CCLuaValue* value = new CCLuaValue();
+    value->m_field.intValue = intValue;
+    value->m_type = CCLuaValueTypeInt;
+    return value;
+}
+
+CCLuaValue* CCLuaValue::valueWithFloat(float floatValue)
+{
+    CCLuaValue* value = new CCLuaValue();
+    value->m_field.floatValue = floatValue;
+    value->m_type = CCLuaValueTypeFloat;
+    return value;
+}
+
+CCLuaValue* CCLuaValue::valueWithBoolean(bool booleanValue)
+{
+    CCLuaValue* value = new CCLuaValue();
+    value->m_field.booleanValue = booleanValue;
+    value->m_type = CCLuaValueTypeBoolean;
+    return value;
+}
+
+CCLuaValue* CCLuaValue::valueWithString(const char* stringValue)
+{
+    CCLuaValue* value = new CCLuaValue();
+    value->m_field.stringValue = new std::string(stringValue ? stringValue : "");
+    value->m_type = CCLuaValueTypeString;
+    return value;
+}
+
+CCLuaValue* CCLuaValue::valueWithString(const std::string& stringValue)
+{
+    CCLuaValue* value = new CCLuaValue();
+    value->m_field.stringValue = new std::string(stringValue);
+    value->m_type = CCLuaValueTypeString;
+    return value;
+}
+
+CCLuaValue* CCLuaValue::valueWithCCLuaTableDict(const CCLuaTableDict& tableDict)
+{
+    CCLuaValue* value = new CCLuaValue();
+    value->m_field.tableDictValue = new CCLuaTableDict(tableDict);
+    value->m_type = CCLuaValueTypeCCLuaTableDict;
+    return value;
+}
+
+CCLuaValue* CCLuaValue::valueWithCCLuaTableArray(const CCLuaTableArray& tableArray)
+{
+    CCLuaValue* value = new CCLuaValue();
+    value->m_field.tableArrayValue = new CCLuaTableArray(tableArray);
+    value->m_type = CCLuaValueTypeCCLuaTableArray;
+    return value;
+}
+
+CCLuaValue::~CCLuaValue(void)
+{
+    if (m_type == CCLuaValueTypeString)
+    {
+        delete m_field.stringValue;
+    }
+    else if (m_type == CCLuaValueTypeCCLuaTableDict)
+    {
+        delete m_field.tableDictValue;
+    }
+    else if (m_type == CCLuaValueTypeCCLuaTableArray)
+    {
+        delete m_field.tableArrayValue;
+    }
+}
+
+// ----------------------------
+
+
 static CCScriptEngineManager* s_pSharedScriptEngineManager = NULL;
 
 

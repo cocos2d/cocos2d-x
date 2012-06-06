@@ -28,6 +28,9 @@ THE SOFTWARE.
 #include "CCCommon.h"
 #include "CCTouch.h"
 #include "CCSet.h"
+#include <string>
+#include <map>
+#include <list>
 
 typedef struct lua_State lua_State;
 
@@ -38,6 +41,9 @@ typedef int LUA_TABLE;
 NS_CC_BEGIN
 
 class CCTimer;
+
+#pragma mark -
+#pragma mark CCSchedulerScriptHandlerEntry
 
 // Lua support for CCScheduler
 class CCSchedulerScriptHandlerEntry : public CCObject
@@ -79,6 +85,9 @@ private:
 };
 
 
+#pragma mark -
+#pragma mark CCTouchScriptHandlerEntry
+
 // Lua support for touch events
 class CCTouchScriptHandlerEntry : public CCObject
 {
@@ -112,6 +121,88 @@ private:
     bool    m_bSwallowsTouches;
 };
 
+
+#pragma mark -
+#pragma mark CCLuaValue
+
+class CCLuaValue;
+typedef std::map<std::string, CCLuaValue*>  CCLuaTableDict;
+typedef CCLuaTableDict::iterator            CCLuaTableDictIterator;
+typedef std::list<CCLuaValue*>              CCLuaTableArray;
+typedef CCLuaTableArray::iterator           CCLuaTableArrayIterator;
+
+typedef enum {
+    CCLuaValueTypeInt,
+    CCLuaValueTypeFloat,
+    CCLuaValueTypeBoolean,
+    CCLuaValueTypeString,
+    CCLuaValueTypeCCLuaTableDict,
+    CCLuaValueTypeCCLuaTableArray
+} CCLuaValueType;
+
+typedef union {
+    int                 intValue;
+    float               floatValue;
+    bool                booleanValue;
+    std::string*        stringValue;
+    CCLuaTableDict*     tableDictValue;
+    CCLuaTableArray*    tableArrayValue;
+} CCLuaValueField;
+
+class CCLuaValue
+{
+public:
+    static CCLuaValue* valueWithInt(int intValue);
+    static CCLuaValue* valueWithFloat(float floatValue);
+    static CCLuaValue* valueWithBoolean(bool booleanValue);
+    static CCLuaValue* valueWithString(const char* stringValue);
+    static CCLuaValue* valueWithString(const std::string& stringValue);
+    static CCLuaValue* valueWithCCLuaTableDict(const CCLuaTableDict& tableDict);
+    static CCLuaValue* valueWithCCLuaTableArray(const CCLuaTableArray& tableArray);
+    
+    ~CCLuaValue(void);
+    
+    CCLuaValueType getType(void) {
+        return m_type;
+    }
+    
+    int getIntValue(void) {
+        return m_field.intValue;
+    }
+    
+    float getFloatValue(void) {
+        return m_field.floatValue;
+    }
+    
+    bool getBooleanValue(void) {
+        return m_field.booleanValue;
+    }
+    
+    const std::string& getStringValue(void) {
+        return *m_field.stringValue;
+    }
+    
+    CCLuaTableDict* getTableDictValue(void) {
+        return m_field.tableDictValue;
+    }
+    
+    CCLuaTableArray* getTableArrayValue(void) {
+        return m_field.tableArrayValue;
+    }
+    
+private:
+    CCLuaValue(void)
+    : m_type(CCLuaValueTypeInt) {
+        memset(&m_field, 0, sizeof(m_field));
+    }
+    
+    CCLuaValueField m_field;
+    CCLuaValueType  m_type;
+};
+
+
+#pragma mark -
+#pragma mark CCScriptEngineProtocol
 
 class CC_DLL CCScriptEngineProtocol : public CCObject
 {
@@ -171,11 +262,19 @@ public:
     virtual int executeFunctionWithIntegerData(int nHandler, int data) = 0;
     virtual int executeFunctionWithFloatData(int nHandler, float data) = 0;
     virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;    
+    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;
+    
+    /**
+     @brief Push value to Lua stack, return number of values in Lua stack
+     */
     virtual int pushIntegerToLuaStack(int data) = 0;
     virtual int pushFloatToLuaStack(int data) = 0;
     virtual int pushBooleanToLuaStack(int data) = 0;
+    virtual int pushStringToLuaStack(const char* data) = 0;
     virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName) = 0;
+    virtual int pushCCLuaValueToLuaStack(CCLuaValue* pValue) = 0;
+    virtual int pushCCLuaTableDictToLuaStack(CCLuaTableDict* pDict) = 0;
+    virtual int pushCCLuaTableArrayToLuaStack(CCLuaTableArray* pArray) = 0;
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;
@@ -184,6 +283,10 @@ public:
     // execute a schedule function
     virtual int executeSchedule(int nHandler, ccTime dt) = 0;
 };
+
+
+#pragma mark -
+#pragma mark CCScriptEngineManager
 
 /**
  CCScriptEngineManager is a singleton which holds an object instance of CCScriptEngineProtocl
