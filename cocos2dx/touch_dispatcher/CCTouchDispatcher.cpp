@@ -40,7 +40,7 @@ NS_CC_BEGIN
  */
 static int less(const void* p1, const void* p2)
 {
-    return ((cocos2d::CCTouchHandler*)p1)->getPriority() < ((cocos2d::CCTouchHandler*)p2)->getPriority() ? 1 : -1;
+    return (*((CCTouchHandler**)p1))->getPriority() - (*((CCTouchHandler**)p2))->getPriority();
 }
 
 
