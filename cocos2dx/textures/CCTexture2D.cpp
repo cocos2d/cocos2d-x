@@ -45,7 +45,7 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "CCTextureCache.h"
 #endif
 
@@ -78,7 +78,7 @@ CCTexture2D::CCTexture2D()
 
 CCTexture2D::~CCTexture2D()
 {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::removeTexture(this);
 #endif
 
@@ -417,7 +417,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 }
 bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data
     VolatileTexture::addStringTexture(this, text, dimensions, alignment, fontName, fontSize);
 #endif
