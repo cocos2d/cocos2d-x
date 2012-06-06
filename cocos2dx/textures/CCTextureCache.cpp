@@ -361,7 +361,7 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
         texture->initWithImage(pImage);
 #endif
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
        // cache the texture file name
        VolatileTexture::addImageTexture(texture, filename, pImageInfo->imageType);
 #endif
@@ -449,7 +449,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
                 if( texture )
                 {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
                     // cache the texture file name
                     VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
 #endif
@@ -527,7 +527,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
     tex = new CCTexture2D();
     if(tex != NULL && tex->initWithPVRFile(fullpath.c_str()) )
     {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture file name
         VolatileTexture::addImageTexture(tex, fullpath.c_str(), CCImage::kFmtRawData);
 #endif
@@ -582,7 +582,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 
     } while (0);
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::addCCImage(texture, image);
 #endif
     
@@ -667,7 +667,7 @@ CCTexture2D* CCTextureCache::textureForKey(const char* key)
 
 void CCTextureCache::reloadAllTextures()
 {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::reloadAllTextures();
 #endif
 }
@@ -699,7 +699,7 @@ void CCTextureCache::dumpCachedTextureInfo()
     CCLOG("cocos2d: CCTextureCache dumpDebugInfo: %ld textures, for %lu KB (%.2f MB)", (long)count, (long)totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
 }
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
 
 std::list<VolatileTexture*> VolatileTexture::textures;
 bool VolatileTexture::isReloading = false;
@@ -897,7 +897,7 @@ void VolatileTexture::reloadAllTextures()
     isReloading = false;
 }
 
-#endif // CC_ENABLE_CACHE_TEXTTURE_DATA
+#endif // CC_ENABLE_CACHE_TEXTURE_DATA
 
 NS_CC_END
 
