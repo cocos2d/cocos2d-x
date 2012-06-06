@@ -172,10 +172,10 @@ void CCRenderTexture::begin()
     float heightRatio = size.height / texSize.height;
 
     // Adjust the orthographic projection and viewport
-    glViewport(0, 0, (GLsizei)(texSize.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(texSize.height * CC_CONTENT_SCALE_FACTOR()));
+    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
 
     // special viewport for 3d projection + retina display
-    if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
+    if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1.0f )
     {
         glViewport((GLsizei)(-texSize.width/2), (GLsizei)(-texSize.height/2), (GLsizei)(texSize.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(texSize.height * CC_CONTENT_SCALE_FACTOR()));
     }
