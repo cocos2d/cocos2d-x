@@ -7,7 +7,7 @@ NS_CC_EXT_BEGIN
 
 class CCBSelectorResolver {
     public:
-        virtual cocos2d::SEL_MenuHandler onResolveCCBSelector(CCObject * pTarget, std::string pSelectorName) = 0;
+        virtual cocos2d::SEL_MenuHandler onResolveCCBSelector(CCObject * pTarget, const char * pSelectorName) = 0;
 };
 
 NS_CC_EXT_END
