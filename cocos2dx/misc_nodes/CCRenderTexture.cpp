@@ -224,7 +224,7 @@ void CCRenderTexture::end(bool bIsTOCacheTexture)
 
     director->setProjection(director->getProjection());
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     if (bIsTOCacheTexture)
     {
         CC_SAFE_DELETE(m_pUITextureImage);
