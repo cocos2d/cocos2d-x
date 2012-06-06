@@ -55,11 +55,12 @@ public:
     /** Creates an label.
      */
     static CCLabelTTF * node();
+
+    virtual const char* getString();
     /** changes the string to render
     * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
     */
     virtual void setString(const char *label);
-    virtual const char* getString(void);
     virtual const char* getFontName();
     virtual void setFontName(const char *fontName);
     virtual float getFontSize();
@@ -74,10 +75,10 @@ protected:
     CCSize m_tDimensions;
     CCTextAlignment m_eAlignment;
     /** Font name used in the label */
-    std::string * m_pFontName;
+    std::string m_sFontName;
     /** Font size of the label */
     float m_fFontSize;
-    std::string * m_pString;
+    std::string m_sString;
 };
 
 NS_CC_END
