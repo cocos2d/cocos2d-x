@@ -336,10 +336,9 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
     CCSize size = m_obWinSizeInPixels;
     CCSize sizePoint = m_obWinSizeInPoints;
 
-    //glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
     if (m_pobOpenGLView)
     {
-        m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
+        m_pobOpenGLView->setViewPortInPoints(0, 0, sizePoint.width, sizePoint.height);
     }
 
     switch (kProjection)
