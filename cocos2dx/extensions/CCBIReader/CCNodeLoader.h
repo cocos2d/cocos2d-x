@@ -12,7 +12,7 @@ struct BlockData {
 };
 
 struct BlockCCControlData {
-    SEL_MenuHandler mSELMenuHandler;
+    SEL_CCControlHandler mSELCCControlHandler;
     CCObject * mTarget;
     int mControlEvents;
 };

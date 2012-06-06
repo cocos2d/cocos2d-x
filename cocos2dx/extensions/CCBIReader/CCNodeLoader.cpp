@@ -558,7 +558,7 @@ BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, C
                 CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
                 if(ccbSelectorResolver != NULL) {
                     BlockData * blockData = new BlockData();
-                    blockData->mSELMenuHandler = ccbSelectorResolver->onResolveCCBSelector(target, selectorName);
+                    blockData->mSELMenuHandler = ccbSelectorResolver->onResolveCCBCCMenuSelector(target, selectorName);
 
                     blockData->mTarget = target;
 
@@ -595,7 +595,7 @@ BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, C
                 CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
                 if(ccbSelectorResolver != NULL) {
                     BlockCCControlData * blockCCControlData = new BlockCCControlData();
-                    blockCCControlData->mSELMenuHandler = ccbSelectorResolver->onResolveCCBSelector(target, selectorName);
+                    blockCCControlData->mSELCCControlHandler = ccbSelectorResolver->onResolveCCBCCControlSelector(target, selectorName);
 
                     blockCCControlData->mTarget = target;
                     blockCCControlData->mControlEvents = controlEvents;
