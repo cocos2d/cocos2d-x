@@ -134,7 +134,7 @@ public:
     * @param controlEvents A bitmask specifying the control events for which the 
     * action message is sent. See "CCControlEvent" for bitmask constants.
     */
-    virtual void addTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents);
+    virtual void addTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents);
 
     /**
     * Removes a target and action for a particular event (or events) from an 
@@ -148,7 +148,7 @@ public:
     * @param controlEvents A bitmask specifying the control events associated with
     * target and action. See "CCControlEvent" for bitmask constants.
     */
-    virtual void removeTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents);
+    virtual void removeTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents);
 
     /**
     * Returns a point corresponding to the touh location converted into the 
@@ -183,7 +183,7 @@ protected:
  * @return an CCInvocation object able to construct messages using a given 
  * target-action pair.
  */
-    CCInvocation* invocationWithTargetAndActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
+    CCInvocation* invocationWithTargetAndActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
 
 
@@ -199,8 +199,8 @@ protected:
     //<CCInvocation*>
     CCArray* dispatchListforControlEvent(CCControlEvent controlEvent);
 public:
-    void addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
-    void removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
+    void addTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
+    void removeTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
     LAYER_NODE_FUNC(CCControl);
 
