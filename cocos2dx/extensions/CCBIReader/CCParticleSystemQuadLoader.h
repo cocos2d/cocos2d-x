@@ -9,6 +9,9 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class CCParticleSystemQuadLoader : public CCNodeLoader {
+    public:
+        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCParticleSystemQuadLoader, loader);
+
     protected:
         virtual CCParticleSystemQuad * createCCNode(CCNode *, CCBReader *);
 

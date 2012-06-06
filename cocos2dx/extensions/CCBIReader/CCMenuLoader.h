@@ -9,6 +9,9 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class CCMenuLoader : public CCLayerLoader {
+    public:
+        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuLoader, loader);
+
     protected:
         virtual CCMenu * createCCNode(CCNode *, CCBReader *);
 };

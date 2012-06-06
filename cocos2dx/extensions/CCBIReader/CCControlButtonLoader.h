@@ -9,6 +9,9 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class CCControlButtonLoader : public CCControlLoader {
+    public:
+        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCControlButtonLoader, loader);
+
     protected:
         virtual CCControl * createCCNode(CCNode *, CCBReader *);
 
