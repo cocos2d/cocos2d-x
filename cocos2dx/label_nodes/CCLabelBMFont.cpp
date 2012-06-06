@@ -807,7 +807,7 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         m_pConfiguration = FNTConfigLoadFile(fntFile);
         m_pConfiguration->retain();
 
-        m_pFntFile = fntFile;
+        m_sFntFile = fntFile;
         CCAssert( m_pConfiguration, "Error creating config for LabelBMFont");
 
         texture = CCTextureCache::sharedTextureCache()->addImage(this->m_pConfiguration->m_sAtlasName.c_str());
@@ -856,7 +856,6 @@ CCLabelBMFont::~CCLabelBMFont()
 {
     CC_SAFE_DELETE(this->m_sString);
     CC_SAFE_RELEASE(this->m_pConfiguration);
-    CC_SAFE_DELETE(this->m_pFntFile);
 }
 
 // LabelBMFont - Atlas generation
@@ -1355,8 +1354,7 @@ void CCLabelBMFont::setWidth(float width)
 
 void CCLabelBMFont::setFntFile(const char *fntFile)
 {
-    CC_SAFE_DELETE(m_pFntFile);
-    this->m_pFntFile = fntFile;
+    this->m_sFntFile = fntFile;
     CCBMFontConfiguration * newConfiguration = FNTConfigLoadFile(fntFile);
     
     CCAssert(newConfiguration, printf("CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile) );
@@ -1402,7 +1400,7 @@ float CCLabelBMFont::getLetterPosXRight( CCSprite* sp )
 }
 const char * CCLabelBMFont::getFntFile()
 {
-    return this->m_pFntFile;
+    return this->m_sFntFile.c_str();
 }
 //LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW

@@ -167,7 +167,7 @@ protected:
     bool m_bLineBreakWithoutSpaces;
     // offset of the texture atlas
     CCPoint    m_tImageOffset;
-    const char * m_pFntFile;
+    std::string m_sFntFile;
 public:
     CCLabelBMFont();
 
