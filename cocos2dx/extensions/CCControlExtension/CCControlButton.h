@@ -70,6 +70,9 @@ protected:
     //CC_PROPERTY(CCScale9Sprite*, m_backgroundSprite, BackgroundSprite);
     CCScale9Sprite* m_backgroundSprite;
 
+    /* Override setter to affect a background sprite too */
+    CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
+    
     /** Flag to know if the button is currently pushed.  */
     CC_SYNTHESIZE_READONLY(bool, pushed, IsPushed); 
     // <CCControlState, CCString*>
@@ -104,8 +107,6 @@ public:
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
-
-
 
     /**
     * Returns the title used for a state.
