@@ -163,32 +163,6 @@ public:
     static int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 };
 
-class CCFileData
-{
-public:
-    CCFileData(const char* pszFileName, const char* pszMode)
-        : m_pBuffer(0)
-        , m_uSize(0)
-    {
-        m_pBuffer = CCFileUtils::getFileData(pszFileName, pszMode, &m_uSize);
-    }
-    ~CCFileData()
-    {
-        CC_SAFE_DELETE_ARRAY(m_pBuffer);
-    }
-
-    bool reset(const char* pszFileName, const char* pszMode)
-    {
-        CC_SAFE_DELETE_ARRAY(m_pBuffer);
-        m_uSize = 0;
-        m_pBuffer = CCFileUtils::getFileData(pszFileName, pszMode, &m_uSize);
-        return (m_pBuffer) ? true : false;
-    }
-
-    CC_SYNTHESIZE_READONLY(unsigned char *, m_pBuffer, Buffer);
-    CC_SYNTHESIZE_READONLY(unsigned long ,  m_uSize,   Size);
-};
-
 NS_CC_END
 
 #endif    // __CC_FILEUTILS_PLATFORM_H__
