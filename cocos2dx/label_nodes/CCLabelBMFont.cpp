@@ -473,10 +473,9 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 void CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
     std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
-
-    CCFileData data(fullpath.c_str(), "rb");
-    unsigned long nBufSize = data.getSize();
-    char* pBuffer = (char*) data.getBuffer();
+    
+    unsigned long nBufSize;
+    char *pBuffer = (char*)CCFileUtils::getFileData(fullpath.c_str(), "rb", &nBufSize);
 
     CCAssert(pBuffer, "CCBMFontConfiguration::parseConfigFile | Open file error.");
 
