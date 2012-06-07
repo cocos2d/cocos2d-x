@@ -168,9 +168,13 @@ CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 {
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 
-    char msg[256] = {0};
-    sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
-    CCAssert(pFrame != NULL, msg);
+#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG != 0
+    if (pFrame == NULL)
+    {
+        CCLOG("Invalid spriteFrameName: %s", pszSpriteFrameName);
+        CCAssert(pFrame != NULL, "pFrame != NULL");
+    }
+#endif
 	return spriteWithSpriteFrame(pFrame);
 }
 
