@@ -38,11 +38,10 @@ NS_CC_BEGIN
 /**
  * Used for sort
  */
-static int less(const void* p1, const void* p2)
+static int less(const CCObject* p1, const CCObject* p2)
 {
-    return (*((CCTouchHandler**)p1))->getPriority() - (*((CCTouchHandler**)p2))->getPriority();
+    return ((CCTouchHandler*)p1)->getPriority() < ((CCTouchHandler*)p2)->getPriority();
 }
-
 
 bool CCTouchDispatcher::isDispatchEvents(void)
 {
@@ -293,8 +292,7 @@ CCTouchHandler* CCTouchDispatcher::findHandler(CCArray* pArray, CCTouchDelegate 
 
 void CCTouchDispatcher::rearrangeHandlers(CCArray *pArray)
 {
-    // FIXME: qsort is not supported in bada1.0, so we must implement it ourselves.
-    qsort(pArray->data->arr, pArray->data->num, sizeof(pArray->data->arr[0]), less);
+    std::sort(pArray->data->arr, pArray->data->arr + pArray->data->num, less);
 }
 
 void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
@@ -306,11 +304,13 @@ void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
     handler = this->findHandler(pDelegate);
 
     CCAssert(handler != NULL, "");
-
-    handler->setPriority(nPriority);
-
-    this->rearrangeHandlers(m_pTargetedHandlers);
-    this->rearrangeHandlers(m_pStandardHandlers);
+	
+    if (handler->getPriority() != nPriority)
+    {
+        handler->setPriority(nPriority);
+        this->rearrangeHandlers(m_pTargetedHandlers);
+        this->rearrangeHandlers(m_pStandardHandlers);
+    }
 }
 
 //
