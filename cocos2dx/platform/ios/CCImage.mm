@@ -347,8 +347,10 @@ CCImage::~CCImage()
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
-    CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
-    return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
+    unsigned long nSize;
+    unsigned char *pBuffer = CCFileUtils::getFileData(CCFileUtils::fullPathFromRelativePath(strPath), "rb", &nSize);
+    
+    return initWithImageData(pBuffer, nSize, eImgFmt);
 }
 
 bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
@@ -356,9 +358,11 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
       CC_UNUSED_PARAM(imageType);
       /*
        * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
-       */
-    CCFileData data(fullpath, "rb");
-    return initWithImageData(data.getBuffer(), data.getSize(), imageType);
+       */    
+    unsigned long nSize;
+    unsigned char *pBuffer = CCFileUtils::getFileData(fullpath, "rb", &nSize);
+    
+    return initWithImageData(pBuffer, nSize, imageType);
 }
 
 bool CCImage::initWithImageData(void * pData, 

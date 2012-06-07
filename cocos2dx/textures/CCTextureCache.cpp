@@ -438,10 +438,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                     eImageFormat = CCImage::kFmtTiff;
                 }
                 
-                CCImage image;
-                CCFileData data(fullpath.c_str(), "rb");
-                unsigned long nSize  = data.getSize();
-                unsigned char* pBuffer = data.getBuffer();
+                CCImage image;                
+                unsigned long nSize;
+                unsigned char *pBuffer = CCFileUtils::getFileData(fullpath.c_str(), "rb", &nSize);
                 CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, eImageFormat));
 
                 texture = new CCTexture2D();
@@ -851,9 +850,9 @@ void VolatileTexture::reloadAllTextures()
                 } 
                 else 
                 {
-                    CCFileData data(vt->m_strFileName.c_str(), "rb");
-                    unsigned long nSize  = data.getSize();
-                    unsigned char* pBuffer = data.getBuffer();
+                    unsigned long nSize;
+                    unsigned char *pBuffer = CCFileUtils::getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
+                    
 
                     if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
                     {
