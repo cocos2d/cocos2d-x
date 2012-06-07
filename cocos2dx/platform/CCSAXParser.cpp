@@ -83,9 +83,8 @@ bool CCSAXParser::parse(const char* pXMLData, unsigned int uDataLength)
 
 bool CCSAXParser::parse(const char *pszFile)
 {
-    CCFileData data(pszFile, "rt");
-    unsigned long size = data.getSize();
-    char *pBuffer = (char*) data.getBuffer();
+    unsigned long size;
+    char *pBuffer = (char*)CCFileUtils::getFileData(pszFile, "rt", &size);
     
     if (!pBuffer)
     {
