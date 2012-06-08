@@ -14,7 +14,7 @@ public:
     virtual void showCurrentTest();
     virtual void onEnter();
     virtual std::string title();
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 
 protected:
     CCLabelBMFont * m_plabel;
@@ -22,7 +22,7 @@ protected:
     int                numberOfTouchesM;
     int                numberOfTouchesE;
     int                numberOfTouchesC;
-    ccTime            elapsedTime;
+    float            elapsedTime;
 };
 
 class TouchesPerformTest1 : public TouchesMainScene

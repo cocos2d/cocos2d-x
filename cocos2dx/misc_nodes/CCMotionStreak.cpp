@@ -207,7 +207,7 @@ bool CCMotionStreak::getIsOpacityModifyRGB(void)
     return false;
 }
 
-void CCMotionStreak::update(ccTime delta)
+void CCMotionStreak::update(float delta)
 {
     delta *= m_fFadeDelta;
 

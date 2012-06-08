@@ -7,7 +7,7 @@
 class FadeWhiteTransition : public CCTransitionFade 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionFade::transitionWithDuration(t, s, ccWHITE); 
     }
@@ -16,7 +16,7 @@ public:
 class FlipXLeftOver : public CCTransitionFlipX 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionFlipX::transitionWithDuration(t, s, kOrientationLeftOver);
     }
@@ -25,7 +25,7 @@ public:
 class FlipXRightOver : public CCTransitionFlipX 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionFlipX::transitionWithDuration(t, s, kOrientationRightOver);
     }
@@ -34,7 +34,7 @@ public:
 class FlipYUpOver : public CCTransitionFlipY 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionFlipY::transitionWithDuration(t, s, kOrientationUpOver); 
     }
@@ -43,7 +43,7 @@ public:
 class FlipYDownOver : public CCTransitionFlipY 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionFlipY::transitionWithDuration(t, s, kOrientationDownOver); 
     }
@@ -52,7 +52,7 @@ public:
 class FlipAngularLeftOver : public CCTransitionFlipAngular 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionFlipAngular::transitionWithDuration(t, s, kOrientationLeftOver); 
     }
@@ -61,7 +61,7 @@ public:
 class FlipAngularRightOver : public CCTransitionFlipAngular 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionFlipAngular::transitionWithDuration(t, s, kOrientationRightOver);
     }
@@ -70,7 +70,7 @@ public:
 class ZoomFlipXLeftOver : public CCTransitionZoomFlipX 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionZoomFlipX::transitionWithDuration(t, s, kOrientationLeftOver); 
     }
@@ -79,7 +79,7 @@ public:
 class ZoomFlipXRightOver : public CCTransitionZoomFlipX 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionZoomFlipX::transitionWithDuration(t, s, kOrientationRightOver);
     }
@@ -88,7 +88,7 @@ public:
 class ZoomFlipYUpOver : public CCTransitionZoomFlipY 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionZoomFlipY::transitionWithDuration(t, s, kOrientationUpOver); 
 
@@ -98,7 +98,7 @@ public:
 class ZoomFlipYDownOver : public CCTransitionZoomFlipY 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionZoomFlipY::transitionWithDuration(t, s, kOrientationDownOver); 
     }
@@ -107,7 +107,7 @@ public:
 class ZoomFlipAngularLeftOver : public CCTransitionZoomFlipAngular 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionZoomFlipAngular::transitionWithDuration(t, s, kOrientationLeftOver); 
     }
@@ -116,7 +116,7 @@ public:
 class ZoomFlipAngularRightOver : public CCTransitionZoomFlipAngular 
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         return CCTransitionZoomFlipAngular::transitionWithDuration(t, s, kOrientationRightOver);
     }
@@ -125,7 +125,7 @@ public:
 class PageTransitionForward : public CCTransitionPageTurn
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         CCDirector::sharedDirector()->setDepthTest(true);
         return CCTransitionPageTurn::transitionWithDuration(t, s, false);
@@ -135,7 +135,7 @@ public:
 class PageTransitionBackward : public CCTransitionPageTurn
 {
 public:
-    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
+    static CCTransitionScene* transitionWithDuration(float t, CCScene* s)
     {
         CCDirector::sharedDirector()->setDepthTest(true);
         return CCTransitionPageTurn::transitionWithDuration(t, s, true);
@@ -198,7 +198,7 @@ static std::string transitions[MAX_LAYER] = {
 };
 static int s_nSceneIdx = 0;
 
-CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
+CCTransitionScene* createTransition(int nIndex, float t, CCScene* s)
 {
     // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
     CCDirector::sharedDirector()->setDepthTest(false);
@@ -374,7 +374,7 @@ void TestLayer1::backCallback(CCObject* pSender)
     }
 }
 
-void TestLayer1::step(ccTime dt)
+void TestLayer1::step(float dt)
 {
 
 }
@@ -503,7 +503,7 @@ void TestLayer2::backCallback(CCObject* pSender)
     }
 }
 
-void TestLayer2::step(ccTime dt)
+void TestLayer2::step(float dt)
 {
 
 }

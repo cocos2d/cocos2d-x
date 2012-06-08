@@ -70,7 +70,7 @@ TileMapEditTest::TileMapEditTest()
     map->setPosition( ccp(-20,-200) );
 }
 
-void TileMapEditTest::updateMap(ccTime dt)
+void TileMapEditTest::updateMap(float dt)
 {
     // IMPORTANT
     //   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
@@ -278,7 +278,7 @@ TMXOrthoTest4::TMXOrthoTest4()
 
 }
 
-void TMXOrthoTest4::removeSprite(ccTime dt)
+void TMXOrthoTest4::removeSprite(float dt)
 {
     unschedule(schedule_selector(TMXOrthoTest4::removeSprite));
 
@@ -376,7 +376,7 @@ void TMXReadWriteTest::removeSprite(CCNode* sender)
     //////----UXLOG("atlas quantity: %d", p->textureAtlas()->totalQuads());
 }
 
-void TMXReadWriteTest::updateCol(ccTime dt)
+void TMXReadWriteTest::updateCol(float dt)
 {    
     CCTMXTiledMap* map = (CCTMXTiledMap*)getChildByTag(kTagTileMap);
     CCTMXLayer *layer = (CCTMXLayer*)map->getChildByTag(0);
@@ -395,7 +395,7 @@ void TMXReadWriteTest::updateCol(ccTime dt)
     m_gid2 = (m_gid2 + 1) % 80;
 }
 
-void TMXReadWriteTest::repaintWithGID(ccTime dt)
+void TMXReadWriteTest::repaintWithGID(float dt)
 {
 //    unschedule:_cmd);
     
@@ -411,7 +411,7 @@ void TMXReadWriteTest::repaintWithGID(ccTime dt)
     }
 }
 
-void TMXReadWriteTest::removeTiles(ccTime dt)
+void TMXReadWriteTest::removeTiles(float dt)
 {
     unschedule(schedule_selector(TMXReadWriteTest::removeTiles));
 
@@ -835,7 +835,7 @@ void TMXIsoZorder::onExit()
     TileDemo::onExit();
 }
 
-void TMXIsoZorder::repositionSprite(ccTime dt)
+void TMXIsoZorder::repositionSprite(float dt)
 {
     CCPoint p = m_tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
@@ -895,7 +895,7 @@ TMXOrthoZorder::~TMXOrthoZorder()
     m_tamara->release();
 }
 
-void TMXOrthoZorder::repositionSprite(ccTime dt)
+void TMXOrthoZorder::repositionSprite(float dt)
 {
     CCPoint p = m_tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
@@ -958,7 +958,7 @@ TMXIsoVertexZ::~TMXIsoVertexZ()
     m_tamara->release();
 }
 
-void TMXIsoVertexZ::repositionSprite(ccTime dt)
+void TMXIsoVertexZ::repositionSprite(float dt)
 {
     // tile height is 64x32
     // map size: 30x30
@@ -1028,7 +1028,7 @@ TMXOrthoVertexZ::~TMXOrthoVertexZ()
     m_tamara->release();
 }
 
-void TMXOrthoVertexZ::repositionSprite(ccTime dt)
+void TMXOrthoVertexZ::repositionSprite(float dt)
 {
     // tile height is 101x81
     // map size: 12x12
@@ -1207,7 +1207,7 @@ std::string TMXOrthoFlipRunTimeTest::subtitle()
     return "in 2 sec bottom left tiles will flip";
 }
 
-void TMXOrthoFlipRunTimeTest::flipIt(ccTime dt)
+void TMXOrthoFlipRunTimeTest::flipIt(float dt)
 {
     CCTMXTiledMap *map = (CCTMXTiledMap*) getChildByTag(kTagTileMap); 
     CCTMXLayer *layer = map->layerNamed("Layer 0"); 
