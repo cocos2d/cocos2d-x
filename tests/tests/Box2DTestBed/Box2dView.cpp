@@ -187,7 +187,7 @@ std::string Box2DView::title()
     return std::string(m_entry->name);
 }
 
-void Box2DView::tick(ccTime dt)
+void Box2DView::tick(float dt)
 {
     m_test->Step(&settings);
 }

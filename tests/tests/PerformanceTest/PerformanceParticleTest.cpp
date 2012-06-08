@@ -144,7 +144,7 @@ std::string ParticleMainScene::title()
     return "No title";
 }
 
-void ParticleMainScene::step(ccTime dt)
+void ParticleMainScene::step(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagLabelAtlas);
     CCParticleSystem *emitter = (CCParticleSystem*) getChildByTag(kTagParticleSystem);

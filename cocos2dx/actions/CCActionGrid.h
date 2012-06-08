@@ -41,13 +41,13 @@ public:
     virtual CCActionInterval* reverse(void);
 
     /** initializes the action with size and duration */
-    virtual bool initWithSize(const ccGridSize& gridSize, ccTime duration);
+    virtual bool initWithSize(const ccGridSize& gridSize, float duration);
     /** returns the grid */
     virtual CCGridBase* getGrid(void);
 
 public:
     /** creates the action with size and duration */
-    static CCGridAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
+    static CCGridAction* actionWithSize(const ccGridSize& gridSize, float duration);
 
 protected:
     ccGridSize m_sGridSize;
@@ -71,7 +71,7 @@ public:
 
 public:
     /** creates the action with size and duration */
-    static CCGrid3DAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
+    static CCGrid3DAction* actionWithSize(const ccGridSize& gridSize, float duration);
 };
 
 /** @brief Base class for CCTiledGrid3D actions */
@@ -90,7 +90,7 @@ public:
 
 public:
     /** creates the action with size and duration */
-    static CCTiledGrid3DAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
+    static CCTiledGrid3DAction* actionWithSize(const ccGridSize& gridSize, float duration);
 };
 
 /** @brief CCAccelDeccelAmplitude action */
@@ -99,10 +99,10 @@ class CC_DLL CCAccelDeccelAmplitude : public CCActionInterval
 public:
     virtual ~CCAccelDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(CCAction *pAction, ccTime duration);
+    bool initWithAction(CCAction *pAction, float duration);
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(ccTime time);
+    virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
     /** get amplitude rate */
@@ -112,7 +112,7 @@ public:
 
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+    static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, float duration);
 
 protected:
     float m_fRate;
@@ -125,7 +125,7 @@ class CC_DLL CCAccelAmplitude : public CCActionInterval
 public:
     ~CCAccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(CCAction *pAction, ccTime duration);
+    bool initWithAction(CCAction *pAction, float duration);
 
     /** get amplitude rate */
     inline float getRate(void) { return m_fRate; }
@@ -133,12 +133,12 @@ public:
     inline void setRate(float fRate) { m_fRate = fRate; }
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(ccTime time);
+    virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static CCAccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+    static CCAccelAmplitude* actionWithAction(CCAction *pAction, float duration);
 
 protected:
     float m_fRate;
@@ -151,7 +151,7 @@ class CC_DLL CCDeccelAmplitude : public CCActionInterval
 public:
     ~CCDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(CCAction *pAction, ccTime duration);
+    bool initWithAction(CCAction *pAction, float duration);
 
     /** get amplitude rate */
     inline float getRate(void) { return m_fRate; }
@@ -159,12 +159,12 @@ public:
     inline void setRate(float fRate) { m_fRate = fRate; }
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(ccTime time);
+    virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static CCDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+    static CCDeccelAmplitude* actionWithAction(CCAction *pAction, float duration);
 
 protected:
     float m_fRate;

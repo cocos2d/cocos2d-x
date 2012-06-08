@@ -161,7 +161,7 @@ void SchedulerAutoremove::onEnter()
     accum = 0;
 }
 
-void SchedulerAutoremove::autoremove(ccTime dt)
+void SchedulerAutoremove::autoremove(float dt)
 {
     accum += dt;
     CCLOG("Time: %f", accum);
@@ -173,7 +173,7 @@ void SchedulerAutoremove::autoremove(ccTime dt)
     }
 }
 
-void SchedulerAutoremove::tick(ccTime dt)
+void SchedulerAutoremove::tick(float dt)
 {
     CCLOG("This scheduler should not be removed");
 }
@@ -202,17 +202,17 @@ void SchedulerPauseResume::onEnter()
     schedule(schedule_selector(SchedulerPauseResume::pause), 0.5f);
 }
 
-void SchedulerPauseResume::tick1(ccTime dt)
+void SchedulerPauseResume::tick1(float dt)
 {
     CCLOG("tick1");
 }
 
-void SchedulerPauseResume::tick2(ccTime dt)
+void SchedulerPauseResume::tick2(float dt)
 {
     CCLOG("tick2");
 }
 
-void SchedulerPauseResume::pause(ccTime dt)
+void SchedulerPauseResume::pause(float dt)
 {
     CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
 }
@@ -243,27 +243,27 @@ void SchedulerUnscheduleAll::onEnter()
     schedule(schedule_selector(SchedulerUnscheduleAll::unscheduleAll), 4);
 }
 
-void SchedulerUnscheduleAll::tick1(ccTime dt)
+void SchedulerUnscheduleAll::tick1(float dt)
 {
     CCLOG("tick1");
 }
 
-void SchedulerUnscheduleAll::tick2(ccTime dt)
+void SchedulerUnscheduleAll::tick2(float dt)
 {
     CCLOG("tick2");
 }
 
-void SchedulerUnscheduleAll::tick3(ccTime dt)
+void SchedulerUnscheduleAll::tick3(float dt)
 {
     CCLOG("tick3");
 }
 
-void SchedulerUnscheduleAll::tick4(ccTime dt)
+void SchedulerUnscheduleAll::tick4(float dt)
 {
     CCLOG("tick4");
 }
 
-void SchedulerUnscheduleAll::unscheduleAll(ccTime dt)
+void SchedulerUnscheduleAll::unscheduleAll(float dt)
 {
     unscheduleAllSelectors();
 }
@@ -294,27 +294,27 @@ void SchedulerUnscheduleAllHard::onEnter()
     schedule(schedule_selector(SchedulerUnscheduleAllHard::unscheduleAll), 4);
 }
 
-void SchedulerUnscheduleAllHard::tick1(ccTime dt)
+void SchedulerUnscheduleAllHard::tick1(float dt)
 {
     CCLOG("tick1");
 }
 
-void SchedulerUnscheduleAllHard::tick2(ccTime dt)
+void SchedulerUnscheduleAllHard::tick2(float dt)
 {
     CCLOG("tick2");
 }
 
-void SchedulerUnscheduleAllHard::tick3(ccTime dt)
+void SchedulerUnscheduleAllHard::tick3(float dt)
 {
     CCLOG("tick3");
 }
 
-void SchedulerUnscheduleAllHard::tick4(ccTime dt)
+void SchedulerUnscheduleAllHard::tick4(float dt)
 {
     CCLOG("tick4");
 }
 
-void SchedulerUnscheduleAllHard::unscheduleAll(ccTime dt)
+void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
     CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectors();
 }
@@ -343,22 +343,22 @@ void SchedulerSchedulesAndRemove::onEnter()
     schedule(schedule_selector(SchedulerSchedulesAndRemove::scheduleAndUnschedule), 4.0f);
 }
 
-void SchedulerSchedulesAndRemove::tick1(ccTime dt)
+void SchedulerSchedulesAndRemove::tick1(float dt)
 {
     CCLOG("tick1");
 }
 
-void SchedulerSchedulesAndRemove::tick2(ccTime dt)
+void SchedulerSchedulesAndRemove::tick2(float dt)
 {
     CCLOG("tick2");
 }
 
-void SchedulerSchedulesAndRemove::tick3(ccTime dt)
+void SchedulerSchedulesAndRemove::tick3(float dt)
 {
     CCLOG("tick3");
 }
 
-void SchedulerSchedulesAndRemove::tick4(ccTime dt)
+void SchedulerSchedulesAndRemove::tick4(float dt)
 {
     CCLOG("tick4");
 }
@@ -373,7 +373,7 @@ std::string SchedulerSchedulesAndRemove::subtitle()
     return "Will unschedule and schedule selectors in 4s. See console";
 }
 
-void SchedulerSchedulesAndRemove::scheduleAndUnschedule(ccTime dt)
+void SchedulerSchedulesAndRemove::scheduleAndUnschedule(float dt)
 {
     unschedule(schedule_selector(SchedulerSchedulesAndRemove::tick1));
     unschedule(schedule_selector(SchedulerSchedulesAndRemove::tick2));
@@ -454,7 +454,7 @@ void SchedulerUpdate::onEnter()
     schedule(schedule_selector(SchedulerUpdate::removeUpdates), 4.0f);
 }
 
-void SchedulerUpdate::removeUpdates(ccTime dt)
+void SchedulerUpdate::removeUpdates(float dt)
 {
     CCArray* children = getChildren();
     CCNode* pNode;
@@ -495,17 +495,17 @@ void SchedulerUpdateAndCustom::onEnter()
     schedule(schedule_selector(SchedulerUpdateAndCustom::stopSelectors), 0.4f);
 }
 
-void SchedulerUpdateAndCustom::update(ccTime dt)
+void SchedulerUpdateAndCustom::update(float dt)
 {
     CCLOG("update called:%f", dt);
 }
 
-void SchedulerUpdateAndCustom::tick(ccTime dt)
+void SchedulerUpdateAndCustom::tick(float dt)
 {
     CCLOG("custom selector called:%f",dt);
 }
 
-void SchedulerUpdateAndCustom::stopSelectors(ccTime dt)
+void SchedulerUpdateAndCustom::stopSelectors(float dt)
 {
     unscheduleAllSelectors();
 }
@@ -532,19 +532,19 @@ void SchedulerUpdateFromCustom::onEnter()
     schedule(schedule_selector(SchedulerUpdateFromCustom::schedUpdate), 2.0f);
 }
 
-void SchedulerUpdateFromCustom::update(ccTime dt)
+void SchedulerUpdateFromCustom::update(float dt)
 {
     CCLOG("update called:%f", dt);
 }
 
-void SchedulerUpdateFromCustom::schedUpdate(ccTime dt)
+void SchedulerUpdateFromCustom::schedUpdate(float dt)
 {
     unschedule(schedule_selector(SchedulerUpdateFromCustom::schedUpdate));
     scheduleUpdate();
     schedule(schedule_selector(SchedulerUpdateFromCustom::stopUpdate), 2.0f);
 }
 
-void SchedulerUpdateFromCustom::stopUpdate(ccTime dt)
+void SchedulerUpdateFromCustom::stopUpdate(float dt)
 {
     unscheduleUpdate();
     unschedule(schedule_selector(SchedulerUpdateFromCustom::stopUpdate));
@@ -584,7 +584,7 @@ std::string RescheduleSelector::subtitle()
     return "Interval is 1 second, then 2, then 3...";
 }
 
-void RescheduleSelector::schedUpdate(ccTime dt)
+void RescheduleSelector::schedUpdate(float dt)
 {
     m_nTicks++;
 
@@ -616,7 +616,7 @@ std::string SchedulerDelayAndRepeat::subtitle()
     return "After 5 x executed, method unscheduled. See console";
 }
 
-void SchedulerDelayAndRepeat::update(ccTime dt)
+void SchedulerDelayAndRepeat::update(float dt)
 {
     CCLog("update called:%f", dt);
 }
@@ -639,7 +639,7 @@ CCControlSlider* SchedulerTimeScale::sliderCtl()
 void SchedulerTimeScale::sliderAction(CCObject* pSender)
 {
     CCControlSlider* pSliderCtl = (CCControlSlider*)pSender;
-    ccTime scale;
+    float scale;
     scale = pSliderCtl->getValue();
 
     CCDirector::sharedDirector()->getScheduler()->setTimeScale(scale);
@@ -730,7 +730,7 @@ CCControlSlider *TwoSchedulers::sliderCtl()
 
 void TwoSchedulers::sliderAction(CCObject* sender)
 {
-    ccTime scale;
+    float scale;
 
     CCControlSlider *slider = (CCControlSlider*) sender;
     scale = slider->getValue();

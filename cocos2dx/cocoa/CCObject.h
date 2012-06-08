@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CCOBJECT_H__
 #define __CCOBJECT_H__
 
-#include "ccTypes.h"
 #include "CCCommon.h"
 
 NS_CC_BEGIN
@@ -66,13 +65,13 @@ public:
     unsigned int retainCount(void);
     virtual bool isEqual(const CCObject* pObject);
     
-    virtual void update(ccTime dt) {CC_UNUSED_PARAM(dt);};
+    virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
     friend class CCAutoreleasePool;
 };
 
 
-typedef void (CCObject::*SEL_SCHEDULE)(ccTime);
+typedef void (CCObject::*SEL_SCHEDULE)(float);
 typedef void (CCObject::*SEL_CallFunc)();
 typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
 typedef void (CCObject::*SEL_CallFuncND)(CCNode*, void*);
