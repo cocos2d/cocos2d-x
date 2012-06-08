@@ -76,6 +76,8 @@ public:
 
     /** When fast mode is enbled, new points are added faster but with lower precision */
     CC_SYNTHESIZE(bool, m_bFastMode, IsFastMode);
+
+    CC_SYNTHESIZE(bool, m_bStartingPositionInitialized, StartingPositionInitialized);
 private:
     /** texture used for the motion streak */
     CCTexture2D* m_pTexture;
@@ -89,6 +91,7 @@ private:
 
     unsigned int m_uMaxPoints;
     unsigned int m_uNuPoints;
+    unsigned int m_uPreviousNuPoints;
 
     /** Pointers */
     CCPoint* m_pPointVertexes;

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -103,6 +103,7 @@ CCParticleSystem::CCParticleSystem()
     ,m_fEmissionRate(0)
     ,m_uTotalParticles(0)
     ,m_pTexture(NULL)
+    ,m_bOpacityModifyRGB(false)
     ,m_bIsBlendAdditive(false)
     ,m_ePositionType(kCCPositionTypeFree)
     ,m_bIsAutoRemoveOnFinish(false)
@@ -269,6 +270,9 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
             //don't get the internal texture if a batchNode is used
             if (!m_pBatchNode)
             {
+                // Set a compatible default for the alpha transfer
+                m_bOpacityModifyRGB = false;
+
                 // texture        
                 // Try to get the texture from the cache
                 const char* textureName = dictionary->valueForKey("textureFileName")->getCString();
@@ -384,6 +388,7 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
 CCParticleSystem::~CCParticleSystem()
 {
+    unscheduleUpdate();
     CC_SAFE_FREE(m_pParticles);
     CC_SAFE_RELEASE(m_pTexture);
 }
@@ -723,16 +728,34 @@ void CCParticleSystem::postStep()
 // ParticleSystem - CCTexture protocol
 void CCParticleSystem::setTexture(CCTexture2D* var)
 {
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pTexture);
-    m_pTexture = var;
-
-    // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-    if( m_pTexture && ! m_pTexture->getHasPremultipliedAlpha() &&        
-        ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) ) 
+    if (m_pTexture != var)
     {
-        m_tBlendFunc.src = GL_SRC_ALPHA;
-        m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        CC_SAFE_RETAIN(var);
+        CC_SAFE_RELEASE(m_pTexture);
+        m_pTexture = var;
+        updateBlendFunc();
+    }
+}
+
+void CCParticleSystem::updateBlendFunc()
+{
+    CCAssert(! m_pBatchNode, "Can't change blending functions when the particle is being batched");
+
+    bool premultiplied = m_pTexture->getHasPremultipliedAlpha();
+
+    m_bOpacityModifyRGB = false;
+
+    if( m_pTexture && ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) )
+    {
+        if( premultiplied )
+        {
+            m_bOpacityModifyRGB = true;
+        }
+        else
+        {
+            m_tBlendFunc.src = GL_SRC_ALPHA;
+            m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        }
     }
 }
 
@@ -1152,9 +1175,12 @@ ccBlendFunc CCParticleSystem::getBlendFunc()
     return m_tBlendFunc;
 }
 
-void CCParticleSystem::setBlendFunc(ccBlendFunc var)
+void CCParticleSystem::setBlendFunc(ccBlendFunc blendFunc)
 {
-    m_tBlendFunc = var;
+    if( m_tBlendFunc.src != blendFunc.src || m_tBlendFunc.dst != blendFunc.dst ) {
+        m_tBlendFunc = blendFunc;
+        this->updateBlendFunc();
+    }
 }
 
 tCCPositionType CCParticleSystem::getPositionType()

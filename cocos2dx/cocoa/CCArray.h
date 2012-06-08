@@ -126,7 +126,8 @@ public:
     CCObject* randomObject();
     /** Returns a Boolean value that indicates whether object is present in array. */
     bool containsObject(CCObject* object);
-
+    /** @since 1.1 */
+    bool isEqualToArray(CCArray* pOtherArray);
     // Adding Objects
 
     /** Add a certain object */
@@ -159,12 +160,30 @@ public:
     void exchangeObject(CCObject* object1, CCObject* object2);
     /** Swap two elements with certain indexes */
     void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
+
+    /** Replace object at index with another object. */
+    void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
+
     /** Revers the array */
     void reverseObjects();
     /* Shrinks the array so the memory footprint corresponds with the number of items */
     void reduceMemoryFootprint();
 
-    void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
+    // Sorting Array 
+    /** all since @1.1 */
+    void qsortUsingCFuncComparator(cc_comparator comparator);	// c qsort is used for sorting
+    void insertionSortUsingCFuncComparator(cc_comparator comparator);  // insertion sort 
+    void mergesortLUsingCFuncComparator(cc_comparator comparator);	// mergesort
+    void insertionSort(SEL_Compare selector); // It sorts source array in ascending order
+    void sortUsingFunction(int (*compare)(CCObject*, CCObject*, SEL_Compare) , SEL_Compare context);
+    void sortUsingSelector(SEL_Compare selector);
+    
+    // Sending Messages to Elements
+
+    void makeObjectsPerformSelector(SEL_CallFunc aSelector);
+    void makeObjectsPerformSelectorWithObject(SEL_CallFuncO aSelector, CCObject* object);
+    /** @since 1.1 */
+    void makeObjectPerformSelectorWithArrayObjects(CCObject* object, SEL_CallFuncO aSelector); 
 
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);

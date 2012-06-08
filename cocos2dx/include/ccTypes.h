@@ -326,12 +326,34 @@ typedef enum
 typedef float ccTime;
 //typedef double ccTime;
 
-typedef enum 
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+//! Vertical text alignment type
+typedef enum
 {
-    CCTextAlignmentLeft,
-    CCTextAlignmentCenter,
-    CCTextAlignmentRight,
+    kCCVerticalTextAlignmentTop,
+    kCCVerticalTextAlignmentCenter,
+    kCCVerticalTextAlignmentBottom,
+} CCVerticalTextAlignment;
+
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+//! Horizontal text alignment type
+typedef enum
+{
+    kCCTextAlignmentLeft,
+    kCCTextAlignmentCenter,
+    kCCTextAlignmentRight,
 } CCTextAlignment;
+
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+//! Line break modes
+typedef enum {
+    kCCLineBreakModeWordWrap,
+    kCCLineBreakModeCharacterWrap,
+    kCCLineBreakModeClip,
+    kCCLineBreakModeHeadTruncation,
+    kCCLineBreakModeTailTruncation,
+    kCCLineBreakModeMiddleTruncation
+} CCLineBreakMode;
 
 // types for animation in particle systems
 

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -357,11 +357,11 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
     case kCCDirectorProjection3D:
         {
-            // reset the viewport if 3d proj & retina display
-            if( CC_CONTENT_SCALE_FACTOR() != 1.0f )
-            {
-                glViewport((GLint)-size.width/2, (GLint)-size.height/2, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
-            }
+//cjh             // reset the viewport if 3d proj & retina display
+//             if( CC_CONTENT_SCALE_FACTOR() != 1.0f )
+//             {
+//                 glViewport((GLint)-size.width/2, (GLint)-size.height/2, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
+//             }
 
             float zeye = this->getZEye();
 
@@ -371,14 +371,17 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLLoadIdentity();
 
             // issue #1334
-            if (m_pobOpenGLView && m_pobOpenGLView->isIpad() && m_pobOpenGLView->getMainScreenScale() > 1.0f)
-            {
-                kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2);
-            }
-            else
-            {
-                 kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500);
-            }
+            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
+            // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+
+//cjh          if (m_pobOpenGLView && m_pobOpenGLView->isIpad() && m_pobOpenGLView->getMainScreenScale() > 1.0f)
+//             {
+//                 kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2);
+//             }
+//             else
+//             {
+//                  kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500);
+//             }
            
 //            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
             kmGLMultMatrix(&matrixPerspective);
