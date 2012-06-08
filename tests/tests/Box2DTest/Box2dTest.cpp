@@ -34,7 +34,7 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float x = pos.x * PTM_RATIO;
     float y = pos.y * PTM_RATIO;
 
-    if ( !getIsRelativeAnchorPoint() ) {
+    if ( getIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
