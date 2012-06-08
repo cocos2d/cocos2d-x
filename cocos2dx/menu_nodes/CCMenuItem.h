@@ -239,6 +239,8 @@ public:
     
     virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool getIsOpacityModifyRGB(void) { return false;}
+protected:
+    virtual void updateImagesVisibility();
 };
 
 /** @brief CCMenuItemImage accepts images as items.

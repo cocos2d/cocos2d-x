@@ -166,22 +166,27 @@ public: virtual void set##funName(varType var)   \
 #define CC_SAFE_RETAIN(p)            do { if(p) { (p)->retain(); } } while(0)
 #define CC_BREAK_IF(cond)            if(cond) break
 
+#define __CCLOGWITHFUNCTION(s, ...) \
+    CCLog("%s : %s",__FUNCTION__, CCString::stringWithFormat(s, ##__VA_ARGS__)->getCString())
 
 // cocos2d debug
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-#define CCLOG(...)              
-#define CCLOGINFO(...)         
-#define CCLOGERROR(...)         
+#define CCLOG(...)       do {} while (0)
+#define CCLOGINFO(...)   do {} while (0)
+#define CCLOGERROR(...)  do {} while (0)
+#define CCLOGWARN(...)   do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
 #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   do {} while (0)
+#define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 
 #elif COCOS2D_DEBUG > 1
 #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   cocos2d::CCLog(format, ##__VA_ARGS__)
+#define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
 // Lua engine debug

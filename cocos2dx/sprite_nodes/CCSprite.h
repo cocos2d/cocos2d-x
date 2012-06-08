@@ -181,7 +181,7 @@ public:
     virtual void setScale(float fScale);
     virtual void setVertexZ(float fVertexZ);
     virtual void setAnchorPoint(const CCPoint& anchor);
-    virtual void setIsRelativeAnchorPoint(bool bRelative);
+    virtual void setIgnoreAnchorPointForPosition(bool value);
     virtual void setIsVisible(bool bVisible);
     void setFlipX(bool bFlipX);
     void setFlipY(bool bFlipY);
