@@ -225,11 +225,9 @@ class CC_DLL CCNode : public CCObject
     /** A weak reference to the parent */
     CC_PROPERTY(CCNode *, m_pParent, Parent)
 
-    /** If true the transformtions will be relative to it's anchor point.
-     * Sprites, Labels and any other sizeble object use it have it enabled by default.
-     * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
-     */
-    CC_PROPERTY(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
+    // If ture, the Anchor Point will be (0,0) when you position the CCNode.
+	// Used by CCLayer and CCScene
+    CC_PROPERTY(bool, m_bIgnoreAnchorPointForPosition, IgnoreAnchorPointForPosition);
 
     /** A tag used to identify the node easily */
     CC_PROPERTY(int, m_nTag, Tag)

@@ -52,10 +52,20 @@ public:
         m_sString.clear(); 
     }
     /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
+    static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    
+    /** creates the CCLabelAtlas with a string and a configuration file
+     @since v2.0
+     */
+    static CCLabelAtlas* labelWithString(const char *sring, const char *fntFile);
 
     /** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    bool initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
+    bool initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    
+    /** initializes the CCLabelAtlas with a string and a configuration file
+     @since v2.0
+     */
+    bool initWithString(const char *string, const char *fntFile);
     // super methods
     virtual void updateAtlasValues();
     virtual void setString(const char *label);
@@ -69,7 +79,7 @@ protected:
     // string to render
     std::string m_sString;
     // the first char in the charmap
-    unsigned char m_cMapStartChar;
+    unsigned int m_uMapStartChar;
 };
 
 NS_CC_END
