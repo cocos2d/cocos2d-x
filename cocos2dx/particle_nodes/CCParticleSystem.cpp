@@ -1183,6 +1183,16 @@ void CCParticleSystem::setBlendFunc(ccBlendFunc blendFunc)
     }
 }
 
+bool CCParticleSystem::getOpacityModifyRGB()
+{
+    return m_bOpacityModifyRGB;
+}
+
+void CCParticleSystem::setOpacityModifyRGB(bool bOpacityModifyRGB)
+{
+    m_bOpacityModifyRGB = bOpacityModifyRGB;
+}
+
 tCCPositionType CCParticleSystem::getPositionType()
 {
     return m_ePositionType;
