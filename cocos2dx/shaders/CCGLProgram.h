@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCObject.h"
 
+#include "CCGL.h"
+
 NS_CC_BEGIN
 
 enum {

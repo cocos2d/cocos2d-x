@@ -31,7 +31,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCWaves3D
 
-CCWaves3D* CCWaves3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
+CCWaves3D* CCWaves3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     CCWaves3D *pAction = new CCWaves3D();
 
@@ -50,7 +50,7 @@ CCWaves3D* CCWaves3D::actionWithWaves(int wav, float amp, const ccGridSize& grid
     return pAction;    
 }
 
-bool CCWaves3D::initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
+bool CCWaves3D::initWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     if (CCGrid3DAction::initWithSize(gridSize, duration))
     {
@@ -88,7 +88,7 @@ CCObject* CCWaves3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCWaves3D::update(ccTime time)
+void CCWaves3D::update(float time)
 {
     int i, j;
     for (i = 0; i < m_sGridSize.x + 1; ++i)
@@ -105,7 +105,7 @@ void CCWaves3D::update(ccTime time)
 
 // implementation of CCFlipX3D
 
-CCFlipX3D* CCFlipX3D::actionWithDuration(ccTime duration)
+CCFlipX3D* CCFlipX3D::actionWithDuration(float duration)
 {
     CCFlipX3D *pAction = new CCFlipX3D();
 
@@ -124,12 +124,12 @@ CCFlipX3D* CCFlipX3D::actionWithDuration(ccTime duration)
     return pAction;
 }
 
-bool CCFlipX3D::initWithDuration(ccTime duration)
+bool CCFlipX3D::initWithDuration(float duration)
 {
     return CCGrid3DAction::initWithSize(ccg(1, 1), duration);
 }
 
-bool CCFlipX3D::initWithSize(const ccGridSize& gridSize, ccTime duration)
+bool CCFlipX3D::initWithSize(const ccGridSize& gridSize, float duration)
 {
     if (gridSize.x != 1 || gridSize.y != 1)
     {
@@ -165,7 +165,7 @@ CCObject* CCFlipX3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCFlipX3D::update(ccTime time)
+void CCFlipX3D::update(float time)
 {
     CCFloat angle = (CCFloat)M_PI * time; // 180 degrees
     CCFloat mz = sinf(angle);
@@ -231,7 +231,7 @@ void CCFlipX3D::update(ccTime time)
 
 // implementation of FlipY3D
 
-CCFlipY3D* CCFlipY3D::actionWithDuration(ccTime duration)
+CCFlipY3D* CCFlipY3D::actionWithDuration(float duration)
 {
     CCFlipY3D *pAction = new CCFlipY3D();
 
@@ -273,7 +273,7 @@ CCObject* CCFlipY3D::copyWithZone(CCZone* pZone)
     return pCopy;
 }
 
-void CCFlipY3D::update(ccTime time)
+void CCFlipY3D::update(float time)
 {
     CCFloat angle = (CCFloat)M_PI * time; // 180 degrees
     CCFloat mz = sinf( angle );
@@ -340,7 +340,7 @@ void CCFlipY3D::update(ccTime time)
 
 // implementation of Lens3D
 
-CCLens3D* CCLens3D::actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, ccTime duration)
+CCLens3D* CCLens3D::actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration)
 {
     CCLens3D *pAction = new CCLens3D();
 
@@ -359,7 +359,7 @@ CCLens3D* CCLens3D::actionWithPosition(const CCPoint& pos, float r, const ccGrid
     return pAction;
 }
 
-bool CCLens3D::initWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, ccTime duration)
+bool CCLens3D::initWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration)
 {
     if (CCGrid3DAction::initWithSize(gridSize, duration))
     {
@@ -409,7 +409,7 @@ void CCLens3D::setPosition(const CCPoint& pos)
     }
 }
 
-void CCLens3D::update(ccTime time)
+void CCLens3D::update(float time)
 {
     CC_UNUSED_PARAM(time);
     if (m_bDirty)
@@ -454,7 +454,7 @@ void CCLens3D::update(ccTime time)
 
 // implementation of Ripple3D
 
-CCRipple3D* CCRipple3D::actionWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, ccTime duration)
+CCRipple3D* CCRipple3D::actionWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     CCRipple3D *pAction = new CCRipple3D();
 
@@ -473,7 +473,7 @@ CCRipple3D* CCRipple3D::actionWithPosition(const CCPoint& pos, float r, int wav,
     return pAction;
 }
 
-bool CCRipple3D::initWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, ccTime duration)
+bool CCRipple3D::initWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     if (CCGrid3DAction::initWithSize(gridSize, duration))
     {
@@ -519,7 +519,7 @@ CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCRipple3D::update(ccTime time)
+void CCRipple3D::update(float time)
 {
     int i, j;
 
@@ -545,7 +545,7 @@ void CCRipple3D::update(ccTime time)
 
 // implementation of Shaky3D
 
-CCShaky3D* CCShaky3D::actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, ccTime duration)
+CCShaky3D* CCShaky3D::actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration)
 {
     CCShaky3D *pAction = new CCShaky3D();
 
@@ -564,7 +564,7 @@ CCShaky3D* CCShaky3D::actionWithRange(int range, bool shakeZ, const ccGridSize& 
     return pAction;
 }
 
-bool CCShaky3D::initWithRange(int range, bool shakeZ, const ccGridSize& gridSize, ccTime duration)
+bool CCShaky3D::initWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration)
 {
     if (CCGrid3DAction::initWithSize(gridSize, duration))
     {
@@ -600,7 +600,7 @@ CCObject* CCShaky3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCShaky3D::update(ccTime time)
+void CCShaky3D::update(float time)
 {
     CC_UNUSED_PARAM(time);
     int i, j;
@@ -624,7 +624,7 @@ void CCShaky3D::update(ccTime time)
 
 // implementation of Liquid
 
-CCLiquid* CCLiquid::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
+CCLiquid* CCLiquid::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     CCLiquid *pAction = new CCLiquid();
 
@@ -643,7 +643,7 @@ CCLiquid* CCLiquid::actionWithWaves(int wav, float amp, const ccGridSize& gridSi
     return pAction;
 }
 
-bool CCLiquid::initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
+bool CCLiquid::initWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     if (CCGrid3DAction::initWithSize(gridSize, duration))
     {
@@ -680,7 +680,7 @@ CCObject* CCLiquid::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCLiquid::update(ccTime time)
+void CCLiquid::update(float time)
 {
     int i, j;
 
@@ -698,7 +698,7 @@ void CCLiquid::update(ccTime time)
 
 // implementation of Waves
 
-CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, ccTime duration)
+CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, float duration)
 {
     CCWaves *pAction = new CCWaves();
 
@@ -717,7 +717,7 @@ CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, const ccGr
     return pAction;
 }
 
-bool CCWaves::initWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, ccTime duration)
+bool CCWaves::initWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, float duration)
 {
     if (CCGrid3DAction::initWithSize(gridSize, duration))
     {
@@ -756,7 +756,7 @@ CCObject* CCWaves::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCWaves::update(ccTime time)
+void CCWaves::update(float time)
 {
     int i, j;
 
@@ -783,7 +783,7 @@ void CCWaves::update(ccTime time)
 
 // implementation of Twirl
 
-CCTwirl* CCTwirl::actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize, ccTime duration)
+CCTwirl* CCTwirl::actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize, float duration)
 {
     CCTwirl *pAction = new CCTwirl();
 
@@ -802,7 +802,7 @@ CCTwirl* CCTwirl::actionWithPosition(CCPoint pos, int t, float amp, const ccGrid
     return pAction;
 }
 
-bool CCTwirl::initWithPosition(const CCPoint& pos, int t, float amp, const ccGridSize& gridSize, ccTime duration)
+bool CCTwirl::initWithPosition(const CCPoint& pos, int t, float amp, const ccGridSize& gridSize, float duration)
 {
     if (CCGrid3DAction::initWithSize(gridSize, duration))
     {
@@ -848,7 +848,7 @@ CCObject* CCTwirl::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCTwirl::update(ccTime time)
+void CCTwirl::update(float time)
 {
     int i, j;
     CCPoint    c = m_positionInPixels;

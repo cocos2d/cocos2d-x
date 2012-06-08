@@ -138,7 +138,7 @@ bool CCDirector::init(void)
     m_pScheduler = new CCScheduler();
     // action manager
     m_pActionManager = new CCActionManager();
-    m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCActionManagerPriority, false);
+    m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCPrioritySystem, false);
     // touchDispatcher
     m_pTouchDispatcher = new CCTouchDispatcher();
     m_pTouchDispatcher->init();

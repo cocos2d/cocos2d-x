@@ -99,7 +99,7 @@ typedef struct sCCParticle {
     float        rotation;
     float        deltaRotation;
 
-    ccTime        timeToLive;
+    float        timeToLive;
 
     unsigned int    atlasIndex;
 
@@ -392,7 +392,7 @@ public:
     //! should be overriden by subclasses
     virtual void postStep();
 
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
     virtual void updateWithNoTime(void);
 
 protected:

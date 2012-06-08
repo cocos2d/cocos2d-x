@@ -321,11 +321,6 @@ typedef enum
     
 } ccResolutionType;
 
-//! delta time type
-//! if you want more resolution redefine it as a double
-typedef float ccTime;
-//typedef double ccTime;
-
 // XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
 //! Vertical text alignment type
 typedef enum
@@ -374,7 +369,7 @@ typedef struct _ccT2F_Quad
 typedef struct
 {
     ccT2F_Quad texCoords;
-    ccTime delay;
+    float delay;
     CCSize size; 
 } ccAnimationFrameData;
 
