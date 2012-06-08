@@ -67,6 +67,40 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
 #endif
 
+#define arrayMakeObjectsPerformSelector(pArray, func, elementType)    \
+do {                                                                  \
+    if(pArray && pArray->count() > 0)                                 \
+    {                                                                 \
+        CCObject* child;                                              \
+        CCARRAY_FOREACH(pArray, child)                                \
+        {                                                             \
+            elementType pNode = (elementType) child;                  \
+            if(pNode)                                                 \
+            {                                                         \
+                pNode->func();                                        \
+            }                                                         \
+        }                                                             \
+    }                                                                 \
+}                                                                     \
+while(false)
+
+#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
+do {                                                                  \
+    if(pArray && pArray->count() > 0)                                 \
+    {                                                                 \
+        CCObject* child = NULL;                                       \
+        CCARRAY_FOREACH(pArray, child)                                \
+        {                                                             \
+            elementType pNode = (elementType) child;                  \
+            if(pNode)                                                 \
+            {                                                         \
+                pNode->func(pObject);                                 \
+            }                                                         \
+        }                                                             \
+    }                                                                 \
+}                                                                     \
+while(false)
+
 
 NS_CC_BEGIN
 

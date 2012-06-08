@@ -256,60 +256,6 @@ void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	arr->num -= back;
 }
 
-/** Sends to each object in arr the message identified by given selector. */
-void ccArrayMakeObjectsPerformSelector(ccArray *arr, SEL_CallFunc sel)
-{
-	unsigned int i;
-	
-	for( i = 0; i < arr->num; i++)
-    {
-        // #pragma clang diagnostic push
-        // #if defined(__has_feature) && __has_feature(objc_arc)				
-        // #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        // #endif		
-        (arr->arr[i]->*sel)();
-        //[arr->arr[i] performSelector:sel];
-        //#pragma clang diagnostic pop
-    }
-
-}
-
-void ccArrayMakeObjectsPerformSelectorWithObject(ccArray *arr, SEL_CallFuncO sel, CCObject* object)
-{
-	unsigned int i;
-	
-	for( i = 0; i < arr->num; i++)
-    {
-        // #pragma clang diagnostic push
-        // 		
-        // #if defined(__has_feature) && __has_feature(objc_arc)		
-        // #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        // #endif		
-        (arr->arr[i]->*sel)(object);
-        //[arr->arr[i] performSelector:sel withObject:object];
-        //#pragma clang diagnostic pop
-    }
-
-}
-
-void ccArrayMakeObjectPerformSelectorWithArrayObjects(ccArray *arr, SEL_CallFuncO sel, CCObject* object)
-{
-	unsigned int i;
-	
-	for( i = 0; i < arr->num; i++)
-    {
-// #pragma clang diagnostic push
-// 
-// #if defined(__has_feature) && __has_feature(objc_arc)		
-// #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-// #endif		
-//        [object performSelector:sel withObject:arr->arr[i]];
-        (object->*sel)(arr->arr[i]);
-//#pragma clang diagnostic pop
-    }
-}
-
-
 // #pragma mark -
 // #pragma mark ccCArray for Values (c structures)
 

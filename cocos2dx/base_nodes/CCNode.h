@@ -57,40 +57,6 @@ enum {
     kCCNodeOnExit
 };
 
-#define arrayMakeObjectsPerformSelector(pArray, func, elementType)  \
-do {                                                                  \
-    if(pArray && pArray->count() > 0)                                 \
-    {                                                                 \
-        CCObject* child;                                              \
-        CCARRAY_FOREACH(pArray, child)                                \
-        {                                                             \
-            elementType pNode = (elementType) child;                  \
-            if(pNode)                                                 \
-            {                                                         \
-                pNode->func();                                        \
-            }                                                         \
-        }                                                             \
-    }                                                                 \
-}                                                                     \
-while(false)
-
-#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
-do {                                                                  \
-    if(pArray && pArray->count() > 0)                                 \
-    {                                                                 \
-        CCObject* child = NULL;                                       \
-        CCARRAY_FOREACH(pArray, child)                                \
-        {                                                             \
-            elementType pNode = (elementType) child;                  \
-            if(pNode)                                                 \
-            {                                                         \
-                pNode->func(pObject);                                 \
-            }                                                         \
-        }                                                             \
-    }                                                                 \
-}                                                                     \
-while(false)
-
 /** @brief CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
 
