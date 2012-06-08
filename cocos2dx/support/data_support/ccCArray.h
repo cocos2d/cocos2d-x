@@ -52,33 +52,15 @@ NS_CC_BEGIN
 
 #define CC_INVALID_INDEX 0xffffffff
 
-
-// #pragma mark -
-// #pragma mark ccArray for Objects
-
 // Easy integration
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
 __object__=__array__->arr[0]; for(unsigned int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
 
-// #if defined(__has_feature) && __has_feature(objc_arc)
-// 	typedef __strong CCObject* CCARRAY_ID;
-// #else
-	typedef CCObject* CCARRAY_ID;
-//#endif
 
 typedef struct _ccArray {
 	unsigned int num, max;
-	CCARRAY_ID *arr;
+	CCObject** arr;
 } ccArray;
-
-enum CCComparisonResult
-{
-    CCOrderedDescending = 1,
-    CCOrderedAscending = -1,
-    CCOrderedSame = 0
-};
-
-typedef int (*cc_comparator)(const void *, const void *);
 
 /** Allocates and initializes a new array with specified capacity */
 ccArray* ccArrayNew(unsigned int capacity);
@@ -151,7 +133,7 @@ void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr);
 
 typedef struct _ccCArray {
     unsigned int num, max;
-    void **arr;
+    void** arr;
 } ccCArray;
 
 /** Allocates and initializes a new C array with specified capacity */
@@ -218,14 +200,6 @@ void ccCArrayRemoveArray(ccCArray *arr, ccCArray *minusArr);
  @since v0.99.4
  */
 void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr);
-
-// iterative mergesort arrd on
-//  http://www.inf.fh-flensburg.de/lang/algorithmen/sortieren/merge/mergiter.htm  
-int cc_mergesortL(ccCArray* array, size_t width, cc_comparator comparator);
-
-void cc_insertionSort(ccCArray* arr, cc_comparator comparator);
-
-void cc_pointerswap(void* a, void* b, size_t width);
 
 NS_CC_END
 	
