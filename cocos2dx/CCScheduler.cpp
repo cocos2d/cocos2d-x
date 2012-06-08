@@ -256,8 +256,8 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused, unsigned int repeat, float delay)
 {
-    CCAssert(pfnSelector, "");
-    CCAssert(pTarget, "");
+    CCAssert(pfnSelector, "Argument selector must be non-NULL");
+    CCAssert(pTarget, "Argument target must be non-NULL");
 
     tHashSelectorEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForSelectors, &pTarget, pElement);
@@ -292,7 +292,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
 
             if (pfnSelector == timer->m_pfnSelector)
             {
-                CCLOG("CCSheduler#scheduleSelector. Selector already scheduled.");
+                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), fInterval);
                 timer->m_fInterval = fInterval;
                 return;
             }        
@@ -511,6 +511,11 @@ void CCScheduler::unscheduleUpdateForTarget(const CCObject *pTarget)
 
 void CCScheduler::unscheduleAllSelectors(void)
 {
+    unscheduleAllSelectorsWithMinPriority(kCCPrioritySystem);
+}
+
+void CCScheduler::unscheduleAllSelectorsWithMinPriority(int nMinPriority)
+{
     // Custom Selectors
     tHashSelectorEntry *pElement = NULL;
     tHashSelectorEntry *pNextElement = NULL;
@@ -525,17 +530,31 @@ void CCScheduler::unscheduleAllSelectors(void)
 
     // Updates selectors
     tListEntry *pEntry, *pTmp;
-    DL_FOREACH_SAFE(m_pUpdates0List, pEntry, pTmp)
+    if(nMinPriority < 0) 
     {
-        unscheduleUpdateForTarget(pEntry->target);
+        DL_FOREACH_SAFE(m_pUpdatesNegList, pEntry, pTmp)
+        {
+            if(pEntry->priority >= nMinPriority) 
+            {
+                unscheduleUpdateForTarget(pEntry->target);
+            }
+        }
     }
-    DL_FOREACH_SAFE(m_pUpdatesNegList, pEntry, pTmp)
+
+    if(nMinPriority <= 0) 
     {
-        unscheduleUpdateForTarget(pEntry->target);
+        DL_FOREACH_SAFE(m_pUpdates0List, pEntry, pTmp)
+        {
+            unscheduleUpdateForTarget(pEntry->target);
+        }
     }
+
     DL_FOREACH_SAFE(m_pUpdatesPosList, pEntry, pTmp)
     {
-        unscheduleUpdateForTarget(pEntry->target);
+        if(pEntry->priority >= nMinPriority) 
+        {
+            unscheduleUpdateForTarget(pEntry->target);
+        }
     }
 
     if (m_pScriptHandlerEntries)
@@ -661,6 +680,68 @@ bool CCScheduler::isTargetPaused(CCObject *pTarget)
         return pElement->paused;
     }
     return false;  // should never get here
+}
+
+CCSet* CCScheduler::pauseAllTargets()
+{
+    return pauseAllTargetsWithMinPriority(kCCPrioritySystem);
+}
+
+CCSet* CCScheduler::pauseAllTargetsWithMinPriority(int nMinPriority)
+{
+    CCSet* idsWithSelectors = new CCSet();// setWithCapacity:50];
+    idsWithSelectors->autorelease();
+
+    // Custom Selectors
+    for(tHashSelectorEntry *element = m_pHashForSelectors; element != NULL;
+        element = (tHashSelectorEntry*)element->hh.next) 
+    {
+        element->paused = true;
+        idsWithSelectors->addObject(element->target);
+    }
+
+    // Updates selectors
+    tListEntry *entry, *tmp;
+    if(nMinPriority < 0) 
+    {
+        DL_FOREACH_SAFE( m_pUpdatesNegList, entry, tmp ) 
+        {
+            if(entry->priority >= nMinPriority) 
+            {
+                entry->paused = true;
+                idsWithSelectors->addObject(entry->target);
+            }
+        }
+    }
+
+    if(nMinPriority <= 0) 
+    {
+        DL_FOREACH_SAFE( m_pUpdates0List, entry, tmp )
+        {
+            entry->paused = true;
+            idsWithSelectors->addObject(entry->target);
+        }
+    }
+
+    DL_FOREACH_SAFE( m_pUpdatesPosList, entry, tmp ) 
+    {
+        if(entry->priority >= nMinPriority) 
+        {
+            entry->paused = true;
+            idsWithSelectors->addObject(entry->target);
+        }
+    }
+
+    return idsWithSelectors;
+}
+
+void CCScheduler::resumeTargets(CCSet* pTargetsToResume)
+{
+    CCSetIterator iter;
+    for (iter = pTargetsToResume->begin(); iter != pTargetsToResume->end(); ++iter)
+    {
+        resumeTarget(*iter);
+    }
 }
 
 // main loop

@@ -97,7 +97,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     CC_UNUSED_PARAM(eImgFmt);
     
     unsigned long nSize;
-    unsigned char *pBuffer = CCFileUtils::getFileData(CCFileUtils::fullPathFromRelativePath(strPath), "rb", &nSize);
+    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath), "rb", &nSize);
     
     return initWithImageData(pBuffer, nSize, eImgFmt);
 }
@@ -107,7 +107,7 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
     CC_UNUSED_PARAM(imageType);
 
     unsigned long nSize;
-    unsigned char *pBuffer = CCFileUtils::getFileData(fullpath, "rb", &nSize);
+    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
     
     return initWithImageData(pBuffer, nSize, imageType);
 }

@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
-
+#include "ccGLStateCache.h"
 #include <cctype>
 
 NS_CC_BEGIN
@@ -371,7 +371,7 @@ bool CCTexturePVR::createGLTexture()
     {
         if (m_uName != 0)
         {
-            glDeleteTextures(1, &m_uName);
+            ccGLDeleteTexture(m_uName);
         }
         
         glGenTextures(1, &m_uName);
@@ -446,7 +446,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     }
     else
     {
-        pvrdata = CCFileUtils::getFileData(path, "rb", (unsigned long *)(&pvrlen));
+        pvrdata = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
     }
     
     if (pvrlen < 0)

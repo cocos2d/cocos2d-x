@@ -851,6 +851,10 @@
 				Name="data_support"
 				>
 				<File
+					RelativePath="..\support\data_support\ccCArray.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\support\data_support\ccCArray.h"
 					>
 				</File>

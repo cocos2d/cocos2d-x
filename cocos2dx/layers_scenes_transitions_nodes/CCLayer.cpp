@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -49,7 +49,7 @@ CCLayer::CCLayer()
 ,m_pScriptHandlerEntry(NULL)
 {
     setAnchorPoint(ccp(0.5f, 0.5f));
-    m_bIsRelativeAnchorPoint = false;
+    m_bIgnoreAnchorPointForPosition = true;
 }
 
 CCLayer::~CCLayer()

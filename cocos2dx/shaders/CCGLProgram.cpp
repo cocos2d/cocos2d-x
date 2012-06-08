@@ -116,8 +116,8 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
 
 bool CCGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(vShaderFilename))->getCString();
-    const GLchar * fragmentSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(fShaderFilename))->getCString();
+    const GLchar * vertexSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(vShaderFilename))->getCString();
+    const GLchar * fragmentSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fShaderFilename))->getCString();
 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }

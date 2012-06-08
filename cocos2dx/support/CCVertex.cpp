@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011 ForzeField Studios S.L
 
  http://www.cocos2d-x.org
@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, ccTex2F *texCoords, unsigned int offset, unsigned int nuPoints)
+void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, unsigned int offset, unsigned int nuPoints)
 {
     nuPoints += offset;
     if(nuPoints<=1) return;
@@ -38,7 +38,6 @@ void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, 
 
     unsigned int idx;
     unsigned int nuPointsMinus = nuPoints-1;
-    float texDelta = 1.0f/(float)nuPointsMinus;
 
     for(unsigned int i = offset; i<nuPoints; i++)
     {
@@ -73,8 +72,6 @@ void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, 
         vertices[idx] = vertex2(p1.x+perpVector.x, p1.y+perpVector.y);
         vertices[idx+1] = vertex2(p1.x-perpVector.x, p1.y-perpVector.y);
 
-        texCoords[idx] = tex2(0, texDelta*(float)i);
-        texCoords[idx+1] = tex2(1, texDelta*(float)i);
     }
 
     // Validate vertexes
