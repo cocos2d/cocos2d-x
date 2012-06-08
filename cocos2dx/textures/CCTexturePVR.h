@@ -123,7 +123,7 @@ protected:
         How many mipmaps do we have. It must be at least one
         when proper initialization finishes
     */
-    CC_PROPERTY_READONLY(unsigned int, m_uNumberOfMipmaps, NumberOfMipmaps);
+    CC_SYNTHESIZE_READONLY(unsigned int, m_uNumberOfMipmaps, NumberOfMipmaps);
 
     /*
         Makrs for mipmaps. Each entry contains position in file

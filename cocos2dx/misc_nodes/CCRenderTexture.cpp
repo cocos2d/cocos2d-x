@@ -111,6 +111,11 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
     return NULL;
 }
 
+bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
+{
+    return initWithWidthAndHeight(w, h, eFormat, 0);
+}
+
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     CCAssert(m_ePixelFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
