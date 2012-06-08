@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCThread.h"
+
 // iOS already has a CCThread.mm
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-
-#include "CCThread.h"
 
 NS_CC_BEGIN
 
