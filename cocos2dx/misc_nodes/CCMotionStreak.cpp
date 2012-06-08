@@ -211,7 +211,7 @@ bool CCMotionStreak::getIsOpacityModifyRGB(void)
     return false;
 }
 
-void CCMotionStreak::update(ccTime delta)
+void CCMotionStreak::update(float delta)
 {
     if (!m_bStartingPositionInitialized)
     {

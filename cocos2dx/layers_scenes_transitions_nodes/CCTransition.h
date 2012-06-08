@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __CCTRANSITION_H__
 
 #include "CCScene.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -35,10 +36,10 @@ NS_CC_BEGIN
 //c/c++ don't support object creation of using class name
 //so, all classes need creation method.
 #define DECLEAR_TRANSITIONWITHDURATION(_Type)\
-    static _Type* transitionWithDuration(ccTime t, CCScene* scene);
+    static _Type* transitionWithDuration(float t, CCScene* scene);
 
 #define IMPLEMENT_TRANSITIONWITHDURATION(_Type)\
-    _Type* _Type::transitionWithDuration(ccTime t, CCScene* scene)\
+    _Type* _Type::transitionWithDuration(float t, CCScene* scene)\
     {\
     _Type* pScene = new _Type();\
     if(pScene && pScene->initWithDuration(t, scene)){\
@@ -85,7 +86,7 @@ class CC_DLL CCTransitionScene : public CCScene
 protected:
     CCScene    * m_pInScene;
     CCScene    * m_pOutScene;
-    ccTime    m_fDuration;
+    float    m_fDuration;
     bool    m_bIsInSceneOnTop;
     bool    m_bIsSendCleanupToScene;
 
@@ -99,10 +100,10 @@ public:
     virtual void cleanup();
 
     /** creates a base transition with duration and incoming scene */
-    static CCTransitionScene * transitionWithDuration(ccTime t, CCScene *scene);
+    static CCTransitionScene * transitionWithDuration(float t, CCScene *scene);
 
     /** initializes a transition with duration and incoming scene */
-    virtual bool initWithDuration(ccTime t,CCScene* scene);
+    virtual bool initWithDuration(float t,CCScene* scene);
 
     /** called after the transition finishes */
     void finish(void);
@@ -113,7 +114,7 @@ public:
 protected:
     virtual void sceneOrder();
 private:
-    void setNewScene(ccTime dt);
+    void setNewScene(float dt);
 
 };
 
@@ -130,9 +131,9 @@ public:
     virtual ~CCTransitionSceneOriented();
 
     /** creates a base transition with duration and incoming scene */
-    static CCTransitionSceneOriented * transitionWithDuration(ccTime t,CCScene* scene, tOrientation orientation);
+    static CCTransitionSceneOriented * transitionWithDuration(float t,CCScene* scene, tOrientation orientation);
     /** initializes a transition with duration and incoming scene */
-    virtual bool initWithDuration(ccTime t,CCScene* scene,tOrientation orientation);
+    virtual bool initWithDuration(float t,CCScene* scene,tOrientation orientation);
 };
 
 /** @brief CCTransitionRotoZoom:
@@ -327,7 +328,7 @@ public:
 
     virtual void onEnter();
 
-    static CCTransitionFlipX* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
 /** @brief CCTransitionFlipY:
@@ -342,7 +343,7 @@ public:
 
     virtual void onEnter();
 
-    static CCTransitionFlipY* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationUpOver);
+    static CCTransitionFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
 };
 
 /** @brief CCTransitionFlipAngular:
@@ -357,7 +358,7 @@ public:
 
     virtual void onEnter();
 
-    static CCTransitionFlipAngular* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
 /** @brief CCTransitionZoomFlipX:
@@ -372,7 +373,7 @@ public:
 
     virtual void onEnter();
 
-    static CCTransitionZoomFlipX* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionZoomFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
 /** @brief CCTransitionZoomFlipY:
@@ -387,7 +388,7 @@ public:
 
     virtual void onEnter();
 
-    static CCTransitionZoomFlipY* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationUpOver);
+    static CCTransitionZoomFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
 };
 
 /** @brief CCTransitionZoomFlipAngular:
@@ -402,7 +403,7 @@ public:
 
     virtual void onEnter();
 
-    static CCTransitionZoomFlipAngular* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionZoomFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
 /** @brief CCTransitionFade:
@@ -421,11 +422,11 @@ public:
     /** creates the transition with a duration and with an RGB color
     * Example: FadeTransition::transitionWithDuration(2, scene, ccc3(255,0,0); // red color
     */
-    static CCTransitionFade* transitionWithDuration(ccTime duration,CCScene* scene, const ccColor3B& color = ccBLACK);
+    static CCTransitionFade* transitionWithDuration(float duration,CCScene* scene, const ccColor3B& color = ccBLACK);
     /** initializes the transition with a duration and with an RGB color */
-    virtual bool initWithDuration(ccTime t, CCScene*scene ,const ccColor3B& color);
+    virtual bool initWithDuration(float t, CCScene*scene ,const ccColor3B& color);
 
-    virtual bool initWithDuration(ccTime t,CCScene* scene); 
+    virtual bool initWithDuration(float t,CCScene* scene); 
     virtual void onEnter();
     virtual void onExit();
 };

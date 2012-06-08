@@ -48,7 +48,7 @@ class LayerTestBlend : public LayerTest
 {
 public:
     LayerTestBlend();
-    void newBlend(ccTime dt);
+    void newBlend(float dt);
     virtual std::string title();
 };
 

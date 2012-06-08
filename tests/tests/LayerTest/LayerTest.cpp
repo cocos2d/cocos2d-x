@@ -267,7 +267,7 @@ LayerTestBlend::LayerTestBlend()
     schedule( schedule_selector(LayerTestBlend::newBlend), 1.0f);
 }
 
-void LayerTestBlend::newBlend(ccTime dt)
+void LayerTestBlend::newBlend(float dt)
 {
      CCLayerColor *layer = (CCLayerColor*)getChildByTag(kTagLayer);
 

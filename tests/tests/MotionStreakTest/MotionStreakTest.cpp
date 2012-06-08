@@ -56,7 +56,7 @@ void MotionStreakTest1::onEnter()
     streak = m_streak;
 }
 
-void MotionStreakTest1::onUpdate(ccTime delta)
+void MotionStreakTest1::onUpdate(float delta)
 {
     m_streak->setPosition( m_target->convertToWorldSpace(CCPointZero) );
 }

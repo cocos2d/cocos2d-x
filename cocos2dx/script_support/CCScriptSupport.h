@@ -33,17 +33,17 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
-class CCTimer;
+class floatr;
 
 // Lua support for CCScheduler
 class CCSchedulerScriptHandlerEntry : public CCObject
 {
 public:
     // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
-    static CCSchedulerScriptHandlerEntry* entryWithHandler(int nHandler, ccTime fInterval, bool bPaused);
+    static CCSchedulerScriptHandlerEntry* entryWithHandler(int nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
-    inline cocos2d::CCTimer* getTimer(void) {
+    inline cocos2d::floatr* getTimer(void) {
         return m_pTimer;
     }
     
@@ -65,9 +65,9 @@ public:
     
 private:
     CCSchedulerScriptHandlerEntry(void);
-    bool initWithHandler(int nHandler, ccTime fInterval, bool bPaused);
+    bool initWithHandler(int nHandler, float fInterval, bool bPaused);
     
-    cocos2d::CCTimer*   m_pTimer;
+    cocos2d::floatr*   m_pTimer;
     bool                m_bPaused;
     bool                m_bMarkedForDeletion;
     int                 m_nHandler;
@@ -178,7 +178,7 @@ public:
     virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches) = 0;
     
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, ccTime dt) = 0;
+    virtual int executeSchedule(int nHandler, float dt) = 0;
 };
 
 /**

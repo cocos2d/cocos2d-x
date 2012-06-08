@@ -63,15 +63,15 @@ typedef struct _hashSelectorEntry
     ccArray                      *timers;
     CCObject            *target;    // hash key (retained)
     unsigned int                timerIndex;
-    CCTimer                        *currentTimer;
+    floatr                        *currentTimer;
     bool                        currentTimerSalvaged;
     bool                        paused;
     UT_hash_handle                hh;
 } tHashSelectorEntry;
 
-// implementation CCTimer
+// implementation floatr
 
-CCTimer::CCTimer()
+floatr::floatr()
 : m_pfnSelector(NULL)
 , m_fInterval(0.0f)
 , m_pTarget(NULL)
@@ -86,9 +86,9 @@ CCTimer::CCTimer()
 
 }
 
-CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
+floatr* floatr::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
-    CCTimer *pTimer = new CCTimer();
+    floatr *pTimer = new floatr();
 
     pTimer->initWithTarget(pTarget, pfnSelector, 0.0f, kCCRepeatForever, 0.0f);
     pTimer->autorelease();
@@ -96,9 +96,9 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
+floatr* floatr::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds)
 {
-    CCTimer *pTimer = new CCTimer();
+    floatr *pTimer = new floatr();
 
     pTimer->initWithTarget(pTarget, pfnSelector, fSeconds, kCCRepeatForever, 0.0f);
     pTimer->autorelease();
@@ -106,9 +106,9 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, c
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithScriptHandler(int nHandler, ccTime fSeconds)
+floatr* floatr::timerWithScriptHandler(int nHandler, float fSeconds)
 {
-    CCTimer *pTimer = new CCTimer();
+    floatr *pTimer = new floatr();
 
     pTimer->initWithScriptHandler(nHandler, fSeconds);
     pTimer->autorelease();
@@ -116,7 +116,7 @@ CCTimer* CCTimer::timerWithScriptHandler(int nHandler, ccTime fSeconds)
     return pTimer;
 }
 
-bool CCTimer::initWithScriptHandler(int nHandler, ccTime fSeconds)
+bool floatr::initWithScriptHandler(int nHandler, float fSeconds)
 {
     m_nScriptHandler = nHandler;
     m_fElapsed = -1;
@@ -125,12 +125,12 @@ bool CCTimer::initWithScriptHandler(int nHandler, ccTime fSeconds)
     return true;
 }
 
-bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
+bool floatr::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
     return initWithTarget(pTarget, pfnSelector, 0, kCCRepeatForever, 0.0f);
 }
 
-bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds, unsigned int nRepeat, ccTime fDelay)
+bool floatr::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay)
 {
     m_pTarget = pTarget;
     m_pfnSelector = pfnSelector;
@@ -143,7 +143,7 @@ bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime
     return true;
 }
 
-void CCTimer::update(ccTime dt)
+void floatr::update(float dt)
 {
     if (m_fElapsed == -1)
     {
@@ -254,7 +254,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
     this->scheduleSelector(pfnSelector, pTarget, fInterval, bPaused, kCCRepeatForever, 0.0f);
 }
 
-void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, ccTime fInterval, bool bPaused, unsigned int repeat, ccTime delay)
+void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused, unsigned int repeat, float delay)
 {
     CCAssert(pfnSelector, "Argument selector must be non-NULL");
     CCAssert(pTarget, "Argument target must be non-NULL");
@@ -288,7 +288,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
     {
         for (unsigned int i = 0; i < pElement->timers->num; ++i)
         {
-            CCTimer *timer = (CCTimer*)pElement->timers->arr[i];
+            floatr *timer = (floatr*)pElement->timers->arr[i];
 
             if (pfnSelector == timer->m_pfnSelector)
             {
@@ -300,7 +300,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
         ccArrayEnsureExtraCapacity(pElement->timers, 1);
     }
 
-    CCTimer *pTimer = new CCTimer();
+    floatr *pTimer = new floatr();
     pTimer->initWithTarget(pTarget, pfnSelector, fInterval, repeat, delay);
     ccArrayAppendObject(pElement->timers, pTimer);
     pTimer->release();    
@@ -324,7 +324,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget
     {
         for (unsigned int i = 0; i < pElement->timers->num; ++i)
         {
-            CCTimer *pTimer = (CCTimer*)(pElement->timers->arr[i]);
+            floatr *pTimer = (floatr*)(pElement->timers->arr[i]);
 
             if (pfnSelector == pTimer->m_pfnSelector)
             {
@@ -599,7 +599,7 @@ void CCScheduler::unscheduleAllSelectorsForTarget(CCObject *pTarget)
     unscheduleUpdateForTarget(pTarget);
 }
 
-unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, ccTime fInterval, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
 {
     CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::entryWithHandler(nHandler, fInterval, bPaused);
     if (!m_pScriptHandlerEntries)
@@ -745,7 +745,7 @@ void CCScheduler::resumeTargets(CCSet* pTargetsToResume)
 }
 
 // main loop
-void CCScheduler::update(ccTime dt)
+void CCScheduler::update(float dt)
 {
     m_bUpdateHashLocked = true;
 
@@ -795,7 +795,7 @@ void CCScheduler::update(ccTime dt)
             // The 'timers' array may change while inside this loop
             for (elt->timerIndex = 0; elt->timerIndex < elt->timers->num; ++(elt->timerIndex))
             {
-                elt->currentTimer = (CCTimer*)(elt->timers->arr[elt->timerIndex]);
+                elt->currentTimer = (floatr*)(elt->timers->arr[elt->timerIndex]);
                 elt->currentTimerSalvaged = false;
 
                 elt->currentTimer->update(dt);

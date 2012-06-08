@@ -1263,7 +1263,7 @@ void Issue1305::onExit()
     ActionsDemo::onExit();
 }
 
-void Issue1305::addSprite(ccTime dt)
+void Issue1305::addSprite(float dt)
 {
     m_pSpriteTmp->setPosition(ccp(250,250));
     addChild(m_pSpriteTmp);
