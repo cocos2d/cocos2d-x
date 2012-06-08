@@ -29,7 +29,7 @@ bool Bug1159Layer::init()
 
         CCLayerColor *sprite_a = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 700, 700);
         sprite_a->setAnchorPoint(ccp(0.5f, 0.5f));
-        sprite_a->setIsRelativeAnchorPoint(true);
+        sprite_a->setIgnoreAnchorPointForPosition(false);
         sprite_a->setPosition(ccp(0.0f, s.height/2));
         addChild(sprite_a);
 
@@ -40,7 +40,7 @@ bool Bug1159Layer::init()
 
         CCLayerColor *sprite_b = CCLayerColor::layerWithColor(ccc4(0, 0, 255, 255), 400, 400);
         sprite_b->setAnchorPoint(ccp(0.5f, 0.5f));
-        sprite_b->setIsRelativeAnchorPoint(true);
+        sprite_b->setIgnoreAnchorPointForPosition(false);
         sprite_b->setPosition(ccp(s.width/2, s.height/2));
         addChild(sprite_b);
 

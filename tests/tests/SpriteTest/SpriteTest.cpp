@@ -1191,7 +1191,7 @@ Sprite6::Sprite6()
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     CCSpriteBatchNode* batch = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 1);
     addChild(batch, 0, kTagSpriteBatchNode);
-    batch->setIsRelativeAnchorPoint( false );
+    batch->setIgnoreAnchorPointForPosition( true );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
