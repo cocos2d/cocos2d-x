@@ -217,8 +217,8 @@ namespace cocos2d
          unsigned char *compressed = NULL;
         
         int fileLen = 0;
-        compressed = CCFileUtils::getFileData(path, "rb", (unsigned long *)(&fileLen));
-         // int fileLen  = CCFileUtils::ccLoadFileIntoMemory( path, &compressed );
+        compressed = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&fileLen));
+         // int fileLen  = CCFileUtils::sharedFileUtils()->ccLoadFileIntoMemory( path, &compressed );
 
          if( fileLen < 0 ) 
          {

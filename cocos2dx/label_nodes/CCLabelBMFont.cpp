@@ -480,7 +480,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 
 bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
-    std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
     CCString *contents = CCString::stringWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
@@ -570,7 +570,7 @@ void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fnt
     index2 = line.find('"', index);
     value = line.substr(index, index2-index);
 
-    m_sAtlasName = CCFileUtils::fullPathFromRelativeFile(value.c_str(), fntFile);
+    m_sAtlasName = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(value.c_str(), fntFile);
 }
 
 void CCBMFontConfiguration::parseInfoArguments(std::string line)
@@ -754,7 +754,7 @@ CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFi
 
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 {
-    return initWithString(theString, fntFile, kCCLabelAutomaticWidth, CCTextAlignmentLeft, CCPointZero);
+    return initWithString(theString, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
 }
 
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment)
@@ -1247,7 +1247,7 @@ void CCLabelBMFont::updateLabel()
     }
 
     // Step 2: Make alignment
-    if (m_pAlignment != CCTextAlignmentLeft)
+    if (m_pAlignment != kCCTextAlignmentLeft)
     {
         int i = 0;
 
@@ -1272,11 +1272,12 @@ void CCLabelBMFont::updateLabel()
                 float shift = 0;
                 switch (m_pAlignment)
                 {
-                case CCTextAlignmentCenter:
+                case kCCTextAlignmentCenter:
                     shift = getContentSize().width/2.0f - lineWidth/2.0f;
                     break;
-                case CCTextAlignmentRight:
+                case kCCTextAlignmentRight:
                     shift = getContentSize().width - lineWidth;
+                    break;
                 default:
                     break;
                 }

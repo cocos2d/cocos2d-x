@@ -150,7 +150,7 @@ bool CCParticleSystem::init()
 bool CCParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
-    m_sPlistFile = CCFileUtils::fullPathFromRelativePath(plistFile);
+    m_sPlistFile = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plistFile);
     CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
@@ -276,19 +276,19 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                 // texture        
                 // Try to get the texture from the cache
                 const char* textureName = dictionary->valueForKey("textureFileName")->getCString();
-                std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
+                std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
                 
                 CCTexture2D *tex = NULL;
                 
                 if (strlen(textureName) > 0)
                 {
                     // set not pop-up message box when load image failed
-                    bool bNotify = CCFileUtils::getIsPopupNotify();
-                    CCFileUtils::setIsPopupNotify(false);
+                    bool bNotify = CCFileUtils::sharedFileUtils()->getIsPopupNotify();
+                    CCFileUtils::sharedFileUtils()->setIsPopupNotify(false);
                     tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
                     
                     // reset the value of UIImage notify
-                    CCFileUtils::setIsPopupNotify(bNotify);
+                    CCFileUtils::sharedFileUtils()->setIsPopupNotify(bNotify);
                 }
                 
                 if (tex)

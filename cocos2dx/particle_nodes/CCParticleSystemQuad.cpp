@@ -237,8 +237,8 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const C
         quad = &(m_pQuads[m_uParticleIdx]);
     }
     ccColor4B color = (m_bOpacityModifyRGB)
-        ? (ccColor4B){ particle->color.r*particle->color.a*255, particle->color.g*particle->color.a*255, particle->color.b*particle->color.a*255, particle->color.a*255}
-        : (ccColor4B){ particle->color.r*255, particle->color.g*255, particle->color.b*255, particle->color.a*255};
+        ? ccc4( particle->color.r*particle->color.a*255, particle->color.g*particle->color.a*255, particle->color.b*particle->color.a*255, particle->color.a*255)
+        : ccc4( particle->color.r*255, particle->color.g*255, particle->color.b*255, particle->color.a*255);
 
     quad->bl.colors = color;
     quad->br.colors = color;

@@ -39,7 +39,7 @@ NS_CC_BEGIN
 //CCLabelTTF
 //
 CCLabelTTF::CCLabelTTF()
-    : m_eAlignment(CCTextAlignmentCenter)
+    : m_eAlignment(kCCTextAlignmentCenter)
     , m_pFontName(NULL)
     , m_fFontSize(0.0)
     , m_pString(NULL)
@@ -137,7 +137,7 @@ void CCLabelTTF::setString(const char *label)
     else
     {
         texture = new CCTexture2D();
-        texture->initWithString(label, m_tDimensions, m_eAlignment, m_pFontName->c_str(), m_fFontSize);
+//cjh        texture->initWithString(label, m_tDimensions, m_eAlignment, kCCVerticalTextAlignmentTop, m_pFontName->c_str(), m_fFontSize);
     }
 
 // TODO

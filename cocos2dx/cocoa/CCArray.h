@@ -211,14 +211,7 @@ public:
     void insertionSort(SEL_Compare selector); // It sorts source array in ascending order
     void sortUsingFunction(int (*compare)(CCObject*, CCObject*, SEL_Compare) , SEL_Compare context);
     void sortUsingSelector(SEL_Compare selector);
-    
-    // Sending Messages to Elements
-
-    void makeObjectsPerformSelector(SEL_CallFunc aSelector);
-    void makeObjectsPerformSelectorWithObject(SEL_CallFuncO aSelector, CCObject* object);
-    /** @since 1.1 */
-    void makeObjectPerformSelectorWithArrayObjects(CCObject* object, SEL_CallFuncO aSelector); 
-
+  
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
