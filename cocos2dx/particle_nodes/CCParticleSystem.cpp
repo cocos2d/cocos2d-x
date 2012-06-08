@@ -534,7 +534,7 @@ bool CCParticleSystem::isFull()
 }
 
 // ParticleSystem - MainLoop
-void CCParticleSystem::update(ccTime dt)
+void CCParticleSystem::update(float dt)
 {
     CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 

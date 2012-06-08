@@ -28,7 +28,7 @@ bool Bug624Layer::init()
     return false;
 }
 
-void Bug624Layer::switchLayer(ccTime dt)
+void Bug624Layer::switchLayer(float dt)
 {
     unschedule(schedule_selector(Bug624Layer::switchLayer));
 
@@ -65,7 +65,7 @@ bool Bug624Layer2::init()
     return false;
 }
 
-void Bug624Layer2::switchLayer(ccTime dt)
+void Bug624Layer2::switchLayer(float dt)
 {
     unschedule(schedule_selector(Bug624Layer::switchLayer));
 

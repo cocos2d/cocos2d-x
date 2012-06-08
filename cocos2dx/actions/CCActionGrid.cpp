@@ -30,7 +30,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCGridAction
 
-CCGridAction* CCGridAction::actionWithSize(const ccGridSize& gridSize, ccTime duration)
+CCGridAction* CCGridAction::actionWithSize(const ccGridSize& gridSize, float duration)
 {
     CCGridAction *pAction = new CCGridAction();
     if (pAction)
@@ -48,7 +48,7 @@ CCGridAction* CCGridAction::actionWithSize(const ccGridSize& gridSize, ccTime du
     return pAction;
 }
 
-bool CCGridAction::initWithSize(const ccGridSize& gridSize, ccTime duration)
+bool CCGridAction::initWithSize(const ccGridSize& gridSize, float duration)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
@@ -181,7 +181,7 @@ void CCTiledGrid3DAction::setTile(const ccGridSize& pos, const ccQuad3& coords)
 
 // implementation CCAccelDeccelAmplitude
 
-CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::actionWithAction(CCAction *pAction, ccTime duration)
+CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::actionWithAction(CCAction *pAction, float duration)
 {
     CCAccelDeccelAmplitude *pRet = new CCAccelDeccelAmplitude();
     if (pRet)
@@ -199,7 +199,7 @@ CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::actionWithAction(CCAction *pActi
     return pRet;
 }
 
-bool CCAccelDeccelAmplitude::initWithAction(CCAction *pAction, ccTime duration)
+bool CCAccelDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
@@ -224,7 +224,7 @@ void CCAccelDeccelAmplitude::startWithTarget(CCNode *pTarget)
     m_pOther->startWithTarget(pTarget);
 }
 
-void CCAccelDeccelAmplitude::update(ccTime time)
+void CCAccelDeccelAmplitude::update(float time)
 {
     float f = time * 2;
 
@@ -244,7 +244,7 @@ CCActionInterval* CCAccelDeccelAmplitude::reverse(void)
 
 // implementation of AccelAmplitude
 
-CCAccelAmplitude* CCAccelAmplitude::actionWithAction(CCAction *pAction, ccTime duration)
+CCAccelAmplitude* CCAccelAmplitude::actionWithAction(CCAction *pAction, float duration)
 {
     CCAccelAmplitude *pRet = new CCAccelAmplitude();
     if (pRet)
@@ -262,7 +262,7 @@ CCAccelAmplitude* CCAccelAmplitude::actionWithAction(CCAction *pAction, ccTime d
     return pRet;
 }
 
-bool CCAccelAmplitude::initWithAction(CCAction *pAction, ccTime duration)
+bool CCAccelAmplitude::initWithAction(CCAction *pAction, float duration)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
@@ -287,7 +287,7 @@ void CCAccelAmplitude::startWithTarget(CCNode *pTarget)
     m_pOther->startWithTarget(pTarget);
 }
 
-void CCAccelAmplitude::update(ccTime time)
+void CCAccelAmplitude::update(float time)
 {
     ((CCAccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(time, m_fRate));
     m_pOther->update(time);
@@ -300,7 +300,7 @@ CCActionInterval* CCAccelAmplitude::reverse(void)
 
 // DeccelAmplitude
 
-CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(CCAction *pAction, ccTime duration)
+CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(CCAction *pAction, float duration)
 {
     CCDeccelAmplitude *pRet = new CCDeccelAmplitude();
     if (pRet)
@@ -318,7 +318,7 @@ CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(CCAction *pAction, ccTime
     return pRet;
 }
 
-bool CCDeccelAmplitude::initWithAction(CCAction *pAction, ccTime duration)
+bool CCDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
@@ -343,7 +343,7 @@ void CCDeccelAmplitude::startWithTarget(CCNode *pTarget)
     m_pOther->startWithTarget(pTarget);
 }
 
-void CCDeccelAmplitude::update(ccTime time)
+void CCDeccelAmplitude::update(float time)
 {
     ((CCDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf((1 - time), m_fRate));
     m_pOther->update(time);

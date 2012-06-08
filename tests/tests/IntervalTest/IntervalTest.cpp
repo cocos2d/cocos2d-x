@@ -75,7 +75,7 @@ IntervalLayer::~IntervalLayer()
     }
 }
 
-void IntervalLayer::update(ccTime dt)
+void IntervalLayer::update(float dt)
 {
     m_time0 +=dt;
     char time[10] = {0};
@@ -92,7 +92,7 @@ void IntervalLayer::onPause(CCObject* pSender)
 
 }
 
-void IntervalLayer::step1(ccTime dt)
+void IntervalLayer::step1(float dt)
 {
     m_time1 +=dt;
 
@@ -101,7 +101,7 @@ void IntervalLayer::step1(ccTime dt)
     m_label1->setString( str );
 }
 
-void IntervalLayer::step2(ccTime dt)
+void IntervalLayer::step2(float dt)
 {
     m_time2 +=dt;
 
@@ -110,7 +110,7 @@ void IntervalLayer::step2(ccTime dt)
     m_label2->setString( str ); 
 }
 
-void IntervalLayer::step3(ccTime dt)
+void IntervalLayer::step3(float dt)
 {
     m_time3 +=dt;
 
@@ -119,7 +119,7 @@ void IntervalLayer::step3(ccTime dt)
     m_label3->setString( str ); 
 }
 
-void IntervalLayer::step4(ccTime dt)
+void IntervalLayer::step4(float dt)
 {
     m_time4 +=dt;
 

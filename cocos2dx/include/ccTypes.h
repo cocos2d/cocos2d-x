@@ -321,11 +321,6 @@ typedef enum
     
 } ccResolutionType;
 
-//! delta time type
-//! if you want more resolution redefine it as a double
-typedef float ccTime;
-//typedef double ccTime;
-
 typedef enum 
 {
     CCTextAlignmentLeft,
@@ -352,7 +347,7 @@ typedef struct _ccT2F_Quad
 typedef struct
 {
     ccT2F_Quad texCoords;
-    ccTime delay;
+    float delay;
     CCSize size; 
 } ccAnimationFrameData;
 

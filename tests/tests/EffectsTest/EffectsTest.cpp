@@ -39,7 +39,7 @@ static std::string effectsList[] =
 class Shaky3DDemo : public CCShaky3D 
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCShaky3D::actionWithRange(5, false, ccg(15,10), t);
     }
@@ -48,7 +48,7 @@ public:
 class Waves3DDemo : public CCWaves3D 
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCWaves3D::actionWithWaves(5, 40, ccg(15,10), t);
     }
@@ -57,7 +57,7 @@ public:
 class FlipX3DDemo : public CCFlipX3D 
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCFlipX3D* flipx  = CCFlipX3D::actionWithDuration(t);
         CCActionInterval* flipx_back = flipx->reverse();
@@ -70,7 +70,7 @@ public:
 class FlipY3DDemo : public CCFlipY3D 
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCFlipY3D* flipy  = CCFlipY3D::actionWithDuration(t);
         CCActionInterval* flipy_back = flipy->reverse();
@@ -83,7 +83,7 @@ public:
 class Lens3DDemo : public CCLens3D 
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
         return CCLens3D::actionWithPosition(CCPointMake(size.width/2,size.height/2), 240, ccg(15,10), t); 
@@ -94,7 +94,7 @@ public:
 class Ripple3DDemo : public CCRipple3D 
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
         return CCRipple3D::actionWithPosition(CCPointMake(size.width/2,size.height/2), 240, 4, 160, ccg(32,24), t);
@@ -105,7 +105,7 @@ public:
 class LiquidDemo : public CCLiquid
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCLiquid::actionWithWaves(4, 20, ccg(16,12), t); 
     }
@@ -115,7 +115,7 @@ public:
 class WavesDemo : public CCWaves 
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCWaves::actionWithWaves(4, 20, true, true, ccg(16,12), t);  
     }
@@ -125,7 +125,7 @@ public:
 class TwirlDemo : public CCTwirl 
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
         return CCTwirl::actionWithPosition(CCPointMake(size.width/2, size.height/2), 1, 2.5f, ccg(12,8), t); 
@@ -136,7 +136,7 @@ public:
 class ShakyTiles3DDemo : public CCShakyTiles3D
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCShakyTiles3D::actionWithRange(5, false, ccg(16,12), t) ;
     }
@@ -146,7 +146,7 @@ public:
 class ShatteredTiles3DDemo : public CCShatteredTiles3D
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCShatteredTiles3D::actionWithRange(5, false, ccg(16,12), t); 
     }
@@ -156,7 +156,7 @@ public:
 class ShuffleTilesDemo : public CCShuffleTiles
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCShuffleTiles* shuffle = CCShuffleTiles::actionWithSeed(25, ccg(16,12), t);
         CCActionInterval* shuffle_back = shuffle->reverse();
@@ -170,7 +170,7 @@ public:
 class FadeOutTRTilesDemo : public CCFadeOutTRTiles
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCFadeOutTRTiles* fadeout = CCFadeOutTRTiles::actionWithSize(ccg(16,12), t);
         CCActionInterval* back = fadeout->reverse();
@@ -184,7 +184,7 @@ public:
 class FadeOutBLTilesDemo : public CCFadeOutBLTiles
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCFadeOutBLTiles* fadeout = CCFadeOutBLTiles::actionWithSize(ccg(16,12), t);
         CCActionInterval* back = fadeout->reverse();
@@ -198,7 +198,7 @@ public:
 class FadeOutUpTilesDemo : public CCFadeOutUpTiles
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCFadeOutUpTiles* fadeout = CCFadeOutUpTiles::actionWithSize(ccg(16,12), t);
         CCActionInterval* back = fadeout->reverse();
@@ -211,7 +211,7 @@ public:
 class FadeOutDownTilesDemo : public CCFadeOutDownTiles
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCFadeOutDownTiles* fadeout = CCFadeOutDownTiles::actionWithSize(ccg(16,12), t);
         CCActionInterval* back = fadeout->reverse();
@@ -224,7 +224,7 @@ public:
 class TurnOffTilesDemo : public CCTurnOffTiles
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCTurnOffTiles* fadeout = CCTurnOffTiles::actionWithSeed(25, ccg(48,32) , t);
         CCActionInterval* back = fadeout->reverse();
@@ -237,7 +237,7 @@ public:
 class WavesTiles3DDemo : public CCWavesTiles3D
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCWavesTiles3D::actionWithWaves(4, 120, ccg(15,10), t); 
     }
@@ -246,7 +246,7 @@ public:
 class JumpTiles3DDemo : public CCJumpTiles3D
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
         return CCJumpTiles3D::actionWithJumps(2, 30, ccg(15,10), t); 
@@ -256,7 +256,7 @@ public:
 class SplitRowsDemo : public CCSplitRows
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCSplitRows::actionWithRows(9, t); 
     }
@@ -265,7 +265,7 @@ public:
 class SplitColsDemo : public CCSplitCols
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         return CCSplitCols::actionWithCols(9, t); 
     }
@@ -274,7 +274,7 @@ public:
 class PageTurn3DDemo : public CCPageTurn3D
 {
 public:
-    static CCActionInterval* actionWithDuration(ccTime t)
+    static CCActionInterval* actionWithDuration(float t)
     {
         CCDirector::sharedDirector()->setDepthTest(true);
         return CCPageTurn3D::actionWithSize(ccg(15,10), t); 
@@ -288,7 +288,7 @@ public:
 //------------------------------------------------------------------
 #define MAX_LAYER    22
 
-CCActionInterval* createEffect(int nIndex, ccTime t)
+CCActionInterval* createEffect(int nIndex, float t)
 {
 
     CCDirector::sharedDirector()->setDepthTest(false);
@@ -393,7 +393,7 @@ TextLayer::TextLayer(void)
     schedule( schedule_selector(TextLayer::checkAnim) );
 }
 
-void TextLayer::checkAnim(ccTime dt)
+void TextLayer::checkAnim(float dt)
 {
     CCNode* s2 = getChildByTag(kTagBackground);
     if ( s2->numberOfRunningActions() == 0 && s2->getGrid() != NULL)

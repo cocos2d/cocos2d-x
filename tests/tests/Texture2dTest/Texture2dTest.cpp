@@ -1133,7 +1133,7 @@ TextureAsync::~TextureAsync()
     CCTextureCache::sharedTextureCache()->removeAllTextures();
 }
 
-void TextureAsync::loadImages(ccTime dt)
+void TextureAsync::loadImages(float dt)
 {
     for( int i=0;i < 8;i++) {
         for( int j=0;j < 8; j++) {

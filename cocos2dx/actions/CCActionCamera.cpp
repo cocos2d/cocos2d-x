@@ -116,7 +116,7 @@ void CCOrbitCamera::startWithTarget(CCNode *pTarget)
     m_fRadX = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleX);
 }
 
-void CCOrbitCamera::update(ccTime dt)
+void CCOrbitCamera::update(float dt)
 {
     float r = (m_fRadius + m_fDeltaRadius * dt) * CCCamera::getZEye();
     float za = m_fRadZ + m_fRadDeltaZ * dt;

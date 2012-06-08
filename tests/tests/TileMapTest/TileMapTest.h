@@ -41,7 +41,7 @@ public:
     TileMapEditTest (void);
     virtual std::string title();
 
-    void updateMap(ccTime dt);
+    void updateMap(float dt);
 };
 
 class TMXOrthoTest : public TileDemo
@@ -72,7 +72,7 @@ class TMXOrthoTest4 : public TileDemo
 {
 public:
     TMXOrthoTest4(void);
-    void removeSprite(ccTime dt);
+    void removeSprite(float dt);
     virtual std::string title();
 };
 
@@ -85,9 +85,9 @@ public:
     virtual std::string title();
 
     void removeSprite(CCNode* sender);
-    void updateCol(ccTime dt);
-    void repaintWithGID(ccTime dt);
-    void removeTiles(ccTime dt);
+    void updateCol(float dt);
+    void repaintWithGID(float dt);
+    void removeTiles(float dt);
 };
 
 class TMXHexTest : public TileDemo
@@ -173,7 +173,7 @@ public:
     virtual void onExit(void);
 
     ~TMXIsoZorder();
-    void repositionSprite(ccTime dt);
+    void repositionSprite(float dt);
 };
 
 class TMXOrthoZorder : public TileDemo
@@ -185,7 +185,7 @@ public:
     virtual std::string subtitle();
 
     virtual ~TMXOrthoZorder();
-    void repositionSprite(ccTime dt);
+    void repositionSprite(float dt);
 };
 
 class TMXIsoVertexZ : public TileDemo
@@ -197,7 +197,7 @@ public:
     virtual std::string subtitle();
 
     ~TMXIsoVertexZ();
-    void repositionSprite(ccTime dt);
+    void repositionSprite(float dt);
     virtual void onEnter();
     virtual void onExit();
 };
@@ -211,7 +211,7 @@ public:
     virtual std::string subtitle();
 
     ~TMXOrthoVertexZ();
-    void repositionSprite(ccTime dt);
+    void repositionSprite(float dt);
     virtual void onEnter();
     virtual void onExit();
 };
@@ -253,7 +253,7 @@ public:
     TMXOrthoFlipRunTimeTest();
     virtual std::string title();
     virtual std::string subtitle();
-    void flipIt(ccTime dt);
+    void flipIt(float dt);
 };
 
 class TMXOrthoFromXMLTest : public TileDemo 
