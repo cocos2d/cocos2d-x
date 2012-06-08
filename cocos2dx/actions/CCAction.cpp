@@ -94,13 +94,13 @@ bool CCAction::isDone()
     return true;
 }
 
-void CCAction::step(ccTime dt)
+void CCAction::step(float dt)
 {
     CC_UNUSED_PARAM(dt);
     CCLOG("[Action step]. override me");
 }
 
-void CCAction::update(ccTime time)
+void CCAction::update(float time)
 {
     CC_UNUSED_PARAM(time);
     CCLOG("[Action update]. override me");
@@ -178,7 +178,7 @@ void CCSpeed::stop()
     CCAction::stop();
 }
 
-void CCSpeed::step(ccTime dt)
+void CCSpeed::step(float dt)
 {
     m_pInnerAction->step(dt * m_fSpeed);
 }
@@ -303,7 +303,7 @@ CCObject *CCFollow::copyWithZone(CCZone *pZone)
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
-void CCFollow::step(ccTime dt)
+void CCFollow::step(float dt)
 {
     CC_UNUSED_PARAM(dt);
 

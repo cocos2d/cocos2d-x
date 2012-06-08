@@ -151,7 +151,7 @@ void MenuLayerMainMenu::menuCallbackConfig(CCObject* sender)
     ((CCLayerMultiplex*)m_pParent)->switchTo(3);
 }
 
-void MenuLayerMainMenu::allowTouches(ccTime dt)
+void MenuLayerMainMenu::allowTouches(float dt)
 {
     CCDirector* pDirector = CCDirector::sharedDirector();
     pDirector->getTouchDispatcher()->setPriority(kCCMenuHandlerPriority+1, this);

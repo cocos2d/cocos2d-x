@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		15527950157C64F9007CC855 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1552794F157C64F9007CC855 /* Shaders */; };
 		158F259C1574BDE20092E383 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 158F259B1574BDE20092E383 /* CCStdC.h */; };
+		15D4B26C15808F2E00729646 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = 15D4B26B15808F2E00729646 /* CCActionCatmullRom.h */; };
+		15D4B26F15808F7B00729646 /* CCActionCatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15D4B26E15808F7A00729646 /* CCActionCatmullRom.cpp */; };
 		15DD6D8E156DD2E6003E7567 /* fps_images.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8C156DD2E6003E7567 /* fps_images.fnt */; };
 		15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8D156DD2E6003E7567 /* fps_images.png */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
@@ -641,6 +643,8 @@
 /* Begin PBXFileReference section */
 		1552794F157C64F9007CC855 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		158F259B1574BDE20092E383 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
+		15D4B26B15808F2E00729646 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
+		15D4B26E15808F7A00729646 /* CCActionCatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCatmullRom.cpp; sourceTree = "<group>"; };
 		15DD6D8C156DD2E6003E7567 /* fps_images.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fps_images.fnt; sourceTree = "<group>"; };
 		15DD6D8D156DD2E6003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1512,6 +1516,8 @@
 				781C377A1547F9DC00633F88 /* CCActionTiledGrid.h */,
 				781C377B1547F9DC00633F88 /* CCActionTween.cpp */,
 				781C377C1547F9DC00633F88 /* CCActionTween.h */,
+				15D4B26B15808F2E00729646 /* CCActionCatmullRom.h */,
+				15D4B26E15808F7A00729646 /* CCActionCatmullRom.cpp */,
 			);
 			path = actions;
 			sourceTree = "<group>";
@@ -3278,6 +3284,7 @@
 				D41E6055155145AB001A12E9 /* CCBReader.h in Headers */,
 				D41F734A155686AB00A475EA /* CCBCustomClass.h in Headers */,
 				158F259C1574BDE20092E383 /* CCStdC.h in Headers */,
+				15D4B26C15808F2E00729646 /* CCActionCatmullRom.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3617,6 +3624,7 @@
 				787FAAD31545336200B3AD0A /* MutiTouchTest.cpp in Sources */,
 				D41E604815514587001A12E9 /* CocosBuilderTest.cpp in Sources */,
 				D41E604915514587001A12E9 /* HelloCocosBuilder.cpp in Sources */,
+				15D4B26F15808F7B00729646 /* CCActionCatmullRom.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

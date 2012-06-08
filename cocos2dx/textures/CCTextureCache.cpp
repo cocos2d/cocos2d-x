@@ -330,7 +330,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     sem_post(s_pSem);
 }
 
-void CCTextureCache::addImageAsyncCallBack(ccTime dt)
+void CCTextureCache::addImageAsyncCallBack(float dt)
 {
     // the image is generated in loading thread
     std::queue<ImageInfo*> *imagesQueue = s_pImageQueue;

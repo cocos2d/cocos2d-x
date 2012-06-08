@@ -148,7 +148,7 @@ void ChipmunkAccelTouchTestLayer::initPhysics()
     }
 }
 
-void ChipmunkAccelTouchTestLayer::update(ccTime delta)
+void ChipmunkAccelTouchTestLayer::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;

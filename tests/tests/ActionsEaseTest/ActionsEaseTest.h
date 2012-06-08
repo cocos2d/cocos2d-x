@@ -35,7 +35,7 @@ public:
     void onEnter();
     virtual std::string title();
 
-    void testStopAction(ccTime dt);
+    void testStopAction(float dt);
 };
 
 class SpriteEaseInOut : public EaseSpriteDemo
@@ -121,7 +121,7 @@ public:
     void onEnter();
     virtual std::string title();
 
-    void altertime(ccTime dt);
+    void altertime(float dt);
 };
 
 class ActionsEaseTestScene : public TestScene

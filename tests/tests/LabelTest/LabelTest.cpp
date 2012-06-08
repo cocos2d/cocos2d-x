@@ -279,7 +279,7 @@ LabelAtlasTest::LabelAtlasTest()
     
 }
 
-void LabelAtlasTest::step(ccTime dt)
+void LabelAtlasTest::step(float dt)
 {
     m_time += dt;
     char string[12] = {0};
@@ -333,7 +333,7 @@ LabelAtlasColorTest::LabelAtlasColorTest()
     schedule( schedule_selector(LabelAtlasColorTest::step) ); //:@selector(step:)];
 }
 
-void LabelAtlasColorTest::step(ccTime dt)
+void LabelAtlasColorTest::step(float dt)
 {
     m_time += dt;
     char string[12] = {0};
@@ -413,7 +413,7 @@ Atlas3::Atlas3()
     schedule( schedule_selector(Atlas3::step) );//:@selector(step:)];
 }
 
-void Atlas3::step(ccTime dt)
+void Atlas3::step(float dt)
 {
     m_time += dt;
     //std::string string;
@@ -512,7 +512,7 @@ void Atlas4::draw()
     ccDrawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
 }
 
-void Atlas4::step(ccTime dt)
+void Atlas4::step(float dt)
 {
     m_time += dt;
     char string[10] = {0};
@@ -780,7 +780,7 @@ LabelsEmpty::LabelsEmpty()
     setEmpty = false;
 }
 
-void LabelsEmpty::updateStrings(ccTime dt)
+void LabelsEmpty::updateStrings(float dt)
 {
     CCLabelBMFont* label1 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas1);
     CCLabelTTF* label2 = (CCLabelTTF*) getChildByTag(kTagBitmapAtlas2);

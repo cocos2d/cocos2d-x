@@ -43,7 +43,7 @@ class PauseTest : public ActionManagerTest
 public:
     virtual std::string title();
     virtual void onEnter();
-    void unpause(ccTime dt);
+    void unpause(float dt);
 };
 
 class RemoveTest : public ActionManagerTest
@@ -59,7 +59,7 @@ class ResumeTest : public ActionManagerTest
 public:
     virtual std::string title();
     virtual void onEnter();
-    void resumeGrossini(ccTime time);
+    void resumeGrossini(float time);
 };
 
 class ActionManagerTestScene : public TestScene

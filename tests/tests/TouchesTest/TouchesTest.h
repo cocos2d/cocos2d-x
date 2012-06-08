@@ -29,7 +29,7 @@ public:
     ~PongLayer();
 
     void resetAndScoreBallForPlayer(int player);
-    void doStep(ccTime delta);
+    void doStep(float delta);
 };
 
 #endif
