@@ -229,7 +229,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
     CCAssert(pszPlist, "plist filename should not be NULL");
 
-    if (m_pLoadedFileNames->find(pszPlist) != m_pLoadedFileNames->end())
+    if (m_pLoadedFileNames->find(pszPlist) == m_pLoadedFileNames->end())
     {
         const char *pszPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pszPlist);
         CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(pszPath);
