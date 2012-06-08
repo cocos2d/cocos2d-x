@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#if CCB_READER_VERSION == 1
+
 #include "CCBReader.h"
 #include "CCBCustomClass.h"
 
@@ -705,3 +707,4 @@ CCNode* CCBReader::nodeGraphFromFile(const char* file, CCNode* owner)
     return nodeGraphFromDictionary(dict, NULL, ccbFileDir.c_str(), owner);
 }
 
+#endif
