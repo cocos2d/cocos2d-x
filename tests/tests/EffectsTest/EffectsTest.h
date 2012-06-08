@@ -18,7 +18,7 @@ public:
     TextLayer(void);
     ~TextLayer(void);
 
-    void checkAnim(ccTime dt);
+    void checkAnim(float dt);
 
     virtual void onEnter();
 

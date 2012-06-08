@@ -56,7 +56,7 @@ protected:
 
 private:
     // @todo void addImageWithAsyncObject(CCAsyncObject* async);
-    void addImageAsyncCallBack(ccTime dt);
+    void addImageAsyncCallBack(float dt);
 
 public:
 

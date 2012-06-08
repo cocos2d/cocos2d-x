@@ -26,12 +26,13 @@ THE SOFTWARE.
 #define __CCGEMETRY_H__
 
 #include "CCPlatformMacros.h"
+#include "CCObject.h"
 
 NS_CC_BEGIN
 
 typedef float CCFloat;
 
-class CC_DLL CCPoint
+class CC_DLL CCPoint : public CCObject
 {
 public:
     float x;
@@ -47,7 +48,7 @@ public:
     static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
 
-class CC_DLL CCSize
+class CC_DLL CCSize : public CCObject
 {
 public:
     float width;
@@ -63,7 +64,7 @@ public:
     static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
 
-class CC_DLL CCRect
+class CC_DLL CCRect : public CCObject
 {
 public:
     CCPoint origin;

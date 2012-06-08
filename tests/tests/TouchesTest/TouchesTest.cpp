@@ -103,7 +103,7 @@ void PongLayer::resetAndScoreBallForPlayer(int player)
     // TODO -- scoring
 }
 
-void PongLayer::doStep(ccTime delta)
+void PongLayer::doStep(float delta)
 {
     m_ball->move(delta);
 

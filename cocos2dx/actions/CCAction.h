@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __ACTIONS_CCACTION_H__
 
 #include "CCObject.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN
 
@@ -62,7 +63,7 @@ public:
     virtual void stop(void);
 
     //! called every frame with it's delta time. DON'T override unless you know what you are doing.
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
 
     /** 
     called once per frame. time a value between 0 and 1
@@ -72,7 +73,7 @@ public:
     - 0.5 means that the action is in the middle
     - 1 means that the action is over
     */
-    virtual void update(ccTime time);
+    virtual void update(float time);
     
     inline CCNode* getTarget(void) { return m_pTarget; }
     /** The action will modify the target properties. */
@@ -122,15 +123,15 @@ public:
     {}
     virtual ~CCFiniteTimeAction(){}
     //! get duration in seconds of the action
-    inline ccTime getDuration(void) { return m_fDuration; }
+    inline float getDuration(void) { return m_fDuration; }
     //! set duration in seconds of the action
-    inline void setDuration(ccTime duration) { m_fDuration = duration; }
+    inline void setDuration(float duration) { m_fDuration = duration; }
 
     /** returns a reversed action */
     virtual CCFiniteTimeAction* reverse(void);
 protected:
     //! duration in seconds
-    ccTime m_fDuration;
+    float m_fDuration;
 };
 
 class CCActionInterval;
@@ -161,7 +162,7 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode* pTarget);
     virtual void stop();
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
     virtual bool isDone(void);
     virtual CCActionInterval* reverse(void);
 
@@ -181,10 +182,6 @@ protected:
     CCActionInterval *m_pInnerAction;
 };
 
-
-class CCNode;
-class CCPoint;
-class CCRect;
 /** 
 @brief CCFollow is an action that "follows" a node.
 
@@ -219,7 +216,7 @@ public:
     bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect);
 
     virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
     virtual bool isDone(void);
     virtual void stop(void);
 

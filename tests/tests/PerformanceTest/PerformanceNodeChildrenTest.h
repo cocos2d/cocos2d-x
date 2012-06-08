@@ -37,7 +37,7 @@ public:
     ~IterateSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(ccTime dt) = 0;
+    virtual void update(float dt) = 0;
     virtual std::string profilerName();
 
 protected:
@@ -51,7 +51,7 @@ protected:
 class IterateSpriteSheetFastEnum : public IterateSpriteSheet
 {
 public:
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 
     virtual std::string title();
     virtual std::string subtitle();
@@ -61,7 +61,7 @@ public:
 class IterateSpriteSheetCArray : public IterateSpriteSheet
 {
 public:
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 
     virtual std::string title();
     virtual std::string subtitle();
@@ -74,7 +74,7 @@ public:
     ~AddRemoveSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(ccTime dt) = 0;
+    virtual void update(float dt) = 0;
     virtual std::string profilerName();
 
 protected:
@@ -88,7 +88,7 @@ protected:
 class AddSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 
     virtual std::string title();
     virtual std::string subtitle();
@@ -98,7 +98,7 @@ public:
 class RemoveSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 
     virtual std::string title();
     virtual std::string subtitle();
@@ -108,7 +108,7 @@ public:
 class ReorderSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 
     virtual std::string title();
     virtual std::string subtitle();

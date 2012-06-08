@@ -102,10 +102,10 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     bool init();
-    void update(ccTime dt);
+    void update(float dt);
 protected:
     CCLabelBMFont* m_pLabel;
-    ccTime           m_fAccum;
+    float           m_fAccum;
 };
 
 class ShaderNode : public CCNode
@@ -116,7 +116,7 @@ public:
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
 
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
     virtual void setPosition(const CCPoint &newPosition);
     virtual void draw();
 

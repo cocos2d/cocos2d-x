@@ -115,7 +115,7 @@ void CCActionEase::stop(void)
     CCActionInterval::stop();
 }
 
-void CCActionEase::update(ccTime time)
+void CCActionEase::update(float time)
 {
     m_pOther->update(time);
 }
@@ -229,7 +229,7 @@ CCObject* CCEaseIn::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseIn::update(ccTime time)
+void CCEaseIn::update(float time)
 {
     m_pOther->update(powf(time, m_fRate));
 }
@@ -281,7 +281,7 @@ CCObject* CCEaseOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseOut::update(ccTime time)
+void CCEaseOut::update(float time)
 {
     m_pOther->update(powf(time, 1 / m_fRate));
 }
@@ -333,7 +333,7 @@ CCObject* CCEaseInOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseInOut::update(ccTime time)
+void CCEaseInOut::update(float time)
 {
     time *= 2;
     if (time < 1)
@@ -394,7 +394,7 @@ CCObject* CCEaseExponentialIn::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseExponentialIn::update(ccTime time)
+void CCEaseExponentialIn::update(float time)
 {
     m_pOther->update(time == 0 ? 0 : powf(2, 10 * (time/1 - 1)) - 1 * 0.001f);
 }
@@ -446,7 +446,7 @@ CCObject* CCEaseExponentialOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseExponentialOut::update(ccTime time)
+void CCEaseExponentialOut::update(float time)
 {
     m_pOther->update(time == 1 ? 1 : (-powf(2, -10 * time / 1) + 1));
 }
@@ -498,7 +498,7 @@ CCObject* CCEaseExponentialInOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseExponentialInOut::update(ccTime time)
+void CCEaseExponentialInOut::update(float time)
 {
     time /= 0.5f;
     if (time < 1)
@@ -560,7 +560,7 @@ CCObject* CCEaseSineIn::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseSineIn::update(ccTime time)
+void CCEaseSineIn::update(float time)
 {
     m_pOther->update(-1 * cosf(time * (float)M_PI_2) + 1);
 }
@@ -612,7 +612,7 @@ CCObject* CCEaseSineOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseSineOut::update(ccTime time)
+void CCEaseSineOut::update(float time)
 {
     m_pOther->update(sinf(time * (float)M_PI_2));
 }
@@ -664,7 +664,7 @@ CCObject* CCEaseSineInOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseSineInOut::update(ccTime time)
+void CCEaseSineInOut::update(float time)
 {
     m_pOther->update(-0.5f * (cosf((float)M_PI * time) - 1));
 }
@@ -817,9 +817,9 @@ CCObject* CCEaseElasticIn::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseElasticIn::update(ccTime time)
+void CCEaseElasticIn::update(float time)
 {
-    ccTime newT = 0;
+    float newT = 0;
     if (time == 0 || time == 1)
     {
         newT = time;
@@ -899,9 +899,9 @@ CCObject *CCEaseElasticOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseElasticOut::update(ccTime time)
+void CCEaseElasticOut::update(float time)
 {
-    ccTime newT = 0;
+    float newT = 0;
     if (time == 0 || time == 1)
     {
         newT = time;
@@ -981,9 +981,9 @@ CCObject* CCEaseElasticInOut::copyWithZone(CCZone *pZone)
 
 }
 
-void CCEaseElasticInOut::update(ccTime time)
+void CCEaseElasticInOut::update(float time)
 {
-    ccTime newT = 0;
+    float newT = 0;
     if (time == 0 || time == 1)
     {
         newT = time;
@@ -996,7 +996,7 @@ void CCEaseElasticInOut::update(ccTime time)
             m_fPeriod = 0.3f * 1.5f;
         }
 
-        ccTime s = m_fPeriod / 4;
+        float s = m_fPeriod / 4;
 
         time = time - 1;
         if (time < 0)
@@ -1059,7 +1059,7 @@ CCObject* CCEaseBounce::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-ccTime CCEaseBounce::bounceTime(ccTime time)
+float CCEaseBounce::bounceTime(float time)
 {
     if (time < 1 / 2.75)
     {
@@ -1127,9 +1127,9 @@ CCObject* CCEaseBounceIn::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseBounceIn::update(ccTime time)
+void CCEaseBounceIn::update(float time)
 {
-    ccTime newT = 1 - bounceTime(1 - time);
+    float newT = 1 - bounceTime(1 - time);
     m_pOther->update(newT);
 }
 
@@ -1180,9 +1180,9 @@ CCObject* CCEaseBounceOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseBounceOut::update(ccTime time)
+void CCEaseBounceOut::update(float time)
 {
-    ccTime newT = bounceTime(time);
+    float newT = bounceTime(time);
     m_pOther->update(newT);
 }
 
@@ -1233,9 +1233,9 @@ CCObject* CCEaseBounceInOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseBounceInOut::update(ccTime time)
+void CCEaseBounceInOut::update(float time)
 {
-    ccTime newT = 0;
+    float newT = 0;
     if (time < 0.5f)
     {
         time = time * 2;
@@ -1296,9 +1296,9 @@ CCObject* CCEaseBackIn::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseBackIn::update(ccTime time)
+void CCEaseBackIn::update(float time)
 {
-    ccTime overshoot = 1.70158f;
+    float overshoot = 1.70158f;
     m_pOther->update(time * time * ((overshoot + 1) * time - overshoot));
 }
 
@@ -1349,9 +1349,9 @@ CCObject* CCEaseBackOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseBackOut::update(ccTime time)
+void CCEaseBackOut::update(float time)
 {
-    ccTime overshoot = 1.70158f;
+    float overshoot = 1.70158f;
 
     time = time - 1;
     m_pOther->update(time * time * ((overshoot + 1) * time + overshoot) + 1);
@@ -1404,9 +1404,9 @@ CCObject* CCEaseBackInOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCEaseBackInOut::update(ccTime time)
+void CCEaseBackInOut::update(float time)
 {
-    ccTime overshoot = 1.70158f * 1.525f;
+    float overshoot = 1.70158f * 1.525f;
 
     time = time * 2;
     if (time < 1)

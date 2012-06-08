@@ -51,7 +51,7 @@ void SpriteEase::onEnter()
     schedule(schedule_selector(SpriteEase::testStopAction), 6.25f);
 }
 
-void SpriteEase::testStopAction(ccTime dt)
+void SpriteEase::testStopAction(float dt)
 {
     unschedule(schedule_selector(SpriteEase::testStopAction));
     m_tamara->stopActionByTag(1);
@@ -515,7 +515,7 @@ void SpeedTest::onEnter()
     this->schedule(schedule_selector(SpeedTest::altertime), 1.0f);//:@selector(altertime:) interval:1.0f];
 }
 
-void SpeedTest::altertime(ccTime dt)
+void SpeedTest::altertime(float dt)
 {    
     CCSpeed* action1 = (CCSpeed*)(m_grossini->getActionByTag(kTagAction1));
     CCSpeed* action2 = (CCSpeed*)(m_tamara->getActionByTag(kTagAction1));

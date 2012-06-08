@@ -21,7 +21,7 @@ public:
     void nextCallback(CCObject* pSender);
     void backCallback(CCObject* pSender);
 
-    void step(ccTime dt);
+    void step(float dt);
 
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
@@ -39,7 +39,7 @@ public:
     void nextCallback(CCObject* pSender);
     void backCallback(CCObject* pSender);
 
-    void step(ccTime dt);
+    void step(float dt);
 
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();

@@ -544,18 +544,18 @@ public:
      If the selector is already scheduled, then the interval parameter
      will be updated without scheduling it again.
      */
-    void schedule(SEL_SCHEDULE selector, ccTime interval);
+    void schedule(SEL_SCHEDULE selector, float interval);
 
     /**
      repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
      delay is the amount of time the action will wait before execution
      */
-    void schedule(SEL_SCHEDULE selector, ccTime interval, unsigned int repeat, ccTime delay);
+    void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
 
     /**
      Schedules a selector that runs only once, with a delay of 0 or larger
     */
-    void scheduleOnce(SEL_SCHEDULE selector, ccTime delay);
+    void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /** unschedules a custom selector.*/
     void unschedule(SEL_SCHEDULE selector);
