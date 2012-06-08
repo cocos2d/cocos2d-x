@@ -268,7 +268,7 @@ private:
     /** whether or not the texture has their Alpha premultiplied */
     CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
 
-    CC_PROPERTY_READONLY(bool, m_bHasMipmaps, HasMipmaps);
+    CC_SYNTHESIZE_READONLY(bool, m_bHasMipmaps, HasMipmaps);
 
     /** shader program used by drawAtPoint and drawInRect */
     CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);

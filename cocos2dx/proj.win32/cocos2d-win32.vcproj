@@ -340,6 +340,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCActionCatmullRom.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionCatmullRom.h"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionEase.cpp"
 				>
 			</File>

@@ -370,8 +370,6 @@ CCArray::~CCArray()
     ccArrayFree(data);
 }
 
-
-
 CCObject* CCArray::copyWithZone(CCZone* pZone)
 {
     CCAssert(pZone == NULL, "CCArray should not be inherited.");
@@ -384,128 +382,6 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
         pArray->addObject(pObj->copy()->autorelease());
     }
     return pArray;
-}
-
-//#pragma mark CCArray - sorting 
-
-/** @since 1.1 */ 
-//#pragma mark -
-//#pragma mark CCArray insertionSortUsingCFuncComparator
-
-void CCArray::insertionSortUsingCFuncComparator(cc_comparator comparator)
-{
-//TODO:    cc_insertionSort(data, comparator);
-}
-
-//#pragma mark CCArray qsortUsingCFuncComparator
-
-void CCArray::qsortUsingCFuncComparator(cc_comparator comparator)
-{
-    // stable c qsort is used - cost of sorting:  best n*log(n), average n*log(n)
-    //  qsort(void *, size_t, size_t, int (*)(const void *arg1, const void *arg2));
-
-    qsort(data->arr, data->num, sizeof (CCObject*), comparator);  
-}
-
-//#pragma mark CCArray mergesortLUsingCFuncComparator
-
-void CCArray::mergesortLUsingCFuncComparator(cc_comparator comparator)
-{
-//TODO:    cc_mergesortL(data, sizeof (CCObject*), comparator); 
-}
-
-//#pragma mark CCArray insertionSort with (SEL)selector
-
-void CCArray::insertionSort(SEL_Compare selector) // It sorts source array in ascending order
-{
-    int i,j,length = data->num;
-
-    CCObject* * x = data->arr;
-    CCObject* temp;	
-
-    // insertion sort
-    for(i=1; i<length; i++)
-    {
-        j = i;
-        // continue moving element downwards while order is descending 
-        while( j>0 &&  (x[j-1]->*selector)(x[j]) == CCOrderedDescending )
-        {
-            temp = x[j];
-            x[j] = x[j-1];
-            x[j-1] = temp;
-            j--;
-        }
-    }
-}
-
-static inline int selectorCompare(CCObject* object1,CCObject* object2,SEL_Compare selector)
-{
-    return (int) (object1->*selector)(object2);
-}
-
-void CCArray::sortUsingSelector(SEL_Compare selector)
-{
-    this->sortUsingFunction(selectorCompare, selector);
-}
-
-//#pragma mark CCArray sortUsingFunction
-
-// using a comparison function
-void CCArray::sortUsingFunction(int (*compare)(CCObject*, CCObject*, SEL_Compare) , SEL_Compare context)
-{
-    int h, i, j, k, l, m, n = this->count();
-    CCObject*  A, **B = (CCObject**)malloc( (n/2 + 1) * sizeof(CCObject*));
-
-    // to prevent retain counts from temporarily hitting zero.  
-    for( i=0;i<n;i++)
-    {
-        // [[self objectAtIndex:i] retain]; // prevents compiler warning
-        data->arr[i]->retain();
-    }
-
-    for (h = 1; h < n; h += h)
-    {
-        for (m = n - 1 - h; m >= 0; m -= h + h)
-        {
-            l = m - h + 1;
-            if (l < 0)
-            {
-                l = 0;
-            }
-
-            for (i = 0, j = l; j <= m; i++, j++)
-            {
-                B[i] = this->objectAtIndex(j);
-            }
-
-            for (i = 0, k = l; k < j && j <= m + h; k++)
-            {
-                A = this->objectAtIndex(j);
-                if (compare(A, B[i], context) == CCOrderedDescending)
-                {
-                    this->replaceObjectAtIndex(k, B[i++]);
-                }
-                else
-                {
-                    this->replaceObjectAtIndex(k, A);
-                    j++;
-                }
-            }
-
-            while (k < j)
-            {
-                this->replaceObjectAtIndex(k++, B[i++]);
-            }
-        }
-    }
-
-    for(i=0;i<n;i++)
-    {
-        // [[self objectAtIndex:i] release]; // prevents compiler warning
-        data->arr[i]->release();
-    }
-
-    free(B);
 }
 
 NS_CC_END

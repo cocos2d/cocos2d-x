@@ -202,15 +202,6 @@ public:
     void reverseObjects();
     /* Shrinks the array so the memory footprint corresponds with the number of items */
     void reduceMemoryFootprint();
-
-    // Sorting Array 
-    /** all since @1.1 */
-    void qsortUsingCFuncComparator(cc_comparator comparator);	// c qsort is used for sorting
-    void insertionSortUsingCFuncComparator(cc_comparator comparator);  // insertion sort 
-    void mergesortLUsingCFuncComparator(cc_comparator comparator);	// mergesort
-    void insertionSort(SEL_Compare selector); // It sorts source array in ascending order
-    void sortUsingFunction(int (*compare)(CCObject*, CCObject*, SEL_Compare) , SEL_Compare context);
-    void sortUsingSelector(SEL_Compare selector);
   
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);
