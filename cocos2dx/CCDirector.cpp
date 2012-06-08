@@ -357,7 +357,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
     case kCCDirectorProjection3D:
         {
-//cjh             // reset the viewport if 3d proj & retina display
+//TODO:             // reset the viewport if 3d proj & retina display
 //             if( CC_CONTENT_SCALE_FACTOR() != 1.0f )
 //             {
 //                 glViewport((GLint)-size.width/2, (GLint)-size.height/2, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
@@ -374,7 +374,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
             // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
-//cjh          if (m_pobOpenGLView && m_pobOpenGLView->isIpad() && m_pobOpenGLView->getMainScreenScale() > 1.0f)
+//TODO:         if (m_pobOpenGLView && m_pobOpenGLView->isIpad() && m_pobOpenGLView->getMainScreenScale() > 1.0f)
 //             {
 //                 kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2);
 //             }

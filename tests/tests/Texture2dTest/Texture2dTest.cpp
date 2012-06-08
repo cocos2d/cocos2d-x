@@ -1478,14 +1478,14 @@ void FileUtilsTest::onEnter()
 #if 0 // TODO:(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     // Testint CCFileUtils API
     bool ret = false;
-    ret = CCFileUtils::iPhoneRetinaDisplayFileExistsAtPath("Images/bugs/test_issue_1179.png");
+    ret = CCFileUtils::sharedFileUtils()->iPhoneRetinaDisplayFileExistsAtPath("Images/bugs/test_issue_1179.png");
     if( ret )
         CCLog("Test #3: retinaDisplayFileExistsAtPath: OK");
     else
         CCLog("Test #3: retinaDisplayFileExistsAtPath: FAILED");
 
 
-    ret = CCFileUtils::iPhoneRetinaDisplayFileExistsAtPath("grossini-does_no_exist.png");
+    ret = CCFileUtils::sharedFileUtils()->iPhoneRetinaDisplayFileExistsAtPath("grossini-does_no_exist.png");
     if( !ret )
         CCLog("Test #4: retinaDisplayFileExistsAtPath: OK");
     else
