@@ -146,14 +146,6 @@ void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr);
  matching instances in arr will be removed. */
 void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr);
 
-/** Sends to each object in arr the message identified by given selector. */
-void ccArrayMakeObjectsPerformSelector(ccArray *arr, SEL_CallFunc sel);
-
-void ccArrayMakeObjectsPerformSelectorWithObject(ccArray *arr, SEL_CallFuncO sel, CCObject* object);
-
-void ccArrayMakeObjectPerformSelectorWithArrayObjects(ccArray *arr, SEL_CallFuncO sel, CCObject* object);
-
-
 // #pragma mark -
 // #pragma mark ccCArray for Values (c structures)
 
