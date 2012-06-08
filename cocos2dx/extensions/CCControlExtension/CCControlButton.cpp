@@ -74,7 +74,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         m_zoomOnTouchDown = true;
 
         // Set the default anchor point
-        setIsRelativeAnchorPoint(true);
+        setIgnoreAnchorPointForPosition(false);
         setAnchorPoint(ccp(0.5f, 0.5f));
         
         // Set the nodes

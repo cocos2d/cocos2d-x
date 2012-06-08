@@ -34,7 +34,8 @@ NS_CC_BEGIN
 class CC_DLL CCFileUtils
 {
 public:
-
+    static CCFileUtils* sharedFileUtils();
+    static void purgeFileUtils();
     /**
     @brief Get resource file data
     @param[in]  pszFileName The resource file name which contain the path
@@ -43,7 +44,7 @@ public:
     @return if success,the pointer of data will be returned,or NULL is returned
     @warning If you get the file data succeed,you must delete it after used.
     */
-    static unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+    unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
 
     /**
     @brief Get resource file data from zip file
@@ -52,7 +53,7 @@ public:
     @return if success,the pointer of data will be returned,or NULL is returned
     @warning If you get the file data succeed,you must delete it after used.
     */
-    static unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
+    unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
 
     /** removes the suffix from a path
      * On RetinaDisplay it will remove the -hd suffix
@@ -62,7 +63,7 @@ public:
  
      @since v0.99.5
      */
-    static std::string& removeSuffixFromFile(std::string& path);
+    std::string& removeSuffixFromFile(std::string& path);
 
     /**
     @brief   Generate the absolute path of the file.
@@ -72,7 +73,7 @@ public:
     If you have not set the ResourcePath,the function add "/NEWPLUS/TDA_DATA/UserData/" as default.
     You can set ResourcePath by function void setResourcePath(const char *pszResourcePath);
     */
-    static const char* fullPathFromRelativePath(const char *pszRelativePath);
+    const char* fullPathFromRelativePath(const char *pszRelativePath);
 
     /** Returns the fullpath of an filename including the resolution of the image.
  
@@ -88,10 +89,10 @@ public:
         If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
  
       */
-    static const char* fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType);
+    const char* fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType);
 
     /// @cond
-    static const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+    const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
     /// @endcond
 
     /** Sets the iPhone RetinaDisplay suffix to load resources.
@@ -100,7 +101,7 @@ public:
  
         @since v1.1
      */
-    static void setiPhoneRetinaDisplaySuffix(const char *suffix);
+    void setiPhoneRetinaDisplaySuffix(const char *suffix);
 
     /** Sets the iPad suffix to load resources.
         By default it is "".
@@ -108,7 +109,7 @@ public:
  
 
      */
-    static void setiPadSuffix(const char *suffix);
+    void setiPadSuffix(const char *suffix);
 
     /** Sets the iPad Retina Display suffix to load resources.
         By default it is "-ipadhd".
@@ -116,7 +117,7 @@ public:
  
         @since v1.1
      */
-    static void setiPadRetinaDisplaySuffix(const char *suffix);
+    void setiPadRetinaDisplaySuffix(const char *suffix);
 
     /** Returns whether or not a given filename exists with the iPad suffix.
         Only available on iOS. Not supported on OS X.
@@ -125,8 +126,8 @@ public:
     bool iPadFileExistsAtPath(const char *filename);
 
     /** Returns whether or not a given filename exists with the iPad RetinaDisplay suffix.
-        Only available on iOS. Not supported on OS X.
- 
+     Only available on iOS. Not supported on OS X.
+     @since v2.0
      */
     bool iPadRetinaDisplayFileExistsAtPath(const char *filename);
 
@@ -143,24 +144,19 @@ public:
     In android, if you want to read file other than apk, you shoud use invoke getFileData(), and pass the 
     absolute path.
     */
-    static void setResourcePath(const char *pszResourcePath);
+    void setResourcePath(const char *pszResourcePath);
 
     /**
     @brief   Get the writeable path
     @return  The path that can write/read file
     */
-    static std::string getWriteablePath();
+    std::string getWriteablePath();
 
     /**
     @brief Set/Get whether pop-up a message box when the image load failed
     */
-    static void setIsPopupNotify(bool bNotify);
-    static bool getIsPopupNotify();
-
-    ///////////////////////////////////////////////////
-    // interfaces on ios
-    ///////////////////////////////////////////////////
-    static int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
+    void setIsPopupNotify(bool bNotify);
+    bool getIsPopupNotify();
 };
 
 NS_CC_END

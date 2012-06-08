@@ -42,16 +42,16 @@ ccArray* ccArrayNew(unsigned int capacity) {
 }
 
 /** Frees array after removing all remaining objects. Silently ignores NULL arr. */
-void ccArrayFree(ccArray **arr)
+void ccArrayFree(ccArray*& arr)
 {
-	if( arr == NULL || *arr == NULL) return;
+	if( arr == NULL) return;
 	
-	ccArrayRemoveAllObjects(*arr);
+	ccArrayRemoveAllObjects(arr);
 	
-	free((*arr)->arr);
-	free(*arr);
+	free(arr->arr);
+	free(arr);
 
-    *arr = NULL;
+    arr = NULL;
 }
 
 void ccArrayDoubleCapacity(ccArray *arr)
@@ -267,7 +267,7 @@ ccCArray* ccCArrayNew(unsigned int capacity)
 	
 	ccCArray *arr = (ccCArray*)malloc( sizeof(ccCArray) );
 	arr->num = 0;
-	arr->arr =  (CCARRAY_ID *) malloc( capacity * sizeof(CCObject*) );
+	arr->arr = (void**)malloc( capacity * sizeof(void*) );
 	arr->max = capacity;
 	
 	return arr;
@@ -287,35 +287,40 @@ void ccCArrayFree(ccCArray *arr)
 /** Doubles C array capacity */
 void ccCArrayDoubleCapacity(ccCArray *arr)
 {
-	ccArrayDoubleCapacity(arr);
+    arr->max *= 2;
+    void** newArr = (void**)realloc( arr->arr, arr->max * sizeof(void*) );
+    // will fail when there's not enough memory
+    CCAssert(newArr != NULL, "ccCArrayDoubleCapacity failed. Not enough memory");
+    arr->arr = newArr;
 }
 
 /** Increases array capacity such that max >= num + extra. */
 void ccCArrayEnsureExtraCapacity(ccCArray *arr, unsigned int extra)
 {
-	ccArrayEnsureExtraCapacity(arr,extra);
+    while (arr->max < arr->num + extra)
+        ccCArrayDoubleCapacity(arr);
 }
 
 /** Returns index of first occurence of value, CC_INVALID_INDEX if value not found. */
-unsigned int ccCArrayGetIndexOfValue(ccCArray *arr, CCARRAY_ID value)
+unsigned int ccCArrayGetIndexOfValue(ccCArray *arr, void* value)
 {
 	unsigned int i;
 	
 	for( i = 0; i < arr->num; i++)
     {
-		if( arr->arr[i]->isEqual(value) ) return i;
+		if( arr->arr[i] == value ) return i;
     }
 	return CC_INVALID_INDEX;
 }
 
 /** Returns a Boolean value that indicates whether value is present in the C array. */
-bool ccCArrayContainsValue(ccCArray *arr, CCARRAY_ID value)
+bool ccCArrayContainsValue(ccCArray *arr, void* value)
 {
 	return ccCArrayGetIndexOfValue(arr, value) != CC_INVALID_INDEX;
 }
 
 /** Inserts a value at a certain position. Behaviour undefined if aray doesn't have enough capacity */
-void ccCArrayInsertValueAtIndex( ccCArray *arr, CCARRAY_ID value, unsigned int index)
+void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, unsigned int index)
 {
 	CCAssert( index < arr->max, "ccCArrayInsertValueAtIndex: invalid index");
 	
@@ -332,14 +337,14 @@ void ccCArrayInsertValueAtIndex( ccCArray *arr, CCARRAY_ID value, unsigned int i
 }
 
 /** Appends an value. Bahaviour undefined if array doesn't have enough capacity. */
-void ccCArrayAppendValue(ccCArray *arr, CCARRAY_ID value)
+void ccCArrayAppendValue(ccCArray *arr, void* value)
 {
 	arr->arr[arr->num] = (CCObject*) value;
 	arr->num++;
 }
 
 /** Appends an value. Capacity of arr is increased if needed. */
-void ccCArrayAppendValueWithResize(ccCArray *arr, CCARRAY_ID value)
+void ccCArrayAppendValueWithResize(ccCArray *arr, void* value)
 {
 	ccCArrayEnsureExtraCapacity(arr, 1);
 	ccCArrayAppendValue(arr, value);
@@ -397,7 +402,7 @@ void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, unsigned int index)
 /** Searches for the first occurance of value and removes it. If value is not found the function has no effect.
  @since v0.99.4
  */
-void ccCArrayRemoveValue(ccCArray *arr, CCARRAY_ID value)
+void ccCArrayRemoveValue(ccCArray *arr, void* value)
 {
 	unsigned int index = ccCArrayGetIndexOfValue(arr, value);
 	if (index != CC_INVALID_INDEX)
@@ -446,55 +451,55 @@ void cc_pointerswap(void* a, void* b, size_t width)
 //  http://www.inf.fh-flensburg.de/lang/algorithmen/sortieren/merge/mergiter.htm  
 int cc_mergesortL(ccCArray* array, size_t width, cc_comparator comparator)
 {
-    CCARRAY_ID *arr = array->arr; 
-    int i,j,k,s,m,n= array->num; 
-    
-    CCARRAY_ID *B = (CCARRAY_ID*) malloc((n/2 + 1) * width);
-    for (s = 1; s < n; s += s) 
-    {
-        for (m = n-1-s; m >= 0; m -= s+s)
-        {
-            int lo = MAX(m-(s+1),0); 
-            int hi = m+s; 
-            
-            j = lo;
-			
-            if (m-j > 0)
-            {
-                //triggers a warning when compiled with ARC, B needs to be strong typed, for compiling for obj-c++
-                //memcpy aritmetics aren't allowed on void* types
-                //explicitely casting didn't work
-// #pragma clang diagnostic push
-// #if defined(__has_feature) && __has_feature(objc_arc)				
-// #pragma clang diagnostic ignored "-Warc-non-pod-memaccess"
-// #endif				
-                
-                memcpy(B, &arr[j], (m-j) * width);
-//#pragma clang diagnostic pop
-            }
-            
-            i = 0;
-            j = m;
-            k = lo; 
-            
-            while (k<j  && j <= hi) 
-            {
-                if (comparator(&B[i],&arr[j]) <= 0)
-                {    
-                    cc_pointerswap(&arr[k++],&B[i++], width);
-                }
-				
-                else 
-                {    
-					cc_pointerswap(&arr[k++],&arr[j++], width);
-                }
-            }
-            
-            while (k<j)
-                cc_pointerswap(&arr[k++],&B[i++],width);
-        }
-    }
-   	free(B);
+//     void** arr = array->arr; 
+//     int i,j,k,s,m,n= array->num; 
+//     
+//     void *B = malloc((n/2 + 1) * width);
+//     for (s = 1; s < n; s += s) 
+//     {
+//         for (m = n-1-s; m >= 0; m -= s+s)
+//         {
+//             int lo = MAX(m-(s+1),0); 
+//             int hi = m+s; 
+//             
+//             j = lo;
+// 			
+//             if (m-j > 0)
+//             {
+//                 //triggers a warning when compiled with ARC, B needs to be strong typed, for compiling for obj-c++
+//                 //memcpy aritmetics aren't allowed on void* types
+//                 //explicitely casting didn't work
+// // #pragma clang diagnostic push
+// // #if defined(__has_feature) && __has_feature(objc_arc)				
+// // #pragma clang diagnostic ignored "-Warc-non-pod-memaccess"
+// // #endif				
+//                 
+//                 memcpy(B, &arr[j], (m-j) * width);
+// //#pragma clang diagnostic pop
+//             }
+//             
+//             i = 0;
+//             j = m;
+//             k = lo; 
+//             
+//             while (k<j  && j <= hi) 
+//             {
+//                 if (comparator(&B[i],&arr[j]) <= 0)
+//                 {    
+//                     cc_pointerswap(&arr[k++],&B[i++], width);
+//                 }
+// 				
+//                 else 
+//                 {    
+// 					cc_pointerswap(&arr[k++],&arr[j++], width);
+//                 }
+//             }
+//             
+//             while (k<j)
+//                 cc_pointerswap(&arr[k++],&B[i++],width);
+//         }
+//     }
+//    	free(B);
 	return 0;
 }
 
@@ -509,8 +514,8 @@ void cc_insertionSort(ccCArray* arr, cc_comparator comparator)
 	
 	int i,j,length = arr->num;
 	
-	CCARRAY_ID *x = arr->arr;
-	CCObject* temp;	
+	void** x = arr->arr;
+	void* temp;	
     
 	// insertion sort
 	for(i=1; i<length; i++)

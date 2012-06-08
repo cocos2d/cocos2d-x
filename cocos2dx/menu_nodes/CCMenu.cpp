@@ -119,7 +119,7 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
         // menu in the center of the screen
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        this->ignoreAnchorPointForPosition = true;
+        this->setIgnoreAnchorPointForPosition(true);
         setAnchorPoint(ccp(0.5f, 0.5f));
         this->setContentSize(s);
 

@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
 #include "CCActionCatmullRom.h"
+#include "CCPointExtension.h"
 #include <string.h>
 #include <cmath>
 
@@ -167,9 +168,9 @@ void ccDrawSolidRect( CCPoint origin, CCPoint destination, ccColor4F color )
 {
     CCPoint vertices[] = {
         origin,
-        {destination.x, origin.y},
+        ccp(destination.x, origin.y),
         destination,
-        {origin.x, destination.y},
+        ccp(origin.x, destination.y)
     };
 
     ccDrawSolidPoly(vertices, 4, color );

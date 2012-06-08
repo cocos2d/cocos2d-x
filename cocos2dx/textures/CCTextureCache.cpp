@@ -258,9 +258,9 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     // optimization
 
     std::string pathKey = path;
-    CCFileUtils::removeSuffixFromFile(pathKey);
+    CCFileUtils::sharedFileUtils()->removeSuffixFromFile(pathKey);
 
-    pathKey = CCFileUtils::fullPathFromRelativePath(pathKey.c_str());
+    pathKey = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pathKey.c_str());
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey;
@@ -402,12 +402,12 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
     std::string pathKey = path;
     ccResolutionType resolution = kCCResolutionUnknown;
-    CCFileUtils::removeSuffixFromFile(pathKey);
+    CCFileUtils::sharedFileUtils()->removeSuffixFromFile(pathKey);
 
-    pathKey = CCFileUtils::fullPathFromRelativePath(pathKey.c_str());
+    pathKey = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pathKey.c_str());
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
-    std::string fullpath = pathKey; // (CCFileUtils::fullPathFromRelativePath(path));
+    std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
     if( ! texture ) 
     {
         std::string lowerCase(path);
@@ -440,7 +440,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 
                 CCImage image;                
                 unsigned long nSize;
-                unsigned char *pBuffer = CCFileUtils::getFileData(fullpath.c_str(), "rb", &nSize);
+                unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
                 CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, eImageFormat));
 
                 texture = new CCTexture2D();
@@ -478,7 +478,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
     CCTexture2D * texture;
 
     std::string temp(path);
-    CCFileUtils::removeSuffixFromFile(temp);
+    CCFileUtils::sharedFileUtils()->removeSuffixFromFile(temp);
     
     if ( (texture = (CCTexture2D*)m_pTextures->objectForKey(temp.c_str())) )
     {
@@ -486,7 +486,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
     }
     
     // Split up directory and filename
-    std::string fullpath( CCFileUtils::fullPathFromRelativePath(path) );
+    std::string fullpath( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path) );
 
     CCData * data = CCData::dataWithContentsOfFile(fullpath);
     texture = new CCTexture2D();
@@ -514,7 +514,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
     CCTexture2D* tex = NULL;
     std::string key(path);
     // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-    CCFileUtils::removeSuffixFromFile(key);
+    CCFileUtils::sharedFileUtils()->removeSuffixFromFile(key);
     
     if( (tex = (CCTexture2D*)m_pTextures->objectForKey(key.c_str())) ) 
     {
@@ -522,7 +522,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
     }
 
     // Split up directory and filename
-    std::string fullpath = CCFileUtils::fullPathFromRelativePath(key.c_str());
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(key.c_str());
     tex = new CCTexture2D();
     if(tex != NULL && tex->initWithPVRFile(fullpath.c_str()) )
     {
@@ -551,7 +551,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
     std::string forKey;
     if (key)
     {
-        forKey = CCFileUtils::fullPathFromRelativePath(key);
+        forKey = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(key);
     }
 
     // Don't have to lock here, because addImageAsync() will not 
@@ -655,13 +655,13 @@ void CCTextureCache::removeTextureForKey(const char *textureKeyName)
         return;
     }
 
-    string fullPath = CCFileUtils::fullPathFromRelativePath(textureKeyName);
+    string fullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(textureKeyName);
     m_pTextures->removeObjectForKey(fullPath.c_str());
 }
 
 CCTexture2D* CCTextureCache::textureForKey(const char* key)
 {
-    return (CCTexture2D*)m_pTextures->objectForKey(CCFileUtils::fullPathFromRelativePath(key));
+    return (CCTexture2D*)m_pTextures->objectForKey(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(key));
 }
 
 void CCTextureCache::reloadAllTextures()
@@ -851,7 +851,7 @@ void VolatileTexture::reloadAllTextures()
                 else 
                 {
                     unsigned long nSize;
-                    unsigned char *pBuffer = CCFileUtils::getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
+                    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
                     
 
                     if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))

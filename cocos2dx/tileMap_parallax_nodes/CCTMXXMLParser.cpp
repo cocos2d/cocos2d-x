@@ -158,7 +158,7 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
 
     if (tmxFileName != NULL)
     {
-        m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFileName);
+        m_sTMXFileName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(tmxFileName);
     }
     
     if (resourcePath != NULL)
@@ -359,17 +359,17 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             if (m_sTMXFileName.length() == 0)
             {
-                string pszFullPath = CCFileUtils::fullPathFromRelativePath(m_sResources.c_str());
+                string pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(m_sResources.c_str());
                 if (pszFullPath.find_last_of("/\\") != pszFullPath.length()-1)
                 {
                     pszFullPath.append("/");
                 }
                 
-                externalTilesetFilename = CCFileUtils::fullPathFromRelativeFile(externalTilesetFilename.c_str(), pszFullPath.c_str()  );
+                externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(externalTilesetFilename.c_str(), pszFullPath.c_str()  );
             }
             else
             {
-                externalTilesetFilename = CCFileUtils::fullPathFromRelativeFile(externalTilesetFilename.c_str(), pTMXMapInfo->getTMXFileName());
+                externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(externalTilesetFilename.c_str(), pTMXMapInfo->getTMXFileName());
             }
             pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
@@ -458,17 +458,17 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         std::string imagename = valueForKey("source", attributeDict);
         if (m_sTMXFileName.length() == 0)
         {
-            string pszFullPath = CCFileUtils::fullPathFromRelativePath(m_sResources.c_str());
+            string pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(m_sResources.c_str());
             if (pszFullPath.find_last_of("/\\") != pszFullPath.length()-1)
             {
                 pszFullPath.append("/");
             }
 
-            tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativeFile(imagename.c_str(), pszFullPath.c_str()  );
+            tileset->m_sSourceImage = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(imagename.c_str(), pszFullPath.c_str()  );
         }
         else
         {
-            tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativeFile(imagename.c_str(), pTMXMapInfo->getTMXFileName());
+            tileset->m_sSourceImage = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(imagename.c_str(), pTMXMapInfo->getTMXFileName());
         }
     } 
     else if(elementName == "data")

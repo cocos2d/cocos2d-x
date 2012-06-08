@@ -66,7 +66,7 @@ __object__=__array__->arr[0]; for(unsigned int i=0, num=__array__->num; i<num; i
 	typedef CCObject* CCARRAY_ID;
 //#endif
 
-typedef struct ccArray {
+typedef struct _ccArray {
 	unsigned int num, max;
 	CCARRAY_ID *arr;
 } ccArray;
@@ -84,7 +84,7 @@ typedef int (*cc_comparator)(const void *, const void *);
 ccArray* ccArrayNew(unsigned int capacity);
 
 /** Frees array after removing all remaining objects. Silently ignores nil arr. */
-void ccArrayFree(ccArray **arr);
+void ccArrayFree(ccArray*& arr);
 
 /** Doubles array capacity */
 void ccArrayDoubleCapacity(ccArray *arr);
@@ -149,7 +149,10 @@ void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr);
 // #pragma mark -
 // #pragma mark ccCArray for Values (c structures)
 
-typedef ccArray ccCArray;
+typedef struct _ccCArray {
+    unsigned int num, max;
+    void **arr;
+} ccCArray;
 
 /** Allocates and initializes a new C array with specified capacity */
 ccCArray* ccCArrayNew(unsigned int capacity);
@@ -164,19 +167,19 @@ void ccCArrayDoubleCapacity(ccCArray *arr);
 void ccCArrayEnsureExtraCapacity(ccCArray *arr, unsigned int extra);
 
 /** Returns index of first occurence of value, NSNotFound if value not found. */
-unsigned int ccCArrayGetIndexOfValue(ccCArray *arr, CCARRAY_ID value);
+unsigned int ccCArrayGetIndexOfValue(ccCArray *arr, void* value);
 
 /** Returns a Boolean value that indicates whether value is present in the C array. */
-bool ccCArrayContainsValue(ccCArray *arr, CCARRAY_ID value);
+bool ccCArrayContainsValue(ccCArray *arr, void* value);
 
 /** Inserts a value at a certain position. Behaviour undefined if aray doesn't have enough capacity */
-void ccCArrayInsertValueAtIndex( ccCArray *arr, CCARRAY_ID value, unsigned int index);
+void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, unsigned int index);
 
 /** Appends an value. Bahaviour undefined if array doesn't have enough capacity. */
-void ccCArrayAppendValue(ccCArray *arr, CCARRAY_ID value);
+void ccCArrayAppendValue(ccCArray *arr, void* value);
 
 /** Appends an value. Capacity of arr is increased if needed. */
-void ccCArrayAppendValueWithResize(ccCArray *arr, CCARRAY_ID value);
+void ccCArrayAppendValueWithResize(ccCArray *arr, void* value);
 
 /** Appends values from plusArr to arr. Behaviour undefined if arr doesn't have
  enough capacity. */
@@ -204,7 +207,7 @@ void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, unsigned int index);
 /** Searches for the first occurance of value and removes it. If value is not found the function has no effect.
  @since v0.99.4
  */
-void ccCArrayRemoveValue(ccCArray *arr, CCARRAY_ID value);
+void ccCArrayRemoveValue(ccCArray *arr, void* value);
 
 /** Removes from arr all values in minusArr. For each Value in minusArr, the first matching instance in arr will be removed.
  @since v0.99.4
