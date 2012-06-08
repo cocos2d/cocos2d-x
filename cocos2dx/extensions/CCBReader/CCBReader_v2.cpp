@@ -23,10 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#if CCB_READER_VERSION == 2
-
 #include "CCBReader.h"
 #include "CCBCustomClass.h"
+
+#if CCB_READER_VERSION == 2
 
 USING_NS_CC;
 USING_NS_CC_EXT;
