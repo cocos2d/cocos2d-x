@@ -234,7 +234,7 @@ class TextureAsync : public TextureDemo
 {
 public:
     virtual ~TextureAsync();
-    void loadImages(ccTime dt);
+    void loadImages(float dt);
     void imageLoaded(CCObject* pObj);
     virtual std::string title();
     virtual std::string subtitle();

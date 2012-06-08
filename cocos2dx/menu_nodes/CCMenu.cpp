@@ -119,7 +119,7 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
         // menu in the center of the screen
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        this->m_bIsRelativeAnchorPoint = false;
+        this->setIgnoreAnchorPointForPosition(true);
         setAnchorPoint(ccp(0.5f, 0.5f));
         this->setContentSize(s);
 
@@ -178,7 +178,7 @@ void CCMenu::onExit()
 
 //Menu - Events
 
-void CCMenu::setHandlerPriority(unsigned int newPriority)
+void CCMenu::setHandlerPriority(int newPriority)
 {
     CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
     pDispatcher->setPriority(newPriority, this);

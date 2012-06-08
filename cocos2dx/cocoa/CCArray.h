@@ -67,6 +67,40 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
 #endif
 
+#define arrayMakeObjectsPerformSelector(pArray, func, elementType)    \
+do {                                                                  \
+    if(pArray && pArray->count() > 0)                                 \
+    {                                                                 \
+        CCObject* child;                                              \
+        CCARRAY_FOREACH(pArray, child)                                \
+        {                                                             \
+            elementType pNode = (elementType) child;                  \
+            if(pNode)                                                 \
+            {                                                         \
+                pNode->func();                                        \
+            }                                                         \
+        }                                                             \
+    }                                                                 \
+}                                                                     \
+while(false)
+
+#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
+do {                                                                  \
+    if(pArray && pArray->count() > 0)                                 \
+    {                                                                 \
+        CCObject* child = NULL;                                       \
+        CCARRAY_FOREACH(pArray, child)                                \
+        {                                                             \
+            elementType pNode = (elementType) child;                  \
+            if(pNode)                                                 \
+            {                                                         \
+                pNode->func(pObject);                                 \
+            }                                                         \
+        }                                                             \
+    }                                                                 \
+}                                                                     \
+while(false)
+
 
 NS_CC_BEGIN
 
@@ -126,7 +160,8 @@ public:
     CCObject* randomObject();
     /** Returns a Boolean value that indicates whether object is present in array. */
     bool containsObject(CCObject* object);
-
+    /** @since 1.1 */
+    bool isEqualToArray(CCArray* pOtherArray);
     // Adding Objects
 
     /** Add a certain object */
@@ -159,13 +194,15 @@ public:
     void exchangeObject(CCObject* object1, CCObject* object2);
     /** Swap two elements with certain indexes */
     void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
+
+    /** Replace object at index with another object. */
+    void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
+
     /** Revers the array */
     void reverseObjects();
     /* Shrinks the array so the memory footprint corresponds with the number of items */
     void reduceMemoryFootprint();
-
-    void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
-
+  
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);
 

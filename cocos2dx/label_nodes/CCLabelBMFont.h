@@ -91,8 +91,8 @@ public://@public
     // BMFont definitions
     struct _FontDefHashElement* m_pFontDefDictionary;
 
-    //! FNTConfig: Common Height
-    unsigned int m_uCommonHeight;
+    //! FNTConfig: Common Height Should be signed (issue #1343)
+    int m_nCommonHeight;
     //! Padding
     ccBMFontPadding    m_tPadding;
     //! atlas name
@@ -107,13 +107,15 @@ public:
     static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
     /** initializes a BitmapFontConfiguration with a FNT file */
     bool initWithFNTfile(const char *FNTfile);
+    
+    inline const char* getAtlasName(){ return m_sAtlasName.c_str(); }
+    inline void setAtlasName(const char* atlasName) { m_sAtlasName = atlasName; }
 private:
-    void parseConfigFile(const char *controlFile);
+    bool parseConfigFile(const char *controlFile);
     void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
     void parseImageFileName(std::string line, const char *fntFile);
-    void parseKerningCapacity(std::string line);
     void parseKerningEntry(std::string line);
     void purgeKerningDictionary();
     void purgeFontDefDictionary();
@@ -160,10 +162,19 @@ class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, p
 protected:
     // string to render
     unsigned short* m_sString;
-    std::string m_sString_initial;
-    CCBMFontConfiguration *m_pConfiguration;
+    
+    // name of fntFile
+    std::string m_sFntFile;
+    
+    // initial string without line breaks
+    std::string m_sInitialString;
+    // alignment of all lines
     CCTextAlignment m_pAlignment;
+    // max width until a line break is added
     float m_fWidth;
+    
+    CCBMFontConfiguration *m_pConfiguration;
+    
     bool m_bLineBreakWithoutSpaces;
     // offset of the texture atlas
     CCPoint    m_tImageOffset;

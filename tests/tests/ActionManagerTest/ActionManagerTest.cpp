@@ -240,7 +240,7 @@ void PauseTest::onEnter()
     schedule( schedule_selector(PauseTest::unpause), 3); 
 }
 
-void PauseTest::unpause(ccTime dt)
+void PauseTest::unpause(float dt)
 {
     unschedule( schedule_selector(PauseTest::unpause) );
     CCNode* node = getChildByTag( kTagGrossini );
@@ -324,7 +324,7 @@ void ResumeTest::onEnter()
     this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
 }
 
-void ResumeTest::resumeGrossini(ccTime time)
+void ResumeTest::resumeGrossini(float time)
 {
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 

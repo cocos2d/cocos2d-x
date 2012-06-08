@@ -86,6 +86,9 @@ Developers:
     jreitman
         fix the bug of asynchronous loading resources for iOS
 
+    Nat Weiss
+        Minor enhancements to the Cocos2D-X codebase and Android build scripts
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 

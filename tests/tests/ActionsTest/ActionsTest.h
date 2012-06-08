@@ -290,7 +290,7 @@ public:
     virtual void onEnter();
     virtual void onExit();
     void log(CCNode* pSender);
-    void addSprite(ccTime dt);
+    void addSprite(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:

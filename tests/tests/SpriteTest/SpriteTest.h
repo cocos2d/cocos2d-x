@@ -46,7 +46,7 @@ class SpriteColorOpacity : public SpriteTestDemo
 {
 public:
     SpriteColorOpacity();
-    void removeAndAddSprite(ccTime dt);
+    void removeAndAddSprite(float dt);
     virtual std::string title();
 };
 
@@ -54,7 +54,7 @@ class SpriteBatchNodeColorOpacity : public SpriteTestDemo
 {
 public:
     SpriteBatchNodeColorOpacity();
-    void removeAndAddSprite(ccTime dt);
+    void removeAndAddSprite(float dt);
     virtual std::string title();
 };
 
@@ -63,7 +63,7 @@ class SpriteZOrder : public SpriteTestDemo
     int        m_dir;
 public:
     SpriteZOrder();
-    void reorderSprite(ccTime dt);
+    void reorderSprite(float dt);
     virtual std::string title();
 };
 
@@ -72,7 +72,7 @@ class SpriteBatchNodeZOrder: public SpriteTestDemo
     int        m_dir;
 public:
     SpriteBatchNodeZOrder();
-    void reorderSprite(ccTime dt);
+    void reorderSprite(float dt);
     virtual std::string title();
 };
 
@@ -98,7 +98,7 @@ public:
     SpriteBatchNodeReorderIssue766();
     virtual std::string title();
     virtual std::string subtitle();
-    void reorderSprite(ccTime dt);
+    void reorderSprite(float dt);
     CCSprite* makeSpriteZ(int aZ);
 
 private:
@@ -114,7 +114,7 @@ public:
     SpriteBatchNodeReorderIssue767();
     virtual std::string title();
     virtual std::string subtitle();
-    void reorderSprites(ccTime dt);
+    void reorderSprites(float dt);
 };
 
 class SpriteZVertex: public SpriteTestDemo
@@ -164,7 +164,7 @@ class SpriteFlip : public SpriteTestDemo
 {
 public:
     SpriteFlip();
-    void flipSprites(ccTime dt);
+    void flipSprites(float dt);
     virtual std::string title();
 };
 
@@ -172,7 +172,7 @@ class SpriteBatchNodeFlip : public SpriteTestDemo
 {
 public:
     SpriteBatchNodeFlip();
-    void flipSprites(ccTime dt);
+    void flipSprites(float dt);
     virtual std::string title();
 };
 
@@ -229,8 +229,8 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void startIn05Secs(ccTime dt);
-    void flipSprites(ccTime dt);
+    void startIn05Secs(float dt);
+    void flipSprites(float dt);
 private:
     CCSprite *m_pSprite1;
     CCSprite *m_pSprite2;
@@ -341,7 +341,7 @@ class SpriteHybrid: public SpriteTestDemo
     bool     m_usingSpriteBatchNode; 
 public:
     SpriteHybrid();
-    void reparentSprite(ccTime dt);
+    void reparentSprite(float dt);
     virtual std::string title();
     virtual void onExit();
 };
@@ -448,7 +448,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    void reorderSprite(ccTime dt);
+    void reorderSprite(float dt);
 
 private:
     CCNode *m_pNode;
@@ -466,7 +466,7 @@ public:
     
     virtual std::string title();
     virtual std::string subtitle();
-    void reorderSprite(ccTime dt);
+    void reorderSprite(float dt);
 
 private:
     CCSpriteBatchNode *m_pBatchNode;
@@ -481,7 +481,7 @@ class SpriteBatchNodeReorderOneChild : public SpriteTestDemo
 {
 public:
     SpriteBatchNodeReorderOneChild();
-    void reorderSprite(ccTime dt);
+    void reorderSprite(float dt);
     virtual std::string title();
 private:
     CCSpriteBatchNode *m_pBatchNode;

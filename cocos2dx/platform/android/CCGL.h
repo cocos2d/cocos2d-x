@@ -53,4 +53,4 @@ extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
 #define glDeleteVertexArraysOES glDeleteVertexArraysOESEXT
 
 
-#endif // __PLATFOMR_CCGL_H__
+#endif // __CCGL_H__

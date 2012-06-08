@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 #include "CCThread.h"
 
+// iOS already has a CCThread.mm
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+
 NS_CC_BEGIN
 
 CCThread::~CCThread()
@@ -37,3 +40,5 @@ void CCThread::createAutoreleasePool()
 }
 
 NS_CC_END
+
+#endif

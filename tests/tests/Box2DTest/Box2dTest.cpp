@@ -34,7 +34,7 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float x = pos.x * PTM_RATIO;
     float y = pos.y * PTM_RATIO;
 
-    if ( !getIsRelativeAnchorPoint() ) {
+    if ( getIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
@@ -237,7 +237,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
 }
 
 
-void Box2DTestLayer::update(ccTime dt)
+void Box2DTestLayer::update(float dt)
 {
     //It is recommended that a fixed time step is used with Box2D for stability
     //of the simulation, however, we are using a variable time step here.

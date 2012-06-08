@@ -32,7 +32,7 @@ protected:
 
 public:
     virtual void onEnter();
-    void onUpdate(ccTime delta);
+    void onUpdate(float delta);
     virtual std::string title();
 };
 

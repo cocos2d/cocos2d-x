@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "support/data_support/ccCArray.h"
 #include "support/data_support/uthash.h"
+#include "CCSet.h"
 
 NS_CC_BEGIN
 //
@@ -136,6 +137,32 @@ void CCActionManager::resumeTarget(CCObject *pTarget)
     if (pElement)
     {
         pElement->paused = false;
+    }
+}
+
+CCSet* CCActionManager::pauseAlllRunningActions()
+{
+    CCSet *idsWithActions = new CCSet();
+    idsWithActions->autorelease();
+    
+    for (tHashElement *element=m_pTargets; element != NULL; element = (tHashElement *)element->hh.next) 
+    {
+        if (! element->paused) 
+        {
+            element->paused = true;
+            idsWithActions->addObject(element->target);
+        }
+    }    
+    
+    return idsWithActions;
+}
+
+void CCActionManager::resumeTargets(cocos2d::CCSet *targetsToResume)
+{    
+    CCSetIterator iter;
+    for (iter = targetsToResume->begin(); iter != targetsToResume->end(); ++iter)
+    {
+        resumeTarget(*iter);
     }
 }
 
@@ -309,7 +336,7 @@ unsigned int CCActionManager::numberOfRunningActionsInTarget(CCObject *pTarget)
 }
 
 // main loop
-void CCActionManager::update(ccTime dt)
+void CCActionManager::update(float dt)
 {
     for (tHashElement *elt = m_pTargets; elt != NULL; )
     {

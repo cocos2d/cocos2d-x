@@ -914,7 +914,7 @@ void Issue870::onEnter()
     schedule(schedule_selector(Issue870::updateQuads), 2.0f);
 }
 
-void Issue870::updateQuads(ccTime dt)
+void Issue870::updateQuads(float dt)
 {
     m_nIndex = (m_nIndex + 1) % 4;
     CCRect rect = CCRectMake(m_nIndex * 32, 0, 32, 32);
@@ -1168,7 +1168,7 @@ void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
     }
 }
 
-void ParticleDemo::update(ccTime dt)
+void ParticleDemo::update(float dt)
 {
     if (m_emitter)
     {
@@ -1252,7 +1252,7 @@ void ParticleBatchHybrid::onEnter()
      m_pParent2 = node;
 }
 
-void ParticleBatchHybrid::switchRender(ccTime dt)
+void ParticleBatchHybrid::switchRender(float dt)
 {
      bool usingBatch = ( m_emitter->getBatchNode() != NULL );
      m_emitter->removeFromParentAndCleanup(false);
@@ -1373,7 +1373,7 @@ std::string ParticleReorder::subtitle()
     return "Reordering particles with and without batches batches";
 }
 
-void ParticleReorder::reorderParticles(ccTime dt)
+void ParticleReorder::reorderParticles(float dt)
 {
     for( int i=0; i<2;i++) {
         CCNode *parent = getChildByTag(1000+i);
@@ -1407,7 +1407,7 @@ class RainbowEffect : public CCParticleSystemQuad
 public:
     bool init();
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 };
 
 bool RainbowEffect::init()
@@ -1481,7 +1481,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
     return false;
 }
 
-void RainbowEffect::update(ccTime dt)
+void RainbowEffect::update(float dt)
 {
     m_fEmitCounter = 0;
     CCParticleSystemQuad::update(dt);
@@ -1551,7 +1551,7 @@ std::string MultipleParticleSystems::subtitle()
     return "v1.1 test: FPS should be lower than next test";
 }
 
-void MultipleParticleSystems::update(ccTime dt)
+void MultipleParticleSystems::update(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1602,7 +1602,7 @@ void MultipleParticleSystemsBatched::onEnter()
     m_emitter = NULL;
 }
 
-void MultipleParticleSystemsBatched::update(ccTime dt)
+void MultipleParticleSystemsBatched::update(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1668,7 +1668,7 @@ void AddAndDeleteParticleSystems::onEnter()
 
 }
 
-void AddAndDeleteParticleSystems::removeSystem(ccTime dt)
+void AddAndDeleteParticleSystems::removeSystem(float dt)
 {
     int nChildrenCount = m_pBatchNode->getChildren()->count();
     if (nChildrenCount > 0) 
@@ -1691,7 +1691,7 @@ void AddAndDeleteParticleSystems::removeSystem(ccTime dt)
     }
 }
 
-void AddAndDeleteParticleSystems::update(ccTime dt)
+void AddAndDeleteParticleSystems::update(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1820,14 +1820,14 @@ void ReorderParticleSystems::onEnter()
 
 }
 
-void ReorderParticleSystems::reorderSystem(ccTime time)
+void ReorderParticleSystems::reorderSystem(float time)
 {
     CCParticleSystem* system = (CCParticleSystem*)m_pBatchNode->getChildren()->objectAtIndex(1);
     m_pBatchNode->reorderChild(system, system->getZOrder() - 1);     
 }
 
 
-void ReorderParticleSystems::update(ccTime dt)
+void ReorderParticleSystems::update(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 

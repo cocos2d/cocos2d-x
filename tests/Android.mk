@@ -12,7 +12,7 @@ tests/ActionManagerTest/ActionManagerTest.cpp \
 tests/ActionsTest/ActionsTest.cpp \
 tests/ActionsEaseTest/ActionsEaseTest.cpp \
 tests/ActionsProgressTest/ActionsProgressTest.cpp \
-tests/Box2dTest/Box2dTest.cpp \
+tests/Box2DTest/Box2dTest.cpp \
 tests/Box2DTestBed/Box2dView.cpp \
 tests/Box2DTestBed/GLES-Render.cpp \
 tests/Box2DTestBed/Test.cpp \

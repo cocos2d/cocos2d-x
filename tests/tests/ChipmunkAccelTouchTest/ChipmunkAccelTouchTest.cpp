@@ -46,7 +46,7 @@ CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
     CCFloat x = m_pBody->p.x;
     CCFloat y = m_pBody->p.y;
 
-    if ( !getIsRelativeAnchorPoint() ) {
+    if ( getIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
@@ -148,7 +148,7 @@ void ChipmunkAccelTouchTestLayer::initPhysics()
     }
 }
 
-void ChipmunkAccelTouchTestLayer::update(ccTime delta)
+void ChipmunkAccelTouchTestLayer::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;

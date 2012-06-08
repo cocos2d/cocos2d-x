@@ -49,6 +49,22 @@ static void _CheckPath()
     }
 }
 
+static CCFileUtils* s_pFileUtils = NULL;
+
+CCFileUtils* CCFileUtils::sharedFileUtils()
+{
+    if (s_pFileUtils == NULL)
+    {
+        s_pFileUtils = new CCFileUtils();
+    }
+    return s_pFileUtils;
+}
+
+void CCFileUtils::purgeFileUtils()
+{
+    CC_SAFE_DELETE(s_pFileUtils);
+}
+
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
     CCAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
