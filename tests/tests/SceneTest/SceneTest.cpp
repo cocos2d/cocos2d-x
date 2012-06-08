@@ -38,7 +38,7 @@ SceneTestLayer1::SceneTestLayer1()
     schedule( schedule_selector(SceneTestLayer1::testDealloc) );
 }
 
-void SceneTestLayer1::testDealloc(ccTime dt)
+void SceneTestLayer1::testDealloc(float dt)
 {
     //UXLOG("SceneTestLayer1:testDealloc");
 }
@@ -123,7 +123,7 @@ SceneTestLayer2::SceneTestLayer2()
     schedule( schedule_selector(SceneTestLayer2::testDealloc) );
 }
 
-void SceneTestLayer2::testDealloc(ccTime dt)
+void SceneTestLayer2::testDealloc(float dt)
 {
     //m_timeCounter += dt;
     //if( m_timeCounter > 10 )
@@ -180,7 +180,7 @@ SceneTestLayer3::SceneTestLayer3()
     //schedule();
 }
 
-void SceneTestLayer3::testDealloc(ccTime dt)
+void SceneTestLayer3::testDealloc(float dt)
 {
 
 }

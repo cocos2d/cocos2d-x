@@ -409,7 +409,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(CCTextFieldTTF * pSender, con
     CCSize  inputTextSize = label->getContentSize();
     CCPoint beginPos(endPos.x, CCDirector::sharedDirector()->getWinSize().height - inputTextSize.height * 2); 
 
-    ccTime duration = 0.5;
+    float duration = 0.5;
     label->setPosition(beginPos);
     label->setScale(8);
 
@@ -440,8 +440,8 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(CCTextFieldTTF * pSender,
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     CCPoint endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
 
-    ccTime duration = 1;
-    ccTime rotateDuration = 0.2f;
+    float duration = 1;
+    float rotateDuration = 0.2f;
     int repeatTime = 5; 
     label->setPosition(beginPos);
 

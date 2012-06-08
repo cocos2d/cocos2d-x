@@ -40,7 +40,7 @@ public:
 
     bool initWithEntryID(int entryId);
     std::string title();
-    void tick(ccTime dt);
+    void tick(float dt);
     void draw();
 
     virtual void registerWithTouchDispatcher();

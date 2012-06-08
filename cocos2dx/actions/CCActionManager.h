@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#define kCCActionManagerPriority 0
+class CCSet;
 
 struct _hashElement;
 /** 
@@ -98,6 +98,14 @@ public:
     /** Resumes the target. All queued actions will be resumed.
     */
     void resumeTarget(CCObject *pTarget);
+    
+    /** Pauses all running actions, returning a list of targets whose actions were paused.
+     */
+    CCSet* pauseAlllRunningActions();
+    
+    /** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
+     */
+    void resumeTargets(CCSet *targetsToResume);
 
 protected:
     // declared in CCActionManager.m
@@ -105,7 +113,7 @@ protected:
     void removeActionAtIndex(unsigned int uIndex, struct _hashElement *pElement);
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
-    void update(ccTime dt);
+    void update(float dt);
 
 protected:
     struct _hashElement    *m_pTargets;

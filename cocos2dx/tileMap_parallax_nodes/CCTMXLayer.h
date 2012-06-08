@@ -186,7 +186,7 @@ protected:
 
     //! used for optimization
     CCSprite            *m_pReusedTile;
-    _ccCArray            *m_pAtlasIndexArray;
+    ccCArray            *m_pAtlasIndexArray;
     
     // used for retina display
     float               m_fContentScaleFactor;

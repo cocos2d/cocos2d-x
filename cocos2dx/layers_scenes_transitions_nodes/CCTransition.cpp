@@ -51,7 +51,7 @@ CCTransitionScene::~CCTransitionScene()
     m_pOutScene->release();
 }
 
-CCTransitionScene * CCTransitionScene::transitionWithDuration(ccTime t, CCScene *scene)
+CCTransitionScene * CCTransitionScene::transitionWithDuration(float t, CCScene *scene)
 {
     CCTransitionScene * pScene = new CCTransitionScene();
     if(pScene && pScene->initWithDuration(t,scene))
@@ -63,7 +63,7 @@ CCTransitionScene * CCTransitionScene::transitionWithDuration(ccTime t, CCScene 
     return NULL;
 }
 
-bool CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
+bool CCTransitionScene::initWithDuration(float t, CCScene *scene)
 {
     CCAssert( scene != NULL, "Argument scene must be non-nil");
 
@@ -75,6 +75,11 @@ bool CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
         m_pInScene = scene;
         m_pInScene->retain();
         m_pOutScene = CCDirector::sharedDirector()->getRunningScene();
+        if (m_pOutScene == NULL)
+        {
+            m_pOutScene = CCScene::node();
+            m_pOutScene->init();
+        }
         m_pOutScene->retain();
 
         CCAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
@@ -130,7 +135,7 @@ void CCTransitionScene::finish()
 
 }
 
-void CCTransitionScene::setNewScene(ccTime dt)
+void CCTransitionScene::setNewScene(float dt)
 {    
     CC_UNUSED_PARAM(dt);
     // [self unschedule:_cmd]; 
@@ -192,7 +197,7 @@ CCTransitionSceneOriented::~CCTransitionSceneOriented()
 {
 }
 
-CCTransitionSceneOriented * CCTransitionSceneOriented::transitionWithDuration(ccTime t, CCScene *scene, tOrientation orientation)
+CCTransitionSceneOriented * CCTransitionSceneOriented::transitionWithDuration(float t, CCScene *scene, tOrientation orientation)
 {
     CCTransitionSceneOriented * pScene = new CCTransitionSceneOriented();
     pScene->initWithDuration(t,scene,orientation);
@@ -200,7 +205,7 @@ CCTransitionSceneOriented * CCTransitionSceneOriented::transitionWithDuration(cc
     return pScene;
 }
 
-bool CCTransitionSceneOriented::initWithDuration(ccTime t, CCScene *scene, tOrientation orientation)
+bool CCTransitionSceneOriented::initWithDuration(float t, CCScene *scene, tOrientation orientation)
 {
     if ( CCTransitionScene::initWithDuration(t, scene) )
     {
@@ -652,7 +657,7 @@ void CCTransitionFlipX::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-CCTransitionFlipX* CCTransitionFlipX::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+CCTransitionFlipX* CCTransitionFlipX::transitionWithDuration(float t, CCScene* s, tOrientation o)
 {
     CCTransitionFlipX* pScene = new CCTransitionFlipX();
     pScene->initWithDuration(t, s, o);
@@ -717,7 +722,7 @@ void CCTransitionFlipY::onEnter()
 
 }
 
-CCTransitionFlipY* CCTransitionFlipY::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+CCTransitionFlipY* CCTransitionFlipY::transitionWithDuration(float t, CCScene* s, tOrientation o)
 {
     CCTransitionFlipY* pScene = new CCTransitionFlipY();
     pScene->initWithDuration(t, s, o);
@@ -781,7 +786,7 @@ void CCTransitionFlipAngular::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-CCTransitionFlipAngular* CCTransitionFlipAngular::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+CCTransitionFlipAngular* CCTransitionFlipAngular::transitionWithDuration(float t, CCScene* s, tOrientation o)
 {
     CCTransitionFlipAngular* pScene = new CCTransitionFlipAngular();
     pScene->initWithDuration(t, s, o);
@@ -854,7 +859,7 @@ void CCTransitionZoomFlipX::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-CCTransitionZoomFlipX* CCTransitionZoomFlipX::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+CCTransitionZoomFlipX* CCTransitionZoomFlipX::transitionWithDuration(float t, CCScene* s, tOrientation o)
 {
     CCTransitionZoomFlipX* pScene = new CCTransitionZoomFlipX();
     pScene->initWithDuration(t, s, o);
@@ -927,7 +932,7 @@ void CCTransitionZoomFlipY::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-CCTransitionZoomFlipY* CCTransitionZoomFlipY::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+CCTransitionZoomFlipY* CCTransitionZoomFlipY::transitionWithDuration(float t, CCScene* s, tOrientation o)
 {
     CCTransitionZoomFlipY* pScene = new CCTransitionZoomFlipY();
     pScene->initWithDuration(t, s, o);
@@ -1003,7 +1008,7 @@ void CCTransitionZoomFlipAngular::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-CCTransitionZoomFlipAngular* CCTransitionZoomFlipAngular::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+CCTransitionZoomFlipAngular* CCTransitionZoomFlipAngular::transitionWithDuration(float t, CCScene* s, tOrientation o)
 {
     CCTransitionZoomFlipAngular* pScene = new CCTransitionZoomFlipAngular();
     pScene->initWithDuration(t, s, o);
@@ -1023,7 +1028,7 @@ CCTransitionFade::~CCTransitionFade()
 }
 
 
-CCTransitionFade * CCTransitionFade::transitionWithDuration(ccTime duration, CCScene *scene, const ccColor3B& color)
+CCTransitionFade * CCTransitionFade::transitionWithDuration(float duration, CCScene *scene, const ccColor3B& color)
 {
     CCTransitionFade * pTransition = new CCTransitionFade();
     pTransition->initWithDuration(duration, scene, color);
@@ -1031,7 +1036,7 @@ CCTransitionFade * CCTransitionFade::transitionWithDuration(ccTime duration, CCS
     return pTransition;
 }
 
-bool CCTransitionFade::initWithDuration(ccTime duration, CCScene *scene, const ccColor3B& color)
+bool CCTransitionFade::initWithDuration(float duration, CCScene *scene, const ccColor3B& color)
 {
     if (CCTransitionScene::initWithDuration(duration, scene))
     {
@@ -1043,7 +1048,7 @@ bool CCTransitionFade::initWithDuration(ccTime duration, CCScene *scene, const c
     return true;
 }
 
-bool CCTransitionFade::initWithDuration(ccTime t, CCScene *scene)
+bool CCTransitionFade::initWithDuration(float t, CCScene *scene)
 {
     this->initWithDuration(t, scene, ccBLACK);
     return true;
@@ -1172,7 +1177,7 @@ void CCTransitionCrossFade::onExit()
     CCTransitionScene::onExit();
 }
 
-CCTransitionCrossFade* CCTransitionCrossFade::transitionWithDuration(ccTime d, CCScene* s)
+CCTransitionCrossFade* CCTransitionCrossFade::transitionWithDuration(float d, CCScene* s)
 {
     CCTransitionCrossFade* Transition = new CCTransitionCrossFade();
     Transition->initWithDuration(d, s);

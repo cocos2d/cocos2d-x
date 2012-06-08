@@ -16,11 +16,6 @@ public:
     virtual ~AppDelegate();
 
     /**
-    @brief    Implement for initialize OpenGL instance, set source path, etc...
-    */
-    virtual bool initInstance();
-
-    /**
     @brief    Implement CCDirector and CCScene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
@@ -38,9 +33,6 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
-
-private:
-    LuaEngine* m_pLuaEngine;
 };
 
 #endif // _APP_DELEGATE_H_

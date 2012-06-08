@@ -395,62 +395,74 @@ CCNode * CCMenuItemSprite::getNormalImage()
 {
     return m_pNormalImage;
 }
-void CCMenuItemSprite::setNormalImage(CCNode* var)
+void CCMenuItemSprite::setNormalImage(CCNode* pImage)
 {
-    if (var)
+    if (pImage != m_pNormalImage)
     {
-        addChild(var, 0, kNormalTag);
-        var->setAnchorPoint(ccp(0, 0));
-        var->setIsVisible(true);
+        if (pImage)
+        {
+            addChild(pImage, 0, kNormalTag);
+            pImage->setAnchorPoint(ccp(0, 0));
+        }
+
+        if (m_pNormalImage)
+        {
+            removeChild(m_pNormalImage, true);
+        }
+
+        m_pNormalImage = pImage;
+        this->setContentSize(m_pNormalImage->getContentSize());
+        this->updateImagesVisibility();
     }
-    
-    if (m_pNormalImage)
-    {
-        removeChild(m_pNormalImage, true);
-    }
-    
-    m_pNormalImage = var;
-    this->setContentSize(m_pNormalImage->getContentSize());
 }
 CCNode * CCMenuItemSprite::getSelectedImage()
 {
     return m_pSelectedImage;
 }
-void CCMenuItemSprite::setSelectedImage(CCNode* var)
+void CCMenuItemSprite::setSelectedImage(CCNode* pImage)
 {
-    if (var)
+    if (pImage != m_pNormalImage)
     {
-        addChild(var, 0, kSelectedTag);
-        var->setAnchorPoint(ccp(0, 0));
-        var->setIsVisible(false);
+        if (pImage)
+        {
+            addChild(pImage, 0, kSelectedTag);
+            pImage->setAnchorPoint(ccp(0, 0));
+        }
+
+        if (m_pSelectedImage)
+        {
+            removeChild(m_pSelectedImage, true);
+        }
+
+        m_pSelectedImage = pImage;
+        this->updateImagesVisibility();
     }
-    
-    if (m_pSelectedImage)
-    {
-        removeChild(m_pSelectedImage, true);
-    }
-    
-    m_pSelectedImage = var;
+
 }
+
 CCNode * CCMenuItemSprite::getDisabledImage()
 {
     return m_pDisabledImage;
 }
-void CCMenuItemSprite::setDisabledImage(CCNode* var)
+
+void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
 {
-    if (var)
+    if (pImage != m_pNormalImage)
     {
-        addChild(var, 0, kDisableTag);
-        var->setAnchorPoint(ccp(0, 0));
-        var->setIsVisible(false);
+        if (pImage)
+        {
+            addChild(pImage, 0, kDisableTag);
+            pImage->setAnchorPoint(ccp(0, 0));
+        }
+
+        if (m_pDisabledImage)
+        {
+            removeChild(m_pDisabledImage, true);
+        }
+
+        m_pDisabledImage = pImage;
+        this->updateImagesVisibility();
     }
-    
-    if (m_pDisabledImage)
-    {
-        removeChild(m_pDisabledImage, true);
-    }
-    
-    m_pDisabledImage = var;
 }
 //
 //CCMenuItemSprite - CCRGBAProtocol protocol
@@ -560,32 +572,35 @@ void CCMenuItemSprite::unselected()
 
 void CCMenuItemSprite::setIsEnabled(bool bEnabled)
 {
-    CCMenuItem::setIsEnabled(bEnabled);
-    
-    if (m_pSelectedImage)
+    if( m_bIsEnabled != bEnabled ) 
     {
-        m_pSelectedImage->setIsVisible(false);
+        CCMenuItem::setIsEnabled(bEnabled);
+        this->updateImagesVisibility();
     }
-    
-    if (bEnabled)
+}
+
+// Helper 
+void CCMenuItemSprite::updateImagesVisibility()
+{
+    if (m_bIsEnabled)
     {
-        m_pNormalImage->setIsVisible(true);
-        
-        if (m_pDisabledImage)
-        {
-            m_pDisabledImage->setIsVisible(false);
-        }
+        if (m_pNormalImage)   m_pNormalImage->setIsVisible(true);
+        if (m_pSelectedImage) m_pSelectedImage->setIsVisible(false);
+        if (m_pDisabledImage) m_pDisabledImage->setIsVisible(false);
     }
     else
     {
         if (m_pDisabledImage)
         {
-            m_pDisabledImage->setIsVisible(true);
-            m_pNormalImage->setIsVisible(false);
+            if (m_pNormalImage)   m_pNormalImage->setIsVisible(false);
+            if (m_pSelectedImage) m_pSelectedImage->setIsVisible(false);
+            if (m_pDisabledImage) m_pDisabledImage->setIsVisible(true);
         }
         else
         {
-            m_pNormalImage->setIsVisible(true);
+            if (m_pNormalImage)   m_pNormalImage->setIsVisible(true);
+            if (m_pSelectedImage) m_pSelectedImage->setIsVisible(false);
+            if (m_pDisabledImage) m_pDisabledImage->setIsVisible(false);
         }
     }
 }
@@ -594,10 +609,12 @@ CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, 
 {
     return CCMenuItemImage::itemWithNormalImage(normalImage, selectedImage, NULL, NULL, NULL);
 }
+
 CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector)
 {
     return CCMenuItemImage::itemWithNormalImage(normalImage, selectedImage, NULL, target, selector);
 }
+
 CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
 {
     CCMenuItemImage *pRet = new CCMenuItemImage();
@@ -609,6 +626,7 @@ CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, 
     CC_SAFE_DELETE(pRet);
     return NULL;
 }
+
 CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage)
 {
     CCMenuItemImage *pRet = new CCMenuItemImage();
@@ -620,6 +638,7 @@ CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, 
     CC_SAFE_DELETE(pRet);
     return NULL;
 }
+
 bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
 {
     CCNode *normalSprite = CCSprite::spriteWithFile(normalImage);
@@ -770,15 +789,18 @@ void CCMenuItemToggle::activate()
 }
 void CCMenuItemToggle::setIsEnabled(bool enabled)
 {
-    CCMenuItem::setIsEnabled(enabled);
-    
-    if(m_pSubItems && m_pSubItems->count() > 0)
+    if (m_bIsEnabled != enabled)
     {
-        CCObject* pObj = NULL;
-        CCARRAY_FOREACH(m_pSubItems, pObj)
+        CCMenuItem::setIsEnabled(enabled);
+
+        if(m_pSubItems && m_pSubItems->count() > 0)
         {
-            CCMenuItem* pItem = (CCMenuItem*)pObj;
-            pItem->setIsEnabled(enabled);
+            CCObject* pObj = NULL;
+            CCARRAY_FOREACH(m_pSubItems, pObj)
+            {
+                CCMenuItem* pItem = (CCMenuItem*)pObj;
+                pItem->setIsEnabled(enabled);
+            }
         }
     }
 }

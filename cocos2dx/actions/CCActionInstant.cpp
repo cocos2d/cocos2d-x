@@ -56,12 +56,12 @@ bool CCActionInstant::isDone() {
     return true;
 }
 
-void CCActionInstant::step(ccTime dt) {
+void CCActionInstant::step(float dt) {
     CC_UNUSED_PARAM(dt);
     update(1);
 }
 
-void CCActionInstant::update(ccTime time) {
+void CCActionInstant::update(float time) {
     CC_UNUSED_PARAM(time);
     // nothing
 }
@@ -83,7 +83,7 @@ CCShow* CCShow::action() {
     return pRet;
 }
 
-void CCShow::update(ccTime time) {
+void CCShow::update(float time) {
     CC_UNUSED_PARAM(time);
     m_pTarget->setIsVisible(true);
 }
@@ -121,7 +121,7 @@ CCHide * CCHide::action() {
     return pRet;
 }
 
-void CCHide::update(ccTime time) {
+void CCHide::update(float time) {
     CC_UNUSED_PARAM(time);
     m_pTarget->setIsVisible(false);
 }
@@ -161,7 +161,7 @@ CCToggleVisibility * CCToggleVisibility::action()
     return pRet;
 }
 
-void CCToggleVisibility::update(ccTime time) 
+void CCToggleVisibility::update(float time) 
 {
     CC_UNUSED_PARAM(time);
     m_pTarget->setIsVisible(!m_pTarget->getIsVisible());
@@ -204,7 +204,7 @@ bool CCFlipX::initWithFlipX(bool x) {
     return true;
 }
 
-void CCFlipX::update(ccTime time) {
+void CCFlipX::update(float time) {
     CC_UNUSED_PARAM(time);
     ((CCSprite*) (m_pTarget))->setFlipX(m_bFlipX);
 }
@@ -250,7 +250,7 @@ bool CCFlipY::initWithFlipY(bool y) {
     return true;
 }
 
-void CCFlipY::update(ccTime time) {
+void CCFlipY::update(float time) {
     CC_UNUSED_PARAM(time);
     ((CCSprite*) (m_pTarget))->setFlipY(m_bFlipY);
 }
@@ -313,7 +313,7 @@ CCObject * CCPlace::copyWithZone(CCZone *pZone) {
     return pRet;
 }
 
-void CCPlace::update(ccTime time) {
+void CCPlace::update(float time) {
     CC_UNUSED_PARAM(time);
     m_pTarget->setPosition(m_tPosition);
 }
@@ -370,7 +370,7 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     return pRet;
 }
 
-void CCCallFunc::update(ccTime time) {
+void CCCallFunc::update(float time) {
     CC_UNUSED_PARAM(time);
     this->execute();
 }

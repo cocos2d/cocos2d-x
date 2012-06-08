@@ -32,7 +32,7 @@ NS_CC_BEGIN
 
 // implementation of CCProgressTo
 
-CCProgressTo* CCProgressTo::actionWithDuration(ccTime duration, float fPercent)
+CCProgressTo* CCProgressTo::actionWithDuration(float duration, float fPercent)
 {
     CCProgressTo *pProgressTo = new CCProgressTo();
     pProgressTo->initWithDuration(duration, fPercent);
@@ -41,7 +41,7 @@ CCProgressTo* CCProgressTo::actionWithDuration(ccTime duration, float fPercent)
     return pProgressTo;
 }
 
-bool CCProgressTo::initWithDuration(ccTime duration, float fPercent)
+bool CCProgressTo::initWithDuration(float duration, float fPercent)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
@@ -89,14 +89,14 @@ void CCProgressTo::startWithTarget(CCNode *pTarget)
     }
 }
 
-void CCProgressTo::update(ccTime time)
+void CCProgressTo::update(float time)
 {
     ((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 }
 
 // implementation of CCProgressFromTo
 
-CCProgressFromTo* CCProgressFromTo::actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage)
+CCProgressFromTo* CCProgressFromTo::actionWithDuration(float duration, float fFromPercentage, float fToPercentage)
 {
     CCProgressFromTo *pProgressFromTo = new CCProgressFromTo();
     pProgressFromTo->initWithDuration(duration, fFromPercentage, fToPercentage);
@@ -105,7 +105,7 @@ CCProgressFromTo* CCProgressFromTo::actionWithDuration(ccTime duration, float fF
     return pProgressFromTo;
 }
 
-bool CCProgressFromTo::initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage)
+bool CCProgressFromTo::initWithDuration(float duration, float fFromPercentage, float fToPercentage)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
@@ -151,7 +151,7 @@ void CCProgressFromTo::startWithTarget(CCNode *pTarget)
     CCActionInterval::startWithTarget(pTarget);
 }
 
-void CCProgressFromTo::update(ccTime time)
+void CCProgressFromTo::update(float time)
 {
     ((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 }
