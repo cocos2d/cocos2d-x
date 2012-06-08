@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "CCString.h"
 #include "CCArray.h"
+#include "CCDictionary.h"
 #include <vector>
 
 using namespace std;
@@ -64,6 +65,7 @@ bool CCSpriteFrameCache::init(void)
 {
     m_pSpriteFrames= new CCDictionary();
     m_pSpriteFramesAliases = new CCDictionary();
+    m_pLoadedFileNames = new std::set<std::string>();
     return true;
 }
 
@@ -71,6 +73,7 @@ CCSpriteFrameCache::~CCSpriteFrameCache(void)
 {
     CC_SAFE_RELEASE(m_pSpriteFrames);
     CC_SAFE_RELEASE(m_pSpriteFramesAliases);
+    CC_SAFE_DELETE(m_pLoadedFileNames);
 }
 
 void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, CCTexture2D *pobTexture)
@@ -95,7 +98,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
     }
 
     // check the format
-    CCAssert(format >=0 && format <= 3, "");
+    CCAssert(format >=0 && format <= 3, "format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
@@ -120,7 +123,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             // check ow/oh
             if(!ow || !oh)
             {
-                CCLOG("cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
             }
             // abs ow/oh
             ow = abs(ow);
@@ -176,7 +179,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
                 std::string oneAlias = ((CCString*)pObj)->getCString();
                 if (m_pSpriteFramesAliases->objectForKey(oneAlias.c_str()))
                 {
-                    CCLOG("cocos2d: WARNING: an alias with name %s already exists", oneAlias.c_str());
+                    CCLOGWARN("cocos2d: WARNING: an alias with name %s already exists", oneAlias.c_str());
                 }
 
                 m_pSpriteFramesAliases->setObject(frameKey, oneAlias.c_str());
@@ -199,7 +202,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
 {
-    const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
+    const char *pszPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pszPlist);
     CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(pszPath);
 
     addSpriteFramesWithDictionary(dict, pobTexture);
@@ -224,50 +227,57 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* 
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
-    const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
-    CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(pszPath);
-    
-    string texturePath("");
+    CCAssert(pszPlist, "plist filename should not be NULL");
 
-    CCDictionary* metadataDict = (CCDictionary*)dict->objectForKey("metadata");
-    if (metadataDict)
+    if (m_pLoadedFileNames->find(pszPlist) != m_pLoadedFileNames->end())
     {
-        // try to read  texture file name from meta data
-        texturePath = metadataDict->valueForKey("textureFileName")->getCString();
+        const char *pszPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pszPlist);
+        CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(pszPath);
+
+        string texturePath("");
+
+        CCDictionary* metadataDict = (CCDictionary*)dict->objectForKey("metadata");
+        if (metadataDict)
+        {
+            // try to read  texture file name from meta data
+            texturePath = metadataDict->valueForKey("textureFileName")->getCString();
+        }
+
+        if (! texturePath.empty())
+        {
+            // build texture path relative to plist file
+            texturePath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(texturePath.c_str(), pszPath);
+        }
+        else
+        {
+            // build texture path by replacing file extension
+            texturePath = pszPath;
+
+            // remove .xxx
+            size_t startPos = texturePath.find_last_of("."); 
+            texturePath = texturePath.erase(startPos);
+
+            // append .png
+            texturePath = texturePath.append(".png");
+
+            CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
+        }
+
+        CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
+
+        if (pTexture)
+        {
+            addSpriteFramesWithDictionary(dict, pTexture);
+            m_pLoadedFileNames->insert(pszPlist);
+        }
+        else
+        {
+            CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
+        }
+
+        dict->release();
     }
 
-    if (! texturePath.empty())
-    {
-        // build texture path relative to plist file
-        texturePath = CCFileUtils::fullPathFromRelativeFile(texturePath.c_str(), pszPath);
-    }
-    else
-    {
-        // build texture path by replacing file extension
-        texturePath = pszPath;
-
-        // remove .xxx
-        size_t startPos = texturePath.find_last_of("."); 
-        texturePath = texturePath.erase(startPos);
-
-        // append .png
-        texturePath = texturePath.append(".png");
-
-        CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
-    }
-
-    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
-
-    if (pTexture)
-    {
-        addSpriteFramesWithDictionary(dict, pTexture);
-    }
-    else
-    {
-        CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
-    }
-
-    dict->release();
 }
 
 void CCSpriteFrameCache::addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName)
@@ -279,10 +289,12 @@ void CCSpriteFrameCache::removeSpriteFrames(void)
 {
     m_pSpriteFrames->removeAllObjects();
     m_pSpriteFramesAliases->removeAllObjects();
+    m_pLoadedFileNames->clear();
 }
 
 void CCSpriteFrameCache::removeUnusedSpriteFrames(void)
 {
+    bool bRemoved = false;
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(m_pSpriteFrames, pElement)
     {
@@ -291,7 +303,14 @@ void CCSpriteFrameCache::removeUnusedSpriteFrames(void)
         {
             CCLOG("cocos2d: CCSpriteFrameCache: removing unused frame: %s", pElement->getStrKey());
             m_pSpriteFrames->removeObjectForElememt(pElement);
+            bRemoved = true;
         }
+    }
+
+    // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
+    if( bRemoved )
+    {
+        m_pLoadedFileNames->clear();
     }
 }
 
@@ -316,14 +335,24 @@ void CCSpriteFrameCache::removeSpriteFrameByName(const char *pszName)
     {
         m_pSpriteFrames->removeObjectForKey(pszName);
     }
+
+    // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
+    m_pLoadedFileNames->clear();
 }
 
 void CCSpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 {
-    const char* path = CCFileUtils::fullPathFromRelativePath(plist);
+    const char* path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plist);
     CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(path);
 
     removeSpriteFramesFromDictionary((CCDictionary*)dict);
+
+    // remove it from the cache
+    set<string>::iterator ret = m_pLoadedFileNames->find(plist);
+    if (ret != m_pLoadedFileNames->end())
+    {
+        m_pLoadedFileNames->erase(ret);
+    }
 
     dict->release();
 }

@@ -185,7 +185,7 @@ CCString* CCString::stringWithContentsOfFile(const char* pszFileName)
     unsigned long size = 0;
     unsigned char* pData = 0;
     CCString* pRet = NULL;
-    pData = CCFileUtils::getFileData(pszFileName, "rb", &size);
+    pData = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(pszFileName, "rb", &size);
     pRet = stringWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;

@@ -452,7 +452,7 @@ void CCParticleBatchNode::increaseAtlasCapacityTo(unsigned int quantity)
 
     if( ! m_pTextureAtlas->resizeCapacity(quantity) ) {
         // serious problems
-        CCLOG("cocos2d: WARNING: Not enough memory to resize the atlas");
+        CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
         CCAssert(false,"XXX: CCParticleBatchNode #increaseAtlasCapacity SHALL handle this assert");
     }
 }

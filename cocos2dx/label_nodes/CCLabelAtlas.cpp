@@ -85,7 +85,7 @@ CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *fntF
 
 bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-    CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(fntFile));
+    CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFile(CCFileUtils::sharedFileUtils()->sharedFileUtils()->fullPathFromRelativePath(fntFile));
 	
     CCAssert(((CCInteger*)dict->objectForKey("version"))->getValue() == 1, "Unsupported version. Upgrade cocos2d version");
     

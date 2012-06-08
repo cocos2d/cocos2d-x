@@ -38,6 +38,7 @@ NS_CC_BEGIN
 // Minimum priority level for user scheduling.
 #define kCCPriorityNonSystemMin (kCCPrioritySystem+1)
 
+class CCSet;
 //
 // floatr
 //
@@ -175,6 +176,12 @@ public:
      */
     void unscheduleAllSelectors(void);
     
+    /** Unschedules all selectors from all targets with a minimum priority.
+      You should only call this with kCCPriorityNonSystemMin or higher.
+      @since v2.0.0
+      */
+    void unscheduleAllSelectorsWithMinPriority(int nMinPriority);
+
     /** The scheduled script callback will be called every 'interval' seconds.
      If paused is YES, then it won't be called until it is resumed.
      If 'interval' is 0, it will be called every frame.
@@ -203,6 +210,24 @@ public:
     @since v1.0.0
     */
     bool isTargetPaused(CCObject *pTarget);
+
+    /** Pause all selectors from all targets.
+      You should NEVER call this method, unless you know what you are doing.
+     @since v2.0.0
+      */
+    CCSet* pauseAllTargets();
+
+    /** Pause all selectors from all targets with a minimum priority.
+      You should only call this with kCCPriorityNonSystemMin or higher.
+      @since v2.0.0
+      */
+    CCSet* pauseAllTargetsWithMinPriority(int nMinPriority);
+
+    /** Resume selectors on a set of targets.
+     This can be useful for undoing a call to pauseAllSelectors.
+     @since v2.0.0
+      */
+    void resumeTargets(CCSet* targetsToResume);
 
 private:
     void removeHashElement(struct _hashSelectorEntry *pElement);
