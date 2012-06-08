@@ -30,6 +30,8 @@
 #include "cocos2d.h"
 #include "CCBCustomClass.h"
 
+#define CCB_READER_VERSION 2
+
 NS_CC_EXT_BEGIN
 
 /**
