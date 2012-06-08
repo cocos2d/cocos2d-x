@@ -50,7 +50,7 @@ CCTextureWatcher::CCTextureWatcher()
 
     // the menu of disabling touch event
     //*
-    CCLabelTTF *label = CCLabelTTF::labelWithString(" ", size, kCCTextAlignmentLeft, kCCVerticalTextAlignmentTop, "Arial", 12);
+    CCLabelTTF *label = CCLabelTTF::labelWithString(" ", size, kCCTextAlignmentLeft, "Arial", 12);
     CCMenuItemLabel *menuItem = CCMenuItemLabel::itemWithLabel(label);
     menuItem->setAnchorPoint(ccp(0, 0));
     menuItem->setPosition(ccp(0, 0));
@@ -98,7 +98,7 @@ CCTextureWatcher::CCTextureWatcher()
     m_pLayer->addChild(menu1);
     
     // label page
-    m_labelPage = CCLabelTTF::labelWithString(" ", CCSizeMake(size.width * 0.1, labelFresh->getContentSize().height), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, "Arial", 16);
+    m_labelPage = CCLabelTTF::labelWithString(" ", CCSizeMake(size.width * 0.1, labelFresh->getContentSize().height), kCCTextAlignmentCenter, "Arial", 16);
     m_labelPage->setAnchorPoint(ccp(0.5, 0));
     m_labelPage->setPosition(ccp(size.width/2.0, 0));
     m_pLayer->addChild(m_labelPage, 0);
@@ -314,7 +314,7 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
                 string name = key.substr(pos, len - pos);
                 sprintf(m_pszString, "%s", name.c_str());
                 CCSize dimensions = CCSizeMake(listItemSize.width * 0.9f, labelSize->getContentSize().height);
-                CCLabelTTF *labelName = CCLabelTTF::labelWithString(m_pszString, dimensions, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, "Arial", 16);
+                CCLabelTTF *labelName = CCLabelTTF::labelWithString(m_pszString, dimensions, kCCTextAlignmentCenter, "Arial", 16);
                 offX = offsetX + listItemSize.width * 0.5f;
                 offY = offY + labelName->getContentSize().height;
                 labelName->setPosition(ccp(offX, offY));

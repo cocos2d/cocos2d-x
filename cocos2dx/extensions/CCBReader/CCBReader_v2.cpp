@@ -380,7 +380,7 @@ void CCBReader::setPropsForNode(CCNode* node, CCDictionary* props, CCDictionary*
     node->setScaleY(floatValFromDict(props, "scaleY"));
     node->setAnchorPoint(pointValFromDict(props, "anchorPoint"));
     node->setRotation(floatValFromDict(props, "rotation"));
-    node->setIsRelativeAnchorPoint(boolValFromDict(props, "isRelativeAnchorPoint"));
+    node->setIgnoreAnchorPointForPosition(!boolValFromDict(props, "isRelativeAnchorPoint"));
     node->setIsVisible(boolValFromDict(props, "visible"));
 
     if (extraProps)
