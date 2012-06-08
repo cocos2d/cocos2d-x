@@ -154,7 +154,7 @@ void LayerTest1::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLayerColor* layer = CCLayerColor::layerWithColor( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
     
-    layer->setIsRelativeAnchorPoint(true);
+    layer->setIgnoreAnchorPointForPosition(false);
     layer->setPosition( CCPointMake(s.width/2, s.height/2) );
     addChild(layer, 1, kTagLayer);
 }
@@ -219,12 +219,12 @@ void LayerTest2::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLayerColor* layer1 = CCLayerColor::layerWithColor( ccc4(255, 255, 0, 80), 100, 300);
     layer1->setPosition(CCPointMake(s.width/3, s.height/2));
-    layer1->setIsRelativeAnchorPoint(true);
+    layer1->setIgnoreAnchorPointForPosition(false);
     addChild(layer1, 1);
     
     CCLayerColor* layer2 = CCLayerColor::layerWithColor( ccc4(0, 0, 255, 255), 100, 300);
     layer2->setPosition(CCPointMake((s.width/3)*2, s.height/2));
-    layer2->setIsRelativeAnchorPoint(true);
+    layer2->setIgnoreAnchorPointForPosition(false);
     addChild(layer2, 1);
     
     CCActionInterval* actionTint = CCTintBy::actionWithDuration(2, -255, -127, 0);

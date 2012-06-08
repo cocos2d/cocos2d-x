@@ -75,9 +75,9 @@ void FontTest::showFont(const char *pFont)
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelTTF *top = CCLabelTTF::labelWithString(pFont, pFont, 24);
-    CCLabelTTF *left = CCLabelTTF::labelWithString("alignment left", CCSizeMake(s.width, 50), CCTextAlignmentLeft, pFont, 32);
-    CCLabelTTF *center = CCLabelTTF::labelWithString("alignment center", CCSizeMake(s.width, 50), CCTextAlignmentCenter, pFont, 32);
-    CCLabelTTF *right = CCLabelTTF::labelWithString("alignment right", CCSizeMake(s.width, 50), CCTextAlignmentRight, pFont, 32);
+    CCLabelTTF *left = CCLabelTTF::labelWithString("alignment left", CCSizeMake(s.width, 50), kCCTextAlignmentLeft, pFont, 32);
+    CCLabelTTF *center = CCLabelTTF::labelWithString("alignment center", CCSizeMake(s.width, 50), kCCTextAlignmentCenter, pFont, 32);
+    CCLabelTTF *right = CCLabelTTF::labelWithString("alignment right", CCSizeMake(s.width, 50), kCCTextAlignmentRight, pFont, 32);
 
     top->setPosition(ccp(s.width/2, 250));
     left->setPosition(ccp(s.width/2, 200));
