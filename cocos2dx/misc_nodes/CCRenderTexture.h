@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Jason Booth
 
 http://www.cocos2d-x.org
@@ -58,6 +58,10 @@ class CC_DLL CCRenderTexture : public CCNode
 public:
     CCRenderTexture();
     virtual ~CCRenderTexture();
+
+    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    static CCRenderTexture * renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
     static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
 
@@ -67,6 +71,9 @@ public:
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
     bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
 
+    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+
     /** starts grabbing */
     void begin();
 
@@ -74,7 +81,14 @@ public:
     This is more efficient then calling -clear first and then -begin */
     void beginWithClear(float r, float g, float b, float a);
 
-    
+    /** starts rendering to the texture while clearing the texture first.
+     This is more efficient then calling -clear first and then -begin */
+    void beginWithClear(float r, float g, float b, float a, float depthValue);
+
+    /** starts rendering to the texture while clearing the texture first.
+     This is more efficient then calling -clear first and then -begin */
+    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
+
     /** end is key word of lua, use other name to export to lua. */
     inline void endToLua(){ end();};
 
@@ -85,6 +99,11 @@ public:
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
 
+    /** clears the texture with a specified depth value */
+    void clearDepth(float depthValue);
+
+    /** clears the texture with a specified stencil value */
+    void clearStencil(int stencilValue);
     /* creates a new CCImage from with the texture's data.
        Caller is responsible for releasing it by calling delete.
      */
@@ -101,11 +120,12 @@ public:
     bool saveToFile(const char *name, tCCImageFormat format);
 
 protected:
-    GLuint                m_uFBO;
-    GLint                m_nOldFBO;
-    CCTexture2D            *m_pTexture;
-    CCImage                *m_pUITextureImage;
-    GLenum                m_ePixelFormat;
+    GLuint       m_uFBO;
+    GLuint       m_uDepthRenderBufffer;
+    GLint        m_nOldFBO;
+    CCTexture2D* m_pTexture;
+    CCImage*     m_pUITextureImage;
+    GLenum       m_ePixelFormat;
 };
 
 NS_CC_END
