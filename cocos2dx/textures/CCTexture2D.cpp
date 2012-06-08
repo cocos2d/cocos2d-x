@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008      Apple Inc. All Rights Reserved.
 
 http://www.cocos2d-x.org
@@ -71,6 +71,7 @@ CCTexture2D::CCTexture2D()
 , m_fMaxS(0.0)
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
+, m_bHasMipmaps(false)
 , m_bPVRHaveAlphaPremultiplied(true)
 , m_pShaderProgram(NULL)
 {
@@ -177,11 +178,23 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
-    glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+    // XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
+    if( pixelFormat == kCCTexture2DPixelFormat_RGBA8888 || ( ccNextPOT(pixelsWide)==pixelsWide && ccNextPOT(pixelsHigh)==pixelsHigh) )
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+    }
+    else
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+    }
+
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);
 
-    this->setAntiAliasTexParameters();
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
     // Specify OpenGL texture image
 
@@ -224,6 +237,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     m_fMaxT = contentSize.height / (float)(pixelsHigh);
 
     m_bHasPremultipliedAlpha = false;
+    m_bHasMipmaps = false;
 
     m_eResolutionType = kCCResolutionUnknown;
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
@@ -413,9 +427,15 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 // implementation CCTexture2D (Text)
 bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
 {
-    return initWithString(text, CCSizeMake(0,0), CCTextAlignmentCenter, fontName, fontSize);
+    return initWithString(text, CCSizeMake(0,0), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, kCCLineBreakModeWordWrap, fontName, fontSize);
 }
-bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+
+bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
+{
+    return initWithString(text, dimensions, hAlignment, vAlignment, kCCLineBreakModeWordWrap, fontName, fontSize);
+}
+
+bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, CCLineBreakMode lineBreakMode, const char *fontName, float fontSize)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data
@@ -423,10 +443,30 @@ bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCT
 #endif
 
     CCImage image;
-    CCImage::ETextAlign eAlign = (CCTextAlignmentCenter == alignment) ? CCImage::kAlignCenter
-        : (CCTextAlignmentLeft == alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+
+    CCImage::ETextAlign eAlign;
+
+    if (kCCVerticalTextAlignmentTop == vAlignment)
+    {
+        eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignTop
+            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
+    }
+    else if (kCCVerticalTextAlignmentCenter == vAlignment)
+    {
+        eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignCenter
+            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+    }
+    else if (kCCVerticalTextAlignmentBottom == vAlignment)
+    {
+        eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignBottom
+            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
+    }
+    else
+    {
+        CCAssert(false, "Not supported alignment format!");
+    }
     
-    if (! image.initWithString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize))
+    if (!image.initWithString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize))
     {
         return false;
     }
@@ -551,8 +591,8 @@ bool CCTexture2D::initWithPVRFile(const char* file)
         m_tContentSize = CCSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
         m_bHasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
         m_ePixelFormat = pvr->getFormat();
-                
-        this->setAntiAliasTexParameters();
+        m_bHasMipmaps = pvr->getNumberOfMipmaps() > 1;       
+
         pvr->release();
     }
     else
@@ -579,13 +619,15 @@ void CCTexture2D::generateMipmap()
     CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
     ccGLBindTexture2D( m_uName );
     glGenerateMipmap(GL_TEXTURE_2D);
+    m_bHasMipmaps = true;
 }
 
 void CCTexture2D::setTexParameters(ccTexParams *texParams)
 {
-    CCAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh)) ||
-        (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
-        "GL_CLAMP_TO_EDGE should be used in NPOT textures");
+    CCAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) || texParams->wrapS == GL_CLAMP_TO_EDGE) &&
+        (m_uPixelsHigh == ccNextPOT(m_uPixelsHigh) || texParams->wrapT == GL_CLAMP_TO_EDGE),
+        "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
+
     ccGLBindTexture2D( m_uName );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
@@ -595,14 +637,34 @@ void CCTexture2D::setTexParameters(ccTexParams *texParams)
 
 void CCTexture2D::setAliasTexParameters()
 {
-    ccTexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-    this->setTexParameters(&texParams);
+    ccGLBindTexture2D( m_uName );
+
+    if( ! m_bHasMipmaps )
+    {
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    }
+    else
+    {
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST );
+    }
+
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 }
 
 void CCTexture2D::setAntiAliasTexParameters()
 {
-    ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-    this->setTexParameters(&texParams);
+    ccGLBindTexture2D( m_uName );
+
+    if( ! m_bHasMipmaps )
+    {
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    }
+    else
+    {
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
+    }
+
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 }
 
 //
@@ -655,7 +717,8 @@ unsigned int CCTexture2D::bitsPerPixelForFormat()
             ret = 16;
             break;
         case kCCTexture2DPixelFormat_RGB888:
-            ret = 24;
+            // It is 32 and not 24, since its internal representation uses 32 bits.
+            ret = 32;
             break;
         default:
             ret = -1;

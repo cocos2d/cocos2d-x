@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
+#include "CCActionCatmullRom.h"
 #include <string.h>
 #include <cmath>
 
@@ -154,6 +155,25 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
     CC_INCREMENT_GL_DRAWS(1);
 }
 
+void ccDrawRect( CCPoint origin, CCPoint destination )
+{
+    ccDrawLine(CCPointMake(origin.x, origin.y), CCPointMake(destination.x, origin.y));
+    ccDrawLine(CCPointMake(destination.x, origin.y), CCPointMake(destination.x, destination.y));
+    ccDrawLine(CCPointMake(destination.x, destination.y), CCPointMake(origin.x, destination.y));
+    ccDrawLine(CCPointMake(origin.x, destination.y), CCPointMake(origin.x, origin.y));
+}
+
+void ccDrawSolidRect( CCPoint origin, CCPoint destination, ccColor4F color )
+{
+    CCPoint vertices[] = {
+        origin,
+        {destination.x, origin.y},
+        destination,
+        {origin.x, destination.y},
+    };
+
+    ccDrawSolidPoly(vertices, 4, color );
+}
 
 void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePolygon )
 {
@@ -192,7 +212,7 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawFilledPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4F color )
+void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4F color )
 {
     lazy_init();
 
@@ -291,6 +311,58 @@ void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoi
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
 
+    CC_INCREMENT_GL_DRAWS(1);
+}
+
+void ccDrawCatmullRom( CCPointArray *points, unsigned int segments )
+{
+    ccDrawCardinalSpline( points, 0.5f, segments );
+}
+
+void ccDrawCardinalSpline( CCPointArray *config, CCFloat tension,  unsigned int segments )
+{
+    lazy_init();
+
+    ccVertex2F* vertices = new ccVertex2F[segments + 1];
+
+    unsigned int p;
+    CCFloat lt;
+    CCFloat deltaT = 1.0f / config->count();
+
+    for( unsigned int i=0; i < segments+1;i++) {
+
+        CCFloat dt = (CCFloat)i / segments;
+
+        // border
+        if( dt == 1 ) {
+            p = config->count() - 1;
+            lt = 1;
+        } else {
+            p = dt / deltaT;
+            lt = (dt - deltaT * (CCFloat)p) / deltaT;
+        }
+
+        // Interpolate
+        CCPoint pp0 = config->getControlPointAtIndex(p-1);
+        CCPoint pp1 = config->getControlPointAtIndex(p+0);
+        CCPoint pp2 = config->getControlPointAtIndex(p+1);
+        CCPoint pp3 = config->getControlPointAtIndex(p+2);
+
+        CCPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
+        vertices[i].x = newPos.x;
+        vertices[i].y = newPos.y;
+    }
+
+    shader_->use();
+    shader_->setUniformForModelViewProjectionMatrix();    
+    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*)&color_.r, 1);
+
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
+
+    CC_SAFE_DELETE_ARRAY(vertices);
     CC_INCREMENT_GL_DRAWS(1);
 }
 

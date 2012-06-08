@@ -287,6 +287,7 @@ bool CCTMXMapInfo::parseXMLString(const char *xmlString)
 bool CCTMXMapInfo::parseXMLData(const CCData* data)
 {
     //TODO: implementation.
+    CCAssert(false, "not implement!");
     return false;
 }
 

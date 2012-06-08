@@ -115,12 +115,14 @@ void CCTileMapAtlas::loadTGAfile(const char *file)
 {
     CCAssert( file != NULL, "file must be non-nil");
 
+    const char* pPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(file)
+
     //    //Find the path of the file
     //    NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
     //    CCString *resourcePath = [mainBndl resourcePath];
     //    CCString * path = [resourcePath stringByAppendingPathComponent:file];
 
-    m_pTGAInfo = tgaLoad( CCFileUtils::fullPathFromRelativePath(file) );
+    m_pTGAInfo = tgaLoad( pPath );
 #if 1
     if( m_pTGAInfo->status != TGA_OK ) 
     {

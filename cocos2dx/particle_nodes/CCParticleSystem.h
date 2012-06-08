@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -324,6 +324,9 @@ public:
     CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
     /** conforms to CocosNodeTexture protocol */
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+    /** does the alpha value modify color */
+    CC_PROPERTY(bool, m_bOpacityModifyRGB, OpacityModifyRGB)
+
     /** whether or not the particles are using blend additive.
     If enabled, the following blending function will be used.
     @code
@@ -391,6 +394,9 @@ public:
 
     virtual void update(ccTime dt);
     virtual void updateWithNoTime(void);
+
+protected:
+    virtual void updateBlendFunc();
 };
 
 NS_CC_END

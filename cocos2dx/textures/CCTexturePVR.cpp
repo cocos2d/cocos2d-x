@@ -371,7 +371,7 @@ bool CCTexturePVR::createGLTexture()
     {
         if (m_uName != 0)
         {
-            glDeleteTextures(1, &m_uName);
+            ccGLDeleteTexture(m_uName);
         }
         
         glGenTextures(1, &m_uName);

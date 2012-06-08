@@ -145,7 +145,7 @@ bool CCArray::init()
 
 bool CCArray::initWithObject(CCObject* pObject)
 {
-    ccArrayFree(data);
+    ccArrayFree(&data);
     bool bRet = initWithCapacity(1);
     if (bRet)
     {
@@ -157,7 +157,7 @@ bool CCArray::initWithObject(CCObject* pObject)
 /** Initializes an array with some objects */
 bool CCArray::initWithObjects(CCObject* pObject, ...)
 {
-    ccArrayFree(data);
+    ccArrayFree(&data);
     bool bRet = false;
     do 
     {
@@ -191,14 +191,14 @@ bool CCArray::initWithObjects(CCObject* pObject, ...)
 
 bool CCArray::initWithCapacity(unsigned int capacity)
 {
-    ccArrayFree(data);
+    ccArrayFree(&data);
     data = ccArrayNew(capacity);
     return true;
 }
 
 bool CCArray::initWithArray(CCArray* otherArray)
 {
-    ccArrayFree(data);
+    ccArrayFree(&data);
     bool bRet = false;
     do 
     {
@@ -251,6 +251,18 @@ CCObject* CCArray::randomObject()
 bool CCArray::containsObject(CCObject* object)
 {
     return ccArrayContainsObject(data, object);
+}
+
+bool CCArray::isEqualToArray(CCArray* otherArray)
+{
+    for (int i = 0; i< this->count(); i++)
+    {
+        if (!this->objectAtIndex(i)->isEqual(otherArray->objectAtIndex(i)))
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 void CCArray::addObject(CCObject* object)
@@ -326,6 +338,12 @@ void CCArray::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
+void CCArray::replaceObjectAtIndex(unsigned int index, CCObject* pObject, bool bReleaseObject/* = true*/)
+{
+    ccArrayInsertObjectAtIndex(data, pObject, index);
+    ccArrayRemoveObjectAtIndex(data, index+1);
+}
+
 void CCArray::reverseObjects()
 {
     if (data->num > 1)
@@ -349,24 +367,10 @@ void CCArray::reduceMemoryFootprint()
 
 CCArray::~CCArray()
 {
-    ccArrayFree(data);
+    ccArrayFree(&data);
 }
 
-void CCArray::replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject/* = true*/)
-{
-    if (bReleaseObject && uIndex < data->num && data->arr[uIndex] != NULL)
-    {
-        data->arr[uIndex]->release();
-    }
 
-    data->arr[uIndex] = pObject;
-
-    // add the ref
-    if (pObject)
-    {
-        pObject->retain();
-    }
-}
 
 CCObject* CCArray::copyWithZone(CCZone* pZone)
 {
@@ -380,6 +384,143 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
         pArray->addObject(pObj->copy()->autorelease());
     }
     return pArray;
+}
+
+//#pragma mark CCArray - sorting 
+
+/** @since 1.1 */ 
+//#pragma mark -
+//#pragma mark CCArray insertionSortUsingCFuncComparator
+
+void CCArray::insertionSortUsingCFuncComparator(cc_comparator comparator)
+{
+    cc_insertionSort(data, comparator);
+}
+
+//#pragma mark CCArray qsortUsingCFuncComparator
+
+void CCArray::qsortUsingCFuncComparator(cc_comparator comparator)
+{
+    // stable c qsort is used - cost of sorting:  best n*log(n), average n*log(n)
+    //  qsort(void *, size_t, size_t, int (*)(const void *arg1, const void *arg2));
+
+    qsort(data->arr, data->num, sizeof (CCObject*), comparator);  
+}
+
+//#pragma mark CCArray mergesortLUsingCFuncComparator
+
+void CCArray::mergesortLUsingCFuncComparator(cc_comparator comparator)
+{
+    cc_mergesortL(data, sizeof (CCObject*), comparator); 
+}
+
+//#pragma mark CCArray insertionSort with (SEL)selector
+
+void CCArray::insertionSort(SEL_Compare selector) // It sorts source array in ascending order
+{
+    int i,j,length = data->num;
+
+    CCObject* * x = data->arr;
+    CCObject* temp;	
+
+    // insertion sort
+    for(i=1; i<length; i++)
+    {
+        j = i;
+        // continue moving element downwards while order is descending 
+        while( j>0 &&  (x[j-1]->*selector)(x[j]) == CCOrderedDescending )
+        {
+            temp = x[j];
+            x[j] = x[j-1];
+            x[j-1] = temp;
+            j--;
+        }
+    }
+}
+
+static inline int selectorCompare(CCObject* object1,CCObject* object2,SEL_Compare selector)
+{
+    return (int) (object1->*selector)(object2);
+}
+
+void CCArray::sortUsingSelector(SEL_Compare selector)
+{
+    this->sortUsingFunction(selectorCompare, selector);
+}
+
+//#pragma mark CCArray sortUsingFunction
+
+// using a comparison function
+void CCArray::sortUsingFunction(int (*compare)(CCObject*, CCObject*, SEL_Compare) , SEL_Compare context)
+{
+    int h, i, j, k, l, m, n = this->count();
+    CCObject*  A, **B = (CCObject**)malloc( (n/2 + 1) * sizeof(CCObject*));
+
+    // to prevent retain counts from temporarily hitting zero.  
+    for( i=0;i<n;i++)
+    {
+        // [[self objectAtIndex:i] retain]; // prevents compiler warning
+        data->arr[i]->retain();
+    }
+
+    for (h = 1; h < n; h += h)
+    {
+        for (m = n - 1 - h; m >= 0; m -= h + h)
+        {
+            l = m - h + 1;
+            if (l < 0)
+            {
+                l = 0;
+            }
+
+            for (i = 0, j = l; j <= m; i++, j++)
+            {
+                B[i] = this->objectAtIndex(j);
+            }
+
+            for (i = 0, k = l; k < j && j <= m + h; k++)
+            {
+                A = this->objectAtIndex(j);
+                if (compare(A, B[i], context) == CCOrderedDescending)
+                {
+                    this->replaceObjectAtIndex(k, B[i++]);
+                }
+                else
+                {
+                    this->replaceObjectAtIndex(k, A);
+                    j++;
+                }
+            }
+
+            while (k < j)
+            {
+                this->replaceObjectAtIndex(k++, B[i++]);
+            }
+        }
+    }
+
+    for(i=0;i<n;i++)
+    {
+        // [[self objectAtIndex:i] release]; // prevents compiler warning
+        data->arr[i]->release();
+    }
+
+    free(B);
+}
+
+void CCArray::makeObjectsPerformSelector(SEL_CallFunc aSelector)
+{
+    ccArrayMakeObjectsPerformSelector(data, aSelector);
+}
+
+void CCArray::makeObjectsPerformSelectorWithObject(SEL_CallFuncO aSelector, CCObject* object)
+{
+    ccArrayMakeObjectsPerformSelectorWithObject(data, aSelector, object);
+}
+
+void CCArray::makeObjectPerformSelectorWithArrayObjects(CCObject* object, SEL_CallFuncO aSelector)
+{		
+    ccArrayMakeObjectPerformSelectorWithArrayObjects(data, aSelector, object);
 }
 
 NS_CC_END
