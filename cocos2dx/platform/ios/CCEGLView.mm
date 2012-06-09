@@ -86,6 +86,7 @@ void CCEGLView::swapBuffers()
 CCSize  CCEGLView::getFrameSize()
 {
     assert(false);
+	return CCSizeMake(0, 0);
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
