@@ -521,7 +521,7 @@ static BOOL _mixerRateSet = NO;
         if (soundId >= bufferTotal) {
             //Need to resize the buffers
             int requiredIncrement = CD_BUFFERS_INCREMENT;
-            while (bufferTotal + requiredIncrement < soundId) {
+            while (bufferTotal + requiredIncrement <= soundId) {
                 requiredIncrement += CD_BUFFERS_INCREMENT;
             }
             CDLOGINFO(@"Denshion::CDSoundEngine - attempting to resize buffers by %i for sound %i",requiredIncrement,soundId);
