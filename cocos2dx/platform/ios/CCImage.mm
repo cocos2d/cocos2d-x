@@ -348,7 +348,8 @@ CCImage::~CCImage()
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
     unsigned long nSize;
-    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath), "rb", &nSize);
+    CCFileUtils *fileUtils = CCFileUtils::sharedFileUtils();
+    unsigned char *pBuffer = fileUtils->getFileData(fileUtils->fullPathFromRelativePath(strPath), "rb", &nSize);
     
     return initWithImageData(pBuffer, nSize, eImgFmt);
 }
@@ -426,21 +427,25 @@ bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeigh
 bool CCImage::_initWithJpgData(void *pData, int nDatalen)
 {
     assert(0);
+	return false;
 }
 
 bool CCImage::_initWithPngData(void *pData, int nDatalen)
 {
     assert(0);
+	return false;
 }
 
 bool CCImage::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
 {
     assert(0);
+	return false;
 }
 
 bool CCImage::_saveImageToJPG(const char *pszFilePath)
 {
     assert(0);
+	return false;
 }
 
 bool CCImage::initWithString(

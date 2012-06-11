@@ -36,6 +36,8 @@ class CC_DLL CCFileUtils
 public:
     static CCFileUtils* sharedFileUtils();
     static void purgeFileUtils();
+
+    void purgeCachedEntries();
     /**
     @brief Get resource file data
     @param[in]  pszFileName The resource file name which contain the path

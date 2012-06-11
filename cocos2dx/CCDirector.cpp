@@ -121,7 +121,7 @@ bool CCDirector::init(void)
 
     // paused ?
     m_bPaused = false;
-    
+   
     // purge ?
     m_bPurgeDirecotorInNextLoop = false;
 
@@ -268,7 +268,7 @@ void CCDirector::calculateDeltaTime(void)
         return;
     }
 
-    // new delta time
+    // new delta time. Re-fixed issue #1277
     if (m_bNextDeltaTimeZero)
     {
         m_fDeltaTime = 0;
@@ -358,12 +358,6 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
     case kCCDirectorProjection3D:
         {
-//TODO:             // reset the viewport if 3d proj & retina display
-//             if( CC_CONTENT_SCALE_FACTOR() != 1.0f )
-//             {
-//                 glViewport((GLint)-size.width/2, (GLint)-size.height/2, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
-//             }
-
             float zeye = this->getZEye();
 
             kmMat4 matrixPerspective, matrixLookup;
@@ -375,16 +369,6 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
             // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
-//TODO:         if (m_pobOpenGLView && m_pobOpenGLView->isIpad() && m_pobOpenGLView->getMainScreenScale() > 1.0f)
-//             {
-//                 kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2);
-//             }
-//             else
-//             {
-//                  kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500);
-//             }
-           
-//            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
             kmGLMultMatrix(&matrixPerspective);
 
             kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -418,11 +402,12 @@ void CCDirector::purgeCachedData(void)
 {
     CCLabelBMFont::purgeCachedData();
     CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+    CCFileUtils::sharedFileUtils()->purgeCachedEntries();
 }
 
 float CCDirector::getZEye(void)
 {
-    return (m_obWinSizeInPixels.height / 1.1566f);    
+    return (m_obWinSizeInPixels.height / 1.1566f / CC_CONTENT_SCALE_FACTOR());    
 }
 
 void CCDirector::setAlphaBlending(bool bOn)
@@ -547,6 +532,35 @@ void CCDirector::popScene(void)
     }
 }
 
+void CCDirector::popToRootScene(void)
+{
+    CCAssert(m_pRunningScene != NULL, "A running Scene is needed");
+    unsigned int c = m_pobScenesStack->count();
+
+    if (c == 1) 
+    {
+        m_pobScenesStack->removeLastObject();
+        this->end();
+    } 
+    else 
+    {
+        while (c > 1) 
+        {
+            CCScene *current = (CCScene*)m_pobScenesStack->lastObject();
+            if( current->getIsRunning() )
+            {
+                current->onExit();
+            }
+            current->cleanup();
+
+            m_pobScenesStack->removeLastObject();
+            c--;
+        }
+        m_pNextScene = (CCScene*)m_pobScenesStack->lastObject();
+        m_bSendCleanupToScene = false;
+    }
+}
+
 void CCDirector::end()
 {
     m_bPurgeDirecotorInNextLoop = true;
@@ -589,6 +603,7 @@ void CCDirector::purgeDirector()
     CCSpriteFrameCache::purgeSharedSpriteFrameCache();
     CCTextureCache::purgeSharedTextureCache();
     CCShaderCache::purgeSharedShaderCache();
+    CCFileUtils::purgeFileUtils();
     CCConfiguration::purgeConfiguration();
 
     // cocos2d-x specific data structures
@@ -721,21 +736,32 @@ void CCDirector::calculateMPF()
 
 void CCDirector::createStatsLabel()
 {
-    CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-    CC_SAFE_RELEASE_NULL(m_pSPFLabel);
-    CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
-    
-    m_pFPSLabel = CCLabelBMFont::labelWithString("00.0", "fps_images.fnt");
-    m_pSPFLabel = CCLabelBMFont::labelWithString("0.000", "fps_images.fnt");
-    m_pDrawsLabel = CCLabelBMFont::labelWithString("000", "fps_images.fnt");
-    
-    m_pFPSLabel->retain();
-    m_pSPFLabel->retain();
-    m_pDrawsLabel->retain();
-    
-    m_pDrawsLabel->setPosition(ccp(20, 50));
-    m_pSPFLabel->setPosition(ccp(25, 30));
-    m_pFPSLabel->setPosition(ccp(20, 10));
+    if( m_pFPSLabel && m_pSPFLabel ) 
+    {
+        CCTexture2D *texture = m_pFPSLabel->getTexture();
+
+        CC_SAFE_RELEASE_NULL(m_pFPSLabel);
+        CC_SAFE_RELEASE_NULL(m_pSPFLabel);
+        CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
+        CCTextureCache::sharedTextureCache()->removeTexture(texture);
+
+        CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+    }
+
+    CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    m_pFPSLabel = new CCLabelAtlas();
+    m_pFPSLabel->initWithString("00.0", "fps_images.png", 12, 32, '.');
+    m_pSPFLabel = new CCLabelAtlas();
+    m_pSPFLabel->initWithString("0.000", "fps_images.png", 12, 32, '.');
+    m_pDrawsLabel = new CCLabelAtlas();
+    m_pDrawsLabel->initWithString("000", "fps_images.png", 12, 32, '.');
+
+    CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
+
+    m_pDrawsLabel->setPosition( ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) );
+    m_pSPFLabel->setPosition( ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) );
+    m_pFPSLabel->setPosition( CC_DIRECTOR_STATS_POSITION );
 }
 
 

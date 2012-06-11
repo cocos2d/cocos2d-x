@@ -237,6 +237,11 @@ void CCControlButton::setPreferredSize(CCSize size)
     needsLayout();
 }
 
+CCSize CCControlButton::getPreferredSize()
+{
+    return m_preferredSize;
+}
+
 void CCControlButton::setAdjustBackgroundImage(bool adjustBackgroundImage)
 {
     m_adjustBackgroundImage=adjustBackgroundImage;
@@ -246,11 +251,6 @@ void CCControlButton::setAdjustBackgroundImage(bool adjustBackgroundImage)
 bool CCControlButton::getAdjustBackgroundImage()
 {
     return m_adjustBackgroundImage;
-}
-
-CCSize CCControlButton::getPreferredSize()
-{
-    return this->m_preferredSize;
 }
 
 CCPoint CCControlButton::getLabelAnchorPoint()

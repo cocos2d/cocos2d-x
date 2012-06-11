@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
+#include "CCApplication.h"
 
 NS_CC_BEGIN
 
@@ -39,14 +40,17 @@ NS_CC_BEGIN
 //CCLabelTTF
 //
 CCLabelTTF::CCLabelTTF()
-    : m_eAlignment(kCCTextAlignmentCenter)
-    , m_fFontSize(0.0)
+: m_hAlignment(kCCTextAlignmentCenter)
+, m_vAlignment(kCCVerticalTextAlignmentTop)
+, m_pFontName(NULL)
+, m_fFontSize(0.0)
+, m_string("")
 {
 }
 
 CCLabelTTF::~CCLabelTTF()
 {
-      
+    CC_SAFE_DELETE(m_pFontName); 
 }
 
 CCLabelTTF * CCLabelTTF::node()
@@ -63,21 +67,20 @@ CCLabelTTF * CCLabelTTF::node()
     return pRet;
 }
 
-CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const char *fontName, float fontSize)
 {
-    CCLabelTTF *pRet = new CCLabelTTF();
-    if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    return labelWithString(string, CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, fontName, fontSize);
 }
-CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const char *fontName, float fontSize)
+
+CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, const char *fontName, float fontSize)
+{
+    return labelWithString(string, dimensions, hAlignment, kCCVerticalTextAlignmentTop, fontName, fontSize);
+}
+
+CCLabelTTF* CCLabelTTF::labelWithString(const char *string, const cocos2d::CCSize &dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
 {
     CCLabelTTF *pRet = new CCLabelTTF();
-    if(pRet && pRet->initWithString(label, fontName, fontSize))
+    if(pRet && pRet->initWithString(string, dimensions, hAlignment, vAlignment, fontName, fontSize))
     {
         pRet->autorelease();
         return pRet;
@@ -93,135 +96,205 @@ bool CCLabelTTF::init()
 
 bool CCLabelTTF::initWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
-    CCAssert(label != NULL, "");
-    if (CCSprite::init())
-    {
-        // shader program
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
-
-        m_tDimensions = CCSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
-        m_eAlignment = alignment;
-
-        m_sFontName = fontName;
-
-        m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
-        this->setString(label);
-        return true;
-    }
-    return false;
+    return this->initWithString(label, dimensions, alignment, kCCVerticalTextAlignmentTop, fontName, fontSize);
 }
+
 bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
-    CCAssert(label != NULL, "");
+    return this->initWithString(label, CCSizeZero, kCCTextAlignmentLeft, kCCVerticalTextAlignmentTop, fontName, fontSize);
+}
+
+bool CCLabelTTF::initWithString(const char *string, const cocos2d::CCSize &dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
+{
     if (CCSprite::init())
     {
         // shader program
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
-
-        m_tDimensions = CCSizeZero;
-
-        m_sFontName = fontName;
-
-        m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
-        this->setString(label);
+        this->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
+        
+        m_tDimensions = CCSizeMake(dimensions.width, dimensions.height);
+        m_hAlignment = hAlignment;
+        m_vAlignment = vAlignment;
+        m_pFontName = new std::string(fontName);
+        m_fFontSize = fontSize;
+        
+        this->setString(string);
+        
         return true;
     }
+    
     return false;
 }
-const char * CCLabelTTF::getFontName()
-{
-    return this->m_sFontName.c_str();
-}
-void CCLabelTTF::setFontName(const char *fontName)
-{
-    if(strcmp(this->m_sFontName.c_str(), fontName) != 0)
-    {
-        this->m_sFontName = fontName;
-        
-        this->setString(this->m_sString.c_str());
-    }
-}
-float CCLabelTTF::getFontSize()
-{
-    return this->m_fFontSize;
-}
-void CCLabelTTF::setFontSize(float fontSize)
-{
-    if(this->m_fFontSize != fontSize)
-    {
-        this->m_fFontSize = fontSize;
-        
-        this->setString(this->m_sString.c_str());
-    }
-}
-void CCLabelTTF::setDimensions(CCSize dimensions)
-{
-    if(this->m_tDimensions.width != dimensions.width || this->m_tDimensions.height != dimensions.height)
-    {
-        this->m_tDimensions = dimensions;
-        
-        this->setString(this->m_sString.c_str());
-    }
-}
-void CCLabelTTF::setHorizontalAlignment(CCTextAlignment pCCTextAlignment)
-{
-    if(this->m_eAlignment != pCCTextAlignment)
-    {
-        this->m_eAlignment = pCCTextAlignment;
 
-        this->setString(this->m_sString.c_str());
-    }
-}
-void CCLabelTTF::setString(const char *label)
+void CCLabelTTF::setString(const char *string)
 {
-    m_sString = label;
+    CCAssert(string != NULL, "Invalid string");
     
-    CCTexture2D *texture;
-    if( CCSize::CCSizeEqualToSize( m_tDimensions, CCSizeZero ) )
+    if (m_string.compare(string))
     {
-        texture = new CCTexture2D();
-        texture->initWithString(label, m_sFontName.c_str(), m_fFontSize);
+        m_string = string;
+        
+        this->updateTexture();
     }
-    else
-    {
-        texture = new CCTexture2D();
-//cjh        texture->initWithString(label, m_tDimensions, m_eAlignment, kCCVerticalTextAlignmentTop, m_pFontName->c_str(), m_fFontSize);
-    }
-
-// TODO
-// #ifdef __CC_PLATFORM_IOS
-//     // iPad ?
-//     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-//         if( CC_CONTENT_SCALE_FACTOR() == 2 )
-//             [tex setResolutionType:kCCResolutioniPadRetinaDisplay];
-//         else
-//             [tex setResolutionType:kCCResolutioniPad];
-//     }
-//     // iPhone ?
-//     else
-//     {
-//         if( CC_CONTENT_SCALE_FACTOR() == 2 )
-//             [tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
-//         else
-//             [tex setResolutionType:kCCResolutioniPhone];
-//     }
-// #end
-    this->setTexture(texture);
-    texture->release();
-
-    CCRect rect = CCRectZero;
-    rect.size = m_pobTexture->getContentSize();
-    this->setTextureRect(rect);
 }
 
 const char* CCLabelTTF::getString(void)
 {
-    return m_sString.c_str();
+    return m_string.c_str();
 }
 
 const char* CCLabelTTF::description()
 {
-    return CCString::stringWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_sFontName.c_str(), m_fFontSize)->getCString();
+    return CCString::stringWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
+}
+
+CCTextAlignment CCLabelTTF::getHorizontalAlignment()
+{
+    return m_hAlignment;
+}
+
+void CCLabelTTF::setHorizontalAlignment(CCTextAlignment alignment)
+{
+    if (alignment != m_hAlignment)
+    {
+        m_hAlignment = alignment;
+        
+        // Force update
+        if (m_string.size() > 0)
+        {
+            this->updateTexture();
+        }
+    }
+}
+
+CCVerticalTextAlignment CCLabelTTF::getVerticalAlignment()
+{
+    return m_vAlignment;
+}
+
+void CCLabelTTF::setVerticalAlignment(CCVerticalTextAlignment verticalAlignment)
+{
+    if (verticalAlignment != m_vAlignment)
+    {
+        m_vAlignment = verticalAlignment;
+        
+        // Force update
+        if (m_string.size() > 0)
+        {
+            this->updateTexture();
+        }
+    }
+}
+
+CCSize CCLabelTTF::getDimensions()
+{
+    return m_tDimensions;
+}
+
+void CCLabelTTF::setDimensions(CCSize &dim)
+{
+    if (dim.width != m_tDimensions.width || dim.height != m_tDimensions.height)
+    {
+        m_tDimensions = dim;
+        
+        // Force udpate
+        if (m_string.size() > 0)
+        {
+            this->updateTexture();
+        }
+    }
+}
+
+float CCLabelTTF::getFontSize()
+{
+    return m_fFontSize;
+}
+
+void CCLabelTTF::setFontSize(float fontSize)
+{
+    if (m_fFontSize != fontSize)
+    {
+        m_fFontSize = fontSize;
+
+        // Force update
+        if (m_string.size() > 0)
+        {
+            this->updateTexture();
+        }
+    }
+}
+
+const char* CCLabelTTF::getFontName()
+{
+    return m_pFontName->c_str();
+}
+
+void CCLabelTTF::setFontName(const char *fontName)
+{
+    if (m_pFontName->compare(fontName))
+    {
+        delete m_pFontName;
+        m_pFontName = new std::string(fontName);
+        
+        // Force update
+        if (m_string.size() > 0)
+        {
+            this->updateTexture();
+        }
+    }
+}
+
+// Helper
+void CCLabelTTF::updateTexture()
+{
+    CCTexture2D *tex;
+	if (m_tDimensions.width == 0 || m_tDimensions.height == 0)
+    {
+        tex = new CCTexture2D();
+        tex->initWithString(m_string.c_str(), m_pFontName->c_str(), m_fFontSize * CC_CONTENT_SCALE_FACTOR()) ;
+    }
+	else
+    {
+        tex = new CCTexture2D();
+        tex->initWithString(m_string.c_str(),
+                            CC_SIZE_POINTS_TO_PIXELS(m_tDimensions), 
+                            m_hAlignment,
+                            m_vAlignment,
+                            m_pFontName->c_str(),
+                            m_fFontSize * CC_CONTENT_SCALE_FACTOR());
+    }
+		
+	// iPad ?
+	//if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+    if (CCApplication::sharedApplication().isIpad())
+    {            
+		if (CC_CONTENT_SCALE_FACTOR() == 2)
+        {
+            tex->setResolutionType(kCCResolutioniPadRetinaDisplay);
+        }
+		else
+        {
+            tex->setResolutionType(kCCResolutioniPad);
+        }
+	}
+	// iPhone ?
+	else
+	{
+		if (CC_CONTENT_SCALE_FACTOR() == 2)
+        {
+            tex->setResolutionType(kCCResolutioniPhoneRetinaDisplay);
+        }
+		else
+        {
+            tex->setResolutionType(kCCResolutioniPhone);
+        }
+	}
+	
+    this->setTexture(tex);
+    tex->release();
+	
+	CCRect rect = CCRectZero;
+    rect.size = m_pobTexture->getContentSize();
+    this->setTextureRect(rect);
 }
 
 NS_CC_END

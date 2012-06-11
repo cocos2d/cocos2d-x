@@ -111,10 +111,10 @@ void SpriteDemo::onEnter()
     CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(SpriteDemo::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
-    menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );    
+    menu->setPosition(CCPointZero);
+    item1->setPosition(CCPointMake( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(CCPointMake( s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(CCPointMake( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));    
     addChild(menu, 1);    
 
     CCLayerColor *background = CCLayerColor::layerWithColor(ccc4(255,0,0,255));
