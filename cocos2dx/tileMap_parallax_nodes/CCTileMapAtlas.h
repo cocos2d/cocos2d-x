@@ -25,15 +25,14 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCTILE_MAP_ATLAS__
 #define __CCTILE_MAP_ATLAS__
-#include <string>
-#include <map>
+
+
 #include "CCAtlasNode.h"
 
 NS_CC_BEGIN
 
-typedef std::map<std::string, int> StringToIntegerDictionary;
-typedef std::pair<std::string, int> StringToIntegerPair;
 struct sImageTGA;
+class CCDictionary;
 /** @brief CCTileMapAtlas is a subclass of CCAtlasNode.
 
 It knows how to render a map based of tiles.
@@ -82,9 +81,9 @@ private:
 
 protected:
     //! x,y to altas dicctionary
-    StringToIntegerDictionary *m_pPosToAtlasIndex;
+    CCDictionary* m_pPosToAtlasIndex;
     //! numbers of tiles to render
-    int                m_nItemsToRender;
+    int m_nItemsToRender;
 };
 
 NS_CC_END

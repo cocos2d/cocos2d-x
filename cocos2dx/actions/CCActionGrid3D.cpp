@@ -134,7 +134,7 @@ bool CCFlipX3D::initWithSize(const ccGridSize& gridSize, float duration)
     if (gridSize.x != 1 || gridSize.y != 1)
     {
         // Grid size must be (1,1)
-        CCAssert(0, "");
+        CCAssert(0, "Grid size must be (1,1)");
 
         return false;
     }
@@ -402,9 +402,6 @@ void CCLens3D::setPosition(const CCPoint& pos)
 {
     if( ! CCPoint::CCPointEqualToPoint(pos, m_position) ) {
         m_position = pos;
-        m_positionInPixels.x = pos.x * CC_CONTENT_SCALE_FACTOR();
-        m_positionInPixels.y = pos.y * CC_CONTENT_SCALE_FACTOR();
-
         m_bDirty = true;
     }
 }
@@ -421,7 +418,7 @@ void CCLens3D::update(float time)
             for (j = 0; j < m_sGridSize.y + 1; ++j)
             {
                 ccVertex3F v = originalVertex(ccg(i, j));
-                CCPoint vect = ccpSub(m_positionInPixels, ccp(v.x, v.y));
+                CCPoint vect = ccpSub(m_position, ccp(v.x, v.y));
                 CCFloat r = ccpLength(vect);
                 
                 if (r < m_fRadius)
@@ -492,8 +489,6 @@ bool CCRipple3D::initWithPosition(const CCPoint& pos, float r, int wav, float am
 void CCRipple3D::setPosition(const CCPoint& position)
 {
     m_position = position;
-    m_positionInPixels.x = position.x * CC_CONTENT_SCALE_FACTOR();
-    m_positionInPixels.y = position.y * CC_CONTENT_SCALE_FACTOR();
 }
 
 CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
@@ -528,7 +523,7 @@ void CCRipple3D::update(float time)
         for (j = 0; j < (m_sGridSize.y+1); ++j)
         {
             ccVertex3F v = originalVertex(ccg(i, j));
-            CCPoint vect = ccpSub(m_positionInPixels, ccp(v.x,v.y));
+            CCPoint vect = ccpSub(m_position, ccp(v.x,v.y));
             CCFloat r = ccpLength(vect);
             
             if (r < m_fRadius)
@@ -820,8 +815,6 @@ bool CCTwirl::initWithPosition(const CCPoint& pos, int t, float amp, const ccGri
 void CCTwirl::setPosition(const CCPoint& position)
 {
     m_position = position;
-    m_positionInPixels.x = position.x * CC_CONTENT_SCALE_FACTOR();
-    m_positionInPixels.y = position.y * CC_CONTENT_SCALE_FACTOR();
 }
 
 CCObject* CCTwirl::copyWithZone(CCZone *pZone)
@@ -851,7 +844,7 @@ CCObject* CCTwirl::copyWithZone(CCZone *pZone)
 void CCTwirl::update(float time)
 {
     int i, j;
-    CCPoint    c = m_positionInPixels;
+    CCPoint    c = m_position;
     
     for (i = 0; i < (m_sGridSize.x+1); ++i)
     {
@@ -865,10 +858,9 @@ void CCTwirl::update(float time)
             CCFloat amp = 0.1f * m_fAmplitude * m_fAmplitudeRate;
             CCFloat a = r * cosf( (CCFloat)M_PI/2.0f + time * (CCFloat)M_PI * m_nTwirls * 2 ) * amp;
             
-            CCPoint    d;
-            
-            d.x = sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x);
-            d.y = cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x);
+            CCPoint d = ccp(
+                sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x),
+                cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x));
             
             v.x = c.x + d.x;
             v.y = c.y + d.y;

@@ -89,7 +89,7 @@ bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture,
     CC_SAFE_RETAIN(m_pTexture);
     m_bIsTextureFlipped = bFlipped;
 
-    const CCSize& texSize = m_pTexture->getContentSizeInPixels();
+    const CCSize& texSize = m_pTexture->getContentSize();
     m_obStep.x = texSize.width / m_sGridSize.x;
     m_obStep.y = texSize.height / m_sGridSize.y;
 

@@ -212,6 +212,32 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
 
 NS_CC_BEGIN
 
+static CCFileUtils* s_pFileUtils = NULL;
+
+CCFileUtils* CCFileUtils::sharedFileUtils()
+{
+    if (s_pFileUtils == NULL)
+    {
+        s_pFileUtils = new CCFileUtils();
+    }
+    return s_pFileUtils;
+}
+
+void CCFileUtils::purgeFileUtils()
+{
+    if (s_pFileUtils != NULL)
+    {
+        s_pFileUtils->purgeCachedEntries();
+    }
+
+    CC_SAFE_DELETE(s_pFileUtils);
+}
+
+void CCFileUtils::purgeCachedEntries()
+{
+
+}
+
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
     assert(0);
@@ -389,7 +415,7 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    const char* pszFullPath = CCFileUtils::fullPathFromRelativePath(pFileName);
+    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
     NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
