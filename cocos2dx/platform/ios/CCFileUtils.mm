@@ -212,6 +212,17 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
 
 NS_CC_BEGIN
 
+CCFileUtils* CCFileUtils::sharedFileUtils()
+{
+    static CCFileUtils *fileUtils = NULL;
+    if (fileUtils == NULL)
+    {
+        fileUtils = new CCFileUtils();
+    }
+    
+    return fileUtils;
+}
+
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
     assert(0);
@@ -389,7 +400,7 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    const char* pszFullPath = CCFileUtils::fullPathFromRelativePath(pFileName);
+    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
     NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     

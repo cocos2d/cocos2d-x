@@ -348,7 +348,8 @@ CCImage::~CCImage()
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
     unsigned long nSize;
-    unsigned char *pBuffer = CCFileUtils::getFileData(CCFileUtils::fullPathFromRelativePath(strPath), "rb", &nSize);
+    CCFileUtils *fileUtils = CCFileUtils::sharedFileUtils();
+    unsigned char *pBuffer = fileUtils->getFileData(fileUtils->fullPathFromRelativePath(strPath), "rb", &nSize);
     
     return initWithImageData(pBuffer, nSize, eImgFmt);
 }
@@ -360,7 +361,7 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
        * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
        */    
     unsigned long nSize;
-    unsigned char *pBuffer = CCFileUtils::getFileData(fullpath, "rb", &nSize);
+    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
     
     return initWithImageData(pBuffer, nSize, imageType);
 }
