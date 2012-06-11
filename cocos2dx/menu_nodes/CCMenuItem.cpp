@@ -524,6 +524,10 @@ bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* select
     setSelectedImage(selectedSprite);
     setDisabledImage(disabledSprite);
 
+    if(m_pNormalImage)
+    {
+        this->setContentSize(m_pNormalImage->getContentSize());
+    }
     return true;
 }
 
@@ -533,6 +537,7 @@ bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* select
 void CCMenuItemSprite::selected()
 {
     CCMenuItem::selected();
+
     if (m_pNormalImage)
     {
         if (m_pDisabledImage)

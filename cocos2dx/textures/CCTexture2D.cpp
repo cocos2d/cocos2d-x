@@ -179,13 +179,10 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
     // XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-    if( pixelFormat == kCCTexture2DPixelFormat_RGBA8888 || ( ccNextPOT(pixelsWide)==pixelsWide && ccNextPOT(pixelsHigh)==pixelsHigh) )
+    bool useDefaultAlignment = kCCTexture2DPixelFormat_RGBA8888 && ccNextPOT(pixelsWide)==pixelsWide && ccNextPOT(pixelsHigh)==pixelsHigh;
+    if(!useDefaultAlignment)
     {
-        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-    }
-    else
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
 
     glGenTextures(1, &m_uName);
@@ -227,6 +224,12 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     default:
         CCAssert(0, "NSInternalInconsistencyException");
 
+    }
+
+    if(!useDefaultAlignment)
+    {
+        // Revert to default alignment
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
     }
 
     m_tContentSize = contentSize;

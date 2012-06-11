@@ -51,16 +51,15 @@ protected:
 
     /** Adjust the background image. YES by default. If the property is set to NO, the 
     background will use the prefered size of the background image. */
-    CC_PROPERTY(bool, m_adjustBackgroundImage, AdjustBackgroundImage);
-
-	/** Default value is (0.5f, 0.5f). */
-    CC_PROPERTY(CCPoint, m_labelAnchorPoint, LabelAnchorPoint);
+    CC_PROPERTY(bool, m_adjustBackgroundImage, AdjustBackgroundImage); 
 
     /** Adjust the button zooming on touchdown. Default value is YES. */
     CC_PROPERTY(bool, m_zoomOnTouchDown, ZoomOnTouchDown);
 
     /** The prefered size of the button, if label is larger it will be expanded. */
     CC_PROPERTY(CCSize, m_preferredSize, PreferredSize);
+
+    CC_PROPERTY(CCPoint, m_labelAnchorPoint, LabelAnchorPoint);
 
     /** The current title that is displayed on the button. */
     CC_SYNTHESIZE_READONLY(CCString*, m_currentTitle, CurrentTitle); 

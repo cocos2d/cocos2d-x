@@ -25,16 +25,42 @@ THE SOFTWARE.
 #define __CC_PLATFORM_FILEUTILS_CPP__
 #include "CCFileUtilsCommon_cpp.h"
 
+using namespace std;
+
 NS_CC_BEGIN
 
 #include "CCCommon.h"
 #include "jni/SystemInfoJni.h"
 
-using namespace std;
-
 // record the resource path
 static string s_strResourcePath = "";
     
+static CCFileUtils* s_pFileUtils = NULL;
+
+CCFileUtils* CCFileUtils::sharedFileUtils()
+{
+    if (s_pFileUtils == NULL)
+    {
+        s_pFileUtils = new CCFileUtils();
+    }
+    return s_pFileUtils;
+}
+
+void CCFileUtils::purgeFileUtils()
+{
+    if (s_pFileUtils != NULL)
+    {
+        s_pFileUtils->purgeCachedEntries();
+    }
+
+    CC_SAFE_DELETE(s_pFileUtils);
+}
+
+void CCFileUtils::purgeCachedEntries()
+{
+
+}
+
 /*
  * This function is implemented for jni to set apk path.
  */

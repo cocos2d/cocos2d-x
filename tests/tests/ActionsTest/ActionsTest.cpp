@@ -1,5 +1,6 @@
 #include "ActionsTest.h"
 #include "../testResource.h"
+#include "CCActionCatmullRom.h"
 
 CCLayer* NextAction();
 CCLayer* BackAction();
@@ -13,72 +14,79 @@ CCLayer* CreateLayer(int nIndex)
 
     switch (nIndex)
     {
-    case ACTION_MANUAL_LAYER:
-        pLayer = new ActionManual(); break;
-    case ACTION_MOVE_LAYER:
-        pLayer = new ActionMove(); break;
-    case ACTION_SCALE_LAYER:
-        pLayer = new ActionScale(); break;
-    case ACTION_ROTATE_LAYER:
-        pLayer = new ActionRotate(); break;
-    case ACTION_SKEW_LAYER:
-        pLayer = new ActionSkew(); break;
-    case ACTION_SKEWROTATE_LAYER:
-        pLayer = new ActionSkewRotateScale(); break;
-    case ACTION_JUMP_LAYER:
-        pLayer = new ActionJump(); break;
-    case ACTION_BEZIER_LAYER:
-        pLayer = new ActionBezier(); break;
-    case ACTION_BLINK_LAYER:
-        pLayer = new ActionBlink(); break;
-    case ACTION_FADE_LAYER:
-        pLayer = new ActionFade(); break;
-    case ACTION_TINT_LAYER:
-        pLayer = new ActionTint(); break;
-    case ACTION_ANIMATE_LAYER:
-        pLayer = new ActionAnimate(); break;
-    case ACTION_SEQUENCE_LAYER:
-        pLayer = new ActionSequence(); break;
-    case ACTION_SEQUENCE2_LAYER:
-        pLayer = new ActionSequence2(); break;
-    case ACTION_SPAWN_LAYER:
-        pLayer = new ActionSpawn(); break;
-    case ACTION_REVERSE:
-        pLayer = new ActionReverse(); break;
-    case ACTION_DELAYTIME_LAYER:
-        pLayer = new ActionDelayTime(); break;
-    case ACTION_REPEAT_LAYER:
-        pLayer = new ActionRepeat(); break;
-    case ACTION_REPEATEFOREVER_LAYER:
-        pLayer = new ActionRepeatForever(); break;
-    case ACTION_ROTATETOREPEATE_LAYER:
-        pLayer = new ActionRotateToRepeat(); break;
-    case ACTION_ROTATEJERK_LAYER:
-        pLayer = new ActionRotateJerk(); break;    
-    case ACTION_CALLFUNC_LAYER:
-        pLayer = new ActionCallFunc(); break;
-    case ACTION_CALLFUNCND_LAYER:
-        pLayer = new ActionCallFuncND(); break;
-    case ACTION_REVERSESEQUENCE_LAYER:
-        pLayer = new ActionReverseSequence(); break;
-    case ACTION_REVERSESEQUENCE2_LAYER:
-        pLayer = new ActionReverseSequence2(); break;
-    case ACTION_ORBIT_LAYER:
-        pLayer = new ActionOrbit(); break;
-    case ACTION_FLLOW_LAYER:
-        pLayer = new ActionFollow(); break;
-    case ACTION_TARGETED_LAYER:
-        pLayer = new ActionTargeted(); break;
-    case ACTION_ISSUE1305_LAYER:
-        pLayer = new Issue1305(); break;
-    case ACTION_ISSUE1305_2_LAYER:
-        pLayer = new Issue1305_2(); break;
-    case ACTION_ISSUE1288_LAYER:
-        pLayer = new Issue1288(); break;
-    case ACTION_ISSUE1288_2_LAYER:
-        pLayer = new Issue1288_2(); break;
-    case ACTION_ISSUE1327_LAYER:
-        pLayer = new Issue1327(); break;
+        case ACTION_MANUAL_LAYER:
+            pLayer = new ActionManual(); break;
+        case ACTION_MOVE_LAYER:
+            pLayer = new ActionMove(); break;
+        case ACTION_SCALE_LAYER:
+            pLayer = new ActionScale(); break;
+        case ACTION_ROTATE_LAYER:
+            pLayer = new ActionRotate(); break;
+        case ACTION_SKEW_LAYER:
+            pLayer = new ActionSkew(); break;
+        case ACTION_SKEWROTATE_LAYER:
+            pLayer = new ActionSkewRotateScale(); break;
+        case ACTION_JUMP_LAYER:
+            pLayer = new ActionJump(); break;
+        case ACTION_BEZIER_LAYER:
+            pLayer = new ActionBezier(); break;
+        case ACTION_BLINK_LAYER:
+            pLayer = new ActionBlink(); break;
+        case ACTION_FADE_LAYER:
+            pLayer = new ActionFade(); break;
+        case ACTION_TINT_LAYER:
+            pLayer = new ActionTint(); break;
+        case ACTION_ANIMATE_LAYER:
+            pLayer = new ActionAnimate(); break;
+        case ACTION_SEQUENCE_LAYER:
+            pLayer = new ActionSequence(); break;
+        case ACTION_SEQUENCE2_LAYER:
+            pLayer = new ActionSequence2(); break;
+        case ACTION_SPAWN_LAYER:
+            pLayer = new ActionSpawn(); break;
+        case ACTION_REVERSE:
+            pLayer = new ActionReverse(); break;
+        case ACTION_DELAYTIME_LAYER:
+            pLayer = new ActionDelayTime(); break;
+        case ACTION_REPEAT_LAYER:
+            pLayer = new ActionRepeat(); break;
+        case ACTION_REPEATEFOREVER_LAYER:
+            pLayer = new ActionRepeatForever(); break;
+        case ACTION_ROTATETOREPEATE_LAYER:
+            pLayer = new ActionRotateToRepeat(); break;
+        case ACTION_ROTATEJERK_LAYER:
+            pLayer = new ActionRotateJerk(); break;    
+        case ACTION_CALLFUNC_LAYER:
+            pLayer = new ActionCallFunc(); break;
+        case ACTION_CALLFUNCND_LAYER:
+            pLayer = new ActionCallFuncND(); break;
+        case ACTION_REVERSESEQUENCE_LAYER:
+            pLayer = new ActionReverseSequence(); break;
+        case ACTION_REVERSESEQUENCE2_LAYER:
+            pLayer = new ActionReverseSequence2(); break;
+        case ACTION_ORBIT_LAYER:
+            pLayer = new ActionOrbit(); break;
+        case ACTION_FLLOW_LAYER:
+            pLayer = new ActionFollow(); break;
+        case ACTION_TARGETED_LAYER:
+            pLayer = new ActionTargeted(); break;
+        case ACTION_ISSUE1305_LAYER:
+            pLayer = new Issue1305(); break;
+        case ACTION_ISSUE1305_2_LAYER:
+            pLayer = new Issue1305_2(); break;
+        case ACTION_ISSUE1288_LAYER:
+            pLayer = new Issue1288(); break;
+        case ACTION_ISSUE1288_2_LAYER:
+            pLayer = new Issue1288_2(); break;
+        case ACTION_ISSUE1327_LAYER:
+            pLayer = new Issue1327(); break;
+        case ACTION_CARDINALSPLINE_LAYER:
+            pLayer = new ActionCardinalSpline(); break;
+        case ACTION_CATMULLROM_LAYER:
+            pLayer = new ActionCatmullRom(); break;
+        case PAUSERESUMEACTIONS_LAYER:
+            pLayer = new PauseResumeActions(); break;
+
     default:
         break;
     }
@@ -157,9 +165,9 @@ void ActionsDemo::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    m_grossini->setPosition( CCPointMake(s.width/2, s.height/3));
-    m_tamara->setPosition( CCPointMake(s.width/2, 2*s.height/3));
-    m_kathia->setPosition( CCPointMake(s.width/2, s.height/2)); 
+    m_grossini->setPosition(CCPointMake(s.width/2, s.height/3));
+    m_tamara->setPosition(CCPointMake(s.width/2, 2*s.height/3));
+    m_kathia->setPosition(CCPointMake(s.width/2, s.height/2)); 
 
     // add title and subtitle
     std::string str = title();
@@ -183,10 +191,10 @@ void ActionsDemo::onEnter()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
+    menu->setPosition(CCPointZero);
+    item1->setPosition(CCPointMake(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(CCPointMake(s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(CCPointMake(s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
 
     addChild(menu, 1);
 }
@@ -1441,3 +1449,219 @@ void Issue1327::logSprRotation(CCNode* pSender)
     CCLog("%f", ((CCSprite*)pSender)->getRotation());
 }
 
+/** ActionCatmullRom
+ */
+void ActionCatmullRom::onEnter()
+{
+    ActionsDemo::onEnter();
+    
+    this->centerSprites(2);
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+	//
+	// sprite 1 (By)
+	//
+	// startPosition can be any coordinate, but since the movement
+	// is relative to the Catmull Rom curve, it is better to start with (0,0).
+	//
+	
+    m_tamara->setPosition(ccp(50, 50));
+	
+    CCPointArray *array = CCPointArray::arrayWithCapacity(20);
+    
+    array->addControlPoint(ccp(0, 0));
+    array->addControlPoint(ccp(80, 80));
+    array->addControlPoint(ccp(s.width - 80, 80));
+    array->addControlPoint(ccp(s.width - 80, s.height - 80));
+    array->addControlPoint(ccp(80, s.height - 80));
+    array->addControlPoint(ccp(80, 80));
+    array->addControlPoint(ccp(s.width / 2, s.height / 2));
+    
+    CCCatmullRomBy *action = CCCatmullRomBy::actionWithDuration(3, array);
+    CCFiniteTimeAction *reverse = action->reverse();
+	
+    CCFiniteTimeAction *seq = CCSequence::actions(action, reverse, NULL);
+	
+    m_tamara->runAction(seq);
+	
+	
+	//
+	// sprite 2 (To)
+	//
+	// The startPosition is not important here, because it uses a "To" action.
+	// The initial position will be the 1st point of the Catmull Rom path
+	//    
+    
+    CCPointArray *array2 = CCPointArray::arrayWithCapacity(20);
+    
+    array2->addControlPoint(ccp(s.width / 2, 30));
+    array2->addControlPoint(ccp(s.width  -80, 30));
+    array2->addControlPoint(ccp(s.width - 80, s.height - 80));
+    array2->addControlPoint(ccp(s.width / 2, s.height - 80));
+    array2->addControlPoint(ccp(s.width / 2, 30));
+    
+    CCCatmullRomTo *action2 = CCCatmullRomTo::actionWithDuration(3, array2);
+    CCFiniteTimeAction *reverse2 = action2->reverse();
+	
+    CCFiniteTimeAction *seq2 = CCSequence::actions(action2, reverse2, NULL);
+	
+    m_kathia->runAction(seq2);
+    
+    m_pArray1 = array;
+    m_pArray1->retain();
+    m_pArray2 = array2;
+    m_pArray2->retain();
+}
+
+ActionCatmullRom::~ActionCatmullRom()
+{
+    m_pArray1->release();
+    m_pArray2->release();
+}
+
+void ActionCatmullRom::draw()
+{
+    ActionsDemo::draw();
+    
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCatmullRom(m_pArray1, 50);
+	kmGLPopMatrix();
+    
+	ccDrawCatmullRom(m_pArray2,50);
+}
+
+string ActionCatmullRom::title()
+{
+    return "CatmullRomBy / CatmullRomTo";
+}
+
+string ActionCatmullRom::subtitle()
+{
+    return "Catmull Rom spline paths. Testing reverse too";
+}
+
+/** ActionCardinalSpline
+ */
+void ActionCardinalSpline::onEnter()
+{
+    ActionsDemo::onEnter();
+	
+    this->centerSprites(2);
+	
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCPointArray *array = CCPointArray::arrayWithCapacity(20);
+    
+    array->addControlPoint(ccp(0, 0));
+    array->addControlPoint(ccp(s.width/2-30, 0));
+    array->addControlPoint(ccp(s.width/2-30, s.height-80));
+    array->addControlPoint(ccp(0, s.height-80));
+    array->addControlPoint(ccp(0, 0));
+    
+	//
+	// sprite 1 (By)
+	//
+	// Spline with no tension (tension==0)
+	//
+    
+    CCCardinalSplineBy *action = CCCardinalSplineBy::actionWithDuration(3, array, 0);
+    CCActionInterval *reverse = action->reverse();
+	
+    CCFiniteTimeAction *seq = CCSequence::actions(action, reverse, NULL);
+	
+    m_tamara->setPosition(ccp(50, 50));
+    m_tamara->runAction(seq);
+	
+	//
+	// sprite 2 (By)
+	//
+	// Spline with high tension (tension==1)
+	//
+    
+    CCCardinalSplineBy *action2 = CCCardinalSplineBy::actionWithDuration(3, array, 1);
+    CCActionInterval *reverse2 = action2->reverse();
+	
+    CCFiniteTimeAction *seq2 = CCSequence::actions(action2, reverse2, NULL);
+	
+    m_kathia->setPosition(ccp(s.width/2, 50));
+    m_kathia->runAction(seq2);
+	
+    m_pArray = array;
+    array->retain();
+}
+
+ActionCardinalSpline::~ActionCardinalSpline()
+{
+    m_pArray->release();
+}
+
+void ActionCardinalSpline::draw()
+{
+    ActionsDemo::draw();
+	
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCardinalSpline(m_pArray, 0, 100);
+	kmGLPopMatrix();
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+	kmGLPushMatrix();
+	kmGLTranslatef(s.width/2, 50, 0);
+	ccDrawCardinalSpline(m_pArray, 1, 100);
+	kmGLPopMatrix();
+}
+
+string ActionCardinalSpline::title()
+{
+    return "CardinalSplineBy / CardinalSplineAt";
+}
+
+string ActionCardinalSpline::subtitle()
+{
+    return "Cardinal Spline paths. Testing different tensions for one array";
+}
+
+/** PauseResumeActions
+ */
+void PauseResumeActions::onEnter()
+{
+    ActionsDemo::onEnter();
+	
+    this->centerSprites(2);
+    
+    m_tamara->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3, 360)));
+    m_grossini->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3, -360)));
+    m_kathia->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3, 360)));
+    
+    this->schedule(schedule_selector(PauseResumeActions::pause), 3, false, 0);
+    this->schedule(schedule_selector(PauseResumeActions::resume), 5, false, 0);
+}
+
+string PauseResumeActions::title()
+{
+    return "PauseResumeActions";
+}
+
+string PauseResumeActions::subtitle()
+{
+    return "All actions pause at 3s and resume at 5s";
+}
+
+void PauseResumeActions::pause(float dt)
+{
+    CCLog("Pausing");
+    CCDirector *director = CCDirector::sharedDirector();
+    this->m_pPausedTargets = director->getActionManager()->pauseAlllRunningActions();
+}
+
+void PauseResumeActions::resume(float dt)
+{
+    CCLog("Resuming");
+    CCDirector *director = CCDirector::sharedDirector();
+    director->getActionManager()->resumeTargets(this->m_pPausedTargets);
+}
