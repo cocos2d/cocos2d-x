@@ -21,7 +21,6 @@ public:
     virtual void    swapBuffers() = 0;
     virtual void    setIMEKeyboardState(bool bOpen) = 0;
 
-    virtual bool    isIpad();
     virtual CCRect  getViewPort();
     virtual CCSize  getSize();
     virtual void    setFrameSize(float width, float height);

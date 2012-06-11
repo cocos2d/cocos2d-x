@@ -55,11 +55,6 @@ CCEGLViewProtocol::~CCEGLViewProtocol()
 
 }
 
-bool CCEGLViewProtocol::isIpad()
-{
-    return false;
-}
-
 void CCEGLViewProtocol::setFrameSize(float width, float height)
 {
     m_sSizeInPixel.setSize(width, height);
