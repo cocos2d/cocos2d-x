@@ -617,8 +617,10 @@ EaseSpriteDemo::~EaseSpriteDemo(void)
 
 void EaseSpriteDemo::positionForTwo()
 {    
-    m_grossini->setPosition( CCPointMake( 60, 120 ) );
-    m_tamara->setPosition( CCPointMake( 60, 220) );
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    m_grossini->setPosition(CCPointMake(60, s.height*1/5));
+    m_tamara->setPosition(CCPointMake( 60, s.height*4/5));
     m_kathia->setIsVisible(false);
 }
 
@@ -643,13 +645,13 @@ void EaseSpriteDemo::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    m_grossini->setPosition( CCPointMake(60, 50) );
-    m_kathia->setPosition( CCPointMake(60, 150) );
-    m_tamara->setPosition( CCPointMake(60, 250) );
+    m_grossini->setPosition(CCPointMake(60, s.height*1/5));
+    m_kathia->setPosition(CCPointMake(60, s.height*2.5f/5));
+    m_tamara->setPosition(CCPointMake(60, s.height*4/5));
 
     CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
     addChild(label);
-    label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    label->setPosition(CCPointMake(s.width/2, s.height-50));
 
     CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(EaseSpriteDemo::backCallback) );
     CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(EaseSpriteDemo::restartCallback) );
@@ -657,10 +659,10 @@ void EaseSpriteDemo::onEnter()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
+    menu->setPosition(CCPointZero);
+    item1->setPosition(CCPointMake(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(CCPointMake( s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(CCPointMake( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 }
