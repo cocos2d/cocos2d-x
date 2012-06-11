@@ -81,6 +81,8 @@ bool CCConfiguration::init(void)
 
 #if CC_ENABLE_PROFILERS
     bEnableProfilers = true;
+#else
+	bEnableProfilers = false;
 #endif
 
     CCLOG("cocos2d: compiled with Profiling Support: %s",
