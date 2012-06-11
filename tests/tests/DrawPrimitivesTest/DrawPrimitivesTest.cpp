@@ -90,6 +90,9 @@ void DrawPrimitivesTest::draw()
     ccDrawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
 
     CHECK_GL_ERROR_DEBUG();
+    //draw a solid polygon
+    CCPoint vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
+    ccDrawSolidPoly( vertices3, 4, ccc4f(1,1,0,1) );
 
     // restore original values
     glLineWidth(1);

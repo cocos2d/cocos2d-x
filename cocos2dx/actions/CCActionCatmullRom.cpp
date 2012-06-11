@@ -36,6 +36,8 @@
 #include "support/CCPointExtension.h"
 #include "CCActionCatmullRom.h"
 
+using namespace std;
+
 NS_CC_BEGIN;
 
 /*
@@ -78,6 +80,7 @@ CCObject* CCPointArray::copyWithZone(cocos2d::CCZone *zone)
     }
     
     CCPointArray *points = CCPointArray::arrayWithCapacity(10);
+    points->retain();
     points->setControlPoints(newArray);
     newArray->release();
     
@@ -91,14 +94,30 @@ CCPointArray::~CCPointArray()
 
 CCPointArray::CCPointArray() :m_pControlPoints(NULL){}
 
-void CCPointArray::addControlPoint(CCPoint &controlPoint)
+void CCPointArray::addControlPoint(CCPoint controlPoint)
 {
-    m_pControlPoints->addObject(&controlPoint);
+    // should create a new object of CCPoint
+    // because developer always use this function like this
+    // addControlPoint(ccp(x, y))
+    // passing controlPoint is a temple object
+    // and CCArray::addObject() will retain the passing object, so it 
+    // should be an object created in heap
+    CCPoint *temp = new CCPoint(controlPoint.x, controlPoint.y);
+    m_pControlPoints->addObject(temp);
+    temp->release();
 }
 
 void CCPointArray::insertControlPoint(CCPoint &controlPoint, unsigned int index)
 {
-    m_pControlPoints->insertObject(&controlPoint, index);
+    // should create a new object of CCPoint
+    // because developer always use this function like this
+    // insertControlPoint(ccp(x, y))
+    // passing controlPoint is a temple object
+    // and CCArray::insertObject() will retain the passing object, so it 
+    // should be an object created in heap
+    CCPoint *temp = new CCPoint(controlPoint.x, controlPoint.y);
+    m_pControlPoints->insertObject(temp, index);
+    temp->release();
 }
 
 CCPoint CCPointArray::getControlPointAtIndex(unsigned int index)
@@ -111,7 +130,15 @@ CCPoint CCPointArray::getControlPointAtIndex(unsigned int index)
 
 void CCPointArray::replaceControlPoint(cocos2d::CCPoint &controlPoint, unsigned int index)
 {
-    m_pControlPoints->replaceObjectAtIndex(index, &controlPoint);
+    // should create a new object of CCPoint
+    // because developer always use this function like this
+    // replaceControlPoint(ccp(x, y))
+    // passing controlPoint is a temple object
+    // and CCArray::insertObject() will retain the passing object, so it 
+    // should be an object created in heap
+    CCPoint *temp = new CCPoint(controlPoint.x, controlPoint.y);
+    m_pControlPoints->replaceObjectAtIndex(index, temp);
+    temp->release();
 }
 
 void CCPointArray::removeControlPointAtIndex(unsigned int index)
@@ -136,7 +163,6 @@ CCPointArray* CCPointArray::reverse()
     
     newArray->release();
     
-    config->autorelease();
     return config;
 }
 
@@ -150,7 +176,7 @@ void CCPointArray::reverseInline()
 }
 
 // CatmullRom Spline formula:
-inline CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, CCFloat tension, float t)
+CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t)
 {
     float t2 = t * t;
     float t3 = t2 * t;

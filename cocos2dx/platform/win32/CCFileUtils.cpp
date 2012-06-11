@@ -62,7 +62,17 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
 
 void CCFileUtils::purgeFileUtils()
 {
+    if (s_pFileUtils != NULL)
+    {
+        s_pFileUtils->purgeCachedEntries();
+    }
+    
     CC_SAFE_DELETE(s_pFileUtils);
+}
+
+void CCFileUtils::purgeCachedEntries()
+{
+
 }
 
 void CCFileUtils::setResourcePath(const char *pszResourcePath)

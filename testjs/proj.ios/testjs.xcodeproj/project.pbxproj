@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		152ECD601585905C00C57056 /* CCActionCatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD5E1585905C00C57056 /* CCActionCatmullRom.cpp */; };
+		152ECD611585905C00C57056 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = 152ECD5F1585905C00C57056 /* CCActionCatmullRom.h */; };
+		152ECD641585907300C57056 /* ccCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD631585907300C57056 /* ccCArray.cpp */; };
 		1554941A15737858009041F8 /* JS in Resources */ = {isa = PBXBuildFile; fileRef = 1554941915737858009041F8 /* JS */; };
 		1554941F15737A4D009041F8 /* simple_class.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1554941B15737A4D009041F8 /* simple_class.cpp */; };
 		1554942015737A4D009041F8 /* simple_native_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1554941D15737A4D009041F8 /* simple_native_generated.cpp */; };
@@ -427,6 +430,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		152ECD5E1585905C00C57056 /* CCActionCatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCatmullRom.cpp; sourceTree = "<group>"; };
+		152ECD5F1585905C00C57056 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
+		152ECD631585907300C57056 /* ccCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccCArray.cpp; sourceTree = "<group>"; };
 		1554941915737858009041F8 /* JS */ = {isa = PBXFileReference; lastKnownFileType = folder; path = JS; sourceTree = "<group>"; };
 		1554941B15737A4D009041F8 /* simple_class.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_class.cpp; sourceTree = "<group>"; };
 		1554941C15737A4D009041F8 /* simple_class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_class.h; sourceTree = "<group>"; };
@@ -546,7 +552,7 @@
 		D4544C8A156E03D000887EB5 /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCamera.h; sourceTree = "<group>"; };
 		D4544C8B156E03D000887EB5 /* CCConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCConfiguration.cpp; sourceTree = "<group>"; };
 		D4544C8C156E03D000887EB5 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
-		D4544C8D156E03D000887EB5 /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDirector.cpp; sourceTree = "<group>"; };
+		D4544C8D156E03D000887EB5 /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCDirector.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		D4544C8E156E03D000887EB5 /* CCDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirector.h; sourceTree = "<group>"; };
 		D4544C8F156E03D000887EB5 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
 		D4544C90156E03D000887EB5 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
@@ -744,8 +750,8 @@
 		D4544D83156E03D100887EB5 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		D4544D85156E03D100887EB5 /* AccelerometerSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerSimulation.h; sourceTree = "<group>"; };
 		D4544D86156E03D100887EB5 /* AccelerometerSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerometerSimulation.m; sourceTree = "<group>"; };
-		D4544D87156E03D100887EB5 /* platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
-		D4544D88156E03D100887EB5 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
+		D4544D87156E03D100887EB5 /* platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = platform.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		D4544D88156E03D100887EB5 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = platform.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D4544F2B156E03D100887EB5 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		D4544F2C156E03D100887EB5 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		D4544F2E156E03D100887EB5 /* CCGLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgram.cpp; sourceTree = "<group>"; };
@@ -786,7 +792,7 @@
 		D4544F53156E03D100887EB5 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		D4544F54156E03D100887EB5 /* CCPointExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPointExtension.cpp; sourceTree = "<group>"; };
 		D4544F55156E03D100887EB5 /* CCPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPointExtension.h; sourceTree = "<group>"; };
-		D4544F56156E03D100887EB5 /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProfiling.cpp; sourceTree = "<group>"; };
+		D4544F56156E03D100887EB5 /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCProfiling.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		D4544F57156E03D100887EB5 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		D4544F58156E03D100887EB5 /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
 		D4544F59156E03D100887EB5 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
@@ -1092,6 +1098,8 @@
 		D4544C6A156E03D000887EB5 /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				152ECD5E1585905C00C57056 /* CCActionCatmullRom.cpp */,
+				152ECD5F1585905C00C57056 /* CCActionCatmullRom.h */,
 				D4544C6B156E03D000887EB5 /* CCAction.cpp */,
 				D4544C6C156E03D000887EB5 /* CCAction.h */,
 				D4544C6D156E03D000887EB5 /* CCActionCamera.cpp */,
@@ -1597,6 +1605,7 @@
 		D4544F5E156E03D100887EB5 /* data_support */ = {
 			isa = PBXGroup;
 			children = (
+				152ECD631585907300C57056 /* ccCArray.cpp */,
 				D4544F5F156E03D100887EB5 /* ccCArray.h */,
 				D4544F60156E03D100887EB5 /* uthash.h */,
 				D4544F61156E03D100887EB5 /* utlist.h */,
@@ -1924,6 +1933,7 @@
 				D45451A7156E03D300887EB5 /* CCTouchDispatcher.h in Headers */,
 				D45451A9156E03D300887EB5 /* CCTouchHandler.h in Headers */,
 				158F25A31574BE880092E383 /* CCStdC.h in Headers */,
+				152ECD611585905C00C57056 /* CCActionCatmullRom.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2253,6 +2263,8 @@
 				D45451A2156E03D300887EB5 /* CCTMXXMLParser.cpp in Sources */,
 				D45451A6156E03D300887EB5 /* CCTouchDispatcher.cpp in Sources */,
 				D45451A8156E03D300887EB5 /* CCTouchHandler.cpp in Sources */,
+				152ECD601585905C00C57056 /* CCActionCatmullRom.cpp in Sources */,
+				152ECD641585907300C57056 /* ccCArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
