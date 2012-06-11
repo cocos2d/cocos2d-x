@@ -1104,7 +1104,7 @@ void ParticleDemo::onEnter(void)
     
     addChild( menu, 100 );
     
-    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0000", "fonts/fps_images.png", 16, 24, '.');
+    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 100, kTagParticleCount);
     labelAtlas->setPosition(CCPointMake(s.width-66,50));
     
