@@ -150,7 +150,7 @@ void CCPointArray::reverseInline()
 }
 
 // CatmullRom Spline formula:
-inline CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, CCFloat tension, float t)
+CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t)
 {
     float t2 = t * t;
     float t3 = t2 * t;

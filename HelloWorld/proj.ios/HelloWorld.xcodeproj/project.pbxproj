@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		152ECD5615858FE100C57056 /* CCActionCatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD5415858FE100C57056 /* CCActionCatmullRom.cpp */; };
+		152ECD591585901500C57056 /* ccCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD581585901500C57056 /* ccCArray.cpp */; };
 		15DD6D79156DD120003E7567 /* fps_images.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D77156DD120003E7567 /* fps_images.fnt */; };
 		15DD6D7A156DD120003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D78156DD120003E7567 /* fps_images.png */; };
 		15EFF2BA15786755002D8F37 /* CCBCustomClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFF2B515786755002D8F37 /* CCBCustomClass.cpp */; };
@@ -171,6 +173,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		152ECD5415858FE100C57056 /* CCActionCatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCatmullRom.cpp; sourceTree = "<group>"; };
+		152ECD5515858FE100C57056 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
+		152ECD581585901500C57056 /* ccCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccCArray.cpp; sourceTree = "<group>"; };
 		158F258F1574BD400092E383 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCStdC.h; path = ../../cocos2dx/platform/ios/CCStdC.h; sourceTree = "<group>"; };
 		15DD6D77156DD120003E7567 /* fps_images.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fps_images.fnt; sourceTree = "<group>"; };
 		15DD6D78156DD120003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
@@ -632,6 +637,8 @@
 		781C356D1547F0ED00633F88 /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				152ECD5415858FE100C57056 /* CCActionCatmullRom.cpp */,
+				152ECD5515858FE100C57056 /* CCActionCatmullRom.h */,
 				781C356E1547F0ED00633F88 /* CCAction.cpp */,
 				781C356F1547F0ED00633F88 /* CCAction.h */,
 				781C35701547F0ED00633F88 /* CCActionCamera.cpp */,
@@ -1036,6 +1043,7 @@
 		781C365C1547F0ED00633F88 /* data_support */ = {
 			isa = PBXGroup;
 			children = (
+				152ECD581585901500C57056 /* ccCArray.cpp */,
 				781C365D1547F0ED00633F88 /* ccCArray.h */,
 				781C365E1547F0ED00633F88 /* uthash.h */,
 				781C365F1547F0ED00633F88 /* utlist.h */,
@@ -1486,6 +1494,8 @@
 				78EE01011550D1C7004C84B0 /* CCTextureWatcher.cpp in Sources */,
 				15EFF2BA15786755002D8F37 /* CCBCustomClass.cpp in Sources */,
 				15EFF2BC15786755002D8F37 /* CCBReader_v2.cpp in Sources */,
+				152ECD5615858FE100C57056 /* CCActionCatmullRom.cpp in Sources */,
+				152ECD591585901500C57056 /* ccCArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
