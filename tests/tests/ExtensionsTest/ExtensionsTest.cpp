@@ -3,6 +3,7 @@
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
+#include "CCBIReaderTest/CCBIReaderTest.h"
 
 enum
 {
@@ -16,6 +17,7 @@ enum
     TEST_CCCONTROLBUTTON,
     TEST_TEXTUREWATCHER,
     TEST_COCOSBUILDER,
+    TEST_CCBIREADER,
     TEST_MAX_COUNT,
 };
 
@@ -25,6 +27,7 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "CCControlButtonTest",
     "TextureWatcherTest",
     "CocosBuilderTest",
+    "CCBIReaderTest",
 };
 
 ////////////////////////////////////////////////////////
@@ -82,6 +85,16 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
     case TEST_COCOSBUILDER:
         {
             TestScene* pScene = new CocosBuilderTestScene();
+            if (pScene)
+            {
+                pScene->runThisTest();
+                pScene->release();
+            }
+        }
+        break;
+    case TEST_CCBIREADER:
+        {
+            TestScene* pScene = new CCBIReaderTestScene();
             if (pScene)
             {
                 pScene->runThisTest();
