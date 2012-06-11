@@ -181,7 +181,7 @@ public:
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
-extern CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, CCFloat tension, float t);
+extern CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t);
 
 NS_CC_END;
 

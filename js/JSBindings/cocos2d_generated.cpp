@@ -1092,7 +1092,7 @@ JSBool S_CCLayer::jsunregisterScriptTouchHandler(JSContext *cx, uint32_t argc, j
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCLayer::update(ccTime delta) {
+void S_CCLayer::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -4325,7 +4325,7 @@ JSBool S_CCParallaxNode::jsvisit(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCParallaxNode::update(ccTime delta) {
+void S_CCParallaxNode::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -4824,7 +4824,7 @@ JSBool S_CCMotionStreak::jsupdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCMotionStreak::update(ccTime delta) {
+void S_CCMotionStreak::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -8010,7 +8010,7 @@ JSBool S_CCProgressTimer::jsprogressWithSprite(JSContext *cx, uint32_t argc, jsv
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCProgressTimer::update(ccTime delta) {
+void S_CCProgressTimer::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -11216,7 +11216,7 @@ JSBool S_CCAtlasNode::jsdraw(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCAtlasNode::update(ccTime delta) {
+void S_CCAtlasNode::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -16939,7 +16939,7 @@ JSBool S_CCNode::jsconvertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCNode::update(ccTime delta) {
+void S_CCNode::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -18258,7 +18258,7 @@ JSBool S_CCScene::jsinit(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCScene::update(ccTime delta) {
+void S_CCScene::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -20662,7 +20662,7 @@ JSBool S_CCMenuItem::jsunregisterScriptHandler(JSContext *cx, uint32_t argc, jsv
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCMenuItem::update(ccTime delta) {
+void S_CCMenuItem::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -21187,7 +21187,7 @@ JSBool S_CCTMXTiledMap::jslayerNamed(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCTMXTiledMap::update(ccTime delta) {
+void S_CCTMXTiledMap::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -23880,7 +23880,7 @@ JSBool S_CCRenderTexture::jssaveToFile(JSContext *cx, uint32_t argc, jsval *vp) 
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCRenderTexture::update(ccTime delta) {
+void S_CCRenderTexture::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -27194,7 +27194,7 @@ JSBool S_CCSprite::jsdisplayFrame(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCSprite::update(ccTime delta) {
+void S_CCSprite::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
@@ -27957,7 +27957,7 @@ JSBool S_CCSpriteBatchNode::jsdraw(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
-void S_CCSpriteBatchNode::update(ccTime delta) {
+void S_CCSpriteBatchNode::update(float delta) {
 	if (m_jsobj) {
 		JSContext* cx = ScriptingCore::getInstance().getGlobalContext();
 		JSBool found; JS_HasProperty(cx, m_jsobj, "update", &found);
