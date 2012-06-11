@@ -86,7 +86,24 @@ bool AppDelegate::initInstance()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
 		CCEGLView * pMainWnd = new CCEGLView();
-		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(1024, 600));
+		int width, height;
+		const char *width_str, *height_str;
+		width_str = getenv("WIDTH");
+		height_str = getenv("HEIGHT");
+		if (width_str && height_str)
+		{
+			width = atoi(width_str);
+			height = atoi(height_str);
+		}
+		else
+		{
+			width = 1024;
+			height = 600;
+		}
+		width /= 2;
+		height /= 2;
+
+		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(width, height));
 		CCFileUtils::setResourcePath("app/native/Resources");
 #endif // CC_PLATFORM_QNX
 
