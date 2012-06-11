@@ -68,7 +68,7 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
  {
      if (CCControl::init())
      {
-        setIsRelativeAnchorPoint(true);
+        setIgnoreAnchorPointForPosition(false);
         setIsTouchEnabled(true);
 
         m_backgroundSprite=backgroundSprite;

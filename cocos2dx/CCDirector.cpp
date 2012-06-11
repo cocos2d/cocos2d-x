@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -55,6 +55,7 @@ THE SOFTWARE.
 #include "extensions/CCNotificationCenter/CCNotificationCenter.h"
 #include "extensions/CCTextureWatcher/CCTextureWatcher.h"
 #include "extensions/CCBReader/CCBCustomClass.h"
+#include "extensions/CCBIReader/CCNodeLoaderLibrary.h"
 #include <string>
 
 using namespace std;
@@ -138,7 +139,7 @@ bool CCDirector::init(void)
     m_pScheduler = new CCScheduler();
     // action manager
     m_pActionManager = new CCActionManager();
-    m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCActionManagerPriority, false);
+    m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCPrioritySystem, false);
     // touchDispatcher
     m_pTouchDispatcher = new CCTouchDispatcher();
     m_pTouchDispatcher->init();
@@ -336,10 +337,9 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
     CCSize size = m_obWinSizeInPixels;
     CCSize sizePoint = m_obWinSizeInPoints;
 
-    //glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
     if (m_pobOpenGLView)
     {
-        m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
+        m_pobOpenGLView->setViewPortInPoints(0, 0, sizePoint.width, sizePoint.height);
     }
 
     switch (kProjection)
@@ -349,7 +349,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             kmMat4 orthoMatrix;
-            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
+            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width / CC_CONTENT_SCALE_FACTOR(), 0, size.height / CC_CONTENT_SCALE_FACTOR(), -1024, 1024 );
             kmGLMultMatrix(&orthoMatrix);
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
@@ -358,11 +358,11 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
     case kCCDirectorProjection3D:
         {
-            // reset the viewport if 3d proj & retina display
-            if( CC_CONTENT_SCALE_FACTOR() != 1.0f )
-            {
-                glViewport((GLint)-size.width/2, (GLint)-size.height/2, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
-            }
+//TODO:             // reset the viewport if 3d proj & retina display
+//             if( CC_CONTENT_SCALE_FACTOR() != 1.0f )
+//             {
+//                 glViewport((GLint)-size.width/2, (GLint)-size.height/2, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
+//             }
 
             float zeye = this->getZEye();
 
@@ -372,14 +372,17 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLLoadIdentity();
 
             // issue #1334
-            if (m_pobOpenGLView && m_pobOpenGLView->isIpad() && m_pobOpenGLView->getMainScreenScale() > 1.0f)
-            {
-                kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2);
-            }
-            else
-            {
-                 kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500);
-            }
+            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
+            // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+
+//TODO:         if (m_pobOpenGLView && m_pobOpenGLView->isIpad() && m_pobOpenGLView->getMainScreenScale() > 1.0f)
+//             {
+//                 kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2);
+//             }
+//             else
+//             {
+//                  kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500);
+//             }
            
 //            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
             kmGLMultMatrix(&matrixPerspective);
@@ -593,6 +596,7 @@ void CCDirector::purgeDirector()
     extension::CCNotificationCenter::purgeNotificationCenter();
     extension::CCTextureWatcher::purgeTextureWatcher();
     extension::CCBCustomClassFactory::purgeFactory();
+    extension::CCNodeLoaderLibrary::purgeSharedCCNodeLoaderLibrary();
 
     ccGLInvalidateStateCache();
     

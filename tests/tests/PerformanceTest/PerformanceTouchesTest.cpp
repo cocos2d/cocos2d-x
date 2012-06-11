@@ -57,7 +57,7 @@ void TouchesMainScene::onEnter()
     numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;    
 }
 
-void TouchesMainScene::update(ccTime dt)
+void TouchesMainScene::update(float dt)
 {
     elapsedTime += dt;
 

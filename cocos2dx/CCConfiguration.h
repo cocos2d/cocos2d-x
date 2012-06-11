@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -97,6 +97,14 @@ public:
         return m_bSupportsDiscardFramebuffer;
     }
 
+    /** Whether or not shareable VAOs are supported.
+     @since v2.0.0
+     */
+    inline bool isSupportsShareableVAO(void)
+    {
+        return m_bSupportsShareableVAO;
+    }
+
     /** returns whether or not an OpenGL is supported */
     bool checkForGLExtension(const std::string &searchName);
 
@@ -113,6 +121,7 @@ protected:
     bool            m_bSupportsNPOT;
     bool            m_bSupportsBGRA8888;
     bool            m_bSupportsDiscardFramebuffer;
+    bool            m_bSupportsShareableVAO;
     GLint           m_nMaxSamplesAllowed;
     GLint           m_nMaxTextureUnits;
     char *          m_pGlExtensions;

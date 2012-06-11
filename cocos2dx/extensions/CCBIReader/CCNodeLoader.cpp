@@ -709,7 +709,7 @@ void CCNodeLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const
     if(strcmp(pPropertyName, PROPERTY_VISIBLE) == 0) {
         pNode->setIsVisible(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_IGNOREANCHORPOINTFORPOSITION) == 0) {
-        pNode->setIsRelativeAnchorPoint(!pCheck);
+        pNode->setIgnoreAnchorPointForPosition(pCheck);
     } else {
         ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }

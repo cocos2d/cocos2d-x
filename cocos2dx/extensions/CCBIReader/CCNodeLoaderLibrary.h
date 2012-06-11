@@ -24,6 +24,8 @@ class CC_DLL CCNodeLoaderLibrary : public CCObject {
 
     public:
         static CCNodeLoaderLibrary * sharedCCNodeLoaderLibrary();
+        static void purgeSharedCCNodeLoaderLibrary();
+
         static CCNodeLoaderLibrary * newDefaultCCNodeLoaderLibrary();
 };
 

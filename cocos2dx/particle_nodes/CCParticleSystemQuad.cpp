@@ -1,7 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009        Leonardo Kasperavičius
+Copyright (c) 2009      Leonardo Kasperavičius
 Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
@@ -236,8 +236,10 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const C
     {
         quad = &(m_pQuads[m_uParticleIdx]);
     }
-    ccColor4B color = {(GLubyte)(particle->color.r * 255), (GLubyte)(particle->color.g * 255), (GLubyte)(particle->color.b * 255), 
-        (GLubyte)(particle->color.a * 255)};
+    ccColor4B color = (m_bOpacityModifyRGB)
+        ? ccc4( particle->color.r*particle->color.a*255, particle->color.g*particle->color.a*255, particle->color.b*particle->color.a*255, particle->color.a*255)
+        : ccc4( particle->color.r*255, particle->color.g*255, particle->color.b*255, particle->color.a*255);
+
     quad->bl.colors = color;
     quad->br.colors = color;
     quad->tl.colors = color;

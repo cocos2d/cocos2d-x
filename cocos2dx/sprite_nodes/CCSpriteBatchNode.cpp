@@ -425,7 +425,7 @@ void CCSpriteBatchNode::increaseAtlasCapacity(void)
     if (! m_pobTextureAtlas->resizeCapacity(quantity))
     {
         // serious problems
-        CCLOG("cocos2d: WARNING: Not enough memory to resize the atlas");
+        CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
         CCAssert(false, "Not enough memory to resize the atla");
     }
 }

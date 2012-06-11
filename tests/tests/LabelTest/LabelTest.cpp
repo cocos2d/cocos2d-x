@@ -279,7 +279,7 @@ LabelAtlasTest::LabelAtlasTest()
     
 }
 
-void LabelAtlasTest::step(ccTime dt)
+void LabelAtlasTest::step(float dt)
 {
     m_time += dt;
     char string[12] = {0};
@@ -333,7 +333,7 @@ LabelAtlasColorTest::LabelAtlasColorTest()
     schedule( schedule_selector(LabelAtlasColorTest::step) ); //:@selector(step:)];
 }
 
-void LabelAtlasColorTest::step(ccTime dt)
+void LabelAtlasColorTest::step(float dt)
 {
     m_time += dt;
     char string[12] = {0};
@@ -413,7 +413,7 @@ Atlas3::Atlas3()
     schedule( schedule_selector(Atlas3::step) );//:@selector(step:)];
 }
 
-void Atlas3::step(ccTime dt)
+void Atlas3::step(float dt)
 {
     m_time += dt;
     //std::string string;
@@ -512,7 +512,7 @@ void Atlas4::draw()
     ccDrawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
 }
 
-void Atlas4::step(ccTime dt)
+void Atlas4::step(float dt)
 {
     m_time += dt;
     char string[10] = {0};
@@ -780,7 +780,7 @@ LabelsEmpty::LabelsEmpty()
     setEmpty = false;
 }
 
-void LabelsEmpty::updateStrings(ccTime dt)
+void LabelsEmpty::updateStrings(float dt)
 {
     CCLabelBMFont* label1 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas1);
     CCLabelTTF* label2 = (CCLabelTTF*) getChildByTag(kTagBitmapAtlas2);
@@ -912,9 +912,9 @@ LabelTTFTest::LabelTTFTest()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // CCLabelBMFont
-    CCLabelTTF *left = CCLabelTTF::labelWithString("align left", CCSizeMake(s.width, 50), CCTextAlignmentLeft, "Marker Felt", 32);
-    CCLabelTTF *center = CCLabelTTF::labelWithString("align center", CCSizeMake(s.width, 50), CCTextAlignmentCenter, "Marker Felt", 32);
-    CCLabelTTF *right = CCLabelTTF::labelWithString("align right", CCSizeMake(s.width, 50), CCTextAlignmentRight, "Marker Felt", 32);
+    CCLabelTTF *left = CCLabelTTF::labelWithString("align left", CCSizeMake(s.width, 50), kCCTextAlignmentLeft, "Marker Felt", 32);
+    CCLabelTTF *center = CCLabelTTF::labelWithString("align center", CCSizeMake(s.width, 50), kCCTextAlignmentCenter, "Marker Felt", 32);
+    CCLabelTTF *right = CCLabelTTF::labelWithString("align right", CCSizeMake(s.width, 50), kCCTextAlignmentRight, "Marker Felt", 32);
 
     left->setPosition(ccp(s.width / 2, 200));
     center->setPosition(ccp(s.width / 2, 150));
@@ -941,7 +941,7 @@ LabelTTFMultiline::LabelTTFMultiline()
 
     // CCLabelBMFont
     CCLabelTTF *center = CCLabelTTF::labelWithString("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
-        CCSizeMake(s.width / 2, 200), CCTextAlignmentCenter, "MarkerFelt.ttc", 32);
+        CCSizeMake(s.width / 2, 200), kCCTextAlignmentCenter, "MarkerFelt.ttc", 32);
     center->setPosition(ccp(s.width / 2, 150));
 
     addChild(center);
@@ -1010,7 +1010,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     CCSize size = CCDirector::sharedDirector()->getWinSize();
 
     // create and initialize a Label
-    this->m_pLabelShouldRetain = CCLabelBMFont::labelWithString(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, CCTextAlignmentCenter);
+    this->m_pLabelShouldRetain = CCLabelBMFont::labelWithString(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, kCCTextAlignmentCenter);
     this->m_pLabelShouldRetain->retain();
 
     this->m_pArrowsBarShouldRetain = CCSprite::spriteWithFile("Images/arrowsBar.png");
@@ -1119,13 +1119,13 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
     switch(item->getTag())
     {
     case LeftAlign:
-        this->m_pLabelShouldRetain->setAlignment(CCTextAlignmentLeft);
+        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentLeft);
         break;
     case CenterAlign:
-        this->m_pLabelShouldRetain->setAlignment(CCTextAlignmentCenter);
+        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentCenter);
         break;
     case RightAlign:
-        this->m_pLabelShouldRetain->setAlignment(CCTextAlignmentRight);
+        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentRight);
         break;
 
     default:
@@ -1217,11 +1217,11 @@ BMFontOneAtlas::BMFontOneAtlas()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelBMFont *label1 = CCLabelBMFont::labelWithString("This is Helvetica", "fonts/helvetica-32.fnt", kCCLabelAutomaticWidth, CCTextAlignmentLeft, CCPointZero);
+    CCLabelBMFont *label1 = CCLabelBMFont::labelWithString("This is Helvetica", "fonts/helvetica-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
     addChild(label1);
     label1->setPosition(ccp(s.width/2, s.height/3*2));
 
-    CCLabelBMFont *label2 = CCLabelBMFont::labelWithString("And this is Geneva", "fonts/geneva-32.fnt", kCCLabelAutomaticWidth, CCTextAlignmentLeft, ccp(0, 128));
+    CCLabelBMFont *label2 = CCLabelBMFont::labelWithString("And this is Geneva", "fonts/geneva-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, ccp(0, 128));
     addChild(label2);
     label2->setPosition(ccp(s.width/2, s.height/3*1));
 }
@@ -1247,7 +1247,7 @@ BMFontUnicode::BMFontUnicode()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelBMFont *label1 = CCLabelBMFont::labelWithString(spanish, "fonts/arial-unicode-26.fnt", 200, CCTextAlignmentLeft);
+    CCLabelBMFont *label1 = CCLabelBMFont::labelWithString(spanish, "fonts/arial-unicode-26.fnt", 200, kCCTextAlignmentLeft);
     addChild(label1);
     label1->setPosition(ccp(s.width/2, s.height/4*3));
 

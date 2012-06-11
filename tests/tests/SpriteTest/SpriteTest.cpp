@@ -434,7 +434,7 @@ SpriteColorOpacity::SpriteColorOpacity()
 
 // this function test if remove and add works as expected:
 //   color array and vertex array should be reindexed
-void SpriteColorOpacity::removeAndAddSprite(ccTime dt)
+void SpriteColorOpacity::removeAndAddSprite(float dt)
 {
     CCSprite* sprite = (CCSprite*)(getChildByTag(kTagSprite5));    
     sprite->retain();
@@ -522,7 +522,7 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
 
 // this function test if remove and add works as expected:
 //   color array and vertex array should be reindexed
-void SpriteBatchNodeColorOpacity::removeAndAddSprite(ccTime dt)
+void SpriteBatchNodeColorOpacity::removeAndAddSprite(float dt)
 {
     CCSpriteBatchNode* batch= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteBatchNode ));
     CCSprite* sprite = (CCSprite*)(batch->getChildByTag(kTagSprite5));
@@ -576,7 +576,7 @@ SpriteZOrder::SpriteZOrder()
     schedule( schedule_selector(SpriteZOrder::reorderSprite), 1);        
 }
 
-void SpriteZOrder::reorderSprite(ccTime dt)
+void SpriteZOrder::reorderSprite(float dt)
 {
     CCSprite* sprite = (CCSprite*)(getChildByTag(kTagSprite1));
     
@@ -639,7 +639,7 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     schedule( schedule_selector(SpriteBatchNodeZOrder::reorderSprite), 1);        
 }
 
-void SpriteBatchNodeZOrder::reorderSprite(ccTime dt)
+void SpriteBatchNodeZOrder::reorderSprite(float dt)
 {
     CCSpriteBatchNode* batch= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteBatchNode ));
     CCSprite* sprite = (CCSprite*)(batch->getChildByTag(kTagSprite1));
@@ -782,7 +782,7 @@ CCSprite* SpriteBatchNodeReorderIssue766::makeSpriteZ(int aZ)
     return sprite;
 }
 
-void SpriteBatchNodeReorderIssue766::reorderSprite(ccTime dt)
+void SpriteBatchNodeReorderIssue766::reorderSprite(float dt)
 {
     unschedule(schedule_selector(SpriteBatchNodeReorderIssue766::reorderSprite));
 
@@ -893,7 +893,7 @@ std::string SpriteBatchNodeReorderIssue767::subtitle()
     return "Should not crash";
 }
 
-void SpriteBatchNodeReorderIssue767::reorderSprites(ccTime dt)
+void SpriteBatchNodeReorderIssue767::reorderSprites(float dt)
 {
     CCSpriteBatchNode* spritebatch = (CCSpriteBatchNode*)getChildByTag(kTagSprite1);
     CCSprite *father = (CCSprite*)spritebatch->getChildByTag(kTagSprite2);
@@ -1191,7 +1191,7 @@ Sprite6::Sprite6()
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     CCSpriteBatchNode* batch = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 1);
     addChild(batch, 0, kTagSpriteBatchNode);
-    batch->setIsRelativeAnchorPoint( false );
+    batch->setIgnoreAnchorPointForPosition( true );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -1253,7 +1253,7 @@ SpriteFlip::SpriteFlip()
     schedule( schedule_selector(SpriteFlip::flipSprites), 1);
 }
 
-void SpriteFlip::flipSprites(ccTime dt)
+void SpriteFlip::flipSprites(float dt)
 {
     CCSprite* sprite1 = (CCSprite*)(getChildByTag(kTagSprite1));
     CCSprite* sprite2 = (CCSprite*)(getChildByTag(kTagSprite2));
@@ -1295,7 +1295,7 @@ SpriteBatchNodeFlip::SpriteBatchNodeFlip()
     schedule( schedule_selector(SpriteBatchNodeFlip::flipSprites), 1);
 }
 
-void SpriteBatchNodeFlip::flipSprites(ccTime dt)
+void SpriteBatchNodeFlip::flipSprites(float dt)
 {
     CCSpriteBatchNode* batch= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteBatchNode ));
     CCSprite* sprite1 = (CCSprite*)(batch->getChildByTag(kTagSprite1));
@@ -1716,13 +1716,13 @@ std::string SpriteFrameTest::subtitle()
     return "Testing issue #792";
 }
 
-void SpriteFrameTest::startIn05Secs(ccTime dt)
+void SpriteFrameTest::startIn05Secs(float dt)
 {
     unschedule(schedule_selector(SpriteFrameTest::startIn05Secs));
     schedule(schedule_selector(SpriteFrameTest::flipSprites), 1.0f);
 }
 
-void SpriteFrameTest::flipSprites(ccTime dt)
+void SpriteFrameTest::flipSprites(float dt)
 {
     m_nCounter++;
 
@@ -2241,7 +2241,7 @@ SpriteHybrid::SpriteHybrid()
     schedule( schedule_selector(SpriteHybrid::reparentSprite), 2);
 }
 
-void SpriteHybrid::reparentSprite(ccTime dt)
+void SpriteHybrid::reparentSprite(float dt)
 {
     CCNode *p1 = getChildByTag(kTagNode);
     CCNode *p2 = getChildByTag( kTagSpriteBatchNode );
@@ -4186,7 +4186,7 @@ std::string NodeSort::subtitle()
     return "tag order in console should be 2,1,3,4,5";
 }
 
-void NodeSort::reorderSprite(ccTime dt)
+void NodeSort::reorderSprite(float dt)
 {
     unschedule(schedule_selector(NodeSort::reorderSprite));
 
@@ -4250,7 +4250,7 @@ std::string SpriteBatchNodeReorderSameIndex::subtitle()
     return "tag order in console should be 2,3,4,5,1";
 }
 
-void SpriteBatchNodeReorderSameIndex::reorderSprite(ccTime dt)
+void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
 {
     m_pBatchNode->reorderChild(m_pSprite4, 4);
     m_pBatchNode->reorderChild(m_pSprite5, 4);
@@ -4338,7 +4338,7 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
     scheduleOnce(schedule_selector(SpriteBatchNodeReorderOneChild::reorderSprite), 2.0f);
 }
 
-void SpriteBatchNodeReorderOneChild::reorderSprite(ccTime dt)
+void SpriteBatchNodeReorderOneChild::reorderSprite(float dt)
 {
     m_pReorderSprite->getParent()->reorderChild(m_pReorderSprite, -1);
 

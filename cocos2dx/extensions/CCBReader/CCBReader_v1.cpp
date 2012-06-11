@@ -26,6 +26,8 @@
 #include "CCBReader.h"
 #include "CCBCustomClass.h"
 
+#if CCB_READER_VERSION == 1
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -705,3 +707,4 @@ CCNode* CCBReader::nodeGraphFromFile(const char* file, CCNode* owner)
     return nodeGraphFromDictionary(dict, NULL, ccbFileDir.c_str(), owner);
 }
 
+#endif

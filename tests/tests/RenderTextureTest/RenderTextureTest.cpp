@@ -195,7 +195,7 @@ void RenderTextureTest::ccTouchesMoved(CCSet* touches, CCEvent* event)
 
 void RenderTextureTest::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
 
     CCSetIterator it;
     CCTouch* touch;

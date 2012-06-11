@@ -153,7 +153,6 @@
 		D4544FD6156E03D200887EB5 /* CCBCustomClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4544CB3156E03D000887EB5 /* CCBCustomClass.cpp */; };
 		D4544FD7156E03D200887EB5 /* CCBCustomClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D4544CB4156E03D000887EB5 /* CCBCustomClass.h */; };
 		D4544FD8156E03D200887EB5 /* CCBReader.h in Headers */ = {isa = PBXBuildFile; fileRef = D4544CB5156E03D000887EB5 /* CCBReader.h */; };
-		D4544FD9156E03D200887EB5 /* CCBReader_v1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4544CB6156E03D000887EB5 /* CCBReader_v1.cpp */; };
 		D4544FDA156E03D200887EB5 /* CCBReader_v2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4544CB7156E03D000887EB5 /* CCBReader_v2.cpp */; };
 		D4544FDB156E03D200887EB5 /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4544CB9156E03D000887EB5 /* CCControl.cpp */; };
 		D4544FDC156E03D200887EB5 /* CCControl.h in Headers */ = {isa = PBXBuildFile; fileRef = D4544CBA156E03D000887EB5 /* CCControl.h */; };
@@ -584,7 +583,6 @@
 		D4544CB3156E03D000887EB5 /* CCBCustomClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBCustomClass.cpp; sourceTree = "<group>"; };
 		D4544CB4156E03D000887EB5 /* CCBCustomClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBCustomClass.h; sourceTree = "<group>"; };
 		D4544CB5156E03D000887EB5 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
-		D4544CB6156E03D000887EB5 /* CCBReader_v1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBReader_v1.cpp; sourceTree = "<group>"; };
 		D4544CB7156E03D000887EB5 /* CCBReader_v2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBReader_v2.cpp; sourceTree = "<group>"; };
 		D4544CB9156E03D000887EB5 /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
 		D4544CBA156E03D000887EB5 /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
@@ -1192,7 +1190,6 @@
 				D4544CB3156E03D000887EB5 /* CCBCustomClass.cpp */,
 				D4544CB4156E03D000887EB5 /* CCBCustomClass.h */,
 				D4544CB5156E03D000887EB5 /* CCBReader.h */,
-				D4544CB6156E03D000887EB5 /* CCBReader_v1.cpp */,
 				D4544CB7156E03D000887EB5 /* CCBReader_v2.cpp */,
 			);
 			path = CCBReader;
@@ -2149,7 +2146,6 @@
 				D4544FD2156E03D200887EB5 /* CCGrabber.cpp in Sources */,
 				D4544FD4156E03D200887EB5 /* CCGrid.cpp in Sources */,
 				D4544FD6156E03D200887EB5 /* CCBCustomClass.cpp in Sources */,
-				D4544FD9156E03D200887EB5 /* CCBReader_v1.cpp in Sources */,
 				D4544FDA156E03D200887EB5 /* CCBReader_v2.cpp in Sources */,
 				D4544FDB156E03D200887EB5 /* CCControl.cpp in Sources */,
 				D4544FDD156E03D200887EB5 /* CCControlButton.cpp in Sources */,

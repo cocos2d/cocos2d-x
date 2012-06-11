@@ -57,40 +57,6 @@ enum {
     kCCNodeOnExit
 };
 
-#define arrayMakeObjectsPerformSelector(pArray, func, elementType)  \
-do {                                                                  \
-    if(pArray && pArray->count() > 0)                                 \
-    {                                                                 \
-        CCObject* child;                                              \
-        CCARRAY_FOREACH(pArray, child)                                \
-        {                                                             \
-            elementType pNode = (elementType) child;                  \
-            if(pNode)                                                 \
-            {                                                         \
-                pNode->func();                                        \
-            }                                                         \
-        }                                                             \
-    }                                                                 \
-}                                                                     \
-while(false)
-
-#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
-do {                                                                  \
-    if(pArray && pArray->count() > 0)                                 \
-    {                                                                 \
-        CCObject* child = NULL;                                       \
-        CCARRAY_FOREACH(pArray, child)                                \
-        {                                                             \
-            elementType pNode = (elementType) child;                  \
-            if(pNode)                                                 \
-            {                                                         \
-                pNode->func(pObject);                                 \
-            }                                                         \
-        }                                                             \
-    }                                                                 \
-}                                                                     \
-while(false)
-
 /** @brief CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
 
@@ -259,11 +225,9 @@ class CC_DLL CCNode : public CCObject
     /** A weak reference to the parent */
     CC_PROPERTY(CCNode *, m_pParent, Parent)
 
-    /** If true the transformtions will be relative to it's anchor point.
-     * Sprites, Labels and any other sizeble object use it have it enabled by default.
-     * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
-     */
-    CC_PROPERTY(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
+    // If ture, the Anchor Point will be (0,0) when you position the CCNode.
+	// Used by CCLayer and CCScene
+    CC_PROPERTY(bool, m_bIgnoreAnchorPointForPosition, IgnoreAnchorPointForPosition);
 
     /** A tag used to identify the node easily */
     CC_PROPERTY(int, m_nTag, Tag)
@@ -544,18 +508,18 @@ public:
      If the selector is already scheduled, then the interval parameter
      will be updated without scheduling it again.
      */
-    void schedule(SEL_SCHEDULE selector, ccTime interval);
+    void schedule(SEL_SCHEDULE selector, float interval);
 
     /**
      repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
      delay is the amount of time the action will wait before execution
      */
-    void schedule(SEL_SCHEDULE selector, ccTime interval, unsigned int repeat, ccTime delay);
+    void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
 
     /**
      Schedules a selector that runs only once, with a delay of 0 or larger
     */
-    void scheduleOnce(SEL_SCHEDULE selector, ccTime delay);
+    void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /** unschedules a custom selector.*/
     void unschedule(SEL_SCHEDULE selector);

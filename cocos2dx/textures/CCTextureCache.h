@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "CCImage.h"
     #include <list>
 #endif
@@ -56,7 +56,7 @@ protected:
 
 private:
     // @todo void addImageWithAsyncObject(CCAsyncObject* async);
-    void addImageAsyncCallBack(ccTime dt);
+    void addImageAsyncCallBack(float dt);
 
 public:
 
@@ -163,12 +163,12 @@ public:
     CCTexture2D* addPVRImage(const char* filename);
 
     /** Reload all textures
-    It's only useful when the value of CC_ENABLE_CACHE_TEXTTURE_DATA is 1
+    It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
     */
     static void reloadAllTextures();
 };
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
 
 class VolatileTexture
 {

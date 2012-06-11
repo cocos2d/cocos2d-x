@@ -44,11 +44,13 @@ CCMotionStreak::CCMotionStreak()
 , m_fMinSeg(0.0f)
 , m_uMaxPoints(0)
 , m_uNuPoints(0)
+, m_uPreviousNuPoints(0)
 , m_pPointVertexes(NULL)
 , m_pPointState(NULL)
 , m_pVertices(NULL)
 , m_pColorPointer(NULL)
 , m_pTexCoords(NULL)
+, m_bStartingPositionInitialized(false)
 {
     m_tBlendFunc.src = GL_SRC_ALPHA;
     m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -102,7 +104,8 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
 {
     CCNode::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
-    setIsRelativeAnchorPoint(false);
+    setIgnoreAnchorPointForPosition(true);
+    m_bStartingPositionInitialized = false;
 
     m_tPositionR = CCPointZero;
     m_bFastMode = true;
@@ -137,6 +140,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
 
 void CCMotionStreak::setPosition(const CCPoint& position)
 {
+    m_bStartingPositionInitialized = true;
     m_tPositionR = position;
 }
 
@@ -207,8 +211,13 @@ bool CCMotionStreak::getIsOpacityModifyRGB(void)
     return false;
 }
 
-void CCMotionStreak::update(ccTime delta)
+void CCMotionStreak::update(float delta)
 {
+    if (!m_bStartingPositionInitialized)
+    {
+        return;
+    }
+    
     delta *= m_fFadeDelta;
 
     unsigned int newIdx, newIdx2, i, i2;
@@ -261,14 +270,18 @@ void CCMotionStreak::update(ccTime delta)
     // Append new point
     bool appendNewPoint = true;
     if(m_uNuPoints >= m_uMaxPoints)
+    {
         appendNewPoint = false;
+    }
 
     else if(m_uNuPoints>0)
     {
         bool a1 = ccpDistanceSQ(m_pPointVertexes[m_uNuPoints-1], m_tPositionR) < m_fMinSeg;
         bool a2 = (m_uNuPoints == 1) ? false : (ccpDistanceSQ(m_pPointVertexes[m_uNuPoints-2], m_tPositionR) < (m_fMinSeg * 2.0f));
         if(a1 || a2)
+        {
             appendNewPoint = false;
+        }
     }
 
     if(appendNewPoint)
@@ -289,16 +302,33 @@ void CCMotionStreak::update(ccTime delta)
         if(m_uNuPoints > 0 && m_bFastMode )
         {
             if(m_uNuPoints > 1)
-                ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, m_pTexCoords, m_uNuPoints, 1);
+            {
+                ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, m_uNuPoints, 1);
+            }
             else
-                ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, m_pTexCoords, 0, 2);
+            {
+                ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, 0, 2);
+            }
         }
 
         m_uNuPoints ++;
     }
 
     if( ! m_bFastMode )
-        ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, m_pTexCoords, 0, m_uNuPoints);
+    {
+        ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, 0, m_uNuPoints);
+    }
+
+    // Updated Tex Coords only if they are different than previous step
+    if( m_uNuPoints  && m_uPreviousNuPoints != m_uNuPoints ) {
+        float texDelta = 1.0f / m_uNuPoints;
+        for( i=0; i < m_uNuPoints; i++ ) {
+            m_pTexCoords[i*2] = tex2(0, texDelta*i);
+            m_pTexCoords[i*2+1] = tex2(1, texDelta*i);
+        }
+
+        m_uPreviousNuPoints = m_uNuPoints;
+    }
 }
 
 void CCMotionStreak::reset()

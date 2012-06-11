@@ -77,8 +77,11 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         // Adjust the background image by default
         m_adjustBackgroundImage=true;
 
+        // Zooming button by default
+        m_zoomOnTouchDown = true;
+
         // Set the default anchor point
-        setIsRelativeAnchorPoint(true);
+        setIgnoreAnchorPointForPosition(false);
         setAnchorPoint(ccp(0.5f, 0.5f));
         
         // Set the nodes
@@ -194,8 +197,7 @@ void CCControlButton::setIsHighlighted(bool enabled)
         stopAction(action);        
     }
     needsLayout();
-
-    if(m_zoomOnTouchDown)
+    if( m_zoomOnTouchDown )
     {
         float scaleValue = (getIsHighlighted() && getIsEnabled() && !getIsSelected()) ? 1.1f : 1.0f;
         CCAction *zoomAction =CCScaleTo::actionWithDuration(0.05f, scaleValue);
@@ -203,6 +205,38 @@ void CCControlButton::setIsHighlighted(bool enabled)
         runAction(zoomAction);
     }
 }
+
+void CCControlButton::setZoomOnTouchDown(bool zoomOnTouchDown)
+{
+    m_zoomOnTouchDown = zoomOnTouchDown;
+}
+
+bool CCControlButton::getZoomOnTouchDown()
+{
+    return m_zoomOnTouchDown;
+}
+
+void CCControlButton::setPreferredSize(CCSize size)
+{
+    if(size.width == 0 && size.height == 0)
+    {
+        m_adjustBackgroundImage = true;
+    }
+    else
+    {
+        m_adjustBackgroundImage = false;
+        CCDictElement * item = NULL;
+        CCDICT_FOREACH(m_backgroundSpriteDispatchTable, item)
+        {
+            CCScale9Sprite* sprite = (CCScale9Sprite*)item->getObject();
+            sprite->setPreferredSize(size);
+        }
+        
+        m_preferredSize = size;
+    }
+    needsLayout();
+}
+
 void CCControlButton::setAdjustBackgroundImage(bool adjustBackgroundImage)
 {
     m_adjustBackgroundImage=adjustBackgroundImage;
@@ -217,30 +251,6 @@ bool CCControlButton::getAdjustBackgroundImage()
 CCSize CCControlButton::getPreferredSize()
 {
     return this->m_preferredSize;
-}
-
-void CCControlButton::setPreferredSize(CCSize preferredSize)
-{
-    if (preferredSize.width == 0 && preferredSize.height == 0)
-    {
-        this->m_adjustBackgroundImage = true;
-    }
-    else
-    {
-        this->m_adjustBackgroundImage = false;
-
-        // TODO Was: "for (id key in backgroundSpriteDispatchTable_)"
-        CCDictElement * element = NULL;
-        CCDICT_FOREACH(m_backgroundSpriteDispatchTable, element)
-        {
-            CCScale9Sprite * sprite = dynamic_cast<CCScale9Sprite *>(m_backgroundSpriteDispatchTable->objectForKey(element->getIntKey()));
-            sprite->setPreferredSize(preferredSize);
-        }
-    }
-
-    this->m_preferredSize = preferredSize;
-
-    this->needsLayout();
 }
 
 CCPoint CCControlButton::getLabelAnchorPoint()

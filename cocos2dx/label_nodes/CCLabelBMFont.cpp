@@ -42,6 +42,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "CCFileUtils.h"
 #include "support/data_support/uthash.h"
 #include "CCDirector.h"
+#include "CCTextureCache.h"
 
 using namespace std;
 
@@ -373,7 +374,10 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
     if( pRet == NULL )
     {
         pRet = CCBMFontConfiguration::configurationWithFNTFile(fntFile);
-        configurations->setObject(pRet, fntFile);
+        if (pRet)
+        {
+            configurations->setObject(pRet, fntFile);
+        }        
     }
 
     return pRet;
@@ -416,15 +420,19 @@ CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const ch
 
 bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
 {
-    CCAssert(FNTfile != NULL && strlen(FNTfile)!=0, "");
     m_pKerningDictionary = NULL;
-    this->parseConfigFile(FNTfile);
+    m_pFontDefDictionary = NULL;
+    if (! this->parseConfigFile(FNTfile))
+    {
+        return false;
+    }
+
     return true;
 }
 
 CCBMFontConfiguration::CCBMFontConfiguration()
     : m_pFontDefDictionary(NULL)
-    , m_uCommonHeight(0)
+    , m_nCommonHeight(0)
     , m_pKerningDictionary(NULL)
 {
 
@@ -471,24 +479,22 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 }
 
 
-void CCBMFontConfiguration::parseConfigFile(const char *controlFile)
+bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
-    std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
+    CCString *contents = CCString::stringWithContentsOfFile(fullpath.c_str());
 
-    CCFileData data(fullpath.c_str(), "rb");
-    unsigned long nBufSize = data.getSize();
-    char* pBuffer = (char*) data.getBuffer();
+    CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
 
-    CCAssert(pBuffer, "CCBMFontConfiguration::parseConfigFile | Open file error.");
-
-    if (!pBuffer)
+    if (!contents)
     {
-        return;
+        CCLOG("cocos2d: Error parsing FNTfile %s", controlFile);
+        return false;
     }
 
     // parse spacing / padding
     std::string line;
-    std::string strLeft(pBuffer, nBufSize);
+    std::string strLeft = contents->getCString();
     while (strLeft.length() > 0)
     {
         int pos = strLeft.find('\n');
@@ -535,15 +541,17 @@ void CCBMFontConfiguration::parseConfigFile(const char *controlFile)
             element->key = element->fontDef.charID;
             HASH_ADD_INT(m_pFontDefDictionary, key, element);
         }
-        else if(line.substr(0,strlen("kernings count")) == "kernings count")
-        {
-            this->parseKerningCapacity(line);
-        }
+//        else if(line.substr(0,strlen("kernings count")) == "kernings count")
+//        {
+//            this->parseKerningCapacity(line);
+//        }
         else if(line.substr(0,strlen("kerning first")) == "kerning first")
         {
             this->parseKerningEntry(line);
         }
     }
+    
+    return true;
 }
 
 void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
@@ -563,7 +571,7 @@ void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fnt
     index2 = line.find('"', index);
     value = line.substr(index, index2-index);
 
-    m_sAtlasName = CCFileUtils::fullPathFromRelativeFile(value.c_str(), fntFile);
+    m_sAtlasName = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(value.c_str(), fntFile);
 }
 
 void CCBMFontConfiguration::parseInfoArguments(std::string line)
@@ -593,7 +601,7 @@ void CCBMFontConfiguration::parseCommonArguments(std::string line)
     int index = line.find("lineHeight=");
     int index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
-    sscanf(value.c_str(), "lineHeight=%u", &m_uCommonHeight);
+    sscanf(value.c_str(), "lineHeight=%d", &m_nCommonHeight);
     // scaleW. sanity check
     index = line.find("scaleW=") + strlen("scaleW=");
     index2 = line.find(' ', index);
@@ -661,28 +669,6 @@ void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontD
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
     sscanf(value.c_str(), "xadvance=%d", &characterDefinition->xAdvance);
-}
-
-void CCBMFontConfiguration::parseKerningCapacity(std::string line)
-{
-    // When using uthash there is not need to parse the capacity.
-
-    //    CCAssert(!kerningDictionary, @"dictionary already initialized");
-    //    
-    //    // Break the values for this line up using =
-    //    CCMutableArray *values = [line componentsSeparatedByString:@"="];
-    //    NSEnumerator *nse = [values objectEnumerator];    
-    //    CCString *propertyValue;
-    //    
-    //    // We need to move past the first entry in the array before we start assigning values
-    //    [nse nextObject];
-    //    
-    //    // count
-    //    propertyValue = [nse nextObject];
-    //    int capacity = [propertyValue intValue];
-    //    
-    //    if( capacity != -1 )
-    //        kerningDictionary = ccHashSetNew(capacity, targetSetEql);
 }
 
 void CCBMFontConfiguration::parseKerningEntry(std::string line)
@@ -781,12 +767,12 @@ CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFi
 
 bool CCLabelBMFont::init()
 {
-    return initWithString(NULL, NULL, kCCLabelAutomaticWidth, CCTextAlignmentLeft, CCPointZero);
+    return initWithString(NULL, NULL, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
 }
 
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 {
-    return initWithString(theString, fntFile, kCCLabelAutomaticWidth, CCTextAlignmentLeft, CCPointZero);
+    return initWithString(theString, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
 }
 
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment)
@@ -797,27 +783,28 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset)
 {
     CCAssert(!this->m_pConfiguration, "re-init is no longer supported");
-    
     CCAssert((theString != NULL && fntFile != NULL) || (theString == NULL && fntFile == NULL), "Invalid params for CCLabelBMFont");
-
-    CCTexture2D * texture;
-
-    if(fntFile != NULL)
+    
+    CCTexture2D *texture = NULL;
+    
+    if (fntFile != NULL)
     {
-        m_pConfiguration = FNTConfigLoadFile(fntFile);
-        m_pConfiguration->retain();
-
+        CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
+        CCAssert(newConf, "CCLabelBMFont: Impossible to create font. Please check file");
+        
+        newConf->retain();
+        CC_SAFE_RELEASE(m_pConfiguration);
+        m_pConfiguration = newConf;
+        
         m_sFntFile = fntFile;
-        CCAssert( m_pConfiguration, "Error creating config for LabelBMFont");
-
-        texture = CCTextureCache::sharedTextureCache()->addImage(this->m_pConfiguration->m_sAtlasName.c_str());
+        
+        texture = CCTextureCache::sharedTextureCache()->addImage(m_pConfiguration->getAtlasName());
     }
-    else
+    else 
     {
         texture = new CCTexture2D();
         texture->autorelease();
     }
-    
 
     if (CCSpriteBatchNode::initWithTexture(texture, (theString == NULL) ? 0 : strlen(theString)))
     {
@@ -902,8 +889,8 @@ void CCLabelBMFont::createFontChars()
         }
     }
 
-    totalHeight = m_pConfiguration->m_uCommonHeight * quantityOfLines;
-    nextFontPositionY = 0-(m_pConfiguration->m_uCommonHeight - m_pConfiguration->m_uCommonHeight * quantityOfLines);
+    totalHeight = m_pConfiguration->m_nCommonHeight * quantityOfLines;
+    nextFontPositionY = 0-(m_pConfiguration->m_nCommonHeight - m_pConfiguration->m_nCommonHeight * quantityOfLines);
 
     for (unsigned int i= 0; i < stringLen; i++)
     {
@@ -912,7 +899,7 @@ void CCLabelBMFont::createFontChars()
         if (c == '\n')
         {
             nextFontPositionX = 0;
-            nextFontPositionY -= m_pConfiguration->m_uCommonHeight;
+            nextFontPositionY -= m_pConfiguration->m_nCommonHeight;
             continue;
         }
 
@@ -951,7 +938,8 @@ void CCLabelBMFont::createFontChars()
             fontChar->setOpacity(255);
         }
 
-        float yOffset = (float)(m_pConfiguration->m_uCommonHeight) - fontDef.yOffset;
+        // See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
+        int yOffset = m_pConfiguration->m_nCommonHeight - fontDef.yOffset;
         CCPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
             (float)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
         fontChar->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));
@@ -995,7 +983,7 @@ void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
 {
     CC_SAFE_DELETE_ARRAY(m_sString);
     m_sString = cc_utf16_from_utf8(newString);
-    m_sString_initial = newString;
+    m_sInitialString = newString;
 
     updateString(fromUpdate);
 }
@@ -1022,7 +1010,7 @@ void CCLabelBMFont::updateString(bool fromUpdate)
 
 const char* CCLabelBMFont::getString(void)
 {
-    return m_sString_initial.c_str();
+    return m_sInitialString.c_str();
 }
 
 void CCLabelBMFont::setCString(const char *label)
@@ -1114,7 +1102,7 @@ void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 // LabelBMFont - Alignment
 void CCLabelBMFont::updateLabel()
 {
-    this->setString(m_sString_initial.c_str(), true);
+    this->setString(m_sInitialString.c_str(), true);
 
     if (m_fWidth > 0)
     {
@@ -1281,7 +1269,7 @@ void CCLabelBMFont::updateLabel()
     }
 
     // Step 2: Make alignment
-    if (m_pAlignment != CCTextAlignmentLeft)
+    if (m_pAlignment != kCCTextAlignmentLeft)
     {
         int i = 0;
 
@@ -1306,11 +1294,12 @@ void CCLabelBMFont::updateLabel()
                 float shift = 0;
                 switch (m_pAlignment)
                 {
-                case CCTextAlignmentCenter:
+                case kCCTextAlignmentCenter:
                     shift = getContentSize().width/2.0f - lineWidth/2.0f;
                     break;
-                case CCTextAlignmentRight:
+                case kCCTextAlignmentRight:
                     shift = getContentSize().width - lineWidth;
+                    break;
                 default:
                     break;
                 }

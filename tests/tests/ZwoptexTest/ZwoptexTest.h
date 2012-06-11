@@ -21,8 +21,8 @@ class ZwoptexGenericTest : public ZwoptexTest
 public:
     ~ZwoptexGenericTest();
     virtual void onEnter();
-    void flipSprites(ccTime dt);
-    void startIn05Secs(ccTime dt);
+    void flipSprites(float dt);
+    void startIn05Secs(float dt);
 
     virtual std::string title();
     virtual std::string subtitle();

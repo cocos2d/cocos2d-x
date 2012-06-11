@@ -238,27 +238,52 @@ void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid
     sprite->setOpacity(m_cOpacity);
 
     //issue 1264, flip can be undone as well
-    if (gid & kCCTMXTileHorizontalFlag)
+    sprite->setFlipX(false);
+    sprite->setFlipX(false);
+    sprite->setRotation(0.0f);
+    sprite->setAnchorPoint(ccp(0,0));
+
+    // Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
+    if (gid & kCCTMXTileDiagonalFlag)
     {
-        sprite->setFlipX(true);
+        // put the anchor in the middle for ease of rotation.
+        sprite->setAnchorPoint(ccp(0.5f,0.5f));
+        sprite->setPosition(ccp(positionAt(pos).x + sprite->getContentSize().height/2,
+           positionAt(pos).y + sprite->getContentSize().width/2 ) );
+
+        unsigned int flag = gid & (kCCTMXTileHorizontalFlag | kCCTMXTileVerticalFlag );
+
+        // handle the 4 diagonally flipped states.
+        if (flag == kCCTMXTileHorizontalFlag)
+        {
+            sprite->setRotation(90.0f);
+        }
+        else if (flag == kCCTMXTileVerticalFlag)
+        {
+            sprite->setRotation(270.0f);
+        }
+        else if (flag == (kCCTMXTileVerticalFlag | kCCTMXTileHorizontalFlag) )
+        {
+            sprite->setRotation(90.0f);
+            sprite->setFlipX(true);
+        }
+        else
+        {
+            sprite->setRotation(270.0f);
+            sprite->setFlipX(true);
+        }
     }
     else
     {
-        sprite->setFlipX(false);
-    }
+        if (gid & kCCTMXTileHorizontalFlag)
+        {
+            sprite->setFlipX(true);
+        }
 
-    if (gid & kCCTMXTileVerticalFlag)
-    {    
-        sprite->setFlipY(true);
-    }
-    else
-    {
-        sprite->setFlipY(false);
-    }
-
-    if( gid & kCCTMXTileDiagonalFlag)
-    {
-        CCAssert(false, "Tiled Anti-Diagonally Flip not supported yet");
+        if (gid & kCCTMXTileVerticalFlag)
+        {
+            sprite->setFlipY(true);
+        }
     }
 }
 
