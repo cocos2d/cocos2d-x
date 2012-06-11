@@ -88,8 +88,6 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
         m_pAtlasIndexArray = ccCArrayNew((unsigned int)totalNumberOfTiles);
 
         this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(CCSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height)));
-                    m_tMapTileSize.width /= m_fContentScaleFactor;
-                    m_tMapTileSize.height /= m_fContentScaleFactor;
 
         m_bUseAutomaticVertexZ = false;
         m_nVertexZvalue = 0;
