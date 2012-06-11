@@ -110,9 +110,6 @@ protected:
     /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
     float m_fLensEffect;
 
-    /* @since v0.99.5 */
-    // CCPoint m_lastPosition;
-    CCPoint m_positionInPixels;
     bool    m_bDirty;
 };
 
@@ -148,9 +145,6 @@ protected:
     int m_nWaves;
     float m_fAmplitude;
     float m_fAmplitudeRate;
-
-    /*@since v0.99.5*/
-    CCPoint m_positionInPixels;
 };
 
 /** @brief CCShaky3D action */
@@ -255,9 +249,6 @@ protected:
     int m_nTwirls;
     float m_fAmplitude;
     float m_fAmplitudeRate;
-
-    /*@since v0.99.5 */
-    CCPoint m_positionInPixels;
 };
 
 NS_CC_END
