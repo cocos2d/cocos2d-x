@@ -44,9 +44,8 @@ CCData::~CCData(void)
 
 CCData* CCData::dataWithContentsOfFile(const string &strPath)
 {
-    CCFileData data(strPath.c_str(), "rb");
-    unsigned long  nSize = data.getSize();
-    unsigned char* pBuffer = data.getBuffer();
+    unsigned long nSize;
+    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(strPath.c_str(), "rb", &nSize);
 
     if (! pBuffer)
     {

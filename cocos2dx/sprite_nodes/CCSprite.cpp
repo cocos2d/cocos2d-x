@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -390,9 +390,9 @@ void CCSprite::setTextureCoords(CCRect rect)
         bottom    = top+(rect.size.width*2-2)/(2*atlasHeight);
 #else
         left    = rect.origin.x/atlasWidth;
-        right    = left+(rect.size.height/atlasWidth);
+        right    = (rect.origin.x+rect.size.height) / atlasWidth;
         top        = rect.origin.y/atlasHeight;
-        bottom    = top+(rect.size.width/atlasHeight);
+        bottom    = (rect.origin.y+rect.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if (m_bFlipX)
@@ -423,9 +423,9 @@ void CCSprite::setTextureCoords(CCRect rect)
         bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
 #else
         left    = rect.origin.x/atlasWidth;
-        right    = left + rect.size.width/atlasWidth;
+        right    = (rect.origin.x + rect.size.width) / atlasWidth;
         top        = rect.origin.y/atlasHeight;
-        bottom    = top + rect.size.height/atlasHeight;
+        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if(m_bFlipX)
@@ -827,10 +827,10 @@ void CCSprite::setAnchorPoint(const CCPoint& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
-void CCSprite::setIsRelativeAnchorPoint(bool bRelative)
+void CCSprite::setIgnoreAnchorPointForPosition(bool value)
 {
-    CCAssert(! m_pobBatchNode, "relativeTransformAnchor is invalid in CCSprite");
-    CCNode::setIsRelativeAnchorPoint(bRelative);
+    CCAssert(! m_pobBatchNode, "ignoreAnchorPointForPosition is invalid in CCSprite");
+    CCNode::setIgnoreAnchorPointForPosition(value);
 }
 
 void CCSprite::setIsVisible(bool bVisible)
@@ -1061,11 +1061,12 @@ void CCSprite::updateBlendFunc(void)
 
 void CCSprite::setTexture(CCTexture2D *texture)
 {
-    CCAssert(! m_pobBatchNode, "setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
+    // If batchnode, then texture id should be the same
+    CCAssert(! m_pobBatchNode || texture->getName() == m_pobBatchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
 
-    if (m_pobTexture != texture)
+    if (!m_pobBatchNode && m_pobTexture != texture)
     {
         CC_SAFE_RETAIN(texture);
         CC_SAFE_RELEASE(m_pobTexture);

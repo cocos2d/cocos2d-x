@@ -80,6 +80,10 @@ CCNodeLoaderLibrary * CCNodeLoaderLibrary::sharedCCNodeLoaderLibrary() {
     return sSharedCCNodeLoaderLibrary;
 }
 
+void CCNodeLoaderLibrary::purgeSharedCCNodeLoaderLibrary() {
+    CC_SAFE_DELETE(sSharedCCNodeLoaderLibrary);
+}
+
 CCNodeLoaderLibrary * CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary() {
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::library();
 

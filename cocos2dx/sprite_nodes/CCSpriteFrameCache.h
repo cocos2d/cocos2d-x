@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
@@ -38,10 +38,12 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
 #include "CCObject.h"
-#include "CCDictionary.h"
+#include <set>
 
 NS_CC_BEGIN
 
+class CCDictionary;
+class CCArray;
 class CCSprite;
 
 /** @brief Singleton that handles the loading of the sprite frames.
@@ -54,10 +56,11 @@ public:
     bool init(void);
     ~CCSpriteFrameCache(void);
 
+private:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
     void addSpriteFramesWithDictionary(CCDictionary* pobDictionary, CCTexture2D *pobTexture);
-
+public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
      * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
@@ -101,11 +104,12 @@ public:
     */
     void removeSpriteFramesFromFile(const char* plist);
 
+private:
     /** Removes multiple Sprite Frames from CCDictionary.
     * @since v0.99.5
     */
     void removeSpriteFramesFromDictionary(CCDictionary* dictionary);
-
+public:
     /** Removes all Sprite Frames associated with the specified textures.
     * It is convinient to call this method when a specific texture needs to be removed.
     * @since v0.995.
@@ -130,6 +134,7 @@ private:
 protected:
     CCDictionary* m_pSpriteFrames;
     CCDictionary* m_pSpriteFramesAliases;
+    std::set<std::string>*  m_pLoadedFileNames;
 };
 
 NS_CC_END

@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-void tgaLoadRLEImageData(FILE *file, tImageTGA *info);
+static bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo);
 void tgaFlipImage( tImageTGA *info );
 
 // load the image header field from stream
@@ -197,9 +197,9 @@ tImageTGA * tgaLoad(const char *pszFilename)
 {
     int mode,total;
     tImageTGA *info = NULL;
-    CCFileData data(pszFilename, "rb");
-    unsigned long nSize = data.getSize();
-    unsigned char* pBuffer = data.getBuffer();
+    
+    unsigned long nSize;
+    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(pszFilename, "rb", &nSize);
 
     do
     {

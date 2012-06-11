@@ -253,6 +253,18 @@ bool CCArray::containsObject(CCObject* object)
     return ccArrayContainsObject(data, object);
 }
 
+bool CCArray::isEqualToArray(CCArray* otherArray)
+{
+    for (unsigned int i = 0; i< this->count(); i++)
+    {
+        if (!this->objectAtIndex(i)->isEqual(otherArray->objectAtIndex(i)))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void CCArray::addObject(CCObject* object)
 {
     ccArrayAppendObjectWithResize(data, object);
@@ -326,6 +338,12 @@ void CCArray::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
+void CCArray::replaceObjectAtIndex(unsigned int index, CCObject* pObject, bool bReleaseObject/* = true*/)
+{
+    ccArrayInsertObjectAtIndex(data, pObject, index);
+    ccArrayRemoveObjectAtIndex(data, index+1);
+}
+
 void CCArray::reverseObjects()
 {
     if (data->num > 1)
@@ -350,22 +368,6 @@ void CCArray::reduceMemoryFootprint()
 CCArray::~CCArray()
 {
     ccArrayFree(data);
-}
-
-void CCArray::replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject/* = true*/)
-{
-    if (bReleaseObject && uIndex < data->num && data->arr[uIndex] != NULL)
-    {
-        data->arr[uIndex]->release();
-    }
-
-    data->arr[uIndex] = pObject;
-
-    // add the ref
-    if (pObject)
-    {
-        pObject->retain();
-    }
 }
 
 CCObject* CCArray::copyWithZone(CCZone* pZone)

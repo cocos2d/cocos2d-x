@@ -76,10 +76,10 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCObject * 
 }
 
 CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
-    const char * path = CCFileUtils::fullPathFromRelativePath(pCCBFileName);
+    const char * path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pCCBFileName);
 
     unsigned long size = 0;
-    this->mBytes = CCFileUtils::getFileData(path, "r", &size);
+    this->mBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "r", &size);
 
     this->mCurrentByte = 0;
     this->mCurrentBit = 0;

@@ -34,11 +34,11 @@ public:
 
 class LabelAtlasTest : public AtlasDemo
 {
-    ccTime        m_time;
+    float        m_time;
 public:
     LabelAtlasTest();
 
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
 
     virtual std::string title();
     virtual std::string subtitle();
@@ -46,21 +46,21 @@ public:
 
 class LabelAtlasColorTest : public AtlasDemo
 {
-    ccTime        m_time;
+    float        m_time;
 public:
     LabelAtlasColorTest();
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 };
 
 class Atlas3 : public AtlasDemo
 {
-    ccTime        m_time;
+    float        m_time;
 public:
     Atlas3();
 
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
 
     virtual std::string title();
     virtual std::string subtitle();
@@ -68,10 +68,10 @@ public:
 
 class Atlas4 : public AtlasDemo
 {
-    ccTime        m_time;
+    float        m_time;
 public:
     Atlas4();
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
     virtual void draw();
 
     virtual std::string title();
@@ -124,7 +124,7 @@ class LabelsEmpty : public AtlasDemo
 {
 public:
     LabelsEmpty();
-    void updateStrings(ccTime dt);
+    void updateStrings(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 

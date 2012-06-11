@@ -194,7 +194,7 @@ void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
     shader->release();
 }
 
-void ShaderNode::update(ccTime dt)
+void ShaderNode::update(float dt)
 {
     m_time += dt;
 }
@@ -476,7 +476,7 @@ bool SpriteBlur::initWithTexture(CCTexture2D* texture, const CCRect& rect)
         sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
         GLchar * fragSource = (GLchar*) CCString::stringWithContentsOfFile(
-            CCFileUtils::fullPathFromRelativePath("Shaders/example_Blur.fsh"))->getCString();
+            CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Shaders/example_Blur.fsh"))->getCString();
         CCGLProgram* pProgram = new CCGLProgram();
         pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
         setShaderProgram(pProgram);
@@ -630,7 +630,7 @@ bool ShaderRetroEffect::init()
 {
     if( ShaderTestDemo::init() ) {
 
-        GLchar * fragSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath("Shaders/example_HorizontalColor.fsh"))->getCString();
+        GLchar * fragSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Shaders/example_HorizontalColor.fsh"))->getCString();
         CCGLProgram *p = new CCGLProgram();
         p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
 
@@ -662,7 +662,7 @@ bool ShaderRetroEffect::init()
     return false;
 }
 
-void ShaderRetroEffect::update(ccTime dt)
+void ShaderRetroEffect::update(float dt)
 {
     m_fAccum += dt;
 

@@ -34,4 +34,4 @@ THE SOFTWARE.
 #include <OPenGLES/ES2/glext.h>
 
 
-#endif // __PLATFOMR_CCGL_H__
+#endif // __CCGL_H__

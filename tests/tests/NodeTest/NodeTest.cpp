@@ -232,14 +232,14 @@ Test4::Test4()
     schedule( schedule_selector(Test4::delay4), 4.0f); 
 }
 
-void Test4::delay2(ccTime dt)
+void Test4::delay2(float dt)
 {
     CCSprite* node = (CCSprite*)(getChildByTag(2));
     CCAction* action1 = CCRotateBy::actionWithDuration(1, 360);
     node->runAction(action1);
 }
 
-void Test4::delay4(ccTime dt)
+void Test4::delay4(float dt)
 {
     unschedule(schedule_selector(Test4::delay4)); 
     removeChildByTag(3, false);
@@ -282,7 +282,7 @@ Test5::Test5()
     schedule( schedule_selector(Test5::addAndRemove), 2.0f);
 }
 
-void Test5::addAndRemove(ccTime dt)
+void Test5::addAndRemove(float dt)
 {
     CCNode* sp1 = getChildByTag(kTagSprite1);
     CCNode* sp2 = getChildByTag(kTagSprite2);
@@ -343,7 +343,7 @@ Test6::Test6()
     schedule( schedule_selector(Test6::addAndRemove), 2.0f);
 }
 
-void Test6::addAndRemove(ccTime dt)
+void Test6::addAndRemove(float dt)
 {
     CCNode* sp1 = getChildByTag(kTagSprite1);
     CCNode* sp2 = getChildByTag(kTagSprite2);
@@ -384,7 +384,7 @@ StressTest1::StressTest1()
     schedule( schedule_selector(StressTest1::shouldNotCrash), 1.0f);
 }
 
-void StressTest1::shouldNotCrash(ccTime dt)
+void StressTest1::shouldNotCrash(float dt)
 {
     unschedule(schedule_selector(StressTest1::shouldNotCrash));
 
@@ -455,7 +455,7 @@ StressTest2::StressTest2()
     addChild(sublayer, 0, kTagSprite1);
 }
 
-void StressTest2::shouldNotLeak(ccTime dt)
+void StressTest2::shouldNotLeak(float dt)
 {
     unschedule( schedule_selector(StressTest2::shouldNotLeak) );
     CCLayer* sublayer = (CCLayer*)getChildByTag(kTagSprite1);
@@ -482,13 +482,13 @@ SchedulerTest1::SchedulerTest1()
     //UXLOG("retain count after addChild is %d", layer->retainCount());      // 2
     
     layer->schedule( schedule_selector(SchedulerTest1::doSomething) );
-    //UXLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
+    //UXLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because floatr class don't save target.
     
     layer->unschedule(schedule_selector(SchedulerTest1::doSomething));
     //UXLOG("retain count after unschedule is %d", layer->retainCount());        // STILL 3!  (win32 is '2')
 }
 
-void SchedulerTest1::doSomething(ccTime dt)
+void SchedulerTest1::doSomething(float dt)
 {
 
 }
@@ -657,7 +657,7 @@ CameraZoomTest::CameraZoomTest()
     scheduleUpdate();
 }
 
-void CameraZoomTest::update(ccTime dt)
+void CameraZoomTest::update(float dt)
 {
     CCNode *sprite;
     CCCamera *cam;

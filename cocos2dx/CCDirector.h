@@ -329,8 +329,8 @@ protected:
     bool m_bLandscape;
     
     bool m_bDisplayStats;
-    ccTime m_fAccumDt;
-    ccTime m_fFrameRate;
+    float m_fAccumDt;
+    float m_fFrameRate;
     
     CCLabelBMFont *m_pFPSLabel;
     CCLabelBMFont *m_pSPFLabel;
@@ -342,7 +342,7 @@ protected:
     /* How many frames were called since the director started */
     unsigned int m_uTotalFrames;
     unsigned int m_uFrames;
-    ccTime m_fSecondsPerFrame;
+    float m_fSecondsPerFrame;
      
     /* The running scene */
     CCScene *m_pRunningScene;
@@ -361,7 +361,7 @@ protected:
     struct cc_timeval *m_pLastUpdate;
 
     /* delta time since last tick to main loop */
-    ccTime m_fDeltaTime;
+    float m_fDeltaTime;
 
     /* whether or not the next delta time will be zero */
     bool m_bNextDeltaTimeZero;

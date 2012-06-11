@@ -26,6 +26,8 @@
 #include "CCBReader.h"
 #include "CCBCustomClass.h"
 
+#if CCB_READER_VERSION == 2
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -378,7 +380,7 @@ void CCBReader::setPropsForNode(CCNode* node, CCDictionary* props, CCDictionary*
     node->setScaleY(floatValFromDict(props, "scaleY"));
     node->setAnchorPoint(pointValFromDict(props, "anchorPoint"));
     node->setRotation(floatValFromDict(props, "rotation"));
-    node->setIsRelativeAnchorPoint(boolValFromDict(props, "isRelativeAnchorPoint"));
+    node->setIgnoreAnchorPointForPosition(!boolValFromDict(props, "isRelativeAnchorPoint"));
     node->setIsVisible(boolValFromDict(props, "visible"));
 
     if (extraProps)
@@ -766,3 +768,4 @@ CCNode* CCBReader::nodeGraphFromFile(const char* file, CCNode* owner)
     return nodeGraphFromDictionary(dict, NULL, ccbFileDir.c_str(), owner);
 }
 
+#endif

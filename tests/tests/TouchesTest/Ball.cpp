@@ -23,7 +23,7 @@ Ball* Ball::ballWithTexture(CCTexture2D* aTexture)
     return pBall;
 }
 
-void Ball::move(ccTime delta)
+void Ball::move(float delta)
 {
     this->setPosition( ccpAdd(getPosition(), ccpMult(m_velocity, delta)) );
     

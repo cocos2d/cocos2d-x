@@ -49,6 +49,17 @@ static NSString *__suffixiPad =@"-ipad";
 static NSString *__suffixiPadRetinaDisplay =@"-ipadhd";
 static NSFileManager *__localFileManager= [[NSFileManager alloc] init];
 
+static CCFileUtils* s_pFileUtils = NULL;
+
+CCFileUtils* CCFileUtils::sharedFileUtils()
+{
+    if (s_pFileUtils == NULL)
+    {
+        s_pFileUtils = new CCFileUtils();
+    }
+    return s_pFileUtils;
+}
+
 static NSString* removeSuffixFromPath(NSString *suffix, NSString *path)
 {
     // quick return
@@ -389,7 +400,7 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    const char* pszFullPath = CCFileUtils::fullPathFromRelativePath(pFileName);
+    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
     NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     

@@ -309,7 +309,7 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
         m_pSwitchSprite->setPosition(ccp (m_pSwitchSprite->getContentSize().width / 2, m_pSwitchSprite->getContentSize().height / 2));
         addChild(m_pSwitchSprite);
         
-        setIsRelativeAnchorPoint(true);
+        setIgnoreAnchorPointForPosition(false);
         setAnchorPoint(ccp (0.5f, 0.5f));
         setContentSize(m_pSwitchSprite->getContentSize());
         return true;

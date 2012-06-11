@@ -109,7 +109,7 @@ public:
     void alignItemsInRows(unsigned int rows, va_list args);
 
     /** set event handler priority. By default it is: kCCMenuTouchPriority */
-    void setHandlerPriority(unsigned int newPriority);
+    void setHandlerPriority(int newPriority);
 
     //super methods
     virtual void addChild(CCNode * child);
