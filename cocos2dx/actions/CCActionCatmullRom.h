@@ -59,7 +59,7 @@ public:
     bool initWithCapacity(unsigned int capacity);
     
     /** appends a control point */
-    void addControlPoint(CCPoint &controlPoint);
+    void addControlPoint(CCPoint controlPoint);
     
     /** inserts a controlPoint at index */
     void insertControlPoint(CCPoint &controlPoint, unsigned int index);

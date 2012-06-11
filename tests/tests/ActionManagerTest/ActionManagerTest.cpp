@@ -90,7 +90,7 @@ void ActionManagerTest::onEnter()
 
     CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    label->setPosition(CCPointMake(s.width/2, s.height-50));
 
     CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionManagerTest::backCallback) );
     CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ActionManagerTest::restartCallback) );
@@ -98,10 +98,10 @@ void ActionManagerTest::onEnter()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
+    menu->setPosition(CCPointZero);
+    item1->setPosition(CCPointMake(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(CCPointMake(s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(CCPointMake(s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 }
