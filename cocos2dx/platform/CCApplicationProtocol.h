@@ -43,6 +43,8 @@ public:
     @return Current language config
     */
     virtual ccLanguageType getCurrentLanguage() = 0;
+    
+    virtual bool isIpad() { return false; }
 
 };
 
