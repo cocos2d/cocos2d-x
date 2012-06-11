@@ -581,7 +581,7 @@ CCControlSlider* ShaderBlur::createSliderCtl()
     slider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 3.0f));
 
     // When the value of the slider will change, the given selector will be call
-    slider->addTargetWithActionForControlEvents(this, menu_selector(ShaderBlur::sliderAction), CCControlEventValueChanged);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), CCControlEventValueChanged);
 
     return slider;
  
