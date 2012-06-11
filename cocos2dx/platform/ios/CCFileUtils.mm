@@ -415,7 +415,7 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    const char* pszFullPath = CCFileUtils::fullPathFromRelativePath(pFileName);
+    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
     NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
