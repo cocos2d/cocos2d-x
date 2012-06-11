@@ -25,11 +25,13 @@ Ball* Ball::ballWithTexture(CCTexture2D* aTexture)
 
 void Ball::move(float delta)
 {
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+
     this->setPosition( ccpAdd(getPosition(), ccpMult(m_velocity, delta)) );
     
-    if (getPosition().x > 320 - radius()) 
+    if (getPosition().x > size.width - radius()) 
     {
-        setPosition( ccp( 320 - radius(), getPosition().y) );
+        setPosition( ccp( size.width - radius(), getPosition().y) );
         m_velocity.x *= -1;
     } 
     else if (getPosition().x < radius()) 

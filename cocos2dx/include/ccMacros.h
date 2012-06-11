@@ -85,7 +85,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_NODE_DRAW_SETUP() \
 do { \
     ccGLEnable( m_glServerState ); \
-    if (getShaderProgram() != NULL) \
+    CCAssert(getShaderProgram(), "No shader program set for node: %p", this); \
     { \
         getShaderProgram()->use(); \
         getShaderProgram()->setUniformForModelViewProjectionMatrix(); \

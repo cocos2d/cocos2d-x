@@ -126,7 +126,6 @@ void CCAtlasNode::calculateMaxItems()
 void CCAtlasNode::updateAtlasValues()
 {
     CCAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overriden");
-    //[NSException raise:@"CCAtlasNode:Abstract" format:@"updateAtlasValue not overriden"];
 }
 
 // CCAtlasNode - draw

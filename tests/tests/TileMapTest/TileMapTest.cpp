@@ -22,7 +22,7 @@ TileMapTest::TileMapTest()
     map->getTexture()->setAntiAliasTexParameters();
     
     CCSize s = map->getContentSize();
-    ////----UXLOG("ContentSize: %f, %f", s.width,s.height);
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
 
     // If you are not going to use the Map, you can free it now
     // NEW since v0.7
@@ -57,12 +57,12 @@ TileMapEditTest::TileMapEditTest()
     map->getTexture()->setAliasTexParameters();
     
     CCSize s = map->getContentSize();
-    ////----UXLOG("ContentSize: %f, %f", s.width,s.height);
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     // If you are not going to use the Map, you can free it now
     // [tilemap releaseMap);
     // And if you are going to use, it you can access the data with:
-    schedule(schedule_selector(TileMapEditTest::updateMap), 0.2f);//:@selector(updateMap:) interval:0.2f);
+    schedule(schedule_selector(TileMapEditTest::updateMap), 0.2f);
     
     addChild(map, 0, kTagTileMap);
     
@@ -126,7 +126,7 @@ TMXOrthoTest::TMXOrthoTest()
     addChild(map, 0, kTagTileMap);
     
     CCSize s = map->getContentSize();
-    ////----UXLOG("ContentSize: %f, %f", s.width,s.height);
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     CCArray * pChildrenArray = map->getChildren();
     CCSpriteBatchNode* child = NULL;
