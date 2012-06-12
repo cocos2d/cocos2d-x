@@ -101,7 +101,7 @@ public:
     
     /** Pauses all running actions, returning a list of targets whose actions were paused.
      */
-    CCSet* pauseAlllRunningActions();
+    CCSet* pauseAllRunningActions();
     
     /** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
      */
