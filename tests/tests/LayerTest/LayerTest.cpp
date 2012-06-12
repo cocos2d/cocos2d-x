@@ -12,7 +12,7 @@ CCLayer* restartTestAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    4
+#define MAX_LAYER    7
 
 CCLayer* createTestLayer(int nIndex)
 {
@@ -22,6 +22,9 @@ CCLayer* createTestLayer(int nIndex)
         case 1: return new LayerTest2();
         case 2: return new LayerTestBlend();
         case 3: return new LayerGradient();
+        case 4: return new LayerIgnoreAnchorPointPos();
+        case 5: return new LayerIgnoreAnchorPointRot();
+        case 6: return new LayerIgnoreAnchorPointScale();
     }
 
     return NULL;
@@ -108,9 +111,9 @@ void LayerTest::onEnter()
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
+    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
+    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
     
     addChild(menu, 1);    
 }
@@ -349,6 +352,156 @@ std::string LayerGradient::title()
 string LayerGradient::subtitle()
 {
     return "Touch the screen and move your finger";
+}
+
+// LayerIgnoreAnchorPointPos
+
+#define kLayerIgnoreAnchorPoint  1000
+
+void LayerIgnoreAnchorPointPos::onEnter()
+{
+    LayerTest::onEnter();
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCLayerColor *l = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 150, 150);
+
+    l->setAnchorPoint(ccp(0.5f, 0.5f));
+    l->setPosition(ccp( s.width/2, s.height/2));
+
+    CCMoveBy *move = CCMoveBy::actionWithDuration(2, ccp(100,2));
+    CCMoveBy * back = (CCMoveBy *)move->reverse();
+    CCSequence *seq = (CCSequence *)CCSequence::actions(move, back, NULL);
+    l->runAction(CCRepeatForever::actionWithAction(seq));
+    this->addChild(l, 0, kLayerIgnoreAnchorPoint);
+
+    CCSprite *child = CCSprite::spriteWithFile("Images/grossini.png");
+    l->addChild(child);
+    CCSize lsize = l->getContentSize();
+    child->setPosition(ccp(lsize.width/2, lsize.height/2));
+
+    CCMenuItemFont *item = CCMenuItemFont::itemWithString("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos::onToggle));
+
+    CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+    this->addChild(menu);
+
+    menu->setPosition(ccp(s.width/2, s.height/2));
+}
+
+void LayerIgnoreAnchorPointPos::onToggle(CCObject* pObject)
+{
+    CCNode* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = pLayer->getIgnoreAnchorPointForPosition();
+    pLayer->setIgnoreAnchorPointForPosition(! ignore);
+}
+
+std::string LayerIgnoreAnchorPointPos::title()
+{
+    return "IgnoreAnchorPoint - Position";
+}
+
+std::string LayerIgnoreAnchorPointPos::subtitle()
+{
+    return "Ignoring Anchor Point for position";
+}
+
+// LayerIgnoreAnchorPointRot
+
+void LayerIgnoreAnchorPointRot::onEnter()
+{
+    LayerTest::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCLayerColor *l = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 200, 200);
+
+    l->setAnchorPoint(ccp(0.5f, 0.5f));
+    l->setPosition(ccp( s.width/2, s.height/2));
+
+    this->addChild(l, 0, kLayerIgnoreAnchorPoint);
+
+    CCRotateBy *rot = CCRotateBy::actionWithDuration(2, 360);
+    l->runAction(CCRepeatForever::actionWithAction(rot));
+
+
+    CCSprite *child = CCSprite::spriteWithFile("Images/grossini.png");
+    l->addChild(child);
+    CCSize lsize = l->getContentSize();
+    child->setPosition(ccp(lsize.width/2, lsize.height/2));
+
+    CCMenuItemFont *item = CCMenuItemFont::itemWithString("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointRot::onToggle));
+
+    CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+    this->addChild(menu);
+
+    menu->setPosition(ccp(s.width/2, s.height/2));
+}
+
+void LayerIgnoreAnchorPointRot::onToggle(CCObject* pObject)
+{
+    CCNode* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = pLayer->getIgnoreAnchorPointForPosition();
+    pLayer->setIgnoreAnchorPointForPosition(! ignore);
+}
+
+std::string LayerIgnoreAnchorPointRot::title()
+{
+    return "IgnoreAnchorPoint - Rotation";
+}
+
+std::string LayerIgnoreAnchorPointRot::subtitle()
+{
+    return "Ignoring Anchor Point for rotations";
+}
+
+// LayerIgnoreAnchorPointScale
+void LayerIgnoreAnchorPointScale::onEnter()
+{
+    LayerTest::onEnter();
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCLayerColor *l = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 200, 200);
+
+    l->setAnchorPoint(ccp(0.5f, 1.0f));
+    l->setPosition(ccp( s.width/2, s.height/2));
+
+
+    CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
+    CCScaleBy* back = (CCScaleBy*)scale->reverse();
+    CCSequence *seq = (CCSequence*)CCSequence::actions(scale, back, NULL);
+
+    l->runAction(CCRepeatForever::actionWithAction(seq));
+
+    this->addChild(l, 0, kLayerIgnoreAnchorPoint);
+
+    CCSprite *child = CCSprite::spriteWithFile("Images/grossini.png");
+    l->addChild(child);
+    CCSize lsize = l->getContentSize();
+    child->setPosition(ccp(lsize.width/2, lsize.height/2));
+
+    CCMenuItemFont *item = CCMenuItemFont::itemWithString("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointScale::onToggle));
+
+    CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+    this->addChild(menu);
+
+    menu->setPosition(ccp(s.width/2, s.height/2));
+}
+
+void LayerIgnoreAnchorPointScale::onToggle(CCObject* pObject)
+{
+    CCNode* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = pLayer->getIgnoreAnchorPointForPosition();
+    pLayer->setIgnoreAnchorPointForPosition(! ignore);
+}
+
+std::string LayerIgnoreAnchorPointScale::title()
+{
+    return "IgnoreAnchorPoint - Scale";
+}
+
+std::string LayerIgnoreAnchorPointScale::subtitle()
+{
+    return "Ignoring Anchor Point for scale";
 }
 
 void LayerTestScene::runThisTest()
