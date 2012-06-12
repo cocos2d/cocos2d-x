@@ -89,4 +89,12 @@ private:
     cocos2d::CCSprite *sp9;
 };
 
+class RenderTextureTestDepthStencil : public RenderTextureTest
+{
+public:
+    RenderTextureTestDepthStencil();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 #endif
