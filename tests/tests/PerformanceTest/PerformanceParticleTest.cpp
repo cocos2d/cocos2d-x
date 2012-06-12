@@ -13,7 +13,7 @@ enum {
 
 enum {
     kMaxParticles = 14000,
-    kNodesIncrease = 100,
+    kNodesIncrease = 500,
 };
 
 static int s_nParCurIdx = 0;
