@@ -520,18 +520,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="HiResTest"
-					>
-					<File
-						RelativePath="..\tests\HiResTest\HiResTest.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\tests\HiResTest\HiResTest.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="KeypadTest"
 					>
 					<File
@@ -652,18 +640,6 @@
 					</File>
 					<File
 						RelativePath="..\tests\UserDefaultTest\UserDefaultTest.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="DirectorTest"
-					>
-					<File
-						RelativePath="..\tests\DirectorTest\DirectorTest.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\tests\DirectorTest\DirectorTest.h"
 						>
 					</File>
 				</Filter>
