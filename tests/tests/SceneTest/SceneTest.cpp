@@ -138,22 +138,20 @@ void SceneTestLayer2::onGoBack(CCObject* pSender)
 void SceneTestLayer2::onReplaceScene(CCObject* pSender)
 {
     CCScene* pScene = new SceneTestScene();
-    CCLayer* pLayer = new SceneTestLayer3();
+    CCLayer* pLayer = SceneTestLayer3::node();
     pScene->addChild( pLayer, 0 );
     CCDirector::sharedDirector()->replaceScene( pScene );
     pScene->release();
-    pLayer->release();
 }
 
 
 void SceneTestLayer2::onReplaceSceneTran(CCObject* pSender)
 {
     CCScene* pScene = new SceneTestScene();
-    CCLayer* pLayer = new SceneTestLayer3();
+    CCLayer* pLayer = SceneTestLayer3::node();
     pScene->addChild( pLayer, 0 );
     CCDirector::sharedDirector()->replaceScene( CCTransitionFlipX::transitionWithDuration(2, pScene) );
     pScene->release();
-    pLayer->release();
 }
 
 //------------------------------------------------------------------
@@ -164,32 +162,57 @@ void SceneTestLayer2::onReplaceSceneTran(CCObject* pSender)
 
 SceneTestLayer3::SceneTestLayer3()
 {
-    setIsTouchEnabled( true );
-    CCLabelTTF* label = CCLabelTTF::labelWithString("Touch to popScene", "Marker Felt", 28);
-    addChild(label);
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    label->setPosition( CCPointMake(s.width/2, s.height/2) );
-    
-    CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
-    addChild(sprite);
-    sprite->setPosition( CCPointMake(s.width-40, s.height/2) );
-    CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
-    CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
-    sprite->runAction(repeat);
 
-    //schedule();
+}
+
+bool SceneTestLayer3::init()
+{
+    if (CCLayerColor::initWithColor(ccc4(0,0,255,255)))
+    {
+        CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+        CCMenuItemFont *item0 = CCMenuItemFont::itemWithString("Touch to pushScene (self)", this, menu_selector(SceneTestLayer3::item0Clicked));
+        CCMenuItemFont *item1 = CCMenuItemFont::itemWithString("Touch to popScene", this, menu_selector(SceneTestLayer3::item1Clicked));
+        CCMenuItemFont *item2 = CCMenuItemFont::itemWithString("Touch to popToRootScene", this, menu_selector(SceneTestLayer3::item2Clicked));
+
+
+        CCMenu *menu = CCMenu::menuWithItems(item0, item1, item2, NULL);
+        this->addChild(menu);
+        menu->alignItemsVertically();
+
+        this->schedule(schedule_selector(SceneTestLayer3::testDealloc));
+
+        CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+        addChild(sprite);
+        sprite->setPosition( CCPointMake(s.width/2, 40) );
+        CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
+        CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
+        sprite->runAction(repeat);
+        return true;
+    }
+    return false;
 }
 
 void SceneTestLayer3::testDealloc(float dt)
 {
-
+    CCLog("Layer3:testDealloc");
 }
 
-void SceneTestLayer3::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void SceneTestLayer3::item0Clicked(CCObject* pSender)
 {
-//    static int i = 0;
-    //UXLOG("SceneTestLayer3::ccTouchesEnded(%d)", ++i);
+    CCScene *newScene = CCScene::node();
+    newScene->addChild(SceneTestLayer3::node());
+    CCDirector::sharedDirector()->pushScene(CCTransitionFade::transitionWithDuration(0.5, newScene, ccc3(0,255,255)));
+}
+
+void SceneTestLayer3::item1Clicked(CCObject* pSender)
+{
     CCDirector::sharedDirector()->popScene();
+}
+
+void SceneTestLayer3::item2Clicked(CCObject* pSender)
+{
+    CCDirector::sharedDirector()->popToRootScene();
 }
 
 void SceneTestScene::runThisTest()
