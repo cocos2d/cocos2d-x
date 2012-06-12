@@ -697,7 +697,7 @@
 						<key>value</key>
 						<array>
 							<real>98</real>
-							<real>220</real>
+							<real>218</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -866,8 +866,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>69</real>
-							<real>203</real>
+							<real>43</real>
+							<real>260</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -913,7 +913,7 @@
 						<key>type</key>
 						<string>Degrees</string>
 						<key>value</key>
-						<real>0.0</real>
+						<real>45</real>
 					</dict>
 					<dict>
 						<key>name</key>

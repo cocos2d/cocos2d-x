@@ -25,7 +25,6 @@
 #include "CCBIReaderTest.h"
 #include "../../testResource.h"
 #include "extensions/CCBIReader/CCBReader.h"
-#include "HelloCocosBuilder.h"
 #include "extensions/CCBIReader/CCNodeLoaderLibrary.h"
 #include "CCBIReaderLayer.h"
 
@@ -33,7 +32,7 @@ using namespace cocos2d;
 using namespace cocos2d::extension;
 
 void CCBIReaderTestScene::runThisTest() {
-    CCBIReaderLayer * ccbiReaderLayer = (CCBIReaderLayer *)CCBIReaderLayer::node();
+    CCBIReaderLayer * ccbiReaderLayer = CCBIReaderLayer::node();
 
     /* Create an autorelease CCNodeLoaderLibrary. */
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
@@ -43,11 +42,13 @@ void CCBIReaderTestScene::runThisTest() {
     ccbReader->autorelease();
     
     /* Read a ccbi file. */
-    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/pub/ccb/test.ccbi", ccbiReaderLayer);
+    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/pub/", "ccb/test.ccbi", ccbiReaderLayer);
     
     if(node != NULL) {
-        this->addChild(node);
+        ccbiReaderLayer->addChild(node);
     }
+
+    this->addChild(ccbiReaderLayer);
 
     CCDirector::sharedDirector()->replaceScene(this);
 }

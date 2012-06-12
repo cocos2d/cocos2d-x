@@ -83,6 +83,7 @@ class CCNodeLoaderLibrary;
  */
 class CC_DLL CCBReader : public CCObject {
     private:
+        std::string mCCBRootPath;
         bool mRootCCBReader;
 
         unsigned char * mBytes;
@@ -107,11 +108,12 @@ class CC_DLL CCBReader : public CCObject {
         /* Destructor. */
         ~CCBReader();
 
-        CCNode * readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner = NULL);
-        CCNode * readNodeGraphFromFile(const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize);
+        CCNode * readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner = NULL);
+        CCNode * readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize);
         CCBMemberVariableAssigner * getCCBMemberVariableAssigner();
         CCBSelectorResolver * getCCBSelectorResolver();
 
+        std::string getCCBRootPath();
         CCObject * getOwner();
         CCNode * getRootNode();
         CCSize getContainerSize(CCNode *);
@@ -121,17 +123,18 @@ class CC_DLL CCBReader : public CCObject {
         void addLoadedSpriteSheet(const char *);
 
         /* Utility methods. */
-        const char * lastPathComponent(const char *);
-        const char * deletePathExtension(const char *);
-        const char * toLowerCase(const char *);
+        std::string lastPathComponent(const char *);
+        std::string deletePathExtension(const char *);
+        std::string toLowerCase(const char *);
         bool endsWith(const char *, const char *);
+        std::string concat(const char *, const char *);
 
         /* Parse methods. */
         int readInt(bool pSign);
         unsigned char readByte();
         bool readBool();
         float readFloat();
-        const char * readCachedString();
+        std::string readCachedString();
 
     private:
         bool readHeader();

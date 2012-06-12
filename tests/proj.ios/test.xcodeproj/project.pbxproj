@@ -18,6 +18,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		4A2188031586CCE10069114E /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 4A2188021586CCE10069114E /* ccb */; };
 		4A777F81158689DA006D5831 /* CCBIReaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A777F7B158689DA006D5831 /* CCBIReaderTest.cpp */; };
 		4A777F83158689DA006D5831 /* CCBIReaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A777F7F158689DA006D5831 /* CCBIReaderLayer.cpp */; };
 		4A777FA915868BB8006D5831 /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A777F8515868BB8006D5831 /* CCBFileLoader.cpp */; };
@@ -37,7 +38,6 @@
 		4A777FB715868BB8006D5831 /* CCParticleSystemQuadLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A777FA315868BB8006D5831 /* CCParticleSystemQuadLoader.cpp */; };
 		4A777FB815868BB8006D5831 /* CCScale9SpriteLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A777FA515868BB8006D5831 /* CCScale9SpriteLoader.cpp */; };
 		4A777FB915868BB8006D5831 /* CCSpriteLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A777FA715868BB8006D5831 /* CCSpriteLoader.cpp */; };
-		4A778000158691AC006D5831 /* cbb in Resources */ = {isa = PBXBuildFile; fileRef = 4A777FFF158691AC006D5831 /* cbb */; };
 		781C38861547F9DD00633F88 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C37651547F9DC00633F88 /* CCAction.cpp */; };
 		781C38871547F9DD00633F88 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 781C37661547F9DC00633F88 /* CCAction.h */; };
 		781C38881547F9DD00633F88 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C37671547F9DC00633F88 /* CCActionCamera.cpp */; };
@@ -675,6 +675,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		4A2188021586CCE10069114E /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
 		4A777F7B158689DA006D5831 /* CCBIReaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBIReaderTest.cpp; sourceTree = "<group>"; };
 		4A777F7C158689DA006D5831 /* CCBIReaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBIReaderTest.h; sourceTree = "<group>"; };
 		4A777F7F158689DA006D5831 /* CCBIReaderLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBIReaderLayer.cpp; sourceTree = "<group>"; };
@@ -715,7 +716,6 @@
 		4A777FA615868BB8006D5831 /* CCScale9SpriteLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScale9SpriteLoader.h; sourceTree = "<group>"; };
 		4A777FA715868BB8006D5831 /* CCSpriteLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteLoader.cpp; sourceTree = "<group>"; };
 		4A777FA815868BB8006D5831 /* CCSpriteLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteLoader.h; sourceTree = "<group>"; };
-		4A777FFF158691AC006D5831 /* cbb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cbb; sourceTree = "<group>"; };
 		781C37651547F9DC00633F88 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		781C37661547F9DC00633F88 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		781C37671547F9DC00633F88 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -2340,7 +2340,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4A777FFF158691AC006D5831 /* cbb */,
+				4A2188021586CCE10069114E /* ccb */,
 				1552794F157C64F9007CC855 /* Shaders */,
 				789B560C15197BE00038CD1E /* animations */,
 				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
@@ -3651,7 +3651,7 @@
 				15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */,
 				78CAE769156F8124002A7A68 /* Particles in Resources */,
 				15527950157C64F9007CC855 /* Shaders in Resources */,
-				4A778000158691AC006D5831 /* cbb in Resources */,
+				4A2188031586CCE10069114E /* ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

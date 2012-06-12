@@ -31,7 +31,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
     int propertyCount = pCCBReader->readInt(false);
     for(int i = 0; i < propertyCount; i++) {
         int type = pCCBReader->readInt(false);
-        const char * propertyName = pCCBReader->readCachedString();
+        const char * propertyName = pCCBReader->readCachedString().c_str();
 
         // Check if the property can be set for this platform
         bool setProp = false;
@@ -404,24 +404,29 @@ bool CCNodeLoader::parsePropTypeCheck(CCNode * pNode, CCNode * pParent, CCBReade
 
 
 CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    const char * spriteSheet = pCCBReader->readCachedString();
-    const char * spriteFile = pCCBReader->readCachedString();
+    const char * spriteSheet = pCCBReader->readCachedString().c_str();
+    const char * spriteFile = pCCBReader->readCachedString().c_str();
     
     CCSpriteFrame * spriteFrame;
     if(strcmp(spriteSheet, "") == 0) {
         if(strcmp(spriteFile, "") == 0) {
             return NULL;
         }
-        CCTexture2D * texture = CCTextureCache::sharedTextureCache()->addImage(spriteFile);
+
+        const char * spriteFilePath = pCCBReader->concat(pCCBReader->getCCBRootPath().c_str(), spriteFile).c_str();
+
+        CCTexture2D * texture = CCTextureCache::sharedTextureCache()->addImage(spriteFilePath);
         CCRect bounds = CCRect::CCRect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
         spriteFrame = CCSpriteFrame::frameWithTexture(texture, bounds);
     } else {
         CCSpriteFrameCache * frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        
+
+        const char * spriteSheetPath = pCCBReader->concat(pCCBReader->getCCBRootPath().c_str(), spriteSheet).c_str();
+
         /* Load the sprite sheet only if it is not loaded. */
-        if(!pCCBReader->isSpriteSheetLoaded(spriteSheet)) {
-            frameCache->addSpriteFramesWithFile(spriteSheet);
-            pCCBReader->addLoadedSpriteSheet(spriteSheet);
+        if(!pCCBReader->isSpriteSheetLoaded(spriteSheetPath)) {
+            frameCache->addSpriteFramesWithFile(spriteSheetPath);
+            pCCBReader->addLoadedSpriteSheet(spriteSheetPath);
         }
         
         spriteFrame = frameCache->spriteFrameByName(spriteFile);
@@ -430,8 +435,8 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
 }
 
 CCAnimation * CCNodeLoader::parsePropTypeAnimation(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    const char * animationFile = pCCBReader->readCachedString();
-    const char * animation = pCCBReader->readCachedString();
+    const char * animationFile = pCCBReader->readCachedString().c_str();
+    const char * animation = pCCBReader->readCachedString().c_str();
     
     CCAnimation * ccAnimation = NULL;
     
@@ -440,8 +445,8 @@ CCAnimation * CCNodeLoader::parsePropTypeAnimation(CCNode * pNode, CCNode * pPar
     // Eventually this should be handled by a client side asset manager
     // interface which figured out what resources to load.
     // TODO Does this problem exist in C++?
-    animation = pCCBReader->lastPathComponent(animation);
-    animationFile = pCCBReader->lastPathComponent(animationFile);
+    animation = pCCBReader->lastPathComponent(animation).c_str();
+    animationFile = pCCBReader->lastPathComponent(animationFile).c_str();
     
     if(strcmp(animation, "") != 0) {
         CCAnimationCache * animationCache = CCAnimationCache::sharedAnimationCache();
@@ -453,7 +458,7 @@ CCAnimation * CCNodeLoader::parsePropTypeAnimation(CCNode * pNode, CCNode * pPar
 }
 
 CCTexture2D * CCNodeLoader::parsePropTypeTexture(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    const char * spriteFile = pCCBReader->readCachedString();
+    const char * spriteFile = pCCBReader->concat(pCCBReader->getCCBRootPath().c_str(), pCCBReader->readCachedString().c_str()).c_str();
 
     return CCTextureCache::sharedTextureCache()->addImage(spriteFile);
 }
@@ -518,31 +523,31 @@ ccBlendFunc CCNodeLoader::parsePropTypeBlendFunc(CCNode * pNode, CCNode * pParen
 }
 
 const char * CCNodeLoader::parsePropTypeFntFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    return pCCBReader->readCachedString();
+    return pCCBReader->readCachedString().c_str();
 }
 
 const char * CCNodeLoader::parsePropTypeString(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    return pCCBReader->readCachedString();
+    return pCCBReader->readCachedString().c_str();
 }
 
 const char * CCNodeLoader::parsePropTypeText(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    return pCCBReader->readCachedString();
+    return pCCBReader->readCachedString().c_str();
 }
 
 const char * CCNodeLoader::parsePropTypeFontTTF(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    const char * fnt = pCCBReader->readCachedString();
+    const char * fnt = pCCBReader->readCachedString().c_str();
     
     const char * ttfEnding("ttf");
 
-    if(pCCBReader->endsWith(pCCBReader->toLowerCase(fnt), ttfEnding)){
-        fnt = pCCBReader->deletePathExtension(pCCBReader->lastPathComponent(fnt));
+    if(pCCBReader->endsWith(pCCBReader->toLowerCase(fnt).c_str(), ttfEnding)){
+        fnt = pCCBReader->deletePathExtension(pCCBReader->lastPathComponent(fnt).c_str()).c_str();
     }
 
     return fnt;
 }
 
 BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    const char * selectorName = pCCBReader->readCachedString();
+    const char * selectorName = pCCBReader->readCachedString().c_str();
     int selectorTarget = pCCBReader->readInt(false);
 
     if(selectorTarget != kCCBTargetTypeNone) {
@@ -578,7 +583,7 @@ BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, C
 }
 
 BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    const char * selectorName = pCCBReader->readCachedString();
+    const char * selectorName = pCCBReader->readCachedString().c_str();
     int selectorTarget = pCCBReader->readInt(false);
     int controlEvents = pCCBReader->readInt(false);
 
@@ -616,20 +621,16 @@ BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, C
 }
 
 CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    const char * ccbFileName = pCCBReader->readCachedString();
+    const char * ccbFileName = pCCBReader->readCachedString().c_str();
 
     /* Change path extension to .ccbi. */
-    const char * ccbFileWithoutPathExtension = pCCBReader->deletePathExtension(ccbFileName);
-    int ccbiFileNameLenght = strlen(ccbFileWithoutPathExtension) + strlen(".ccbi");
-    char ccbiFileName[ccbiFileNameLenght + 1];
-    strcpy(ccbiFileName, ccbFileWithoutPathExtension);
-    strcat(ccbiFileName, ".ccbi");
-    ccbiFileName[ccbiFileNameLenght] = '\0';
+    const char * ccbFileWithoutPathExtension = pCCBReader->deletePathExtension(ccbFileName).c_str();
+    const char * ccbiFileName = pCCBReader->concat(ccbFileWithoutPathExtension, ".ccbi").c_str();
 
     CCBReader * ccbReader = new CCBReader(pCCBReader);
     ccbReader->autorelease();
 
-    CCNode * ccbFileNode = ccbReader->readNodeGraphFromFile(ccbiFileName, pCCBReader->getOwner(), pParent->getContentSize());
+    CCNode * ccbFileNode = ccbReader->readNodeGraphFromFile(pCCBReader->getCCBRootPath().c_str(), ccbiFileName, pCCBReader->getOwner(), pParent->getContentSize());
 
     return ccbFileNode;
 }

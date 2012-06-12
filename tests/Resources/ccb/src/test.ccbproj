@@ -13,7 +13,7 @@
 	<key>javascriptBased</key>
 	<false/>
 	<key>publishDirectory</key>
-	<string>../Resources</string>
+	<string>../pub</string>
 	<key>publishToZipFile</key>
 	<false/>
 	<key>resourcePaths</key>

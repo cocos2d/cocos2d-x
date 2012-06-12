@@ -50,7 +50,7 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>135</real>
+							<real>283</real>
 							<real>39</real>
 							<integer>0</integer>
 						</array>
@@ -85,7 +85,7 @@
 						<key>type</key>
 						<string>Degrees</string>
 						<key>value</key>
-						<real>0.0</real>
+						<real>180</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -135,8 +135,8 @@
 						<key>value</key>
 						<array>
 							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
+							<integer>0</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -156,7 +156,7 @@
 						<key>type</key>
 						<string>Text</string>
 						<key>value</key>
-						<string>CCBFile</string>
+						<string>CCBFile works!</string>
 					</dict>
 				</array>
 			</dict>
