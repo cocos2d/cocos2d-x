@@ -969,7 +969,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    41
+#define MAX_LAYER    43
 
 CCLayer* createParticleLayer(int nIndex)
 {
@@ -1017,6 +1017,8 @@ CCLayer* createParticleLayer(int nIndex)
         case 38: return new MultipleParticleSystemsBatched();
         case 39: return new AddAndDeleteParticleSystems();
         case 40: return new ReorderParticleSystems();
+        case 41: return new PremultipliedAlphaTest();
+        case 42: return new PremultipliedAlphaTest2();
         default:
             break;
     }
@@ -1096,24 +1098,24 @@ void ParticleDemo::onEnter(void)
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, item4, NULL);
     
     menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
-    item4->setPosition( CCPointMake( 0, 100) );
-    item4->setAnchorPoint( CCPointMake(0,0) );
+    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
+    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item4->setPosition( ccp( 0, 100) );
+    item4->setAnchorPoint( ccp(0,0) );
     
     addChild( menu, 100 );
     
     CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 100, kTagParticleCount);
-    labelAtlas->setPosition(CCPointMake(s.width-66,50));
+    labelAtlas->setPosition(ccp(s.width-66,50));
     
     // moving background
     m_background = CCSprite::spriteWithFile(s_back3);
     addChild(m_background, 5);
-    m_background->setPosition( CCPointMake(s.width/2, s.height-180) );
+    m_background->setPosition( ccp(s.width/2, s.height-180) );
     
-    CCActionInterval* move = CCMoveBy::actionWithDuration(4, CCPointMake(300,0) );
+    CCActionInterval* move = CCMoveBy::actionWithDuration(4, ccp(300,0) );
     CCActionInterval* move_back = move->reverse();
     CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
     m_background->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq) );
@@ -1858,6 +1860,72 @@ std::string ReorderParticleSystems::subtitle()
     return "changes every 2 seconds";
 }
 
+// PremultipliedAlphaTest
+
+std::string PremultipliedAlphaTest::title()
+{
+    return "premultiplied alpha";
+}
+
+std::string PremultipliedAlphaTest::subtitle()
+{
+    return "no black halo, particles should fade out";
+}
+
+void PremultipliedAlphaTest::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    this->setColor(ccBLUE);
+    this->removeChild(m_background, true);
+    m_background = NULL;
+
+    m_emitter = CCParticleSystemQuad::particleWithFile("Particles/BoilingFoam.plist");
+    m_emitter->retain();
+    // Particle Designer "normal" blend func causes black halo on premul textures (ignores multiplication)
+    //this->emitter.blendFunc = (ccBlendFunc){ GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
+
+    // Cocos2d "normal" blend func for premul causes alpha to be ignored (oversaturates colors)
+    ccBlendFunc tBlendFunc = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
+    m_emitter->setBlendFunc(tBlendFunc);
+
+    CCAssert(m_emitter->getOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
+
+    // Toggle next line to see old behavior
+    //	this->emitter.opacityModifyRGB = NO;
+
+    m_emitter->setStartColor(ccc4f(1, 1, 1, 1));
+    m_emitter->setEndColor(ccc4f(1, 1, 1, 0));
+    m_emitter->setStartColorVar(ccc4f(0, 0, 0, 0));
+    m_emitter->setEndColorVar(ccc4f(0, 0, 0, 0));
+
+    this->addChild(m_emitter, 10);
+}
+
+// PremultipliedAlphaTest2
+
+void PremultipliedAlphaTest2::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    this->setColor(ccBLACK);
+    this->removeChild(m_background, true);
+    m_background = NULL;
+
+    m_emitter = CCParticleSystemQuad::particleWithFile("Particles/TestPremultipliedAlpha.plist");
+    m_emitter->retain();
+    this->addChild(m_emitter ,10);
+}
+
+std::string PremultipliedAlphaTest2::title()
+{
+    return "premultiplied alpha 2";
+}
+
+std::string PremultipliedAlphaTest2::subtitle()
+{
+    return "Arrows should be faded";
+}
 
 void ParticleTestScene::runThisTest()
 {
