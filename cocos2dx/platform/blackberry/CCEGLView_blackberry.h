@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_QNX_H__
-#define __CC_EGLVIEW_QNX_H__
+#ifndef __CC_EGLVIEW_BLACKBERRY_H__
+#define __CC_EGLVIEW_BLACKBERRY_H__
 
 #include "CCGeometry.h"
 #include <GLES/gl.h>
@@ -113,13 +113,12 @@ private:
 	CCSize  			m_sSizeInPixel;
 	CCSize 			 	m_sSizeInPoint;
 	CCRect  			m_rcViewPort;
-	bool    			m_bNotHVGA;
 	bool				m_isGLInitialized;
 	
-	EventHandler*		m_pEventHandler;
 	EGLTouchDelegate   *m_pDelegate;
+	EventHandler*		m_pEventHandler;
 	float  				m_fScreenScaleFactor;
-
+	bool    			m_bNotHVGA;
 	bool 				m_isWindowActive;
 
 	static bool 		m_initializedFunctions;
