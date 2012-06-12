@@ -1,5 +1,5 @@
-#ifndef _CCLAYER_LOADER_H_
-#define _CCLAYER_LOADER_H_
+#ifndef _CCB_CCLAYERLOADER_H_
+#define _CCB_CCLAYERLOADER_H_
 
 #include "CCNodeLoader.h"
 

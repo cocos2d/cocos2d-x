@@ -1,4 +1,4 @@
-#import "CCMenuLoader.h"
+#include "CCMenuLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

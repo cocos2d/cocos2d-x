@@ -1,4 +1,4 @@
-#import "CCLayerLoader.h"
+#include "CCLayerLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

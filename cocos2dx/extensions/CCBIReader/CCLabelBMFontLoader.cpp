@@ -1,4 +1,4 @@
-#import "CCLabelBMFontLoader.h"
+#include "CCLabelBMFontLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

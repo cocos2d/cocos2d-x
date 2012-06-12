@@ -1,5 +1,5 @@
-#ifndef _CCB_SELECTORRESOLVER_H_
-#define _CCB_SELECTORRESOLVER_H_
+#ifndef _CCB_CCBSELECTORRESOLVER_H_
+#define _CCB_CCBSELECTORRESOLVER_H_
 
 #include "cocos2d.h"
 

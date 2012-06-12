@@ -1,5 +1,5 @@
-#ifndef _CCLAYERCOLOR_LOADER_H_
-#define _CCLAYERCOLOR_LOADER_H_
+#ifndef _CCB_CCLAYERCOLORLOADER_H_
+#define _CCB_CCLAYERCOLORLOADER_H_
 
 #include "CCLayerLoader.h"
 

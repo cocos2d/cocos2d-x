@@ -2,21 +2,26 @@
 
 #include "CCNodeLoader.h"
 #include "CCNodeLoaderLibrary.h"
+#include "CCNodeLoaderListener.h"
+#include "CCBMemberVariableAssigner.h"
+#include "CCBSelectorResolver.h"
 
 #ifdef __CC_PLATFORM_IOS
-#import <UIKit/UIDevice.h>
+#include <UIKit/UIDevice.h>
 #endif
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver) {
+CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver, CCNodeLoaderListener * pCCNodeLoaderListener) {
     this->mRootNode = NULL;
     this->mRootCCBReader = true;
 
     this->mCCNodeLoaderLibrary = pCCNodeLoaderLibrary;
+    this->mCCNodeLoaderLibrary->retain();
     this->mCCBMemberVariableAssigner = pCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBSelectorResolver;
+    this->mCCNodeLoaderListener = pCCNodeLoaderListener;
 
     this->mResolutionScale = 1;
 
@@ -33,6 +38,8 @@ CCBReader::~CCBReader() {
         delete this->mBytes;
         this->mBytes = NULL;
     }
+
+    this->mCCNodeLoaderLibrary->release();
 
     /* Clear string cache. */
     this->mStringCache.clear();
@@ -57,6 +64,7 @@ CCBReader::CCBReader(CCBReader * pCCBReader) {
     this->mCCNodeLoaderLibrary = pCCBReader->mCCNodeLoaderLibrary;
     this->mCCBMemberVariableAssigner = pCCBReader->mCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBReader->mCCBSelectorResolver;
+    this->mCCNodeLoaderListener = pCCBReader->mCCNodeLoaderListener;
 }
 
 std::string CCBReader::getCCBRootPath() {
@@ -296,12 +304,9 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         node->addChild(child);
     }
 
-    // TODO
-    /*
-    if([node respondsToSelector:@selector(didLoadFromCCB)]) {
-        [node performSelector:@selector(didLoadFromCCB)];
+    if(this->mCCNodeLoaderListener != NULL) {
+        this->mCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
     }
-    */
 
     return node;
 }

@@ -1,5 +1,5 @@
-#ifndef _CCLABELBMFONT_LOADER_H_
-#define _CCLABELBMFONT_LOADER_H_
+#ifndef _CCB_CCLABELBMFONTLOADER_H_
+#define _CCB_CCLABELBMFONTLOADER_H_
 
 #include "CCNodeLoader.h"
 

@@ -1,5 +1,5 @@
-#ifndef _CCLABELTTF_LOADER_H_
-#define _CCLABELTTF_LOADER_H_
+#ifndef _CCB_CCLABELTTFLOADER_H_
+#define _CCB_CCLABELTTFLOADER_H_
 
 #include "CCNodeLoader.h"
 

@@ -1,5 +1,5 @@
-#ifndef _CCSPRITE_LOADER_H_
-#define _CCSPRITE_LOADER_H_
+#ifndef _CCB_CCSPRITELOADER_H_
+#define _CCB_CCSPRITELOADER_H_
 
 #include "CCNodeLoader.h"
 
