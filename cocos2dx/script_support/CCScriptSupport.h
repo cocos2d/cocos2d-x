@@ -33,7 +33,7 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
-class floatr;
+class CCTimer;
 
 // Lua support for CCScheduler
 class CCSchedulerScriptHandlerEntry : public CCObject
@@ -43,7 +43,7 @@ public:
     static CCSchedulerScriptHandlerEntry* entryWithHandler(int nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
-    inline cocos2d::floatr* getTimer(void) {
+    inline cocos2d::CCTimer* getTimer(void) {
         return m_pTimer;
     }
     
@@ -67,7 +67,7 @@ private:
     CCSchedulerScriptHandlerEntry(void);
     bool initWithHandler(int nHandler, float fInterval, bool bPaused);
     
-    cocos2d::floatr*   m_pTimer;
+    cocos2d::CCTimer*   m_pTimer;
     bool                m_bPaused;
     bool                m_bMarkedForDeletion;
     int                 m_nHandler;
