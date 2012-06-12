@@ -62,6 +62,33 @@ public:
     void toggleItem(cocos2d::CCObject *sender);
 };
 
+class LayerIgnoreAnchorPointPos : public LayerTest
+{
+public:
+    virtual void onEnter();
+    void onToggle(CCObject* pObject);
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class LayerIgnoreAnchorPointRot : public LayerTest
+{
+public:
+    virtual void onEnter();
+    void onToggle(CCObject* pObject);
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class LayerIgnoreAnchorPointScale : public LayerTest
+{
+public:
+    virtual void onEnter();
+    void onToggle(CCObject* pObject);
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 class LayerTestScene : public TestScene
 {
 public:
