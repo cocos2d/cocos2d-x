@@ -6,7 +6,7 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    4
+#define MAX_LAYER    5
 
 CCLayer* createTestCase(int nIndex)
 {
@@ -17,6 +17,7 @@ CCLayer* createTestCase(int nIndex)
     case 1: return new RenderTextureIssue937();
     case 2: return new RenderTextureZbuffer();
     case 3: return new RenderTextureSave();
+    case 4: return new RenderTextureTestDepthStencil();
     }
 
     return NULL;
@@ -78,9 +79,9 @@ void RenderTextureTestDemo::onEnter()
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - 100,30) );
-    item2->setPosition( ccp( s.width/2, 30) );
-    item3->setPosition( ccp( s.width/2 + 100,30) );
+    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
+    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
 
     addChild(menu, 1);
 }
@@ -567,5 +568,52 @@ void RenderTextureZbuffer::renderScreenShot()
     sprite->runAction(CCSequence::actions(CCFadeTo::actionWithDuration(2, 0),
                                           CCHide::action(),
                                           NULL));
+}
+
+
+// RenderTextureTestDepthStencil
+
+RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSprite *sprite = CCSprite::spriteWithFile("Images/fire.png");
+    sprite->setPosition(ccp(s.width * 0.25f, 0));
+    sprite->setScale(10);
+    CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, CC_GL_DEPTH24_STENCIL8);
+
+    glStencilMask(0xFF);
+    rend->beginWithClear(0, 0, 0, 0, 0, 0);
+
+    //! mark sprite quad into stencil buffer
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glColorMask(0, 0, 0, 1);
+    sprite->visit();
+
+    //! move sprite half width and height, and draw only where not marked
+    sprite->setPosition(ccpAdd(sprite->getPosition(), ccpMult(ccp(sprite->getContentSize().width * sprite->getScale(), sprite->getContentSize().height * sprite->getScale()), 0.5)));
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glColorMask(1, 1, 1, 1);
+    sprite->visit();
+
+    rend->end();
+
+    glDisable(GL_STENCIL_TEST);
+
+    rend->setPosition(ccp(s.width * 0.5f, s.height * 0.5f));
+
+    this->addChild(rend);
+}
+
+std::string RenderTextureTestDepthStencil::title()
+{
+    return "Testing depthStencil attachment";
+}
+
+std::string RenderTextureTestDepthStencil::subtitle()
+{
+    return "Circle should be missing 1/4 of its region";
 }
 
