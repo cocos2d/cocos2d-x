@@ -54,6 +54,42 @@ public:
     void pause(float dt);
 };
 
+class SchedulerPauseResumeAll : public SchedulerTestLayer
+{
+public:
+    SchedulerPauseResumeAll();
+    virtual ~SchedulerPauseResumeAll();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void tick1(float dt);
+    void tick2(float dt);
+    void pause(float dt);
+    void resume(float dt);
+private:
+    CCSet* m_pPausedTargets;
+};
+
+class SchedulerPauseResumeAllUser : public SchedulerTestLayer
+{
+public:
+    SchedulerPauseResumeAllUser();
+    virtual ~SchedulerPauseResumeAllUser();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void tick1(float dt);
+    void tick2(float dt);
+    void pause(float dt);
+    void resume(float dt);
+private:
+    CCSet* m_pPausedTargets;
+};
+
 class SchedulerUnscheduleAll : public SchedulerTestLayer
 {
 public:
@@ -69,6 +105,23 @@ public:
 };
 
 class SchedulerUnscheduleAllHard : public SchedulerTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void tick1(float dt);
+    void tick2(float dt);
+    void tick3(float dt);
+    void tick4(float dt);
+    void unscheduleAll(float dt);
+private:
+    bool m_bActionManagerActive;
+};
+
+class SchedulerUnscheduleAllUserLevel : public SchedulerTestLayer
 {
 public:
     virtual void onEnter();
