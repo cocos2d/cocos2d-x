@@ -54,6 +54,15 @@ public:
     virtual std::string subtitle();
 };
 
+class LabelTTFAlignment : public AtlasDemo
+{
+public:
+    LabelTTFAlignment();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+
 class Atlas3 : public AtlasDemo
 {
     float        m_time;
@@ -166,8 +175,22 @@ class LabelTTFTest : public AtlasDemo
 {
 public:
     LabelTTFTest();
+    virtual ~LabelTTFTest();
     virtual std::string title();
     virtual std::string subtitle();
+private:
+    void  setAlignmentLeft(CCObject* pSender);
+    void  setAlignmentCenter(CCObject* pSender);
+    void  setAlignmentRight(CCObject* pSender);
+    void  setAlignmentTop(CCObject* pSender);
+    void  setAlignmentMiddle(CCObject* pSender);
+    void  setAlignmentBottom(CCObject* pSender);
+    void  updateAlignment();
+    const char* getCurrentAlignment();
+private:
+    CCLabelTTF* m_plabel;
+    CCTextAlignment m_eHorizAlign;
+    CCVerticalTextAlignment m_eVertAlign;
 };
 
 class LabelTTFMultiline : public AtlasDemo
@@ -236,6 +259,33 @@ class BMFontUnicode : public AtlasDemo
 {
 public:
     BMFontUnicode();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class BMFontInit : public AtlasDemo
+{
+public:
+    BMFontInit();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class TTFFontInit : public AtlasDemo
+{
+public:
+    TTFFontInit();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class Issue1343 : public AtlasDemo
+{
+public:
+    Issue1343();
 
     virtual std::string title();
     virtual std::string subtitle();
