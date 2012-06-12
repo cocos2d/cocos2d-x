@@ -63,15 +63,15 @@ typedef struct _hashSelectorEntry
     ccArray                      *timers;
     CCObject            *target;    // hash key (retained)
     unsigned int                timerIndex;
-    floatr                        *currentTimer;
+    CCTimer                        *currentTimer;
     bool                        currentTimerSalvaged;
     bool                        paused;
     UT_hash_handle                hh;
 } tHashSelectorEntry;
 
-// implementation floatr
+// implementation CCTimer
 
-floatr::floatr()
+CCTimer::CCTimer()
 : m_pfnSelector(NULL)
 , m_fInterval(0.0f)
 , m_pTarget(NULL)
@@ -86,9 +86,9 @@ floatr::floatr()
 
 }
 
-floatr* floatr::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
+CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
-    floatr *pTimer = new floatr();
+    CCTimer *pTimer = new CCTimer();
 
     pTimer->initWithTarget(pTarget, pfnSelector, 0.0f, kCCRepeatForever, 0.0f);
     pTimer->autorelease();
@@ -96,9 +96,9 @@ floatr* floatr::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
     return pTimer;
 }
 
-floatr* floatr::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds)
+CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds)
 {
-    floatr *pTimer = new floatr();
+    CCTimer *pTimer = new CCTimer();
 
     pTimer->initWithTarget(pTarget, pfnSelector, fSeconds, kCCRepeatForever, 0.0f);
     pTimer->autorelease();
@@ -106,9 +106,9 @@ floatr* floatr::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, flo
     return pTimer;
 }
 
-floatr* floatr::timerWithScriptHandler(int nHandler, float fSeconds)
+CCTimer* CCTimer::timerWithScriptHandler(int nHandler, float fSeconds)
 {
-    floatr *pTimer = new floatr();
+    CCTimer *pTimer = new CCTimer();
 
     pTimer->initWithScriptHandler(nHandler, fSeconds);
     pTimer->autorelease();
@@ -116,7 +116,7 @@ floatr* floatr::timerWithScriptHandler(int nHandler, float fSeconds)
     return pTimer;
 }
 
-bool floatr::initWithScriptHandler(int nHandler, float fSeconds)
+bool CCTimer::initWithScriptHandler(int nHandler, float fSeconds)
 {
     m_nScriptHandler = nHandler;
     m_fElapsed = -1;
@@ -125,12 +125,12 @@ bool floatr::initWithScriptHandler(int nHandler, float fSeconds)
     return true;
 }
 
-bool floatr::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
+bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
     return initWithTarget(pTarget, pfnSelector, 0, kCCRepeatForever, 0.0f);
 }
 
-bool floatr::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay)
+bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay)
 {
     m_pTarget = pTarget;
     m_pfnSelector = pfnSelector;
@@ -143,7 +143,7 @@ bool floatr::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float f
     return true;
 }
 
-void floatr::update(float dt)
+void CCTimer::update(float dt)
 {
     if (m_fElapsed == -1)
     {
@@ -288,7 +288,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
     {
         for (unsigned int i = 0; i < pElement->timers->num; ++i)
         {
-            floatr *timer = (floatr*)pElement->timers->arr[i];
+            CCTimer *timer = (CCTimer*)pElement->timers->arr[i];
 
             if (pfnSelector == timer->m_pfnSelector)
             {
@@ -300,7 +300,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
         ccArrayEnsureExtraCapacity(pElement->timers, 1);
     }
 
-    floatr *pTimer = new floatr();
+    CCTimer *pTimer = new CCTimer();
     pTimer->initWithTarget(pTarget, pfnSelector, fInterval, repeat, delay);
     ccArrayAppendObject(pElement->timers, pTimer);
     pTimer->release();    
@@ -324,7 +324,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget
     {
         for (unsigned int i = 0; i < pElement->timers->num; ++i)
         {
-            floatr *pTimer = (floatr*)(pElement->timers->arr[i]);
+            CCTimer *pTimer = (CCTimer*)(pElement->timers->arr[i]);
 
             if (pfnSelector == pTimer->m_pfnSelector)
             {
@@ -795,7 +795,7 @@ void CCScheduler::update(float dt)
             // The 'timers' array may change while inside this loop
             for (elt->timerIndex = 0; elt->timerIndex < elt->timers->num; ++(elt->timerIndex))
             {
-                elt->currentTimer = (floatr*)(elt->timers->arr[elt->timerIndex]);
+                elt->currentTimer = (CCTimer*)(elt->timers->arr[elt->timerIndex]);
                 elt->currentTimerSalvaged = false;
 
                 elt->currentTimer->update(dt);
