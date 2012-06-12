@@ -84,7 +84,7 @@ bool AppDelegate::initInstance()
 
 #endif  // CC_PLATFORM_BADA
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
 		CCEGLView * pMainWnd = new CCEGLView();
 		int width, height;
 		const char *width_str, *height_str;
@@ -105,7 +105,7 @@ bool AppDelegate::initInstance()
 
 		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(width, height));
 		CCFileUtils::setResourcePath("app/native/Resources");
-#endif // CC_PLATFORM_QNX
+#endif // CC_PLATFORM_BLACKBERRY
 
         bRet = true;
     } while (0);

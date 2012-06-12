@@ -295,7 +295,7 @@ NS_CC_END;
 /****************************************************
  * qnx
  ***************************************************/
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
 #include <cstdio>
 #include <cstdarg>
 #include <stdio.h>
@@ -323,4 +323,4 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 
 NS_CC_END;
 
-#endif // CC_PLATFORM_QNX
+#endif // CC_PLATFORM_BLACKBERRY

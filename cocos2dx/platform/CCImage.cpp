@@ -607,8 +607,8 @@ NS_CC_END;
 #include "bada/CCImage_bada.cpp"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-#include "qnx/CCImage_qnx.cpp"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+#include "blackberry/CCImage_blackberry.cpp"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
