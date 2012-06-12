@@ -1,8 +1,8 @@
 #include "PerformanceSpriteTest.h"
 
 enum {
-    kMaxNodes = 5000,
-    kNodesIncrease = 50,
+    kMaxNodes = 50000,
+    kNodesIncrease = 250,
 
     TEST_COUNT = 7,
 };
