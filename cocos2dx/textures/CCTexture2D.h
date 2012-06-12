@@ -190,16 +190,15 @@ public:
     */
     void generateMipmap();
 
+    /** returns the pixel format.
+     @since v2.0
+     */
+    const char* stringForFormat();
+
     /** returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
     unsigned int bitsPerPixelForFormat();  
-    
-    /** returns the pixel format in a NSString.
-     @since v2.0
-     */
-    CCString* stringForFormat();
-
 
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
