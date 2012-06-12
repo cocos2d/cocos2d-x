@@ -119,7 +119,7 @@ void Issue1358::onEnter()
     // ask director the the window size
     CCSize size = CCDirector::sharedDirector()->getWinSize();
     
-    streak = CCMotionStreak::streakWithFade(2.0f, 1.0f, 50.0f, ccc3(255, 255, 0), "Icon.png");
+    streak = CCMotionStreak::streakWithFade(2.0f, 1.0f, 50.0f, ccc3(255, 255, 0), "Images/Icon.png");
     addChild(streak);
     
     
