@@ -198,7 +198,9 @@ float CCLabelTTF::getFontSize()
 void CCLabelTTF::setFontSize(float fontSize)
 {
     if (m_fFontSize != fontSize)
-    {        
+    {   
+        m_fFontSize = fontSize;
+        
         // Force update
         if (m_string.size() > 0)
         {
