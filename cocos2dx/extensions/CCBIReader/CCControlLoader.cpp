@@ -1,4 +1,4 @@
-#import "CCControlLoader.h"
+#include "CCControlLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

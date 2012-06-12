@@ -1,5 +1,5 @@
-#ifndef _CCCONTROL_LOADER_H_
-#define _CCCONTROL_LOADER_H_
+#ifndef _CCB_CCCONTROLLOADER_H_
+#define _CCB_CCCONTROLLOADER_H_
 
 #include "CCNodeLoader.h"
 

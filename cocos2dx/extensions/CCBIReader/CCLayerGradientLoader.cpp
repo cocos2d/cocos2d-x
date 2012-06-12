@@ -1,4 +1,4 @@
-#import "CCLayerGradientLoader.h"
+#include "CCLayerGradientLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

@@ -1,5 +1,5 @@
-#ifndef _CCMENU_LOADER_H_
-#define _CCMENU_LOADER_H_
+#ifndef _CCB_CCMENULOADER_H_
+#define _CCB_CCMENULOADER_H_
 
 #include "CCLayerLoader.h"
 

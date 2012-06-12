@@ -1,4 +1,4 @@
-#import "CCMenuItemImageLoader.h"
+#include "CCMenuItemImageLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

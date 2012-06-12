@@ -1,5 +1,5 @@
-#ifndef _CCNODE_LOADER_LIBRARY_H_
-#define _CCNODE_LOADER_LIBRARY_H_
+#ifndef _CCB_CCNODELOADERLIBRARY_H_
+#define _CCB_CCNODELOADERLIBRARY_H_
 
 #include "cocos2d.h"
 #include "CCBReader.h"

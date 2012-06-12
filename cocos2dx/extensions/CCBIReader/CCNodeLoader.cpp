@@ -1,4 +1,5 @@
-#import "CCNodeLoader.h"
+#include "CCNodeLoader.h"
+#include "CCBSelectorResolver.h"
 
 #define PROPERTY_POSITION "position"
 #define PROPERTY_CONTENTSIZE "contentSize"

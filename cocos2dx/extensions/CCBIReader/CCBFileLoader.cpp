@@ -1,4 +1,4 @@
-#import "CCBFileLoader.h"
+#include "CCBFileLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

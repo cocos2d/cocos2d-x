@@ -1,4 +1,4 @@
-#import "CCSpriteLoader.h"
+#include "CCSpriteLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
