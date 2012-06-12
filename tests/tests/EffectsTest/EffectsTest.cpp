@@ -343,19 +343,19 @@ TextLayer::TextLayer(void)
         
     float x,y;
     
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    x = size.width;
-    y = size.height;
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    x = s.width;
+    y = s.height;
     
     CCNode* node = CCNode::node();
     CCActionInterval* effect = getAction();
-    node->runAction(effect)
-        ;
+    node->runAction(effect);
     addChild(node, 0, kTagBackground);
     
     CCSprite *bg = CCSprite::spriteWithFile(s_back3);
     node->addChild(bg, 0);
-    bg->setAnchorPoint( CCPointZero );
+//  bg->setAnchorPoint( CCPointZero );
+    bg->setPosition(ccp(s.width/2, s.height/2));
 
     CCSprite* grossini = CCSprite::spriteWithFile(s_pPathSister2);
     node->addChild(grossini, 1);
@@ -383,10 +383,10 @@ TextLayer::TextLayer(void)
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( size.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( size.width/2, 30) );
-    item3->setPosition( CCPointMake( size.width/2 + 100,30) );
+    menu->setPosition(CCPointZero);
+    item1->setPosition(CCPointMake( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(CCPointMake( s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(CCPointMake( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 
