@@ -81,8 +81,6 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new Box2dTestBedScene(); break;
     case TEST_EFFECT_ADVANCE:
         pScene = new EffectAdvanceScene(); break;
-    case TEST_HIRES:
-        pScene = new HiResTestScene(); break;
     case TEST_ACCELEROMRTER:
         pScene = new AccelerometerTestScene(); break;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
@@ -104,8 +102,6 @@ static TestScene* CreateTestScene(int nIdx)
 #endif
     case TEST_USERDEFAULT:
         pScene = new UserDefaultTestScene(); break;
-    case TEST_DIRECTOR:
-        pScene = new DirectorTestScene(); break;
     case TEST_BUGS:
         pScene = new BugsTestScene(); break;
     case TEST_FONTS:
