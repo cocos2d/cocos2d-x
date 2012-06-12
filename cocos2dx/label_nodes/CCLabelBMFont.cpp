@@ -752,6 +752,11 @@ CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFi
     return NULL;
 }
 
+bool CCLabelBMFont::init()
+{
+    return initWithString(NULL, NULL, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
+}
+
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 {
     return initWithString(theString, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
@@ -786,6 +791,11 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
     {
         texture = new CCTexture2D();
         texture->autorelease();
+    }
+
+    if (theString == NULL)
+    {
+        theString = "";
     }
 
     if (CCSpriteBatchNode::initWithTexture(texture, strlen(theString)))
@@ -1352,6 +1362,33 @@ float CCLabelBMFont::getLetterPosXRight( CCSprite* sp )
 {
     return sp->getPosition().x * m_fScaleX + (sp->getContentSize().width * m_fScaleX * sp->getAnchorPoint().x);
 }
+
+// LabelBMFont - FntFile
+void CCLabelBMFont::setFntFile(const char* fntFile)
+{
+    if (fntFile != NULL && strcmp(fntFile, m_sFntFile.c_str()) != 0 )
+    {
+        CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
+
+        CCAssert( newConf, "CCLabelBMFont: Impossible to create font. Please check file");
+
+        m_sFntFile = fntFile;
+
+        CC_SAFE_RELEASE(m_pConfiguration);
+        CC_SAFE_RETAIN(newConf);
+        m_pConfiguration = newConf;
+
+        this->setTexture(CCTextureCache::sharedTextureCache()->addImage(m_pConfiguration->getAtlasName()));
+        this->createFontChars();
+    }
+}
+
+const char* CCLabelBMFont::getFntFile()
+{
+    return m_sFntFile.c_str();
+}
+
+
 //LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW
 void CCLabelBMFont::draw()

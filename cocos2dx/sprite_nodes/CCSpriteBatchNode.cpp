@@ -93,6 +93,12 @@ bool CCSpriteBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacity)
     m_blendFunc.src = CC_BLEND_SRC;
     m_blendFunc.dst = CC_BLEND_DST;
     m_pobTextureAtlas = new CCTextureAtlas();
+
+    if (0 == capacity)
+    {
+        capacity = defaultCapacity;
+    }
+    
     m_pobTextureAtlas->initWithTexture(tex, capacity);
 
     updateBlendFunc();
