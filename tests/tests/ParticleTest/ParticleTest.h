@@ -284,4 +284,20 @@ private:
     CCParticleBatchNode* m_pBatchNode;
 };
 
+class PremultipliedAlphaTest : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class PremultipliedAlphaTest2 : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 #endif
