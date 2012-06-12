@@ -39,12 +39,12 @@ class SceneTestLayer3 : public CCLayerColor
 {
 public:
     SceneTestLayer3();
-
+    bool init();
     virtual void testDealloc(float dt);
-
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
-
-    //CREATE_NODE(SceneTestLayer3);
+    void item0Clicked(CCObject* pSender);
+    void item1Clicked(CCObject* pSender);
+    void item2Clicked(CCObject* pSender);
+    LAYER_NODE_FUNC(SceneTestLayer3)
 } ;
 
 class SceneTestScene : public TestScene
