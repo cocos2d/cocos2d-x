@@ -59,7 +59,7 @@ public:
     bool initWithCapacity(unsigned int capacity);
     
     /** appends a control point */
-    void addControlPoint(CCPoint &controlPoint);
+    void addControlPoint(CCPoint controlPoint);
     
     /** inserts a controlPoint at index */
     void insertControlPoint(CCPoint &controlPoint, unsigned int index);
@@ -156,7 +156,7 @@ protected:
  A Catmull Rom is a Cardinal Spline with a tension of 0.5.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  */
-class CCCatmullRomTo : public CCCardinalSplineTo
+class CC_DLL CCCatmullRomTo : public CCCardinalSplineTo
 {
 public:
     /** creates an action with a Cardinal Spline array of points and tension */
@@ -181,7 +181,7 @@ public:
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
-extern CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t);
+extern CC_DLL CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t);
 
 NS_CC_END;
 
