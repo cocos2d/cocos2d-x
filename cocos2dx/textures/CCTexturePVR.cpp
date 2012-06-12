@@ -39,29 +39,21 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK    0xff
-#define PVR_TEXTURE_FLAG_FLIPPED_MASK 0x10000
 
 // Values taken from PVRTexture.h from http://www.imgtec.com
 enum {
-    kPVRTextureFlagMipmap        = (1<<8),        // has mip map levels
+    kPVRTextureFlagMipmap         = (1<<8),        // has mip map levels
     kPVRTextureFlagTwiddle        = (1<<9),        // is twiddled
-    kPVRTextureFlagBumpmap        = (1<<10),        // has normals encoded for a bump map
-    kPVRTextureFlagTiling        = (1<<11),        // is bordered for tiled pvr
-    kPVRTextureFlagCubemap        = (1<<12),        // is a cubemap/skybox
-    kPVRTextureFlagFalseMipCol    = (1<<13),        // are there false coloured MIP levels
-    kPVRTextureFlagVolume        = (1<<14),        // is this a volume texture
-    kPVRTextureFlagAlpha        = (1<<15),        // v2.1 is there transparency info in the texture
-    kPVRTextureFlagVerticalFlip    = (1<<16),        // v2.1 is the texture vertically flipped
+    kPVRTextureFlagBumpmap        = (1<<10),       // has normals encoded for a bump map
+    kPVRTextureFlagTiling         = (1<<11),       // is bordered for tiled pvr
+    kPVRTextureFlagCubemap        = (1<<12),       // is a cubemap/skybox
+    kPVRTextureFlagFalseMipCol    = (1<<13),       // are there false coloured MIP levels
+    kPVRTextureFlagVolume         = (1<<14),       // is this a volume texture
+    kPVRTextureFlagAlpha          = (1<<15),       // v2.1 is there transparency info in the texture
+    kPVRTextureFlagVerticalFlip   = (1<<16),       // v2.1 is the texture vertically flipped
 };
     
-/*
-    PVR header contains special field called PVRTag. This tag
-    is used only to determine that passed file is really pvrt.
-
-    Its set of 4 numbers. Each number casted to the char 
-    must correspond to the "PVR!" string
-*/
-static unsigned int gPVRTexIdentifier[] = { 'P', 'V', 'R', '!'};
+static char gPVRTexIdentifier[5] = "PVR!";
 
 /*
     List of formats in pvr container
@@ -73,7 +65,7 @@ enum
     kPVRTextureFlagTypeRGBA_8888,
     kPVRTextureFlagTypeRGB_565,
     kPVRTextureFlagTypeRGB_555,                // unsupported
-    kPVRTextureFlagTypeRGB_888,                // unsupported
+    kPVRTextureFlagTypeRGB_888,                
     kPVRTextureFlagTypeI_8,
     kPVRTextureFlagTypeAI_88,
     kPVRTextureFlagTypePVRTC_2,
@@ -82,14 +74,6 @@ enum
     kPVRTextureFlagTypeA_8,
 };
 
-/*
-    Helps us to convert pvr format to the gl compatible bitspaces
-
-    WARNING!! OpenGL ES 1.1. does not support GL_BGRA format. Its PowerVR 
-    extension and it will work only on PowerVR chipsets. It means that
-
-    kPVRTextureFlagTypeBGRA_8888 can be used only on apple devices (or PowerVR compatible)
-*/
 static const unsigned int tableFormats[][7] = {
     
     // - PVR texture format
@@ -99,26 +83,23 @@ static const unsigned int tableFormats[][7] = {
     // - bpp
     // - compressed
     // - Cocos2d texture format constant
-    { kPVRTextureFlagTypeRGBA_4444, GL_RGBA,    GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4,    16, false, kCCTexture2DPixelFormat_RGBA4444    },
-    { kPVRTextureFlagTypeRGBA_5551, GL_RGBA,    GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1,    16, false, kCCTexture2DPixelFormat_RGB5A1    },
-    { kPVRTextureFlagTypeRGBA_8888, GL_RGBA,    GL_RGBA, GL_UNSIGNED_BYTE,            32, false, kCCTexture2DPixelFormat_RGBA8888    },
-    { kPVRTextureFlagTypeRGB_565,    GL_RGB,        GL_RGB,     GL_UNSIGNED_SHORT_5_6_5,    16, false, kCCTexture2DPixelFormat_RGB565    },
-    { kPVRTextureFlagTypeA_8,        GL_ALPHA,    GL_ALPHA,    GL_UNSIGNED_BYTE,        8,    false, kCCTexture2DPixelFormat_A8        },
-    { kPVRTextureFlagTypeI_8,        GL_LUMINANCE,    GL_LUMINANCE,    GL_UNSIGNED_BYTE,            8,    false, kCCTexture2DPixelFormat_I8    },
-    { kPVRTextureFlagTypeAI_88,        GL_LUMINANCE_ALPHA,    GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,    16,    false, kCCTexture2DPixelFormat_AI88 },
+    {kPVRTextureFlagTypeRGBA_4444, GL_RGBA,           GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4,    16, false, kCCTexture2DPixelFormat_RGBA4444},
+    {kPVRTextureFlagTypeRGBA_5551, GL_RGBA,           GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1,    16, false, kCCTexture2DPixelFormat_RGB5A1},
+    {kPVRTextureFlagTypeRGBA_8888, GL_RGBA,           GL_RGBA, GL_UNSIGNED_BYTE,             32, false, kCCTexture2DPixelFormat_RGBA8888},
+    {kPVRTextureFlagTypeRGB_565,   GL_RGB,             GL_RGB,  GL_UNSIGNED_SHORT_5_6_5,     16, false, kCCTexture2DPixelFormat_RGB565},
+    {kPVRTextureFlagTypeA_8,       GL_ALPHA,           GL_ALPHA,GL_UNSIGNED_BYTE,            8,  false, kCCTexture2DPixelFormat_A8},
+    {kPVRTextureFlagTypeI_8,       GL_LUMINANCE,       GL_LUMINANCE,   GL_UNSIGNED_BYTE,     8,  false, kCCTexture2DPixelFormat_I8    },
+    {kPVRTextureFlagTypeAI_88,     GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, kCCTexture2DPixelFormat_AI88 },
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    { kPVRTextureFlagTypePVRTC_2,    GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,    2,    true, kCCTexture2DPixelFormat_PVRTC2 },
-    { kPVRTextureFlagTypePVRTC_4,    GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,    4,    true, kCCTexture2DPixelFormat_PVRTC4 },
-    { kPVRTextureFlagTypeBGRA_8888, GL_RGBA,    GL_BGRA, GL_UNSIGNED_BYTE,            32,    false, kCCTexture2DPixelFormat_RGBA8888    },
+    {kPVRTextureFlagTypePVRTC_2,   GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,    2,    true, kCCTexture2DPixelFormat_PVRTC2 },
+    {kPVRTextureFlagTypePVRTC_4,   GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,    4,    true, kCCTexture2DPixelFormat_PVRTC4 },
+    {kPVRTextureFlagTypeBGRA_8888, GL_RGBA,    GL_BGRA, GL_UNSIGNED_BYTE,          32,   false, kCCTexture2DPixelFormat_RGBA8888    },
 #endif
 };
 
 //Tells How large is tableFormats
 #define MAX_TABLE_ELEMENTS (sizeof(tableFormats) / sizeof(tableFormats[0]))
 
-/*
-    Helper enum to traverse tableFormats
-*/
 enum {
     kCCInternalPVRTextureFormat,
     kCCInternalOpenGLInternalFormat,
@@ -129,9 +110,6 @@ enum {
     kCCInternalCCTexture2DPixelFormat,
 };
 
-/*
-    Official PVRT header
-*/
 typedef struct _PVRTexHeader
 {
     unsigned int headerLength;
@@ -149,9 +127,15 @@ typedef struct _PVRTexHeader
     unsigned int numSurfs;
 } PVRTexHeader;
 
-CCTexturePVR::CCTexturePVR() :
-    m_uTableFormatIndex(0),
-    m_uNumberOfMipmaps(0)
+CCTexturePVR::CCTexturePVR() 
+: m_uTableFormatIndex(0)
+, m_uNumberOfMipmaps(0)
+, m_uWidth(0)
+, m_uHeight(0)
+, m_bRetainName(false)
+, m_bHasAlpha(false)
+, m_uName(0)
+, m_eFormat(kCCTexture2DPixelFormat_Default)
 {
 }
 
@@ -159,43 +143,10 @@ CCTexturePVR::~CCTexturePVR()
 {
     CCLOGINFO( "cocos2d: deallocing CCTexturePVR" );
 
-    if (m_uName != 0 && ! m_bRetainName )
-        glDeleteTextures(1, &m_uName);
-}
-
-GLuint CCTexturePVR::getName()
-{
-    return m_uName;
-}
-
-unsigned int CCTexturePVR::getWidth()
-{
-    return m_uWidth;
-}
-
-unsigned int CCTexturePVR::getHeight()
-{
-    return m_uHeight;
-}
-
-CCTexture2DPixelFormat CCTexturePVR::getFormat()
-{
-    return m_eFormat;
-}
-
-bool CCTexturePVR::getHasAlpha()
-{
-    return m_bHasAlpha;
-}
-
-bool CCTexturePVR::getRetainName()
-{
-    return m_bRetainName;
-}
-
-void CCTexturePVR::setRetainName(bool var)
-{
-    m_bRetainName = var;
+    if (m_uName != 0 && ! m_bRetainName)
+    {
+        ccGLDeleteTexture(m_uName);
+    }
 }
 
 bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
@@ -228,43 +179,27 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
         gPVRTexIdentifier[2] != ((pvrTag >> 16) & 0xff) ||
         gPVRTexIdentifier[3] != ((pvrTag >> 24) & 0xff))
     {
+        CCLOG("Unsupported PVR format. Use the Legacy format until the new format is supported");
         return false;
     }
     
     CCConfiguration *configuration = CCConfiguration::sharedConfiguration();
 
-    //Get file flags (in correct byte order)
     flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
-
-    //Trim to only bites which are needed. Resulting flag is image format
     formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
-
-    /*
-     When flags combined with flipped mask is not empty (zero). 
-     It means that image is compressed as flipped. We don't
-     support automatic flipping.
-     */
     bool flipped = (flags & kPVRTextureFlagVerticalFlip) ? true : false;
-    if ( flipped )
+    if (flipped)
     {
         CCLOG("cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
     }
 
-    if ( ! configuration->isSupportsNPOT() &&
+    if (! configuration->isSupportsNPOT() &&
         (header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)))
     {
         CCLOG("cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
         return false;
     }
-    
-    //Check that sides of texture are power of two
-    if(header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)) 
-    {
-        CCLOG("cocos2d: WARNING: PVR NPOT textures are not supported. Regenerate it.");
-        return false;
-    }
 
-    //Go thru format array
     for (m_uTableFormatIndex = 0; m_uTableFormatIndex < (unsigned int)MAX_TABLE_ELEMENTS; m_uTableFormatIndex++)
     {
         //Does image format in table fits to the one parsed from header?
@@ -279,16 +214,20 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
             
             //Do we use alpha ?
             if (CC_SWAP_INT32_LITTLE_TO_HOST(header->bitmaskAlpha))
+            {
                 m_bHasAlpha = true;
+            }
             else
+            {
                 m_bHasAlpha = false;
+            }
             
             //Get ptr to where data starts..
             dataLength = CC_SWAP_INT32_LITTLE_TO_HOST(header->dataLength);
 
             //Move by size of header
             bytes = ((unsigned char *)data) + sizeof(PVRTexHeader);
-            m_eFormat = (CCTexture2DPixelFormat)( tableFormats[m_uTableFormatIndex][kCCInternalCCTexture2DPixelFormat] );
+            m_eFormat = (CCTexture2DPixelFormat)(tableFormats[m_uTableFormatIndex][kCCInternalCCTexture2DPixelFormat]);
             bpp = tableFormats[m_uTableFormatIndex][kCCInternalBPP];
             
             // Calculate the data size for each texture level and respect the minimum number of blocks
@@ -299,13 +238,11 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
                         blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
                         widthBlocks = width / 8;
                         heightBlocks = height / 4;
-                        bpp = 2;
                         break;
                     case kPVRTextureFlagTypePVRTC_4:
                         blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
                         widthBlocks = width / 4;
                         heightBlocks = height / 4;
-                        bpp = 4;
                         break;
                     case kPVRTextureFlagTypeBGRA_8888:
                         if (CCConfiguration::sharedConfiguration()->isSupportsBGRA8888() == false) 
@@ -317,22 +254,25 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
                         blockSize = 1;
                         widthBlocks = width;
                         heightBlocks = height;
-                        bpp = tableFormats[m_uTableFormatIndex][kCCInternalBPP];
                         break;
                 }
                 
                 // Clamp to minimum number of blocks
                 if (widthBlocks < 2)
+                {
                     widthBlocks = 2;
+                }
                 if (heightBlocks < 2)
+                {
                     heightBlocks = 2;
+                }
 
                 dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
-                unsigned int packetLength = (dataLength-dataOffset);
+                float packetLength = (dataLength - dataOffset);
                 packetLength = packetLength > dataSize ? dataSize : packetLength;
                 
                 //Make record to the mipmaps array and increment coutner
-                m_asMipmaps[m_uNumberOfMipmaps].address = bytes+dataOffset;
+                m_asMipmaps[m_uNumberOfMipmaps].address = bytes + dataOffset;
                 m_asMipmaps[m_uNumberOfMipmaps].len = packetLength;
                 m_uNumberOfMipmaps++;
                 
@@ -353,9 +293,9 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
         }
     }
 
-    if (false == success)
+    if (! success)
     {
-        CCLOG("cocos2d: WARNING: Unssupported PVR Pixel Format: 0x%2x", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
     }
     
     return success;
@@ -374,51 +314,69 @@ bool CCTexturePVR::createGLTexture()
             ccGLDeleteTexture(m_uName);
         }
         
+        // From PVR sources: "PVR files are never row aligned."
+        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+        
         glGenTextures(1, &m_uName);
         glBindTexture(GL_TEXTURE_2D, m_uName);
+        
+        // Default: Anti alias.
+		if (m_uNumberOfMipmaps == 1)
+        {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        }
+		else
+        {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+        }
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     }
+    
+    CHECK_GL_ERROR_DEBUG(); // clean possible GL error
+    
+	GLenum internalFormat = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLInternalFormat];
+	GLenum format = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLFormat];
+	GLenum type = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLType];
+	bool compressed = tableFormats[m_uTableFormatIndex][kCCInternalCompressedImage];
 
     // Generate textures with mipmaps
     for (unsigned int i = 0; i < m_uNumberOfMipmaps; ++i)
     {
-        GLenum internalFormat = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLInternalFormat];
-        GLenum format = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLFormat];
-        GLenum type = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLType];
-        bool compressed = tableFormats[m_uTableFormatIndex][kCCInternalCompressedImage] == 1;
-         
-        if (compressed == true && CCConfiguration::sharedConfiguration()->isSupportsPVRTC() == false) 
+        if (compressed && ! CCConfiguration::sharedConfiguration()->isSupportsNPOT()) 
         {
-            CCLOG("cocos2d: WARNING: PVRTC images are not supported");
-            return false;
-        }            
+			CCLOG("cocos2d: WARNING: PVRTC images are not supported");
+			return false;
+		}
         
-        unsigned char *data = m_asMipmaps[i].address;
-        unsigned int datalen = m_asMipmaps[i].len;
+		unsigned char *data = m_asMipmaps[i].address;
+		unsigned int datalen = m_asMipmaps[i].len;
         
-        if (compressed == true)
+		if (compressed)
         {
-            glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, datalen, data);
+			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, datalen, data);
         }
-        else 
+		else
         {
-            glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
-        }
-
-        if(i > 0 && (width != height || ccNextPOT(width) != width ) )
-        {
-            CCLOG("cocos2d: TexturePVR. WARNING. Mipmap level %lu is not squared. Texture won't render correctly. width=%lu != height=%lu", i, width, height);
+			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
         }
         
-        err = glGetError();
-        if (err != GL_NO_ERROR)
+		if (i > 0 && (width != height || ccNextPOT(width) != width ))
         {
-            CCLOG("cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", (unsigned int)i, err);
-            return false;
+			CCLOG("cocos2d: TexturePVR. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%u != height=%u", i, width, height);
         }
         
-        //Update width and height to the next lower power of two
-        width = MAX(width >> 1, 1);
-        height = MAX(height >> 1, 1);
+		err = glGetError();
+		if (err != GL_NO_ERROR)
+		{
+			CCLOG("cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
+			return false;
+		}
+        
+		width = MAX(width >> 1, 1);
+		height = MAX(height >> 1, 1);
     }
         
     return true;
@@ -463,7 +421,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
 
     m_bRetainName = false; // cocos2d integration
 
-    if ( !unpackPVRData(pvrdata, pvrlen)  || !createGLTexture() )
+    if (!unpackPVRData(pvrdata, pvrlen)  || !createGLTexture())
     {
         delete [] pvrdata;
         this->release();
@@ -478,15 +436,20 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
 CCTexturePVR * CCTexturePVR::pvrTextureWithContentsOfFile(const char* path)
 {
     CCTexturePVR * pTexture = new CCTexturePVR();
-    if(true == pTexture->initWithContentsOfFile(path))
+    if (pTexture)
     {
-        pTexture->autorelease();
-        return pTexture;
+        if (pTexture->initWithContentsOfFile(path))
+        {
+            pTexture->autorelease();
+        }
+        else
+        {
+            delete pTexture;
+            pTexture = NULL;
+        }
     }
-    else
-    {
-        return NULL;
-    }
+
+    return pTexture;
 }
 
 NS_CC_END
