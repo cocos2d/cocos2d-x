@@ -5,6 +5,21 @@
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
+CCBIReaderLayer * CCBIReaderLayer::node() {
+    CCBIReaderLayer *pRet = new CCBIReaderLayer();
+    if (pRet && pRet->init()) {
+        pRet->autorelease();
+        return pRet;
+    } else {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
+    }
+}
+
+bool CCBIReaderLayer::init() {
+    return CCLayer::init();
+}
+
 void CCBIReaderLayer::menuCloseCallback(CCObject* pSender) {
     CCDirector::sharedDirector()->end();
 

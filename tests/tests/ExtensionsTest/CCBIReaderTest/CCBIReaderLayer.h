@@ -7,6 +7,8 @@
 
 class CCBIReaderLayer : public cocos2d::CCLayer, public cocos2d::extension::CCBMemberVariableAssigner, public cocos2d::extension::CCBSelectorResolver {
     public:
+        static CCBIReaderLayer * node();
+
         virtual bool init();  
 
         virtual void menuCloseCallback(CCObject * pSender);
