@@ -546,7 +546,6 @@
 		BF1B266213C7108F009769C6 /* Bug-899.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B265113C7108F009769C6 /* Bug-899.cpp */; };
 		BF1B266313C7108F009769C6 /* Bug-914.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B265313C7108F009769C6 /* Bug-914.cpp */; };
 		BF1B266413C7108F009769C6 /* BugsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B265513C7108F009769C6 /* BugsTest.cpp */; };
-		BF1B266513C7108F009769C6 /* DirectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B265813C7108F009769C6 /* DirectorTest.cpp */; };
 		BF1B49F013FE04C300838E41 /* CurrentLanguageTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B49EF13FE04C300838E41 /* CurrentLanguageTest.cpp */; };
 		BF1C47EB1293683800B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -566,7 +565,6 @@
 		BF31E3AD12E979A200D4F513 /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E17A12E979A100D4F513 /* DrawPrimitivesTest.cpp */; };
 		BF31E3AF12E979A200D4F513 /* EffectsAdvancedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18012E979A100D4F513 /* EffectsAdvancedTest.cpp */; };
 		BF31E3B012E979A200D4F513 /* EffectsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18312E979A100D4F513 /* EffectsTest.cpp */; };
-		BF31E3B112E979A200D4F513 /* HiResTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18612E979A100D4F513 /* HiResTest.cpp */; };
 		BF31E3B212E979A200D4F513 /* IntervalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18912E979A100D4F513 /* IntervalTest.cpp */; };
 		BF31E3B312E979A200D4F513 /* KeypadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18C12E979A100D4F513 /* KeypadTest.cpp */; };
 		BF31E3B412E979A200D4F513 /* LayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E18F12E979A100D4F513 /* LayerTest.cpp */; };
@@ -1259,8 +1257,6 @@
 		BF1B265413C7108F009769C6 /* Bug-914.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-914.h"; sourceTree = "<group>"; };
 		BF1B265513C7108F009769C6 /* BugsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BugsTest.cpp; sourceTree = "<group>"; };
 		BF1B265613C7108F009769C6 /* BugsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugsTest.h; sourceTree = "<group>"; };
-		BF1B265813C7108F009769C6 /* DirectorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirectorTest.cpp; sourceTree = "<group>"; };
-		BF1B265913C7108F009769C6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectorTest.h; sourceTree = "<group>"; };
 		BF1B49EE13FE04C300838E41 /* CurrentLanguageTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentLanguageTest.h; sourceTree = "<group>"; };
 		BF1B49EF13FE04C300838E41 /* CurrentLanguageTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurrentLanguageTest.cpp; sourceTree = "<group>"; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1293,8 +1289,6 @@
 		BF31E18112E979A100D4F513 /* EffectsAdvancedTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsAdvancedTest.h; sourceTree = "<group>"; };
 		BF31E18312E979A100D4F513 /* EffectsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectsTest.cpp; sourceTree = "<group>"; };
 		BF31E18412E979A100D4F513 /* EffectsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectsTest.h; sourceTree = "<group>"; };
-		BF31E18612E979A100D4F513 /* HiResTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HiResTest.cpp; sourceTree = "<group>"; };
-		BF31E18712E979A100D4F513 /* HiResTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HiResTest.h; sourceTree = "<group>"; };
 		BF31E18912E979A100D4F513 /* IntervalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IntervalTest.cpp; sourceTree = "<group>"; };
 		BF31E18A12E979A100D4F513 /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalTest.h; sourceTree = "<group>"; };
 		BF31E18C12E979A100D4F513 /* KeypadTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeypadTest.cpp; sourceTree = "<group>"; };
@@ -2579,15 +2573,6 @@
 			path = "Bug-458";
 			sourceTree = "<group>";
 		};
-		BF1B265713C7108F009769C6 /* DirectorTest */ = {
-			isa = PBXGroup;
-			children = (
-				BF1B265813C7108F009769C6 /* DirectorTest.cpp */,
-				BF1B265913C7108F009769C6 /* DirectorTest.h */,
-			);
-			path = DirectorTest;
-			sourceTree = "<group>";
-		};
 		BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2676,13 +2661,11 @@
 				BF31E17112E979A100D4F513 /* CocosDenshionTest */,
 				BF3E8C74135C0B39001AE294 /* CurlTest */,
 				BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */,
-				BF1B265713C7108F009769C6 /* DirectorTest */,
 				BF31E17912E979A100D4F513 /* DrawPrimitivesTest */,
 				BF31E17F12E979A100D4F513 /* EffectsAdvancedTest */,
 				BF31E18212E979A100D4F513 /* EffectsTest */,
 				78C7E02514EBA5580085D0C2 /* ExtensionsTest */,
 				BF1E7A4213E2629800C2D68B /* FontTest */,
-				BF31E18512E979A100D4F513 /* HiResTest */,
 				BF31E18812E979A100D4F513 /* IntervalTest */,
 				BF31E18B12E979A100D4F513 /* KeypadTest */,
 				BF137F45131E3A7B000F7B64 /* LabelTest */,
@@ -2782,15 +2765,6 @@
 				BF31E18412E979A100D4F513 /* EffectsTest.h */,
 			);
 			path = EffectsTest;
-			sourceTree = "<group>";
-		};
-		BF31E18512E979A100D4F513 /* HiResTest */ = {
-			isa = PBXGroup;
-			children = (
-				BF31E18612E979A100D4F513 /* HiResTest.cpp */,
-				BF31E18712E979A100D4F513 /* HiResTest.h */,
-			);
-			path = HiResTest;
 			sourceTree = "<group>";
 		};
 		BF31E18812E979A100D4F513 /* IntervalTest */ = {
@@ -3555,7 +3529,6 @@
 				BF31E3AD12E979A200D4F513 /* DrawPrimitivesTest.cpp in Sources */,
 				BF31E3AF12E979A200D4F513 /* EffectsAdvancedTest.cpp in Sources */,
 				BF31E3B012E979A200D4F513 /* EffectsTest.cpp in Sources */,
-				BF31E3B112E979A200D4F513 /* HiResTest.cpp in Sources */,
 				BF31E3B212E979A200D4F513 /* IntervalTest.cpp in Sources */,
 				BF31E3B312E979A200D4F513 /* KeypadTest.cpp in Sources */,
 				BF31E3B412E979A200D4F513 /* LayerTest.cpp in Sources */,
@@ -3597,7 +3570,6 @@
 				BF1B266213C7108F009769C6 /* Bug-899.cpp in Sources */,
 				BF1B266313C7108F009769C6 /* Bug-914.cpp in Sources */,
 				BF1B266413C7108F009769C6 /* BugsTest.cpp in Sources */,
-				BF1B266513C7108F009769C6 /* DirectorTest.cpp in Sources */,
 				BF1EB66813D6B915008D2559 /* Texture2dTest.cpp in Sources */,
 				BF1E7BC513E273DF00C2D68B /* FontTest.cpp in Sources */,
 				BF1B49F013FE04C300838E41 /* CurrentLanguageTest.cpp in Sources */,
