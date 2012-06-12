@@ -69,8 +69,7 @@ void CCLabelTTFLoader::onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * p
     if(strcmp(pPropertyName, PROPERTY_HORIZONTALALIGNMENT) == 0) {
         ((CCLabelTTF *)pNode)->setHorizontalAlignment(CCTextAlignment(pIntegerLabeled));
     } else if(strcmp(pPropertyName, PROPERTY_VERTICALALIGNMENT) == 0) {
-        // TODO Add support when CCLabelTTF supports it. ( See: 63d9724ac4d81a05c6ec7feea0c01bcd27c8fc6b )
-        // ((CCLabelTTF *)pNode)->setVerticalAlignment(pIntegerLabeled);
+        ((CCLabelTTF *)pNode)->setVerticalAlignment(CCVerticalTextAlignment(pIntegerLabeled));
     } else {
         CCNodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
     }
