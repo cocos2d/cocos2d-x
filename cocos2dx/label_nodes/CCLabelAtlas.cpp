@@ -87,12 +87,12 @@ bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
     CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFile(CCFileUtils::sharedFileUtils()->sharedFileUtils()->fullPathFromRelativePath(fntFile));
 	
-    CCAssert(((CCInteger*)dict->objectForKey("version"))->getValue() == 1, "Unsupported version. Upgrade cocos2d version");
+    CCAssert(((CCString*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
     
     CCString *textureFilename = (CCString*)dict->objectForKey("textureFilename");
-    unsigned int width = ((CCInteger*)dict->objectForKey("itemWidth"))->getValue() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int height = ((CCInteger*)dict->objectForKey("itemHeight"))->getValue() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int startChar = ((CCInteger*)dict->objectForKey("firstChar"))->getValue();
+    unsigned int width = ((CCString*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int height = ((CCString*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int startChar = ((CCString*)dict->objectForKey("firstChar"))->intValue();
 	
 
     this->initWithString(theString, textureFilename->getCString(), width, height, startChar);
