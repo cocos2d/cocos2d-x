@@ -119,7 +119,7 @@ void ChipmunkAccelTouchTestLayer::initPhysics()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // init chipmunk
-    cpInitChipmunk();
+    //cpInitChipmunk();
 
     m_pSpace = cpSpaceNew();
 
