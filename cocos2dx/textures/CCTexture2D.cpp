@@ -434,7 +434,7 @@ bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCT
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data
-    VolatileTexture::addStringTexture(this, text, dimensions, alignment, fontName, fontSize);
+    VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
 #endif
 
     CCImage image;

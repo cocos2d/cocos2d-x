@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define glDeleteVertexArrays        glDeleteVertexArraysOES
 #define glGenVertexArrays           glGenVertexArraysOES
 #define glBindVertexArray           glBindVertexArrayOES
+#define CC_GL_DEPTH24_STENCIL8      GL_DEPTH24_STENCIL8_OES
 
 // GL_GLEXT_PROTOTYPES isn't defined in glplatform.h on android ndk r7 
 // we manually define it here

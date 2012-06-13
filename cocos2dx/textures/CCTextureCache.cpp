@@ -710,7 +710,8 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 , m_PixelFormat(kTexture2DPixelFormat_RGBA8888)
 , m_strFileName("")
 , m_FmtImage(CCImage::kFmtPng)
-, m_alignment(CCTextAlignmentCenter)
+, m_alignment(kCCTextAlignmentCenter)
+, m_vAlignment(kCCVerticalTextAlignmentCenter)
 , m_strFontName("")
 , m_strText("")
 , uiImage(NULL)
@@ -786,7 +787,8 @@ void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPix
     vt->m_TextureSize = contentSize;
 }
 
-void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, 
+                                       CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
 {
     if (isReloading)
     {
@@ -799,6 +801,7 @@ void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, const 
     vt->m_size        = dimensions;
     vt->m_strFontName = fontName;
     vt->m_alignment   = alignment;
+    vt->m_vAlignment  = vAlignment;
     vt->m_fFontSize   = fontSize;
     vt->m_strText     = text;
 }
@@ -878,6 +881,7 @@ void VolatileTexture::reloadAllTextures()
                 vt->texture->initWithString(vt->m_strText.c_str(),
                     vt->m_size,
                     vt->m_alignment,
+                    vt->m_vAlignment,
                     vt->m_strFontName.c_str(),
                     vt->m_fFontSize);
             }
