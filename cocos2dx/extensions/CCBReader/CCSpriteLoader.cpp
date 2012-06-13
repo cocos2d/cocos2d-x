@@ -26,7 +26,7 @@ void CCSpriteLoader::onHandlePropTypeFlip(CCNode * pNode, CCNode * pParent, cons
         ((CCSprite *)pNode)->setFlipX(pFlip[0]);
         ((CCSprite *)pNode)->setFlipX(pFlip[1]);
     } else {
-        CCNodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pFlip, pCCBReader);
+        CCNodeLoader::onHandlePropTypeFlip(pNode, pParent, pPropertyName, pFlip, pCCBReader);
     }
 }
 
