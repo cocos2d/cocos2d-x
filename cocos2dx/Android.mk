@@ -13,6 +13,7 @@ CCScheduler.cpp \
 CCCamera.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
+actions/CCActionCatmullRom.cpp \
 actions/CCActionEase.cpp \
 actions/CCActionGrid.cpp \
 actions/CCActionGrid3D.cpp \
@@ -124,6 +125,7 @@ support/CCUserDefault.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
 support/CCVertex.cpp \
+support/data_support/ccCArray.cpp \
 support/image_support/TGAlib.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
