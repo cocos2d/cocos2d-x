@@ -78,7 +78,6 @@ enum {
 class CCTexturePVR : public CCObject
 {
 public:
-
     CCTexturePVR();
     virtual ~CCTexturePVR();
 
@@ -86,50 +85,35 @@ public:
     bool initWithContentsOfFile(const char* path);
 
     /** creates and initializes a CCTexturePVR with a path */
-    static CCTexturePVR * pvrTextureWithContentsOfFile(const char* path);
+    static CCTexturePVR* pvrTextureWithContentsOfFile(const char* path);
+    
+    // properties 
+    
+    inline unsigned int getName() { return m_uName; }
+    inline unsigned int getWidth() { return m_uWidth; }
+    inline unsigned int getHeight() { return m_uHeight; }
+    inline bool hasAlpha() { return m_bHasAlpha; }
+    inline unsigned int getNumberOfMipmaps() { return m_uNumberOfMipmaps; }
+    inline CCTexture2DPixelFormat getFormat() { return m_eFormat; }
+    inline bool isRetainName() { return m_bRetainName; }
+    inline void setRetainName(bool retainName) { m_bRetainName = retainName; }
 
-    CC_PROPERTY_READONLY(GLuint, m_uName, Name)
-    CC_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
-    CC_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
-    CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_eFormat, Format)
-    CC_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
-
-    // cocos2d integration
-    CC_PROPERTY(bool, m_bRetainName, RetainName);
-
-protected:
-
-    /*
-        Unpacks data (data of pvr texture file) and determine 
-        how many mipmaps it uses (m_uNumberOfMipmaps). Adresses
-        of mimaps (m_asMipmaps). And basic data like size, format
-        and alpha presence
-    */
+private:
     bool unpackPVRData(unsigned char* data, unsigned int len);
-
-    /*
-        Binds all mipmaps to the GL state machine as separate
-        textures
-    */
     bool createGLTexture();
-
-    /*
-        Index to the tableFormats array. Which tells us what exact 
-        format is file which initializes this object. 
-    */
+    
+protected:
+    struct CCPVRMipmap m_asMipmaps[CC_PVRMIPMAP_MAX];   // pointer to mipmap images    
+    unsigned int m_uNumberOfMipmaps;                    // number of mipmap used
+    
     unsigned int m_uTableFormatIndex;
-
-    /*
-        How many mipmaps do we have. It must be at least one
-        when proper initialization finishes
-    */
-    CC_SYNTHESIZE_READONLY(unsigned int, m_uNumberOfMipmaps, NumberOfMipmaps);
-
-    /*
-        Makrs for mipmaps. Each entry contains position in file
-        and lenght of data which represents one mipmap.
-    */
-    struct CCPVRMipmap m_asMipmaps[CC_PVRMIPMAP_MAX];
+    unsigned int m_uWidth, m_uHeight;
+    GLuint m_uName;
+    bool m_bHasAlpha;
+    
+    // cocos2d integration
+    bool m_bRetainName;
+    CCTexture2DPixelFormat m_eFormat;
 };
 
 NS_CC_END

@@ -86,7 +86,7 @@ CCLayer* createTextureTest(int index)
     case 33:
         pLayer = new TextureDrawInRect(); break;
     case 34:
-        pLayer = new FileUtilsTest(); break;
+        pLayer = new TextureMemoryAlloc(); break;
     default:
         break;
     }
@@ -1444,65 +1444,6 @@ std::string TextureDrawInRect::subtitle()
     return "draws 2 textures using drawInRect";
 }
 
-// FileUtilsTest
-void FileUtilsTest::onEnter()
-{
-    TextureDemo::onEnter();
-    // This test is only valid in Retinadisplay
-
-    if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-
-        CCSprite *sprite = new CCSprite();
-        sprite->initWithFile("Images/bugs/test_issue_1179.png");
-        if( sprite )
-            CCLog("Test #1 issue 1179: OK");
-        else
-            CCLog("Test #1 issue 1179: FAILED");
-
-        sprite->release();
-
-        sprite = new CCSprite();
-        sprite->initWithFile("only_in_hd.pvr.ccz");
-        if( sprite )
-            CCLog("Test #2 issue 1179: OK");
-        else
-            CCLog("Test #2 issue 1179: FAILED");
-
-        sprite->release();
-
-    } else {
-        CCLog("Test issue #1179 failed. Needs to be tested with RetinaDispaly");
-    }
-
-
-#if 0 // TODO:(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    // Testint CCFileUtils API
-    bool ret = false;
-    ret = CCFileUtils::sharedFileUtils()->iPhoneRetinaDisplayFileExistsAtPath("Images/bugs/test_issue_1179.png");
-    if( ret )
-        CCLog("Test #3: retinaDisplayFileExistsAtPath: OK");
-    else
-        CCLog("Test #3: retinaDisplayFileExistsAtPath: FAILED");
-
-
-    ret = CCFileUtils::sharedFileUtils()->iPhoneRetinaDisplayFileExistsAtPath("grossini-does_no_exist.png");
-    if( !ret )
-        CCLog("Test #4: retinaDisplayFileExistsAtPath: OK");
-    else
-        CCLog("Test #4: retinaDisplayFileExistsAtPath: FAILED");
-#endif 
-}
-
-std::string FileUtilsTest::title()
-{
-    return "CCFileUtils: See console";
-}
-
-std::string FileUtilsTest::subtitle()
-{
-    return "See the console";
-}
-
 //------------------------------------------------------------------
 //
 // TextureTestScene
@@ -1513,4 +1454,105 @@ void TextureTestScene::runThisTest()
     CCLayer* pLayer = nextTextureTest();
     addChild(pLayer);
     CCDirector::sharedDirector()->replaceScene(this);
+}
+
+//------------------------------------------------------------------
+//
+// TextureMemoryAlloc
+//
+//------------------------------------------------------------------
+void TextureMemoryAlloc::onEnter()
+{
+    TextureDemo::onEnter();
+    m_pBackground = NULL;
+    
+    CCMenuItemFont::setFontSize(24);
+    
+    CCMenuItem *item1 = CCMenuItemFont::itemWithString("PNG", this, menu_selector(TextureMemoryAlloc::updateImage));
+    item1->setTag(0);
+    
+    CCMenuItem *item2 = CCMenuItemFont::itemWithString("RGBA8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    item2->setTag(1);
+    
+    CCMenuItem *item3 = CCMenuItemFont::itemWithString("RGB8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    item3->setTag(2);
+    
+    CCMenuItem *item4 = CCMenuItemFont::itemWithString("RGBA4", this, menu_selector(TextureMemoryAlloc::updateImage));
+    item4->setTag(3);
+    
+    CCMenuItem *item5 = CCMenuItemFont::itemWithString("A8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    item5->setTag(4);
+    
+    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, item4, item5, NULL);
+    menu->alignItemsHorizontally();
+    
+    addChild(menu);
+    
+    CCMenuItemFont *warmup = CCMenuItemFont::itemWithString("warm up texture", this, menu_selector(TextureMemoryAlloc::changeBackgroundVisible));
+    
+    CCMenu *menu2 = CCMenu::menuWithItems(warmup, NULL);
+
+    menu2->alignItemsHorizontally();
+    
+    addChild(menu2);
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    menu2->setPosition(ccp(s.width/2, s.height/4));
+}
+
+void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::CCObject *sender)
+{
+    if (m_pBackground)
+    {
+        m_pBackground->setIsVisible(true);
+    }
+}
+
+void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
+{
+    if (m_pBackground)
+    {
+        m_pBackground->removeFromParentAndCleanup(true);
+    }
+    
+    CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+	
+    int tag = ((CCNode*)sender)->getTag();
+	string file;
+	switch (tag) 
+    {
+		case 0:
+			file = "Images/test_1021x1024.png";
+			break;
+		case 1:
+			file = "Images/test_1021x1024_rgba8888.pvr.gz";
+			break;
+		case 2:
+			file = "Images/test_1021x1024_rgb888.pvr.gz";
+			break;
+		case 3:
+			file = "Images/test_1021x1024_rgba4444.pvr.gz";
+			break;
+		case 4:
+			file = "Images/test_1021x1024_a8.pvr.gz";
+			break;
+	}
+
+    m_pBackground = CCSprite::spriteWithFile(file.c_str());
+    addChild(m_pBackground, -10);
+	
+    m_pBackground->setIsVisible(false);
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    m_pBackground->setPosition(ccp(s.width/2, s.height/2));
+}
+
+string TextureMemoryAlloc::title()
+{
+    return "Texture memory";
+}
+
+string TextureMemoryAlloc::subtitle()
+{
+    return "Testing Texture Memory allocation. Use Instruments + VM Tracker";
 }

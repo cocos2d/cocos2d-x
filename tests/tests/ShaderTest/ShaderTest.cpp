@@ -85,9 +85,9 @@ bool ShaderTestDemo::init()
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
     menu->setPosition(ccp(0, 0));
-    item1->setPosition(s.width/2-100, 30);
-    item2->setPosition(s.width/2, 30);
-    item3->setPosition(s.width/2 + 100, 30);
+    item1->setPosition(s.width/2- item2->getContentSize().width*2, item2->getContentSize().height/2);
+    item2->setPosition(s.width/2, item2->getContentSize().height/2);
+    item3->setPosition(s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2);
     addChild(menu, 1);
 
     return true;

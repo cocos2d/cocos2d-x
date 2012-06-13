@@ -124,7 +124,7 @@ extern "C"
     void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
     {
         const char* str = env->GetStringUTFChars(apkPath, NULL);
-        cocos2d::CCFileUtils::setResourcePath(str);
+        cocos2d::CCFileUtils::sharedFileUtils()->setResourcePath(str);
         env->ReleaseStringUTFChars(apkPath, str);
     }
 }

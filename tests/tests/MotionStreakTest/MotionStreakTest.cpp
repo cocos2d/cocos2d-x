@@ -1,6 +1,12 @@
 #include "MotionStreakTest.h"
 #include "../testResource.h"
 
+enum {
+	kTagLabel = 1,
+	kTagSprite1 = 2,
+	kTagSprite2 = 3,
+};
+
 CCLayer* nextMotionAction();
 CCLayer* backMotionAction();
 CCLayer* restartMotionAction();
@@ -20,16 +26,16 @@ void MotionStreakTest1::onEnter()
     // the root object just rotates around
     m_root = CCSprite::spriteWithFile(s_pPathR1);
     addChild(m_root, 1);
-    m_root->setPosition( CCPointMake(s.width/2, s.height/2) );
+    m_root->setPosition(ccp(s.width/2, s.height/2));
   
     // the target object is offset from root, and the streak is moved to follow it
     m_target = CCSprite::spriteWithFile(s_pPathR1);
     m_root->addChild(m_target);
-    m_target->setPosition( CCPointMake(100,0) );
+    m_target->setPosition(ccp(s.width/4, 0));
 
     // create the streak object and add it to the scene
-    m_streak = CCMotionStreak::streakWithFade(2, 3, 32, ccGREEN, s_streak);
-    addChild( m_streak );
+    streak = CCMotionStreak::streakWithFade(2, 3, 32, ccGREEN, s_streak);
+    addChild(streak);
     // schedule an update on each frame so we can syncronize the streak with the target
     schedule(schedule_selector(MotionStreakTest1::onUpdate));
   
@@ -50,15 +56,12 @@ void MotionStreakTest1::onEnter()
         CCTintTo::actionWithDuration(0.2f, 255, 255, 255),
         NULL));
 
-    m_streak->runAction(colorAction);
-
-    // weak ref
-    streak = m_streak;
+    streak->runAction(colorAction);
 }
 
 void MotionStreakTest1::onUpdate(float delta)
 {
-    m_streak->setPosition( m_target->convertToWorldSpace(CCPointZero) );
+    streak->setPosition( m_target->convertToWorldSpace(CCPointZero) );
 }
 
 std::string MotionStreakTest1::title()
@@ -81,13 +84,10 @@ void MotionStreakTest2::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
         
     // create the streak object and add it to the scene
-    m_streak = CCMotionStreak::streakWithFade(3, 3, 64, ccWHITE, s_streak );
-    addChild( m_streak );
+    streak = CCMotionStreak::streakWithFade(3, 3, 64, ccWHITE, s_streak );
+    addChild(streak);
     
-    m_streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 
-
-    // weak ref
-    streak = m_streak;
+    streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 
 }
 
 void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
@@ -98,12 +98,53 @@ void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
     CCPoint touchLocation = touch->locationInView();    
     touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
     
-    m_streak->setPosition( touchLocation );
+    streak->setPosition( touchLocation );
 }
 
 std::string MotionStreakTest2::title()
 {
     return "MotionStreak test";
+}
+
+//------------------------------------------------------------------
+//
+// Issue1358
+//
+//------------------------------------------------------------------
+
+void Issue1358::onEnter()
+{
+    MotionStreakTest::onEnter();
+    
+    // ask director the the window size
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    
+    streak = CCMotionStreak::streakWithFade(2.0f, 1.0f, 50.0f, ccc3(255, 255, 0), "Images/Icon.png");
+    addChild(streak);
+    
+    
+    m_center  = ccp(size.width/2, size.height/2);
+    m_fRadius = size.width/3;
+    m_fAngle = 0.0f;
+    
+    schedule(schedule_selector(Issue1358::update), 0);
+}
+
+void Issue1358::update(float dt)
+{
+    m_fAngle += 1.0f;
+    streak->setPosition(ccp(m_center.x + cosf(m_fAngle/180 * M_PI)*m_fRadius,
+                            m_center.y + sinf(m_fAngle/ 180 * M_PI)*m_fRadius));
+}
+
+std::string Issue1358::title()
+{
+    return "Issue 1358";
+}
+
+std::string Issue1358::subtitle()
+{
+    return "The tail should use the texture";
 }
 
 //------------------------------------------------------------------
@@ -121,7 +162,7 @@ std::string MotionStreakTest2::title()
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    2
+#define MAX_LAYER    3
 
 CCLayer* createMotionLayer(int nIndex)
 {
@@ -129,6 +170,7 @@ CCLayer* createMotionLayer(int nIndex)
     {
         case 0: return new MotionStreakTest1();
         case 1: return new MotionStreakTest2();
+        case 2: return new Issue1358();
     }
 
     return NULL;
@@ -180,6 +222,11 @@ std::string MotionStreakTest::title()
     return "No title";
 }
 
+std::string MotionStreakTest::subtitle()
+{
+    return "";
+}
+
 void MotionStreakTest::onEnter()
 {
     CCLayer::onEnter();
@@ -187,8 +234,16 @@ void MotionStreakTest::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
-    addChild(label, 1);
-    label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    addChild(label, 0, kTagLabel);
+    label->setPosition(CCPointMake(s.width/2, s.height-50));
+    
+    string subTitle = this->subtitle();
+    if (subTitle.size() > 0)
+    {
+        CCLabelTTF *l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
+        addChild(l, 1);
+        l->setPosition(ccp(s.width/2, s.height-80));
+    }
 
     CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(MotionStreakTest::backCallback) );
     CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(MotionStreakTest::restartCallback) );
@@ -196,22 +251,22 @@ void MotionStreakTest::onEnter()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
+    menu->setPosition(CCPointZero);
+    item1->setPosition(CCPointMake(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(CCPointMake(s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(CCPointMake(s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 
     CCMenuItemToggle *itemMode = CCMenuItemToggle::itemWithTarget(this, menu_selector(MotionStreakTest::modeCallback),
-        CCMenuItemFont::itemWithString("Fast"),
-        CCMenuItemFont::itemWithString("Slow"),
+        CCMenuItemFont::itemWithString("Use High Quality Mode"),
+        CCMenuItemFont::itemWithString("Use Fast Mode"),
         NULL);
 
     CCMenu *menuMode = CCMenu::menuWithItems(itemMode, NULL);
     addChild(menuMode);
 
-    menuMode->setPosition(ccp(30, 65));
+    menuMode->setPosition(ccp(s.width/2, s.height/4));
 }
 
 void MotionStreakTest::modeCallback(CCObject *pSender)

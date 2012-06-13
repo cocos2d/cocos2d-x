@@ -123,9 +123,9 @@ void TestCocosNodeDemo::onEnter()
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
+    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
+    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
     
     addChild(menu, 11);    
 }
@@ -482,7 +482,7 @@ SchedulerTest1::SchedulerTest1()
     //UXLOG("retain count after addChild is %d", layer->retainCount());      // 2
     
     layer->schedule( schedule_selector(SchedulerTest1::doSomething) );
-    //UXLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because floatr class don't save target.
+    //UXLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
     
     layer->unschedule(schedule_selector(SchedulerTest1::doSomething));
     //UXLOG("retain count after unschedule is %d", layer->retainCount());        // STILL 3!  (win32 is '2')

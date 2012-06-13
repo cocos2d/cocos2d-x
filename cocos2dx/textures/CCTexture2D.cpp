@@ -179,10 +179,13 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
     // XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-    bool useDefaultAlignment = kCCTexture2DPixelFormat_RGBA8888 && ccNextPOT(pixelsWide)==pixelsWide && ccNextPOT(pixelsHigh)==pixelsHigh;
-    if(!useDefaultAlignment)
+    if( pixelFormat == kCCTexture2DPixelFormat_RGBA8888 || ( ccNextPOT(pixelsWide)==pixelsWide && ccNextPOT(pixelsHigh)==pixelsHigh) )
     {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+    }
+    else
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
     }
 
     glGenTextures(1, &m_uName);
@@ -224,12 +227,6 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     default:
         CCAssert(0, "NSInternalInconsistencyException");
 
-    }
-
-    if(!useDefaultAlignment)
-    {
-        // Revert to default alignment
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
     }
 
     m_tContentSize = contentSize;
@@ -430,19 +427,14 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 // implementation CCTexture2D (Text)
 bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
 {
-    return initWithString(text, CCSizeMake(0,0), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, kCCLineBreakModeWordWrap, fontName, fontSize);
+    return initWithString(text, CCSizeMake(0,0), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, fontName, fontSize);
 }
 
 bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
 {
-    return initWithString(text, dimensions, hAlignment, vAlignment, kCCLineBreakModeWordWrap, fontName, fontSize);
-}
-
-bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, CCLineBreakMode lineBreakMode, const char *fontName, float fontSize)
-{
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data
-    VolatileTexture::addStringTexture(this, text, dimensions, alignment, fontName, fontSize);
+    VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
 #endif
 
     CCImage image;
@@ -670,6 +662,50 @@ void CCTexture2D::setAntiAliasTexParameters()
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 }
 
+const char* CCTexture2D::stringForFormat()
+{
+	switch (m_ePixelFormat) 
+	{
+		case kCCTexture2DPixelFormat_RGBA8888:
+			return  "RGBA8888";
+
+		case kCCTexture2DPixelFormat_RGB888:
+			return  "RGB888";
+
+		case kCCTexture2DPixelFormat_RGB565:
+			return  "RGB565";
+
+		case kCCTexture2DPixelFormat_RGBA4444:
+			return  "RGBA4444";
+
+		case kCCTexture2DPixelFormat_RGB5A1:
+			return  "RGB5A1";
+
+		case kCCTexture2DPixelFormat_AI88:
+			return  "AI88";
+
+		case kCCTexture2DPixelFormat_A8:
+			return  "A8";
+
+		case kCCTexture2DPixelFormat_I8:
+			return  "I8";
+
+		case kCCTexture2DPixelFormat_PVRTC4:
+			return  "PVRTC4";
+
+		case kCCTexture2DPixelFormat_PVRTC2:
+			return  "PVRTC2";
+
+		default:
+			CCAssert(false , "unrecognised pixel format");
+			CCLOG("stringForFormat: %ld, cannot give useful result", (long)m_ePixelFormat);
+			break;
+	}
+
+	return  NULL;
+}
+
+
 //
 // Texture options for images that contains alpha
 //
@@ -686,50 +722,55 @@ CCTexture2DPixelFormat CCTexture2D::defaultAlphaPixelFormat()
     return g_defaultAlphaPixelFormat;
 }
 
+unsigned int CCTexture2D::bitsPerPixelForFormat(CCTexture2DPixelFormat format)
+{
+	unsigned int ret=0;
+
+	switch (format) {
+		case kCCTexture2DPixelFormat_RGBA8888:
+			ret = 32;
+			break;
+		case kCCTexture2DPixelFormat_RGB888:
+			// It is 32 and not 24, since its internal representation uses 32 bits.
+			ret = 32;
+			break;
+		case kCCTexture2DPixelFormat_RGB565:
+			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_RGBA4444:
+			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_RGB5A1:
+			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_AI88:
+			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_A8:
+			ret = 8;
+			break;
+		case kCCTexture2DPixelFormat_I8:
+			ret = 8;
+			break;
+		case kCCTexture2DPixelFormat_PVRTC4:
+			ret = 4;
+			break;
+		case kCCTexture2DPixelFormat_PVRTC2:
+			ret = 2;
+			break;
+		default:
+			ret = -1;
+			CCAssert(false , "unrecognised pixel format");
+			CCLOG("bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
+			break;
+	}
+	return ret;
+}
+
 unsigned int CCTexture2D::bitsPerPixelForFormat()
 {
-    unsigned int ret = 0;
-
-    switch (m_ePixelFormat) 
-    {
-        case kCCTexture2DPixelFormat_RGBA8888:
-            ret = 32;
-            break;
-        case kCCTexture2DPixelFormat_RGB565:
-            ret = 16;
-            break;
-        case kCCTexture2DPixelFormat_A8:
-            ret = 8;
-            break;
-        case kCCTexture2DPixelFormat_RGBA4444:
-            ret = 16;
-            break;
-        case kCCTexture2DPixelFormat_RGB5A1:
-            ret = 16;
-            break;
-        case kCCTexture2DPixelFormat_PVRTC4:
-            ret = 4;
-            break;
-        case kCCTexture2DPixelFormat_PVRTC2:
-            ret = 2;
-            break;
-        case kCCTexture2DPixelFormat_I8:
-            ret = 8;
-            break;
-        case kCCTexture2DPixelFormat_AI88:
-            ret = 16;
-            break;
-        case kCCTexture2DPixelFormat_RGB888:
-            // It is 32 and not 24, since its internal representation uses 32 bits.
-            ret = 32;
-            break;
-        default:
-            ret = -1;
-            CCAssert(false, "illegal pixel format");
-            CCLOG("bitsPerPixelForFormat: %d, cannot give useful result", m_ePixelFormat);
-            break;
-    }
-    return ret;
+	return this->bitsPerPixelForFormat(m_ePixelFormat);
 }
+
 
 NS_CC_END

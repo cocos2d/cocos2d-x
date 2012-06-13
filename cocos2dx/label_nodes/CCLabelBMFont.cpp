@@ -35,7 +35,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "platform/platform.h"
 #include "CCDictionary.h"
 #include "CCConfiguration.h"
-#include "CCTextureCache.h"
 #include "CCDrawingPrimitives.h"
 #include "CCSprite.h"
 #include "CCPointExtension.h"
@@ -782,12 +781,12 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset)
 {
-    CCAssert(!this->m_pConfiguration, "re-init is no longer supported");
-    CCAssert((theString != NULL && fntFile != NULL) || (theString == NULL && fntFile == NULL), "Invalid params for CCLabelBMFont");
+    CCAssert(!m_pConfiguration, "re-init is no longer supported");
+    CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for CCLabelBMFont");
     
     CCTexture2D *texture = NULL;
     
-    if (fntFile != NULL)
+    if (fntFile)
     {
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
         CCAssert(newConf, "CCLabelBMFont: Impossible to create font. Please check file");
@@ -806,23 +805,22 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         texture->autorelease();
     }
 
-    if (CCSpriteBatchNode::initWithTexture(texture, (theString == NULL) ? 0 : strlen(theString)))
+    if (theString == NULL)
     {
-        m_fWidth = width;
+        theString = "";
+    }
+
+    if (CCSpriteBatchNode::initWithTexture(texture, strlen(theString)))
+    {
         m_pAlignment = alignment;
+        m_tImageOffset = imageOffset;
+        m_fWidth = width;
         m_cOpacity = 255;
         m_tColor = ccWHITE;
-
         m_tContentSize = CCSizeZero;
-
         m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
-        
+        this->setString(theString);
         setAnchorPoint(ccp(0.5f, 0.5f));
-
-        m_tImageOffset = imageOffset;
-
-        this->setString((theString == NULL) ? "" : theString);
-
         return true;
     }
     return false;
@@ -841,8 +839,8 @@ CCLabelBMFont::CCLabelBMFont()
 
 CCLabelBMFont::~CCLabelBMFont()
 {
-    CC_SAFE_DELETE(this->m_sString);
-    CC_SAFE_RELEASE(this->m_pConfiguration);
+    CC_SAFE_DELETE(m_sString);
+    CC_SAFE_RELEASE(m_pConfiguration);
 }
 
 // LabelBMFont - Atlas generation
@@ -1341,19 +1339,6 @@ void CCLabelBMFont::setWidth(float width)
     updateLabel();
 }
 
-void CCLabelBMFont::setFntFile(const char *fntFile)
-{
-    this->m_sFntFile = fntFile;
-    CCBMFontConfiguration * newConfiguration = FNTConfigLoadFile(fntFile);
-    
-    CCAssert(newConfiguration, printf("CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile) );
-    CC_SAFE_RELEASE(this->m_pConfiguration);
-    this->m_pConfiguration = newConfiguration;
-    this->m_pConfiguration->retain();
-    this->setTexture(CCTextureCache::sharedTextureCache()->addImage(this->m_pConfiguration->m_sAtlasName.c_str()));
-    this->createFontChars();
-}
-
 void CCLabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
 {
     m_bLineBreakWithoutSpaces = breakWithoutSpace;
@@ -1387,10 +1372,33 @@ float CCLabelBMFont::getLetterPosXRight( CCSprite* sp )
 {
     return sp->getPosition().x * m_fScaleX + (sp->getContentSize().width * m_fScaleX * sp->getAnchorPoint().x);
 }
-const char * CCLabelBMFont::getFntFile()
+
+// LabelBMFont - FntFile
+void CCLabelBMFont::setFntFile(const char* fntFile)
 {
-    return this->m_sFntFile.c_str();
+    if (fntFile != NULL && strcmp(fntFile, m_sFntFile.c_str()) != 0 )
+    {
+        CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
+
+        CCAssert( newConf, "CCLabelBMFont: Impossible to create font. Please check file");
+
+        m_sFntFile = fntFile;
+
+        CC_SAFE_RELEASE(m_pConfiguration);
+        CC_SAFE_RETAIN(newConf);
+        m_pConfiguration = newConf;
+
+        this->setTexture(CCTextureCache::sharedTextureCache()->addImage(m_pConfiguration->getAtlasName()));
+        this->createFontChars();
+    }
 }
+
+const char* CCLabelBMFont::getFntFile()
+{
+    return m_sFntFile.c_str();
+}
+
+
 //LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW
 void CCLabelBMFont::draw()

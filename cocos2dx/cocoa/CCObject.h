@@ -25,13 +25,12 @@ THE SOFTWARE.
 #ifndef __CCOBJECT_H__
 #define __CCOBJECT_H__
 
-#include "CCCommon.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
 class CCZone;
 class CCObject;
-class CCString;
 class CCNode;
 class CCEvent;
 
@@ -64,7 +63,7 @@ public:
     bool isSingleRefrence(void);
     unsigned int retainCount(void);
     virtual bool isEqual(const CCObject* pObject);
-    
+
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
     friend class CCAutoreleasePool;

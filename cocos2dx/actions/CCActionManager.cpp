@@ -140,7 +140,7 @@ void CCActionManager::resumeTarget(CCObject *pTarget)
     }
 }
 
-CCSet* CCActionManager::pauseAlllRunningActions()
+CCSet* CCActionManager::pauseAllRunningActions()
 {
     CCSet *idsWithActions = new CCSet();
     idsWithActions->autorelease();
