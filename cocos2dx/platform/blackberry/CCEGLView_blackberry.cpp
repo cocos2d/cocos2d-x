@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCEGLView_qnx.h"
+#include "CCEGLView_blackberry.h"
 #include "GLES/gl.h"
 
 #include <ctype.h>
@@ -34,8 +34,10 @@ THE SOFTWARE.
 #include <bps/screen.h>
 #include <bps/navigator.h>
 #include <bps/orientation.h>
+#include <bps/sensor.h>
 #include <bps/virtualkeyboard.h>
 
+#include "CCAccelerometer.h"
 #include "CCSet.h"
 #include "CCDirector.h"
 #include "CCApplication.h"
@@ -101,6 +103,11 @@ CCEGLView::CCEGLView()
     bps_initialize();
     navigator_request_events(0);
     virtualkeyboard_request_events(0);
+
+    static const int SENSOR_RATE = 25000;
+    sensor_set_rate(SENSOR_TYPE_ACCELEROMETER, SENSOR_RATE);
+//    sensor_set_skip_duplicates(SENSOR_TYPE_ACCELEROMETER, true);
+    sensor_request_events(SENSOR_TYPE_ACCELEROMETER);
 
     navigator_rotation_lock(true);
 
@@ -574,7 +581,7 @@ bool CCEGLView::createNativeWindow(const EGLConfig &config)
 		return false;
 	}
 
-err = screen_create_window_group(m_screenWindow, m_window_group_id);
+	err = screen_create_window_group(m_screenWindow, m_window_group_id);
 	if (err)
 	{
 		fprintf(stderr, "screen_create_window_group");
@@ -619,69 +626,88 @@ err = screen_create_window_group(m_screenWindow, m_window_group_id);
 		return false;
 	}
 
-	screen_display_t screen_disp;
-    int rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&screen_disp);
-    if (rc)
-    {
-    	fprintf(stderr, "screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
-        return false;
-    }
+	char *width_str = getenv("WIDTH");
+	char *height_str = getenv("HEIGHT");
 
-	screen_display_mode_t screen_mode;
-	rc = screen_get_display_property_pv(screen_disp, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
-	if (rc)
+	if (width_str && height_str)
 	{
-		fprintf(stderr, "screen_get_display_property_pv(SCREEN_PROPERTY_MODE)");
-	    return false;
-	}
+		int screen_res[2];
+		screen_res[0] = atoi(width_str);
+		screen_res[1] = atoi(height_str);
 
-    int size[2];
-	rc = screen_get_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, size);
-	if (rc)
-	{
-		fprintf(stderr, "screen_get_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
-		return false;
-	}
-
-	int angle = atoi(getenv("ORIENTATION"));
-	int buffer_size[2] = { size[0], size[1] };
-
-	if ((angle == 0) || (angle == 180))
-	{
-		if (((screen_mode.width > screen_mode.height) && (size[0] < size[1])) ||
-			((screen_mode.width < screen_mode.height) && (size[0] > size[1])))
+		int rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, screen_res);
+		if (rc)
 		{
-			buffer_size[1] = size[0];
-			buffer_size[0] = size[1];
-		}
-	}
-	else if ((angle == 90) || (angle == 270))
-	{
-		if (((screen_mode.width > screen_mode.height) && (size[0] > size[1])) ||
-			((screen_mode.width < screen_mode.height && size[0] < size[1])))
-		{
-			buffer_size[1] = size[0];
-			buffer_size[0] = size[1];
+			fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
+			return false;
 		}
 	}
 	else
 	{
-		fprintf(stderr, "Navigator returned an unexpected orientation angle of %d.\n", angle);
-		return false;
-	}
+		screen_display_t screen_disp;
+		int rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&screen_disp);
+		if (rc)
+		{
+			fprintf(stderr, "screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
+			return false;
+		}
 
-	rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, buffer_size);
-	if (rc)
-	{
-		fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
-		return false;
-	}
+		screen_display_mode_t screen_mode;
+		rc = screen_get_display_property_pv(screen_disp, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
+		if (rc)
+		{
+			fprintf(stderr, "screen_get_display_property_pv(SCREEN_PROPERTY_MODE)");
+			return false;
+		}
 
-	rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_ROTATION, &angle);
-	if (rc)
-	{
-		fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_ROTATION)");
-		return false;
+		int size[2];
+		rc = screen_get_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, size);
+		if (rc)
+		{
+			fprintf(stderr, "screen_get_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
+			return false;
+		}
+
+		int angle = atoi(getenv("ORIENTATION"));
+		int buffer_size[2] = { size[0], size[1] };
+
+		if ((angle == 0) || (angle == 180))
+		{
+			if (((screen_mode.width > screen_mode.height) && (size[0] < size[1])) ||
+				((screen_mode.width < screen_mode.height) && (size[0] > size[1])))
+			{
+				buffer_size[1] = size[0];
+				buffer_size[0] = size[1];
+			}
+		}
+		else if ((angle == 90) || (angle == 270))
+		{
+			if (((screen_mode.width > screen_mode.height) && (size[0] > size[1])) ||
+				((screen_mode.width < screen_mode.height && size[0] < size[1])))
+			{
+				buffer_size[1] = size[0];
+				buffer_size[0] = size[1];
+			}
+		}
+		else
+		{
+			fprintf(stderr, "Navigator returned an unexpected orientation angle of %d.\n", angle);
+			return false;
+		}
+
+		rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, buffer_size);
+		if (rc)
+		{
+			fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
+			return false;
+		}
+
+		rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_ROTATION, &angle);
+		if (rc)
+		{
+			fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_ROTATION)");
+			return false;
+		}
 	}
 
 	err = screen_create_window_buffers(m_screenWindow, nbuffers);
@@ -835,6 +861,11 @@ void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 EGLTouchDelegate* CCEGLView::getDelegate(void)
 {
 	return m_pDelegate;
+}
+
+static long time2millis(struct timespec *times)
+{
+    return times->tv_sec*1000 + times->tv_nsec/1000000;
 }
 
 bool CCEGLView::HandleEvents()
@@ -1137,6 +1168,21 @@ bool CCEGLView::HandleEvents()
 					break;
 			}
 		}
+        else if (domain == sensor_get_domain())
+        {
+            if (bps_event_get_code(event) == SENSOR_ACCELEROMETER_READING)
+            {
+            	struct timespec time_struct;
+            	long current_time;
+                float x, y, z;
+
+                clock_gettime(CLOCK_REALTIME, &time_struct);
+                current_time = time2millis(&time_struct);
+
+                sensor_event_get_xyz(event, &x, &y, &z);
+                CCAccelerometer::sharedAccelerometer()->update(current_time, -x, -y, z);
+            }
+        }
 	}
 
 	return true;

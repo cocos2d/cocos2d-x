@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_QNX_CCACCELEROMETER_H__
-#define __PLATFORM_QNX_CCACCELEROMETER_H__
+#ifndef __PLATFORM_CCACCELEROMETER_BLACKBERRY_H__
+#define __PLATFORM_CCACCELEROMETER_BLACKBERRY_H__
 
 #include "CCCommon.h"
 #include "CCAccelerometerDelegate.h"
@@ -40,7 +40,7 @@ public:
     static CCAccelerometer* sharedAccelerometer();
 
     void setDelegate(CCAccelerometerDelegate* pDelegate);
-    void update(long sensorTimeStamp);
+    void update(long sensorTimeStamp, double x, double y, double z);
 
 private:
 

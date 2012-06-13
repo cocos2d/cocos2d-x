@@ -45,7 +45,7 @@ build for which target platform
 #define CC_PLATFORM_MARMALADE          5
 #define CC_PLATFORM_LINUX              6
 #define CC_PLATFORM_BADA               7
-#define CC_PLATFORM_QNX				   8
+#define CC_PLATFORM_BLACKBERRY		   8
 
 // Determine tartet platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -104,7 +104,7 @@ build for which target platform
 // qnx
 #if ! CC_TARGET_PLATFORM && defined(__QNX__)
     #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM     CC_PLATFORM_QNX
+    #define CC_TARGET_PLATFORM     CC_PLATFORM_BLACKBERRY
 #endif
 
 //////////////////////////////////////////////////////////////////////////
@@ -146,9 +146,9 @@ build for which target platform
 #define CC_TARGET_PLATFORM			   CC_PLATFORM_BADA
 #endif
 
-#if defined(CC_UNDER_QNX)
+#if defined(CC_UNDER_BLACKBERRY)
 #undef  CC_TARGET_PLATFORM
-#define CC_TARGET_PLATFORM        	  CC_PLATFORM_QNX
+#define CC_TARGET_PLATFORM        	  CC_PLATFORM_BLACKBERRY
 #endif
 
 // Check user assigned supportive of multi-thread
