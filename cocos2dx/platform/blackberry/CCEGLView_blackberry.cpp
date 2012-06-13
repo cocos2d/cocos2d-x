@@ -102,6 +102,7 @@ CCEGLView::CCEGLView()
     snprintf(m_window_group_id, sizeof(m_window_group_id), "%d", getpid());
     bps_initialize();
     navigator_request_events(0);
+    virtualkeyboard_request_events(0);
 
     static const int SENSOR_RATE = 25000;
     sensor_set_rate(SENSOR_TYPE_ACCELEROMETER, SENSOR_RATE);
@@ -946,10 +947,23 @@ bool CCEGLView::HandleEvents()
 					break;
 			}
 		}
+		else if (domain == virtualkeyboard_get_domain())
+		{
+		  switch (bps_event_get_code(event))
+		  {
+		    case VIRTUALKEYBOARD_EVENT_VISIBLE:
+		      showKeyboard(false);
+		      break;
+		    case VIRTUALKEYBOARD_EVENT_HIDDEN:
+		      hideKeyboard(false);
+		      break;
+		    case VIRTUALKEYBOARD_EVENT_INFO:
+		      break;
+		  }
+		}
 		else if (domain == screen_get_domain())
 		{
 			m_screenEvent = screen_event_get_event(event);
-
 			rc = screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_TYPE, &val);
 			if (rc || val == SCREEN_EVENT_NONE)
 				break;
@@ -1278,7 +1292,7 @@ bool CCEGLView::isGLExtension(const char *searchName) const
 	return false;
 }
 
-void CCEGLView::showKeyboard()
+void CCEGLView::showKeyboard(bool will)
 {
 	int height;
 
@@ -1290,27 +1304,37 @@ void CCEGLView::showKeyboard()
 	CCRect rect_begin(0, 0 - height, m_sSizeInPixel.width / factor, height);
 	CCRect rect_end(0, 0, m_sSizeInPixel.width / factor, height);
 
-    CCIMEKeyboardNotificationInfo info;
-    info.begin = rect_begin;
-    info.end = rect_end;
-    info.duration = 0;
+  CCIMEKeyboardNotificationInfo info;
+  info.begin = rect_begin;
+  info.end = rect_end;
+  info.duration = 0;
 
+  if (will) {
     CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
-    virtualkeyboard_show();
+  } else {
     CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
+  }
 }
 
-void CCEGLView::hideKeyboard()
+void CCEGLView::hideKeyboard(bool will)
 {
-	virtualkeyboard_hide();
+  CCIMEKeyboardNotificationInfo info;
+  if (will) {
+    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillHide(info);
+  } else {
+    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidHide(info);
+  }
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-	if (bOpen)
-		showKeyboard();
-	else
-		hideKeyboard();
+	if (bOpen) {
+		showKeyboard(true);
+    virtualkeyboard_show();
+	} else {
+		hideKeyboard(true);
+	  virtualkeyboard_hide();
+	}
 }
 
 }       // end of namespace cocos2d
