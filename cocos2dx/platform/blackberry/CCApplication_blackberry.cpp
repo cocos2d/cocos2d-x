@@ -2,7 +2,6 @@
 
 #include "CCDirector.h"
 #include "CCEGLView.h"
-#include "CCAccelerometer.h"
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
@@ -59,8 +58,6 @@ int CCApplication::run()
 		if ((current_time - update_time) > m_animationInterval)
 		{
 			update_time = current_time;
-
-			CCAccelerometer::sharedAccelerometer()->update(current_time);
 			CCDirector::sharedDirector()->mainLoop();
 		}
 		else
