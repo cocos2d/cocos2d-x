@@ -55,46 +55,44 @@ enum {
     
 static char gPVRTexIdentifier[5] = "PVR!";
 
-/*
-    List of formats in pvr container
-*/
 enum
 {
-    kPVRTextureFlagTypeRGBA_4444= 0x10,
-    kPVRTextureFlagTypeRGBA_5551,
-    kPVRTextureFlagTypeRGBA_8888,
-    kPVRTextureFlagTypeRGB_565,
-    kPVRTextureFlagTypeRGB_555,                // unsupported
-    kPVRTextureFlagTypeRGB_888,                
-    kPVRTextureFlagTypeI_8,
-    kPVRTextureFlagTypeAI_88,
-    kPVRTextureFlagTypePVRTC_2,
-    kPVRTextureFlagTypePVRTC_4,    
-    kPVRTextureFlagTypeBGRA_8888,
-    kPVRTextureFlagTypeA_8,
+	kPVRTexturePixelTypeRGBA_4444= 0x10,
+	kPVRTexturePixelTypeRGBA_5551,
+	kPVRTexturePixelTypeRGBA_8888,
+	kPVRTexturePixelTypeRGB_565,
+	kPVRTexturePixelTypeRGB_555,				// unsupported
+	kPVRTexturePixelTypeRGB_888,
+	kPVRTexturePixelTypeI_8,
+	kPVRTexturePixelTypeAI_88,
+	kPVRTexturePixelTypePVRTC_2,
+	kPVRTexturePixelTypePVRTC_4,
+	kPVRTexturePixelTypeBGRA_8888,
+	kPVRTexturePixelTypeA_8,
 };
 
 static const unsigned int tableFormats[][7] = {
     
-    // - PVR texture format
-    // - OpenGL internal format
-    // - OpenGL format
-    // - OpenGL type
-    // - bpp
-    // - compressed
-    // - Cocos2d texture format constant
-    {kPVRTextureFlagTypeRGBA_4444, GL_RGBA,           GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4,    16, false, kCCTexture2DPixelFormat_RGBA4444},
-    {kPVRTextureFlagTypeRGBA_5551, GL_RGBA,           GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1,    16, false, kCCTexture2DPixelFormat_RGB5A1},
-    {kPVRTextureFlagTypeRGBA_8888, GL_RGBA,           GL_RGBA, GL_UNSIGNED_BYTE,             32, false, kCCTexture2DPixelFormat_RGBA8888},
-    {kPVRTextureFlagTypeRGB_565,   GL_RGB,             GL_RGB,  GL_UNSIGNED_SHORT_5_6_5,     16, false, kCCTexture2DPixelFormat_RGB565},
-    {kPVRTextureFlagTypeA_8,       GL_ALPHA,           GL_ALPHA,GL_UNSIGNED_BYTE,            8,  false, kCCTexture2DPixelFormat_A8},
-    {kPVRTextureFlagTypeI_8,       GL_LUMINANCE,       GL_LUMINANCE,   GL_UNSIGNED_BYTE,     8,  false, kCCTexture2DPixelFormat_I8    },
-    {kPVRTextureFlagTypeAI_88,     GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, kCCTexture2DPixelFormat_AI88 },
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    {kPVRTextureFlagTypePVRTC_2,   GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,    2,    true, kCCTexture2DPixelFormat_PVRTC2 },
-    {kPVRTextureFlagTypePVRTC_4,   GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,    4,    true, kCCTexture2DPixelFormat_PVRTC4 },
-    {kPVRTextureFlagTypeBGRA_8888, GL_RGBA,    GL_BGRA, GL_UNSIGNED_BYTE,          32,   false, kCCTexture2DPixelFormat_RGBA8888    },
-#endif
+	// - PVR texture format
+	// - OpenGL internal format
+	// - OpenGL format
+	// - OpenGL type
+	// - bpp
+	// - compressed
+	// - Cocos2d texture format constant
+	{ kPVRTexturePixelTypeRGBA_4444, GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4,			16, false, kCCTexture2DPixelFormat_RGBA4444	},
+	{ kPVRTexturePixelTypeRGBA_5551, GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1,			16, false, kCCTexture2DPixelFormat_RGB5A1	},
+	{ kPVRTexturePixelTypeRGBA_8888, GL_RGBA,	GL_RGBA, GL_UNSIGNED_BYTE,					32, false, kCCTexture2DPixelFormat_RGBA8888	},
+	{ kPVRTexturePixelTypeRGB_565,	 GL_RGB,	GL_RGB,	 GL_UNSIGNED_SHORT_5_6_5,			16, false, kCCTexture2DPixelFormat_RGB565	},
+	{ kPVRTexturePixelTypeRGB_888,	 GL_RGB,	GL_RGB,	 GL_UNSIGNED_BYTE,					24, false,	kCCTexture2DPixelFormat_RGB888	},
+	{ kPVRTexturePixelTypeA_8,		 GL_ALPHA,	GL_ALPHA,	GL_UNSIGNED_BYTE,				8,	false, kCCTexture2DPixelFormat_A8		},
+	{ kPVRTexturePixelTypeI_8,		 GL_LUMINANCE,	GL_LUMINANCE,	GL_UNSIGNED_BYTE,		8,	false, kCCTexture2DPixelFormat_I8		},
+	{ kPVRTexturePixelTypeAI_88,	 GL_LUMINANCE_ALPHA,	GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,16,	false, kCCTexture2DPixelFormat_AI88	},
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)  
+	{ kPVRTexturePixelTypePVRTC_2,	 GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,			2,	true, kCCTexture2DPixelFormat_PVRTC2	},
+	{ kPVRTexturePixelTypePVRTC_4,	 GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,			4,	true, kCCTexture2DPixelFormat_PVRTC4	},
+#endif // iphone only
+	{ kPVRTexturePixelTypeBGRA_8888, GL_RGBA,	GL_BGRA, GL_UNSIGNED_BYTE,					32,	false, kCCTexture2DPixelFormat_RGBA8888	},
 };
 
 //Tells How large is tableFormats
@@ -234,17 +232,17 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
             while (dataOffset < dataLength)
             {
                 switch (formatFlags) {
-                    case kPVRTextureFlagTypePVRTC_2:
+                    case kPVRTexturePixelTypePVRTC_2:
                         blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
                         widthBlocks = width / 8;
                         heightBlocks = height / 4;
                         break;
-                    case kPVRTextureFlagTypePVRTC_4:
+                    case kPVRTexturePixelTypePVRTC_4:
                         blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
                         widthBlocks = width / 4;
                         heightBlocks = height / 4;
                         break;
-                    case kPVRTextureFlagTypeBGRA_8888:
+                    case kPVRTexturePixelTypeBGRA_8888:
                         if (CCConfiguration::sharedConfiguration()->isSupportsBGRA8888() == false) 
                         {
                             CCLOG("cocos2d: TexturePVR. BGRA8888 not supported on this device");
