@@ -65,6 +65,7 @@ extensions/CCBReader/CCControlButtonLoader.cpp \
 extensions/CCBReader/CCControlLoader.cpp \
 extensions/CCBReader/CCLabelBMFontLoader.cpp \
 extensions/CCBReader/CCLabelTTFLoader.cpp \
+extensions/CCBReader/CCLayerLoader.cpp \
 extensions/CCBReader/CCLayerColorLoader.cpp \
 extensions/CCBReader/CCLayerGradientLoader.cpp \
 extensions/CCBReader/CCMenuLoader.cpp \
@@ -72,6 +73,7 @@ extensions/CCBReader/CCMenuItemLoader.cpp \
 extensions/CCBReader/CCMenuItemImageLoader.cpp \
 extensions/CCBReader/CCSpriteLoader.cpp \
 extensions/CCBReader/CCScale9SpriteLoader.cpp \
+extensions/CCBReader/CCParticleSystemQuadLoader.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
