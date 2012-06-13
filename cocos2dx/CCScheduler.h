@@ -40,13 +40,13 @@ NS_CC_BEGIN
 
 class CCSet;
 //
-// floatr
+// CCTimer
 //
 /** @brief Light weight timer */
-class CC_DLL floatr : public CCObject
+class CC_DLL CCTimer : public CCObject
 {
 public:
-    floatr(void);
+    CCTimer(void);
 
     /** get interval in seconds */
     inline float getInterval(void) { return m_fInterval; }
@@ -67,13 +67,13 @@ public:
 
 public:
     /** Allocates a timer with a target and a selector. */
-    static floatr* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
+    static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
 
     /** Allocates a timer with a target, a selector and an interval in seconds. */
-    static floatr* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
+    static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
 
     /** Allocates a timer with a script callback function and an interval in seconds. */
-    static floatr* timerWithScriptHandler(int nHandler, float fSeconds);
+    static CCTimer* timerWithScriptHandler(int nHandler, float fSeconds);
 
 public:
     SEL_SCHEDULE m_pfnSelector;

@@ -601,6 +601,33 @@ void CCControlButton::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     }
 }
 
+void CCControlButton::setOpacity(GLubyte opacity)
+{
+    m_cOpacity = opacity;
+    
+    CCObject* child;
+    CCArray* children=getChildren();
+    CCARRAY_FOREACH(children, child)
+    {
+        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
+        if (pNode)
+        {
+            pNode->setOpacity(opacity);
+        }
+    }
+    CCDictElement * item = NULL;
+    CCDICT_FOREACH(m_backgroundSpriteDispatchTable, item)
+    {
+        CCScale9Sprite* sprite = (CCScale9Sprite*)item->getObject();
+        sprite->setOpacity(opacity);
+    }
+}
+
+GLubyte CCControlButton::getOpacity()
+{
+    return m_cOpacity;
+}
+
 void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     m_nState = CCControlStateNormal;

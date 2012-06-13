@@ -5,7 +5,7 @@ enum {
     kTagAnimationDance = 1,
 };
 
-#define MAX_TESTS           11
+#define MAX_TESTS           13
 static int sceneIdx = -1;
 
 CCLayer* nextSchedulerTest();
@@ -29,16 +29,20 @@ CCLayer* createSchedulerTest(int nIndex)
     case 4:
         pLayer = new SchedulerPauseResume(); break;
     case 5:
-        pLayer = new SchedulerUnscheduleAll(); break;
+        pLayer = new SchedulerPauseResumeAll(); break;
     case 6:
-        pLayer = new SchedulerUnscheduleAllHard(); break;
+        pLayer = new SchedulerUnscheduleAll(); break;
     case 7:
-        pLayer = new SchedulerSchedulesAndRemove(); break;
+        pLayer = new SchedulerUnscheduleAllHard(); break;
     case 8:
-        pLayer = new SchedulerUpdate(); break;
+        pLayer = new SchedulerUnscheduleAllUserLevel(); break;
     case 9:
-        pLayer = new SchedulerUpdateAndCustom(); break;
+        pLayer = new SchedulerSchedulesAndRemove(); break;
     case 10:
+        pLayer = new SchedulerUpdate(); break;
+    case 11:
+        pLayer = new SchedulerUpdateAndCustom(); break;
+    case 12:
         pLayer = new SchedulerUpdateFromCustom(); break;
     default:
         break;
@@ -100,9 +104,9 @@ void SchedulerTestLayer::onEnter()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
-    item1->setPosition(ccp( s.width/2 - 100,30));
-    item2->setPosition(ccp( s.width/2, 30));
-    item3->setPosition(ccp( s.width/2 + 100,30));
+    item1->setPosition(ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(ccp( s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
 
     addChild(menu, 1);
 }
@@ -229,6 +233,163 @@ std::string SchedulerPauseResume::subtitle()
 
 //------------------------------------------------------------------
 //
+// SchedulerPauseResumeAll
+//
+//------------------------------------------------------------------
+
+SchedulerPauseResumeAll::SchedulerPauseResumeAll()
+: m_pPausedTargets(NULL)
+{
+    
+}
+
+SchedulerPauseResumeAll::~SchedulerPauseResumeAll()
+{
+    CC_SAFE_RELEASE(m_pPausedTargets);
+}
+
+void SchedulerPauseResumeAll::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    sprite->setPosition(ccp(s.width/2, s.height/2));
+    this->addChild(sprite);
+    sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3.0, 360)));
+
+    schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
+    schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
+    schedule(schedule_selector(SchedulerPauseResumeAll::pause), 3.0f, false, 0);
+    //TODO: [self performSelector:@selector(resume) withObject:nil afterDelay:5];
+}
+
+void SchedulerPauseResumeAll::onExit()
+{
+    if(m_pPausedTargets != NULL)
+    {
+        CCDirector::sharedDirector()->getScheduler()->resumeTargets(m_pPausedTargets);
+    }
+}
+
+void SchedulerPauseResumeAll::tick1(float dt)
+{
+    CCLog("tick1");
+}
+
+void SchedulerPauseResumeAll::tick2(float dt)
+{
+    CCLog("tick2");
+}
+
+void SchedulerPauseResumeAll::pause(float dt)
+{
+    CCLog("Pausing");
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    m_pPausedTargets = pDirector->getScheduler()->pauseAllTargets();
+    CC_SAFE_RETAIN(m_pPausedTargets);
+}
+
+void SchedulerPauseResumeAll::resume(float dt)
+{
+    CCLog("Resuming");
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getScheduler()->resumeTargets(m_pPausedTargets);
+    CC_SAFE_RELEASE_NULL(m_pPausedTargets);
+}
+
+std::string SchedulerPauseResumeAll::title()
+{
+    return "Pause / Resume";
+}
+
+std::string SchedulerPauseResumeAll::subtitle()
+{
+    return "Everything will pause after 3s, then resume at 5s. See console";
+}
+
+//------------------------------------------------------------------
+//
+// SchedulerPauseResumeAllUser
+//
+//------------------------------------------------------------------
+
+SchedulerPauseResumeAllUser::SchedulerPauseResumeAllUser()
+: m_pPausedTargets(NULL)
+{
+
+}
+
+SchedulerPauseResumeAllUser::~SchedulerPauseResumeAllUser()
+{
+    CC_SAFE_RELEASE(m_pPausedTargets);
+}
+
+void SchedulerPauseResumeAllUser::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    sprite->setPosition(ccp(s.width/2, s.height/2));
+    this->addChild(sprite);
+    sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3.0, 360)));
+
+    schedule(schedule_selector(SchedulerPauseResumeAllUser::tick1), 0.5f);
+    schedule(schedule_selector(SchedulerPauseResumeAllUser::tick2), 1.0f);
+    schedule(schedule_selector(SchedulerPauseResumeAllUser::pause), 3.0f, false, 0);
+    //TODO: [self performSelector:@selector(resume) withObject:nil afterDelay:5];
+}
+
+void SchedulerPauseResumeAllUser::onExit()
+{
+    if(m_pPausedTargets != NULL)
+    {
+        CCDirector::sharedDirector()->getScheduler()->resumeTargets(m_pPausedTargets);
+    }
+}
+
+void SchedulerPauseResumeAllUser::tick1(float dt)
+{
+    CCLog("tick1");
+}
+
+void SchedulerPauseResumeAllUser::tick2(float dt)
+{
+    CCLog("tick2");
+}
+
+void SchedulerPauseResumeAllUser::pause(float dt)
+{
+    CCLog("Pausing");
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    m_pPausedTargets = pDirector->getScheduler()->pauseAllTargetsWithMinPriority(kCCPriorityNonSystemMin);
+    CC_SAFE_RETAIN(m_pPausedTargets);
+}
+
+void SchedulerPauseResumeAllUser::resume(float dt)
+{
+    CCLog("Resuming");
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    pDirector->getScheduler()->resumeTargets(m_pPausedTargets);
+    CC_SAFE_RELEASE_NULL(m_pPausedTargets);
+}
+
+std::string SchedulerPauseResumeAllUser::title()
+{
+    return "Pause / Resume";
+}
+
+std::string SchedulerPauseResumeAllUser::subtitle()
+{
+    return "Everything will pause after 3s, then resume at 5s. See console";
+}
+
+
+//------------------------------------------------------------------
+//
 // SchedulerUnscheduleAll
 //
 //------------------------------------------------------------------
@@ -287,11 +448,29 @@ void SchedulerUnscheduleAllHard::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    sprite->setPosition(ccp(s.width/2, s.height/2));
+    this->addChild(sprite);
+    sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3.0, 360)));
+
+    m_bActionManagerActive = true;
+
     schedule(schedule_selector(SchedulerUnscheduleAllHard::tick1), 0.5f);
     schedule(schedule_selector(SchedulerUnscheduleAllHard::tick2), 1.0f);
     schedule(schedule_selector(SchedulerUnscheduleAllHard::tick3), 1.5f);
     schedule(schedule_selector(SchedulerUnscheduleAllHard::tick4), 1.5f);
     schedule(schedule_selector(SchedulerUnscheduleAllHard::unscheduleAll), 4);
+}
+
+void SchedulerUnscheduleAllHard::onExit()
+{
+    if(!m_bActionManagerActive) {
+        // Restore the director's action manager.
+        CCDirector* director = CCDirector::sharedDirector();
+        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), kCCPrioritySystem, false);
+    }
 }
 
 void SchedulerUnscheduleAllHard::tick1(float dt)
@@ -317,16 +496,75 @@ void SchedulerUnscheduleAllHard::tick4(float dt)
 void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
     CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectors();
+    m_bActionManagerActive = false;
 }
 
 std::string SchedulerUnscheduleAllHard::title()
 {
-    return "Unschedule All selectors #2";
+    return "Unschedule All selectors (HARD)";
 }
 
 std::string SchedulerUnscheduleAllHard::subtitle()
 {
-    return "Unschedules all selectors after 4s. Uses CCScheduler. See console";
+    return "Unschedules all user selectors after 4s. Action will stop. See console";
+}
+
+//------------------------------------------------------------------
+//
+// SchedulerUnscheduleAllUserLevel
+//
+//------------------------------------------------------------------
+void SchedulerUnscheduleAllUserLevel::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    sprite->setPosition(ccp(s.width/2, s.height/2));
+    this->addChild(sprite);
+    sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3.0, 360)));
+
+    schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::tick1), 0.5f);
+    schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::tick2), 1.0f);
+    schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::tick3), 1.5f);
+    schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::tick4), 1.5f);
+    schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::unscheduleAll), 4);
+}
+
+void SchedulerUnscheduleAllUserLevel::tick1(float dt)
+{
+    CCLOG("tick1");
+}
+
+void SchedulerUnscheduleAllUserLevel::tick2(float dt)
+{
+    CCLOG("tick2");
+}
+
+void SchedulerUnscheduleAllUserLevel::tick3(float dt)
+{
+    CCLOG("tick3");
+}
+
+void SchedulerUnscheduleAllUserLevel::tick4(float dt)
+{
+    CCLOG("tick4");
+}
+
+void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
+{
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectorsWithMinPriority(kCCPriorityNonSystemMin);
+}
+
+std::string SchedulerUnscheduleAllUserLevel::title()
+{
+    return "Unschedule All user selectors";
+}
+
+std::string SchedulerUnscheduleAllUserLevel::subtitle()
+{
+    return "Unschedules all user selectors after 4s. Action should not stop. See console";
 }
 
 //------------------------------------------------------------------
@@ -588,7 +826,7 @@ void RescheduleSelector::schedUpdate(float dt)
 {
     m_nTicks++;
 
-    CCLOG("schedUpdate: %.2f", dt);
+    CCLOG("schedUpdate: %.4f", dt);
     if ( m_nTicks > 3 )
     {
         m_fInterval += 1.0f;

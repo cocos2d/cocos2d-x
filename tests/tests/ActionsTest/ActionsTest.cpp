@@ -1656,7 +1656,7 @@ void PauseResumeActions::pause(float dt)
 {
     CCLog("Pausing");
     CCDirector *director = CCDirector::sharedDirector();
-    this->m_pPausedTargets = director->getActionManager()->pauseAlllRunningActions();
+    this->m_pPausedTargets = director->getActionManager()->pauseAllRunningActions();
 }
 
 void PauseResumeActions::resume(float dt)
