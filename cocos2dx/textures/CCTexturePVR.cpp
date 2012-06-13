@@ -343,7 +343,7 @@ bool CCTexturePVR::createGLTexture()
     // Generate textures with mipmaps
     for (unsigned int i = 0; i < m_uNumberOfMipmaps; ++i)
     {
-        if (compressed && ! CCConfiguration::sharedConfiguration()->isSupportsNPOT()) 
+        if (compressed && ! CCConfiguration::sharedConfiguration()->isSupportsPVRTC()) 
         {
 			CCLOG("cocos2d: WARNING: PVRTC images are not supported");
 			return false;
