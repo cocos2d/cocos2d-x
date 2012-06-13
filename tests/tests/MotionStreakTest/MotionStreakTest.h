@@ -4,7 +4,7 @@
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
 
-//using namespace cocos2d;
+//USING_NS_CC;
 
 class MotionStreakTest : public CCLayer
 {

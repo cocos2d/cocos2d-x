@@ -413,12 +413,14 @@ CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
 
 CCScale9Sprite* CCScale9Sprite::node()
 { 
-    CCScale9Sprite *pRet = new CCScale9Sprite();
-    if (pRet)
+    CCScale9Sprite *pReturn = new CCScale9Sprite();
+    if (pReturn)
     { 
-        pRet->autorelease();   
+        pReturn->autorelease();   
+        return pReturn;
     } 
-    return pRet; 
+    CC_SAFE_DELETE(pReturn);
+    return NULL;
 }
 
 
