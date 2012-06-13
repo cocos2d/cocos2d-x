@@ -51,7 +51,7 @@ bool CCControlColourPickerTest::init()
         layer->addChild(colourPicker);
 
         // Add the target-action pair
-        colourPicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPickerTest::colourValueChanged), CCControlEventValueChanged);
+        colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPickerTest::colourValueChanged), CCControlEventValueChanged);
 
 
         layer_width += colourPicker->getContentSize().width;

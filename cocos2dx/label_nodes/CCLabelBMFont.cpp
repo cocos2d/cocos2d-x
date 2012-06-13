@@ -713,6 +713,18 @@ void CCLabelBMFont::purgeCachedData()
     FNTConfigRemoveCache();
 }
 
+CCLabelBMFont * CCLabelBMFont::node()
+{
+    CCLabelBMFont * pRet = new CCLabelBMFont();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
 //LabelBMFont - Creation & Init
 CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
 {
@@ -803,8 +815,6 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         m_pAlignment = alignment;
         m_tImageOffset = imageOffset;
         m_fWidth = width;
-        CC_SAFE_DELETE_ARRAY(m_sString);
-        m_sString = cc_utf16_from_utf8(theString);
         m_cOpacity = 255;
         m_tColor = ccWHITE;
         m_tContentSize = CCSizeZero;

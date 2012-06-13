@@ -865,7 +865,7 @@ CCControlSlider* SchedulerTimeScale::sliderCtl()
 {
     CCControlSlider * slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
 
-    slider->addTargetWithActionForControlEvents(this, menu_selector(SchedulerTimeScale::sliderAction), CCControlEventValueChanged);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SchedulerTimeScale::sliderAction), CCControlEventValueChanged);
 
     slider->setMinimumValue(-3.0f);
     slider->setMaximumValue(3.0f);
@@ -953,7 +953,7 @@ CCControlSlider *TwoSchedulers::sliderCtl()
    // CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
     CCControlSlider *slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
         //[[UISlider alloc] initWithFrame:frame];
-    slider->addTargetWithActionForControlEvents(this, menu_selector(TwoSchedulers::sliderAction), CCControlEventValueChanged);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TwoSchedulers::sliderAction), CCControlEventValueChanged);
 
     // in case the parent view draws with a custom color or gradient, use a transparent color
     //slider.backgroundColor = [UIColor clearColor];
