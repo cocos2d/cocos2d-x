@@ -427,15 +427,10 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 // implementation CCTexture2D (Text)
 bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
 {
-    return initWithString(text, CCSizeMake(0,0), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, kCCLineBreakModeWordWrap, fontName, fontSize);
+    return initWithString(text, CCSizeMake(0,0), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, fontName, fontSize);
 }
 
 bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
-{
-    return initWithString(text, dimensions, hAlignment, vAlignment, kCCLineBreakModeWordWrap, fontName, fontSize);
-}
-
-bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, CCLineBreakMode lineBreakMode, const char *fontName, float fontSize)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data

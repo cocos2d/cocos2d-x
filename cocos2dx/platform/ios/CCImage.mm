@@ -204,6 +204,11 @@ static CGSize _calculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize
     return dim;
 }
 
+// refer CCImage::ETextAlign
+#define ALIGN_TOP    1
+#define ALIGN_CENTER 3
+#define ALIGN_BOTTOM 2
+
 static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
@@ -259,7 +264,20 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         int startH = 0;
         if (constrainSize.height > dim.height)
         {
-            startH = (constrainSize.height - dim.height) / 2;
+            // vertical alignment
+            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
+            if (vAlignment == ALIGN_TOP)
+            {
+                startH = 0;
+            }
+            else if (vAlignment == ALIGN_CENTER)
+            {
+                startH = (constrainSize.height - dim.height) / 2;
+            }
+            else 
+            {
+                startH = constrainSize.height - dim.height;
+            }
         }
         
         // adjust text rect
@@ -282,8 +300,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         if (! context)
         {
-                delete[] data;
-                break;
+            delete[] data;
+            break;
         }
         
         CGContextSetRGBFillColor(context, 1, 1, 1, 1);
