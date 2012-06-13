@@ -15,7 +15,7 @@ class CCLayerLoader : public CCNodeLoader {
     protected:
         virtual CCLayer * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool, CCBReader *);
+        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader);
 };
 
 NS_CC_EXT_END
