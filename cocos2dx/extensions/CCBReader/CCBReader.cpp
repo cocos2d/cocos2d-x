@@ -49,9 +49,7 @@ CCBReader::~CCBReader() {
         this->mLoadedSpriteSheets.clear();
     }
 
-    if(this->mRootNode != NULL) {
-        this->mRootNode->release();
-    }
+    CC_SAFE_RELEASE(this->mRootNode);
 }
 
 CCBReader::CCBReader(CCBReader * pCCBReader) {
@@ -99,7 +97,7 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char 
     const char * path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFullFilePath);
 
     unsigned long size = 0;
-    this->mBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "r", &size);
+    this->mBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &size);
 
     this->mCurrentByte = 0;
     this->mCurrentBit = 0;
@@ -127,7 +125,7 @@ bool CCBReader::readHeader() {
     int magicBytes = *((int*)(this->mBytes + this->mCurrentByte));
     this->mCurrentByte += 4;
 
-    if(magicBytes != 'ccbi') {
+    if(CC_SWAP_INT32_LITTLE_TO_HOST(magicBytes) != 'ccbi') {
         return false; 
     }
 
