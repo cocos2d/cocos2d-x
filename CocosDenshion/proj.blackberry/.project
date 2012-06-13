@@ -85,9 +85,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
 		</link>
 		<link>
-			<name>qnx</name>
+			<name>blackberry</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/qnx</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/blackberry</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

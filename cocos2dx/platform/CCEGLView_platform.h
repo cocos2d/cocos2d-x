@@ -41,8 +41,8 @@ THE SOFTWARE.
 	#include "linux/CCEGLView_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCEGLView_bada.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-    #include "qnx/CCEGLView_qnx.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+    #include "blackberry/CCEGLView_blackberry.h"
 #else
     #error
 #endif

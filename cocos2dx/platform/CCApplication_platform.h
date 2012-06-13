@@ -41,8 +41,8 @@ THE SOFTWARE.
 	#include "linux/CCApplication_linux.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 	#include "bada/CCApplication_bada.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-    #include "qnx/CCApplication_qnx.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+    #include "blackberry/CCApplication_blackberry.h"
 #else
     #error
 #endif
