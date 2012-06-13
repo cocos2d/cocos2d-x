@@ -100,8 +100,6 @@ bool AppDelegate::initInstance()
 			width = 1024;
 			height = 600;
 		}
-		width /= 2;
-		height /= 2;
 
 		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(width, height));
 		CCFileUtils::setResourcePath("app/native/Resources");
