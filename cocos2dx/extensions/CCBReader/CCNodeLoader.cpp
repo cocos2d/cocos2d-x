@@ -562,21 +562,21 @@ BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, C
 
         if(target != NULL) {
             if(strlen(selectorName) > 0) {
-                SEL_MenuHandler selMenuHandler = NULL;
+                SEL_MenuHandler selMenuHandler = 0;
 
                 CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
 
                 if(targetAsCCBSelectorResolver != NULL) {
                     selMenuHandler = targetAsCCBSelectorResolver->onResolveCCBCCMenuSelector(target, selectorName);
                 }
-                if(selMenuHandler == NULL) {
+                if(selMenuHandler == 0) {
                     CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
                     if(ccbSelectorResolver != NULL) {
                         selMenuHandler = ccbSelectorResolver->onResolveCCBCCMenuSelector(target, selectorName);
                     }
                 }
 
-                if(selMenuHandler == NULL) {
+                if(selMenuHandler == 0) {
                     CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName);
                 } else {
                     BlockData * blockData = new BlockData();
@@ -612,21 +612,21 @@ BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, C
 
         if(target != NULL) {
             if(strlen(selectorName) > 0) {
-                SEL_CCControlHandler selCCControlHandler = NULL;
+                SEL_CCControlHandler selCCControlHandler = 0;
 
                 CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
 
                 if(targetAsCCBSelectorResolver != NULL) {
                     selCCControlHandler = targetAsCCBSelectorResolver->onResolveCCBCCControlSelector(target, selectorName);
                 }
-                if(selCCControlHandler == NULL) {
+                if(selCCControlHandler == 0) {
                     CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
                     if(ccbSelectorResolver != NULL) {
                         selCCControlHandler = ccbSelectorResolver->onResolveCCBCCControlSelector(target, selectorName);
                     }
                 }
 
-                if(selCCControlHandler == NULL) {
+                if(selCCControlHandler == 0) {
                     CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName);
                 } else {
                     BlockCCControlData * blockCCControlData = new BlockCCControlData();

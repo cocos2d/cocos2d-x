@@ -1,7 +1,7 @@
 #ifndef _TESTHEADERLAYERLOADER_H_
 #define _TESTHEADERLAYERLOADER_H_
 
-#include "CCLayerLoader.h"
+#include "extensions/CCBReader/CCLayerLoader.h"
 #include "TestHeaderLayer.h"
 
 /* Forward declaration. */

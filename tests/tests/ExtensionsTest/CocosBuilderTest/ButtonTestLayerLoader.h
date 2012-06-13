@@ -1,7 +1,7 @@
 #ifndef _BUTTONTESTLAYERLOADER_H_
 #define _BUTTONTESTLAYERLOADER_H_
 
-#include "CCLayerLoader.h"
+#include "extensions/CCBReader/CCLayerLoader.h"
 #include "ButtonTestLayer.h"
 
 /* Forward declaration. */
