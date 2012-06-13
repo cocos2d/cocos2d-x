@@ -33,7 +33,6 @@ tests/ClickAndMoveTest/ClickAndMoveTest.cpp \
 tests/CocosDenshionTest/CocosDenshionTest.cpp \
 tests/CurlTest/CurlTest.cpp \
 tests/CurrentLanguageTest/CurrentLanguageTest.cpp \
-tests/DirectorTest/DirectorTest.cpp \
 tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 tests/EffectsTest/EffectsTest.cpp \
@@ -48,7 +47,6 @@ tests/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTes
 tests/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
 tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder.cpp \
 tests/FontTest/FontTest.cpp \
-tests/HiResTest/HiResTest.cpp \
 tests/IntervalTest/IntervalTest.cpp \
 tests/KeypadTest/KeypadTest.cpp \
 tests/LabelTest/LabelTest.cpp \
