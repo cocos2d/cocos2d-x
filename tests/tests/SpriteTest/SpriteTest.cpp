@@ -186,10 +186,10 @@ void SpriteTestDemo::onEnter()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - 100,30) );
-    item2->setPosition( ccp( s.width/2, 30) );
-    item3->setPosition( ccp( s.width/2 + 100,30) );
+    menu->setPosition(CCPointZero);
+    item1->setPosition(ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(ccp( s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 }
@@ -1843,10 +1843,10 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
     for(int i=0;i<3;i++) 
     {
         //
-        // Animation using Sprite BatchNode
+        // Animation using Sprite batch
         //
         CCSprite* sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-        sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
+        sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
 
         CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
         point->setScale( 0.25f );
@@ -1908,14 +1908,17 @@ std::string SpriteOffsetAnchorRotation::title()
 
 SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();        
+    CCSize s = CCDirector::sharedDirector()->getWinSize(); 
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+    addChild(spritebatch);
     
     for(int i=0;i<3;i++) 
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-        
         //
         // Animation using Sprite BatchNode
         //
@@ -1941,9 +1944,6 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         }
         
         point->setPosition( sprite->getPosition() );
-        
-        CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-        addChild(spritebatch);
         
         CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
@@ -1986,14 +1986,14 @@ std::string SpriteBatchNodeOffsetAnchorRotation::title()
 
 SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();        
+    CCSize s = CCDirector::sharedDirector()->getWinSize();   
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
     
     for(int i=0;i<3;i++) 
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-        
         //
         // Animation using Sprite BatchNode
         //
@@ -2061,14 +2061,17 @@ std::string SpriteOffsetAnchorScale::title()
 //------------------------------------------------------------------
 SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();        
+    CCSize s = CCDirector::sharedDirector()->getWinSize(); 
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+    addChild(spritesheet);
     
     for(int i=0;i<3;i++) 
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-        
         //
         // Animation using Sprite BatchNode
         //
@@ -2093,9 +2096,6 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         }
         
         point->setPosition( sprite->getPosition() );
-        
-        CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-        addChild(spritesheet);
         
         CCArray* animFrames = CCArray::arrayWithCapacity(14);
         char str[100] = {0};
@@ -3674,13 +3674,13 @@ void SpriteTestScene::runThisTest()
 SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
     for (int i = 0; i < 3; i++)
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-
         //
         // Animation using Sprite batch
         //
@@ -3749,13 +3749,16 @@ string SpriteOffsetAnchorSkew::title()
 SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+    addChild(spritebatch);
 
     for (int i = 0; i < 3; i++)
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-
         //
         // Animation using Sprite batch
         //
@@ -3781,10 +3784,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         }
 
         point->setPosition(sprite->getPosition());
-
-        CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-        addChild(spritebatch);
-
+        
         CCArray* animFrames = CCArray::array();
         char tmp[50];
         for (int j = 0; j < 14; j++)
@@ -3827,13 +3827,13 @@ string SpriteBatchNodeOffsetAnchorSkew::title()
 SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
     for (int i = 0; i < 3; i++)
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-
         //
         // Animation using Sprite batch
         //
@@ -3906,13 +3906,16 @@ string SpriteOffsetAnchorSkewScale::title()
 SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+    addChild(spritebatch);
 
     for (int i = 0; i < 3; i++)
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-
         //
         // Animation using Sprite batch
         //
@@ -3937,10 +3940,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
             break;
         }
 
-        point->setPosition(sprite->getPosition());
-
-        CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-        addChild(spritebatch);
+        point->setPosition(sprite->getPosition());        
 
         CCArray *animFrames = CCArray::array();
         char tmp[50];
@@ -3991,13 +3991,13 @@ string SpriteBatchNodeOffsetAnchorSkewScale::title()
 SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
     for (int i = 0; i < 3; i++)
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-
         //
         // Animation using Sprite batch
         //
@@ -4070,13 +4070,16 @@ string SpriteOffsetAnchorFlip::subtitle()
 SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+    addChild(spritebatch);
 
     for (int i = 0; i < 3; i++)
     {
-        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-        cache->addSpriteFramesWithFile("animations/grossini.plist");
-        cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
-
         //
         // Animation using Sprite batch
         //
@@ -4101,10 +4104,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
             break;
         }
 
-        point->setPosition(sprite->getPosition());
-
-        CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
-        addChild(spritebatch);
+        point->setPosition(sprite->getPosition());        
 
         CCArray *animFrames = CCArray::array();
         char tmp[50];
