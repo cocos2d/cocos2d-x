@@ -54,8 +54,7 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "extensions/CCNotificationCenter/CCNotificationCenter.h"
 #include "extensions/CCTextureWatcher/CCTextureWatcher.h"
-#include "extensions/CCBReader/CCBCustomClass.h"
-#include "extensions/CCBIReader/CCNodeLoaderLibrary.h"
+#include "extensions/CCBReader/CCNodeLoaderLibrary.h"
 #include <string>
 
 using namespace std;
@@ -610,7 +609,6 @@ void CCDirector::purgeDirector()
     CCUserDefault::purgeSharedUserDefault();
     extension::CCNotificationCenter::purgeNotificationCenter();
     extension::CCTextureWatcher::purgeTextureWatcher();
-    extension::CCBCustomClassFactory::purgeFactory();
     extension::CCNodeLoaderLibrary::purgeSharedCCNodeLoaderLibrary();
 
     ccGLInvalidateStateCache();
