@@ -1,7 +1,7 @@
 #ifndef _HELLOCOCOSBUILDERLAYERLOADER_H_
 #define _HELLOCOCOSBUILDERLAYERLOADER_H_
 
-#include "CCLayerLoader.h"
+#include "extensions/CCBReader/CCLayerLoader.h"
 #include "HelloCocosBuilderLayer.h"
 
 /* Forward declaration. */

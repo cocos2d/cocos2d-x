@@ -1,5 +1,7 @@
 #include "CCBReader.h"
 
+#include <algorithm>
+
 #include "CCNodeLoader.h"
 #include "CCNodeLoaderLibrary.h"
 #include "CCNodeLoaderListener.h"

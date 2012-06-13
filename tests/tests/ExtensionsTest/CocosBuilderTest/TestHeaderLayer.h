@@ -2,8 +2,8 @@
 #define _TESTHEADERLAYER_H_
 
 #include "cocos2d.h"
-#include "CCNodeLoader.h"
-#include "CCBSelectorResolver.h"
+#include "extensions/CCBReader/CCNodeLoader.h"
+#include "extensions/CCBReader/CCBSelectorResolver.h"
 
 class TestHeaderLayer : public cocos2d::extension::CCBSelectorResolver, public cocos2d::CCLayer {
     public:

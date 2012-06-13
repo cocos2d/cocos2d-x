@@ -2,10 +2,10 @@
 #define _HELLOCOCOSBUILDERLAYER_H_
 
 #include "cocos2d.h"
-#include "CCNodeLoader.h"
-#include "CCNodeLoaderListener.h"
-#include "CCBSelectorResolver.h"
-#include "CCBMemberVariableAssigner.h"
+#include "extensions/CCBReader/CCNodeLoader.h"
+#include "extensions/CCBReader/CCNodeLoaderListener.h"
+#include "extensions/CCBReader/CCBSelectorResolver.h"
+#include "extensions/CCBReader/CCBMemberVariableAssigner.h"
 
 /*
  * Note: for some pretty hard fucked up reason, the order of inheritance is important!
