@@ -124,6 +124,11 @@ unsigned int CCString::length() const
     return m_sString.length();
 }
 
+int CCString::compare(const char * pStr) const
+{
+    return strcmp(getCString(), pStr);
+}
+
 CCObject* CCString::copyWithZone(CCZone* pZone)
 {
     CCAssert(pZone == NULL, "CCString should not be inherited.");
@@ -150,6 +155,31 @@ CCString* CCString::stringWithCString(const char* pStr)
     CCString* pRet = new CCString(pStr);
     pRet->autorelease();
     return pRet;
+}
+
+CCString* CCString::stringWithString(const std::string& pStr)
+{
+    CCString* pRet = new CCString(pStr);
+    pRet->autorelease();
+    return pRet;
+}
+
+CCString* CCString::stringWithCStringData(const char* pData, unsigned long nLen)
+{
+    CCString* pRet = NULL;
+    if (pData != NULL)
+    {
+        char* pStr = (char*)malloc(nLen+1);
+        if (pStr != NULL)
+        {
+            pStr[nLen] = '\0';
+            memcpy(pStr, pData, nLen);
+            pRet = CCString::stringWithCString(pStr);
+            free(pStr);
+        }
+    }
+    return pRet;
+
 }
 
 CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
