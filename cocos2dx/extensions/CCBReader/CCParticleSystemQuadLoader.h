@@ -10,7 +10,7 @@ class CCBReader;
 
 class CCParticleSystemQuadLoader : public CCNodeLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCParticleSystemQuadLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCParticleSystemQuadLoader, loader);
 
     protected:
         virtual CCParticleSystemQuad * createCCNode(CCNode *, CCBReader *);

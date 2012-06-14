@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-#define STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
+#define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
 T * t = new T(); \
 t->autorelease(); \
 return t; \

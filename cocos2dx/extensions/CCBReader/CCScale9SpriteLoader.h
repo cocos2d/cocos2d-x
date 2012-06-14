@@ -10,7 +10,7 @@ class CCBReader;
 
 class CCScale9SpriteLoader : public CCNodeLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCScale9SpriteLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCScale9SpriteLoader, loader);
 
     protected:
         virtual CCScale9Sprite * createCCNode(CCNode *, CCBReader *);

@@ -10,7 +10,7 @@ class CCBReader;
 
 class CCLabelBMFontLoader : public CCNodeLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelBMFontLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelBMFontLoader, loader);
 
     protected:
         virtual CCLabelBMFont * createCCNode(CCNode *, CCBReader *);
