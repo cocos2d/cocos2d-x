@@ -37,8 +37,13 @@ CCControlHuePicker::~CCControlHuePicker()
 {
 
 }
-    
-CCControlHuePicker* CCControlHuePicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
+
+// CCControlHuePicker* CCControlHuePicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
+// {
+//     return CCControlHuePicker::create(target, pos);
+// }
+
+CCControlHuePicker* CCControlHuePicker::create(CCNode* target, CCPoint pos)
 {
     CCControlHuePicker *pRet = new CCControlHuePicker();
     pRet->initWithTargetAndPos(target, pos);

@@ -67,11 +67,11 @@ static const char* restartAction(void)
 FontTest::FontTest()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(FontTest::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(FontTest::restartCallback));
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(FontTest::nextCallback));
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(FontTest::backCallback));
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(FontTest::restartCallback));
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(FontTest::nextCallback));
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
     item1->setPosition(ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
     item2->setPosition(ccp( s.width/2, item2->getContentSize().height/2));
@@ -93,14 +93,14 @@ void FontTest::showFont(const char *pFont)
     removeChildByTag(kTagLabel3, true);
     removeChildByTag(kTagLabel4, true);
 
-    CCLabelTTF *top = CCLabelTTF::labelWithString(pFont, pFont, 24);
-    CCLabelTTF *left = CCLabelTTF::labelWithString("alignment left", blockSize, kCCTextAlignmentLeft, verticalAlignment[vAlignIdx], pFont, fontSize);
-    CCLabelTTF *center = CCLabelTTF::labelWithString("alignment center", blockSize, kCCTextAlignmentCenter, verticalAlignment[vAlignIdx], pFont, fontSize);
-    CCLabelTTF *right = CCLabelTTF::labelWithString("alignment right", blockSize, kCCTextAlignmentRight, verticalAlignment[vAlignIdx], pFont, fontSize);
+    CCLabelTTF *top = CCLabelTTF::create(pFont, pFont, 24);
+    CCLabelTTF *left = CCLabelTTF::create("alignment left", blockSize, kCCTextAlignmentLeft, verticalAlignment[vAlignIdx], pFont, fontSize);
+    CCLabelTTF *center = CCLabelTTF::create("alignment center", blockSize, kCCTextAlignmentCenter, verticalAlignment[vAlignIdx], pFont, fontSize);
+    CCLabelTTF *right = CCLabelTTF::create("alignment right", blockSize, kCCTextAlignmentRight, verticalAlignment[vAlignIdx], pFont, fontSize);
 
-    CCLayerColor *leftColor = CCLayerColor::layerWithColor(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height);
-    CCLayerColor *centerColor = CCLayerColor::layerWithColor(ccc4(200, 100, 100, 255), blockSize.width, blockSize.height);
-    CCLayerColor *rightColor = CCLayerColor::layerWithColor(ccc4(100, 100, 200, 255), blockSize.width, blockSize.height);
+    CCLayerColor *leftColor = CCLayerColor::create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height);
+    CCLayerColor *centerColor = CCLayerColor::create(ccc4(200, 100, 100, 255), blockSize.width, blockSize.height);
+    CCLayerColor *rightColor = CCLayerColor::create(ccc4(100, 100, 200, 255), blockSize.width, blockSize.height);
 
     leftColor->setIgnoreAnchorPointForPosition(false);
     centerColor->setIgnoreAnchorPointForPosition(false);
@@ -159,7 +159,7 @@ void FontTest::restartCallback(CCObject* pSender)
 ///---------------------------------------
 void FontTestScene::runThisTest()
 {
-    CCLayer* pLayer = FontTest::node();
+    CCLayer* pLayer = FontTest::create();
     addChild(pLayer);
 
     CCDirector::sharedDirector()->replaceScene(this);

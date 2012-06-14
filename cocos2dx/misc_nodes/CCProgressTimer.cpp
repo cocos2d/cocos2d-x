@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Lam Pham
 
 http://www.cocos2d-x.org
@@ -56,7 +56,12 @@ CCProgressTimer::CCProgressTimer()
 ,m_bReverseDirection(false)
 {}
 
-CCProgressTimer* CCProgressTimer::progressWithSprite(CCSprite* sp)
+// CCProgressTimer* CCProgressTimer::progressWithSprite(CCSprite* sp)
+// {
+//     return CCProgressTimer::create(sp);
+// }
+
+CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
 {
     CCProgressTimer *pProgressTimer = new CCProgressTimer();
     if (pProgressTimer->initWithSprite(sp))

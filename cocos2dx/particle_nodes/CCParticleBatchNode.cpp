@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2011 cocos2d-x.org
+ * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
@@ -45,8 +45,6 @@
 
 NS_CC_BEGIN
 
-#define kCCParticleDefaultCapacity 500
-
 CCParticleBatchNode::CCParticleBatchNode()
 : m_pTextureAtlas(NULL)
 {
@@ -60,19 +58,12 @@ CCParticleBatchNode::~CCParticleBatchNode()
 /*
  * creation with CCTexture2D
  */
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D * tex)
-{
-    CCParticleBatchNode * p = new CCParticleBatchNode();
-    if( p && p->initWithTexture(tex, kCCParticleDefaultCapacity))
-    {
-        p->autorelease();
-        return p;
-    }
-    CC_SAFE_DELETE(p);
-    return NULL;
-}
+// CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
+// {
+//     return CCParticleBatchNode::createWithTexture(tex, capacity);
+// }
 
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity)
+CCParticleBatchNode* CCParticleBatchNode::createWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
     CCParticleBatchNode * p = new CCParticleBatchNode();
     if( p && p->initWithTexture(tex, capacity))
@@ -87,22 +78,15 @@ CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex,
 /*
  * creation with File Image
  */
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithFile(const char* imageFile, unsigned int capacity)
+// CCParticleBatchNode* CCParticleBatchNode::batchNodeWithFile(const char* imageFile, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
+// {
+//     return CCParticleBatchNode::create(imageFile, capacity);
+// }
+
+CCParticleBatchNode* CCParticleBatchNode::create(const char* imageFile, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
     CCParticleBatchNode * p = new CCParticleBatchNode();
     if( p && p->initWithFile(imageFile, capacity))
-    {
-        p->autorelease();
-        return p;
-    }
-    CC_SAFE_DELETE(p);
-    return NULL;
-}
-
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithFile(const char* imageFile)
-{
-    CCParticleBatchNode * p = new CCParticleBatchNode();
-    if( p && p->initWithFile(imageFile, kCCParticleDefaultCapacity))
     {
         p->autorelease();
         return p;

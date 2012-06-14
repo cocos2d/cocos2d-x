@@ -67,12 +67,18 @@ CCSprite * CCRenderTexture::getSprite()
 {
     return m_pSprite;
 }
+
 void CCRenderTexture::setSprite(CCSprite* var)
 {
     m_pSprite = var;
 }
 
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
+// CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
+// {
+//     return CCRenderTexture::create(w, h, eFormat);
+// }
+
+CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat eFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
 
@@ -85,7 +91,12 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h,
     return NULL;
 }
 
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+// CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+// {
+//     return CCRenderTexture::create(w, h, eFormat, uDepthStencilFormat);
+// }
+
+CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
 
@@ -98,7 +109,12 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w ,int h,
     return NULL;
 }
 
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
+// CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
+// {
+//     return CCRenderTexture::create(w, h);
+// }
+
+CCRenderTexture * CCRenderTexture::create(int w, int h)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
 
@@ -181,7 +197,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 
         m_pTexture->setAliasTexParameters();
 
-        m_pSprite = CCSprite::spriteWithTexture(m_pTexture);
+        m_pSprite = CCSprite::createWithTexture(m_pTexture);
 
         m_pTexture->release();
         m_pSprite->setScaleY(-1);

@@ -81,7 +81,12 @@ CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
 
 // implementation of CCAnimation
 
-CCAnimation* CCAnimation::animation(void)
+// CCAnimation* CCAnimation::animation(void)
+// {
+//     return CCAnimation::create();
+// }
+
+CCAnimation* CCAnimation::create(void)
 {
     CCAnimation *pAnimation = new CCAnimation();
     pAnimation->init();
@@ -90,16 +95,12 @@ CCAnimation* CCAnimation::animation(void)
     return pAnimation;
 } 
 
-CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames)
-{
-    CCAnimation *pAnimation = new CCAnimation();
-    pAnimation->initWithSpriteFrames(frames);
-    pAnimation->autorelease();
+// CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
+// {
+//     return CCAnimation::createWithSpriteFrames(frames, delay);
+// }
 
-    return pAnimation;
-}
-
-CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames, float delay)
+CCAnimation* CCAnimation::createWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
 {
     CCAnimation *pAnimation = new CCAnimation();
     pAnimation->initWithSpriteFrames(frames, delay);
@@ -108,10 +109,15 @@ CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames, float delay
     return pAnimation;
 }
 
-CCAnimation* CCAnimation::animationWithAnimationFrames(CCArray* arrayOfSpriteFrameNames, float delayPerUnit, unsigned int loops)
+// CCAnimation* CCAnimation::animationWithAnimationFrames(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
+// {
+//     return CCAnimation::createWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
+// }
+
+CCAnimation* CCAnimation::createWithAnimationFrames(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
 {
     CCAnimation *pAnimation = new CCAnimation();
-    pAnimation->initWithAnimationFrames(arrayOfSpriteFrameNames, delayPerUnit, loops);
+    pAnimation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
     pAnimation->autorelease();
     return pAnimation;
 }
@@ -121,12 +127,7 @@ bool CCAnimation::init()
     return initWithSpriteFrames(NULL, 0.0f);
 }
 
-bool CCAnimation::initWithSpriteFrames(CCArray* pFrames)
-{
-    return initWithSpriteFrames(pFrames, 0.0f);
-}
-
-bool CCAnimation::initWithSpriteFrames(CCArray *pFrames, float delay)
+bool CCAnimation::initWithSpriteFrames(CCArray *pFrames, float delay/* = 0.0f*/)
 {
     CCARRAY_VERIFY_TYPE(pFrames, CCSpriteFrame*);
 
@@ -204,13 +205,13 @@ void CCAnimation::addSpriteFrameWithFileName(const char *pszFileName)
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFileName);
     CCRect rect = CCRectZero;
     rect.size = pTexture->getContentSize();
-    CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pTexture, rect);
+    CCSpriteFrame *pFrame = CCSpriteFrame::create(pTexture, rect);
     addSpriteFrame(pFrame);
 }
 
 void CCAnimation::addSpriteFrameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
 {
-    CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pobTexture, rect);
+    CCSpriteFrame *pFrame = CCSpriteFrame::create(pobTexture, rect);
     addSpriteFrame(pFrame);
 }
 

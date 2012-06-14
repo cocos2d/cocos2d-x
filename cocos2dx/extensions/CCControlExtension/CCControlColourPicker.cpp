@@ -44,7 +44,7 @@ bool CCControlColourPicker::init()
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
         
         // Create the sprite batch node
-        CCSpriteBatchNode *spriteSheet  = CCSpriteBatchNode::batchNodeWithFile("extensions/CCControlColourPickerSpriteSheet.png");
+        CCSpriteBatchNode *spriteSheet  = CCSpriteBatchNode::create("extensions/CCControlColourPickerSpriteSheet.png");
         addChild(spriteSheet);
         
         // MIPMAP
@@ -67,8 +67,8 @@ bool CCControlColourPicker::init()
         float hueShift                = 8;
         float colourShift             = 28;
         
-        m_huePicker=CCControlHuePicker::pickerWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
-        m_colourPicker=CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
+        m_huePicker=CCControlHuePicker::create(spriteSheet, ccp(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
+        m_colourPicker=CCControlSaturationBrightnessPicker::create(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
         m_huePicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPicker::hueSliderValueChanged), CCControlEventValueChanged);
@@ -87,7 +87,12 @@ bool CCControlColourPicker::init()
         return false;
 }
 
-CCControlColourPicker* CCControlColourPicker::colourPicker()
+// CCControlColourPicker* CCControlColourPicker::colourPicker()
+// {
+//     return CCControlColourPicker::create();
+// }
+
+CCControlColourPicker* CCControlColourPicker::create()
 {
     CCControlColourPicker *pRet = new CCControlColourPicker();
     pRet->init();

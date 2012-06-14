@@ -30,7 +30,25 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCGridAction
 
-CCGridAction* CCGridAction::actionWithSize(const ccGridSize& gridSize, float duration)
+// CCGridAction* CCGridAction::actionWithSize(const ccGridSize& gridSize, float duration)
+// {
+//     CCGridAction *pAction = new CCGridAction();
+//     if (pAction)
+//     {
+//         if (pAction->initWithSize(gridSize, duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_DELETE(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCGridAction* CCGridAction::create(const ccGridSize& gridSize, float duration)
 {
     CCGridAction *pAction = new CCGridAction();
     if (pAction)
@@ -103,7 +121,7 @@ CCGridBase* CCGridAction::getGrid(void)
 
 CCActionInterval* CCGridAction::reverse(void)
 {
-    return CCReverseTime::actionWithAction(this);
+    return CCReverseTime::create(this);
 }
 
 CCObject* CCGridAction::copyWithZone(CCZone *pZone)
@@ -181,7 +199,25 @@ void CCTiledGrid3DAction::setTile(const ccGridSize& pos, const ccQuad3& coords)
 
 // implementation CCAccelDeccelAmplitude
 
-CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::actionWithAction(CCAction *pAction, float duration)
+// CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::actionWithAction(CCAction *pAction, float duration)
+// {
+//     CCAccelDeccelAmplitude *pRet = new CCAccelDeccelAmplitude();
+//     if (pRet)
+//     {
+//         if (pRet->initWithAction(pAction, duration))
+//         {
+//             pRet->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_DELETE(pRet);
+//         }
+//     }
+// 
+//     return pRet;
+// }
+
+CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::create(CCAction *pAction, float duration)
 {
     CCAccelDeccelAmplitude *pRet = new CCAccelDeccelAmplitude();
     if (pRet)
@@ -239,12 +275,30 @@ void CCAccelDeccelAmplitude::update(float time)
 
 CCActionInterval* CCAccelDeccelAmplitude::reverse(void)
 {
-    return CCAccelDeccelAmplitude::actionWithAction(m_pOther->reverse(), m_fDuration);
+    return CCAccelDeccelAmplitude::create(m_pOther->reverse(), m_fDuration);
 }
 
 // implementation of AccelAmplitude
 
-CCAccelAmplitude* CCAccelAmplitude::actionWithAction(CCAction *pAction, float duration)
+// CCAccelAmplitude* CCAccelAmplitude::actionWithAction(CCAction *pAction, float duration)
+// {
+//     CCAccelAmplitude *pRet = new CCAccelAmplitude();
+//     if (pRet)
+//     {
+//         if (pRet->initWithAction(pAction, duration))
+//         {
+//             pRet->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_DELETE(pRet);
+//         }
+//     }
+// 
+//     return pRet;
+// }
+
+CCAccelAmplitude* CCAccelAmplitude::create(CCAction *pAction, float duration)
 {
     CCAccelAmplitude *pRet = new CCAccelAmplitude();
     if (pRet)
@@ -295,12 +349,30 @@ void CCAccelAmplitude::update(float time)
 
 CCActionInterval* CCAccelAmplitude::reverse(void)
 {
-    return CCAccelAmplitude::actionWithAction(m_pOther->reverse(), m_fDuration);
+    return CCAccelAmplitude::create(m_pOther->reverse(), m_fDuration);
 }
 
 // DeccelAmplitude
 
-CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(CCAction *pAction, float duration)
+// CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(CCAction *pAction, float duration)
+// {
+//     CCDeccelAmplitude *pRet = new CCDeccelAmplitude();
+//     if (pRet)
+//     {
+//         if (pRet->initWithAction(pAction, duration))
+//         {
+//             pRet->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_DELETE(pRet);
+//         }
+//     }
+// 
+//     return pRet;
+// }
+
+CCDeccelAmplitude* CCDeccelAmplitude::create(CCAction *pAction, float duration)
 {
     CCDeccelAmplitude *pRet = new CCDeccelAmplitude();
     if (pRet)
@@ -317,6 +389,7 @@ CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(CCAction *pAction, float 
 
     return pRet;
 }
+
 
 bool CCDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
 {
@@ -351,7 +424,7 @@ void CCDeccelAmplitude::update(float time)
 
 CCActionInterval* CCDeccelAmplitude::reverse(void)
 {
-    return CCDeccelAmplitude::actionWithAction(m_pOther->reverse(), m_fDuration);
+    return CCDeccelAmplitude::create(m_pOther->reverse(), m_fDuration);
 }
 
 // implementation of StopGrid
@@ -367,17 +440,42 @@ void CCStopGrid::startWithTarget(CCNode *pTarget)
     }
 }
 
-CCStopGrid* CCStopGrid::action(void)
+// CCStopGrid* CCStopGrid::action(void)
+// {
+//     CCStopGrid* pAction = new CCStopGrid();
+//     pAction->autorelease();
+// 
+//     return pAction;
+// }
+
+CCStopGrid* CCStopGrid::create(void)
 {
     CCStopGrid* pAction = new CCStopGrid();
     pAction->autorelease();
 
     return pAction;
 }
-
 // implementation of CCReuseGrid
 
-CCReuseGrid* CCReuseGrid::actionWithTimes(int times)
+// CCReuseGrid* CCReuseGrid::actionWithTimes(int times)
+// {
+//     CCReuseGrid *pAction = new CCReuseGrid();
+//     if (pAction)
+//     {
+//         if (pAction->initWithTimes(times))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_DELETE(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCReuseGrid* CCReuseGrid::create(int times)
 {
     CCReuseGrid *pAction = new CCReuseGrid();
     if (pAction)

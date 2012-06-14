@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -46,12 +46,33 @@ enum
 //CCMenu
 //
 
-CCMenu* CCMenu::node()
+// CCMenu* CCMenu::node()
+// {
+//     return CCMenu::create();
+// }
+
+CCMenu* CCMenu::create()
 {
-    return menuWithItem(NULL);
+    return CCMenu::create(NULL, NULL);
 }
 
-CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
+// CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
+// {
+//     va_list args;
+//     va_start(args,item);
+//     CCMenu *pRet = new CCMenu();
+//     if (pRet && pRet->initWithItems(item, args))
+//     {
+//         pRet->autorelease();
+//         va_end(args);
+//         return pRet;
+//     }
+//     va_end(args);
+//     CC_SAFE_DELETE(pRet);
+//     return NULL;
+// }
+
+CCMenu * CCMenu::create(CCMenuItem* item, ...)
 {
     va_list args;
     va_start(args,item);
@@ -67,7 +88,12 @@ CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
     return NULL;
 }
 
-CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
+// CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
+// {
+//     return CCMenu::create(pArrayOfItems);
+// }
+
+CCMenu* CCMenu::create(CCArray* pArrayOfItems)
 {
     CCMenu *pRet = new CCMenu();
     if (pRet && pRet->initWithArray(pArrayOfItems))
@@ -82,9 +108,14 @@ CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
     return pRet;
 }
 
-CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
+// CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
+// {
+//     return CCMenu::createWithItem(item);
+// }
+
+CCMenu* CCMenu::createWithItem(CCMenuItem* item)
 {
-    return menuWithItems(item, NULL);
+    return CCMenu::create(item, NULL);
 }
 
 bool CCMenu::init()

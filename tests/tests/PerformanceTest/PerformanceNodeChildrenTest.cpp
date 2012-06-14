@@ -73,7 +73,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // Title
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 40);
+    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
     label->setColor(ccc3(255,255,40));
@@ -82,7 +82,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        CCLabelTTF *l = CCLabelTTF::labelWithString(strSubTitle.c_str(), "Thonburi", 16);
+        CCLabelTTF *l = CCLabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
@@ -92,17 +92,17 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     quantityOfNodes = nNodes;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::itemWithString(" - ", this, menu_selector(NodeChildrenMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(NodeChildrenMainScene::onDecrease));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::itemWithString(" + ", this, menu_selector(NodeChildrenMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(NodeChildrenMainScene::onIncrease));
     increase->setColor(ccc3(0,200,20));
 
-    CCMenu *menu = CCMenu::menuWithItems(decrease, increase, NULL);
+    CCMenu *menu = CCMenu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
     menu->setPosition(ccp(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
-    CCLabelTTF *infoLabel = CCLabelTTF::labelWithString("0 nodes", "Marker Felt", 30);
+    CCLabelTTF *infoLabel = CCLabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(ccc3(0,200,20));
     infoLabel->setPosition(ccp(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
@@ -180,7 +180,7 @@ void IterateSpriteSheet::updateQuantityOfNodes()
     {
         for(int i = 0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
         {
-            CCSprite *sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
+            CCSprite *sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
             batchNode->addChild(sprite);
             sprite->setPosition(ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
         }
@@ -201,7 +201,7 @@ void IterateSpriteSheet::updateQuantityOfNodes()
 
 void IterateSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
 {
-    batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/spritesheet1.png");
+    batchNode = CCSpriteBatchNode::create("Images/spritesheet1.png");
     addChild(batchNode);
 
     NodeChildrenMainScene::initWithQuantityOfNodes(nNodes);
@@ -316,7 +316,7 @@ AddRemoveSpriteSheet::~AddRemoveSpriteSheet()
 
 void AddRemoveSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
 {
-    batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/spritesheet1.png");
+    batchNode = CCSpriteBatchNode::create("Images/spritesheet1.png");
     addChild(batchNode);
 
     NodeChildrenMainScene::initWithQuantityOfNodes(nNodes);
@@ -337,7 +337,7 @@ void AddRemoveSpriteSheet::updateQuantityOfNodes()
     {
         for (int i=0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
         {
-            CCSprite *sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
+            CCSprite *sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
             batchNode->addChild(sprite);
             sprite->setPosition(ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
             sprite->setIsVisible(false);
@@ -382,7 +382,7 @@ void AddSpriteSheet::update(float dt)
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
-            CCSprite* pSprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
+            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
             sprites->addObject(pSprite);
             zs[i]      = CCRANDOM_MINUS1_1() * 50;
         }
@@ -445,7 +445,7 @@ void RemoveSpriteSheet::update(float dt)
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            CCSprite* pSprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
+            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
             sprites->addObject(pSprite);
         }
 
@@ -505,7 +505,7 @@ void ReorderSpriteSheet::update(float dt)
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            CCSprite* pSprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
+            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
             sprites->addObject(pSprite);
         }
 

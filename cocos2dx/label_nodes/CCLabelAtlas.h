@@ -51,13 +51,24 @@ public:
     { 
         m_sString.clear(); 
     }
+    /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas 
+    @warning: This interface will be deprecated in future.
+    */
+    //static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    
+    /** creates the CCLabelAtlas with a string and a configuration file
+    @warning: This interface will be deprecated in future.
+    @since v2.0
+    */
+    //static CCLabelAtlas* labelWithString(const char *sring, const char *fntFile);
+
     /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    static CCLabelAtlas * create(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     
     /** creates the CCLabelAtlas with a string and a configuration file
      @since v2.0
      */
-    static CCLabelAtlas* labelWithString(const char *sring, const char *fntFile);
+    static CCLabelAtlas* create(const char *sring, const char *fntFile);
 
     /** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
     bool initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);

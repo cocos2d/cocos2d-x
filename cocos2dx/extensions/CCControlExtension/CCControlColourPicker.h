@@ -52,7 +52,11 @@ protected:
     CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);   
     
 public:
-    static CCControlColourPicker* colourPicker();
+    //@warning: This interface will be deprecated in future.
+    //static CCControlColourPicker* colourPicker();
+
+    static CCControlColourPicker* create();
+
     virtual bool init();
     //virtual ~CCControlColourPicker();
     void hueSliderValueChanged(CCObject * sender);

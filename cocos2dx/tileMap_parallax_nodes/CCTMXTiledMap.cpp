@@ -32,7 +32,12 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 // implementation CCTMXTiledMap
-CCTMXTiledMap * CCTMXTiledMap::tiledMapWithTMXFile(const char *tmxFile)
+// CCTMXTiledMap * CCTMXTiledMap::tiledMapWithTMXFile(const char *tmxFile)
+// {
+//     return CCTMXTiledMap::create(tmxFile);
+// }
+
+CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
 {
     CCTMXTiledMap *pRet = new CCTMXTiledMap();
     if (pRet->initWithTMXFile(tmxFile))
@@ -44,7 +49,12 @@ CCTMXTiledMap * CCTMXTiledMap::tiledMapWithTMXFile(const char *tmxFile)
     return NULL;
 }
 
-CCTMXTiledMap* CCTMXTiledMap::tiledMapWithXML(const char* tmxString, const char* resourcePath)
+// CCTMXTiledMap* CCTMXTiledMap::tiledMapWithXML(const char* tmxString, const char* resourcePath)
+// {
+//     return CCTMXTiledMap::create(tmxString, resourcePath);
+// }
+
+CCTMXTiledMap* CCTMXTiledMap::create(const char* tmxString, const char* resourcePath)
 {
     CCTMXTiledMap *pRet = new CCTMXTiledMap();
     if (pRet->initWithXML(tmxString, resourcePath))
@@ -129,7 +139,7 @@ void CCTMXTiledMap::setProperties(CCDictionary* var)
 CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
 {
     CCTMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
-    CCTMXLayer *layer = CCTMXLayer::layerWithTilesetInfo(tileset, layerInfo, mapInfo);
+    CCTMXLayer *layer = CCTMXLayer::create(tileset, layerInfo, mapInfo);
 
     // tell the layerinfo to release the ownership of the tiles map.
     layerInfo->m_bOwnTiles = false;

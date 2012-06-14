@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2011 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2009      Valentin Milea
  Copyright (c) 2011      Zynga Inc.
@@ -298,8 +298,14 @@ public:
 
     /** allocates and initializes a node.
      The node will be created as "autorelease".
+	 @warning: This interface will be deprecated in future.
      */
-    static CCNode * node(void);
+    //static CCNode * node(void);
+
+	/** allocates and initializes a node.
+     The node will be created as "autorelease".
+     */
+    static CCNode * create(void);
 
     //scene managment
 

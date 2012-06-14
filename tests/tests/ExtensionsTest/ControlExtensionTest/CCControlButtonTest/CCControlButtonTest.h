@@ -35,7 +35,7 @@ public:
     /** Creates and return a button with a default background and title color. */
     CCControlButton *standardButtonWithTitle(const char * title);
 
-    CONTROL_SCENE_NODE_FUNC(CCControlButtonTest_HelloVariableSize)
+    CONTROL_SCENE_CREATE_FUNC(CCControlButtonTest_HelloVariableSize)
 };
 
 class CCControlButtonTest_Event : public CCControlScene
@@ -54,7 +54,7 @@ public:
     void touchCancelAction(CCObject *sender);
 protected:
     CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
-    CONTROL_SCENE_NODE_FUNC(CCControlButtonTest_Event)
+    CONTROL_SCENE_CREATE_FUNC(CCControlButtonTest_Event)
 };
 
 
@@ -63,7 +63,7 @@ class CCControlButtonTest_Styling : public CCControlScene
 public:
     bool init();
     CCControlButton *standardButtonWithTitle(const char *title);
-    CONTROL_SCENE_NODE_FUNC(CCControlButtonTest_Styling)
+    CONTROL_SCENE_CREATE_FUNC(CCControlButtonTest_Styling)
 };
 
 

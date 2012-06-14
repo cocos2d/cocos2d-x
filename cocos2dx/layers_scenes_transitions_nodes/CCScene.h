@@ -47,14 +47,50 @@ public:
     CCScene();
     virtual ~CCScene();
     bool init();
-    static CCScene *node(void);
+    //static CCScene *node(void);
+    static CCScene *create(void);
 };
 
 NS_CC_END
 
+// for the subclass of CCScene, each has to implement the static "node" method
+// @warning: This interface will be deprecated in future.
+// #define SCENE_NODE_FUNC(scene) \
+// static scene* node() \
+// { \
+//     scene *pRet = new scene(); \
+//     if (pRet && pRet->init()) \
+//     { \
+//         pRet->autorelease(); \
+//         return pRet; \
+//     } \
+//     else \
+//     { \
+//         delete pRet; \
+//         pRet = NULL; \
+//         return NULL; \
+//     } \
+// }; 
+
+// @warning: This interface will be deprecated in future.
+// #define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
+//     static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
+//     { \
+//         cocos2d::CCScene * scene = NULL; \
+//         do  \
+//         { \
+//             scene = cocos2d::CCScene::node(); \
+//             CC_BREAK_IF(! scene); \
+//             __TYPE__ *layer = __TYPE__::node(__PARAM__); \
+//             CC_BREAK_IF(! layer); \
+//             scene->addChild(layer); \
+//         } while (0); \
+//         return scene; \
+//     }
+
 // for the subclass of CCScene, each has to implement the static "node" method 
-#define SCENE_NODE_FUNC(scene) \
-static scene* node() \
+#define SCENE_CREATE_FUNC(scene) \
+static scene* create() \
 { \
     scene *pRet = new scene(); \
     if (pRet && pRet->init()) \
@@ -70,20 +106,19 @@ static scene* node() \
     } \
 }; 
 
-#define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
-    static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
+#define SCENE_CREATE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
+    static cocos2d::CCScene* create(__PARAMTYPE__ __PARAM__) \
     { \
         cocos2d::CCScene * scene = NULL; \
         do  \
         { \
-            scene = cocos2d::CCScene::node(); \
+            scene = cocos2d::CCScene::create(); \
             CC_BREAK_IF(! scene); \
-            __TYPE__ *layer = __TYPE__::node(__PARAM__); \
+            __TYPE__ *layer = __TYPE__::create(__PARAM__); \
             CC_BREAK_IF(! layer); \
             scene->addChild(layer); \
         } while (0); \
         return scene; \
     }
-
 
 #endif // __CCSCENE_H__

@@ -70,25 +70,25 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     //
     
     // Centre
-    centre = CCSprite::spriteWithTexture(scale9Image->getTexture(), m_capInsets);
+    centre = CCSprite::createWithTexture(scale9Image->getTexture(), m_capInsets);
     scale9Image->addChild(centre ,0 ,pCentre);
     
     // Top
-    top = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsets.origin.x,
+    top = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsets.origin.x,
                                                                 t,
                                                                 m_capInsets.size.width,
                                                                 m_capInsets.origin.y - t));
     scale9Image->addChild(top, 1, pTop);
     
     // Bottom
-    bottom = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake( m_capInsets.origin.x,
+    bottom = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake( m_capInsets.origin.x,
                                                                    m_capInsets.origin.y + m_capInsets.size.height,
                                                                    m_capInsets.size.width,
                                                                    h - (m_capInsets.origin.y - t + m_capInsets.size.height) ));
     scale9Image->addChild(bottom, 1, pBottom);
     
     // Left
-    left = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake(
+    left = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                  l,
                                                                  m_capInsets.origin.y,
                                                                  m_capInsets.origin.x - l,
@@ -96,7 +96,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     scale9Image->addChild(left, 1, pLeft);
     
     // Right
-    right = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake(
+    right = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                   m_capInsets.origin.x + m_capInsets.size.width,
                                                                   m_capInsets.origin.y,
                                                                   w - (m_capInsets.origin.x - l + m_capInsets.size.width),
@@ -104,7 +104,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     scale9Image->addChild(right, 1, pRight);
     
     // Top left
-    topLeft = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake(
+    topLeft = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                     l,
                                                                     t,
                                                                     m_capInsets.origin.x - l,
@@ -113,7 +113,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     scale9Image->addChild(topLeft, 2, pTopLeft);
     
     // Top right
-    topRight = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake(
+    topRight = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                      m_capInsets.origin.x + m_capInsets.size.width,
                                                                      t,
                                                                      w - (m_capInsets.origin.x - l + m_capInsets.size.width),
@@ -122,7 +122,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     scale9Image->addChild(topRight, 2, pTopRight);
     
     // Bottom left
-    bottomLeft = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake(
+    bottomLeft = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                        l,
                                                                        m_capInsets.origin.y + m_capInsets.size.height,
                                                                        m_capInsets.origin.x - l,
@@ -130,7 +130,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     scale9Image->addChild(bottomLeft, 2, pBottomLeft);
     
     // Bottom right
-    bottomRight = CCSprite::spriteWithTexture(scale9Image->getTexture(), CCRectMake(
+    bottomRight = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                         m_capInsets.origin.x + m_capInsets.size.width,
                                                                         m_capInsets.origin.y + m_capInsets.size.height,
                                                                         w - (m_capInsets.origin.x - l + m_capInsets.size.width),
@@ -189,12 +189,17 @@ bool CCScale9Sprite::initWithFile(const char* file, CCRect rect,  CCRect capInse
 {
     CCAssert(file != NULL, "Invalid file for sprite");
     
-    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::batchNodeWithFile(file, 9);
+    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::create(file, 9);
     bool pReturn = this->initWithBatchNode(batchnode, rect, capInsets);
     return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, CCRect rect,  CCRect capInsets)
+// CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, CCRect rect,  CCRect capInsets)
+// {
+//     return CCScale9Sprite::create(file, rect, capInsets);
+// }
+
+CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect,  CCRect capInsets)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, rect, capInsets) )
@@ -211,7 +216,13 @@ bool CCScale9Sprite::initWithFile(const char* file, CCRect rect)
     bool pReturn = this->initWithFile(file, rect, CCRectZero);
     return pReturn;
 }
-CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, CCRect rect)
+
+// CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, CCRect rect)
+// {
+//     return CCScale9Sprite::create(file, rect);
+// }
+
+CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, rect) )
@@ -230,7 +241,12 @@ bool CCScale9Sprite::initWithFile(CCRect capInsets, const char* file)
     return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::spriteWithFile(CCRect capInsets, const char* file)
+// CCScale9Sprite* CCScale9Sprite::spriteWithFile(CCRect capInsets, const char* file)
+// {
+//     return CCScale9Sprite::create(capInsets, file);
+// }
+
+CCScale9Sprite* CCScale9Sprite::create(CCRect capInsets, const char* file)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, capInsets) )
@@ -248,7 +264,13 @@ bool CCScale9Sprite::initWithFile(const char* file)
     return pReturn;
     
 }
-CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file)
+
+// CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file)
+// {
+//     return CCScale9Sprite::create(file);
+// }
+
+CCScale9Sprite* CCScale9Sprite::create(const char* file)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithFile(file) )
@@ -264,12 +286,17 @@ bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capI
 {
     CCAssert(spriteFrame != NULL, "Sprite frame must be not nil");
     
-    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::batchNodeWithTexture(spriteFrame->getTexture(), 9);
+    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
     bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), capInsets);
     return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets)
+// CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets)
+// {
+//     return CCScale9Sprite::createWithSpriteFrame(spriteFrame, capInsets);
+// }
+
+CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame, capInsets) )
@@ -286,7 +313,13 @@ bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame)
     return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrame(CCSpriteFrame* spriteFrame)
+
+// CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrame(CCSpriteFrame* spriteFrame)
+// {
+//     return CCScale9Sprite::createWithSpriteFrame(spriteFrame);
+// }
+
+CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame) )
@@ -307,7 +340,12 @@ bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, CCRect
     return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
+// CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
+// {
+//     return CCScale9Sprite::createWithSpriteFrameName(spriteFrameName, capInsets);
+// }
+
+CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName, capInsets) )
@@ -326,7 +364,12 @@ bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName)
     return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrameName(const char* spriteFrameName)
+// CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrameName(const char* spriteFrameName)
+// {
+//     return CCScale9Sprite::createWithSpriteFrameName(spriteFrameName);
+// }
+
+CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFrameName)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
@@ -351,7 +394,12 @@ CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
     return NULL;
 }
 
-CCScale9Sprite* CCScale9Sprite::node()
+// CCScale9Sprite* CCScale9Sprite::node()
+// {
+//     return CCScale9Sprite::create();
+// }
+
+CCScale9Sprite* CCScale9Sprite::create()
 { 
     CCScale9Sprite *pRet = new CCScale9Sprite();
     if (pRet)

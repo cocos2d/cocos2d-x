@@ -25,7 +25,7 @@ enum
 //------------------------------------------------------------------
 PongScene::PongScene()
 {
-    PongLayer *pongLayer = new PongLayer();//PongLayer::node();
+    PongLayer *pongLayer = new PongLayer();//PongLayer::create();
     addChild(pongLayer);
     pongLayer->release();
 }

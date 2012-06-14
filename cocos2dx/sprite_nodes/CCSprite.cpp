@@ -58,7 +58,12 @@ NS_CC_BEGIN
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
+// CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
+// {
+//     return CCSprite::createWithTexture(pTexture);
+// }
+
+CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
 {
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithTexture(pTexture))
@@ -70,7 +75,12 @@ CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
+// CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
+// {
+//     return CCSprite::createWithTexture(pTexture, rect);
+// }
+
+CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
 {
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithTexture(pTexture, rect))
@@ -82,17 +92,12 @@ CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect, const CCPoint& offset)
-{
-    CC_UNUSED_PARAM(pTexture);
-    CC_UNUSED_PARAM(rect);
-    CC_UNUSED_PARAM(offset);
-    // not implement
-    CCAssert(0, "");
-    return NULL;
-}
+// CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
+// {
+//     CCSprite::create(pszFileName);
+// }
 
-CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
+CCSprite* CCSprite::create(const char *pszFileName)
 {
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName))
@@ -104,7 +109,12 @@ CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
+// CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
+// {
+//     return CCSprite::create(pszFileName, rect);
+// }
+
+CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
 {
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName, rect))
@@ -116,7 +126,12 @@ CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+// CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+// {
+//     return CCSprite::createWithSpriteFrame(pSpriteFrame);
+// }
+
+CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
@@ -128,17 +143,27 @@ CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
+// CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
+// {
+//     return CCSprite::createWithSpriteFrameName(pszSpriteFrameName);
+// }
+
+CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
     CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
     CCAssert(pFrame != NULL, msg);
-    return spriteWithSpriteFrame(pFrame);
+    return createWithSpriteFrame(pFrame);
 }
 
-CCSprite* CCSprite::node()
+// CCSprite* CCSprite::node()
+// {
+//     return CCSprite::create();
+// }
+
+CCSprite* CCSprite::create()
 {
     CCSprite *pSprite = new CCSprite();
     if (pSprite && pSprite->init())
@@ -1000,7 +1025,7 @@ bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
 
 CCSpriteFrame* CCSprite::displayFrame(void)
 {
-    return CCSpriteFrame::frameWithTexture(m_pobTexture,
+    return CCSpriteFrame::create(m_pobTexture,
                                            CC_RECT_POINTS_TO_PIXELS(m_obRect),
                                            m_bRectRotated,
                                            m_obUnflippedOffsetPositionFromCenter,

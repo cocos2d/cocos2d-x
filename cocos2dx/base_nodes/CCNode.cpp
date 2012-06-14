@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
 Copyright (c) 2011      Zynga Inc.
@@ -437,13 +437,17 @@ CCRect CCNode::boundingBox()
     return CCRectApplyAffineTransform(rect, nodeToParentTransform());
 }
 
-CCNode * CCNode::node(void)
-{
-    CCNode * pRet = new CCNode();
-    pRet->autorelease();
-    return pRet;
-}
+// CCNode * CCNode::node(void)
+// {
+//     return CCNode::create();
+// }
 
+CCNode * CCNode::create(void)
+{
+	CCNode * pRet = new CCNode();
+	pRet->autorelease();
+	return pRet;
+}
 
 void CCNode::cleanup()
 {

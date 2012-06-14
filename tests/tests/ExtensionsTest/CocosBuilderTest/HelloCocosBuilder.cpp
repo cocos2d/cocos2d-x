@@ -62,8 +62,8 @@ bool HelloCocosBuilder::callbackSetChildren(const char* name, CCObject* node)
 void HelloCocosBuilder::callbackAfterCCBLoaded()
 {
     CCLOG("loading.....successed!") ;
-    void* act = CCRotateBy::actionWithDuration(0.5f, 10) ;
-    void* act1 = CCRepeatForever::actionWithAction((CCActionInterval*)act) ;
+    void* act = CCRotateBy::create(0.5f, 10) ;
+    void* act1 = CCRepeatForever::create((CCActionInterval*)act) ;
     m_pSpriteBurst->runAction((CCAction*)act1) ;
 }
 
@@ -86,7 +86,7 @@ SEL_MenuHandler HelloCocosBuilder::callbackGetSelectors(const char* selectorName
 void HelloCocosBuilder::pressedButton(CCObject*sender) 
 {
     m_pSpriteIcon->stopAllActions() ;
-    void* rotateAction = CCRotateBy::actionWithDuration(1, 360) ;
+    void* rotateAction = CCRotateBy::create(1, 360) ;
     m_pSpriteIcon->runAction((CCAction*)rotateAction) ;
 }
 

@@ -65,7 +65,7 @@ bool ShaderTestDemo::init()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 26);
+    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 26);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-50));
     label->setColor(ccRED);
@@ -73,16 +73,16 @@ bool ShaderTestDemo::init()
     std::string subtitle = this->subtitle();
     if (subtitle.length() > 0)
     {
-        CCLabelTTF *l = CCLabelTTF::labelWithString(subtitle.c_str(), "Thonburi", 16);
+        CCLabelTTF *l = CCLabelTTF::create(subtitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ShaderTestDemo::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ShaderTestDemo::restartCallback));
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ShaderTestDemo::nextCallback));
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ShaderTestDemo::backCallback));
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ShaderTestDemo::restartCallback));
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ShaderTestDemo::nextCallback));
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition(ccp(0, 0));
     item1->setPosition(s.width/2- item2->getContentSize().width*2, item2->getContentSize().height/2);
@@ -104,7 +104,7 @@ void ShaderTestDemo::backCallback(CCObject* pSender)
 
 void ShaderTestDemo::nextCallback(CCObject* pSender)
 {
-    CCScene* s = new ShaderTestScene();//CCScene::node();
+    CCScene* s = new ShaderTestScene();//CCScene::create();
     s->addChild( nextAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
@@ -442,7 +442,7 @@ public:
     bool initWithTexture(CCTexture2D* texture, const CCRect&  rect);
     void draw();
 
-    static SpriteBlur* spriteWithFile(const char *pszFileName);
+    static SpriteBlur* create(const char *pszFileName);
 
     CCPoint blur_;
     GLfloat    sub_[4];
@@ -451,7 +451,7 @@ public:
     GLuint    subLocation;
 };
 
-SpriteBlur* SpriteBlur::spriteWithFile(const char *pszFileName)
+SpriteBlur* SpriteBlur::create(const char *pszFileName)
 {
     SpriteBlur* pRet = new SpriteBlur();
     if (pRet && pRet->initWithFile(pszFileName))
@@ -573,7 +573,7 @@ CCControlSlider* ShaderBlur::createSliderCtl()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
-    CCControlSlider *slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+    CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
     slider->setAnchorPoint(ccp(0.5f, 1.0f));
     slider->setMinimumValue(0.0f); // Sets the min value of range
     slider->setMaximumValue(3.0f); // Sets the max value of range
@@ -591,9 +591,9 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
-        m_pBlurSprite = SpriteBlur::spriteWithFile("Images/grossini.png");
+        m_pBlurSprite = SpriteBlur::create("Images/grossini.png");
 
-        CCSprite *sprite = CCSprite::spriteWithFile("Images/grossini.png");
+        CCSprite *sprite = CCSprite::create("Images/grossini.png");
 
         CCSize s = CCDirector::sharedDirector()->getWinSize();
         m_pBlurSprite->setPosition(ccp(s.width/3, s.height/2));
@@ -644,7 +644,7 @@ bool ShaderRetroEffect::init()
         CCDirector *director = CCDirector::sharedDirector();
         CCSize s = director->getWinSize();
 
-        m_pLabel = CCLabelBMFont::labelWithString("RETRO EFFECT", "fonts/west_england-64.fnt");
+        m_pLabel = CCLabelBMFont::create("RETRO EFFECT", "fonts/west_england-64.fnt");
 
         m_pLabel->setShaderProgram(p);
 
