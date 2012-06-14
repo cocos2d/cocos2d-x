@@ -285,7 +285,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         memberVarAssignmentName = this->readCachedString();
     }
 
-    CCNodeLoader * ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className->m_sString);
+    CCNodeLoader * ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className);
     CCNode * node = ccNodeLoader->loadCCNode(pParent, this);
 
     /* Set root node, if not set yet. */
