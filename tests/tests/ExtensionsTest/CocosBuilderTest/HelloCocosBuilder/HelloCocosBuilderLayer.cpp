@@ -3,9 +3,8 @@
 #include "extensions/CCBReader/CCBReader.h"
 #include "extensions/CCBReader/CCNodeLoaderLibrary.h"
 
-#include "TestHeaderLayerLoader.h"
-#include "ButtonTestLayerLoader.h"
-#include "CCTransition.h"
+#include "../TestHeader/TestHeaderLayerLoader.h"
+#include "../ButtonTest/ButtonTestLayerLoader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;

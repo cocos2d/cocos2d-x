@@ -14,7 +14,7 @@ class CC_DLL CCNodeLoaderLibrary : public CCObject {
         CCNodeLoaderMap mCCNodeLoaders;
 
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoaderLibrary, library);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoaderLibrary, library);
 
         CCNodeLoaderLibrary();
         ~CCNodeLoaderLibrary();

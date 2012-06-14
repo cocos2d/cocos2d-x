@@ -10,7 +10,7 @@ class CCBReader;
 
 class CCLayerGradientLoader : public CCLayerLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerGradientLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerGradientLoader, loader);
 
     protected:
         virtual CCLayerGradient * createCCNode(CCNode *, CCBReader *);

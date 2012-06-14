@@ -10,7 +10,7 @@ class CCBReader;
 
 class CCMenuItemImageLoader : public CCMenuItemLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuItemImageLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuItemImageLoader, loader);
 
     protected:
         virtual CCMenuItemImage * createCCNode(CCNode *, CCBReader *);
