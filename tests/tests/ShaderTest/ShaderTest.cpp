@@ -611,7 +611,7 @@ bool ShaderBlur::init()
     return false;
 }
 
-void ShaderBlur::sliderAction(CCObject* sender)
+void ShaderBlur::sliderAction(CCObject* sender, CCControlEvent controlEvent)
 {
     CCControlSlider* pSlider = (CCControlSlider*)sender;
     m_pBlurSprite->setBlurSize(pSlider->getValue());

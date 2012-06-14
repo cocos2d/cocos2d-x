@@ -252,8 +252,9 @@ public:
 
     virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool getIsOpacityModifyRGB(void) { return false;}
-    LAYER_CREATE_FUNC(CCLayerColor);
-    
+    //@warning: This interface will be deprecated in future.
+    LAYER_CREATE_FUNC(CCLayerColor)
+    LAYER_NODE_FUNC(CCLayerColor)
 protected:
     virtual void updateColor();
 };
@@ -317,7 +318,9 @@ public:
     */
     CC_PROPERTY(bool, m_bCompressedInterpolation, IsCompressedInterpolation)
 
-    LAYER_CREATE_FUNC(CCLayerGradient);
+    // @warning: This interface will be deprecated in future.
+    LAYER_NODE_FUNC(CCLayerGradient)
+    LAYER_CREATE_FUNC(CCLayerGradient)
 protected:
     virtual void updateColor();
 };
@@ -372,7 +375,10 @@ public:
     */
     void switchToAndReleaseMe(unsigned int n);
     
-    LAYER_CREATE_FUNC(CCLayerMultiplex);
+    //@warning: This interface will be deprecated in future.
+    LAYER_NODE_FUNC(CCLayerMultiplex)
+
+    LAYER_CREATE_FUNC(CCLayerMultiplex)
 };
 
 NS_CC_END

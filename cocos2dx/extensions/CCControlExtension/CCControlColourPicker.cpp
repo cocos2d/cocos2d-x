@@ -130,7 +130,7 @@ void CCControlColourPicker::updateHueAndControlPicker()
 }
 
 
-void CCControlColourPicker::hueSliderValueChanged(CCObject * sender)
+void CCControlColourPicker::hueSliderValueChanged(CCObject * sender, CCControlEvent controlEvent)
 {
     m_hsv.h      = ((CCControlHuePicker*)sender)->getHue();
 
@@ -143,7 +143,7 @@ void CCControlColourPicker::hueSliderValueChanged(CCObject * sender)
     updateControlPicker();
 }
 
-void CCControlColourPicker::colourSliderValueChanged(CCObject * sender)
+void CCControlColourPicker::colourSliderValueChanged(CCObject * sender, CCControlEvent controlEvent)
 {
     m_hsv.s=((CCControlSaturationBrightnessPicker*)sender)->getSaturation();
     m_hsv.v=((CCControlSaturationBrightnessPicker*)sender)->getBrightness();

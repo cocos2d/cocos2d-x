@@ -718,6 +718,10 @@ void CCLabelBMFont::purgeCachedData()
     FNTConfigRemoveCache();
 }
 
+CCLabelBMFont * CCLabelBMFont::node(){    return CCLabelBMFont::create();}
+
+CCLabelBMFont * CCLabelBMFont::create(){    CCLabelBMFont * pRet = new CCLabelBMFont();    if (pRet && pRet->init())    {        pRet->autorelease();        return pRet;    }    CC_SAFE_DELETE(pRet);    return NULL;}
+
 CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
 {
     return CCLabelBMFont::create(str, fntFile, width, alignment, imageOffset);

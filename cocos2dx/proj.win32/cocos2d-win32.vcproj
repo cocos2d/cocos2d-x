@@ -1239,11 +1239,19 @@
 				Name="CCBReader"
 				>
 				<File
-					RelativePath="..\extensions\CCBReader\CCBCustomClass.cpp"
+					RelativePath="..\extensions\CCBReader\CCBFileLoader.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\CCBReader\CCBCustomClass.h"
+					RelativePath="..\extensions\CCBReader\CCBFileLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBMemberVariableAssigner.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBReader.cpp"
 					>
 				</File>
 				<File
@@ -1251,7 +1259,131 @@
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\CCBReader\CCBReader_v2.cpp"
+					RelativePath="..\extensions\CCBReader\CCBSelectorResolver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCControlButtonLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCControlButtonLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCControlLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCControlLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLabelBMFontLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLabelBMFontLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLabelTTFLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLabelTTFLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerColorLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerColorLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerGradientLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerGradientLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuItemImageLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuItemImageLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuItemLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuItemLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoaderLibrary.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoaderLibrary.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoaderListener.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCParticleSystemQuadLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCParticleSystemQuadLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCScale9SpriteLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCScale9SpriteLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCSpriteLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCSpriteLoader.h"
 					>
 				</File>
 			</Filter>

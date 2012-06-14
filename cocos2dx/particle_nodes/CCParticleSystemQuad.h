@@ -101,7 +101,10 @@ public:
      */
     void listenBackToForeground(CCObject *obj);
 
+    //@warning: This interface will be deprecated in future.
     static CCParticleSystemQuad * node();
+
+    static CCParticleSystemQuad * create();
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();

@@ -569,7 +569,12 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
     }
 }
 
-CCParticleSystemQuad * CCParticleSystemQuad::node() {
+CCParticleSystemQuad * CCParticleSystemQuad::node()
+{
+    return CCParticleSystemQuad::create();
+}
+
+CCParticleSystemQuad * CCParticleSystemQuad::create() {
     CCParticleSystemQuad *pParticleSystemQuad = new CCParticleSystemQuad();
     if (pParticleSystemQuad && pParticleSystemQuad->init())
     {

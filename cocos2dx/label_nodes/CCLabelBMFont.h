@@ -201,8 +201,13 @@ public:
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
 
     /** Creates an label.
+    @warning: This interface will be deprecated in future.
      */
     static CCLabelBMFont * node();
+
+    /** Creates an label.
+     */
+    static CCLabelBMFont * create();
 
     bool init();
     /** init a bitmap font altas with an initial string and the FNT file */

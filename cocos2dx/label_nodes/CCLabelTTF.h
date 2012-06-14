@@ -90,6 +90,10 @@ public:
      */
     static CCLabelTTF * node();
 
+    /** Creates an label.
+     */
+    static CCLabelTTF * create();
+
     /** changes the string to render
     * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
     */

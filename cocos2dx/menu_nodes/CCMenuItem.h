@@ -339,8 +339,13 @@ public:
     /** sets the sprite frame for the disabled image */
     void setDisabledSpriteFrame(CCSpriteFrame* frame);
     /** Creates an CCMenuItemImage.
+    @warning: This interface will be deprecated in future.
      */
     static CCMenuItemImage* node();
+
+    /** Creates an CCMenuItemImage.
+     */
+    static CCMenuItemImage* create();
 };
 
 /** @brief A CCMenuItemToggle

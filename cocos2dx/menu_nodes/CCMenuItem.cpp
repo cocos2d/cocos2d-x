@@ -693,8 +693,12 @@ void CCMenuItemSprite::updateImagesVisibility()
     }
 }
 
-
 CCMenuItemImage* CCMenuItemImage::node()
+{
+    return CCMenuItemImage::create();
+}
+
+CCMenuItemImage* CCMenuItemImage::create()
 {
     CCMenuItemImage *pRet = new CCMenuItemImage();
     if (pRet && pRet->init())

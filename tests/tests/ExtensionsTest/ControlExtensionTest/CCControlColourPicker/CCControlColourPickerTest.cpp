@@ -75,7 +75,7 @@ bool CCControlColourPickerTest::init()
         layer->setAnchorPoint(ccp (0.5f, 0.5f));
 
         // Update the color text
-        colourValueChanged(colourPicker);
+        colourValueChanged(colourPicker, CCControlEventValueChanged);
         return true;
     }
     return false;
@@ -87,7 +87,7 @@ CCControlColourPickerTest::~CCControlColourPickerTest()
     CC_SAFE_RELEASE(m_pColorLabel);
 }
 
-void CCControlColourPickerTest::colourValueChanged(CCObject *sender)
+void CCControlColourPickerTest::colourValueChanged(CCObject *sender, CCControlEvent controlEvent)
 {
     CCControlColourPicker* pPicker = (CCControlColourPicker*)sender;
     m_pColorLabel->setString(CCString::createWithFormat("#%02X%02X%02X",pPicker->getColorValue().r, pPicker->getColorValue().g, pPicker->getColorValue().b)->getCString());

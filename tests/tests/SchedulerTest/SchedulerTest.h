@@ -223,7 +223,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     CCControlSlider* sliderCtl();
-    void sliderAction(CCObject* pSender);
+    void sliderAction(CCObject* pSender, CCControlEvent controlEvent);
     CCControlSlider* m_pSliderCtl;
 };
 
@@ -236,7 +236,7 @@ public:
     virtual std::string subtitle();
     void onEnter();
     CCControlSlider* sliderCtl();
-    void sliderAction(CCObject* sender);
+    void sliderAction(CCObject* sender, CCControlEvent controlEvent);
     CCScheduler *sched1;
     CCScheduler *sched2;
     CCActionManager *actionManager1;
