@@ -788,10 +788,10 @@ void CCTransitionFlipAngular::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-// CCTransitionFlipAngular* CCTransitionFlipAngular::transitionWithDuration(float t, CCScene* s, tOrientation o)
-// {
-//     return CCTransitionFlipAngular::create(t, s, o);
-// }
+CCTransitionFlipAngular* CCTransitionFlipAngular::transitionWithDuration(float t, CCScene* s, tOrientation o)
+{
+    return CCTransitionFlipAngular::create(t, s, o);
+}
 
 CCTransitionFlipAngular* CCTransitionFlipAngular::create(float t, CCScene* s, tOrientation o)
 {
