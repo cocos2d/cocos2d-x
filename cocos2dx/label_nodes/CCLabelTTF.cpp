@@ -50,7 +50,21 @@ CCLabelTTF::CCLabelTTF()
 
 CCLabelTTF::~CCLabelTTF()
 {
-    CC_SAFE_DELETE(m_pFontName);       
+    CC_SAFE_DELETE(m_pFontName);
+}
+
+CCLabelTTF * CCLabelTTF::node()
+{
+    CCLabelTTF * pRet = new CCLabelTTF();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
 }
 
 CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const char *fontName, float fontSize)
@@ -213,7 +227,7 @@ float CCLabelTTF::getFontSize()
 void CCLabelTTF::setFontSize(float fontSize)
 {
     if (m_fFontSize != fontSize)
-    {   
+    {
         m_fFontSize = fontSize;
         
         // Force update

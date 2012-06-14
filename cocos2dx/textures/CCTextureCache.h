@@ -185,7 +185,8 @@ public:
     ~VolatileTexture();
 
     static void addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format);
-    static void addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    static void addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, 
+                                 CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
     static void addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize);
     static void addCCImage(CCTexture2D *tt, CCImage *image);
 
@@ -217,6 +218,7 @@ protected:
 
     CCSize          m_size;
     CCTextAlignment m_alignment;
+    CCVerticalTextAlignment m_vAlignment;
     std::string     m_strFontName;
     std::string     m_strText;
     float           m_fFontSize;

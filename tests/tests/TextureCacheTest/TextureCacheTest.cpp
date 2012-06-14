@@ -3,7 +3,7 @@
 
 #include "TextureCacheTest.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 TextureCacheTest::TextureCacheTest()
 : m_nNumberOfSprites(20)

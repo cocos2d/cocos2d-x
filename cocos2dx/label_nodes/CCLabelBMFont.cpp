@@ -777,8 +777,6 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         m_pAlignment = alignment;
         m_tImageOffset = imageOffset;
         m_fWidth = width;
-        CC_SAFE_DELETE_ARRAY(m_sString);
-        m_sString = cc_utf16_from_utf8(theString);
         m_cOpacity = 255;
         m_tColor = ccWHITE;
         m_tContentSize = CCSizeZero;

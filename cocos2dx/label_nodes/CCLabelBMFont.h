@@ -200,6 +200,10 @@ public:
     /** creates a bitmap font altas with an initial string and the FNT file */
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
 
+    /** Creates an label.
+     */
+    static CCLabelBMFont * node();
+
     bool init();
     /** init a bitmap font altas with an initial string and the FNT file */
     bool initWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);

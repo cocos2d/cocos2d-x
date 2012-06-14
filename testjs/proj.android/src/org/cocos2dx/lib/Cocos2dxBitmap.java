@@ -40,11 +40,14 @@ import android.util.Log;
 public class Cocos2dxBitmap{
 	/*
 	 * The values are the same as cocos2dx/platform/CCImage.h.
-	 * I think three alignments are OK.
 	 */
-	private static final int ALIGNCENTER = 0x33;
-	private static final int ALIGNLEFT	 = 0x31;
-	private static final int ALIGNRIGHT	 = 0x32;
+	private static final int HALIGNCENTER = 3;
+	private static final int HALIGNLEFT	  = 1;
+	private static final int HALIGNRIGHT  = 2;
+	// vertical alignment
+	private static final int VALIGNTOP    = 1;
+	private static final int VALIGNBOTTOM = 2;
+	private static final int VALIGNCENTER = 3;
 	
 	private static Context context;
 	
@@ -74,8 +77,7 @@ public class Cocos2dxBitmap{
         // Draw string
         FontMetricsInt fm = paint.getFontMetricsInt();
         int x = 0;
-        int y = height == 0 ?(-fm.top):
-			(-fm.top + (height - textProperty.totalHeight)/2);
+        int y = computeY(fm, height, textProperty.totalHeight, alignment);
         String[] lines = textProperty.lines;
         for (String line : lines){
         	x = computeX(paint, line, textProperty.maxWidth, alignment);
@@ -88,17 +90,18 @@ public class Cocos2dxBitmap{
     
     private static int computeX(Paint paint, String content, int w, int alignment){
     	int ret = 0;
+    	int hAlignment = alignment & 0x0F;
     	
-    	switch (alignment){
-    	case ALIGNCENTER:
+    	switch (hAlignment){
+    	case HALIGNCENTER:
     		ret = w / 2;
     		break;
     	
         // ret = 0
-    	case ALIGNLEFT:   		
+    	case HALIGNLEFT:   		
     		break;
     		
-    	case ALIGNRIGHT:
+    	case HALIGNRIGHT:
     		ret = w;
     		break;
     	
@@ -111,6 +114,30 @@ public class Cocos2dxBitmap{
     	}
     	
     	return ret;
+    }
+    
+    private static int computeY(FontMetricsInt fm, int constrainHeight, int totalHeight, int alignment) {
+    	int y = -fm.top;
+
+    	if (constrainHeight > totalHeight) {
+    		int vAlignment = (alignment >> 4) & 0x0F;
+    		
+        	switch (vAlignment) {
+        	case VALIGNTOP:
+        		y = -fm.top;
+        		break;
+        	case VALIGNCENTER:
+        		y = -fm.top + (constrainHeight - totalHeight)/2;
+        		break;
+        	case VALIGNBOTTOM:
+        		y = -fm.top + (constrainHeight - totalHeight);
+        		break;
+        	default:
+        		break;
+        	}
+    	}
+    	
+    	return y;
     }
     
     private static class TextProperty{
@@ -258,6 +285,10 @@ public class Cocos2dxBitmap{
         				strList.add(content.substring(start, i));   				
         			}
     			}
+    			
+    			// remove spaces at the beginning of a new line
+    			while(content.indexOf(i++) == ' ') {
+    			}
     			   			
     			start = i;
     		}
@@ -301,16 +332,17 @@ public class Cocos2dxBitmap{
         	paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
         }
         
-        switch (alignment){
-    	case ALIGNCENTER:
+        int hAlignment = alignment & 0x0F;
+        switch (hAlignment){
+    	case HALIGNCENTER:
     		paint.setTextAlign(Align.CENTER);
     		break;
     	
-    	case ALIGNLEFT:  
+    	case HALIGNLEFT:  
     		paint.setTextAlign(Align.LEFT);
     		break;
     		
-    	case ALIGNRIGHT:
+    	case HALIGNRIGHT:
     		paint.setTextAlign(Align.RIGHT);
     		break;
     	

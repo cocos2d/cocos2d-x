@@ -71,7 +71,7 @@ bool CCControlSwitchTest::init()
         switchControl->setPosition(ccp (layer_width + 10 + switchControl->getContentSize().width / 2, 0));
         layer->addChild(switchControl);
 
-        switchControl->addTargetWithActionForControlEvents(this, menu_selector(CCControlSwitchTest::valueChanged), CCControlEventValueChanged);
+        switchControl->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSwitchTest::valueChanged), CCControlEventValueChanged);
         
         // Set the layer size
         layer->setContentSize(CCSizeMake(layer_width, 0));

@@ -90,8 +90,9 @@ static const unsigned int tableFormats[][7] = {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)  
 	{ kPVRTexturePixelTypePVRTC_2,	 GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,			2,	true, kCCTexture2DPixelFormat_PVRTC2	},
 	{ kPVRTexturePixelTypePVRTC_4,	 GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,			4,	true, kCCTexture2DPixelFormat_PVRTC4	},
-#endif // iphone only
+
 	{ kPVRTexturePixelTypeBGRA_8888, GL_RGBA,	GL_BGRA, GL_UNSIGNED_BYTE,					32,	false, kCCTexture2DPixelFormat_RGBA8888	},
+#endif // iphone only
 };
 
 //Tells How large is tableFormats
@@ -342,7 +343,7 @@ bool CCTexturePVR::createGLTexture()
     // Generate textures with mipmaps
     for (unsigned int i = 0; i < m_uNumberOfMipmaps; ++i)
     {
-        if (compressed && ! CCConfiguration::sharedConfiguration()->isSupportsNPOT()) 
+        if (compressed && ! CCConfiguration::sharedConfiguration()->isSupportsPVRTC()) 
         {
 			CCLOG("cocos2d: WARNING: PVRTC images are not supported");
 			return false;

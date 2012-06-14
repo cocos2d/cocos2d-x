@@ -33,7 +33,6 @@ tests/ClickAndMoveTest/ClickAndMoveTest.cpp \
 tests/CocosDenshionTest/CocosDenshionTest.cpp \
 tests/CurlTest/CurlTest.cpp \
 tests/CurrentLanguageTest/CurrentLanguageTest.cpp \
-tests/DirectorTest/DirectorTest.cpp \
 tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 tests/EffectsTest/EffectsTest.cpp \
@@ -46,9 +45,13 @@ tests/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourP
 tests/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
 tests/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
 tests/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
-tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder.cpp \
+tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilderLayer.cpp \
+tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilderLayerLoader.cpp \
+tests/ExtensionsTest/CocosBuilderTest/TestHeaderLayer.cpp \
+tests/ExtensionsTest/CocosBuilderTest/TestHeaderLayerLoader.cpp \
+tests/ExtensionsTest/CocosBuilderTest/ButtonTestLayer.cpp \
+tests/ExtensionsTest/CocosBuilderTest/ButtonTestLayerLoader.cpp \
 tests/FontTest/FontTest.cpp \
-tests/HiResTest/HiResTest.cpp \
 tests/IntervalTest/IntervalTest.cpp \
 tests/KeypadTest/KeypadTest.cpp \
 tests/LabelTest/LabelTest.cpp \
