@@ -9,8 +9,8 @@ class TestHeaderLayer : public cocos2d::extension::CCBSelectorResolver, public c
     public:
         static TestHeaderLayer * node();
 
-        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
-        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
+        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName);
+        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName);
 
         virtual void onBackClicked(cocos2d::CCObject * pSender);
 };

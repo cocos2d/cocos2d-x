@@ -15,13 +15,13 @@ ButtonTestLayer * ButtonTestLayer::node() {
     return NULL;
 }
 
-SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuSelector(CCObject * pTarget, const char * pSelectorName) {
+SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuSelector(CCObject * pTarget, CCString * pSelectorName) {
     return NULL;    
 }
 
-SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName) {
+SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(CCObject * pTarget, CCString * pSelectorName) {
     if(pTarget == this) {
-        if(strcmp(pSelectorName, "onCCControlButtonClicked") == 0) {
+        if(pSelectorName->compare("onCCControlButtonClicked") == 0) {
             return cccontrol_selector(ButtonTestLayer::onCCControlButtonClicked);
         }
     }
@@ -29,5 +29,5 @@ SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(CCObject * p
 }
 
 void ButtonTestLayer::onCCControlButtonClicked(cocos2d::CCObject *pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    printf("onCCControlButtonClicked\n");
+    CCLOG("onCCControlButtonClicked\n");
 }

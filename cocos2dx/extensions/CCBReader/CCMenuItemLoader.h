@@ -12,8 +12,8 @@ class CCMenuItemLoader : public CCNodeLoader {
     protected:
         virtual CCMenuItem * createCCNode(CCNode *, CCBReader *) = 0;
 
-        virtual void onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, const char * pPropertyName, BlockData *, CCBReader *);
-        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool, CCBReader *);
+        virtual void onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, BlockData *, CCBReader *);
+        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool, CCBReader *);
 };
 
 NS_CC_EXT_END
