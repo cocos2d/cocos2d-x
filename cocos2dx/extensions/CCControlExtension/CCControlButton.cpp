@@ -28,6 +28,7 @@
 #include "CCScale9Sprite.h"
 #include "CCPointExtension.h"
 #include "CCLabelTTF.h"
+#include "CCLabelBMFont.h"
 #include "CCAction.h"
 #include "CCActionInterval.h"
 
@@ -50,6 +51,11 @@ CCControlButton::~CCControlButton()
 
 //initialisers
 
+bool CCControlButton::init()
+{
+    return this->initWithLabelAndBackgroundSprite(CCLabelTTF::labelWithString("", "Helvetica", 12), CCScale9Sprite::node());
+}
+
 
 bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Sprite* backgroundSprite)
 {
@@ -62,6 +68,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         
         setIsTouchEnabled(true);
         pushed=false;
+        m_zoomOnTouchDown = true;
         m_nState=CCControlStateInitial;
         m_currentTitle=NULL;
         m_backgroundSprite=NULL;
@@ -111,6 +118,8 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         //default margins
         m_marginH=24;    
         m_marginV=12;
+
+        this->m_labelAnchorPoint = CCPoint(0.5f, 0.5f);
 
         // Layout update
         needsLayout();
@@ -244,6 +253,18 @@ bool CCControlButton::getAdjustBackgroundImage()
     return m_adjustBackgroundImage;
 }
 
+CCPoint CCControlButton::getLabelAnchorPoint()
+{
+    return this->m_labelAnchorPoint;
+}
+
+void CCControlButton::setLabelAnchorPoint(CCPoint labelAnchorPoint)
+{
+    this->m_labelAnchorPoint = labelAnchorPoint;
+
+    this->m_titleLabel->setAnchorPoint(labelAnchorPoint);
+}
+
 CCString* CCControlButton::getTitleForState(CCControlState state)
 {
     CCString* title=(CCString*)m_titleDispatchTable->objectForKey(state);    
@@ -331,6 +352,75 @@ void CCControlButton::setTitleLabelForState(CCNode* titleLabel, CCControlState s
     }
 }
 
+void CCControlButton::setTitleTTFForState(const char * fntFile, CCControlState state)
+{
+    CCString * title = this->getTitleForState(state);
+    if (!title) title = new CCString("");
+    this->setTitleLabelForState(CCLabelTTF::labelWithString(title->getCString(), fntFile, 12), state);
+}
+
+const char * CCControlButton::getTitleTTFForState(CCControlState state)
+{
+    CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(this->getTitleLabelForState(state));
+    CCLabelTTF* labelTTF = dynamic_cast<CCLabelTTF*>(label);
+    if(labelTTF != 0)
+    {
+        return labelTTF->getFontName();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+void CCControlButton::setTitleTTFSizeForState(float size, CCControlState state)
+{
+    CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(this->getTitleLabelForState(state));
+    if(label)
+    {
+        CCLabelTTF* labelTTF = dynamic_cast<CCLabelTTF*>(label);
+        if(labelTTF != 0)
+        {
+            return labelTTF->setFontSize(size);
+        }
+    }
+}
+
+float CCControlButton::getTitleTTFSizeForState(CCControlState state)
+{
+    CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(this->getTitleLabelForState(state));
+    CCLabelTTF* labelTTF = dynamic_cast<CCLabelTTF*>(label);
+    if(labelTTF != 0)
+    {
+        return labelTTF->getFontSize();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void CCControlButton::setTitleBMFontForState(const char * fntFile, CCControlState state)
+{
+    CCString * title = this->getTitleForState(state);
+    if (!title) title = new CCString("");
+    this->setTitleLabelForState(CCLabelBMFont::labelWithString(title->getCString(), fntFile), state);
+}
+
+const char * CCControlButton::getTitleBMFontForState(CCControlState state)
+{
+    CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(this->getTitleLabelForState(state));
+    CCLabelBMFont* labelBMFont = dynamic_cast<CCLabelBMFont*>(label);
+    if(labelBMFont != 0)
+    {
+        return labelBMFont->getFntFile();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 
 CCScale9Sprite* CCControlButton::getBackgroundSpriteForState(CCControlState state)
 {
@@ -349,13 +439,18 @@ void CCControlButton::setBackgroundSpriteForState(CCScale9Sprite* sprite, CCCont
     if (previousSprite)
     {
         removeChild(previousSprite, true);
-        m_backgroundSpriteDispatchTable->removeObjectForKey(state);        
+        m_backgroundSpriteDispatchTable->removeObjectForKey(state);
     }
 
     m_backgroundSpriteDispatchTable->setObject(sprite, state);
     sprite->setIsVisible(false);
     sprite->setAnchorPoint(ccp(0.5f, 0.5f));
     addChild(sprite);
+
+    if (this->m_preferredSize.width != 0 || this->m_preferredSize.height != 0)
+    {
+        sprite->setPreferredSize(this->m_preferredSize);
+    }
 
     // If the current state if equal to the given state we update the layout
     if (getState() == state)
@@ -364,11 +459,21 @@ void CCControlButton::setBackgroundSpriteForState(CCScale9Sprite* sprite, CCCont
     }
 }
 
+void CCControlButton::setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFrame, CCControlState state)
+{
+    CCScale9Sprite * sprite = CCScale9Sprite::spriteWithSpriteFrame(spriteFrame);
+    this->setBackgroundSpriteForState(sprite, state);
+}
+
+
 void CCControlButton::needsLayout()
 {
     // Hide the background and the label
     m_titleLabel->setIsVisible(false);
     m_backgroundSprite->setIsVisible(false);
+
+    // Update anchor of all labels
+    this->setLabelAnchorPoint(this->m_labelAnchorPoint);
     
     // Update the label to match with the current state
     //CC_SAFE_RELEASE(m_currentTitle)
@@ -529,6 +634,18 @@ void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     pushed = false;
     setIsHighlighted(false);
     sendActionsForControlEvents(CCControlEventTouchCancel);
+}
+
+CCControlButton * CCControlButton::node()
+{
+    CCControlButton *pControlButton = new CCControlButton();
+    if (pControlButton && pControlButton->init())
+    {
+        pControlButton->autorelease();
+        return pControlButton;
+    }
+    CC_SAFE_DELETE(pControlButton);
+    return NULL;
 }
 
 NS_CC_EXT_END

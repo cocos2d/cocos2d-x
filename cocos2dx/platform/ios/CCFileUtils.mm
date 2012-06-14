@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 #define MAX_PATH 260
 
-using namespace cocos2d;
+USING_NS_CC;
 
 static void static_addValueToCCDict(id key, id value, CCDictionary* pDict);
 static void static_addItemToCCArray(id item, CCArray* pArray);

@@ -741,20 +741,23 @@ void CCParticleSystem::updateBlendFunc()
 {
     CCAssert(! m_pBatchNode, "Can't change blending functions when the particle is being batched");
 
-    bool premultiplied = m_pTexture->getHasPremultipliedAlpha();
-
-    m_bOpacityModifyRGB = false;
-
-    if( m_pTexture && ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) )
+    if(m_pTexture)
     {
-        if( premultiplied )
+        bool premultiplied = m_pTexture->getHasPremultipliedAlpha();
+        
+        m_bOpacityModifyRGB = false;
+        
+        if( m_pTexture && ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) )
         {
-            m_bOpacityModifyRGB = true;
-        }
-        else
-        {
-            m_tBlendFunc.src = GL_SRC_ALPHA;
-            m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+            if( premultiplied )
+            {
+                m_bOpacityModifyRGB = true;
+            }
+            else
+            {
+                m_tBlendFunc.src = GL_SRC_ALPHA;
+                m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+            }
         }
     }
 }

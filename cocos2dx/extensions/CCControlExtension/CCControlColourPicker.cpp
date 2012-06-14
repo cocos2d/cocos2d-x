@@ -71,8 +71,8 @@ bool CCControlColourPicker::init()
         m_colourPicker=CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
-        m_huePicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPicker::hueSliderValueChanged), CCControlEventValueChanged);
-        m_colourPicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPicker::colourSliderValueChanged), CCControlEventValueChanged);
+        m_huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPicker::hueSliderValueChanged), CCControlEventValueChanged);
+        m_colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPicker::colourSliderValueChanged), CCControlEventValueChanged);
        
         // Set defaults
         updateHueAndControlPicker();

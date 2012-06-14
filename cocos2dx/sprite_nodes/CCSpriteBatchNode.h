@@ -105,6 +105,7 @@ public:
     The file will be loaded using the TextureMgr.
     */
     bool initWithFile(const char* fileImage, unsigned int capacity);
+    bool init();
 
     void increaseAtlasCapacity();
 
