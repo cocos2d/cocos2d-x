@@ -107,26 +107,26 @@ bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCStr
 
 
 void HelloCocosBuilderLayer::onMenuTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLOG("onMenuTestClicked\n");
+    CCLog("onMenuTestClicked\n");
 }
 
 void HelloCocosBuilderLayer::onSpriteTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLOG("onSpriteTestClicked\n");
+    CCLog("onSpriteTestClicked\n");
 }
 
 void HelloCocosBuilderLayer::onButtonTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLOG("onButtonTestClicked\n");
+    CCLog("onButtonTestClicked\n");
     this->openTest("ccb/ButtonTest.ccbi", "ButtonTestLayer", ButtonTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onLabelTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLOG("onLabelTestClicked\n");
+    CCLog("onLabelTestClicked\n");
 }
 
 void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLOG("onParticleSystemTestClicked\n");
+    CCLog("onParticleSystemTestClicked\n");
 }
 
 void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLOG("onScrollViewTestClicked\n");
+    CCLog("onScrollViewTestClicked\n");
 }
