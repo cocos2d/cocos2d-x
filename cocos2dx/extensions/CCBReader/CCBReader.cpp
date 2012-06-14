@@ -93,6 +93,7 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char 
     this->mCCBRootPath = pCCBRootPath;
 
     char* ccbFullFilePath = (char*)malloc(strlen(pCCBRootPath) + strlen(pCCBFileName) + 1);
+    ccbFullFilePath[strlen(pCCBRootPath) + strlen(pCCBFileName)] = '\0';
 
     strcpy(ccbFullFilePath, pCCBRootPath);
     strcat(ccbFullFilePath, pCCBFileName);
