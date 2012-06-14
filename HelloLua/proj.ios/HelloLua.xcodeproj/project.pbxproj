@@ -50,7 +50,6 @@
 		78DC4BE815490AF400317402 /* CCAffineTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4ADC15490AF300317402 /* CCAffineTransform.cpp */; };
 		78DC4BE915490AF400317402 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4ADE15490AF300317402 /* CCArray.cpp */; };
 		78DC4BEA15490AF400317402 /* CCAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4AE015490AF300317402 /* CCAutoreleasePool.cpp */; };
-		78DC4BEB15490AF400317402 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4AE215490AF300317402 /* CCData.cpp */; };
 		78DC4BEC15490AF400317402 /* CCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4AE415490AF300317402 /* CCDictionary.cpp */; };
 		78DC4BED15490AF400317402 /* CCGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4AE615490AF300317402 /* CCGeometry.cpp */; };
 		78DC4BEE15490AF400317402 /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC4AE915490AF300317402 /* CCNS.cpp */; };
@@ -299,8 +298,6 @@
 		78DC4ADF15490AF300317402 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		78DC4AE015490AF300317402 /* CCAutoreleasePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAutoreleasePool.cpp; sourceTree = "<group>"; };
 		78DC4AE115490AF300317402 /* CCAutoreleasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAutoreleasePool.h; sourceTree = "<group>"; };
-		78DC4AE215490AF300317402 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		78DC4AE315490AF300317402 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		78DC4AE415490AF300317402 /* CCDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDictionary.cpp; sourceTree = "<group>"; };
 		78DC4AE515490AF300317402 /* CCDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDictionary.h; sourceTree = "<group>"; };
 		78DC4AE615490AF300317402 /* CCGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGeometry.cpp; sourceTree = "<group>"; };
@@ -848,8 +845,6 @@
 				78DC4ADF15490AF300317402 /* CCArray.h */,
 				78DC4AE015490AF300317402 /* CCAutoreleasePool.cpp */,
 				78DC4AE115490AF300317402 /* CCAutoreleasePool.h */,
-				78DC4AE215490AF300317402 /* CCData.cpp */,
-				78DC4AE315490AF300317402 /* CCData.h */,
 				78DC4AE415490AF300317402 /* CCDictionary.cpp */,
 				78DC4AE515490AF300317402 /* CCDictionary.h */,
 				78DC4AE615490AF300317402 /* CCGeometry.cpp */,
@@ -1697,7 +1692,6 @@
 				78DC4BE815490AF400317402 /* CCAffineTransform.cpp in Sources */,
 				78DC4BE915490AF400317402 /* CCArray.cpp in Sources */,
 				78DC4BEA15490AF400317402 /* CCAutoreleasePool.cpp in Sources */,
-				78DC4BEB15490AF400317402 /* CCData.cpp in Sources */,
 				78DC4BEC15490AF400317402 /* CCDictionary.cpp in Sources */,
 				78DC4BED15490AF400317402 /* CCGeometry.cpp in Sources */,
 				78DC4BEE15490AF400317402 /* CCNS.cpp in Sources */,

@@ -147,12 +147,22 @@ bool CCString::isEqual(const CCObject* pObject)
 
 CCString* CCString::stringWithCString(const char* pStr)
 {
+    return CCString::create(pStr);
+}
+
+CCString* CCString::create(const char* pStr)
+{
     CCString* pRet = new CCString(pStr);
     pRet->autorelease();
     return pRet;
 }
 
 CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
+{
+    return CCString::createWithData(pData, nLen);
+}
+
+CCString* CCString::createWithData(unsigned char* pData, unsigned long nLen)
 {
     CCString* pRet = NULL;
     if (pData != NULL && nLen > 0)
@@ -162,7 +172,7 @@ CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
         {
             pStr[nLen] = '\0';
             memcpy(pStr, pData, nLen);
-            pRet = CCString::stringWithCString(pStr);
+            pRet = CCString::create(pStr);
             free(pStr);
         }
     }
@@ -171,7 +181,18 @@ CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
 
 CCString* CCString::stringWithFormat(const char* format, ...)
 {
-    CCString* pRet = CCString::stringWithCString("");
+    CCString* pRet = CCString::create("");
+    va_list ap;
+    va_start(ap, format);
+    pRet->initWithFormatAndValist(format, ap);
+    va_end(ap);
+
+    return pRet;
+}
+
+CCString* CCString::createWithFormat(const char* format, ...)
+{
+    CCString* pRet = CCString::create("");
     va_list ap;
     va_start(ap, format);
     pRet->initWithFormatAndValist(format, ap);
@@ -182,11 +203,16 @@ CCString* CCString::stringWithFormat(const char* format, ...)
 
 CCString* CCString::stringWithContentsOfFile(const char* pszFileName)
 {
+    return CCString::createWithContentsOfFile(pszFileName);
+}
+
+CCString* CCString::createWithContentsOfFile(const char* pszFileName)
+{
     unsigned long size = 0;
     unsigned char* pData = 0;
     CCString* pRet = NULL;
-    pData = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(pszFileName, "rb", &size);
-    pRet = stringWithData(pData, size);
+    pData = CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
+    pRet = CCString::createWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;
 }

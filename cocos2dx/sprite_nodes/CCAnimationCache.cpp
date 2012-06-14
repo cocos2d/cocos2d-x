@@ -108,7 +108,7 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
             continue;
         }
 
-        CCArray* frames = CCArray::arrayWithCapacity(frameNames->count());
+        CCArray* frames = CCArray::create(frameNames->count());
         frames->retain();
 
         CCObject* pObj = NULL;
@@ -136,7 +136,7 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
             CCLOG("cocos2d: CCAnimationCache: An animation in your dictionary refers to a frame which is not in the CCSpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", pElement->getStrKey());
         }
 
-        animation = CCAnimation::animationWithAnimationFrames(frames, delay, 1);
+        animation = CCAnimation::createWithAnimationFrames(frames, delay, 1);
 
         CCAnimationCache::sharedAnimationCache()->addAnimation(animation, pElement->getStrKey());
         frames->release();
@@ -164,7 +164,7 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
         }
 
         // Array of AnimationFrames
-        CCArray* array = CCArray::arrayWithCapacity(frameArray->count());
+        CCArray* array = CCArray::create(frameArray->count());
         array->retain();
 
         CCObject* pObj = NULL;
@@ -245,7 +245,7 @@ void CCAnimationCache::addAnimationsWithFile(const char* plist)
     CCAssert( plist, "Invalid texture file name");
 
     const char* path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plist);
-    CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFile(path);
+    CCDictionary* dict = CCDictionary::createWithContentsOfFile(path);
 
     CCAssert( dict, "CCAnimationCache: File could not be found");
 

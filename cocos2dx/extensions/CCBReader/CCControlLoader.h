@@ -8,7 +8,7 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CCControlLoader : public CCNodeLoader {
+class CC_DLL CCControlLoader : public CCNodeLoader {
     protected:
         virtual CCControl * createCCNode(CCNode *, CCBReader *) = 0;
 

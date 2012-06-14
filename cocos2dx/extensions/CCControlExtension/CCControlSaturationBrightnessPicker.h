@@ -56,7 +56,10 @@ protected:
 public:
     virtual ~CCControlSaturationBrightnessPicker();
     virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
+
+    //@warning: This interface will be deprecated in future.
     static CCControlSaturationBrightnessPicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
+    static CCControlSaturationBrightnessPicker* create(CCNode* target, CCPoint pos);
     virtual void updateWithHSV(HSV hsv);
     virtual void updateDraggerWithHSV(HSV hsv);
 

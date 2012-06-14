@@ -60,23 +60,23 @@ void RenderTextureTestDemo::onEnter()
     CCLayer::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
     addChild(label, 1);
     label->setPosition( ccp(s.width/2, s.height-50) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
-        CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition( ccp(s.width/2, s.height-80) );
     }    
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(RenderTextureTestDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(RenderTextureTestDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(RenderTextureTestDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(RenderTextureTestDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(RenderTextureTestDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(RenderTextureTestDemo::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
     item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
@@ -127,7 +127,7 @@ RenderTextureTest::RenderTextureTest()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // create a render texture, this is what we're going to draw into
-    m_target = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height);
+    m_target = CCRenderTexture::create(s.width, s.height);
 
     if (NULL == m_target)
     {
@@ -141,7 +141,7 @@ RenderTextureTest::RenderTextureTest()
     addChild(m_target, 1);
 
     // create a brush image to draw into the texture with
-    m_brush = CCSprite::spriteWithFile("Images/stars.png");
+    m_brush = CCSprite::create("Images/stars.png");
     m_brush->retain();
 
     ccBlendFunc bf = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
@@ -230,7 +230,7 @@ RenderTextureSave::RenderTextureSave()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    m_pTarget = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
+    m_pTarget = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
     m_pTarget->retain();
     m_pTarget->setPosition(ccp(s.width / 2, s.height / 2));
 
@@ -239,7 +239,7 @@ RenderTextureSave::RenderTextureSave()
     this->addChild(m_pTarget, -1);
 
     // create a brush image to draw into the texture with
-    m_pBrush = CCSprite::spriteWithFile("Images/fire.png");
+    m_pBrush = CCSprite::create("Images/fire.png");
     m_pBrush->retain();
     m_pBrush->setColor(ccRED);
     m_pBrush->setOpacity(20);
@@ -247,9 +247,9 @@ RenderTextureSave::RenderTextureSave()
 
     // Save Image menu
     CCMenuItemFont::setFontSize(16);
-    CCMenuItem *item1 = CCMenuItemFont::itemWithString("Save Image", this, menu_selector(RenderTextureSave::saveImage));
-    CCMenuItem *item2 = CCMenuItemFont::itemWithString("Clear", this, menu_selector(RenderTextureSave::clearImage));
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, NULL);
+    CCMenuItem *item1 = CCMenuItemFont::create("Save Image", this, menu_selector(RenderTextureSave::saveImage));
+    CCMenuItem *item2 = CCMenuItemFont::create("Clear", this, menu_selector(RenderTextureSave::clearImage));
+    CCMenu *menu = CCMenu::create(item1, item2, NULL);
     this->addChild(menu);
     menu->alignItemsVertically();
     menu->setPosition(ccp(s.width - 80, s.height - 30));
@@ -289,7 +289,7 @@ void RenderTextureSave::saveImage(cocos2d::CCObject *pSender)
 
     CC_SAFE_DELETE(pImage);
 
-    CCSprite *sprite = CCSprite::spriteWithTexture(tex);
+    CCSprite *sprite = CCSprite::createWithTexture(tex);
 
     sprite->setScale(0.3f);
     addChild(sprite);
@@ -363,20 +363,20 @@ RenderTextureIssue937::RenderTextureIssue937()
     *  B1: non-premulti sprite
     *  B2: non-premulti render
     */
-    CCLayerColor *background = CCLayerColor::layerWithColor(ccc4(200,200,200,255));
+    CCLayerColor *background = CCLayerColor::create(ccc4(200,200,200,255));
     addChild(background);
 
-    CCSprite *spr_premulti = CCSprite::spriteWithFile("Images/fire.png");
+    CCSprite *spr_premulti = CCSprite::create("Images/fire.png");
     spr_premulti->setPosition(ccp(16,48));
 
-    CCSprite *spr_nonpremulti = CCSprite::spriteWithFile("Images/fire.png");
+    CCSprite *spr_nonpremulti = CCSprite::create("Images/fire.png");
     spr_nonpremulti->setPosition(ccp(16,16));
 
 
     
     
     /* A2 & B2 setup */
-    CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(32, 64, kCCTexture2DPixelFormat_RGBA8888);
+    CCRenderTexture *rend = CCRenderTexture::create(32, 64, kCCTexture2DPixelFormat_RGBA8888);
 
     if (NULL == rend)
     {
@@ -431,15 +431,15 @@ RenderTextureZbuffer::RenderTextureZbuffer()
 {
     this->setIsTouchEnabled(true);
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF *label = CCLabelTTF::labelWithString("vertexZ = 50", "Marker Felt", 64);
+    CCLabelTTF *label = CCLabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(ccp(size.width / 2, size.height * 0.25f));
     this->addChild(label);
 
-    CCLabelTTF *label2 = CCLabelTTF::labelWithString("vertexZ = 0", "Marker Felt", 64);
+    CCLabelTTF *label2 = CCLabelTTF::create("vertexZ = 0", "Marker Felt", 64);
     label2->setPosition(ccp(size.width / 2, size.height * 0.5f));
     this->addChild(label2);
 
-    CCLabelTTF *label3 = CCLabelTTF::labelWithString("vertexZ = -50", "Marker Felt", 64);
+    CCLabelTTF *label3 = CCLabelTTF::create("vertexZ = -50", "Marker Felt", 64);
     label3->setPosition(ccp(size.width / 2, size.height * 0.75f));
     this->addChild(label3);
 
@@ -448,17 +448,17 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     label3->setVertexZ(-50);
 
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Images/bugs/circle.plist");
-    mgr = CCSpriteBatchNode::batchNodeWithFile("Images/bugs/circle.png", 9);
+    mgr = CCSpriteBatchNode::create("Images/bugs/circle.png", 9);
     this->addChild(mgr);
-    sp1 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp2 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp3 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp4 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp5 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp6 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp7 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp8 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp9 = CCSprite::spriteWithSpriteFrameName("circle.png");
+    sp1 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp2 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp3 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp4 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp5 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp6 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp7 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp8 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp9 = CCSprite::createWithSpriteFrameName("circle.png");
 
     mgr->addChild(sp1, 9);
     mgr->addChild(sp2, 8);
@@ -545,7 +545,7 @@ void RenderTextureZbuffer::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 void RenderTextureZbuffer::renderScreenShot()
 {
-    CCRenderTexture *texture = CCRenderTexture::renderTextureWithWidthAndHeight(512, 512);
+    CCRenderTexture *texture = CCRenderTexture::create(512, 512);
     if (NULL == texture)
     {
         return;
@@ -557,7 +557,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     texture->end();
 
-    CCSprite *sprite = CCSprite::spriteWithTexture(texture->getSprite()->getTexture());
+    CCSprite *sprite = CCSprite::createWithTexture(texture->getSprite()->getTexture());
 
     sprite->setPosition(ccp(256, 256));
     sprite->setOpacity(182);
@@ -565,8 +565,8 @@ void RenderTextureZbuffer::renderScreenShot()
     this->addChild(sprite, 999999);
     sprite->setColor(ccGREEN);
 
-    sprite->runAction(CCSequence::actions(CCFadeTo::actionWithDuration(2, 0),
-                                          CCHide::action(),
+    sprite->runAction(CCSequence::create(CCFadeTo::create(2, 0),
+                                          CCHide::create(),
                                           NULL));
 }
 
@@ -577,10 +577,10 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *sprite = CCSprite::spriteWithFile("Images/fire.png");
+    CCSprite *sprite = CCSprite::create("Images/fire.png");
     sprite->setPosition(ccp(s.width * 0.25f, 0));
     sprite->setScale(10);
-    CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, CC_GL_DEPTH24_STENCIL8);
+    CCRenderTexture *rend = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, CC_GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);

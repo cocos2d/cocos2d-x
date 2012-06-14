@@ -79,23 +79,23 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     quantityParticles = particles;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::itemWithString(" - ", this, menu_selector(ParticleMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(ParticleMainScene::onDecrease));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::itemWithString(" + ", this, menu_selector(ParticleMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(ParticleMainScene::onIncrease));
     increase->setColor(ccc3(0,200,20));
 
-    CCMenu *menu = CCMenu::menuWithItems(decrease, increase, NULL);
+    CCMenu *menu = CCMenu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
     menu->setPosition(ccp(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
-    CCLabelTTF *infoLabel = CCLabelTTF::labelWithString("0 nodes", "Marker Felt", 30);
+    CCLabelTTF *infoLabel = CCLabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(ccc3(0,200,20));
     infoLabel->setPosition(ccp(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // particles on stage
-    CCLabelAtlas *labelAtlas = CCLabelAtlas::labelWithString("0000", "fps_images.png", 12, 32, '.');
+    CCLabelAtlas *labelAtlas = CCLabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 0, kTagLabelAtlas);
     labelAtlas->setPosition(ccp(s.width-66,50));
 
@@ -106,12 +106,12 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 
     // Sub Tests
     CCMenuItemFont::setFontSize(40);
-    CCMenu* pSubMenu = CCMenu::menuWithItems(NULL);
+    CCMenu* pSubMenu = CCMenu::create();
     for (int i = 1; i <= 6; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::itemWithString(str, this, menu_selector(ParticleMainScene::testNCallback));
+        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, this, menu_selector(ParticleMainScene::testNCallback));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
@@ -128,7 +128,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     pSubMenu->setPosition(ccp(s.width/2, 80));
     addChild(pSubMenu, 2);
 
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 40);
+    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
     label->setColor(ccc3(255,255,40));

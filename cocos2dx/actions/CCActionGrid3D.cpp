@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
  
 http://www.cocos2d-x.org
@@ -32,6 +32,11 @@ NS_CC_BEGIN
 // implementation of CCWaves3D
 
 CCWaves3D* CCWaves3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
+{
+    return CCWaves3D::create(wav, amp, gridSize, duration);
+}
+
+CCWaves3D* CCWaves3D::create(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     CCWaves3D *pAction = new CCWaves3D();
 
@@ -106,6 +111,11 @@ void CCWaves3D::update(float time)
 // implementation of CCFlipX3D
 
 CCFlipX3D* CCFlipX3D::actionWithDuration(float duration)
+{
+    return CCFlipX3D::create(duration);
+}
+
+CCFlipX3D* CCFlipX3D::create(float duration)
 {
     CCFlipX3D *pAction = new CCFlipX3D();
 
@@ -233,6 +243,11 @@ void CCFlipX3D::update(float time)
 
 CCFlipY3D* CCFlipY3D::actionWithDuration(float duration)
 {
+    return CCFlipY3D::create(duration);
+}
+
+CCFlipY3D* CCFlipY3D::create(float duration)
+{
     CCFlipY3D *pAction = new CCFlipY3D();
 
     if (pAction)
@@ -341,6 +356,11 @@ void CCFlipY3D::update(float time)
 // implementation of Lens3D
 
 CCLens3D* CCLens3D::actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration)
+{
+    return CCLens3D::create(pos, r, gridSize, duration);
+}
+
+CCLens3D* CCLens3D::create(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration)
 {
     CCLens3D *pAction = new CCLens3D();
 
@@ -453,6 +473,11 @@ void CCLens3D::update(float time)
 
 CCRipple3D* CCRipple3D::actionWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, float duration)
 {
+    return CCRipple3D::create(pos, r, wav, amp, gridSize, duration);
+}
+
+CCRipple3D* CCRipple3D::create(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, float duration)
+{
     CCRipple3D *pAction = new CCRipple3D();
 
     if (pAction)
@@ -542,6 +567,11 @@ void CCRipple3D::update(float time)
 
 CCShaky3D* CCShaky3D::actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration)
 {
+    return CCShaky3D::create(range, shakeZ, gridSize, duration);
+}
+
+CCShaky3D* CCShaky3D::create(int range, bool shakeZ, const ccGridSize& gridSize, float duration)
+{
     CCShaky3D *pAction = new CCShaky3D();
 
     if (pAction)
@@ -621,6 +651,11 @@ void CCShaky3D::update(float time)
 
 CCLiquid* CCLiquid::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
+    return CCLiquid::create(wav, amp, gridSize, duration);
+}
+
+CCLiquid* CCLiquid::create(int wav, float amp, const ccGridSize& gridSize, float duration)
+{
     CCLiquid *pAction = new CCLiquid();
 
     if (pAction)
@@ -694,6 +729,11 @@ void CCLiquid::update(float time)
 // implementation of Waves
 
 CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, float duration)
+{
+    return CCWaves::create(wav, amp, h, v, gridSize, duration);
+}
+
+CCWaves* CCWaves::create(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, float duration)
 {
     CCWaves *pAction = new CCWaves();
 
@@ -779,6 +819,11 @@ void CCWaves::update(float time)
 // implementation of Twirl
 
 CCTwirl* CCTwirl::actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize, float duration)
+{
+    return CCTwirl::create(pos, t, amp, gridSize, duration);
+}
+
+CCTwirl* CCTwirl::create(CCPoint pos, int t, float amp, const ccGridSize& gridSize, float duration)
 {
     CCTwirl *pAction = new CCTwirl();
 
