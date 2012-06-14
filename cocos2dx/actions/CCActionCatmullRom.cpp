@@ -44,24 +44,10 @@ NS_CC_BEGIN;
 /*
  *  Implementation of CCPointArray
  */
-//cjh CCPointArray* CCPointArray::arrayWithCapacity(unsigned int capacity)
-// {
-//     CCPointArray* ret = new CCPointArray();
-//     if (ret)
-//     {
-//         if (ret->initWithCapacity(capacity))
-//         {
-//             ret->autorelease();
-//         }
-//         else 
-//         {
-//             delete ret;
-//             ret = NULL;
-//         }
-//     }
-//     
-//     return ret;
-// }
+CCPointArray* CCPointArray::arrayWithCapacity(unsigned int capacity)
+{
+    return CCPointArray::create(capacity);
+}
 
 CCPointArray* CCPointArray::create(unsigned int capacity)
 {
@@ -213,23 +199,10 @@ CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, f
 
 /* Implementation of CCCardinalSplineTo
  */
-//cjh CCCardinalSplineTo* CCCardinalSplineTo::actionWithDuration(float duration, cocos2d::CCPointArray *points, float tension)
-// {
-//     CCCardinalSplineTo *ret = new CCCardinalSplineTo();
-//     if (ret)
-//     {
-//         if (ret->initWithDuration(duration, points, tension))
-//         {
-//             ret->autorelease();
-//         }
-//         else 
-//         {
-//             CC_SAFE_RELEASE_NULL(ret);
-//         }
-//     }
-//     
-//     return ret;
-// }
+CCCardinalSplineTo* CCCardinalSplineTo::actionWithDuration(float duration, cocos2d::CCPointArray *points, float tension)
+{
+    return CCCardinalSplineTo::create(duration, points, tension);
+}
 
 CCCardinalSplineTo* CCCardinalSplineTo::create(float duration, cocos2d::CCPointArray *points, float tension)
 {
@@ -348,23 +321,10 @@ CCActionInterval* CCCardinalSplineTo::reverse()
 /* CCCardinalSplineBy
  */
 
-//cjh CCCardinalSplineBy* CCCardinalSplineBy::actionWithDuration(float duration, cocos2d::CCPointArray *points, float tension)
-// {
-//     CCCardinalSplineBy *ret = new CCCardinalSplineBy();
-//     if (ret)
-//     {
-//         if (ret->initWithDuration(duration, points, tension))
-//         {
-//             ret->autorelease();
-//         }
-//         else 
-//         {
-//             CC_SAFE_RELEASE_NULL(ret);
-//         }
-//     }
-//     
-//     return ret;
-// }
+CCCardinalSplineBy* CCCardinalSplineBy::actionWithDuration(float duration, cocos2d::CCPointArray *points, float tension)
+{
+    return CCCardinalSplineBy::create(duration, points, tension);
+}
 
 CCCardinalSplineBy* CCCardinalSplineBy::create(float duration, cocos2d::CCPointArray *points, float tension)
 {

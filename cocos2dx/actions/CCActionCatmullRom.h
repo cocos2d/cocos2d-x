@@ -52,7 +52,7 @@ public:
     /** creates and initializes a Points array with capacity 
     @warning: This interface will be deprecated in future.
     */
-    //static CCPointArray* arrayWithCapacity(unsigned int capacity);
+    static CCPointArray* arrayWithCapacity(unsigned int capacity);
     
     /** creates and initializes a Points array with capacity */
     static CCPointArray* create(unsigned int capacity);
@@ -110,7 +110,7 @@ public:
     /** creates an action with a Cardinal Spline array of points and tension 
     @warning: This interface will be deprecated in future.
     */
-    //static CCCardinalSplineTo* actionWithDuration(float duration, CCPointArray* points, float tension);
+    static CCCardinalSplineTo* actionWithDuration(float duration, CCPointArray* points, float tension);
 
     /** creates an action with a Cardinal Spline array of points and tension */
     static CCCardinalSplineTo* create(float duration, CCPointArray* points, float tension);
@@ -153,7 +153,7 @@ public:
     /** creates an action with a Cardinal Spline array of points and tension 
     @warning: This interface will be deprecated in future.
     */
-    //static CCCardinalSplineBy* actionWithDuration(float duration, CCPointArray* points, float tension);
+    static CCCardinalSplineBy* actionWithDuration(float duration, CCPointArray* points, float tension);
     
     /** creates an action with a Cardinal Spline array of points and tension */
     static CCCardinalSplineBy* create(float duration, CCPointArray* points, float tension);
@@ -177,7 +177,7 @@ public:
     /** creates an action with a Cardinal Spline array of points and tension 
     @warning: This interface will be deprecated in future.
     */
-    //static CCCatmullRomTo* actionWithDuration(float dt, CCPointArray* points);
+    static CCCatmullRomTo* actionWithDuration(float dt, CCPointArray* points);
     
     /** creates an action with a Cardinal Spline array of points and tension */
     static CCCatmullRomTo* create(float dt, CCPointArray* points);
@@ -196,7 +196,7 @@ public:
     /** creates an action with a Cardinal Spline array of points and tension 
     @warning: This interface will be deprecated in future.
     */
-    //static CCCatmullRomBy* actionWithDuration(float dt, CCPointArray* points);
+    static CCCatmullRomBy* actionWithDuration(float dt, CCPointArray* points);
     
     /** creates an action with a Cardinal Spline array of points and tension */
     static CCCatmullRomBy* create(float dt, CCPointArray* points);

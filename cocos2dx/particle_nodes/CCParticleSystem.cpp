@@ -130,10 +130,10 @@ CCParticleSystem::CCParticleSystem()
     m_tBlendFunc.dst = CC_BLEND_DST;
 }
 // implementation CCParticleSystem
-// CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
-// {
-//     return CCParticleSystem::create(plistFile);
-// }
+CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
+{
+    return CCParticleSystem::create(plistFile);
+}
 
 CCParticleSystem * CCParticleSystem::create(const char *plistFile)
 {

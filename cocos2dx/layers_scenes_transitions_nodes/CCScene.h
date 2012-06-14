@@ -47,7 +47,7 @@ public:
     CCScene();
     virtual ~CCScene();
     bool init();
-    //static CCScene *node(void);
+    static CCScene *node(void);
     static CCScene *create(void);
 };
 
@@ -55,38 +55,38 @@ NS_CC_END
 
 // for the subclass of CCScene, each has to implement the static "node" method
 // @warning: This interface will be deprecated in future.
-// #define SCENE_NODE_FUNC(scene) \
-// static scene* node() \
-// { \
-//     scene *pRet = new scene(); \
-//     if (pRet && pRet->init()) \
-//     { \
-//         pRet->autorelease(); \
-//         return pRet; \
-//     } \
-//     else \
-//     { \
-//         delete pRet; \
-//         pRet = NULL; \
-//         return NULL; \
-//     } \
-// }; 
+#define SCENE_NODE_FUNC(scene) \
+static scene* node() \
+{ \
+    scene *pRet = new scene(); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}; 
 
 // @warning: This interface will be deprecated in future.
-// #define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
-//     static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
-//     { \
-//         cocos2d::CCScene * scene = NULL; \
-//         do  \
-//         { \
-//             scene = cocos2d::CCScene::node(); \
-//             CC_BREAK_IF(! scene); \
-//             __TYPE__ *layer = __TYPE__::node(__PARAM__); \
-//             CC_BREAK_IF(! layer); \
-//             scene->addChild(layer); \
-//         } while (0); \
-//         return scene; \
-//     }
+#define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
+    static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
+    { \
+        cocos2d::CCScene * scene = NULL; \
+        do  \
+        { \
+            scene = cocos2d::CCScene::node(); \
+            CC_BREAK_IF(! scene); \
+            __TYPE__ *layer = __TYPE__::node(__PARAM__); \
+            CC_BREAK_IF(! layer); \
+            scene->addChild(layer); \
+        } while (0); \
+        return scene; \
+    }
 
 // for the subclass of CCScene, each has to implement the static "node" method 
 #define SCENE_CREATE_FUNC(scene) \

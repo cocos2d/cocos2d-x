@@ -13,10 +13,10 @@ public:
     int getValue() const {return m_nValue;}
 
     // @warning: This interface will be deprecated in future.
-//     static CCInteger* integerWithInt(int v)
-//     {
-//         return CCInteger::create(v);
-//     }
+    static CCInteger* integerWithInt(int v)
+    {
+        return CCInteger::create(v);
+    }
 
     static CCInteger* create(int v)
     {

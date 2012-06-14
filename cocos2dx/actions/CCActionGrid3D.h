@@ -50,7 +50,7 @@ public:
     /** create the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCWaves3D* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
+    static CCWaves3D* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     /** create the action */
     static CCWaves3D* create(int wav, float amp, const ccGridSize& gridSize, float duration);
 protected:
@@ -73,7 +73,7 @@ public:
     /** creates the action with duration 
     @warning: This interface will be deprecated in future.
     */
-    //static CCFlipX3D* actionWithDuration(float duration);
+    static CCFlipX3D* actionWithDuration(float duration);
     /** creates the action with duration */
     static CCFlipX3D* create(float duration);
 };
@@ -89,7 +89,7 @@ public:
     /** creates the action with duration 
     @warning: This interface will be deprecated in future.
     */
-    //static CCFlipY3D* actionWithDuration(float duration);
+    static CCFlipY3D* actionWithDuration(float duration);
     /** creates the action with duration */
     static CCFlipY3D* create(float duration);
 };
@@ -115,7 +115,7 @@ public:
     /** creates the action with center position, radius, a grid size and duration 
     @warning: This interface will be deprecated in future.
     */
-    //static CCLens3D* actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration);
+    static CCLens3D* actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration);
     /** creates the action with center position, radius, a grid size and duration */
     static CCLens3D* create(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration);
 protected:
@@ -153,8 +153,8 @@ public:
     /** creates the action with radius, number of waves, amplitude, a grid size and duration 
     @warning: This interface will be deprecated in future.
     */
-    //static CCRipple3D* actionWithPosition(const CCPoint& pos, float r, int wav, float amp, 
-    //    const ccGridSize& gridSize, float duration);
+    static CCRipple3D* actionWithPosition(const CCPoint& pos, float r, int wav, float amp, 
+        const ccGridSize& gridSize, float duration);
     /** creates the action with radius, number of waves, amplitude, a grid size and duration */
     static CCRipple3D* create(const CCPoint& pos, float r, int wav, float amp, 
         const ccGridSize& gridSize, float duration);
@@ -180,7 +180,7 @@ public:
     /** creates the action with a range, shake Z vertices, a grid and duration 
     @warning: This interface will be deprecated in future.
     */
-    //static CCShaky3D* actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration);
+    static CCShaky3D* actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration);
     /** creates the action with a range, shake Z vertices, a grid and duration */
     static CCShaky3D* create(int range, bool shakeZ, const ccGridSize& gridSize, float duration);
 protected:
@@ -207,7 +207,7 @@ public:
     /** creates the action with amplitude, a grid and duration 
     @warning: This interface will be deprecated in future.
     */
-    //static CCLiquid* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
+    static CCLiquid* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     /** creates the action with amplitude, a grid and duration */
     static CCLiquid* create(int wav, float amp, const ccGridSize& gridSize, float duration);
 protected:
@@ -236,8 +236,8 @@ public:
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration 
     @warning: This interface will be deprecated in future.
     */
-//     static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
-//         float duration);
+     static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
+         float duration);
 
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     static CCWaves* create(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
@@ -275,8 +275,8 @@ public:
     /** creates the action with center position, number of twirls, amplitude, a grid size and duration 
     @warning: This interface will be deprecated in future.
     */
-//     static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize,
-//         float duration);
+    static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize,
+         float duration);
 
     /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
     static CCTwirl* create(CCPoint pos, int t, float amp, const ccGridSize& gridSize,

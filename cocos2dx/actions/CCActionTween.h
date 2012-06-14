@@ -60,7 +60,7 @@ public:
     /** creates an initializes the action with the property name (key), and the from and to parameters. 
     @warning: This interface will be deprecated in future.
     */
-    //static CCActionTween* actionWithDuration(float aDuration, const char* key, float from, float to);
+    static CCActionTween* actionWithDuration(float aDuration, const char* key, float from, float to);
     /** creates an initializes the action with the property name (key), and the from and to parameters. */
     static CCActionTween* create(float aDuration, const char* key, float from, float to);
     /** initializes the action with the property name (key), and the from and to parameters. */

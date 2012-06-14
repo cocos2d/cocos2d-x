@@ -41,24 +41,10 @@ struct Tile
 
 // implementation of ShakyTiles3D
 
-// CCShakyTiles3D* CCShakyTiles3D::actionWithRange(int nRange, bool bShakeZ,const ccGridSize& gridSize, float duration)
-// {
-//     CCShakyTiles3D *pAction = new CCShakyTiles3D();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithRange(nRange, bShakeZ, gridSize, duration))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;    
-// }
+CCShakyTiles3D* CCShakyTiles3D::actionWithRange(int nRange, bool bShakeZ,const ccGridSize& gridSize, float duration)
+{
+    return CCShakyTiles3D::create(nRange, bShakeZ, gridSize, duration);    
+}
 
 CCShakyTiles3D* CCShakyTiles3D::create(int nRange, bool bShakeZ,const ccGridSize& gridSize, float duration)
 {
@@ -153,24 +139,10 @@ void CCShakyTiles3D::update(float time)
 
 // implementation of CCShatteredTiles3D
 
-// CCShatteredTiles3D* CCShatteredTiles3D::actionWithRange(int nRange, bool bShatterZ, const ccGridSize& gridSize, float duration)
-// {
-//     CCShatteredTiles3D *pAction = new CCShatteredTiles3D();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithRange(nRange, bShatterZ, gridSize, duration))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;    
-// }
+CCShatteredTiles3D* CCShatteredTiles3D::actionWithRange(int nRange, bool bShatterZ, const ccGridSize& gridSize, float duration)
+{
+    return CCShatteredTiles3D::create(nRange, bShatterZ, gridSize, duration);    
+}
 
 CCShatteredTiles3D* CCShatteredTiles3D::create(int nRange, bool bShatterZ, const ccGridSize& gridSize, float duration)
 {
@@ -271,24 +243,10 @@ void CCShatteredTiles3D::update(float time)
 
 // implementation of CCShuffleTiles
 
-// CCShuffleTiles* CCShuffleTiles::actionWithSeed(int s, const ccGridSize& gridSize, float duration)
-// {
-//     CCShuffleTiles *pAction = new CCShuffleTiles();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithSeed(s, gridSize, duration))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;    
-// }
+CCShuffleTiles* CCShuffleTiles::actionWithSeed(int s, const ccGridSize& gridSize, float duration)
+{
+    return CCShuffleTiles::create(s, gridSize, duration);    
+}
 
 CCShuffleTiles* CCShuffleTiles::create(int s, const ccGridSize& gridSize, float duration)
 {
@@ -454,24 +412,10 @@ void CCShuffleTiles::update(float time)
 
 // implementation of CCFadeOutTRTiles
 
-// CCFadeOutTRTiles* CCFadeOutTRTiles::actionWithSize(const ccGridSize& gridSize, float time)
-// {
-//     CCFadeOutTRTiles *pAction = new CCFadeOutTRTiles();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithSize(gridSize, time))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;    
-// }
+CCFadeOutTRTiles* CCFadeOutTRTiles::actionWithSize(const ccGridSize& gridSize, float time)
+{
+    return CCFadeOutTRTiles::create( gridSize, time);    
+}
 
 CCFadeOutTRTiles* CCFadeOutTRTiles::create(const ccGridSize& gridSize, float time)
 {
@@ -561,24 +505,10 @@ void CCFadeOutTRTiles::update(float time)
 }
 
 // implementation of CCFadeOutBLTiles
-// CCFadeOutBLTiles* CCFadeOutBLTiles::actionWithSize(const ccGridSize& gridSize, float time)
-// {
-//     CCFadeOutBLTiles *pAction = new CCFadeOutBLTiles();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithSize(gridSize, time))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;
-// }
+CCFadeOutBLTiles* CCFadeOutBLTiles::actionWithSize(const ccGridSize& gridSize, float time)
+{
+    return CCFadeOutBLTiles::create(gridSize, time);
+}
 
 CCFadeOutBLTiles* CCFadeOutBLTiles::create(const ccGridSize& gridSize, float time)
 {
@@ -612,24 +542,10 @@ float CCFadeOutBLTiles::testFunc(const ccGridSize& pos, float time)
 
 // implementation of CCFadeOutUpTiles
 
-// CCFadeOutUpTiles* CCFadeOutUpTiles::actionWithSize(const ccGridSize& gridSize, float time)
-// {
-//     CCFadeOutUpTiles *pAction = new CCFadeOutUpTiles();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithSize(gridSize, time))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;
-// }
+CCFadeOutUpTiles* CCFadeOutUpTiles::actionWithSize(const ccGridSize& gridSize, float time)
+{
+    return CCFadeOutUpTiles::create(gridSize, time);
+}
 
 CCFadeOutUpTiles* CCFadeOutUpTiles::create(const ccGridSize& gridSize, float time)
 {
@@ -675,24 +591,10 @@ void CCFadeOutUpTiles::transformTile(const ccGridSize& pos, float distance)
 }
 
 // implementation of CCFadeOutDownTiles
-// CCFadeOutDownTiles* CCFadeOutDownTiles::actionWithSize(const ccGridSize& gridSize, float time)
-// {
-//     CCFadeOutDownTiles *pAction = new CCFadeOutDownTiles();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithSize(gridSize, time))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;
-// }
+CCFadeOutDownTiles* CCFadeOutDownTiles::actionWithSize(const ccGridSize& gridSize, float time)
+{
+    return CCFadeOutDownTiles::create(gridSize, time);
+}
 
 CCFadeOutDownTiles* CCFadeOutDownTiles::create(const ccGridSize& gridSize, float time)
 {
@@ -725,19 +627,10 @@ float CCFadeOutDownTiles::testFunc(const ccGridSize& pos, float time)
 }
 
 // implementation of TurnOffTiles
-// CCTurnOffTiles* CCTurnOffTiles::actionWithSize(const ccGridSize& size, float d)
-// {
-//     CCTurnOffTiles* pAction = new CCTurnOffTiles();
-//     if (pAction->initWithSize(size, d))
-//     {
-//         pAction->autorelease();
-//     }
-//     else
-//     {
-//         CC_SAFE_RELEASE_NULL(pAction);
-//     }
-//     return pAction;
-// }
+CCTurnOffTiles* CCTurnOffTiles::actionWithSize(const ccGridSize& size, float d)
+{
+    return CCTurnOffTiles::create( size, d);
+}
 
 CCTurnOffTiles* CCTurnOffTiles::create(const ccGridSize& size, float d)
 {
@@ -753,24 +646,10 @@ CCTurnOffTiles* CCTurnOffTiles::create(const ccGridSize& size, float d)
     return pAction;
 }
 
-// CCTurnOffTiles* CCTurnOffTiles::actionWithSeed(int s, const ccGridSize& gridSize, float duration)
-// {
-//     CCTurnOffTiles *pAction = new CCTurnOffTiles();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithSeed(s, gridSize, duration))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;
-// }
+CCTurnOffTiles* CCTurnOffTiles::actionWithSeed(int s, const ccGridSize& gridSize, float duration)
+{
+    return CCTurnOffTiles::create(s, gridSize, duration);
+}
 
 CCTurnOffTiles* CCTurnOffTiles::create(int s, const ccGridSize& gridSize, float duration)
 {
@@ -902,24 +781,10 @@ void CCTurnOffTiles::update(float time)
 
 // implementation of CCWavesTiles3D
 
-// CCWavesTiles3D* CCWavesTiles3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
-// {
-//     CCWavesTiles3D *pAction = new CCWavesTiles3D();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithWaves(wav, amp, gridSize, duration))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;
-// }
+CCWavesTiles3D* CCWavesTiles3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
+{
+    return CCWavesTiles3D::create(wav, amp, gridSize, duration);
+}
 
 CCWavesTiles3D* CCWavesTiles3D::create(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
@@ -999,24 +864,10 @@ void CCWavesTiles3D::update(float time)
 
 // implementation of CCJumpTiles3D
 
-// CCJumpTiles3D* CCJumpTiles3D::actionWithJumps(int j, float amp, const ccGridSize& gridSize, float duration)
-// {
-//     CCJumpTiles3D *pAction = new CCJumpTiles3D();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithJumps(j, amp, gridSize, duration))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;
-// }
+CCJumpTiles3D* CCJumpTiles3D::actionWithJumps(int j, float amp, const ccGridSize& gridSize, float duration)
+{
+    return CCJumpTiles3D::create(j, amp, gridSize, duration);
+}
 
 CCJumpTiles3D* CCJumpTiles3D::create(int j, float amp, const ccGridSize& gridSize, float duration)
 {
@@ -1107,24 +958,10 @@ void CCJumpTiles3D::update(float time)
 
 // implementation of CCSplitRows
 
-// CCSplitRows* CCSplitRows::actionWithRows(int nRows, float duration)
-// {
-//     CCSplitRows *pAction = new CCSplitRows();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithRows(nRows, duration))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;
-// }
+CCSplitRows* CCSplitRows::actionWithRows(int nRows, float duration)
+{
+    return CCSplitRows::create(nRows, duration);
+}
 
 CCSplitRows* CCSplitRows::create(int nRows, float duration)
 {
@@ -1205,24 +1042,10 @@ void CCSplitRows::update(float time)
 
 // implementation of CCSplitCols
 
-// CCSplitCols* CCSplitCols::actionWithCols(int nCols, float duration)
-// {
-//     CCSplitCols *pAction = new CCSplitCols();
-// 
-//     if (pAction)
-//     {
-//         if (pAction->initWithCols(nCols, duration))
-//         {
-//             pAction->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pAction);
-//         }
-//     }
-// 
-//     return pAction;
-// }
+CCSplitCols* CCSplitCols::actionWithCols(int nCols, float duration)
+{
+    return CCSplitCols::create(nCols, duration);
+}
 
 CCSplitCols* CCSplitCols::create(int nCols, float duration)
 {

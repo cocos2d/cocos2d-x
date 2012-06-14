@@ -32,10 +32,10 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 // implementation CCTMXTiledMap
-// CCTMXTiledMap * CCTMXTiledMap::tiledMapWithTMXFile(const char *tmxFile)
-// {
-//     return CCTMXTiledMap::create(tmxFile);
-// }
+CCTMXTiledMap * CCTMXTiledMap::tiledMapWithTMXFile(const char *tmxFile)
+{
+    return CCTMXTiledMap::create(tmxFile);
+}
 
 CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
 {
@@ -49,10 +49,10 @@ CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
     return NULL;
 }
 
-// CCTMXTiledMap* CCTMXTiledMap::tiledMapWithXML(const char* tmxString, const char* resourcePath)
-// {
-//     return CCTMXTiledMap::create(tmxString, resourcePath);
-// }
+CCTMXTiledMap* CCTMXTiledMap::tiledMapWithXML(const char* tmxString, const char* resourcePath)
+{
+    return CCTMXTiledMap::create(tmxString, resourcePath);
+}
 
 CCTMXTiledMap* CCTMXTiledMap::create(const char* tmxString, const char* resourcePath)
 {

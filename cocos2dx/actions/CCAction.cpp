@@ -48,12 +48,10 @@ CCAction::~CCAction()
     CCLOGINFO("cocos2d: deallocing");
 }
 
-//cjh CCAction * CCAction::action()
-// {
-//     CCAction * pRet = new CCAction();
-//     pRet->autorelease();
-//     return pRet;
-// }
+CCAction * CCAction::action()
+{
+    return CCAction::create();
+}
 
 CCAction* CCAction::create()
 {
@@ -131,17 +129,10 @@ CCSpeed::~CCSpeed()
     CC_SAFE_RELEASE(m_pInnerAction);
 }
 
-//cjh CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fSpeed)
-// {
-//     CCSpeed *pRet = new CCSpeed();
-//     if (pRet && pRet->initWithAction(pAction, fSpeed))
-//     {
-//         pRet->autorelease();
-//         return pRet;
-//     }
-//     CC_SAFE_DELETE(pRet);
-//     return NULL;
-// }
+CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fSpeed)
+{
+    return CCSpeed::create(pAction, fSpeed);
+}
 
 CCSpeed* CCSpeed::create(CCActionInterval* pAction, float fSpeed)
 {
@@ -230,17 +221,10 @@ CCFollow::~CCFollow()
     CC_SAFE_RELEASE(m_pobFollowedNode);
 }
 
-//cjh CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
-// {
-//     CCFollow *pRet = new CCFollow();
-//     if (pRet && pRet->initWithTarget(pFollowedNode, rect))
-//     {
-//         pRet->autorelease();
-//         return pRet;
-//     }
-//     CC_SAFE_DELETE(pRet);
-//     return NULL;
-// }
+CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
+{
+    return CCFollow::create(pFollowedNode, rect);
+}
 
 CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
 {

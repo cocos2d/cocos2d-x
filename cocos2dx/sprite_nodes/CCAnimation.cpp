@@ -81,10 +81,10 @@ CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
 
 // implementation of CCAnimation
 
-// CCAnimation* CCAnimation::animation(void)
-// {
-//     return CCAnimation::create();
-// }
+CCAnimation* CCAnimation::animation(void)
+{
+    return CCAnimation::create();
+}
 
 CCAnimation* CCAnimation::create(void)
 {
@@ -95,10 +95,10 @@ CCAnimation* CCAnimation::create(void)
     return pAnimation;
 } 
 
-// CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
-// {
-//     return CCAnimation::createWithSpriteFrames(frames, delay);
-// }
+CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
+{
+    return CCAnimation::createWithSpriteFrames(frames, delay);
+}
 
 CCAnimation* CCAnimation::createWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
 {
@@ -109,10 +109,10 @@ CCAnimation* CCAnimation::createWithSpriteFrames(CCArray *frames, float delay/* 
     return pAnimation;
 }
 
-// CCAnimation* CCAnimation::animationWithAnimationFrames(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
-// {
-//     return CCAnimation::createWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
-// }
+CCAnimation* CCAnimation::animationWithAnimationFrames(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
+{
+    return CCAnimation::createWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
+}
 
 CCAnimation* CCAnimation::createWithAnimationFrames(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
 {

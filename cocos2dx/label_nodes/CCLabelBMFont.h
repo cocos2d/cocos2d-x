@@ -106,7 +106,7 @@ public:
     /** allocates a CCBMFontConfiguration with a FNT file 
     @warning: This interface will be deprecated in future.
     */
-    //static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
+    static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
 
     /** allocates a CCBMFontConfiguration with a FNT file */
     static CCBMFontConfiguration * create(const char *FNTfile);
@@ -196,7 +196,7 @@ public:
     /** creates a bitmap font altas with an initial string and the FNT file 
     @warning: This interface will be deprecated in future.
     */
-    //static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
+    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
     /** creates a bitmap font altas with an initial string and the FNT file */
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
 

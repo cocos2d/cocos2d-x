@@ -32,14 +32,10 @@ NS_CC_BEGIN
 
 // implementation of CCProgressTo
 
-// CCProgressTo* CCProgressTo::actionWithDuration(float duration, float fPercent)
-// {
-//     CCProgressTo *pProgressTo = new CCProgressTo();
-//     pProgressTo->initWithDuration(duration, fPercent);
-//     pProgressTo->autorelease();
-// 
-//     return pProgressTo;
-// }
+CCProgressTo* CCProgressTo::actionWithDuration(float duration, float fPercent)
+{
+    return CCProgressTo::create(duration, fPercent);
+}
 
 CCProgressTo* CCProgressTo::create(float duration, float fPercent)
 {
@@ -105,14 +101,10 @@ void CCProgressTo::update(float time)
 
 // implementation of CCProgressFromTo
 
-// CCProgressFromTo* CCProgressFromTo::actionWithDuration(float duration, float fFromPercentage, float fToPercentage)
-// {
-//     CCProgressFromTo *pProgressFromTo = new CCProgressFromTo();
-//     pProgressFromTo->initWithDuration(duration, fFromPercentage, fToPercentage);
-//     pProgressFromTo->autorelease();
-// 
-//     return pProgressFromTo;
-// }
+CCProgressFromTo* CCProgressFromTo::actionWithDuration(float duration, float fFromPercentage, float fToPercentage)
+{
+    return CCProgressFromTo::create(duration, fFromPercentage, fToPercentage);
+}
 
 CCProgressFromTo* CCProgressFromTo::create(float duration, float fFromPercentage, float fToPercentage)
 {

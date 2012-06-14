@@ -273,10 +273,10 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
     return initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL);
 }
 
-// CCControlSwitch* CCControlSwitch::switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
-// {
-//     return CCControlSwitch::create(maskSprite, onSprite, offSprite, thumbSprite);
-// }
+CCControlSwitch* CCControlSwitch::switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
+{
+    return CCControlSwitch::create(maskSprite, onSprite, offSprite, thumbSprite);
+}
 
 CCControlSwitch* CCControlSwitch::create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
 {
@@ -322,10 +322,10 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
     return false;
 }
 
-// CCControlSwitch* CCControlSwitch::switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel)
-// {
-//     return CCControlSwitch::create(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
-// }
+CCControlSwitch* CCControlSwitch::switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel)
+{
+    return CCControlSwitch::create(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
+}
 
 CCControlSwitch* CCControlSwitch::create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel)
 {

@@ -359,7 +359,7 @@ public:
     @warning: This interface will be deprecated in future.
     @since v0.99.3
     */
-    //static CCParticleSystem * particleWithFile(const char *plistFile);
+    static CCParticleSystem * particleWithFile(const char *plistFile);
 
     /** creates an initializes a CCParticleSystem from a plist file.
     This plist files can be creted manually or with Particle Designer:

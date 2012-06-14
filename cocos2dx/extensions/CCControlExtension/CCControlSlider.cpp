@@ -38,10 +38,10 @@ CCControlSlider::~CCControlSlider()
 
 }
 
-// CCControlSlider* CCControlSlider::sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile)
-// {
-//     return CCControlSlider::create(bgFile, progressFile, thumbFile);
-// }
+CCControlSlider* CCControlSlider::sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile)
+{
+    return CCControlSlider::create(bgFile, progressFile, thumbFile);
+}
 
 CCControlSlider* CCControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile)
 {
@@ -61,10 +61,10 @@ CCControlSlider* CCControlSlider::create(const char* bgFile, const char* progres
     return CCControlSlider::create(backgroundSprite, progressSprite, thumbMenuItem);
 }
 
-// CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem)
-// {
-//     return CCControlSlider::create(backgroundSprite, pogressSprite, thumbItem);
-// }
+CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem)
+{
+    return CCControlSlider::create(backgroundSprite, pogressSprite, thumbItem);
+}
 
 CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem)
 {

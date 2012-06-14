@@ -65,7 +65,7 @@ public:
     This plist files can be creted manually or with Particle Designer:  
     @warning: This interface will be deprecated in future.
     */
-    //static CCParticleSystemQuad * particleWithFile(const char *plistFile);
+    static CCParticleSystemQuad * particleWithFile(const char *plistFile);
 
     /** creates an initializes a CCParticleSystemQuad from a plist file.
     This plist files can be creted manually or with Particle Designer:  

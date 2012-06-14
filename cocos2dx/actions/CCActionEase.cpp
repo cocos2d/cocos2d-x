@@ -42,23 +42,10 @@ NS_CC_BEGIN
 //
 // EaseAction
 //
-//cjh CCActionEase* CCActionEase::actionWithAction(CCActionInterval *pAction)
-// {
-//     CCActionEase *pRet = new CCActionEase();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;
-// }
+CCActionEase* CCActionEase::actionWithAction(CCActionInterval *pAction)
+{
+    return CCActionEase::create(pAction);
+}
 
 CCActionEase* CCActionEase::create(CCActionInterval *pAction)
 {
@@ -146,23 +133,10 @@ CCActionInterval* CCActionEase::reverse(void)
 //
 // EaseRateAction
 //
-//cjh CCEaseRateAction* CCEaseRateAction::actionWithAction(CCActionInterval *pAction, float fRate)
-// {
-//     CCEaseRateAction *pRet = new CCEaseRateAction();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction, fRate))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;
-// }
+CCEaseRateAction* CCEaseRateAction::actionWithAction(CCActionInterval *pAction, float fRate)
+{
+    return CCEaseRateAction::create(pAction, fRate);
+}
 
 CCEaseRateAction* CCEaseRateAction::create(CCActionInterval *pAction, float fRate)
 {
@@ -226,23 +200,10 @@ CCActionInterval* CCEaseRateAction::reverse(void)
 //
 // EeseIn
 //
-//cjh CCEaseIn* CCEaseIn::actionWithAction(CCActionInterval *pAction, float fRate)
-// {
-//     CCEaseIn *pRet = new CCEaseIn();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction, fRate))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;
-// }
+CCEaseIn* CCEaseIn::actionWithAction(CCActionInterval *pAction, float fRate)
+{
+    return CCEaseIn::create(pAction, fRate);
+}
 
 CCEaseIn* CCEaseIn::create(CCActionInterval *pAction, float fRate)
 {
@@ -296,23 +257,10 @@ CCActionInterval* CCEaseIn::reverse(void)
 //
 // EaseOut
 //
-//cjh CCEaseOut* CCEaseOut::actionWithAction(CCActionInterval *pAction, float fRate)
-// {
-//     CCEaseOut *pRet = new CCEaseOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction, fRate))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;      
-// }
+CCEaseOut* CCEaseOut::actionWithAction(CCActionInterval *pAction, float fRate)
+{
+    return CCEaseOut::create(pAction, fRate);
+}
 
 CCEaseOut* CCEaseOut::create(CCActionInterval *pAction, float fRate)
 {
@@ -366,23 +314,10 @@ CCActionInterval* CCEaseOut::reverse()
 //
 // EaseInOut
 //
-//cjh CCEaseInOut* CCEaseInOut::actionWithAction(CCActionInterval *pAction, float fRate)
-// {
-//     CCEaseInOut *pRet = new CCEaseInOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction, fRate))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;        
-// }
+CCEaseInOut* CCEaseInOut::actionWithAction(CCActionInterval *pAction, float fRate)
+{
+    return CCEaseInOut::create(pAction, fRate);
+}
 
 CCEaseInOut* CCEaseInOut::create(CCActionInterval *pAction, float fRate)
 {
@@ -445,23 +380,10 @@ CCActionInterval* CCEaseInOut::reverse(void)
 //
 // EaseExponentialIn
 //
-//cjh CCEaseExponentialIn* CCEaseExponentialIn::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseExponentialIn *pRet = new CCEaseExponentialIn();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;      
-// }
+CCEaseExponentialIn* CCEaseExponentialIn::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseExponentialIn::create(pAction);
+}
 
 CCEaseExponentialIn* CCEaseExponentialIn::create(CCActionInterval* pAction)
 {
@@ -515,23 +437,10 @@ CCActionInterval* CCEaseExponentialIn::reverse(void)
 //
 // EaseExponentialOut
 //
-//cjh CCEaseExponentialOut* CCEaseExponentialOut::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseExponentialOut *pRet = new CCEaseExponentialOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseExponentialOut* CCEaseExponentialOut::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseExponentialOut::create(pAction);
+}
 
 CCEaseExponentialOut* CCEaseExponentialOut::create(CCActionInterval* pAction)
 {
@@ -585,23 +494,10 @@ CCActionInterval* CCEaseExponentialOut::reverse(void)
 //
 // EaseExponentialInOut
 //
-//cjh CCEaseExponentialInOut* CCEaseExponentialInOut::actionWithAction(CCActionInterval *pAction)
-// {
-//     CCEaseExponentialInOut *pRet = new CCEaseExponentialInOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseExponentialInOut* CCEaseExponentialInOut::actionWithAction(CCActionInterval *pAction)
+{
+    return CCEaseExponentialInOut::create(pAction);
+}
 
 CCEaseExponentialInOut* CCEaseExponentialInOut::create(CCActionInterval *pAction)
 {
@@ -665,23 +561,10 @@ CCActionInterval* CCEaseExponentialInOut::reverse()
 //
 // EaseSineIn
 //
-//cjh CCEaseSineIn* CCEaseSineIn::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseSineIn *pRet = new CCEaseSineIn();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseSineIn* CCEaseSineIn::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseSineIn::create(pAction);
+}
 
 CCEaseSineIn* CCEaseSineIn::create(CCActionInterval* pAction)
 {
@@ -735,23 +618,10 @@ CCActionInterval* CCEaseSineIn::reverse(void)
 //
 // EaseSineOut
 //
-//cjh CCEaseSineOut* CCEaseSineOut::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseSineOut *pRet = new CCEaseSineOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseSineOut* CCEaseSineOut::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseSineOut::create(pAction);
+}
 
 CCEaseSineOut* CCEaseSineOut::create(CCActionInterval* pAction)
 {
@@ -805,23 +675,10 @@ CCActionInterval* CCEaseSineOut::reverse(void)
 //
 // EaseSineInOut
 //
-//cjh CCEaseSineInOut* CCEaseSineInOut::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseSineInOut *pRet = new CCEaseSineInOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseSineInOut* CCEaseSineInOut::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseSineInOut::create(pAction);
+}
 
 CCEaseSineInOut* CCEaseSineInOut::create(CCActionInterval* pAction)
 {
@@ -876,23 +733,10 @@ CCActionInterval* CCEaseSineInOut::reverse()
 // EaseElastic
 //
 
-//cjh CCEaseElastic* CCEaseElastic::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
-// {
-//     CCEaseElastic *pRet = new CCEaseElastic();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction, fPeriod))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseElastic* CCEaseElastic::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
+{
+    return CCEaseElastic::create(pAction, fPeriod);
+}
 
 CCEaseElastic* CCEaseElastic::create(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
@@ -954,23 +798,10 @@ CCActionInterval* CCEaseElastic::reverse(void)
 //
 // EaseElasticIn
 //
-//cjh CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
-// {
-//     CCEaseElasticIn *pRet = new CCEaseElasticIn();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction, fPeriod))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
+{
+    return CCEaseElasticIn::create(pAction, fPeriod);
+}
 
 CCEaseElasticIn* CCEaseElasticIn::create(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
@@ -1037,23 +868,10 @@ CCActionInterval* CCEaseElasticIn::reverse(void)
 // EaseElasticOut
 //
 
-//cjh CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
-// {
-//     CCEaseElasticOut *pRet = new CCEaseElasticOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction, fPeriod))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
+{
+    return CCEaseElasticOut::create(pAction, fPeriod);
+}
 
 CCEaseElasticOut* CCEaseElasticOut::create(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
@@ -1119,23 +937,10 @@ CCActionInterval* CCEaseElasticOut::reverse(void)
 // EaseElasticInOut
 //
 
-//cjh CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
-// {
-//     CCEaseElasticInOut *pRet = new CCEaseElasticInOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction, fPeriod))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
+{
+    return CCEaseElasticInOut::create(pAction, fPeriod);
+}
 
 CCEaseElasticInOut* CCEaseElasticInOut::create(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
@@ -1216,23 +1021,10 @@ CCActionInterval* CCEaseElasticInOut::reverse(void)
 //
 // EaseBounce
 //
-//cjh CCEaseBounce* CCEaseBounce::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseBounce *pRet = new CCEaseBounce();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseBounce* CCEaseBounce::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseBounce::create(pAction);
+}
 
 CCEaseBounce* CCEaseBounce::create(CCActionInterval* pAction)
 {
@@ -1302,23 +1094,10 @@ CCActionInterval* CCEaseBounce::reverse()
 //
 // EaseBounceIn
 //
-//cjh CCEaseBounceIn* CCEaseBounceIn::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseBounceIn *pRet = new CCEaseBounceIn();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseBounceIn* CCEaseBounceIn::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseBounceIn::create(pAction);
+}
 
 CCEaseBounceIn* CCEaseBounceIn::create(CCActionInterval* pAction)
 {
@@ -1373,23 +1152,10 @@ CCActionInterval* CCEaseBounceIn::reverse(void)
 //
 // EaseBounceOut
 //
-//cjh CCEaseBounceOut* CCEaseBounceOut::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseBounceOut *pRet = new CCEaseBounceOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseBounceOut* CCEaseBounceOut::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseBounceOut::create(pAction);
+}
 
 CCEaseBounceOut* CCEaseBounceOut::create(CCActionInterval* pAction)
 {
@@ -1444,23 +1210,10 @@ CCActionInterval* CCEaseBounceOut::reverse(void)
 //
 // EaseBounceInOut
 //
-//cjh CCEaseBounceInOut* CCEaseBounceInOut::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseBounceInOut *pRet = new CCEaseBounceInOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet; 
-// }
+CCEaseBounceInOut* CCEaseBounceInOut::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseBounceInOut::create(pAction);
+}
 
 CCEaseBounceInOut* CCEaseBounceInOut::create(CCActionInterval* pAction)
 {
@@ -1525,23 +1278,10 @@ CCActionInterval* CCEaseBounceInOut::reverse()
 //
 // EaseBackIn
 //
-//cjh CCEaseBackIn* CCEaseBackIn::actionWithAction(CCActionInterval *pAction)
-// {
-//     CCEaseBackIn *pRet = new CCEaseBackIn();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;
-// }
+CCEaseBackIn* CCEaseBackIn::actionWithAction(CCActionInterval *pAction)
+{
+    return CCEaseBackIn::create(pAction);
+}
 
 CCEaseBackIn* CCEaseBackIn::create(CCActionInterval *pAction)
 {
@@ -1596,23 +1336,10 @@ CCActionInterval* CCEaseBackIn::reverse(void)
 //
 // EaseBackOut
 //
-//cjh CCEaseBackOut* CCEaseBackOut::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseBackOut *pRet = new CCEaseBackOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;
-// }
+CCEaseBackOut* CCEaseBackOut::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseBackOut::create(pAction);
+}
 
 CCEaseBackOut* CCEaseBackOut::create(CCActionInterval* pAction)
 {
@@ -1669,23 +1396,10 @@ CCActionInterval* CCEaseBackOut::reverse(void)
 //
 // EaseBackInOut
 //
-//cjh CCEaseBackInOut* CCEaseBackInOut::actionWithAction(CCActionInterval* pAction)
-// {
-//     CCEaseBackInOut *pRet = new CCEaseBackInOut();
-//     if (pRet)
-//     {
-//         if (pRet->initWithAction(pAction))
-//         {
-//             pRet->autorelease();
-//         }
-//         else
-//         {
-//             CC_SAFE_RELEASE_NULL(pRet);
-//         }
-//     }
-// 
-//     return pRet;
-// }
+CCEaseBackInOut* CCEaseBackInOut::actionWithAction(CCActionInterval* pAction)
+{
+    return CCEaseBackInOut::create(pAction);
+}
 
 CCEaseBackInOut* CCEaseBackInOut::create(CCActionInterval* pAction)
 {

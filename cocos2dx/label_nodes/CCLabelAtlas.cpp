@@ -41,10 +41,10 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
-// CCLabelAtlas* CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
-// {
-//     return CCLabelAtlas::create(label, charMapFile, itemWidth, itemHeight, startCharMap);
-// }
+CCLabelAtlas* CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
+{
+    return CCLabelAtlas::create(label, charMapFile, itemWidth, itemHeight, startCharMap);
+}
 
 CCLabelAtlas* CCLabelAtlas::create(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
 {
@@ -70,10 +70,10 @@ bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, un
     return false;
 }
 
-// CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *fntFile)
-// {
-//     return CCLabelAtlas::create(string, fntFile);
-// }
+CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *fntFile)
+{
+    return CCLabelAtlas::create(string, fntFile);
+}
 
 CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
 {    

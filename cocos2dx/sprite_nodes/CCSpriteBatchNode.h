@@ -80,14 +80,14 @@ public:
     The capacity will be increased in 33% in runtime if it run out of space.
     @warning: This interface will be deprecated in future.
     */
-    //static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity = kDefaultSpriteBatchCapacity);
+    static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity = kDefaultSpriteBatchCapacity);
 
     /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
     The file will be loaded using the TextureMgr.
     @warning: This interface will be deprecated in future.
     */
-    //static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity = kDefaultSpriteBatchCapacity);
+    static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity = kDefaultSpriteBatchCapacity);
 
     /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.

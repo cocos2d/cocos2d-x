@@ -94,7 +94,7 @@ public:
     /** Allocates and initializes the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCAction* action();
+    static CCAction* action();
 
     /** Create an action */
     static CCAction* create();
@@ -181,7 +181,7 @@ public:
     /** creates the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
+    static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
     
     /** create the action */
     static CCSpeed* create(CCActionInterval* pAction, float fSpeed);
@@ -230,7 +230,7 @@ public:
         It will work with no boundary if @param rect is equal to CCRectZero.
     @warning: This interface will be deprecated in future.
     */
-    //static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
+    static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
     /** creates the action with a set boundary,
     It will work with no boundary if @param rect is equal to CCRectZero.
     */

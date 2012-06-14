@@ -53,7 +53,7 @@ protected:
     
 public:
     //@warning: This interface will be deprecated in future.
-    //static CCControlColourPicker* colourPicker();
+    static CCControlColourPicker* colourPicker();
 
     static CCControlColourPicker* create();
 

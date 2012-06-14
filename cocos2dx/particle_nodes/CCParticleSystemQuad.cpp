@@ -103,10 +103,10 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 }
 
 // implementation CCParticleSystemQuad
-// CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistFile)
-// {
-//     return CCParticleSystemQuad::create(plistFile);
-// }
+CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistFile)
+{
+    return CCParticleSystemQuad::create(plistFile);
+}
 
 CCParticleSystemQuad * CCParticleSystemQuad::create(const char *plistFile)
 {

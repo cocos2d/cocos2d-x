@@ -65,10 +65,10 @@ CCParallaxNode::~CCParallaxNode()
     }
 }
 
-// CCParallaxNode * CCParallaxNode::node()
-// {
-//     return CCParallaxNode::create();
-// }
+CCParallaxNode * CCParallaxNode::node()
+{
+    return CCParallaxNode::create();
+}
 
 CCParallaxNode * CCParallaxNode::create()
 {
