@@ -376,7 +376,7 @@ void AddSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::arrayWithCapacity(totalToAdd);
+        CCArray* sprites = CCArray::create(totalToAdd);
         int         *zs      = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
@@ -440,7 +440,7 @@ void RemoveSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::arrayWithCapacity(totalToAdd);
+        CCArray* sprites = CCArray::create(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
@@ -500,7 +500,7 @@ void ReorderSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::arrayWithCapacity(totalToAdd);
+        CCArray* sprites = CCArray::create(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)

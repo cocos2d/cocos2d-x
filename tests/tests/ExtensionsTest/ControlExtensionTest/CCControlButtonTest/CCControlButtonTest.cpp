@@ -32,7 +32,7 @@ bool CCControlButtonTest_HelloVariableSize::init()
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         
         // Defines an array of title to create buttons dynamically
-        CCArray *stringArray = CCArray::arrayWithObjects(
+        CCArray *stringArray = CCArray::create(
             ccs("Hello"),
             ccs("Variable"),
             ccs("Size"),
@@ -151,42 +151,42 @@ bool CCControlButtonTest_Event::init()
 
 void CCControlButtonTest_Event::touchDownAction(CCObject *sender)
 {
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Touch Down")->getCString());
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Down")->getCString());
 }
 
 void CCControlButtonTest_Event::touchDragInsideAction(CCObject *sender)
 {
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Drag Inside")->getCString());
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Inside")->getCString());
 }
 
 void CCControlButtonTest_Event::touchDragOutsideAction(CCObject *sender)
 {
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Drag Outside")->getCString());
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Outside")->getCString());
 }
 
 void CCControlButtonTest_Event::touchDragEnterAction(CCObject *sender)
 {
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Drag Enter")->getCString());
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Enter")->getCString());
 }
 
 void CCControlButtonTest_Event::touchDragExitAction(CCObject *sender)
 {
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Drag Exit")->getCString());
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Exit")->getCString());
 }
 
 void CCControlButtonTest_Event::touchUpInsideAction(CCObject *sender)
 {
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Touch Up Inside.")->getCString());
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Up Inside.")->getCString());
 }
 
 void CCControlButtonTest_Event::touchUpOutsideAction(CCObject *sender)
 {
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Touch Up Outside.")->getCString());
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Up Outside.")->getCString());
 }
 
 void CCControlButtonTest_Event::touchCancelAction(CCObject *sender)
 {
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Touch Cancel")->getCString());
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Cancel")->getCString());
 }
 
 
@@ -209,7 +209,7 @@ bool CCControlButtonTest_Styling::init()
             for (int j = 0; j < 3; j++)
             {
                 // Add the buttons
-                CCControlButton *button = standardButtonWithTitle(CCString::stringWithFormat("%d",rand() % 30)->getCString());
+                CCControlButton *button = standardButtonWithTitle(CCString::createWithFormat("%d",rand() % 30)->getCString());
                 button->setAdjustBackgroundImage(false);  // Tells the button that the background image must not be adjust
                                                     // It'll use the prefered size of the background image
                 button->setPosition(ccp (button->getContentSize().width / 2 + (button->getContentSize().width + space) * i,

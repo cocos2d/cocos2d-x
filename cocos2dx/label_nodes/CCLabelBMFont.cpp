@@ -452,7 +452,7 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
 
 const char* CCBMFontConfiguration::description(void)
 {
-    return CCString::stringWithFormat(
+    return CCString::createWithFormat(
         "<CCBMFontConfiguration = %08X | Glphys:%d Kernings:%d | Image = %s>",
         this,
         HASH_COUNT(m_pFontDefDictionary),
@@ -486,7 +486,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
-    CCString *contents = CCString::stringWithContentsOfFile(fullpath.c_str());
+    CCString *contents = CCString::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
 

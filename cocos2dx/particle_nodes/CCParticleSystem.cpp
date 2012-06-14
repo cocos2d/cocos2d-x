@@ -156,7 +156,7 @@ bool CCParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
     m_sPlistFile = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plistFile);
-    CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
+    CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
     bRet = this->initWithDictionary(dict);

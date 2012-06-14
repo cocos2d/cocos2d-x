@@ -54,7 +54,7 @@ PongLayer::PongLayer()
     
     CCTexture2D* paddleTexture = CCTextureCache::sharedTextureCache()->addImage(s_Paddle);
     
-    CCArray *paddlesM = CCArray::arrayWithCapacity(4);
+    CCArray *paddlesM = CCArray::create(4);
     
     Paddle* paddle = Paddle::paddleWithTexture(paddleTexture);
     paddle->setPosition( CCPointMake(m_tWinSize.width/2, 15) );

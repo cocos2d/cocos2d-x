@@ -669,7 +669,7 @@ std::string SpriteBatchNodeZOrder::title()
 
 SpriteBatchNodeReorder::SpriteBatchNodeReorder()
 {
-    CCArray* a = CCArray::arrayWithCapacity(10);
+    CCArray* a = CCArray::create(10);
     CCSpriteBatchNode* asmtest = CCSpriteBatchNode::create("animations/ghosts.png");
     
     for(int i=0; i<10; i++)
@@ -1641,7 +1641,7 @@ void SpriteFrameTest::onEnter()
     spritebatch->addChild(m_pSprite1);
     addChild(spritebatch);
 
-    CCArray* animFrames = CCArray::arrayWithCapacity(15);
+    CCArray* animFrames = CCArray::create(15);
 
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
@@ -1666,7 +1666,7 @@ void SpriteFrameTest::onEnter()
     addChild(m_pSprite2);
 
 
-    CCArray* moreFrames = CCArray::arrayWithCapacity(20);
+    CCArray* moreFrames = CCArray::create(20);
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
@@ -1797,7 +1797,7 @@ void SpriteFrameAliasNameTest::onEnter()
     spriteBatch->addChild(sprite);
     addChild(spriteBatch);
 
-    CCArray* animFrames = CCArray::arrayWithCapacity(15);
+    CCArray* animFrames = CCArray::create(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
@@ -1868,7 +1868,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         
         point->setPosition( sprite->getPosition() );
         
-        CCArray* animFrames = CCArray::arrayWithCapacity(14);
+        CCArray* animFrames = CCArray::create(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
@@ -1945,7 +1945,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         
         point->setPosition( sprite->getPosition() );
         
-        CCArray* animFrames = CCArray::arrayWithCapacity(14);
+        CCArray* animFrames = CCArray::create(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
@@ -2020,7 +2020,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         
         point->setPosition( sprite->getPosition() );
         
-        CCArray* animFrames = CCArray::arrayWithCapacity(14);
+        CCArray* animFrames = CCArray::create(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
@@ -2097,7 +2097,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         
         point->setPosition( sprite->getPosition() );
         
-        CCArray* animFrames = CCArray::arrayWithCapacity(14);
+        CCArray* animFrames = CCArray::create(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
@@ -2159,7 +2159,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     sprite->setPosition( ccp( s.width/2-80, s.height/2) );
     addChild(sprite);
             
-    CCArray* animFrames = CCArray::arrayWithCapacity(6);
+    CCArray* animFrames = CCArray::create(6);
     animFrames->addObject(frame0);
     animFrames->addObject(frame1);
     animFrames->addObject(frame2);
@@ -2246,7 +2246,7 @@ void SpriteHybrid::reparentSprite(float dt)
     CCNode *p1 = getChildByTag(kTagNode);
     CCNode *p2 = getChildByTag( kTagSpriteBatchNode );
     
-    CCArray* retArray = CCArray::arrayWithCapacity(250);
+    CCArray* retArray = CCArray::create(250);
 
     if( m_usingSpriteBatchNode )
         CC_SWAP(p1,p2, CCNode*);
@@ -2323,7 +2323,7 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite1->addChild(sprite3);
     
     // BEGIN NEW CODE
-    CCArray *animFrames = CCArray::array();
+    CCArray *animFrames = CCArray::create();
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
     {
@@ -3474,7 +3474,7 @@ AnimationCache::AnimationCache()
     //
     // create animation "dance"
     //
-    CCArray* animFrames = CCArray::arrayWithCapacity(15);
+    CCArray* animFrames = CCArray::create(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
@@ -3707,7 +3707,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 
         point->setPosition(sprite->getPosition());
 
-        CCArray *animFrames = CCArray::array();
+        CCArray *animFrames = CCArray::create();
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
@@ -3785,7 +3785,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 
         point->setPosition(sprite->getPosition());
         
-        CCArray* animFrames = CCArray::array();
+        CCArray* animFrames = CCArray::create();
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
@@ -3860,7 +3860,7 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 
         point->setPosition(sprite->getPosition());
 
-        CCArray *animFrames = CCArray::array();
+        CCArray *animFrames = CCArray::create();
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
@@ -3942,7 +3942,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 
         point->setPosition(sprite->getPosition());        
 
-        CCArray *animFrames = CCArray::array();
+        CCArray *animFrames = CCArray::create();
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
@@ -4024,7 +4024,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
 
         point->setPosition(sprite->getPosition());
 
-        CCArray* animFrames = CCArray::array();
+        CCArray* animFrames = CCArray::create();
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            
@@ -4106,7 +4106,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 
         point->setPosition(sprite->getPosition());        
 
-        CCArray *animFrames = CCArray::array();
+        CCArray *animFrames = CCArray::create();
         char tmp[50];
         for (int j = 0; j < 14; j++)
         {            

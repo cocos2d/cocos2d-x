@@ -232,14 +232,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\cocoa\CCData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\cocoa\CCData.h"
-				>
-			</File>
-			<File
 				RelativePath="..\cocoa\CCDictionary.cpp"
 				>
 			</File>

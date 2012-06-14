@@ -462,13 +462,13 @@ void CCNode::cleanup()
 
 const char* CCNode::description()
 {
-    return CCString::stringWithFormat("<CCNode | Tag = %d>", m_nTag)->getCString();
+    return CCString::createWithFormat("<CCNode | Tag = %d>", m_nTag)->getCString();
 }
 
 // lazy allocs
 void CCNode::childrenAlloc(void)
 {
-    m_pChildren = CCArray::arrayWithCapacity(4);
+    m_pChildren = CCArray::create(4);
     m_pChildren->retain();
 }
 

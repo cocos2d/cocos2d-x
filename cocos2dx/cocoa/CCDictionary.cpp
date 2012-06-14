@@ -28,7 +28,8 @@ CCArray* CCDictionary::allKeys()
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
-    CCArray* pArray = CCArray::arrayWithCapacity(iKeyCount);
+
+    CCArray* pArray = CCArray::create(iKeyCount);
 
     CCDictElement *pElement, *tmp;
     if (m_eDictType == kCCDictStr)
@@ -57,7 +58,7 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
-    CCArray* pArray = CCArray::array();
+    CCArray* pArray = CCArray::create();
 
     CCDictElement *pElement, *tmp;
 
@@ -68,8 +69,8 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
             if (object == pElement->m_pObject)
             {
                 CCString* pOneKey = new CCString(pElement->m_szKey);
-                pOneKey->autorelease();
                 pArray->addObject(pOneKey);
+                pOneKey->release();
             }
         }
     }
@@ -80,8 +81,8 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
             if (object == pElement->m_pObject)
             {
                 CCInteger* pOneKey = new CCInteger(pElement->m_iKey);
-                pOneKey->autorelease();
                 pArray->addObject(pOneKey);
+                pOneKey->release();
             }
         }
     }
@@ -123,7 +124,7 @@ const CCString* CCDictionary::valueForKey(const std::string& key)
     CCString* pStr = (CCString*)objectForKey(key);
     if (pStr == NULL)
     {
-        pStr = CCString::stringWithCString("");
+        pStr = CCString::create("");
     }
     return pStr;
 }
@@ -133,7 +134,7 @@ const CCString* CCDictionary::valueForKey(int key)
     CCString* pStr = (CCString*)objectForKey(key);
     if (pStr == NULL)
     {
-        pStr = CCString::stringWithCString("");
+        pStr = CCString::create("");
     }
     return pStr;
 }
@@ -291,7 +292,12 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
     return pNewDict;
 }
 
-CCDictionary* CCDictionary::dictionary()
+// CCDictionary* CCDictionary::dictionary()
+// {
+//     return CCDictionary::create();
+// }
+
+CCDictionary* CCDictionary::create()
 {
     CCDictionary* pRet = new CCDictionary();
     if (pRet != NULL)
@@ -301,7 +307,12 @@ CCDictionary* CCDictionary::dictionary()
     return pRet;
 }
 
-CCDictionary* CCDictionary::dictionaryWithDictionary(CCDictionary* srcDict)
+// CCDictionary* CCDictionary::dictionaryWithDictionary(CCDictionary* srcDict)
+// {
+//     return CCDictionary::createWithDictionary(srcDict);
+// }
+
+CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 {
     CCDictionary* pNewDict = (CCDictionary*)srcDict->copy();
     pNewDict->autorelease();
@@ -310,14 +321,24 @@ CCDictionary* CCDictionary::dictionaryWithDictionary(CCDictionary* srcDict)
 
 extern CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
 
-CCDictionary* CCDictionary::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+// CCDictionary* CCDictionary::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+// {
+//     return CCDictionary::createWithContentsOfFileThreadSafe(pFileName);
+// }
+
+CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
     return ccFileUtils_dictionaryWithContentsOfFileThreadSafe(pFileName);
 }
 
-CCDictionary* CCDictionary::dictionaryWithContentsOfFile(const char *pFileName)
+// CCDictionary* CCDictionary::dictionaryWithContentsOfFile(const char *pFileName)
+// {
+//     return CCDictionary::createWithContentsOfFile(pFileName);
+// }
+
+CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
 {
-    CCDictionary* pRet = dictionaryWithContentsOfFileThreadSafe(pFileName);
+    CCDictionary* pRet = createWithContentsOfFileThreadSafe(pFileName);
     pRet->autorelease();
     return pRet;
 }

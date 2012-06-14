@@ -40,7 +40,12 @@ CCArray::CCArray(unsigned int capacity)
     initWithCapacity(capacity);
 }
 
-CCArray* CCArray::array()
+// CCArray* CCArray::array()
+// {
+//     return CCArray::create();
+// }
+
+CCArray* CCArray::create()
 {
     CCArray* pArray = new CCArray();
 
@@ -56,7 +61,12 @@ CCArray* CCArray::array()
     return pArray;
 }
 
-CCArray* CCArray::arrayWithObject(CCObject* pObject)
+// CCArray* CCArray::arrayWithObject(CCObject* pObject)
+// {
+//     return CCArray::createWithObject(pObject);
+// }
+
+CCArray* CCArray::createWithObject(CCObject* pObject)
 {
     CCArray* pArray = new CCArray();
 
@@ -72,12 +82,38 @@ CCArray* CCArray::arrayWithObject(CCObject* pObject)
     return pArray;
 }
 
-CCArray* CCArray::arrayWithObjects(CCObject* pObject, ...)
+// CCArray* CCArray::arrayWithObjects(CCObject* pObject, ...)
+// {
+//     va_list args;
+//     va_start(args,pObject);
+//     
+//     CCArray* pArray = create();
+//     if (pArray && pObject)
+//     {
+//         pArray->addObject(pObject);
+//         CCObject *i = va_arg(args, CCObject*);
+//         while(i) 
+//         {
+//             pArray->addObject(i);
+//             i = va_arg(args, CCObject*);
+//         }
+//     }
+//     else
+//     {
+//         CC_SAFE_DELETE(pArray);
+//     }
+// 
+//     va_end(args);
+//     
+//     return pArray;
+// }
+
+CCArray* CCArray::create(CCObject* pObject, ...)
 {
     va_list args;
     va_start(args,pObject);
-    
-    CCArray* pArray = array();
+
+    CCArray* pArray = create();
     if (pArray && pObject)
     {
         pArray->addObject(pObject);
@@ -94,11 +130,16 @@ CCArray* CCArray::arrayWithObjects(CCObject* pObject, ...)
     }
 
     va_end(args);
-    
+
     return pArray;
 }
 
-CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
+// CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
+// {
+//     return CCArray::create(capacity);
+// }
+
+CCArray* CCArray::create(unsigned int capacity)
 {
     CCArray* pArray = new CCArray();
 
@@ -114,16 +155,26 @@ CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
     return pArray;
 }
 
-CCArray* CCArray::arrayWithArray(CCArray* otherArray)
+// CCArray* CCArray::arrayWithArray(CCArray* otherArray)
+// {
+//     return CCArray::create(otherArray);
+// }
+
+CCArray* CCArray::create(CCArray* otherArray)
 {
     CCArray* pRet = (CCArray*)otherArray->copy();
     pRet->autorelease();
     return pRet;
 }
 
-CCArray* CCArray::arrayWithContentsOfFile(const char* pFileName)
+// CCArray* CCArray::arrayWithContentsOfFile(const char* pFileName)
+// {
+//     return CCArray::createWithContentsOfFile(pFileName);
+// }
+
+CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
 {
-    CCArray* pRet = arrayWithContentsOfFileThreadSafe(pFileName);
+    CCArray* pRet = createWithContentsOfFileThreadSafe(pFileName);
     if (pRet != NULL)
     {
         pRet->autorelease();
@@ -133,7 +184,12 @@ CCArray* CCArray::arrayWithContentsOfFile(const char* pFileName)
 
 extern CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName);
 
-CCArray* CCArray::arrayWithContentsOfFileThreadSafe(const char* pFileName)
+// CCArray* CCArray::arrayWithContentsOfFileThreadSafe(const char* pFileName)
+// {
+//     return CCArray::createWithContentsOfFileThreadSafe(pFileName);
+// }
+
+CCArray* CCArray::createWithContentsOfFileThreadSafe(const char* pFileName)
 {
     return ccFileUtils_arrayWithContentsOfFileThreadSafe(pFileName);
 }

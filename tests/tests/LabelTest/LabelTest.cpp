@@ -342,7 +342,7 @@ void LabelAtlasColorTest::step(float dt)
     m_time += dt;
     char string[12] = {0};
     sprintf(string, "%2.2f Test", m_time);
-    //std::string string = std::string::stringWithFormat("%2.2f Test", m_time);
+    //std::string string = std::string::createWithFormat("%2.2f Test", m_time);
     CCLabelAtlas* label1 = (CCLabelAtlas*)getChildByTag(kTagSprite1);
     label1->setString(string);
     
@@ -1069,7 +1069,7 @@ const char* LabelTTFTest::getCurrentAlignment()
             break;
     }
 
-    return CCString::stringWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
+    return CCString::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
 }
 
 string LabelTTFTest::title()
@@ -1390,7 +1390,7 @@ std::string BMFontOneAtlas::subtitle()
 /// BMFontUnicode
 BMFontUnicode::BMFontUnicode()
 {
-    CCDictionary *strings = CCDictionary::dictionaryWithContentsOfFile("fonts/strings.xml");
+    CCDictionary *strings = CCDictionary::createWithContentsOfFile("fonts/strings.xml");
     const char *chinese = ((CCString*)strings->objectForKey("chinese1"))->m_sString.c_str();
     const char *japanese = ((CCString*)strings->objectForKey("japanese"))->m_sString.c_str();
     const char *spanish = ((CCString*)strings->objectForKey("spanish"))->m_sString.c_str();

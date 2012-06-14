@@ -2531,7 +2531,7 @@ void CCAnimate::update(float t)
 CCActionInterval* CCAnimate::reverse(void)
 {
     CCArray* pOldArray = m_pAnimation->getFrames();
-    CCArray* pNewArray = CCArray::arrayWithCapacity(pOldArray->count());
+    CCArray* pNewArray = CCArray::create(pOldArray->count());
    
     CCARRAY_VERIFY_TYPE(pOldArray, CCAnimationFrame*);
 

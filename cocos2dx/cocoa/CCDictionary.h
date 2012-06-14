@@ -136,21 +136,40 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
     /* static functions */
-    static CCDictionary* dictionary();
+    //@warning: This interface will be deprecated in future.
+    //static CCDictionary* dictionary();
 
-    static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
+    //static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
+    /**
+    @brief   Generate a CCDictionary pointer by file
+    @param   pFileName  The file name of *.plist file
+    @return  The CCDictionary pointer generated from the file
+    @warning: This interface will be deprecated in future.
+    */
+    //static CCDictionary* dictionaryWithContentsOfFile(const char *pFileName);
+
+    /*
+    @brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the
+           invoker should call release().
+    @warning: This interface will be deprecated in future.
+    */
+    //static CCDictionary* dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
+
+    static CCDictionary* create();
+
+    static CCDictionary* createWithDictionary(CCDictionary* srcDict);
     /**
     @brief   Generate a CCDictionary pointer by file
     @param   pFileName  The file name of *.plist file
     @return  The CCDictionary pointer generated from the file
     */
-    static CCDictionary* dictionaryWithContentsOfFile(const char *pFileName);
+    static CCDictionary* createWithContentsOfFile(const char *pFileName);
 
     /*
     @brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the
            invoker should call release().
     */
-    static CCDictionary* dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
+    static CCDictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
 
 private:
     void setObjectUnSafe(CCObject* pObject, const std::string& key);
