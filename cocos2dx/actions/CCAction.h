@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -91,9 +91,13 @@ public:
     inline void setTag(int nTag) { m_nTag = nTag; }
 
 public:
-    /** Allocates and initializes the action */
+    /** Allocates and initializes the action 
+    @warning: This interface will be deprecated in future.
+    */
     static CCAction* action();
 
+    /** Create an action */
+    static CCAction* create();
 protected:
     CCNode    *m_pOriginalTarget;
     /** The "target".
@@ -174,9 +178,13 @@ public:
     }
 
 public:
-    /** creates the action */
+    /** creates the action 
+    @warning: This interface will be deprecated in future.
+    */
     static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
     
+    /** create the action */
+    static CCSpeed* create(CCActionInterval* pAction, float fSpeed);
 protected:
     float m_fSpeed;
     CCActionInterval *m_pInnerAction;
@@ -209,11 +217,8 @@ public:
     /** alter behavior - turn on/off boundary */
     inline void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
 
-    /** initializes the action */
-    bool initWithTarget(CCNode *pFollowedNode);
-
     /** initializes the action with a set boundary */
-    bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect);
+    bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
 
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void step(float dt);
@@ -221,12 +226,15 @@ public:
     virtual void stop(void);
 
 public:
-    /** creates the action with no boundary set */
-    static CCFollow* actionWithTarget(CCNode *pFollowedNode);
-
-    /** creates the action with a set boundary */
-    static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect);
-
+    /** creates the action with a set boundary,
+        It will work with no boundary if @param rect is equal to CCRectZero.
+    @warning: This interface will be deprecated in future.
+    */
+    static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
+    /** creates the action with a set boundary,
+    It will work with no boundary if @param rect is equal to CCRectZero.
+    */
+    static CCFollow* create(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
 protected:
     // node to follow
     CCNode *m_pobFollowedNode;

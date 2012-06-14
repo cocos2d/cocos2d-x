@@ -56,6 +56,11 @@ bool CCScene::init()
 
 CCScene *CCScene::node()
 {
+    return CCScene::create();
+}
+
+CCScene *CCScene::create()
+{
     CCScene *pRet = new CCScene();
     if (pRet && pRet->init())
     {

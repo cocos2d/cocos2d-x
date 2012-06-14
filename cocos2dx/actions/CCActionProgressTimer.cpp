@@ -34,6 +34,11 @@ NS_CC_BEGIN
 
 CCProgressTo* CCProgressTo::actionWithDuration(float duration, float fPercent)
 {
+    return CCProgressTo::create(duration, fPercent);
+}
+
+CCProgressTo* CCProgressTo::create(float duration, float fPercent)
+{
     CCProgressTo *pProgressTo = new CCProgressTo();
     pProgressTo->initWithDuration(duration, fPercent);
     pProgressTo->autorelease();
@@ -98,6 +103,11 @@ void CCProgressTo::update(float time)
 
 CCProgressFromTo* CCProgressFromTo::actionWithDuration(float duration, float fFromPercentage, float fToPercentage)
 {
+    return CCProgressFromTo::create(duration, fFromPercentage, fToPercentage);
+}
+
+CCProgressFromTo* CCProgressFromTo::create(float duration, float fFromPercentage, float fToPercentage)
+{
     CCProgressFromTo *pProgressFromTo = new CCProgressFromTo();
     pProgressFromTo->initWithDuration(duration, fFromPercentage, fToPercentage);
     pProgressFromTo->autorelease();
@@ -143,7 +153,7 @@ CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
 
 CCActionInterval* CCProgressFromTo::reverse(void)
 {
-    return CCProgressFromTo::actionWithDuration(m_fDuration, m_fTo, m_fFrom);
+    return CCProgressFromTo::create(m_fDuration, m_fTo, m_fFrom);
 }
 
 void CCProgressFromTo::startWithTarget(CCNode *pTarget)

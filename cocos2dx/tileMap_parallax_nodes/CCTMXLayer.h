@@ -83,8 +83,14 @@ class CC_DLL CCTMXLayer : public CCSpriteBatchNode
 public:
     CCTMXLayer();
     virtual ~CCTMXLayer();
-    /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
+    /** creates a CCTMXLayer with an tileset info, a layer info and a map info 
+    @warning: This interface will be deprecated in future.
+    */
     static CCTMXLayer * layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+  
+    /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
+    static CCTMXLayer * create(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+
     /** initializes a CCTMXLayer with a tileset info, a layer info and a map info */
     bool initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
 

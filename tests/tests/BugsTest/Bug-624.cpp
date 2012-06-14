@@ -15,7 +15,7 @@ bool Bug624Layer::init()
     if(BugsTestBaseLayer::init())
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        CCLabelTTF *label = CCLabelTTF::labelWithString("Layer1", "Marker Felt", 36);
+        CCLabelTTF *label = CCLabelTTF::create("Layer1", "Marker Felt", 36);
 
         label->setPosition(ccp(size.width/2, size.height/2));
         addChild(label);
@@ -32,9 +32,9 @@ void Bug624Layer::switchLayer(float dt)
 {
     unschedule(schedule_selector(Bug624Layer::switchLayer));
 
-    CCScene *scene = CCScene::node();    
-    scene->addChild(Bug624Layer2::node(), 0);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::transitionWithDuration(2.0f, scene, ccWHITE));
+    CCScene *scene = CCScene::create();    
+    scene->addChild(Bug624Layer2::create(), 0);
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(2.0f, scene, ccWHITE));
 }
 
 void Bug624Layer::didAccelerate(CCAcceleration* acceleration)
@@ -52,7 +52,7 @@ bool Bug624Layer2::init()
     if(BugsTestBaseLayer::init())
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        CCLabelTTF *label = CCLabelTTF::labelWithString("Layer2", "Marker Felt", 36);
+        CCLabelTTF *label = CCLabelTTF::create("Layer2", "Marker Felt", 36);
 
         label->setPosition(ccp(size.width/2, size.height/2));
         addChild(label);
@@ -69,9 +69,9 @@ void Bug624Layer2::switchLayer(float dt)
 {
     unschedule(schedule_selector(Bug624Layer::switchLayer));
 
-    CCScene *scene = CCScene::node();    
-    scene->addChild(Bug624Layer::node(), 0);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::transitionWithDuration(2.0f, scene, ccRED));
+    CCScene *scene = CCScene::create();    
+    scene->addChild(Bug624Layer::create(), 0);
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(2.0f, scene, ccRED));
 }
 
 void Bug624Layer2::didAccelerate(CCAcceleration* acceleration)

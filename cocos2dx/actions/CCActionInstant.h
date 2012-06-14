@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011 Zynga Inc.
 
@@ -63,8 +63,13 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
     //override static method
-    /** Allocates and initializes the action */
+    /** Allocates and initializes the action 
+    @warning: This interface will be deprecated in future.
+    */
     static CCShow * action();
+
+    /** Allocates and initializes the action */
+    static CCShow * create();
 };
 
 
@@ -83,8 +88,13 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
     //override static method
-    /** Allocates and initializes the action */
+    /** Allocates and initializes the action 
+    @warning: This interface will be deprecated in future.
+    */
     static CCHide * action();
+
+    /** Allocates and initializes the action */
+    static CCHide * create();
 };
 
 /** @brief Toggles the visibility of a node
@@ -99,8 +109,13 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
     //override static method
-    /** Allocates and initializes the action */
+    /** Allocates and initializes the action 
+    @warning: This interface will be deprecated in future.
+    */
     static CCToggleVisibility * action();
+
+    /** Allocates and initializes the action */
+    static CCToggleVisibility * create();
 };
 
 /** 
@@ -115,8 +130,14 @@ public:
     {}
     virtual ~CCFlipX(){}
 
-    /** create the action */
+    /** create the action 
+    @warning: This interface will be deprecated in future.
+    */
     static CCFlipX * actionWithFlipX(bool x);
+
+    /** create the action */
+    static CCFlipX * create(bool x);
+
     /** init the action */
     bool initWithFlipX(bool x);
     //super methods
@@ -140,8 +161,14 @@ public:
     {}
     virtual ~CCFlipY(){}
     
-    /** create the action */
+    /** create the action 
+    @warning: This interface will be deprecated in future.
+    */
     static CCFlipY * actionWithFlipY(bool y);
+
+    /** create the action */
+    static CCFlipY * create(bool y);
+
     /** init the action */
     bool initWithFlipY(bool y);
     //super methods
@@ -160,8 +187,12 @@ class CC_DLL CCPlace : public CCActionInstant //<NSCopying>
 public:
     CCPlace(){}
     virtual ~CCPlace(){}
-    /** creates a Place action with a position */
+    /** creates a Place action with a position 
+    @warning: This interface will be deprecated in future.
+    */
     static CCPlace * actionWithPosition(const CCPoint& pos);
+    /** creates a Place action with a position */
+    static CCPlace * create(const CCPoint& pos);
     /** Initializes a Place action with a position */
     bool initWithPosition(const CCPoint& pos);
     //super methods
@@ -190,10 +221,17 @@ public:
         }
     }
     /** creates the action with the callback 
-
+    @warning: This interface will be deprecated in future.
     typedef void (CCObject::*SEL_CallFunc)();
     */
     static CCCallFunc * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFunc selector);
+
+    /** creates the action with the callback 
+
+    typedef void (CCObject::*SEL_CallFunc)();
+    */
+    static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
+
     /** initializes the action with the callback 
     
     typedef void (CCObject::*SEL_CallFunc)();
@@ -251,10 +289,16 @@ public:
     CCCallFuncN(){}
     virtual ~CCCallFuncN(){}
     /** creates the action with the callback 
-
+    @warning: This interface will be deprecated in future.
     typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
     */
     static CCCallFuncN * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
+
+    /** creates the action with the callback 
+
+    typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
+    */
+    static CCCallFuncN * create(CCObject* pSelectorTarget, SEL_CallFuncN selector);
     /** initializes the action with the callback 
 
     typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
@@ -274,8 +318,14 @@ class CC_DLL CCCallFuncND : public CCCallFuncN
 {
 public:
 
-    /** creates the action with the callback and the data to pass as an argument */
+    /** creates the action with the callback and the data to pass as an argument 
+    @warning: This interface will be deprecated in future.
+    */
     static CCCallFuncND * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
+
+    /** creates the action with the callback and the data to pass as an argument */
+    static CCCallFuncND * create(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
+
     /** initializes the action with the callback and the data to pass as an argument */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
     // super methods
@@ -298,10 +348,17 @@ public:
     CCCallFuncO();
     virtual ~CCCallFuncO();
     /** creates the action with the callback 
-
+    @warning: This interface will be deprecated in future.
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
     */
     static CCCallFuncO * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
+
+    /** creates the action with the callback 
+
+    typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
+    */
+    static CCCallFuncO * create(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
+
     /** initializes the action with the callback 
 
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);

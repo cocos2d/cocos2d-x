@@ -62,23 +62,23 @@ void ZwoptexTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 26);
+    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 26);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-50));
     
     std::string strSubTitle = subtitle();
     if (strSubTitle.length() > 0)
     {
-        CCLabelTTF *l = CCLabelTTF::labelWithString(strSubTitle.c_str(), "Thonburi", 16);
+        CCLabelTTF *l = CCLabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
     
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ZwoptexTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ZwoptexTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ZwoptexTest::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ZwoptexTest::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ZwoptexTest::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ZwoptexTest::nextCallback) );
     
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     
     menu->setPosition(CCPointZero);
     item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
@@ -89,21 +89,21 @@ void ZwoptexTest::onEnter()
 
 void ZwoptexTest::restartCallback(CCObject* pSender)
 {
-    CCScene *s = ZwoptexTestScene::node();
+    CCScene *s = ZwoptexTestScene::create();
     s->addChild(restartZwoptexTest());
     CCDirector::sharedDirector()->replaceScene(s);
 }
 
 void ZwoptexTest::nextCallback(CCObject* pSender)
 {
-    CCScene *s = ZwoptexTestScene::node();
+    CCScene *s = ZwoptexTestScene::create();
     s->addChild(nextZwoptexTest());
     CCDirector::sharedDirector()->replaceScene(s);
 }
 
 void ZwoptexTest::backCallback(CCObject* pSender)
 {
-    CCScene *s = ZwoptexTestScene::node();
+    CCScene *s = ZwoptexTestScene::create();
     s->addChild(backZwoptexTest());
     CCDirector::sharedDirector()->replaceScene(s);
 }
@@ -132,22 +132,22 @@ void ZwoptexGenericTest::onEnter()
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini.plist");
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
     
-    CCLayerColor *layer1 = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 85, 121);
+    CCLayerColor *layer1 = CCLayerColor::create(ccc4(255, 0, 0, 255), 85, 121);
     layer1->setPosition(ccp(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer1);
 
-    sprite1 = CCSprite::spriteWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_01.png"));
+    sprite1 = CCSprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_01.png"));
     sprite1->setPosition(ccp( s.width/2-80, s.height/2));
     addChild(sprite1);
 
     sprite1->setFlipX(false);
     sprite1->setFlipY(false);
 
-    CCLayerColor *layer2 = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 85, 121);
+    CCLayerColor *layer2 = CCLayerColor::create(ccc4(255, 0, 0, 255), 85, 121);
     layer2->setPosition(ccp(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer2);
     
-    sprite2 = CCSprite::spriteWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_generic_01.png"));
+    sprite2 = CCSprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_generic_01.png"));
     sprite2->setPosition(ccp( s.width/2 + 80, s.height/2));
     addChild(sprite2);
 

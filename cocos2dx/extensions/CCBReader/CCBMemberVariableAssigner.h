@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-class CCBMemberVariableAssigner {
+class CC_DLL CCBMemberVariableAssigner {
     public:
         virtual bool onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode) = 0;
 };

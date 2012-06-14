@@ -64,12 +64,19 @@ CCParallaxNode::~CCParallaxNode()
         m_pParallaxArray = NULL;
     }
 }
+
 CCParallaxNode * CCParallaxNode::node()
+{
+    return CCParallaxNode::create();
+}
+
+CCParallaxNode * CCParallaxNode::create()
 {
     CCParallaxNode *pRet = new CCParallaxNode();
     pRet->autorelease();
     return pRet;
 }
+
 void CCParallaxNode::addChild(CCNode * child, unsigned int zOrder, int tag)
 {
     CC_UNUSED_PARAM(zOrder);
