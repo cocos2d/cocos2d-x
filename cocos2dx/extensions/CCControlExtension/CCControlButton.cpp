@@ -99,7 +99,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         
         // Initialize the dispatch table
         
-        CCString* tempString = CCString::stringWithCString(label->getString());
+        CCString* tempString = CCString::create(label->getString());
         //tempString->autorelease();
         setTitleForState(tempString, CCControlStateNormal);
         setTitleColorForState(rgbaLabel->getColor(), CCControlStateNormal);

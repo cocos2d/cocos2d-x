@@ -133,7 +133,7 @@ bool CCAnimation::initWithSpriteFrames(CCArray *pFrames, float delay/* = 0.0f*/)
 
     m_uLoops = 1;
     m_fDelayPerUnit = delay;
-    CCArray* pTmpFrames = CCArray::array();
+    CCArray* pTmpFrames = CCArray::create();
     setFrames(pTmpFrames);
 
     if (pFrames != NULL)
@@ -161,7 +161,7 @@ bool CCAnimation::initWithAnimationFrames(CCArray* arrayOfAnimationFrames, float
     m_fDelayPerUnit = delayPerUnit;
     m_uLoops = loops;
 
-    setFrames(CCArray::arrayWithArray(arrayOfAnimationFrames));
+    setFrames(CCArray::create(arrayOfAnimationFrames));
 
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(m_pFrames, pObj)

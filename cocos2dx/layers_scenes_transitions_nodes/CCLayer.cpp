@@ -800,7 +800,7 @@ void CCLayerMultiplex::addLayer(CCLayer* layer)
 
 bool CCLayerMultiplex::initWithLayer(CCLayer* layer)
 {
-    m_pLayers = CCArray::array();
+    m_pLayers = CCArray::create();
     m_pLayers->retain();
     m_pLayers->addObject(layer);
     m_nEnabledLayer = 0;
@@ -810,7 +810,7 @@ bool CCLayerMultiplex::initWithLayer(CCLayer* layer)
 
 bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 {
-    m_pLayers = CCArray::arrayWithCapacity(5);
+    m_pLayers = CCArray::create(5);
     m_pLayers->retain();
 
     m_pLayers->addObject(layer);

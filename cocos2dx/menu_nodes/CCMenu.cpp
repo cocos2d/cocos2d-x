@@ -128,7 +128,7 @@ bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
     CCArray* pArray = NULL;
     if( item ) 
     {
-        pArray = CCArray::arrayWithObject(item);
+        pArray = CCArray::create(item, NULL);
         CCMenuItem *i = va_arg(args, CCMenuItem*);
         while(i) 
         {

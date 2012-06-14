@@ -64,7 +64,7 @@ CCAction* CCAction::create()
 
 const char* CCAction::description()
 {
-    return CCString::stringWithFormat("<CCAction | Tag = %d>", m_nTag)->getCString();
+    return CCString::createWithFormat("<CCAction | Tag = %d>", m_nTag)->getCString();
 }
 
 CCObject* CCAction::copyWithZone(CCZone *pZone)

@@ -203,7 +203,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
 {
     const char *pszPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pszPlist);
-    CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(pszPath);
+    CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(pszPath);
 
     addSpriteFramesWithDictionary(dict, pobTexture);
 
@@ -232,7 +232,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
     if (m_pLoadedFileNames->find(pszPlist) == m_pLoadedFileNames->end())
     {
         const char *pszPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pszPlist);
-        CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(pszPath);
+        CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(pszPath);
 
         string texturePath("");
 
@@ -343,7 +343,7 @@ void CCSpriteFrameCache::removeSpriteFrameByName(const char *pszName)
 void CCSpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 {
     const char* path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plist);
-    CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(path);
+    CCDictionary* dict = CCDictionary::createWithContentsOfFileThreadSafe(path);
 
     removeSpriteFramesFromDictionary((CCDictionary*)dict);
 
@@ -360,14 +360,14 @@ void CCSpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictionary)
 {
     CCDictionary* framesDict = (CCDictionary*)dictionary->objectForKey("frames");
-    CCArray* keysToRemove = CCArray::array();
+    CCArray* keysToRemove = CCArray::create();
 
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
     {
         if (m_pSpriteFrames->objectForKey(pElement->getStrKey()))
         {
-            keysToRemove->addObject(CCString::stringWithCString(pElement->getStrKey()));
+            keysToRemove->addObject(CCString::create(pElement->getStrKey()));
         }
     }
 
@@ -376,7 +376,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictiona
 
 void CCSpriteFrameCache::removeSpriteFramesFromTexture(CCTexture2D* texture)
 {
-    CCArray* keysToRemove = CCArray::array();
+    CCArray* keysToRemove = CCArray::create();
 
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(m_pSpriteFrames, pElement)
@@ -385,7 +385,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromTexture(CCTexture2D* texture)
         CCSpriteFrame* frame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(key.c_str());
         if (frame && (frame->getTexture() == texture))
         {
-            keysToRemove->addObject(CCString::stringWithCString(pElement->getStrKey()));
+            keysToRemove->addObject(CCString::create(pElement->getStrKey()));
         }
     }
 

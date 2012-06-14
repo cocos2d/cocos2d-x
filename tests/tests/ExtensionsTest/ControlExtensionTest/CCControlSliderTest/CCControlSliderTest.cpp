@@ -69,6 +69,6 @@ void CCControlSliderTest::valueChanged(CCObject *sender)
 {
     CCControlSlider* pSlider = (CCControlSlider*)sender;
     // Change value of label.
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Slider value = %.02f", pSlider->getValue())->getCString());    
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Slider value = %.02f", pSlider->getValue())->getCString());    
 }
 

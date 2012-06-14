@@ -145,7 +145,7 @@ const char* CCLabelTTF::getString(void)
 
 const char* CCLabelTTF::description()
 {
-    return CCString::stringWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
+    return CCString::createWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
 }
 
 CCTextAlignment CCLabelTTF::getHorizontalAlignment()

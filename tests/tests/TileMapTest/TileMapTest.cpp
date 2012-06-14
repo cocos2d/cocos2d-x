@@ -1254,7 +1254,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     string resources = "TileMaps";        // partial paths are OK as resource paths.
     string file = resources + "/orthogonal-test1.tmx";
 
-    CCString* str = CCString::stringWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(file.c_str()));
+    CCString* str = CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(file.c_str()));
     CCAssert(str != NULL, "Unable to open file");
 
     CCTMXTiledMap *map = CCTMXTiledMap::create(str->getCString() ,resources.c_str());

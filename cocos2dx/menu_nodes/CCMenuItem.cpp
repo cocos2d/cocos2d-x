@@ -816,7 +816,7 @@ CCMenuItemToggle * CCMenuItemToggle::create(CCObject* target, SEL_MenuHandler se
 bool CCMenuItemToggle::initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 {
     CCMenuItem::initWithTarget(target, selector);
-    this->m_pSubItems = CCArray::array();
+    this->m_pSubItems = CCArray::create();
     this->m_pSubItems->retain();
     int z = 0;
     CCMenuItem *i = item;
@@ -847,7 +847,7 @@ CCMenuItemToggle* CCMenuItemToggle::create(CCMenuItem *item)
 bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
 {
     CCMenuItem::initWithTarget(NULL, NULL);
-    this->m_pSubItems = CCArray::array();
+    this->m_pSubItems = CCArray::create();
     this->m_pSubItems->retain();
     m_pSubItems->addObject(item);
     m_uSelectedIndex = UINT_MAX;

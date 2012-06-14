@@ -167,7 +167,7 @@ public: virtual void set##funName(varType var)   \
 #define CC_BREAK_IF(cond)            if(cond) break
 
 #define __CCLOGWITHFUNCTION(s, ...) \
-    CCLog("%s : %s",__FUNCTION__, CCString::stringWithFormat(s, ##__VA_ARGS__)->getCString())
+    CCLog("%s : %s",__FUNCTION__, CCString::createWithFormat(s, ##__VA_ARGS__)->getCString())
 
 // cocos2d debug
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0

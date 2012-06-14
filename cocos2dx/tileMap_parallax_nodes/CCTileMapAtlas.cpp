@@ -157,7 +157,7 @@ void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
 
         // XXX: this method consumes a lot of memory
         // XXX: a tree of something like that shall be impolemented
-        CCInteger *num = (CCInteger*)m_pPosToAtlasIndex->objectForKey(CCString::stringWithFormat("%d,%d", position.x, position.y)->getCString());
+        CCInteger *num = (CCInteger*)m_pPosToAtlasIndex->objectForKey(CCString::createWithFormat("%d,%d", position.x, position.y)->getCString());
         this->updateAtlasValueAt(position, tile, num->getValue());
     }    
 }
@@ -251,8 +251,8 @@ void CCTileMapAtlas::updateAtlasValues()
                 {
                     this->updateAtlasValueAt(ccg(x,y), value, total);
 
-                    CCString *key = CCString::stringWithFormat("%d,%d", x,y);
-                    CCInteger *num = CCInteger::integerWithInt(total);
+                    CCString *key = CCString::createWithFormat("%d,%d", x,y);
+                    CCInteger *num = CCInteger::create(total);
                     m_pPosToAtlasIndex->setObject(num, key->getCString());
 
                     total++;

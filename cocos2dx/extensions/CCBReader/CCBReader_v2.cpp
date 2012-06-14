@@ -763,7 +763,7 @@ CCNode* CCBReader::nodeGraphFromFile(const char* file, CCNode* owner)
         ccbFileDir = ccbFilePath.substr(0, lastSlash) + "/";
     }
     
-    CCDictionary* dict = CCDictionary::dictionaryWithContentsOfFile(ccbFilePath.c_str());
+    CCDictionary* dict = CCDictionary::createWithContentsOfFile(ccbFilePath.c_str());
     CCAssert(dict != NULL, "CCBReader: file not found");
     return nodeGraphFromDictionary(dict, NULL, ccbFileDir.c_str(), owner);
 }
