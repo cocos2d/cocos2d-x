@@ -93,8 +93,7 @@ public:
     inline void endToLua(){ end();};
 
     /** ends grabbing*/
-    // para bIsTOCacheTexture       the parameter is only used for android to cache the texture
-    void end(bool bIsTOCacheTexture = true);
+    void end();
 
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
@@ -118,6 +117,11 @@ public:
         Returns YES if the operation is successful.
      */
     bool saveToFile(const char *name, tCCImageFormat format);
+    
+    /** Listen "come to background" message, and save render texture.
+     It only has effect on Android.
+     */
+    void listenToBackground(CCObject *obj);
 
 protected:
     GLuint       m_uFBO;
