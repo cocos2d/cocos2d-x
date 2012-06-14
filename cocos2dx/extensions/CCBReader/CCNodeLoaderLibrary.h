@@ -17,9 +17,12 @@ class CC_DLL CCNodeLoaderLibrary : public CCObject {
         ~CCNodeLoaderLibrary();
 
         void registerDefaultCCNodeLoaders();
-        void registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader);
-        void unregisterCCNodeLoader(std::string pClassName);
-        CCNodeLoader * getCCNodeLoader(std::string pClassName);
+        void registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader);
+        void registerCCNodeLoader(CCString * pClassName, CCNodeLoader * pCCNodeLoader);
+        void unregisterCCNodeLoader(const char * pClassName);
+        void unregisterCCNodeLoader(CCString * pClassName);
+        CCNodeLoader * getCCNodeLoader(const char * pClassName);
+        CCNodeLoader * getCCNodeLoader(CCString * pClassName);
         void purge(bool pDelete);
 
     public:
