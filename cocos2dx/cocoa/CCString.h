@@ -120,6 +120,13 @@ public:
     std::string m_sString;
 };
 
+struct CCStringCompare : public std::binary_function<CCString *, CCString *, bool> {
+    public:
+        bool operator() (CCString * a, CCString * b) const {
+            return strcmp(a->getCString(), b->getCString()) < 0;
+        }
+};
+
 #define CCStringMake(str) CCString::stringWithCString(str)
 #define ccs               CCStringMake
 
