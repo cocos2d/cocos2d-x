@@ -149,42 +149,42 @@ bool CCControlButtonTest_Event::init()
     return false;
 }
 
-void CCControlButtonTest_Event::touchDownAction(CCObject *sender)
+void CCControlButtonTest_Event::touchDownAction(CCObject *senderz, CCControlEvent controlEvent)
 {
     m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Down")->getCString());
 }
 
-void CCControlButtonTest_Event::touchDragInsideAction(CCObject *sender)
+void CCControlButtonTest_Event::touchDragInsideAction(CCObject *sender, CCControlEvent controlEvent)
 {
     m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Inside")->getCString());
 }
 
-void CCControlButtonTest_Event::touchDragOutsideAction(CCObject *sender)
+void CCControlButtonTest_Event::touchDragOutsideAction(CCObject *sender, CCControlEvent controlEvent)
 {
     m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Outside")->getCString());
 }
 
-void CCControlButtonTest_Event::touchDragEnterAction(CCObject *sender)
+void CCControlButtonTest_Event::touchDragEnterAction(CCObject *sender, CCControlEvent controlEvent)
 {
     m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Enter")->getCString());
 }
 
-void CCControlButtonTest_Event::touchDragExitAction(CCObject *sender)
+void CCControlButtonTest_Event::touchDragExitAction(CCObject *sender, CCControlEvent controlEvent)
 {
     m_pDisplayValueLabel->setString(CCString::createWithFormat("Drag Exit")->getCString());
 }
 
-void CCControlButtonTest_Event::touchUpInsideAction(CCObject *sender)
+void CCControlButtonTest_Event::touchUpInsideAction(CCObject *sender, CCControlEvent controlEvent)
 {
     m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Up Inside.")->getCString());
 }
 
-void CCControlButtonTest_Event::touchUpOutsideAction(CCObject *sender)
+void CCControlButtonTest_Event::touchUpOutsideAction(CCObject *sender, CCControlEvent controlEvent)
 {
     m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Up Outside.")->getCString());
 }
 
-void CCControlButtonTest_Event::touchCancelAction(CCObject *sender)
+void CCControlButtonTest_Event::touchCancelAction(CCObject *sender, CCControlEvent controlEvent)
 {
     m_pDisplayValueLabel->setString(CCString::createWithFormat("Touch Cancel")->getCString());
 }

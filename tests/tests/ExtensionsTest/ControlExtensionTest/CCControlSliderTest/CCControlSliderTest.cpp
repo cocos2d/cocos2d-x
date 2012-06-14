@@ -65,7 +65,7 @@ bool CCControlSliderTest::init()
     return false;
 }
 
-void CCControlSliderTest::valueChanged(CCObject *sender)
+void CCControlSliderTest::valueChanged(CCObject *sender, CCControlEvent controlEvent)
 {
     CCControlSlider* pSlider = (CCControlSlider*)sender;
     // Change value of label.

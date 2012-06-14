@@ -55,6 +55,11 @@ CCLabelTTF::~CCLabelTTF()
 
 CCLabelTTF * CCLabelTTF::node()
 {
+    return CCLabelTTF::create();
+}
+
+CCLabelTTF * CCLabelTTF::create()
+{
     CCLabelTTF * pRet = new CCLabelTTF();
     if (pRet && pRet->init())
     {

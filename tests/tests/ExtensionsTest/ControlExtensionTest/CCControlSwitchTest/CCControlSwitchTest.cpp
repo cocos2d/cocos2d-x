@@ -78,13 +78,13 @@ bool CCControlSwitchTest::init()
         layer->setAnchorPoint(ccp (0.5f, 0.5f));
         
         // Update the value label
-        valueChanged(switchControl);
+        valueChanged(switchControl, CCControlEventValueChanged);
         return true;
     }
     return false;
 }
 
-void CCControlSwitchTest::valueChanged(CCObject* sender)
+void CCControlSwitchTest::valueChanged(CCObject* sender, CCControlEvent controlEvent)
 {
     CCControlSwitch* pSwitch = (CCControlSwitch*)sender;
     if (pSwitch->getIsOn())

@@ -59,8 +59,8 @@ public:
 
     virtual bool init();
     //virtual ~CCControlColourPicker();
-    void hueSliderValueChanged(CCObject * sender);
-    void colourSliderValueChanged(CCObject * sender);
+    void hueSliderValueChanged(CCObject * sender, CCControlEvent controlEvent);
+    void colourSliderValueChanged(CCObject * sender, CCControlEvent controlEvent);
 
 protected:    
     void updateControlPicker();

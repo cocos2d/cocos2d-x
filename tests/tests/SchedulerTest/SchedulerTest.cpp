@@ -874,7 +874,7 @@ CCControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(CCObject* pSender)
+void SchedulerTimeScale::sliderAction(CCObject* pSender, CCControlEvent controlEvent)
 {
     CCControlSlider* pSliderCtl = (CCControlSlider*)pSender;
     float scale;
@@ -966,7 +966,7 @@ CCControlSlider *TwoSchedulers::sliderCtl()
     return slider;
 }
 
-void TwoSchedulers::sliderAction(CCObject* sender)
+void TwoSchedulers::sliderAction(CCObject* sender, CCControlEvent controlEvent)
 {
     float scale;
 

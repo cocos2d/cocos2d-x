@@ -44,14 +44,14 @@ public:
     CCControlButtonTest_Event();
     ~CCControlButtonTest_Event();
     bool init();
-    void touchDownAction(CCObject *sender);
-    void touchDragInsideAction(CCObject *sender);
-    void touchDragOutsideAction(CCObject *sender);
-    void touchDragEnterAction(CCObject *sender);
-    void touchDragExitAction(CCObject *sender);
-    void touchUpInsideAction(CCObject *sender);
-    void touchUpOutsideAction(CCObject *sender);
-    void touchCancelAction(CCObject *sender);
+    void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchDragInsideAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchDragOutsideAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchDragEnterAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchDragExitAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchUpInsideAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchUpOutsideAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchCancelAction(CCObject *sender, CCControlEvent controlEvent);
 protected:
     CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
     CONTROL_SCENE_CREATE_FUNC(CCControlButtonTest_Event)
