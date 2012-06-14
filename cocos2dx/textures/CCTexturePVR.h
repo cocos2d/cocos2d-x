@@ -33,9 +33,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-//Forward definition for CCData
-class CCData;
-
 /**
  @brief Structure which can tell where mimap begins and how long is it
 */

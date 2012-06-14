@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Lam Pham
 
 http://www.cocos2d-x.org
@@ -79,9 +79,12 @@ public:
     virtual bool getIsOpacityModifyRGB(void);
 
 public:
-    /** Creates a progress timer with the sprite as the shape the timer goes through */
+    /** Creates a progress timer with the sprite as the shape the timer goes through 
+    @warning: This interface will be deprecated in future.
+    */
     static CCProgressTimer* progressWithSprite(CCSprite* sp);
-
+    /** Creates a progress timer with the sprite as the shape the timer goes through */
+    static CCProgressTimer* create(CCSprite* sp);
 protected:
     ccTex2F textureCoordFromAlphaPoint(CCPoint alpha);
     ccVertex2F vertexFromAlphaPoint(CCPoint alpha);

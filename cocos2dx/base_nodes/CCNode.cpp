@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
 Copyright (c) 2011      Zynga Inc.
@@ -439,11 +439,15 @@ CCRect CCNode::boundingBox()
 
 CCNode * CCNode::node(void)
 {
-    CCNode * pRet = new CCNode();
-    pRet->autorelease();
-    return pRet;
+    return CCNode::create();
 }
 
+CCNode * CCNode::create(void)
+{
+	CCNode * pRet = new CCNode();
+	pRet->autorelease();
+	return pRet;
+}
 
 void CCNode::cleanup()
 {
@@ -458,13 +462,13 @@ void CCNode::cleanup()
 
 const char* CCNode::description()
 {
-    return CCString::stringWithFormat("<CCNode | Tag = %d>", m_nTag)->getCString();
+    return CCString::createWithFormat("<CCNode | Tag = %d>", m_nTag)->getCString();
 }
 
 // lazy allocs
 void CCNode::childrenAlloc(void)
 {
-    m_pChildren = CCArray::arrayWithCapacity(4);
+    m_pChildren = CCArray::create(4);
     m_pChildren->retain();
 }
 

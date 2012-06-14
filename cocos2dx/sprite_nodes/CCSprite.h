@@ -123,41 +123,81 @@ public:
     /** Creates an sprite with a texture.
      The rect used will be the size of the texture.
      The offset will be (0,0).
+     @warning: This interface will be deprecated in future.
      */
     static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
 
     /** Creates an sprite with a texture and a rect.
      The offset will be (0,0).
+     @warning: This interface will be deprecated in future.
      */
     static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect);
 
-    /** Creates an sprite with a texture, a rect and offset. */
-    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect, const CCPoint& offset);
+        /** Creates an sprite with a texture.
+     The rect used will be the size of the texture.
+     The offset will be (0,0).
+     */
+    static CCSprite* createWithTexture(CCTexture2D *pTexture);
+
+    /** Creates an sprite with a texture and a rect.
+     The offset will be (0,0).
+     */
+    static CCSprite* createWithTexture(CCTexture2D *pTexture, const CCRect& rect);
+
+    /** Creates an sprite with an sprite frame. 
+    @warning: This interface will be deprecated in future.
+    */
+    static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+
+    /** Creates an sprite with an sprite frame name.
+     An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
+     If the CCSpriteFrame doesn't exist it will raise an exception.
+     @warning: This interface will be deprecated in future.
+     @since v0.9
+     */
+    static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
 
     /** Creates an sprite with an sprite frame. */
-    static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+    static CCSprite* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
     /** Creates an sprite with an sprite frame name.
      An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
      If the CCSpriteFrame doesn't exist it will raise an exception.
      @since v0.9
      */
-    static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
+    static CCSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
 
     /** Creates an sprite with an image filename.
      The rect used will be the size of the image.
+     @warning: This interface will be deprecated in future.
      The offset will be (0,0).
      */
     static CCSprite* spriteWithFile(const char *pszFileName);
 
     /** Creates an sprite with an image filename and a rect.
      The offset will be (0,0).
+     @warning: This interface will be deprecated in future.
      */
     static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
     
+    /** Creates an sprite with an image filename.
+     The rect used will be the size of the image.
+     The offset will be (0,0).
+     */
+    static CCSprite* create(const char *pszFileName);
+
+    /** Creates an sprite with an image filename and a rect.
+     The offset will be (0,0).
+     */
+    static CCSprite* create(const char *pszFileName, const CCRect& rect);
+
     /** Creates an sprite.
+    @warning: This interface will be deprecated in future.
      */
     static CCSprite* node();
+    /** Creates an sprite.
+     */
+    static CCSprite* create();
 public:
     CCSprite(void);
     virtual ~CCSprite(void);

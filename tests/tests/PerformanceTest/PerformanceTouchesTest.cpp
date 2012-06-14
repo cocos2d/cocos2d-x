@@ -28,7 +28,7 @@ void TouchesMainScene::showCurrentTest()
 
     if (pLayer)
     {
-        CCScene* pScene = CCScene::node();
+        CCScene* pScene = CCScene::create();
         pScene->addChild(pLayer);
         pLayer->release();
 
@@ -43,13 +43,13 @@ void TouchesMainScene::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // add title
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-50));
 
     scheduleUpdate();
 
-    m_plabel = CCLabelBMFont::labelWithString("00.0", "fonts/arial16.fnt");
+    m_plabel = CCLabelBMFont::create("00.0", "fonts/arial16.fnt");
     m_plabel->setPosition(ccp(s.width/2, s.height/2));
     addChild(m_plabel);
 
@@ -168,7 +168,7 @@ void TouchesPerformTest2::ccTouchesCancelled(CCSet* touches, CCEvent* event)
 void runTouchesTest()
 {
     s_nTouchCurCase = 0;
-    CCScene* pScene = CCScene::node();
+    CCScene* pScene = CCScene::create();
     CCLayer* pLayer = new TouchesPerformTest1(true, TEST_COUNT, s_nTouchCurCase);
 
     pScene->addChild(pLayer);

@@ -92,11 +92,15 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char 
 CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
     this->mCCBRootPath = pCCBRootPath;
 
-    char ccbFullFilePath[strlen(pCCBRootPath) + strlen(pCCBFileName) + 1];
+    char* ccbFullFilePath = (char*)malloc(strlen(pCCBRootPath) + strlen(pCCBFileName) + 1);
+    ccbFullFilePath[strlen(pCCBRootPath) + strlen(pCCBFileName)] = '\0';
+
     strcpy(ccbFullFilePath, pCCBRootPath);
     strcat(ccbFullFilePath, pCCBFileName);
 
     const char * path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFullFilePath);
+
+    CC_SAFE_FREE(ccbFullFilePath);
 
     unsigned long size = 0;
     this->mBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &size);

@@ -40,6 +40,11 @@ NS_CC_BEGIN
 // CCTMXLayer - init & alloc & dealloc
 CCTMXLayer * CCTMXLayer::layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
 {
+    return CCTMXLayer::create(tilesetInfo, layerInfo, mapInfo);
+}
+
+CCTMXLayer * CCTMXLayer::create(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
+{
     CCTMXLayer *pRet = new CCTMXLayer();
     if (pRet->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
@@ -70,7 +75,7 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
         m_uMinGID = layerInfo->m_uMinGID;
         m_uMaxGID = layerInfo->m_uMaxGID;
         m_cOpacity = layerInfo->m_cOpacity;
-        setProperties(CCDictionary::dictionaryWithDictionary(layerInfo->getProperties()));
+        setProperties(CCDictionary::createWithDictionary(layerInfo->getProperties()));
         m_fContentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor(); 
 
         // tilesetInfo

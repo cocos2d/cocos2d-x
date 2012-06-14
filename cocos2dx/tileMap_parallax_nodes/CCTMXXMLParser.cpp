@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include <map>
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
-#include "CCData.h"
 #include "ccMacros.h"
 #include "CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
@@ -150,10 +149,10 @@ CCTMXMapInfo * CCTMXMapInfo::formatWithXML(const char* tmxString, const char* re
 
 void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
 {
-    m_pTilesets = CCArray::array();
+    m_pTilesets = CCArray::create();
     m_pTilesets->retain();
 
-    m_pLayers = CCArray::array();
+    m_pLayers = CCArray::create();
     m_pLayers->retain();
 
     if (tmxFileName != NULL)
@@ -166,7 +165,7 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
         m_sResources = resourcePath;
     }
     
-    m_pObjectGroups = CCArray::arrayWithCapacity(4);
+    m_pObjectGroups = CCArray::create(4);
     m_pObjectGroups->retain();
 
     m_pProperties = new CCDictionary();
@@ -282,13 +281,6 @@ bool CCTMXMapInfo::parseXMLString(const char *xmlString)
     parser.setDelegator(this);
 
     return parser.parse(xmlString, len);
-}
-
-bool CCTMXMapInfo::parseXMLData(const CCData* data)
-{
-    //TODO: implementation.
-    CCAssert(false, "not implement!");
-    return false;
 }
 
 bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)

@@ -372,7 +372,7 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
     pRet = (CCBMFontConfiguration*)configurations->objectForKey(fntFile);
     if( pRet == NULL )
     {
-        pRet = CCBMFontConfiguration::configurationWithFNTFile(fntFile);
+        pRet = CCBMFontConfiguration::create(fntFile);
         if (pRet)
         {
             configurations->setObject(pRet, fntFile);
@@ -406,6 +406,11 @@ typedef struct _KerningHashElement
 //
 
 CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
+{
+    return CCBMFontConfiguration::create(FNTfile);
+}
+
+CCBMFontConfiguration * CCBMFontConfiguration::create(const char *FNTfile)
 {
     CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
     if (pRet->initWithFNTfile(FNTfile))
@@ -447,7 +452,7 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
 
 const char* CCBMFontConfiguration::description(void)
 {
-    return CCString::stringWithFormat(
+    return CCString::createWithFormat(
         "<CCBMFontConfiguration = %08X | Glphys:%d Kernings:%d | Image = %s>",
         this,
         HASH_COUNT(m_pFontDefDictionary),
@@ -481,7 +486,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
-    CCString *contents = CCString::stringWithContentsOfFile(fullpath.c_str());
+    CCString *contents = CCString::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
 
@@ -713,46 +718,17 @@ void CCLabelBMFont::purgeCachedData()
     FNTConfigRemoveCache();
 }
 
-CCLabelBMFont * CCLabelBMFont::node()
+CCLabelBMFont * CCLabelBMFont::node(){    return CCLabelBMFont::create();}
+
+CCLabelBMFont * CCLabelBMFont::create(){    CCLabelBMFont * pRet = new CCLabelBMFont();    if (pRet && pRet->init())    {        pRet->autorelease();        return pRet;    }    CC_SAFE_DELETE(pRet);    return NULL;}
+
+CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
 {
-    CCLabelBMFont * pRet = new CCLabelBMFont();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    return CCLabelBMFont::create(str, fntFile, width, alignment, imageOffset);
 }
 
 //LabelBMFont - Creation & Init
-CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
-{
-    CCLabelBMFont *pRet = new CCLabelBMFont();
-    if(pRet && pRet->initWithString(str, fntFile))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
-}
-
-//LabelBMFont - Creation & Init
-CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment)
-{
-    CCLabelBMFont *pRet = new CCLabelBMFont();
-    if(pRet && pRet->initWithString(str, fntFile, width, alignment))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
-}
-
-//LabelBMFont - Creation & Init
-CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset)
+CCLabelBMFont *CCLabelBMFont::create(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
 {
     CCLabelBMFont *pRet = new CCLabelBMFont();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
@@ -769,17 +745,7 @@ bool CCLabelBMFont::init()
     return initWithString(NULL, NULL, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
 }
 
-bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
-{
-    return initWithString(theString, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
-}
-
-bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment)
-{
-    return initWithString(theString, fntFile, width, alignment, CCPointZero);
-}
-
-bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset)
+bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
 {
     CCAssert(!m_pConfiguration, "re-init is no longer supported");
     CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for CCLabelBMFont");

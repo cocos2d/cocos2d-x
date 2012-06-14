@@ -45,35 +45,35 @@ bool CCControlScene::init()
         // Get the sceensize
         CCSize screensize = CCDirector::sharedDirector()->getWinSize();
 
-        CCMenuItemFont* pBackItem = CCMenuItemFont::itemWithString("Back", this,
+        CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", this,
             menu_selector(CCControlScene::toExtensionsMainLayer));
         pBackItem->setPosition(ccp(screensize.width - 50, 25));
-        CCMenu* pBackMenu = CCMenu::menuWithItems(pBackItem, NULL);
+        CCMenu* pBackMenu = CCMenu::create(pBackItem, NULL);
         pBackMenu->setPosition( CCPointZero );
         addChild(pBackMenu, 10);
 
         // Add the generated background
-        CCSprite *background = CCSprite::spriteWithFile("extensions/background.png");
+        CCSprite *background = CCSprite::create("extensions/background.png");
         background->setPosition(ccp(screensize.width / 2, screensize.height / 2));
         addChild(background);
         
         // Add the ribbon
-        CCScale9Sprite *ribbon = CCScale9Sprite::spriteWithFile("extensions/ribbon.png", CCRectMake(1, 1, 48, 55));
+        CCScale9Sprite *ribbon = CCScale9Sprite::create("extensions/ribbon.png", CCRectMake(1, 1, 48, 55));
         ribbon->setContentSize(CCSizeMake(screensize.width, 57));
         ribbon->setPosition(ccp(screensize.width / 2.0f, screensize.height - ribbon->getContentSize().height / 2.0f));
         addChild(ribbon);
         
         // Add the title
-        setSceneTitleLabel(CCLabelTTF::labelWithString("Title", "Arial", 12));
+        setSceneTitleLabel(CCLabelTTF::create("Title", "Arial", 12));
         m_pSceneTitleLabel->setPosition(ccp (screensize.width / 2, screensize.height - m_pSceneTitleLabel->getContentSize().height / 2 - 5));
         addChild(m_pSceneTitleLabel, 1);
         
         // Add the menu
-        CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(CCControlScene::previousCallback));
-        CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(CCControlScene::restartCallback));
-        CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(CCControlScene::nextCallback));
+        CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(CCControlScene::previousCallback));
+        CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(CCControlScene::restartCallback));
+        CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(CCControlScene::nextCallback));
         
-        CCMenu *menu = CCMenu::menuWithItems(item1, item3, item2, NULL);
+        CCMenu *menu = CCMenu::create(item1, item3, item2, NULL);
         menu->setPosition(CCPointZero);
         item1->setPosition(ccp(screensize.width / 2 - 100, 37));
         item2->setPosition(ccp(screensize.width / 2, 35));

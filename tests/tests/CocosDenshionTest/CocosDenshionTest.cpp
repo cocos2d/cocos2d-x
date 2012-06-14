@@ -52,18 +52,18 @@ m_nSoundId(0)
     };
 
     // add menu items for tests
-    m_pItmeMenu = CCMenu::menuWithItems(NULL);
+    m_pItmeMenu = CCMenu::create();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     m_nTestCount = sizeof(testItems) / sizeof(testItems[0]);
 
     for (int i = 0; i < m_nTestCount; ++i)
     {
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//        CCLabelBMFont* label = CCLabelBMFont::labelWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
+//        CCLabelBMFont* label = CCLabelBMFont::create(testItems[i].c_str(),  "fonts/arial16.fnt");
 //#else
-        CCLabelTTF* label = CCLabelTTF::labelWithString(testItems[i].c_str(), "Arial", 24);
+        CCLabelTTF* label = CCLabelTTF::create(testItems[i].c_str(), "Arial", 24);
 //#endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(CocosDenshionTest::menuCallback));
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(CocosDenshionTest::menuCallback));
         
         m_pItmeMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
