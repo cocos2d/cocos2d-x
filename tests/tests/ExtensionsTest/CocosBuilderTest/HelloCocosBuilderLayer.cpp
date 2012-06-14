@@ -64,23 +64,23 @@ void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::CCNode * pNode, cocos2d::exte
 }
 
 
-SEL_MenuHandler HelloCocosBuilderLayer::onResolveCCBCCMenuSelector(CCObject * pTarget, const char * pSelectorName) {
+SEL_MenuHandler HelloCocosBuilderLayer::onResolveCCBCCMenuSelector(CCObject * pTarget, CCString * pSelectorName) {
     return NULL;    
 }
 
-SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName) {
+SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObject * pTarget, CCString * pSelectorName) {
     if(pTarget == this) {
-        if(strcmp(pSelectorName, "onMenuTestClicked") == 0) {
+        if(strcmp(pSelectorName->getCString(), "onMenuTestClicked") == 0) {
             return cccontrol_selector(HelloCocosBuilderLayer::onMenuTestClicked);
-        } else if(strcmp(pSelectorName, "onSpriteTestClicked") == 0) {
+        } else if(strcmp(pSelectorName->getCString(), "onSpriteTestClicked") == 0) {
             return cccontrol_selector(HelloCocosBuilderLayer::onSpriteTestClicked);
-        } else if(strcmp(pSelectorName, "onButtonTestClicked") == 0) {
+        } else if(strcmp(pSelectorName->getCString(), "onButtonTestClicked") == 0) {
             return cccontrol_selector(HelloCocosBuilderLayer::onButtonTestClicked);
-        } else if(strcmp(pSelectorName, "onLabelTestClicked") == 0) {
+        } else if(strcmp(pSelectorName->getCString(), "onLabelTestClicked") == 0) {
             return cccontrol_selector(HelloCocosBuilderLayer::onLabelTestClicked);
-        } else if(strcmp(pSelectorName, "onParticleSystemTestClicked") == 0) {
+        } else if(strcmp(pSelectorName->getCString(), "onParticleSystemTestClicked") == 0) {
             return cccontrol_selector(HelloCocosBuilderLayer::onParticleSystemTestClicked);
-        } else if(strcmp(pSelectorName, "onScrollViewTestClicked") == 0) {
+        } else if(strcmp(pSelectorName->getCString(), "onScrollViewTestClicked") == 0) {
             return cccontrol_selector(HelloCocosBuilderLayer::onScrollViewTestClicked);
         }
     }
@@ -88,14 +88,14 @@ SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObj
 }
 
 
-bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode) {
+bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) {
     if(pTarget == this) {
-        if(strcmp(pMemberVariableName, "mBurstSprite") == 0) {
+        if(strcmp(pMemberVariableName->getCString(), "mBurstSprite") == 0) {
             this->mBurstSprite = dynamic_cast<CCSprite *>(pNode);
             CC_ASSERT(this->mBurstSprite);
             this->mBurstSprite->retain();
             return true;
-        } else if(strcmp(pMemberVariableName, "mTestTitleLabel") == 0) {
+        } else if(strcmp(pMemberVariableName->getCString(), "mTestTitleLabel") == 0) {
             this->mTestTitleLabelTTF = dynamic_cast<CCLabelTTF *>(pNode);
             CC_ASSERT(this->mTestTitleLabelTTF);
             this->mTestTitleLabelTTF->retain();
@@ -107,26 +107,26 @@ bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, const
 
 
 void HelloCocosBuilderLayer::onMenuTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    printf("onMenuTestClicked\n");
+    CCLOG("onMenuTestClicked\n");
 }
 
 void HelloCocosBuilderLayer::onSpriteTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    printf("onSpriteTestClicked\n");
+    CCLOG("onSpriteTestClicked\n");
 }
 
 void HelloCocosBuilderLayer::onButtonTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    printf("onButtonTestClicked\n");
+    CCLOG("onButtonTestClicked\n");
     this->openTest("ccb/ButtonTest.ccbi", "ButtonTestLayer", ButtonTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onLabelTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    printf("onLabelTestClicked\n");
+    CCLOG("onLabelTestClicked\n");
 }
 
 void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    printf("onParticleSystemTestClicked\n");
+    CCLOG("onParticleSystemTestClicked\n");
 }
 
 void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    printf("onScrollViewTestClicked\n");
+    CCLOG("onScrollViewTestClicked\n");
 }

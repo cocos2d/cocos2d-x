@@ -41,18 +41,18 @@ void CCNodeLoaderLibrary::registerDefaultCCNodeLoaders() {
     this->registerCCNodeLoader("CCParticleSystemQuad", CCParticleSystemQuadLoader::loader());
 }
 
-void CCNodeLoaderLibrary::registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader) {
-    this->mCCNodeLoaders.insert(std::pair<const char *, CCNodeLoader *>(pClassName, pCCNodeLoader));
+void CCNodeLoaderLibrary::registerCCNodeLoader(std::string pClassName, CCNodeLoader * pCCNodeLoader) {
     pCCNodeLoader->retain();
+    this->mCCNodeLoaders.insert(std::pair<std::string, CCNodeLoader *>(pClassName, pCCNodeLoader));
 }
 
-void CCNodeLoaderLibrary::unregisterCCNodeLoader(const char * pClassName) {
+void CCNodeLoaderLibrary::unregisterCCNodeLoader(std::string pClassName) {
     std::map<std::string, CCNodeLoader *>::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
     assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
     ccNodeLoadersIterator->second->release();
 }
 
-CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(const char * pClassName) {
+CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(std::string pClassName) {
     std::map<std::string, CCNodeLoader *>::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
     assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
     return ccNodeLoadersIterator->second;

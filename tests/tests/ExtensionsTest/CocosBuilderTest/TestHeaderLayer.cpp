@@ -15,16 +15,16 @@ TestHeaderLayer * TestHeaderLayer::node() {
     return NULL;
 }
 
-SEL_MenuHandler TestHeaderLayer::onResolveCCBCCMenuSelector(CCObject * pTarget, const char * pSelectorName) {
+SEL_MenuHandler TestHeaderLayer::onResolveCCBCCMenuSelector(CCObject * pTarget, CCString * pSelectorName) {
     if(pTarget == this) {
-        if(strcmp(pSelectorName, "onBackClicked") == 0) {
+        if(pSelectorName->compare("onBackClicked") == 0) {
             return menu_selector(TestHeaderLayer::onBackClicked);
         }
     }
     return NULL;    
 }
 
-SEL_CCControlHandler TestHeaderLayer::onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName) {
+SEL_CCControlHandler TestHeaderLayer::onResolveCCBCCControlSelector(CCObject * pTarget, CCString * pSelectorName) {
 
     return NULL;
 }

@@ -23,9 +23,9 @@ class HelloCocosBuilderLayer : public cocos2d::extension::CCBSelectorResolver, p
 
         void openTest(const char * pCCBFileName, const char * pCCNodeName = NULL, cocos2d::extension::CCNodeLoader * pCCNodeLoader = NULL);
 
-        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
-        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
-        virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName);
+        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName);
+        virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cocos2d::CCString * pMemberVariableName, cocos2d::CCNode * pNode);
         virtual void onNodeLoaded(cocos2d::CCNode * pNode, cocos2d::extension::CCNodeLoader * pNodeLoader);
 
         virtual void onMenuTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);

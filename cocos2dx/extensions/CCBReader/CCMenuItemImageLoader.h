@@ -15,7 +15,7 @@ class CCMenuItemImageLoader : public CCMenuItemLoader {
     protected:
         virtual CCMenuItemImage * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame *, CCBReader *);
+        virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame *, CCBReader *);
 };
 
 NS_CC_EXT_END
