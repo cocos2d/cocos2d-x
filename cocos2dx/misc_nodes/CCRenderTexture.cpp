@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "CCFileUtils.h"
 #include "CCGL.h"
+#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "CCEventType.h"
 // extern
 #include "kazmath/GL/matrix.h"
 
@@ -50,17 +52,46 @@ CCRenderTexture::CCRenderTexture()
 , m_pUITextureImage(NULL)
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 {
+    // Listen this event to save render texture before come to background.
+    // Then it can be restored after coming to foreground on Android.
+    extension::CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                             callfuncO_selector(CCRenderTexture::listenToBackground),
+                                                                             EVENT_COME_TO_BACKGROUND,
+                                                                             NULL);
 }
 
 CCRenderTexture::~CCRenderTexture()
 {
-//TODO: 2.0 remove this line.    removeAllChildrenWithCleanup(true);
     glDeleteFramebuffers(1, &m_uFBO);
     if (m_uDepthRenderBufffer)
     {
         glDeleteRenderbuffers(1, &m_uDepthRenderBufffer);
     }
     CC_SAFE_DELETE(m_pUITextureImage);
+    
+    extension::CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
+}
+
+void CCRenderTexture::listenToBackground(cocos2d::CCObject *obj)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    
+    CC_SAFE_DELETE(m_pUITextureImage);
+    
+    // to get the rendered texture data
+    m_pUITextureImage = newCCImage();
+
+
+    if (m_pUITextureImage)
+    {
+        const CCSize& s = m_pTexture->getContentSizeInPixels();
+        VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+    } 
+    else
+    {
+        CCLOG("Cache rendertexture failed!");
+    }
+#endif
 }
 
 CCSprite * CCRenderTexture::getSprite()
@@ -281,7 +312,7 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float d
     glClearStencil(stencilClearValue);
 }
 
-void CCRenderTexture::end(bool bIsTOCacheTexture)
+void CCRenderTexture::end()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
     kmGLPopMatrix();
@@ -300,26 +331,6 @@ void CCRenderTexture::end(bool bIsTOCacheTexture)
     }
 
     director->setProjection(director->getProjection());
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    if (bIsTOCacheTexture)
-    {
-        CC_SAFE_DELETE(m_pUITextureImage);
-
-        // to get the rendered texture data
-        const CCSize& s = m_pTexture->getContentSizeInPixels();
-        m_pUITextureImage = newCCImage();
-
-        if (m_pUITextureImage)
-        {
-            VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
-        } 
-        else
-        {
-            CCLOG("Cache rendertexture failed!");
-        }
-    }
-#endif
 }
 
 void CCRenderTexture::clear(float r, float g, float b, float a)
@@ -426,7 +437,7 @@ CCImage* CCRenderTexture::newCCImage()
         this->begin();
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0,0,nSavedBufferWidth, nSavedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
-        this->end(false);
+        this->end();
 
         // to get the actual texture data 
         // #640 the image read from rendertexture is upseted

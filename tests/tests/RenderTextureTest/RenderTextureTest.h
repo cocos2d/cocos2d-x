@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "../testBasic.h"
 
-class RenderTextureTestDemo : public CCLayer
+class RenderTextureTest : public CCLayer
 {
 public:
     virtual void onEnter();
@@ -16,23 +16,7 @@ public:
     void backCallback(CCObject* pSender);
 };
 
-/**
-@todo refactor the save image feature
-*/
-class RenderTextureTest : public RenderTextureTestDemo
-{
-public:
-    RenderTextureTest();
-    ~RenderTextureTest();
-    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
-    
-private:
-    CCRenderTexture*    m_target;
-    CCSprite*            m_brush;
-};
-
-class RenderTextureSave : public RenderTextureTestDemo
+class RenderTextureSave : public RenderTextureTest
 {
 public:
     RenderTextureSave();
@@ -48,7 +32,7 @@ private:
     CCSprite *m_pBrush;
 };
 
-class RenderTextureIssue937 : public RenderTextureTestDemo
+class RenderTextureIssue937 : public RenderTextureTest
 {
 public:
     RenderTextureIssue937();
@@ -62,7 +46,7 @@ public:
     virtual void runThisTest();
 };
 
-class RenderTextureZbuffer : public RenderTextureTestDemo
+class RenderTextureZbuffer : public RenderTextureTest
 {
 public:
     RenderTextureZbuffer();
