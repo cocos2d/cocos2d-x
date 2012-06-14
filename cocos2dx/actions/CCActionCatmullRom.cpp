@@ -405,23 +405,10 @@ void CCCardinalSplineBy::startWithTarget(cocos2d::CCNode *pTarget)
 
 /* CCCatmullRomTo
  */
-// CCCatmullRomTo* CCCatmullRomTo::actionWithDuration(float dt, cocos2d::CCPointArray *points)
-// {
-//     CCCatmullRomTo *ret = new CCCatmullRomTo();
-//     if (ret)
-//     {
-//         if (ret->initWithDuration(dt, points))
-//         {
-//             ret->autorelease();
-//         }
-//         else 
-//         {
-//             CC_SAFE_RELEASE_NULL(ret);
-//         }
-//     }
-//     
-//     return ret;
-// }
+CCCatmullRomTo* CCCatmullRomTo::actionWithDuration(float dt, cocos2d::CCPointArray *points)
+{
+    return CCCatmullRomTo::create(dt, points);
+}
 
 CCCatmullRomTo* CCCatmullRomTo::create(float dt, cocos2d::CCPointArray *points)
 {
@@ -453,23 +440,10 @@ bool CCCatmullRomTo::initWithDuration(float dt, cocos2d::CCPointArray *points)
 
 /* CCCatmullRomBy
  */
-// CCCatmullRomBy* CCCatmullRomBy::actionWithDuration(float dt, cocos2d::CCPointArray *points)
-// {
-//     CCCatmullRomBy *ret = new CCCatmullRomBy();
-//     if (ret)
-//     {
-//         if (ret->initWithDuration(dt, points))
-//         {
-//             ret->autorelease();
-//         }
-//         else 
-//         {
-//             CC_SAFE_RELEASE_NULL(ret);
-//         }
-//     }
-//     
-//     return ret;
-// }
+CCCatmullRomBy* CCCatmullRomBy::actionWithDuration(float dt, cocos2d::CCPointArray *points)
+{
+    return CCCatmullRomBy::create(dt, points);
+}
 
 CCCatmullRomBy* CCCatmullRomBy::create(float dt, cocos2d::CCPointArray *points)
 {
