@@ -144,12 +144,6 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     return pData;
 }
 
-int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
-{
-    CCAssert(0, "Have not implement!");
-    return 0;
-}
-
 string CCFileUtils::getWriteablePath()
 {
     // the path is: /data/data/ + package name

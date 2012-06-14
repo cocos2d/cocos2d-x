@@ -28,6 +28,7 @@ Developers:
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
+		added CCBReader (CCBI format)
         
     Jianfeng Zhou (NetGragon Inc)
         contributes CCListView and CCTextureWatcher.

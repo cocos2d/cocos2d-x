@@ -339,17 +339,6 @@ typedef enum
     kCCTextAlignmentRight,
 } CCTextAlignment;
 
-// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
-//! Line break modes
-typedef enum {
-    kCCLineBreakModeWordWrap,
-    kCCLineBreakModeCharacterWrap,
-    kCCLineBreakModeClip,
-    kCCLineBreakModeHeadTruncation,
-    kCCLineBreakModeTailTruncation,
-    kCCLineBreakModeMiddleTruncation
-} CCLineBreakMode;
-
 // types for animation in particle systems
 
 // texture coordinates for a quad

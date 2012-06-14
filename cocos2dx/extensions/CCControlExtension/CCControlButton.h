@@ -58,7 +58,9 @@ protected:
 
     /** The prefered size of the button, if label is larger it will be expanded. */
     CC_PROPERTY(CCSize, m_preferredSize, PreferredSize);
-    
+
+    CC_PROPERTY(CCPoint, m_labelAnchorPoint, LabelAnchorPoint);
+
     /** The current title that is displayed on the button. */
     CC_SYNTHESIZE_READONLY(CCString*, m_currentTitle, CurrentTitle); 
     /** The current color used to display the title. */
@@ -93,6 +95,7 @@ protected:
 
 
 public:
+    virtual bool init();
     virtual bool initWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
     //@warning: This interface will be deprecated in future.
     static CCControlButton* buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
@@ -177,6 +180,21 @@ public:
     */
     virtual void setTitleLabelForState(CCNode* label, CCControlState state);
 
+    virtual void setTitleTTFForState(const char * fntFile, CCControlState state);
+    virtual const char * getTitleTTFForState(CCControlState state);
+
+    virtual void setTitleTTFSizeForState(float size, CCControlState state);
+    virtual float getTitleTTFSizeForState(CCControlState state);
+
+    /**
+     * Sets the font of the label, changes the label to a CCLabelBMFont if neccessary.
+     * @param fntFile The name of the font to change to
+     * @param state The state that uses the specified fntFile. The values are described
+     * in "CCControlState".
+     */
+    virtual void setTitleBMFontForState(const char * fntFile, CCControlState state);
+    virtual const char * getTitleBMFontForState(CCControlState state);
+
     /**
     * Returns the background sprite used for a state.
     *
@@ -194,6 +212,16 @@ public:
     */
     virtual void setBackgroundSpriteForState(CCScale9Sprite* sprite, CCControlState state);
 
+    /**
+     * Sets the background spriteFrame to use for the specified button state.
+     *
+     * @param spriteFrame The background spriteFrame to use for the specified state.
+     * @param state The state that uses the specified image. The values are described
+     * in "CCControlState".
+     */
+    virtual void setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFrame, CCControlState state);
+
+    static CCControlButton * node();
 };
 
 NS_CC_EXT_END

@@ -86,7 +86,10 @@ public:
     
     /** initializes the CCLabelTTF */
     bool init();
-    
+    /** Creates an label.
+     */
+    static CCLabelTTF * node();
+
     /** changes the string to render
     * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
     */

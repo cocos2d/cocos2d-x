@@ -136,14 +136,14 @@ bool CCControlButtonTest_Event::init()
         addChild(background);
         
         // Sets up event handlers
-        controlButton->addTargetWithActionForControlEvent(this, menu_selector(CCControlButtonTest_Event::touchDownAction), CCControlEventTouchDown);
-        controlButton->addTargetWithActionForControlEvent(this, menu_selector(CCControlButtonTest_Event::touchDragInsideAction), CCControlEventTouchDragInside);
-        controlButton->addTargetWithActionForControlEvent(this, menu_selector(CCControlButtonTest_Event::touchDragOutsideAction), CCControlEventTouchDragOutside);
-        controlButton->addTargetWithActionForControlEvent(this, menu_selector(CCControlButtonTest_Event::touchDragEnterAction), CCControlEventTouchDragEnter);
-        controlButton->addTargetWithActionForControlEvent(this, menu_selector(CCControlButtonTest_Event::touchDragExitAction), CCControlEventTouchDragExit);
-        controlButton->addTargetWithActionForControlEvent(this, menu_selector(CCControlButtonTest_Event::touchUpInsideAction), CCControlEventTouchUpInside);
-        controlButton->addTargetWithActionForControlEvent(this, menu_selector(CCControlButtonTest_Event::touchUpOutsideAction), CCControlEventTouchUpOutside);
-        controlButton->addTargetWithActionForControlEvent(this, menu_selector(CCControlButtonTest_Event::touchCancelAction), CCControlEventTouchCancel);
+        controlButton->addTargetWithActionForControlEvent(this, cccontrol_selector(CCControlButtonTest_Event::touchDownAction), CCControlEventTouchDown);
+        controlButton->addTargetWithActionForControlEvent(this, cccontrol_selector(CCControlButtonTest_Event::touchDragInsideAction), CCControlEventTouchDragInside);
+        controlButton->addTargetWithActionForControlEvent(this, cccontrol_selector(CCControlButtonTest_Event::touchDragOutsideAction), CCControlEventTouchDragOutside);
+        controlButton->addTargetWithActionForControlEvent(this, cccontrol_selector(CCControlButtonTest_Event::touchDragEnterAction), CCControlEventTouchDragEnter);
+        controlButton->addTargetWithActionForControlEvent(this, cccontrol_selector(CCControlButtonTest_Event::touchDragExitAction), CCControlEventTouchDragExit);
+        controlButton->addTargetWithActionForControlEvent(this, cccontrol_selector(CCControlButtonTest_Event::touchUpInsideAction), CCControlEventTouchUpInside);
+        controlButton->addTargetWithActionForControlEvent(this, cccontrol_selector(CCControlButtonTest_Event::touchUpOutsideAction), CCControlEventTouchUpOutside);
+        controlButton->addTargetWithActionForControlEvent(this, cccontrol_selector(CCControlButtonTest_Event::touchCancelAction), CCControlEventTouchCancel);
         return true;
     }
     return false;

@@ -107,7 +107,7 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
         }
     }
 }
-void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents)
+void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents)
 {
     // For each control events
     for (int i = 0; i < CONTROL_EVENT_TOTAL_NUMBER; i++)
@@ -135,7 +135,7 @@ void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_MenuHa
  * @param controlEvent A control event for which the action message is sent.
  * See "CCControlEvent" for constants.
  */
-void CCControl::addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent)
+void CCControl::addTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
 {    
     // Create the invocation object
     CCInvocation *invocation=new CCInvocation(target, action, controlEvent);
@@ -145,7 +145,7 @@ void CCControl::addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHan
     eventInvocationList->addObject(invocation);    
 }
 
-void CCControl::removeTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents)
+void CCControl::removeTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents)
 {
      // For each control events
     for (int i = 0; i < CONTROL_EVENT_TOTAL_NUMBER; i++)
@@ -170,7 +170,7 @@ void CCControl::removeTargetWithActionForControlEvents(CCObject* target, SEL_Men
  * @param controlEvent A control event for which the action message is sent.
  * See "CCControlEvent" for constants.
  */
-void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent)
+void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
 {
     // Retrieve all invocations for the given control event
     //<CCInvocation*>

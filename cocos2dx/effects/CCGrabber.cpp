@@ -70,15 +70,15 @@ void CCGrabber::beforeRender(CCTexture2D *pTexture)
     glGetFloatv(GL_COLOR_CLEAR_VALUE, m_oldClearColor);
     // BUG XXX: doesn't work with RGB565.
 
-    /*glClearColor(0, 0, 0, 0);*/
+    glClearColor(0, 0, 0, 0);
 
     // BUG #631: To fix #631, uncomment the lines with #631
     // Warning: But it CCGrabber won't work with 2 effects at the same time
-    glClearColor(0.0f,0.0f,0.0f,1.0f);    // #631
+//  glClearColor(0.0f,0.0f,0.0f,1.0f);    // #631
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glColorMask(true, true, true, false);    // #631
+//  glColorMask(true, true, true, false);    // #631
 }
 
 void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
@@ -86,9 +86,10 @@ void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
     CC_UNUSED_PARAM(pTexture);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
-    glColorMask(true, true, true, true);    // #631
+//  glColorMask(true, true, true, true);    // #631
+    
     // Restore clear color
-    glClearColor( m_oldClearColor[0], m_oldClearColor[1], m_oldClearColor[2], m_oldClearColor[3] );
+    glClearColor(m_oldClearColor[0], m_oldClearColor[1], m_oldClearColor[2], m_oldClearColor[3]);
 }
 
 CCGrabber::~CCGrabber()

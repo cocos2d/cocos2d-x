@@ -2,7 +2,7 @@
 
 #define kLabelTag
 
-using namespace cocos2d;
+USING_NS_CC;
 
 bool QuestionContainerSprite::init()
 {

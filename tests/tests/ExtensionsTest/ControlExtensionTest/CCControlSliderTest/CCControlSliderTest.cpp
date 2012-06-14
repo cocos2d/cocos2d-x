@@ -57,7 +57,7 @@ bool CCControlSliderTest::init()
         slider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
 
         // When the value of the slider will change, the given selector will be call
-        slider->addTargetWithActionForControlEvents(this, menu_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
+        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
 
         addChild(slider);    
         return true;
