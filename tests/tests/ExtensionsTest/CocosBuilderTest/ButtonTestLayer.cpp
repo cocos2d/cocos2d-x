@@ -28,6 +28,48 @@ SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(CCObject * p
     return NULL;
 }
 
+bool ButtonTestLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) {
+    if(pTarget == this) {
+        if(strcmp(pMemberVariableName->getCString(), "mCCControlEventLabel") == 0) {
+            this->mCCControlEventLabel = dynamic_cast<CCLabelBMFont *>(pNode);
+            CC_ASSERT(this->mCCControlEventLabel);
+            this->mCCControlEventLabel->retain();
+            return true;
+        }
+    }
+    return false;
+}
+
 void ButtonTestLayer::onCCControlButtonClicked(cocos2d::CCObject *pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLOG("onCCControlButtonClicked\n");
+    switch(pCCControlEvent) {
+        case CCControlEventTouchDown:
+            this->mCCControlEventLabel->setString("Touch Down.");
+            break;
+        case CCControlEventTouchDragInside:
+            this->mCCControlEventLabel->setString("Touch Drag Inside.");
+            break;
+        case CCControlEventTouchDragOutside:
+            this->mCCControlEventLabel->setString("Touch Drag Outside.");
+            break;
+        case CCControlEventTouchDragEnter:
+            this->mCCControlEventLabel->setString("Touch Drag Enter.");
+            break;
+        case CCControlEventTouchDragExit:
+            this->mCCControlEventLabel->setString("Touch Drag Exit.");
+            break;
+        case CCControlEventTouchUpInside:
+            this->mCCControlEventLabel->setString("Touch Up Inside.");
+            break;
+        case CCControlEventTouchUpOutside:
+            this->mCCControlEventLabel->setString("Touch Up Outside.");
+            break;
+        case CCControlEventTouchCancel:
+            this->mCCControlEventLabel->setString("Touch Cancel.");
+            break;
+        case CCControlEventValueChanged:
+            this->mCCControlEventLabel->setString("Value Changed.");
+            break;
+        default:
+            assert(false); // OH SHIT!
+    }
 }

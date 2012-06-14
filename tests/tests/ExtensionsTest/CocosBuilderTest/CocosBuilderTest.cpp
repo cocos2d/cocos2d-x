@@ -32,8 +32,6 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 void CocosBuilderTestScene::runThisTest() {
-    CCLog("HELLO WORLD");
-
     /* Create an autorelease CCNodeLoaderLibrary. */
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
     
