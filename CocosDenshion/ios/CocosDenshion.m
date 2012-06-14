@@ -975,7 +975,7 @@ static BOOL _mixerRateSet = NO;
       return;
   }
   alSourcePause(sourceId);
-  alGetError();//Clear error in case we stopped any sounds that couldn't be paused
+  alGetError();//Clear error in case we pause any sounds that couldn't be paused
 }
 
 - (void) pauseAllSounds {
@@ -989,6 +989,15 @@ static BOOL _mixerRateSet = NO;
   if (!functioning_) {
     return;
   }
+  
+    // only resume a sound id that is paused
+    ALint state;
+    alGetSourcei(soundId, AL_SOURCE_STATE, &state);
+    if (state != AL_PAUSED)
+    {
+        return;
+    }
+        
   alSourcePlay(soundId);
   alGetError();//Clear error in case we stopped any sounds that couldn't be resumed
 }
