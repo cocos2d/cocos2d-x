@@ -17,17 +17,34 @@ class CC_DLL CCMenuPassive : public CCLayer, public CCRGBAProtocol
         CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
 
 public:
+        /** creates an empty CCMenu 
+        @warning: This interface will be deprecated in future.
+        */
+        //static CCMenuPassive* node();
+
+        /** creates a CCMenu with it's items 
+        @warning: This interface will be deprecated in future.
+        */
+        //static CCMenuPassive* menuWithItems(CCNode* item, ...);
+
+        /** creates a CCMenu with it's item, then use addChild() to add 
+          * other items. It is used for script, it can't init with undetermined
+          * number of variables.
+          @warning: This interface will be deprecated in future.
+        */
+        //static CCMenuPassive* menuWithItem(CCNode* item);
+
         /** creates an empty CCMenu */
-        static CCMenuPassive* node();
+        static CCMenuPassive* create();
 
         /** creates a CCMenu with it's items */
-        static CCMenuPassive* menuWithItems(CCNode* item, ...);
+        static CCMenuPassive* create(CCNode* item, ...);
 
         /** creates a CCMenu with it's item, then use addChild() to add 
           * other items. It is used for script, it can't init with undetermined
           * number of variables.
         */
-        static CCMenuPassive*menuWithItem(CCNode* item);
+        static CCMenuPassive* createWithItem(CCNode* item);
 
         /** initializes a CCMenu with it's items */
         bool initWithItems(CCNode* item, va_list args);

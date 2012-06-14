@@ -267,18 +267,24 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
     CCDictionary* pNewDict = new CCDictionary();
 
     CCDictElement* pElement = NULL;
+    CCObject* pTmpObj = NULL;
+
     if (m_eDictType == kCCDictInt)
     {
         CCDICT_FOREACH(this, pElement)
         {
-            pNewDict->setObject(pElement->getObject()->copy()->autorelease(), pElement->getIntKey());
+            pTmpObj = pElement->getObject()->copy();
+            pNewDict->setObject(pTmpObj, pElement->getIntKey());
+            pTmpObj->release();
         }
     }
     else if (m_eDictType == kCCDictStr)
     {
         CCDICT_FOREACH(this, pElement)
         {
-            pNewDict->setObject(pElement->getObject()->copy()->autorelease(), pElement->getStrKey());
+            pTmpObj = pElement->getObject()->copy();
+            pNewDict->setObject(pTmpObj, pElement->getStrKey());
+            pTmpObj->release();
         }
     }
 

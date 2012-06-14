@@ -36,7 +36,12 @@ NS_CC_BEGIN
 
 // implementation CCTileMapAtlas
 
-CCTileMapAtlas * CCTileMapAtlas::tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
+// CCTileMapAtlas * CCTileMapAtlas::tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
+// {
+//     return CCTileMapAtlas::create(tile, mapFile, tileWidth, tileHeight);
+// }
+
+CCTileMapAtlas * CCTileMapAtlas::create(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
 {
     CCTileMapAtlas *pRet = new CCTileMapAtlas();
     if (pRet->initWithTileFile(tile, mapFile, tileWidth, tileHeight))

@@ -92,23 +92,23 @@ void LayerTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
     label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
     string subtitle_ = subtitle();
     if (subtitle_.size() > 0)
     {
-        CCLabelTTF *l = CCLabelTTF::labelWithString(subtitle_.c_str(), "Thonburi", 16);
+        CCLabelTTF *l = CCLabelTTF::create(subtitle_.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width / 2, s.height - 80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(LayerTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(LayerTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(LayerTest::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(LayerTest::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(LayerTest::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(LayerTest::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
     item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
@@ -155,7 +155,7 @@ void LayerTest1::onEnter()
     setIsTouchEnabled(true);
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLayerColor* layer = CCLayerColor::layerWithColor( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
+    CCLayerColor* layer = CCLayerColor::create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
     
     layer->setIgnoreAnchorPointForPosition(false);
     layer->setPosition( CCPointMake(s.width/2, s.height/2) );
@@ -220,24 +220,24 @@ void LayerTest2::onEnter()
     LayerTest::onEnter();
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLayerColor* layer1 = CCLayerColor::layerWithColor( ccc4(255, 255, 0, 80), 100, 300);
+    CCLayerColor* layer1 = CCLayerColor::create( ccc4(255, 255, 0, 80), 100, 300);
     layer1->setPosition(CCPointMake(s.width/3, s.height/2));
     layer1->setIgnoreAnchorPointForPosition(false);
     addChild(layer1, 1);
     
-    CCLayerColor* layer2 = CCLayerColor::layerWithColor( ccc4(0, 0, 255, 255), 100, 300);
+    CCLayerColor* layer2 = CCLayerColor::create( ccc4(0, 0, 255, 255), 100, 300);
     layer2->setPosition(CCPointMake((s.width/3)*2, s.height/2));
     layer2->setIgnoreAnchorPointForPosition(false);
     addChild(layer2, 1);
     
-    CCActionInterval* actionTint = CCTintBy::actionWithDuration(2, -255, -127, 0);
+    CCActionInterval* actionTint = CCTintBy::create(2, -255, -127, 0);
     CCActionInterval* actionTintBack = actionTint->reverse();
-    CCActionInterval* seq1 = (CCActionInterval*)CCSequence::actions( actionTint, actionTintBack, NULL);
+    CCActionInterval* seq1 = (CCActionInterval*)CCSequence::create( actionTint, actionTintBack, NULL);
     layer1->runAction(seq1);
 
-    CCActionInterval* actionFade = CCFadeOut::actionWithDuration(2.0f);
+    CCActionInterval* actionFade = CCFadeOut::create(2.0f);
     CCActionInterval* actionFadeBack = actionFade->reverse();
-    CCActionInterval* seq2 = (CCActionInterval*)CCSequence::actions(actionFade, actionFadeBack, NULL);        
+    CCActionInterval* seq2 = (CCActionInterval*)CCSequence::create(actionFade, actionFadeBack, NULL);        
     layer2->runAction(seq2);
 }
 
@@ -255,10 +255,10 @@ std::string LayerTest2::title()
 LayerTestBlend::LayerTestBlend()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLayerColor* layer1 = CCLayerColor::layerWithColor( ccc4(255, 255, 255, 80) );
+    CCLayerColor* layer1 = CCLayerColor::create( ccc4(255, 255, 255, 80) );
     
-    CCSprite* sister1 = CCSprite::spriteWithFile(s_pPathSister1);
-    CCSprite* sister2 = CCSprite::spriteWithFile(s_pPathSister2);
+    CCSprite* sister1 = CCSprite::create(s_pPathSister1);
+    CCSprite* sister2 = CCSprite::create(s_pPathSister2);
     
     addChild(sister1);
     addChild(sister2);
@@ -305,18 +305,18 @@ std::string LayerTestBlend::title()
 //------------------------------------------------------------------
 LayerGradient::LayerGradient()
 {
-    CCLayerGradient* layer1 = CCLayerGradient::layerWithColor(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9f, 0.9f));
+    CCLayerGradient* layer1 = CCLayerGradient::create(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
 
     setIsTouchEnabled(true);
 
-    CCLabelTTF *label1 = CCLabelTTF::labelWithString("Compressed Interpolation: Enabled", "Marker Felt", 26);
-    CCLabelTTF *label2 = CCLabelTTF::labelWithString("Compressed Interpolation: Disabled", "Marker Felt", 26);
-    CCMenuItemLabel *item1 = CCMenuItemLabel::itemWithLabel(label1);
-    CCMenuItemLabel *item2 = CCMenuItemLabel::itemWithLabel(label2);
-    CCMenuItemToggle *item = CCMenuItemToggle::itemWithTarget(this, menu_selector(LayerGradient::toggleItem), item1, item2, NULL);
+    CCLabelTTF *label1 = CCLabelTTF::create("Compressed Interpolation: Enabled", "Marker Felt", 26);
+    CCLabelTTF *label2 = CCLabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);
+    CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
+    CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
+    CCMenuItemToggle *item = CCMenuItemToggle::create(this, menu_selector(LayerGradient::toggleItem), item1, item2, NULL);
 
-    CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+    CCMenu *menu = CCMenu::create(item, NULL);
     addChild(menu);
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     menu->setPosition(ccp(s.width / 2, 100));
@@ -364,25 +364,25 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLayerColor *l = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 150, 150);
+    CCLayerColor *l = CCLayerColor::create(ccc4(255, 0, 0, 255), 150, 150);
 
     l->setAnchorPoint(ccp(0.5f, 0.5f));
     l->setPosition(ccp( s.width/2, s.height/2));
 
-    CCMoveBy *move = CCMoveBy::actionWithDuration(2, ccp(100,2));
+    CCMoveBy *move = CCMoveBy::create(2, ccp(100,2));
     CCMoveBy * back = (CCMoveBy *)move->reverse();
-    CCSequence *seq = (CCSequence *)CCSequence::actions(move, back, NULL);
-    l->runAction(CCRepeatForever::actionWithAction(seq));
+    CCSequence *seq = (CCSequence *)CCSequence::create(move, back, NULL);
+    l->runAction(CCRepeatForever::create(seq));
     this->addChild(l, 0, kLayerIgnoreAnchorPoint);
 
-    CCSprite *child = CCSprite::spriteWithFile("Images/grossini.png");
+    CCSprite *child = CCSprite::create("Images/grossini.png");
     l->addChild(child);
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::itemWithString("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos::onToggle));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos::onToggle));
 
-    CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+    CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
 
     menu->setPosition(ccp(s.width/2, s.height/2));
@@ -412,25 +412,25 @@ void LayerIgnoreAnchorPointRot::onEnter()
     LayerTest::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLayerColor *l = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 200, 200);
+    CCLayerColor *l = CCLayerColor::create(ccc4(255, 0, 0, 255), 200, 200);
 
     l->setAnchorPoint(ccp(0.5f, 0.5f));
     l->setPosition(ccp( s.width/2, s.height/2));
 
     this->addChild(l, 0, kLayerIgnoreAnchorPoint);
 
-    CCRotateBy *rot = CCRotateBy::actionWithDuration(2, 360);
-    l->runAction(CCRepeatForever::actionWithAction(rot));
+    CCRotateBy *rot = CCRotateBy::create(2, 360);
+    l->runAction(CCRepeatForever::create(rot));
 
 
-    CCSprite *child = CCSprite::spriteWithFile("Images/grossini.png");
+    CCSprite *child = CCSprite::create("Images/grossini.png");
     l->addChild(child);
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::itemWithString("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointRot::onToggle));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointRot::onToggle));
 
-    CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+    CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
 
     menu->setPosition(ccp(s.width/2, s.height/2));
@@ -460,28 +460,28 @@ void LayerIgnoreAnchorPointScale::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLayerColor *l = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255), 200, 200);
+    CCLayerColor *l = CCLayerColor::create(ccc4(255, 0, 0, 255), 200, 200);
 
     l->setAnchorPoint(ccp(0.5f, 1.0f));
     l->setPosition(ccp( s.width/2, s.height/2));
 
 
-    CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
+    CCScaleBy *scale = CCScaleBy::create(2, 2);
     CCScaleBy* back = (CCScaleBy*)scale->reverse();
-    CCSequence *seq = (CCSequence*)CCSequence::actions(scale, back, NULL);
+    CCSequence *seq = (CCSequence*)CCSequence::create(scale, back, NULL);
 
-    l->runAction(CCRepeatForever::actionWithAction(seq));
+    l->runAction(CCRepeatForever::create(seq));
 
     this->addChild(l, 0, kLayerIgnoreAnchorPoint);
 
-    CCSprite *child = CCSprite::spriteWithFile("Images/grossini.png");
+    CCSprite *child = CCSprite::create("Images/grossini.png");
     l->addChild(child);
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::itemWithString("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointScale::onToggle));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointScale::onToggle));
 
-    CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+    CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
 
     menu->setPosition(ccp(s.width/2, s.height/2));

@@ -34,6 +34,6 @@ public:
     void valueChanged(CCObject *sender);
 protected:
     CCLabelTTF* m_pDisplayValueLabel;
-    CONTROL_SCENE_NODE_FUNC(CCControlSliderTest)
+    CONTROL_SCENE_CREATE_FUNC(CCControlSliderTest)
 };
 

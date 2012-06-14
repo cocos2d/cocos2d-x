@@ -202,7 +202,7 @@ public:
     void addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
     void removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
 
-    LAYER_NODE_FUNC(CCControl);
+    LAYER_CREATE_FUNC(CCControl);
 
 };
 

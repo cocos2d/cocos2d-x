@@ -27,7 +27,26 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCPageTurn3D* CCPageTurn3D::actionWithSize(const ccGridSize& gridSize, float time)
+// CCPageTurn3D* CCPageTurn3D::actionWithSize(const ccGridSize& gridSize, float time)
+// {
+//     CCPageTurn3D *pAction = new CCPageTurn3D();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithSize(gridSize, time))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCPageTurn3D* CCPageTurn3D::create(const ccGridSize& gridSize, float time)
 {
     CCPageTurn3D *pAction = new CCPageTurn3D();
 

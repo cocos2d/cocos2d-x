@@ -34,6 +34,6 @@ public:
     /** Callback for the change value. */
     void valueChanged(CCObject* sender);
     CCLabelTTF *m_pDisplayValueLabel;
-    CONTROL_SCENE_NODE_FUNC(CCControlSwitchTest)
+    CONTROL_SCENE_CREATE_FUNC(CCControlSwitchTest)
 };
 

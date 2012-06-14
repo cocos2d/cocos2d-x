@@ -36,14 +36,14 @@ bool CCControlColourPickerTest::init()
     {
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
-        CCNode *layer  = CCNode::node();
+        CCNode *layer  = CCNode::create();
         layer->setPosition(ccp (screenSize.width / 2, screenSize.height / 2));
         addChild(layer, 1);
 
         double layer_width = 0;
 
         // Create the colour picker
-        CCControlColourPicker *colourPicker = CCControlColourPicker::colourPicker();
+        CCControlColourPicker *colourPicker = CCControlColourPicker::create();
         colourPicker->setColor(ccc3(37, 46, 252));
         colourPicker->setPosition(ccp (colourPicker->getContentSize().width / 2, 0));
 
@@ -57,14 +57,14 @@ bool CCControlColourPickerTest::init()
         layer_width += colourPicker->getContentSize().width;
 
         // Add the black background for the text
-        CCScale9Sprite *background = CCScale9Sprite::spriteWithFile("extensions/buttonBackground.png");
+        CCScale9Sprite *background = CCScale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(CCSizeMake(150, 50));
         background->setPosition(ccp(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);
 
         layer_width += background->getContentSize().width;
 
-        m_pColorLabel = CCLabelTTF::labelWithString("#color", "Marker Felt", 30);
+        m_pColorLabel = CCLabelTTF::create("#color", "Marker Felt", 30);
         m_pColorLabel->retain();
 
         m_pColorLabel->setPosition(background->getPosition());

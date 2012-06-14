@@ -467,16 +467,16 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         {
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spriteSheetFile->m_sString.c_str());
             
-            spriteNormal = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileNormal"))->getCString());
-            spriteSelected = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileSelected"))->getCString());
-            spriteDisabled = CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileDisabled"))->getCString());
+            spriteNormal = CCSprite::createWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileNormal"))->getCString());
+            spriteSelected = CCSprite::createWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileSelected"))->getCString());
+            spriteDisabled = CCSprite::createWithSpriteFrameName(((CCString*)props->objectForKey("spriteFileDisabled"))->getCString());
             // TBD: how to defense if exception raise here?
         }
         else
         {
-            spriteNormal = CCSprite::spriteWithFile(spriteFileNormal->m_sString.c_str());
-            spriteSelected = CCSprite::spriteWithFile(spriteFileSelected->m_sString.c_str());
-            spriteDisabled = CCSprite::spriteWithFile(spriteFileDisabled->m_sString.c_str());
+            spriteNormal = CCSprite::create(spriteFileNormal->m_sString.c_str());
+            spriteSelected = CCSprite::create(spriteFileSelected->m_sString.c_str());
+            spriteDisabled = CCSprite::create(spriteFileDisabled->m_sString.c_str());
         }
         
         //deallocate
@@ -484,9 +484,9 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         CC_SAFE_RELEASE_NULL(spriteFileSelected);
         CC_SAFE_RELEASE_NULL(spriteFileDisabled);
         
-        if (!spriteNormal) spriteNormal = CCSprite::spriteWithFile("missing-texture.png");
-        if (!spriteSelected) spriteSelected = CCSprite::spriteWithFile("missing-texture.png");
-        if (!spriteDisabled) spriteDisabled = CCSprite::spriteWithFile("missing-texture.png");
+        if (!spriteNormal) spriteNormal = CCSprite::create("missing-texture.png");
+        if (!spriteSelected) spriteSelected = CCSprite::create("missing-texture.png");
+        if (!spriteDisabled) spriteDisabled = CCSprite::create("missing-texture.png");
         
         CCNode *target = NULL ;
         if ( extraProps == NULL )
@@ -512,7 +512,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
             target = NULL ;
         }
         
-        node = (CCNode*)CCMenuItemImage::itemWithNormalSprite((CCNode*) spriteNormal, (CCNode*) spriteSelected, (CCNode*) spriteDisabled, target, sel);
+        node = (CCNode*)CCMenuItemSprite::create((CCNode*) spriteNormal, (CCNode*) spriteSelected, (CCNode*) spriteDisabled, target, sel);
         
         setPropsForNode(node, (CCDictionary*) props, extraProps);
         setPropsForMenuItem((CCMenuItem*) node, (CCDictionary*) props, extraProps);
@@ -520,7 +520,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
     }
     else if (className->m_sString.compare("CCMenu") == 0)
     {
-        node = (CCNode*)CCMenu::menuWithItems(NULL);
+        node = (CCNode*)CCMenu::create();
         setPropsForNode(node, (CCDictionary*) props, extraProps);
         setPropsForLayer((CCLayer*) node, (CCDictionary*) props, extraProps);
         setPropsForMenu((CCMenu*)node, (CCDictionary*) props, extraProps);
@@ -531,12 +531,12 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         fontFile->m_sString += ((CCString*)props->objectForKey("fontFile"))->m_sString;
         CCString* stringText = ((CCString*)props->objectForKey("string"));
         
-        node = (CCNode*)CCLabelBMFont::labelWithString(stringText->m_sString.c_str(), 
+        node = (CCNode*)CCLabelBMFont::create(stringText->m_sString.c_str(), 
                                                         fontFile->m_sString.c_str() );
 
         CC_SAFE_RELEASE_NULL(fontFile);
         
-        if (!node) node = (CCNode*)CCLabelBMFont::labelWithString(stringText->m_sString.c_str(), "missing-font.fnt");
+        if (!node) node = (CCNode*)CCLabelBMFont::create(stringText->m_sString.c_str(), "missing-font.fnt");
         
         setPropsForNode(node, (CCDictionary*) props, extraProps);
         setPropsForLabelBMFont((CCLabelBMFont*) node, (CCDictionary*) props, extraProps);
@@ -555,18 +555,18 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         if (spriteSheetFile && !spriteSheetFile->length())
         {
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spriteSheetFile->m_sString.c_str());
-            node = (CCNode*)CCSprite::spriteWithSpriteFrameName(((CCString*)props->objectForKey("spriteFile"))->m_sString.c_str());
+            node = (CCNode*)CCSprite::createWithSpriteFrameName(((CCString*)props->objectForKey("spriteFile"))->m_sString.c_str());
             // TBD: how to defense if exception raise here?
         }
         else
         {
             CCLOG("spriteFile->m_string.cstr is %s\n", spriteFile->m_sString.c_str()) ;
-            node = (CCNode*)CCSprite::spriteWithFile(spriteFile->m_sString.c_str());
+            node = (CCNode*)CCSprite::create(spriteFile->m_sString.c_str());
         }
         
         CC_SAFE_RELEASE_NULL(spriteFile);
         
-        if (!node) node = (CCNode*)CCSprite::spriteWithFile("missing-texture.png");
+        if (!node) node = (CCNode*)CCSprite::create("missing-texture.png");
         
         setPropsForNode(node, (CCDictionary*) props, extraProps);
         setPropsForSprite((CCSprite*) node, (CCDictionary*) props, extraProps);
@@ -585,7 +585,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         }
         else
         {
-            node = (CCNode*)CCLayerGradient::node();
+            node = (CCNode*)CCLayerGradient::create();
         }
         
         setPropsForNode(node, (CCDictionary*) props, extraProps);
@@ -608,7 +608,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         }
         else
         {
-            node = (CCNode*)CCLayerColor::node();
+            node = (CCNode*)CCLayerColor::create();
         }
         setPropsForNode(node, (CCDictionary*) props, extraProps);
         setPropsForLayer((CCLayer*) node, (CCDictionary*) props, extraProps);
@@ -628,7 +628,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         }
         else
         {
-            node = (CCNode*)CCLayer::node();
+            node = (CCNode*)CCLayer::create();
         }
         
         setPropsForNode(node, (CCDictionary*) props, extraProps);
@@ -649,7 +649,7 @@ CCNode* CCBReader::ccObjectFromDictionary(CCDictionary* dict, CCDictionary* extr
         }
         else
         {
-            node = (CCNode*)CCNode::node();
+            node = (CCNode*)CCNode::create();
         }
         
         setPropsForNode(node, (CCDictionary*) props, extraProps);

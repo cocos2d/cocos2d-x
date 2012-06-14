@@ -86,23 +86,23 @@ void SchedulerTestLayer::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label);
     label->setPosition(ccp(s.width/2, s.height-50));
 
     std::string subTitle = subtitle();
     if(! subTitle.empty())
     {
-        CCLabelTTF* l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
+        CCLabelTTF* l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(SchedulerTestLayer::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(SchedulerTestLayer::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(SchedulerTestLayer::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(SchedulerTestLayer::backCallback));
+    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(SchedulerTestLayer::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(SchedulerTestLayer::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
     item1->setPosition(ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
     item2->setPosition(ccp( s.width/2, item2->getContentSize().height/2));
@@ -254,10 +254,10 @@ void SchedulerPauseResumeAll::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3.0, 360)));
+    sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
     schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
@@ -332,10 +332,10 @@ void SchedulerPauseResumeAllUser::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3.0, 360)));
+    sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
     schedule(schedule_selector(SchedulerPauseResumeAllUser::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResumeAllUser::tick2), 1.0f);
@@ -450,10 +450,10 @@ void SchedulerUnscheduleAllHard::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3.0, 360)));
+    sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
     m_bActionManagerActive = true;
 
@@ -520,10 +520,10 @@ void SchedulerUnscheduleAllUserLevel::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(3.0, 360)));
+    sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
     schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::tick1), 0.5f);
     schedule(schedule_selector(SchedulerUnscheduleAllUserLevel::tick2), 1.0f);
@@ -863,7 +863,7 @@ void SchedulerDelayAndRepeat::update(float dt)
 
 CCControlSlider* SchedulerTimeScale::sliderCtl()
 {
-    CCControlSlider * slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+    CCControlSlider * slider = CCControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
 
     slider->addTargetWithActionForControlEvents(this, menu_selector(SchedulerTimeScale::sliderAction), CCControlEventValueChanged);
 
@@ -890,22 +890,22 @@ void SchedulerTimeScale::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // rotate and jump
-    CCActionInterval *jump1 = CCJumpBy::actionWithDuration(4, ccp(-s.width+80,0), 100, 4);
+    CCActionInterval *jump1 = CCJumpBy::create(4, ccp(-s.width+80,0), 100, 4);
     CCActionInterval *jump2 = jump1->reverse();
-    CCActionInterval *rot1 = CCRotateBy::actionWithDuration(4, 360*2);
+    CCActionInterval *rot1 = CCRotateBy::create(4, 360*2);
     CCActionInterval *rot2 = rot1->reverse();
 
-    CCFiniteTimeAction* seq3_1 = CCSequence::actions(jump2, jump1, NULL);
-    CCFiniteTimeAction* seq3_2 = CCSequence::actions(rot1, rot2, NULL);
-    CCFiniteTimeAction* spawn = CCSpawn::actions(seq3_1, seq3_2, NULL);
-    CCRepeat* action = CCRepeat::actionWithAction(spawn, 50);
+    CCFiniteTimeAction* seq3_1 = CCSequence::create(jump2, jump1, NULL);
+    CCFiniteTimeAction* seq3_2 = CCSequence::create(rot1, rot2, NULL);
+    CCFiniteTimeAction* spawn = CCSpawn::create(seq3_1, seq3_2, NULL);
+    CCRepeat* action = CCRepeat::create(spawn, 50);
 
     CCRepeat* action2 = (CCRepeat*)action->copy()->autorelease();
     CCRepeat* action3 = (CCRepeat*)action->copy()->autorelease();
 
-    CCSprite *grossini = CCSprite::spriteWithFile("Images/grossini.png");
-    CCSprite *tamara = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
-    CCSprite *kathia = CCSprite::spriteWithFile("Images/grossinis_sister2.png");
+    CCSprite *grossini = CCSprite::create("Images/grossini.png");
+    CCSprite *tamara = CCSprite::create("Images/grossinis_sister1.png");
+    CCSprite *kathia = CCSprite::create("Images/grossinis_sister2.png");
 
     grossini->setPosition(ccp(40,80));
     tamara->setPosition(ccp(40,80));
@@ -915,11 +915,11 @@ void SchedulerTimeScale::onEnter()
     addChild(tamara);
     addChild(kathia);
 
-    grossini->runAction(CCSpeed::actionWithAction(action, 0.5f));
-    tamara->runAction(CCSpeed::actionWithAction(action2, 1.5f));
-    kathia->runAction(CCSpeed::actionWithAction(action3, 1.0f));
+    grossini->runAction(CCSpeed::create(action, 0.5f));
+    tamara->runAction(CCSpeed::create(action2, 1.5f));
+    kathia->runAction(CCSpeed::create(action3, 1.0f));
 
-    CCParticleSystem *emitter = CCParticleFireworks::node();
+    CCParticleSystem *emitter = CCParticleFireworks::create();
     emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
     addChild(emitter);
 
@@ -951,7 +951,7 @@ std::string SchedulerTimeScale::subtitle()
 CCControlSlider *TwoSchedulers::sliderCtl()
 {
    // CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
-    CCControlSlider *slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+    CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
         //[[UISlider alloc] initWithFrame:frame];
     slider->addTargetWithActionForControlEvents(this, menu_selector(TwoSchedulers::sliderAction), CCControlEventValueChanged);
 
@@ -986,16 +986,16 @@ void TwoSchedulers::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
         // rotate and jump
-    CCActionInterval *jump1 = CCJumpBy::actionWithDuration(4, ccp(0,0), 100, 4);
+    CCActionInterval *jump1 = CCJumpBy::create(4, ccp(0,0), 100, 4);
     CCActionInterval *jump2 = jump1->reverse();
 
-    CCFiniteTimeAction* seq = CCSequence::actions(jump2, jump1, NULL);
-    CCRepeatForever* action = CCRepeatForever::actionWithAction((CCActionInterval *)seq);
+    CCFiniteTimeAction* seq = CCSequence::create(jump2, jump1, NULL);
+    CCRepeatForever* action = CCRepeatForever::create((CCActionInterval *)seq);
 
         //
         // Center
         //
-    CCSprite *grossini = CCSprite::spriteWithFile("Images/grossini.png");
+    CCSprite *grossini = CCSprite::create("Images/grossini.png");
     addChild(grossini);
     grossini->setPosition(ccp(s.width/2,100));
     grossini->runAction((CCAction*)action->copy()->autorelease());
@@ -1019,7 +1019,7 @@ void TwoSchedulers::onEnter()
 
     for( unsigned int i=0; i < 10; i++ ) 
     {
-        CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+        CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
 
         // IMPORTANT: Set the actionManager running any action
         sprite->setActionManager(actionManager1);
@@ -1044,7 +1044,7 @@ void TwoSchedulers::onEnter()
     sched2->scheduleUpdateForTarget(actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {
-        CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister2.png");
+        CCSprite *sprite = CCSprite::create("Images/grossinis_sister2.png");
 
         // IMPORTANT: Set the actionManager running any action
         sprite->setActionManager(actionManager2);

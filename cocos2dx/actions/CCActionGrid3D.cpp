@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
  
 http://www.cocos2d-x.org
@@ -31,7 +31,26 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCWaves3D
 
-CCWaves3D* CCWaves3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
+// CCWaves3D* CCWaves3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
+// {
+//     CCWaves3D *pAction = new CCWaves3D();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithWaves(wav, amp, gridSize, duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;    
+// }
+
+CCWaves3D* CCWaves3D::create(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     CCWaves3D *pAction = new CCWaves3D();
 
@@ -105,7 +124,26 @@ void CCWaves3D::update(float time)
 
 // implementation of CCFlipX3D
 
-CCFlipX3D* CCFlipX3D::actionWithDuration(float duration)
+// CCFlipX3D* CCFlipX3D::actionWithDuration(float duration)
+// {
+//     CCFlipX3D *pAction = new CCFlipX3D();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithSize(ccg(1, 1), duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCFlipX3D* CCFlipX3D::create(float duration)
 {
     CCFlipX3D *pAction = new CCFlipX3D();
 
@@ -231,7 +269,26 @@ void CCFlipX3D::update(float time)
 
 // implementation of FlipY3D
 
-CCFlipY3D* CCFlipY3D::actionWithDuration(float duration)
+// CCFlipY3D* CCFlipY3D::actionWithDuration(float duration)
+// {
+//     CCFlipY3D *pAction = new CCFlipY3D();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithSize(ccg(1, 1), duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCFlipY3D* CCFlipY3D::create(float duration)
 {
     CCFlipY3D *pAction = new CCFlipY3D();
 
@@ -340,7 +397,26 @@ void CCFlipY3D::update(float time)
 
 // implementation of Lens3D
 
-CCLens3D* CCLens3D::actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration)
+// CCLens3D* CCLens3D::actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration)
+// {
+//     CCLens3D *pAction = new CCLens3D();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithPosition(pos, r, gridSize, duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCLens3D* CCLens3D::create(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration)
 {
     CCLens3D *pAction = new CCLens3D();
 
@@ -451,7 +527,26 @@ void CCLens3D::update(float time)
 
 // implementation of Ripple3D
 
-CCRipple3D* CCRipple3D::actionWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, float duration)
+// CCRipple3D* CCRipple3D::actionWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, float duration)
+// {
+//     CCRipple3D *pAction = new CCRipple3D();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithPosition(pos, r, wav, amp, gridSize, duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCRipple3D* CCRipple3D::create(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     CCRipple3D *pAction = new CCRipple3D();
 
@@ -540,7 +635,26 @@ void CCRipple3D::update(float time)
 
 // implementation of Shaky3D
 
-CCShaky3D* CCShaky3D::actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration)
+// CCShaky3D* CCShaky3D::actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration)
+// {
+//     CCShaky3D *pAction = new CCShaky3D();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithRange(range, shakeZ, gridSize, duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCShaky3D* CCShaky3D::create(int range, bool shakeZ, const ccGridSize& gridSize, float duration)
 {
     CCShaky3D *pAction = new CCShaky3D();
 
@@ -619,7 +733,26 @@ void CCShaky3D::update(float time)
 
 // implementation of Liquid
 
-CCLiquid* CCLiquid::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
+// CCLiquid* CCLiquid::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration)
+// {
+//     CCLiquid *pAction = new CCLiquid();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithWaves(wav, amp, gridSize, duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCLiquid* CCLiquid::create(int wav, float amp, const ccGridSize& gridSize, float duration)
 {
     CCLiquid *pAction = new CCLiquid();
 
@@ -693,7 +826,26 @@ void CCLiquid::update(float time)
 
 // implementation of Waves
 
-CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, float duration)
+// CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, float duration)
+// {
+//     CCWaves *pAction = new CCWaves();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithWaves(wav, amp, h, v, gridSize, duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCWaves* CCWaves::create(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, float duration)
 {
     CCWaves *pAction = new CCWaves();
 
@@ -778,7 +930,26 @@ void CCWaves::update(float time)
 
 // implementation of Twirl
 
-CCTwirl* CCTwirl::actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize, float duration)
+// CCTwirl* CCTwirl::actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize, float duration)
+// {
+//     CCTwirl *pAction = new CCTwirl();
+// 
+//     if (pAction)
+//     {
+//         if (pAction->initWithPosition(pos, t, amp, gridSize, duration))
+//         {
+//             pAction->autorelease();
+//         }
+//         else
+//         {
+//             CC_SAFE_RELEASE_NULL(pAction);
+//         }
+//     }
+// 
+//     return pAction;
+// }
+
+CCTwirl* CCTwirl::create(CCPoint pos, int t, float amp, const ccGridSize& gridSize, float duration)
 {
     CCTwirl *pAction = new CCTwirl();
 

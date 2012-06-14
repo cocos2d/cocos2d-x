@@ -122,7 +122,12 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         return false;
 }
 
-CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite)
+// CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite)
+// {
+//     return CCControlButton::create(label, backgroundSprite);
+// }
+
+CCControlButton* CCControlButton::create(CCNode* label, CCScale9Sprite* backgroundSprite)
 {
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
@@ -132,11 +137,16 @@ CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* lab
 
 bool CCControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
 {
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title.c_str(), fontName, fontSize);
-    return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::node());
+    CCLabelTTF *label = CCLabelTTF::create(title.c_str(), fontName, fontSize);
+    return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::create());
 }
 
-CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
+// CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
+// {
+//     return CCControlButton::create(title, fontName, fontSize);
+// }
+
+CCControlButton* CCControlButton::create(string title, const char * fontName, float fontSize)
 {
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
@@ -146,11 +156,16 @@ CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string t
 
 bool CCControlButton::initWithBackgroundSprite(CCScale9Sprite* sprite)
 {
-    CCLabelTTF *label = CCLabelTTF::labelWithString("", "Arial", 30);//
+    CCLabelTTF *label = CCLabelTTF::create("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
-CCControlButton* CCControlButton::buttonWithBackgroundSprite(CCScale9Sprite* sprite)
+// CCControlButton* CCControlButton::buttonWithBackgroundSprite(CCScale9Sprite* sprite)
+// {
+//     return CCControlButton::create(sprite);
+// }
+
+CCControlButton* CCControlButton::create(CCScale9Sprite* sprite)
 {
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithBackgroundSprite(sprite);
@@ -191,7 +206,7 @@ void CCControlButton::setIsHighlighted(bool enabled)
     if( m_zoomOnTouchDown )
     {
         float scaleValue = (getIsHighlighted() && getIsEnabled() && !getIsSelected()) ? 1.1f : 1.0f;
-        CCAction *zoomAction =CCScaleTo::actionWithDuration(0.05f, scaleValue);
+        CCAction *zoomAction =CCScaleTo::create(0.05f, scaleValue);
         zoomAction->setTag(kZoomActionTag);
         runAction(zoomAction);
     }

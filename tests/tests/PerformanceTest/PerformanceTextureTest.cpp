@@ -48,7 +48,7 @@ void TextureMenuLayer::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // Title
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 40);
+    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
     label->setColor(ccc3(255,255,40));
@@ -57,7 +57,7 @@ void TextureMenuLayer::onEnter()
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        CCLabelTTF *l = CCLabelTTF::labelWithString(strSubTitle.c_str(), "Thonburi", 16);
+        CCLabelTTF *l = CCLabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
@@ -344,7 +344,7 @@ std::string TextureTest::subtitle()
 
 CCScene* TextureTest::scene()
 {
-    CCScene *pScene = CCScene::node();
+    CCScene *pScene = CCScene::create();
     TextureTest *layer = new TextureTest(false, TEST_COUNT, s_nTexCurCase);
     pScene->addChild(layer);
     layer->release();

@@ -58,7 +58,12 @@ bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, C
         return false;
 }
 
-CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
+// CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
+// {
+//     return CCControlSaturationBrightnessPicker::create(target, pos);
+// }
+
+CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::create(CCNode* target, CCPoint pos)
 {
     CCControlSaturationBrightnessPicker *pRet = new CCControlSaturationBrightnessPicker();
     pRet->initWithTargetAndPos(target, pos);

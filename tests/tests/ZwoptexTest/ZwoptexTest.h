@@ -38,7 +38,7 @@ class ZwoptexTestScene : public TestScene
 public:
     virtual void runThisTest();
 
-    SCENE_NODE_FUNC(ZwoptexTestScene);
+    SCENE_CREATE_FUNC(ZwoptexTestScene);
 };
 
 #endif // __ZWOPTEX_TEST_H__

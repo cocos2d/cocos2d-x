@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2011 cocos2d-x.org
+ * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
@@ -38,6 +38,8 @@ class CCTexture2D;
 class CCTextureAtlas;
 class CCParticleSystem;
 
+#define kCCParticleDefaultCapacity 500
+
 /** CCParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
  * (often known as "batch draw").
  *
@@ -62,17 +64,22 @@ class CC_DLL CCParticleBatchNode : public CCNode, public CCTextureProtocol
 public:
     CCParticleBatchNode();
     virtual ~CCParticleBatchNode();
-    /** initializes the particle system with CCTexture2D, a default capacity of 500 */
-    static CCParticleBatchNode* batchNodeWithTexture(CCTexture2D * tex);
 
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a default capacity of 500 particles */
-    static CCParticleBatchNode* batchNodeWithFile(const char* imageFile);
+    /** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use 
+    @warning: This interface will be deprecated in future.
+    */
+    //static CCParticleBatchNode* batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity = kCCParticleDefaultCapacity);
+
+    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles
+    @warning: This interface will be deprecated in future.
+    */
+    //static CCParticleBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity = kCCParticleDefaultCapacity);
 
     /** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use */
-    static CCParticleBatchNode* batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity);
+    static CCParticleBatchNode* createWithTexture(CCTexture2D *tex, unsigned int capacity = kCCParticleDefaultCapacity);
 
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
-    static CCParticleBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
+    static CCParticleBatchNode* create(const char* fileImage, unsigned int capacity = kCCParticleDefaultCapacity);
 
     /** initializes the particle system with CCTexture2D, a capacity of particles */
     bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
