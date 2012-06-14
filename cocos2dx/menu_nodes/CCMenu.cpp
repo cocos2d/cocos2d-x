@@ -46,31 +46,31 @@ enum
 //CCMenu
 //
 
-// CCMenu* CCMenu::node()
-// {
-//     return CCMenu::create();
-// }
+CCMenu* CCMenu::node()
+{
+    return CCMenu::create();
+}
 
 CCMenu* CCMenu::create()
 {
     return CCMenu::create(NULL, NULL);
 }
 
-// CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
-// {
-//     va_list args;
-//     va_start(args,item);
-//     CCMenu *pRet = new CCMenu();
-//     if (pRet && pRet->initWithItems(item, args))
-//     {
-//         pRet->autorelease();
-//         va_end(args);
-//         return pRet;
-//     }
-//     va_end(args);
-//     CC_SAFE_DELETE(pRet);
-//     return NULL;
-// }
+CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
+{
+    va_list args;
+    va_start(args,item);
+    CCMenu *pRet = new CCMenu();
+    if (pRet && pRet->initWithItems(item, args))
+    {
+        pRet->autorelease();
+        va_end(args);
+        return pRet;
+    }
+    va_end(args);
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
 
 CCMenu * CCMenu::create(CCMenuItem* item, ...)
 {
@@ -88,10 +88,10 @@ CCMenu * CCMenu::create(CCMenuItem* item, ...)
     return NULL;
 }
 
-// CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
-// {
-//     return CCMenu::create(pArrayOfItems);
-// }
+CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
+{
+    return CCMenu::create(pArrayOfItems);
+}
 
 CCMenu* CCMenu::create(CCArray* pArrayOfItems)
 {
@@ -108,10 +108,10 @@ CCMenu* CCMenu::create(CCArray* pArrayOfItems)
     return pRet;
 }
 
-// CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
-// {
-//     return CCMenu::createWithItem(item);
-// }
+CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
+{
+    return CCMenu::createWithItem(item);
+}
 
 CCMenu* CCMenu::createWithItem(CCMenuItem* item)
 {

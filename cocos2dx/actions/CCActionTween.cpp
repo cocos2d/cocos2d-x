@@ -27,19 +27,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-// CCActionTween* CCActionTween::actionWithDuration(float aDuration, const char* key, float from, float to)
-// {
-//     CCActionTween* pRet = new CCActionTween();
-//     if (pRet && pRet->initWithDuration(aDuration, key, from, to))
-//     {
-//         pRet->autorelease();
-//     }
-//     else
-//     {
-//         CC_SAFE_DELETE(pRet);
-//     }
-//     return pRet;
-// }
+CCActionTween* CCActionTween::actionWithDuration(float aDuration, const char* key, float from, float to)
+{
+    return CCActionTween::create(aDuration, key, from, to);
+}
 
 CCActionTween* CCActionTween::create(float aDuration, const char* key, float from, float to)
 {

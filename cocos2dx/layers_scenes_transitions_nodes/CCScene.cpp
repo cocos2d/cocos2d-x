@@ -54,10 +54,10 @@ bool CCScene::init()
      return bRet;
 }
 
-// CCScene *CCScene::node()
-// {
-//     return CCScene::create();
-// }
+CCScene *CCScene::node()
+{
+    return CCScene::create();
+}
 
 CCScene *CCScene::create()
 {

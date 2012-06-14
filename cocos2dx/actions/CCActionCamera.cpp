@@ -50,17 +50,10 @@ CCActionInterval * CCActionCamera::reverse()
 //
 // CCOrbitCamera
 //
-//cjh CCOrbitCamera * CCOrbitCamera::actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
-// {
-//     CCOrbitCamera * pRet = new CCOrbitCamera();
-//     if(pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
-//     {
-//         pRet->autorelease();
-//         return pRet;
-//     }
-//     CC_SAFE_DELETE(pRet);
-//     return NULL;
-// }
+CCOrbitCamera * CCOrbitCamera::actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
+{
+    return CCOrbitCamera::create(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX);
+}
 
 CCOrbitCamera * CCOrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {

@@ -103,7 +103,7 @@ public:
      * @see initWithFile:rect:centerRegion:
      @warning: This interface will be deprecated in future.
      */
-    //static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect,  CCRect capInsets);
+    static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect,  CCRect capInsets);
     
         /** 
      * Creates a 9-slice sprite with a texture file, a delimitation zone and
@@ -134,7 +134,7 @@ public:
      * @see initWithFile:rect:
      @warning: This interface will be deprecated in future.
      */
-    //static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect);
+    static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect);
     
      /** 
      * Creates a 9-slice sprite with a texture file and a delimitation zone. The
@@ -163,7 +163,7 @@ public:
      * @see initWithFile:capInsets:
      @warning: This interface will be deprecated in future.
      */
-    //static CCScale9Sprite* spriteWithFile(CCRect capInsets, const char* file);
+    static CCScale9Sprite* spriteWithFile(CCRect capInsets, const char* file);
     /** 
      * Creates a 9-slice sprite with a texture file. The whole texture will be
      * broken down into a 3×3 grid of equal blocks.
@@ -191,7 +191,7 @@ public:
      * @see initWithFile:
      @warning: This interface will be deprecated in future.
      */
-    //static CCScale9Sprite* spriteWithFile(const char* file);
+    static CCScale9Sprite* spriteWithFile(const char* file);
 
     /** 
      * Creates a 9-slice sprite with a texture file. The whole texture will be
@@ -222,7 +222,7 @@ public:
      * @see initWithSpriteFrame:centerRegion:
      @warning: This interface will be deprecated in future.
      */
-    //static CCScale9Sprite* spriteWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets);
+    static CCScale9Sprite* spriteWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets);
 
         /**
      * Creates a 9-slice sprite with an sprite frame and the centre of its zone.
@@ -252,7 +252,7 @@ public:
      * @see initWithSpriteFrame:
      @warning: This interface will be deprecated in future.
      */
-    //static CCScale9Sprite* spriteWithSpriteFrame(CCSpriteFrame* spriteFrame);    
+    static CCScale9Sprite* spriteWithSpriteFrame(CCSpriteFrame* spriteFrame);    
 
     /**
      * Creates a 9-slice sprite with an sprite frame.
@@ -285,7 +285,7 @@ public:
      * @see initWithSpriteFrameName:centerRegion:
      @warning: This interface will be deprecated in future.
      */
-    //static CCScale9Sprite* spriteWithSpriteFrameName(const char*spriteFrameName, CCRect capInsets);  
+    static CCScale9Sprite* spriteWithSpriteFrameName(const char*spriteFrameName, CCRect capInsets);  
 
        /**
      * Creates a 9-slice sprite with an sprite frame name and the centre of its
@@ -317,7 +317,7 @@ public:
      * @see initWithSpriteFrameName:
      @warning: This interface will be deprecated in future.
      */
-    //static CCScale9Sprite* spriteWithSpriteFrameName(const char*spriteFrameName);
+    static CCScale9Sprite* spriteWithSpriteFrameName(const char*spriteFrameName);
 
     /**
      * Creates a 9-slice sprite with an sprite frame name.
@@ -340,7 +340,7 @@ public:
     CCScale9Sprite* resizableSpriteWithCapInsets(CCRect capInsets);
     
     
-    //static CCScale9Sprite* node();
+    static CCScale9Sprite* node();
     
     static CCScale9Sprite* create();
 

@@ -53,30 +53,30 @@ CCLabelTTF::~CCLabelTTF()
     CC_SAFE_DELETE(m_pFontName);       
 }
 
-// CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const char *fontName, float fontSize)
-// {
-//     return CCLabelTTF::create(string, fontName, fontSize);
-// }
+CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const char *fontName, float fontSize)
+{
+    return CCLabelTTF::create(string, fontName, fontSize);
+}
 
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return CCLabelTTF::create(string, CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, fontName, fontSize);
 }
 
-// CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, const char *fontName, float fontSize)
-// {
-//     return CCLabelTTF::create(string, dimensions, hAlignment, kCCVerticalTextAlignmentTop, fontName, fontSize);
-// }
+CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, const char *fontName, float fontSize)
+{
+    return CCLabelTTF::create(string, dimensions, hAlignment, kCCVerticalTextAlignmentTop, fontName, fontSize);
+}
 
 CCLabelTTF * CCLabelTTF::create(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, const char *fontName, float fontSize)
 {
     return CCLabelTTF::create(string, dimensions, hAlignment, kCCVerticalTextAlignmentTop, fontName, fontSize);
 }
 
-// CCLabelTTF* CCLabelTTF::labelWithString(const char *string, const cocos2d::CCSize &dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
-// {
-//     return CCLabelTTF::create(string, dimensions, hAlignment, vAlignment, fontName, fontSize);
-// }
+CCLabelTTF* CCLabelTTF::labelWithString(const char *string, const cocos2d::CCSize &dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
+{
+    return CCLabelTTF::create(string, dimensions, hAlignment, vAlignment, fontName, fontSize);
+}
 
 CCLabelTTF* CCLabelTTF::create(const char *string, const cocos2d::CCSize &dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
 {

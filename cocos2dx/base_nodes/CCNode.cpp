@@ -437,10 +437,10 @@ CCRect CCNode::boundingBox()
     return CCRectApplyAffineTransform(rect, nodeToParentTransform());
 }
 
-// CCNode * CCNode::node(void)
-// {
-//     return CCNode::create();
-// }
+CCNode * CCNode::node(void)
+{
+    return CCNode::create();
+}
 
 CCNode * CCNode::create(void)
 {

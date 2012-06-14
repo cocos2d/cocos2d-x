@@ -35,10 +35,10 @@ NS_CC_EXT_BEGIN
 /******************************************
 **************Public Functions*************
 *******************************************/
-// CCListView* CCListView::viewWithMode(CCListViewMode mode)
-// {
-//     return CCListView::create(mode);
-// }
+CCListView* CCListView::viewWithMode(CCListViewMode mode)
+{
+    return CCListView::create(mode);
+}
 
 CCListView* CCListView::create(CCListViewMode mode)
 {

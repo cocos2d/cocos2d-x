@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011 Zynga Inc.
 
@@ -66,7 +66,7 @@ public:
     /** Allocates and initializes the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCShow * action();
+    static CCShow * action();
 
     /** Allocates and initializes the action */
     static CCShow * create();
@@ -91,7 +91,7 @@ public:
     /** Allocates and initializes the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCHide * action();
+    static CCHide * action();
 
     /** Allocates and initializes the action */
     static CCHide * create();
@@ -112,7 +112,7 @@ public:
     /** Allocates and initializes the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCToggleVisibility * action();
+    static CCToggleVisibility * action();
 
     /** Allocates and initializes the action */
     static CCToggleVisibility * create();
@@ -133,7 +133,7 @@ public:
     /** create the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCFlipX * actionWithFlipX(bool x);
+    static CCFlipX * actionWithFlipX(bool x);
 
     /** create the action */
     static CCFlipX * create(bool x);
@@ -164,7 +164,7 @@ public:
     /** create the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCFlipY * actionWithFlipY(bool y);
+    static CCFlipY * actionWithFlipY(bool y);
 
     /** create the action */
     static CCFlipY * create(bool y);
@@ -190,7 +190,7 @@ public:
     /** creates a Place action with a position 
     @warning: This interface will be deprecated in future.
     */
-    //static CCPlace * actionWithPosition(const CCPoint& pos);
+    static CCPlace * actionWithPosition(const CCPoint& pos);
     /** creates a Place action with a position */
     static CCPlace * create(const CCPoint& pos);
     /** Initializes a Place action with a position */
@@ -224,7 +224,7 @@ public:
     @warning: This interface will be deprecated in future.
     typedef void (CCObject::*SEL_CallFunc)();
     */
-    //static CCCallFunc * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFunc selector);
+    static CCCallFunc * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFunc selector);
 
     /** creates the action with the callback 
 
@@ -292,7 +292,7 @@ public:
     @warning: This interface will be deprecated in future.
     typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
     */
-    //static CCCallFuncN * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
+    static CCCallFuncN * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
 
     /** creates the action with the callback 
 
@@ -321,7 +321,7 @@ public:
     /** creates the action with the callback and the data to pass as an argument 
     @warning: This interface will be deprecated in future.
     */
-    //static CCCallFuncND * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
+    static CCCallFuncND * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
 
     /** creates the action with the callback and the data to pass as an argument */
     static CCCallFuncND * create(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
@@ -351,7 +351,7 @@ public:
     @warning: This interface will be deprecated in future.
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
     */
-    //static CCCallFuncO * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
+    static CCCallFuncO * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
 
     /** creates the action with the callback 
 

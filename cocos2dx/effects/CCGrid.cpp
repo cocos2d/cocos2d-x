@@ -39,10 +39,10 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCGridBase
 
-// CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
-// {
-//     return CCGridBase::create(gridSize);
-// }
+CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
+{
+    return CCGridBase::create(gridSize);
+}
 
 CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
 {
@@ -63,10 +63,10 @@ CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
     return pGridBase;
 }
 
-// CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
-// {
-//     return CCGridBase::create(gridSize, texture, flipped);
-// }
+CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
+{
+    return CCGridBase::create(gridSize, texture, flipped);
+}
 
 CCGridBase* CCGridBase::create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
 {

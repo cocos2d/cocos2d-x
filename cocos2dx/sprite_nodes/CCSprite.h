@@ -125,13 +125,13 @@ public:
      The offset will be (0,0).
      @warning: This interface will be deprecated in future.
      */
-    //static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
+    static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
 
     /** Creates an sprite with a texture and a rect.
      The offset will be (0,0).
      @warning: This interface will be deprecated in future.
      */
-    //static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect);
+    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect);
 
         /** Creates an sprite with a texture.
      The rect used will be the size of the texture.
@@ -147,7 +147,7 @@ public:
     /** Creates an sprite with an sprite frame. 
     @warning: This interface will be deprecated in future.
     */
-   // static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+    static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
     /** Creates an sprite with an sprite frame name.
      An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
@@ -155,7 +155,7 @@ public:
      @warning: This interface will be deprecated in future.
      @since v0.9
      */
-    //static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
+    static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
 
     /** Creates an sprite with an sprite frame. */
     static CCSprite* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
@@ -172,13 +172,13 @@ public:
      @warning: This interface will be deprecated in future.
      The offset will be (0,0).
      */
-    //static CCSprite* spriteWithFile(const char *pszFileName);
+    static CCSprite* spriteWithFile(const char *pszFileName);
 
     /** Creates an sprite with an image filename and a rect.
      The offset will be (0,0).
      @warning: This interface will be deprecated in future.
      */
-    //static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
+    static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
     
     /** Creates an sprite with an image filename.
      The rect used will be the size of the image.
@@ -194,7 +194,7 @@ public:
     /** Creates an sprite.
     @warning: This interface will be deprecated in future.
      */
-    //static CCSprite* node();
+    static CCSprite* node();
     /** Creates an sprite.
      */
     static CCSprite* create();

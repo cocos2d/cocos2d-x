@@ -46,7 +46,7 @@ public:
     /** create the action 
     @warning: This interface will be deprecated in future.
     */
-    //static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, float time);
+    static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, float time);
     /** create the action */
     static CCPageTurn3D* create(const ccGridSize& gridSize, float time);
 };

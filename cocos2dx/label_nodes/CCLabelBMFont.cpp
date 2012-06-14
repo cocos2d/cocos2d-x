@@ -405,10 +405,10 @@ typedef struct _KerningHashElement
 //BitmapFontConfiguration
 //
 
-// CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
-// {
-//     return CCBMFontConfiguration::create(FNTfile);
-// }
+CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
+{
+    return CCBMFontConfiguration::create(FNTfile);
+}
 
 CCBMFontConfiguration * CCBMFontConfiguration::create(const char *FNTfile)
 {
@@ -718,10 +718,10 @@ void CCLabelBMFont::purgeCachedData()
     FNTConfigRemoveCache();
 }
 
-// CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
-// {
-//     return CCLabelBMFont::create(str, fntFile, width, alignment, imageOffset);
-// }
+CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
+{
+    return CCLabelBMFont::create(str, fntFile, width, alignment, imageOffset);
+}
 
 //LabelBMFont - Creation & Init
 CCLabelBMFont *CCLabelBMFont::create(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)

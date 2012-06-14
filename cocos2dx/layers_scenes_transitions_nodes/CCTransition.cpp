@@ -51,10 +51,10 @@ CCTransitionScene::~CCTransitionScene()
     m_pOutScene->release();
 }
 
-// CCTransitionScene * CCTransitionScene::transitionWithDuration(float t, CCScene *scene)
-// {
-//     return CCTransitionScene::create(t,scene);
-// }
+CCTransitionScene * CCTransitionScene::transitionWithDuration(float t, CCScene *scene)
+{
+    return CCTransitionScene::create(t,scene);
+}
 
 CCTransitionScene * CCTransitionScene::create(float t, CCScene *scene)
 {
@@ -204,10 +204,10 @@ CCTransitionSceneOriented::~CCTransitionSceneOriented()
 {
 }
 
-// CCTransitionSceneOriented * CCTransitionSceneOriented::transitionWithDuration(float t, CCScene *scene, tOrientation orientation)
-// {
-//     return CCTransitionSceneOriented::create(t,scene,orientation);
-// }
+CCTransitionSceneOriented * CCTransitionSceneOriented::transitionWithDuration(float t, CCScene *scene, tOrientation orientation)
+{
+    return CCTransitionSceneOriented::create(t,scene,orientation);
+}
 
 CCTransitionSceneOriented * CCTransitionSceneOriented::create(float t, CCScene *scene, tOrientation orientation)
 {
@@ -648,10 +648,10 @@ void CCTransitionFlipX::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-// CCTransitionFlipX* CCTransitionFlipX::transitionWithDuration(float t, CCScene* s, tOrientation o)
-// {
-//     return CCTransitionFlipX::create(t, s, o);
-// }
+CCTransitionFlipX* CCTransitionFlipX::transitionWithDuration(float t, CCScene* s, tOrientation o)
+{
+    return CCTransitionFlipX::create(t, s, o);
+}
 
 CCTransitionFlipX* CCTransitionFlipX::create(float t, CCScene* s, tOrientation o)
 {
@@ -718,10 +718,10 @@ void CCTransitionFlipY::onEnter()
 
 }
 
-// CCTransitionFlipY* CCTransitionFlipY::transitionWithDuration(float t, CCScene* s, tOrientation o)
-// {
-//     return CCTransitionFlipY::create(t, s, o);
-// }
+CCTransitionFlipY* CCTransitionFlipY::transitionWithDuration(float t, CCScene* s, tOrientation o)
+{
+    return CCTransitionFlipY::create(t, s, o);
+}
 
 CCTransitionFlipY* CCTransitionFlipY::create(float t, CCScene* s, tOrientation o)
 {
@@ -866,10 +866,10 @@ void CCTransitionZoomFlipX::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-// CCTransitionZoomFlipX* CCTransitionZoomFlipX::transitionWithDuration(float t, CCScene* s, tOrientation o)
-// {
-//     return CCTransitionZoomFlipX::create(t, s, o);
-// }
+CCTransitionZoomFlipX* CCTransitionZoomFlipX::transitionWithDuration(float t, CCScene* s, tOrientation o)
+{
+    return CCTransitionZoomFlipX::create(t, s, o);
+}
 
 CCTransitionZoomFlipX* CCTransitionZoomFlipX::create(float t, CCScene* s, tOrientation o)
 {
@@ -945,10 +945,10 @@ void CCTransitionZoomFlipY::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-// CCTransitionZoomFlipY* CCTransitionZoomFlipY::transitionWithDuration(float t, CCScene* s, tOrientation o)
-// {
-//     return CCTransitionZoomFlipY::create(t, s, o);
-// }
+CCTransitionZoomFlipY* CCTransitionZoomFlipY::transitionWithDuration(float t, CCScene* s, tOrientation o)
+{
+    return CCTransitionZoomFlipY::create(t, s, o);
+}
 
 CCTransitionZoomFlipY* CCTransitionZoomFlipY::create(float t, CCScene* s, tOrientation o)
 {
@@ -1026,10 +1026,10 @@ void CCTransitionZoomFlipAngular::onEnter()
     m_pOutScene->runAction(outA);
 }
 
-// CCTransitionZoomFlipAngular* CCTransitionZoomFlipAngular::transitionWithDuration(float t, CCScene* s, tOrientation o)
-// {
-//     return CCTransitionZoomFlipAngular::create(t, s, o);
-// }
+CCTransitionZoomFlipAngular* CCTransitionZoomFlipAngular::transitionWithDuration(float t, CCScene* s, tOrientation o)
+{
+    return CCTransitionZoomFlipAngular::create(t, s, o);
+}
 
 CCTransitionZoomFlipAngular* CCTransitionZoomFlipAngular::create(float t, CCScene* s, tOrientation o)
 {
@@ -1050,10 +1050,10 @@ CCTransitionFade::~CCTransitionFade()
 {
 }
 
-// CCTransitionFade * CCTransitionFade::transitionWithDuration(float duration, CCScene *scene, const ccColor3B& color)
-// {
-//     return CCTransitionFade::create(duration, scene, color);
-// }
+CCTransitionFade * CCTransitionFade::transitionWithDuration(float duration, CCScene *scene, const ccColor3B& color)
+{
+    return CCTransitionFade::create(duration, scene, color);
+}
 
 CCTransitionFade * CCTransitionFade::create(float duration, CCScene *scene, const ccColor3B& color)
 {

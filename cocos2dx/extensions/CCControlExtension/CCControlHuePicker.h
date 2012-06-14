@@ -55,7 +55,7 @@ public:
     virtual ~CCControlHuePicker();
     virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
     //@warning: This interface will be deprecated in future.
-    //static CCControlHuePicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
+    static CCControlHuePicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
     static CCControlHuePicker* create(CCNode* target, CCPoint pos);
 protected:    
     void updateSliderPosition(CCPoint location);

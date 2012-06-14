@@ -79,11 +79,11 @@ public:
     /** create one Grid 
     @warning: This interface will be deprecated in future.
     */
-    //static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
+    static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
     /** create one Grid 
     @warning: This interface will be deprecated in future.
     */
-    //static CCGridBase* gridWithSize(const ccGridSize& gridSize);
+    static CCGridBase* gridWithSize(const ccGridSize& gridSize);
 
     /** create one Grid */
     static CCGridBase* create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);

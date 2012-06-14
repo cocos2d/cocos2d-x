@@ -62,7 +62,7 @@ public:
     /** Creates a CCMenuItem with a target/selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItem * itemWithTarget(CCObject *rec, SEL_MenuHandler selector);
+    static CCMenuItem * itemWithTarget(CCObject *rec, SEL_MenuHandler selector);
     /** Creates a CCMenuItem with a target/selector */
     static CCMenuItem * create(CCObject *rec, SEL_MenuHandler selector);
     /** Initializes a CCMenuItem with a target/selector */
@@ -110,11 +110,11 @@ public:
     /** creates a CCMenuItemLabel with a Label, target and selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemLabel * itemWithLabel(CCNode*label, CCObject* target, SEL_MenuHandler selector);
+    static CCMenuItemLabel * itemWithLabel(CCNode*label, CCObject* target, SEL_MenuHandler selector);
     /** creates a CCMenuItemLabel with a Label. Target and selector will be nill 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemLabel* itemWithLabel(CCNode *label);
+    static CCMenuItemLabel* itemWithLabel(CCNode *label);
 
     /** creates a CCMenuItemLabel with a Label, target and selector */
     static CCMenuItemLabel * create(CCNode*label, CCObject* target, SEL_MenuHandler selector);
@@ -156,11 +156,11 @@ public:
     /** creates a menu item from a string and atlas with a target/selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemAtlasFont* itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
+    static CCMenuItemAtlasFont* itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemAtlasFont* itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
+    static CCMenuItemAtlasFont* itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
     
     /** creates a menu item from a string and atlas with a target/selector */
     static CCMenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
@@ -189,11 +189,11 @@ public:
     /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemFont * itemWithString(const char *value);
+    static CCMenuItemFont * itemWithString(const char *value);
     /** creates a menu item from a string with a target/selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemFont * itemWithString(const char *value, CCObject* target, SEL_MenuHandler selector);
+    static CCMenuItemFont * itemWithString(const char *value, CCObject* target, SEL_MenuHandler selector);
 
     /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
     static CCMenuItemFont * create(const char *value);
@@ -252,15 +252,15 @@ public:
     /** creates a menu item with a normal, selected and disabled image
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
+    static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
     /** creates a menu item with a normal and selected image with target/selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
+    static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
+    static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 
     /** creates a menu item with a normal, selected and disabled image*/
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
@@ -306,19 +306,19 @@ public:
     /** creates a menu item with a normal and selected image
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage);
+    static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage);
     /** creates a menu item with a normal,selected  and disabled image
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
+    static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
     /** creates a menu item with a normal and selected image with target/selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
+    static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
+    static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
     
     /** creates a menu item with a normal and selected image*/
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage);
@@ -366,7 +366,7 @@ public:
     /** creates a menu item from a list of items with a target/selector 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemToggle* itemWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);   
+    static CCMenuItemToggle* itemWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);   
 
     /** creates a menu item from a list of items with a target/selector */
     static CCMenuItemToggle* create(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);  
@@ -378,7 +378,7 @@ public:
     /** creates a menu item with a item 
     @warning: This interface will be deprecated in future.
     */
-    //static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
+    static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
 
     /** creates a menu item with a item */
     static CCMenuItemToggle* create(CCMenuItem *item);

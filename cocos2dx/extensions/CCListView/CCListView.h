@@ -122,7 +122,7 @@ public:
     CCListView(void);
 
     // @warning: This interface will be deprecated in future.
-    //static CCListView* viewWithMode(CCListViewMode mode);
+    static CCListView* viewWithMode(CCListViewMode mode);
 
     static CCListView* create(CCListViewMode mode);
 

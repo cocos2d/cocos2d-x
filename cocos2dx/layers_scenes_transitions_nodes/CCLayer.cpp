@@ -73,10 +73,10 @@ bool CCLayer::init()
     return bRet;
 }
 
-// CCLayer *CCLayer::node()
-// {
-//     return CCLayer::create();
-// }
+CCLayer *CCLayer::node()
+{
+    return CCLayer::create();
+}
 
 CCLayer *CCLayer::create()
 {
@@ -426,10 +426,10 @@ void CCLayerColor::setBlendFunc(ccBlendFunc var)
     m_tBlendFunc = var;
 }
 
-// CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height)
-// {
-//     return CCLayerColor::create(color,width,height);
-// }
+CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height)
+{
+    return CCLayerColor::create(color,width,height);
+}
 
 CCLayerColor * CCLayerColor::create(const ccColor4B& color, GLfloat width, GLfloat height)
 {
@@ -443,10 +443,10 @@ CCLayerColor * CCLayerColor::create(const ccColor4B& color, GLfloat width, GLflo
     return NULL;
 }
 
-// CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color)
-// {
-//     return CCLayerColor::create(color);
-// }
+CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color)
+{
+    return CCLayerColor::create(color);
+}
 
 CCLayerColor * CCLayerColor::create(const ccColor4B& color)
 {
@@ -558,10 +558,10 @@ void CCLayerColor::draw()
 //
 // CCLayerGradient
 // 
-// CCLayerGradient* CCLayerGradient::layerWithColor(const ccColor4B& start, const ccColor4B& end)
-// {
-//     return CCLayerGradient::create(start, end);
-// }
+CCLayerGradient* CCLayerGradient::layerWithColor(const ccColor4B& start, const ccColor4B& end)
+{
+    return CCLayerGradient::create(start, end);
+}
 
 CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B& end)
 {
@@ -575,10 +575,10 @@ CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B
     return NULL;
 }
 
-// CCLayerGradient* CCLayerGradient::layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v)
-// {
-//     return CCLayerGradient::create(start, end, v);
-// }
+CCLayerGradient* CCLayerGradient::layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v)
+{
+    return CCLayerGradient::create(start, end, v);
+}
 
 CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B& end, const CCPoint& v)
 {
@@ -745,22 +745,22 @@ CCLayerMultiplex::~CCLayerMultiplex()
     CC_SAFE_RELEASE(m_pLayers);
 }
 
-// CCLayerMultiplex * CCLayerMultiplex::layerWithLayers(CCLayer * layer, ...)
-// {
-//     va_list args;
-//     va_start(args,layer);
-// 
-//     CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
-//     if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
-//     {
-//         pMultiplexLayer->autorelease();
-//         va_end(args);
-//         return pMultiplexLayer;
-//     }
-//     va_end(args);
-//     CC_SAFE_DELETE(pMultiplexLayer);
-//     return NULL;
-// }
+CCLayerMultiplex * CCLayerMultiplex::layerWithLayers(CCLayer * layer, ...)
+{
+    va_list args;
+    va_start(args,layer);
+
+    CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
+    if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
+    {
+        pMultiplexLayer->autorelease();
+        va_end(args);
+        return pMultiplexLayer;
+    }
+    va_end(args);
+    CC_SAFE_DELETE(pMultiplexLayer);
+    return NULL;
+}
 
 CCLayerMultiplex * CCLayerMultiplex::create(CCLayer * layer, ...)
 {
@@ -779,12 +779,12 @@ CCLayerMultiplex * CCLayerMultiplex::create(CCLayer * layer, ...)
     return NULL;
 }
 
-// CCLayerMultiplex * CCLayerMultiplex::layerWithLayer(CCLayer* layer)
-// {
-//     return CCLayerMultiplex::create(layer);
-// }
+CCLayerMultiplex * CCLayerMultiplex::layerWithLayer(CCLayer* layer)
+{
+    return CCLayerMultiplex::createWithLayer(layer);
+}
 
-CCLayerMultiplex * CCLayerMultiplex::create(CCLayer* layer)
+CCLayerMultiplex * CCLayerMultiplex::createWithLayer(CCLayer* layer)
 {
     CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
     pMultiplexLayer->initWithLayer(layer);

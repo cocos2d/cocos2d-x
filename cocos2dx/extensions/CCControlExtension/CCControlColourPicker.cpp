@@ -87,10 +87,10 @@ bool CCControlColourPicker::init()
         return false;
 }
 
-// CCControlColourPicker* CCControlColourPicker::colourPicker()
-// {
-//     return CCControlColourPicker::create();
-// }
+CCControlColourPicker* CCControlColourPicker::colourPicker()
+{
+    return CCControlColourPicker::create();
+}
 
 CCControlColourPicker* CCControlColourPicker::create()
 {

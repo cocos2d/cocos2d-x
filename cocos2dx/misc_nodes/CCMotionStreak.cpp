@@ -66,10 +66,10 @@ CCMotionStreak::~CCMotionStreak()
     CC_SAFE_FREE(m_pTexCoords);
 }
 
-// CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
-// {
-//     return CCMotionStreak::create(fade, minSeg, stroke, color, path);
-// }
+CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+{
+    return CCMotionStreak::create(fade, minSeg, stroke, color, path);
+}
 
 CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
 {
@@ -84,10 +84,10 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-// CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
-// {
-//     return CCMotionStreak::create(fade, minSeg, stroke, color, texture);
-// }
+CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
+{
+    return CCMotionStreak::create(fade, minSeg, stroke, color, texture);
+}
 
 CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
 {

@@ -46,20 +46,20 @@ public:
     /** creates a CCLabelTTF with a font name and font size in points
     @warning: This interface will be deprecated in future.
     */
-    //static CCLabelTTF * labelWithString(const char *string, const char *fontName, float fontSize);
+    static CCLabelTTF * labelWithString(const char *string, const char *fontName, float fontSize);
     
     /** creates a CCLabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
      @warning: This interface will be deprecated in future.
      @since v1.0
      */
-    //static CCLabelTTF * labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, 
-    //                                    const char *fontName, float fontSize);
+    static CCLabelTTF * labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, 
+                                        const char *fontName, float fontSize);
     
     /** creates a CCLabel from a fontname, alignment, dimension in points and font size in points
     @warning: This interface will be deprecated in future.
     */
-    //static CCLabelTTF * labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, 
-    //                                    CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
+    static CCLabelTTF * labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, 
+                                        CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
     
     /** creates a CCLabelTTF with a font name and font size in points*/
     static CCLabelTTF * create(const char *string, const char *fontName, float fontSize);

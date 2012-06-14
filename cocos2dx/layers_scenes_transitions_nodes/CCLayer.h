@@ -55,7 +55,7 @@ public:
     bool init();
 
     // @warning: This interface will be deprecated in future.
-    //static CCLayer *node(void);
+    static CCLayer *node(void);
     /** create one layer */
     static CCLayer *create(void);
 
@@ -120,22 +120,22 @@ private:
     
 // for the subclass of CCLayer, each has to implement the static "node" method 
 // @warning: This interface will be deprecated in future.
-//#define LAYER_NODE_FUNC(layer) \
-//     static layer* node() \
-//     { \
-//         layer *pRet = new layer(); \
-//         if (pRet && pRet->init()) \
-//     { \
-//         pRet->autorelease(); \
-//         return pRet; \
-//     } \
-//     else \
-//     { \
-//         delete pRet; \
-//         pRet = NULL; \
-//         return NULL; \
-//     } \
-// }
+#define LAYER_NODE_FUNC(layer) \
+    static layer* node() \
+    { \
+        layer *pRet = new layer(); \
+        if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}
 
 
 // for the subclass of CCLayer, each has to implement the static "node" method 
@@ -157,22 +157,22 @@ private:
 }
 
 // @warning: This interface will be deprecated in future.
-//#define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
-//     static layer* node(__PARAMTYPE__ __PARAM__) \
-//     { \
-//         layer *pRet = new layer(); \
-//         if (pRet && pRet->init(__PARAM__)) \
-//         { \
-//             pRet->autorelease(); \
-//             return pRet; \
-//         } \
-//         else \
-//         { \
-//             delete pRet; \
-//             pRet = NULL; \
-//             return NULL; \
-//         } \
-//     }
+#define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
+    static layer* node(__PARAMTYPE__ __PARAM__) \
+    { \
+        layer *pRet = new layer(); \
+        if (pRet && pRet->init(__PARAM__)) \
+        { \
+            pRet->autorelease(); \
+            return pRet; \
+        } \
+        else \
+        { \
+            delete pRet; \
+            pRet = NULL; \
+            return NULL; \
+        } \
+    }
  
     
 #define LAYER_CREATE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
@@ -217,11 +217,11 @@ public:
     /** creates a CCLayer with color, width and height in Points 
     @warning: This interface will be deprecated in future.
     */
-    //static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
+    static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
     /** creates a CCLayer with color. Width and height are the window size. 
     @warning: This interface will be deprecated in future.
     */
-    //static CCLayerColor * layerWithColor(const ccColor4B& color);
+    static CCLayerColor * layerWithColor(const ccColor4B& color);
 
     /** creates a CCLayer with color, width and height in Points */
     static CCLayerColor * create(const ccColor4B& color, GLfloat width, GLfloat height);
@@ -287,12 +287,12 @@ public:
     /** Creates a full-screen CCLayer with a gradient between start and end. 
     @warning: This interface will be deprecated in future.
     */
-    //static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end);
+    static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end);
 
     /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. 
     @warning: This interface will be deprecated in future.
     */
-    //static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+    static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
     /** Creates a full-screen CCLayer with a gradient between start and end. */
     static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end);
@@ -340,14 +340,14 @@ public:
     /** creates a CCLayerMultiplex with one or more layers using a variable argument list. 
     @warning: This interface will be deprecated in future.
     */
-    //static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
+    static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
 
     /**
      * lua script can not init with undetermined number of variables
      * so add these functinons to be used with lua.
      @warning: This interface will be deprecated in future.
      */
-    //static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
+    static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
 
     /** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
     static CCLayerMultiplex * create(CCLayer* layer, ... );
@@ -356,7 +356,7 @@ public:
      * lua script can not init with undetermined number of variables
      * so add these functinons to be used with lua.
      */
-    static CCLayerMultiplex * create(CCLayer* layer);
+    static CCLayerMultiplex * createWithLayer(CCLayer* layer);
 
     void addLayer(CCLayer* layer);
     bool initWithLayer(CCLayer* layer);

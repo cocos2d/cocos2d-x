@@ -300,7 +300,7 @@ public:
      The node will be created as "autorelease".
 	 @warning: This interface will be deprecated in future.
      */
-    //static CCNode * node(void);
+    static CCNode * node(void);
 
 	/** allocates and initializes a node.
      The node will be created as "autorelease".

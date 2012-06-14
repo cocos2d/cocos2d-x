@@ -58,10 +58,10 @@ NS_CC_BEGIN
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
-// CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
-// {
-//     return CCSprite::createWithTexture(pTexture);
-// }
+CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
+{
+    return CCSprite::createWithTexture(pTexture);
+}
 
 CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
 {
@@ -75,10 +75,10 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
     return NULL;
 }
 
-// CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
-// {
-//     return CCSprite::createWithTexture(pTexture, rect);
-// }
+CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
+{
+    return CCSprite::createWithTexture(pTexture, rect);
+}
 
 CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
 {
@@ -92,10 +92,10 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     return NULL;
 }
 
-// CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
-// {
-//     CCSprite::create(pszFileName);
-// }
+CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
+{
+    return CCSprite::create(pszFileName);
+}
 
 CCSprite* CCSprite::create(const char *pszFileName)
 {
@@ -109,10 +109,10 @@ CCSprite* CCSprite::create(const char *pszFileName)
     return NULL;
 }
 
-// CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
-// {
-//     return CCSprite::create(pszFileName, rect);
-// }
+CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
+{
+    return CCSprite::create(pszFileName, rect);
+}
 
 CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
 {
@@ -126,10 +126,10 @@ CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
     return NULL;
 }
 
-// CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
-// {
-//     return CCSprite::createWithSpriteFrame(pSpriteFrame);
-// }
+CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+{
+    return CCSprite::createWithSpriteFrame(pSpriteFrame);
+}
 
 CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
@@ -143,10 +143,10 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     return NULL;
 }
 
-// CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
-// {
-//     return CCSprite::createWithSpriteFrameName(pszSpriteFrameName);
-// }
+CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
+{
+    return CCSprite::createWithSpriteFrameName(pszSpriteFrameName);
+}
 
 CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
@@ -158,10 +158,10 @@ CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return createWithSpriteFrame(pFrame);
 }
 
-// CCSprite* CCSprite::node()
-// {
-//     return CCSprite::create();
-// }
+CCSprite* CCSprite::node()
+{
+    return CCSprite::create();
+}
 
 CCSprite* CCSprite::create()
 {

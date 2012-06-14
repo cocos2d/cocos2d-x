@@ -194,10 +194,10 @@ bool CCScale9Sprite::initWithFile(const char* file, CCRect rect,  CCRect capInse
     return pReturn;
 }
 
-// CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, CCRect rect,  CCRect capInsets)
-// {
-//     return CCScale9Sprite::create(file, rect, capInsets);
-// }
+CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, CCRect rect,  CCRect capInsets)
+{
+    return CCScale9Sprite::create(file, rect, capInsets);
+}
 
 CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect,  CCRect capInsets)
 {
@@ -217,10 +217,10 @@ bool CCScale9Sprite::initWithFile(const char* file, CCRect rect)
     return pReturn;
 }
 
-// CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, CCRect rect)
-// {
-//     return CCScale9Sprite::create(file, rect);
-// }
+CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, CCRect rect)
+{
+    return CCScale9Sprite::create(file, rect);
+}
 
 CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect)
 {
@@ -241,10 +241,10 @@ bool CCScale9Sprite::initWithFile(CCRect capInsets, const char* file)
     return pReturn;
 }
 
-// CCScale9Sprite* CCScale9Sprite::spriteWithFile(CCRect capInsets, const char* file)
-// {
-//     return CCScale9Sprite::create(capInsets, file);
-// }
+CCScale9Sprite* CCScale9Sprite::spriteWithFile(CCRect capInsets, const char* file)
+{
+    return CCScale9Sprite::create(capInsets, file);
+}
 
 CCScale9Sprite* CCScale9Sprite::create(CCRect capInsets, const char* file)
 {
@@ -265,10 +265,10 @@ bool CCScale9Sprite::initWithFile(const char* file)
     
 }
 
-// CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file)
-// {
-//     return CCScale9Sprite::create(file);
-// }
+CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file)
+{
+    return CCScale9Sprite::create(file);
+}
 
 CCScale9Sprite* CCScale9Sprite::create(const char* file)
 {
@@ -291,10 +291,10 @@ bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capI
     return pReturn;
 }
 
-// CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets)
-// {
-//     return CCScale9Sprite::createWithSpriteFrame(spriteFrame, capInsets);
-// }
+CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets)
+{
+    return CCScale9Sprite::createWithSpriteFrame(spriteFrame, capInsets);
+}
 
 CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets)
 {
@@ -314,10 +314,10 @@ bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame)
 }
 
 
-// CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrame(CCSpriteFrame* spriteFrame)
-// {
-//     return CCScale9Sprite::createWithSpriteFrame(spriteFrame);
-// }
+CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrame(CCSpriteFrame* spriteFrame)
+{
+    return CCScale9Sprite::createWithSpriteFrame(spriteFrame);
+}
 
 CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame)
 {
@@ -340,10 +340,10 @@ bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, CCRect
     return pReturn;
 }
 
-// CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
-// {
-//     return CCScale9Sprite::createWithSpriteFrameName(spriteFrameName, capInsets);
-// }
+CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
+{
+    return CCScale9Sprite::createWithSpriteFrameName(spriteFrameName, capInsets);
+}
 
 CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
 {
@@ -364,10 +364,10 @@ bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName)
     return pReturn;
 }
 
-// CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrameName(const char* spriteFrameName)
-// {
-//     return CCScale9Sprite::createWithSpriteFrameName(spriteFrameName);
-// }
+CCScale9Sprite* CCScale9Sprite::spriteWithSpriteFrameName(const char* spriteFrameName)
+{
+    return CCScale9Sprite::createWithSpriteFrameName(spriteFrameName);
+}
 
 CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFrameName)
 {
@@ -394,10 +394,10 @@ CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
     return NULL;
 }
 
-// CCScale9Sprite* CCScale9Sprite::node()
-// {
-//     return CCScale9Sprite::create();
-// }
+CCScale9Sprite* CCScale9Sprite::node()
+{
+    return CCScale9Sprite::create();
+}
 
 CCScale9Sprite* CCScale9Sprite::create()
 { 

@@ -122,10 +122,10 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         return false;
 }
 
-// CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite)
-// {
-//     return CCControlButton::create(label, backgroundSprite);
-// }
+CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite)
+{
+    return CCControlButton::create(label, backgroundSprite);
+}
 
 CCControlButton* CCControlButton::create(CCNode* label, CCScale9Sprite* backgroundSprite)
 {
@@ -141,10 +141,10 @@ bool CCControlButton::initWithTitleAndFontNameAndFontSize(string title, const ch
     return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::create());
 }
 
-// CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
-// {
-//     return CCControlButton::create(title, fontName, fontSize);
-// }
+CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
+{
+    return CCControlButton::create(title, fontName, fontSize);
+}
 
 CCControlButton* CCControlButton::create(string title, const char * fontName, float fontSize)
 {
@@ -160,10 +160,10 @@ bool CCControlButton::initWithBackgroundSprite(CCScale9Sprite* sprite)
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
-// CCControlButton* CCControlButton::buttonWithBackgroundSprite(CCScale9Sprite* sprite)
-// {
-//     return CCControlButton::create(sprite);
-// }
+CCControlButton* CCControlButton::buttonWithBackgroundSprite(CCScale9Sprite* sprite)
+{
+    return CCControlButton::create(sprite);
+}
 
 CCControlButton* CCControlButton::create(CCScale9Sprite* sprite)
 {

@@ -87,20 +87,20 @@ public:
     @warning: This interface will be deprecated in future.
     @since v0.99.5
     */
-    //static CCAnimation* animation(void);
+    static CCAnimation* animation(void);
 
     /* Creates an animation with an array of CCSpriteFrame and a delay between frames in seconds.
      The frames will be added with one "delay unit".
      @warning: This interface will be deprecated in future.
      @since v0.99.5
     */
-    //static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
+    static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
 
     /* Creates an animation with an array of CCAnimationFrame, the delay per units in seconds and and how many times it should be executed.
      @warning: This interface will be deprecated in future.
      @since v2.0
      */
-    //static CCAnimation* animationWithAnimationFrames(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+    static CCAnimation* animationWithAnimationFrames(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
         /** Creates an animation
     @since v0.99.5
