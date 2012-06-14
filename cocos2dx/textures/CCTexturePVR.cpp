@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "CCTexturePVR.h"
 #include "ccMacros.h"
-#include "CCData.h"
 #include "CCConfiguration.h"
 #include "support/ccUtils.h"
 #include "CCStdC.h"
@@ -403,7 +402,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     }
     else
     {
-        pvrdata = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
+        pvrdata = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
     }
     
     if (pvrlen < 0)

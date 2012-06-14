@@ -206,7 +206,7 @@ void CCControlSwitchSprite::needsLayout()
             m_pOffSprite->getContentSize().height / 2));
     }
 
-    CCRenderTexture *rt = CCRenderTexture::renderTextureWithWidthAndHeight((int)m_pMaskTexture->getContentSize().width, (int)m_pMaskTexture->getContentSize().height);
+    CCRenderTexture *rt = CCRenderTexture::create((int)m_pMaskTexture->getContentSize().width, (int)m_pMaskTexture->getContentSize().height);
 
     rt->begin();
     m_pOnSprite->visit();
@@ -275,6 +275,11 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
 
 CCControlSwitch* CCControlSwitch::switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
 {
+    return CCControlSwitch::create(maskSprite, onSprite, offSprite, thumbSprite);
+}
+
+CCControlSwitch* CCControlSwitch::create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
+{
     CCControlSwitch* pRet = new CCControlSwitch();
     if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL))
     {
@@ -319,6 +324,11 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
 
 CCControlSwitch* CCControlSwitch::switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel)
 {
+    return CCControlSwitch::create(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
+}
+
+CCControlSwitch* CCControlSwitch::create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel)
+{
     CCControlSwitch* pRet = new CCControlSwitch();
     if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel))
     {
@@ -342,7 +352,7 @@ void CCControlSwitch::setOn(bool isOn, bool animated)
 
     m_pSwitchSprite->runAction
     (
-        CCActionTween::actionWithDuration
+        CCActionTween::create
             (
                 0.2f, 
                 "sliderXPosition",

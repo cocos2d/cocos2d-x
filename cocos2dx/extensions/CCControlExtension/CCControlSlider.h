@@ -75,8 +75,24 @@ public:
     /** 
     * Creates slider with a background filename, a progress filename and a 
     * thumb image filename.
+    @warning: This interface will be deprecated in future.
     */
     static CCControlSlider* sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile);
+
+    /** 
+    * Creates a slider with a given background sprite and a progress bar and a
+    * thumb item.
+    *@warning: This interface will be deprecated in future.
+    * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
+    */
+    static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
+
+
+        /** 
+    * Creates slider with a background filename, a progress filename and a 
+    * thumb image filename.
+    */
+    static CCControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile);
 
     /** 
     * Creates a slider with a given background sprite and a progress bar and a
@@ -84,9 +100,7 @@ public:
     *
     * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
     */
-    static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
-
-
+    static CCControlSlider* create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
 
 
 protected:

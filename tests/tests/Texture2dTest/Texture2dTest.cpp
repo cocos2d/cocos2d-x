@@ -136,23 +136,23 @@ void TextureDemo::onEnter()
 
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
     CCSize s = CCDirector::sharedDirector()->getWinSize();    
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 26);
+    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 26);
     addChild(label, 1, kTagLabel);
     label->setPosition(ccp(s.width/2, s.height-50));
 
     std::string strSubtitle = subtitle();
     if(strSubtitle.length())
     {
-        CCLabelTTF *l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+        CCLabelTTF *l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TextureDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(TextureDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TextureDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(TextureDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(TextureDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(TextureDemo::nextCallback) );
     
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
     item1->setPosition(ccp( s.width/2 - 100,30));
     item2->setPosition(ccp( s.width/2, 30));
@@ -212,7 +212,7 @@ void TextureTIFF::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image.tiff");
+    CCSprite *img = CCSprite::create("Images/test_image.tiff");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     this->addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -234,7 +234,7 @@ void TexturePNG::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image.png");
+    CCSprite *img = CCSprite::create("Images/test_image.png");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -255,7 +255,7 @@ void TextureJPEG::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image.jpeg");
+    CCSprite *img = CCSprite::create("Images/test_image.jpeg");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -283,26 +283,26 @@ void TextureMipMap::onEnter()
 
     CCTexture2D *texture1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas_nomipmap.png");
 
-    CCSprite *img0 = CCSprite::spriteWithTexture(texture0);
+    CCSprite *img0 = CCSprite::createWithTexture(texture0);
     img0->setTextureRect(CCRectMake(85, 121, 85, 121));
     img0->setPosition(ccp( s.width/3.0f, s.height/2.0f));
     addChild(img0);
 
-    CCSprite *img1 = CCSprite::spriteWithTexture(texture1);
+    CCSprite *img1 = CCSprite::createWithTexture(texture1);
     img1->setTextureRect(CCRectMake(85, 121, 85, 121));
     img1->setPosition(ccp( 2*s.width/3.0f, s.height/2.0f));
     addChild(img1);
     
     
-    CCEaseOut* scale1 = CCEaseOut::actionWithAction(CCScaleBy::actionWithDuration(4, 0.01f), 3);
+    CCEaseOut* scale1 = CCEaseOut::create(CCScaleBy::create(4, 0.01f), 3);
     CCActionInterval* sc_back = scale1->reverse();
     
     CCEaseOut* scale2 = (CCEaseOut*) (scale1->copy());
     scale2->autorelease();
     CCActionInterval* sc_back2 = scale2->reverse();
 
-    img0->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(scale1, sc_back, NULL))));
-    img1->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(scale2, sc_back2, NULL))));
+    img0->runAction(CCRepeatForever::create((CCActionInterval*)(CCSequence::create(scale1, sc_back, NULL))));
+    img1->runAction(CCRepeatForever::create((CCActionInterval*)(CCSequence::create(scale2, sc_back2, NULL))));
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 }
 
@@ -328,7 +328,7 @@ void TexturePVRMipMap::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *imgMipMap = CCSprite::spriteWithFile("Images/logo-mipmap.pvr");
+    CCSprite *imgMipMap = CCSprite::create("Images/logo-mipmap.pvr");
     if( imgMipMap )
     {
         imgMipMap->setPosition(ccp( s.width/2.0f-100, s.height/2.0f));
@@ -339,21 +339,21 @@ void TexturePVRMipMap::onEnter()
         imgMipMap->getTexture()->setTexParameters(&texParams);
     }
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/logo-nomipmap.pvr");
+    CCSprite *img = CCSprite::create("Images/logo-nomipmap.pvr");
     if( img )
     {
         img->setPosition(ccp( s.width/2.0f+100, s.height/2.0f));
         addChild(img);
 
-        CCEaseOut* scale1 = CCEaseOut::actionWithAction(CCScaleBy::actionWithDuration(4, 0.01f), 3);
+        CCEaseOut* scale1 = CCEaseOut::create(CCScaleBy::create(4, 0.01f), 3);
         CCActionInterval* sc_back = scale1->reverse();
 
         CCEaseOut* scale2 = (CCEaseOut*) (scale1->copy());
         scale2->autorelease();
         CCActionInterval* sc_back2 = scale2->reverse();
         
-        imgMipMap->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(scale1, sc_back, NULL))));
-        img->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(scale2, sc_back2, NULL))));
+        imgMipMap->runAction(CCRepeatForever::create((CCActionInterval*)(CCSequence::create(scale1, sc_back, NULL))));
+        img->runAction(CCRepeatForever::create((CCActionInterval*)(CCSequence::create(scale2, sc_back2, NULL))));
     }
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 }
@@ -377,7 +377,7 @@ void TexturePVRMipMap2::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *imgMipMap = CCSprite::spriteWithFile("Images/test_image_rgba4444_mipmap.pvr");
+    CCSprite *imgMipMap = CCSprite::create("Images/test_image_rgba4444_mipmap.pvr");
     imgMipMap->setPosition(ccp( s.width/2.0f-100, s.height/2.0f));
     addChild(imgMipMap);
     
@@ -385,19 +385,19 @@ void TexturePVRMipMap2::onEnter()
     ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
     imgMipMap->getTexture()->setTexParameters(&texParams);
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image.png");
+    CCSprite *img = CCSprite::create("Images/test_image.png");
     img->setPosition(ccp( s.width/2.0f+100, s.height/2.0f));
     addChild(img);
     
-    CCEaseOut* scale1 = CCEaseOut::actionWithAction(CCScaleBy::actionWithDuration(4, 0.01f), 3);
+    CCEaseOut* scale1 = CCEaseOut::create(CCScaleBy::create(4, 0.01f), 3);
     CCActionInterval* sc_back = scale1->reverse();
 
     CCEaseOut* scale2 = (CCEaseOut*) (scale1->copy());
     scale2->autorelease();
     CCActionInterval* sc_back2 = scale2->reverse();
     
-    imgMipMap->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(scale1, sc_back, NULL))));
-    img->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(scale2, sc_back2, NULL))));
+    imgMipMap->runAction(CCRepeatForever::create((CCActionInterval*)(CCSequence::create(scale1, sc_back, NULL))));
+    img->runAction(CCRepeatForever::create((CCActionInterval*)(CCSequence::create(scale2, sc_back2, NULL))));
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 }
 
@@ -423,7 +423,7 @@ void TexturePVR2BPP::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_pvrtc2bpp.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_pvrtc2bpp.pvr");
     
     if( img )
     {
@@ -450,7 +450,7 @@ void TexturePVR::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image.pvr");
     
     if( img )
     {
@@ -482,7 +482,7 @@ void TexturePVR4BPP::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_pvrtc4bpp.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_pvrtc4bpp.pvr");
     
     if( img )
     {
@@ -513,7 +513,7 @@ void TexturePVRRGBA8888::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgba8888.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_rgba8888.pvr");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -536,7 +536,7 @@ void TexturePVRBGRA8888::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_bgra8888.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_bgra8888.pvr");
     if( img )
     {
         img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
@@ -566,7 +566,7 @@ void TexturePVRRGBA5551::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgba5551.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_rgba5551.pvr");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -589,7 +589,7 @@ void TexturePVRRGBA4444::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgba4444.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_rgba4444.pvr");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -614,9 +614,9 @@ void TexturePVRRGBA4444GZ::onEnter()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // android can not pack .gz file into apk file
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgba4444.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_rgba4444.pvr");
 #else
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgba4444.pvr.gz");
+    CCSprite *img = CCSprite::create("Images/test_image_rgba4444.pvr.gz");
 #endif
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
@@ -645,7 +645,7 @@ void TexturePVRRGBA4444CCZ::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgba4444.pvr.ccz");
+    CCSprite *img = CCSprite::create("Images/test_image_rgba4444.pvr.ccz");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);    
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -673,7 +673,7 @@ void TexturePVRRGB565::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgb565.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_rgb565.pvr");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -692,7 +692,7 @@ void TexturePVRRGB888::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_rgb888.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_rgb888.pvr");
     if (img != NULL)
     {
         img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
@@ -719,7 +719,7 @@ void TexturePVRA8::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_a8.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_a8.pvr");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -743,7 +743,7 @@ void TexturePVRI8::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_i8.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_i8.pvr");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -766,7 +766,7 @@ void TexturePVRAI88::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image_ai88.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image_ai88.pvr");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -789,7 +789,7 @@ void TexturePVRBadEncoding::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/test_image-bad_encoding.pvr");
+    CCSprite *img = CCSprite::create("Images/test_image-bad_encoding.pvr");
     if( img )
     {
         img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
@@ -817,7 +817,7 @@ void TexturePVRNonSquare::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/grossini_128x256_mipmap.pvr");
+    CCSprite *img = CCSprite::create("Images/grossini_128x256_mipmap.pvr");
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
@@ -843,7 +843,7 @@ void TexturePVRNPOT4444::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite *img = CCSprite::spriteWithFile("Images/grossini_pvr_rgba4444.pvr");
+    CCSprite *img = CCSprite::create("Images/grossini_pvr_rgba4444.pvr");
     if ( img )
     {
         img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
@@ -872,7 +872,7 @@ void TexturePVRNPOT8888::onEnter()
     TextureDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite *img = CCSprite::spriteWithFile("Images/grossini_pvr_rgba8888.pvr");
+    CCSprite *img = CCSprite::create("Images/grossini_pvr_rgba8888.pvr");
     if( img )
     {
         img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
@@ -906,7 +906,7 @@ void TextureAlias::onEnter()
     //
     // Default filter is GL_LINEAR
     
-    CCSprite *sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp( s.width/3.0f, s.height/2.0f));
     addChild(sprite);
     
@@ -917,7 +917,7 @@ void TextureAlias::onEnter()
     // Sprite 1: GL_NEAREST
     //    
     
-    CCSprite *sprite2 = CCSprite::spriteWithFile("Images/grossinis_sister2.png");
+    CCSprite *sprite2 = CCSprite::create("Images/grossinis_sister2.png");
     sprite2->setPosition(ccp( 2*s.width/3.0f, s.height/2.0f));
     addChild(sprite2);
     
@@ -925,9 +925,9 @@ void TextureAlias::onEnter()
     sprite2->getTexture()->setAliasTexParameters();
         
     // scale them to show
-    CCScaleBy* sc = CCScaleBy::actionWithDuration(3, 8.0f);
+    CCScaleBy* sc = CCScaleBy::create(3, 8.0f);
     CCScaleBy* sc_back = (CCScaleBy*) (sc->reverse());
-    CCRepeatForever* scaleforever = CCRepeatForever::actionWithAction((CCActionInterval*) (CCSequence::actions(sc, sc_back, NULL)));
+    CCRepeatForever* scaleforever = CCRepeatForever::create((CCActionInterval*) (CCSequence::create(sc, sc_back, NULL)));
     CCRepeatForever* scaleToo = (CCRepeatForever*) (scaleforever->copy());
     scaleToo->autorelease();
 
@@ -967,12 +967,12 @@ void TexturePixelFormat::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLayerColor *background = CCLayerColor::layerWithColor(ccc4(128,128,128,255), s.width, s.height);
+    CCLayerColor *background = CCLayerColor::create(ccc4(128,128,128,255), s.width, s.height);
     addChild(background, -1);
     
     // RGBA 8888 image (32-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-    CCSprite *sprite1 = CCSprite::spriteWithFile("Images/test-rgba1.png");
+    CCSprite *sprite1 = CCSprite::create("Images/test-rgba1.png");
     sprite1->setPosition(ccp(1*s.width/7, s.height/2+32));
     addChild(sprite1, 0);
 
@@ -981,7 +981,7 @@ void TexturePixelFormat::onEnter()
 
     // RGBA 4444 image (16-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-    CCSprite *sprite2 = CCSprite::spriteWithFile("Images/test-rgba1.png");
+    CCSprite *sprite2 = CCSprite::create("Images/test-rgba1.png");
     sprite2->setPosition(ccp(2*s.width/7, s.height/2-32));
     addChild(sprite2, 0);
 
@@ -990,7 +990,7 @@ void TexturePixelFormat::onEnter()
 
     // RGB5A1 image (16-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
-    CCSprite *sprite3 = CCSprite::spriteWithFile("Images/test-rgba1.png");
+    CCSprite *sprite3 = CCSprite::create("Images/test-rgba1.png");
     sprite3->setPosition(ccp(3*s.width/7, s.height/2+32));
     addChild(sprite3, 0);
 
@@ -999,7 +999,7 @@ void TexturePixelFormat::onEnter()
 
     // RGB888 image
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB888);
-    CCSprite *sprite4 = CCSprite::spriteWithFile("Images/test-rgba1.png");
+    CCSprite *sprite4 = CCSprite::create("Images/test-rgba1.png");
     sprite4->setPosition(ccp(4*s.width/7, s.height/2-32));
     addChild(sprite4, 0);
 
@@ -1008,7 +1008,7 @@ void TexturePixelFormat::onEnter()
 
     // RGB565 image (16-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565);
-    CCSprite *sprite5 = CCSprite::spriteWithFile("Images/test-rgba1.png");
+    CCSprite *sprite5 = CCSprite::create("Images/test-rgba1.png");
     sprite5->setPosition(ccp(5*s.width/7, s.height/2+32));
     addChild(sprite5, 0);
 
@@ -1017,17 +1017,17 @@ void TexturePixelFormat::onEnter()
 
     // A8 image (8-bit)
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8);
-    CCSprite *sprite6 = CCSprite::spriteWithFile("Images/test-rgba1.png");
+    CCSprite *sprite6 = CCSprite::create("Images/test-rgba1.png");
     sprite6->setPosition(ccp(6*s.width/7, s.height/2-32));
     addChild(sprite6, 0);
     
     // remove texture from texture manager    
     CCTextureCache::sharedTextureCache()->removeTexture(sprite6->getTexture());
 
-    CCFadeOut* fadeout = CCFadeOut::actionWithDuration(2);
-    CCFadeIn*  fadein  = CCFadeIn::actionWithDuration(2);
-    CCFiniteTimeAction* seq = CCSequence::actions(CCDelayTime::actionWithDuration(2), fadeout, fadein, NULL);
-    CCRepeatForever* seq_4ever = CCRepeatForever::actionWithAction((CCActionInterval*) seq);
+    CCFadeOut* fadeout = CCFadeOut::create(2);
+    CCFadeIn*  fadein  = CCFadeIn::create(2);
+    CCFiniteTimeAction* seq = CCSequence::create(CCDelayTime::create(2), fadeout, fadein, NULL);
+    CCRepeatForever* seq_4ever = CCRepeatForever::create((CCActionInterval*) seq);
     CCRepeatForever* seq_4ever2 = (CCRepeatForever*) (seq_4ever->copy()); seq_4ever2->autorelease();
     CCRepeatForever* seq_4ever3 = (CCRepeatForever*) (seq_4ever->copy()); seq_4ever3->autorelease();
     CCRepeatForever* seq_4ever4 = (CCRepeatForever*) (seq_4ever->copy()); seq_4ever4->autorelease();
@@ -1067,7 +1067,7 @@ void TextureBlend::onEnter()
     {
         // BOTTOM sprites have alpha pre-multiplied
         // they use by default GL_ONE, GL_ONE_MINUS_SRC_ALPHA
-        CCSprite *cloud = CCSprite::spriteWithFile("Images/test_blend.png");
+        CCSprite *cloud = CCSprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 100+i);
         cloud->setPosition(ccp(50+25*i, 80));
         ccBlendFunc blendFunc1 = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
@@ -1075,7 +1075,7 @@ void TextureBlend::onEnter()
 
         // CENTER sprites have also alpha pre-multiplied
         // they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
-        cloud = CCSprite::spriteWithFile("Images/test_blend.png");
+        cloud = CCSprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 200+i);
         cloud->setPosition(ccp(50+25*i, 160));
         ccBlendFunc blendFunc2 = { GL_ONE_MINUS_DST_COLOR, GL_ZERO };
@@ -1083,7 +1083,7 @@ void TextureBlend::onEnter()
 
         // UPPER sprites are using custom blending function
         // You can set any blend function to your sprites
-        cloud = CCSprite::spriteWithFile("Images/test_blend.png");
+        cloud = CCSprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 200+i);
         cloud->setPosition(ccp(50+25*i, 320-80));
         ccBlendFunc blendFunc3 = { GL_SRC_ALPHA, GL_ONE };
@@ -1116,14 +1116,14 @@ void TextureAsync::onEnter()
 
     CCSize size =CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF *label = CCLabelTTF::labelWithString("Loading...", "Marker Felt", 32);
+    CCLabelTTF *label = CCLabelTTF::create("Loading...", "Marker Felt", 32);
     label->setPosition(ccp( size.width/2, size.height/2));
     addChild(label, 10);
 
-    CCScaleBy* scale = CCScaleBy::actionWithDuration(0.3f, 2);
+    CCScaleBy* scale = CCScaleBy::create(0.3f, 2);
     CCScaleBy* scale_back = (CCScaleBy*)scale->reverse();
-    CCSequence* seq = (CCSequence*)CCSequence::actions(scale, scale_back, NULL);
-    label->runAction(CCRepeatForever::actionWithAction(seq));
+    CCSequence* seq = (CCSequence*)CCSequence::create(scale, scale_back, NULL);
+    label->runAction(CCRepeatForever::create(seq));
 
     scheduleOnce(schedule_selector(TextureAsync::loadImages), 1.0f);
 }
@@ -1162,7 +1162,7 @@ void TextureAsync::imageLoaded(CCObject* pObj)
 
     // This test just creates a sprite based on the Texture
 
-    CCSprite *sprite = CCSprite::spriteWithTexture(tex);
+    CCSprite *sprite = CCSprite::createWithTexture(tex);
     sprite->setAnchorPoint(ccp(0,0));
     addChild(sprite, -1);
 
@@ -1199,17 +1199,17 @@ void TextureGlClamp::onEnter()
 
     // The .png image MUST be power of 2 in order to create a continue effect.
     // eg: 32x64, 512x128, 256x1024, 64x64, etc..
-    CCSprite *sprite = CCSprite::spriteWithFile("Images/pattern1.png", CCRectMake(0,0,512,256));
+    CCSprite *sprite = CCSprite::create("Images/pattern1.png", CCRectMake(0,0,512,256));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(ccp(size.width/2,size.height/2));
     ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
     sprite->getTexture()->setTexParameters(&params);
 
-    CCRotateBy* rotate = CCRotateBy::actionWithDuration(4, 360);
+    CCRotateBy* rotate = CCRotateBy::create(4, 360);
     sprite->runAction(rotate);
-    CCScaleBy* scale = CCScaleBy::actionWithDuration(2, 0.04f);
+    CCScaleBy* scale = CCScaleBy::create(2, 0.04f);
     CCScaleBy* scaleBack = (CCScaleBy*) (scale->reverse());
-    CCFiniteTimeAction* seq = CCSequence::actions(scale, scaleBack, NULL);
+    CCFiniteTimeAction* seq = CCSequence::create(scale, scaleBack, NULL);
     sprite->runAction(seq);
 }
 
@@ -1236,17 +1236,17 @@ void TextureGlRepeat::onEnter()
     
     // The .png image MUST be power of 2 in order to create a continue effect.
     // eg: 32x64, 512x128, 256x1024, 64x64, etc..
-    CCSprite *sprite = CCSprite::spriteWithFile("Images/pattern1.png", CCRectMake(0, 0, 4096, 4096));
+    CCSprite *sprite = CCSprite::create("Images/pattern1.png", CCRectMake(0, 0, 4096, 4096));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(ccp(size.width/2,size.height/2));
     ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
     sprite->getTexture()->setTexParameters(&params);
     
-    CCRotateBy* rotate = CCRotateBy::actionWithDuration(4, 360);
+    CCRotateBy* rotate = CCRotateBy::create(4, 360);
     sprite->runAction(rotate);
-    CCScaleBy* scale = CCScaleBy::actionWithDuration(2, 0.04f);
+    CCScaleBy* scale = CCScaleBy::create(2, 0.04f);
     CCScaleBy* scaleBack = (CCScaleBy*) (scale->reverse());
-    CCFiniteTimeAction* seq = CCSequence::actions(scale, scaleBack, NULL);
+    CCFiniteTimeAction* seq = CCSequence::create(scale, scaleBack, NULL);
     sprite->runAction(seq);
 }
 
@@ -1271,28 +1271,28 @@ void TextureSizeTest::onEnter()
     CCSprite *sprite = NULL;
     
     CCLog("Loading 512x512 image...");
-    sprite = CCSprite::spriteWithFile("Images/texture512x512.png");
+    sprite = CCSprite::create("Images/texture512x512.png");
     if( sprite )
         CCLog("OK\n");
     else
         CCLog("Error\n");
 
     CCLog("Loading 1024x1024 image...");
-    sprite = CCSprite::spriteWithFile("Images/texture1024x1024.png");
+    sprite = CCSprite::create("Images/texture1024x1024.png");
     if( sprite )
         CCLog("OK\n");
     else
         CCLog("Error\n");
 //     @todo
 //     CCLog("Loading 2048x2048 image...");
-//     sprite = CCSprite::spriteWithFile("Images/texture2048x2048.png");
+//     sprite = CCSprite::create("Images/texture2048x2048.png");
 //     if( sprite )
 //         CCLog("OK\n");
 //     else
 //         CCLog("Error\n");
 //     
 //     CCLog("Loading 4096x4096 image...");
-//     sprite = CCSprite::spriteWithFile("Images/texture4096x4096.png");
+//     sprite = CCSprite::create("Images/texture4096x4096.png");
 //     if( sprite )
 //         CCLog("OK\n");
 //     else
@@ -1322,7 +1322,7 @@ void TextureCache1::onEnter()
     
     CCSprite *sprite;
 
-    sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    sprite = CCSprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/5*1, s.height/2));
     sprite->getTexture()->setAliasTexParameters();
     sprite->setScale(2);
@@ -1330,7 +1330,7 @@ void TextureCache1::onEnter()
 
     CCTextureCache::sharedTextureCache()->removeTexture(sprite->getTexture());
     
-    sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    sprite = CCSprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(ccp(s.width/5*2, s.height/2));
     sprite->getTexture()->setAntiAliasTexParameters();
     sprite->setScale(2);
@@ -1338,7 +1338,7 @@ void TextureCache1::onEnter()
 
     // 2nd set of sprites
     
-    sprite = CCSprite::spriteWithFile("Images/grossinis_sister2.png");
+    sprite = CCSprite::create("Images/grossinis_sister2.png");
     sprite->setPosition(ccp(s.width/5*3, s.height/2));
     sprite->getTexture()->setAliasTexParameters();
     sprite->setScale(2);
@@ -1346,7 +1346,7 @@ void TextureCache1::onEnter()
     
     CCTextureCache::sharedTextureCache()->removeTextureForKey("Images/grossinis_sister2.png");
 
-    sprite = CCSprite::spriteWithFile("Images/grossinis_sister2.png");
+    sprite = CCSprite::create("Images/grossinis_sister2.png");
     sprite->setPosition(ccp(s.width/5*4, s.height/2));
     sprite->getTexture()->setAntiAliasTexParameters();
     sprite->setScale(2);
@@ -1468,29 +1468,29 @@ void TextureMemoryAlloc::onEnter()
     
     CCMenuItemFont::setFontSize(24);
     
-    CCMenuItem *item1 = CCMenuItemFont::itemWithString("PNG", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item1 = CCMenuItemFont::create("PNG", this, menu_selector(TextureMemoryAlloc::updateImage));
     item1->setTag(0);
     
-    CCMenuItem *item2 = CCMenuItemFont::itemWithString("RGBA8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item2 = CCMenuItemFont::create("RGBA8", this, menu_selector(TextureMemoryAlloc::updateImage));
     item2->setTag(1);
     
-    CCMenuItem *item3 = CCMenuItemFont::itemWithString("RGB8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item3 = CCMenuItemFont::create("RGB8", this, menu_selector(TextureMemoryAlloc::updateImage));
     item3->setTag(2);
     
-    CCMenuItem *item4 = CCMenuItemFont::itemWithString("RGBA4", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item4 = CCMenuItemFont::create("RGBA4", this, menu_selector(TextureMemoryAlloc::updateImage));
     item4->setTag(3);
     
-    CCMenuItem *item5 = CCMenuItemFont::itemWithString("A8", this, menu_selector(TextureMemoryAlloc::updateImage));
+    CCMenuItem *item5 = CCMenuItemFont::create("A8", this, menu_selector(TextureMemoryAlloc::updateImage));
     item5->setTag(4);
     
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, item4, item5, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, item4, item5, NULL);
     menu->alignItemsHorizontally();
     
     addChild(menu);
     
-    CCMenuItemFont *warmup = CCMenuItemFont::itemWithString("warm up texture", this, menu_selector(TextureMemoryAlloc::changeBackgroundVisible));
+    CCMenuItemFont *warmup = CCMenuItemFont::create("warm up texture", this, menu_selector(TextureMemoryAlloc::changeBackgroundVisible));
     
-    CCMenu *menu2 = CCMenu::menuWithItems(warmup, NULL);
+    CCMenu *menu2 = CCMenu::create(warmup, NULL);
 
     menu2->alignItemsHorizontally();
     
@@ -1538,7 +1538,7 @@ void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
 			break;
 	}
 
-    m_pBackground = CCSprite::spriteWithFile(file.c_str());
+    m_pBackground = CCSprite::create(file.c_str());
     addChild(m_pBackground, -10);
 	
     m_pBackground->setIsVisible(false);

@@ -77,7 +77,7 @@ ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // title
-    CCLabelTTF *label = CCLabelTTF::labelWithString("Multi touch the screen", "Marker Felt", 36);
+    CCLabelTTF *label = CCLabelTTF::create("Multi touch the screen", "Marker Felt", 36);
     label->setPosition(ccp( s.width / 2, s.height - 30));
     this->addChild(label, -1);
 
@@ -89,12 +89,12 @@ ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
 
 #if 1
     // Use batch node. Faster
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
+    CCSpriteBatchNode *parent = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
     m_pSpriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
     m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
-    CCNode *parent = CCNode::node();
+    CCNode *parent = CCNode::create();
 #endif
     addChild(parent, 0, kTagParentNode);
 
@@ -161,9 +161,9 @@ void ChipmunkAccelTouchTestLayer::update(float delta)
 
 void ChipmunkAccelTouchTestLayer::createResetButton()
 {
-    CCMenuItemImage *reset = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(ChipmunkAccelTouchTestLayer::reset));
+    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(ChipmunkAccelTouchTestLayer::reset));
 
-    CCMenu *menu = CCMenu::menuWithItems(reset, NULL);
+    CCMenu *menu = CCMenu::create(reset, NULL);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

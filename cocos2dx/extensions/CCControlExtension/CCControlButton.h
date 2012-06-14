@@ -97,13 +97,22 @@ protected:
 public:
     virtual bool init();
     virtual bool initWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
-    static CCControlButton* buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);    
+    //@warning: This interface will be deprecated in future.
+    static CCControlButton* buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
+    static CCControlButton* create(CCNode* label, CCScale9Sprite* backgroundSprite);
     
     virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+    //@warning: This interface will be deprecated in future.
     static CCControlButton* buttonWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+
+    static CCControlButton* create(std::string title, const char * fontName, float fontSize);
     
     virtual bool initWithBackgroundSprite(CCScale9Sprite* sprite);
+
+    //@warning: This interface will be deprecated in future.
     static CCControlButton* buttonWithBackgroundSprite(CCScale9Sprite* sprite);
+
+    static CCControlButton* create(CCScale9Sprite* sprite);
     
     //events
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);

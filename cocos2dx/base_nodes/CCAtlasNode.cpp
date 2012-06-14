@@ -63,14 +63,20 @@ CCAtlasNode::~CCAtlasNode()
 CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
                                              unsigned int itemsToRender)
 {
-    CCAtlasNode * pRet = new CCAtlasNode();
-    if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    return CCAtlasNode::create(tile, tileWidth, tileHeight, itemsToRender);
+}
+
+CCAtlasNode * CCAtlasNode::create(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
+											 unsigned int itemsToRender)
+{
+	CCAtlasNode * pRet = new CCAtlasNode();
+	if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	CC_SAFE_DELETE(pRet);
+	return NULL;
 }
 
 bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
