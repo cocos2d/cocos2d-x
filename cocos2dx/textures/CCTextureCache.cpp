@@ -502,7 +502,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
     {
         CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
     }
-    CC_SAFE_DELETE(data);
+    CC_SAFE_DELETE_ARRAY(pData);
 
     return texture;
 }
