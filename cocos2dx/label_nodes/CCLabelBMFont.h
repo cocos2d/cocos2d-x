@@ -192,6 +192,10 @@ public:
     static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
     static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
 
+    /** Creates an label.
+     */
+    static CCLabelBMFont * node();
+
     bool init();
     /** init a bitmap font altas with an initial string and the FNT file */
     bool initWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);

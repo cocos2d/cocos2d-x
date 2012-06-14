@@ -5,7 +5,7 @@
 
 class Paddle;
 
-using namespace cocos2d;
+USING_NS_CC;
 
 class Ball : public CCSprite
 {

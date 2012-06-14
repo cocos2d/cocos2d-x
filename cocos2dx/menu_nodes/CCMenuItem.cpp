@@ -437,7 +437,6 @@ void CCMenuItemSprite::setSelectedImage(CCNode* pImage)
         m_pSelectedImage = pImage;
         this->updateImagesVisibility();
     }
-
 }
 
 CCNode * CCMenuItemSprite::getDisabledImage()
@@ -520,13 +519,15 @@ CCMenuItemSprite * CCMenuItemSprite::itemWithNormalSprite(CCNode *normalSprite, 
 }
 bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector)
 {
-    CCAssert(normalSprite != NULL, "");
     CCMenuItem::initWithTarget(target, selector); 
     setNormalImage(normalSprite);
     setSelectedImage(selectedSprite);
     setDisabledImage(disabledSprite);
-    
-    this->setContentSize(m_pNormalImage->getContentSize());
+
+    if(m_pNormalImage)
+    {
+        this->setContentSize(m_pNormalImage->getContentSize());
+    }
     return true;
 }
 
@@ -536,37 +537,42 @@ bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* select
 void CCMenuItemSprite::selected()
 {
     CCMenuItem::selected();
-    
-    if (m_pDisabledImage)
+
+    if (m_pNormalImage)
     {
-        m_pDisabledImage->setIsVisible(false);
-    }
-    
-    if (m_pSelectedImage)
-    {
-        m_pNormalImage->setIsVisible(false);
-        m_pSelectedImage->setIsVisible(true);
-    }
-    else
-    {
-        m_pNormalImage->setIsVisible(true);
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->setIsVisible(false);
+        }
+
+        if (m_pSelectedImage)
+        {
+            m_pNormalImage->setIsVisible(false);
+            m_pSelectedImage->setIsVisible(true);
+        }
+        else
+        {
+            m_pNormalImage->setIsVisible(true);
+        }
     }
 }
 
 void CCMenuItemSprite::unselected()
 {
     CCMenuItem::unselected();
-    
-    m_pNormalImage->setIsVisible(true);
-    
-    if (m_pSelectedImage)
+    if (m_pNormalImage)
     {
-        m_pSelectedImage->setIsVisible(false);
-    }
-    
-    if (m_pDisabledImage)
-    {
-        m_pDisabledImage->setIsVisible(false);
+        m_pNormalImage->setIsVisible(true);
+
+        if (m_pSelectedImage)
+        {
+            m_pSelectedImage->setIsVisible(false);
+        }
+
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->setIsVisible(false);
+        }
     }
 }
 
@@ -605,6 +611,23 @@ void CCMenuItemSprite::updateImagesVisibility()
     }
 }
 
+
+CCMenuItemImage* CCMenuItemImage::node()
+{
+    CCMenuItemImage *pRet = new CCMenuItemImage();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool CCMenuItemImage::init(void)
+{
+    return initWithNormalImage(NULL, NULL, NULL, NULL, NULL);
+}
 CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, const char *selectedImage)
 {
     return CCMenuItemImage::itemWithNormalImage(normalImage, selectedImage, NULL, NULL, NULL);
@@ -641,10 +664,15 @@ CCMenuItemImage * CCMenuItemImage::itemWithNormalImage(const char *normalImage, 
 
 bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
 {
-    CCNode *normalSprite = CCSprite::spriteWithFile(normalImage);
+    CCNode *normalSprite = NULL;
     CCNode *selectedSprite = NULL;
     CCNode *disabledSprite = NULL;
-    
+
+    if (normalImage)
+    {
+        normalSprite = CCSprite::spriteWithFile(normalImage);
+    }
+
     if (selectedImage)
     {
         selectedSprite = CCSprite::spriteWithFile(selectedImage);
@@ -673,7 +701,6 @@ void CCMenuItemImage::setDisabledSpriteFrame(CCSpriteFrame * frame)
 {
     setDisabledImage(CCSprite::spriteWithSpriteFrame(frame));
 }
-
 //
 // MenuItemToggle
 //

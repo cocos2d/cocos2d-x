@@ -104,7 +104,8 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
     CCDICT_FOREACH(framesDict, pElement)
     {
         CCDictionary* frameDict = (CCDictionary*)pElement->getObject();
-        CCSpriteFrame* spriteFrame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(pElement->getStrKey());
+        std::string spriteFrameName = pElement->getStrKey();
+        CCSpriteFrame* spriteFrame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(spriteFrameName);
         if (spriteFrame)
         {
             continue;
@@ -171,7 +172,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
 
             // get aliases
             CCArray* aliases = (CCArray*) (frameDict->objectForKey("aliases"));
-            CCString * frameKey = new CCString(pElement->getStrKey());
+            CCString * frameKey = new CCString(spriteFrameName);
 
             CCObject* pObj = NULL;
             CCARRAY_FOREACH(aliases, pObj)
@@ -195,7 +196,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
         }
 
         // add sprite frame
-        m_pSpriteFrames->setObject(spriteFrame, pElement->getStrKey());
+        m_pSpriteFrames->setObject(spriteFrame, spriteFrameName);
         spriteFrame->release();
     }
 }
