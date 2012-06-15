@@ -38,7 +38,6 @@
 		781C36A21547F0ED00633F88 /* CCAffineTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C35961547F0ED00633F88 /* CCAffineTransform.cpp */; };
 		781C36A31547F0ED00633F88 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C35981547F0ED00633F88 /* CCArray.cpp */; };
 		781C36A41547F0ED00633F88 /* CCAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C359A1547F0ED00633F88 /* CCAutoreleasePool.cpp */; };
-		781C36A51547F0ED00633F88 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C359C1547F0ED00633F88 /* CCData.cpp */; };
 		781C36A61547F0ED00633F88 /* CCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C359E1547F0ED00633F88 /* CCDictionary.cpp */; };
 		781C36A71547F0ED00633F88 /* CCGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C35A01547F0ED00633F88 /* CCGeometry.cpp */; };
 		781C36A81547F0ED00633F88 /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C35A31547F0ED00633F88 /* CCNS.cpp */; };
@@ -234,8 +233,6 @@
 		781C35991547F0ED00633F88 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		781C359A1547F0ED00633F88 /* CCAutoreleasePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAutoreleasePool.cpp; sourceTree = "<group>"; };
 		781C359B1547F0ED00633F88 /* CCAutoreleasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAutoreleasePool.h; sourceTree = "<group>"; };
-		781C359C1547F0ED00633F88 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		781C359D1547F0ED00633F88 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		781C359E1547F0ED00633F88 /* CCDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDictionary.cpp; sourceTree = "<group>"; };
 		781C359F1547F0ED00633F88 /* CCDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDictionary.h; sourceTree = "<group>"; };
 		781C35A01547F0ED00633F88 /* CCGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGeometry.cpp; sourceTree = "<group>"; };
@@ -689,8 +686,6 @@
 				781C35991547F0ED00633F88 /* CCArray.h */,
 				781C359A1547F0ED00633F88 /* CCAutoreleasePool.cpp */,
 				781C359B1547F0ED00633F88 /* CCAutoreleasePool.h */,
-				781C359C1547F0ED00633F88 /* CCData.cpp */,
-				781C359D1547F0ED00633F88 /* CCData.h */,
 				781C359E1547F0ED00633F88 /* CCDictionary.cpp */,
 				781C359F1547F0ED00633F88 /* CCDictionary.h */,
 				781C35A01547F0ED00633F88 /* CCGeometry.cpp */,
@@ -1376,7 +1371,6 @@
 				781C36A21547F0ED00633F88 /* CCAffineTransform.cpp in Sources */,
 				781C36A31547F0ED00633F88 /* CCArray.cpp in Sources */,
 				781C36A41547F0ED00633F88 /* CCAutoreleasePool.cpp in Sources */,
-				781C36A51547F0ED00633F88 /* CCData.cpp in Sources */,
 				781C36A61547F0ED00633F88 /* CCDictionary.cpp in Sources */,
 				781C36A71547F0ED00633F88 /* CCGeometry.cpp in Sources */,
 				781C36A81547F0ED00633F88 /* CCNS.cpp in Sources */,

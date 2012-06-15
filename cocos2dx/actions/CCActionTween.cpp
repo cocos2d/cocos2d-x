@@ -29,6 +29,11 @@ NS_CC_BEGIN
 
 CCActionTween* CCActionTween::actionWithDuration(float aDuration, const char* key, float from, float to)
 {
+    return CCActionTween::create(aDuration, key, from, to);
+}
+
+CCActionTween* CCActionTween::create(float aDuration, const char* key, float from, float to)
+{
     CCActionTween* pRet = new CCActionTween();
     if (pRet && pRet->initWithDuration(aDuration, key, from, to))
     {
@@ -68,7 +73,7 @@ void CCActionTween::update(float dt)
 
 CCActionInterval* CCActionTween::reverse()
 {
-    return CCActionTween::actionWithDuration(m_fDuration, m_strKey.c_str(), m_fTo, m_fFrom);
+    return CCActionTween::create(m_fDuration, m_strKey.c_str(), m_fTo, m_fFrom);
 }
 
 

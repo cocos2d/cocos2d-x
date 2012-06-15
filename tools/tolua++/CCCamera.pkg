@@ -7,7 +7,7 @@ class  CCCamera : public CCObject
     char * description(void);
 
     void setDirty(bool bValue);
-    bool getDirty(void);
+    bool isDirty(void);
     void restore(void);
     void locate(void);
     void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);

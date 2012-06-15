@@ -31,10 +31,10 @@ void Bug422Layer::reset()
     removeChild(node, false);
 //    [self removeChildByTag:localtag-1 cleanup:NO];
 
-    CCMenuItem *item1 = CCMenuItemFont::itemWithString("One", this, menu_selector(Bug422Layer::menuCallback));
+    CCMenuItem *item1 = CCMenuItemFont::create("One", this, menu_selector(Bug422Layer::menuCallback));
     CCLog("MenuItemFont: %p", item1);
-    CCMenuItem *item2 = CCMenuItemFont::itemWithString("Two", this, menu_selector(Bug422Layer::menuCallback));
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, NULL);
+    CCMenuItem *item2 = CCMenuItemFont::create("Two", this, menu_selector(Bug422Layer::menuCallback));
+    CCMenu *menu = CCMenu::create(item1, item2, NULL);
     menu->alignItemsVertically();
 
     float x = CCRANDOM_0_1() * 50;

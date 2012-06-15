@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
 Copyright (c) 2011      Zynga Inc.
@@ -324,13 +324,13 @@ void CCNode::setGrid(CCGridBase* pGrid)
 
 
 /// isVisible getter
-bool CCNode::getIsVisible()
+bool CCNode::isVisible()
 {
     return m_bIsVisible;
 }
 
 /// isVisible setter
-void CCNode::setIsVisible(bool var)
+void CCNode::setVisible(bool var)
 {
     m_bIsVisible = var;
 }
@@ -374,11 +374,10 @@ void CCNode::setContentSize(const CCSize& size)
 }
 
 // isRunning getter
-bool CCNode::getIsRunning()
+bool CCNode::isRunning()
 {
     return m_bIsRunning;
 }
-
 
 /// parent getter
 CCNode * CCNode::getParent()
@@ -392,12 +391,12 @@ void CCNode::setParent(CCNode * var)
 }
 
 /// isRelativeAnchorPoint getter
-bool CCNode::getIgnoreAnchorPointForPosition()
+bool CCNode::isIgnoreAnchorPointForPosition()
 {
     return m_bIgnoreAnchorPointForPosition;
 }
 /// isRelativeAnchorPoint setter
-void CCNode::setIgnoreAnchorPointForPosition(bool newValue)
+void CCNode::ignoreAnchorPointForPosition(bool newValue)
 {
     if (newValue != m_bIgnoreAnchorPointForPosition) 
     {
@@ -439,11 +438,15 @@ CCRect CCNode::boundingBox()
 
 CCNode * CCNode::node(void)
 {
-    CCNode * pRet = new CCNode();
-    pRet->autorelease();
-    return pRet;
+    return CCNode::create();
 }
 
+CCNode * CCNode::create(void)
+{
+	CCNode * pRet = new CCNode();
+	pRet->autorelease();
+	return pRet;
+}
 
 void CCNode::cleanup()
 {
@@ -458,13 +461,13 @@ void CCNode::cleanup()
 
 const char* CCNode::description()
 {
-    return CCString::stringWithFormat("<CCNode | Tag = %d>", m_nTag)->getCString();
+    return CCString::createWithFormat("<CCNode | Tag = %d>", m_nTag)->getCString();
 }
 
 // lazy allocs
 void CCNode::childrenAlloc(void)
 {
-    m_pChildren = CCArray::arrayWithCapacity(4);
+    m_pChildren = CCArray::create(4);
     m_pChildren->retain();
 }
 

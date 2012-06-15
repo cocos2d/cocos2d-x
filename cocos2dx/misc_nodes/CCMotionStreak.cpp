@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011 ForzeField Studios S.L.
 
 http://www.cocos2d-x.org
@@ -68,6 +68,11 @@ CCMotionStreak::~CCMotionStreak()
 
 CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
 {
+    return CCMotionStreak::create(fade, minSeg, stroke, color, path);
+}
+
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+{
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
     {
@@ -80,6 +85,11 @@ CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float s
 }
 
 CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
+{
+    return CCMotionStreak::create(fade, minSeg, stroke, color, texture);
+}
+
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
 {
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
@@ -104,7 +114,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
 {
     CCNode::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
-    setIgnoreAnchorPointForPosition(true);
+    ignoreAnchorPointForPosition(true);
     m_bStartingPositionInitialized = false;
 
     m_tPositionR = CCPointZero;
@@ -201,12 +211,12 @@ GLubyte CCMotionStreak::getOpacity(void)
     return 0;
 }
 
-void CCMotionStreak::setIsOpacityModifyRGB(bool bValue)
+void CCMotionStreak::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);
 }
 
-bool CCMotionStreak::getIsOpacityModifyRGB(void)
+bool CCMotionStreak::isOpacityModifyRGB(void)
 {
     return false;
 }

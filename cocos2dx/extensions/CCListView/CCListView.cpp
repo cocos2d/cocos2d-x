@@ -37,6 +37,11 @@ NS_CC_EXT_BEGIN
 *******************************************/
 CCListView* CCListView::viewWithMode(CCListViewMode mode)
 {
+    return CCListView::create(mode);
+}
+
+CCListView* CCListView::create(CCListViewMode mode)
+{
     CCListView *pRet = new CCListView();
     if (pRet && pRet->initWithMode(mode))
     {
@@ -52,14 +57,15 @@ CCListView* CCListView::viewWithMode(CCListViewMode mode)
 
 bool CCListView::initWithMode(CCListViewMode mode)
 {
-    bool bRet = false;
-    m_nMode = mode;
-    m_layerPanel = CCLayer::node();
-    this->addChild(m_layerPanel);
-
-    bRet = CCLayerColor::initWithColor(ccc4(255, 255, 255, 0), 0, 0);
-    setIsTouchEnabled(true);
-    return bRet;
+    if (CCLayerColor::initWithColor(ccc4(255, 255, 255, 0), 0, 0))
+    {
+        setTouchEnabled(true);
+        m_nMode = mode;
+        m_layerPanel = CCLayer::create();
+        this->addChild(m_layerPanel);
+        return true;
+    }
+    return false;
 }
 
 CCListView::CCListView(void)
@@ -563,9 +569,9 @@ void CCListView::scrollCellToFront(unsigned int nRow, bool bAnimated)
 
     if (bAnimated)
     {
-        CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
-        CCEaseOut *ease = CCEaseOut::actionWithAction(moveBy, 3);
-        CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishScroll)), NULL);
+        CCMoveBy *moveBy = CCMoveBy::create(m_fActionDuration, CCPointMake(disX, disY));
+        CCEaseOut *ease = CCEaseOut::create(moveBy, 3);
+        CCFiniteTimeAction *actions = CCSequence::create(ease, CCCallFunc::create(this, callfunc_selector(CCListView::finishScroll)), NULL);
         m_layerPanel->runAction(actions);
     }
     else
@@ -896,9 +902,9 @@ void CCListView::scrollCellToBack(unsigned int nRow, bool bAnimated)
 
     if (bAnimated)
     {
-        CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
-        CCEaseOut *ease = CCEaseOut::actionWithAction(moveBy, 3);
-        CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishScroll)), NULL);
+        CCMoveBy *moveBy = CCMoveBy::create(m_fActionDuration, CCPointMake(disX, disY));
+        CCEaseOut *ease = CCEaseOut::create(moveBy, 3);
+        CCFiniteTimeAction *actions = CCSequence::create(ease, CCCallFunc::create(this, callfunc_selector(CCListView::finishScroll)), NULL);
         m_layerPanel->runAction(actions);
     }
     else
@@ -956,7 +962,7 @@ int CCListView::rowForTouch(cocos2d::CCTouch *touch)
         CCARRAY_FOREACH(pChildren, pObject)
         {
             CCNode* pChild = (CCNode*) pObject;
-            if (pChild && pChild->getIsVisible())
+            if (pChild && pChild->isVisible())
             {
                 CCPoint local = pChild->convertToNodeSpace(touchLocation);
                 CCRect r = CCRectZero;
@@ -978,7 +984,7 @@ void CCListView::finishFix(void)
 {
     if(m_pListViewParent)
     {
-        m_pListViewParent->setIsEnabled(true);
+        m_pListViewParent->setEnabled(true);
     }
     m_nState = CCListViewStateWatting;
     m_nSlideDir = CCListViewSlideDirNone;
@@ -1476,9 +1482,9 @@ void CCListView::fixFirstRow(void)
         }
         
         m_nState = CCListViewStateFix;
-        CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
-        CCEaseInOut *ease = CCEaseInOut::actionWithAction(moveBy, 2);
-        CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishFix)), NULL);
+        CCMoveBy *moveBy = CCMoveBy::create(m_fActionDuration, CCPointMake(disX, disY));
+        CCEaseInOut *ease = CCEaseInOut::create(moveBy, 2);
+        CCFiniteTimeAction *actions = CCSequence::create(ease, CCCallFunc::create(this, callfunc_selector(CCListView::finishFix)), NULL);
         m_layerPanel->runAction(actions);
     }
     else
@@ -1515,9 +1521,9 @@ void CCListView::fixLastRow(void)
         }
 
         m_nState = CCListViewStateFix;
-        CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
-        CCEaseInOut *ease = CCEaseInOut::actionWithAction(moveBy, 2);
-        CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishFix)), NULL);
+        CCMoveBy *moveBy = CCMoveBy::create(m_fActionDuration, CCPointMake(disX, disY));
+        CCEaseInOut *ease = CCEaseInOut::create(moveBy, 2);
+        CCFiniteTimeAction *actions = CCSequence::create(ease, CCCallFunc::create(this, callfunc_selector(CCListView::finishFix)), NULL);
         m_layerPanel->runAction(actions);
     }
     else
@@ -1723,9 +1729,9 @@ void CCListView::easeOutWithDistance(float dis)
     }
 
     m_nState = CCListViewStateEaseOut;
-    CCMoveBy *moveBy = CCMoveBy::actionWithDuration(m_fActionDuration, CCPointMake(disX, disY));
-    CCEaseOut *ease = CCEaseOut::actionWithAction(moveBy, 3);
-    CCFiniteTimeAction *actions = CCSequence::actions(ease, CCCallFunc::actionWithTarget(this, callfunc_selector(CCListView::finishEaseOut)), NULL);
+    CCMoveBy *moveBy = CCMoveBy::create(m_fActionDuration, CCPointMake(disX, disY));
+    CCEaseOut *ease = CCEaseOut::create(moveBy, 3);
+    CCFiniteTimeAction *actions = CCSequence::create(ease, CCCallFunc::create(this, callfunc_selector(CCListView::finishEaseOut)), NULL);
     m_layerPanel->runAction(actions);
 }
 
@@ -1820,6 +1826,8 @@ void CCListView::registerWithTouchDispatcher()
 
 void CCListView::onEnter(void)
 {
+    CCLayerColor::onEnter();
+
     if (0 == m_nNumberOfRows)
     {
         m_layerPanel->setPosition(CCPointZero);
@@ -1828,8 +1836,6 @@ void CCListView::onEnter(void)
         m_nNumberOfRows = triggerNumberOfCells();
         displayVisibleRows();
     }
-    
-    CCLayerColor::onEnter();
 }
 
 void CCListView::onExit(void)
@@ -1863,7 +1869,7 @@ bool CCListView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
      CC_UNUSED_PARAM(event);
 
-    if (!isTouchInside(touch) || !getIsVisible() || !m_bIsEnabled)
+    if (!isTouchInside(touch) || !isVisible() || !m_bIsEnabled)
     {
         return false;
     }
@@ -2020,7 +2026,7 @@ void CCListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
     if (CCListViewSlideDirNone != m_nSlideDir && m_pListViewParent)
     {
-        m_pListViewParent->setIsEnabled(false);
+        m_pListViewParent->setEnabled(false);
     }
 }
 

@@ -53,7 +53,11 @@ public:
     CCLayer();
     virtual ~CCLayer();
     bool init();
+
+    // @warning: This interface will be deprecated in future.
     static CCLayer *node(void);
+    /** create one layer */
+    static CCLayer *create(void);
 
     virtual void onEnter();
     virtual void onExit();
@@ -95,17 +99,25 @@ public:
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
     */
-    CC_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
+    bool isTouchEnabled();
+    void setTouchEnabled(bool value);
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
     */
-    CC_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+    bool isAccelerometerEnabled();
+    void setAccelerometerEnabled(bool value);
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-    CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
+    bool isKeypadEnabled();
+    void setKeypadEnabled(bool value);
+    
+protected:   
+    bool m_bIsTouchEnabled;
+    bool m_bIsAccelerometerEnabled;
+    bool m_bIsKeypadEnabled;
     
 private:
     // Script touch events handler
@@ -115,23 +127,44 @@ private:
 };
     
 // for the subclass of CCLayer, each has to implement the static "node" method 
+// @warning: This interface will be deprecated in future.
 #define LAYER_NODE_FUNC(layer) \
-static layer* node() \
-{ \
-layer *pRet = new layer(); \
-if (pRet && pRet->init()) \
-{ \
-pRet->autorelease(); \
-return pRet; \
-} \
-else \
-{ \
-delete pRet; \
-pRet = NULL; \
-return NULL; \
-} \
-}; 
+    static layer* node() \
+    { \
+        layer *pRet = new layer(); \
+        if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}
 
+
+// for the subclass of CCLayer, each has to implement the static "node" method 
+#define LAYER_CREATE_FUNC(layer) \
+    static layer* create() \
+    { \
+        layer *pRet = new layer(); \
+        if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}
+
+// @warning: This interface will be deprecated in future.
 #define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
     static layer* node(__PARAMTYPE__ __PARAM__) \
     { \
@@ -148,8 +181,24 @@ return NULL; \
             return NULL; \
         } \
     }
-
-
+ 
+    
+#define LAYER_CREATE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
+    static layer* create(__PARAMTYPE__ __PARAM__) \
+    { \
+        layer *pRet = new layer(); \
+        if (pRet && pRet->init(__PARAM__)) \
+        { \
+            pRet->autorelease(); \
+            return pRet; \
+        } \
+        else \
+        { \
+            delete pRet; \
+            pRet = NULL; \
+            return NULL; \
+        } \
+    }
 //
 // CCLayerColor
 //
@@ -173,10 +222,19 @@ public:
     virtual void draw();
     virtual void setContentSize(const CCSize& var);
 
-    /** creates a CCLayer with color, width and height in Points */
+    /** creates a CCLayer with color, width and height in Points 
+    @warning: This interface will be deprecated in future.
+    */
     static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
-    /** creates a CCLayer with color. Width and height are the window size. */
+    /** creates a CCLayer with color. Width and height are the window size. 
+    @warning: This interface will be deprecated in future.
+    */
     static CCLayerColor * layerWithColor(const ccColor4B& color);
+
+    /** creates a CCLayer with color, width and height in Points */
+    static CCLayerColor * create(const ccColor4B& color, GLfloat width, GLfloat height);
+    /** creates a CCLayer with color. Width and height are the window size. */
+    static CCLayerColor * create(const ccColor4B& color);
 
     virtual bool init();
     /** initializes a CCLayer with color, width and height in Points */
@@ -200,10 +258,11 @@ public:
     /** BlendFunction. Conforms to CCBlendProtocol protocol */
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
-    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool getIsOpacityModifyRGB(void) { return false;}
-    LAYER_NODE_FUNC(CCLayerColor);
-    
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) { return false;}
+    //@warning: This interface will be deprecated in future.
+    LAYER_CREATE_FUNC(CCLayerColor)
+    LAYER_NODE_FUNC(CCLayerColor)
 protected:
     virtual void updateColor();
 };
@@ -234,11 +293,21 @@ If ' compressedInterpolation' is enabled (default mode) you will see both the st
 class CC_DLL CCLayerGradient : public CCLayerColor
 {
 public:
-    /** Creates a full-screen CCLayer with a gradient between start and end. */
+    /** Creates a full-screen CCLayer with a gradient between start and end. 
+    @warning: This interface will be deprecated in future.
+    */
     static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end);
 
-    /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
+    /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. 
+    @warning: This interface will be deprecated in future.
+    */
     static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+
+    /** Creates a full-screen CCLayer with a gradient between start and end. */
+    static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end);
+
+    /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
+    static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
     /** Initializes the CCLayer with a gradient between start and end. */
     virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end);
@@ -255,9 +324,15 @@ public:
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
     Default: YES
     */
-    CC_PROPERTY(bool, m_bCompressedInterpolation, IsCompressedInterpolation)
+protected:
+    bool m_bCompressedInterpolation;
+public:
+    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
+    virtual bool isCompressedInterpolation();
 
-    LAYER_NODE_FUNC(CCLayerGradient);
+    // @warning: This interface will be deprecated in future.
+    LAYER_NODE_FUNC(CCLayerGradient)
+    LAYER_CREATE_FUNC(CCLayerGradient)
 protected:
     virtual void updateColor();
 };
@@ -277,14 +352,27 @@ public:
     CCLayerMultiplex();
     virtual ~CCLayerMultiplex();
 
-    /** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
+    /** creates a CCLayerMultiplex with one or more layers using a variable argument list. 
+    @warning: This interface will be deprecated in future.
+    */
     static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
 
     /**
      * lua script can not init with undetermined number of variables
      * so add these functinons to be used with lua.
+     @warning: This interface will be deprecated in future.
      */
     static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
+
+    /** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
+    static CCLayerMultiplex * create(CCLayer* layer, ... );
+
+    /**
+     * lua script can not init with undetermined number of variables
+     * so add these functinons to be used with lua.
+     */
+    static CCLayerMultiplex * createWithLayer(CCLayer* layer);
+
     void addLayer(CCLayer* layer);
     bool initWithLayer(CCLayer* layer);
 
@@ -299,7 +387,10 @@ public:
     */
     void switchToAndReleaseMe(unsigned int n);
     
-    LAYER_NODE_FUNC(CCLayerMultiplex);
+    //@warning: This interface will be deprecated in future.
+    LAYER_NODE_FUNC(CCLayerMultiplex)
+
+    LAYER_CREATE_FUNC(CCLayerMultiplex)
 };
 
 NS_CC_END

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Lam Pham
 
 http://www.cocos2d-x.org
@@ -75,13 +75,19 @@ public:
     virtual const ccColor3B& getColor(void);
     virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte opacity);
-    virtual void setIsOpacityModifyRGB(bool bValue);
-    virtual bool getIsOpacityModifyRGB(void);
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB(void);
+    
+    inline bool isReverseDirection() { return m_bReverseDirection; };
+    inline void setReverseDirection(bool value) { m_bReverseDirection = value; };
 
 public:
-    /** Creates a progress timer with the sprite as the shape the timer goes through */
+    /** Creates a progress timer with the sprite as the shape the timer goes through 
+    @warning: This interface will be deprecated in future.
+    */
     static CCProgressTimer* progressWithSprite(CCSprite* sp);
-
+    /** Creates a progress timer with the sprite as the shape the timer goes through */
+    static CCProgressTimer* create(CCSprite* sp);
 protected:
     ccTex2F textureCoordFromAlphaPoint(CCPoint alpha);
     ccVertex2F vertexFromAlphaPoint(CCPoint alpha);
@@ -118,7 +124,7 @@ protected:
      */
     CC_SYNTHESIZE(CCPoint, m_tBarChangeRate, BarChangeRate);
 
-    CC_SYNTHESIZE(bool ,m_bReverseDirection, IsReverseDirection);
+    bool m_bReverseDirection;
 };
 
 NS_CC_END

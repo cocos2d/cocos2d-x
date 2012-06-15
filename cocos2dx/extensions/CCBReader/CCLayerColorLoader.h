@@ -8,7 +8,7 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CCLayerColorLoader : public CCLayerLoader {
+class CC_DLL CCLayerColorLoader : public CCLayerLoader {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerColorLoader, loader);
     protected:

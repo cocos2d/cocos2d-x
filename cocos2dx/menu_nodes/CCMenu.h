@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -54,7 +54,8 @@ class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
     /** Opacity: conforms with CCRGBAProtocol protocol */
     CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
     /** whether or not the menu will receive events */
-    CC_SYNTHESIZE(bool, m_bEnabled, Enabled);
+    bool m_bEnabled;
+    
 public:
     CCMenu()
         : m_cOpacity(0)
@@ -62,20 +63,42 @@ public:
     {}
     virtual ~CCMenu(){}
 
-    /** creates an empty CCMenu */
+    /** creates an empty CCMenu 
+    @warning: This interface will be deprecated in future.
+    */
     static CCMenu* node();
 
-    /** creates a CCMenu with it's items */
+    /** creates a CCMenu with it's items 
+    @warning: This interface will be deprecated in future.
+    */
     static CCMenu* menuWithItems(CCMenuItem* item, ...);
 
-    /** creates a CCMenu with a NSArray of CCMenuItem objects */
+    /** creates a CCMenu with a NSArray of CCMenuItem objects 
+    @warning: This interface will be deprecated in future.
+    */
     static CCMenu* menuWithArray(CCArray* pArrayOfItems);
 
     /** creates a CCMenu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
       * number of variables.
+    @warning: This interface will be deprecated in future.
     */
     static CCMenu* menuWithItem(CCMenuItem* item);
+
+    /** creates an empty CCMenu */
+    static CCMenu* create();
+
+    /** creates a CCMenu with it's items */
+    static CCMenu* create(CCMenuItem* item, ...);
+
+    /** creates a CCMenu with a NSArray of CCMenuItem objects */
+    static CCMenu* create(CCArray* pArrayOfItems);
+
+    /** creates a CCMenu with it's item, then use addChild() to add 
+      * other items. It is used for script, it can't init with undetermined
+      * number of variables.
+    */
+    static CCMenu* createWithItem(CCMenuItem* item);
 
     /** initializes an empty CCMenu */
     bool init();
@@ -131,8 +154,11 @@ public:
     */
     virtual void onExit();
 
-    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool getIsOpacityModifyRGB(void) { return false;}
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) { return false;}
+    
+    virtual bool isEnabled() { return m_bEnabled; }
+    virtual void setEnabled(bool value) { m_bEnabled = value; };
 
 protected:
     CCMenuItem* itemForTouch(CCTouch * touch);

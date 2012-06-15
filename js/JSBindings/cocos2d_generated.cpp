@@ -4000,7 +4000,7 @@ JSBool S_CCSequence::jsactionsWithArray(JSContext *cx, uint32_t argc, jsval *vp)
 		JSObject *arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCArray* narg0; JSGET_PTRSHELL(CCArray, narg0, arg0);
-		CCFiniteTimeAction* ret = CCSequence::actionsWithArray(narg0);
+		CCFiniteTimeAction* ret = CCSequence::actionWithArray(narg0);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
@@ -16203,8 +16203,8 @@ JSBool S_CCNode::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *va
 			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(tmp));
 		} while (0);
 		break;
-	case kIsRelativeAnchorPoint:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsRelativeAnchorPoint()));
+	case kIsIgnoreAnchorPointForPosition:
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIgnoreAnchorPointForPosition()));
 		break;
 	case kTag:
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getTag(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
@@ -16292,8 +16292,8 @@ JSBool S_CCNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool st
 			if (tmp) { cobj->setParent(tmp); }
 		} while (0);
 		break;
-	case kIsRelativeAnchorPoint:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsRelativeAnchorPoint(tmp); } while (0);
+	case kIsIgnoreAnchorPointForPosition:
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIgnoreAnchorPointForPosition(tmp); } while (0);
 		break;
 	case kTag:
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setTag(tmp); } while (0);
@@ -16348,7 +16348,7 @@ void S_CCNode::jsCreateClass(JSContext *cx, JSObject *globalObj, const char *nam
 			{"contentSize", kContentSize, JSPROP_PERMANENT | JSPROP_SHARED, S_CCNode::jsPropertyGet, S_CCNode::jsPropertySet},
 			{"isRunning", kIsRunning, JSPROP_PERMANENT | JSPROP_SHARED, S_CCNode::jsPropertyGet, S_CCNode::jsPropertySet},
 			{"parent", kParent, JSPROP_PERMANENT | JSPROP_SHARED, S_CCNode::jsPropertyGet, S_CCNode::jsPropertySet},
-			{"isRelativeAnchorPoint", kIsRelativeAnchorPoint, JSPROP_PERMANENT | JSPROP_SHARED, S_CCNode::jsPropertyGet, S_CCNode::jsPropertySet},
+			{"isIgnoreAnchorPointForPosition", kIsIgnoreAnchorPointForPosition, JSPROP_PERMANENT | JSPROP_SHARED, S_CCNode::jsPropertyGet, S_CCNode::jsPropertySet},
 			{"tag", kTag, JSPROP_PERMANENT | JSPROP_SHARED, S_CCNode::jsPropertyGet, S_CCNode::jsPropertySet},
 			{"userData", kUserData, JSPROP_PERMANENT | JSPROP_SHARED, S_CCNode::jsPropertyGet, S_CCNode::jsPropertySet},
 			{"transform", kTransform, JSPROP_PERMANENT | JSPROP_SHARED, S_CCNode::jsPropertyGet, S_CCNode::jsPropertySet},
@@ -18294,8 +18294,8 @@ JSBool S_CCDirector::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	S_CCDirector *cobj; JSGET_PTRSHELL(S_CCDirector, cobj, obj);
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
-	case kFrames:
-		do { jsval tmp; JS_NewNumberValue(cx, cobj->getFrames(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
+	case kTotalFrames:
+		do { jsval tmp; JS_NewNumberValue(cx, cobj->getTotalFrames(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
 		break;
 	case kRunningScene:
 		do {
@@ -23835,10 +23835,8 @@ JSBool S_CCRenderTexture::jsend(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	S_CCRenderTexture* self = NULL; JSGET_PTRSHELL(S_CCRenderTexture, self, obj);
 	if (self == NULL) return JS_FALSE;
-	if (argc == 1) {
-		JSBool arg0;
-		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		self->end(arg0);
+	if (argc == 0) {
+		self->end();
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;

@@ -104,6 +104,8 @@ CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pC
 
     const char * path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFullFilePath->getCString());
 
+    CC_SAFE_FREE(ccbFullFilePath);
+
     unsigned long size = 0;
     this->mBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &size);
 

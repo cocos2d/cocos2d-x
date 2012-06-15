@@ -37,7 +37,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCData;
 class CCTMXObjectGroup;
 
 /** @file
@@ -181,8 +180,6 @@ public:
     bool parseXMLFile(const char *xmlFilename);
     /* initalises parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
     bool parseXMLString(const char *xmlString);
-    /* handles the work of parsing for parseXMLFile: and parseXMLString: */
-    bool parseXMLData(const CCData* data);
 
     CCDictionary* getTileProperties();
     void setTileProperties(CCDictionary* tileProperties);

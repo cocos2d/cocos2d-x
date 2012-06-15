@@ -13,20 +13,20 @@ class CCAction : public CCObject
     // int getTag(void);
     // void setTag(int nTag);
 
-    // static CCAction* action();
+    // static CCAction* create();
 };
 
 class CCActionInterval : public CCAction
 {
-    // ccTime getElapsed(void);
+    // float getElapsed(void);
     // void setAmplitudeRate(CGFloat amp);
     // CGFloat getAmplitudeRate(void);
 };
 
 class CCFiniteTimeAction : public CCActionInterval
 {
-    // ccTime getDuration(void);
-    // void setDuration(ccTime duration);
+    // float getDuration(void);
+    // void setDuration(float duration);
     // CCFiniteTimeAction* reverse(void);
 };
 
@@ -37,7 +37,7 @@ class CCSpeed : public CCAction
     void setSpeed(float fSpeed);
     CCAction* reverse(void);
 
-    static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);
+    static CCSpeed* create(CCActionInterval *pAction, float fRate);
 };
 
 class CCFollow : public CCAction
@@ -45,70 +45,70 @@ class CCFollow : public CCAction
     bool isBoundarySet(void);
     void setBoudarySet(bool bValue);
 
-    static CCFollow* actionWithTarget(CCNode *pFollowedNode);
-    static CCFollow* actionWithTarget(CCNode *pFollowedNode, CCRect rect);
+    static CCFollow* create(CCNode *pFollowedNode);
+    static CCFollow* create(CCNode *pFollowedNode, CCRect rect);
 };
 
 class CCSequence : public CCActionInterval
 {
-    static CCFiniteTimeAction* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
-    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+    static CCFiniteTimeAction* create(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+    static CCFiniteTimeAction* create(CCArray *actions);
 };
 
 class CCRepeat : public CCActionInterval
 {
-    static CCRepeat* actionWithAction(CCActionInterval *pAction, unsigned int times);
+    static CCRepeat* create(CCActionInterval *pAction, unsigned int times);
 };
 
 class CCRepeatForever : public CCActionInterval
 {
-    static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
+    static CCRepeatForever* create(CCActionInterval *pAction);
 };
 
 class CCSpawn : public CCActionInterval
 {
-    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
-    static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+    static CCFiniteTimeAction* create(CCArray *actions);
+    static CCSpawn* create(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 };
 
 class CCRotateTo : public CCActionInterval
 {
-    static CCRotateTo* actionWithDuration(ccTime duration, float fDeltaAngle);
+    static CCRotateTo* create(float duration, float fDeltaAngle);
 };
 
 class CCRotateBy : public CCActionInterval
 {
-    static CCRotateBy* actionWithDuration(ccTime duration, float fDeltaAngle);
+    static CCRotateBy* create(float duration, float fDeltaAngle);
 };
 
 class CCMoveTo : public CCActionInterval
 {
-    static CCMoveTo* actionWithDuration(ccTime duration, CCPoint position);
+    static CCMoveTo* create(float duration, CCPoint position);
 };
 
 class CCMoveBy : public CCActionInterval
 {
-    static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
+    static CCMoveBy* create(float duration, CCPoint position);
 };
 
 class CCSkewTo : public CCActionInterval
 {
-    static CCSkewTo* actionWithDuration(ccTime t, float sx, float sy);
+    static CCSkewTo* create(float t, float sx, float sy);
 };
 
 class CCSkewBy : public CCActionInterval
 {
-    static CCSkewBy* actionWithDuration(ccTime t, float deltaSkewX, float deltaSkewY);
+    static CCSkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 };
 
 class CCJumpBy : public CCActionInterval
 {
-    static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+    static CCJumpBy* create(float duration, CCPoint position, float height, int jumps);
 };
 
 class CCJumpTo : public CCActionInterval
 {
-    static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+    static CCJumpTo* create(float duration, CCPoint position, float height, int jumps);
 };
 
 typedef struct _ccBezierConfig {
@@ -119,64 +119,64 @@ typedef struct _ccBezierConfig {
 
 class CCBezierBy : public CCActionInterval
 {
-    static CCBezierBy* actionWithDuration(ccTime t, ccBezierConfig c);
+    static CCBezierBy* create(float t, ccBezierConfig c);
 };
 
 class CCBezierTo : public CCActionInterval
 {
-    static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
+    static CCBezierTo* create(float t, ccBezierConfig c);
 };
 
 class CCScaleTo : public CCActionInterval
 {
-    static CCScaleTo* actionWithDuration(ccTime duration, float s);
-    static CCScaleTo* actionWithDuration(ccTime duration, float sx, float sy);
+    static CCScaleTo* create(float duration, float s);
+    static CCScaleTo* create(float duration, float sx, float sy);
 };
 
 class CCScaleBy : public CCActionInterval
 {
-    static CCScaleBy* actionWithDuration(ccTime duration, float s);
-    static CCScaleBy* actionWithDuration(ccTime duration, float sx, float sy);
+    static CCScaleBy* create(float duration, float s);
+    static CCScaleBy* create(float duration, float sx, float sy);
 };
 
 class CCBlink : public CCActionInterval
 {
-    static CCBlink* actionWithDuration(ccTime duration, unsigned int uBlinks);
+    static CCBlink* create(float duration, unsigned int uBlinks);
 };
 
 class CCFadeIn : public CCActionInterval
 {
-    static CCFadeIn* actionWithDuration(ccTime d);
+    static CCFadeIn* create(float d);
 };
 
 class CCFadeOut : public CCActionInterval
 {
-    static CCFadeOut* actionWithDuration(ccTime d);
+    static CCFadeOut* create(float d);
 };
 
 class CCFadeTo : public CCActionInterval
 {
-    static CCFadeTo* actionWithDuration(ccTime duration, GLubyte opacity);
+    static CCFadeTo* create(float duration, GLubyte opacity);
 };
 
 class CCTintTo : public CCActionInterval
 {
-    static CCTintTo* actionWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
+    static CCTintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
 };
 
 class CCTintBy : public CCActionInterval
 {
-    static CCTintBy* actionWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+    static CCTintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 };
 
 class CCDelayTime : public CCActionInterval
 {
-    static CCDelayTime* actionWithDuration(ccTime d);
+    static CCDelayTime* create(float d);
 };
 
 class CCReverseTime : public CCActionInterval
 {
-    static CCReverseTime* actionWithAction(CCFiniteTimeAction *pAction);
+    static CCReverseTime* create(CCFiniteTimeAction *pAction);
 };
 
 class CCAnimate : public CCActionInterval
@@ -184,47 +184,47 @@ class CCAnimate : public CCActionInterval
     CCAnimation* getAnimation(void);
     void setAnimation(CCAnimation *pAnimation);
 
-    static CCAction* actionWithAnimation(CCAnimation *pAnimation);
+    static CCAction* create(CCAnimation *pAnimation);
 };
 
 class CCProgressTo : public CCAction
 {
-    static CCAction* actionWithDuration(ccTime duration, float fPercent);
+    static CCAction* create(float duration, float fPercent);
 };
 
 class CCProgressFromTo : public CCAction
 {
-    static CCAction* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
+    static CCAction* create(float duration, float fFromPercentage, float fToPercentage);
 };
 
 
 // CCActionInstant
 class CCShow : public CCAction
 {
-    static CCAction* action();
+    static CCAction* create();
 };
 
 class CCHide : public CCAction
 {
-    static CCAction* action();
+    static CCAction* create();
 };
 
 class CCToggleVisibility : public CCAction
 {
-    static CCAction* action();
+    static CCAction* create();
 };
 
 class CCFlipX : public CCAction
 {
-    static CCAction* actionWithFlipX(bool x);
+    static CCAction* create(bool x);
 };
 
 class CCFlipY : public CCAction
 {
-    static CCAction* actionWithFlipY(bool y);
+    static CCAction* create(bool y);
 };
 
 class CCPlace : public CCAction //<NSCopying>
 {
-    static CCAction* actionWithPosition(CCPoint pos);
+    static CCAction* create(CCPoint pos);
 };

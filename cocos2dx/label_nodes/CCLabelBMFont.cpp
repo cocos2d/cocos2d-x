@@ -372,7 +372,7 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
     pRet = (CCBMFontConfiguration*)configurations->objectForKey(fntFile);
     if( pRet == NULL )
     {
-        pRet = CCBMFontConfiguration::configurationWithFNTFile(fntFile);
+        pRet = CCBMFontConfiguration::create(fntFile);
         if (pRet)
         {
             configurations->setObject(pRet, fntFile);
@@ -406,6 +406,11 @@ typedef struct _KerningHashElement
 //
 
 CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
+{
+    return CCBMFontConfiguration::create(FNTfile);
+}
+
+CCBMFontConfiguration * CCBMFontConfiguration::create(const char *FNTfile)
 {
     CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
     if (pRet->initWithFNTfile(FNTfile))
@@ -447,7 +452,7 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
 
 const char* CCBMFontConfiguration::description(void)
 {
-    return CCString::stringWithFormat(
+    return CCString::createWithFormat(
         "<CCBMFontConfiguration = %08X | Glphys:%d Kernings:%d | Image = %s>",
         this,
         HASH_COUNT(m_pFontDefDictionary),
@@ -481,7 +486,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
-    CCString *contents = CCString::stringWithContentsOfFile(fullpath.c_str());
+    CCString *contents = CCString::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
 
@@ -715,6 +720,11 @@ void CCLabelBMFont::purgeCachedData()
 
 CCLabelBMFont * CCLabelBMFont::node()
 {
+    return CCLabelBMFont::create();
+}
+
+CCLabelBMFont * CCLabelBMFont::create()
+{
     CCLabelBMFont * pRet = new CCLabelBMFont();
     if (pRet && pRet->init())
     {
@@ -725,34 +735,13 @@ CCLabelBMFont * CCLabelBMFont::node()
     return NULL;
 }
 
-//LabelBMFont - Creation & Init
-CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
+CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
 {
-    CCLabelBMFont *pRet = new CCLabelBMFont();
-    if(pRet && pRet->initWithString(str, fntFile))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    return CCLabelBMFont::create(str, fntFile, width, alignment, imageOffset);
 }
 
 //LabelBMFont - Creation & Init
-CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment)
-{
-    CCLabelBMFont *pRet = new CCLabelBMFont();
-    if(pRet && pRet->initWithString(str, fntFile, width, alignment))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
-}
-
-//LabelBMFont - Creation & Init
-CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset)
+CCLabelBMFont *CCLabelBMFont::create(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
 {
     CCLabelBMFont *pRet = new CCLabelBMFont();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
@@ -769,17 +758,7 @@ bool CCLabelBMFont::init()
     return initWithString(NULL, NULL, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
 }
 
-bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
-{
-    return initWithString(theString, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
-}
-
-bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment)
-{
-    return initWithString(theString, fntFile, width, alignment, CCPointZero);
-}
-
-bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset)
+bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
 {
     CCAssert(!m_pConfiguration, "re-init is no longer supported");
     CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for CCLabelBMFont");
@@ -818,7 +797,7 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         m_cOpacity = 255;
         m_tColor = ccWHITE;
         m_tContentSize = CCSizeZero;
-        m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
+        m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha();
         this->setString(theString);
         setAnchorPoint(ccp(0.5f, 0.5f));
         return true;
@@ -932,7 +911,7 @@ void CCLabelBMFont::createFontChars()
             fontChar->setTextureRect(rect, false, rect.size);
 
             // restore to default in case they were modified
-            fontChar->setIsVisible(true);
+            fontChar->setVisible(true);
             fontChar->setOpacity(255);
         }
 
@@ -947,7 +926,7 @@ void CCLabelBMFont::createFontChars()
         prev = c;
 
         // Apply label properties
-        fontChar->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+        fontChar->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
         // Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
         fontChar->setColor(m_tColor);
 
@@ -996,7 +975,7 @@ void CCLabelBMFont::updateString(bool fromUpdate)
             CCNode* pNode = (CCNode*) child;
             if (pNode)
             {
-                pNode->setIsVisible(false);
+                pNode->setVisible(false);
             }
         }
     }
@@ -1062,7 +1041,7 @@ GLubyte CCLabelBMFont::getOpacity()
 {
     return m_cOpacity;
 }
-void CCLabelBMFont::setIsOpacityModifyRGB(bool var)
+void CCLabelBMFont::setOpacityModifyRGB(bool var)
 {
     m_bIsOpacityModifyRGB = var;
     if (m_pChildren && m_pChildren->count() != 0)
@@ -1076,13 +1055,13 @@ void CCLabelBMFont::setIsOpacityModifyRGB(bool var)
                 CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pNode);
                 if (pRGBAProtocol)
                 {
-                    pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+                    pRGBAProtocol->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
                 }
             }
         }
     }
 }
-bool CCLabelBMFont::getIsOpacityModifyRGB()
+bool CCLabelBMFont::isOpacityModifyRGB()
 {
     return m_bIsOpacityModifyRGB;
 }
@@ -1125,7 +1104,7 @@ void CCLabelBMFont::updateLabel()
             while (!(characterSprite = (CCSprite*)this->getChildByTag(j + skip)))
                 skip++;
 
-            if (!characterSprite->getIsVisible()) continue;
+            if (!characterSprite->isVisible()) continue;
 
             if (i >= stringLength)
                 break;

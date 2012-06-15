@@ -66,7 +66,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         CCRGBAProtocol* rgbaLabel = dynamic_cast<CCRGBAProtocol*>(node);
         assert(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL);
         
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         pushed=false;
         m_zoomOnTouchDown = true;
         m_nState=CCControlStateInitial;
@@ -81,7 +81,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         m_zoomOnTouchDown = true;
 
         // Set the default anchor point
-        setIgnoreAnchorPointForPosition(false);
+        ignoreAnchorPointForPosition(false);
         setAnchorPoint(ccp(0.5f, 0.5f));
         
         // Set the nodes
@@ -102,11 +102,11 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         // Set the default color and opacity
         setColor(ccc3(255, 255, 255));
         setOpacity(255);
-        setIsOpacityModifyRGB(true);
+        setOpacityModifyRGB(true);
         
         // Initialize the dispatch table
         
-        CCString* tempString = CCString::stringWithCString(label->getString());
+        CCString* tempString = CCString::create(label->getString());
         //tempString->autorelease();
         setTitleForState(tempString, CCControlStateNormal);
         setTitleColorForState(rgbaLabel->getColor(), CCControlStateNormal);
@@ -133,6 +133,11 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
 
 CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite)
 {
+    return CCControlButton::create(label, backgroundSprite);
+}
+
+CCControlButton* CCControlButton::create(CCNode* label, CCScale9Sprite* backgroundSprite)
+{
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
     pRet->autorelease();
@@ -141,11 +146,16 @@ CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* lab
 
 bool CCControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
 {
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title.c_str(), fontName, fontSize);
-    return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::node());
+    CCLabelTTF *label = CCLabelTTF::create(title.c_str(), fontName, fontSize);
+    return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::create());
 }
 
 CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
+{
+    return CCControlButton::create(title, fontName, fontSize);
+}
+
+CCControlButton* CCControlButton::create(string title, const char * fontName, float fontSize)
 {
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
@@ -155,11 +165,16 @@ CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string t
 
 bool CCControlButton::initWithBackgroundSprite(CCScale9Sprite* sprite)
 {
-    CCLabelTTF *label = CCLabelTTF::labelWithString("", "Arial", 30);//
+    CCLabelTTF *label = CCLabelTTF::create("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
 CCControlButton* CCControlButton::buttonWithBackgroundSprite(CCScale9Sprite* sprite)
+{
+    return CCControlButton::create(sprite);
+}
+
+CCControlButton* CCControlButton::create(CCScale9Sprite* sprite)
 {
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithBackgroundSprite(sprite);
@@ -175,21 +190,21 @@ void CCControlButton::setMargins(int marginH, int marginV)
     needsLayout();
 }
 
-void CCControlButton::setIsEnabled(bool enabled)
+void CCControlButton::setEnabled(bool enabled)
 {
-    CCControl::setIsEnabled(enabled);
+    CCControl::setEnabled(enabled);
     needsLayout();
 }
 
-void CCControlButton::setIsSelected(bool enabled)
+void CCControlButton::setSelected(bool enabled)
 {
-    CCControl::setIsSelected(enabled);
+    CCControl::setSelected(enabled);
     needsLayout();
 }
 
-void CCControlButton::setIsHighlighted(bool enabled)
+void CCControlButton::setHighlighted(bool enabled)
 {
-    CCControl::setIsHighlighted(enabled);
+    CCControl::setHighlighted(enabled);
 
     CCAction *action =getActionByTag(kZoomActionTag);
     if (action)
@@ -199,8 +214,8 @@ void CCControlButton::setIsHighlighted(bool enabled)
     needsLayout();
     if( m_zoomOnTouchDown )
     {
-        float scaleValue = (getIsHighlighted() && getIsEnabled() && !getIsSelected()) ? 1.1f : 1.0f;
-        CCAction *zoomAction =CCScaleTo::actionWithDuration(0.05f, scaleValue);
+        float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? 1.1f : 1.0f;
+        CCAction *zoomAction =CCScaleTo::create(0.05f, scaleValue);
         zoomAction->setTag(kZoomActionTag);
         runAction(zoomAction);
     }
@@ -341,7 +356,7 @@ void CCControlButton::setTitleLabelForState(CCNode* titleLabel, CCControlState s
     }
 
     m_titleLabelDispatchTable->setObject(titleLabel, state);
-    titleLabel->setIsVisible(false);
+    titleLabel->setVisible(false);
     titleLabel->setAnchorPoint(ccp(0.5f, 0.5f));
     addChild(titleLabel, 1);
 
@@ -443,7 +458,7 @@ void CCControlButton::setBackgroundSpriteForState(CCScale9Sprite* sprite, CCCont
     }
 
     m_backgroundSpriteDispatchTable->setObject(sprite, state);
-    sprite->setIsVisible(false);
+    sprite->setVisible(false);
     sprite->setAnchorPoint(ccp(0.5f, 0.5f));
     addChild(sprite);
 
@@ -469,8 +484,8 @@ void CCControlButton::setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFra
 void CCControlButton::needsLayout()
 {
     // Hide the background and the label
-    m_titleLabel->setIsVisible(false);
-    m_backgroundSprite->setIsVisible(false);
+    m_titleLabel->setVisible(false);
+    m_backgroundSprite->setVisible(false);
 
     // Update anchor of all labels
     this->setLabelAnchorPoint(this->m_labelAnchorPoint);
@@ -530,22 +545,22 @@ void CCControlButton::needsLayout()
     m_backgroundSprite->setPosition(ccp(getContentSize().width/2, getContentSize().height/2));
     
     // Make visible the background and the label
-    m_titleLabel->setIsVisible(true);
-    m_backgroundSprite->setIsVisible(true);    
+    m_titleLabel->setVisible(true);
+    m_backgroundSprite->setVisible(true);    
 }
 
 
 
 bool CCControlButton::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!isTouchInside(pTouch) || !getIsEnabled())
+    if (!isTouchInside(pTouch) || !isEnabled())
     {
         return false;
     }
     
     m_nState=CCControlStateHighlighted;
     pushed=true;
-    this->setIsHighlighted(true);
+    this->setHighlighted(true);
     sendActionsForControlEvents(CCControlEventTouchDown);
     return true;
 }
@@ -556,7 +571,7 @@ void CCControlButton::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     {
         if (m_bHighlighted)
         {
-            setIsHighlighted(false);
+            setHighlighted(false);
         }
         return;
     }
@@ -565,7 +580,7 @@ void CCControlButton::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     if (isTouchMoveInside && !m_bHighlighted)
     {
         m_nState = CCControlStateHighlighted;
-        setIsHighlighted(true);
+        setHighlighted(true);
         sendActionsForControlEvents(CCControlEventTouchDragEnter);
     }
     else if (isTouchMoveInside && m_bHighlighted)
@@ -575,7 +590,7 @@ void CCControlButton::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     else if (!isTouchMoveInside && m_bHighlighted)
     {
         m_nState = CCControlStateNormal;
-            setIsHighlighted(false);
+        setHighlighted(false);
         
         sendActionsForControlEvents(CCControlEventTouchDragExit);        
     }
@@ -588,7 +603,7 @@ void CCControlButton::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
     m_nState = CCControlStateNormal;
     pushed = false;
-    setIsHighlighted(false);
+    setHighlighted(false);
     
     
     if (isTouchInside(pTouch))
@@ -632,7 +647,7 @@ void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     m_nState = CCControlStateNormal;
     pushed = false;
-    setIsHighlighted(false);
+    setHighlighted(false);
     sendActionsForControlEvents(CCControlEventTouchCancel);
 }
 

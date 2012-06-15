@@ -43,7 +43,7 @@ bool CCControl::init()
 {
     if (CCLayer::init())
     {
-        //this->setIsTouchEnabled(true);
+        //this->setTouchEnabled(true);
         //m_bIsTouchEnabled=true;
         // Initialise instance variables
         m_nState=CCControlStateNormal;
@@ -249,7 +249,7 @@ GLubyte CCControl::getOpacity()
 }
 
 
-void CCControl::setIsOpacityModifyRGB(bool opacityModifyRGB)
+void CCControl::setOpacityModifyRGB(bool opacityModifyRGB)
 {
     m_bIsOpacityModifyRGB=opacityModifyRGB;
         CCObject* child;
@@ -259,12 +259,12 @@ void CCControl::setIsOpacityModifyRGB(bool opacityModifyRGB)
         CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
         if (pNode)
         {
-            pNode->setIsOpacityModifyRGB(opacityModifyRGB);
+            pNode->setOpacityModifyRGB(opacityModifyRGB);
         }
     }
 }
 
-bool CCControl::getIsOpacityModifyRGB()
+bool CCControl::isOpacityModifyRGB()
 {
     return m_bIsOpacityModifyRGB;
 }
@@ -293,10 +293,40 @@ CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
     // If the invocation list does not exist for the  dispatch table, we create it
     if (invocationList == NULL)
     {
-        invocationList = CCArray::arrayWithCapacity(1);
+        invocationList = CCArray::create(1);
         dispatchTable->setObject(invocationList, controlEvent);
     }    
     return invocationList;
+}
+
+void CCControl::setEnabled(bool bEnabled)
+{
+    m_bEnabled = bEnabled;
+}
+
+bool CCControl::isEnabled()
+{
+    return m_bEnabled;
+}
+
+void CCControl::setSelected(bool bSelected)
+{
+    m_bSelected = bSelected;
+}
+
+bool CCControl::isSelected()
+{
+    return m_bSelected;
+}
+
+void CCControl::setHighlighted(bool bHighlighted)
+{
+    m_bHighlighted = bHighlighted;
+}
+
+bool CCControl::isHighlighted()
+{
+    return m_bHighlighted;
 }
 
 NS_CC_EXT_END

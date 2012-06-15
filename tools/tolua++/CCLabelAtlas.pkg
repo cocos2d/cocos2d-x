@@ -9,6 +9,6 @@ class CCLabelAtlas : public CCAtlasNode
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D *texture);
 
-    static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
-    static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);
+    static CCLabelAtlas* create(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    static CCLabelAtlas* create(const char *sring, const char *fntFile);
 };

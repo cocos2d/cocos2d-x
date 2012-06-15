@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2011 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2009      Valentin Milea
  Copyright (c) 2011      Zynga Inc.
@@ -196,7 +196,12 @@ class CC_DLL CCNode : public CCObject
     CC_PROPERTY(CCGridBase *, m_pGrid, Grid)
 
     /** Whether of not the node is visible. Default is true */
-    CC_PROPERTY(bool, m_bIsVisible, IsVisible)
+protected:
+    bool m_bIsVisible;
+public:
+    virtual bool isVisible();
+    virtual void setVisible(bool visible);
+
 
     /** anchorPoint is the point around which all transformations and positioning manipulations take place.
      It's like a pin in the node where it is "attached" to its parent.
@@ -220,14 +225,17 @@ class CC_DLL CCNode : public CCObject
     CC_PROPERTY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
 
     /** whether or not the node is running */
-    CC_PROPERTY_READONLY(bool, m_bIsRunning, IsRunning)
+    bool m_bIsRunning;
+    bool isRunning();
 
     /** A weak reference to the parent */
     CC_PROPERTY(CCNode *, m_pParent, Parent)
 
     // If ture, the Anchor Point will be (0,0) when you position the CCNode.
 	// Used by CCLayer and CCScene
-    CC_PROPERTY(bool, m_bIgnoreAnchorPointForPosition, IgnoreAnchorPointForPosition);
+    bool m_bIgnoreAnchorPointForPosition;
+    bool isIgnoreAnchorPointForPosition();
+    void ignoreAnchorPointForPosition(bool isIgnoreAnchorPointForPosition);
 
     /** A tag used to identify the node easily */
     CC_PROPERTY(int, m_nTag, Tag)
@@ -298,8 +306,14 @@ public:
 
     /** allocates and initializes a node.
      The node will be created as "autorelease".
+	 @warning: This interface will be deprecated in future.
      */
     static CCNode * node(void);
+
+	/** allocates and initializes a node.
+     The node will be created as "autorelease".
+     */
+    static CCNode * create(void);
 
     //scene managment
 
