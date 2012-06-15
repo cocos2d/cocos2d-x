@@ -318,6 +318,11 @@ int CCLuaEngine::pushCCLuaTableArrayToLuaStack(CCLuaTableArray* pArray)
     return lua_gettop(m_state);
 }
 
+void CCLuaEngine::cleanLuaStack(void)
+{
+    lua_settop(m_state, 0);
+}
+
 // functions for excute touch event
 int CCLuaEngine::executeTouchEvent(LUA_HANDLE nHandler, int eventType, CCTouch *pTouch)
 {
