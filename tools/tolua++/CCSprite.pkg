@@ -40,7 +40,7 @@ class CCSprite : public CCNode
 	//CCPoint getOffsetPositionInPixels(void);
 
 	void setDirtyRecursively(bool bValue);
-	void setIsRelativeAnchorPoint(bool bRelative);
+	void setIgnoreAnchorPointForPosition(bool newValue);
 	void setFlipX(bool bFlipX);
 	void setFlipY(bool bFlipY);
 	bool isFlipX(void);
@@ -72,7 +72,7 @@ class CCSprite : public CCNode
 
 	static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
 	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect);
-	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset);
+//	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset);
 	static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 	static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
   	static CCSprite* spriteWithFile(const char *pszFileName);

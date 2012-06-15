@@ -2466,7 +2466,7 @@ public:
 		kContentSizeInPixels,
 		kIsRunning,
 		kParent,
-		kIsRelativeAnchorPoint,
+		kIsIgnoreAnchorPointForPosition,
 		kTag,
 		kUserData,
 		kTransform,
