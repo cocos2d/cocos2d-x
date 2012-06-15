@@ -8,6 +8,7 @@
 #include "../ButtonTest/ButtonTestLayerLoader.h"
 #include "../SpriteTest/SpriteTestLayerLoader.h"
 #include "../MenuTest/MenuTestLayerLoader.h"
+#include "../ParticleSystemTest/ParticleSystemTestLayerLoader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -73,7 +74,7 @@ SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObj
 
 bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) {
     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mBurstSprite", CCSprite *, this->mBurstSprite);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mTestTitleLabel", CCLabelTTF *, this->mTestTitleLabelTTF);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mTestTitleLabelTTF", CCLabelTTF *, this->mTestTitleLabelTTF);
 
     return false;
 }
@@ -96,7 +97,7 @@ void HelloCocosBuilderLayer::onLabelTestClicked(CCObject * pSender, cocos2d::ext
 }
 
 void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLog("onParticleSystemTestClicked\n");
+    this->openTest("ccb/ParticleSystemTest.ccbi", "ParticleSystemTestLayer", ParticleSystemTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
