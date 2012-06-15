@@ -236,7 +236,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
     CCARRAY_FOREACH(pChildren, pObject)
     {
         CCSprite* pSprite = (CCSprite*) pObject;
-        pSprite->setIsVisible(false);
+        pSprite->setVisible(false);
     }
 
 #if CC_ENABLE_PROFILERS
@@ -277,7 +277,7 @@ void IterateSpriteSheetCArray::update(float dt)
     CCARRAY_FOREACH(pChildren, pObject)
     {
         CCSprite* pSprite = (CCSprite*)pObject;
-        pSprite->setIsVisible(false);
+        pSprite->setVisible(false);
     }
 
 #if CC_ENABLE_PROFILERS
@@ -340,7 +340,7 @@ void AddRemoveSpriteSheet::updateQuantityOfNodes()
             CCSprite *sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
             batchNode->addChild(sprite);
             sprite->setPosition(ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
-            sprite->setIsVisible(false);
+            sprite->setVisible(false);
         }
     }
     // decrease nodes

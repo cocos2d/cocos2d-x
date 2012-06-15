@@ -324,7 +324,11 @@ public:
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
     Default: YES
     */
-    CC_PROPERTY(bool, m_bCompressedInterpolation, IsCompressedInterpolation)
+protected:
+    bool m_bCompressedInterpolation;
+public:
+    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
+    virtual bool isCompressedInterpolation();
 
     // @warning: This interface will be deprecated in future.
     LAYER_NODE_FUNC(CCLayerGradient)

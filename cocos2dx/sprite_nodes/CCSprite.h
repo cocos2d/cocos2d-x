@@ -222,7 +222,7 @@ public:
     virtual void setVertexZ(float fVertexZ);
     virtual void setAnchorPoint(const CCPoint& anchor);
     virtual void ignoreAnchorPointForPosition(bool value);
-    virtual void setIsVisible(bool bVisible);
+    virtual void setVisible(bool bVisible);
     void setFlipX(bool bFlipX);
     void setFlipY(bool bFlipY);
     /** whether or not the sprite is flipped horizontally. 

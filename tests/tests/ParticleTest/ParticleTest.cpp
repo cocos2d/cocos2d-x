@@ -362,7 +362,7 @@ void DemoExplosion::onEnter()
     
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
     
-    m_emitter->setIsAutoRemoveOnFinish(true);
+    m_emitter->setAutoRemoveOnFinish(true);
     
     setEmitterPosition();
 }

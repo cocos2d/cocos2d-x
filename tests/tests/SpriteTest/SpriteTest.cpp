@@ -2562,7 +2562,7 @@ SpriteChildrenVisibilityIssue665::SpriteChildrenVisibilityIssue665()
     sprite3->setPosition(ccp(-20,30));
 
     // test issue #665
-    sprite1->setIsVisible(false);
+    sprite1->setVisible(false);
 
     aParent->addChild(sprite1);
     sprite1->addChild(sprite2, -2);
@@ -2585,7 +2585,7 @@ SpriteChildrenVisibilityIssue665::SpriteChildrenVisibilityIssue665()
     sprite3->setPosition(ccp(-20,30));
 
     // test issue #665
-    sprite1->setIsVisible(false);
+    sprite1->setVisible(false);
 
     aParent->addChild(sprite1);
     sprite1->addChild(sprite2, -2);

@@ -43,7 +43,7 @@ bool CCControl::init()
 {
     if (CCLayer::init())
     {
-        //this->setIsTouchEnabled(true);
+        //this->setTouchEnabled(true);
         //m_bIsTouchEnabled=true;
         // Initialise instance variables
         m_nState=CCControlStateNormal;
@@ -297,6 +297,36 @@ CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
         dispatchTable->setObject(invocationList, controlEvent);
     }    
     return invocationList;
+}
+
+void CCControl::setEnabled(bool bEnabled)
+{
+    m_bEnabled = bEnabled;
+}
+
+bool CCControl::isEnabled()
+{
+    return m_bEnabled;
+}
+
+void CCControl::setSelected(bool bSelected)
+{
+    m_bSelected = bSelected;
+}
+
+bool CCControl::isSelected()
+{
+    return m_bSelected;
+}
+
+void CCControl::setHighlighted(bool bHighlighted)
+{
+    m_bHighlighted = bHighlighted;
+}
+
+bool CCControl::isHighlighted()
+{
+    return m_bHighlighted;
 }
 
 NS_CC_EXT_END
