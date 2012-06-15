@@ -43,7 +43,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     }
     this->m_positionsAreDirty = true;
     
-    return this;
+    return true;
 }
 
 bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets)
