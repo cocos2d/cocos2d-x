@@ -724,6 +724,8 @@
 		4ACB592F158AB71200E0D552 /* MenuTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuTestLayer.cpp; sourceTree = "<group>"; };
 		4ACB5930158AB71200E0D552 /* MenuTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTestLayer.h; sourceTree = "<group>"; };
 		4ACB5931158AB71200E0D552 /* MenuTestLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTestLayerLoader.h; sourceTree = "<group>"; };
+		4ACB5938158BE3F300E0D552 /* ParticleSystemTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystemTestLayer.h; sourceTree = "<group>"; };
+		4ACB5939158BE3F300E0D552 /* ParticleSystemTestLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystemTestLayerLoader.h; sourceTree = "<group>"; };
 		781C37651547F9DC00633F88 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		781C37661547F9DC00633F88 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		781C37671547F9DC00633F88 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -1555,6 +1557,7 @@
 				4AC010A0158A906F00627D49 /* LabelTest */,
 				4ACB592B158AAE6A00E0D552 /* SpriteTest */,
 				4ACB592E158AB71100E0D552 /* MenuTest */,
+				4ACB5937158BE3F200E0D552 /* ParticleSystemTest */,
 			);
 			path = CocosBuilderTest;
 			sourceTree = "<group>";
@@ -1659,6 +1662,15 @@
 				4ACB5931158AB71200E0D552 /* MenuTestLayerLoader.h */,
 			);
 			path = MenuTest;
+			sourceTree = "<group>";
+		};
+		4ACB5937158BE3F200E0D552 /* ParticleSystemTest */ = {
+			isa = PBXGroup;
+			children = (
+				4ACB5938158BE3F300E0D552 /* ParticleSystemTestLayer.h */,
+				4ACB5939158BE3F300E0D552 /* ParticleSystemTestLayerLoader.h */,
+			);
+			path = ParticleSystemTest;
 			sourceTree = "<group>";
 		};
 		781C37641547F9DC00633F88 /* actions */ = {
