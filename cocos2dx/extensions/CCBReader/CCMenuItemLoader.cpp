@@ -16,7 +16,7 @@ void CCMenuItemLoader::onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, C
 
 void CCMenuItemLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_ISENABLED) == 0) {
-        ((CCMenuItem *)pNode)->setIsEnabled(pCheck);
+        ((CCMenuItem *)pNode)->setEnabled(pCheck);
     } else {
         CCNodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
     }

@@ -167,7 +167,7 @@ void* CCTexture2D::keepData(void *data, unsigned int length)
     return data;
 }
 
-bool CCTexture2D::getHasPremultipliedAlpha()
+bool CCTexture2D::hasPremultipliedAlpha()
 {
     return m_bHasPremultipliedAlpha;
 }
@@ -244,7 +244,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 
 const char* CCTexture2D::description(void)
 {
-    return CCString::stringWithFormat("<CCTexture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT)->getCString();
+    return CCString::createWithFormat("<CCTexture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT)->getCString();
 }
 
 // implementation CCTexture2D (Image)
@@ -526,7 +526,7 @@ void CCTexture2D::drawInRect(const CCRect& rect)
 // implementation CCTexture2D (PVRTC);    
 bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length, CCTexture2DPixelFormat pixelFormat)
 {
-    if( !(CCConfiguration::sharedConfiguration()->isSupportsPVRTC()) )
+    if( !(CCConfiguration::sharedConfiguration()->supportsPVRTC()) )
     {
         CCLOG("cocos2d: WARNING: PVRTC images is not supported.");
         this->release();
@@ -611,6 +611,11 @@ void CCTexture2D::generateMipmap()
     ccGLBindTexture2D( m_uName );
     glGenerateMipmap(GL_TEXTURE_2D);
     m_bHasMipmaps = true;
+}
+
+bool CCTexture2D::hasMipmaps()
+{
+    return m_bHasMipmaps;
 }
 
 void CCTexture2D::setTexParameters(ccTexParams *texParams)

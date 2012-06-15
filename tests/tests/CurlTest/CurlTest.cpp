@@ -6,14 +6,14 @@
 CurlTest::CurlTest()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF* label = CCLabelTTF::labelWithString("Curl Test", "Arial", 28);
+    CCLabelTTF* label = CCLabelTTF::create("Curl Test", "Arial", 28);
     addChild(label, 0);
     label->setPosition( ccp(s.width/2, s.height-50) );
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     // create a label to display the tip string
-    m_pLabel = CCLabelTTF::labelWithString("Touch the screen to connect", "Arial", 22);
+    m_pLabel = CCLabelTTF::create("Touch the screen to connect", "Arial", 22);
     m_pLabel->setPosition(ccp(s.width / 2, s.height / 2));
     addChild(m_pLabel, 0);
     

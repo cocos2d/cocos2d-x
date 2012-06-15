@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011  cocos2d-x.org
+Copyright (c) 2010-2012  cocos2d-x.org
 Copyright (c) 2011 ForzeField Studios S.L.
 
 http://www.cocos2d-x.org
@@ -41,10 +41,19 @@ class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol, public CC
 public:
     CCMotionStreak();
     virtual ~CCMotionStreak();
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename 
+    @warning: This interface will be deprecated in future.
+    */
     static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture 
+    @warning: This interface will be deprecated in future.
+    */
     static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
     bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
@@ -71,13 +80,21 @@ public:
     virtual const ccColor3B& getColor(void);
     virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte opacity);
-    virtual void setIsOpacityModifyRGB(bool bValue);
-    virtual bool getIsOpacityModifyRGB(void);
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB(void);
 
     /** When fast mode is enbled, new points are added faster but with lower precision */
-    CC_SYNTHESIZE(bool, m_bFastMode, IsFastMode);
+    inline bool isFastMode() { return m_bFastMode; }
+    inline void setFastMode(bool bFastMode) { m_bFastMode = bFastMode; }
 
-    CC_SYNTHESIZE(bool, m_bStartingPositionInitialized, StartingPositionInitialized);
+    inline bool isStartingPositionInitialized() { return m_bStartingPositionInitialized; }
+    inline void setStartingPositionInitialized(bool bStartingPositionInitialized) 
+    { 
+        m_bStartingPositionInitialized = bStartingPositionInitialized; 
+    }
+protected:
+    bool m_bFastMode;
+    bool m_bStartingPositionInitialized;
 private:
     /** texture used for the motion streak */
     CCTexture2D* m_pTexture;

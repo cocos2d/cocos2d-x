@@ -10,7 +10,7 @@ public:
     static CCScene* scene();
     void callBack(CCObject* pSender);
 
-    LAYER_NODE_FUNC(Bug1159Layer);
+    LAYER_CREATE_FUNC(Bug1159Layer);
 };
 
 #endif // __BUG_1159_H__

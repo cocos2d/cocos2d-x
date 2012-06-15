@@ -110,28 +110,63 @@ public:
     ~CCArray();
 
     /* static functions */
-    /** Create an array */
+    /** Create an array 
+    @warning: This interface will be deprecated in future.
+    */
     static CCArray* array();
-    /** Create an array with one object */
+    /** Create an array with one object 
+    @warning: This interface will be deprecated in future.
+    */
     static CCArray* arrayWithObject(CCObject* pObject);
-    /** Create an array with some objects */
+    /** Create an array with some objects 
+    @warning: This interface will be deprecated in future.
+    */
     static CCArray* arrayWithObjects(CCObject* pObject, ...);
-    /** Create an array with capacity */
+    /** Create an array with capacity 
+    @warning: This interface will be deprecated in future.
+    */
     static CCArray* arrayWithCapacity(unsigned int capacity);
-    /** Create an array with an existing array */
+    /** Create an array with an existing array
+    @warning: This interface will be deprecated in future.
+    */
     static CCArray* arrayWithArray(CCArray* otherArray);
     /**
      @brief   Generate a CCArray pointer by file
      @param   pFileName  The file name of *.plist file
      @return  The CCArray pointer generated from the file
+     @warning: This interface will be deprecated in future.
      */
     static CCArray* arrayWithContentsOfFile(const char* pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
      invoker should call release().
+     @warning: This interface will be deprecated in future.
      */
     static CCArray* arrayWithContentsOfFileThreadSafe(const char* pFileName);
+
+    /** Create an array */
+    static CCArray* create();
+    /** Create an array with one object */
+    static CCArray* createWithObject(CCObject* pObject);
+    /** Create an array with some objects */
+    static CCArray* create(CCObject* pObject, ...);
+    /** Create an array with capacity */
+    static CCArray* create(unsigned int capacity);
+    /** Create an array with an existing array */
+    static CCArray* create(CCArray* otherArray);
+    /**
+     @brief   Generate a CCArray pointer by file
+     @param   pFileName  The file name of *.plist file
+     @return  The CCArray pointer generated from the file
+     */
+    static CCArray* createWithContentsOfFile(const char* pFileName);
+    
+    /*
+     @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
+     invoker should call release().
+     */
+    static CCArray* createWithContentsOfFileThreadSafe(const char* pFileName);
 
     /** Initializes an array */
     bool init();

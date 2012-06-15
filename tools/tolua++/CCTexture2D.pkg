@@ -1,6 +1,6 @@
 
 typedef enum {
-    kCCTexture2DPixelFormat_Automatic = 0,
+//    kCCTexture2DPixelFormat_Automatic = 0,
     //! 32-bit texture: RGBA8888
     kCCTexture2DPixelFormat_RGBA8888,
     //! 24-bit texture: RGBA888
@@ -26,7 +26,7 @@ typedef enum {
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
 
     // backward compatibility stuff
-    kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
+  //  kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
     kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
     kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
     kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
@@ -53,7 +53,8 @@ class CCTexture2D : public CCObject
     GLfloat getMaxT();
     void setMaxT(GLfloat val);
 
-    bool getHasPremultipliedAlpha();
+    bool hasPremultipliedAlpha();
+    bool hasMipmaps();
 
     void drawAtPoint(CCPoint point);
     void drawInRect(CCRect rect);

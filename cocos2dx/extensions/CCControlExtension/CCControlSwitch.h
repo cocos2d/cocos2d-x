@@ -46,14 +46,26 @@ public:
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
     bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
 
-    /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
+    /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. 
+    @warning: This interface will be deprecated in future.
+    */
     static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
+
+    /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
+    static CCControlSwitch* create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
+
 
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
     bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
 
-    /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
+    /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels.
+    @warning: This interface will be deprecated in future.
+    */
     static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+
+    /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
+    static CCControlSwitch* create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+
 
     /**
      * Set the state of the switch to On or Off, optionally animating the transition.
@@ -65,9 +77,9 @@ public:
      */
     void setOn(bool isOn, bool animated);
     void setOn(bool isOn);
-    bool getIsOn(void) { return m_bOn; }
+    bool isOn(void) { return m_bOn; }
     bool hasMoved() { return m_bMoved; }
-    void setIsEnabled(bool enabled);
+    virtual void setEnabled(bool enabled);
 
     CCPoint locationFromTouch(CCTouch* touch);
     //events

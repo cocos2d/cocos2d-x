@@ -112,7 +112,7 @@ public:
     virtual int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches);
     
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, cocos2d::ccTime dt);
+    virtual int executeSchedule(int nHandler, float dt);
     
     // Add lua loader, now it is used on android
     virtual void addLuaLoader(lua_CFunction func);

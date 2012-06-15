@@ -41,6 +41,11 @@ NS_CC_BEGIN
 
 CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
 {
+    return CCGridBase::create(gridSize);
+}
+
+CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
+{
     CCGridBase *pGridBase = new CCGridBase();
 
     if (pGridBase)
@@ -59,6 +64,11 @@ CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
 }
 
 CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
+{
+    return CCGridBase::create(gridSize, texture, flipped);
+}
+
+CCGridBase* CCGridBase::create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
 {
     CCGridBase *pGridBase = new CCGridBase();
 
@@ -168,7 +178,7 @@ void CCGridBase::setActive(bool bActive)
     }
 }
 
-void CCGridBase::setIsTextureFlipped(bool bFlipped)
+void CCGridBase::setTextureFlipped(bool bFlipped)
 {
     if (m_bIsTextureFlipped != bFlipped)
     {
@@ -218,7 +228,7 @@ void CCGridBase::afterDraw(cocos2d::CCNode *pTarget)
     CCDirector *director = CCDirector::sharedDirector();
     director->setProjection(m_directorProjection);
 
-    if (pTarget->getCamera()->getDirty())
+    if (pTarget->getCamera()->isDirty())
     {
         const CCPoint& offset = pTarget->getAnchorPointInPoints();
 

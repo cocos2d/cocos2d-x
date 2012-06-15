@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CCRENDER_TEXTURE_H__
 #define __CCRENDER_TEXTURE_H__
 
-#include "CCData.h"
 #include "CCNode.h"
 #include "CCSprite.h"
 #include "kazmath/mat4.h"
@@ -59,14 +58,29 @@ public:
     CCRenderTexture();
     virtual ~CCRenderTexture();
 
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
+    @warning: This interface will be deprecated in future.
+    */
     static CCRenderTexture * renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
 
-    /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+    /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid 
+    @warning: This interface will be deprecated in future.
+    */
     static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
 
-    /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
+    /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 
+    @warning: This interface will be deprecated in future.
+    */
     static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h);
+
+    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    static CCRenderTexture * create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+
+    /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+    static CCRenderTexture * create(int w, int h, CCTexture2DPixelFormat eFormat);
+
+    /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
+    static CCRenderTexture * create(int w, int h);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
     bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
@@ -93,8 +107,7 @@ public:
     inline void endToLua(){ end();};
 
     /** ends grabbing*/
-    // para bIsTOCacheTexture       the parameter is only used for android to cache the texture
-    void end(bool bIsTOCacheTexture = true);
+    void end();
 
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
@@ -118,6 +131,11 @@ public:
         Returns YES if the operation is successful.
      */
     bool saveToFile(const char *name, tCCImageFormat format);
+    
+    /** Listen "come to background" message, and save render texture.
+     It only has effect on Android.
+     */
+    void listenToBackground(CCObject *obj);
 
 protected:
     GLuint       m_uFBO;

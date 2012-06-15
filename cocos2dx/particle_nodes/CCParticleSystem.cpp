@@ -132,6 +132,11 @@ CCParticleSystem::CCParticleSystem()
 // implementation CCParticleSystem
 CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
 {
+    return CCParticleSystem::create(plistFile);
+}
+
+CCParticleSystem * CCParticleSystem::create(const char *plistFile)
+{
     CCParticleSystem *pRet = new CCParticleSystem();
     if (pRet && pRet->initWithFile(plistFile))
     {
@@ -151,7 +156,7 @@ bool CCParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
     m_sPlistFile = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plistFile);
-    CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
+    CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
     bRet = this->initWithDictionary(dict);
@@ -283,12 +288,12 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                 if (strlen(textureName) > 0)
                 {
                     // set not pop-up message box when load image failed
-                    bool bNotify = CCFileUtils::sharedFileUtils()->getIsPopupNotify();
-                    CCFileUtils::sharedFileUtils()->setIsPopupNotify(false);
+                    bool bNotify = CCFileUtils::sharedFileUtils()->isPopupNotify();
+                    CCFileUtils::sharedFileUtils()->popupNotify(false);
                     tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
                     
                     // reset the value of UIImage notify
-                    CCFileUtils::sharedFileUtils()->setIsPopupNotify(bNotify);
+                    CCFileUtils::sharedFileUtils()->popupNotify(bNotify);
                 }
                 
                 if (tex)
@@ -743,7 +748,7 @@ void CCParticleSystem::updateBlendFunc()
 
     if(m_pTexture)
     {
-        bool premultiplied = m_pTexture->getHasPremultipliedAlpha();
+        bool premultiplied = m_pTexture->hasPremultipliedAlpha();
         
         m_bOpacityModifyRGB = false;
         
@@ -768,7 +773,7 @@ CCTexture2D * CCParticleSystem::getTexture()
 }
 
 // ParticleSystem - Additive Blending
-void CCParticleSystem::setIsBlendAdditive(bool additive)
+void CCParticleSystem::setBlendAdditive(bool additive)
 {
     if( additive )
     {
@@ -777,7 +782,7 @@ void CCParticleSystem::setIsBlendAdditive(bool additive)
     }
     else
     {
-        if( m_pTexture && ! m_pTexture->getHasPremultipliedAlpha() )
+        if( m_pTexture && ! m_pTexture->hasPremultipliedAlpha() )
         {
             m_tBlendFunc.src = GL_SRC_ALPHA;
             m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -790,7 +795,7 @@ void CCParticleSystem::setIsBlendAdditive(bool additive)
     }
 }
 
-bool CCParticleSystem::getIsBlendAdditive()
+bool CCParticleSystem::isBlendAdditive()
 {
     return( m_tBlendFunc.src == GL_SRC_ALPHA && m_tBlendFunc.dst == GL_ONE);
 }
@@ -953,7 +958,7 @@ float CCParticleSystem::getRotatePerSecondVar()
     return modeB.rotatePerSecondVar;
 }
 
-bool CCParticleSystem::getIsActive()
+bool CCParticleSystem::isActive()
 {
     return m_bIsActive;
 }
@@ -1206,12 +1211,12 @@ void CCParticleSystem::setPositionType(tCCPositionType var)
     m_ePositionType = var;
 }
 
-bool CCParticleSystem::getIsAutoRemoveOnFinish()
+bool CCParticleSystem::isAutoRemoveOnFinish()
 {
     return m_bIsAutoRemoveOnFinish;
 }
 
-void CCParticleSystem::setIsAutoRemoveOnFinish(bool var)
+void CCParticleSystem::setAutoRemoveOnFinish(bool var)
 {
     m_bIsAutoRemoveOnFinish = var;
 }

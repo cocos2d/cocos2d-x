@@ -63,14 +63,20 @@ CCAtlasNode::~CCAtlasNode()
 CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
                                              unsigned int itemsToRender)
 {
-    CCAtlasNode * pRet = new CCAtlasNode();
-    if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    return CCAtlasNode::create(tile, tileWidth, tileHeight, itemsToRender);
+}
+
+CCAtlasNode * CCAtlasNode::create(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
+											 unsigned int itemsToRender)
+{
+	CCAtlasNode * pRet = new CCAtlasNode();
+	if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	CC_SAFE_DELETE(pRet);
+	return NULL;
 }
 
 bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
@@ -178,21 +184,21 @@ void CCAtlasNode::setOpacity(GLubyte opacity)
         this->setColor(m_tColorUnmodified);
 }
 
-void CCAtlasNode::setIsOpacityModifyRGB(bool bValue)
+void CCAtlasNode::setOpacityModifyRGB(bool bValue)
 {
     ccColor3B oldColor    = this->m_tColor;
     m_bIsOpacityModifyRGB = bValue;
     this->m_tColor        = oldColor;
 }
 
-bool CCAtlasNode::getIsOpacityModifyRGB()
+bool CCAtlasNode::isOpacityModifyRGB()
 {
     return m_bIsOpacityModifyRGB;
 }
 
 void CCAtlasNode::updateOpacityModifyRGB()
 {
-    m_bIsOpacityModifyRGB = m_pTextureAtlas->getTexture()->getHasPremultipliedAlpha();
+    m_bIsOpacityModifyRGB = m_pTextureAtlas->getTexture()->hasPremultipliedAlpha();
 }
 
 // CCAtlasNode - CocosNodeTexture protocol
@@ -209,7 +215,7 @@ void CCAtlasNode::setBlendFunc(ccBlendFunc blendFunc)
 
 void CCAtlasNode::updateBlendFunc()
 {
-    if( ! m_pTextureAtlas->getTexture()->getHasPremultipliedAlpha() ) {
+    if( ! m_pTextureAtlas->getTexture()->hasPremultipliedAlpha() ) {
         m_tBlendFunc.src = GL_SRC_ALPHA;
         m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
     }

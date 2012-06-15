@@ -42,7 +42,7 @@ bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, C
 {
     if (CCControl::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         // Add background and slider sprites
         m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, ccp(0.0f, 0.0f));
         m_overlay=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, ccp(0.0f, 0.0f));
@@ -59,6 +59,11 @@ bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, C
 }
 
 CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
+{
+    return CCControlSaturationBrightnessPicker::create(target, pos);
+}
+
+CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::create(CCNode* target, CCPoint pos)
 {
     CCControlSaturationBrightnessPicker *pRet = new CCControlSaturationBrightnessPicker();
     pRet->initWithTargetAndPos(target, pos);

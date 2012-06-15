@@ -67,11 +67,11 @@ void CCTouchDispatcher::setDispatchEvents(bool bDispatchEvents)
 bool CCTouchDispatcher::init(void)
 {
     m_bDispatchEvents = true;
-    m_pTargetedHandlers = CCArray::arrayWithCapacity(8);
+    m_pTargetedHandlers = CCArray::create(8);
     m_pTargetedHandlers->retain();
-     m_pStandardHandlers = CCArray::arrayWithCapacity(4);
+     m_pStandardHandlers = CCArray::create(4);
     m_pStandardHandlers->retain();
-    m_pHandlersToAdd = CCArray::arrayWithCapacity(8);
+    m_pHandlersToAdd = CCArray::create(8);
     m_pHandlersToAdd->retain();
     m_pHandlersToRemove = ccCArrayNew(8);
 

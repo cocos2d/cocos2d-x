@@ -24,36 +24,36 @@ void MotionStreakTest1::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
   
     // the root object just rotates around
-    m_root = CCSprite::spriteWithFile(s_pPathR1);
+    m_root = CCSprite::create(s_pPathR1);
     addChild(m_root, 1);
     m_root->setPosition(ccp(s.width/2, s.height/2));
   
     // the target object is offset from root, and the streak is moved to follow it
-    m_target = CCSprite::spriteWithFile(s_pPathR1);
+    m_target = CCSprite::create(s_pPathR1);
     m_root->addChild(m_target);
     m_target->setPosition(ccp(s.width/4, 0));
 
     // create the streak object and add it to the scene
-    streak = CCMotionStreak::streakWithFade(2, 3, 32, ccGREEN, s_streak);
+    streak = CCMotionStreak::create(2, 3, 32, ccGREEN, s_streak);
     addChild(streak);
     // schedule an update on each frame so we can syncronize the streak with the target
     schedule(schedule_selector(MotionStreakTest1::onUpdate));
   
-    CCActionInterval* a1 = CCRotateBy::actionWithDuration(2, 360);
+    CCActionInterval* a1 = CCRotateBy::create(2, 360);
 
-    CCAction* action1 = CCRepeatForever::actionWithAction(a1);
-    CCActionInterval* motion = CCMoveBy::actionWithDuration(2, CCPointMake(100,0) );
-    m_root->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(motion, motion->reverse(), NULL)) ) );
+    CCAction* action1 = CCRepeatForever::create(a1);
+    CCActionInterval* motion = CCMoveBy::create(2, CCPointMake(100,0) );
+    m_root->runAction( CCRepeatForever::create((CCActionInterval*)(CCSequence::create(motion, motion->reverse(), NULL)) ) );
     m_root->runAction( action1 );
 
-    CCActionInterval *colorAction = CCRepeatForever::actionWithAction((CCActionInterval *)CCSequence::actions(
-        CCTintTo::actionWithDuration(0.2f, 255, 0, 0),
-        CCTintTo::actionWithDuration(0.2f, 0, 255, 0),
-        CCTintTo::actionWithDuration(0.2f, 0, 0, 255),
-        CCTintTo::actionWithDuration(0.2f, 0, 255, 255),
-        CCTintTo::actionWithDuration(0.2f, 255, 255, 0),
-        CCTintTo::actionWithDuration(0.2f, 255, 0, 255),
-        CCTintTo::actionWithDuration(0.2f, 255, 255, 255),
+    CCActionInterval *colorAction = CCRepeatForever::create((CCActionInterval *)CCSequence::create(
+        CCTintTo::create(0.2f, 255, 0, 0),
+        CCTintTo::create(0.2f, 0, 255, 0),
+        CCTintTo::create(0.2f, 0, 0, 255),
+        CCTintTo::create(0.2f, 0, 255, 255),
+        CCTintTo::create(0.2f, 255, 255, 0),
+        CCTintTo::create(0.2f, 255, 0, 255),
+        CCTintTo::create(0.2f, 255, 255, 255),
         NULL));
 
     streak->runAction(colorAction);
@@ -79,12 +79,12 @@ void MotionStreakTest2::onEnter()
 {
     MotionStreakTest::onEnter();
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
         
     // create the streak object and add it to the scene
-    streak = CCMotionStreak::streakWithFade(3, 3, 64, ccWHITE, s_streak );
+    streak = CCMotionStreak::create(3, 3, 64, ccWHITE, s_streak );
     addChild(streak);
     
     streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 
@@ -119,7 +119,7 @@ void Issue1358::onEnter()
     // ask director the the window size
     CCSize size = CCDirector::sharedDirector()->getWinSize();
     
-    streak = CCMotionStreak::streakWithFade(2.0f, 1.0f, 50.0f, ccc3(255, 255, 0), "Images/Icon.png");
+    streak = CCMotionStreak::create(2.0f, 1.0f, 50.0f, ccc3(255, 255, 0), "Images/Icon.png");
     addChild(streak);
     
     
@@ -233,23 +233,23 @@ void MotionStreakTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 0, kTagLabel);
     label->setPosition(CCPointMake(s.width/2, s.height-50));
     
     string subTitle = this->subtitle();
     if (subTitle.size() > 0)
     {
-        CCLabelTTF *l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
+        CCLabelTTF *l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(MotionStreakTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(MotionStreakTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(MotionStreakTest::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(MotionStreakTest::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(MotionStreakTest::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(MotionStreakTest::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition(CCPointZero);
     item1->setPosition(CCPointMake(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
@@ -258,12 +258,12 @@ void MotionStreakTest::onEnter()
     
     addChild(menu, 1);    
 
-    CCMenuItemToggle *itemMode = CCMenuItemToggle::itemWithTarget(this, menu_selector(MotionStreakTest::modeCallback),
-        CCMenuItemFont::itemWithString("Use High Quality Mode"),
-        CCMenuItemFont::itemWithString("Use Fast Mode"),
+    CCMenuItemToggle *itemMode = CCMenuItemToggle::create(this, menu_selector(MotionStreakTest::modeCallback),
+        CCMenuItemFont::create("Use High Quality Mode"),
+        CCMenuItemFont::create("Use Fast Mode"),
         NULL);
 
-    CCMenu *menuMode = CCMenu::menuWithItems(itemMode, NULL);
+    CCMenu *menuMode = CCMenu::create(itemMode, NULL);
     addChild(menuMode);
 
     menuMode->setPosition(ccp(s.width/2, s.height/4));
@@ -271,13 +271,13 @@ void MotionStreakTest::onEnter()
 
 void MotionStreakTest::modeCallback(CCObject *pSender)
 {
-    bool fastMode = streak->getIsFastMode();
-    streak->setIsFastMode(! fastMode);
+    bool fastMode = streak->isFastMode();
+    streak->setFastMode(! fastMode);
 }
 
 void MotionStreakTest::restartCallback(CCObject* pSender)
 {
-    CCScene* s = new MotionStreakTestScene();//CCScene::node();
+    CCScene* s = new MotionStreakTestScene();//CCScene::create();
     s->addChild(restartMotionAction()); 
 
     CCDirector::sharedDirector()->replaceScene(s);
@@ -286,7 +286,7 @@ void MotionStreakTest::restartCallback(CCObject* pSender)
 
 void MotionStreakTest::nextCallback(CCObject* pSender)
 {
-    CCScene* s = new MotionStreakTestScene();//CCScene::node();
+    CCScene* s = new MotionStreakTestScene();//CCScene::create();
     s->addChild( nextMotionAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
@@ -294,7 +294,7 @@ void MotionStreakTest::nextCallback(CCObject* pSender)
 
 void MotionStreakTest::backCallback(CCObject* pSender)
 {
-    CCScene* s = new MotionStreakTestScene;//CCScene::node();
+    CCScene* s = new MotionStreakTestScene;//CCScene::create();
     s->addChild( backMotionAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();

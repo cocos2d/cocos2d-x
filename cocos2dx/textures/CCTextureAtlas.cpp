@@ -209,7 +209,7 @@ void CCTextureAtlas::listenBackToForeground(CCObject *obj)
 
 const char* CCTextureAtlas::description()
 {
-    return CCString::stringWithFormat("<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads)->getCString();
+    return CCString::createWithFormat("<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads)->getCString();
 }
 
 

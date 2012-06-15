@@ -894,6 +894,22 @@
 						Name="CocosBuilderTest"
 						>
 						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayer.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayer.h"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayerLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayerLoader.h"
+							>
+						</File>
+						<File
 							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp"
 							>
 						</File>
@@ -902,11 +918,35 @@
 							>
 						</File>
 						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.cpp"
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayer.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.h"
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayer.h"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayerLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayerLoader.h"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayer.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayer.h"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayerLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayerLoader.h"
 							>
 						</File>
 					</Filter>

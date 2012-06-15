@@ -237,7 +237,7 @@ protected:
     unsigned int m_uAllocatedParticles;
 
     /** Is the emitter active */
-    CC_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
+    bool m_bIsActive;
     /** Quantity of particles that are being simulated at the moment */
     CC_PROPERTY_READONLY(unsigned int, m_uParticleCount, ParticleCount)
     /** How many seconds the emitter wil run. -1 means 'forever' */
@@ -290,6 +290,10 @@ public:
     virtual void setRotation(float newRotation);
     virtual void setScaleX(float newScaleX);
     virtual void setScaleY(float newScaleY);
+    
+    virtual bool isActive();
+    virtual bool isBlendAdditive();
+    virtual void setBlendAdditive(bool value);
 //////////////////////////////////////////////////////////////////////////
     
     /** start size in pixels of each particle */
@@ -334,7 +338,7 @@ public:
     dest blend function = GL_ONE;
     @endcode
     */
-    CC_PROPERTY(bool, m_bIsBlendAdditive, IsBlendAdditive)
+    bool m_bIsBlendAdditive;
     /** particles movement type: Free or Grouped
     @since v0.8
     */
@@ -343,7 +347,12 @@ public:
     By default it is false.
     @since v0.8
     */
-    CC_PROPERTY(bool, m_bIsAutoRemoveOnFinish, IsAutoRemoveOnFinish)
+protected:
+    bool m_bIsAutoRemoveOnFinish;
+public:
+    virtual bool isAutoRemoveOnFinish();
+    virtual void setAutoRemoveOnFinish(bool var);
+
     /** Switch between different kind of emitter modes:
     - kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
     - kCCParticleModeRadius: uses radius movement + rotation
@@ -356,9 +365,17 @@ public:
     /** creates an initializes a CCParticleSystem from a plist file.
     This plist files can be creted manually or with Particle Designer:
     http://particledesigner.71squared.com/
+    @warning: This interface will be deprecated in future.
     @since v0.99.3
     */
     static CCParticleSystem * particleWithFile(const char *plistFile);
+
+    /** creates an initializes a CCParticleSystem from a plist file.
+    This plist files can be creted manually or with Particle Designer:
+    http://particledesigner.71squared.com/
+    @since v2.0
+    */
+    static CCParticleSystem * create(const char *plistFile);
 
     /** initializes a CCParticleSystem*/
     bool init();

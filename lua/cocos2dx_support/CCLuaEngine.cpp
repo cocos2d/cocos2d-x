@@ -282,7 +282,7 @@ int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouche
     return executeFunctionByHandler(nHandler, 2);
 }
 
-int CCLuaEngine::executeSchedule(int nHandler, ccTime dt)
+int CCLuaEngine::executeSchedule(int nHandler, float dt)
 {
     return executeFunctionWithFloatData(nHandler, dt);
 }

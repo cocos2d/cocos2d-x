@@ -122,7 +122,7 @@ public:
     inline bool isPaused(void) { return m_bPaused; }
 
     /** How many frames were called since the director started */
-    inline unsigned int getFrames(void) { return m_uFrames; }
+    inline unsigned int getTotalFrames(void) { return m_uTotalFrames; }
     
     /** Sets an OpenGL projection
      @since v0.8.2

@@ -1,7 +1,7 @@
 class CCMotionStreak : public CCNode
 {
-    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
-    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
 
     void tintWithColor(ccColor3B colors);
     void reset();
@@ -16,8 +16,10 @@ class CCMotionStreak : public CCNode
     const ccColor3B& getColor(void);
     GLubyte getOpacity(void);
     void setOpacity(GLubyte opacity);
-    void setIsOpacityModifyRGB(bool bValue);
-    bool getIsOpacityModifyRGB(void);
-    bool getIsFastMode();
-    void setIsFastMode(bool mode);
+    void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
+    bool isFastMode();
+    void setFastMode(bool bFastMode);
+    bool isStartingPositionInitialized();
+    void setStartingPositionInitialized(bool bStartingPositionInitialized);
 };

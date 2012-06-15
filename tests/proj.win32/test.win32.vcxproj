@@ -125,9 +125,13 @@
     <ClCompile Include="..\tests\BugsTest\BugsTest.cpp" />
     <ClCompile Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.cpp" />
     <ClCompile Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.cpp" />
-    <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayer.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayerLoader.cpp" />
     <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp" />
-    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayer.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayerLoader.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayer.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayerLoader.cpp" />
     <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.cpp" />
     <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp" />
     <ClCompile Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlScene.cpp" />
@@ -174,7 +178,6 @@
     <ClCompile Include="..\tests\Box2DTestBed\Test.cpp" />
     <ClCompile Include="..\tests\Box2DTestBed\TestEntries.cpp" />
     <ClCompile Include="..\tests\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
-    <ClCompile Include="..\tests\HiResTest\HiResTest.cpp" />
     <ClCompile Include="..\tests\KeypadTest\KeypadTest.cpp" />
     <ClCompile Include="..\tests\CocosDenshionTest\CocosDenshionTest.cpp" />
     <ClCompile Include="..\tests\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
@@ -205,9 +208,13 @@
     <ClInclude Include="..\tests\BugsTest\BugsTest.h" />
     <ClInclude Include="..\tests\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.h" />
     <ClInclude Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.h" />
-    <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayer.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayerLoader.h" />
     <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h" />
-    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayer.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayerLoader.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayer.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayerLoader.h" />
     <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.h" />
     <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h" />
     <ClInclude Include="..\tests\ExtensionsTest\ControlExtensionTest\CCControlScene.h" />
@@ -292,7 +299,6 @@
     <ClInclude Include="..\tests\Box2DTestBed\Tests\VerticalStack.h" />
     <ClInclude Include="..\tests\Box2DTestBed\Tests\Web.h" />
     <ClInclude Include="..\tests\EffectsAdvancedTest\EffectsAdvancedTest.h" />
-    <ClInclude Include="..\tests\HiResTest\HiResTest.h" />
     <ClInclude Include="..\tests\KeypadTest\KeypadTest.h" />
     <ClInclude Include="..\tests\CocosDenshionTest\CocosDenshionTest.h" />
     <ClInclude Include="..\tests\PerformanceTest\PerformanceNodeChildrenTest.h" />

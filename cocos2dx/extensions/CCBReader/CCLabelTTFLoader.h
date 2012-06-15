@@ -8,7 +8,7 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CCLabelTTFLoader : public CCNodeLoader {
+class CC_DLL CCLabelTTFLoader : public CCNodeLoader {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelTTFLoader, loader);
 

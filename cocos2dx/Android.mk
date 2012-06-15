@@ -29,7 +29,6 @@ base_nodes/CCNode.cpp \
 cocoa/CCAffineTransform.cpp \
 cocoa/CCGeometry.cpp \
 cocoa/CCAutoreleasePool.cpp \
-cocoa/CCData.cpp \
 cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCObject.cpp \
