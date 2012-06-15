@@ -69,7 +69,6 @@ bool AppDelegate::initInstance() {
 		CCFileUtils::setResourcePath("../Resources/");
 
 #endif  // CC_PLATFORM_LINUX
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 
 		CCEGLView * pMainWnd = new CCEGLView();
@@ -79,11 +78,29 @@ bool AppDelegate::initInstance() {
 
 #endif  // CC_PLATFORM_BADA
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+
 		CCEGLView * pMainWnd = new CCEGLView();
-		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(1024, 600));
+		int width, height;
+		const char *width_str, *height_str;
+		width_str = getenv("WIDTH");
+		height_str = getenv("HEIGHT");
+		if (width_str && height_str)
+		{
+			width = atoi(width_str);
+			height = atoi(height_str);
+		}
+		else
+		{
+			width = 1024;
+			height = 600;
+		}
+
+		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(width, height));
 		CCFileUtils::setResourcePath("app/native/Resources");
+
 #endif // CC_PLATFORM_QNX
+
 		bRet = true;
 	} while (0);
 	return bRet;

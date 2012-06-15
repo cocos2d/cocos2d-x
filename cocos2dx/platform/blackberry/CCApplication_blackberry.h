@@ -1,5 +1,5 @@
-#ifndef __CC_APPLICATION_QNX_H__
-#define __CC_APPLICATION_QNX_H__
+#ifndef __CC_APPLICATION_BLACKBERRY_H__
+#define __CC_APPLICATION_BLACKBERRY_H__
 
 #include "CCApplication.h"
 
@@ -97,4 +97,4 @@ private:
 
 NS_CC_END;
 
-#endif	// __CCX_APPLICATION_QNX_H__
+#endif	// __CCX_APPLICATION_BLACKBERRY_H__

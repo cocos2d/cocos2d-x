@@ -38,8 +38,8 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1683707872" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -85,7 +85,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="blackberry/CCFileUtils_blackberry.cpp|blackberry/CCImage_blackberry.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -135,8 +135,8 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.686663849" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -180,7 +180,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="blackberry/CCFileUtils_blackberry.cpp|blackberry/CCImage_blackberry.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -231,8 +231,8 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.60228339" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -279,7 +279,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="blackberry/CCFileUtils_blackberry.cpp|blackberry/CCImage_blackberry.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -330,8 +330,8 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1193350404" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -341,7 +341,7 @@
 							</tool>
 							<tool id="com.qnx.qcc.tool.linker.1774234448" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
 								<option id="com.qnx.qcc.option.linker.debug.1048129666" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.coverage.1971055956" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs -p)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.coverage.1971055956" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.shared.703226957" name="Shared (-shared)" superClass="com.qnx.qcc.option.linker.shared" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.1643174530" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.security.971205904" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
@@ -378,7 +378,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="blackberry/CCFileUtils_blackberry.cpp|blackberry/CCImage_blackberry.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -427,8 +427,8 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.353833674" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -476,7 +476,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="blackberry/CCFileUtils_blackberry.cpp|blackberry/CCImage_blackberry.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -526,8 +526,8 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1783715221" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -574,7 +574,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="blackberry/CCFileUtils_blackberry.cpp|blackberry/CCImage_blackberry.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -624,8 +624,8 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/qnx"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/qnx/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.2131157600" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -635,7 +635,7 @@
 							</tool>
 							<tool id="com.qnx.qcc.tool.linker.1935296322" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
 								<option id="com.qnx.qcc.option.linker.debug.2001932067" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.coverage.1744548688" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs -p)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.coverage.1744548688" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.shared.17383340" name="Shared (-shared)" superClass="com.qnx.qcc.option.linker.shared" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.804911640" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.security.1763537921" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
@@ -672,7 +672,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="qnx/CCFileUtils_qnx.cpp|qnx/CCImage_qnx.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="blackberry/CCFileUtils_blackberry.cpp|blackberry/CCImage_blackberry.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
