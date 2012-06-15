@@ -218,7 +218,7 @@
 			<type>9</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-qnx</arguments>
+				<arguments>1.0-name-matches-false-false-blackberry</arguments>
 			</matcher>
 		</filter>
 		<filter>
@@ -236,7 +236,7 @@
 			<type>9</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-qnx</arguments>
+				<arguments>1.0-name-matches-false-false-blackberry</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

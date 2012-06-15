@@ -47,7 +47,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/include"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1372558930" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1849571146" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -72,7 +72,7 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1420758037" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.libraries.1877286895" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="vorbis"/>
@@ -88,7 +88,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="blackberry"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -128,7 +128,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/include"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1936049270" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.82187465" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -143,7 +143,7 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1451935319" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.libraries.489827673" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="vorbis"/>
@@ -158,7 +158,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="blackberry"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -199,7 +199,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/include"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.584937839" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.2036659301" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -217,7 +217,7 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1442577269" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.libraries.1900616981" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="vorbis"/>
@@ -232,7 +232,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="blackberry"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -273,7 +273,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/include"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1106404059" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1381169559" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -291,7 +291,7 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.852035655" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.libraries.1060548334" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="vorbis"/>
@@ -306,7 +306,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="blackberry"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -345,7 +345,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/include"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.641179327" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1896937509" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -362,7 +362,7 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.718721840" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.libraries.300012761" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="vorbis"/>
@@ -377,7 +377,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="blackberry"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -417,7 +417,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/include"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.151407782" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.746859765" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -435,7 +435,7 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1018342959" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.libraries.97324431" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="vorbis"/>
@@ -450,7 +450,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="blackberry"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -490,7 +490,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/include"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1555108705" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1894319763" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -508,7 +508,7 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.640263912" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../third_party/qnx/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.libraries.1213644826" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="vorbis"/>
@@ -523,7 +523,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="qnx"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="blackberry"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

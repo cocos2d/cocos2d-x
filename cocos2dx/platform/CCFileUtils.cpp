@@ -418,8 +418,8 @@ NS_CC_END;
 #include "bada/CCFileUtils_bada.cpp"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_QNX)
-#include "qnx/CCFileUtils_qnx.cpp"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+#include "blackberry/CCFileUtils_blackberry.cpp"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)

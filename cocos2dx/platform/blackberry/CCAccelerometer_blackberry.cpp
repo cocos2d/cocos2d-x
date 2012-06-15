@@ -21,15 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCAccelerometer_qnx.h"
+#include "CCAccelerometer_blackberry.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <bps/accelerometer.h>
-#include <fcntl.h>
-
-#define BUFFER_SIZE 			30
 
 namespace cocos2d
 {
@@ -40,8 +34,6 @@ namespace cocos2d
 	{
 		m_pAccelDelegate = NULL;
 		m_initialOrientationAngle = atoi(getenv("ORIENTATION"));
-
-		accelerometer_set_update_frequency(FREQ_40_HZ);
 	}
 
     CCAccelerometer::~CCAccelerometer()
@@ -62,35 +54,37 @@ namespace cocos2d
     	m_pAccelDelegate = pDelegate;
     }
 
-	void CCAccelerometer::update(long timeStamp)
+	void CCAccelerometer::update(long timeStamp, double x, double y, double z)
 	{
 		if ( m_pAccelDelegate != NULL)
 		{
-			int angle = atoi(getenv("ORIENTATION"));
-
-			double x, y, z;
-
-			accelerometer_read_forces(&x, &y, &z);
-
-			if (m_initialOrientationAngle == 270)
-		    {
-		    	m_accelerationValue.x = y;
-		    	m_accelerationValue.y = -x;
-		    }
-			else if (m_initialOrientationAngle == 90)
-			{
-				m_accelerationValue.x = -y;
-				m_accelerationValue.y = x;
-			}
-			else if (m_initialOrientationAngle == 0)
+			if (getenv("WIDTH"))
 			{
 				m_accelerationValue.x = x;
 				m_accelerationValue.y = y;
-		    }
-			else if (m_initialOrientationAngle == 180)
+			}
+			else // for PlayBook we need to take into account the initial orientation
 			{
-				m_accelerationValue.x = -x;
-				m_accelerationValue.y = -y;
+				if (m_initialOrientationAngle == 270)
+				{
+					m_accelerationValue.x = y;
+					m_accelerationValue.y = -x;
+				}
+				else if (m_initialOrientationAngle == 90)
+				{
+					m_accelerationValue.x = -y;
+					m_accelerationValue.y = x;
+				}
+				else if (m_initialOrientationAngle == 0)
+				{
+					m_accelerationValue.x = x;
+					m_accelerationValue.y = y;
+				}
+				else if (m_initialOrientationAngle == 180)
+				{
+					m_accelerationValue.x = -x;
+					m_accelerationValue.y = -y;
+				}
 			}
 
 			m_accelerationValue.z = z;
