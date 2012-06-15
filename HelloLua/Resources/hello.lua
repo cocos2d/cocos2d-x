@@ -128,7 +128,7 @@ local function createLayerFram()
     end
 
     layerFarm:registerScriptTouchHandler(onTouch)
-    layerFarm:setIsTouchEnabled(true)
+    layerFarm:setTouchEnabled(true)
 
     return layerFarm
 end
@@ -143,13 +143,13 @@ local function createLayerMenu()
     local function menuCallbackClosePopup()
         -- stop test sound effect
         SimpleAudioEngine:sharedEngine():stopEffect(effectID)
-        menuPopup:setIsVisible(false)
+        menuPopup:setVisible(false)
     end
 
     local function menuCallbackOpenPopup()
         -- loop test sound effect
         effectID = SimpleAudioEngine:sharedEngine():playEffect("effect1.wav")
-        menuPopup:setIsVisible(true)
+        menuPopup:setVisible(true)
     end
 
     -- add a popup menu
@@ -158,7 +158,7 @@ local function createLayerMenu()
     menuPopupItem:registerScriptHandler(menuCallbackClosePopup)
     menuPopup = CCMenu:createWithItem(menuPopupItem)
     menuPopup:setPosition(winSize.width / 2, winSize.height / 2)
-    menuPopup:setIsVisible(false)
+    menuPopup:setVisible(false)
     layerMenu:addChild(menuPopup)
 
     -- add the left-bottom "tools" menu to invoke menuPopup
