@@ -246,11 +246,11 @@ void ScriptingCore::runScript(const char *path)
 //    std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
     std::string dpath("");
     dpath += path;
-    const char *realPath = CCFileUtils::fullPathFromRelativePath(dpath.c_str());
+    const char *realPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(dpath.c_str());
 #else
-    const char *realPath = CCFileUtils::fullPathFromRelativePath(path);
+    const char *realPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path);
 #endif
-    const char* content = CCString::stringWithContentsOfFile(realPath)->getCString();
+    const char* content = CCString::createWithContentsOfFile(realPath)->getCString();
     if (content && strlen(content) > 0) {
         JSBool ok;
         jsval rval;

@@ -18,15 +18,15 @@ class CCAction : public CCObject
 
 class CCActionInterval : public CCAction
 {
-    // ccTime getElapsed(void);
+    // float getElapsed(void);
     // void setAmplitudeRate(CGFloat amp);
     // CGFloat getAmplitudeRate(void);
 };
 
 class CCFiniteTimeAction : public CCActionInterval
 {
-    // ccTime getDuration(void);
-    // void setDuration(ccTime duration);
+    // float getDuration(void);
+    // void setDuration(float duration);
     // CCFiniteTimeAction* reverse(void);
 };
 
@@ -52,7 +52,7 @@ class CCFollow : public CCAction
 class CCSequence : public CCActionInterval
 {
     static CCFiniteTimeAction* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
-    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+    static CCFiniteTimeAction* actionWithArray(CCArray *actions);
 };
 
 class CCRepeat : public CCActionInterval
@@ -67,48 +67,48 @@ class CCRepeatForever : public CCActionInterval
 
 class CCSpawn : public CCActionInterval
 {
-    static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
+    static CCFiniteTimeAction* actionWithArray(CCArray *actions);
     static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 };
 
 class CCRotateTo : public CCActionInterval
 {
-    static CCRotateTo* actionWithDuration(ccTime duration, float fDeltaAngle);
+    static CCRotateTo* actionWithDuration(float duration, float fDeltaAngle);
 };
 
 class CCRotateBy : public CCActionInterval
 {
-    static CCRotateBy* actionWithDuration(ccTime duration, float fDeltaAngle);
+    static CCRotateBy* actionWithDuration(float duration, float fDeltaAngle);
 };
 
 class CCMoveTo : public CCActionInterval
 {
-    static CCMoveTo* actionWithDuration(ccTime duration, CCPoint position);
+    static CCMoveTo* actionWithDuration(float duration, CCPoint position);
 };
 
 class CCMoveBy : public CCActionInterval
 {
-    static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
+    static CCMoveBy* actionWithDuration(float duration, CCPoint position);
 };
 
 class CCSkewTo : public CCActionInterval
 {
-    static CCSkewTo* actionWithDuration(ccTime t, float sx, float sy);
+    static CCSkewTo* actionWithDuration(float t, float sx, float sy);
 };
 
 class CCSkewBy : public CCActionInterval
 {
-    static CCSkewBy* actionWithDuration(ccTime t, float deltaSkewX, float deltaSkewY);
+    static CCSkewBy* actionWithDuration(float t, float deltaSkewX, float deltaSkewY);
 };
 
 class CCJumpBy : public CCActionInterval
 {
-    static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+    static CCJumpBy* actionWithDuration(float duration, CCPoint position, float height, int jumps);
 };
 
 class CCJumpTo : public CCActionInterval
 {
-    static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+    static CCJumpTo* actionWithDuration(float duration, CCPoint position, float height, int jumps);
 };
 
 typedef struct _ccBezierConfig {
@@ -119,59 +119,59 @@ typedef struct _ccBezierConfig {
 
 class CCBezierBy : public CCActionInterval
 {
-    static CCBezierBy* actionWithDuration(ccTime t, ccBezierConfig c);
+    static CCBezierBy* actionWithDuration(float t, ccBezierConfig c);
 };
 
 class CCBezierTo : public CCActionInterval
 {
-    static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
+    static CCBezierTo* actionWithDuration(float t, ccBezierConfig c);
 };
 
 class CCScaleTo : public CCActionInterval
 {
-    static CCScaleTo* actionWithDuration(ccTime duration, float s);
-    static CCScaleTo* actionWithDuration(ccTime duration, float sx, float sy);
+    static CCScaleTo* actionWithDuration(float duration, float s);
+    static CCScaleTo* actionWithDuration(float duration, float sx, float sy);
 };
 
 class CCScaleBy : public CCActionInterval
 {
-    static CCScaleBy* actionWithDuration(ccTime duration, float s);
-    static CCScaleBy* actionWithDuration(ccTime duration, float sx, float sy);
+    static CCScaleBy* actionWithDuration(float duration, float s);
+    static CCScaleBy* actionWithDuration(float duration, float sx, float sy);
 };
 
 class CCBlink : public CCActionInterval
 {
-    static CCBlink* actionWithDuration(ccTime duration, unsigned int uBlinks);
+    static CCBlink* actionWithDuration(float duration, unsigned int uBlinks);
 };
 
 class CCFadeIn : public CCActionInterval
 {
-    static CCFadeIn* actionWithDuration(ccTime d);
+    static CCFadeIn* actionWithDuration(float d);
 };
 
 class CCFadeOut : public CCActionInterval
 {
-    static CCFadeOut* actionWithDuration(ccTime d);
+    static CCFadeOut* actionWithDuration(float d);
 };
 
 class CCFadeTo : public CCActionInterval
 {
-    static CCFadeTo* actionWithDuration(ccTime duration, GLubyte opacity);
+    static CCFadeTo* actionWithDuration(float duration, GLubyte opacity);
 };
 
 class CCTintTo : public CCActionInterval
 {
-    static CCTintTo* actionWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
+    static CCTintTo* actionWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
 };
 
 class CCTintBy : public CCActionInterval
 {
-    static CCTintBy* actionWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+    static CCTintBy* actionWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 };
 
 class CCDelayTime : public CCActionInterval
 {
-    static CCDelayTime* actionWithDuration(ccTime d);
+    static CCDelayTime* actionWithDuration(float d);
 };
 
 class CCReverseTime : public CCActionInterval
@@ -189,12 +189,12 @@ class CCAnimate : public CCActionInterval
 
 class CCProgressTo : public CCAction
 {
-    static CCAction* actionWithDuration(ccTime duration, float fPercent);
+    static CCAction* actionWithDuration(float duration, float fPercent);
 };
 
 class CCProgressFromTo : public CCAction
 {
-    static CCAction* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
+    static CCAction* actionWithDuration(float duration, float fFromPercentage, float fToPercentage);
 };
 
 
