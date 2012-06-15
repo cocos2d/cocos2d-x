@@ -567,12 +567,12 @@ BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, C
                 CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
 
                 if(targetAsCCBSelectorResolver != NULL) {
-                    selMenuHandler = targetAsCCBSelectorResolver->onResolveCCBCCMenuSelector(target, selectorName);
+                    selMenuHandler = targetAsCCBSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName);
                 }
                 if(selMenuHandler == 0) {
                     CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
                     if(ccbSelectorResolver != NULL) {
-                        selMenuHandler = ccbSelectorResolver->onResolveCCBCCMenuSelector(target, selectorName);
+                        selMenuHandler = ccbSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName);
                     }
                 }
 

@@ -5,38 +5,19 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-ButtonTestLayer * ButtonTestLayer::node() { 
-    ButtonTestLayer * ptr = new ButtonTestLayer();
-    if(ptr && ptr->init()) { 
-        ptr->autorelease();   
-        return ptr;
-    } 
-    CC_SAFE_DELETE(ptr);
-    return NULL;
-}
-
-SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuSelector(CCObject * pTarget, CCString * pSelectorName) {
+SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, CCString * pSelectorName) {
     return NULL;    
 }
 
 SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(CCObject * pTarget, CCString * pSelectorName) {
-    if(pTarget == this) {
-        if(pSelectorName->compare("onCCControlButtonClicked") == 0) {
-            return cccontrol_selector(ButtonTestLayer::onCCControlButtonClicked);
-        }
-    }
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonClicked", ButtonTestLayer::onCCControlButtonClicked);
+
     return NULL;
 }
 
 bool ButtonTestLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) {
-    if(pTarget == this) {
-        if(strcmp(pMemberVariableName->getCString(), "mCCControlEventLabel") == 0) {
-            this->mCCControlEventLabel = dynamic_cast<CCLabelBMFont *>(pNode);
-            CC_ASSERT(this->mCCControlEventLabel);
-            this->mCCControlEventLabel->retain();
-            return true;
-        }
-    }
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", CCLabelBMFont *, this->mCCControlEventLabel);
+
     return false;
 }
 
