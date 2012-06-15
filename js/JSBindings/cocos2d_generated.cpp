@@ -23835,10 +23835,8 @@ JSBool S_CCRenderTexture::jsend(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	S_CCRenderTexture* self = NULL; JSGET_PTRSHELL(S_CCRenderTexture, self, obj);
 	if (self == NULL) return JS_FALSE;
-	if (argc == 1) {
-		JSBool arg0;
-		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		self->end(arg0);
+	if (argc == 0) {
+		self->end();
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
