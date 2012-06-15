@@ -148,8 +148,8 @@ public:
     inline void setListViewParent(CCListView *pParent) { m_pListViewParent = pParent; }
     inline CCListView *getListViewParent(void) { return m_pListViewParent; }
 
-    inline void setIsEnabled(bool bEnabled) { m_bIsEnabled = bEnabled; }
-    inline bool getIsEnabled(void) { return m_bIsEnabled; }
+    inline void setEnabled(bool bEnabled) { m_bIsEnabled = bEnabled; }
+    inline bool isEnabled(void) { return m_bIsEnabled; }
 
     // un
     void setDelegate(const CCListViewDelegate *pDelegate) { m_pDelegate = const_cast<CCListViewDelegate*>(pDelegate);}

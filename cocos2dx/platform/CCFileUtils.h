@@ -157,8 +157,8 @@ public:
     /**
     @brief Set/Get whether pop-up a message box when the image load failed
     */
-    void setIsPopupNotify(bool bNotify);
-    bool getIsPopupNotify();
+    void popupNotify(bool bNotify);
+    bool isPopupNotify();
 };
 
 NS_CC_END

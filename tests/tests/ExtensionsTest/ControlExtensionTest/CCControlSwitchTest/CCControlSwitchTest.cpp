@@ -87,7 +87,7 @@ bool CCControlSwitchTest::init()
 void CCControlSwitchTest::valueChanged(CCObject* sender, CCControlEvent controlEvent)
 {
     CCControlSwitch* pSwitch = (CCControlSwitch*)sender;
-    if (pSwitch->getIsOn())
+    if (pSwitch->isOn())
     {
         m_pDisplayValueLabel->setString("On");
     } 

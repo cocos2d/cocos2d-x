@@ -42,9 +42,9 @@ public:
     virtual ~CCControlButton();
     virtual void needsLayout(void);
 
-    virtual void setIsEnabled(bool enabled);
-    virtual void setIsSelected(bool enabled);
-    virtual void setIsHighlighted(bool enabled);
+    virtual void setEnabled(bool enabled);
+    virtual void setSelected(bool enabled);
+    virtual void setHighlighted(bool enabled);
 protected:
     // CCRGBAProtocol
     //bool m_bIsOpacityModifyRGB;

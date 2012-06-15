@@ -589,7 +589,7 @@ void CCScale9Sprite::setOpacityModifyRGB(bool var)
             //    CCRGBAProtocol *pRGBAProtocol = (CCRGBAProtocol *)pNode;
             //    if (pRGBAProtocol)
             //    {
-            //        pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+            //        pRGBAProtocol->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
             //    }
             //}
         }

@@ -238,21 +238,21 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
 
     if( numberOfSprites == 0 )
     {
-        m_tamara->setIsVisible(false);
-        m_kathia->setIsVisible(false);
-        m_grossini->setIsVisible(false);
+        m_tamara->setVisible(false);
+        m_kathia->setVisible(false);
+        m_grossini->setVisible(false);
     } 
     else if ( numberOfSprites == 1 ) 
     {
-        m_tamara->setIsVisible(false);
-        m_kathia->setIsVisible(false);
+        m_tamara->setVisible(false);
+        m_kathia->setVisible(false);
         m_grossini->setPosition(CCPointMake(s.width/2, s.height/2));
     }
     else if( numberOfSprites == 2 ) 
     {        
         m_kathia->setPosition( CCPointMake(s.width/3, s.height/2));
         m_tamara->setPosition( CCPointMake(2*s.width/3, s.height/2));
-        m_grossini->setIsVisible(false);
+        m_grossini->setVisible(false);
     } 
     else if( numberOfSprites == 3 ) 
     {
@@ -268,15 +268,15 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
 
     if( numberOfSprites == 1 ) 
     {
-        m_tamara->setIsVisible(false);
-        m_kathia->setIsVisible(false);
+        m_tamara->setVisible(false);
+        m_kathia->setVisible(false);
         m_grossini->setPosition(CCPointMake(60, s.height/2));
     } 
     else if( numberOfSprites == 2 ) 
     {        
         m_kathia->setPosition( CCPointMake(60, s.height/3));
         m_tamara->setPosition( CCPointMake(60, 2*s.height/3));
-        m_grossini->setIsVisible( false );
+        m_grossini->setVisible( false );
     } 
     else if( numberOfSprites == 3 ) 
     {
@@ -734,7 +734,7 @@ void ActionSequence2::onEnter()
 
     alignSpritesLeft(1);
 
-    m_grossini->setIsVisible(false);
+    m_grossini->setVisible(false);
 
     CCFiniteTimeAction*  action = CCSequence::create(
         CCPlace::create(CCPointMake(200,200)),

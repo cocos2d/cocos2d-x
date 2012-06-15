@@ -107,7 +107,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     }
 
     m_disabledItem = item3; item3->retain();
-    m_disabledItem->setIsEnabled( false );
+    m_disabledItem->setEnabled( false );
 
     addChild(menu);
     menu->setPosition(ccp(s.width/2, s.height/2));
@@ -170,7 +170,7 @@ void MenuLayerMainMenu::menuCallbackDisabled(CCObject* sender)
 
 void MenuLayerMainMenu::menuCallbackEnable(CCObject* sender) 
 {
-    m_disabledItem->setIsEnabled(! m_disabledItem->isEnabled() );
+    m_disabledItem->setEnabled(! m_disabledItem->isEnabled() );
 }
 
 void MenuLayerMainMenu::menuCallback2(CCObject* sender)
@@ -319,7 +319,7 @@ MenuLayer3::MenuLayer3()
     
     CCMenuItemSprite* item3 = CCMenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, this, menu_selector(MenuLayer3::menuCallback3));
     m_disabledItem = item3;  item3->retain();
-    m_disabledItem->setIsEnabled( false );
+    m_disabledItem->setEnabled( false );
     
     CCMenu *menu = CCMenu::create( item1, item2, item3, NULL);    
     menu->setPosition( CCPointMake(0,0) );
@@ -361,7 +361,7 @@ void MenuLayer3::menuCallback(CCObject* sender)
 void MenuLayer3::menuCallback2(CCObject* sender)
 {
     //UXLOG("Label clicked. Toogling AtlasSprite");
-    m_disabledItem->setIsEnabled( ! m_disabledItem->isEnabled() );
+    m_disabledItem->setEnabled( ! m_disabledItem->isEnabled() );
     m_disabledItem->stopAllActions();
 }
 
@@ -380,7 +380,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontName("American Typewriter");
     CCMenuItemFont::setFontSize(18);
     CCMenuItemFont*title1 = CCMenuItemFont::create("Sound");
-    title1->setIsEnabled(false);
+    title1->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
     CCMenuItemToggle* item1 = CCMenuItemToggle::create(    this, 
@@ -392,7 +392,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontName( "American Typewriter" );
     CCMenuItemFont::setFontSize(18);
     CCMenuItemFont* title2 = CCMenuItemFont::create( "Music" );
-    title2->setIsEnabled(false);
+    title2->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
     CCMenuItemToggle *item2 = CCMenuItemToggle::create(    this, 
@@ -404,7 +404,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontName( "American Typewriter" );
     CCMenuItemFont::setFontSize(18);
     CCMenuItemFont* title3 = CCMenuItemFont::create( "Quality" );
-    title3->setIsEnabled( false );
+    title3->setEnabled( false );
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
     CCMenuItemToggle *item3 = CCMenuItemToggle::create(    this, 
@@ -416,7 +416,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontName( "American Typewriter" );
     CCMenuItemFont::setFontSize(18);
     CCMenuItemFont* title4 = CCMenuItemFont::create( "Orientation" );
-    title4->setIsEnabled(false);
+    title4->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
     CCMenuItemToggle *item4 = CCMenuItemToggle::create( this, 

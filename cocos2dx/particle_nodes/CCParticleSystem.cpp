@@ -288,12 +288,12 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                 if (strlen(textureName) > 0)
                 {
                     // set not pop-up message box when load image failed
-                    bool bNotify = CCFileUtils::sharedFileUtils()->getIsPopupNotify();
-                    CCFileUtils::sharedFileUtils()->setIsPopupNotify(false);
+                    bool bNotify = CCFileUtils::sharedFileUtils()->isPopupNotify();
+                    CCFileUtils::sharedFileUtils()->popupNotify(false);
                     tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
                     
                     // reset the value of UIImage notify
-                    CCFileUtils::sharedFileUtils()->setIsPopupNotify(bNotify);
+                    CCFileUtils::sharedFileUtils()->popupNotify(bNotify);
                 }
                 
                 if (tex)
@@ -1211,12 +1211,12 @@ void CCParticleSystem::setPositionType(tCCPositionType var)
     m_ePositionType = var;
 }
 
-bool CCParticleSystem::getIsAutoRemoveOnFinish()
+bool CCParticleSystem::isAutoRemoveOnFinish()
 {
     return m_bIsAutoRemoveOnFinish;
 }
 
-void CCParticleSystem::setIsAutoRemoveOnFinish(bool var)
+void CCParticleSystem::setAutoRemoveOnFinish(bool var)
 {
     m_bIsAutoRemoveOnFinish = var;
 }
