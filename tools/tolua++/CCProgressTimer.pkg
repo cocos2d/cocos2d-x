@@ -24,7 +24,7 @@ class CCProgressTimer : public CCNode
     void setIsOpacityModifyRGB(bool bValue);
     bool getIsOpacityModifyRGB(void);
 
-    static CCProgressTimer* progressWithSprite(CCSprite* sp);
+    static CCProgressTimer* create(CCSprite* sp);
 
     CCPoint getMidpoint();
     void setMidpoint(CCPoint pt);

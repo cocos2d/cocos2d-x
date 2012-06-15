@@ -5,5 +5,5 @@ class CCAtlasNode : public CCNode
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D *texture);
 
-    static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+    static CCAtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 };
