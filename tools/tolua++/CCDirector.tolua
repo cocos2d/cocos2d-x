@@ -34,5 +34,7 @@ class CCDirector : public CCObject
     void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
     CGFloat getContentScaleFactor(void);
     bool isRetinaDisplay();
+    void pause(void);
+    void resume(void);
     static CCDirector* sharedDirector(void);
 };

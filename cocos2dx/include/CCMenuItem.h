@@ -73,8 +73,8 @@ namespace cocos2d{
         virtual void unselected();
         
         /** Register menu handler script function */
-        virtual void registerScriptHandler(int nHandler);
-        virtual void unregisterScriptHandler(void);
+        virtual void registerScriptTapHandler(int nHandler);
+        virtual void unregisterScriptTapHandler(void);
         
         /** set the target/selector of the menu item*/
         void setTarget(CCObject *rec, SEL_MenuHandler selector);

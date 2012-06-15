@@ -34,9 +34,25 @@
 #define TOLUA_RELEASE
 #endif
 
+#include <vector>
+#include <map>
+#include "LuaCocos2d.h"
+
+extern "C" {
 #include "tolua++.h"
+#include "tolua_fix.h"
+}
+
+#include "cocos2d.h"
+#include "CCScriptSupport.h"
+#include "CCConfiguration.h"
+#include "CCRibbon.h"
+#include "SimpleAudioEngine.h"
+
+using namespace std;
+using namespace cocos2d;
+using namespace CocosDenshion;
 
 int  tolua_Cocos2d_open(lua_State* tolua_S);
-
 
 #endif // __LUACOCOS2D_H
