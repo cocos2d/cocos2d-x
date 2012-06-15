@@ -81,9 +81,10 @@ public:
     virtual void registerScriptHandler(int nHandler);
     virtual void unregisterScriptHandler(void);
     
-    bool isEnabled();
-    void setIsEnabled(bool value);
-    bool isSelected();
+    virtual bool isEnabled();
+    //@note: It's 'setIsEnable' in cocos2d-iphone. 
+    virtual void setEnabled(bool value);
+    virtual bool isSelected();
     
     /** set the target/selector of the menu item*/
     void setTarget(CCObject *rec, SEL_MenuHandler selector);
@@ -135,9 +136,9 @@ public:
     virtual void selected();
     virtual void unselected();
     /** Enable or disabled the CCMenuItemFont
-     @warning setIsEnabled changes the RGB color of the font
+     @warning setEnabled changes the RGB color of the font
      */
-    virtual void setIsEnabled(bool enabled);
+    virtual void setEnabled(bool enabled);
     virtual void setOpacity(GLubyte opacity);
     virtual GLubyte getOpacity();
     virtual void setColor(const ccColor3B& color);
@@ -287,7 +288,7 @@ public:
      */
     virtual void selected();
     virtual void unselected();
-    virtual void setIsEnabled(bool bEnabled);
+    virtual void setEnabled(bool bEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) { return false;}
@@ -408,7 +409,7 @@ public:
     virtual void activate();
     virtual void selected();
     virtual void unselected();
-    virtual void setIsEnabled(bool var);
+    virtual void setEnabled(bool var);
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) { return false;}

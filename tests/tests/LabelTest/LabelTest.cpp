@@ -1199,7 +1199,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     // position the label on the center of the screen
     this->m_pLabelShouldRetain->setPosition(ccp(size.width/2, size.height/2));
 
-    this->m_pArrowsBarShouldRetain->setIsVisible(false);
+    this->m_pArrowsBarShouldRetain->setVisible(false);
 
     float arrowsWidth = (ArrowsMax - ArrowsMin) * size.width;
     this->m_pArrowsBarShouldRetain->setScaleX(arrowsWidth / this->m_pArrowsBarShouldRetain->getContentSize().width);
@@ -1294,7 +1294,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, coco
     if (CCRect::CCRectContainsPoint(this->m_pArrowsShouldRetain->boundingBox(), location))
     {
         m_drag = true;
-        this->m_pArrowsBarShouldRetain->setIsVisible(true);
+        this->m_pArrowsBarShouldRetain->setVisible(true);
     }
 }
 
@@ -1303,7 +1303,7 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::CCSet *pTouches, coco
     m_drag = false;
     this->snapArrowsToEdge();
 
-    this->m_pArrowsBarShouldRetain->setIsVisible(false);
+    this->m_pArrowsBarShouldRetain->setVisible(false);
 }
 
 void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)

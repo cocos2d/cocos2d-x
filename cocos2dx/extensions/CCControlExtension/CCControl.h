@@ -92,14 +92,23 @@ class CC_DLL CCControl : public CCLayer, public CCRGBAProtocol
     CC_SYNTHESIZE(int, m_nDefaultTouchPriority, DefaultTouchPriority);
     /** The current control state constant. */
     CC_SYNTHESIZE_READONLY(CCControlState, m_nState, State);
+
+public:
     /** Tells whether the control is enabled. */
-    CC_SYNTHESIZE(bool, m_bEnabled, IsEnabled);
-    /** A Boolean value that determines the control’s selected state. */
-    CC_SYNTHESIZE(bool, m_bSelected, IsSelected);
+    virtual void setEnabled(bool bEnabled);
+    virtual bool isEnabled();
+    /** A Boolean value that determines the control selected state. */
+    virtual void setSelected(bool bSelected);
+    virtual bool isSelected();
     /** A Boolean value that determines whether the control is highlighted. */
-    CC_SYNTHESIZE(bool, m_bHighlighted, IsHighlighted);
-    
-    protected:
+    virtual void setHighlighted(bool bHighlighted);
+    virtual bool isHighlighted();
+
+protected:
+    bool m_bEnabled;
+    bool m_bSelected;
+    bool m_bHighlighted;
+
     // CCControlState, CCArray<CCInvocation*>
     CCDictionary* dispatchTable;
 

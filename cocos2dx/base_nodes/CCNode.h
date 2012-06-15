@@ -196,9 +196,12 @@ class CC_DLL CCNode : public CCObject
     CC_PROPERTY(CCGridBase *, m_pGrid, Grid)
 
     /** Whether of not the node is visible. Default is true */
+protected:
     bool m_bIsVisible;
-    bool isVisible();
-    void setVisible(bool visible);
+public:
+    virtual bool isVisible();
+    virtual void setVisible(bool visible);
+
 
     /** anchorPoint is the point around which all transformations and positioning manipulations take place.
      It's like a pin in the node where it is "attached" to its parent.

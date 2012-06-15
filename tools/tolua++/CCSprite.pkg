@@ -40,7 +40,7 @@ class CCSprite : public CCNode
 	//CCPoint getOffsetPositionInPixels(void);
 
 	void setDirtyRecursively(bool bValue);
-	void setIgnoreAnchorPointForPosition(bool newValue);
+	void ignoreAnchorPointForPosition(bool newValue);
 	void setFlipX(bool bFlipX);
 	void setFlipY(bool bFlipY);
 	bool isFlipX(void);
@@ -54,8 +54,8 @@ class CCSprite : public CCNode
 
 	void setColor(ccColor3B color3);
 	ccColor3B getColor(void);
-	void setIsOpacityModifyRGB(bool bValue);
-	bool getIsOpacityModifyRGB(void);
+	void setOpacityModifyRGB(bool bValue);
+	bool isOpacityModifyRGB(void);
 
 	void setTexture(CCTexture2D *texture);
 	CCTexture2D* getTexture(void);
