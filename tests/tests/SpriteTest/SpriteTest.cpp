@@ -228,7 +228,7 @@ void SpriteTestDemo::backCallback(CCObject* pSender)
 
 Sprite1::Sprite1()
 {
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -300,7 +300,7 @@ std::string Sprite1::title()
 
 SpriteBatchNode1::SpriteBatchNode1()
 {
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
 
     CCSpriteBatchNode* BatchNode = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(BatchNode, 0, kTagSpriteBatchNode);
@@ -1191,7 +1191,7 @@ Sprite6::Sprite6()
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     CCSpriteBatchNode* batch = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
     addChild(batch, 0, kTagSpriteBatchNode);
-    batch->setIgnoreAnchorPointForPosition( true );
+    batch->ignoreAnchorPointForPosition( true );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -1431,7 +1431,7 @@ std::string SpriteBatchNodeAliased::title()
 
 SpriteNewTexture::SpriteNewTexture()
 {
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     CCNode* node = CCNode::create();
     addChild(node, 0, kTagSpriteBatchNode);
@@ -1540,7 +1540,7 @@ std::string SpriteNewTexture::title()
 
 SpriteBatchNodeNewTexture::SpriteBatchNodeNewTexture()
 {
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     CCSpriteBatchNode* batch = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(batch, 0, kTagSpriteBatchNode);

@@ -493,7 +493,7 @@ void CCParticleBatchNode::updateAllAtlasIndexes()
 
 void CCParticleBatchNode::updateBlendFunc(void)
 {
-    if( ! m_pTextureAtlas->getTexture()->getHasPremultipliedAlpha()) {
+    if( ! m_pTextureAtlas->getTexture()->hasPremultipliedAlpha()) {
         m_tBlendFunc.src = GL_SRC_ALPHA;
         m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
     }
@@ -504,7 +504,7 @@ void CCParticleBatchNode::setTexture(CCTexture2D* texture)
     m_pTextureAtlas->setTexture(texture);
 
     // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-    if( texture && ! texture->getHasPremultipliedAlpha() && ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) )
+    if( texture && ! texture->hasPremultipliedAlpha() && ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) )
     {
             m_tBlendFunc.src = GL_SRC_ALPHA;
             m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;

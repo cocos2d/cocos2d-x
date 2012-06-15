@@ -191,7 +191,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
         CCLOG("cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
     }
 
-    if (! configuration->isSupportsNPOT() &&
+    if (! configuration->supportsNPOT() &&
         (header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)))
     {
         CCLOG("cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
@@ -243,7 +243,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
                         heightBlocks = height / 4;
                         break;
                     case kPVRTexturePixelTypeBGRA_8888:
-                        if (CCConfiguration::sharedConfiguration()->isSupportsBGRA8888() == false) 
+                        if (CCConfiguration::sharedConfiguration()->supportsBGRA8888() == false) 
                         {
                             CCLOG("cocos2d: TexturePVR. BGRA8888 not supported on this device");
                             return false;
@@ -343,7 +343,7 @@ bool CCTexturePVR::createGLTexture()
     // Generate textures with mipmaps
     for (unsigned int i = 0; i < m_uNumberOfMipmaps; ++i)
     {
-        if (compressed && ! CCConfiguration::sharedConfiguration()->isSupportsPVRTC()) 
+        if (compressed && ! CCConfiguration::sharedConfiguration()->supportsPVRTC()) 
         {
 			CCLOG("cocos2d: WARNING: PVRTC images are not supported");
 			return false;

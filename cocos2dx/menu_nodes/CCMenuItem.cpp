@@ -124,7 +124,7 @@ void CCMenuItem::setIsEnabled(bool enabled)
     m_bIsEnabled = enabled;
 }
 
-bool CCMenuItem::getIsEnabled()
+bool CCMenuItem::isEnabled()
 {
     return m_bIsEnabled;
 }
@@ -136,7 +136,7 @@ CCRect CCMenuItem::rect()
                       m_tContentSize.width, m_tContentSize.height);
 }
 
-bool CCMenuItem::getIsSelected()
+bool CCMenuItem::isSelected()
 {
     return m_bIsSelected;
 }
@@ -624,17 +624,17 @@ void CCMenuItemSprite::selected()
     {
         if (m_pDisabledImage)
         {
-            m_pDisabledImage->setIsVisible(false);
+            m_pDisabledImage->setVisible(false);
         }
 
         if (m_pSelectedImage)
         {
-            m_pNormalImage->setIsVisible(false);
-            m_pSelectedImage->setIsVisible(true);
+            m_pNormalImage->setVisible(false);
+            m_pSelectedImage->setVisible(true);
         }
         else
         {
-            m_pNormalImage->setIsVisible(true);
+            m_pNormalImage->setVisible(true);
         }
     }
 }
@@ -644,16 +644,16 @@ void CCMenuItemSprite::unselected()
     CCMenuItem::unselected();
     if (m_pNormalImage)
     {
-        m_pNormalImage->setIsVisible(true);
+        m_pNormalImage->setVisible(true);
 
         if (m_pSelectedImage)
         {
-            m_pSelectedImage->setIsVisible(false);
+            m_pSelectedImage->setVisible(false);
         }
 
         if (m_pDisabledImage)
         {
-            m_pDisabledImage->setIsVisible(false);
+            m_pDisabledImage->setVisible(false);
         }
     }
 }
@@ -672,23 +672,23 @@ void CCMenuItemSprite::updateImagesVisibility()
 {
     if (m_bIsEnabled)
     {
-        if (m_pNormalImage)   m_pNormalImage->setIsVisible(true);
-        if (m_pSelectedImage) m_pSelectedImage->setIsVisible(false);
-        if (m_pDisabledImage) m_pDisabledImage->setIsVisible(false);
+        if (m_pNormalImage)   m_pNormalImage->setVisible(true);
+        if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
+        if (m_pDisabledImage) m_pDisabledImage->setVisible(false);
     }
     else
     {
         if (m_pDisabledImage)
         {
-            if (m_pNormalImage)   m_pNormalImage->setIsVisible(false);
-            if (m_pSelectedImage) m_pSelectedImage->setIsVisible(false);
-            if (m_pDisabledImage) m_pDisabledImage->setIsVisible(true);
+            if (m_pNormalImage)   m_pNormalImage->setVisible(false);
+            if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
+            if (m_pDisabledImage) m_pDisabledImage->setVisible(true);
         }
         else
         {
-            if (m_pNormalImage)   m_pNormalImage->setIsVisible(true);
-            if (m_pSelectedImage) m_pSelectedImage->setIsVisible(false);
-            if (m_pDisabledImage) m_pDisabledImage->setIsVisible(false);
+            if (m_pNormalImage)   m_pNormalImage->setVisible(true);
+            if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
+            if (m_pDisabledImage) m_pDisabledImage->setVisible(false);
         }
     }
 }

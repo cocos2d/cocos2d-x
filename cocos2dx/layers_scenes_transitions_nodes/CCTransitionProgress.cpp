@@ -41,9 +41,9 @@ enum {
 };
 
 CCTransitionProgress::CCTransitionProgress()
-: to_(0.0f)
-, from_(0.0f)
-, sceneToBeModified_(NULL)
+: m_fTo(0.0f)
+, m_fFrom(0.0f)
+, m_pSceneToBeModified(NULL)
 {
 
 }
@@ -68,12 +68,12 @@ void CCTransitionProgress::onEnter()
     // render outScene to its texturebuffer
     texture->clear(0, 0, 0, 1);
     texture->begin();
-    sceneToBeModified_->visit();
+    m_pSceneToBeModified->visit();
     texture->end();
 
 
     //    Since we've passed the outScene to the texture we don't need it.
-    if( sceneToBeModified_ == m_pOutScene )
+    if (m_pSceneToBeModified == m_pOutScene)
     {
         hideOutShowIn();
     }
@@ -82,7 +82,7 @@ void CCTransitionProgress::onEnter()
 
     // create the blend action
     CCActionInterval* layerAction = (CCActionInterval*)CCSequence::create(
-        CCProgressFromTo::create(m_fDuration, from_, to_),
+        CCProgressFromTo::create(m_fDuration, m_fFrom, m_fTo),
         CCCallFunc::create(this, callfunc_selector(CCTransitionProgress::finish)), 
         NULL);
     // run the blend action
@@ -107,9 +107,9 @@ void CCTransitionProgress::sceneOrder()
 
 void CCTransitionProgress::setupTransition()
 {
-    sceneToBeModified_ = m_pOutScene;
-    from_ = 100;
-    to_ = 0;
+    m_pSceneToBeModified = m_pOutScene;
+    m_fFrom = 100;
+    m_fTo = 0;
 }
 
 CCProgressTimer* CCTransitionProgress::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
@@ -132,7 +132,7 @@ CCProgressTimer* CCTransitionProgressRadialCCW::progressTimerNodeWithRenderTextu
     pNode->setType(kCCProgressTimerTypeRadial);
 
     //    Return the radial type that we want to use
-    pNode->setIsReverseDirection(false);
+    pNode->setReverseDirection(false);
     pNode->setPercentage(100);
     pNode->setPosition(ccp(size.width/2, size.height/2));
     pNode->setAnchorPoint(ccp(0.5f,0.5f));
@@ -153,7 +153,7 @@ CCProgressTimer* CCTransitionProgressRadialCW::progressTimerNodeWithRenderTextur
     pNode->setType( kCCProgressTimerTypeRadial );
     
     //    Return the radial type that we want to use
-    pNode->setIsReverseDirection(true);
+    pNode->setReverseDirection(true);
     pNode->setPercentage(100);
     pNode->setPosition(ccp(size.width/2, size.height/2));
     pNode->setAnchorPoint(ccp(0.5f,0.5f));
@@ -215,9 +215,9 @@ void CCTransitionProgressInOut::sceneOrder()
 
 void CCTransitionProgressInOut::setupTransition()
 {
-    sceneToBeModified_ = m_pInScene;
-    from_ = 0;
-    to_ = 100;    
+    m_pSceneToBeModified = m_pInScene;
+    m_fFrom = 0;
+    m_fTo = 100;    
 }
 
 CCProgressTimer* CCTransitionProgressInOut::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)

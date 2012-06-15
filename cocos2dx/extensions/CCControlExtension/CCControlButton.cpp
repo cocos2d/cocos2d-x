@@ -66,7 +66,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         CCRGBAProtocol* rgbaLabel = dynamic_cast<CCRGBAProtocol*>(node);
         assert(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL);
         
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         pushed=false;
         m_zoomOnTouchDown = true;
         m_nState=CCControlStateInitial;
@@ -81,7 +81,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         m_zoomOnTouchDown = true;
 
         // Set the default anchor point
-        setIgnoreAnchorPointForPosition(false);
+        ignoreAnchorPointForPosition(false);
         setAnchorPoint(ccp(0.5f, 0.5f));
         
         // Set the nodes
@@ -102,7 +102,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         // Set the default color and opacity
         setColor(ccc3(255, 255, 255));
         setOpacity(255);
-        setIsOpacityModifyRGB(true);
+        setOpacityModifyRGB(true);
         
         // Initialize the dispatch table
         
@@ -356,7 +356,7 @@ void CCControlButton::setTitleLabelForState(CCNode* titleLabel, CCControlState s
     }
 
     m_titleLabelDispatchTable->setObject(titleLabel, state);
-    titleLabel->setIsVisible(false);
+    titleLabel->setVisible(false);
     titleLabel->setAnchorPoint(ccp(0.5f, 0.5f));
     addChild(titleLabel, 1);
 
@@ -458,7 +458,7 @@ void CCControlButton::setBackgroundSpriteForState(CCScale9Sprite* sprite, CCCont
     }
 
     m_backgroundSpriteDispatchTable->setObject(sprite, state);
-    sprite->setIsVisible(false);
+    sprite->setVisible(false);
     sprite->setAnchorPoint(ccp(0.5f, 0.5f));
     addChild(sprite);
 
@@ -484,8 +484,8 @@ void CCControlButton::setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFra
 void CCControlButton::needsLayout()
 {
     // Hide the background and the label
-    m_titleLabel->setIsVisible(false);
-    m_backgroundSprite->setIsVisible(false);
+    m_titleLabel->setVisible(false);
+    m_backgroundSprite->setVisible(false);
 
     // Update anchor of all labels
     this->setLabelAnchorPoint(this->m_labelAnchorPoint);
@@ -545,8 +545,8 @@ void CCControlButton::needsLayout()
     m_backgroundSprite->setPosition(ccp(getContentSize().width/2, getContentSize().height/2));
     
     // Make visible the background and the label
-    m_titleLabel->setIsVisible(true);
-    m_backgroundSprite->setIsVisible(true);    
+    m_titleLabel->setVisible(true);
+    m_backgroundSprite->setVisible(true);    
 }
 
 

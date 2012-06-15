@@ -28,7 +28,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     CCMenuItemFont::setFontSize( 30 );
     CCMenuItemFont::setFontName("Courier New");
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
     // Font Item
     
     CCSprite* spriteNormal = CCSprite::create(s_MenuItem, CCRectMake(0,23*2,115,23));
@@ -170,7 +170,7 @@ void MenuLayerMainMenu::menuCallbackDisabled(CCObject* sender)
 
 void MenuLayerMainMenu::menuCallbackEnable(CCObject* sender) 
 {
-    m_disabledItem->setIsEnabled(! m_disabledItem->getIsEnabled() );
+    m_disabledItem->setIsEnabled(! m_disabledItem->isEnabled() );
 }
 
 void MenuLayerMainMenu::menuCallback2(CCObject* sender)
@@ -361,7 +361,7 @@ void MenuLayer3::menuCallback(CCObject* sender)
 void MenuLayer3::menuCallback2(CCObject* sender)
 {
     //UXLOG("Label clicked. Toogling AtlasSprite");
-    m_disabledItem->setIsEnabled( ! m_disabledItem->getIsEnabled() );
+    m_disabledItem->setIsEnabled( ! m_disabledItem->isEnabled() );
     m_disabledItem->stopAllActions();
 }
 

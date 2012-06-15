@@ -758,7 +758,7 @@ std::string CameraCenterTest::subtitle()
 //------------------------------------------------------------------
 ConvertToNode::ConvertToNode()
 {
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCRotateBy* rotate = CCRotateBy::create(10, 360);
