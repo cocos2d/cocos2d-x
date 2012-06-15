@@ -45,11 +45,12 @@ class CCSpriteFrame;
  */
 class CC_DLL CCMenuItem : public CCNode
 {
+protected:
     /** whether or not the item is selected
      @since v0.8.2
      */
-    CC_PROPERTY_READONLY(bool, m_bIsSelected, IsSelected);
-    CC_PROPERTY(bool, m_bIsEnabled, IsEnabled);
+    bool m_bIsEnabled;
+    bool m_bIsSelected;
 public:
     CCMenuItem()
     : m_bIsSelected(false)
@@ -79,6 +80,10 @@ public:
     /** Register menu handler script function */
     virtual void registerScriptHandler(int nHandler);
     virtual void unregisterScriptHandler(void);
+    
+    bool isEnabled();
+    void setIsEnabled(bool value);
+    bool isSelected();
     
     /** set the target/selector of the menu item*/
     void setTarget(CCObject *rec, SEL_MenuHandler selector);
@@ -138,8 +143,8 @@ public:
     virtual void setColor(const ccColor3B& color);
     virtual const ccColor3B& getColor();
     
-    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool getIsOpacityModifyRGB(void) { return false;}
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) { return false;}
 protected:
     ccColor3B    m_tColorBackup;
     float        m_fOriginalScale;
@@ -284,8 +289,8 @@ public:
     virtual void unselected();
     virtual void setIsEnabled(bool bEnabled);
     
-    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool getIsOpacityModifyRGB(void) { return false;}
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) { return false;}
 protected:
     virtual void updateImagesVisibility();
 };
@@ -405,8 +410,8 @@ public:
     virtual void unselected();
     virtual void setIsEnabled(bool var);
     
-    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool getIsOpacityModifyRGB(void) { return false;}
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) { return false;}
 };
     
 NS_CC_END

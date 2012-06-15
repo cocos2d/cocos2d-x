@@ -84,7 +84,9 @@ class CC_DLL CCControl : public CCLayer, public CCRGBAProtocol
     //CCRGBAProtocol
     CC_PROPERTY(GLubyte, m_cOpacity, Opacity); 
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
-    CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB);
+    bool m_bIsOpacityModifyRGB;
+    bool isOpacityModifyRGB();
+    void setOpacityModifyRGB(bool isOpacityModifyRGB);
 
     /** Changes the priority of the button. The lower the number, the higher the priority. */
     CC_SYNTHESIZE(int, m_nDefaultTouchPriority, DefaultTouchPriority);

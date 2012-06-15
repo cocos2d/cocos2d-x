@@ -176,12 +176,12 @@ GLubyte CCProgressTimer::getOpacity(void)
     return m_pSprite->getOpacity();
 }
 
-void CCProgressTimer::setIsOpacityModifyRGB(bool bValue)
+void CCProgressTimer::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);
 }
 
-bool CCProgressTimer::getIsOpacityModifyRGB(void)
+bool CCProgressTimer::isOpacityModifyRGB(void)
 {
     return false;
 }

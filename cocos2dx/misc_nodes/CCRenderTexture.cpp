@@ -179,7 +179,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         unsigned int powW = 0;
         unsigned int powH = 0;
 
-        if( CCConfiguration::sharedConfiguration()->isSupportsNPOT() ) {
+        if( CCConfiguration::sharedConfiguration()->supportsNPOT() ) {
             powW = w;
             powH = h;
         } else {

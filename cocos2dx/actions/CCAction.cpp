@@ -331,7 +331,7 @@ void CCFollow::step(float dt)
 
 bool CCFollow::isDone()
 {
-    return ( !m_pobFollowedNode->getIsRunning() );
+    return ( !m_pobFollowedNode->isRunning() );
 }
 
 void CCFollow::stop()

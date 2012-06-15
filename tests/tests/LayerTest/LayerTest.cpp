@@ -152,12 +152,12 @@ void LayerTest1::onEnter()
 {
     LayerTest::onEnter();
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLayerColor* layer = CCLayerColor::create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
     
-    layer->setIgnoreAnchorPointForPosition(false);
+    layer->ignoreAnchorPointForPosition(false);
     layer->setPosition( CCPointMake(s.width/2, s.height/2) );
     addChild(layer, 1, kTagLayer);
 }
@@ -222,12 +222,12 @@ void LayerTest2::onEnter()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLayerColor* layer1 = CCLayerColor::create( ccc4(255, 255, 0, 80), 100, 300);
     layer1->setPosition(CCPointMake(s.width/3, s.height/2));
-    layer1->setIgnoreAnchorPointForPosition(false);
+    layer1->ignoreAnchorPointForPosition(false);
     addChild(layer1, 1);
     
     CCLayerColor* layer2 = CCLayerColor::create( ccc4(0, 0, 255, 255), 100, 300);
     layer2->setPosition(CCPointMake((s.width/3)*2, s.height/2));
-    layer2->setIgnoreAnchorPointForPosition(false);
+    layer2->ignoreAnchorPointForPosition(false);
     addChild(layer2, 1);
     
     CCActionInterval* actionTint = CCTintBy::create(2, -255, -127, 0);
@@ -308,7 +308,7 @@ LayerGradient::LayerGradient()
     CCLayerGradient* layer1 = CCLayerGradient::create(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     CCLabelTTF *label1 = CCLabelTTF::create("Compressed Interpolation: Enabled", "Marker Felt", 26);
     CCLabelTTF *label2 = CCLabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);
@@ -391,8 +391,8 @@ void LayerIgnoreAnchorPointPos::onEnter()
 void LayerIgnoreAnchorPointPos::onToggle(CCObject* pObject)
 {
     CCNode* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->getIgnoreAnchorPointForPosition();
-    pLayer->setIgnoreAnchorPointForPosition(! ignore);
+    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
+    pLayer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointPos::title()
@@ -439,8 +439,8 @@ void LayerIgnoreAnchorPointRot::onEnter()
 void LayerIgnoreAnchorPointRot::onToggle(CCObject* pObject)
 {
     CCNode* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->getIgnoreAnchorPointForPosition();
-    pLayer->setIgnoreAnchorPointForPosition(! ignore);
+    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
+    pLayer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointRot::title()
@@ -490,8 +490,8 @@ void LayerIgnoreAnchorPointScale::onEnter()
 void LayerIgnoreAnchorPointScale::onToggle(CCObject* pObject)
 {
     CCNode* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->getIgnoreAnchorPointForPosition();
-    pLayer->setIgnoreAnchorPointForPosition(! ignore);
+    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
+    pLayer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointScale::title()

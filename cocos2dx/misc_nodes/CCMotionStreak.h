@@ -80,8 +80,8 @@ public:
     virtual const ccColor3B& getColor(void);
     virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte opacity);
-    virtual void setIsOpacityModifyRGB(bool bValue);
-    virtual bool getIsOpacityModifyRGB(void);
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB(void);
 
     /** When fast mode is enbled, new points are added faster but with lower precision */
     CC_SYNTHESIZE(bool, m_bFastMode, IsFastMode);

@@ -144,12 +144,12 @@ int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 }
 
 /// isTouchEnabled getter
-bool CCLayer::getIsTouchEnabled()
+bool CCLayer::isTouchEnabled()
 {
     return m_bIsTouchEnabled;
 }
 /// isTouchEnabled setter
-void CCLayer::setIsTouchEnabled(bool enabled)
+void CCLayer::setTouchEnabled(bool enabled)
 {
     if (m_bIsTouchEnabled != enabled)
     {
@@ -171,12 +171,12 @@ void CCLayer::setIsTouchEnabled(bool enabled)
 }
 
 /// isAccelerometerEnabled getter
-bool CCLayer::getIsAccelerometerEnabled()
+bool CCLayer::isAccelerometerEnabled()
 {
     return m_bIsAccelerometerEnabled;
 }
 /// isAccelerometerEnabled setter
-void CCLayer::setIsAccelerometerEnabled(bool enabled)
+void CCLayer::setAccelerometerEnabled(bool enabled)
 {
     if (enabled != m_bIsAccelerometerEnabled)
     {
@@ -198,12 +198,12 @@ void CCLayer::setIsAccelerometerEnabled(bool enabled)
 }
 
 /// isKeypadEnabled getter
-bool CCLayer::getIsKeypadEnabled()
+bool CCLayer::isKeypadEnabled()
 {
     return m_bIsKeypadEnabled;
 }
 /// isKeypadEnabled setter
-void CCLayer::setIsKeypadEnabled(bool enabled)
+void CCLayer::setKeypadEnabled(bool enabled)
 {
     if (enabled != m_bIsKeypadEnabled)
     {

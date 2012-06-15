@@ -221,7 +221,7 @@ public:
     virtual void setScale(float fScale);
     virtual void setVertexZ(float fVertexZ);
     virtual void setAnchorPoint(const CCPoint& anchor);
-    virtual void setIgnoreAnchorPointForPosition(bool value);
+    virtual void ignoreAnchorPointForPosition(bool value);
     virtual void setIsVisible(bool bVisible);
     void setFlipX(bool bFlipX);
     void setFlipY(bool bFlipY);
@@ -245,8 +245,8 @@ public:
     void updateColor(void);
     // RGBAProtocol
     /** opacity: conforms to CCRGBAProtocol protocol */
-    virtual void setIsOpacityModifyRGB(bool bValue);
-    virtual bool getIsOpacityModifyRGB(void);
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB(void);
 
     // CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);

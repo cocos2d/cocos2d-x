@@ -70,13 +70,13 @@ public:
      
      @since v0.99.2
      */
-    inline bool isSupportsNPOT(void)
+    inline bool supportsNPOT(void)
     {
         return m_bSupportsNPOT;
     }
 
     /** Whether or not PVR Texture Compressed is supported */
-    inline bool isSupportsPVRTC(void)
+    inline bool supportsPVRTC(void)
     {
         return m_bSupportsPVRTC;
     }
@@ -84,7 +84,7 @@ public:
     /** Whether or not BGRA8888 textures are supported.
      @since v0.99.2
      */
-    inline bool isSupportsBGRA8888(void)
+    inline bool supportsBGRA8888(void)
     {
         return m_bSupportsBGRA8888;
     }
@@ -92,7 +92,7 @@ public:
     /** Whether or not glDiscardFramebufferEXT is supported
      @since v0.99.2
      */
-    inline bool isSupportsDiscardFramebuffer(void)
+    inline bool supportsDiscardFramebuffer(void)
     {
         return m_bSupportsDiscardFramebuffer;
     }
@@ -100,7 +100,7 @@ public:
     /** Whether or not shareable VAOs are supported.
      @since v2.0.0
      */
-    inline bool isSupportsShareableVAO(void)
+    inline bool supportsShareableVAO(void)
     {
         return m_bSupportsShareableVAO;
     }

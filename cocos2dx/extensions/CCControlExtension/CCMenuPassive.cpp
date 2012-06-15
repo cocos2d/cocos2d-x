@@ -78,7 +78,7 @@ bool CCMenuPassive::initWithItems(CCNode* item, va_list args)
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
         // Set the default anchor point
-        setIgnoreAnchorPointForPosition(true);
+        ignoreAnchorPointForPosition(true);
         setAnchorPoint(ccp(0.5f, 0.5f));
         this->setContentSize(s);
 

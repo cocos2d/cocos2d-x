@@ -8,7 +8,7 @@ KeypadTest::KeypadTest()
     addChild(label, 0);
     label->setPosition( ccp(s.width/2, s.height-50) );
 
-    setIsKeypadEnabled(true);
+    setKeypadEnabled(true);
 
     // create a label to display the tip string
     m_pLabel = CCLabelTTF::create("Please press any key...", "Arial", 22);

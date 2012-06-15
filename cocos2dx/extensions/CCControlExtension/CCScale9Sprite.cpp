@@ -570,7 +570,7 @@ void CCScale9Sprite::updateCapInset()
     this->setCapInsets(insets);
 }
 
-void CCScale9Sprite::setIsOpacityModifyRGB(bool var)
+void CCScale9Sprite::setOpacityModifyRGB(bool var)
 {
     m_bIsOpacityModifyRGB = var;
     if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
@@ -581,7 +581,7 @@ void CCScale9Sprite::setIsOpacityModifyRGB(bool var)
             CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
             if (pNode)
             {
-                pNode->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+                pNode->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
             }
             //CCNode* pNode = (CCNode*) child;
             //if (pNode)
@@ -595,7 +595,7 @@ void CCScale9Sprite::setIsOpacityModifyRGB(bool var)
         }
     }
 }
-bool CCScale9Sprite::getIsOpacityModifyRGB()
+bool CCScale9Sprite::isOpacityModifyRGB()
 {
     return m_bIsOpacityModifyRGB;
 }

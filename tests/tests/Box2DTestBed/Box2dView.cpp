@@ -50,7 +50,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     
     m_entryID = entryId;
     
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     Box2DView* view = Box2DView::viewWithEntryID( entryId );
     addChild(view, 0, kTagBox2DNode);
@@ -172,7 +172,7 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 bool Box2DView::initWithEntryID(int entryId)
 {    
 //    setIsAccelerometerEnabled( true );
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
 
     schedule( schedule_selector(Box2DView::tick) );
 
