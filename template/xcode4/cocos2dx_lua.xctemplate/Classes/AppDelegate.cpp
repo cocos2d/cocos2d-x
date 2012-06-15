@@ -41,13 +41,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    CCString* pstrFileContent = CCString::stringWithContentsOfFile("hello.lua");
+    CCString* pstrFileContent = CCString::createWithContentsOfFile("hello.lua");
     if (pstrFileContent)
     {
         pEngine->executeString(pstrFileContent->getCString());
     }
 #else
-    string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+    string path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif 

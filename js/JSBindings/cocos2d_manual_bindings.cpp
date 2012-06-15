@@ -128,7 +128,7 @@ JSBool S_CCFileUtils::jsgetFileData(JSContext *cx, uint32_t argc, jsval *vp) {
         JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "SS", &arg0, &arg1);
         char *narg0 = JS_EncodeString(cx, arg0);
         char *narg1 = JS_EncodeString(cx, arg1);
-        unsigned char *ret = CCFileUtils::getFileData(narg0, narg1, &len);
+        unsigned char *ret = CCFileUtils::sharedFileUtils()->getFileData(narg0, narg1, &len);
         if (ret == NULL) {
             JS_SET_RVAL(cx, vp, JSVAL_NULL);
             return JS_TRUE;
@@ -146,7 +146,7 @@ JSBool S_CCFileUtils::jsfullPathFromRelativePath(JSContext *cx, uint32_t argc, j
         JSString *arg0;
         JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "S", &arg0);
         char *narg0 = JS_EncodeString(cx, arg0);
-        const char *ret = CCFileUtils::fullPathFromRelativePath(narg0);
+        const char *ret = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(narg0);
         if (ret == NULL) {
             JS_SET_RVAL(cx, vp, JSVAL_NULL);
             return JS_TRUE;
@@ -166,7 +166,7 @@ JSBool S_CCFileUtils::jsfullPathFromRelativeFile(JSContext *cx, uint32_t argc, j
         JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "SS", &arg0, &arg1);
         char *narg0 = JS_EncodeString(cx, arg0);
         char *narg1 = JS_EncodeString(cx, arg1);
-        const char *ret = CCFileUtils::fullPathFromRelativeFile(narg0, narg1);
+        const char *ret = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(narg0, narg1);
         if (ret == NULL) {
             JS_SET_RVAL(cx, vp, JSVAL_NULL);
             return JS_TRUE;
