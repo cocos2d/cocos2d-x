@@ -37,6 +37,7 @@ class CCRenderTexture;
 class CC_DLL CCTransitionProgress : public CCTransitionScene
 {
 public:
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgress)
     TRANSITION_CREATE_FUNC(CCTransitionProgress)
 
     CCTransitionProgress();
@@ -58,6 +59,7 @@ protected:
 class CC_DLL CCTransitionProgressRadialCCW : public CCTransitionProgress
 {
 public:
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCCW)
     TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCCW)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
@@ -71,6 +73,7 @@ protected:
 class CC_DLL CCTransitionProgressRadialCW : public CCTransitionProgress
 {
 public:
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCW)
     TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCW)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
@@ -83,6 +86,7 @@ protected:
 class CC_DLL CCTransitionProgressHorizontal : public CCTransitionProgress
 {
 public:
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressHorizontal)
     TRANSITION_CREATE_FUNC(CCTransitionProgressHorizontal)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
@@ -92,6 +96,7 @@ protected:
 class CC_DLL CCTransitionProgressVertical : public CCTransitionProgress
 {
 public:
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressVertical)
     TRANSITION_CREATE_FUNC(CCTransitionProgressVertical)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
@@ -101,6 +106,7 @@ protected:
 class CC_DLL CCTransitionProgressInOut : public CCTransitionProgress
 {
 public:
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressInOut)
     TRANSITION_CREATE_FUNC(CCTransitionProgressInOut)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
@@ -111,6 +117,7 @@ protected:
 class CC_DLL CCTransitionProgressOutIn : public CCTransitionProgress
 {
 public:
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressOutIn)
     TRANSITION_CREATE_FUNC(CCTransitionProgressOutIn)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
