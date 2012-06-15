@@ -5,75 +5,83 @@
     </description>
     <property name="tolua++" location="/usr/local/bin/tolua++"/>
 
-  <target name="cocos2d-x-bindings">
-    <echo message="Calling tolua++" />
-    <exec executable="${tolua++}">
-      <arg value="-L" />
-      <arg value="basic.lua" />
-      <arg value="-o"/>
-      <arg value="LuaCocos2d.cpp"/>
-      <arg value="Cocos2d.pkg"/>
-    </exec>
-    <echo message="Patching resultant lua bindings" />
+    <target name="cocos2d-x-bindings">
+        <echo message="Calling tolua++" />
+        <exec executable="${tolua++}">
+            <arg value="-L" />
+            <arg value="basic.lua" />
+            <arg value="-o"/>
+            <arg value="LuaCocos2d.cpp"/>
+            <arg value="Cocos2d.tolua"/>
+        </exec>
+        <echo message="Patching resultant lua bindings" />
 
-    <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[tolua_pushusertype_ccobject(tolua_S,(void*)tolua_ret]]></replacetoken>
-      <replacevalue><![CDATA[int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret]]></replacevalue>
-    </replace>
+        <!-- fix push ccobject -->
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[toluafix_pushusertype_ccobject(tolua_S,(void*)tolua_ret]]></replacetoken>
+            <replacevalue><![CDATA[int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+   int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+   toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret]]></replacevalue>
+        </replace>
 
-    <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[unsigned void* tolua_ret = (unsigned void*)  self->getTiles();]]></replacetoken>
-      <replacevalue><![CDATA[unsigned int* tolua_ret = (unsigned int*)  self->getTiles();]]></replacevalue>
-    </replace>
+        <!-- fix LUA_FUNCTION -->
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[*((LUA_FUNCTION*)]]></replacetoken>
+            <replacevalue><![CDATA[(]]></replacevalue>
+        </replace>
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[tolua_usertype(tolua_S,"LUA_FUNCTION");]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
 
-    <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&(const ccColor3B)ccBLACK));]]></replacetoken>
-      <replacevalue><![CDATA[ccColor3B clr = ccBLACK;
-  ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));]]></replacevalue>
-    </replace>
+        <!-- fix LUA_TABLE -->
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[*((LUA_TABLE*)]]></replacetoken>
+            <replacevalue><![CDATA[(]]></replacevalue>
+        </replace>
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[tolua_usertype(tolua_S,"LUA_TABLE");]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[{
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((LUA_TABLE)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"LUA_TABLE");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(LUA_TABLE));
+     tolua_pushusertype(tolua_S,tolua_obj,"LUA_TABLE");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[LUA_TABLE tolua_ret = (LUA_TABLE)]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
 
-    <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA["LUA_FUNCTION",0,&tolua_err]]></replacetoken>
-      <replacevalue><![CDATA[&tolua_err]]></replacevalue>
-    </replace>
-
-    <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[LUA_FUNCTION nHandler = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
-      <replacevalue><![CDATA[int nHandler = (tolua_ref_function(tolua_S,]]></replacevalue>
-    </replace>
-
-    <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[#ifndef __cplusplus
+        <!-- remove unused header -->
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[#ifndef __cplusplus
 #include "stdlib.h"
 #endif
 #include "string.h"
 
-#include "tolua++.h"
+#include "tolua++.h"]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
 
-/* Exported function */
+        <!-- remove unused functions -->
+        <replace file="LuaCocos2d.cpp">
+            <replacetoken><![CDATA[/* Exported function */
 TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]]></replacetoken>
-      <replacevalue><![CDATA[#include <vector>
-#include <map>
-#include "LuaCocos2d.h"
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
 
-extern "C" {
-#include "tolua_fix.h"
-}
-
-#include "cocos2d.h"
-#include "CCConfiguration.h"
-#include "CCRibbon.h"
-#include "SimpleAudioEngine.h"
-
-using namespace cocos2d;
-using namespace CocosDenshion;
-]]></replacevalue>
-    </replace>
-
-    <echo message="Copying new bindings to target location" />
-    <move file="LuaCocos2d.cpp" todir="../../lua/cocos2dx_support/"/>
-  </target>
-  <target name="create-lua-bindings" depends="cocos2d-x-bindings" />
+        <echo message="Copying new bindings to target location" />
+        <move file="LuaCocos2d.cpp" todir="../../lua/cocos2dx_support/"/>
+    </target>
+    <target name="create-lua-bindings" depends="cocos2d-x-bindings" />
 </project>
