@@ -858,7 +858,7 @@ void CCSprite::ignoreAnchorPointForPosition(bool value)
     CCNode::ignoreAnchorPointForPosition(value);
 }
 
-void CCSprite::setIsVisible(bool bVisible)
+void CCSprite::setVisible(bool bVisible)
 {
     CCNode::setVisible(bVisible);
     SET_DIRTY_RECURSIVELY();

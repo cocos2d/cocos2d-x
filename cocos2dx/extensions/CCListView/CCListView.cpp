@@ -984,7 +984,7 @@ void CCListView::finishFix(void)
 {
     if(m_pListViewParent)
     {
-        m_pListViewParent->setIsEnabled(true);
+        m_pListViewParent->setEnabled(true);
     }
     m_nState = CCListViewStateWatting;
     m_nSlideDir = CCListViewSlideDirNone;
@@ -2026,7 +2026,7 @@ void CCListView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
     if (CCListViewSlideDirNone != m_nSlideDir && m_pListViewParent)
     {
-        m_pListViewParent->setIsEnabled(false);
+        m_pListViewParent->setEnabled(false);
     }
 }
 

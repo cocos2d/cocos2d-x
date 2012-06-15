@@ -9,9 +9,9 @@ USING_NS_CC_EXT;
 
 void CCControlLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_ENABLED) == 0) {
-        ((CCControl *)pNode)->setIsEnabled(pCheck);
+        ((CCControl *)pNode)->setEnabled(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_SELECTED) == 0) {
-        ((CCControl *)pNode)->setIsSelected(pCheck);
+        ((CCControl *)pNode)->setSelected(pCheck);
     } else {
         CCNodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
     }

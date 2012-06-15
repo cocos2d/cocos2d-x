@@ -325,7 +325,7 @@ LayerGradient::LayerGradient()
 void LayerGradient::toggleItem(CCObject *sender)
 {
     CCLayerGradient *gradient = (CCLayerGradient*)getChildByTag(kTagLayer);
-    gradient->setIsCompressedInterpolation(! gradient->getIsCompressedInterpolation());
+    gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
 }
 
 void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)

@@ -23,7 +23,7 @@ void CCLayerLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, cons
     } else if(strcmp(pPropertyName, PROPERTY_KEYBOARD_ENABLED) == 0) {
         // TODO XXX
         CCLOG("The property '%s' is not supported!", PROPERTY_KEYBOARD_ENABLED);
-        // This comes closest: ((CCLayer *)pNode)->setIsKeypadEnabled(pCheck);
+        // This comes closest: ((CCLayer *)pNode)->setKeypadEnabled(pCheck);
     } else {
         CCNodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
     }

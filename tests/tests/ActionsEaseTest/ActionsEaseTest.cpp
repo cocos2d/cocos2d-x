@@ -621,7 +621,7 @@ void EaseSpriteDemo::positionForTwo()
     
     m_grossini->setPosition(CCPointMake(60, s.height*1/5));
     m_tamara->setPosition(CCPointMake( 60, s.height*4/5));
-    m_kathia->setIsVisible(false);
+    m_kathia->setVisible(false);
 }
 
 

@@ -1504,7 +1504,7 @@ void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::CCObject *sender)
 {
     if (m_pBackground)
     {
-        m_pBackground->setIsVisible(true);
+        m_pBackground->setVisible(true);
     }
 }
 
@@ -1541,7 +1541,7 @@ void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
     m_pBackground = CCSprite::create(file.c_str());
     addChild(m_pBackground, -10);
 	
-    m_pBackground->setIsVisible(false);
+    m_pBackground->setVisible(false);
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     m_pBackground->setPosition(ccp(s.width/2, s.height/2));

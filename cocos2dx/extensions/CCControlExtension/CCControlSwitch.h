@@ -77,9 +77,9 @@ public:
      */
     void setOn(bool isOn, bool animated);
     void setOn(bool isOn);
-    bool getIsOn(void) { return m_bOn; }
+    bool isOn(void) { return m_bOn; }
     bool hasMoved() { return m_bMoved; }
-    void setIsEnabled(bool enabled);
+    virtual void setEnabled(bool enabled);
 
     CCPoint locationFromTouch(CCTouch* touch);
     //events
