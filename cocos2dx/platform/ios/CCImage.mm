@@ -230,17 +230,14 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                 dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
         }      
         
-#if CC_FONT_LABEL_SUPPORT
         if (! font)
         {
                 font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
                 if (font)
                 {
-                    //dim = [str sizeWithZFont:font];
-                    dim =_caculateStringSizeWithFontOrZFont(str, font, &constrainSize, true);
+                    dim =_calculateStringSizeWithFontOrZFont(str, font, &constrainSize, true);
                 }  
         }
-#endif // CC_FONT_LABEL_SUPPORT
 
         if (! font)
         {
@@ -316,17 +313,14 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                                 : UITextAlignmentLeft;
         
         // normal fonts
-    if( [font isKindOfClass:[UIFont class] ] )
-    {
-        [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
-    }
-    
-#if CC_FONT_LABEL_SUPPORT
-    else // ZFont class 
-    {
-        [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
-    }
-#endif
+        if( [font isKindOfClass:[UIFont class] ] )
+        {
+            [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+        }
+        else // ZFont class 
+        {
+            [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+        }
         
         UIGraphicsPopContext();
         
