@@ -113,7 +113,10 @@ create_android_project(){
         exit
     fi
 
-    $ANDROID_SDK_ROOT_LOCAL/tools/android create project -n $PROJECT_NAME -t $TARGET_ID -k $PACKAGE_PATH -a $PROJECT_NAME -p $PROJECT_DIR
+    # Make project directory
+    mkdir $PROJECT_DIR
+    # Create Android project inside proj.android
+    $ANDROID_SDK_ROOT_LOCAL/tools/android create project -n $PROJECT_NAME -t $TARGET_ID -k $PACKAGE_PATH -a $PROJECT_NAME -p $PROJECT_DIR/proj.android
 }
 
 check_path
