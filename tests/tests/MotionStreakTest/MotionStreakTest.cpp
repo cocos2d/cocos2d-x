@@ -271,8 +271,8 @@ void MotionStreakTest::onEnter()
 
 void MotionStreakTest::modeCallback(CCObject *pSender)
 {
-    bool fastMode = streak->getIsFastMode();
-    streak->setIsFastMode(! fastMode);
+    bool fastMode = streak->isFastMode();
+    streak->setFastMode(! fastMode);
 }
 
 void MotionStreakTest::restartCallback(CCObject* pSender)
