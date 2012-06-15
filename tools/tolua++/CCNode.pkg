@@ -118,5 +118,5 @@ class CCNode : public CCObject
     void registerScriptHandler(LUA_FUNCTION funcID);
     void unregisterScriptHandler(void);
 
-    static CCNode * node(void);
+    static CCNode * create(void);
 };

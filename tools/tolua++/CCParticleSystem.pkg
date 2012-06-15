@@ -46,10 +46,10 @@ class CCParticleSystem : public CCNode
     ccBlendFunc getBlendFunc(void);
     void setBlendFunc(ccBlendFunc var);
 
-    static CCParticleSystem * particleWithFile(const char *plistFile);
+    static CCParticleSystem * create(const char *plistFile);
 };
 
 class CCParticleSystemQuad : public CCParticleSystem {
-    static CCParticleSystemQuad * particleWithFile(const char *plistFile);
+    static CCParticleSystemQuad * create(const char *plistFile);
 };
 
