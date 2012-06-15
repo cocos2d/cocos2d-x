@@ -525,7 +525,9 @@ ccBlendFunc CCNodeLoader::parsePropTypeBlendFunc(CCNode * pNode, CCNode * pParen
 }
 
 CCString * CCNodeLoader::parsePropTypeFntFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    return pCCBReader->readCachedString();
+    CCString * fntFile = pCCBReader->readCachedString();
+
+    return CCBReader::concat(pCCBReader->getCCBRootPath(), fntFile);
 }
 
 CCString * CCNodeLoader::parsePropTypeString(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
@@ -537,15 +539,16 @@ CCString * CCNodeLoader::parsePropTypeText(CCNode * pNode, CCNode * pParent, CCB
 }
 
 CCString * CCNodeLoader::parsePropTypeFontTTF(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    CCString * fnt = pCCBReader->readCachedString();
+    CCString * fontTTF = pCCBReader->readCachedString();
     
-    CCString * ttfEnding = CCString::stringWithCString("ttf");
+    CCString * ttfEnding = CCString::stringWithCString(".ttf");
 
-    if(CCBReader::endsWith(CCBReader::toLowerCase(fnt), ttfEnding)){
-        fnt = CCBReader::deletePathExtension(CCBReader::lastPathComponent(fnt));
+    /* System fonts come without the ".ttf" extension, so remove the path if there is one. */
+    if(CCBReader::endsWith(CCBReader::toLowerCase(fontTTF), ttfEnding)){
+        fontTTF = CCBReader::concat(pCCBReader->getCCBRootPath(), fontTTF);
     }
 
-    return fnt;
+    return fontTTF;
 }
 
 BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {

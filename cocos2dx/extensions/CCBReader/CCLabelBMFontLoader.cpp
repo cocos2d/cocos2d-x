@@ -39,9 +39,7 @@ void CCLabelBMFontLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pPa
 
 void CCLabelBMFontLoader::onHandlePropTypeFntFile(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCString * pFntFile, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_FNTFILE) == 0) {
-        CCString * fntFilePath = CCBReader::concat(pCCBReader->getCCBRootPath(), pFntFile);
-
-        ((CCLabelBMFont *)pNode)->setFntFile(fntFilePath->getCString());
+        ((CCLabelBMFont *)pNode)->setFntFile(pFntFile->getCString());
     } else {
         CCNodeLoader::onHandlePropTypeFntFile(pNode, pParent, pPropertyName, pFntFile, pCCBReader);
     }
