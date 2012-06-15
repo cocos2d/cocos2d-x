@@ -38,6 +38,9 @@ extern "C" {
 
 NS_CC_BEGIN
 
+#pragma mark -
+#pragma mark CCLuaEngine
+
 // Lua support for cocos2d-x
 class CCLuaEngine : public CCScriptEngineProtocol
 {
@@ -105,7 +108,12 @@ public:
     virtual int pushIntegerToLuaStack(int data);
     virtual int pushFloatToLuaStack(int data);
     virtual int pushBooleanToLuaStack(int data);
+    virtual int pushStringToLuaStack(const char* data);
     virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName);
+    virtual int pushCCLuaValueToLuaStack(CCLuaValue* pValue);
+    virtual int pushCCLuaTableDictToLuaStack(CCLuaTableDict* pDict);
+    virtual int pushCCLuaTableArrayToLuaStack(CCLuaTableArray* pArray);
+    virtual void cleanLuaStack(void);
     
     // functions for excute touch event
     virtual int executeTouchEvent(LUA_HANDLE nHandler, int eventType, cocos2d::CCTouch *pTouch);

@@ -440,7 +440,7 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
 const char* CCBMFontConfiguration::description(void)
 {
 	char* pBuf = new char[100];
-	sprintf(pBuf, "<CCBMFontConfiguration = %08X | Glphys:%d Kernings:%d | Image = %s>", this,
+	sprintf(pBuf, "<CCBMFontConfiguration = %08X | Glphys:%d Kernings:%d | Image = %s>", (unsigned int)this,
 		HASH_COUNT(m_pFontDefDictionary),
 		HASH_COUNT(m_pKerningDictionary),
 		m_sAtlasName.c_str());
@@ -1101,7 +1101,7 @@ void CCLabelBMFont::updateLabel()
 
 			if (!characterSprite->getIsVisible()) continue;
 
-			if (i >= stringLength || i < 0)
+			if (i >= stringLength)
 				break;
 
 			unsigned short character = str_whole[i];
@@ -1132,7 +1132,7 @@ void CCLabelBMFont::updateLabel()
 				i++;
 				line++;
 
-				if (i >= stringLength || i < 0)
+				if (i >= stringLength)
 					break;
 
 				character = str_whole[i];
@@ -1195,7 +1195,7 @@ void CCLabelBMFont::updateLabel()
 					startOfLine = -1;
 					line++;
 
-					if (i >= stringLength || i < 0)
+					if (i >= stringLength)
 						break;
 
 					if (!startOfWord)

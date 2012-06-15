@@ -67,7 +67,7 @@ namespace cocos2d{
     
     CCMenuItem::~CCMenuItem()
     {
-        unregisterScriptHandler();
+        unregisterScriptTapHandler();
     }
     
     void CCMenuItem::selected()
@@ -80,14 +80,14 @@ namespace cocos2d{
         m_bIsSelected = false;
     }
     
-    void CCMenuItem::registerScriptHandler(int nHandler)
+    void CCMenuItem::registerScriptTapHandler(int nHandler)
     {
-        unregisterScriptHandler();
+        unregisterScriptTapHandler();
         m_nScriptHandler = nHandler;
         LUALOG("[LUA] Add CCMenuItem script handler: %d", m_nScriptHandler);
     }
     
-    void CCMenuItem::unregisterScriptHandler(void)
+    void CCMenuItem::unregisterScriptTapHandler(void)
     {
         if (m_nScriptHandler)
         {
