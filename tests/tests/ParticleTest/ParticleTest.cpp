@@ -206,7 +206,7 @@ void DemoBigFlower::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
     
     // additive
-    m_emitter->setIsBlendAdditive(true);
+    m_emitter->setBlendAdditive(true);
 
     setEmitterPosition();
 }
@@ -291,7 +291,7 @@ void DemoRotFlower::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
 
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
     
     setEmitterPosition();
 }
@@ -549,7 +549,7 @@ void DemoModernArt::onEnter()
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
     
     setEmitterPosition();
 }
@@ -707,7 +707,7 @@ void RadiusMode1::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
 
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
 }
 
 std::string RadiusMode1::title()
@@ -791,7 +791,7 @@ void RadiusMode2::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
 
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
 }
 
 std::string RadiusMode2::title()
@@ -875,7 +875,7 @@ void Issue704::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
 
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
 
     CCRotateBy* rot = CCRotateBy::create(16, 360);
     m_emitter->runAction(CCRepeatForever::create(rot));
@@ -1072,7 +1072,7 @@ void ParticleDemo::onEnter(void)
     
     m_emitter = NULL;
     
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
@@ -1339,13 +1339,13 @@ void ParticleReorder::onEnter()
 
         CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter1->setStartColor(ccc4f(1,0,0,1));
-        emitter1->setIsBlendAdditive(false);
+        emitter1->setBlendAdditive(false);
         CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter2->setStartColor(ccc4f(0,1,0,1));
-        emitter2->setIsBlendAdditive(false);
+        emitter2->setBlendAdditive(false);
         CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter3->setStartColor(ccc4f(0,0,1,1));
-        emitter3->setIsBlendAdditive(false);
+        emitter3->setBlendAdditive(false);
 
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -1422,7 +1422,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // additive
-        setIsBlendAdditive(false);
+        setBlendAdditive(false);
 
         // duration
         setDuration(kCCParticleDurationInfinity);

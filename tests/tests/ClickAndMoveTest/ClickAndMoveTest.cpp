@@ -17,7 +17,7 @@ void ClickAndMoveTestScene::runThisTest()
 
 MainLayer::MainLayer()
 {
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
     
     CCSprite* sprite = CCSprite::create(s_pPathGrossini);
     

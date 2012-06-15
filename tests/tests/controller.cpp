@@ -159,7 +159,7 @@ TestController::TestController()
     m_pItemMenu->setPosition(s_tCurPos);
     addChild(m_pItemMenu);
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     addChild(pMenu, 1);
 

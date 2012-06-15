@@ -152,7 +152,7 @@ void TextInputTest::onEnter()
 KeyboardNotificationLayer::KeyboardNotificationLayer()
 : m_pTrackNode(0)
 {
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 }
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
