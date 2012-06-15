@@ -29,8 +29,8 @@ class CCNode : public CCObject
     void    setSkewX(float skewX);
     float   getSkewY();
     void    setSkewY(float skewY);
-    bool    getIsVisible();
-    void    setIsVisible(bool var);
+    bool    isVisible();
+    void    setVisible(bool var);
     CCPoint getAnchorPoint();
     void    setAnchorPoint(CCPoint point);
     CCSize  getContentSize();
@@ -48,7 +48,7 @@ class CCNode : public CCObject
     tolua_property__CCPositionY     float y;
     tolua_property__CCSkewX         float skewX;
     tolua_property__CCSkewY         float skewY;
-    tolua_property__CCIsVisible     bool  isVisible;
+//    tolua_property__CCIsVisible     bool  isVisible;
     tolua_property__CCAnchorPoint   CCPoint anchorPoint;
     tolua_property__CCContentSize   CCSize contentSize;
     tolua_property__CCTag           int tag;
@@ -62,11 +62,11 @@ class CCNode : public CCObject
     //CCPoint getAnchorPointInPixels();
     //CCSize  getContentSizeInPixels();
     //void    setContentSizeInPixels(CCSize sz);
-    bool    getIsRunning();
+    bool    isRunning();
     CCNode* getParent();
     void    setParent(CCNode * var);
-    bool    getIgnoreAnchorPointForPosition();
-    void    setIgnoreAnchorPointForPosition(bool newValue);
+    bool    isIgnoreAnchorPointForPosition();
+    void    ignoreAnchorPointForPosition(bool newValue);
     void*   getUserData();
     void    setUserData(void *var);
     void    addChild(CCNode * child);

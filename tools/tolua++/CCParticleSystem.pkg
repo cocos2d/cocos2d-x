@@ -46,6 +46,15 @@ class CCParticleSystem : public CCNode
     ccBlendFunc getBlendFunc(void);
     void setBlendFunc(ccBlendFunc var);
 
+    void setScale(float s);
+    void setRotation(float newRotation);
+    void setScaleX(float newScaleX);
+    void setScaleY(float newScaleY);
+    
+    bool isActive();
+    bool isBlendAdditive();
+    void setBlendAdditive(bool value);
+
     static CCParticleSystem * create(const char *plistFile);
 };
 

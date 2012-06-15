@@ -1,14 +1,14 @@
 
 class CCLayer : public CCNode
 {
-    void setIsTouchEnabled(bool bValue);
-    bool getIsTouchEnabled();
+    void setTouchEnabled(bool bValue);
+    bool isTouchEnabled();
 
-    void setIsAccelerometerEnabled(bool bValue);
-    bool getIsAccelerometerEnabled();
+    void setAccelerometerEnabled(bool bValue);
+    bool isAccelerometerEnabled();
 
-    void setIsKeypadEnabled(bool bValue);
-    bool getIsKeypadEnabled();
+    void setKeypadEnabled(bool bValue);
+    bool isKeypadEnabled();
 
     void registerScriptTouchHandler(LUA_FUNCTION funcID,
                                     bool bIsMultiTouches = false,
@@ -49,8 +49,8 @@ class CCLayerGradient : public CCLayerColor
     void setVector(CCPoint Value);
     CCPoint getVector(void);
 
-    void setIsCompressedInterpolation(bool Value);
-    bool getIsCompressedInterpolation(void);
+    void setCompressedInterpolation(bool Value);
+    bool isCompressedInterpolation(void);
 
     static CCLayerGradient* create(ccColor4B start, ccColor4B end);
     static CCLayerGradient* create(ccColor4B start, ccColor4B end, CCPoint v);
