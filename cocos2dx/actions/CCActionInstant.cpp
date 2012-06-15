@@ -91,7 +91,7 @@ CCShow* CCShow::create()
 
 void CCShow::update(float time) {
     CC_UNUSED_PARAM(time);
-    m_pTarget->setIsVisible(true);
+    m_pTarget->setVisible(true);
 }
 
 CCFiniteTimeAction* CCShow::reverse() {
@@ -135,7 +135,7 @@ CCHide * CCHide::create()
 
 void CCHide::update(float time) {
     CC_UNUSED_PARAM(time);
-    m_pTarget->setIsVisible(false);
+    m_pTarget->setVisible(false);
 }
 
 CCFiniteTimeAction *CCHide::reverse() {
@@ -181,7 +181,7 @@ CCToggleVisibility * CCToggleVisibility::create()
 void CCToggleVisibility::update(float time) 
 {
     CC_UNUSED_PARAM(time);
-    m_pTarget->setIsVisible(!m_pTarget->getIsVisible());
+    m_pTarget->setVisible(!m_pTarget->isVisible());
 }
 
 CCObject* CCToggleVisibility::copyWithZone(CCZone *pZone)

@@ -144,13 +144,13 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
 {
     if (CCLayer::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
 
         m_bEnabled = true;
         // menu in the center of the screen
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        this->setIgnoreAnchorPointForPosition(true);
+        this->ignoreAnchorPointForPosition(true);
         setAnchorPoint(ccp(0.5f, 0.5f));
         this->setContentSize(s);
 
@@ -231,7 +231,7 @@ bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
     for (CCNode *c = this->m_pParent; c != NULL; c = c->getParent())
     {
-        if (c->getIsVisible() == false)
+        if (c->isVisible() == false)
         {
             return false;
         }
@@ -654,7 +654,7 @@ CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
-            if (pChild && pChild->getIsVisible() && ((CCMenuItem*)pChild)->getIsEnabled())
+            if (pChild && pChild->isVisible() && ((CCMenuItem*)pChild)->isEnabled())
             {
                 CCPoint local = pChild->convertToNodeSpace(touchLocation);
                 CCRect r = ((CCMenuItem*)pChild)->rect();
@@ -666,7 +666,6 @@ CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
                 }
             }
         }
-        
     }
 
     return NULL;

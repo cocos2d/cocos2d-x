@@ -1155,7 +1155,7 @@ static float alignmentItemPadding = 50;
 static float menuItemPaddingCenter = 50;
 BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 {
-    this->setIsTouchEnabled(true);
+    this->setTouchEnabled(true);
 
     // ask director the the window size
     CCSize size = CCDirector::sharedDirector()->getWinSize();

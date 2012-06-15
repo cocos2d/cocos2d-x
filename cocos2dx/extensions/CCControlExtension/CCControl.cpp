@@ -249,7 +249,7 @@ GLubyte CCControl::getOpacity()
 }
 
 
-void CCControl::setIsOpacityModifyRGB(bool opacityModifyRGB)
+void CCControl::setOpacityModifyRGB(bool opacityModifyRGB)
 {
     m_bIsOpacityModifyRGB=opacityModifyRGB;
         CCObject* child;
@@ -259,12 +259,12 @@ void CCControl::setIsOpacityModifyRGB(bool opacityModifyRGB)
         CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
         if (pNode)
         {
-            pNode->setIsOpacityModifyRGB(opacityModifyRGB);
+            pNode->setOpacityModifyRGB(opacityModifyRGB);
         }
     }
 }
 
-bool CCControl::getIsOpacityModifyRGB()
+bool CCControl::isOpacityModifyRGB()
 {
     return m_bIsOpacityModifyRGB;
 }

@@ -1722,7 +1722,7 @@ void CCBlink::update(float time)
     {
         float slice = 1.0f / m_nTimes;
         float m = fmodf(time, slice);
-        m_pTarget->setIsVisible(m > slice / 2 ? true : false);
+        m_pTarget->setVisible(m > slice / 2 ? true : false);
     }
 }
 

@@ -852,15 +852,15 @@ void CCSprite::setAnchorPoint(const CCPoint& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
-void CCSprite::setIgnoreAnchorPointForPosition(bool value)
+void CCSprite::ignoreAnchorPointForPosition(bool value)
 {
     CCAssert(! m_pobBatchNode, "ignoreAnchorPointForPosition is invalid in CCSprite");
-    CCNode::setIgnoreAnchorPointForPosition(value);
+    CCNode::ignoreAnchorPointForPosition(value);
 }
 
 void CCSprite::setIsVisible(bool bVisible)
 {
-    CCNode::setIsVisible(bVisible);
+    CCNode::setVisible(bVisible);
     SET_DIRTY_RECURSIVELY();
 }
 
@@ -966,14 +966,14 @@ void CCSprite::setColor(const ccColor3B& color3)
     updateColor();
 }
 
-void CCSprite::setIsOpacityModifyRGB(bool bValue)
+void CCSprite::setOpacityModifyRGB(bool bValue)
 {
     ccColor3B oldColor = m_sColor;
     m_bOpacityModifyRGB = bValue;
     m_sColor = oldColor;
 }
 
-bool CCSprite::getIsOpacityModifyRGB(void)
+bool CCSprite::isOpacityModifyRGB(void)
 {
     return m_bOpacityModifyRGB;
 }
@@ -1070,17 +1070,17 @@ void CCSprite::updateBlendFunc(void)
     CCAssert (! m_pobBatchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet");
 
     // it is possible to have an untextured sprite
-    if (! m_pobTexture || ! m_pobTexture->getHasPremultipliedAlpha())
+    if (! m_pobTexture || ! m_pobTexture->hasPremultipliedAlpha())
     {
         m_sBlendFunc.src = GL_SRC_ALPHA;
         m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-        setIsOpacityModifyRGB(false);
+        setOpacityModifyRGB(false);
     }
     else
     {
         m_sBlendFunc.src = CC_BLEND_SRC;
         m_sBlendFunc.dst = CC_BLEND_DST;
-        setIsOpacityModifyRGB(true);
+        setOpacityModifyRGB(true);
     }
 }
 

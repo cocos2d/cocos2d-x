@@ -108,7 +108,7 @@ void RotateWorldMainLayer::onEnter()
 
     white->setScale(0.5f);
     white->setPosition(ccp(x/4,y/4));
-    white->setIgnoreAnchorPointForPosition(false);
+    white->ignoreAnchorPointForPosition(false);
     white->setPosition(ccp(x/4*3,y/4*3));
 
     addChild(blue, -1);

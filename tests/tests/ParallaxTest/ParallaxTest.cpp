@@ -87,7 +87,7 @@ std::string Parallax1::title()
 
 Parallax2::Parallax2()
 {
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     // Top Layer, a simple image
     CCSprite* cocosImage = CCSprite::create(s_Power);

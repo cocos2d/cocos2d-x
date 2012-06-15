@@ -210,15 +210,11 @@ public:
     CCCallFunc()
         : m_pSelectorTarget(NULL)
         , m_pCallFunc(NULL)
-
     {
     }
     virtual ~CCCallFunc()
     {
-        if (m_pSelectorTarget)
-        {
-            m_pSelectorTarget->release();
-        }
+        CC_SAFE_RELEASE(m_pSelectorTarget);
     }
     /** creates the action with the callback 
     @warning: This interface will be deprecated in future.
@@ -252,17 +248,9 @@ public:
     {
         if (pSel != m_pSelectorTarget)
         {
-            if (m_pSelectorTarget)
-            {
-                m_pSelectorTarget->release();
-            }
-            
-            m_pSelectorTarget = pSel;
-
-            if (m_pSelectorTarget)
-            {
-                m_pSelectorTarget->retain();
-            }                
+            CC_SAFE_RETAIN(pSel);
+            CC_SAFE_RELEASE(m_pSelectorTarget);
+            m_pSelectorTarget = pSel; 
         }
     }
 

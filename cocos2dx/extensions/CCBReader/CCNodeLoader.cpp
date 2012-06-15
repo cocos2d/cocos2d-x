@@ -736,9 +736,9 @@ void CCNodeLoader::onHandlePropTypeFloatVar(CCNode * pNode, CCNode * pParent, co
 
 void CCNodeLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_VISIBLE) == 0) {
-        pNode->setIsVisible(pCheck);
+        pNode->setVisible(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_IGNOREANCHORPOINTFORPOSITION) == 0) {
-        pNode->setIgnoreAnchorPointForPosition(pCheck);
+        pNode->ignoreAnchorPointForPosition(pCheck);
     } else {
         ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }

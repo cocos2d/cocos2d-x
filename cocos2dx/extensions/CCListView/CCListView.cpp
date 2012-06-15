@@ -59,7 +59,7 @@ bool CCListView::initWithMode(CCListViewMode mode)
 {
     if (CCLayerColor::initWithColor(ccc4(255, 255, 255, 0), 0, 0))
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         m_nMode = mode;
         m_layerPanel = CCLayer::create();
         this->addChild(m_layerPanel);
@@ -962,7 +962,7 @@ int CCListView::rowForTouch(cocos2d::CCTouch *touch)
         CCARRAY_FOREACH(pChildren, pObject)
         {
             CCNode* pChild = (CCNode*) pObject;
-            if (pChild && pChild->getIsVisible())
+            if (pChild && pChild->isVisible())
             {
                 CCPoint local = pChild->convertToNodeSpace(touchLocation);
                 CCRect r = CCRectZero;
@@ -1869,7 +1869,7 @@ bool CCListView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
      CC_UNUSED_PARAM(event);
 
-    if (!isTouchInside(touch) || !getIsVisible() || !m_bIsEnabled)
+    if (!isTouchInside(touch) || !isVisible() || !m_bIsEnabled)
     {
         return false;
     }

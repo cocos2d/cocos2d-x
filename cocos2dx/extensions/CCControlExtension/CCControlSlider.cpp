@@ -78,8 +78,8 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
  {
      if (CCControl::init())
      {
-        setIgnoreAnchorPointForPosition(false);
-        setIsTouchEnabled(true);
+        ignoreAnchorPointForPosition(false);
+        setTouchEnabled(true);
 
         m_backgroundSprite=backgroundSprite;
         m_progressSprite=progessSprite;
@@ -215,7 +215,7 @@ void CCControlSlider::sliderMoved(CCPoint location)
 
 void CCControlSlider::sliderEnded(CCPoint location)
 {
-    if (m_thumbItem->getIsSelected())
+    if (m_thumbItem->isSelected())
     {
         m_thumbItem->unselected();
         setValue(valueForLocation(m_thumbItem->getPosition()));

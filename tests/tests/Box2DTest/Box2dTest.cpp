@@ -34,7 +34,7 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float x = pos.x * PTM_RATIO;
     float y = pos.y * PTM_RATIO;
 
-    if ( getIgnoreAnchorPointForPosition() ) {
+    if ( isIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
@@ -60,8 +60,8 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
 Box2DTestLayer::Box2DTestLayer()
 : m_pSpriteTexture(NULL)
 {
-    setIsTouchEnabled( true );
-    setIsAccelerometerEnabled( true );
+    setTouchEnabled( true );
+    setAccelerometerEnabled( true );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     // init physics

@@ -85,7 +85,6 @@ public:
     virtual void draw();
 #endif
 
-    virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
 protected:
     // string to render
     std::string m_sString;

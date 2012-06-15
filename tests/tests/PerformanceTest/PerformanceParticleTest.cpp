@@ -349,7 +349,7 @@ void ParticlePerformTest1::doTest()
     particleSystem->setStartSizeVar(0);
 
     // additive
-    particleSystem->setIsBlendAdditive(false);
+    particleSystem->setBlendAdditive(false);
 }
 
 ////////////////////////////////////////////////////////
@@ -419,7 +419,7 @@ void ParticlePerformTest2::doTest()
     particleSystem->setStartSizeVar(0);
 
     // additive
-    particleSystem->setIsBlendAdditive(false);
+    particleSystem->setBlendAdditive(false);
 }
 
 ////////////////////////////////////////////////////////
@@ -489,7 +489,7 @@ void ParticlePerformTest3::doTest()
     particleSystem->setStartSizeVar(0);
 
     // additive
-    particleSystem->setIsBlendAdditive(false);
+    particleSystem->setBlendAdditive(false);
 }
 
 ////////////////////////////////////////////////////////
@@ -559,7 +559,7 @@ void ParticlePerformTest4::doTest()
     particleSystem->setStartSizeVar(0);
 
     // additive
-    particleSystem->setIsBlendAdditive(false);
+    particleSystem->setBlendAdditive(false);
 
 }
 

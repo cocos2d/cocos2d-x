@@ -14,9 +14,9 @@ CCLayer * CCLayerLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) 
 
 void CCLayerLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TOUCH_ENABLED) == 0) {
-        ((CCLayer *)pNode)->setIsTouchEnabled(pCheck);
+        ((CCLayer *)pNode)->setTouchEnabled(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_ACCELEROMETER_ENABLED) == 0) {
-        ((CCLayer *)pNode)->setIsAccelerometerEnabled(pCheck);
+        ((CCLayer *)pNode)->setAccelerometerEnabled(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_MOUSE_ENABLED) == 0) {
         // TODO XXX
         CCLOG("The property '%s' is not supported!", PROPERTY_MOUSE_ENABLED);

@@ -324,13 +324,13 @@ void CCNode::setGrid(CCGridBase* pGrid)
 
 
 /// isVisible getter
-bool CCNode::getIsVisible()
+bool CCNode::isVisible()
 {
     return m_bIsVisible;
 }
 
 /// isVisible setter
-void CCNode::setIsVisible(bool var)
+void CCNode::setVisible(bool var)
 {
     m_bIsVisible = var;
 }
@@ -374,11 +374,10 @@ void CCNode::setContentSize(const CCSize& size)
 }
 
 // isRunning getter
-bool CCNode::getIsRunning()
+bool CCNode::isRunning()
 {
     return m_bIsRunning;
 }
-
 
 /// parent getter
 CCNode * CCNode::getParent()
@@ -392,12 +391,12 @@ void CCNode::setParent(CCNode * var)
 }
 
 /// isRelativeAnchorPoint getter
-bool CCNode::getIgnoreAnchorPointForPosition()
+bool CCNode::isIgnoreAnchorPointForPosition()
 {
     return m_bIgnoreAnchorPointForPosition;
 }
 /// isRelativeAnchorPoint setter
-void CCNode::setIgnoreAnchorPointForPosition(bool newValue)
+void CCNode::ignoreAnchorPointForPosition(bool newValue)
 {
     if (newValue != m_bIgnoreAnchorPointForPosition) 
     {
