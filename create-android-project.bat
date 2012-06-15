@@ -33,6 +33,8 @@ set /P _TARGETID=Please input target id:
 set _PROJECTDIR=%CD%\%_PROJECTNAME%
 
 echo Create android project
+mkdir %_PROJECTDIR%
+echo Create Android project inside proj.android
 call "%_ANDROIDTOOLS%\android.bat" create project -n %_PROJECTNAME% -t %_TARGETID% -k %_PACKAGEPATH% -a %_PROJECTNAME% -p %_PROJECTDIR%
 	 
 :: Resolve ___.sh to /cygdrive based *nix path and store in %_CYGSCRIPT%
