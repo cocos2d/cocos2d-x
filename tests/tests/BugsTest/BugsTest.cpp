@@ -64,7 +64,7 @@ void BugsTestMainLayer::onEnter()
 
     m_pItmeMenu->setPosition(s_tCurPos);
     addChild(m_pItmeMenu);
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 }
 
 void BugsTestMainLayer::menuCallback(CCObject* pSender)

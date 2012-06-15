@@ -30,7 +30,7 @@ bool Bug914Layer::init()
     // Apple recommends to re-assign "self" with the "super" return value
     if (BugsTestBaseLayer::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         // ask director the the window size
         CCSize size = CCDirector::sharedDirector()->getWinSize();
         CCLayerColor *layer;
@@ -40,7 +40,7 @@ bool Bug914Layer::init()
             layer->setContentSize(CCSizeMake(i*100, i*100));
             layer->setPosition(ccp(size.width/2, size.height/2));
             layer->setAnchorPoint(ccp(0.5f, 0.5f));
-            layer->setIgnoreAnchorPointForPosition(false);
+            layer->ignoreAnchorPointForPosition(false);
             addChild(layer, -1-i);
         }
 

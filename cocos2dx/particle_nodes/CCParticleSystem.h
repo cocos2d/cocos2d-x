@@ -237,7 +237,7 @@ protected:
     unsigned int m_uAllocatedParticles;
 
     /** Is the emitter active */
-    CC_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
+    bool m_bIsActive;
     /** Quantity of particles that are being simulated at the moment */
     CC_PROPERTY_READONLY(unsigned int, m_uParticleCount, ParticleCount)
     /** How many seconds the emitter wil run. -1 means 'forever' */
@@ -290,6 +290,10 @@ public:
     virtual void setRotation(float newRotation);
     virtual void setScaleX(float newScaleX);
     virtual void setScaleY(float newScaleY);
+    
+    virtual bool isActive();
+    virtual bool isBlendAdditive();
+    virtual void setBlendAdditive(bool value);
 //////////////////////////////////////////////////////////////////////////
     
     /** start size in pixels of each particle */
@@ -334,7 +338,7 @@ public:
     dest blend function = GL_ONE;
     @endcode
     */
-    CC_PROPERTY(bool, m_bIsBlendAdditive, IsBlendAdditive)
+    bool m_bIsBlendAdditive;
     /** particles movement type: Free or Grouped
     @since v0.8
     */

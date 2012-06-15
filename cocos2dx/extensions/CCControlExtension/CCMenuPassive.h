@@ -72,8 +72,8 @@ public:
         void alignItemsInRows(unsigned int rows, va_list args);
 
         //RGBA protocol
-        virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-        virtual bool getIsOpacityModifyRGB(void) { return false;}
+        virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+        virtual bool isOpacityModifyRGB(void) { return false;}
 };
 
 NS_CC_EXT_END

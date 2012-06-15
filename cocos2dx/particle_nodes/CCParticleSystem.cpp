@@ -748,7 +748,7 @@ void CCParticleSystem::updateBlendFunc()
 
     if(m_pTexture)
     {
-        bool premultiplied = m_pTexture->getHasPremultipliedAlpha();
+        bool premultiplied = m_pTexture->hasPremultipliedAlpha();
         
         m_bOpacityModifyRGB = false;
         
@@ -773,7 +773,7 @@ CCTexture2D * CCParticleSystem::getTexture()
 }
 
 // ParticleSystem - Additive Blending
-void CCParticleSystem::setIsBlendAdditive(bool additive)
+void CCParticleSystem::setBlendAdditive(bool additive)
 {
     if( additive )
     {
@@ -782,7 +782,7 @@ void CCParticleSystem::setIsBlendAdditive(bool additive)
     }
     else
     {
-        if( m_pTexture && ! m_pTexture->getHasPremultipliedAlpha() )
+        if( m_pTexture && ! m_pTexture->hasPremultipliedAlpha() )
         {
             m_tBlendFunc.src = GL_SRC_ALPHA;
             m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -795,7 +795,7 @@ void CCParticleSystem::setIsBlendAdditive(bool additive)
     }
 }
 
-bool CCParticleSystem::getIsBlendAdditive()
+bool CCParticleSystem::isBlendAdditive()
 {
     return( m_tBlendFunc.src == GL_SRC_ALPHA && m_tBlendFunc.dst == GL_ONE);
 }
@@ -958,7 +958,7 @@ float CCParticleSystem::getRotatePerSecondVar()
     return modeB.rotatePerSecondVar;
 }
 
-bool CCParticleSystem::getIsActive()
+bool CCParticleSystem::isActive()
 {
     return m_bIsActive;
 }

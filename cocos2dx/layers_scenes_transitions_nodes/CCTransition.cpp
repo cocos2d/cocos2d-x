@@ -123,13 +123,13 @@ void CCTransitionScene::draw()
 void CCTransitionScene::finish()
 {
     // clean up     
-     m_pInScene->setIsVisible(true);
+     m_pInScene->setVisible(true);
      m_pInScene->setPosition(ccp(0,0));
      m_pInScene->setScale(1.0f);
      m_pInScene->setRotation(0.0f);
      m_pInScene->getCamera()->restore();
  
-     m_pOutScene->setIsVisible(false);
+     m_pOutScene->setVisible(false);
      m_pOutScene->setPosition(ccp(0,0));
      m_pOutScene->setScale(1.0f);
      m_pOutScene->setRotation(0.0f);
@@ -154,13 +154,13 @@ void CCTransitionScene::setNewScene(float dt)
     // enable events while transitions
     director->getTouchDispatcher()->setDispatchEvents(true);
     // issue #267
-    m_pOutScene->setIsVisible(true);
+    m_pOutScene->setVisible(true);
 }
 
 void CCTransitionScene::hideOutShowIn()
 {
-    m_pInScene->setIsVisible(true);
-    m_pOutScene->setIsVisible(false);
+    m_pInScene->setVisible(true);
+    m_pOutScene->setVisible(false);
 }
 
 
@@ -607,7 +607,7 @@ void CCTransitionFlipX::onEnter()
     CCTransitionSceneOriented::onEnter();
 
     CCActionInterval *inA, *outA;
-    m_pInScene->setIsVisible(false);
+    m_pInScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
@@ -677,7 +677,7 @@ void CCTransitionFlipY::onEnter()
     CCTransitionSceneOriented::onEnter();
 
     CCActionInterval *inA, *outA;
-    m_pInScene->setIsVisible(false);
+    m_pInScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
@@ -748,7 +748,7 @@ void CCTransitionFlipAngular::onEnter()
     CCTransitionSceneOriented::onEnter();
 
     CCActionInterval *inA, *outA;
-    m_pInScene->setIsVisible(false);
+    m_pInScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
@@ -817,7 +817,7 @@ void CCTransitionZoomFlipX::onEnter()
     CCTransitionSceneOriented::onEnter();
 
     CCActionInterval *inA, *outA;
-    m_pInScene->setIsVisible(false);
+    m_pInScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
@@ -896,7 +896,7 @@ void CCTransitionZoomFlipY::onEnter()
     CCTransitionSceneOriented::onEnter();
 
     CCActionInterval *inA, *outA;
-    m_pInScene->setIsVisible(false);
+    m_pInScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
@@ -975,7 +975,7 @@ void CCTransitionZoomFlipAngular::onEnter()
     CCTransitionSceneOriented::onEnter();
 
     CCActionInterval *inA, *outA;
-    m_pInScene->setIsVisible(false);
+    m_pInScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
@@ -1086,7 +1086,7 @@ void CCTransitionFade :: onEnter()
     CCTransitionScene::onEnter();
 
     CCLayerColor* l = CCLayerColor::create(m_tColor);
-    m_pInScene->setIsVisible(false);
+    m_pInScene->setVisible(false);
 
     addChild(l, 2, kSceneFade);
     CCNode* f = getChildByTag(kSceneFade);
@@ -1264,7 +1264,7 @@ CCTransitionSplitCols::~CCTransitionSplitCols()
 void CCTransitionSplitCols::onEnter()
 {
     CCTransitionScene::onEnter();
-    m_pInScene->setIsVisible(false);
+    m_pInScene->setVisible(false);
 
     CCActionInterval* split = action();
     CCActionInterval* seq = (CCActionInterval*)CCSequence::create

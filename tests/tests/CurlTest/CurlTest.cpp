@@ -10,7 +10,7 @@ CurlTest::CurlTest()
     addChild(label, 0);
     label->setPosition( ccp(s.width/2, s.height-50) );
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     // create a label to display the tip string
     m_pLabel = CCLabelTTF::create("Touch the screen to connect", "Arial", 22);

@@ -19,7 +19,7 @@ bool Bug624Layer::init()
 
         label->setPosition(ccp(size.width/2, size.height/2));
         addChild(label);
-        setIsAccelerometerEnabled(true);
+        setAccelerometerEnabled(true);
         schedule(schedule_selector(Bug624Layer::switchLayer), 5.0f);
 
         return true;
@@ -56,7 +56,7 @@ bool Bug624Layer2::init()
 
         label->setPosition(ccp(size.width/2, size.height/2));
         addChild(label);
-        setIsAccelerometerEnabled(true);
+        setAccelerometerEnabled(true);
         schedule(schedule_selector(Bug624Layer2::switchLayer), 5.0f);
 
         return true;

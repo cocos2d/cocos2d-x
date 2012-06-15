@@ -73,7 +73,7 @@ m_nSoundId(0)
     m_pItmeMenu->setPosition(CCPointZero);
     addChild(m_pItmeMenu);
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     // preload background music and effect
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE) );

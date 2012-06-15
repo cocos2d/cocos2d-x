@@ -54,7 +54,8 @@ class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
     /** Opacity: conforms with CCRGBAProtocol protocol */
     CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
     /** whether or not the menu will receive events */
-    CC_SYNTHESIZE(bool, m_bEnabled, Enabled);
+    bool m_bEnabled;
+    
 public:
     CCMenu()
         : m_cOpacity(0)
@@ -153,8 +154,11 @@ public:
     */
     virtual void onExit();
 
-    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool getIsOpacityModifyRGB(void) { return false;}
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) { return false;}
+    
+    virtual bool isEnabled() { return m_bEnabled; }
+    virtual void setEnabled(bool value) { m_bEnabled = value; };
 
 protected:
     CCMenuItem* itemForTouch(CCTouch * touch);
