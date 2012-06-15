@@ -8,7 +8,7 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CCParticleSystemQuadLoader : public CCNodeLoader {
+class CC_DLL CCParticleSystemQuadLoader : public CCNodeLoader {
     public:
         STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCParticleSystemQuadLoader, loader);
 

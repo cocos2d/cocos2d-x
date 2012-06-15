@@ -12,9 +12,9 @@
 CCScene* Bug914Layer::scene()
 {
     // 'scene' is an autorelease object.
-    CCScene *pScene = CCScene::node();
+    CCScene *pScene = CCScene::create();
     // 'layer' is an autorelease object.
-    Bug914Layer* layer = Bug914Layer::node();
+    Bug914Layer* layer = Bug914Layer::create();
 
     // add layer as a child to scene
     pScene->addChild(layer);
@@ -36,7 +36,7 @@ bool Bug914Layer::init()
         CCLayerColor *layer;
         for( int i=0;i < 5;i++)
         {
-            layer = CCLayerColor::layerWithColor(ccc4(i*20, i*20, i*20,255));
+            layer = CCLayerColor::create(ccc4(i*20, i*20, i*20,255));
             layer->setContentSize(CCSizeMake(i*100, i*100));
             layer->setPosition(ccp(size.width/2, size.height/2));
             layer->setAnchorPoint(ccp(0.5f, 0.5f));
@@ -45,10 +45,10 @@ bool Bug914Layer::init()
         }
 
         // create and initialize a Label
-        CCLabelTTF *label = CCLabelTTF::labelWithString("Hello World", "Marker Felt", 64);
-        CCMenuItem *item1 = CCMenuItemFont::itemWithString("restart", this, menu_selector(Bug914Layer::restart));
+        CCLabelTTF *label = CCLabelTTF::create("Hello World", "Marker Felt", 64);
+        CCMenuItem *item1 = CCMenuItemFont::create("restart", this, menu_selector(Bug914Layer::restart));
 
-        CCMenu *menu = CCMenu::menuWithItems(item1, NULL);
+        CCMenu *menu = CCMenu::create(item1, NULL);
         menu->alignItemsVertically();
         menu->setPosition(ccp(size.width/2, 100));
         addChild(menu);

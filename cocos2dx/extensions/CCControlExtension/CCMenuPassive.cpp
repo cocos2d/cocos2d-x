@@ -16,11 +16,15 @@ enum
 //
 //CCMenu
 //
+CCMenuPassive* CCMenuPassive::node()
+{
+    return CCMenuPassive::create();
+}
 
-    CCMenuPassive* CCMenuPassive::node()
-    {
-        return menuWithItem(NULL);
-    }
+CCMenuPassive* CCMenuPassive::create()
+{
+    return create(NULL, NULL);
+}
 
 CCMenuPassive * CCMenuPassive::menuWithItems(CCNode* item, ...)
 {
@@ -38,9 +42,30 @@ CCMenuPassive * CCMenuPassive::menuWithItems(CCNode* item, ...)
     return NULL;
 }
 
+CCMenuPassive * CCMenuPassive::create(CCNode* item, ...)
+{
+    va_list args;
+    va_start(args,item);
+    CCMenuPassive *pRet = new CCMenuPassive();
+    if (pRet && pRet->initWithItems(item, args))
+    {
+        pRet->autorelease();
+        va_end(args);
+        return pRet;
+    }
+    va_end(args);
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
 CCMenuPassive* CCMenuPassive::menuWithItem(CCNode* item)
 {
-    return menuWithItems(item, NULL);
+    return CCMenuPassive::createWithItem(item);
+}
+
+CCMenuPassive* CCMenuPassive::createWithItem(CCNode* item)
+{
+    return create(item, NULL);
 }
 
 bool CCMenuPassive::initWithItems(CCNode* item, va_list args)

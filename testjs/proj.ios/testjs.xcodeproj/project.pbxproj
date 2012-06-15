@@ -131,8 +131,6 @@
 		D4544FBD156E03D200887EB5 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D4544C97156E03D000887EB5 /* CCArray.h */; };
 		D4544FBE156E03D200887EB5 /* CCAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4544C98156E03D000887EB5 /* CCAutoreleasePool.cpp */; };
 		D4544FBF156E03D200887EB5 /* CCAutoreleasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = D4544C99156E03D000887EB5 /* CCAutoreleasePool.h */; };
-		D4544FC0156E03D200887EB5 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4544C9A156E03D000887EB5 /* CCData.cpp */; };
-		D4544FC1156E03D200887EB5 /* CCData.h in Headers */ = {isa = PBXBuildFile; fileRef = D4544C9B156E03D000887EB5 /* CCData.h */; };
 		D4544FC2156E03D200887EB5 /* CCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4544C9C156E03D000887EB5 /* CCDictionary.cpp */; };
 		D4544FC3156E03D200887EB5 /* CCDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = D4544C9D156E03D000887EB5 /* CCDictionary.h */; };
 		D4544FC4156E03D200887EB5 /* CCGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4544C9E156E03D000887EB5 /* CCGeometry.cpp */; };
@@ -564,8 +562,6 @@
 		D4544C97156E03D000887EB5 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		D4544C98156E03D000887EB5 /* CCAutoreleasePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAutoreleasePool.cpp; sourceTree = "<group>"; };
 		D4544C99156E03D000887EB5 /* CCAutoreleasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAutoreleasePool.h; sourceTree = "<group>"; };
-		D4544C9A156E03D000887EB5 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
-		D4544C9B156E03D000887EB5 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		D4544C9C156E03D000887EB5 /* CCDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDictionary.cpp; sourceTree = "<group>"; };
 		D4544C9D156E03D000887EB5 /* CCDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDictionary.h; sourceTree = "<group>"; };
 		D4544C9E156E03D000887EB5 /* CCGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGeometry.cpp; sourceTree = "<group>"; };
@@ -1148,8 +1144,6 @@
 				D4544C97156E03D000887EB5 /* CCArray.h */,
 				D4544C98156E03D000887EB5 /* CCAutoreleasePool.cpp */,
 				D4544C99156E03D000887EB5 /* CCAutoreleasePool.h */,
-				D4544C9A156E03D000887EB5 /* CCData.cpp */,
-				D4544C9B156E03D000887EB5 /* CCData.h */,
 				D4544C9C156E03D000887EB5 /* CCDictionary.cpp */,
 				D4544C9D156E03D000887EB5 /* CCDictionary.h */,
 				D4544C9E156E03D000887EB5 /* CCGeometry.cpp */,
@@ -1773,7 +1767,6 @@
 				D4544FBB156E03D200887EB5 /* CCAffineTransform.h in Headers */,
 				D4544FBD156E03D200887EB5 /* CCArray.h in Headers */,
 				D4544FBF156E03D200887EB5 /* CCAutoreleasePool.h in Headers */,
-				D4544FC1156E03D200887EB5 /* CCData.h in Headers */,
 				D4544FC3156E03D200887EB5 /* CCDictionary.h in Headers */,
 				D4544FC5156E03D200887EB5 /* CCGeometry.h in Headers */,
 				D4544FC6156E03D200887EB5 /* CCInteger.h in Headers */,
@@ -2144,7 +2137,6 @@
 				D4544FBA156E03D200887EB5 /* CCAffineTransform.cpp in Sources */,
 				D4544FBC156E03D200887EB5 /* CCArray.cpp in Sources */,
 				D4544FBE156E03D200887EB5 /* CCAutoreleasePool.cpp in Sources */,
-				D4544FC0156E03D200887EB5 /* CCData.cpp in Sources */,
 				D4544FC2156E03D200887EB5 /* CCDictionary.cpp in Sources */,
 				D4544FC4156E03D200887EB5 /* CCGeometry.cpp in Sources */,
 				D4544FC7156E03D200887EB5 /* CCNS.cpp in Sources */,

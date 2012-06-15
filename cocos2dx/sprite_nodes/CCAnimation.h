@@ -84,26 +84,39 @@ public:
     ~CCAnimation(void);
 public:
     /** Creates an animation
+    @warning: This interface will be deprecated in future.
     @since v0.99.5
     */
     static CCAnimation* animation(void);
 
-    /** Creates an animation with an array of CCSpriteFrame.
-    The frames will be created with one "delay unit".
+    /* Creates an animation with an array of CCSpriteFrame and a delay between frames in seconds.
+     The frames will be added with one "delay unit".
+     @warning: This interface will be deprecated in future.
+     @since v0.99.5
+    */
+    static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
+
+    /* Creates an animation with an array of CCAnimationFrame, the delay per units in seconds and and how many times it should be executed.
+     @warning: This interface will be deprecated in future.
+     @since v2.0
+     */
+    static CCAnimation* animationWithAnimationFrames(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+
+        /** Creates an animation
     @since v0.99.5
     */
-    static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames);
+    static CCAnimation* create(void);
 
     /* Creates an animation with an array of CCSpriteFrame and a delay between frames in seconds.
      The frames will be added with one "delay unit".
      @since v0.99.5
     */
-    static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
+    static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
 
     /* Creates an animation with an array of CCAnimationFrame, the delay per units in seconds and and how many times it should be executed.
      @since v2.0
      */
-    static CCAnimation* animationWithAnimationFrames(CCArray *arrayOfSpriteFrameNames, float delayPerUnit, unsigned int loops);
+    static CCAnimation* createWithAnimationFrames(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
     /** Adds a CCSpriteFrame to a CCAnimation.
      The frame will be added with one "delay unit".
@@ -123,15 +136,11 @@ public:
     void addSpriteFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
 
     bool init();
-    /** Initializes a CCAnimation with frames.
-    @since v0.99.5
-    */
-    bool initWithSpriteFrames(CCArray *pFrames);
 
     /** Initializes a CCAnimation with frames and a delay between frames
     @since v0.99.5
     */
-    bool initWithSpriteFrames(CCArray *pFrames, float delay);
+    bool initWithSpriteFrames(CCArray *pFrames, float delay = 0.0f);
 
     /** Initializes a CCAnimation with CCAnimationFrame
     @since v2.0

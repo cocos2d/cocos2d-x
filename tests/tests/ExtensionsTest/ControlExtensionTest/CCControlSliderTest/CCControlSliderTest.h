@@ -31,9 +31,9 @@ public:
     CCControlSliderTest();
     virtual ~CCControlSliderTest();
     bool init();
-    void valueChanged(CCObject *sender);
+    void valueChanged(CCObject *sender, CCControlEvent controlEvent);
 protected:
     CCLabelTTF* m_pDisplayValueLabel;
-    CONTROL_SCENE_NODE_FUNC(CCControlSliderTest)
+    CONTROL_SCENE_CREATE_FUNC(CCControlSliderTest)
 };
 

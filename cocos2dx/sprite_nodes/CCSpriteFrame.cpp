@@ -33,6 +33,11 @@ NS_CC_BEGIN
 
 CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
 {
+    return CCSpriteFrame::create(pobTexture, rect);
+}
+
+CCSpriteFrame* CCSpriteFrame::create(CCTexture2D *pobTexture, const CCRect& rect)
+{
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect);
     pSpriteFrame->autorelease();
@@ -41,6 +46,11 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, const CC
 }
 
 CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, const CCRect& rect)
+{
+    return createWithTextureFilename(filename, rect);
+}
+
+CCSpriteFrame* CCSpriteFrame::createWithTextureFilename(const char* filename, const CCRect& rect)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect);
@@ -51,6 +61,11 @@ CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, con
 
 CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
+    return CCSpriteFrame::create(pobTexture, rect, rotated, offset, originalSize);
+}
+
+CCSpriteFrame* CCSpriteFrame::create(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+{
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect, rotated, offset, originalSize);
     pSpriteFrame->autorelease();
@@ -59,6 +74,11 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, const CC
 }
 
 CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+{
+    return CCSpriteFrame::createWithTextureFilename(filename, rect, rotated, offset, originalSize);
+}
+
+CCSpriteFrame* CCSpriteFrame::createWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);

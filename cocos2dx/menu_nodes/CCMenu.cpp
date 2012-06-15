@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -48,7 +48,12 @@ enum
 
 CCMenu* CCMenu::node()
 {
-    return menuWithItem(NULL);
+    return CCMenu::create();
+}
+
+CCMenu* CCMenu::create()
+{
+    return CCMenu::create(NULL, NULL);
 }
 
 CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
@@ -67,7 +72,28 @@ CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
     return NULL;
 }
 
+CCMenu * CCMenu::create(CCMenuItem* item, ...)
+{
+    va_list args;
+    va_start(args,item);
+    CCMenu *pRet = new CCMenu();
+    if (pRet && pRet->initWithItems(item, args))
+    {
+        pRet->autorelease();
+        va_end(args);
+        return pRet;
+    }
+    va_end(args);
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
 CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
+{
+    return CCMenu::create(pArrayOfItems);
+}
+
+CCMenu* CCMenu::create(CCArray* pArrayOfItems)
 {
     CCMenu *pRet = new CCMenu();
     if (pRet && pRet->initWithArray(pArrayOfItems))
@@ -84,7 +110,12 @@ CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
 
 CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
 {
-    return menuWithItems(item, NULL);
+    return CCMenu::createWithItem(item);
+}
+
+CCMenu* CCMenu::createWithItem(CCMenuItem* item)
+{
+    return CCMenu::create(item, NULL);
 }
 
 bool CCMenu::init()
@@ -97,7 +128,7 @@ bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
     CCArray* pArray = NULL;
     if( item ) 
     {
-        pArray = CCArray::arrayWithObject(item);
+        pArray = CCArray::create(item, NULL);
         CCMenuItem *i = va_arg(args, CCMenuItem*);
         while(i) 
         {

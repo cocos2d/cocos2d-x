@@ -43,6 +43,11 @@ NS_CC_BEGIN
 //CCLabelAtlas - Creation & Init
 CCLabelAtlas* CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
 {
+    return CCLabelAtlas::create(label, charMapFile, itemWidth, itemHeight, startCharMap);
+}
+
+CCLabelAtlas* CCLabelAtlas::create(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
+{
     CCLabelAtlas *pRet = new CCLabelAtlas();
     if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
     {
@@ -66,6 +71,11 @@ bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, un
 }
 
 CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *fntFile)
+{
+    return CCLabelAtlas::create(string, fntFile);
+}
+
+CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
 {    
     CCLabelAtlas *ret = new CCLabelAtlas();
     if (ret)
@@ -85,7 +95,7 @@ CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *fntF
 
 bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-    CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFile(CCFileUtils::sharedFileUtils()->sharedFileUtils()->fullPathFromRelativePath(fntFile));
+    CCDictionary *dict = CCDictionary::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fntFile));
 	
     CCAssert(((CCString*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
     

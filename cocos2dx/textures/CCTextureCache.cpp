@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
-#include "CCData.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
 #include "CCFileUtils.h"
@@ -235,7 +234,7 @@ void CCTextureCache::purgeSharedTextureCache()
 
 const char* CCTextureCache::description()
 {
-    return CCString::stringWithFormat("<CCTextureCache | Number of textures = %u>", m_pTextures->count())->getCString();
+    return CCString::createWithFormat("<CCTextureCache | Number of textures = %u>", m_pTextures->count())->getCString();
 }
 
 CCDictionary* CCTextureCache::snapshotTextures()
@@ -440,7 +439,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 
                 CCImage image;                
                 unsigned long nSize;
-                unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
+                unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
                 CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, eImageFormat));
 
                 texture = new CCTexture2D();
@@ -488,10 +487,12 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
     // Split up directory and filename
     std::string fullpath( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path) );
 
-    CCData * data = CCData::dataWithContentsOfFile(fullpath);
+    unsigned long nLen = 0;
+    unsigned char* pData = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nLen);
+
     texture = new CCTexture2D();
     
-    if( texture->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width,
+    if( texture->initWithPVRTCData(pData, 0, bpp, hasAlpha, width,
                                    (bpp==2 ? kCCTexture2DPixelFormat_PVRTC2 : kCCTexture2DPixelFormat_PVRTC4)))
     {
         m_pTextures->setObject(texture, temp.c_str());
@@ -501,7 +502,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
     {
         CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
     }
-    CC_SAFE_DELETE(data);
+    CC_SAFE_DELETE_ARRAY(pData);
 
     return texture;
 }
@@ -854,7 +855,7 @@ void VolatileTexture::reloadAllTextures()
                 else 
                 {
                     unsigned long nSize;
-                    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
+                    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
                     
 
                     if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))

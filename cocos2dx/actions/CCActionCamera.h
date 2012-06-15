@@ -87,8 +87,14 @@ public:
         , m_fRadDeltaX(0.0)        
     {}
     ~CCOrbitCamera(){}
+    /** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX 
+    @warning: This interface will be deprecated in future.
+    */
+    static CCOrbitCamera* actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+    
     /** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
-    static CCOrbitCamera * actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+    static CCOrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+    
     /** initializes a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     /** positions the camera according to spherical coordinates */

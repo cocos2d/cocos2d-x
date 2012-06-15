@@ -18,21 +18,21 @@ enum
 
 SceneTestLayer1::SceneTestLayer1()
 {
-    CCMenuItemFont* item1 = CCMenuItemFont::itemWithString( "Test pushScene", this, menu_selector(SceneTestLayer1::onPushScene) );
-    CCMenuItemFont* item2 = CCMenuItemFont::itemWithString( "Test pushScene w/transition", this, menu_selector(SceneTestLayer1::onPushSceneTran) );
-    CCMenuItemFont* item3 = CCMenuItemFont::itemWithString( "Quit", this, menu_selector(SceneTestLayer1::onQuit) );
+    CCMenuItemFont* item1 = CCMenuItemFont::create( "Test pushScene", this, menu_selector(SceneTestLayer1::onPushScene) );
+    CCMenuItemFont* item2 = CCMenuItemFont::create( "Test pushScene w/transition", this, menu_selector(SceneTestLayer1::onPushSceneTran) );
+    CCMenuItemFont* item3 = CCMenuItemFont::create( "Quit", this, menu_selector(SceneTestLayer1::onQuit) );
     
-    CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, NULL );
+    CCMenu* menu = CCMenu::create( item1, item2, item3, NULL );
     menu->alignItemsVertically();
     
     addChild( menu );
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* sprite = CCSprite::create(s_pPathGrossini);
     addChild(sprite);
     sprite->setPosition( CCPointMake(s.width-40, s.height/2) );
-    CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
-    CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
+    CCActionInterval* rotate = CCRotateBy::create(2, 360);
+    CCAction* repeat = CCRepeatForever::create(rotate);
     sprite->runAction(repeat);
 
     schedule( schedule_selector(SceneTestLayer1::testDealloc) );
@@ -76,7 +76,7 @@ void SceneTestLayer1::onPushSceneTran(CCObject* pSender)
     CCLayer* pLayer = new SceneTestLayer2();
     scene->addChild( pLayer, 0 );
 
-    CCDirector::sharedDirector()->pushScene( CCTransitionSlideInT::transitionWithDuration(1, scene) );
+    CCDirector::sharedDirector()->pushScene( CCTransitionSlideInT::create(1, scene) );
     scene->release();
     pLayer->release();
 }
@@ -103,21 +103,21 @@ SceneTestLayer2::SceneTestLayer2()
 {
     m_timeCounter = 0;
 
-    CCMenuItemFont* item1 = CCMenuItemFont::itemWithString( "replaceScene", this,  menu_selector(SceneTestLayer2::onReplaceScene) );
-    CCMenuItemFont* item2 = CCMenuItemFont::itemWithString( "replaceScene w/transition", this, menu_selector(SceneTestLayer2::onReplaceSceneTran) );
-    CCMenuItemFont* item3 = CCMenuItemFont::itemWithString( "Go Back", this, menu_selector(SceneTestLayer2::onGoBack) );
+    CCMenuItemFont* item1 = CCMenuItemFont::create( "replaceScene", this,  menu_selector(SceneTestLayer2::onReplaceScene) );
+    CCMenuItemFont* item2 = CCMenuItemFont::create( "replaceScene w/transition", this, menu_selector(SceneTestLayer2::onReplaceSceneTran) );
+    CCMenuItemFont* item3 = CCMenuItemFont::create( "Go Back", this, menu_selector(SceneTestLayer2::onGoBack) );
     
-    CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, NULL );
+    CCMenu* menu = CCMenu::create( item1, item2, item3, NULL );
     menu->alignItemsVertically();
     
     addChild( menu );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* sprite = CCSprite::create(s_pPathGrossini);
     addChild(sprite);
     sprite->setPosition( CCPointMake(s.width-40, s.height/2) );
-    CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
-    CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
+    CCActionInterval* rotate = CCRotateBy::create(2, 360);
+    CCAction* repeat = CCRepeatForever::create(rotate);
     sprite->runAction(repeat);
 
     schedule( schedule_selector(SceneTestLayer2::testDealloc) );
@@ -138,7 +138,7 @@ void SceneTestLayer2::onGoBack(CCObject* pSender)
 void SceneTestLayer2::onReplaceScene(CCObject* pSender)
 {
     CCScene* pScene = new SceneTestScene();
-    CCLayer* pLayer = SceneTestLayer3::node();
+    CCLayer* pLayer = SceneTestLayer3::create();
     pScene->addChild( pLayer, 0 );
     CCDirector::sharedDirector()->replaceScene( pScene );
     pScene->release();
@@ -148,9 +148,9 @@ void SceneTestLayer2::onReplaceScene(CCObject* pSender)
 void SceneTestLayer2::onReplaceSceneTran(CCObject* pSender)
 {
     CCScene* pScene = new SceneTestScene();
-    CCLayer* pLayer = SceneTestLayer3::node();
+    CCLayer* pLayer = SceneTestLayer3::create();
     pScene->addChild( pLayer, 0 );
-    CCDirector::sharedDirector()->replaceScene( CCTransitionFlipX::transitionWithDuration(2, pScene) );
+    CCDirector::sharedDirector()->replaceScene( CCTransitionFlipX::create(2, pScene) );
     pScene->release();
 }
 
@@ -171,22 +171,22 @@ bool SceneTestLayer3::init()
     {
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        CCMenuItemFont *item0 = CCMenuItemFont::itemWithString("Touch to pushScene (self)", this, menu_selector(SceneTestLayer3::item0Clicked));
-        CCMenuItemFont *item1 = CCMenuItemFont::itemWithString("Touch to popScene", this, menu_selector(SceneTestLayer3::item1Clicked));
-        CCMenuItemFont *item2 = CCMenuItemFont::itemWithString("Touch to popToRootScene", this, menu_selector(SceneTestLayer3::item2Clicked));
+        CCMenuItemFont *item0 = CCMenuItemFont::create("Touch to pushScene (self)", this, menu_selector(SceneTestLayer3::item0Clicked));
+        CCMenuItemFont *item1 = CCMenuItemFont::create("Touch to popScene", this, menu_selector(SceneTestLayer3::item1Clicked));
+        CCMenuItemFont *item2 = CCMenuItemFont::create("Touch to popToRootScene", this, menu_selector(SceneTestLayer3::item2Clicked));
 
 
-        CCMenu *menu = CCMenu::menuWithItems(item0, item1, item2, NULL);
+        CCMenu *menu = CCMenu::create(item0, item1, item2, NULL);
         this->addChild(menu);
         menu->alignItemsVertically();
 
         this->schedule(schedule_selector(SceneTestLayer3::testDealloc));
 
-        CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+        CCSprite* sprite = CCSprite::create(s_pPathGrossini);
         addChild(sprite);
         sprite->setPosition( CCPointMake(s.width/2, 40) );
-        CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
-        CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
+        CCActionInterval* rotate = CCRotateBy::create(2, 360);
+        CCAction* repeat = CCRepeatForever::create(rotate);
         sprite->runAction(repeat);
         return true;
     }
@@ -200,9 +200,9 @@ void SceneTestLayer3::testDealloc(float dt)
 
 void SceneTestLayer3::item0Clicked(CCObject* pSender)
 {
-    CCScene *newScene = CCScene::node();
-    newScene->addChild(SceneTestLayer3::node());
-    CCDirector::sharedDirector()->pushScene(CCTransitionFade::transitionWithDuration(0.5, newScene, ccc3(0,255,255)));
+    CCScene *newScene = CCScene::create();
+    newScene->addChild(SceneTestLayer3::create());
+    CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene, ccc3(0,255,255)));
 }
 
 void SceneTestLayer3::item1Clicked(CCObject* pSender)

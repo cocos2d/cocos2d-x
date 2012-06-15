@@ -61,7 +61,6 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "CCInteger.h"
 #include "CCString.h"
-#include "CCData.h"
 #include "CCNS.h"
 #include "CCZone.h"
 
