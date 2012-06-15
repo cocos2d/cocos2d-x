@@ -16,5 +16,5 @@ class CCRibbon: public CCNode
     void addPointAt(CCPoint location, float width);
     float sideOfLine(CCPoint p, CCPoint l1, CCPoint l2);
 
-    static CCRibbon * ribbonWithWidth(float w, const char *path, float length, ccColor4B color, float fade);
+    static CCRibbon * create(float w, const char *path, float length, ccColor4B color, float fade);
 };
