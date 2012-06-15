@@ -113,6 +113,7 @@ public:
     virtual int pushCCLuaValueToLuaStack(CCLuaValue* pValue);
     virtual int pushCCLuaTableDictToLuaStack(CCLuaTableDict* pDict);
     virtual int pushCCLuaTableArrayToLuaStack(CCLuaTableArray* pArray);
+    virtual void cleanLuaStack(void);
     
     // functions for excute touch event
     virtual int executeTouchEvent(LUA_HANDLE nHandler, int eventType, cocos2d::CCTouch *pTouch);

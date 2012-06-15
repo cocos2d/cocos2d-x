@@ -37,6 +37,7 @@ typedef struct lua_State lua_State;
 typedef int LUA_FUNCTION;
 typedef int LUA_HANDLE;
 typedef int LUA_TABLE;
+typedef int LUA_STRING;
 
 NS_CC_BEGIN
 
@@ -275,6 +276,11 @@ public:
     virtual int pushCCLuaValueToLuaStack(CCLuaValue* pValue) = 0;
     virtual int pushCCLuaTableDictToLuaStack(CCLuaTableDict* pDict) = 0;
     virtual int pushCCLuaTableArrayToLuaStack(CCLuaTableArray* pArray) = 0;
+    
+    /**
+     @brief Remove all values from Lua stack
+     */
+    virtual void cleanLuaStack(void) = 0;
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;
