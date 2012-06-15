@@ -51,10 +51,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#if CC_FONT_LABEL_SUPPORT
-// FontLabel support
-#endif// CC_FONT_LABEL_SUPPORT
-
 //CLASS IMPLEMENTATIONS:
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
