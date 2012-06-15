@@ -14,7 +14,7 @@ public:
     virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
     virtual void ccTouchesCancelled(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
-    LAYER_NODE_FUNC(MutiTouchTestLayer)
+    LAYER_CREATE_FUNC(MutiTouchTestLayer)
 };
 
 class MutiTouchTestScene : public TestScene

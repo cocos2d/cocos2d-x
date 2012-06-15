@@ -37,7 +37,7 @@ class CCRenderTexture;
 class CC_DLL CCTransitionProgress : public CCTransitionScene
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgress)
+    TRANSITION_CREATE_FUNC(CCTransitionProgress)
 
     CCTransitionProgress();
     virtual void onEnter();
@@ -58,7 +58,7 @@ protected:
 class CC_DLL CCTransitionProgressRadialCCW : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressRadialCCW)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCCW)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
   
@@ -71,7 +71,7 @@ protected:
 class CC_DLL CCTransitionProgressRadialCW : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressRadialCW)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCW)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 
@@ -83,7 +83,7 @@ protected:
 class CC_DLL CCTransitionProgressHorizontal : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressHorizontal)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressHorizontal)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 
@@ -92,7 +92,7 @@ protected:
 class CC_DLL CCTransitionProgressVertical : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressVertical)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressVertical)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 
@@ -101,7 +101,7 @@ protected:
 class CC_DLL CCTransitionProgressInOut : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressInOut)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressInOut)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
     virtual void sceneOrder();
@@ -111,7 +111,7 @@ protected:
 class CC_DLL CCTransitionProgressOutIn : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressOutIn)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressOutIn)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 

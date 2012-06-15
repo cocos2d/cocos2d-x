@@ -40,23 +40,33 @@ CCControlSlider::~CCControlSlider()
 
 CCControlSlider* CCControlSlider::sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile)
 {
+    return CCControlSlider::create(bgFile, progressFile, thumbFile);
+}
+
+CCControlSlider* CCControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile)
+{
     // Prepare background for slider
-    CCSprite *backgroundSprite      = CCSprite::spriteWithFile(bgFile);
+    CCSprite *backgroundSprite      = CCSprite::create(bgFile);
     
     // Prepare progress for slider
-    CCSprite *progressSprite        = CCSprite::spriteWithFile(progressFile);
+    CCSprite *progressSprite        = CCSprite::create(progressFile);
     
     // Prepare thumb (menuItem) for slider
-    CCSprite *thumbNormal           = CCSprite::spriteWithFile(thumbFile);
-    CCSprite *thumbSelected         = CCSprite::spriteWithFile(thumbFile);
+    CCSprite *thumbNormal           = CCSprite::create(thumbFile);
+    CCSprite *thumbSelected         = CCSprite::create(thumbFile);
     thumbSelected->setColor(ccGRAY);
     
-    CCMenuItemSprite* thumbMenuItem =CCMenuItemSprite::itemWithNormalSprite(thumbNormal, thumbSelected);
+    CCMenuItemSprite* thumbMenuItem =CCMenuItemSprite::create(thumbNormal, thumbSelected);
     
-    return CCControlSlider::sliderWithSprites(backgroundSprite, progressSprite, thumbMenuItem);
+    return CCControlSlider::create(backgroundSprite, progressSprite, thumbMenuItem);
 }
 
 CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem)
+{
+    return CCControlSlider::create(backgroundSprite, pogressSprite, thumbItem);
+}
+
+CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem)
 {
     CCControlSlider *pRet = new CCControlSlider();
     pRet->initWithSprites(backgroundSprite, pogressSprite, thumbItem);

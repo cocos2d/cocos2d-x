@@ -105,6 +105,11 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 // implementation CCParticleSystemQuad
 CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistFile)
 {
+    return CCParticleSystemQuad::create(plistFile);
+}
+
+CCParticleSystemQuad * CCParticleSystemQuad::create(const char *plistFile)
+{
     CCParticleSystemQuad *pRet = new CCParticleSystemQuad();
     if (pRet && pRet->initWithFile(plistFile))
     {
@@ -564,7 +569,12 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
     }
 }
 
-CCParticleSystemQuad * CCParticleSystemQuad::node() {
+CCParticleSystemQuad * CCParticleSystemQuad::node()
+{
+    return CCParticleSystemQuad::create();
+}
+
+CCParticleSystemQuad * CCParticleSystemQuad::create() {
     CCParticleSystemQuad *pParticleSystemQuad = new CCParticleSystemQuad();
     if (pParticleSystemQuad && pParticleSystemQuad->init())
     {

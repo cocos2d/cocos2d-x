@@ -40,7 +40,7 @@ CCTextureWatcher::CCTextureWatcher()
     m_bFresh = true;
     m_pTextures = NULL;
     m_pszString = NULL;
-    m_pLayer = CCLayerColor::layerWithColor(ccc4(128, 128, 128, 128));
+    m_pLayer = CCLayerColor::create(ccc4(128, 128, 128, 128));
     m_pLayer->retain();
 
     // layer
@@ -50,19 +50,19 @@ CCTextureWatcher::CCTextureWatcher()
 
     // the menu of disabling touch event
     //*
-    CCLabelTTF *label = CCLabelTTF::labelWithString(" ", size, kCCTextAlignmentLeft, "Arial", 12);
-    CCMenuItemLabel *menuItem = CCMenuItemLabel::itemWithLabel(label);
+    CCLabelTTF *label = CCLabelTTF::create(" ", size, kCCTextAlignmentLeft, "Arial", 12);
+    CCMenuItemLabel *menuItem = CCMenuItemLabel::create(label);
     menuItem->setAnchorPoint(ccp(0, 0));
     menuItem->setPosition(ccp(0, 0));
         
-    CCMenu *menu = CCMenu::menuWithItem(menuItem);
+    CCMenu *menu = CCMenu::create(menuItem, NULL);
     menu->setAnchorPoint(ccp(0, 0));
     menu->setPosition(ccp(0, 0));
     m_pLayer->addChild(menu);
     //*/
 
     // list
-    CCListView *list = CCListView::viewWithMode(CCListViewModeHorizontal);
+    CCListView *list = CCListView::create(CCListViewModeHorizontal);
     list->setContentSize(size);
     list->setDelegate(this);
     list->setSeparatorStyle(CCListViewCellSeparatorStyleNone);
@@ -71,13 +71,13 @@ CCTextureWatcher::CCTextureWatcher()
 
 
     // 'Hide' button
-    CCLabelTTF *labelHide = CCLabelTTF::labelWithString("Hide  ", "Arial", 24);
+    CCLabelTTF *labelHide = CCLabelTTF::create("Hide  ", "Arial", 24);
     labelHide->setColor(ccc3(255, 0, 0));
-    CCMenuItemLabel *menuItem2 = CCMenuItemLabel::itemWithLabel(labelHide, this, menu_selector(CCTextureWatcher::actionHide));
+    CCMenuItemLabel *menuItem2 = CCMenuItemLabel::create(labelHide, this, menu_selector(CCTextureWatcher::actionHide));
     menuItem2->setAnchorPoint(ccp(0, 0));
     menuItem2->setPosition(ccp(0, 0));
 
-    CCMenu *menu2 = CCMenu::menuWithItem(menuItem2);
+    CCMenu *menu2 = CCMenu::create(menuItem2, NULL);
     menu2->setAnchorPoint(ccp(0, 0));
     menu2->setPosition(ccp(size.width - menuItem2->getContentSize().width, 0));
 
@@ -86,19 +86,19 @@ CCTextureWatcher::CCTextureWatcher()
     m_menuHide->retain();
 
     // 'Fresh' button
-    CCLabelTTF *labelFresh = CCLabelTTF::labelWithString("Fresh", "Arial", 24);
+    CCLabelTTF *labelFresh = CCLabelTTF::create("Fresh", "Arial", 24);
     labelFresh->setColor(ccc3(255, 0, 0));
-    CCMenuItemLabel *menuItem1 = CCMenuItemLabel::itemWithLabel(labelFresh, this, menu_selector(CCTextureWatcher::actionFresh));
+    CCMenuItemLabel *menuItem1 = CCMenuItemLabel::create(labelFresh, this, menu_selector(CCTextureWatcher::actionFresh));
     menuItem1->setAnchorPoint(ccp(0, 0));
     menuItem1->setPosition(ccp(0, 0));
 
-    CCMenu *menu1 = CCMenu::menuWithItem(menuItem1);
+    CCMenu *menu1 = CCMenu::create(menuItem1, NULL);
     menu1->setAnchorPoint(ccp(0, 0));
     menu1->setPosition(ccp(size.width - menuItem1->getContentSize().width - menuItem2->getContentSize().width * 1.5, 0));
     m_pLayer->addChild(menu1);
     
     // label page
-    m_labelPage = CCLabelTTF::labelWithString(" ", CCSizeMake(size.width * 0.1, labelFresh->getContentSize().height), kCCTextAlignmentCenter, "Arial", 16);
+    m_labelPage = CCLabelTTF::create(" ", CCSizeMake(size.width * 0.1, labelFresh->getContentSize().height), kCCTextAlignmentCenter, "Arial", 16);
     m_labelPage->setAnchorPoint(ccp(0.5, 0));
     m_labelPage->setPosition(ccp(size.width/2.0, 0));
     m_pLayer->addChild(m_labelPage, 0);
@@ -279,7 +279,7 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
             {
                 // reference count
                 sprintf(m_pszString, "[%d]", textrue->retainCount() - 2);
-                CCLabelTTF *labelCount = CCLabelTTF::labelWithString(m_pszString, "Arial", 16);
+                CCLabelTTF *labelCount = CCLabelTTF::create(m_pszString, "Arial", 16);
                 if (textrue->retainCount() - 2 > 0)
                 {
                     labelCount->setColor(ccc3(0, 255, 0));
@@ -296,7 +296,7 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
 
                 // texture size
                 sprintf(m_pszString, "%.0f*%.0f", textrue->getContentSize().width, textrue->getContentSize().height);
-                CCLabelTTF *labelSize = CCLabelTTF::labelWithString(m_pszString, "Arial", 16);
+                CCLabelTTF *labelSize = CCLabelTTF::create(m_pszString, "Arial", 16);
                 offX = offsetX + listItemSize.width * 0.5f;
                 offY = (listItemSize.height - size.height) * 0.5f + size.height;
                 labelSize->setPosition(ccp(offX, offY));
@@ -314,14 +314,14 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
                 string name = key.substr(pos, len - pos);
                 sprintf(m_pszString, "%s", name.c_str());
                 CCSize dimensions = CCSizeMake(listItemSize.width * 0.9f, labelSize->getContentSize().height);
-                CCLabelTTF *labelName = CCLabelTTF::labelWithString(m_pszString, dimensions, kCCTextAlignmentCenter, "Arial", 16);
+                CCLabelTTF *labelName = CCLabelTTF::create(m_pszString, dimensions, kCCTextAlignmentCenter, "Arial", 16);
                 offX = offsetX + listItemSize.width * 0.5f;
                 offY = offY + labelName->getContentSize().height;
                 labelName->setPosition(ccp(offX, offY));
                 labelName->setAnchorPoint(ccp(0.5f, 0));
                 cell->addChild(labelName);
 
-                CCSprite *sprite = CCSprite::spriteWithTexture(textrue);
+                CCSprite *sprite = CCSprite::createWithTexture(textrue);
                 sprite->setAnchorPoint(ccp(0, 0));
 
                 CCSize spriteSize = sprite->getContentSize();

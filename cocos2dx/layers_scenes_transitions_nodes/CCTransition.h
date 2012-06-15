@@ -35,20 +35,47 @@ NS_CC_BEGIN
 //static creation function macro
 //c/c++ don't support object creation of using class name
 //so, all classes need creation method.
-#define DECLEAR_TRANSITIONWITHDURATION(_Type)\
-    static _Type* transitionWithDuration(float t, CCScene* scene);
 
-#define IMPLEMENT_TRANSITIONWITHDURATION(_Type)\
-    _Type* _Type::transitionWithDuration(float t, CCScene* scene)\
-    {\
-    _Type* pScene = new _Type();\
-    if(pScene && pScene->initWithDuration(t, scene)){\
-    pScene->autorelease();\
-    return pScene;}\
-    CC_SAFE_DELETE(pScene);\
-    return NULL;\
-}
+// @warning: This interface will be deprecated in future.
+// #define DECLEAR_TRANSITIONWITHDURATION(_Type)\
+//     static _Type* transitionWithDuration(float t, CCScene* scene);
+// 
+// #define IMPLEMENT_TRANSITIONWITHDURATION(_Type)\
+//     _Type* _Type::transitionWithDuration(float t, CCScene* scene)\
+// {\
+//     _Type* pScene = new _Type();\
+//     if(pScene && pScene->initWithDuration(t, scene)){\
+//     pScene->autorelease();\
+//     return pScene;}\
+//     CC_SAFE_DELETE(pScene);\
+//     return NULL;\
+//
 
+#define OLD_TRANSITION_CREATE_FUNC(_Type)                           \
+    static _Type* transitionWithDuration(float t, CCScene* scene)   \
+    {                                                               \
+        _Type* pScene = new _Type();                                \
+        if(pScene && pScene->initWithDuration(t, scene))            \
+        {                                                           \
+            pScene->autorelease();                                  \
+            return pScene;                                          \
+        }                                                           \
+        CC_SAFE_DELETE(pScene);                                     \
+        return NULL;                                                \
+    }
+
+#define TRANSITION_CREATE_FUNC(_Type)                               \
+    static _Type* create(float t, CCScene* scene)                   \
+    {                                                               \
+        _Type* pScene = new _Type();                                \
+        if(pScene && pScene->initWithDuration(t, scene))            \
+        {                                                           \
+            pScene->autorelease();                                  \
+            return pScene;                                          \
+        }                                                           \
+        CC_SAFE_DELETE(pScene);                                     \
+        return NULL;                                                \
+    }
 
 class CCActionInterval;
 class CCNode;
@@ -99,8 +126,13 @@ public:
     virtual void onExit();
     virtual void cleanup();
 
-    /** creates a base transition with duration and incoming scene */
+    /** creates a base transition with duration and incoming scene
+    @warning: This interface will be deprecated in future.
+    */
     static CCTransitionScene * transitionWithDuration(float t, CCScene *scene);
+
+    /** creates a base transition with duration and incoming scene */
+    static CCTransitionScene * create(float t, CCScene *scene);
 
     /** initializes a transition with duration and incoming scene */
     virtual bool initWithDuration(float t,CCScene* scene);
@@ -130,8 +162,14 @@ public:
     CCTransitionSceneOriented();
     virtual ~CCTransitionSceneOriented();
 
-    /** creates a base transition with duration and incoming scene */
+    /** creates a base transition with duration and incoming scene 
+    @warning: This interface will be deprecated in future.
+    */
     static CCTransitionSceneOriented * transitionWithDuration(float t,CCScene* scene, tOrientation orientation);
+
+    /** creates a base transition with duration and incoming scene */
+    static CCTransitionSceneOriented * create(float t,CCScene* scene, tOrientation orientation);
+
     /** initializes a transition with duration and incoming scene */
     virtual bool initWithDuration(float t,CCScene* scene,tOrientation orientation);
 };
@@ -146,7 +184,8 @@ public:
     virtual ~CCTransitionRotoZoom();
     virtual void onEnter();
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionRotoZoom);
+    TRANSITION_CREATE_FUNC(CCTransitionRotoZoom);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionRotoZoom);
 };
 
 /** @brief CCTransitionJumpZoom:
@@ -159,7 +198,8 @@ public:
     virtual ~CCTransitionJumpZoom();
     virtual void onEnter();
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionJumpZoom);
+    TRANSITION_CREATE_FUNC(CCTransitionJumpZoom);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionJumpZoom);
 };
 
 /** @brief CCTransitionMoveInL:
@@ -179,7 +219,8 @@ public:
 
     virtual void onEnter();
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionMoveInL);
+    TRANSITION_CREATE_FUNC(CCTransitionMoveInL);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionMoveInL);
 };
 
 /** @brief CCTransitionMoveInR:
@@ -192,7 +233,8 @@ public:
     virtual ~CCTransitionMoveInR();
     virtual void initScenes();
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionMoveInR);
+    TRANSITION_CREATE_FUNC(CCTransitionMoveInR);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionMoveInR);
 };
 
 /** @brief CCTransitionMoveInT:
@@ -205,7 +247,8 @@ public:
     virtual ~CCTransitionMoveInT();
     virtual void initScenes();
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionMoveInT);
+    TRANSITION_CREATE_FUNC(CCTransitionMoveInT);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionMoveInT);
 };
 
 /** @brief CCTransitionMoveInB:
@@ -218,7 +261,8 @@ public:
     virtual ~CCTransitionMoveInB();
     virtual void initScenes();
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionMoveInB);
+    TRANSITION_CREATE_FUNC(CCTransitionMoveInB);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionMoveInB);
 };
 
 /** @brief CCTransitionSlideInL:
@@ -239,7 +283,8 @@ public:
     
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionSlideInL);
+    TRANSITION_CREATE_FUNC(CCTransitionSlideInL);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionSlideInL);
 protected:
     virtual void sceneOrder();
 };
@@ -258,7 +303,8 @@ public:
     /** returns the action that will be performed by the incomming and outgoing scene */
     virtual CCActionInterval* action(void);
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionSlideInR);
+    TRANSITION_CREATE_FUNC(CCTransitionSlideInR);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionSlideInR);
 protected:
     virtual void sceneOrder();
 };
@@ -277,7 +323,8 @@ public:
     /** returns the action that will be performed by the incomming and outgoing scene */
     virtual CCActionInterval* action(void);
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionSlideInB);
+    TRANSITION_CREATE_FUNC(CCTransitionSlideInB);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionSlideInB);
 protected: 
     virtual void sceneOrder();
 };
@@ -296,7 +343,8 @@ public:
     /** returns the action that will be performed by the incomming and outgoing scene */
     virtual CCActionInterval* action(void);
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionSlideInT);
+    TRANSITION_CREATE_FUNC(CCTransitionSlideInT);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionSlideInT);
 protected:
     virtual void sceneOrder();
 };
@@ -313,7 +361,8 @@ public:
     virtual void onEnter();
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionShrinkGrow);
+    TRANSITION_CREATE_FUNC(CCTransitionShrinkGrow);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionShrinkGrow);
 };
 
 /** @brief CCTransitionFlipX:
@@ -328,7 +377,9 @@ public:
 
     virtual void onEnter();
 
+    // @warning: This interface will be deprecated in future.
     static CCTransitionFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
 /** @brief CCTransitionFlipY:
@@ -343,7 +394,9 @@ public:
 
     virtual void onEnter();
 
+    //@warning: This interface will be deprecated in future.
     static CCTransitionFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
+    static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o = kOrientationUpOver);
 };
 
 /** @brief CCTransitionFlipAngular:
@@ -358,7 +411,9 @@ public:
 
     virtual void onEnter();
 
+    //@warning: This interface will be deprecated in future.
     static CCTransitionFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
 /** @brief CCTransitionZoomFlipX:
@@ -373,7 +428,9 @@ public:
 
     virtual void onEnter();
 
+    //@warning: This interface will be deprecated in future.
     static CCTransitionZoomFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
 /** @brief CCTransitionZoomFlipY:
@@ -388,7 +445,9 @@ public:
 
     virtual void onEnter();
 
+    //@warning: This interface will be deprecated in future.
     static CCTransitionZoomFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
+    static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o = kOrientationUpOver);
 };
 
 /** @brief CCTransitionZoomFlipAngular:
@@ -403,7 +462,9 @@ public:
 
     virtual void onEnter();
 
+    //@warning: This interface will be deprecated in future.
     static CCTransitionZoomFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
 /** @brief CCTransitionFade:
@@ -421,8 +482,15 @@ public:
 
     /** creates the transition with a duration and with an RGB color
     * Example: FadeTransition::transitionWithDuration(2, scene, ccc3(255,0,0); // red color
+    @warning: This interface will be deprecated in future.
     */
     static CCTransitionFade* transitionWithDuration(float duration,CCScene* scene, const ccColor3B& color = ccBLACK);
+    
+        /** creates the transition with a duration and with an RGB color
+    * Example: FadeTransition::create(2, scene, ccc3(255,0,0); // red color
+    */
+    static CCTransitionFade* create(float duration,CCScene* scene, const ccColor3B& color = ccBLACK);
+
     /** initializes the transition with a duration and with an RGB color */
     virtual bool initWithDuration(float t, CCScene*scene ,const ccColor3B& color);
 
@@ -447,7 +515,8 @@ public :
     virtual void onExit();
 
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionCrossFade);
+    TRANSITION_CREATE_FUNC(CCTransitionCrossFade);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionCrossFade);
 };
 
 /** @brief CCTransitionTurnOffTiles:
@@ -463,7 +532,8 @@ public :
     virtual CCActionInterval * easeActionWithAction(CCActionInterval * action);
 
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionTurnOffTiles);
+    TRANSITION_CREATE_FUNC(CCTransitionTurnOffTiles);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionTurnOffTiles);
 protected:
     virtual void sceneOrder();
 };
@@ -482,7 +552,8 @@ public:
     virtual CCActionInterval * easeActionWithAction(CCActionInterval * action);
 
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionSplitCols);
+    TRANSITION_CREATE_FUNC(CCTransitionSplitCols);
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionSplitCols);
 };
 
 /** @brief CCTransitionSplitRows:
@@ -497,7 +568,8 @@ public:
     virtual CCActionInterval* action(void);
 
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionSplitRows)
+    TRANSITION_CREATE_FUNC(CCTransitionSplitRows)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionSplitRows)
 };
 
 /** @brief CCTransitionFadeTR:
@@ -513,7 +585,8 @@ public:
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionFadeTR)
+    TRANSITION_CREATE_FUNC(CCTransitionFadeTR)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionFadeTR)
 protected:
     virtual void sceneOrder();
     
@@ -530,7 +603,8 @@ public:
     virtual CCActionInterval* actionWithSize(const ccGridSize& size);
 
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionFadeBL)
+    TRANSITION_CREATE_FUNC(CCTransitionFadeBL)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionFadeBL)
 };
 
 /** @brief CCTransitionFadeUp:
@@ -544,7 +618,8 @@ public:
     virtual CCActionInterval* actionWithSize(const ccGridSize& size);
 
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionFadeUp)
+    TRANSITION_CREATE_FUNC(CCTransitionFadeUp)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionFadeUp)
 };
 
 /** @brief CCTransitionFadeDown:
@@ -558,7 +633,8 @@ public:
     virtual CCActionInterval* actionWithSize(const ccGridSize& size);
 
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionFadeDown)
+    TRANSITION_CREATE_FUNC(CCTransitionFadeDown)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionFadeDown)
 };
 
 NS_CC_END

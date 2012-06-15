@@ -103,8 +103,14 @@ public:
     CCBMFontConfiguration();
     virtual ~CCBMFontConfiguration();
     const char * description();
-    /** allocates a CCBMFontConfiguration with a FNT file */
+    /** allocates a CCBMFontConfiguration with a FNT file 
+    @warning: This interface will be deprecated in future.
+    */
     static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
+
+    /** allocates a CCBMFontConfiguration with a FNT file */
+    static CCBMFontConfiguration * create(const char *FNTfile);
+
     /** initializes a BitmapFontConfiguration with a FNT file */
     bool initWithFNTfile(const char *FNTfile);
     
@@ -187,20 +193,26 @@ public:
     @since v0.99.3
     */
     static void purgeCachedData();
+    /** creates a bitmap font altas with an initial string and the FNT file 
+    @warning: This interface will be deprecated in future.
+    */
+    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
     /** creates a bitmap font altas with an initial string and the FNT file */
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
+    static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
 
     /** Creates an label.
+    @warning: This interface will be deprecated in future.
      */
     static CCLabelBMFont * node();
 
+    /** Creates an label.
+     */
+    static CCLabelBMFont * create();
+
     bool init();
     /** init a bitmap font altas with an initial string and the FNT file */
-    bool initWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
-    bool initWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
-    bool initWithString(const char *str, const char *fntFile);
+    bool initWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
+
     /** updates the font chars based on the string to render */
     void createFontChars();
     // super method
