@@ -32,7 +32,7 @@ void AccelerometerTest::onEnter()
 {
     CCLayer::onEnter();
 
-    setIsAccelerometerEnabled(true);
+    setAccelerometerEnabled(true);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

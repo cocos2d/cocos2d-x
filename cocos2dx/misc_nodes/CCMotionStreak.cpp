@@ -114,7 +114,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
 {
     CCNode::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
-    setIgnoreAnchorPointForPosition(true);
+    ignoreAnchorPointForPosition(true);
     m_bStartingPositionInitialized = false;
 
     m_tPositionR = CCPointZero;
@@ -211,12 +211,12 @@ GLubyte CCMotionStreak::getOpacity(void)
     return 0;
 }
 
-void CCMotionStreak::setIsOpacityModifyRGB(bool bValue)
+void CCMotionStreak::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);
 }
 
-bool CCMotionStreak::getIsOpacityModifyRGB(void)
+bool CCMotionStreak::isOpacityModifyRGB(void)
 {
     return false;
 }

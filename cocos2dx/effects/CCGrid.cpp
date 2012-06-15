@@ -178,7 +178,7 @@ void CCGridBase::setActive(bool bActive)
     }
 }
 
-void CCGridBase::setIsTextureFlipped(bool bFlipped)
+void CCGridBase::setTextureFlipped(bool bFlipped)
 {
     if (m_bIsTextureFlipped != bFlipped)
     {
@@ -228,7 +228,7 @@ void CCGridBase::afterDraw(cocos2d::CCNode *pTarget)
     CCDirector *director = CCDirector::sharedDirector();
     director->setProjection(m_directorProjection);
 
-    if (pTarget->getCamera()->getDirty())
+    if (pTarget->getCamera()->isDirty())
     {
         const CCPoint& offset = pTarget->getAnchorPointInPoints();
 

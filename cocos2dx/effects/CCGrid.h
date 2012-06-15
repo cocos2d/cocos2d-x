@@ -64,7 +64,7 @@ public:
 
     /** is texture flipped */
     inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
-    void setIsTextureFlipped(bool bFlipped);
+    void setTextureFlipped(bool bFlipped);
 
     bool initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
     bool initWithSize(const ccGridSize& gridSize);

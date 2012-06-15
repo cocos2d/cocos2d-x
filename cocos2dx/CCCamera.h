@@ -84,7 +84,7 @@ public:
     /** sets the dirty value */
     inline void setDirty(bool bValue) { m_bDirty = bValue; }
     /** get the dirty value */
-    inline bool getDirty(void) { return m_bDirty; }
+    inline bool isDirty(void) { return m_bDirty; }
 
     /** sets the camera in the default position */
     void restore(void);

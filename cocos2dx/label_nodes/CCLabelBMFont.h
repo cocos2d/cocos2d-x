@@ -164,7 +164,9 @@ class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, p
     /** conforms to CCRGBAProtocol protocol */
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
     /** conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+    bool m_bIsOpacityModifyRGB;
+    bool isOpacityModifyRGB();
+    void setOpacityModifyRGB(bool isOpacityModifyRGB);
 protected:
     // string to render
     unsigned short* m_sString;

@@ -46,7 +46,7 @@ CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
     CCFloat x = m_pBody->p.x;
     CCFloat y = m_pBody->p.y;
 
-    if ( getIgnoreAnchorPointForPosition() ) {
+    if ( isIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
@@ -71,8 +71,8 @@ CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
 ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
 {
     // enable events
-    setIsTouchEnabled(true);
-    setIsAccelerometerEnabled(true);
+    setTouchEnabled(true);
+    setAccelerometerEnabled(true);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

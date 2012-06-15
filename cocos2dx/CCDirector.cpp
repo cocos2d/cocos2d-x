@@ -546,7 +546,7 @@ void CCDirector::popToRootScene(void)
         while (c > 1) 
         {
             CCScene *current = (CCScene*)m_pobScenesStack->lastObject();
-            if( current->getIsRunning() )
+            if( current->isRunning() )
             {
                 current->onExit();
             }
