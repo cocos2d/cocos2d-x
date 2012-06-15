@@ -154,34 +154,34 @@ int	CCLuaEngine::executeGlobalFunction(const char* functionName)
 
 int CCLuaEngine::executeFunctionByHandler(LUA_HANDLE nHandler, int numArgs)
 {
-    if (pushFunctionByHandler(nHandler))
+    if (pushFunctionByHandler(nHandler))                                /* stack: ... arg1 arg2 ... func */
     {
         if (numArgs > 0)
         {
             lua_insert(m_state, -(numArgs + 1));                        /* stack: ... func arg1 arg2 ... */
         }
 
+        int traceback = 0;
+        lua_getglobal(m_state, "__G__TRACKBACK__");                     /* stack: ... func arg1 arg2 ... G */
+        if (!lua_isfunction(m_state, -1))
+        {
+            lua_pop(m_state, 1);                                        /* stack: ... func arg1 arg2 ... */
+        }
+        else
+        {
+            traceback = -(numArgs + 2);
+            lua_insert(m_state, traceback);                             /* stack: ... G func arg1 arg2 ... */
+        }
+
         int error = 0;
-        // try
-        // {
-            error = lua_pcall(m_state, numArgs, 1, 0);                  /* stack: ... ret */
-        // }
-        // catch (exception& e)
-        // {
-        //     CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ exception: %s", nHandler, e.what());
-        //     lua_settop(m_state, 0);
-        //     return 0;
-        // }
-        // catch (...)
-        // {
-        //     CCLOG("[LUA ERROR] lua_pcall(%d) catch C++ unknown exception.", nHandler);
-        //     lua_settop(m_state, 0);
-        //     return 0;
-        // }
+        error = lua_pcall(m_state, numArgs, 1, traceback);              /* stack: ... ret */
         if (error)
         {
-            CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));        /* stack: ... error */
-            lua_pop(m_state, 1); // remove error message from stack
+            if (traceback == 0)
+            {
+                CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));        /* stack: ... error */
+                lua_pop(m_state, 1); // remove error message from stack
+            }
             return 0;
         }
 
