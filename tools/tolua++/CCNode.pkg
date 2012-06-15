@@ -65,8 +65,8 @@ class CCNode : public CCObject
     bool    getIsRunning();
     CCNode* getParent();
     void    setParent(CCNode * var);
-    bool    getIsRelativeAnchorPoint();
-    void    setIsRelativeAnchorPoint(bool newValue);
+    bool    getIgnoreAnchorPointForPosition();
+    void    setIgnoreAnchorPointForPosition(bool newValue);
     void*   getUserData();
     void    setUserData(void *var);
     void    addChild(CCNode * child);

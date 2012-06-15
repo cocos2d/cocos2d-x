@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 05/29/12 17:22:57.
+** Generated automatically by tolua++-1.0.92 on 06/15/12 10:08:15.
 */
 
 #include <vector>
@@ -649,9 +649,9 @@ static int tolua_Cocos2d_CCSequence_actionOneTwo00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: actionsWithArray of class  CCSequence */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSequence_actionsWithArray00
-static int tolua_Cocos2d_CCSequence_actionsWithArray00(lua_State* tolua_S)
+/* method: actionWithArray of class  CCSequence */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSequence_actionWithArray00
+static int tolua_Cocos2d_CCSequence_actionWithArray00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -666,7 +666,7 @@ static int tolua_Cocos2d_CCSequence_actionsWithArray00(lua_State* tolua_S)
  {
   CCArray* actions = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  CCSequence::actionsWithArray(actions);
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  CCSequence::actionWithArray(actions);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
@@ -675,7 +675,7 @@ static int tolua_Cocos2d_CCSequence_actionsWithArray00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'actionsWithArray'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'actionWithArray'.",&tolua_err);
  return 0;
 #endif
 }
@@ -747,9 +747,9 @@ static int tolua_Cocos2d_CCRepeatForever_actionWithAction00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: actionsWithArray of class  CCSpawn */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpawn_actionsWithArray00
-static int tolua_Cocos2d_CCSpawn_actionsWithArray00(lua_State* tolua_S)
+/* method: actionWithArray of class  CCSpawn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpawn_actionWithArray00
+static int tolua_Cocos2d_CCSpawn_actionWithArray00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -764,7 +764,7 @@ static int tolua_Cocos2d_CCSpawn_actionsWithArray00(lua_State* tolua_S)
  {
   CCArray* actions = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  CCSpawn::actionsWithArray(actions);
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  CCSpawn::actionWithArray(actions);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
@@ -773,7 +773,7 @@ static int tolua_Cocos2d_CCSpawn_actionsWithArray00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'actionsWithArray'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'actionWithArray'.",&tolua_err);
  return 0;
 #endif
 }
@@ -829,7 +829,7 @@ static int tolua_Cocos2d_CCRotateTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float fDeltaAngle = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCRotateTo* tolua_ret = (CCRotateTo*)  CCRotateTo::actionWithDuration(duration,fDeltaAngle);
@@ -863,7 +863,7 @@ static int tolua_Cocos2d_CCRotateBy_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float fDeltaAngle = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCRotateBy* tolua_ret = (CCRotateBy*)  CCRotateBy::actionWithDuration(duration,fDeltaAngle);
@@ -897,7 +897,7 @@ static int tolua_Cocos2d_CCMoveTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   CCPoint position = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
   {
    CCMoveTo* tolua_ret = (CCMoveTo*)  CCMoveTo::actionWithDuration(duration,position);
@@ -931,7 +931,7 @@ static int tolua_Cocos2d_CCMoveBy_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   CCPoint position = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
   {
    CCMoveBy* tolua_ret = (CCMoveBy*)  CCMoveBy::actionWithDuration(duration,position);
@@ -966,7 +966,7 @@ static int tolua_Cocos2d_CCSkewTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   float sx = ((float)  tolua_tonumber(tolua_S,3,0));
   float sy = ((float)  tolua_tonumber(tolua_S,4,0));
   {
@@ -1002,7 +1002,7 @@ static int tolua_Cocos2d_CCSkewBy_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   float deltaSkewX = ((float)  tolua_tonumber(tolua_S,3,0));
   float deltaSkewY = ((float)  tolua_tonumber(tolua_S,4,0));
   {
@@ -1039,9 +1039,9 @@ static int tolua_Cocos2d_CCJumpBy_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   CCPoint position = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
-  ccTime height = ((ccTime)  tolua_tonumber(tolua_S,4,0));
+  float height = ((float)  tolua_tonumber(tolua_S,4,0));
   int jumps = ((int)  tolua_tonumber(tolua_S,5,0));
   {
    CCJumpBy* tolua_ret = (CCJumpBy*)  CCJumpBy::actionWithDuration(duration,position,height,jumps);
@@ -1077,9 +1077,9 @@ static int tolua_Cocos2d_CCJumpTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   CCPoint position = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
-  ccTime height = ((ccTime)  tolua_tonumber(tolua_S,4,0));
+  float height = ((float)  tolua_tonumber(tolua_S,4,0));
   int jumps = ((int)  tolua_tonumber(tolua_S,5,0));
   {
    CCJumpTo* tolua_ret = (CCJumpTo*)  CCJumpTo::actionWithDuration(duration,position,height,jumps);
@@ -1203,7 +1203,7 @@ static int tolua_Cocos2d_CCBezierBy_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   ccBezierConfig c = *((ccBezierConfig*)  tolua_tousertype(tolua_S,3,0));
   {
    CCBezierBy* tolua_ret = (CCBezierBy*)  CCBezierBy::actionWithDuration(t,c);
@@ -1237,7 +1237,7 @@ static int tolua_Cocos2d_CCBezierTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   ccBezierConfig c = *((ccBezierConfig*)  tolua_tousertype(tolua_S,3,0));
   {
    CCBezierTo* tolua_ret = (CCBezierTo*)  CCBezierTo::actionWithDuration(t,c);
@@ -1271,7 +1271,7 @@ static int tolua_Cocos2d_CCScaleTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float s = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCScaleTo* tolua_ret = (CCScaleTo*)  CCScaleTo::actionWithDuration(duration,s);
@@ -1304,7 +1304,7 @@ static int tolua_Cocos2d_CCScaleTo_actionWithDuration01(lua_State* tolua_S)
   goto tolua_lerror;
  else
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float sx = ((float)  tolua_tonumber(tolua_S,3,0));
   float sy = ((float)  tolua_tonumber(tolua_S,4,0));
   {
@@ -1336,7 +1336,7 @@ static int tolua_Cocos2d_CCScaleBy_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float s = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCScaleBy* tolua_ret = (CCScaleBy*)  CCScaleBy::actionWithDuration(duration,s);
@@ -1369,7 +1369,7 @@ static int tolua_Cocos2d_CCScaleBy_actionWithDuration01(lua_State* tolua_S)
   goto tolua_lerror;
  else
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float sx = ((float)  tolua_tonumber(tolua_S,3,0));
   float sy = ((float)  tolua_tonumber(tolua_S,4,0));
   {
@@ -1401,7 +1401,7 @@ static int tolua_Cocos2d_CCBlink_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   unsigned int uBlinks = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
   {
    CCBlink* tolua_ret = (CCBlink*)  CCBlink::actionWithDuration(duration,uBlinks);
@@ -1434,7 +1434,7 @@ static int tolua_Cocos2d_CCFadeIn_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime d = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float d = ((float)  tolua_tonumber(tolua_S,2,0));
   {
    CCFadeIn* tolua_ret = (CCFadeIn*)  CCFadeIn::actionWithDuration(d);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -1466,7 +1466,7 @@ static int tolua_Cocos2d_CCFadeOut_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime d = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float d = ((float)  tolua_tonumber(tolua_S,2,0));
   {
    CCFadeOut* tolua_ret = (CCFadeOut*)  CCFadeOut::actionWithDuration(d);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -1499,7 +1499,7 @@ static int tolua_Cocos2d_CCFadeTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   GLubyte opacity = ((GLubyte)  tolua_tonumber(tolua_S,3,0));
   {
    CCFadeTo* tolua_ret = (CCFadeTo*)  CCFadeTo::actionWithDuration(duration,opacity);
@@ -1535,7 +1535,7 @@ static int tolua_Cocos2d_CCTintTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   GLubyte red = ((GLubyte)  tolua_tonumber(tolua_S,3,0));
   GLubyte green = ((GLubyte)  tolua_tonumber(tolua_S,4,0));
   GLubyte blue = ((GLubyte)  tolua_tonumber(tolua_S,5,0));
@@ -1573,7 +1573,7 @@ static int tolua_Cocos2d_CCTintBy_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   GLshort deltaRed = *((GLshort*)  tolua_tousertype(tolua_S,3,0));
   GLshort deltaGreen = *((GLshort*)  tolua_tousertype(tolua_S,4,0));
   GLshort deltaBlue = *((GLshort*)  tolua_tousertype(tolua_S,5,0));
@@ -1608,7 +1608,7 @@ static int tolua_Cocos2d_CCDelayTime_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime d = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float d = ((float)  tolua_tonumber(tolua_S,2,0));
   {
    CCDelayTime* tolua_ret = (CCDelayTime*)  CCDelayTime::actionWithDuration(d);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -1772,7 +1772,7 @@ static int tolua_Cocos2d_CCProgressTo_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float fPercent = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCAction* tolua_ret = (CCAction*)  CCProgressTo::actionWithDuration(duration,fPercent);
@@ -1804,7 +1804,7 @@ static int tolua_Cocos2d_CCProgressTo_actionWithDuration01(lua_State* tolua_S)
   goto tolua_lerror;
  else
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float fPercent = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCProgressTo* tolua_ret = (CCProgressTo*)  CCProgressTo::actionWithDuration(duration,fPercent);
@@ -1836,7 +1836,7 @@ static int tolua_Cocos2d_CCProgressFromTo_actionWithDuration00(lua_State* tolua_
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float fFromPercentage = ((float)  tolua_tonumber(tolua_S,3,0));
   float fToPercentage = ((float)  tolua_tonumber(tolua_S,4,0));
   {
@@ -1870,7 +1870,7 @@ static int tolua_Cocos2d_CCProgressFromTo_actionWithDuration01(lua_State* tolua_
   goto tolua_lerror;
  else
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   float fFromPercentage = ((float)  tolua_tonumber(tolua_S,3,0));
   float fToPercentage = ((float)  tolua_tonumber(tolua_S,4,0));
   {
@@ -3066,7 +3066,7 @@ static int tolua_Cocos2d_CCGridAction_actionWithSize00(lua_State* tolua_S)
 #endif
  {
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCGridAction* tolua_ret = (CCGridAction*)  CCGridAction::actionWithSize(gridSize,duration);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -3165,7 +3165,7 @@ static int tolua_Cocos2d_CCAccelDeccelAmplitude_actionWithAction00(lua_State* to
 #endif
  {
   CCAction* pAction = ((CCAction*)  tolua_tousertype(tolua_S,2,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCAccelDeccelAmplitude* tolua_ret = (CCAccelDeccelAmplitude*)  CCAccelDeccelAmplitude::actionWithAction(pAction,duration);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -3264,7 +3264,7 @@ static int tolua_Cocos2d_CCAccelAmplitude_actionWithAction00(lua_State* tolua_S)
 #endif
  {
   CCAction* pAction = ((CCAction*)  tolua_tousertype(tolua_S,2,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCAccelAmplitude* tolua_ret = (CCAccelAmplitude*)  CCAccelAmplitude::actionWithAction(pAction,duration);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -3363,7 +3363,7 @@ static int tolua_Cocos2d_CCDeccelAmplitude_actionWithAction00(lua_State* tolua_S
 #endif
  {
   CCAction* pAction = ((CCAction*)  tolua_tousertype(tolua_S,2,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCDeccelAmplitude* tolua_ret = (CCDeccelAmplitude*)  CCDeccelAmplitude::actionWithAction(pAction,duration);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
@@ -3593,7 +3593,7 @@ static int tolua_Cocos2d_CCWaves3D_actionWithWaves00(lua_State* tolua_S)
   int wav = ((int)  tolua_tonumber(tolua_S,2,0));
   float amp = ((float)  tolua_tonumber(tolua_S,3,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,4,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,5,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,5,0));
   {
    CCWaves3D* tolua_ret = (CCWaves3D*)  CCWaves3D::actionWithWaves(wav,amp,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCWaves3D");
@@ -3623,7 +3623,7 @@ static int tolua_Cocos2d_CCFlipX3D_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   {
    CCFlipX3D* tolua_ret = (CCFlipX3D*)  CCFlipX3D::actionWithDuration(duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFlipX3D");
@@ -3653,7 +3653,7 @@ static int tolua_Cocos2d_CCFlipY3D_actionWithDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   {
    CCFlipY3D* tolua_ret = (CCFlipY3D*)  CCFlipY3D::actionWithDuration(duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFlipY3D");
@@ -3829,7 +3829,7 @@ static int tolua_Cocos2d_CCLens3D_actionWithPosition00(lua_State* tolua_S)
   CCPoint pos = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
   float r = ((float)  tolua_tonumber(tolua_S,3,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,4,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,5,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,5,0));
   {
    CCLens3D* tolua_ret = (CCLens3D*)  CCLens3D::actionWithPosition(pos,r,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCLens3D");
@@ -4074,7 +4074,7 @@ static int tolua_Cocos2d_CCRipple3D_actionWithPosition00(lua_State* tolua_S)
   int wav = ((int)  tolua_tonumber(tolua_S,4,0));
   float amp = ((float)  tolua_tonumber(tolua_S,5,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,6,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,7,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,7,0));
   {
    CCRipple3D* tolua_ret = (CCRipple3D*)  CCRipple3D::actionWithPosition(pos,r,wav,amp,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCRipple3D");
@@ -4110,7 +4110,7 @@ static int tolua_Cocos2d_CCShaky3D_actionWithRange00(lua_State* tolua_S)
   int range = ((int)  tolua_tonumber(tolua_S,2,0));
   bool shakeZ = ((bool)  tolua_toboolean(tolua_S,3,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,4,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,5,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,5,0));
   {
    CCShaky3D* tolua_ret = (CCShaky3D*)  CCShaky3D::actionWithRange(range,shakeZ,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCShaky3D");
@@ -4276,7 +4276,7 @@ static int tolua_Cocos2d_CCLiquid_actionWithWaves00(lua_State* tolua_S)
   int wav = ((int)  tolua_tonumber(tolua_S,2,0));
   float amp = ((float)  tolua_tonumber(tolua_S,3,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,4,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,5,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,5,0));
   {
    CCLiquid* tolua_ret = (CCLiquid*)  CCLiquid::actionWithWaves(wav,amp,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCLiquid");
@@ -4446,7 +4446,7 @@ static int tolua_Cocos2d_CCWaves_actionWithWaves00(lua_State* tolua_S)
   bool h = ((bool)  tolua_toboolean(tolua_S,4,0));
   bool v = ((bool)  tolua_toboolean(tolua_S,5,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,6,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,7,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,7,0));
   {
    CCWaves* tolua_ret = (CCWaves*)  CCWaves::actionWithWaves(wav,amp,h,v,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCWaves");
@@ -4689,7 +4689,7 @@ static int tolua_Cocos2d_CCTwirl_actionWithPosition00(lua_State* tolua_S)
   int t = ((int)  tolua_tonumber(tolua_S,3,0));
   float amp = ((float)  tolua_tonumber(tolua_S,4,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,5,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,6,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,6,0));
   {
    CCTwirl* tolua_ret = (CCTwirl*)  CCTwirl::actionWithPosition(pos,t,amp,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCTwirl");
@@ -5028,7 +5028,7 @@ static int tolua_Cocos2d_CCPageTurn3D_actionWithSize00(lua_State* tolua_S)
 #endif
  {
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
-  ccTime time = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float time = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCPageTurn3D* tolua_ret = (CCPageTurn3D*)  CCPageTurn3D::actionWithSize(gridSize,time);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPageTurn3D");
@@ -5064,7 +5064,7 @@ static int tolua_Cocos2d_CCShakyTiles3D_actionWithRange00(lua_State* tolua_S)
   int nRange = ((int)  tolua_tonumber(tolua_S,2,0));
   bool bShakeZ = ((bool)  tolua_toboolean(tolua_S,3,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,4,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,5,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,5,0));
   {
    CCShakyTiles3D* tolua_ret = (CCShakyTiles3D*)  CCShakyTiles3D::actionWithRange(nRange,bShakeZ,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCShakyTiles3D");
@@ -5100,7 +5100,7 @@ static int tolua_Cocos2d_CCShatteredTiles3D_actionWithRange00(lua_State* tolua_S
   int nRange = ((int)  tolua_tonumber(tolua_S,2,0));
   bool bShatterZ = ((bool)  tolua_toboolean(tolua_S,3,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,4,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,5,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,5,0));
   {
    CCShatteredTiles3D* tolua_ret = (CCShatteredTiles3D*)  CCShatteredTiles3D::actionWithRange(nRange,bShatterZ,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCShatteredTiles3D");
@@ -5249,7 +5249,7 @@ static int tolua_Cocos2d_CCShuffleTiles_actionWithSeed00(lua_State* tolua_S)
  {
   int s = ((int)  tolua_tonumber(tolua_S,2,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,3,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,4,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,4,0));
   {
    CCShuffleTiles* tolua_ret = (CCShuffleTiles*)  CCShuffleTiles::actionWithSeed(s,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCShuffleTiles");
@@ -5382,7 +5382,7 @@ static int tolua_Cocos2d_CCFadeOutTRTiles_actionWithSize00(lua_State* tolua_S)
 #endif
  {
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
-  ccTime time = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float time = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCFadeOutTRTiles* tolua_ret = (CCFadeOutTRTiles*)  CCFadeOutTRTiles::actionWithSize(gridSize,time);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFadeOutTRTiles");
@@ -5414,7 +5414,7 @@ static int tolua_Cocos2d_CCFadeOutBLTiles_actionWithSize00(lua_State* tolua_S)
 #endif
  {
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
-  ccTime time = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float time = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCFadeOutBLTiles* tolua_ret = (CCFadeOutBLTiles*)  CCFadeOutBLTiles::actionWithSize(gridSize,time);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFadeOutBLTiles");
@@ -5446,7 +5446,7 @@ static int tolua_Cocos2d_CCFadeOutUpTiles_actionWithSize00(lua_State* tolua_S)
 #endif
  {
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
-  ccTime time = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float time = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCFadeOutUpTiles* tolua_ret = (CCFadeOutUpTiles*)  CCFadeOutUpTiles::actionWithSize(gridSize,time);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFadeOutUpTiles");
@@ -5478,7 +5478,7 @@ static int tolua_Cocos2d_CCFadeOutDownTiles_actionWithSize00(lua_State* tolua_S)
 #endif
  {
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
-  ccTime time = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float time = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCFadeOutDownTiles* tolua_ret = (CCFadeOutDownTiles*)  CCFadeOutDownTiles::actionWithSize(gridSize,time);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFadeOutDownTiles");
@@ -5612,7 +5612,7 @@ static int tolua_Cocos2d_CCTurnOffTiles_actionWithSize00(lua_State* tolua_S)
 #endif
  {
   ccGridSize size = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
-  ccTime d = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float d = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCTurnOffTiles* tolua_ret = (CCTurnOffTiles*)  CCTurnOffTiles::actionWithSize(size,d);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCTurnOffTiles");
@@ -5646,7 +5646,7 @@ static int tolua_Cocos2d_CCTurnOffTiles_actionWithSeed00(lua_State* tolua_S)
  {
   int s = ((int)  tolua_tonumber(tolua_S,2,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,3,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,4,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,4,0));
   {
    CCTurnOffTiles* tolua_ret = (CCTurnOffTiles*)  CCTurnOffTiles::actionWithSeed(s,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCTurnOffTiles");
@@ -5812,7 +5812,7 @@ static int tolua_Cocos2d_CCWavesTiles3D_actionWithWaves00(lua_State* tolua_S)
   int wav = ((int)  tolua_tonumber(tolua_S,2,0));
   float amp = ((float)  tolua_tonumber(tolua_S,3,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,4,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,5,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,5,0));
   {
    CCWavesTiles3D* tolua_ret = (CCWavesTiles3D*)  CCWavesTiles3D::actionWithWaves(wav,amp,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCWavesTiles3D");
@@ -5978,7 +5978,7 @@ static int tolua_Cocos2d_CCJumpTiles3D_actionWithJumps00(lua_State* tolua_S)
   int j = ((int)  tolua_tonumber(tolua_S,2,0));
   float amp = ((float)  tolua_tonumber(tolua_S,3,0));
   ccGridSize gridSize = *((ccGridSize*)  tolua_tousertype(tolua_S,4,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,5,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,5,0));
   {
    CCJumpTiles3D* tolua_ret = (CCJumpTiles3D*)  CCJumpTiles3D::actionWithJumps(j,amp,gridSize,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCJumpTiles3D");
@@ -6010,7 +6010,7 @@ static int tolua_Cocos2d_CCSplitRows_actionWithRows00(lua_State* tolua_S)
 #endif
  {
   int nRows = ((int)  tolua_tonumber(tolua_S,2,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCSplitRows* tolua_ret = (CCSplitRows*)  CCSplitRows::actionWithRows(nRows,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCSplitRows");
@@ -6042,7 +6042,7 @@ static int tolua_Cocos2d_CCSplitCols_actionWithCols00(lua_State* tolua_S)
 #endif
  {
   int nCols = ((int)  tolua_tonumber(tolua_S,2,0));
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCSplitCols* tolua_ret = (CCSplitCols*)  CCSplitCols::actionWithCols(nCols,duration);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCSplitCols");
@@ -9767,9 +9767,9 @@ static int tolua_Cocos2d_CCDirector_isPaused00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getFrames of class  CCDirector */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_getFrames00
-static int tolua_Cocos2d_CCDirector_getFrames00(lua_State* tolua_S)
+/* method: getTotalFrames of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_getTotalFrames00
+static int tolua_Cocos2d_CCDirector_getTotalFrames00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -9783,17 +9783,17 @@ static int tolua_Cocos2d_CCDirector_getFrames00(lua_State* tolua_S)
  {
   CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFrames'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTotalFrames'", NULL);
 #endif
   {
-   unsigned int tolua_ret = (unsigned int)  self->getFrames();
+   unsigned int tolua_ret = (unsigned int)  self->getTotalFrames();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getFrames'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getTotalFrames'.",&tolua_err);
  return 0;
 #endif
 }
@@ -10567,9 +10567,9 @@ static int tolua_Cocos2d_ccDrawCubicBezier00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getWriteablePath of class  CCFileUtils */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_getWriteablePath00
-static int tolua_Cocos2d_CCFileUtils_getWriteablePath00(lua_State* tolua_S)
+/* method: sharedFileUtils of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_sharedFileUtils00
+static int tolua_Cocos2d_CCFileUtils_sharedFileUtils00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -10582,7 +10582,39 @@ static int tolua_Cocos2d_CCFileUtils_getWriteablePath00(lua_State* tolua_S)
 #endif
  {
   {
-   std::string tolua_ret = (std::string)  CCFileUtils::getWriteablePath();
+   CCFileUtils* tolua_ret = (CCFileUtils*)  CCFileUtils::sharedFileUtils();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFileUtils");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sharedFileUtils'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getWriteablePath of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_getWriteablePath00
+static int tolua_Cocos2d_CCFileUtils_getWriteablePath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWriteablePath'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getWriteablePath();
    tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
   }
  }
@@ -18017,9 +18049,9 @@ static int tolua_Cocos2d_CCNode_setParent00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getIsRelativeAnchorPoint of class  CCNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getIsRelativeAnchorPoint00
-static int tolua_Cocos2d_CCNode_getIsRelativeAnchorPoint00(lua_State* tolua_S)
+/* method: getIgnoreAnchorPointForPosition of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getIgnoreAnchorPointForPosition00
+static int tolua_Cocos2d_CCNode_getIgnoreAnchorPointForPosition00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -18033,25 +18065,25 @@ static int tolua_Cocos2d_CCNode_getIsRelativeAnchorPoint00(lua_State* tolua_S)
  {
   CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getIsRelativeAnchorPoint'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getIgnoreAnchorPointForPosition'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->getIsRelativeAnchorPoint();
+   bool tolua_ret = (bool)  self->getIgnoreAnchorPointForPosition();
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getIsRelativeAnchorPoint'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getIgnoreAnchorPointForPosition'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setIsRelativeAnchorPoint of class  CCNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setIsRelativeAnchorPoint00
-static int tolua_Cocos2d_CCNode_setIsRelativeAnchorPoint00(lua_State* tolua_S)
+/* method: setIgnoreAnchorPointForPosition of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setIgnoreAnchorPointForPosition00
+static int tolua_Cocos2d_CCNode_setIgnoreAnchorPointForPosition00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -18067,16 +18099,16 @@ static int tolua_Cocos2d_CCNode_setIsRelativeAnchorPoint00(lua_State* tolua_S)
   CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
   bool newValue = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIsRelativeAnchorPoint'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIgnoreAnchorPointForPosition'", NULL);
 #endif
   {
-   self->setIsRelativeAnchorPoint(newValue);
+   self->setIgnoreAnchorPointForPosition(newValue);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setIsRelativeAnchorPoint'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'setIgnoreAnchorPointForPosition'.",&tolua_err);
  return 0;
 #endif
 }
@@ -23589,7 +23621,7 @@ static int tolua_Cocos2d_CCTimer_getInterval00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getInterval'", NULL);
 #endif
   {
-   ccTime tolua_ret = (ccTime)  self->getInterval();
+   float tolua_ret = (float)  self->getInterval();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -23618,7 +23650,7 @@ static int tolua_Cocos2d_CCTimer_setInterval00(lua_State* tolua_S)
 #endif
  {
   CCTimer* self = (CCTimer*)  tolua_tousertype(tolua_S,1,0);
-  ccTime fInterval = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float fInterval = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setInterval'", NULL);
 #endif
@@ -23651,7 +23683,7 @@ static int tolua_Cocos2d_CCTimer_update00(lua_State* tolua_S)
 #endif
  {
   CCTimer* self = (CCTimer*)  tolua_tousertype(tolua_S,1,0);
-  ccTime dt = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float dt = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'update'", NULL);
 #endif
@@ -23687,7 +23719,7 @@ static int tolua_Cocos2d_CCScheduler_getTimeScale00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTimeScale'", NULL);
 #endif
   {
-   ccTime tolua_ret = (ccTime)  self->getTimeScale();
+   float tolua_ret = (float)  self->getTimeScale();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -23716,7 +23748,7 @@ static int tolua_Cocos2d_CCScheduler_setTimeScale00(lua_State* tolua_S)
 #endif
  {
   CCScheduler* self = (CCScheduler*)  tolua_tousertype(tolua_S,1,0);
-  ccTime fTimeScale = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float fTimeScale = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTimeScale'", NULL);
 #endif
@@ -23752,7 +23784,7 @@ static int tolua_Cocos2d_CCScheduler_scheduleScriptFunc00(lua_State* tolua_S)
  {
   CCScheduler* self = (CCScheduler*)  tolua_tousertype(tolua_S,1,0);
   int funcID = (tolua_ref_function(tolua_S,2,0));
-  ccTime fInterval = ((ccTime)  tolua_tonumber(tolua_S,3,0));
+  float fInterval = ((float)  tolua_tonumber(tolua_S,3,0));
   bool bPaused = ((bool)  tolua_toboolean(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scheduleScriptFunc'", NULL);
@@ -24459,9 +24491,9 @@ static int tolua_Cocos2d_CCSprite_setDirtyRecursively00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setIsRelativeAnchorPoint of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setIsRelativeAnchorPoint00
-static int tolua_Cocos2d_CCSprite_setIsRelativeAnchorPoint00(lua_State* tolua_S)
+/* method: setIgnoreAnchorPointForPosition of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setIgnoreAnchorPointForPosition00
+static int tolua_Cocos2d_CCSprite_setIgnoreAnchorPointForPosition00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -24475,18 +24507,18 @@ static int tolua_Cocos2d_CCSprite_setIsRelativeAnchorPoint00(lua_State* tolua_S)
 #endif
  {
   CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
-  bool bRelative = ((bool)  tolua_toboolean(tolua_S,2,0));
+  bool newValue = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIsRelativeAnchorPoint'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIgnoreAnchorPointForPosition'", NULL);
 #endif
   {
-   self->setIsRelativeAnchorPoint(bRelative);
+   self->setIgnoreAnchorPointForPosition(newValue);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setIsRelativeAnchorPoint'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'setIgnoreAnchorPointForPosition'.",&tolua_err);
  return 0;
 #endif
 }
@@ -25180,37 +25212,6 @@ static int tolua_Cocos2d_CCSprite_spriteWithTexture01(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_Cocos2d_CCSprite_spriteWithTexture00(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: spriteWithTexture of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_spriteWithTexture02
-static int tolua_Cocos2d_CCSprite_spriteWithTexture02(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCSprite",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCTexture2D",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCRect",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"CCPoint",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,5,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  CCTexture2D* pTexture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
-  CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
-  CCPoint offset = *((CCPoint*)  tolua_tousertype(tolua_S,4,0));
-  {
-   CCSprite* tolua_ret = (CCSprite*)  CCSprite::spriteWithTexture(pTexture,rect,offset);
-    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
-  }
- }
- return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCSprite_spriteWithTexture01(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -32356,7 +32357,7 @@ static int tolua_Cocos2d_CCTransitionSceneOriented_transitionWithDuration00(lua_
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,0));
   {
@@ -32391,7 +32392,7 @@ static int tolua_Cocos2d_CCTransitionRotoZoom_transitionWithDuration00(lua_State
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionRotoZoom* tolua_ret = (CCTransitionRotoZoom*)  CCTransitionRotoZoom::transitionWithDuration(t,scene);
@@ -32425,7 +32426,7 @@ static int tolua_Cocos2d_CCTransitionJumpZoom_transitionWithDuration00(lua_State
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionJumpZoom* tolua_ret = (CCTransitionJumpZoom*)  CCTransitionJumpZoom::transitionWithDuration(t,scene);
@@ -32459,7 +32460,7 @@ static int tolua_Cocos2d_CCTransitionMoveInL_transitionWithDuration00(lua_State*
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionMoveInL* tolua_ret = (CCTransitionMoveInL*)  CCTransitionMoveInL::transitionWithDuration(t,scene);
@@ -32493,7 +32494,7 @@ static int tolua_Cocos2d_CCTransitionMoveInR_transitionWithDuration00(lua_State*
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionMoveInR* tolua_ret = (CCTransitionMoveInR*)  CCTransitionMoveInR::transitionWithDuration(t,scene);
@@ -32527,7 +32528,7 @@ static int tolua_Cocos2d_CCTransitionMoveInT_transitionWithDuration00(lua_State*
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionMoveInT* tolua_ret = (CCTransitionMoveInT*)  CCTransitionMoveInT::transitionWithDuration(t,scene);
@@ -32561,7 +32562,7 @@ static int tolua_Cocos2d_CCTransitionMoveInB_transitionWithDuration00(lua_State*
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionMoveInB* tolua_ret = (CCTransitionMoveInB*)  CCTransitionMoveInB::transitionWithDuration(t,scene);
@@ -32595,7 +32596,7 @@ static int tolua_Cocos2d_CCTransitionSlideInL_transitionWithDuration00(lua_State
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionSlideInL* tolua_ret = (CCTransitionSlideInL*)  CCTransitionSlideInL::transitionWithDuration(t,scene);
@@ -32629,7 +32630,7 @@ static int tolua_Cocos2d_CCTransitionSlideInR_transitionWithDuration00(lua_State
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionSlideInR* tolua_ret = (CCTransitionSlideInR*)  CCTransitionSlideInR::transitionWithDuration(t,scene);
@@ -32663,7 +32664,7 @@ static int tolua_Cocos2d_CCTransitionSlideInB_transitionWithDuration00(lua_State
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionSlideInB* tolua_ret = (CCTransitionSlideInB*)  CCTransitionSlideInB::transitionWithDuration(t,scene);
@@ -32697,7 +32698,7 @@ static int tolua_Cocos2d_CCTransitionSlideInT_transitionWithDuration00(lua_State
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionSlideInT* tolua_ret = (CCTransitionSlideInT*)  CCTransitionSlideInT::transitionWithDuration(t,scene);
@@ -32731,7 +32732,7 @@ static int tolua_Cocos2d_CCTransitionShrinkGrow_transitionWithDuration00(lua_Sta
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionShrinkGrow* tolua_ret = (CCTransitionShrinkGrow*)  CCTransitionShrinkGrow::transitionWithDuration(t,scene);
@@ -32766,7 +32767,7 @@ static int tolua_Cocos2d_CCTransitionFlipX_transitionWithDuration00(lua_State* t
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationRightOver));
   {
@@ -32802,7 +32803,7 @@ static int tolua_Cocos2d_CCTransitionFlipY_transitionWithDuration00(lua_State* t
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationUpOver));
   {
@@ -32838,7 +32839,7 @@ static int tolua_Cocos2d_CCTransitionFlipAngular_transitionWithDuration00(lua_St
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationRightOver));
   {
@@ -32874,7 +32875,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipX_transitionWithDuration00(lua_Stat
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationRightOver));
   {
@@ -32910,7 +32911,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipY_transitionWithDuration00(lua_Stat
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationUpOver));
   {
@@ -32946,7 +32947,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipAngular_transitionWithDuration00(lu
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationRightOver));
   {
@@ -32982,7 +32983,7 @@ static int tolua_Cocos2d_CCTransitionFade_transitionWithDuration00(lua_State* to
  else
 #endif
  {
-  ccTime duration = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   const ccColor3B clr = ccBLACK;
   ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));
@@ -33018,7 +33019,7 @@ static int tolua_Cocos2d_CCTransitionCrossFade_transitionWithDuration00(lua_Stat
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionCrossFade* tolua_ret = (CCTransitionCrossFade*)  CCTransitionCrossFade::transitionWithDuration(t,scene);
@@ -33052,7 +33053,7 @@ static int tolua_Cocos2d_CCTransitionTurnOffTiles_transitionWithDuration00(lua_S
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionTurnOffTiles* tolua_ret = (CCTransitionTurnOffTiles*)  CCTransitionTurnOffTiles::transitionWithDuration(t,scene);
@@ -33086,7 +33087,7 @@ static int tolua_Cocos2d_CCTransitionSplitCols_transitionWithDuration00(lua_Stat
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionSplitCols* tolua_ret = (CCTransitionSplitCols*)  CCTransitionSplitCols::transitionWithDuration(t,scene);
@@ -33120,7 +33121,7 @@ static int tolua_Cocos2d_CCTransitionSplitRows_transitionWithDuration00(lua_Stat
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionSplitRows* tolua_ret = (CCTransitionSplitRows*)  CCTransitionSplitRows::transitionWithDuration(t,scene);
@@ -33154,7 +33155,7 @@ static int tolua_Cocos2d_CCTransitionFadeTR_transitionWithDuration00(lua_State* 
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionFadeTR* tolua_ret = (CCTransitionFadeTR*)  CCTransitionFadeTR::transitionWithDuration(t,scene);
@@ -33188,7 +33189,7 @@ static int tolua_Cocos2d_CCTransitionFadeBL_transitionWithDuration00(lua_State* 
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionFadeBL* tolua_ret = (CCTransitionFadeBL*)  CCTransitionFadeBL::transitionWithDuration(t,scene);
@@ -33222,7 +33223,7 @@ static int tolua_Cocos2d_CCTransitionFadeUp_transitionWithDuration00(lua_State* 
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionFadeUp* tolua_ret = (CCTransitionFadeUp*)  CCTransitionFadeUp::transitionWithDuration(t,scene);
@@ -33256,7 +33257,7 @@ static int tolua_Cocos2d_CCTransitionFadeDown_transitionWithDuration00(lua_State
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
    CCTransitionFadeDown* tolua_ret = (CCTransitionFadeDown*)  CCTransitionFadeDown::transitionWithDuration(t,scene);
@@ -33327,7 +33328,7 @@ static int tolua_Cocos2d_CCTransitionPageTurn_transitionWithDuration00(lua_State
  else
 #endif
  {
-  ccTime t = ((ccTime)  tolua_tonumber(tolua_S,2,0));
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   bool backwards = ((bool)  tolua_toboolean(tolua_S,4,0));
   {
@@ -36342,7 +36343,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_cclass(tolua_S,"CCSequence","CCSequence","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCSequence");
    tolua_function(tolua_S,"actionOneTwo",tolua_Cocos2d_CCSequence_actionOneTwo00);
-   tolua_function(tolua_S,"actionsWithArray",tolua_Cocos2d_CCSequence_actionsWithArray00);
+   tolua_function(tolua_S,"actionWithArray",tolua_Cocos2d_CCSequence_actionWithArray00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCRepeat","CCRepeat","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCRepeat");
@@ -36354,7 +36355,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSpawn","CCSpawn","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCSpawn");
-   tolua_function(tolua_S,"actionsWithArray",tolua_Cocos2d_CCSpawn_actionsWithArray00);
+   tolua_function(tolua_S,"actionWithArray",tolua_Cocos2d_CCSpawn_actionWithArray00);
    tolua_function(tolua_S,"actionOneTwo",tolua_Cocos2d_CCSpawn_actionOneTwo00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCRotateTo","CCRotateTo","CCActionInterval",NULL);
@@ -36925,7 +36926,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isDisplayStats",tolua_Cocos2d_CCDirector_isDisplayStats00);
    tolua_function(tolua_S,"setDisplayStats",tolua_Cocos2d_CCDirector_setDisplayStats00);
    tolua_function(tolua_S,"isPaused",tolua_Cocos2d_CCDirector_isPaused00);
-   tolua_function(tolua_S,"getFrames",tolua_Cocos2d_CCDirector_getFrames00);
+   tolua_function(tolua_S,"getTotalFrames",tolua_Cocos2d_CCDirector_getTotalFrames00);
    tolua_function(tolua_S,"getWinSize",tolua_Cocos2d_CCDirector_getWinSize00);
    tolua_function(tolua_S,"getWinSizeInPixels",tolua_Cocos2d_CCDirector_getWinSizeInPixels00);
    tolua_function(tolua_S,"convertToGL",tolua_Cocos2d_CCDirector_convertToGL00);
@@ -36951,6 +36952,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_function(tolua_S,"ccDrawCubicBezier",tolua_Cocos2d_ccDrawCubicBezier00);
   tolua_cclass(tolua_S,"CCFileUtils","CCFileUtils","",NULL);
   tolua_beginmodule(tolua_S,"CCFileUtils");
+   tolua_function(tolua_S,"sharedFileUtils",tolua_Cocos2d_CCFileUtils_sharedFileUtils00);
    tolua_function(tolua_S,"getWriteablePath",tolua_Cocos2d_CCFileUtils_getWriteablePath00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
@@ -37261,8 +37263,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getIsRunning",tolua_Cocos2d_CCNode_getIsRunning00);
    tolua_function(tolua_S,"getParent",tolua_Cocos2d_CCNode_getParent00);
    tolua_function(tolua_S,"setParent",tolua_Cocos2d_CCNode_setParent00);
-   tolua_function(tolua_S,"getIsRelativeAnchorPoint",tolua_Cocos2d_CCNode_getIsRelativeAnchorPoint00);
-   tolua_function(tolua_S,"setIsRelativeAnchorPoint",tolua_Cocos2d_CCNode_setIsRelativeAnchorPoint00);
+   tolua_function(tolua_S,"getIgnoreAnchorPointForPosition",tolua_Cocos2d_CCNode_getIgnoreAnchorPointForPosition00);
+   tolua_function(tolua_S,"setIgnoreAnchorPointForPosition",tolua_Cocos2d_CCNode_setIgnoreAnchorPointForPosition00);
    tolua_function(tolua_S,"getUserData",tolua_Cocos2d_CCNode_getUserData00);
    tolua_function(tolua_S,"setUserData",tolua_Cocos2d_CCNode_setUserData00);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCNode_addChild00);
@@ -37486,7 +37488,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setBlendFunc",tolua_Cocos2d_CCSprite_setBlendFunc00);
    tolua_function(tolua_S,"getBlendFunc",tolua_Cocos2d_CCSprite_getBlendFunc00);
    tolua_function(tolua_S,"setDirtyRecursively",tolua_Cocos2d_CCSprite_setDirtyRecursively00);
-   tolua_function(tolua_S,"setIsRelativeAnchorPoint",tolua_Cocos2d_CCSprite_setIsRelativeAnchorPoint00);
+   tolua_function(tolua_S,"setIgnoreAnchorPointForPosition",tolua_Cocos2d_CCSprite_setIgnoreAnchorPointForPosition00);
    tolua_function(tolua_S,"setFlipX",tolua_Cocos2d_CCSprite_setFlipX00);
    tolua_function(tolua_S,"setFlipY",tolua_Cocos2d_CCSprite_setFlipY00);
    tolua_function(tolua_S,"isFlipX",tolua_Cocos2d_CCSprite_isFlipX00);
@@ -37508,7 +37510,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setDisplayFrameWithAnimationName",tolua_Cocos2d_CCSprite_setDisplayFrameWithAnimationName00);
    tolua_function(tolua_S,"spriteWithTexture",tolua_Cocos2d_CCSprite_spriteWithTexture00);
    tolua_function(tolua_S,"spriteWithTexture",tolua_Cocos2d_CCSprite_spriteWithTexture01);
-   tolua_function(tolua_S,"spriteWithTexture",tolua_Cocos2d_CCSprite_spriteWithTexture02);
    tolua_function(tolua_S,"spriteWithSpriteFrame",tolua_Cocos2d_CCSprite_spriteWithSpriteFrame00);
    tolua_function(tolua_S,"spriteWithSpriteFrameName",tolua_Cocos2d_CCSprite_spriteWithSpriteFrameName00);
    tolua_function(tolua_S,"spriteWithFile",tolua_Cocos2d_CCSprite_spriteWithFile00);
@@ -37594,7 +37595,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"textFieldWithPlaceHolder",tolua_Cocos2d_CCTextFieldTTF_textFieldWithPlaceHolder00);
    tolua_function(tolua_S,"textFieldWithPlaceHolder",tolua_Cocos2d_CCTextFieldTTF_textFieldWithPlaceHolder01);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_Automatic",kCCTexture2DPixelFormat_Automatic);
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA8888",kCCTexture2DPixelFormat_RGBA8888);
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB888",kCCTexture2DPixelFormat_RGB888);
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB565",kCCTexture2DPixelFormat_RGB565);
@@ -37606,7 +37606,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC4",kCCTexture2DPixelFormat_PVRTC4);
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC2",kCCTexture2DPixelFormat_PVRTC2);
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_Default",kCCTexture2DPixelFormat_Default);
-  tolua_constant(tolua_S,"kTexture2DPixelFormat_Automatic",kTexture2DPixelFormat_Automatic);
   tolua_constant(tolua_S,"kTexture2DPixelFormat_RGBA8888",kTexture2DPixelFormat_RGBA8888);
   tolua_constant(tolua_S,"kTexture2DPixelFormat_RGB888",kTexture2DPixelFormat_RGB888);
   tolua_constant(tolua_S,"kTexture2DPixelFormat_RGB565",kTexture2DPixelFormat_RGB565);
@@ -38079,9 +38078,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"src",tolua_get_ccBlendFunc_src,tolua_set_ccBlendFunc_src);
    tolua_variable(tolua_S,"dst",tolua_get_ccBlendFunc_dst,tolua_set_ccBlendFunc_dst);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"CCTextAlignmentLeft",CCTextAlignmentLeft);
-  tolua_constant(tolua_S,"CCTextAlignmentCenter",CCTextAlignmentCenter);
-  tolua_constant(tolua_S,"CCTextAlignmentRight",CCTextAlignmentRight);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentTop",kCCVerticalTextAlignmentTop);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentCenter",kCCVerticalTextAlignmentCenter);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentBottom",kCCVerticalTextAlignmentBottom);
+  tolua_constant(tolua_S,"kCCTextAlignmentLeft",kCCTextAlignmentLeft);
+  tolua_constant(tolua_S,"kCCTextAlignmentCenter",kCCTextAlignmentCenter);
+  tolua_constant(tolua_S,"kCCTextAlignmentRight",kCCTextAlignmentRight);
   tolua_cclass(tolua_S,"CCUserDefault","CCUserDefault","",NULL);
   tolua_beginmodule(tolua_S,"CCUserDefault");
    tolua_function(tolua_S,"getBoolForKey",tolua_Cocos2d_CCUserDefault_getBoolForKey00);
