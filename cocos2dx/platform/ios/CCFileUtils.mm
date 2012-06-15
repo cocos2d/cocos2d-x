@@ -476,12 +476,12 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 // notification support when getFileData from a invalid file
 static bool s_bPopupNotify = true;
 
-void CCFileUtils::setIsPopupNotify(bool bNotify)
+void CCFileUtils::popupNotify(bool bNotify)
 {
     s_bPopupNotify = bNotify;
 }
 
-bool CCFileUtils::getIsPopupNotify()
+bool CCFileUtils::isPopupNotify()
 {
     return s_bPopupNotify;
 }
