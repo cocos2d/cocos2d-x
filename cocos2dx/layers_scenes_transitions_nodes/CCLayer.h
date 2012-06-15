@@ -99,17 +99,25 @@ public:
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
     */
-    CC_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
+    bool isTouchEnabled();
+    void setTouchEnabled(bool value);
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
     */
-    CC_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+    bool isAccelerometerEnabled();
+    void setAccelerometerEnabled(bool value);
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-    CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
+    bool isKeypadEnabled();
+    void setKeypadEnabled(bool value);
+    
+protected:   
+    bool m_bIsTouchEnabled;
+    bool m_bIsAccelerometerEnabled;
+    bool m_bIsKeypadEnabled;
     
 private:
     // Script touch events handler
@@ -250,8 +258,8 @@ public:
     /** BlendFunction. Conforms to CCBlendProtocol protocol */
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
-    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool getIsOpacityModifyRGB(void) { return false;}
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) { return false;}
     //@warning: This interface will be deprecated in future.
     LAYER_CREATE_FUNC(CCLayerColor)
     LAYER_NODE_FUNC(CCLayerColor)

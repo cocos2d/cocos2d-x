@@ -79,7 +79,7 @@ void MotionStreakTest2::onEnter()
 {
     MotionStreakTest::onEnter();
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
         

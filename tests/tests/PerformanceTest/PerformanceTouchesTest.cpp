@@ -89,7 +89,7 @@ std::string TouchesMainScene::title()
 void TouchesPerformTest1::onEnter()
 {
     TouchesMainScene::onEnter();
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 }
 
 std::string TouchesPerformTest1::title()
@@ -132,7 +132,7 @@ void TouchesPerformTest1::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 void TouchesPerformTest2::onEnter()
 {
     TouchesMainScene::onEnter();
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 }
 
 std::string TouchesPerformTest2::title()

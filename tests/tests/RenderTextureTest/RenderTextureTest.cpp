@@ -142,7 +142,7 @@ RenderTextureSave::RenderTextureSave()
     m_pBrush->retain();
     m_pBrush->setColor(ccRED);
     m_pBrush->setOpacity(20);
-    this->setIsTouchEnabled(true);
+    this->setTouchEnabled(true);
 
     // Save Image menu
     CCMenuItemFont::setFontSize(16);
@@ -329,7 +329,7 @@ void RenderTextureScene::runThisTest()
 
 RenderTextureZbuffer::RenderTextureZbuffer()
 {
-    this->setIsTouchEnabled(true);
+    this->setTouchEnabled(true);
     CCSize size = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(ccp(size.width / 2, size.height * 0.25f));

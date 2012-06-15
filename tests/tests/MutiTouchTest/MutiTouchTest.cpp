@@ -56,7 +56,7 @@ bool MutiTouchTestLayer::init()
 {
     if (CCLayer::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         return true;
     }
     return false;

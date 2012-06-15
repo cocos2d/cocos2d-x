@@ -301,7 +301,7 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
         CCAssert(offSprite,     "offSprite must not be nil.");
         CCAssert(thumbSprite,   "thumbSprite must not be nil.");
         
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         m_bOn = true;
 
         m_pSwitchSprite = new CCControlSwitchSprite();
@@ -314,7 +314,7 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
         m_pSwitchSprite->setPosition(ccp (m_pSwitchSprite->getContentSize().width / 2, m_pSwitchSprite->getContentSize().height / 2));
         addChild(m_pSwitchSprite);
         
-        setIgnoreAnchorPointForPosition(false);
+        ignoreAnchorPointForPosition(false);
         setAnchorPoint(ccp (0.5f, 0.5f));
         setContentSize(m_pSwitchSprite->getContentSize());
         return true;

@@ -42,7 +42,7 @@ CCListViewCell::CCListViewCell(void)
     :m_nSeparatorStyle(CCListViewCellSeparatorStyleNone)
     ,m_bIsSelected(false)
 {
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
     m_selectionColor = ccc4(0, 0, 255, 255);
     m_separatorLineColor = ccc3(128, 128, 128);
 }

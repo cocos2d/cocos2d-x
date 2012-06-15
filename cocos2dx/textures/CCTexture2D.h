@@ -235,6 +235,9 @@ public:
 
     /** content size */
     const CCSize& getContentSizeInPixels();
+    
+    bool hasPremultipliedAlpha();
+    bool hasMipmaps();
 private:
     bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
@@ -259,9 +262,9 @@ private:
     CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSize)
 
     /** whether or not the texture has their Alpha premultiplied */
-    CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
+    bool m_bHasPremultipliedAlpha;
 
-    CC_SYNTHESIZE_READONLY(bool, m_bHasMipmaps, HasMipmaps);
+    bool m_bHasMipmaps;
 
     /** shader program used by drawAtPoint and drawInRect */
     CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);

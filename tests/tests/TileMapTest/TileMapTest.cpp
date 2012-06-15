@@ -1429,7 +1429,7 @@ CCLayer* restartTileMapAction()
 
 TileDemo::TileDemo(void)
 {
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

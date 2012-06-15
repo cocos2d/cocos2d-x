@@ -102,9 +102,9 @@ void FontTest::showFont(const char *pFont)
     CCLayerColor *centerColor = CCLayerColor::create(ccc4(200, 100, 100, 255), blockSize.width, blockSize.height);
     CCLayerColor *rightColor = CCLayerColor::create(ccc4(100, 100, 200, 255), blockSize.width, blockSize.height);
 
-    leftColor->setIgnoreAnchorPointForPosition(false);
-    centerColor->setIgnoreAnchorPointForPosition(false);
-    rightColor->setIgnoreAnchorPointForPosition(false);
+    leftColor->ignoreAnchorPointForPosition(false);
+    centerColor->ignoreAnchorPointForPosition(false);
+    rightColor->ignoreAnchorPointForPosition(false);
 
 
     top->setAnchorPoint(ccp(0.5, 1));
