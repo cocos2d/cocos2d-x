@@ -540,10 +540,11 @@ CCString * CCNodeLoader::parsePropTypeText(CCNode * pNode, CCNode * pParent, CCB
 
 CCString * CCNodeLoader::parsePropTypeFontTTF(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     CCString * fontTTF = pCCBReader->readCachedString();
-    
+
     CCString * ttfEnding = CCString::stringWithCString(".ttf");
 
-    /* System fonts come without the ".ttf" extension, so remove the path if there is one. */
+    /* If the fontTTF comes with the ".ttf" extension, prepend the absolute path. 
+     * System fonts come without the ".ttf" extension and do not need the path prepended. */
     if(CCBReader::endsWith(CCBReader::toLowerCase(fontTTF), ttfEnding)){
         fontTTF = CCBReader::concat(pCCBReader->getCCBRootPath(), fontTTF);
     }
