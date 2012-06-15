@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Jun  5 12:42:08 2012.
+** Generated automatically by tolua++-1.0.92 on Fri Jun 15 09:25:51 2012.
 */
 
 
@@ -8311,6 +8311,68 @@ static int tolua_Cocos2d_CCDirector_isRetinaDisplay00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'isRetinaDisplay'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: pause of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_pause00
+static int tolua_Cocos2d_CCDirector_pause00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pause'", NULL);
+#endif
+  {
+   self->pause();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'pause'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: resume of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_resume00
+static int tolua_Cocos2d_CCDirector_resume00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resume'", NULL);
+#endif
+  {
+   self->resume();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'resume'.",&tolua_err);
  return 0;
 #endif
 }
@@ -25693,9 +25755,9 @@ static int tolua_Cocos2d_CCMenuItem_unselected00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: registerScriptHandler of class  CCMenuItem */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItem_registerScriptHandler00
-static int tolua_Cocos2d_CCMenuItem_registerScriptHandler00(lua_State* tolua_S)
+/* method: registerScriptTapHandler of class  CCMenuItem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItem_registerScriptTapHandler00
+static int tolua_Cocos2d_CCMenuItem_registerScriptTapHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -25711,24 +25773,24 @@ static int tolua_Cocos2d_CCMenuItem_registerScriptHandler00(lua_State* tolua_S)
   CCMenuItem* self = (CCMenuItem*)  tolua_tousertype(tolua_S,1,0);
   LUA_FUNCTION nHandler = (  toluafix_ref_function(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerScriptHandler'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerScriptTapHandler'", NULL);
 #endif
   {
-   self->registerScriptHandler(nHandler);
+   self->registerScriptTapHandler(nHandler);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'registerScriptTapHandler'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: unregisterScriptHandler of class  CCMenuItem */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItem_unregisterScriptHandler00
-static int tolua_Cocos2d_CCMenuItem_unregisterScriptHandler00(lua_State* tolua_S)
+/* method: unregisterScriptTapHandler of class  CCMenuItem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItem_unregisterScriptTapHandler00
+static int tolua_Cocos2d_CCMenuItem_unregisterScriptTapHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -25742,16 +25804,16 @@ static int tolua_Cocos2d_CCMenuItem_unregisterScriptHandler00(lua_State* tolua_S
  {
   CCMenuItem* self = (CCMenuItem*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unregisterScriptHandler'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unregisterScriptTapHandler'", NULL);
 #endif
   {
-   self->unregisterScriptHandler();
+   self->unregisterScriptTapHandler();
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'unregisterScriptHandler'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'unregisterScriptTapHandler'.",&tolua_err);
  return 0;
 #endif
 }
@@ -35549,6 +35611,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setDeviceOrientation",tolua_Cocos2d_CCDirector_setDeviceOrientation00);
    tolua_function(tolua_S,"getContentScaleFactor",tolua_Cocos2d_CCDirector_getContentScaleFactor00);
    tolua_function(tolua_S,"isRetinaDisplay",tolua_Cocos2d_CCDirector_isRetinaDisplay00);
+   tolua_function(tolua_S,"pause",tolua_Cocos2d_CCDirector_pause00);
+   tolua_function(tolua_S,"resume",tolua_Cocos2d_CCDirector_resume00);
    tolua_function(tolua_S,"sharedDirector",tolua_Cocos2d_CCDirector_sharedDirector00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTimer","CCTimer","CCObject",NULL);
@@ -36532,8 +36596,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"activate",tolua_Cocos2d_CCMenuItem_activate00);
    tolua_function(tolua_S,"selected",tolua_Cocos2d_CCMenuItem_selected00);
    tolua_function(tolua_S,"unselected",tolua_Cocos2d_CCMenuItem_unselected00);
-   tolua_function(tolua_S,"registerScriptHandler",tolua_Cocos2d_CCMenuItem_registerScriptHandler00);
-   tolua_function(tolua_S,"unregisterScriptHandler",tolua_Cocos2d_CCMenuItem_unregisterScriptHandler00);
+   tolua_function(tolua_S,"registerScriptTapHandler",tolua_Cocos2d_CCMenuItem_registerScriptTapHandler00);
+   tolua_function(tolua_S,"unregisterScriptTapHandler",tolua_Cocos2d_CCMenuItem_unregisterScriptTapHandler00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMenuItemLabel","CCMenuItemLabel","CCMenuItem",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItemLabel");
