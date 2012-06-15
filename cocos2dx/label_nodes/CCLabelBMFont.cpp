@@ -911,7 +911,7 @@ void CCLabelBMFont::createFontChars()
             fontChar->setTextureRect(rect, false, rect.size);
 
             // restore to default in case they were modified
-            fontChar->setIsVisible(true);
+            fontChar->setVisible(true);
             fontChar->setOpacity(255);
         }
 

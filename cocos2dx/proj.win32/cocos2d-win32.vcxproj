@@ -132,6 +132,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
   <ItemGroup>
     <ClCompile Include="..\actions\CCAction.cpp" />
     <ClCompile Include="..\actions\CCActionCamera.cpp" />
+    <ClCompile Include="..\actions\CCActionCatmullRom.cpp" />
     <ClCompile Include="..\actions\CCActionEase.cpp" />
     <ClCompile Include="..\actions\CCActionGrid.cpp" />
     <ClCompile Include="..\actions\CCActionGrid3D.cpp" />
@@ -152,7 +153,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
-    <ClCompile Include="..\cocoa\CCData.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCGeometry.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -163,8 +163,23 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\effects\CCGrabber.cpp" />
     <ClCompile Include="..\effects\CCGrid.cpp" />
-    <ClCompile Include="..\extensions\CCBReader\CCBCustomClass.cpp" />
-    <ClCompile Include="..\extensions\CCBReader\CCBReader_v2.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCBFileLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCBReader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCControlButtonLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCControlLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLabelBMFontLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLabelTTFLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLayerColorLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLayerGradientLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLayerLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCMenuItemImageLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCMenuItemLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCMenuLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCNodeLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCNodeLoaderLibrary.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCParticleSystemQuadLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCScale9SpriteLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCSpriteLoader.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControlColourPicker.cpp" />
@@ -241,6 +256,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\support\CCUserDefault.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
+    <ClCompile Include="..\support\data_support\ccCArray.cpp" />
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
@@ -264,6 +280,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h" />
     <ClInclude Include="..\actions\CCActionCamera.h" />
+    <ClInclude Include="..\actions\CCActionCatmullRom.h" />
     <ClInclude Include="..\actions\CCActionEase.h" />
     <ClInclude Include="..\actions\CCActionGrid.h" />
     <ClInclude Include="..\actions\CCActionGrid3D.h" />
@@ -284,7 +301,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
-    <ClInclude Include="..\cocoa\CCData.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
     <ClInclude Include="..\cocoa\CCGeometry.h" />
     <ClInclude Include="..\cocoa\CCInteger.h" />
@@ -295,8 +311,26 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\cocoa\CCZone.h" />
     <ClInclude Include="..\effects\CCGrabber.h" />
     <ClInclude Include="..\effects\CCGrid.h" />
-    <ClInclude Include="..\extensions\CCBReader\CCBCustomClass.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCBFileLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCBMemberVariableAssigner.h" />
     <ClInclude Include="..\extensions\CCBReader\CCBReader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCBSelectorResolver.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCControlButtonLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCControlLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLabelBMFontLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLabelTTFLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLayerColorLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLayerGradientLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLayerLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCMenuItemImageLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCMenuItemLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCMenuLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCNodeLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCNodeLoaderLibrary.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCNodeLoaderListener.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCParticleSystemQuadLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCScale9SpriteLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCSpriteLoader.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControlButton.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControlColourPicker.h" />

@@ -86,7 +86,7 @@ public:
         return m_nHandler;
     }
     
-    inline bool getIsMultiTouches(void) {
+    inline bool isMultiTouches(void) {
         return m_bIsMultiTouches;
     }
     

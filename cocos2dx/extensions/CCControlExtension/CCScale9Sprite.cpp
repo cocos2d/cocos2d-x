@@ -43,7 +43,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     }
     this->m_positionsAreDirty = true;
     
-    return this;
+    return true;
 }
 
 bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets)
@@ -589,7 +589,7 @@ void CCScale9Sprite::setOpacityModifyRGB(bool var)
             //    CCRGBAProtocol *pRGBAProtocol = (CCRGBAProtocol *)pNode;
             //    if (pRGBAProtocol)
             //    {
-            //        pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+            //        pRGBAProtocol->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
             //    }
             //}
         }

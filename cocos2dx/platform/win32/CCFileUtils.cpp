@@ -208,7 +208,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         fclose(fp);
     } while (0);
 
-    if (! pBuffer && getIsPopupNotify())
+    if (! pBuffer && isPopupNotify())
     {
         std::string title = "Notification";
         std::string msg = "Get data from file(";

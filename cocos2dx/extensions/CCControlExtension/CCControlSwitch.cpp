@@ -364,7 +364,7 @@ void CCControlSwitch::setOn(bool isOn, bool animated)
     sendActionsForControlEvents(CCControlEventValueChanged);
 }
 
-void CCControlSwitch::setIsEnabled(bool enabled)
+void CCControlSwitch::setEnabled(bool enabled)
 {
     m_bEnabled = enabled;
 
@@ -383,7 +383,7 @@ CCPoint CCControlSwitch::locationFromTouch(CCTouch* pTouch)
 bool CCControlSwitch::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (!this->isTouchInside(pTouch)
-        || !this->getIsEnabled())
+        || !this->isEnabled())
     {
         return false;
     }

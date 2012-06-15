@@ -190,21 +190,21 @@ void CCControlButton::setMargins(int marginH, int marginV)
     needsLayout();
 }
 
-void CCControlButton::setIsEnabled(bool enabled)
+void CCControlButton::setEnabled(bool enabled)
 {
-    CCControl::setIsEnabled(enabled);
+    CCControl::setEnabled(enabled);
     needsLayout();
 }
 
-void CCControlButton::setIsSelected(bool enabled)
+void CCControlButton::setSelected(bool enabled)
 {
-    CCControl::setIsSelected(enabled);
+    CCControl::setSelected(enabled);
     needsLayout();
 }
 
-void CCControlButton::setIsHighlighted(bool enabled)
+void CCControlButton::setHighlighted(bool enabled)
 {
-    CCControl::setIsHighlighted(enabled);
+    CCControl::setHighlighted(enabled);
 
     CCAction *action =getActionByTag(kZoomActionTag);
     if (action)
@@ -214,7 +214,7 @@ void CCControlButton::setIsHighlighted(bool enabled)
     needsLayout();
     if( m_zoomOnTouchDown )
     {
-        float scaleValue = (getIsHighlighted() && getIsEnabled() && !getIsSelected()) ? 1.1f : 1.0f;
+        float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? 1.1f : 1.0f;
         CCAction *zoomAction =CCScaleTo::create(0.05f, scaleValue);
         zoomAction->setTag(kZoomActionTag);
         runAction(zoomAction);
@@ -553,14 +553,14 @@ void CCControlButton::needsLayout()
 
 bool CCControlButton::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!isTouchInside(pTouch) || !getIsEnabled())
+    if (!isTouchInside(pTouch) || !isEnabled())
     {
         return false;
     }
     
     m_nState=CCControlStateHighlighted;
     pushed=true;
-    this->setIsHighlighted(true);
+    this->setHighlighted(true);
     sendActionsForControlEvents(CCControlEventTouchDown);
     return true;
 }
@@ -571,7 +571,7 @@ void CCControlButton::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     {
         if (m_bHighlighted)
         {
-            setIsHighlighted(false);
+            setHighlighted(false);
         }
         return;
     }
@@ -580,7 +580,7 @@ void CCControlButton::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     if (isTouchMoveInside && !m_bHighlighted)
     {
         m_nState = CCControlStateHighlighted;
-        setIsHighlighted(true);
+        setHighlighted(true);
         sendActionsForControlEvents(CCControlEventTouchDragEnter);
     }
     else if (isTouchMoveInside && m_bHighlighted)
@@ -590,7 +590,7 @@ void CCControlButton::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     else if (!isTouchMoveInside && m_bHighlighted)
     {
         m_nState = CCControlStateNormal;
-            setIsHighlighted(false);
+        setHighlighted(false);
         
         sendActionsForControlEvents(CCControlEventTouchDragExit);        
     }
@@ -603,7 +603,7 @@ void CCControlButton::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
     m_nState = CCControlStateNormal;
     pushed = false;
-    setIsHighlighted(false);
+    setHighlighted(false);
     
     
     if (isTouchInside(pTouch))
@@ -647,7 +647,7 @@ void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     m_nState = CCControlStateNormal;
     pushed = false;
-    setIsHighlighted(false);
+    setHighlighted(false);
     sendActionsForControlEvents(CCControlEventTouchCancel);
 }
 

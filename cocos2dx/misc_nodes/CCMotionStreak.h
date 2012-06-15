@@ -84,9 +84,17 @@ public:
     virtual bool isOpacityModifyRGB(void);
 
     /** When fast mode is enbled, new points are added faster but with lower precision */
-    CC_SYNTHESIZE(bool, m_bFastMode, IsFastMode);
+    inline bool isFastMode() { return m_bFastMode; }
+    inline void setFastMode(bool bFastMode) { m_bFastMode = bFastMode; }
 
-    CC_SYNTHESIZE(bool, m_bStartingPositionInitialized, StartingPositionInitialized);
+    inline bool isStartingPositionInitialized() { return m_bStartingPositionInitialized; }
+    inline void setStartingPositionInitialized(bool bStartingPositionInitialized) 
+    { 
+        m_bStartingPositionInitialized = bStartingPositionInitialized; 
+    }
+protected:
+    bool m_bFastMode;
+    bool m_bStartingPositionInitialized;
 private:
     /** texture used for the motion streak */
     CCTexture2D* m_pTexture;

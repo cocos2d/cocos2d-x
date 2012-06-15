@@ -5,11 +5,9 @@ class CCMenuItem : public CCNode
     void activate();
     void selected();
     void unselected();
-    void setIsEnabled(bool enabled);
-    bool getIsEnabled();
-    bool getIsSelected();
-
-    tolua_property__CCIsEnabled bool isEnabled;
+    void setEnabled(bool enabled);
+    bool isEnabled();
+    bool isSelected();
 
     void registerScriptHandler(LUA_FUNCTION funcID);
     void unregisterScriptHandler(void);

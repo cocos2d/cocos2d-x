@@ -119,7 +119,7 @@ void CCMenuItem::activate()
     }
 }
 
-void CCMenuItem::setIsEnabled(bool enabled)
+void CCMenuItem::setEnabled(bool enabled)
 {
     m_bIsEnabled = enabled;
 }
@@ -271,7 +271,7 @@ void CCMenuItemLabel::unselected()
     }
 }
 
-void CCMenuItemLabel::setIsEnabled(bool enabled)
+void CCMenuItemLabel::setEnabled(bool enabled)
 {
     if( m_bIsEnabled != enabled ) 
     {
@@ -285,7 +285,7 @@ void CCMenuItemLabel::setIsEnabled(bool enabled)
             dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(m_tColorBackup);
         }
     }
-    CCMenuItem::setIsEnabled(enabled);
+    CCMenuItem::setEnabled(enabled);
 }
 
 void CCMenuItemLabel::setOpacity(GLubyte opacity)
@@ -658,11 +658,11 @@ void CCMenuItemSprite::unselected()
     }
 }
 
-void CCMenuItemSprite::setIsEnabled(bool bEnabled)
+void CCMenuItemSprite::setEnabled(bool bEnabled)
 {
     if( m_bIsEnabled != bEnabled ) 
     {
-        CCMenuItem::setIsEnabled(bEnabled);
+        CCMenuItem::setEnabled(bEnabled);
         this->updateImagesVisibility();
     }
 }
@@ -937,11 +937,11 @@ void CCMenuItemToggle::activate()
     }
     CCMenuItem::activate();
 }
-void CCMenuItemToggle::setIsEnabled(bool enabled)
+void CCMenuItemToggle::setEnabled(bool enabled)
 {
     if (m_bIsEnabled != enabled)
     {
-        CCMenuItem::setIsEnabled(enabled);
+        CCMenuItem::setEnabled(enabled);
 
         if(m_pSubItems && m_pSubItems->count() > 0)
         {
@@ -949,7 +949,7 @@ void CCMenuItemToggle::setIsEnabled(bool enabled)
             CCARRAY_FOREACH(m_pSubItems, pObj)
             {
                 CCMenuItem* pItem = (CCMenuItem*)pObj;
-                pItem->setIsEnabled(enabled);
+                pItem->setEnabled(enabled);
             }
         }
     }

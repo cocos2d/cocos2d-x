@@ -53,7 +53,8 @@ class CCTexture2D : public CCObject
     GLfloat getMaxT();
     void setMaxT(GLfloat val);
 
-    bool getHasPremultipliedAlpha();
+    bool hasPremultipliedAlpha();
+    bool hasMipmaps();
 
     void drawAtPoint(CCPoint point);
     void drawInRect(CCRect rect);

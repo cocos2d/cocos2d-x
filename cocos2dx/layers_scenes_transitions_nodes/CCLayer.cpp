@@ -100,7 +100,7 @@ void CCLayer::registerWithTouchDispatcher()
     CCDirector* pDirector = CCDirector::sharedDirector();
     if (m_pScriptHandlerEntry)
     {
-        if (m_pScriptHandlerEntry->getIsMultiTouches())
+        if (m_pScriptHandlerEntry->isMultiTouches())
         {
             pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
             LUALOG("[LUA] Add multi-touches event handler: %d", m_pScriptHandlerEntry->getHandler());
@@ -722,12 +722,12 @@ const CCPoint& CCLayerGradient::getVector()
     return m_AlongVector;
 }
 
-bool CCLayerGradient::getIsCompressedInterpolation()
+bool CCLayerGradient::isCompressedInterpolation()
 {
     return m_bCompressedInterpolation;
 }
 
-void CCLayerGradient::setIsCompressedInterpolation(bool compress)
+void CCLayerGradient::setCompressedInterpolation(bool compress)
 {
     m_bCompressedInterpolation = compress;
     updateColor();

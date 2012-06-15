@@ -347,7 +347,12 @@ public:
     By default it is false.
     @since v0.8
     */
-    CC_PROPERTY(bool, m_bIsAutoRemoveOnFinish, IsAutoRemoveOnFinish)
+protected:
+    bool m_bIsAutoRemoveOnFinish;
+public:
+    virtual bool isAutoRemoveOnFinish();
+    virtual void setAutoRemoveOnFinish(bool var);
+
     /** Switch between different kind of emitter modes:
     - kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
     - kCCParticleModeRadius: uses radius movement + rotation
