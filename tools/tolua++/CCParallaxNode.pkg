@@ -17,5 +17,5 @@ class CCParallaxNode : public CCNode
     struct _ccArray* getParallaxArray();
     void setParallaxArray(struct _ccArray * val);
 
-    static CCParallaxNode* node();
+    static CCParallaxNode* create();
 };

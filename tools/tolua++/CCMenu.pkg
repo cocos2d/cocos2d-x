@@ -1,7 +1,13 @@
 /*
+typedef enum  
+{
+    kCCMenuStateWaiting,
+    kCCMenuStateTrackingTouch
+} tCCMenuState;
+
 enum {
-    //* priority used by the menu
-    kCCMenuTouchPriority = -128,
+    //* priority used by the menu for the event handler
+    kCCMenuHandlerPriority = -128,
 };
 */
 class CCMenu : public CCLayer
@@ -20,6 +26,6 @@ class CCMenu : public CCLayer
     void setColor(ccColor3B color);
     ccColor3B getColor(void);
 
-    static CCMenu* node();
-    static CCMenu* menuWithItem(CCMenuItem* item);
+    static CCMenu* create();
+    static CCMenu* createWithItem(CCMenuItem* item);
 };
