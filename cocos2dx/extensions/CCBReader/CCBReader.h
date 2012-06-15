@@ -4,9 +4,23 @@
 #include "cocos2d.h"
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
-T * t = new T(); \
-t->autorelease(); \
-return t; \
+    T * ptr = new T(); \
+    if(ptr != NULL) { \
+        ptr->autorelease(); \
+        return ptr; \
+    } \
+    CC_SAFE_DELETE(ptr); \
+    return NULL; \
+}
+
+#define CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(T, METHOD) static T * METHOD() { \
+    T * ptr = new T(); \
+    if(ptr != NULL && ptr->init()) { \
+        ptr->autorelease(); \
+        return ptr; \
+    } \
+    CC_SAFE_DELETE(ptr); \
+    return NULL; \
 }
 
 #define kCCBVersion 2

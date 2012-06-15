@@ -48,6 +48,7 @@ tests/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
 tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp \
 tests/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
 tests/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
+tests/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 tests/FontTest/FontTest.cpp \
 tests/IntervalTest/IntervalTest.cpp \
 tests/KeypadTest/KeypadTest.cpp \

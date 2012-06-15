@@ -40,6 +40,7 @@
 		4AC0109A158A877200627D49 /* ButtonTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AC0108C158A877200627D49 /* ButtonTestLayer.cpp */; };
 		4AC0109C158A877200627D49 /* HelloCocosBuilderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AC01091158A877200627D49 /* HelloCocosBuilderLayer.cpp */; };
 		4AC0109E158A877200627D49 /* TestHeaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AC01096158A877200627D49 /* TestHeaderLayer.cpp */; };
+		4ACB5932158AB71200E0D552 /* MenuTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB592F158AB71200E0D552 /* MenuTestLayer.cpp */; };
 		781C38861547F9DD00633F88 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C37651547F9DC00633F88 /* CCAction.cpp */; };
 		781C38871547F9DD00633F88 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 781C37661547F9DC00633F88 /* CCAction.h */; };
 		781C38881547F9DD00633F88 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781C37671547F9DC00633F88 /* CCActionCamera.cpp */; };
@@ -716,6 +717,13 @@
 		4AC01096158A877200627D49 /* TestHeaderLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestHeaderLayer.cpp; sourceTree = "<group>"; };
 		4AC01097158A877200627D49 /* TestHeaderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHeaderLayer.h; sourceTree = "<group>"; };
 		4AC01099158A877200627D49 /* TestHeaderLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHeaderLayerLoader.h; sourceTree = "<group>"; };
+		4AC010A2158A906F00627D49 /* LabelTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTestLayer.h; sourceTree = "<group>"; };
+		4AC010A3158A906F00627D49 /* LabelTestLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTestLayerLoader.h; sourceTree = "<group>"; };
+		4ACB592C158AAE6A00E0D552 /* SpriteTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteTestLayer.h; sourceTree = "<group>"; };
+		4ACB592D158AAE6A00E0D552 /* SpriteTestLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteTestLayerLoader.h; sourceTree = "<group>"; };
+		4ACB592F158AB71200E0D552 /* MenuTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuTestLayer.cpp; sourceTree = "<group>"; };
+		4ACB5930158AB71200E0D552 /* MenuTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTestLayer.h; sourceTree = "<group>"; };
+		4ACB5931158AB71200E0D552 /* MenuTestLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTestLayerLoader.h; sourceTree = "<group>"; };
 		781C37651547F9DC00633F88 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		781C37661547F9DC00633F88 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		781C37671547F9DC00633F88 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -1539,11 +1547,14 @@
 		4AB28AD21589152800276E8B /* CocosBuilderTest */ = {
 			isa = PBXGroup;
 			children = (
-				4AC0108B158A877200627D49 /* ButtonTest */,
-				4AC01090158A877200627D49 /* HelloCocosBuilder */,
-				4AC01095158A877200627D49 /* TestHeader */,
 				4AB28AD61589152800276E8B /* CocosBuilderTest.h */,
 				4AB28AD51589152800276E8B /* CocosBuilderTest.cpp */,
+				4AC01090158A877200627D49 /* HelloCocosBuilder */,
+				4AC01095158A877200627D49 /* TestHeader */,
+				4AC0108B158A877200627D49 /* ButtonTest */,
+				4AC010A0158A906F00627D49 /* LabelTest */,
+				4ACB592B158AAE6A00E0D552 /* SpriteTest */,
+				4ACB592E158AB71100E0D552 /* MenuTest */,
 			);
 			path = CocosBuilderTest;
 			sourceTree = "<group>";
@@ -1620,6 +1631,34 @@
 				4AC01099158A877200627D49 /* TestHeaderLayerLoader.h */,
 			);
 			path = TestHeader;
+			sourceTree = "<group>";
+		};
+		4AC010A0158A906F00627D49 /* LabelTest */ = {
+			isa = PBXGroup;
+			children = (
+				4AC010A2158A906F00627D49 /* LabelTestLayer.h */,
+				4AC010A3158A906F00627D49 /* LabelTestLayerLoader.h */,
+			);
+			path = LabelTest;
+			sourceTree = "<group>";
+		};
+		4ACB592B158AAE6A00E0D552 /* SpriteTest */ = {
+			isa = PBXGroup;
+			children = (
+				4ACB592C158AAE6A00E0D552 /* SpriteTestLayer.h */,
+				4ACB592D158AAE6A00E0D552 /* SpriteTestLayerLoader.h */,
+			);
+			path = SpriteTest;
+			sourceTree = "<group>";
+		};
+		4ACB592E158AB71100E0D552 /* MenuTest */ = {
+			isa = PBXGroup;
+			children = (
+				4ACB592F158AB71200E0D552 /* MenuTestLayer.cpp */,
+				4ACB5930158AB71200E0D552 /* MenuTestLayer.h */,
+				4ACB5931158AB71200E0D552 /* MenuTestLayerLoader.h */,
+			);
+			path = MenuTest;
 			sourceTree = "<group>";
 		};
 		781C37641547F9DC00633F88 /* actions */ = {
@@ -3729,6 +3768,7 @@
 				4AC0109A158A877200627D49 /* ButtonTestLayer.cpp in Sources */,
 				4AC0109C158A877200627D49 /* HelloCocosBuilderLayer.cpp in Sources */,
 				4AC0109E158A877200627D49 /* TestHeaderLayer.cpp in Sources */,
+				4ACB5932158AB71200E0D552 /* MenuTestLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
