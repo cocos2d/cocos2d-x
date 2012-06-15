@@ -353,13 +353,12 @@ void ActionScale::onEnter()
 
     centerSprites(3);
 
-    CCActionInterval*  actionTo = CCScaleTo::create( 2.0f, 0.5f);
-    CCActionInterval*  actionBy = CCScaleBy::create(2.0f , 1.0f, 10.0f);
+    CCActionInterval*  actionTo = CCScaleTo::create(2.0f, 0.5f);
+    CCActionInterval*  actionBy = CCScaleBy::create(2.0f, 1.0f, 10.0f);
     CCActionInterval*  actionBy2 = CCScaleBy::create(2.0f, 5.0f, 1.0f);
-    CCActionInterval*  actionByBack = actionBy->reverse();
 
     m_grossini->runAction( actionTo);
-    m_tamara->runAction( CCSequence::create(actionBy, actionByBack->reverse(), NULL));
+    m_tamara->runAction( CCSequence::create(actionBy, actionBy->reverse(), NULL));
     m_kathia->runAction( CCSequence::create(actionBy2, actionBy2->reverse(), NULL));
 }
 
