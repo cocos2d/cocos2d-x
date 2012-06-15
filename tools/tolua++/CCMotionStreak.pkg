@@ -1,7 +1,7 @@
 class CCMotionStreak : public CCNode
 {
-    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
-    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
 
     void tintWithColor(ccColor3B colors);
     void reset();
