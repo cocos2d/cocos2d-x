@@ -133,7 +133,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         } while (0);        
     }
 
-    if (! pData && getIsPopupNotify())
+    if (! pData && isPopupNotify())
     {
         std::string title = "Notification";
         std::string msg = "Get data from file(";
