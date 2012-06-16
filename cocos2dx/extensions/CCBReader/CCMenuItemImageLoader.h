@@ -10,12 +10,12 @@ class CCBReader;
 
 class CC_DLL CCMenuItemImageLoader : public CCMenuItemLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuItemImageLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuItemImageLoader, loader);
 
     protected:
         virtual CCMenuItemImage * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame *, CCBReader *);
+        virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame *, CCBReader *);
 };
 
 NS_CC_EXT_END

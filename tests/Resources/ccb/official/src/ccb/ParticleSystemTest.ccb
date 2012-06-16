@@ -526,7 +526,7 @@
 						<key>type</key>
 						<string>Texture</string>
 						<key>value</key>
-						<string>particle-fire.png</string>
+						<string>res/particle-fire.png</string>
 					</dict>
 				</array>
 			</dict>
@@ -824,7 +824,7 @@
 						<key>type</key>
 						<string>Texture</string>
 						<key>value</key>
-						<string>particle-snow.png</string>
+						<string>res/particle-snow.png</string>
 					</dict>
 				</array>
 			</dict>
@@ -1267,7 +1267,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestHeader.ccb</string>
+						<string>ccb/TestHeader.ccb</string>
 					</dict>
 				</array>
 			</dict>

@@ -284,7 +284,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestScrollViewsContentA.ccb</string>
+						<string>ccb/ScrollViewTestContent.ccb</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -406,7 +406,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestScrollViewsContentA.ccb</string>
+						<string>ccb/ScrollViewTestContent.ccb</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -533,13 +533,13 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestHeader.ccb</string>
+						<string>ccb/TestHeader.ccb</string>
 					</dict>
 				</array>
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>TestScrollViews</string>
+		<string>ScrollViewTestLayer</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>

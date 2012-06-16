@@ -10,15 +10,15 @@ class CCBReader;
 
 class CC_DLL CCLayerGradientLoader : public CCLayerLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerGradientLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerGradientLoader, loader);
 
     protected:
         virtual CCLayerGradient * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor3B, CCBReader *);
-        virtual void onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, const char * pPropertyName, unsigned char, CCBReader *);
-        virtual void onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCPoint, CCBReader *);
-        virtual void onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc, CCBReader *);
+        virtual void onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccColor3B, CCBReader *);
+        virtual void onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, unsigned char, CCBReader *);
+        virtual void onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCPoint, CCBReader *);
+        virtual void onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccBlendFunc, CCBReader *);
 };
 
 NS_CC_EXT_END
