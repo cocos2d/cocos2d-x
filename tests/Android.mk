@@ -45,12 +45,10 @@ tests/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourP
 tests/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
 tests/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
 tests/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
-tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilderLayer.cpp \
-tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilderLayerLoader.cpp \
-tests/ExtensionsTest/CocosBuilderTest/TestHeaderLayer.cpp \
-tests/ExtensionsTest/CocosBuilderTest/TestHeaderLayerLoader.cpp \
-tests/ExtensionsTest/CocosBuilderTest/ButtonTestLayer.cpp \
-tests/ExtensionsTest/CocosBuilderTest/ButtonTestLayerLoader.cpp \
+tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp \
+tests/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
+tests/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
+tests/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 tests/FontTest/FontTest.cpp \
 tests/IntervalTest/IntervalTest.cpp \
 tests/KeypadTest/KeypadTest.cpp \

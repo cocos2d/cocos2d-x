@@ -326,7 +326,7 @@
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>pressedA:</string>
+									<string>onMenuItemAClicked</string>
 									<integer>1</integer>
 								</array>
 							</dict>
@@ -473,7 +473,7 @@
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>pressedB:</string>
+									<string>onMenuItemBClicked</string>
 									<integer>1</integer>
 								</array>
 							</dict>
@@ -620,7 +620,7 @@
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>pressedC:</string>
+									<string>onMenuItemCClicked</string>
 									<integer>1</integer>
 								</array>
 							</dict>
@@ -1235,7 +1235,7 @@
 				<key>customClass</key>
 				<string></string>
 				<key>memberVarAssignmentName</key>
-				<string>mStatusText</string>
+				<string>mMenuItemStatusLabelBMFont</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>

@@ -9,10 +9,10 @@ class CCBReader;
 
 class HelloCocosBuilderLayerLoader : public cocos2d::extension::CCLayerLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(HelloCocosBuilderLayerLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(HelloCocosBuilderLayerLoader, loader);
 
     protected:
-        virtual HelloCocosBuilderLayer * createCCNode(cocos2d::CCNode *, cocos2d::extension::CCBReader *);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(HelloCocosBuilderLayer);
 };
 
 #endif

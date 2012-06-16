@@ -35,25 +35,6 @@ CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariab
 #endif
 }
 
-CCBReader::~CCBReader() {
-    if(this->mBytes != NULL) {
-        delete this->mBytes;
-        this->mBytes = NULL;
-    }
-
-    this->mCCNodeLoaderLibrary->release();
-
-    /* Clear string cache. */
-    this->mStringCache.clear();
-
-    if(this->mRootCCBReader) {
-        /* Clear loaded spritesheets. */
-        this->mLoadedSpriteSheets.clear();
-    }
-
-    CC_SAFE_RELEASE(this->mRootNode);
-}
-
 CCBReader::CCBReader(CCBReader * pCCBReader) {
     this->mRootNode = NULL;
     this->mRootCCBReader = false;
@@ -69,7 +50,25 @@ CCBReader::CCBReader(CCBReader * pCCBReader) {
     this->mCCNodeLoaderListener = pCCBReader->mCCNodeLoaderListener;
 }
 
-std::string CCBReader::getCCBRootPath() {
+CCBReader::~CCBReader() {
+    CC_SAFE_DELETE(this->mBytes);
+
+    this->mCCNodeLoaderLibrary->release();
+
+    /* Clear string cache. */
+    std::vector<CCString *>::iterator stringCacheIterator;
+    for (stringCacheIterator = this->mStringCache.begin(); stringCacheIterator != this->mStringCache.end(); stringCacheIterator++) {
+        (*stringCacheIterator)->release();
+    }
+    this->mStringCache.clear();
+    
+    if(this->mRootCCBReader) {
+        /* Clear loaded spritesheets. */
+        this->mLoadedSpriteSheets.clear();
+    }
+}
+
+CCString * CCBReader::getCCBRootPath() {
     return this->mCCBRootPath;
 }
 
@@ -89,16 +88,21 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char 
     return this->readNodeGraphFromFile(pCCBRootPath, pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
 }
 
+CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pCCBFileName, CCObject * pOwner) {
+    return this->readNodeGraphFromFile(pCCBRootPath, pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
+}
+
 CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
+    return this->readNodeGraphFromFile(CCString::stringWithCString(pCCBRootPath), CCString::stringWithCString(pCCBFileName), pOwner, pRootContainerSize);
+}
+
+CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
     this->mCCBRootPath = pCCBRootPath;
+    this->mCCBRootPath->retain();
 
-    char* ccbFullFilePath = (char*)malloc(strlen(pCCBRootPath) + strlen(pCCBFileName) + 1);
-    ccbFullFilePath[strlen(pCCBRootPath) + strlen(pCCBFileName)] = '\0';
+    CCString * ccbFullFilePath = CCBReader::concat(pCCBRootPath, pCCBFileName);
 
-    strcpy(ccbFullFilePath, pCCBRootPath);
-    strcat(ccbFullFilePath, pCCBFileName);
-
-    const char * path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFullFilePath);
+    const char * path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFullFilePath->getCString());
 
     CC_SAFE_FREE(ccbFullFilePath);
 
@@ -107,18 +111,21 @@ CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char 
 
     this->mCurrentByte = 0;
     this->mCurrentBit = 0;
+
     this->mOwner = pOwner;
+    this->mOwner->retain();
     this->mRootContainerSize = pRootContainerSize;
 
-    if(!this->readHeader()) {
-        return NULL;
+    CCNode * node = NULL;
+    if(this->readHeader() && this->readStringCache()) {
+        node = this->readNodeGraph();
     }
 
-    if(!this->readStringCache()) {
-        return NULL;
-    }
+    CC_SAFE_RELEASE(this->mOwner);
+    CC_SAFE_RELEASE(this->mCCBRootPath);
+    CC_SAFE_RELEASE(this->mRootNode);
 
-    return this->readNodeGraph();
+    return node;
 }
 
 bool CCBReader::readHeader() {
@@ -162,7 +169,8 @@ void CCBReader::readStringCacheEntry() {
     int numBytes = b0 << 8 | b1;
 
     const char * src = (const char *) (this->mBytes + this->mCurrentByte);
-    std::string string(src, numBytes);
+    CCString * string = CCString::stringWithCStringData(src, (unsigned long)numBytes);
+    string->retain();
 
     this->mCurrentByte += numBytes;
 
@@ -264,19 +272,19 @@ void CCBReader::alignBits() {
     }
 }
 
-std::string CCBReader::readCachedString() {
+CCString * CCBReader::readCachedString() {
     int i = this->readInt(false);
     return this->mStringCache[i];
 }
 
 CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     /* Read class name. */
-    const char * className = this->readCachedString().c_str();
+    CCString * className = this->readCachedString();
 
     int memberVarAssignmentType = this->readInt(false);
-    const char * memberVarAssignmentName;
+    CCString * memberVarAssignmentName;
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
-        memberVarAssignmentName = this->readCachedString().c_str();
+        memberVarAssignmentName = this->readCachedString();
     }
 
     CCNodeLoader * ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className);
@@ -348,49 +356,54 @@ CCSize CCBReader::getContainerSize(CCNode * pNode) {
     }
 }
 
-bool CCBReader::isSpriteSheetLoaded(const char * pSpriteSheet) {
-    return this->mLoadedSpriteSheets.find(pSpriteSheet) != this->mLoadedSpriteSheets.end();
+bool CCBReader::isSpriteSheetLoaded(CCString * pSpriteSheet) {
+    return this->mLoadedSpriteSheets.find(pSpriteSheet->m_sString) != this->mLoadedSpriteSheets.end();
 }
 
-void CCBReader::addLoadedSpriteSheet(const char * pSpriteSheet) {
-    this->mLoadedSpriteSheets.insert(pSpriteSheet);
+void CCBReader::addLoadedSpriteSheet(CCString * pSpriteSheet) {
+    pSpriteSheet->retain();
+    this->mLoadedSpriteSheets.insert(pSpriteSheet->m_sString);
 }
 
-std::string CCBReader::lastPathComponent(const char * pPath) {
-    std::string path(pPath);
+CCString * CCBReader::lastPathComponent(CCString * pPath) {
+    std::string path(pPath->getCString());
     int slashPos = path.find_last_of("/");
     if(slashPos != std::string::npos) {
-        return path.substr(slashPos + 1, path.length() - slashPos);
+        return CCString::stringWithCString(path.substr(slashPos + 1, path.length() - slashPos).c_str());
     }
-    return path;
+    return CCString::stringWithCString(path.c_str());
 }
 
-std::string CCBReader::deletePathExtension(const char * pPath) {
-    std::string path(pPath);
+CCString * CCBReader::deletePathExtension(CCString * pPath) {
+    std::string path(pPath->getCString());
     int dotPos = path.find_last_of(".");
     if(dotPos != std::string::npos) {
-        return path.substr(0, dotPos);
+        return CCString::stringWithCString(path.substr(0, dotPos).c_str());
     }
-    return path;
+    return CCString::stringWithCString(path.c_str());
 }
 
-std::string CCBReader::toLowerCase(const char * pString) {
-    std::string copy(pString);
+CCString * CCBReader::toLowerCase(CCString * pString) {
+    std::string copy(pString->getCString());
     std::transform(copy.begin(), copy.end(), copy.begin(), ::tolower);
-    return copy;
+    return CCString::stringWithCString(copy.c_str());
 }
 
-std::string CCBReader::concat(const char * pStringA, const char * pStringB) {
-    std::string stringA(pStringA);
-    std::string stringB(pStringB);
+CCString * CCBReader::concat(CCString * pStringA, CCString * pStringB) {
+    int concatenatedLength = pStringA->length() + pStringB->length() + 1;
+    char concatenated[concatenatedLength];
 
-    std::string string = stringA + stringB;
-    return string;
+    strcpy(concatenated, pStringA->getCString());
+    strcat(concatenated, pStringB->getCString());
+
+    concatenated[concatenatedLength] = '\0';
+
+    return CCString::stringWithCString(concatenated);
 }
 
-bool CCBReader::endsWith(const char * pString, const char * pEnding) {
-    std::string string(pString);
-    std::string ending(pEnding);
+bool CCBReader::endsWith(CCString * pString, CCString * pEnding) {
+    std::string string(pString->getCString());
+    std::string ending(pEnding->getCString());
     if(string.length() >= ending.length()) {
         return (string.compare(string.length() - ending.length(), ending.length(), ending) == 0);
     } else {
