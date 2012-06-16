@@ -9,10 +9,10 @@ class CCBReader;
 
 class TestHeaderLayerLoader : public cocos2d::extension::CCLayerLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(TestHeaderLayerLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(TestHeaderLayerLoader, loader);
 
     protected:
-        virtual TestHeaderLayer * createCCNode(cocos2d::CCNode *, cocos2d::extension::CCBReader *);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(TestHeaderLayer);
 };
 
 #endif

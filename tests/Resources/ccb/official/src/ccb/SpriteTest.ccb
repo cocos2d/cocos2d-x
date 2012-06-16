@@ -327,7 +327,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>logo-icon.png</string>
+									<string>res/logo-icon.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -475,7 +475,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>logo-icon.png</string>
+									<string>res/logo-icon.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -623,7 +623,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>logo-icon.png</string>
+									<string>res/logo-icon.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -665,7 +665,7 @@
 								<key>value</key>
 								<array>
 									<integer>1</integer>
-									<integer>1</integer>
+									<integer>771</integer>
 								</array>
 							</dict>
 						</array>
@@ -793,7 +793,7 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>150</real>
+							<real>120</real>
 							<real>120</real>
 							<integer>0</integer>
 						</array>
@@ -862,7 +862,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>scale-9-demo.png</string>
+							<string>res/scale-9-demo.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -872,7 +872,7 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>150</real>
+							<real>120</real>
 							<real>120</real>
 							<integer>0</integer>
 						</array>
@@ -903,7 +903,7 @@
 						<key>type</key>
 						<string>Float</string>
 						<key>value</key>
-						<real>15</real>
+						<real>0.0</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -911,7 +911,7 @@
 						<key>type</key>
 						<string>Float</string>
 						<key>value</key>
-						<real>32</real>
+						<real>0.0</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -919,7 +919,7 @@
 						<key>type</key>
 						<string>Float</string>
 						<key>value</key>
-						<real>15</real>
+						<real>0.0</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -927,7 +927,7 @@
 						<key>type</key>
 						<string>Float</string>
 						<key>value</key>
-						<real>15</real>
+						<real>0.0</real>
 					</dict>
 				</array>
 			</dict>
@@ -1036,7 +1036,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>grossini-generic.plist</string>
+									<string>res/grossini-generic.plist</string>
 									<string>grossini_dance_generic_05.png</string>
 								</array>
 							</dict>
@@ -1184,7 +1184,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>grossini-generic.plist</string>
+									<string>res/grossini-generic.plist</string>
 									<string>grossini_dance_generic_06.png</string>
 								</array>
 							</dict>
@@ -1332,7 +1332,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>grossini-generic.plist</string>
+									<string>res/grossini-generic.plist</string>
 									<string>grossini_dance_generic_13.png</string>
 								</array>
 							</dict>
@@ -2080,13 +2080,13 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestHeader.ccb</string>
+						<string>ccb/TestHeader.ccb</string>
 					</dict>
 				</array>
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string></string>
+		<string>SpriteTestLayer</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>

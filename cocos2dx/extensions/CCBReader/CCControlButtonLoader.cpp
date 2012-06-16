@@ -26,82 +26,76 @@ CCControl * CCControlButtonLoader::createCCNode(CCNode * pParent, CCBReader * pC
     return CCControlButton::node();
 }
 
-void CCControlButtonLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
-    if(strcmp(pPropertyName, PROPERTY_ZOOMONTOUCHDOWN) == 0) {
+void CCControlButtonLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_ZOOMONTOUCHDOWN) == 0) {
         ((CCControlButton *)pNode)->setZoomOnTouchDown(pCheck);
     } else {
         CCControlLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
     }
 }
 
-void CCControlButtonLoader::onHandlePropTypeString(CCNode * pNode, CCNode * pParent, const char * pPropertyName, const char * pString, CCBReader * pCCBReader) {
-    if(strcmp(pPropertyName, PROPERTY_TITLE_NORMAL) == 0) {
-        CCString * ccString = new CCString(pString);
-        ccString->autorelease();
-        ((CCControlButton *)pNode)->setTitleForState(ccString, CCControlStateNormal);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLE_HIGHLIGHTED) == 0) {
-        CCString * ccString = new CCString(pString);
-        ccString->autorelease();
-        ((CCControlButton *)pNode)->setTitleForState(ccString, CCControlStateHighlighted);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLE_DISABLED) == 0) {
-        CCString * ccString = new CCString(pString);
-        ccString->autorelease();
-        ((CCControlButton *)pNode)->setTitleForState(ccString, CCControlStateDisabled);
+void CCControlButtonLoader::onHandlePropTypeString(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCString * pString, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_TITLE_NORMAL) == 0) {
+        ((CCControlButton *)pNode)->setTitleForState(pString, CCControlStateNormal);
+    } else if(pPropertyName->compare(PROPERTY_TITLE_HIGHLIGHTED) == 0) {
+        ((CCControlButton *)pNode)->setTitleForState(pString, CCControlStateHighlighted);
+    } else if(pPropertyName->compare(PROPERTY_TITLE_DISABLED) == 0) {
+        ((CCControlButton *)pNode)->setTitleForState(pString, CCControlStateDisabled);
     } else {
         CCControlLoader::onHandlePropTypeString(pNode, pParent, pPropertyName, pString, pCCBReader);
     }
 }
 
-void CCControlButtonLoader::onHandlePropTypeFontTTF(CCNode * pNode, CCNode * pParent, const char * pPropertyName, const char * pFontTTF, CCBReader * pCCBReader) {
-    if(strcmp(pPropertyName, PROPERTY_TITLETTF_NORMAL) == 0) {
-        ((CCControlButton *)pNode)->setTitleTTFForState(pFontTTF, CCControlStateNormal);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLETTF_HIGHLIGHTED) == 0) {
-        ((CCControlButton *)pNode)->setTitleTTFForState(pFontTTF, CCControlStateHighlighted);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLETTF_DISABLED) == 0) {
-        ((CCControlButton *)pNode)->setTitleTTFForState(pFontTTF, CCControlStateDisabled);
+void CCControlButtonLoader::onHandlePropTypeFontTTF(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCString * pFontTTF, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_TITLETTF_NORMAL) == 0) {
+        ((CCControlButton *)pNode)->setTitleTTFForState(pFontTTF->getCString(), CCControlStateNormal);
+    } else if(pPropertyName->compare(PROPERTY_TITLETTF_HIGHLIGHTED) == 0) {
+        ((CCControlButton *)pNode)->setTitleTTFForState(pFontTTF->getCString(), CCControlStateHighlighted);
+    } else if(pPropertyName->compare(PROPERTY_TITLETTF_DISABLED) == 0) {
+        ((CCControlButton *)pNode)->setTitleTTFForState(pFontTTF->getCString(), CCControlStateDisabled);
     } else {
         CCControlLoader::onHandlePropTypeFontTTF(pNode, pParent, pPropertyName, pFontTTF, pCCBReader);
     }
 }
 
-void CCControlButtonLoader::onHandlePropTypeFloatScale(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float pFloatScale, CCBReader * pCCBReader) {
-    if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_NORMAL) == 0) {
+void CCControlButtonLoader::onHandlePropTypeFloatScale(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, float pFloatScale, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_TITLETTFSIZE_NORMAL) == 0) {
         ((CCControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, CCControlStateNormal);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_HIGHLIGHTED) == 0) {
+    } else if(pPropertyName->compare(PROPERTY_TITLETTFSIZE_HIGHLIGHTED) == 0) {
         ((CCControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, CCControlStateHighlighted);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_DISABLED) == 0) {
+    } else if(pPropertyName->compare(PROPERTY_TITLETTFSIZE_DISABLED) == 0) {
         ((CCControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, CCControlStateDisabled);
     } else {
         CCControlLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pFloatScale, pCCBReader);
     }
 }
 
-void CCControlButtonLoader::onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCPoint pPoint, CCBReader * pCCBReader) {
-    if(strcmp(pPropertyName, PROPERTY_LABELANCHORPOINT) == 0) {
+void CCControlButtonLoader::onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCPoint pPoint, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_LABELANCHORPOINT) == 0) {
         ((CCControlButton *)pNode)->setLabelAnchorPoint(pPoint);
     } else {
         CCControlLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, pCCBReader);
     }
 }
 
-void CCControlButtonLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSize pSize, CCBReader * pCCBReader) {
-    if(strcmp(pPropertyName, PROPERTY_PREFEREDSIZE) == 0) {
+void CCControlButtonLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSize pSize, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_PREFEREDSIZE) == 0) {
         ((CCControlButton *)pNode)->setPreferredSize(pSize);
     } else {
         CCControlLoader::onHandlePropTypeSize(pNode, pParent, pPropertyName, pSize, pCCBReader);
     }
 }
 
-void CCControlButtonLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
-    if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_NORMAL) == 0) {
+void CCControlButtonLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_BACKGROUNDSPRITEFRAME_NORMAL) == 0) {
         if(pCCSpriteFrame != NULL) {
             ((CCControlButton *)pNode)->setBackgroundSpriteFrameForState(pCCSpriteFrame, CCControlStateNormal);
         }
-    } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_HIGHLIGHTED) == 0) {
+    } else if(pPropertyName->compare(PROPERTY_BACKGROUNDSPRITEFRAME_HIGHLIGHTED) == 0) {
         if(pCCSpriteFrame != NULL) {
             ((CCControlButton *)pNode)->setBackgroundSpriteFrameForState(pCCSpriteFrame, CCControlStateHighlighted);
         }
-    } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED) == 0) {
+    } else if(pPropertyName->compare(PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED) == 0) {
         if(pCCSpriteFrame != NULL) {
             ((CCControlButton *)pNode)->setBackgroundSpriteFrameForState(pCCSpriteFrame, CCControlStateDisabled);
         }
@@ -110,12 +104,12 @@ void CCControlButtonLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode *
     }
 }
 
-void CCControlButtonLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
-    if(strcmp(pPropertyName, PROPERTY_TITLECOLOR_NORMAL) == 0) {
+void CCControlButtonLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_TITLECOLOR_NORMAL) == 0) {
         ((CCControlButton *)pNode)->setTitleColorForState(pCCColor3B, CCControlStateNormal);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLECOLOR_HIGHLIGHTED) == 0) {
+    } else if(pPropertyName->compare(PROPERTY_TITLECOLOR_HIGHLIGHTED) == 0) {
         ((CCControlButton *)pNode)->setTitleColorForState(pCCColor3B, CCControlStateHighlighted);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLECOLOR_DISABLED) == 0) {
+    } else if(pPropertyName->compare(PROPERTY_TITLECOLOR_DISABLED) == 0) {
         ((CCControlButton *)pNode)->setTitleColorForState(pCCColor3B, CCControlStateDisabled);
     } else {
         CCControlLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pCCColor3B, pCCBReader);
