@@ -48,7 +48,7 @@ copy_src_and_jni(){
 }
 
 copy_library_src(){
-    cp -rf $COCOSJAVALIB_ROOT/src/* $APP_DIR/proj.android/src/
+    cp -rf $COCOSJAVALIB_ROOT/src_common/* $APP_DIR/proj.android/src/
 }
 
 # copy build_native.sh and replace something
