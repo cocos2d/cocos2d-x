@@ -18,9 +18,9 @@ class MenuTestLayer
         virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName);
         virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cocos2d::CCString * pMemberVariableName, cocos2d::CCNode * pNode);
 
-        virtual void onMenuItemAClicked(cocos2d::CCObject * pSender);
-        virtual void onMenuItemBClicked(cocos2d::CCObject * pSender);
-        virtual void onMenuItemCClicked(cocos2d::CCObject * pSender);
+        void onMenuItemAClicked(cocos2d::CCObject * pSender);
+        void onMenuItemBClicked(cocos2d::CCObject * pSender);
+        void onMenuItemCClicked(cocos2d::CCObject * pSender);
 
     private:
         cocos2d::CCLabelBMFont * mMenuItemStatusLabelBMFont;
