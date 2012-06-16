@@ -86,7 +86,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeScaleLock(pNode, pParent, propertyName, scaleLock, pCCBReader);
                 }
-                delete scaleLock;
+                delete[] scaleLock;
                 break;
             }
             case kCCBPropTypeFloat: {
@@ -129,7 +129,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeFloatVar(pNode, pParent, propertyName, floatVar, pCCBReader);
                 }
-                delete floatVar;
+                delete[] floatVar;
                 break;
             }
             case kCCBPropTypeCheck: {
@@ -179,7 +179,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeColor4FVar(pNode, pParent, propertyName, color4FVar, pCCBReader);
                 }
-                delete color4FVar;
+                delete[] color4FVar;
                 break;
             }
             case kCCBPropTypeFlip: {
@@ -187,7 +187,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeFlip(pNode, pParent, propertyName, flip, pCCBReader);
                 }
-                delete flip;
+                delete[] flip;
                 break;
             }
             case kCCBPropTypeBlendFunc: {
