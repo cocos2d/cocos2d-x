@@ -7,6 +7,7 @@ NS_CC_EXT_BEGIN
 
 class CC_DLL CCNodeLoaderListener {
     public:
+        virtual ~CCNodeLoaderListener() {}
         virtual void onNodeLoaded(CCNode * pNode, CCNodeLoader * pNodeLoader) = 0;
 };
 
