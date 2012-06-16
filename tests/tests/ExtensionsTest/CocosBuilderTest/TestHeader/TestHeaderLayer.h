@@ -5,7 +5,10 @@
 #include "extensions/CCBReader/CCNodeLoader.h"
 #include "extensions/CCBReader/CCBSelectorResolver.h"
 
-class TestHeaderLayer : public cocos2d::extension::CCBSelectorResolver, public cocos2d::CCLayer {
+class TestHeaderLayer
+    : public cocos2d::CCLayer
+    , public cocos2d::extension::CCBSelectorResolver
+{
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(TestHeaderLayer, node);
 

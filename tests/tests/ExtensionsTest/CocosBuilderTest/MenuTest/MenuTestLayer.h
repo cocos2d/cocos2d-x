@@ -6,7 +6,11 @@
 #include "extensions/CCBReader/CCBSelectorResolver.h"
 #include "extensions/CCBReader/CCBMemberVariableAssigner.h"
 
-class MenuTestLayer : public cocos2d::extension::CCBSelectorResolver, public cocos2d::extension::CCBMemberVariableAssigner, public cocos2d::CCLayer {
+class MenuTestLayer
+    : public cocos2d::CCLayer
+    , public cocos2d::extension::CCBSelectorResolver
+    , public cocos2d::extension::CCBMemberVariableAssigner 
+{
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(MenuTestLayer, node);
 

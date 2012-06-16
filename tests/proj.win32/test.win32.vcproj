@@ -894,22 +894,6 @@
 						Name="CocosBuilderTest"
 						>
 						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayer.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayer.h"
-							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayerLoader.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTestLayerLoader.h"
-							>
-						</File>
-						<File
 							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp"
 							>
 						</File>
@@ -917,38 +901,106 @@
 							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h"
 							>
 						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayer.cpp"
+						<Filter
+							Name="ButtonTest"
 							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayer.h"
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="HelloCocosBuilder"
 							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayerLoader.cpp"
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="LabelTest"
 							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilderLayerLoader.h"
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="MenuTest"
 							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayer.cpp"
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="ParticleSystemTest"
 							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayer.h"
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="SpriteTest"
 							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayerLoader.cpp"
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="TestHeader"
 							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeaderLayerLoader.h"
-							>
-						</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayerLoader.h"
+								>
+							</File>
+						</Filter>
 					</Filter>
 				</Filter>
 				<Filter

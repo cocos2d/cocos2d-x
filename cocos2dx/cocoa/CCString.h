@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __CCSTRING_H__
 
 #include <string>
+#include <functional>
 #include "CCObject.h"
 
 NS_CC_BEGIN
