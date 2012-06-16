@@ -14,6 +14,7 @@ NS_CC_EXT_BEGIN
 
 class CC_DLL CCBMemberVariableAssigner {
     public:
+        virtual ~CCBMemberVariableAssigner() {}
         virtual bool onAssignCCBMemberVariable(CCObject * pTarget, cocos2d::CCString * pMemberVariableName, CCNode * pNode) = 0;
 };
 
