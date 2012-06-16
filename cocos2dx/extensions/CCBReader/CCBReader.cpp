@@ -51,7 +51,7 @@ CCBReader::CCBReader(CCBReader * pCCBReader) {
 }
 
 CCBReader::~CCBReader() {
-    CC_SAFE_DELETE(this->mBytes);
+    CC_SAFE_DELETE_ARRAY(this->mBytes);
 
     this->mCCNodeLoaderLibrary->release();
 
@@ -103,8 +103,6 @@ CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pC
     CCString * ccbFullFilePath = CCBReader::concat(pCCBRootPath, pCCBFileName);
 
     const char * path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFullFilePath->getCString());
-
-    CC_SAFE_FREE(ccbFullFilePath);
 
     unsigned long size = 0;
     this->mBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &size);
@@ -390,15 +388,16 @@ CCString * CCBReader::toLowerCase(CCString * pString) {
 }
 
 CCString * CCBReader::concat(CCString * pStringA, CCString * pStringB) {
-    int concatenatedLength = pStringA->length() + pStringB->length() + 1;
-    char concatenated[concatenatedLength];
-
+    int concatenatedLength = pStringA->length() + pStringB->length();
+    char* concatenated = (char*) malloc(concatenatedLength+1);
+    CCString* pRet = NULL;
     strcpy(concatenated, pStringA->getCString());
     strcat(concatenated, pStringB->getCString());
 
     concatenated[concatenatedLength] = '\0';
-
-    return CCString::stringWithCString(concatenated);
+    pRet = CCString::stringWithCString(concatenated);
+    CC_SAFE_FREE(concatenated);
+    return pRet;
 }
 
 bool CCBReader::endsWith(CCString * pString, CCString * pEnding) {
