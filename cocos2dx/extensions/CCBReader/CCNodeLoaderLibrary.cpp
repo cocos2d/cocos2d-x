@@ -42,25 +42,35 @@ void CCNodeLoaderLibrary::registerDefaultCCNodeLoaders() {
 }
 
 void CCNodeLoaderLibrary::registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader) {
-    this->mCCNodeLoaders.insert(std::pair<const char *, CCNodeLoader *>(pClassName, pCCNodeLoader));
+    this->registerCCNodeLoader(CCString::stringWithCString(pClassName), pCCNodeLoader);
+}
+
+void CCNodeLoaderLibrary::registerCCNodeLoader(CCString * pClassName, CCNodeLoader * pCCNodeLoader) {
+    pClassName->retain();
     pCCNodeLoader->retain();
+    this->mCCNodeLoaders.insert(CCNodeLoaderMapEntry(pClassName, pCCNodeLoader));
 }
 
 void CCNodeLoaderLibrary::unregisterCCNodeLoader(const char * pClassName) {
-    std::map<std::string, CCNodeLoader *>::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
+    this->unregisterCCNodeLoader(CCString::stringWithCString(pClassName));
+}
+
+void CCNodeLoaderLibrary::unregisterCCNodeLoader(CCString * pClassName) {
+    CCNodeLoaderMap::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
     assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
+    ccNodeLoadersIterator->first->release();
     ccNodeLoadersIterator->second->release();
 }
 
-CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(const char * pClassName) {
-    std::map<std::string, CCNodeLoader *>::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
+CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(CCString * pClassName) {
+    CCNodeLoaderMap::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
     assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
     return ccNodeLoadersIterator->second;
 }
 
 void CCNodeLoaderLibrary::purge(bool pReleaseCCNodeLoaders) {
     if(pReleaseCCNodeLoaders) {
-        for(std::map<std::string, CCNodeLoader *>::iterator it = this->mCCNodeLoaders.begin(); it != this->mCCNodeLoaders.end(); it++) {
+        for(CCNodeLoaderMap::iterator it = this->mCCNodeLoaders.begin(); it != this->mCCNodeLoaders.end(); it++) {
             it->second->release();
         }
     }

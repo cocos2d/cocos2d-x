@@ -3,10 +3,24 @@
 
 #include "cocos2d.h"
 
-#define STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
-T * t = new T(); \
-t->autorelease(); \
-return t; \
+#define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
+    T * ptr = new T(); \
+    if(ptr != NULL) { \
+        ptr->autorelease(); \
+        return ptr; \
+    } \
+    CC_SAFE_DELETE(ptr); \
+    return NULL; \
+}
+
+#define CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(T, METHOD) static T * METHOD() { \
+    T * ptr = new T(); \
+    if(ptr != NULL && ptr->init()) { \
+        ptr->autorelease(); \
+        return ptr; \
+    } \
+    CC_SAFE_DELETE(ptr); \
+    return NULL; \
 }
 
 #define kCCBVersion 2
@@ -84,7 +98,7 @@ class CCBSelectorResolver;
  */
 class CC_DLL CCBReader : public CCObject {
     private:
-        std::string mCCBRootPath;
+        CCString * mCCBRootPath;
         bool mRootCCBReader;
 
         unsigned char * mBytes;
@@ -100,7 +114,7 @@ class CC_DLL CCBReader : public CCObject {
         CCBMemberVariableAssigner * mCCBMemberVariableAssigner;
         CCBSelectorResolver * mCCBSelectorResolver;
 
-        std::vector<std::string> mStringCache;
+        std::vector<CCString *> mStringCache;
         std::set<std::string> mLoadedSpriteSheets;
 
     public:
@@ -109,34 +123,37 @@ class CC_DLL CCBReader : public CCObject {
         CCBReader(CCBReader *);
         /* Destructor. */
         ~CCBReader();
-
+    
         CCNode * readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner = NULL);
+        CCNode * readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pCCBFileName, CCObject * pOwner = NULL);
         CCNode * readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize);
+        CCNode * readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize);
+
         CCBMemberVariableAssigner * getCCBMemberVariableAssigner();
         CCBSelectorResolver * getCCBSelectorResolver();
 
-        std::string getCCBRootPath();
+        CCString * getCCBRootPath();
         CCObject * getOwner();
         CCNode * getRootNode();
         CCSize getContainerSize(CCNode *);
         float getResolutionScale();
 
-        bool isSpriteSheetLoaded(const char *);
-        void addLoadedSpriteSheet(const char *);
+        bool isSpriteSheetLoaded(CCString *);
+        void addLoadedSpriteSheet(CCString *);
 
         /* Utility methods. */
-        std::string lastPathComponent(const char *);
-        std::string deletePathExtension(const char *);
-        std::string toLowerCase(const char *);
-        bool endsWith(const char *, const char *);
-        std::string concat(const char *, const char *);
+        static CCString * lastPathComponent(CCString *);
+        static CCString * deletePathExtension(CCString *);
+        static CCString * toLowerCase(CCString *);
+        static bool endsWith(CCString *, CCString *);
+        static CCString * concat(CCString *, CCString *);
 
         /* Parse methods. */
         int readInt(bool pSign);
         unsigned char readByte();
         bool readBool();
         float readFloat();
-        std::string readCachedString();
+        CCString * readCachedString();
 
     private:
         bool readHeader();
@@ -147,7 +164,7 @@ class CC_DLL CCBReader : public CCObject {
 
         bool getBit();
         void alignBits();
-        const char * readUTF8();
+        CCString * readUTF8();
 };
 
 NS_CC_EXT_END

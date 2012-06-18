@@ -5,9 +5,17 @@
 
 NS_CC_EXT_BEGIN
 
+#define CCB_MEMBERVARIABLEASSIGNER_GLUE(TARGET, MEMBERVARIABLENAME, MEMBERVARIABLETYPE, MEMBERVARIABLE) if(pTarget == TARGET && pMemberVariableName->compare(MEMBERVARIABLENAME) == 0) { \
+    MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(pNode); \
+    CC_ASSERT(MEMBERVARIABLE); \
+    MEMBERVARIABLE->retain(); \
+    return true; \
+}
+
 class CC_DLL CCBMemberVariableAssigner {
     public:
-        virtual bool onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode) = 0;
+        virtual ~CCBMemberVariableAssigner() {}
+        virtual bool onAssignCCBMemberVariable(CCObject * pTarget, cocos2d::CCString * pMemberVariableName, CCNode * pNode) = 0;
 };
 
 NS_CC_EXT_END
