@@ -674,6 +674,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
 		4A2188021586CCE10069114E /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
+		4A4553E5158FCA9F000A0E76 /* ScrollViewTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewTestLayer.h; sourceTree = "<group>"; };
+		4A4553E6158FCA9F000A0E76 /* ScrollViewTestLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewTestLayerLoader.h; sourceTree = "<group>"; };
 		4AB28AD51589152800276E8B /* CocosBuilderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosBuilderTest.cpp; sourceTree = "<group>"; };
 		4AB28AD61589152800276E8B /* CocosBuilderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosBuilderTest.h; sourceTree = "<group>"; };
 		4AB28AE31589159000276E8B /* CCBFileLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBFileLoader.cpp; sourceTree = "<group>"; };
@@ -1557,6 +1559,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4A4553E4158FCA9F000A0E76 /* ScrollViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				4A4553E5158FCA9F000A0E76 /* ScrollViewTestLayer.h */,
+				4A4553E6158FCA9F000A0E76 /* ScrollViewTestLayerLoader.h */,
+			);
+			path = ScrollViewTest;
+			sourceTree = "<group>";
+		};
 		4AB28AD21589152800276E8B /* CocosBuilderTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -1569,6 +1580,7 @@
 				4ACB592B158AAE6A00E0D552 /* SpriteTest */,
 				4ACB592E158AB71100E0D552 /* MenuTest */,
 				4ACB5937158BE3F200E0D552 /* ParticleSystemTest */,
+				4A4553E4158FCA9F000A0E76 /* ScrollViewTest */,
 			);
 			path = CocosBuilderTest;
 			sourceTree = "<group>";

@@ -3,27 +3,42 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-void CCScrollViewLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
+#define PROPERTY_CONTAINER "container"
+#define PROPERTY_DIRECTION "direction"
+#define PROPERTY_CLIPSTOBOUNDS "clipsToBounds"
+#define PROPERTY_BOUNCES "bounces"
+#define PROPERTY_SCALE "scale"
 
+void CCScrollViewLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_CLIPSTOBOUNDS) == 0) {
+        ((CCScrollView *)pNode)->setClippingToBounds(pCheck);
+    } else if(pPropertyName->compare(PROPERTY_BOUNCES) == 0) {
+        ((CCScrollView *)pNode)->setBounceable(pCheck);
+    } else {
+        CCNodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
+    }
 }
 
-void CCScrollViewLoader::onHandlePropTypeFlip(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool * pFlip, CCBReader * pCCBReader) {
-
+void CCScrollViewLoader::onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_CONTAINER) == 0) {
+        ((CCScrollView *)pNode)->addChild(pCCBFileNode);
+    } else {
+        CCNodeLoader::onHandlePropTypeCCBFile(pNode, pParent, pPropertyName, pCCBFileNode, pCCBReader);
+    }
 }
 
-void CCScrollViewLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
-
+void CCScrollViewLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, float pFloat, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_SCALE) == 0) {
+        ((CCScrollView *)pNode)->setScale(pFloat);
+    } else {
+        CCNodeLoader::onHandlePropTypeFloat(pNode, pParent, pPropertyName, pFloat, pCCBReader);
+    }
 }
 
-void CCScrollViewLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
-
-}
-
-void CCScrollViewLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
-
-}
-
-void CCScrollViewLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, float pFloat, CCBReader * pCCBReader)
-{
-
+void CCScrollViewLoader::onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
+    if(pPropertyName->compare(PROPERTY_DIRECTION) == 0) {
+        ((CCScrollView *)pNode)->setDirection(CCScrollViewDirection(pIntegerLabeled));
+    } else {
+        CCNodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
+    }
 }
