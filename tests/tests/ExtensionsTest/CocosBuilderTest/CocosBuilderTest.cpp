@@ -26,7 +26,7 @@
 #include "../../testResource.h"
 #include "extensions/CCBReader/CCBReader.h"
 #include "extensions/CCBReader/CCNodeLoaderLibrary.h"
-#include "HelloCocosBuilderLayerLoader.h"
+#include "HelloCocosBuilder/HelloCocosBuilderLayerLoader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;

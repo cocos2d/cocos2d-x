@@ -9,10 +9,10 @@ class CCBReader;
 
 class ButtonTestLayerLoader : public cocos2d::extension::CCLayerLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(ButtonTestLayerLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(ButtonTestLayerLoader, loader);
 
     protected:
-        virtual ButtonTestLayer * createCCNode(cocos2d::CCNode *, cocos2d::extension::CCBReader *);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(ButtonTestLayer);
 };
 
 #endif

@@ -320,7 +320,7 @@
 						<key>type</key>
 						<string>FntFile</string>
 						<key>value</key>
-						<string>markerfelt24shadow.fnt</string>
+						<string>res/markerfelt24shadow.fnt</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -340,6 +340,17 @@
 							<integer>255</integer>
 							<integer>255</integer>
 							<integer>255</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
+						<key>value</key>
+						<array>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
 					</dict>
 					<dict>
@@ -894,8 +905,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>409.60000610351562</real>
-							<real>153.60000610351562</real>
+							<real>192</real>
+							<real>64</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -961,7 +972,7 @@
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>comic andy.ttf</string>
+						<string>res/comic andy.ttf</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -970,7 +981,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>50</real>
+							<real>55</real>
 							<integer>1</integer>
 						</array>
 					</dict>
@@ -1028,7 +1039,7 @@
 						<key>type</key>
 						<string>Text</string>
 						<key>value</key>
-						<string>Custom TTF</string>
+						<string>TTF Font</string>
 					</dict>
 				</array>
 			</dict>
@@ -1131,13 +1142,13 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestHeader.ccb</string>
+						<string>ccb/TestHeader.ccb</string>
 					</dict>
 				</array>
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string></string>
+		<string>LabelTestLayer</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>

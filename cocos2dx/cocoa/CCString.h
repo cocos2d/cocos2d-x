@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __CCSTRING_H__
 
 #include <string>
+#include <functional>
 #include "CCObject.h"
 
 NS_CC_BEGIN
@@ -66,17 +67,32 @@ public:
     /** get the length of string */
     unsigned int length() const;
 
+    /** compare to a c string */
+    int compare(const char *) const;
+
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual bool isEqual(const CCObject* pObject);
 
     /* static funcitons */
-    /** create a string with c string 
+    /** create a string with c string
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      @warning: This interface will be deprecated in future.
      */
     static CCString* stringWithCString(const char* pStr);
+
+    /** create a string with c string
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
+    static CCString* stringWithCStringData(const char* pData, unsigned long nLen);
+
+    /** create a string with std::string
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
+    static CCString* stringWithString(const std::string& str);
 
     /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
      *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
@@ -132,6 +148,13 @@ private:
 
 public:
     std::string m_sString;
+};
+
+struct CCStringCompare : public std::binary_function<CCString *, CCString *, bool> {
+    public:
+        bool operator() (CCString * a, CCString * b) const {
+            return strcmp(a->getCString(), b->getCString()) < 0;
+        }
 };
 
 #define CCStringMake(str) CCString::create(str)

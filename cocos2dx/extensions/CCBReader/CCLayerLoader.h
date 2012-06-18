@@ -10,12 +10,12 @@ class CCBReader;
 
 class CC_DLL CCLayerLoader : public CCNodeLoader {
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerLoader, loader);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerLoader, loader);
 
     protected:
         virtual CCLayer * createCCNode(CCNode *, CCBReader *);
 
-        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool pCheck, CCBReader * pCCBReader);
 };
 
 NS_CC_EXT_END

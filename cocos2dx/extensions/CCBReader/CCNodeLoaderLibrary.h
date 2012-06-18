@@ -6,20 +6,26 @@
 
 NS_CC_EXT_BEGIN
 
+typedef std::map<CCString *, CCNodeLoader *, CCStringCompare> CCNodeLoaderMap;
+typedef std::pair<CCString *, CCNodeLoader *> CCNodeLoaderMapEntry;
+
 class CC_DLL CCNodeLoaderLibrary : public CCObject {
     private:
-        std::map<std::string, CCNodeLoader *> mCCNodeLoaders;
+        CCNodeLoaderMap mCCNodeLoaders;
 
     public:
-        STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoaderLibrary, library);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoaderLibrary, library);
 
         CCNodeLoaderLibrary();
         ~CCNodeLoaderLibrary();
 
         void registerDefaultCCNodeLoaders();
         void registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader);
+        void registerCCNodeLoader(CCString * pClassName, CCNodeLoader * pCCNodeLoader);
         void unregisterCCNodeLoader(const char * pClassName);
+        void unregisterCCNodeLoader(CCString * pClassName);
         CCNodeLoader * getCCNodeLoader(const char * pClassName);
+        CCNodeLoader * getCCNodeLoader(CCString * pClassName);
         void purge(bool pDelete);
 
     public:

@@ -37,7 +37,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>memberVarAssignmentName</key>
-						<string>mTestTitleLabel</string>
+						<string>mTestTitleLabelTTF</string>
 						<key>memberVarAssignmentType</key>
 						<integer>2</integer>
 						<key>properties</key>
