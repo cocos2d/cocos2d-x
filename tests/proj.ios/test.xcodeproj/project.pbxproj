@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15016C5A158F4433006C925D /* CCScrollViewLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15016C58158F4433006C925D /* CCScrollViewLoader.cpp */; };
+		15016C5B158F4433006C925D /* CCScrollViewLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 15016C59158F4433006C925D /* CCScrollViewLoader.h */; };
+		15016C5F158F443F006C925D /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15016C5D158F443F006C925D /* CCScrollView.cpp */; };
+		15016C60158F443F006C925D /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 15016C5E158F443F006C925D /* CCScrollView.h */; };
 		152ECD4E15858E6300C57056 /* ccCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD4D15858E6300C57056 /* ccCArray.cpp */; };
 		15527950157C64F9007CC855 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1552794F157C64F9007CC855 /* Shaders */; };
 		158F259C1574BDE20092E383 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 158F259B1574BDE20092E383 /* CCStdC.h */; };
@@ -652,6 +656,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15016C58158F4433006C925D /* CCScrollViewLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollViewLoader.cpp; sourceTree = "<group>"; };
+		15016C59158F4433006C925D /* CCScrollViewLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollViewLoader.h; sourceTree = "<group>"; };
+		15016C5D158F443F006C925D /* CCScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
+		15016C5E158F443F006C925D /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
 		152ECD4D15858E6300C57056 /* ccCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccCArray.cpp; sourceTree = "<group>"; };
 		1552794F157C64F9007CC855 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		158F259B1574BDE20092E383 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
@@ -1496,6 +1504,15 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		15016C5C158F443F006C925D /* CCScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				15016C5D158F443F006C925D /* CCScrollView.cpp */,
+				15016C5E158F443F006C925D /* CCScrollView.h */,
+			);
+			path = CCScrollView;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1561,6 +1578,8 @@
 		4AB28AE21589159000276E8B /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
+				15016C58158F4433006C925D /* CCScrollViewLoader.cpp */,
+				15016C59158F4433006C925D /* CCScrollViewLoader.h */,
 				4AB28AE31589159000276E8B /* CCBFileLoader.cpp */,
 				4AB28AE41589159000276E8B /* CCBFileLoader.h */,
 				4AB28AE51589159000276E8B /* CCBMemberVariableAssigner.h */,
@@ -1755,6 +1774,7 @@
 		781C37AA1547F9DC00633F88 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				15016C5C158F443F006C925D /* CCScrollView */,
 				4AB28AE21589159000276E8B /* CCBReader */,
 				781C37AB1547F9DC00633F88 /* CCControlExtension */,
 				78EE00E11550D18D004C84B0 /* CCListView */,
@@ -3417,6 +3437,8 @@
 				78EE00F01550D18D004C84B0 /* CCTextureWatcher.h in Headers */,
 				158F259C1574BDE20092E383 /* CCStdC.h in Headers */,
 				15D4B26C15808F2E00729646 /* CCActionCatmullRom.h in Headers */,
+				15016C5B158F4433006C925D /* CCScrollViewLoader.h in Headers */,
+				15016C60158F443F006C925D /* CCScrollView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3918,6 +3940,8 @@
 				78EE00EB1550D18D004C84B0 /* CCListView.cpp in Sources */,
 				78EE00ED1550D18D004C84B0 /* CCListViewCell.cpp in Sources */,
 				78EE00EF1550D18D004C84B0 /* CCTextureWatcher.cpp in Sources */,
+				15016C5A158F4433006C925D /* CCScrollViewLoader.cpp in Sources */,
+				15016C5F158F443F006C925D /* CCScrollView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
