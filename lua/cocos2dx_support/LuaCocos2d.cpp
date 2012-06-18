@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 06/15/12 17:22:04.
+** Generated automatically by tolua++-1.0.92 on Mon Jun 18 19:23:41 2012.
 */
 
 #include <vector>
@@ -17723,37 +17723,6 @@ static int tolua_set_CCNode_anchorPoint(lua_State* tolua_S)
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
   self->setAnchorPoint(*((CCPoint*)  tolua_tousertype(tolua_S,2,0))
-)
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: contentSize of class  CCNode */
-#ifndef TOLUA_DISABLE_tolua_get_CCNode_contentSize
-static int tolua_get_CCNode_contentSize(lua_State* tolua_S)
-{
-  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'contentSize'",NULL);
-#endif
-   tolua_pushusertype(tolua_S,(void*)&self->getContentSize(),"CCSize");
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: contentSize of class  CCNode */
-#ifndef TOLUA_DISABLE_tolua_set_CCNode_contentSize
-static int tolua_set_CCNode_contentSize(lua_State* tolua_S)
-{
-  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'contentSize'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCSize",0,&tolua_err)))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->setContentSize(*((CCSize*)  tolua_tousertype(tolua_S,2,0))
 )
 ;
  return 0;
@@ -37824,7 +37793,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"skewX",tolua_get_CCNode_skewX,tolua_set_CCNode_skewX);
    tolua_variable(tolua_S,"skewY",tolua_get_CCNode_skewY,tolua_set_CCNode_skewY);
    tolua_variable(tolua_S,"anchorPoint",tolua_get_CCNode_anchorPoint,tolua_set_CCNode_anchorPoint);
-   tolua_variable(tolua_S,"contentSize",tolua_get_CCNode_contentSize,tolua_set_CCNode_contentSize);
    tolua_variable(tolua_S,"tag",tolua_get_CCNode_tag,tolua_set_CCNode_tag);
    tolua_function(tolua_S,"getChildren",tolua_Cocos2d_CCNode_getChildren00);
    tolua_function(tolua_S,"getChildrenCount",tolua_Cocos2d_CCNode_getChildrenCount00);
