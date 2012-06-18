@@ -9,6 +9,8 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class CC_DLL CCMenuItemLoader : public CCNodeLoader {
+    public:
+        virtual ~CCMenuItemLoader() {};
     protected:
         virtual CCMenuItem * createCCNode(CCNode *, CCBReader *) = 0;
 

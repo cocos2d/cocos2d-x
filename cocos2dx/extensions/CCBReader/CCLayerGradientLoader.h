@@ -10,6 +10,7 @@ class CCBReader;
 
 class CC_DLL CCLayerGradientLoader : public CCLayerLoader {
     public:
+        virtual ~CCLayerGradientLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerGradientLoader, loader);
 
     protected:

@@ -10,6 +10,7 @@ class CCBReader;
 
 class CC_DLL CCLabelTTFLoader : public CCNodeLoader {
     public:
+        virtual ~CCLabelTTFLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelTTFLoader, loader);
 
     protected:

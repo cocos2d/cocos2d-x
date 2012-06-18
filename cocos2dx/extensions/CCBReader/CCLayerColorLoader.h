@@ -10,7 +10,9 @@ class CCBReader;
 
 class CC_DLL CCLayerColorLoader : public CCLayerLoader {
     public:
+        virtual ~CCLayerColorLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerColorLoader, loader);
+
     protected:
         virtual CCLayerColor * createCCNode(CCNode *, CCBReader *);
 
