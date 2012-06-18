@@ -902,7 +902,7 @@ bool CCEGLView::HandleEvents()
 
 				case NAVIGATOR_EXIT:
 					// exit the application
-				//	release();
+					CCDirector::sharedDirector()->end();
 					break;
 
 				case NAVIGATOR_WINDOW_INACTIVE:
