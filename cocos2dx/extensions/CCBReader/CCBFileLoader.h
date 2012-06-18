@@ -14,7 +14,7 @@ class CC_DLL CCBFileLoader : public CCNodeLoader {
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCBFileLoader, loader);
 
     protected:
-        virtual CCNode * createCCNode(CCNode *, CCBReader *);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCNode);
 
         virtual void onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCNode *, CCBReader *);
 };

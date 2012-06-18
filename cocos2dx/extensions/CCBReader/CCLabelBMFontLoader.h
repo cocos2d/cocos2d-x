@@ -14,7 +14,7 @@ class CC_DLL CCLabelBMFontLoader : public CCNodeLoader {
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelBMFontLoader, loader);
 
     protected:
-        virtual CCLabelBMFont * createCCNode(CCNode *, CCBReader *);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCLabelBMFont);
 
         virtual void onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccColor3B, CCBReader *);
         virtual void onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, unsigned char, CCBReader *);

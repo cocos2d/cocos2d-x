@@ -11,8 +11,9 @@ class CCBReader;
 class CC_DLL CCMenuItemLoader : public CCNodeLoader {
     public:
         virtual ~CCMenuItemLoader() {};
+
     protected:
-        virtual CCMenuItem * createCCNode(CCNode *, CCBReader *) = 0;
+        CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCMenuItem);
 
         virtual void onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, BlockData *, CCBReader *);
         virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool, CCBReader *);

@@ -14,7 +14,7 @@ class CC_DLL CCMenuLoader : public CCLayerLoader {
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuLoader, loader);
 
     protected:
-        virtual CCMenu * createCCNode(CCNode *, CCBReader *);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCMenu);
 };
 
 NS_CC_EXT_END

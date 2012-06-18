@@ -14,7 +14,7 @@ class CC_DLL CCParticleSystemQuadLoader : public CCNodeLoader {
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCParticleSystemQuadLoader, loader);
 
     protected:
-        virtual CCParticleSystemQuad * createCCNode(CCNode *, CCBReader *);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCParticleSystemQuad);
 
         virtual void onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, int, CCBReader *);
         virtual void onHandlePropTypePoint(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCPoint, CCBReader *);

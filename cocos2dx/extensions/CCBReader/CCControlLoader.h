@@ -13,7 +13,7 @@ class CC_DLL CCControlLoader : public CCNodeLoader {
         virtual ~CCControlLoader() {};
 
     protected:
-        virtual CCControl * createCCNode(CCNode *, CCBReader *) = 0;
+        CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCControl);
 
         virtual void onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, BlockCCControlData *, CCBReader *);
         virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool, CCBReader *);

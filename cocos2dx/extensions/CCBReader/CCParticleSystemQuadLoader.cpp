@@ -26,10 +26,6 @@ USING_NS_CC_EXT;
 #define PROPERTY_ENDRADIUS "endRadius"
 #define PROPERTY_ROTATEPERSECOND "rotatePerSecond"
 
-CCParticleSystemQuad * CCParticleSystemQuadLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCParticleSystemQuad::node();
-}
-
 void CCParticleSystemQuadLoader::onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_EMITERMODE) == 0) {
         ((CCParticleSystemQuad *)pNode)->setEmitterMode(pIntegerLabeled);
