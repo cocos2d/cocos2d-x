@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCTouch : public CCObject
+class CC_DLL CCTouch : public CCObject
 {
 public:
     CCTouch() 
@@ -59,7 +59,7 @@ private:
     CCPoint m_prevPoint;
 };
 
-class CCEvent : public CCObject
+class CC_DLL CCEvent : public CCObject
 {
 };
 
