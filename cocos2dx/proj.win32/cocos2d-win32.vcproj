@@ -1379,11 +1379,31 @@
 					>
 				</File>
 				<File
+					RelativePath="..\extensions\CCBReader\CCScrollViewLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCScrollViewLoader.h"
+					>
+				</File>
+				<File
 					RelativePath="..\extensions\CCBReader\CCSpriteLoader.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\extensions\CCBReader\CCSpriteLoader.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCScrollView"
+				>
+				<File
+					RelativePath="..\extensions\CCScrollView\CCScrollView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCScrollView\CCScrollView.h"
 					>
 				</File>
 			</Filter>
