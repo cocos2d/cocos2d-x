@@ -10,6 +10,7 @@ class CCBReader;
 
 class CC_DLL CCControlButtonLoader : public CCControlLoader {
     public:
+        virtual ~CCControlButtonLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCControlButtonLoader, loader);
 
     protected:

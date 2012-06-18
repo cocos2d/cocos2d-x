@@ -10,6 +10,7 @@ class CCBReader;
 
 class CC_DLL CCScrollViewLoader : public CCNodeLoader {
     public:
+        virtual ~CCScrollViewLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCScrollViewLoader, loader);
 
     protected:
