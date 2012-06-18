@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15016C83158F4611006C925D /* CCScrollViewLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15016C81158F4611006C925D /* CCScrollViewLoader.cpp */; };
+		15016C84158F4611006C925D /* CCScrollViewLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 15016C82158F4611006C925D /* CCScrollViewLoader.h */; };
+		15016C89158F461C006C925D /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15016C87158F461C006C925D /* CCScrollView.cpp */; };
+		15016C8A158F461C006C925D /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 15016C88158F461C006C925D /* CCScrollView.h */; };
 		152ECD601585905C00C57056 /* CCActionCatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD5E1585905C00C57056 /* CCActionCatmullRom.cpp */; };
 		152ECD611585905C00C57056 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = 152ECD5F1585905C00C57056 /* CCActionCatmullRom.h */; };
 		152ECD641585907300C57056 /* ccCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD631585907300C57056 /* ccCArray.cpp */; };
@@ -461,6 +465,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15016C81158F4611006C925D /* CCScrollViewLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollViewLoader.cpp; sourceTree = "<group>"; };
+		15016C82158F4611006C925D /* CCScrollViewLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollViewLoader.h; sourceTree = "<group>"; };
+		15016C87158F461C006C925D /* CCScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
+		15016C88158F461C006C925D /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
 		152ECD5E1585905C00C57056 /* CCActionCatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCatmullRom.cpp; sourceTree = "<group>"; };
 		152ECD5F1585905C00C57056 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		152ECD631585907300C57056 /* ccCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccCArray.cpp; sourceTree = "<group>"; };
@@ -964,9 +972,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15016C86158F461C006C925D /* CCScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				15016C87158F461C006C925D /* CCScrollView.cpp */,
+				15016C88158F461C006C925D /* CCScrollView.h */,
+			);
+			path = CCScrollView;
+			sourceTree = "<group>";
+		};
 		15519808158EDC2900E66CFE /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
+				15016C81158F4611006C925D /* CCScrollViewLoader.cpp */,
+				15016C82158F4611006C925D /* CCScrollViewLoader.h */,
 				15519809158EDC2900E66CFE /* CCBFileLoader.cpp */,
 				1551980A158EDC2900E66CFE /* CCBFileLoader.h */,
 				1551980B158EDC2900E66CFE /* CCBMemberVariableAssigner.h */,
@@ -1287,6 +1306,7 @@
 		D4544CB1156E03D000887EB5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				15016C86158F461C006C925D /* CCScrollView */,
 				15519808158EDC2900E66CFE /* CCBReader */,
 				D4544CB8156E03D000887EB5 /* CCControlExtension */,
 				D4544CD2156E03D000887EB5 /* CCListView */,
@@ -2044,6 +2064,8 @@
 				1551984E158EDC2900E66CFE /* CCParticleSystemQuadLoader.h in Headers */,
 				15519850158EDC2900E66CFE /* CCScale9SpriteLoader.h in Headers */,
 				15519852158EDC2900E66CFE /* CCSpriteLoader.h in Headers */,
+				15016C84158F4611006C925D /* CCScrollViewLoader.h in Headers */,
+				15016C8A158F461C006C925D /* CCScrollView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2389,6 +2411,8 @@
 				1551984D158EDC2900E66CFE /* CCParticleSystemQuadLoader.cpp in Sources */,
 				1551984F158EDC2900E66CFE /* CCScale9SpriteLoader.cpp in Sources */,
 				15519851158EDC2900E66CFE /* CCSpriteLoader.cpp in Sources */,
+				15016C83158F4611006C925D /* CCScrollViewLoader.cpp in Sources */,
+				15016C89158F461C006C925D /* CCScrollView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

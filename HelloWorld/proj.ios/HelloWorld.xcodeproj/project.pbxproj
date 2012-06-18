@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15016C67158F44E8006C925D /* CCScrollViewLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15016C65158F44E8006C925D /* CCScrollViewLoader.cpp */; };
+		15016C6C158F44F5006C925D /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15016C6A158F44F5006C925D /* CCScrollView.cpp */; };
 		152ECD5615858FE100C57056 /* CCActionCatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD5415858FE100C57056 /* CCActionCatmullRom.cpp */; };
 		152ECD591585901500C57056 /* ccCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152ECD581585901500C57056 /* ccCArray.cpp */; };
 		1551977A158EDB1500E66CFE /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15519755158EDB1500E66CFE /* CCBFileLoader.cpp */; };
@@ -186,6 +188,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15016C65158F44E8006C925D /* CCScrollViewLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCScrollViewLoader.cpp; path = CCBReader/CCScrollViewLoader.cpp; sourceTree = "<group>"; };
+		15016C66158F44E8006C925D /* CCScrollViewLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScrollViewLoader.h; path = CCBReader/CCScrollViewLoader.h; sourceTree = "<group>"; };
+		15016C6A158F44F5006C925D /* CCScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
+		15016C6B158F44F5006C925D /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
 		152ECD5415858FE100C57056 /* CCActionCatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCatmullRom.cpp; sourceTree = "<group>"; };
 		152ECD5515858FE100C57056 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		152ECD581585901500C57056 /* ccCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccCArray.cpp; sourceTree = "<group>"; };
@@ -588,6 +594,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15016C69158F44F5006C925D /* CCScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				15016C6A158F44F5006C925D /* CCScrollView.cpp */,
+				15016C6B158F44F5006C925D /* CCScrollView.h */,
+			);
+			path = CCScrollView;
+			sourceTree = "<group>";
+		};
 		15519754158EDB1500E66CFE /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
@@ -800,6 +815,9 @@
 		781C35B31547F0ED00633F88 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				15016C69158F44F5006C925D /* CCScrollView */,
+				15016C65158F44E8006C925D /* CCScrollViewLoader.cpp */,
+				15016C66158F44E8006C925D /* CCScrollViewLoader.h */,
 				15519754158EDB1500E66CFE /* CCBReader */,
 				781C35B41547F0ED00633F88 /* CCControlExtension */,
 				78EE00F61550D1C7004C84B0 /* CCListView */,
@@ -1582,6 +1600,8 @@
 				15519788158EDB1500E66CFE /* CCParticleSystemQuadLoader.cpp in Sources */,
 				15519789158EDB1500E66CFE /* CCScale9SpriteLoader.cpp in Sources */,
 				1551978A158EDB1500E66CFE /* CCSpriteLoader.cpp in Sources */,
+				15016C67158F44E8006C925D /* CCScrollViewLoader.cpp in Sources */,
+				15016C6C158F44F5006C925D /* CCScrollView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
