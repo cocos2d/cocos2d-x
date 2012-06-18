@@ -1,10 +1,7 @@
 #include "CCScrollViewLoader.h"
 
-NS_CC_EXT_BEGIN
-
-CCScrollView * CCScrollViewLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCScrollView::node();
-}
+USING_NS_CC;
+USING_NS_CC_EXT;
 
 void CCScrollViewLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
 
@@ -30,5 +27,3 @@ void CCScrollViewLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent,
 {
 
 }
-
-NS_CC_EXT_END

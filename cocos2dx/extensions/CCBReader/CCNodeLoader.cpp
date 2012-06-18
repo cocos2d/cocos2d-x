@@ -25,10 +25,6 @@ CCNode * CCNodeLoader::loadCCNode(CCNode * pParent, CCBReader * pCCBReader) {
     return ccNode;
 }
 
-CCNode * CCNodeLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCNode::node();
-}
-
 void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     int propertyCount = pCCBReader->readInt(false);
     for(int i = 0; i < propertyCount; i++) {
