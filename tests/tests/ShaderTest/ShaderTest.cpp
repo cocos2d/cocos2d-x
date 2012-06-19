@@ -1,6 +1,6 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
-#include "ccShaders.h"
+#include "cocos2d.h"
 
 static int sceneIdx = -1; 
 

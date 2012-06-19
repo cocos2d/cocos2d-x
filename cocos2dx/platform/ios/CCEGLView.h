@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_IPHONE_H__
 #define __CC_EGLVIEW_IPHONE_H__
 
-#include "CCCommon.h"
-#include "CCEGLViewProtocol.h"
+#include "platform/CCCommon.h"
+#include "platform/CCEGLViewProtocol.h"
 
 NS_CC_BEGIN
 

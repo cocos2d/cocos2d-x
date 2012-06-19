@@ -25,7 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCTMX_TILE_MAP_H__
 #define __CCTMX_TILE_MAP_H__
-#include "CCNode.h"
+
+#include "base_nodes/CCNode.h"
 #include "CCTMXObjectGroup.h"
 
 NS_CC_BEGIN

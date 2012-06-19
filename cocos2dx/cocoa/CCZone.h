@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CC_ZONE_H__
 #define __CC_ZONE_H__
 
+#include "platform/CCPlatformMacros.h"
 #include <stdio.h>
-#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

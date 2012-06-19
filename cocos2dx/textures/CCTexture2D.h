@@ -27,8 +27,8 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <string>
-#include "CCObject.h"
-#include "CCGeometry.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCGeometry.h"
 #include "ccTypes.h"
 
 NS_CC_BEGIN

@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef MAT3_H_INCLUDED
 #define MAT3_H_INCLUDED
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "utility.h"
 
 struct kmVec3;
