@@ -9,10 +9,6 @@ USING_NS_CC_EXT;
 #define PROPERTY_OPACITY "opacity"
 #define PROPERTY_BLENDFUNC "blendFunc"
 
-CCSprite * CCSpriteLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCSprite::node();
-}
-
 void CCSpriteLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_DISPLAYFRAME) == 0) {
         ((CCSprite *)pNode)->setDisplayFrame(pCCSpriteFrame);

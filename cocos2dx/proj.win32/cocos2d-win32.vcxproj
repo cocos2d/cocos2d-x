@@ -174,11 +174,11 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\extensions\CCBReader\CCLayerLoader.cpp" />
     <ClCompile Include="..\extensions\CCBReader\CCMenuItemImageLoader.cpp" />
     <ClCompile Include="..\extensions\CCBReader\CCMenuItemLoader.cpp" />
-    <ClCompile Include="..\extensions\CCBReader\CCMenuLoader.cpp" />
     <ClCompile Include="..\extensions\CCBReader\CCNodeLoader.cpp" />
     <ClCompile Include="..\extensions\CCBReader\CCNodeLoaderLibrary.cpp" />
     <ClCompile Include="..\extensions\CCBReader\CCParticleSystemQuadLoader.cpp" />
     <ClCompile Include="..\extensions\CCBReader\CCScale9SpriteLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCScrollViewLoader.cpp" />
     <ClCompile Include="..\extensions\CCBReader\CCSpriteLoader.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControlButton.cpp" />
@@ -195,6 +195,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\extensions\CCListView\CCListView.cpp" />
     <ClCompile Include="..\extensions\CCListView\CCListViewCell.cpp" />
     <ClCompile Include="..\extensions\CCNotificationCenter\CCNotificationCenter.cpp" />
+    <ClCompile Include="..\extensions\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="..\extensions\CCTextureWatcher\CCTextureWatcher.cpp" />
     <ClCompile Include="..\kazmath\src\aabb.c" />
     <ClCompile Include="..\kazmath\src\GL\mat4stack.c" />
@@ -330,6 +331,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\extensions\CCBReader\CCNodeLoaderListener.h" />
     <ClInclude Include="..\extensions\CCBReader\CCParticleSystemQuadLoader.h" />
     <ClInclude Include="..\extensions\CCBReader\CCScale9SpriteLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCScrollViewLoader.h" />
     <ClInclude Include="..\extensions\CCBReader\CCSpriteLoader.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControlButton.h" />
@@ -348,6 +350,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\extensions\CCListView\CCListView.h" />
     <ClInclude Include="..\extensions\CCListView\CCListViewCell.h" />
     <ClInclude Include="..\extensions\CCNotificationCenter\CCNotificationCenter.h" />
+    <ClInclude Include="..\extensions\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\extensions\CCTextureWatcher\CCTextureWatcher.h" />
     <ClInclude Include="..\include\ccConfig.h" />
     <ClInclude Include="..\include\CCEventType.h" />

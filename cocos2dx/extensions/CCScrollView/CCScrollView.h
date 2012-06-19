@@ -175,6 +175,14 @@ public:
     void setBounceable(bool bBounceable) { m_bBounceable = bBounceable; }
 
     /**
+     * size to clip. CCNode boundingBox uses contentSize directly.
+     * It's semantically different what it actually means to common scroll views.
+     * Hence, this scroll view will use a separate size property.
+     */
+    CCSize getViewSize() { return m_tViewSize; } 
+    void setViewSize(CCSize size);
+
+    /**
      * direction allowed to scroll. CCScrollViewDirectionBoth by default.
      */
     CCScrollViewDirection getDirection() { return m_eDirection; }
@@ -321,10 +329,6 @@ protected:
      * Hence, this scroll view will use a separate size property.
      */
     CCSize m_tViewSize;
-public:
-    CCSize getViewSize() { return m_tViewSize; } 
-    void setViewSize(CCSize size);
-protected:
     /**
      * max and min scale
      */

@@ -7,10 +7,6 @@ USING_NS_CC_EXT;
 #define PROPERTY_SELECTEDDISPLAYFRAME "selectedSpriteFrame"
 #define PROPERTY_DISABLEDDISPLAYFRAME "disabledSpriteFrame"
 
-CCMenuItemImage * CCMenuItemImageLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCMenuItemImage::node();
-}
-
 void CCMenuItemImageLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_NORMALDISPLAYFRAME) == 0) {
         if(pCCSpriteFrame != NULL) {
