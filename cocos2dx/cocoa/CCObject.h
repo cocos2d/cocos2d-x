@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCOBJECT_H__
 #define __CCOBJECT_H__
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

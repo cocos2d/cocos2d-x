@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
 
-#include "CCGeometry.h"
+#include "cocoa/CCGeometry.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN

@@ -27,10 +27,10 @@ THE SOFTWARE.
 #ifndef __CCCAMERA_H__
 #define __CCCAMERA_H__
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 #include "ccMacros.h"
-#include <string>
 #include "kazmath/mat4.h"
+#include <string>
 
 NS_CC_BEGIN
 

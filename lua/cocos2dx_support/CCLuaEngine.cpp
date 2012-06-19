@@ -33,7 +33,7 @@ extern "C" {
 
 #include "cocos2d.h"
 #include "LuaCocos2d.h"
-#include "CCArray.h"
+#include "cocoa/CCArray.h"
 #include "CCScheduler.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

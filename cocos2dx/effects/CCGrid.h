@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRID_H__
 #define __EFFECTS_CCGRID_H__
 
-#include "CCObject.h"
-#include "CCNode.h"
+#include "cocoa/CCObject.h"
+#include "base_nodes/CCNode.h"
 #include "CCCamera.h"
 #include "ccTypes.h"
-#include "CCTexture2D.h"
+#include "textures/CCTexture2D.h"
 #include "CCDirector.h"
 #include "kazmath/mat4.h"
 

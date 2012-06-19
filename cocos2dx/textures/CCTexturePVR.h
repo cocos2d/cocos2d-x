@@ -28,8 +28,8 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 #include "CCGL.h"
-#include "CCObject.h"
-#include "CCArray.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
 

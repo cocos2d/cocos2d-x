@@ -27,11 +27,11 @@ THE SOFTWARE.
 
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
-#include "CCArray.h"
-#include "CCDictionary.h"
-#include "CCGeometry.h"
 
-#include "../platform/CCSAXParser.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCGeometry.h"
+#include "platform/CCSAXParser.h"
 
 #include <string>
 

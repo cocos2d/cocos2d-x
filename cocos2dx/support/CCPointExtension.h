@@ -43,7 +43,7 @@ THE SOFTWARE.
   - cpvadd( CCPointMake(1,1), CCPointMake(2,2) ); // mixing chipmunk and CG (avoid)
  */
 
-#include "CCGeometry.h"
+#include "cocoa/CCGeometry.h"
 #include <math.h>
 
 NS_CC_BEGIN

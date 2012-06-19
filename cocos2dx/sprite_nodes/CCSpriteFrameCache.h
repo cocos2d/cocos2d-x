@@ -34,11 +34,11 @@ THE SOFTWARE.
  * http://zwoptex.zwopple.com/
  */
 
-#include <string>
-#include "CCSpriteFrame.h"
-#include "CCTexture2D.h"
-#include "CCObject.h"
+#include "sprite_nodes/CCSpriteFrame.h"
+#include "textures/CCTexture2D.h"
+#include "cocoa/CCObject.h"
 #include <set>
+#include <string>
 
 NS_CC_BEGIN
 
