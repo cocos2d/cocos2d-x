@@ -21,7 +21,7 @@ void CCScrollViewLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent,
 
 void CCScrollViewLoader::onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_CONTAINER) == 0) {
-        ((CCScrollView *)pNode)->addChild(pCCBFileNode);
+        ((CCScrollView *)pNode)->setContainer(pCCBFileNode);
     } else {
         CCNodeLoader::onHandlePropTypeCCBFile(pNode, pParent, pPropertyName, pCCBFileNode, pCCBReader);
     }
