@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "CCImage.h"
+    #include "platform/CCImage.h"
     #include <list>
 #endif
 

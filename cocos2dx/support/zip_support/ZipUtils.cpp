@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ZipUtils.h"
 #include "ccMacros.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 
 namespace cocos2d
 {

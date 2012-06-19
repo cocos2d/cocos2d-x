@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CC_PLATFORM_IMAGE_CPP__
 #include "platform/CCImageCommon_cpp.h"
 #include "platform/CCPlatformMacros.h"
-#include "CCImage.h"
+#include "platform/CCImage.h"
 #include "jni/JniHelper.h"
 
 #include <android/log.h>
