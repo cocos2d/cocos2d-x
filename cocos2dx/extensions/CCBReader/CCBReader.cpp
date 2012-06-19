@@ -359,7 +359,8 @@ bool CCBReader::isSpriteSheetLoaded(CCString * pSpriteSheet) {
 }
 
 void CCBReader::addLoadedSpriteSheet(CCString * pSpriteSheet) {
-    pSpriteSheet->retain();
+    // Since std::set<string> will copy the string from pSpriteSheet, we needn't to retain 'pSpriteSheet'.
+    //    pSpriteSheet->retain();
     this->mLoadedSpriteSheets.insert(pSpriteSheet->m_sString);
 }
 

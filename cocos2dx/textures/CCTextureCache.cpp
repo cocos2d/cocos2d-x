@@ -438,9 +438,10 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 }
                 
                 CCImage image;                
-                unsigned long nSize;
-                unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
+                unsigned long nSize = 0;
+                unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
                 CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, eImageFormat));
+                CC_SAFE_DELETE_ARRAY(pBuffer);
 
                 texture = new CCTexture2D();
                 texture->initWithImage(&image, resolution);
@@ -453,8 +454,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #endif
 
                     m_pTextures->setObject(texture, pathKey.c_str());
-                    // autorelease prevents possible crash in multithreaded environments
-                    texture->autorelease();
+                    texture->release();
                 }
                 else
                 {
@@ -854,9 +854,8 @@ void VolatileTexture::reloadAllTextures()
                 } 
                 else 
                 {
-                    unsigned long nSize;
-                    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
-                    
+                    unsigned long nSize = 0;
+                    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
 
                     if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
                     {
@@ -865,6 +864,8 @@ void VolatileTexture::reloadAllTextures()
                         vt->texture->initWithImage(&image);
                         CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
                     }
+
+                    CC_SAFE_DELETE_ARRAY(pBuffer);
                 }
             }
             break;

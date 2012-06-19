@@ -421,12 +421,12 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
 
     if (!unpackPVRData(pvrdata, pvrlen)  || !createGLTexture())
     {
-        delete [] pvrdata;
+        CC_SAFE_DELETE_ARRAY(pvrdata);
         this->release();
         return false;
     }
 
-    delete [] pvrdata;
+    CC_SAFE_DELETE_ARRAY(pvrdata);
     
     return true;
 }

@@ -83,14 +83,15 @@ bool CCSAXParser::parse(const char* pXMLData, unsigned int uDataLength)
 
 bool CCSAXParser::parse(const char *pszFile)
 {
-    unsigned long size;
-    char *pBuffer = (char*)CCFileUtils::sharedFileUtils()->getFileData(pszFile, "rt", &size);
-    
-    if (!pBuffer)
+    bool bRet = false;
+    unsigned long size = 0;
+    char* pBuffer = (char*)CCFileUtils::sharedFileUtils()->getFileData(pszFile, "rt", &size);
+    if (pBuffer != NULL && size > 0)
     {
-        return false;
+        bRet = parse(pBuffer, size);
     }
-    return parse(pBuffer, size);
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    return bRet;
 }
 
 void CCSAXParser::startElement(void *ctx, const CC_XML_CHAR *name, const CC_XML_CHAR **atts)
