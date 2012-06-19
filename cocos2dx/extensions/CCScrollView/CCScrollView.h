@@ -182,6 +182,9 @@ public:
     CCSize getViewSize() { return m_tViewSize; } 
     void setViewSize(CCSize size);
 
+    CCNode * getContainer();
+    void setContainer(CCNode * pContainer);
+
     /**
      * direction allowed to scroll. CCScrollViewDirectionBoth by default.
      */
