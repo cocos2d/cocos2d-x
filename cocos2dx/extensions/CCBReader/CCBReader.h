@@ -118,11 +118,9 @@ class CC_DLL CCBReader : public CCObject {
         std::set<std::string> mLoadedSpriteSheets;
 
     public:
-        /* Constructor. */
-        CCBReader(CCNodeLoaderLibrary *, CCBMemberVariableAssigner * = NULL, CCBSelectorResolver * = NULL, CCNodeLoaderListener * = NULL);
-        CCBReader(CCBReader *);
-        /* Destructor. */
-        ~CCBReader();
+        CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariableAssigner * pCCBMemberVariableAssigner = NULL, CCBSelectorResolver * pCCBSelectorResolver = NULL, CCNodeLoaderListener * pCCNodeLoaderListener = NULL);
+        CCBReader(CCBReader * pCCBReader);
+        virtual ~CCBReader();
     
         CCNode * readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner = NULL);
         CCNode * readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pCCBFileName, CCObject * pOwner = NULL);
@@ -135,21 +133,21 @@ class CC_DLL CCBReader : public CCObject {
         CCString * getCCBRootPath();
         CCObject * getOwner();
         CCNode * getRootNode();
-        CCSize getContainerSize(CCNode *);
+        CCSize getContainerSize(CCNode * pNode);
         float getResolutionScale();
 
-        bool isSpriteSheetLoaded(CCString *);
-        void addLoadedSpriteSheet(CCString *);
+        bool isSpriteSheetLoaded(CCString * pSpriteSheet);
+        void addLoadedSpriteSheet(CCString * pSpriteSheet);
 
         /* Utility methods. */
-        static CCString * lastPathComponent(CCString *);
-        static CCString * deletePathExtension(CCString *);
-        static CCString * toLowerCase(CCString *);
-        static bool endsWith(CCString *, CCString *);
-        static CCString * concat(CCString *, CCString *);
+        static CCString * lastPathComponent(CCString * pString);
+        static CCString * deletePathExtension(CCString * pString);
+        static CCString * toLowerCase(CCString * pCCString);
+        static bool endsWith(CCString * pString, CCString * pEnding);
+        static CCString * concat(CCString * pStringA, CCString * pStringB);
 
         /* Parse methods. */
-        int readInt(bool pSign);
+        int readInt(bool pSigned);
         unsigned char readByte();
         bool readBool();
         float readFloat();
@@ -160,7 +158,7 @@ class CC_DLL CCBReader : public CCObject {
         bool readStringCache();
         void readStringCacheEntry();
         CCNode * readNodeGraph();
-        CCNode * readNodeGraph(CCNode *);
+        CCNode * readNodeGraph(CCNode * pParent);
 
         bool getBit();
         void alignBits();

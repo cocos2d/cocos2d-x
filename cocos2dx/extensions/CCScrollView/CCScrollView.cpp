@@ -630,7 +630,6 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             m_bTouchMoved  = true;
             frame        = CCRectMake(this->getPosition().x, this->getPosition().y, m_tViewSize.width, m_tViewSize.height);
             newPoint     = this->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0));
-            CCLOG("new x = %f, y = %f; old x = %f, y = %f", newPoint.x, newPoint.y, m_tTouchPoint.x, m_tTouchPoint.y);
             moveDistance = ccpSub(newPoint, m_tTouchPoint);
             m_tTouchPoint  = newPoint;
             
@@ -647,7 +646,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
                     default:
                         break;
                 }
-                CCLOG("moveDistance = %f", moveDistance);
+
                 m_pContainer->setPosition(ccpAdd(m_pContainer->getPosition(), moveDistance));
                 
                 maxInset = m_fMaxInset;
