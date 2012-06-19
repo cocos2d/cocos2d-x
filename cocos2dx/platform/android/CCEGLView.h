@@ -25,8 +25,9 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_ANDROID_H__
 #define __CC_EGLVIEW_ANDROID_H__
 
-#include "CCGeometry.h"
-#include "CCEGLViewProtocol.h"
+#include "cocoa/CCGeometry.h"
+#include "platform/CCEGLViewProtocol.h"
+#include "platform/CCPlatFormMacros.h"
 
 NS_CC_BEGIN
 

@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define KM_PLANE_NEAR 4
 #define KM_PLANE_FAR 5
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "utility.h"
 
 struct kmVec3;

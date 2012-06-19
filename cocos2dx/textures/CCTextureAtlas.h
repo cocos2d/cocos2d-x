@@ -27,10 +27,10 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_ATLAS_H__
 #define __CCTEXTURE_ATLAS_H__
 
-#include <string>
 #include "ccTypes.h"
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 #include "ccConfig.h"
+#include <string>
 
 NS_CC_BEGIN
 

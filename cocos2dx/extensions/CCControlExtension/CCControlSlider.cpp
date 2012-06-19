@@ -27,8 +27,8 @@
  */
 
 #include "CCControlSlider.h"
-#include "CCPointExtension.h"
-#include "CCTouch.h"
+#include "support/CCPointExtension.h"
+#include "touch_dispatcher/CCTouch.h"
 #include "CCDirector.h"
 
 NS_CC_EXT_BEGIN

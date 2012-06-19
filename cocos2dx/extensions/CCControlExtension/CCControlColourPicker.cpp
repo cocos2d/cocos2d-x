@@ -29,9 +29,9 @@
  */
 
 #include "CCControlColourPicker.h"
-#include "CCPointExtension.h"
-#include "CCSpriteFrameCache.h"
-#include "CCSpriteBatchNode.h"
+#include "support/CCPointExtension.h"
+#include "sprite_nodes/CCSpriteFrameCache.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 
 NS_CC_EXT_BEGIN
 

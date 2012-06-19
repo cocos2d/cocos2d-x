@@ -21,15 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "CCCommon.h"
-
-#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
-
 #include <Windows.h>
+#include "platform/CCCommon.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN
+
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
 void CCLog(const char * pszFormat, ...)
 {

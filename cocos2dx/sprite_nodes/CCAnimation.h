@@ -26,11 +26,11 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_H__
 #define __CC_ANIMATION_H__
 
-#include "CCPlatformConfig.h"
-#include "CCObject.h"
-#include "CCArray.h"
-#include "CCDictionary.h"
-#include "CCGeometry.h"
+#include "platform/CCPlatformConfig.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCGeometry.h"
 #include "CCSpriteFrame.h"
 #include <string>
 

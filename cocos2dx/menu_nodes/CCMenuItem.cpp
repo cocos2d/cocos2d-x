@@ -23,15 +23,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include <cstring>
+
 #include "CCMenuItem.h"
-#include "CCPointExtension.h"
-#include "CCActionInterval.h"
-#include "CCSprite.h"
-#include "CCLabelAtlas.h"
-#include "CCLabelTTF.h"
-#include "CCScriptSupport.h"
+#include "support/CCPointExtension.h"
+#include "actions/CCActionInterval.h"
+#include "sprite_nodes/CCSprite.h"
+#include "label_nodes/CCLabelAtlas.h"
+#include "label_nodes/CCLabelTTF.h"
+#include "script_support/CCScriptSupport.h"
 #include <stdarg.h>
+#include <cstring>
 
 NS_CC_BEGIN
     

@@ -27,8 +27,8 @@ THE SOFTWARE.
 #define __CCTMX_LAYER_H__
 
 #include "CCTMXObjectGroup.h"
-#include "CCAtlasNode.h"
-#include "CCSpriteBatchNode.h"
+#include "base_nodes/CCAtlasNode.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 #include "CCTMXXMLParser.h"
 NS_CC_BEGIN
 

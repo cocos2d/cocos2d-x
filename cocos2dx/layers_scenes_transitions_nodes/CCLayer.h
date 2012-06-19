@@ -27,12 +27,12 @@ THE SOFTWARE.
 #ifndef __CCLAYER_H__
 #define __CCLAYER_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
-#include "CCTouchDelegateProtocol.h"
-#include "CCAccelerometerDelegate.h"
-#include "CCKeypadDelegate.h"
-#include "CCArray.h"
+#include "touch_dispatcher/CCTouchDelegateProtocol.h"
+#include "platform/CCAccelerometerDelegate.h"
+#include "keypad_dispatcher/CCKeypadDelegate.h"
+#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
 

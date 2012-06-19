@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef KM_GL_MATRIX_H_INCLUDED
 #define KM_GL_MATRIX_H_INCLUDED
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 #define KM_GL_MODELVIEW 0x1700
 #define KM_GL_PROJECTION 0x1701

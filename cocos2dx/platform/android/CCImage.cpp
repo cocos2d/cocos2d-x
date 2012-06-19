@@ -25,15 +25,14 @@ THE SOFTWARE.
 //#define COCOS2D_DEBUG 1
 
 #define __CC_PLATFORM_IMAGE_CPP__
-#include "CCImageCommon_cpp.h"
+#include "platform/CCImageCommon_cpp.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/CCImage.h"
+#include "jni/JniHelper.h"
 
 #include <android/log.h>
 #include <string.h>
 #include <jni.h>
-
-#include "CCPlatformMacros.h"
-#include "CCImage.h"
-#include "jni/JniHelper.h"
 
 
 NS_CC_BEGIN
