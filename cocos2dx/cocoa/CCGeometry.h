@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCGEMETRY_H__
 #define __CCGEMETRY_H__
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "CCObject.h"
 
 NS_CC_BEGIN

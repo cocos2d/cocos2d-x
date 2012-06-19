@@ -31,17 +31,17 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
 #include "CCLabelBMFont.h"
-#include "CCString.h"
+#include "cocoa/CCString.h"
 #include "platform/platform.h"
-#include "CCDictionary.h"
+#include "cocoa/CCDictionary.h"
 #include "CCConfiguration.h"
 #include "CCDrawingPrimitives.h"
-#include "CCSprite.h"
-#include "CCPointExtension.h"
-#include "CCFileUtils.h"
+#include "sprite_nodes/CCSprite.h"
+#include "support/CCPointExtension.h"
+#include "platform/CCFileUtils.h"
 #include "support/data_support/uthash.h"
 #include "CCDirector.h"
-#include "CCTextureCache.h"
+#include "textures/CCTextureCache.h"
 
 using namespace std;
 

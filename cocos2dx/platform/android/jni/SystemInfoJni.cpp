@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "SystemInfoJni.h"
 #include "JniHelper.h"
-#include "CCString.h"
+#include "cocoa/CCString.h"
 
 #include <android/log.h>
 #include <jni.h>

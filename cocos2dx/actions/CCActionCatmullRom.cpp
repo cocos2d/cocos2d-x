@@ -35,7 +35,7 @@
 #include "ccMacros.h"
 #include "support/CCPointExtension.h"
 #include "CCActionCatmullRom.h"
-#include "CCZone.h"
+#include "cocoa/CCZone.h"
 
 using namespace std;
 

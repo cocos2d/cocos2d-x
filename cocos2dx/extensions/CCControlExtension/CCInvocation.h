@@ -5,7 +5,7 @@
 #ifndef __CCINVOCATION_H__
 #define __CCINVOCATION_H__
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 
 NS_CC_EXT_BEGIN
 

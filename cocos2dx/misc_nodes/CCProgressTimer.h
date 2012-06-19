@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __MISC_NODE_CCPROGRESS_TIMER_H__
 #define __MISC_NODE_CCPROGRESS_TIMER_H__
 
-#include "CCSprite.h"
+#include "sprite_nodes/CCSprite.h"
 
 NS_CC_BEGIN
 

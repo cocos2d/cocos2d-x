@@ -26,17 +26,18 @@ THE SOFTWARE.
 
 #include "CCTransition.h"
 #include "CCCamera.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "CCDirector.h"
-#include "CCTouchDispatcher.h"
-#include "CCActionInterval.h"
-#include "CCActionInstant.h"
-#include "CCActionEase.h"
-#include "CCActionCamera.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
+#include "actions/CCActionEase.h"
+#include "actions/CCActionCamera.h"
+#include "actions/CCActionTiledGrid.h"
+#include "actions/CCActionGrid.h"
 #include "CCLayer.h"
-#include "CCActionGrid.h"
-#include "CCRenderTexture.h"
-#include "CCActionTiledGrid.h"
+#include "misc_nodes/CCRenderTexture.h"
+
 
 NS_CC_BEGIN
 

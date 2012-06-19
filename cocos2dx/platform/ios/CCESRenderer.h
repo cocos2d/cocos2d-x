@@ -28,7 +28,7 @@
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import "CCPlatformMacros.h"
+#import "platform/CCPlatformMacros.h"
 #import <QuartzCore/QuartzCore.h>
 
 #import <OpenGLES/EAGL.h>

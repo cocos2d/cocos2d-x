@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCKEYPAD_DELEGATE_H__
 
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 
 NS_CC_BEGIN
 

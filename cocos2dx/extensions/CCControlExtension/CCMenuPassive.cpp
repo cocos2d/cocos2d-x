@@ -1,7 +1,7 @@
 #include "CCMenuPassive.h"
 #include "CCDirector.h"
-#include "CCPointExtension.h"
-#include "CCMenuItem.h"
+#include "support/CCPointExtension.h"
+#include "menu_nodes/CCMenuItem.h"
 #include <vector>
 
 using namespace std;

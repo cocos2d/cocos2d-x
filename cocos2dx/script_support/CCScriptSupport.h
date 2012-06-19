@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
-#include "CCCommon.h"
-#include "CCTouch.h"
-#include "CCSet.h"
+#include "platform/CCCommon.h"
+#include "touch_dispatcher/CCTouch.h"
+#include "cocoa/CCSet.h"
 
 typedef struct lua_State lua_State;
 

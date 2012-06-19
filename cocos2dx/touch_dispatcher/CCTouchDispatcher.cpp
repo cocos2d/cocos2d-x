@@ -25,10 +25,10 @@ THE SOFTWARE.
 
 #include "CCTouchDispatcher.h"
 #include "CCTouchHandler.h"
-#include "CCArray.h"
-#include "CCSet.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCSet.h"
 #include "CCTouch.h"
-#include "CCTexture2D.h"
+#include "textures/CCTexture2D.h"
 #include "support/data_support/ccCArray.h"
 #include "ccMacros.h"
 #include <algorithm>

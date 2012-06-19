@@ -26,12 +26,12 @@ THE SOFTWARE.
 #ifndef __CC_LIST_VIEW_H__
 #define __CC_LIST_VIEW_H__
 
-#include <time.h>
-#include "platform.h"
-#include <vector>
-#include <string>
-//#include "../lua/cocos2dx_support/CCLuaEngine.h"
+
+#include "platform/platform.h"
 #include "CCListViewCell.h"
+#include <string>
+#include <vector>
+#include <time.h>
 
 NS_CC_EXT_BEGIN
 

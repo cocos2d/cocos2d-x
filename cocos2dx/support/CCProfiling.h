@@ -26,10 +26,10 @@ THE SOFTWARE.
 #define __SUPPORT_CCPROFILING_H__
 
 #include "ccConfig.h"
-#include <string>
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 #include "platform/platform.h"
-#include "CCDictionary.h"
+#include "cocoa/CCDictionary.h"
+#include <string>
 
 NS_CC_BEGIN
 
