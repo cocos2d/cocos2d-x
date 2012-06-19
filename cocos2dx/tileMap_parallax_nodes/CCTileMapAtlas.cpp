@@ -24,12 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCTileMapAtlas.h"
-#include "CCFileUtils.h"
-#include "CCTextureAtlas.h"
+#include "platform/CCFileUtils.h"
+#include "textures/CCTextureAtlas.h"
 #include "support/image_support/TGAlib.h"
 #include "ccConfig.h"
-#include "CCDictionary.h"
-#include "CCInteger.h"
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCInteger.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN

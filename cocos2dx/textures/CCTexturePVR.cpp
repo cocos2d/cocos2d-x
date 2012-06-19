@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "support/ccUtils.h"
 #include "CCStdC.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
-#include "ccGLStateCache.h"
+#include "shaders/ccGLStateCache.h"
 #include <cctype>
 
 NS_CC_BEGIN

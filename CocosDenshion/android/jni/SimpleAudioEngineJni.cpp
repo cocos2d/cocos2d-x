@@ -1,5 +1,5 @@
 #include "SimpleAudioEngineJni.h"
-#include "JniHelper.h"
+#include "platform/android/jni/JniHelper.h"
 
 #include <android/log.h>
 

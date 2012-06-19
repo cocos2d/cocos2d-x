@@ -28,19 +28,19 @@
  */
 
 #include "CCParticleBatchNode.h"
-#include "CCTextureCache.h"
-#include "CCTextureAtlas.h"
+#include "textures/CCTextureCache.h"
+#include "textures/CCTextureAtlas.h"
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "effects/CCGrid.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "CCParticleSystem.h"
-#include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
 #include "support/base64.h"
 #include "support/zip_support/ZipUtils.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 
 NS_CC_BEGIN

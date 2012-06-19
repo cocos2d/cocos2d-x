@@ -25,12 +25,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionInterval.h"
-#include "CCSprite.h"
-#include "CCNode.h"
-#include "CCPointExtension.h"
+#include "sprite_nodes/CCSprite.h"
+#include "base_nodes/CCNode.h"
+#include "support/CCPointExtension.h"
 #include "CCStdC.h"
 #include "CCActionInstant.h"
-#include "CCZone.h"
+#include "cocoa/CCZone.h"
 #include <stdarg.h>
 
 NS_CC_BEGIN

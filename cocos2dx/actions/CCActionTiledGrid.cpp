@@ -25,9 +25,9 @@ THE SOFTWARE.
 #include "CCActionTiledGrid.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "effects/CCGrid.h"
-#include "CCZone.h"
+#include "cocoa/CCZone.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN
