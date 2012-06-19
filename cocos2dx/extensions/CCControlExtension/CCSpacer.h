@@ -1,7 +1,7 @@
 #ifndef __CCSPACER_H__
 #define __CCSPACER_H__
 
-#include "CCLayer.h"
+#include "layers_scenes_transitions_nodes/CCLayer.h"
 
 NS_CC_EXT_BEGIN
 

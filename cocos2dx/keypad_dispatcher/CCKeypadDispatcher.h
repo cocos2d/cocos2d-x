@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCKEYPAD_DISPATCHER_H__
 
 #include "CCKeypadDelegate.h"
-#include "CCArray.h"
+#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
 

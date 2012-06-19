@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CCLABEL_ATLAS_H__
 #define __CCLABEL_ATLAS_H__
 
-#include "CCAtlasNode.h"
+#include "base_nodes/CCAtlasNode.h"
 
 NS_CC_BEGIN
 

@@ -27,8 +27,9 @@ THE SOFTWARE.
 #ifndef __ACTIONS_CCACTION_H__
 #define __ACTIONS_CCACTION_H__
 
-#include "CCObject.h"
-#include "CCGeometry.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCGeometry.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

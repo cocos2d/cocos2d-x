@@ -27,11 +27,11 @@ THE SOFTWARE.
 #ifndef __SPITE_NODE_CCSPRITE_H__
 #define __SPITE_NODE_CCSPRITE_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
-#include "CCTextureAtlas.h"
+#include "textures/CCTextureAtlas.h"
 #include "ccTypes.h"
-#include "CCDictionary.h"
+#include "cocoa/CCDictionary.h"
 #include <string>
 
 NS_CC_BEGIN

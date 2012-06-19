@@ -26,12 +26,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionManager.h"
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "support/data_support/ccCArray.h"
 #include "support/data_support/uthash.h"
-#include "CCSet.h"
+#include "cocoa/CCSet.h"
 
 NS_CC_BEGIN
 //

@@ -45,7 +45,7 @@ THE SOFTWARE.
  */
 #include "ccTypes.h"
 #include "ccMacros.h"
-#include "CCGeometry.h"    // for CCPoint
+#include "cocoa/CCGeometry.h"    // for CCPoint
 
 NS_CC_BEGIN
 

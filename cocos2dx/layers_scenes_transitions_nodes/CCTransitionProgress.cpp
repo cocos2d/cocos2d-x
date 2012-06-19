@@ -27,12 +27,12 @@ THE SOFTWARE.
 
 #include "CCTransitionProgress.h"
 #include "CCDirector.h"
-#include "CCRenderTexture.h"
+#include "misc_nodes/CCRenderTexture.h"
+#include "misc_nodes/CCProgressTimer.h"
 #include "CCLayer.h"
-#include "CCActionInstant.h"
-#include "CCProgressTimer.h"
-#include "CCActionProgressTimer.h"
-#include "CCPointExtension.h"
+#include "actions/CCActionInstant.h"
+#include "actions/CCActionProgressTimer.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 

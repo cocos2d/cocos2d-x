@@ -38,8 +38,8 @@
 #define __CCACTION_CATMULLROM_H__
 
 #include "CCActionInterval.h"
-#include "CCNode.h"
-#include "CCGeometry.h"
+#include "base_nodes/CCNode.h"
+#include "cocoa/CCGeometry.h"
 
 NS_CC_BEGIN;
 

@@ -24,11 +24,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCAnimation.h"
-#include "CCTextureCache.h"
-#include "CCTexture2D.h"
+#include "textures/CCTextureCache.h"
+#include "textures/CCTexture2D.h"
 #include "ccMacros.h"
-#include "CCSpriteFrame.h"
-#include "CCZone.h"
+#include "sprite_nodes/CCSpriteFrame.h"
+#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 

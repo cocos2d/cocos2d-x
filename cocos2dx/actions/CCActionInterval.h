@@ -27,11 +27,11 @@ THE SOFTWARE.
 #ifndef __ACTION_CCINTERVAL_ACTION_H__
 #define __ACTION_CCINTERVAL_ACTION_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCAction.h"
 #include "CCProtocols.h"
-#include "CCSpriteFrame.h"
-#include "CCAnimation.h"
+#include "sprite_nodes/CCSpriteFrame.h"
+#include "sprite_nodes/CCAnimation.h"
 #include <vector>
 
 NS_CC_BEGIN

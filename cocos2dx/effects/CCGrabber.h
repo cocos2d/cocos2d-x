@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __EFFECTS_CCGRABBER_H__
 
 #include "CCConfiguration.h"
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN

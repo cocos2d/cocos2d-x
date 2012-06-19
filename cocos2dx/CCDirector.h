@@ -27,11 +27,11 @@ THE SOFTWARE.
 #ifndef __CCDIRECTOR_H__
 #define __CCDIRECTOR_H__
 
-#include "CCPlatformMacros.h"
-#include "CCObject.h"
+#include "platform/CCPlatformMacros.h"
+#include "cocoa/CCObject.h"
 #include "ccTypes.h"
-#include "CCGeometry.h"
-#include "CCArray.h"
+#include "cocoa/CCGeometry.h"
+#include "cocoa/CCArray.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 

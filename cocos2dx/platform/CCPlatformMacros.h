@@ -31,6 +31,7 @@
 #include "CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
 
+
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
 Enable it if you want to cache the texture data.
 Basically,it's only enabled in android
