@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CC_LIST_VIEW_CELL_H_
 
 #include "CCControlDefine.h"
-#include "CCLayer.h"
+#include "layers_scenes_transitions_nodes/CCLayer.h"
 
 NS_CC_EXT_BEGIN
 

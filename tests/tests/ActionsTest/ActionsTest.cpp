@@ -1,6 +1,7 @@
 #include "ActionsTest.h"
 #include "../testResource.h"
-#include "CCActionCatmullRom.h"
+#include "cocos2d.h"
+
 
 CCLayer* NextAction();
 CCLayer* BackAction();

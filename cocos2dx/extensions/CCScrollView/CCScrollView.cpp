@@ -28,15 +28,15 @@
 //
 
 #include "CCScrollView.h"
-#include "CCActionInterval.h"
-#include "CCActionTween.h"
-#include "CCActionInstant.h"
-#include "CCPointExtension.h"
-#include "CCTouchDispatcher.h"
-#include "CCGrid.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionTween.h"
+#include "actions/CCActionInstant.h"
+#include "support/CCPointExtension.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "effects/CCGrid.h"
 #include "CCDirector.h"
 #include "kazmath/GL/matrix.h"
-#include "CCTouch.h"
+#include "touch_dispatcher/CCTouch.h"
 
 NS_CC_EXT_BEGIN
 

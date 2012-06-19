@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCGLPROGRAM_H__
 
 #include "ccMacros.h"
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 
 #include "CCGL.h"
 

@@ -31,8 +31,8 @@
 
 #include "CCControl.h"
 #include "CCInvocation.h"
-#include "CCSprite.h"
-#include "CCMenuItem.h"
+#include "sprite_nodes/CCSprite.h"
+#include "menu_nodes/CCMenuItem.h"
 
 #define SLIDER_MARGIN_H 24
 #define SLIDER_MARGIN_V 8

@@ -27,14 +27,14 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_CACHE_H__
 #define __CCTEXTURE_CACHE_H__
 
+#include "cocoa/CCObject.h"
+#include "cocoa/CCDictionary.h"
+#include "textures/CCTexture2D.h"
 #include <string>
-#include "CCObject.h"
-#include "CCDictionary.h"
-#include "CCTexture2D.h"
 
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "CCImage.h"
+    #include "platform/CCImage.h"
     #include <list>
 #endif
 

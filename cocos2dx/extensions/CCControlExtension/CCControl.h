@@ -31,7 +31,7 @@
 
 #include "CCInvocation.h"
 #include "CCControlUtils.h"
-#include "CCLayer.h"
+#include "layers_scenes_transitions_nodes/CCLayer.h"
 
 NS_CC_EXT_BEGIN
 

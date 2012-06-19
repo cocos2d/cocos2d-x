@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
-#include "CCArray.h"
-#include "CCScriptSupport.h"
+#include "cocoa/CCArray.h"
+#include "script_support/CCScriptSupport.h"
 
 using namespace std;
 

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __PLATFORM_WIN32_UIACCELEROMETER_H__
 #define __PLATFORM_WIN32_UIACCELEROMETER_H__
 
-#include "CCAccelerometerDelegate.h"
+#include "platform/CCAccelerometerDelegate.h"
 
 NS_CC_BEGIN
 

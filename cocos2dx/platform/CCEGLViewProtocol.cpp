@@ -1,10 +1,10 @@
 #include "CCEGLViewProtocol.h"
-#include "CCTouchDispatcher.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "touch_dispatcher/CCTouch.h"
 #include "CCDirector.h"
-#include "CCSet.h"
-#include "CCTouch.h"
-#include "CCDictionary.h"
-#include "CCInteger.h"
+#include "cocoa/CCSet.h"
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCInteger.h"
 
 NS_CC_BEGIN
 

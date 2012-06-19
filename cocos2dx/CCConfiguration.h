@@ -26,9 +26,9 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "CCObject.h"
-#include <string>
+#include "cocoa/CCObject.h"
 #include "CCGL.h"
+#include <string>
 
 NS_CC_BEGIN
 
