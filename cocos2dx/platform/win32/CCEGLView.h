@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __CC_EGLVIEW_WIN32_H__
 
 #include <Windows.h>
-#include "CCCommon.h"
-#include "CCGeometry.h"
-#include "CCEGLViewProtocol.h"
+#include "platform/CCCommon.h"
+#include "cocoa/CCGeometry.h"
+#include "platform/CCEGLViewProtocol.h"
 
 NS_CC_BEGIN
 

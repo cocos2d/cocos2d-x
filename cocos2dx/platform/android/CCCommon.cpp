@@ -23,15 +23,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCCommon.h"
-
-#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
-
-#include "android/jni/MessageJni.h"
+#include "jni/MessageJni.h"
 #include <android/log.h>
 #include <stdio.h>
 #include <jni.h>
 
 NS_CC_BEGIN
+
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
 void CCLog(const char * pszFormat, ...)
 {

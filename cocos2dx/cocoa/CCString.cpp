@@ -1,5 +1,5 @@
 #include "CCString.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
