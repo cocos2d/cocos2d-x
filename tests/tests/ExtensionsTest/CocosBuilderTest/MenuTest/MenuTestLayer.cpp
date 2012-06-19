@@ -5,6 +5,14 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+MenuTestLayer::MenuTestLayer()
+: mMenuItemStatusLabelBMFont(NULL)
+{}
+
+MenuTestLayer::~MenuTestLayer()
+{
+    CC_SAFE_RELEASE(mMenuItemStatusLabelBMFont);
+}
 
 SEL_MenuHandler MenuTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, CCString * pSelectorName) {
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onMenuItemAClicked", MenuTestLayer::onMenuItemAClicked);
