@@ -29,11 +29,11 @@
 #define __PLATFOMR_CCNODE_H__
 
 #include "ccMacros.h"
-#include "CCAffineTransform.h"
-#include "CCArray.h"
+#include "cocoa/CCAffineTransform.h"
+#include "cocoa/CCArray.h"
 #include "CCGL.h"
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
+#include "shaders/CCGLProgram.h"
 #include "kazmath/kazmath.h"
 
 NS_CC_BEGIN

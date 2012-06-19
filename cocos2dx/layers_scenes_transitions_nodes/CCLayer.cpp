@@ -26,15 +26,15 @@ THE SOFTWARE.
 
 #include <stdarg.h>
 #include "CCLayer.h"
-#include "CCTouchDispatcher.h"
-#include "CCKeypadDispatcher.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "CCAccelerometer.h"
 #include "CCDirector.h"
-#include "CCPointExtension.h"
-#include "CCScriptSupport.h"
-#include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "support/CCPointExtension.h"
+#include "script_support/CCScriptSupport.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"

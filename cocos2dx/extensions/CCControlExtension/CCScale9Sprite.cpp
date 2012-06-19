@@ -7,11 +7,11 @@
 //
 
 #include "CCScale9Sprite.h"
-#include "CCSpriteBatchNode.h"
-#include "CCSpriteFrame.h"
-#include "CCSpriteFrameCache.h"
-#include "CCSprite.h"
-#include "CCPointExtension.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
+#include "sprite_nodes/CCSpriteFrame.h"
+#include "sprite_nodes/CCSpriteFrameCache.h"
+#include "sprite_nodes/CCSprite.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_EXT_BEGIN
 

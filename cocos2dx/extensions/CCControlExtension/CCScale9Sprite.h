@@ -9,7 +9,7 @@
 #ifndef __CCScale9Sprite_H__
 #define __CCScale9Sprite_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
 
 

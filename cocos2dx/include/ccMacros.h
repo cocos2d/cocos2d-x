@@ -31,7 +31,7 @@ THE SOFTWARE.
 #define _USE_MATH_DEFINES
 #endif
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "CCStdC.h"
 
 #ifndef CCAssert

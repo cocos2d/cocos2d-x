@@ -1,9 +1,5 @@
 #include "AppDelegate.h"
-
-#include "cocos2d.h"
 #include "HelloWorldScene.h"
-
-#include "CCEGLView.h"
 
 USING_NS_CC;
 

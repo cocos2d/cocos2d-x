@@ -23,13 +23,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #define __CC_PLATFORM_FILEUTILS_CPP__
-#include "CCFileUtilsCommon_cpp.h"
+#include "platform/CCFileUtilsCommon_cpp.h"
 
 using namespace std;
 
 NS_CC_BEGIN
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "jni/SystemInfoJni.h"
 
 // record the resource path

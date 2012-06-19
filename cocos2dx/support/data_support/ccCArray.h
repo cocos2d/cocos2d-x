@@ -42,11 +42,12 @@ THE SOFTWARE.
 #ifndef CC_ARRAY_H
 #define CC_ARRAY_H
 
+#include "ccMacros.h"
+#include "cocoa/CCObject.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include "ccMacros.h"
-#include "CCObject.h"
 
 NS_CC_BEGIN
 

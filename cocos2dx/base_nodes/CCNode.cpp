@@ -24,18 +24,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCString.h"
+#include "cocoa/CCString.h"
 #include "CCNode.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "support/TransformUtils.h"
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
-#include "CCTouch.h"
-#include "CCActionManager.h"
-#include "CCScriptSupport.h"
-#include "CCGLProgram.h"
+#include "touch_dispatcher/CCTouch.h"
+#include "actions/CCActionManager.h"
+#include "script_support/CCScriptSupport.h"
+#include "shaders/CCGLProgram.h"
 // externals
 #include "kazmath/GL/matrix.h"
 

@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __ACTION_CCACTION_MANAGER_H__
 
 #include "CCAction.h"
-#include "CCArray.h"
-#include "CCObject.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCObject.h"
 
 NS_CC_BEGIN
 

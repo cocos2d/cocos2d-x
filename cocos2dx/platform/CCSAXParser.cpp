@@ -25,7 +25,7 @@
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
 #include "CCSAXParser.h"
-#include "CCDictionary.h"
+#include "cocoa/CCDictionary.h"
 #include "CCFileUtils.h"
 
 NS_CC_BEGIN

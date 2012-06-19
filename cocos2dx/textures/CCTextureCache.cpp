@@ -24,25 +24,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include <stack>
-#include <string>
-#include <cctype>
-#include <queue>
-#include <list>
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
-#include "CCFileUtils.h"
-#include "CCImage.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCThread.h"
+#include "platform/CCImage.h"
 #include "support/ccUtils.h"
 #include "CCScheduler.h"
-#include "pthread.h"
-#include "CCThread.h"
-#include "semaphore.h"
-#include "CCString.h"
+#include "cocoa/CCString.h"
 #include <errno.h>
+#include <stack>
+#include <string>
+#include <cctype>
+#include <queue>
+#include <list>
+#include <pthread.h>
+#include <semaphore.h>
 
 using namespace std;
 

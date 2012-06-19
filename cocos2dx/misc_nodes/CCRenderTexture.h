@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCRENDER_TEXTURE_H__
 #define __CCRENDER_TEXTURE_H__
 
-#include "CCNode.h"
-#include "CCSprite.h"
+#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CCSprite.h"
 #include "kazmath/mat4.h"
 
 NS_CC_BEGIN

@@ -25,11 +25,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCAtlasNode.h"
-#include "CCTextureAtlas.h"
+#include "textures/CCTextureAtlas.h"
 #include "CCDirector.h"
-#include "CCGLProgram.h"
-#include "CCShaderCache.h"
-#include "ccGLStateCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
 
