@@ -324,6 +324,8 @@ protected:
 public:
     CCSize getViewSize() { return m_tViewSize; } 
     void setViewSize(CCSize size);
+    CCNode * getContainer();
+    void setContainer(CCNode * pContainer);
 protected:
     /**
      * max and min scale
