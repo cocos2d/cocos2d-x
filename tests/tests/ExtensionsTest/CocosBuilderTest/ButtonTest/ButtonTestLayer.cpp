@@ -5,6 +5,15 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+ButtonTestLayer::ButtonTestLayer()
+: mCCControlEventLabel(NULL)
+{}
+
+ButtonTestLayer::~ButtonTestLayer()
+{
+    CC_SAFE_RELEASE(mCCControlEventLabel);
+}
+
 SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, CCString * pSelectorName) {
     return NULL;    
 }

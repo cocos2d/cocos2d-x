@@ -5,12 +5,17 @@
 
 NS_CC_EXT_BEGIN
 
-#define CCB_MEMBERVARIABLEASSIGNER_GLUE(TARGET, MEMBERVARIABLENAME, MEMBERVARIABLETYPE, MEMBERVARIABLE) if(pTarget == TARGET && pMemberVariableName->compare(MEMBERVARIABLENAME) == 0) { \
-    MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(pNode); \
-    CC_ASSERT(MEMBERVARIABLE); \
-    MEMBERVARIABLE->retain(); \
-    return true; \
-}
+#define CCB_MEMBERVARIABLEASSIGNER_GLUE(TARGET, MEMBERVARIABLENAME, MEMBERVARIABLETYPE, MEMBERVARIABLE) \
+    if (pTarget == TARGET && pMemberVariableName->compare(MEMBERVARIABLENAME) == 0) { \
+        MEMBERVARIABLETYPE pOldVar = MEMBERVARIABLE; \
+        MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(pNode); \
+        CC_ASSERT(MEMBERVARIABLE); \
+        if (pOldVar != MEMBERVARIABLE) { \
+            CC_SAFE_RELEASE(pOldVar); \
+            MEMBERVARIABLE->retain(); \
+        } \
+        return true; \
+    }
 
 class CC_DLL CCBMemberVariableAssigner {
     public:
