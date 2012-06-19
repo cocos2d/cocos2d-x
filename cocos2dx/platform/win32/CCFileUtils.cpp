@@ -190,10 +190,11 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
     return pRet->m_sString.c_str();
 }
 
-unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long* pSize)
 {
-    unsigned char * pBuffer = NULL;
-
+    unsigned char* pBuffer = NULL;
+    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invaild parameters.");
+    *pSize = 0;
     do 
     {
         // read the file from hardware

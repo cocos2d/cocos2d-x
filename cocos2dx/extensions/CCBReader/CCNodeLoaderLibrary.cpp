@@ -73,6 +73,7 @@ CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(CCString * pClassName) {
 void CCNodeLoaderLibrary::purge(bool pReleaseCCNodeLoaders) {
     if(pReleaseCCNodeLoaders) {
         for(CCNodeLoaderMap::iterator it = this->mCCNodeLoaders.begin(); it != this->mCCNodeLoaders.end(); it++) {
+            it->first->release();
             it->second->release();
         }
     }

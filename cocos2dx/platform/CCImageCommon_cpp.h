@@ -94,22 +94,28 @@ CCImage::~CCImage()
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
-    CC_UNUSED_PARAM(eImgFmt);
-    
-    unsigned long nSize;
-    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath), "rb", &nSize);
-    
-    return initWithImageData(pBuffer, nSize, eImgFmt);
+    bool bRet = false;
+    unsigned long nSize = 0;
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath), "rb", &nSize);
+    if (pBuffer != NULL && nSize > 0)
+    {
+        bRet = initWithImageData(pBuffer, nSize, eImgFmt);
+    }
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    return bRet;
 }
 
 bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
-    CC_UNUSED_PARAM(imageType);
-
-    unsigned long nSize;
+    bool bRet = false;
+    unsigned long nSize = 0;
     unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
-    
-    return initWithImageData(pBuffer, nSize, imageType);
+    if (pBuffer != NULL && nSize > 0)
+    {
+        bRet = initWithImageData(pBuffer, nSize, imageType);
+    }
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    return bRet;
 }
 
 bool CCImage::initWithImageData(void * pData, 
