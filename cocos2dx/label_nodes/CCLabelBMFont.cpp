@@ -359,23 +359,24 @@ static std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned sh
 //
 //FNTConfig Cache - free functions
 //
-CCDictionary *configurations = NULL;
+static CCDictionary* s_pConfigurations = NULL;
+
 CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
 {
     CCBMFontConfiguration* pRet = NULL;
 
-    if( configurations == NULL )
+    if( s_pConfigurations == NULL )
     {
-        configurations = new CCDictionary();
+        s_pConfigurations = new CCDictionary();
     }
 
-    pRet = (CCBMFontConfiguration*)configurations->objectForKey(fntFile);
+    pRet = (CCBMFontConfiguration*)s_pConfigurations->objectForKey(fntFile);
     if( pRet == NULL )
     {
         pRet = CCBMFontConfiguration::create(fntFile);
         if (pRet)
         {
-            configurations->setObject(pRet, fntFile);
+            s_pConfigurations->setObject(pRet, fntFile);
         }        
     }
 
@@ -384,10 +385,10 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
 
 void FNTConfigRemoveCache( void )
 {
-    if (configurations)
+    if (s_pConfigurations)
     {
-        configurations->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(configurations);
+        s_pConfigurations->removeAllObjects();
+        CC_SAFE_RELEASE_NULL(s_pConfigurations);
     }
 }
 
@@ -1363,8 +1364,8 @@ void CCLabelBMFont::setFntFile(const char* fntFile)
 
         m_sFntFile = fntFile;
 
-        CC_SAFE_RELEASE(m_pConfiguration);
         CC_SAFE_RETAIN(newConf);
+        CC_SAFE_RELEASE(m_pConfiguration);
         m_pConfiguration = newConf;
 
         this->setTexture(CCTextureCache::sharedTextureCache()->addImage(m_pConfiguration->getAtlasName()));

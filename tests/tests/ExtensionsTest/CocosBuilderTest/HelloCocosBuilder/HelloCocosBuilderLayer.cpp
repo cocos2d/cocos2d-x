@@ -14,6 +14,17 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+HelloCocosBuilderLayer::HelloCocosBuilderLayer()
+: mBurstSprite(NULL)
+, mTestTitleLabelTTF(NULL)
+{}
+
+HelloCocosBuilderLayer::~HelloCocosBuilderLayer()
+{
+    CC_SAFE_RELEASE(mBurstSprite);
+    CC_SAFE_RELEASE(mTestTitleLabelTTF);
+}
+
 void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pCCNodeName, CCNodeLoader * pCCNodeLoader) {
     /* Create an autorelease CCNodeLoaderLibrary. */
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
