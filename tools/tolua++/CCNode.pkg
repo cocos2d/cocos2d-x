@@ -50,7 +50,7 @@ class CCNode : public CCObject
     tolua_property__CCSkewY         float skewY;
 //    tolua_property__CCIsVisible     bool  isVisible;
     tolua_property__CCAnchorPoint   CCPoint anchorPoint;
-    tolua_property__CCContentSize   CCSize contentSize;
+//    tolua_property__CCContentSize   CCSize contentSize;
     tolua_property__CCTag           int tag;
 
     CCArray* getChildren();

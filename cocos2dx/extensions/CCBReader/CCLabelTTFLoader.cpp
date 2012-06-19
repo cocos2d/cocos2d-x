@@ -13,10 +13,6 @@ USING_NS_CC_EXT;
 #define PROPERTY_STRING "string"
 #define PROPERTY_DIMENSIONS "dimensions"
 
-CCLabelTTF * CCLabelTTFLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCLabelTTF::node();
-}
-
 void CCLabelTTFLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_COLOR) == 0) {
         ((CCLabelTTF *)pNode)->setColor(pCCColor3B);

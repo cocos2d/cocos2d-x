@@ -14,10 +14,6 @@ USING_NS_CC_EXT;
 #define PROPERTY_INSETRIGHT "insetRight"
 #define PROPERTY_INSETBOTTOM "insetBottom"
 
-CCScale9Sprite * CCScale9SpriteLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCScale9Sprite::node();
-}
-
 void CCScale9SpriteLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_SPRITEFRAME) == 0) {
         ((CCScale9Sprite *)pNode)->initWithSpriteFrame(pCCSpriteFrame);
