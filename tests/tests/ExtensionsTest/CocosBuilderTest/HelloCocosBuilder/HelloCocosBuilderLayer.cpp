@@ -9,6 +9,7 @@
 #include "../SpriteTest/SpriteTestLayerLoader.h"
 #include "../MenuTest/MenuTestLayerLoader.h"
 #include "../ParticleSystemTest/ParticleSystemTestLayerLoader.h"
+#include "../ScrollViewTest/ScrollViewTestLayerLoader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -101,5 +102,5 @@ void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, coc
 }
 
 void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    CCLog("onScrollViewTestClicked\n");
+    this->openTest("ccb/ScrollViewTest.ccbi", "ScrollViewTestLayer", ScrollViewTestLayerLoader::loader());
 }

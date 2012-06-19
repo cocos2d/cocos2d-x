@@ -17,7 +17,7 @@ class CC_DLL CCNodeLoaderLibrary : public CCObject {
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoaderLibrary, library);
 
         CCNodeLoaderLibrary();
-        ~CCNodeLoaderLibrary();
+        virtual ~CCNodeLoaderLibrary();
 
         void registerDefaultCCNodeLoaders();
         void registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader);

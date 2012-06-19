@@ -10,10 +10,6 @@ USING_NS_CC_EXT;
 #define PROPERTY_VECTOR "vector"
 #define PROPERTY_BLENDFUNC "blendFunc"
 
-CCLayerGradient * CCLayerGradientLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCLayerGradient::node();
-}
-
 void CCLayerGradientLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_STARTCOLOR) == 0) {
         ((CCLayerGradient *)pNode)->setStartColor(pCCColor3B);

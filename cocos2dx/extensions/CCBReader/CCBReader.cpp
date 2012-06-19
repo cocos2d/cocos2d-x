@@ -185,7 +185,7 @@ bool CCBReader::readBool() {
     return this->readByte();
 }
 
-int CCBReader::readInt(bool pSign) {
+int CCBReader::readInt(bool pSigned) {
     int numBits = 0;
     while(!this->getBit()) {
         numBits++;
@@ -200,7 +200,7 @@ int CCBReader::readInt(bool pSign) {
     current |= 1 << numBits;
     
     int num;
-    if(pSign) {
+    if(pSigned) {
         int s = current % 2;
         if(s) {
             num = (int)(current / 2);
