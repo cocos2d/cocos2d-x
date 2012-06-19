@@ -24,17 +24,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
-#include "CCTextureAtlas.h"
-#include "CCPointExtension.h"
+#include "textures/CCTextureAtlas.h"
+#include "support/CCPointExtension.h"
 #include "CCDrawingPrimitives.h"
 #include "ccConfig.h"
-#include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
-#include "CCInteger.h"
-#include "CCFileUtils.h"
+#include "cocoa/CCInteger.h"
+#include "platform/CCFileUtils.h"
 // external
 #include "kazmath/GL/matrix.h"
 

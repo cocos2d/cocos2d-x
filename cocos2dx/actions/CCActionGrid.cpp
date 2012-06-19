@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 #include "CCDirector.h"
 #include "effects/CCGrid.h"
-#include "CCZone.h"
+#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 // implementation of CCGridAction

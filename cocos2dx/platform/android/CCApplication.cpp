@@ -1,11 +1,10 @@
-#include "CCApplication.h"
 #include "jni/JniHelper.h"
+#include "jni/SystemInfoJni.h"
+#include "CCApplication.h"
 #include "CCDirector.h"
 #include "CCEGLView.h"
-#include "android/jni/SystemInfoJni.h"
 #include <android/log.h>
 #include <jni.h>
-
 #include <cstring>
 
 #define  LOG_TAG    "CCApplication_android Debug"

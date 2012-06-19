@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #define __CC_PLATFORM_FILEUTILS_CPP__
-#include "CCFileUtilsCommon_cpp.h"
-#include "windows.h"
+#include "platform/CCFileUtilsCommon_cpp.h"
+#include <windows.h>
 #include "CCDirector.h"
 
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"

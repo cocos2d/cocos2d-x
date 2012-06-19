@@ -24,8 +24,8 @@ THE SOFTWARE.
 #include "MessageJni.h"
 #include "CCDirector.h"
 #include "JniHelper.h"
-#include "CCApplication.h"
-#include "CCFileUtils.h"
+#include "../CCApplication.h"
+#include "platform/CCFileUtils.h"
 #include "CCEventType.h"
 #include "extensions/CCNotificationCenter/CCNotificationCenter.h"
 

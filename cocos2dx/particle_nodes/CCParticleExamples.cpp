@@ -25,8 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCParticleExamples.h"
 #include "CCDirector.h"
-#include "CCTextureCache.h"
-#include "CCPointExtension.h"
+#include "textures/CCTextureCache.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 //

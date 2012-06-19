@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCCamera.h"
-#include "CCString.h"
+#include "cocoa/CCString.h"
 #include "CCGL.h"
 
 #include "CCDrawingPrimitives.h"

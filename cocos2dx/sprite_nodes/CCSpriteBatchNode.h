@@ -28,11 +28,11 @@ THE SOFTWARE.
 #ifndef __CC_SPRITE_BATCH_NODE_H__
 #define __CC_SPRITE_BATCH_NODE_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
-#include "CCTextureAtlas.h"
+#include "textures/CCTextureAtlas.h"
 #include "ccMacros.h"
-#include "CCArray.h"
+#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
 

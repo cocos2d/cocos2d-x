@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCSCENE_H__
 #define __CCSCENE_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 
 NS_CC_BEGIN
 

@@ -27,10 +27,10 @@ THE SOFTWARE.
 #ifndef __CCTMX_OBJECT_GROUP_H__
 #define __CCTMX_OBJECT_GROUP_H__
 
-#include "CCGeometry.h"
-#include "CCString.h"
-#include "CCArray.h"
-#include "CCDictionary.h"
+#include "cocoa/CCGeometry.h"
+#include "cocoa/CCString.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCDictionary.h"
 
 NS_CC_BEGIN
 
