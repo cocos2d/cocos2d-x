@@ -1335,10 +1335,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\CCBReader\CCMenuLoader.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\extensions\CCBReader\CCMenuLoader.h"
 					>
 				</File>

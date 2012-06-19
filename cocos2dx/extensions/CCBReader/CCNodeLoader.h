@@ -7,8 +7,10 @@
 NS_CC_EXT_BEGIN
 
 #define CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createCCNode(cocos2d::CCNode * pParent, cocos2d::extension::CCBReader * pCCBReader) { \
-return T::node(); \
+    return T::node(); \
 }
+
+#define CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createCCNode(cocos2d::CCNode * pParent, cocos2d::extension::CCBReader * pCCBReader) = 0
 
 struct BlockData {
     SEL_MenuHandler mSELMenuHandler;
@@ -26,13 +28,14 @@ class CCBReader;
 
 class CC_DLL CCNodeLoader : public CCObject {
     public:
+        virtual ~CCNodeLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoader, loader);
 
         virtual CCNode * loadCCNode(CCNode *, CCBReader * pCCBReader);
         virtual void parseProperties(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
 
     protected:
-        virtual CCNode * createCCNode(CCNode * pParent, CCBReader * pCCBReader);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCNode);
 
         virtual CCPoint parsePropTypePosition(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
         virtual CCPoint parsePropTypePoint(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
