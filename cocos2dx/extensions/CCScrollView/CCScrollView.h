@@ -184,6 +184,7 @@ public:
 
     CCNode * getContainer();
     void setContainer(CCNode * pContainer);
+
     /**
      * direction allowed to scroll. CCScrollViewDirectionBoth by default.
      */
@@ -331,12 +332,6 @@ protected:
      * Hence, this scroll view will use a separate size property.
      */
     CCSize m_tViewSize;
-public:
-    CCSize getViewSize() { return m_tViewSize; } 
-    void setViewSize(CCSize size);
-    CCNode * getContainer();
-    void setContainer(CCNode * pContainer);
-protected:
     /**
      * max and min scale
      */
