@@ -27,17 +27,18 @@ THE SOFTWARE.
 
 #include "CCFileUtils.h"
 #include "CCDirector.h"
-#include "CCDictionary.h"
+#include "cocoa/CCDictionary.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+
+#include "cocoa/CCString.h"
+#include "CCSAXParser.h"
+#include "support/zip_support/unzip.h"
 
 #include <stack>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
-#include "CCString.h"
-#include "CCSAXParser.h"
-#include "support/zip_support/unzip.h"
 
 NS_CC_BEGIN
 

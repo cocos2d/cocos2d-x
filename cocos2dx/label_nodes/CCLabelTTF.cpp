@@ -24,8 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelTTF.h"
 #include "CCDirector.h"
-#include "CCGLProgram.h"
-#include "CCShaderCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/CCShaderCache.h"
 #include "CCApplication.h"
 
 NS_CC_BEGIN

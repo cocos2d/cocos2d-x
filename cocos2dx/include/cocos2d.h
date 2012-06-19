@@ -135,7 +135,7 @@ THE SOFTWARE.
     #include "platform/ios/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#if (CC_TARGET_PLATFROM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "platform/android/CCAccelerometer.h"
     #include "platform/android/CCApplication.h"
     #include "platform/android/CCEGLView.h"
@@ -143,7 +143,7 @@ THE SOFTWARE.
     #include "platform/android/CCStdC.h"
 #endif // CC_TARGET_PLATFROM == CC_PLATFORM_ANDROID
 
-#if (CC_TARGET_PLATFROM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "platform/win32/CCAccelerometer.h"
 #include "platform/win32/CCApplication.h"
 #include "platform/win32/CCEGLView.h"

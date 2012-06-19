@@ -26,10 +26,10 @@ THE SOFTWARE.
 
 #include "CCAction.h"
 #include "CCActionInterval.h"
-#include "CCNode.h"
-#include "CCPointExtension.h"
+#include "base_nodes/CCNode.h"
+#include "support/CCPointExtension.h"
 #include "CCDirector.h"
-#include "CCZone.h"
+#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 //
