@@ -718,13 +718,13 @@ JSBool S_CCLayer::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *v
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kIsTouchEnabled:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsTouchEnabled()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isTouchEnabled()));
 		break;
 	case kIsAccelerometerEnabled:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsAccelerometerEnabled()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isAccelerometerEnabled()));
 		break;
 	case kIsKeypadEnabled:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsKeypadEnabled()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isKeypadEnabled()));
 		break;
 	default:
 		break;
@@ -739,13 +739,13 @@ JSBool S_CCLayer::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool s
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kIsTouchEnabled:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsTouchEnabled(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setTouchEnabled(tmp); } while (0);
 		break;
 	case kIsAccelerometerEnabled:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsAccelerometerEnabled(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setAccelerometerEnabled(tmp); } while (0);
 		break;
 	case kIsKeypadEnabled:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsKeypadEnabled(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setKeypadEnabled(tmp); } while (0);
 		break;
 	default:
 		break;
@@ -1851,7 +1851,7 @@ JSBool S_CCLabelBMFont::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, js
 				// don't know what this is (c ~> js)
 		break;
 	case kIsOpacityModifyRGB:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsOpacityModifyRGB()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isOpacityModifyRGB()));
 		break;
 	case kString:
 				// don't know what this is (c ~> js)
@@ -1885,7 +1885,7 @@ JSBool S_CCLabelBMFont::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 		} while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsOpacityModifyRGB(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setOpacityModifyRGB(tmp); } while (0);
 		break;
 	case kString:
 				// don't know what this is (js ~> c)
@@ -2412,7 +2412,7 @@ JSBool S_CCCamera::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kDirty:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getDirty()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isDirty()));
 		break;
 	default:
 		break;
@@ -2563,7 +2563,7 @@ JSBool S_CCMenu::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *va
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getOpacity(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsOpacityModifyRGB()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isOpacityModifyRGB()));
 		break;
 	default:
 		break;
@@ -3400,7 +3400,7 @@ JSBool S_CCMenuItemSprite::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getOpacity(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsOpacityModifyRGB()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isOpacityModifyRGB()));
 		break;
 	default:
 		break;
@@ -5002,7 +5002,7 @@ JSBool S_CCLayerColor::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsv
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getOpacity(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsOpacityModifyRGB()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isOpacityModifyRGB()));
 		break;
 	default:
 		break;
@@ -5271,7 +5271,7 @@ JSBool S_CCTexture2D::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsva
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getMaxT(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
 		break;
 	case kHasPremultipliedAlpha:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getHasPremultipliedAlpha()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->hasPremultipliedAlpha()));
 		break;
 	case kPixelFormat:
 				// don't know what this is (c ~> js)
@@ -6818,7 +6818,7 @@ JSBool S_CCParticleSystem::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kIsActive:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsActive()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isActive()));
 		break;
 	case kParticleCount:
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getParticleCount(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
@@ -6916,10 +6916,10 @@ JSBool S_CCParticleSystem::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 				// don't know what this is (c ~> js)
 		break;
 	case kIsBlendAdditive:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsBlendAdditive()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isBlendAdditive()));
 		break;
 	case kIsAutoRemoveOnFinish:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsAutoRemoveOnFinish()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isAutoRemoveOnFinish()));
 		break;
 	case kEmitterMode:
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getEmitterMode(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
@@ -7109,10 +7109,10 @@ JSBool S_CCParticleSystem::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 				// don't know what this is (js ~> c)
 		break;
 	case kIsBlendAdditive:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsBlendAdditive(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setBlendAdditive(tmp); } while (0);
 		break;
 	case kIsAutoRemoveOnFinish:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsAutoRemoveOnFinish(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setAutoRemoveOnFinish(tmp); } while (0);
 		break;
 	case kEmitterMode:
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setEmitterMode(tmp); } while (0);
@@ -11037,7 +11037,7 @@ JSBool S_CCAtlasNode::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsva
 		} while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsOpacityModifyRGB()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isOpacityModifyRGB()));
 		break;
 	case kBlendFunc:
 				// don't know what this is (c ~> js)
@@ -11070,7 +11070,7 @@ JSBool S_CCAtlasNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBo
 		} while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsOpacityModifyRGB(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setOpacityModifyRGB(tmp); } while (0);
 		break;
 	case kBlendFunc:
 				// don't know what this is (js ~> c)
@@ -13425,7 +13425,7 @@ JSBool S_CCLayerGradient::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, 
 		} while (0);
 		break;
 	case kIsCompressedInterpolation:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsCompressedInterpolation()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isCompressedInterpolation()));
 		break;
 	default:
 		break;
@@ -13478,7 +13478,7 @@ JSBool S_CCLayerGradient::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 		} while (0);
 		break;
 	case kIsCompressedInterpolation:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsCompressedInterpolation(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setCompressedInterpolation(tmp); } while (0);
 		break;
 	default:
 		break;
@@ -16166,7 +16166,7 @@ JSBool S_CCNode::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *va
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getSkewY(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
 		break;
 	case kIsVisible:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsVisible()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isVisible()));
 		break;
 	case kAnchorPoint:
 		do {
@@ -16191,7 +16191,7 @@ JSBool S_CCNode::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *va
 		} while (0);
 		break;
 	case kIsRunning:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsRunning()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isRunning()));
 		break;
 	case kParent:
 		do {
@@ -16204,7 +16204,7 @@ JSBool S_CCNode::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *va
 		} while (0);
 		break;
 	case kIsIgnoreAnchorPointForPosition:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIgnoreAnchorPointForPosition()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isIgnoreAnchorPointForPosition()));
 		break;
 	case kTag:
 		do { jsval tmp; JS_NewNumberValue(cx, cobj->getTag(), &tmp); JS_SET_RVAL(cx, val, tmp); } while (0);
@@ -16272,7 +16272,7 @@ JSBool S_CCNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool st
 		do { double tmp; JS_ValueToNumber(cx, *val, &tmp); cobj->setSkewY(tmp); } while (0);
 		break;
 	case kIsVisible:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsVisible(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setVisible(tmp); } while (0);
 		break;
 	case kAnchorPoint:
 		do {
@@ -16293,7 +16293,7 @@ JSBool S_CCNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool st
 		} while (0);
 		break;
 	case kIsIgnoreAnchorPointForPosition:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIgnoreAnchorPointForPosition(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->ignoreAnchorPointForPosition(tmp); } while (0);
 		break;
 	case kTag:
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setTag(tmp); } while (0);
@@ -20509,10 +20509,10 @@ JSBool S_CCMenuItem::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kIsSelected:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsSelected()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isSelected()));
 		break;
 	case kIsEnabled:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsEnabled()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isEnabled()));
 		break;
 	default:
 		break;
@@ -20527,7 +20527,7 @@ JSBool S_CCMenuItem::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kIsEnabled:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setIsEnabled(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setEnabled(tmp); } while (0);
 		break;
 	default:
 		break;
@@ -24584,7 +24584,7 @@ JSBool S_CCMenuItemLabel::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, 
 		} while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsOpacityModifyRGB()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isOpacityModifyRGB()));
 		break;
 	default:
 		break;
@@ -26707,7 +26707,7 @@ JSBool S_CCSprite::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 				// don't know what this is (c ~> js)
 		break;
 	case kIsOpacityModifyRGB:
-		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->getIsOpacityModifyRGB()));
+		JS_SET_RVAL(cx, val, BOOLEAN_TO_JSVAL(cobj->isOpacityModifyRGB()));
 		break;
 	default:
 		break;

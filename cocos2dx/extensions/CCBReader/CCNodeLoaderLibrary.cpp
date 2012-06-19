@@ -13,6 +13,7 @@
 #include "CCMenuItemImageLoader.h"
 #include "CCControlButtonLoader.h"
 #include "CCParticleSystemQuadLoader.h"
+#include "CCScrollViewLoader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -34,6 +35,7 @@ void CCNodeLoaderLibrary::registerDefaultCCNodeLoaders() {
     this->registerCCNodeLoader("CCLabelBMFont", CCLabelBMFontLoader::loader());
     this->registerCCNodeLoader("CCLabelTTF", CCLabelTTFLoader::loader());
     this->registerCCNodeLoader("CCScale9Sprite", CCScale9SpriteLoader::loader());
+    this->registerCCNodeLoader("CCScrollView", CCScrollViewLoader::loader());
     this->registerCCNodeLoader("CCBFile", CCBFileLoader::loader());
     this->registerCCNodeLoader("CCMenu", CCMenuLoader::loader());
     this->registerCCNodeLoader("CCMenuItemImage", CCMenuItemImageLoader::loader());
@@ -96,7 +98,7 @@ void CCNodeLoaderLibrary::purgeSharedCCNodeLoaderLibrary() {
 
 CCNodeLoaderLibrary * CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary() {
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::library();
-
+    
     ccNodeLoaderLibrary->registerDefaultCCNodeLoaders();
 
     return ccNodeLoaderLibrary;

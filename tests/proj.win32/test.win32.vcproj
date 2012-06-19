@@ -1001,6 +1001,18 @@
 								>
 							</File>
 						</Filter>
+						<Filter
+							Name="ScrollViewTest"
+							>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
 					</Filter>
 				</Filter>
 				<Filter

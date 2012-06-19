@@ -67,12 +67,13 @@ extensions/CCBReader/CCLabelTTFLoader.cpp \
 extensions/CCBReader/CCLayerLoader.cpp \
 extensions/CCBReader/CCLayerColorLoader.cpp \
 extensions/CCBReader/CCLayerGradientLoader.cpp \
-extensions/CCBReader/CCMenuLoader.cpp \
 extensions/CCBReader/CCMenuItemLoader.cpp \
 extensions/CCBReader/CCMenuItemImageLoader.cpp \
 extensions/CCBReader/CCSpriteLoader.cpp \
 extensions/CCBReader/CCScale9SpriteLoader.cpp \
+extensions/CCBReader/CCScrollViewLoader.cpp \
 extensions/CCBReader/CCParticleSystemQuadLoader.cpp \
+extensions/CCScrollView/CCScrollView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

@@ -98,7 +98,6 @@
 		1551A67F158F2ADE00E66CFE /* CCMenuItemImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A3B2158F2ADE00E66CFE /* CCMenuItemImageLoader.h */; };
 		1551A680158F2ADE00E66CFE /* CCMenuItemLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A3B3158F2ADE00E66CFE /* CCMenuItemLoader.cpp */; };
 		1551A681158F2ADE00E66CFE /* CCMenuItemLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A3B4158F2ADE00E66CFE /* CCMenuItemLoader.h */; };
-		1551A682158F2ADE00E66CFE /* CCMenuLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A3B5158F2ADE00E66CFE /* CCMenuLoader.cpp */; };
 		1551A683158F2ADE00E66CFE /* CCMenuLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A3B6158F2ADE00E66CFE /* CCMenuLoader.h */; };
 		1551A684158F2ADE00E66CFE /* CCNodeLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A3B7158F2ADE00E66CFE /* CCNodeLoader.cpp */; };
 		1551A685158F2ADE00E66CFE /* CCNodeLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A3B8158F2ADE00E66CFE /* CCNodeLoader.h */; };
@@ -363,6 +362,10 @@
 		1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */; };
 		1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A627158F2ADE00E66CFE /* CCTouchHandler.h */; };
 		1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */; };
+		159A667D15904B4C003AEEC0 /* CCScrollViewLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159A667B15904B4C003AEEC0 /* CCScrollViewLoader.cpp */; };
+		159A667E15904B4C003AEEC0 /* CCScrollViewLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 159A667C15904B4C003AEEC0 /* CCScrollViewLoader.h */; };
+		159A668315904B57003AEEC0 /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159A668115904B57003AEEC0 /* CCScrollView.cpp */; };
+		159A668415904B57003AEEC0 /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 159A668215904B57003AEEC0 /* CCScrollView.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -458,7 +461,6 @@
 		1551A3B2158F2ADE00E66CFE /* CCMenuItemImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItemImageLoader.h; sourceTree = "<group>"; };
 		1551A3B3158F2ADE00E66CFE /* CCMenuItemLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuItemLoader.cpp; sourceTree = "<group>"; };
 		1551A3B4158F2ADE00E66CFE /* CCMenuItemLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItemLoader.h; sourceTree = "<group>"; };
-		1551A3B5158F2ADE00E66CFE /* CCMenuLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuLoader.cpp; sourceTree = "<group>"; };
 		1551A3B6158F2ADE00E66CFE /* CCMenuLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuLoader.h; sourceTree = "<group>"; };
 		1551A3B7158F2ADE00E66CFE /* CCNodeLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNodeLoader.cpp; sourceTree = "<group>"; };
 		1551A3B8158F2ADE00E66CFE /* CCNodeLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeLoader.h; sourceTree = "<group>"; };
@@ -725,6 +727,10 @@
 		1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		1551A627158F2ADE00E66CFE /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos2dx-Prefix.pch"; sourceTree = "<group>"; };
+		159A667B15904B4C003AEEC0 /* CCScrollViewLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollViewLoader.cpp; sourceTree = "<group>"; };
+		159A667C15904B4C003AEEC0 /* CCScrollViewLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollViewLoader.h; sourceTree = "<group>"; };
+		159A668115904B57003AEEC0 /* CCScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
+		159A668215904B57003AEEC0 /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -892,6 +898,7 @@
 		1551A39B158F2ADE00E66CFE /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				159A668015904B57003AEEC0 /* CCScrollView */,
 				1551A39C158F2ADE00E66CFE /* CCBReader */,
 				1551A3C2158F2ADE00E66CFE /* CCControlExtension */,
 				1551A3DC158F2ADE00E66CFE /* CCListView */,
@@ -904,6 +911,8 @@
 		1551A39C158F2ADE00E66CFE /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
+				159A667B15904B4C003AEEC0 /* CCScrollViewLoader.cpp */,
+				159A667C15904B4C003AEEC0 /* CCScrollViewLoader.h */,
 				1551A39D158F2ADE00E66CFE /* CCBFileLoader.cpp */,
 				1551A39E158F2ADE00E66CFE /* CCBFileLoader.h */,
 				1551A39F158F2ADE00E66CFE /* CCBMemberVariableAssigner.h */,
@@ -928,7 +937,6 @@
 				1551A3B2158F2ADE00E66CFE /* CCMenuItemImageLoader.h */,
 				1551A3B3158F2ADE00E66CFE /* CCMenuItemLoader.cpp */,
 				1551A3B4158F2ADE00E66CFE /* CCMenuItemLoader.h */,
-				1551A3B5158F2ADE00E66CFE /* CCMenuLoader.cpp */,
 				1551A3B6158F2ADE00E66CFE /* CCMenuLoader.h */,
 				1551A3B7158F2ADE00E66CFE /* CCNodeLoader.cpp */,
 				1551A3B8158F2ADE00E66CFE /* CCNodeLoader.h */,
@@ -1433,6 +1441,15 @@
 			path = touch_dispatcher;
 			sourceTree = "<group>";
 		};
+		159A668015904B57003AEEC0 /* CCScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				159A668115904B57003AEEC0 /* CCScrollView.cpp */,
+				159A668215904B57003AEEC0 /* CCScrollView.h */,
+			);
+			path = CCScrollView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1639,6 +1656,8 @@
 				1551A870158F2ADF00E66CFE /* CCTouchDispatcher.h in Headers */,
 				1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */,
 				1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */,
+				159A667E15904B4C003AEEC0 /* CCScrollViewLoader.h in Headers */,
+				159A668415904B57003AEEC0 /* CCScrollView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1737,7 +1756,6 @@
 				1551A67C158F2ADE00E66CFE /* CCLayerLoader.cpp in Sources */,
 				1551A67E158F2ADE00E66CFE /* CCMenuItemImageLoader.cpp in Sources */,
 				1551A680158F2ADE00E66CFE /* CCMenuItemLoader.cpp in Sources */,
-				1551A682158F2ADE00E66CFE /* CCMenuLoader.cpp in Sources */,
 				1551A684158F2ADE00E66CFE /* CCNodeLoader.cpp in Sources */,
 				1551A686158F2ADE00E66CFE /* CCNodeLoaderLibrary.cpp in Sources */,
 				1551A689158F2ADE00E66CFE /* CCParticleSystemQuadLoader.cpp in Sources */,
@@ -1849,6 +1867,8 @@
 				1551A86B158F2ADF00E66CFE /* CCTMXXMLParser.cpp in Sources */,
 				1551A86F158F2ADF00E66CFE /* CCTouchDispatcher.cpp in Sources */,
 				1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */,
+				159A667D15904B4C003AEEC0 /* CCScrollViewLoader.cpp in Sources */,
+				159A668315904B57003AEEC0 /* CCScrollView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

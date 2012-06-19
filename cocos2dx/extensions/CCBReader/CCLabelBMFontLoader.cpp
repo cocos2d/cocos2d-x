@@ -9,10 +9,6 @@ USING_NS_CC_EXT;
 #define PROPERTY_FNTFILE "fntFile"
 #define PROPERTY_STRING "string"
 
-CCLabelBMFont * CCLabelBMFontLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCLabelBMFont::node();
-}
-
 void CCLabelBMFontLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_COLOR) == 0) {
         ((CCLabelBMFont *)pNode)->setColor(pCCColor3B);
