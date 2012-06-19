@@ -98,7 +98,7 @@ void CCNodeLoaderLibrary::purgeSharedCCNodeLoaderLibrary() {
 
 CCNodeLoaderLibrary * CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary() {
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::library();
-
+    
     ccNodeLoaderLibrary->registerDefaultCCNodeLoaders();
 
     return ccNodeLoaderLibrary;

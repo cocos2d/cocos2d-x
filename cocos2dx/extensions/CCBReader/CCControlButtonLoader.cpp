@@ -22,10 +22,6 @@ USING_NS_CC_EXT;
 #define PROPERTY_BACKGROUNDSPRITEFRAME_HIGHLIGHTED "backgroundSpriteFrame|2"
 #define PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED "backgroundSpriteFrame|3"
 
-CCControl * CCControlButtonLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCControlButton::node();
-}
-
 void CCControlButtonLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_ZOOMONTOUCHDOWN) == 0) {
         ((CCControlButton *)pNode)->setZoomOnTouchDown(pCheck);

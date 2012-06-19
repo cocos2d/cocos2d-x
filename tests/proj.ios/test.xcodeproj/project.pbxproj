@@ -35,7 +35,6 @@
 		4AB28B101589159100276E8B /* CCLayerLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB28AF51589159000276E8B /* CCLayerLoader.cpp */; };
 		4AB28B111589159100276E8B /* CCMenuItemImageLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB28AF71589159000276E8B /* CCMenuItemImageLoader.cpp */; };
 		4AB28B121589159100276E8B /* CCMenuItemLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB28AF91589159000276E8B /* CCMenuItemLoader.cpp */; };
-		4AB28B131589159100276E8B /* CCMenuLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB28AFB1589159000276E8B /* CCMenuLoader.cpp */; };
 		4AB28B141589159100276E8B /* CCNodeLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB28AFD1589159000276E8B /* CCNodeLoader.cpp */; };
 		4AB28B151589159100276E8B /* CCNodeLoaderLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB28AFF1589159000276E8B /* CCNodeLoaderLibrary.cpp */; };
 		4AB28B161589159100276E8B /* CCParticleSystemQuadLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB28B021589159000276E8B /* CCParticleSystemQuadLoader.cpp */; };
@@ -675,6 +674,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
 		4A2188021586CCE10069114E /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
+		4A4553E5158FCA9F000A0E76 /* ScrollViewTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewTestLayer.h; sourceTree = "<group>"; };
+		4A4553E6158FCA9F000A0E76 /* ScrollViewTestLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewTestLayerLoader.h; sourceTree = "<group>"; };
 		4AB28AD51589152800276E8B /* CocosBuilderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosBuilderTest.cpp; sourceTree = "<group>"; };
 		4AB28AD61589152800276E8B /* CocosBuilderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosBuilderTest.h; sourceTree = "<group>"; };
 		4AB28AE31589159000276E8B /* CCBFileLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBFileLoader.cpp; sourceTree = "<group>"; };
@@ -701,7 +702,6 @@
 		4AB28AF81589159000276E8B /* CCMenuItemImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItemImageLoader.h; sourceTree = "<group>"; };
 		4AB28AF91589159000276E8B /* CCMenuItemLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuItemLoader.cpp; sourceTree = "<group>"; };
 		4AB28AFA1589159000276E8B /* CCMenuItemLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItemLoader.h; sourceTree = "<group>"; };
-		4AB28AFB1589159000276E8B /* CCMenuLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuLoader.cpp; sourceTree = "<group>"; };
 		4AB28AFC1589159000276E8B /* CCMenuLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuLoader.h; sourceTree = "<group>"; };
 		4AB28AFD1589159000276E8B /* CCNodeLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeLoader.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		4AB28AFE1589159000276E8B /* CCNodeLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeLoader.h; sourceTree = "<group>"; };
@@ -1559,6 +1559,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4A4553E4158FCA9F000A0E76 /* ScrollViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				4A4553E5158FCA9F000A0E76 /* ScrollViewTestLayer.h */,
+				4A4553E6158FCA9F000A0E76 /* ScrollViewTestLayerLoader.h */,
+			);
+			path = ScrollViewTest;
+			sourceTree = "<group>";
+		};
 		4AB28AD21589152800276E8B /* CocosBuilderTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -1571,6 +1580,7 @@
 				4ACB592B158AAE6A00E0D552 /* SpriteTest */,
 				4ACB592E158AB71100E0D552 /* MenuTest */,
 				4ACB5937158BE3F200E0D552 /* ParticleSystemTest */,
+				4A4553E4158FCA9F000A0E76 /* ScrollViewTest */,
 			);
 			path = CocosBuilderTest;
 			sourceTree = "<group>";
@@ -1578,8 +1588,6 @@
 		4AB28AE21589159000276E8B /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
-				15016C58158F4433006C925D /* CCScrollViewLoader.cpp */,
-				15016C59158F4433006C925D /* CCScrollViewLoader.h */,
 				4AB28AE31589159000276E8B /* CCBFileLoader.cpp */,
 				4AB28AE41589159000276E8B /* CCBFileLoader.h */,
 				4AB28AE51589159000276E8B /* CCBMemberVariableAssigner.h */,
@@ -1604,7 +1612,6 @@
 				4AB28AF81589159000276E8B /* CCMenuItemImageLoader.h */,
 				4AB28AF91589159000276E8B /* CCMenuItemLoader.cpp */,
 				4AB28AFA1589159000276E8B /* CCMenuItemLoader.h */,
-				4AB28AFB1589159000276E8B /* CCMenuLoader.cpp */,
 				4AB28AFC1589159000276E8B /* CCMenuLoader.h */,
 				4AB28AFD1589159000276E8B /* CCNodeLoader.cpp */,
 				4AB28AFE1589159000276E8B /* CCNodeLoader.h */,
@@ -1617,6 +1624,8 @@
 				4AB28B051589159000276E8B /* CCScale9SpriteLoader.h */,
 				4AB28B061589159000276E8B /* CCSpriteLoader.cpp */,
 				4AB28B071589159000276E8B /* CCSpriteLoader.h */,
+				15016C58158F4433006C925D /* CCScrollViewLoader.cpp */,
+				15016C59158F4433006C925D /* CCScrollViewLoader.h */,
 			);
 			path = CCBReader;
 			sourceTree = "<group>";
@@ -3786,7 +3795,6 @@
 				4AB28B101589159100276E8B /* CCLayerLoader.cpp in Sources */,
 				4AB28B111589159100276E8B /* CCMenuItemImageLoader.cpp in Sources */,
 				4AB28B121589159100276E8B /* CCMenuItemLoader.cpp in Sources */,
-				4AB28B131589159100276E8B /* CCMenuLoader.cpp in Sources */,
 				4AB28B141589159100276E8B /* CCNodeLoader.cpp in Sources */,
 				4AB28B151589159100276E8B /* CCNodeLoaderLibrary.cpp in Sources */,
 				4AB28B161589159100276E8B /* CCParticleSystemQuadLoader.cpp in Sources */,

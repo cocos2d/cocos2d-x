@@ -109,6 +109,9 @@
     <Filter Include="extensions\CCBReader">
       <UniqueIdentifier>{4647762c-52c3-475d-968a-96aa48dbcd0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extensions\CCScrollView">
+      <UniqueIdentifier>{a9d9fee5-8d26-4082-b526-2b7830770446}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\effects\CCGrabber.cpp">
@@ -510,9 +513,6 @@
     <ClCompile Include="..\extensions\CCBReader\CCMenuItemLoader.cpp">
       <Filter>extensions\CCBReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\extensions\CCBReader\CCMenuLoader.cpp">
-      <Filter>extensions\CCBReader</Filter>
-    </ClCompile>
     <ClCompile Include="..\extensions\CCBReader\CCNodeLoader.cpp">
       <Filter>extensions\CCBReader</Filter>
     </ClCompile>
@@ -536,6 +536,12 @@
     </ClCompile>
     <ClCompile Include="..\actions\CCActionCatmullRom.cpp">
       <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extensions\CCScrollView\CCScrollView.cpp">
+      <Filter>extensions\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extensions\CCBReader\CCScrollViewLoader.cpp">
+      <Filter>extensions\CCBReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1086,6 +1092,12 @@
     </ClInclude>
     <ClInclude Include="..\actions\CCActionCatmullRom.h">
       <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extensions\CCScrollView\CCScrollView.h">
+      <Filter>extensions\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extensions\CCBReader\CCScrollViewLoader.h">
+      <Filter>extensions\CCBReader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

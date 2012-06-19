@@ -67,7 +67,6 @@ extensions/CCBReader/CCLabelTTFLoader.cpp \
 extensions/CCBReader/CCLayerLoader.cpp \
 extensions/CCBReader/CCLayerColorLoader.cpp \
 extensions/CCBReader/CCLayerGradientLoader.cpp \
-extensions/CCBReader/CCMenuLoader.cpp \
 extensions/CCBReader/CCMenuItemLoader.cpp \
 extensions/CCBReader/CCMenuItemImageLoader.cpp \
 extensions/CCBReader/CCSpriteLoader.cpp \
