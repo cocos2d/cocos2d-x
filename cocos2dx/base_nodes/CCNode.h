@@ -222,7 +222,7 @@ public:
      All nodes has a size. Layer and Scene has the same size of the screen.
      @since v0.8
      */
-    CC_PROPERTY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
+    CC_PROPERTY(CCSize, m_tContentSize, ContentSize)
 
     /** whether or not the node is running */
     bool m_bIsRunning;

@@ -25,10 +25,6 @@ CCNode * CCNodeLoader::loadCCNode(CCNode * pParent, CCBReader * pCCBReader) {
     return ccNode;
 }
 
-CCNode * CCNodeLoader::createCCNode(CCNode * pParent, CCBReader * pCCBReader) {
-    return CCNode::node();
-}
-
 void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     int propertyCount = pCCBReader->readInt(false);
     for(int i = 0; i < propertyCount; i++) {
@@ -86,7 +82,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeScaleLock(pNode, pParent, propertyName, scaleLock, pCCBReader);
                 }
-                delete[] scaleLock;
+                CC_SAFE_DELETE_ARRAY(scaleLock);
                 break;
             }
             case kCCBPropTypeFloat: {
@@ -129,7 +125,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeFloatVar(pNode, pParent, propertyName, floatVar, pCCBReader);
                 }
-                delete[] floatVar;
+                CC_SAFE_DELETE_ARRAY(floatVar);
                 break;
             }
             case kCCBPropTypeCheck: {
@@ -179,7 +175,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeColor4FVar(pNode, pParent, propertyName, color4FVar, pCCBReader);
                 }
-                delete[] color4FVar;
+                CC_SAFE_DELETE_ARRAY(color4FVar);
                 break;
             }
             case kCCBPropTypeFlip: {
@@ -187,7 +183,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeFlip(pNode, pParent, propertyName, flip, pCCBReader);
                 }
-                delete[] flip;
+                CC_SAFE_DELETE_ARRAY(flip);
                 break;
             }
             case kCCBPropTypeBlendFunc: {
@@ -230,7 +226,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp) {
                     this->onHandlePropTypeBlock(pNode, pParent, propertyName, blockData, pCCBReader);
                 }
-                delete blockData;
+                CC_SAFE_DELETE(blockData);
                 break;
             }
             case kCCBPropTypeBlockCCControl: {
@@ -238,7 +234,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 if(setProp && blockCCControlData != NULL) {
                     this->onHandlePropTypeBlockCCControl(pNode, pParent, propertyName, blockCCControlData, pCCBReader);
                 }
-                delete blockCCControlData;
+                CC_SAFE_DELETE(blockCCControlData);
                 break;
             }
             case kCCBPropTypeCCBFile: {
