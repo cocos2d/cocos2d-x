@@ -596,7 +596,7 @@ void CCDirector::purgeDirector()
     // purge bitmap cache
     CCLabelBMFont::purgeCachedData();
 
-    // purge all managers ／ caches
+    // purge all managed caches
     CCAnimationCache::purgeSharedAnimationCache();
     CCSpriteFrameCache::purgeSharedSpriteFrameCache();
     CCTextureCache::purgeSharedTextureCache();

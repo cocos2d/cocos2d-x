@@ -155,9 +155,9 @@ CCString* CCString::stringWithCString(const char* pStr)
     return CCString::create(pStr);
 }
 
-CCString* CCString::create(const char* pStr)
+CCString* CCString::create(const std::string& str)
 {
-    CCString* pRet = new CCString(pStr);
+    CCString* pRet = new CCString(str);
     pRet->autorelease();
     return pRet;
 }
@@ -169,7 +169,12 @@ CCString* CCString::stringWithString(const std::string& pStr)
     return pRet;
 }
 
-CCString* CCString::stringWithCStringData(const char* pData, unsigned long nLen)
+CCString* CCString::stringWithData(const unsigned char* pData, unsigned long nLen)
+{
+    return CCString::createWithData(pData, nLen);
+}
+
+CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLen)
 {
     CCString* pRet = NULL;
     if (pData != NULL)
@@ -178,30 +183,11 @@ CCString* CCString::stringWithCStringData(const char* pData, unsigned long nLen)
         if (pStr != NULL)
         {
             pStr[nLen] = '\0';
-            memcpy(pStr, pData, nLen);
-            pRet = CCString::stringWithCString(pStr);
-            free(pStr);
-        }
-    }
-    return pRet;
-
-}
-
-CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
-{
-    return CCString::createWithData(pData, nLen);
-}
-
-CCString* CCString::createWithData(unsigned char* pData, unsigned long nLen)
-{
-    CCString* pRet = NULL;
-    if (pData != NULL && nLen > 0)
-    {
-        char* pStr = (char*)malloc(nLen+1);
-        if (pStr != NULL)
-        {
-            pStr[nLen] = '\0';
-            memcpy(pStr, pData, nLen);
+            if (nLen > 0)
+            {
+                memcpy(pStr, pData, nLen);
+            }
+            
             pRet = CCString::create(pStr);
             free(pStr);
         }

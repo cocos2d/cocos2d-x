@@ -113,37 +113,37 @@ public:
     /** Create an array 
     @warning: This interface will be deprecated in future.
     */
-    static CCArray* array();
+    CC_DEPRECATED_ATTRIBUTE static CCArray* array();
     /** Create an array with one object 
     @warning: This interface will be deprecated in future.
     */
-    static CCArray* arrayWithObject(CCObject* pObject);
+    CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithObject(CCObject* pObject);
     /** Create an array with some objects 
     @warning: This interface will be deprecated in future.
     */
-    static CCArray* arrayWithObjects(CCObject* pObject, ...);
+    CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithObjects(CCObject* pObject, ...);
     /** Create an array with capacity 
     @warning: This interface will be deprecated in future.
     */
-    static CCArray* arrayWithCapacity(unsigned int capacity);
+    CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithCapacity(unsigned int capacity);
     /** Create an array with an existing array
     @warning: This interface will be deprecated in future.
     */
-    static CCArray* arrayWithArray(CCArray* otherArray);
+    CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithArray(CCArray* otherArray);
     /**
      @brief   Generate a CCArray pointer by file
      @param   pFileName  The file name of *.plist file
      @return  The CCArray pointer generated from the file
      @warning: This interface will be deprecated in future.
      */
-    static CCArray* arrayWithContentsOfFile(const char* pFileName);
+     CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithContentsOfFile(const char* pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
      invoker should call release().
      @warning: This interface will be deprecated in future.
      */
-    static CCArray* arrayWithContentsOfFileThreadSafe(const char* pFileName);
+    CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithContentsOfFileThreadSafe(const char* pFileName);
 
     /** Create an array */
     static CCArray* create();

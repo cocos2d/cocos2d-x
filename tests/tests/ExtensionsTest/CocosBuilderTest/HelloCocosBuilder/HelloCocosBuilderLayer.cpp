@@ -47,7 +47,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pC
 
     this->mTestTitleLabelTTF->setString(pCCBFileName);
 
-    CCScene * scene = CCScene::node();
+    CCScene * scene = CCScene::create();
     if(node != NULL) {
         scene->addChild(node);
     }
@@ -58,13 +58,13 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pC
     transitionColor.g = 0;
     transitionColor.b = 0;
     
-    CCDirector::sharedDirector()->pushScene(CCTransitionFade::transitionWithDuration(0.5f, scene, transitionColor));
+    CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5f, scene, transitionColor));
 }
 
 
 void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::CCNode * pNode, cocos2d::extension::CCNodeLoader * pNodeLoader) {
-    CCRotateBy * ccRotateBy = CCRotateBy::actionWithDuration(0.5f, 10);
-    CCRepeatForever * ccRepeatForever = CCRepeatForever::actionWithAction(ccRotateBy);
+    CCRotateBy * ccRotateBy = CCRotateBy::create(0.5f, 10);
+    CCRepeatForever * ccRepeatForever = CCRepeatForever::create(ccRotateBy);
     this->mBurstSprite->runAction(ccRepeatForever);
 }
 

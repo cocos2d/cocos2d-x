@@ -56,7 +56,7 @@ public:
     * scene is being turned from left over the outgoing scene.
     @warning: This interface will be deprecated in future.
     */
-    static CCTransitionPageTurn* transitionWithDuration(float t,CCScene* scene,bool backwards);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionPageTurn* transitionWithDuration(float t,CCScene* scene,bool backwards);
 
     /**
     * Creates a base transition with duration and incoming scene.
