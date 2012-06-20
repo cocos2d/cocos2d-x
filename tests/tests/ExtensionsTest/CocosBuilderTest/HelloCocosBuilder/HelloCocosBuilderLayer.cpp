@@ -47,7 +47,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pC
 
     this->mTestTitleLabelTTF->setString(pCCBFileName);
 
-    CCScene * scene = CCScene::node();
+    CCScene * scene = CCScene::create();
     if(node != NULL) {
         scene->addChild(node);
     }
