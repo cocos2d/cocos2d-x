@@ -306,7 +306,7 @@ public:
 
     /** allocates and initializes a node.
      The node will be created as "autorelease".
-	 @warning: This interface will be deprecated in future.
+	 @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCNode * node(void);
 

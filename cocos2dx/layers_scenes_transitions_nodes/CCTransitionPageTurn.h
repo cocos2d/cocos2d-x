@@ -54,7 +54,7 @@ public:
     * Creates a base transition with duration and incoming scene.
     * If back is true then the effect is reversed to appear as if the incoming 
     * scene is being turned from left over the outgoing scene.
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCTransitionPageTurn* transitionWithDuration(float t,CCScene* scene,bool backwards);
 

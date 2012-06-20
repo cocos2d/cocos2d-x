@@ -50,7 +50,7 @@ class CC_DLL CCPointArray : public CCNode
 {
 public:
     /** creates and initializes a Points array with capacity 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCPointArray* arrayWithCapacity(unsigned int capacity);
     
@@ -108,7 +108,7 @@ class CC_DLL CCCardinalSplineTo : public CCActionInterval
 {
 public:
     /** creates an action with a Cardinal Spline array of points and tension 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCCardinalSplineTo* actionWithDuration(float duration, CCPointArray* points, float tension);
 
@@ -151,7 +151,7 @@ class CC_DLL CCCardinalSplineBy : public CCCardinalSplineTo
 {
 public:
     /** creates an action with a Cardinal Spline array of points and tension 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCCardinalSplineBy* actionWithDuration(float duration, CCPointArray* points, float tension);
     
@@ -175,7 +175,7 @@ class CC_DLL CCCatmullRomTo : public CCCardinalSplineTo
 {
 public:
     /** creates an action with a Cardinal Spline array of points and tension 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCCatmullRomTo* actionWithDuration(float dt, CCPointArray* points);
     
@@ -194,7 +194,7 @@ class CC_DLL CCCatmullRomBy : public CCCardinalSplineBy
 {
 public:
     /** creates an action with a Cardinal Spline array of points and tension 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCCatmullRomBy* actionWithDuration(float dt, CCPointArray* points);
     

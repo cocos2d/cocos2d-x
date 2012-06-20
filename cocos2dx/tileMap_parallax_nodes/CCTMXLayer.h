@@ -84,7 +84,7 @@ public:
     CCTMXLayer();
     virtual ~CCTMXLayer();
     /** creates a CCTMXLayer with an tileset info, a layer info and a map info 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCTMXLayer * layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
   
