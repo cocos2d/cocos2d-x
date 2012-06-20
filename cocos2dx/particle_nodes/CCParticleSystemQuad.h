@@ -33,6 +33,11 @@ NS_CC_BEGIN
 
 class CCSpriteFrame;
 
+/**
+ * @addtogroup particle_nodes
+ * @{
+ */
+
 /** @brief CCParticleSystemQuad is a subclass of CCParticleSystem
 
 It includes all the features of ParticleSystem.
@@ -113,6 +118,9 @@ private:
 #endif
     bool allocMemory();
 };
+
+// end of particle_nodes group
+/// @}
 
 NS_CC_END
 

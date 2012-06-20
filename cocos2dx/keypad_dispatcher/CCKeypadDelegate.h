@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup input
+ * @{
+ */
+
 class CC_DLL CCKeypadDelegate
 {
 public:
@@ -64,6 +69,9 @@ public:
 protected:
     CCKeypadDelegate* m_pDelegate;
 };
+
+// end of input group
+/// @} 
 
 NS_CC_END
 

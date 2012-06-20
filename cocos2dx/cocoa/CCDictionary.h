@@ -34,6 +34,11 @@ NS_CC_BEGIN
 
 class CCDictionary;
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 class CC_DLL CCDictElement
 {
     #define MAX_KEY_LEN  256
@@ -189,6 +194,9 @@ private:
     CCDictType m_eDictType;
     CCDictType m_eOldDictType;
 };
+
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

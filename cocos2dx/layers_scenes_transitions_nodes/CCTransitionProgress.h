@@ -34,6 +34,11 @@ NS_CC_BEGIN
 class CCProgressTimer;
 class CCRenderTexture;
 
+/**
+ * @addtogroup transition
+ * @{
+ */
+
 class CC_DLL CCTransitionProgress : public CCTransitionScene
 {
 public:
@@ -123,6 +128,9 @@ protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 
 };
+
+// end of transition group
+/// @}
 
 NS_CC_END
 

@@ -32,6 +32,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup global
+ * @{
+ */
+
 // Priority level reserved for system services.
 #define kCCPrioritySystem INT_MIN
 
@@ -257,6 +262,9 @@ protected:
     bool m_bUpdateHashLocked;
     CCArray* m_pScriptHandlerEntries;
 };
+
+// end of global group
+/// @}
 
 NS_CC_END
 

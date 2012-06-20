@@ -32,6 +32,13 @@ enum positions
     pBottomLeft
 };
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 class CC_DLL CCScale9Sprite : public CCNode, CCRGBAProtocol
 {
 public:
@@ -116,7 +123,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect,  CCRect capInsets);
     
-        /** 
+    /** 
      * Creates a 9-slice sprite with a texture file, a delimitation zone and
      * with the specified cap insets.
      *
@@ -374,6 +381,10 @@ public:
 
     virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

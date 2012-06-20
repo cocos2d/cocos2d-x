@@ -28,6 +28,12 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** @brief CCShakyTiles3D action */
 class CC_DLL CCShakyTiles3D : public CCTiledGrid3DAction
 {
@@ -335,6 +341,9 @@ protected:
     int m_nCols;
     CCSize m_winSize;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

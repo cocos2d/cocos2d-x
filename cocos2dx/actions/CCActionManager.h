@@ -37,6 +37,12 @@ NS_CC_BEGIN
 class CCSet;
 
 struct _hashElement;
+
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
  @brief CCActionManager is a singleton that manages all the actions.
  Normally you won't need to use this singleton directly. 99% of the cases you will use the CCNode interface,
@@ -120,6 +126,9 @@ protected:
     struct _hashElement    *m_pCurrentTarget;
     bool            m_bCurrentTargetSalvaged;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

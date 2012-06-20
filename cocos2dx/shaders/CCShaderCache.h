@@ -33,6 +33,11 @@ NS_CC_BEGIN
 
 class CCGLProgram;
 
+/**
+ * @addtogroup shaders
+ * @{
+ */
+
 /** CCShaderCache
  Singleton that stores manages GL shaders
  @since v2.0
@@ -68,6 +73,9 @@ private:
     CCDictionary* m_pPrograms;
 
 };
+
+// end of shaders group
+/// @}
 
 NS_CC_END
 

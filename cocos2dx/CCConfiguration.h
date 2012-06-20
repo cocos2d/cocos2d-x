@@ -33,6 +33,10 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup global
+ * @{
+ */
+/**
  @brief CCConfiguration contains some openGL variables
  @since v0.99.0
  */
@@ -126,6 +130,9 @@ protected:
     GLint           m_nMaxTextureUnits;
     char *          m_pGlExtensions;
 };
+
+// end of global group
+/// @}
 
 NS_CC_END
 

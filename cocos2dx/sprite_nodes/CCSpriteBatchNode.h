@@ -36,6 +36,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup sprite_nodes
+ * @{
+ */
+
 #define kDefaultSpriteBatchCapacity   29
 
 class CCSprite;
@@ -172,6 +177,9 @@ protected:
     // all descendants: chlidren, gran children, etc...
     CCArray* m_pobDescendants;
 };
+
+// end of sprite_nodes group
+/// @}
 
 NS_CC_END
 

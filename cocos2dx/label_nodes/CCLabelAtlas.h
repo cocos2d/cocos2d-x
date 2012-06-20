@@ -30,6 +30,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup label
+ * @{
+ */
+
 /** @brief CCLabelAtlas is a subclass of CCAtlasNode.
 
 It can be as a replacement of CCLabel since it is MUCH faster.
@@ -91,6 +98,11 @@ protected:
     // the first char in the charmap
     unsigned int m_uMapStartChar;
 };
+
+// end of GUI group
+/// @}
+/// @}
+
 
 NS_CC_END
 

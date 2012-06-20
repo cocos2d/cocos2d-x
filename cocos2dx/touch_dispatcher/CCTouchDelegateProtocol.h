@@ -35,7 +35,12 @@ class CCTouch;
 class CCEvent;
 class CCSet;
 class CCTouchDispatcher;
-    
+
+/**
+ * @addtogroup input
+ * @{
+ */
+
 class CC_DLL CCTouchDelegate
 {
 public:
@@ -101,6 +106,9 @@ public:
      virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
  };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

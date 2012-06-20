@@ -43,6 +43,11 @@ NS_CC_BEGIN
 class CCLock;
 class CCImage;
 
+/**
+ * @addtogroup textures
+ * @{
+ */
+
 /** @brief Singleton that handles the loading of textures
 * Once the texture is loaded, the next time it will return
 * a reference of the previously loaded texture reducing GPU & CPU memory
@@ -55,7 +60,7 @@ protected:
 
 
 private:
-    // @todo void addImageWithAsyncObject(CCAsyncObject* async);
+    /// todo: void addImageWithAsyncObject(CCAsyncObject* async);
     void addImageAsyncCallBack(float dt);
 
 public:
@@ -100,7 +105,7 @@ public:
     * If "key" is nil, then a new texture will be created each time.
     * @since v0.8
     */
-    // @todo CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
+    // todo: CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
     /** Returns a Texture2D object given an UIImage image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
     * Otherwise it will return a reference of a previously loaded image
@@ -225,6 +230,9 @@ protected:
 };
 
 #endif
+
+// end of textures group
+/// @}
 
 NS_CC_END
 

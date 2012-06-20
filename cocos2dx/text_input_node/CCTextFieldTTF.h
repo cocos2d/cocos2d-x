@@ -33,6 +33,11 @@ NS_CC_BEGIN
 
 class CCTextFieldTTF;
 
+/**
+ * @addtogroup input
+ * @{
+ */
+
 class CC_DLL CCTextFieldDelegate
 {
 public:
@@ -155,6 +160,9 @@ private:
     class LengthStack;
     LengthStack * m_pLens;
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

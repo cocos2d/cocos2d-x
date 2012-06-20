@@ -32,6 +32,11 @@ NS_CC_BEGIN
 
 class CCGridBase;
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** @brief Base class for Grid actions */
 class CC_DLL CCGridAction : public CCActionInterval
 {
@@ -231,6 +236,9 @@ public:
 protected:
     int m_nTimes;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

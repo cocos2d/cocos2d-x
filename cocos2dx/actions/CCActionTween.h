@@ -29,6 +29,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 class CCActionTweenDelegate
 {
 public:
@@ -74,6 +79,9 @@ public:
     float            m_fFrom, m_fTo;
     float            m_fDelta;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

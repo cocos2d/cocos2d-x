@@ -33,6 +33,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup global
+ * @{
+ */
+
 class CCProfilingTimer;
 
 /** CCProfiler
@@ -94,6 +99,9 @@ extern void CCProfilingResetTimingBlock(const char *timerName);
 extern bool kCCProfilerCategorySprite;
 extern bool kCCProfilerCategoryBatchSprite;
 extern bool kCCProfilerCategoryParticles;
+
+// end of global group
+/// @}
 
 NS_CC_END
 

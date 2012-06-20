@@ -47,6 +47,11 @@ class CCTMXObjectGroup;
 *
 */
 
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
+
 enum {
     TMXLayerAttribNone = 1 << 0,
     TMXLayerAttribBase64 = 1 << 1,
@@ -205,6 +210,9 @@ protected:
     //! tile properties
     CCDictionary* m_pTileProperties;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

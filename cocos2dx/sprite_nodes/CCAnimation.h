@@ -39,6 +39,11 @@ NS_CC_BEGIN
 class CCTexture2D;
 class CCSpriteFrame;
 
+/**
+ * @addtogroup sprite_nodes
+ * @{
+ */
+
 /** CCAnimationFrame
  A frame of the animation. It contains information like:
     - sprite frame name
@@ -167,6 +172,9 @@ public:
     /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
     CC_SYNTHESIZE(unsigned int, m_uLoops, Loops)
 };
+
+// end of sprite_nodes group
+/// @}
 
 NS_CC_END
 

@@ -33,6 +33,12 @@ NS_CC_BEGIN
 
 struct sImageTGA;
 class CCDictionary;
+
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
+
 /** @brief CCTileMapAtlas is a subclass of CCAtlasNode.
 
 It knows how to render a map based of tiles.
@@ -92,6 +98,9 @@ protected:
     //! numbers of tiles to render
     int m_nItemsToRender;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

@@ -32,6 +32,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
 @brief Instant actions are immediate actions. They don't have a duration like
 the CCIntervalAction actions.
@@ -375,6 +380,9 @@ protected:
     /** object to be passed as argument */
     CCObject* m_pObject;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

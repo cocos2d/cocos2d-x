@@ -31,6 +31,11 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ */
+
 class CCListView;
 typedef enum
 {
@@ -74,6 +79,9 @@ class CC_DLL CCListViewCell : public CCLayerColor
         ccColor4B        m_normalColor;
         ccColor3B        m_separatorLineColor;
 };
+
+// end of GUI group
+/// @}
 
 NS_CC_EXT_END
 

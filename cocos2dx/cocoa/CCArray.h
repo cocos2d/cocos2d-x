@@ -27,6 +27,11 @@ THE SOFTWARE.
 
 #include "support/data_support/ccCArray.h"
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 /** @def CCARRAY_FOREACH
 A convience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
 @since v0.99.4
@@ -246,6 +251,9 @@ public:
     CCArray();
     CCArray(unsigned int capacity);
 };
+
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

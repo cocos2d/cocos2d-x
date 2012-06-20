@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup input
+ * @{
+ */
+
 typedef enum {
     // the back key clicked msg
     kTypeBackClicked = 1,
@@ -82,6 +87,9 @@ protected:
     struct _ccCArray *m_pHandlersToAdd;
     struct _ccCArray *m_pHandlersToRemove;
 };
+
+// end of input group
+/// @} 
 
 NS_CC_END
 

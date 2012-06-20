@@ -34,6 +34,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
+
 /** 
 A CCCamera is used in every CCNode.
 Useful to look at the object from different views.
@@ -110,6 +115,9 @@ public:
 private:
     DISALLOW_COPY_AND_ASSIGN(CCCamera);
 };
+
+// end of base_node group
+/// @}
 
 NS_CC_END
 

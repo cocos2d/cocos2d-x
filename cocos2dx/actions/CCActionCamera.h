@@ -32,8 +32,14 @@ NS_CC_BEGIN
 
 class CCCamera;
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
 @brief Base class for CCCamera actions
+@ingroup Actions
 */
 class CC_DLL CCActionCamera : public CCActionInterval //<NSCopying> 
 {
@@ -70,6 +76,7 @@ protected:
 /** 
 @brief CCOrbitCamera action
 Orbits the camera around the center of the screen using spherical coordinates
+@ingroup Actions
 */
 class CC_DLL CCOrbitCamera : public CCActionCamera //<NSCopying> 
 {
@@ -117,6 +124,9 @@ protected:
     float m_fRadX;
     float m_fRadDeltaX;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

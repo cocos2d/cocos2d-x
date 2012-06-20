@@ -46,6 +46,11 @@ class CCDictionary;
 class CCArray;
 class CCSprite;
 
+/**
+ * @addtogroup sprite_nodes
+ * @{
+ */
+
 /** @brief Singleton that handles the loading of the sprite frames.
  It saves in a cache the sprite frames.
  @since v0.9
@@ -136,6 +141,9 @@ protected:
     CCDictionary* m_pSpriteFramesAliases;
     std::set<std::string>*  m_pLoadedFileNames;
 };
+
+// end of sprite_nodes group
+/// @}
 
 NS_CC_END
 

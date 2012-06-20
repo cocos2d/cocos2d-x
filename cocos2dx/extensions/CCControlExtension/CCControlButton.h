@@ -35,6 +35,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 /** @class CCControlButton Button control for Cocos2D. */
 class CC_DLL CCControlButton : public CCControl
 {        
@@ -224,6 +231,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCControlButton * node();
     static CCControlButton* create();
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

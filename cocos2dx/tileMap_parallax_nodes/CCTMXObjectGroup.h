@@ -34,6 +34,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
+
 /** @brief CCTMXObjectGroup represents the TMX object group.
 @since v0.99.0
 */
@@ -63,6 +68,9 @@ protected:
     /** name of the group */
     std::string m_sGroupName;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

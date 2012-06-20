@@ -28,6 +28,12 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 /**
 @brief Returns a Core Graphics rectangle structure corresponding to the data in a given string.
 @param pszContent   A string object whose contents are of the form "{{x,y},{w, h}}",
@@ -63,6 +69,9 @@ CCPoint CC_DLL CCPointFromString(const char* pszContent);
         If the string is not well-formed, the function returns CCSizeZero.
 */
 CCSize CC_DLL CCSizeFromString(const char* pszContent);
+
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

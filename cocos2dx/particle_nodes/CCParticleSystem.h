@@ -33,6 +33,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup particle_nodes
+ * @{
+ */
+
 class CCParticleBatchNode;
 
 //* @enum
@@ -415,6 +420,9 @@ public:
 protected:
     virtual void updateBlendFunc();
 };
+
+// end of particle_nodes group
+/// @}
 
 NS_CC_END
 

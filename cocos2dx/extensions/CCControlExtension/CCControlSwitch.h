@@ -37,6 +37,13 @@ NS_CC_EXT_BEGIN
 
 class CCControlSwitchSprite;
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 /** @class CCControlSwitch Switch control for Cocos2D. */
 class CC_DLL CCControlSwitch : public CCControl
 {
@@ -98,6 +105,9 @@ protected:
     bool m_bOn;
 };
 
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

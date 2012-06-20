@@ -29,6 +29,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup misc_nodes
+ * @{
+ */
+
 /** Types of progress
  @since v0.99.1
  */
@@ -126,6 +131,9 @@ protected:
 
     bool m_bReverseDirection;
 };
+
+// end of misc_nodes group
+/// @}
 
 NS_CC_END
 

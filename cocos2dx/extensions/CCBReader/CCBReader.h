@@ -86,6 +86,11 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup cocosbuilder
+ * @{
+ */
+
 /* Forward declaration. */
 class CCNodeLoader;
 class CCNodeLoaderLibrary;
@@ -164,6 +169,9 @@ class CC_DLL CCBReader : public CCObject {
         void alignBits();
         CCString * readUTF8();
 };
+
+// end of effects group
+/// @}
 
 NS_CC_EXT_END
 

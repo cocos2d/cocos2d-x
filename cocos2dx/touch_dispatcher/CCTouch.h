@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup input
+ * @{
+ */
+
 class CC_DLL CCTouch : public CCObject
 {
 public:
@@ -62,6 +67,9 @@ private:
 class CC_DLL CCEvent : public CCObject
 {
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

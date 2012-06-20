@@ -32,6 +32,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup input
+ * @{
+ */
+
 typedef enum
 {
     ccTouchSelectorBeganBit = 1 << 0,
@@ -164,6 +169,9 @@ protected:
     // 4, 1 for each type of event
     struct ccTouchHandlerHelperData m_sHandlerHelperData[ccTouchMax];
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

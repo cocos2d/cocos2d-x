@@ -39,6 +39,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 class CC_DLL CCControlColourPicker: public CCControl
 {
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_colorValue, ColorValue);
@@ -68,6 +75,10 @@ protected:
     virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

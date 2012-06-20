@@ -37,6 +37,11 @@ NS_CC_BEGIN
 class CCTexture2D;
 class CCZone;
 
+/**
+ * @addtogroup sprite_nodes
+ * @{
+ */
+
 /** @brief A CCSpriteFrame has:
     - texture: A CCTexture2D that will be used by the CCSprite
     - rectangle: A rectangle of the texture
@@ -169,6 +174,9 @@ protected:
     CCTexture2D *m_pobTexture;
     std::string  m_strTextureFilename;
 };
+
+// end of sprite_nodes group
+/// @}
 
 NS_CC_END
 

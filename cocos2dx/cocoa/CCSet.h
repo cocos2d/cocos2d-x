@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 typedef std::set<CCObject *>::iterator CCSetIterator;
 
 class CC_DLL CCSet : public CCObject
@@ -79,6 +84,9 @@ public:
 private:
     std::set<CCObject *> *m_pSet;
 };
+
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

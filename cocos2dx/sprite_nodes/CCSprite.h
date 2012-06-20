@@ -45,6 +45,11 @@ class CCSize;
 class CCTexture2D;
 struct transformValues_;
 
+/**
+ * @addtogroup sprite_nodes
+ * @{
+ */
+
 #define CCSpriteIndexNotInitialized 0xffffffff     /// CCSprite invalid index on the CCSpriteBatchode
 
 
@@ -381,6 +386,9 @@ protected:
     bool m_bFlipX;
     bool m_bFlipY;
 };
+
+// end of sprite_nodes group
+/// @}
 
 NS_CC_END
 

@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 class CC_DLL CCString : public CCObject
 {
 public:
@@ -154,6 +159,8 @@ struct CCStringCompare : public std::binary_function<CCString *, CCString *, boo
 #define CCStringMake(str) CCString::create(str)
 #define ccs               CCStringMake
 
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

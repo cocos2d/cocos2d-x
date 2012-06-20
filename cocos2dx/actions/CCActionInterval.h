@@ -36,6 +36,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
 @brief An interval action is an action that takes place within a certain period of time.
 It has an start time, and a finish time. The finish time is the parameter
@@ -852,6 +857,9 @@ public:
 private:
     CCFiniteTimeAction* m_pAction;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

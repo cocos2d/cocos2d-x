@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 typedef float CCFloat;
 
 class CC_DLL CCPoint : public CCObject
@@ -119,6 +124,9 @@ const CCSize CCSizeZero = CCSizeMake(0,0);
 
 /* The "zero" rectangle -- equivalent to CCRectMake(0, 0, 0, 0). */ 
 const CCRect CCRectZero = CCRectMake(0,0,0,0);
+
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

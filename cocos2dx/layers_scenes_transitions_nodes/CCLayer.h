@@ -36,6 +36,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup layer
+ * @{
+ */
+
 class CCTouchScriptHandlerEntry;
 
 //
@@ -392,6 +397,9 @@ public:
 
     LAYER_CREATE_FUNC(CCLayerMultiplex)
 };
+
+// end of layer group
+/// @}
 
 NS_CC_END
 

@@ -35,6 +35,11 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ */
+
 typedef enum {
     CCScrollViewDirectionHorizontal = 0,
     CCScrollViewDirectionVertical,
@@ -337,6 +342,9 @@ protected:
      */
     CCFloat m_fMinScale, m_fMaxScale;
 };
+
+// end of GUI group
+/// @}
 
 NS_CC_EXT_END
 
