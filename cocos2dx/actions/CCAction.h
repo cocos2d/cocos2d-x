@@ -38,6 +38,11 @@ enum {
     kCCActionTagInvalid = -1,
 };
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
 @brief Base class for CCAction objects.
  */
@@ -256,6 +261,9 @@ protected:
     float m_fTopBoundary;
     float m_fBottomBoundary;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 
