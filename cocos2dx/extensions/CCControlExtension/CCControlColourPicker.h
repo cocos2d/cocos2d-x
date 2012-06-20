@@ -52,7 +52,7 @@ protected:
     CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);   
     
 public:
-    //@warning: This interface will be deprecated in future.
+    //@deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCControlColourPicker* colourPicker();
 
     static CCControlColourPicker* create();

@@ -88,7 +88,7 @@ public:
     {}
     ~CCOrbitCamera(){}
     /** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCOrbitCamera* actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     

@@ -59,17 +59,17 @@ public:
     virtual ~CCRenderTexture();
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCRenderTexture * renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h);
 

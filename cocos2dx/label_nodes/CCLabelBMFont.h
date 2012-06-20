@@ -104,7 +104,7 @@ public:
     virtual ~CCBMFontConfiguration();
     const char * description();
     /** allocates a CCBMFontConfiguration with a FNT file 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
 
@@ -196,14 +196,14 @@ public:
     */
     static void purgeCachedData();
     /** creates a bitmap font altas with an initial string and the FNT file 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
     /** creates a bitmap font altas with an initial string and the FNT file */
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
 
     /** Creates an label.
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCLabelBMFont * node();
 

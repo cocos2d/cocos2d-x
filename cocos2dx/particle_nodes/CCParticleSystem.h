@@ -365,7 +365,7 @@ public:
     /** creates an initializes a CCParticleSystem from a plist file.
     This plist files can be creted manually or with Particle Designer:
     http://particledesigner.71squared.com/
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     @since v0.99.3
     */
     CC_DEPRECATED_ATTRIBUTE static CCParticleSystem * particleWithFile(const char *plistFile);
