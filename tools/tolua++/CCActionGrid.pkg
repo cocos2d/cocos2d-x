@@ -32,10 +32,10 @@ class CCDeccelAmplitude : public CCActionInterval
 
 class CCStopGrid : public CCActionInstant
 {
-    static CCStopGrid* action(void);
+    static CCStopGrid* create(void);
 };
 
 class CCReuseGrid : public CCActionInstant
 {
-    static CCReuseGrid* actionWithTimes(int times);
+    static CCReuseGrid* create(int times);
 };

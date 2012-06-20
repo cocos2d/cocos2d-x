@@ -50,14 +50,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)\lua\cocos2dx_support&quot;;&quot;$(SolutionDir)\lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)\lua\lua&quot;;&quot;$(SolutionDir)\lua\tolua&quot;;&quot;$(SolutionDir)\lua\src&quot;;.;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1"
+				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4251"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -136,13 +136,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)\lua\cocos2dx_support&quot;;&quot;$(SolutionDir)\lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)\lua\lua&quot;;&quot;$(SolutionDir)\lua\tolua&quot;;&quot;$(SolutionDir)\lua\src&quot;;.;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG"
+				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="0"
-				DisableSpecificWarnings="4251"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

@@ -117,7 +117,7 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = NULL*/)
         
         if (!this->m_pContainer)
         {
-            m_pContainer = CCLayer::node();
+            m_pContainer = CCLayer::create();
         }
 
         this->setViewSize(size);
@@ -231,9 +231,9 @@ void CCScrollView::setContentOffsetInDuration(CCPoint offset, float dt)
 {
     CCFiniteTimeAction *scroll, *expire;
     
-    scroll = CCMoveTo::actionWithDuration(dt, offset);
-    expire = CCCallFuncN::actionWithTarget(this, callfuncN_selector(CCScrollView::stoppedAnimatedScroll));
-    m_pContainer->runAction(CCSequence::actions(scroll, expire, NULL));
+    scroll = CCMoveTo::create(dt, offset);
+    expire = CCCallFuncN::create(this, callfuncN_selector(CCScrollView::stoppedAnimatedScroll));
+    m_pContainer->runAction(CCSequence::create(scroll, expire, NULL));
     this->schedule(schedule_selector(CCScrollView::performedAnimatedScroll));
 }
 
@@ -296,7 +296,7 @@ void CCScrollView::setZoomScaleInDuration(float s, float dt)
         if (m_pContainer->getScale() != s)
         {
             CCActionTween *scaleAction;
-            scaleAction = CCActionTween::actionWithDuration(dt, "zoomScale", m_pContainer->getScale(), s);
+            scaleAction = CCActionTween::create(dt, "zoomScale", m_pContainer->getScale(), s);
             this->runAction(scaleAction);
         }
     }

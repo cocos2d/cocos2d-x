@@ -28,8 +28,6 @@ public:
 
     void newScene();
 
-    // @warning: This interface will be deprecated in future.
-    //static TextLayer* node();
     static TextLayer* create();
 };
 

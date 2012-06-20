@@ -53,7 +53,7 @@ CCControlButton::~CCControlButton()
 
 bool CCControlButton::init()
 {
-    return this->initWithLabelAndBackgroundSprite(CCLabelTTF::labelWithString("", "Helvetica", 12), CCScale9Sprite::node());
+    return this->initWithLabelAndBackgroundSprite(CCLabelTTF::create("", "Helvetica", 12), CCScale9Sprite::create());
 }
 
 
@@ -371,7 +371,7 @@ void CCControlButton::setTitleTTFForState(const char * fntFile, CCControlState s
 {
     CCString * title = this->getTitleForState(state);
     if (!title) title = new CCString("");
-    this->setTitleLabelForState(CCLabelTTF::labelWithString(title->getCString(), fntFile, 12), state);
+    this->setTitleLabelForState(CCLabelTTF::create(title->getCString(), fntFile, 12), state);
 }
 
 const char * CCControlButton::getTitleTTFForState(CCControlState state)
@@ -419,7 +419,7 @@ void CCControlButton::setTitleBMFontForState(const char * fntFile, CCControlStat
 {
     CCString * title = this->getTitleForState(state);
     if (!title) title = new CCString("");
-    this->setTitleLabelForState(CCLabelBMFont::labelWithString(title->getCString(), fntFile), state);
+    this->setTitleLabelForState(CCLabelBMFont::create(title->getCString(), fntFile), state);
 }
 
 const char * CCControlButton::getTitleBMFontForState(CCControlState state)
@@ -476,7 +476,7 @@ void CCControlButton::setBackgroundSpriteForState(CCScale9Sprite* sprite, CCCont
 
 void CCControlButton::setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFrame, CCControlState state)
 {
-    CCScale9Sprite * sprite = CCScale9Sprite::spriteWithSpriteFrame(spriteFrame);
+    CCScale9Sprite * sprite = CCScale9Sprite::createWithSpriteFrame(spriteFrame);
     this->setBackgroundSpriteForState(sprite, state);
 }
 
@@ -651,7 +651,7 @@ void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     sendActionsForControlEvents(CCControlEventTouchCancel);
 }
 
-CCControlButton * CCControlButton::node()
+CCControlButton* CCControlButton::create()
 {
     CCControlButton *pControlButton = new CCControlButton();
     if (pControlButton && pControlButton->init())
@@ -661,6 +661,11 @@ CCControlButton * CCControlButton::node()
     }
     CC_SAFE_DELETE(pControlButton);
     return NULL;
+}
+
+CCControlButton* CCControlButton::node()
+{
+    return CCControlButton::create();
 }
 
 NS_CC_EXT_END

@@ -93,7 +93,7 @@ CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pC
 }
 
 CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
-    return this->readNodeGraphFromFile(CCString::stringWithCString(pCCBRootPath), CCString::stringWithCString(pCCBFileName), pOwner, pRootContainerSize);
+    return this->readNodeGraphFromFile(CCString::create(pCCBRootPath), CCString::create(pCCBFileName), pOwner, pRootContainerSize);
 }
 
 CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
@@ -166,8 +166,8 @@ void CCBReader::readStringCacheEntry() {
 
     int numBytes = b0 << 8 | b1;
 
-    const char * src = (const char *) (this->mBytes + this->mCurrentByte);
-    CCString * string = CCString::stringWithCStringData(src, (unsigned long)numBytes);
+    const unsigned char * src = (const unsigned char *) (this->mBytes + this->mCurrentByte);
+    CCString * string = CCString::createWithData(src, (unsigned long)numBytes);
     string->retain();
 
     this->mCurrentByte += numBytes;
@@ -182,7 +182,7 @@ unsigned char CCBReader::readByte() {
 }
 
 bool CCBReader::readBool() {
-    return this->readByte();
+    return 0 == this->readByte() ? false : true;
 }
 
 int CCBReader::readInt(bool pSigned) {
@@ -230,7 +230,7 @@ float CCBReader::readFloat() {
         case kCCBFloat05:
             return 0.5f;
         case kCCBFloatInteger:
-            return this->readInt(true);
+            return (float)this->readInt(true);
         default:
             /* using a memcpy since the compiler isn't
              * doing the float ptr math correctly on device.
@@ -368,24 +368,24 @@ CCString * CCBReader::lastPathComponent(CCString * pPath) {
     std::string path(pPath->getCString());
     int slashPos = path.find_last_of("/");
     if(slashPos != std::string::npos) {
-        return CCString::stringWithCString(path.substr(slashPos + 1, path.length() - slashPos).c_str());
+        return CCString::create(path.substr(slashPos + 1, path.length() - slashPos).c_str());
     }
-    return CCString::stringWithCString(path.c_str());
+    return CCString::create(path.c_str());
 }
 
 CCString * CCBReader::deletePathExtension(CCString * pPath) {
     std::string path(pPath->getCString());
     int dotPos = path.find_last_of(".");
     if(dotPos != std::string::npos) {
-        return CCString::stringWithCString(path.substr(0, dotPos).c_str());
+        return CCString::create(path.substr(0, dotPos).c_str());
     }
-    return CCString::stringWithCString(path.c_str());
+    return CCString::create(path.c_str());
 }
 
 CCString * CCBReader::toLowerCase(CCString * pString) {
     std::string copy(pString->getCString());
     std::transform(copy.begin(), copy.end(), copy.begin(), ::tolower);
-    return CCString::stringWithCString(copy.c_str());
+    return CCString::create(copy.c_str());
 }
 
 CCString * CCBReader::concat(CCString * pStringA, CCString * pStringB) {
@@ -396,7 +396,7 @@ CCString * CCBReader::concat(CCString * pStringA, CCString * pStringB) {
     strcat(concatenated, pStringB->getCString());
 
     concatenated[concatenatedLength] = '\0';
-    pRet = CCString::stringWithCString(concatenated);
+    pRet = CCString::create(concatenated);
     CC_SAFE_FREE(concatenated);
     return pRet;
 }

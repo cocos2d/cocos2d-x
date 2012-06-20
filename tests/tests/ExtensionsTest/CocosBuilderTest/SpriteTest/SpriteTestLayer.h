@@ -6,7 +6,7 @@
 
 class SpriteTestLayer : public cocos2d::CCLayer {
     public:
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SpriteTestLayer, node);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SpriteTestLayer, create);
 };
 
 #endif

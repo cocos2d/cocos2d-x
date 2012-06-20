@@ -85,7 +85,7 @@ public:
     /** Creates a progress timer with the sprite as the shape the timer goes through 
     @warning: This interface will be deprecated in future.
     */
-    static CCProgressTimer* progressWithSprite(CCSprite* sp);
+    CC_DEPRECATED_ATTRIBUTE static CCProgressTimer* progressWithSprite(CCSprite* sp);
     /** Creates a progress timer with the sprite as the shape the timer goes through */
     static CCProgressTimer* create(CCSprite* sp);
 protected:
