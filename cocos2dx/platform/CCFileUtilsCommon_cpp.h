@@ -443,7 +443,7 @@ bool CCFileUtils::iPhoneRetinaDisplayFileExistsAtPath(const char *filename)
 //////////////////////////////////////////////////////////////////////////
 static bool s_bPopupNotify = true;
 
-void CCFileUtils::popupNotify(bool bNotify)
+void CCFileUtils::setPopupNotify(bool bNotify)
 {
     s_bPopupNotify = bNotify;
 }

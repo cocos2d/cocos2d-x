@@ -157,7 +157,7 @@ public:
     /**
     @brief Set/Get whether pop-up a message box when the image load failed
     */
-    void popupNotify(bool bNotify);
+    void setPopupNotify(bool bNotify);
     bool isPopupNotify();
 };
 
