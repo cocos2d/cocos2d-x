@@ -12,7 +12,7 @@ class ButtonTestLayer
     , public cocos2d::extension::CCBSelectorResolver
 {
 public:
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ButtonTestLayer, node);
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ButtonTestLayer, create);
 
     ButtonTestLayer();
     virtual ~ButtonTestLayer();

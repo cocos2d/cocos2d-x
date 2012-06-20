@@ -120,12 +120,12 @@ public:
     /** creates a TMX Tiled Map with a TMX file.
     @warning: This interface will be deprecated in future.
     */
-    static CCTMXTiledMap* tiledMapWithTMXFile(const char *tmxFile);
+    CC_DEPRECATED_ATTRIBUTE static CCTMXTiledMap* tiledMapWithTMXFile(const char *tmxFile);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources 
     @warning: This interface will be deprecated in future.
     */
-    static CCTMXTiledMap* tiledMapWithXML(const char* tmxString, const char* resourcePath);
+    CC_DEPRECATED_ATTRIBUTE static CCTMXTiledMap* tiledMapWithXML(const char* tmxString, const char* resourcePath);
 
     /** creates a TMX Tiled Map with a TMX file.*/
     static CCTMXTiledMap* create(const char *tmxFile);

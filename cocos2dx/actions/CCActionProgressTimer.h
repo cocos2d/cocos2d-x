@@ -47,7 +47,7 @@ public:
     /** Creates and initializes with a duration and a percent 
     @warning: This interface will be deprecated in future.
     */
-    static CCProgressTo* actionWithDuration(float duration, float fPercent);
+    CC_DEPRECATED_ATTRIBUTE static CCProgressTo* actionWithDuration(float duration, float fPercent);
     /** Creates and initializes with a duration and a percent */
     static CCProgressTo* create(float duration, float fPercent);
 protected:
@@ -74,7 +74,7 @@ public:
     /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage 
     @warning: This interface will be deprecated in future.
     */
-    static CCProgressFromTo* actionWithDuration(float duration, float fFromPercentage, float fToPercentage);
+    CC_DEPRECATED_ATTRIBUTE static CCProgressFromTo* actionWithDuration(float duration, float fFromPercentage, float fToPercentage);
     /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
     static CCProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
 protected:

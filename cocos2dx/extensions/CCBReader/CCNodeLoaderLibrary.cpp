@@ -44,7 +44,7 @@ void CCNodeLoaderLibrary::registerDefaultCCNodeLoaders() {
 }
 
 void CCNodeLoaderLibrary::registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader) {
-    this->registerCCNodeLoader(CCString::stringWithCString(pClassName), pCCNodeLoader);
+    this->registerCCNodeLoader(CCString::create(pClassName), pCCNodeLoader);
 }
 
 void CCNodeLoaderLibrary::registerCCNodeLoader(CCString * pClassName, CCNodeLoader * pCCNodeLoader) {
@@ -54,7 +54,7 @@ void CCNodeLoaderLibrary::registerCCNodeLoader(CCString * pClassName, CCNodeLoad
 }
 
 void CCNodeLoaderLibrary::unregisterCCNodeLoader(const char * pClassName) {
-    this->unregisterCCNodeLoader(CCString::stringWithCString(pClassName));
+    this->unregisterCCNodeLoader(CCString::create(pClassName));
 }
 
 void CCNodeLoaderLibrary::unregisterCCNodeLoader(CCString * pClassName) {

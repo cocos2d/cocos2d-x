@@ -71,7 +71,7 @@ public:
      * @param container parent object
      * @return autoreleased scroll view object
      */
-    static CCScrollView* viewWithViewSize(CCSize size, CCNode* container = NULL);
+    CC_DEPRECATED_ATTRIBUTE static CCScrollView* viewWithViewSize(CCSize size, CCNode* container = NULL);
 
     /**
      * Returns an autoreleased scroll view object.
@@ -89,7 +89,7 @@ public:
      * @param container parent object
      * @return autoreleased scroll view object
      */
-    static CCScrollView* node();
+    CC_DEPRECATED_ATTRIBUTE static CCScrollView* node();
 
     /**
      * Returns an autoreleased scroll view object.
