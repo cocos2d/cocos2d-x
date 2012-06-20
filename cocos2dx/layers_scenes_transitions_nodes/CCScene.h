@@ -47,7 +47,7 @@ public:
     CCScene();
     virtual ~CCScene();
     bool init();
-    static CCScene *node(void);
+    CC_DEPRECATED_ATTRIBUTE static CCScene *node(void);
     static CCScene *create(void);
 };
 
