@@ -35,6 +35,11 @@ NS_CC_BEGIN
 
 class CCTimer;
 
+/**
+ * @addtogroup script_support
+ * @{
+ */
+
 // Lua support for CCScheduler
 class CCSchedulerScriptHandlerEntry : public CCObject
 {
@@ -208,6 +213,9 @@ private:
     
     CCScriptEngineProtocol *m_pScriptEngine;
 };
+
+// end of script_support group
+/// @}
 
 NS_CC_END
 

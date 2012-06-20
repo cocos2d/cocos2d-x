@@ -36,6 +36,11 @@ NS_CC_BEGIN
 
 class CCTexture2D;
 
+/**
+ * @addtogroup textures
+ * @{
+ */
+
 /** @brief A class that implements a Texture Atlas.
 Supported features:
 * The atlas file can be a PVRTC, PNG or any other fomrat supported by Texture2D
@@ -205,6 +210,9 @@ private:
     void setupVBO();
 #endif
 };
+
+// end of textures group
+/// @}
 
 NS_CC_END
 

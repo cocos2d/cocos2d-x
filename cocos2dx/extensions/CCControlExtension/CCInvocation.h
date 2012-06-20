@@ -9,6 +9,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 typedef unsigned int CCControlEvent;
 
 typedef void (CCObject::*SEL_CCControlHandler)(CCObject*, CCControlEvent);
@@ -26,6 +33,10 @@ public:
 
     void invoke(CCObject* sender);
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

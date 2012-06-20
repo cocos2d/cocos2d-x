@@ -30,6 +30,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup data_storage
+ * @{
+ */
+
+/**
  * CCUserDefault acts as a tiny database. You can save and get base type values by it.
  * For example, setBoolForKey("played", true) will add a bool value true into the database.
  * Its key is "played". You can get the value of the key by getBoolForKey("played").
@@ -111,6 +116,9 @@ private:
     static std::string m_sFilePath;
     static bool m_sbIsFilePathInitialized;
 };
+
+// end of data_storage group
+/// @}
 
 NS_CC_END
 

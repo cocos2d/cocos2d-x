@@ -48,6 +48,11 @@ class CCLabelProtocol;
 class CCScheduler;
 class CCActionManager;
 
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
+
 enum {
     kCCNodeTagInvalid = -1,
 };
@@ -606,6 +611,9 @@ public:
      */
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
 };
+
+// end of base_node group
+/// @}
 
 NS_CC_END
 

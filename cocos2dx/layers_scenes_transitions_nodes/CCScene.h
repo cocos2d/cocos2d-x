@@ -31,6 +31,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup scene
+ * @{
+ */
+
 /** @brief CCScene is a subclass of CCNode that is used only as an abstract concept.
 
 CCScene an CCNode are almost identical with the difference that CCScene has it's
@@ -50,6 +55,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCScene *node(void);
     static CCScene *create(void);
 };
+
+// end of scene group
+/// @}
 
 NS_CC_END
 

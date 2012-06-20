@@ -37,6 +37,11 @@ class CCTMXLayerInfo;
 class CCTMXTilesetInfo;
 struct _ccCArray;
 
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
+
 /** @brief CCTMXLayer represents the TMX layer.
 
 It is a subclass of CCSpriteBatchNode. By default the tiles are rendered using a CCTextureAtlas.
@@ -197,6 +202,9 @@ protected:
     // used for retina display
     float               m_fContentScaleFactor;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

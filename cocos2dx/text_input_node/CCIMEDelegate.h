@@ -29,6 +29,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup input
+ * @{
+ */
+
 typedef struct
 {
     CCRect  begin;              // the soft keyboard rectangle when animatin begin
@@ -97,6 +102,9 @@ protected:
 protected:
     CCIMEDelegate();
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

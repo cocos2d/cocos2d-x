@@ -37,6 +37,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 class CC_DLL CCControlHuePicker : public CCControl
 {
     //maunally put in the setters
@@ -64,6 +71,10 @@ protected:
     virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

@@ -32,6 +32,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup transition
+ * @{
+ */
+
 //static creation function macro
 //c/c++ don't support object creation of using class name
 //so, all classes need creation method.
@@ -621,6 +626,9 @@ public:
     TRANSITION_CREATE_FUNC(CCTransitionFadeDown)
     OLD_TRANSITION_CREATE_FUNC(CCTransitionFadeDown)
 };
+
+// end of transition group
+/// @}
 
 NS_CC_END
 

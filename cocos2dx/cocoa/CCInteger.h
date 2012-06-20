@@ -5,6 +5,11 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 class CC_DLL CCInteger : public CCObject
 {
 public:
@@ -27,6 +32,9 @@ public:
 private:
     int m_nValue;
 };
+
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

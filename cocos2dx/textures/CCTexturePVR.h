@@ -34,6 +34,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup textures
+ * @{
+ */
+
+/**
  @brief Structure which can tell where mimap begins and how long is it
 */
 struct CCPVRMipmap {
@@ -112,6 +117,9 @@ protected:
     bool m_bRetainName;
     CCTexture2DPixelFormat m_eFormat;
 };
+
+// end of textures group
+/// @}
 
 NS_CC_END
 

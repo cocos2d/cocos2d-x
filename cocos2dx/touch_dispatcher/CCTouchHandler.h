@@ -34,6 +34,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup input
+ * @{
+ */
+
+/**
  CCTouchHandler
  Object than contains the delegate and priority of the event handler.
 */
@@ -109,6 +114,9 @@ protected:
     bool m_bSwallowsTouches;
     CCSet *m_pClaimedTouches;
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

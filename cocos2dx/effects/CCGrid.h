@@ -39,6 +39,11 @@ class CCTexture2D;
 class CCGrabber;
 class CCGLProgram;
 
+/**
+ * @addtogroup effects
+ * @{
+ */
+
 /** Base class for other
 */
 class CCGridBase : public CCObject
@@ -166,6 +171,9 @@ protected:
     GLvoid *m_pOriginalVertices;
     GLushort *m_pIndices;
 };
+
+// end of effects group
+/// @}
 
 NS_CC_END
 

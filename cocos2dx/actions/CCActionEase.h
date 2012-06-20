@@ -33,8 +33,14 @@ NS_CC_BEGIN
 class CCObject;
 class CCZone;
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
  @brief Base class for Easing actions
+ @ingroup Actions
  */
 class CC_DLL CCActionEase : public CCActionInterval
 {
@@ -65,6 +71,7 @@ protected:
 
 /** 
  @brief Base class for Easing actions with rate parameters
+ @ingroup Actions
  */
 class CC_DLL CCEaseRateAction : public CCActionEase
 {
@@ -97,6 +104,7 @@ protected:
 
 /** 
  @brief CCEaseIn action with a rate
+ @ingroup Actions
  */
 class CC_DLL CCEaseIn : public CCEaseRateAction
 {
@@ -116,6 +124,7 @@ public:
 
 /** 
  @brief CCEaseOut action with a rate
+ @ingroup Actions
  */
 class CC_DLL CCEaseOut : public CCEaseRateAction
 {
@@ -136,6 +145,7 @@ public:
 
 /** 
  @brief CCEaseInOut action with a rate
+ @ingroup Actions
  */
 class CC_DLL CCEaseInOut : public CCEaseRateAction
 {
@@ -156,6 +166,7 @@ public:
 
 /** 
  @brief CCEase Exponential In
+ @ingroup Actions
  */
 class CC_DLL CCEaseExponentialIn : public CCActionEase
 {
@@ -175,6 +186,7 @@ public:
 
 /** 
  @brief Ease Exponential Out
+ @ingroup Actions
  */
 class CC_DLL CCEaseExponentialOut : public CCActionEase
 {
@@ -194,6 +206,7 @@ public:
 
 /** 
  @brief Ease Exponential InOut
+ @ingroup Actions
  */
 class CC_DLL CCEaseExponentialInOut : public CCActionEase
 {
@@ -214,6 +227,7 @@ public:
 
 /** 
  @brief Ease Sine In
+ @ingroup Actions
  */
 class CC_DLL CCEaseSineIn : public CCActionEase
 {
@@ -233,6 +247,7 @@ public:
 
 /** 
  @brief Ease Sine Out
+ @ingroup Actions
  */
 class CC_DLL CCEaseSineOut : public CCActionEase
 {
@@ -252,6 +267,7 @@ public:
 
 /** 
  @brief Ease Sine InOut
+ @ingroup Actions
  */
 class CC_DLL CCEaseSineInOut : public CCActionEase
 {
@@ -272,6 +288,7 @@ public:
 /** 
  @brief Ease Elastic abstract class
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseElastic : public CCActionEase
 {
@@ -302,6 +319,7 @@ protected:
  @brief Ease Elastic In action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseElasticIn : public CCEaseElastic
 {
@@ -323,6 +341,7 @@ public:
  @brief Ease Elastic Out action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseElasticOut : public CCEaseElastic
 {
@@ -345,6 +364,7 @@ public:
  @brief Ease Elastic InOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseElasticInOut : public CCEaseElastic
 {
@@ -366,6 +386,7 @@ public:
 /** 
  @brief CCEaseBounce abstract class.
  @since v0.8.2
+ @ingroup Actions
 */
 class CC_DLL CCEaseBounce : public CCActionEase
 {
@@ -387,6 +408,7 @@ public:
  @brief CCEaseBounceIn action.
  @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
 */
 class CC_DLL CCEaseBounceIn : public CCEaseBounce
 {
@@ -408,6 +430,7 @@ public:
  @brief EaseBounceOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseBounceOut : public CCEaseBounce
 {
@@ -429,6 +452,7 @@ public:
  @brief CCEaseBounceInOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseBounceInOut : public CCEaseBounce
 {
@@ -450,6 +474,7 @@ public:
  @brief CCEaseBackIn action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseBackIn : public CCActionEase
 {
@@ -471,6 +496,7 @@ public:
  @brief CCEaseBackOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseBackOut : public CCActionEase
 {
@@ -492,6 +518,7 @@ public:
  @brief CCEaseBackInOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
+ @ingroup Actions
  */
 class CC_DLL CCEaseBackInOut : public CCActionEase
 {
@@ -508,6 +535,9 @@ public:
     /** creates the action */
     static CCEaseBackInOut* create(CCActionInterval* pAction);
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

@@ -7,6 +7,11 @@ NS_CC_BEGIN
 
 class CCRect;
 
+/**
+ * @addtogroup platform
+ * @{
+ */
+
 class CC_DLL CCApplicationProtocol
 {
 public:
@@ -47,6 +52,9 @@ public:
     virtual bool isIpad() { return false; }
 
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

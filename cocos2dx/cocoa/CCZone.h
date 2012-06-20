@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 class CCObject;
 
 class CC_DLL CCZone
@@ -40,6 +45,9 @@ public:
 public:
     CCObject *m_pCopyObject;
 };
+
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

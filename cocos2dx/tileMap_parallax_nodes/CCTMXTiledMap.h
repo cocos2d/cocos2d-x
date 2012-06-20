@@ -37,6 +37,11 @@ class CCTMXLayerInfo;
 class CCTMXTilesetInfo;
 class CCTMXMapInfo;
 
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
+
 /** Possible oritentations of the TMX map */
 enum
 {
@@ -160,6 +165,9 @@ protected:
     CCDictionary* m_pTileProperties;
 
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

@@ -37,6 +37,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
+
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
  */
@@ -426,6 +431,9 @@ public:
 protected:
     bool m_bInvalid;
 };
+
+// end of base_node group
+/// @}
 
 NS_CC_END
 

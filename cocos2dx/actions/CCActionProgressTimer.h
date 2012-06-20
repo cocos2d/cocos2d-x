@@ -30,6 +30,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup actions
+ * @{
+ */
+
+/**
 @brief Progress to percentage
 @since v0.99.1
 */
@@ -81,6 +86,9 @@ protected:
     float m_fTo;
     float m_fFrom;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

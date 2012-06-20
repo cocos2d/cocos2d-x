@@ -32,6 +32,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup shaders
+ * @{
+ */
+
 class CCGLProgram;
 
 /** vertex attrib flags */
@@ -133,6 +138,9 @@ void CC_DLL ccGLDeleteTexture(GLuint textureId);
  @since v2.0.0
  */
 void CC_DLL ccGLEnable( ccGLServerState flags );
+
+// end of shaders group
+/// @}
 
 NS_CC_END
 

@@ -35,6 +35,11 @@ NS_CC_BEGIN
 
 class CCImage;
 
+/**
+ * @addtogroup textures
+ * @{
+ */
+
 //CONSTANTS:
 
 /** @typedef CCTexture2DPixelFormat
@@ -280,6 +285,9 @@ private:
      */
     CC_SYNTHESIZE(ccResolutionType, m_eResolutionType, ResolutionType);
 };
+
+// end of textures group
+/// @}
 
 NS_CC_END
 

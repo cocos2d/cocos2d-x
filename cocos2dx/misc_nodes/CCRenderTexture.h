@@ -31,6 +31,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup textures
+ * @{
+ */
+
 typedef enum eImageFormat
 {
     kCCImageFormatJPEG      = 0,
@@ -145,6 +150,9 @@ protected:
     CCImage*     m_pUITextureImage;
     GLenum       m_ePixelFormat;
 };
+
+// end of textures group
+/// @}
 
 NS_CC_END
 

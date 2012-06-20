@@ -35,6 +35,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup shaders
+ * @{
+ */
+
 enum {
     kCCVertexAttrib_Position,
     kCCVertexAttrib_Color,
@@ -161,6 +166,9 @@ private:
     GLint            m_uUniforms[kCCUniform_MAX];
     struct _hashUniformEntry* m_pHashForUniforms;
 };
+
+// end of shaders group
+/// @}
 
 NS_CC_END
 

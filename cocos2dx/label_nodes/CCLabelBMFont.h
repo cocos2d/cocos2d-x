@@ -41,6 +41,13 @@ Use any of these editors to generate BMFonts:
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup label
+ * @{
+ */
+
 enum {
     kCCLabelAutomaticWidth = -1,
 };
@@ -251,6 +258,10 @@ CC_DLL CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
 /** Purges the FNT config cache
 */
 CC_DLL void FNTConfigRemoveCache( void );
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_END
 

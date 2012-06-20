@@ -43,8 +43,14 @@
 
 NS_CC_BEGIN;
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** An Array that contain control points.
  Used by CCCardinalSplineTo and (By) and CCCatmullRomTo (and By) actions.
+@ingroup Actions
  */
 class CC_DLL CCPointArray : public CCNode
 {
@@ -103,6 +109,7 @@ private:
 
 /** Cardinal Spline path.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
+@ingroup Actions
  */
 class CC_DLL CCCardinalSplineTo : public CCActionInterval
 {
@@ -146,6 +153,7 @@ protected:
 
 /** Cardinal Spline path.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
+ @ingroup Actions
  */
 class CC_DLL CCCardinalSplineBy : public CCCardinalSplineTo 
 {
@@ -170,6 +178,7 @@ protected:
 /** An action that moves the target with a CatmullRom curve to a destination point.
  A Catmull Rom is a Cardinal Spline with a tension of 0.5.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
+ @ingroup Actions
  */
 class CC_DLL CCCatmullRomTo : public CCCardinalSplineTo
 {
@@ -189,6 +198,7 @@ public:
 /** An action that moves the target with a CatmullRom curve by a certain distance.
  A Catmull Rom is a Cardinal Spline with a tension of 0.5.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
+ @ingroup Actions
  */
 class CC_DLL CCCatmullRomBy : public CCCardinalSplineBy
 {
@@ -207,6 +217,9 @@ public:
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
 extern CC_DLL CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t);
+
+// end of actions group
+/// @}
 
 NS_CC_END;
 

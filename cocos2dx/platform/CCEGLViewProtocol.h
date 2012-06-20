@@ -10,6 +10,11 @@ NS_CC_BEGIN
 class EGLTouchDelegate;
 class CCSet;
 
+/**
+ * @addtogroup platform
+ * @{
+ */
+
 class CC_DLL CCEGLViewProtocol
 {
 public:
@@ -53,6 +58,9 @@ protected:
     CCRect m_rcViewPort;
     char m_szViewName[50];
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

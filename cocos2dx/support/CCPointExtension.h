@@ -48,6 +48,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 /** Helper macro that creates a CCPoint
  @return CCPoint
  @since v0.7.2
@@ -328,6 +333,9 @@ ccpIntersectPoint returns the intersection point of line A-B, C-D
 @since v1.0.0
 */
 CCPoint CC_DLL ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
+
+// end of data_structures group
+/// @}
 
 NS_CC_END
 

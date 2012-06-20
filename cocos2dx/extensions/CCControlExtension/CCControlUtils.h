@@ -51,6 +51,12 @@ typedef struct
     double v;       // percent
 } HSV;
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
 
 //helper class to store ccColor3B's in mutable arrays
 class CC_DLL CCColor3bObject : public CCObject
@@ -68,6 +74,10 @@ public:
     static RGBA RGBfromHSV(HSV value);
     static CCRect CCRectUnion(const CCRect& src1, const CCRect& src2);
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

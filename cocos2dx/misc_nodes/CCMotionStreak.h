@@ -32,6 +32,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup misc_nodes
+ * @{
+ */
 
 /** MotionStreak.
  Creates a trailing path.
@@ -119,6 +123,9 @@ private:
     GLubyte* m_pColorPointer;
     ccTex2F* m_pTexCoords;
 };
+
+// end of misc_nodes group
+/// @}
 
 NS_CC_END
 

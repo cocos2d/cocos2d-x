@@ -3,7 +3,6 @@ Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
-
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,6 +29,11 @@ THE SOFTWARE.
 #include "CCParticleSystemQuad.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup particle_nodes
+ * @{
+ */
 
 //! @brief A fire particle system
 class CC_DLL CCParticleFire : public CCParticleSystemQuad
@@ -310,6 +314,9 @@ public:
         return NULL;
     }
 };
+
+// end of particle_nodes group
+/// @}
 
 NS_CC_END
 

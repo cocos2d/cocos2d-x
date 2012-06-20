@@ -38,6 +38,11 @@ class CCTexture2D;
 class CCTextureAtlas;
 class CCParticleSystem;
 
+/**
+ * @addtogroup particle_nodes
+ * @{
+ */
+
 #define kCCParticleDefaultCapacity 500
 
 /** CCParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
@@ -126,6 +131,9 @@ private:
     /** the blend function used for drawing the quads */
     ccBlendFunc m_tBlendFunc;
 };
+
+// end of particle_nodes group
+/// @}
 
 NS_CC_END
 

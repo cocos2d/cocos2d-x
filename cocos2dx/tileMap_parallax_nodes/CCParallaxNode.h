@@ -33,6 +33,11 @@ NS_CC_BEGIN
 
 struct _ccArray;
 
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
+
 /** @brief CCParallaxNode: A node that simulates a parallax scroller
 
 The children will be moved faster / slower than the parent according the the parallax ratio.
@@ -64,6 +69,9 @@ private:
 protected:
     CCPoint    m_tLastPosition;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

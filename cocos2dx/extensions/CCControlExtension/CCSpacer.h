@@ -5,12 +5,23 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 class CC_DLL CCSpacer: public CCLayer
 {
 public:
     static CCSpacer* verticalSpacer(float space);
     static CCSpacer* horizontalSpacer(float space);
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

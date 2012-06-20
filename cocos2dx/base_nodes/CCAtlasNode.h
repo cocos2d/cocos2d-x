@@ -33,6 +33,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
+
 class CCTextureAtlas;
 
 /** @brief CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
@@ -113,6 +118,9 @@ private :
     void updateOpacityModifyRGB();
 
 };
+
+// end of base_node group
+/// @}
 
 NS_CC_END
 

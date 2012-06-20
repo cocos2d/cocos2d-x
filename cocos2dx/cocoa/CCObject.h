@@ -29,6 +29,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
+
 class CCZone;
 class CCObject;
 class CCNode;
@@ -87,6 +92,9 @@ typedef int (CCObject::*SEL_Compare)(CCObject*);
 #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
+
+// end of base_nodes group
+/// @}
 
 NS_CC_END
 

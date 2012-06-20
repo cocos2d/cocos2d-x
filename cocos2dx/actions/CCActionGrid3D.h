@@ -28,6 +28,12 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
 @brief CCWaves3D action 
 */
@@ -288,6 +294,9 @@ protected:
     float m_fAmplitude;
     float m_fAmplitudeRate;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

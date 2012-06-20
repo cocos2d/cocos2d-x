@@ -30,6 +30,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup menu
+ * @{
+ */
 typedef enum  
 {
     kCCMenuStateWaiting,
@@ -165,6 +171,10 @@ protected:
     tCCMenuState m_eState;
     CCMenuItem *m_pSelectedItem;
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_END
 

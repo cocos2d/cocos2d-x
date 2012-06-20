@@ -9,6 +9,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 class CC_DLL CCMenuPassive : public CCLayer, public CCRGBAProtocol
 {
         /** Color: conforms with CCRGBAProtocol protocol */
@@ -75,6 +82,10 @@ public:
         virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
         virtual bool isOpacityModifyRGB(void) { return false;}
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

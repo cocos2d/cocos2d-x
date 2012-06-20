@@ -29,6 +29,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup platform
+ * @{
+ */
+
 class CC_DLL CCImage : public CCObject
 {
 public:
@@ -143,6 +148,9 @@ private:
     CCImage(const CCImage&    rImg);
     CCImage & operator=(const CCImage&);
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

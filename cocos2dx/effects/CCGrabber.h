@@ -30,7 +30,13 @@ THE SOFTWARE.
 #include "CCGL.h"
 
 NS_CC_BEGIN
+
 class CCTexture2D;
+
+/**
+ * @addtogroup effects
+ * @{
+ */
 
 /** FBO class that grabs the the contents of the screen */
 class CCGrabber : public CCObject
@@ -48,6 +54,9 @@ protected:
     GLint m_oldFBO;
     GLfloat    m_oldClearColor[4];
 };
+
+// end of effects group
+/// @}
 
 NS_CC_END
 

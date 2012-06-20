@@ -31,6 +31,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup transition
+ * @{
+ */
+
+/**
 @brief A transition which peels back the bottom right hand corner of a scene
 to transition to the scene beneath it simulating a page turn.
 
@@ -79,6 +84,9 @@ public:
 protected:
     virtual void sceneOrder();
 };
+
+// end of transition group
+/// @}
 
 NS_CC_END
 

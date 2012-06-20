@@ -30,6 +30,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup label
+ * @{
+ */
+
 /** @brief CCLabelTTF is a subclass of CCTextureNode that knows how to render text labels
 *
 * All features from CCTextureNode are valid in CCLabelTTF
@@ -131,6 +138,10 @@ protected:
     
     std::string m_string;
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_END
 

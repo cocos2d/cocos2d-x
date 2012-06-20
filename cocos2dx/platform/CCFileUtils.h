@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup platform
+ * @{
+ */
+
 //! @brief  Helper class to handle file operations
 class CC_DLL CCFileUtils
 {
@@ -160,6 +165,9 @@ public:
     void setPopupNotify(bool bNotify);
     bool isPopupNotify();
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

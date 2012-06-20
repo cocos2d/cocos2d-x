@@ -29,6 +29,11 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup platform
+ * @{
+ */
+
 typedef unsigned char CC_XML_CHAR;
 
 class CC_DLL CCSAXDelegator
@@ -56,6 +61,9 @@ public:
     static void endElement(void *ctx, const CC_XML_CHAR *name);
     static void textHandler(void *ctx, const CC_XML_CHAR *name, int len);
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

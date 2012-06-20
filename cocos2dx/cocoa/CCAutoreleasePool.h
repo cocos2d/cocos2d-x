@@ -29,6 +29,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
+
 class CC_DLL CCAutoreleasePool : public CCObject
 {
     CCArray*    m_pManagedObjectArray;    
@@ -63,6 +68,9 @@ public:
 
     friend class CCAutoreleasePool;
 };
+
+// end of base_nodes group
+/// @}
 
 NS_CC_END
 

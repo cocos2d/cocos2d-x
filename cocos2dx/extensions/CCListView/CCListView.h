@@ -35,6 +35,11 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ */
+
 class CC_DLL CCRange
 {
 public:
@@ -213,6 +218,9 @@ private:
     bool                   m_bIsEnabled;
     bool                   m_bIsOnTouch;
 };
+
+// end of GUI group
+/// @}
 
 NS_CC_EXT_END
 

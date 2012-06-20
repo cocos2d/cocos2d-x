@@ -39,6 +39,13 @@ class CCSprite;
 class CCSpriteFrame;
 #define kCCItemSize 32
     
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup menu
+ * @{
+ */
+
 /** @brief CCMenuItem base class
  *
  *  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
@@ -415,6 +422,10 @@ public:
     virtual bool isOpacityModifyRGB(void) { return false;}
 };
     
+// end of GUI group
+/// @}
+/// @}
+
 NS_CC_END
 
 #endif //__CCMENU_ITEM_H__

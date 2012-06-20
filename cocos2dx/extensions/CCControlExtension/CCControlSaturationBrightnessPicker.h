@@ -37,6 +37,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 class CC_DLL CCControlSaturationBrightnessPicker : public CCControl
 {
     CC_SYNTHESIZE_READONLY(float, m_saturation, Saturation);
@@ -70,6 +77,10 @@ protected:
     virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

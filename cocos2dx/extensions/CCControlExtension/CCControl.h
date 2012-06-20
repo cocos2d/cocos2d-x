@@ -37,6 +37,13 @@ NS_CC_EXT_BEGIN
 
 class CCInvocation;
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 /** Number of kinds of control event. */
 #define CONTROL_EVENT_TOTAL_NUMBER 9
 
@@ -216,6 +223,10 @@ public:
     LAYER_CREATE_FUNC(CCControl);
 
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

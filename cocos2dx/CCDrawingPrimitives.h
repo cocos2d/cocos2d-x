@@ -49,6 +49,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup global
+ * @{
+ */
+
 class CCPointArray;
 
 /** initlialize context */
@@ -123,6 +128,9 @@ void CC_DLL ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
  @since v2.0
  */
 void CC_DLL ccPointSize( GLfloat pointSize );
+
+// end of global group
+/// @}
 
 NS_CC_END
 
