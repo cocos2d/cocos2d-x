@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Jun 18 19:23:41 2012.
+** Generated automatically by tolua++-1.0.92 on 06/20/12 11:53:48.
 */
 
 #include <vector>
@@ -3370,9 +3370,9 @@ static int tolua_Cocos2d_CCDeccelAmplitude_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: action of class  CCStopGrid */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCStopGrid_action00
-static int tolua_Cocos2d_CCStopGrid_action00(lua_State* tolua_S)
+/* method: create of class  CCStopGrid */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCStopGrid_create00
+static int tolua_Cocos2d_CCStopGrid_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -3385,7 +3385,7 @@ static int tolua_Cocos2d_CCStopGrid_action00(lua_State* tolua_S)
 #endif
  {
   {
-   CCStopGrid* tolua_ret = (CCStopGrid*)  CCStopGrid::action();
+   CCStopGrid* tolua_ret = (CCStopGrid*)  CCStopGrid::create();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCStopGrid");
@@ -3394,15 +3394,15 @@ static int tolua_Cocos2d_CCStopGrid_action00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'action'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: actionWithTimes of class  CCReuseGrid */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCReuseGrid_actionWithTimes00
-static int tolua_Cocos2d_CCReuseGrid_actionWithTimes00(lua_State* tolua_S)
+/* method: create of class  CCReuseGrid */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCReuseGrid_create00
+static int tolua_Cocos2d_CCReuseGrid_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -3417,7 +3417,7 @@ static int tolua_Cocos2d_CCReuseGrid_actionWithTimes00(lua_State* tolua_S)
  {
   int times = ((int)  tolua_tonumber(tolua_S,2,0));
   {
-   CCReuseGrid* tolua_ret = (CCReuseGrid*)  CCReuseGrid::actionWithTimes(times);
+   CCReuseGrid* tolua_ret = (CCReuseGrid*)  CCReuseGrid::create(times);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCReuseGrid");
@@ -3426,7 +3426,7 @@ static int tolua_Cocos2d_CCReuseGrid_actionWithTimes00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'actionWithTimes'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
@@ -32879,9 +32879,9 @@ static int tolua_Cocos2d_CCTouch_getID00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionSceneOriented */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSceneOriented_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionSceneOriented_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionSceneOriented */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSceneOriented_create00
+static int tolua_Cocos2d_CCTransitionSceneOriented_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -32900,7 +32900,7 @@ static int tolua_Cocos2d_CCTransitionSceneOriented_transitionWithDuration00(lua_
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,0));
   {
-   CCTransitionSceneOriented* tolua_ret = (CCTransitionSceneOriented*)  CCTransitionSceneOriented::transitionWithDuration(t,scene,o);
+   CCTransitionSceneOriented* tolua_ret = (CCTransitionSceneOriented*)  CCTransitionSceneOriented::create(t,scene,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSceneOriented");
@@ -32909,15 +32909,15 @@ static int tolua_Cocos2d_CCTransitionSceneOriented_transitionWithDuration00(lua_
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionRotoZoom */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionRotoZoom_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionRotoZoom_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionRotoZoom */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionRotoZoom_create00
+static int tolua_Cocos2d_CCTransitionRotoZoom_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -32934,7 +32934,7 @@ static int tolua_Cocos2d_CCTransitionRotoZoom_transitionWithDuration00(lua_State
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionRotoZoom* tolua_ret = (CCTransitionRotoZoom*)  CCTransitionRotoZoom::transitionWithDuration(t,scene);
+   CCTransitionRotoZoom* tolua_ret = (CCTransitionRotoZoom*)  CCTransitionRotoZoom::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionRotoZoom");
@@ -32943,15 +32943,15 @@ static int tolua_Cocos2d_CCTransitionRotoZoom_transitionWithDuration00(lua_State
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionJumpZoom */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionJumpZoom_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionJumpZoom_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionJumpZoom */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionJumpZoom_create00
+static int tolua_Cocos2d_CCTransitionJumpZoom_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -32968,7 +32968,7 @@ static int tolua_Cocos2d_CCTransitionJumpZoom_transitionWithDuration00(lua_State
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionJumpZoom* tolua_ret = (CCTransitionJumpZoom*)  CCTransitionJumpZoom::transitionWithDuration(t,scene);
+   CCTransitionJumpZoom* tolua_ret = (CCTransitionJumpZoom*)  CCTransitionJumpZoom::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionJumpZoom");
@@ -32977,15 +32977,15 @@ static int tolua_Cocos2d_CCTransitionJumpZoom_transitionWithDuration00(lua_State
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionMoveInL */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionMoveInL_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionMoveInL_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionMoveInL */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionMoveInL_create00
+static int tolua_Cocos2d_CCTransitionMoveInL_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33002,7 +33002,7 @@ static int tolua_Cocos2d_CCTransitionMoveInL_transitionWithDuration00(lua_State*
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionMoveInL* tolua_ret = (CCTransitionMoveInL*)  CCTransitionMoveInL::transitionWithDuration(t,scene);
+   CCTransitionMoveInL* tolua_ret = (CCTransitionMoveInL*)  CCTransitionMoveInL::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInL");
@@ -33011,15 +33011,15 @@ static int tolua_Cocos2d_CCTransitionMoveInL_transitionWithDuration00(lua_State*
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionMoveInR */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionMoveInR_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionMoveInR_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionMoveInR */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionMoveInR_create00
+static int tolua_Cocos2d_CCTransitionMoveInR_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33036,7 +33036,7 @@ static int tolua_Cocos2d_CCTransitionMoveInR_transitionWithDuration00(lua_State*
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionMoveInR* tolua_ret = (CCTransitionMoveInR*)  CCTransitionMoveInR::transitionWithDuration(t,scene);
+   CCTransitionMoveInR* tolua_ret = (CCTransitionMoveInR*)  CCTransitionMoveInR::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInR");
@@ -33045,15 +33045,15 @@ static int tolua_Cocos2d_CCTransitionMoveInR_transitionWithDuration00(lua_State*
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionMoveInT */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionMoveInT_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionMoveInT_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionMoveInT */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionMoveInT_create00
+static int tolua_Cocos2d_CCTransitionMoveInT_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33070,7 +33070,7 @@ static int tolua_Cocos2d_CCTransitionMoveInT_transitionWithDuration00(lua_State*
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionMoveInT* tolua_ret = (CCTransitionMoveInT*)  CCTransitionMoveInT::transitionWithDuration(t,scene);
+   CCTransitionMoveInT* tolua_ret = (CCTransitionMoveInT*)  CCTransitionMoveInT::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInT");
@@ -33079,15 +33079,15 @@ static int tolua_Cocos2d_CCTransitionMoveInT_transitionWithDuration00(lua_State*
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionMoveInB */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionMoveInB_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionMoveInB_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionMoveInB */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionMoveInB_create00
+static int tolua_Cocos2d_CCTransitionMoveInB_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33104,7 +33104,7 @@ static int tolua_Cocos2d_CCTransitionMoveInB_transitionWithDuration00(lua_State*
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionMoveInB* tolua_ret = (CCTransitionMoveInB*)  CCTransitionMoveInB::transitionWithDuration(t,scene);
+   CCTransitionMoveInB* tolua_ret = (CCTransitionMoveInB*)  CCTransitionMoveInB::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionMoveInB");
@@ -33113,15 +33113,15 @@ static int tolua_Cocos2d_CCTransitionMoveInB_transitionWithDuration00(lua_State*
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionSlideInL */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSlideInL_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionSlideInL_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionSlideInL */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSlideInL_create00
+static int tolua_Cocos2d_CCTransitionSlideInL_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33138,7 +33138,7 @@ static int tolua_Cocos2d_CCTransitionSlideInL_transitionWithDuration00(lua_State
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionSlideInL* tolua_ret = (CCTransitionSlideInL*)  CCTransitionSlideInL::transitionWithDuration(t,scene);
+   CCTransitionSlideInL* tolua_ret = (CCTransitionSlideInL*)  CCTransitionSlideInL::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInL");
@@ -33147,15 +33147,15 @@ static int tolua_Cocos2d_CCTransitionSlideInL_transitionWithDuration00(lua_State
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionSlideInR */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSlideInR_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionSlideInR_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionSlideInR */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSlideInR_create00
+static int tolua_Cocos2d_CCTransitionSlideInR_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33172,7 +33172,7 @@ static int tolua_Cocos2d_CCTransitionSlideInR_transitionWithDuration00(lua_State
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionSlideInR* tolua_ret = (CCTransitionSlideInR*)  CCTransitionSlideInR::transitionWithDuration(t,scene);
+   CCTransitionSlideInR* tolua_ret = (CCTransitionSlideInR*)  CCTransitionSlideInR::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInR");
@@ -33181,15 +33181,15 @@ static int tolua_Cocos2d_CCTransitionSlideInR_transitionWithDuration00(lua_State
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionSlideInB */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSlideInB_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionSlideInB_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionSlideInB */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSlideInB_create00
+static int tolua_Cocos2d_CCTransitionSlideInB_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33206,7 +33206,7 @@ static int tolua_Cocos2d_CCTransitionSlideInB_transitionWithDuration00(lua_State
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionSlideInB* tolua_ret = (CCTransitionSlideInB*)  CCTransitionSlideInB::transitionWithDuration(t,scene);
+   CCTransitionSlideInB* tolua_ret = (CCTransitionSlideInB*)  CCTransitionSlideInB::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInB");
@@ -33215,15 +33215,15 @@ static int tolua_Cocos2d_CCTransitionSlideInB_transitionWithDuration00(lua_State
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionSlideInT */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSlideInT_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionSlideInT_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionSlideInT */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSlideInT_create00
+static int tolua_Cocos2d_CCTransitionSlideInT_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33240,7 +33240,7 @@ static int tolua_Cocos2d_CCTransitionSlideInT_transitionWithDuration00(lua_State
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionSlideInT* tolua_ret = (CCTransitionSlideInT*)  CCTransitionSlideInT::transitionWithDuration(t,scene);
+   CCTransitionSlideInT* tolua_ret = (CCTransitionSlideInT*)  CCTransitionSlideInT::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSlideInT");
@@ -33249,15 +33249,15 @@ static int tolua_Cocos2d_CCTransitionSlideInT_transitionWithDuration00(lua_State
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionShrinkGrow */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionShrinkGrow_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionShrinkGrow_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionShrinkGrow */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionShrinkGrow_create00
+static int tolua_Cocos2d_CCTransitionShrinkGrow_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33274,7 +33274,7 @@ static int tolua_Cocos2d_CCTransitionShrinkGrow_transitionWithDuration00(lua_Sta
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionShrinkGrow* tolua_ret = (CCTransitionShrinkGrow*)  CCTransitionShrinkGrow::transitionWithDuration(t,scene);
+   CCTransitionShrinkGrow* tolua_ret = (CCTransitionShrinkGrow*)  CCTransitionShrinkGrow::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionShrinkGrow");
@@ -33283,15 +33283,15 @@ static int tolua_Cocos2d_CCTransitionShrinkGrow_transitionWithDuration00(lua_Sta
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionFlipX */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFlipX_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionFlipX_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionFlipX */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFlipX_create00
+static int tolua_Cocos2d_CCTransitionFlipX_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33310,7 +33310,7 @@ static int tolua_Cocos2d_CCTransitionFlipX_transitionWithDuration00(lua_State* t
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationRightOver));
   {
-   CCTransitionFlipX* tolua_ret = (CCTransitionFlipX*)  CCTransitionFlipX::transitionWithDuration(t,s,o);
+   CCTransitionFlipX* tolua_ret = (CCTransitionFlipX*)  CCTransitionFlipX::create(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipX");
@@ -33319,15 +33319,15 @@ static int tolua_Cocos2d_CCTransitionFlipX_transitionWithDuration00(lua_State* t
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionFlipY */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFlipY_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionFlipY_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionFlipY */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFlipY_create00
+static int tolua_Cocos2d_CCTransitionFlipY_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33346,7 +33346,7 @@ static int tolua_Cocos2d_CCTransitionFlipY_transitionWithDuration00(lua_State* t
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationUpOver));
   {
-   CCTransitionFlipY* tolua_ret = (CCTransitionFlipY*)  CCTransitionFlipY::transitionWithDuration(t,s,o);
+   CCTransitionFlipY* tolua_ret = (CCTransitionFlipY*)  CCTransitionFlipY::create(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipY");
@@ -33355,15 +33355,15 @@ static int tolua_Cocos2d_CCTransitionFlipY_transitionWithDuration00(lua_State* t
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionFlipAngular */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFlipAngular_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionFlipAngular_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionFlipAngular */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFlipAngular_create00
+static int tolua_Cocos2d_CCTransitionFlipAngular_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33382,7 +33382,7 @@ static int tolua_Cocos2d_CCTransitionFlipAngular_transitionWithDuration00(lua_St
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationRightOver));
   {
-   CCTransitionFlipAngular* tolua_ret = (CCTransitionFlipAngular*)  CCTransitionFlipAngular::transitionWithDuration(t,s,o);
+   CCTransitionFlipAngular* tolua_ret = (CCTransitionFlipAngular*)  CCTransitionFlipAngular::create(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFlipAngular");
@@ -33391,15 +33391,15 @@ static int tolua_Cocos2d_CCTransitionFlipAngular_transitionWithDuration00(lua_St
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionZoomFlipX */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionZoomFlipX_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionZoomFlipX_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionZoomFlipX */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionZoomFlipX_create00
+static int tolua_Cocos2d_CCTransitionZoomFlipX_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33418,7 +33418,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipX_transitionWithDuration00(lua_Stat
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationRightOver));
   {
-   CCTransitionZoomFlipX* tolua_ret = (CCTransitionZoomFlipX*)  CCTransitionZoomFlipX::transitionWithDuration(t,s,o);
+   CCTransitionZoomFlipX* tolua_ret = (CCTransitionZoomFlipX*)  CCTransitionZoomFlipX::create(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipX");
@@ -33427,15 +33427,15 @@ static int tolua_Cocos2d_CCTransitionZoomFlipX_transitionWithDuration00(lua_Stat
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionZoomFlipY */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionZoomFlipY_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionZoomFlipY_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionZoomFlipY */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionZoomFlipY_create00
+static int tolua_Cocos2d_CCTransitionZoomFlipY_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33454,7 +33454,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipY_transitionWithDuration00(lua_Stat
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationUpOver));
   {
-   CCTransitionZoomFlipY* tolua_ret = (CCTransitionZoomFlipY*)  CCTransitionZoomFlipY::transitionWithDuration(t,s,o);
+   CCTransitionZoomFlipY* tolua_ret = (CCTransitionZoomFlipY*)  CCTransitionZoomFlipY::create(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipY");
@@ -33463,15 +33463,15 @@ static int tolua_Cocos2d_CCTransitionZoomFlipY_transitionWithDuration00(lua_Stat
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionZoomFlipAngular */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionZoomFlipAngular_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionZoomFlipAngular_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionZoomFlipAngular */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionZoomFlipAngular_create00
+static int tolua_Cocos2d_CCTransitionZoomFlipAngular_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33490,7 +33490,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipAngular_transitionWithDuration00(lu
   CCScene* s = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kOrientationRightOver));
   {
-   CCTransitionZoomFlipAngular* tolua_ret = (CCTransitionZoomFlipAngular*)  CCTransitionZoomFlipAngular::transitionWithDuration(t,s,o);
+   CCTransitionZoomFlipAngular* tolua_ret = (CCTransitionZoomFlipAngular*)  CCTransitionZoomFlipAngular::create(t,s,o);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionZoomFlipAngular");
@@ -33499,15 +33499,15 @@ static int tolua_Cocos2d_CCTransitionZoomFlipAngular_transitionWithDuration00(lu
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionFade */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFade_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionFade_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionFade */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFade_create00
+static int tolua_Cocos2d_CCTransitionFade_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33527,7 +33527,7 @@ static int tolua_Cocos2d_CCTransitionFade_transitionWithDuration00(lua_State* to
   const ccColor3B clr = ccBLACK;
   ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,4,(void*)&clr));
   {
-   CCTransitionFade* tolua_ret = (CCTransitionFade*)  CCTransitionFade::transitionWithDuration(duration,scene,color);
+   CCTransitionFade* tolua_ret = (CCTransitionFade*)  CCTransitionFade::create(duration,scene,color);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFade");
@@ -33536,15 +33536,15 @@ static int tolua_Cocos2d_CCTransitionFade_transitionWithDuration00(lua_State* to
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionCrossFade */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionCrossFade_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionCrossFade_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionCrossFade */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionCrossFade_create00
+static int tolua_Cocos2d_CCTransitionCrossFade_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33561,7 +33561,7 @@ static int tolua_Cocos2d_CCTransitionCrossFade_transitionWithDuration00(lua_Stat
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionCrossFade* tolua_ret = (CCTransitionCrossFade*)  CCTransitionCrossFade::transitionWithDuration(t,scene);
+   CCTransitionCrossFade* tolua_ret = (CCTransitionCrossFade*)  CCTransitionCrossFade::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionCrossFade");
@@ -33570,15 +33570,15 @@ static int tolua_Cocos2d_CCTransitionCrossFade_transitionWithDuration00(lua_Stat
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionTurnOffTiles */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionTurnOffTiles_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionTurnOffTiles_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionTurnOffTiles */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionTurnOffTiles_create00
+static int tolua_Cocos2d_CCTransitionTurnOffTiles_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33595,7 +33595,7 @@ static int tolua_Cocos2d_CCTransitionTurnOffTiles_transitionWithDuration00(lua_S
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionTurnOffTiles* tolua_ret = (CCTransitionTurnOffTiles*)  CCTransitionTurnOffTiles::transitionWithDuration(t,scene);
+   CCTransitionTurnOffTiles* tolua_ret = (CCTransitionTurnOffTiles*)  CCTransitionTurnOffTiles::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionTurnOffTiles");
@@ -33604,15 +33604,15 @@ static int tolua_Cocos2d_CCTransitionTurnOffTiles_transitionWithDuration00(lua_S
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionSplitCols */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSplitCols_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionSplitCols_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionSplitCols */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSplitCols_create00
+static int tolua_Cocos2d_CCTransitionSplitCols_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33629,7 +33629,7 @@ static int tolua_Cocos2d_CCTransitionSplitCols_transitionWithDuration00(lua_Stat
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionSplitCols* tolua_ret = (CCTransitionSplitCols*)  CCTransitionSplitCols::transitionWithDuration(t,scene);
+   CCTransitionSplitCols* tolua_ret = (CCTransitionSplitCols*)  CCTransitionSplitCols::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSplitCols");
@@ -33638,15 +33638,15 @@ static int tolua_Cocos2d_CCTransitionSplitCols_transitionWithDuration00(lua_Stat
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionSplitRows */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSplitRows_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionSplitRows_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionSplitRows */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionSplitRows_create00
+static int tolua_Cocos2d_CCTransitionSplitRows_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33663,7 +33663,7 @@ static int tolua_Cocos2d_CCTransitionSplitRows_transitionWithDuration00(lua_Stat
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionSplitRows* tolua_ret = (CCTransitionSplitRows*)  CCTransitionSplitRows::transitionWithDuration(t,scene);
+   CCTransitionSplitRows* tolua_ret = (CCTransitionSplitRows*)  CCTransitionSplitRows::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionSplitRows");
@@ -33672,15 +33672,15 @@ static int tolua_Cocos2d_CCTransitionSplitRows_transitionWithDuration00(lua_Stat
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionFadeTR */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFadeTR_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionFadeTR_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionFadeTR */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFadeTR_create00
+static int tolua_Cocos2d_CCTransitionFadeTR_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33697,7 +33697,7 @@ static int tolua_Cocos2d_CCTransitionFadeTR_transitionWithDuration00(lua_State* 
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionFadeTR* tolua_ret = (CCTransitionFadeTR*)  CCTransitionFadeTR::transitionWithDuration(t,scene);
+   CCTransitionFadeTR* tolua_ret = (CCTransitionFadeTR*)  CCTransitionFadeTR::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeTR");
@@ -33706,15 +33706,15 @@ static int tolua_Cocos2d_CCTransitionFadeTR_transitionWithDuration00(lua_State* 
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionFadeBL */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFadeBL_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionFadeBL_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionFadeBL */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFadeBL_create00
+static int tolua_Cocos2d_CCTransitionFadeBL_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33731,7 +33731,7 @@ static int tolua_Cocos2d_CCTransitionFadeBL_transitionWithDuration00(lua_State* 
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionFadeBL* tolua_ret = (CCTransitionFadeBL*)  CCTransitionFadeBL::transitionWithDuration(t,scene);
+   CCTransitionFadeBL* tolua_ret = (CCTransitionFadeBL*)  CCTransitionFadeBL::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeBL");
@@ -33740,15 +33740,15 @@ static int tolua_Cocos2d_CCTransitionFadeBL_transitionWithDuration00(lua_State* 
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionFadeUp */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFadeUp_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionFadeUp_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionFadeUp */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFadeUp_create00
+static int tolua_Cocos2d_CCTransitionFadeUp_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33765,7 +33765,7 @@ static int tolua_Cocos2d_CCTransitionFadeUp_transitionWithDuration00(lua_State* 
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionFadeUp* tolua_ret = (CCTransitionFadeUp*)  CCTransitionFadeUp::transitionWithDuration(t,scene);
+   CCTransitionFadeUp* tolua_ret = (CCTransitionFadeUp*)  CCTransitionFadeUp::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeUp");
@@ -33774,15 +33774,15 @@ static int tolua_Cocos2d_CCTransitionFadeUp_transitionWithDuration00(lua_State* 
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionFadeDown */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFadeDown_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionFadeDown_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionFadeDown */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionFadeDown_create00
+static int tolua_Cocos2d_CCTransitionFadeDown_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33799,7 +33799,7 @@ static int tolua_Cocos2d_CCTransitionFadeDown_transitionWithDuration00(lua_State
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCTransitionFadeDown* tolua_ret = (CCTransitionFadeDown*)  CCTransitionFadeDown::transitionWithDuration(t,scene);
+   CCTransitionFadeDown* tolua_ret = (CCTransitionFadeDown*)  CCTransitionFadeDown::create(t,scene);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionFadeDown");
@@ -33808,7 +33808,7 @@ static int tolua_Cocos2d_CCTransitionFadeDown_transitionWithDuration00(lua_State
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
@@ -33850,9 +33850,9 @@ static int tolua_Cocos2d_CCTransitionPageTurn_actionWithSize00(lua_State* tolua_
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: transitionWithDuration of class  CCTransitionPageTurn */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionPageTurn_transitionWithDuration00
-static int tolua_Cocos2d_CCTransitionPageTurn_transitionWithDuration00(lua_State* tolua_S)
+/* method: create of class  CCTransitionPageTurn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionPageTurn_create00
+static int tolua_Cocos2d_CCTransitionPageTurn_create00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -33871,7 +33871,7 @@ static int tolua_Cocos2d_CCTransitionPageTurn_transitionWithDuration00(lua_State
   CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
   bool backwards = ((bool)  tolua_toboolean(tolua_S,4,0));
   {
-   CCTransitionPageTurn* tolua_ret = (CCTransitionPageTurn*)  CCTransitionPageTurn::transitionWithDuration(t,scene,backwards);
+   CCTransitionPageTurn* tolua_ret = (CCTransitionPageTurn*)  CCTransitionPageTurn::create(t,scene,backwards);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionPageTurn");
@@ -33880,7 +33880,7 @@ static int tolua_Cocos2d_CCTransitionPageTurn_transitionWithDuration00(lua_State
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'transitionWithDuration'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
 }
@@ -37151,11 +37151,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCStopGrid","CCStopGrid","CCActionInstant",NULL);
   tolua_beginmodule(tolua_S,"CCStopGrid");
-   tolua_function(tolua_S,"action",tolua_Cocos2d_CCStopGrid_action00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCStopGrid_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCReuseGrid","CCReuseGrid","CCActionInstant",NULL);
   tolua_beginmodule(tolua_S,"CCReuseGrid");
-   tolua_function(tolua_S,"actionWithTimes",tolua_Cocos2d_CCReuseGrid_actionWithTimes00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCReuseGrid_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCWaves3D","CCWaves3D","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCWaves3D");
@@ -38373,116 +38373,116 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kOrientationDownOver",kOrientationDownOver);
   tolua_cclass(tolua_S,"CCTransitionSceneOriented","CCTransitionSceneOriented","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionSceneOriented");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionSceneOriented_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionSceneOriented_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionRotoZoom","CCTransitionRotoZoom","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionRotoZoom");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionRotoZoom_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionRotoZoom_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionJumpZoom","CCTransitionJumpZoom","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionJumpZoom");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionJumpZoom_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionJumpZoom_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionMoveInL","CCTransitionMoveInL","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionMoveInL");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionMoveInL_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionMoveInL_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionMoveInR","CCTransitionMoveInR","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionMoveInR");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionMoveInR_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionMoveInR_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionMoveInT","CCTransitionMoveInT","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionMoveInT");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionMoveInT_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionMoveInT_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionMoveInB","CCTransitionMoveInB","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionMoveInB");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionMoveInB_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionMoveInB_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionSlideInL","CCTransitionSlideInL","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionSlideInL");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionSlideInL_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionSlideInL_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionSlideInR","CCTransitionSlideInR","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionSlideInR");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionSlideInR_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionSlideInR_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionSlideInB","CCTransitionSlideInB","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionSlideInB");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionSlideInB_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionSlideInB_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionSlideInT","CCTransitionSlideInT","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionSlideInT");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionSlideInT_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionSlideInT_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionShrinkGrow","CCTransitionShrinkGrow","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionShrinkGrow");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionShrinkGrow_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionShrinkGrow_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionFlipX","CCTransitionFlipX","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionFlipX");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionFlipX_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFlipX_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionFlipY","CCTransitionFlipY","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionFlipY");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionFlipY_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFlipY_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionFlipAngular","CCTransitionFlipAngular","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionFlipAngular");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionFlipAngular_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFlipAngular_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionZoomFlipX","CCTransitionZoomFlipX","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionZoomFlipX");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionZoomFlipX_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionZoomFlipX_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionZoomFlipY","CCTransitionZoomFlipY","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionZoomFlipY");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionZoomFlipY_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionZoomFlipY_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionZoomFlipAngular","CCTransitionZoomFlipAngular","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionZoomFlipAngular");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionZoomFlipAngular_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionZoomFlipAngular_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionFade","CCTransitionFade","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionFade");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionFade_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFade_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionCrossFade","CCTransitionCrossFade","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionCrossFade");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionCrossFade_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionCrossFade_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionTurnOffTiles","CCTransitionTurnOffTiles","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionTurnOffTiles");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionTurnOffTiles_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionTurnOffTiles_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionSplitCols","CCTransitionSplitCols","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionSplitCols");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionSplitCols_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionSplitCols_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionSplitRows","CCTransitionSplitRows","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionSplitRows");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionSplitRows_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionSplitRows_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionFadeTR","CCTransitionFadeTR","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionFadeTR");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionFadeTR_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFadeTR_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionFadeBL","CCTransitionFadeBL","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionFadeBL");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionFadeBL_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFadeBL_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionFadeUp","CCTransitionFadeUp","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionFadeUp");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionFadeUp_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFadeUp_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionFadeDown","CCTransitionFadeDown","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionFadeDown");
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionFadeDown_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFadeDown_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionPageTurn","CCTransitionPageTurn","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionPageTurn");
    tolua_function(tolua_S,"actionWithSize",tolua_Cocos2d_CCTransitionPageTurn_actionWithSize00);
-   tolua_function(tolua_S,"transitionWithDuration",tolua_Cocos2d_CCTransitionPageTurn_transitionWithDuration00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionPageTurn_create00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"ccColor3B","ccColor3B","",tolua_collect_ccColor3B);
