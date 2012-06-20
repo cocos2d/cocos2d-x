@@ -602,7 +602,7 @@ bool CCScale9Sprite::isOpacityModifyRGB()
 
 void CCScale9Sprite::setSpriteFrame(CCSpriteFrame * spriteFrame)
 {
-    CCSpriteBatchNode * batchnode = CCSpriteBatchNode::batchNodeWithTexture(spriteFrame->getTexture(), 9);
+    CCSpriteBatchNode * batchnode = CCSpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
     this->updateWithBatchNode(batchnode, spriteFrame->getRect(), CCRectZero);
 
     // Reset insets

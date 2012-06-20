@@ -6,7 +6,7 @@
 
 class LabelTestLayer : public cocos2d::CCLayer {
     public:
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(LabelTestLayer, node);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(LabelTestLayer, create);
 };
 
 #endif

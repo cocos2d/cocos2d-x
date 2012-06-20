@@ -80,19 +80,13 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      @warning: This interface will be deprecated in future.
      */
-    static CCString* stringWithCString(const char* pStr);
-
-    /** create a string with c string
-     *  @return A CCString pointer which is an autorelease object pointer,
-     *          it means that you needn't do a release operation unless you retain it.
-     */
-    static CCString* stringWithCStringData(const char* pData, unsigned long nLen);
+    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithCString(const char* pStr);
 
     /** create a string with std::string
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-    static CCString* stringWithString(const std::string& str);
+    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithString(const std::string& str);
 
     /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
      *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
@@ -100,27 +94,27 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      @warning: This interface will be deprecated in future.
      */ 
-    static CCString* stringWithFormat(const char* format, ...);
+    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithFormat(const char* format, ...);
 
     /** create a string with binary data 
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      @warning: This interface will be deprecated in future.
      */
-    static CCString* stringWithData(unsigned char* pData, unsigned long nLen);
+    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithData(const unsigned char* pData, unsigned long nLen);
 
     /** create a string with a file, 
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      @warning: This interface will be deprecated in future.
      */
-    static CCString* stringWithContentsOfFile(const char* pszFileName);
+    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithContentsOfFile(const char* pszFileName);
 
-   /** create a string with c string 
+    /** create a string with std string, you can also pass a c string pointer because the default constuctor of std::string can access a c string pointer. 
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-    static CCString* create(const char* pStr);
+    static CCString* create(const std::string& str);
 
     /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
      *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
@@ -133,7 +127,7 @@ public:
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-    static CCString* createWithData(unsigned char* pData, unsigned long nLen);
+    static CCString* createWithData(const unsigned char* pData, unsigned long nLen);
 
     /** create a string with a file, 
      *  @return A CCString pointer which is an autorelease object pointer,

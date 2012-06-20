@@ -36,23 +36,8 @@ NS_CC_BEGIN
 //c/c++ don't support object creation of using class name
 //so, all classes need creation method.
 
-// @warning: This interface will be deprecated in future.
-// #define DECLEAR_TRANSITIONWITHDURATION(_Type)\
-//     static _Type* transitionWithDuration(float t, CCScene* scene);
-// 
-// #define IMPLEMENT_TRANSITIONWITHDURATION(_Type)\
-//     _Type* _Type::transitionWithDuration(float t, CCScene* scene)\
-// {\
-//     _Type* pScene = new _Type();\
-//     if(pScene && pScene->initWithDuration(t, scene)){\
-//     pScene->autorelease();\
-//     return pScene;}\
-//     CC_SAFE_DELETE(pScene);\
-//     return NULL;\
-//
-
 #define OLD_TRANSITION_CREATE_FUNC(_Type)                           \
-    static _Type* transitionWithDuration(float t, CCScene* scene)   \
+    CC_DEPRECATED_ATTRIBUTE static _Type* transitionWithDuration(float t, CCScene* scene)   \
     {                                                               \
         _Type* pScene = new _Type();                                \
         if(pScene && pScene->initWithDuration(t, scene))            \
@@ -129,7 +114,7 @@ public:
     /** creates a base transition with duration and incoming scene
     @warning: This interface will be deprecated in future.
     */
-    static CCTransitionScene * transitionWithDuration(float t, CCScene *scene);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionScene * transitionWithDuration(float t, CCScene *scene);
 
     /** creates a base transition with duration and incoming scene */
     static CCTransitionScene * create(float t, CCScene *scene);
@@ -165,7 +150,7 @@ public:
     /** creates a base transition with duration and incoming scene 
     @warning: This interface will be deprecated in future.
     */
-    static CCTransitionSceneOriented * transitionWithDuration(float t,CCScene* scene, tOrientation orientation);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionSceneOriented * transitionWithDuration(float t,CCScene* scene, tOrientation orientation);
 
     /** creates a base transition with duration and incoming scene */
     static CCTransitionSceneOriented * create(float t,CCScene* scene, tOrientation orientation);
@@ -378,7 +363,7 @@ public:
     virtual void onEnter();
 
     // @warning: This interface will be deprecated in future.
-    static CCTransitionFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
     static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
@@ -395,7 +380,7 @@ public:
     virtual void onEnter();
 
     //@warning: This interface will be deprecated in future.
-    static CCTransitionFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
     static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o = kOrientationUpOver);
 };
 
@@ -412,7 +397,7 @@ public:
     virtual void onEnter();
 
     //@warning: This interface will be deprecated in future.
-    static CCTransitionFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
     static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
@@ -429,7 +414,7 @@ public:
     virtual void onEnter();
 
     //@warning: This interface will be deprecated in future.
-    static CCTransitionZoomFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
     static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
@@ -446,7 +431,7 @@ public:
     virtual void onEnter();
 
     //@warning: This interface will be deprecated in future.
-    static CCTransitionZoomFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
     static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o = kOrientationUpOver);
 };
 
@@ -463,7 +448,7 @@ public:
     virtual void onEnter();
 
     //@warning: This interface will be deprecated in future.
-    static CCTransitionZoomFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
     static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
 };
 
@@ -484,7 +469,7 @@ public:
     * Example: FadeTransition::transitionWithDuration(2, scene, ccc3(255,0,0); // red color
     @warning: This interface will be deprecated in future.
     */
-    static CCTransitionFade* transitionWithDuration(float duration,CCScene* scene, const ccColor3B& color = ccBLACK);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionFade* transitionWithDuration(float duration,CCScene* scene, const ccColor3B& color = ccBLACK);
     
         /** creates the transition with a duration and with an RGB color
     * Example: FadeTransition::create(2, scene, ccc3(255,0,0); // red color
