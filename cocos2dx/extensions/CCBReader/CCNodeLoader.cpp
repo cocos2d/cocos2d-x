@@ -415,7 +415,7 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
 
         CCTexture2D * texture = CCTextureCache::sharedTextureCache()->addImage(spriteFilePath->getCString());
         CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
-        spriteFrame = CCSpriteFrame::frameWithTexture(texture, bounds);
+        spriteFrame = CCSpriteFrame::create(texture, bounds);
     } else {
         CCSpriteFrameCache * frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
 
@@ -537,7 +537,7 @@ CCString * CCNodeLoader::parsePropTypeText(CCNode * pNode, CCNode * pParent, CCB
 CCString * CCNodeLoader::parsePropTypeFontTTF(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     CCString * fontTTF = pCCBReader->readCachedString();
 
-    CCString * ttfEnding = CCString::stringWithCString(".ttf");
+    CCString * ttfEnding = CCString::create(".ttf");
 
     /* If the fontTTF comes with the ".ttf" extension, prepend the absolute path. 
      * System fonts come without the ".ttf" extension and do not need the path prepended. */
@@ -653,7 +653,7 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
 
     /* Change path extension to .ccbi. */
     CCString * ccbFileWithoutPathExtension = CCBReader::deletePathExtension(ccbFileName);
-    CCString * ccbiFileName = CCBReader::concat(ccbFileWithoutPathExtension, CCString::stringWithCString(".ccbi"));
+    CCString * ccbiFileName = CCBReader::concat(ccbFileWithoutPathExtension, CCString::create(".ccbi"));
 
     CCBReader * ccbReader = new CCBReader(pCCBReader);
     ccbReader->autorelease();

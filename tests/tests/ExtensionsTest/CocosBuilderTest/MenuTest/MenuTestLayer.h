@@ -12,7 +12,7 @@ class MenuTestLayer
     , public cocos2d::extension::CCBMemberVariableAssigner 
 {
     public:
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(MenuTestLayer, node);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(MenuTestLayer, create);
 
         MenuTestLayer();
         virtual ~MenuTestLayer();

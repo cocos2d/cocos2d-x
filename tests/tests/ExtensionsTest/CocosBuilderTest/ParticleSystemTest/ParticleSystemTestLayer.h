@@ -6,7 +6,7 @@
 
 class ParticleSystemTestLayer : public cocos2d::CCLayer {
     public:
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ParticleSystemTestLayer, node);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ParticleSystemTestLayer, create);
 };
 
 #endif

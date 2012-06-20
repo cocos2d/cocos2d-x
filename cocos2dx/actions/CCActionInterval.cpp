@@ -178,7 +178,7 @@ CCFiniteTimeAction* CCSequence::actions(CCFiniteTimeAction *pAction1, ...)
         pNow = va_arg(params, CCFiniteTimeAction*);
         if (pNow)
         {
-            pPrev = actionOneTwo(pPrev, pNow);
+            pPrev = CCSequence::create(pPrev, pNow);
         }
         else
         {
@@ -215,18 +215,18 @@ CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, ...)
     return pPrev;
 }
 
-CCFiniteTimeAction* CCSequence::actionWithArray(CCArray *actions)
+CCFiniteTimeAction* CCSequence::actionWithArray(CCArray* arrayOfActions)
 {
-    return CCSequence::create(actions);
+    return CCSequence::create(arrayOfActions);
 }
 
-CCFiniteTimeAction* CCSequence::create(CCArray *actions)
+CCFiniteTimeAction* CCSequence::create(CCArray* arrayOfActions)
 {
-    CCFiniteTimeAction* prev = (CCFiniteTimeAction*)actions->objectAtIndex(0);
+    CCFiniteTimeAction* prev = (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(0);
 
-    for (unsigned int i = 1; i < actions->count(); ++i)
+    for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
     {
-        prev = create(prev, (CCFiniteTimeAction*)actions->objectAtIndex(i));
+        prev = create(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
     }
 
     return prev;
@@ -585,7 +585,7 @@ CCFiniteTimeAction* CCSpawn::actions(CCFiniteTimeAction *pAction1, ...)
         pNow = va_arg(params, CCFiniteTimeAction*);
         if (pNow)
         {
-            pPrev = actionOneTwo(pPrev, pNow);
+            pPrev = CCSpawn::create(pPrev, pNow);
         }
         else
         {
@@ -622,18 +622,18 @@ CCFiniteTimeAction* CCSpawn::create(CCFiniteTimeAction *pAction1, ...)
     return pPrev;
 }
 
-CCFiniteTimeAction* CCSpawn::actionWithArray(CCArray *actions)
+CCFiniteTimeAction* CCSpawn::actionWithArray(CCArray *arrayOfActions)
 {
-    return CCSpawn::create(actions);
+    return CCSpawn::create(arrayOfActions);
 }
 
-CCFiniteTimeAction* CCSpawn::create(CCArray *actions)
+CCFiniteTimeAction* CCSpawn::create(CCArray *arrayOfActions)
 {
-    CCFiniteTimeAction* prev = (CCFiniteTimeAction*)actions->objectAtIndex(0);
+    CCFiniteTimeAction* prev = (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(0);
 
-    for (unsigned int i = 1; i < actions->count(); ++i)
+    for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
     {
-        prev = create(prev, (CCFiniteTimeAction*)actions->objectAtIndex(i));
+        prev = create(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
     }
 
     return prev;

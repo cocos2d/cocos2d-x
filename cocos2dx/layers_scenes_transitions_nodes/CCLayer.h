@@ -55,7 +55,7 @@ public:
     bool init();
 
     // @warning: This interface will be deprecated in future.
-    static CCLayer *node(void);
+    CC_DEPRECATED_ATTRIBUTE static CCLayer *node(void);
     /** create one layer */
     static CCLayer *create(void);
 
@@ -129,7 +129,7 @@ private:
 // for the subclass of CCLayer, each has to implement the static "node" method 
 // @warning: This interface will be deprecated in future.
 #define LAYER_NODE_FUNC(layer) \
-    static layer* node() \
+    CC_DEPRECATED_ATTRIBUTE static layer* node() \
     { \
         layer *pRet = new layer(); \
         if (pRet && pRet->init()) \
@@ -166,7 +166,7 @@ private:
 
 // @warning: This interface will be deprecated in future.
 #define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
-    static layer* node(__PARAMTYPE__ __PARAM__) \
+    CC_DEPRECATED_ATTRIBUTE static layer* node(__PARAMTYPE__ __PARAM__) \
     { \
         layer *pRet = new layer(); \
         if (pRet && pRet->init(__PARAM__)) \
@@ -225,11 +225,11 @@ public:
     /** creates a CCLayer with color, width and height in Points 
     @warning: This interface will be deprecated in future.
     */
-    static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
+    CC_DEPRECATED_ATTRIBUTE static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
     /** creates a CCLayer with color. Width and height are the window size. 
     @warning: This interface will be deprecated in future.
     */
-    static CCLayerColor * layerWithColor(const ccColor4B& color);
+    CC_DEPRECATED_ATTRIBUTE static CCLayerColor * layerWithColor(const ccColor4B& color);
 
     /** creates a CCLayer with color, width and height in Points */
     static CCLayerColor * create(const ccColor4B& color, GLfloat width, GLfloat height);
@@ -296,12 +296,12 @@ public:
     /** Creates a full-screen CCLayer with a gradient between start and end. 
     @warning: This interface will be deprecated in future.
     */
-    static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end);
+    CC_DEPRECATED_ATTRIBUTE static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end);
 
     /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. 
     @warning: This interface will be deprecated in future.
     */
-    static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+    CC_DEPRECATED_ATTRIBUTE static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
     /** Creates a full-screen CCLayer with a gradient between start and end. */
     static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end);
@@ -355,14 +355,14 @@ public:
     /** creates a CCLayerMultiplex with one or more layers using a variable argument list. 
     @warning: This interface will be deprecated in future.
     */
-    static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
+    CC_DEPRECATED_ATTRIBUTE static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
 
     /**
      * lua script can not init with undetermined number of variables
      * so add these functinons to be used with lua.
      @warning: This interface will be deprecated in future.
      */
-    static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
+    CC_DEPRECATED_ATTRIBUTE static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
 
     /** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
     static CCLayerMultiplex * create(CCLayer* layer, ... );

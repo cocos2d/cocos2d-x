@@ -6,7 +6,7 @@
 
 class ScrollViewTestLayer : public cocos2d::CCLayer {
     public:
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ScrollViewTestLayer, node);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ScrollViewTestLayer, create);
 };
 
 #endif

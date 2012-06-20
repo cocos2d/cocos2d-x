@@ -24,7 +24,7 @@ class HelloCocosBuilderLayer
     , public cocos2d::extension::CCNodeLoaderListener
 {
     public:
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(HelloCocosBuilderLayer, node);
+        CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(HelloCocosBuilderLayer, create);
 
         HelloCocosBuilderLayer();
         virtual ~HelloCocosBuilderLayer();

@@ -338,7 +338,7 @@ bool CCTexturePVR::createGLTexture()
 	GLenum internalFormat = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLInternalFormat];
 	GLenum format = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLFormat];
 	GLenum type = tableFormats[m_uTableFormatIndex][kCCInternalOpenGLType];
-	bool compressed = tableFormats[m_uTableFormatIndex][kCCInternalCompressedImage];
+    bool compressed = (0 == tableFormats[m_uTableFormatIndex][kCCInternalCompressedImage]) ? false : true;
 
     // Generate textures with mipmaps
     for (unsigned int i = 0; i < m_uNumberOfMipmaps; ++i)
