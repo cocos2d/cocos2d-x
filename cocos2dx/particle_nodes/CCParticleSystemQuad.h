@@ -63,7 +63,7 @@ public:
 
     /** creates an initializes a CCParticleSystemQuad from a plist file.
     This plist files can be creted manually or with Particle Designer:  
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCParticleSystemQuad * particleWithFile(const char *plistFile);
 
@@ -101,7 +101,7 @@ public:
      */
     void listenBackToForeground(CCObject *obj);
 
-    //@warning: This interface will be deprecated in future.
+    //@deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCParticleSystemQuad * node();
 
     static CCParticleSystemQuad * create();

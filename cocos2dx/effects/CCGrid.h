@@ -77,11 +77,11 @@ public:
 
 public:
     /** create one Grid 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
     /** create one Grid 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCGridBase* gridWithSize(const ccGridSize& gridSize);
 

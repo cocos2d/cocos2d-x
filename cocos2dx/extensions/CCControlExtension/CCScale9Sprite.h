@@ -112,7 +112,7 @@ public:
      * with the specified cap insets.
      *
      * @see initWithFile:rect:centerRegion:
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect,  CCRect capInsets);
     
@@ -143,7 +143,7 @@ public:
      * texture will be broken down into a 3×3 grid of equal blocks.
      *
      * @see initWithFile:rect:
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect);
     
@@ -172,7 +172,7 @@ public:
      * broken down into a 3×3 grid of equal blocks.
      *
      * @see initWithFile:capInsets:
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithFile(CCRect capInsets, const char* file);
     /** 
@@ -200,7 +200,7 @@ public:
      * broken down into a 3×3 grid of equal blocks.
      *
      * @see initWithFile:
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithFile(const char* file);
 
@@ -231,7 +231,7 @@ public:
      * It respects the anchorPoint too.
      *
      * @see initWithSpriteFrame:centerRegion:
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets);
 
@@ -261,7 +261,7 @@ public:
      * It respects the anchorPoint too.
      *
      * @see initWithSpriteFrame:
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithSpriteFrame(CCSpriteFrame* spriteFrame);    
 
@@ -294,7 +294,7 @@ public:
      * It respects the anchorPoint too.
      *
      * @see initWithSpriteFrameName:centerRegion:
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithSpriteFrameName(const char*spriteFrameName, CCRect capInsets);  
 
@@ -326,7 +326,7 @@ public:
      * It respects the anchorPoint too.
      *
      * @see initWithSpriteFrameName:
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithSpriteFrameName(const char*spriteFrameName);
 
@@ -350,7 +350,7 @@ public:
      */
     CCScale9Sprite* resizableSpriteWithCapInsets(CCRect capInsets);
     
-    //@warning: This interface will be deprecated in future.
+    //@deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* node();
     
     static CCScale9Sprite* create();

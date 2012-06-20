@@ -73,7 +73,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCActionInterval* actionWithDuration(float d);
 
@@ -108,15 +108,15 @@ public:
 
 public:
     /** helper constructor to create an array of sequenceable actions 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
     /** helper contructor to create an array of sequenceable actions given an array 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actionWithArray(CCArray *arrayOfActions);
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCSequence* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
@@ -168,7 +168,7 @@ public:
 
 public:
     /** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCRepeat* actionWithAction(CCFiniteTimeAction *pAction, unsigned int times);
 
@@ -220,7 +220,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
     /** creates the action */
@@ -248,17 +248,17 @@ public:
 
 public:
     /** helper constructor to create an array of spawned actions 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
 
     /** helper contructor to create an array of spawned actions given an array 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actionWithArray(CCArray *arrayOfActions);
 
     /** creates the Spawn action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
@@ -292,7 +292,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCRotateTo* actionWithDuration(float duration, float fDeltaAngle);
     /** creates the action */
@@ -318,7 +318,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCRotateBy* actionWithDuration(float duration, float fDeltaAngle);
     /** creates the action */
@@ -342,7 +342,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMoveTo* actionWithDuration(float duration, const CCPoint& position);
     /** creates the action */
@@ -369,7 +369,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMoveBy* actionWithDuration(float duration, const CCPoint& position);
     /** creates the action */
@@ -390,7 +390,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCSkewTo* actionWithDuration(float t, float sx, float sy);
 
@@ -419,7 +419,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCSkewBy* actionWithDuration(float t, float deltaSkewX, float deltaSkewY);
     /** creates the action */
@@ -441,7 +441,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCJumpBy* actionWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps);
     /** creates the action */
@@ -463,7 +463,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCJumpTo* actionWithDuration(float duration, const CCPoint& position, float height, int jumps);
     /** creates the action */
@@ -496,7 +496,7 @@ public:
 
 public:
     /** creates the action with a duration and a bezier configuration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCBezierBy* actionWithDuration(float t, const ccBezierConfig& c);
     /** creates the action with a duration and a bezier configuration */
@@ -517,7 +517,7 @@ public:
 
 public:
     /** creates the action with a duration and a bezier configuration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCBezierTo* actionWithDuration(float t, const ccBezierConfig& c);
 
@@ -543,12 +543,12 @@ public:
 
 public:
     /** creates the action with the same scale factor for X and Y 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCScaleTo* actionWithDuration(float duration, float s);
 
     /** creates the action with and X factor and a Y factor 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCScaleTo* actionWithDuration(float duration, float sx, float sy);
 
@@ -579,12 +579,12 @@ public:
 
 public:
     /** creates the action with the same scale factor for X and Y 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCScaleBy* actionWithDuration(float duration, float s);
 
     /** creates the action with and X factor and a Y factor 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCScaleBy* actionWithDuration(float duration, float sx, float sy);
 
@@ -609,7 +609,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCBlink* actionWithDuration(float duration, unsigned int uBlinks);
     /** creates the action */
@@ -630,7 +630,7 @@ public:
 
 public:
     /** creates the action
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFadeIn* actionWithDuration(float d);
     /** creates the action */
@@ -649,7 +649,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFadeOut* actionWithDuration(float d);
 
@@ -672,7 +672,7 @@ public:
 
 public:
     /** creates an action with duration and opacity
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFadeTo* actionWithDuration(float duration, GLubyte opacity);
     /** creates an action with duration and opacity */
@@ -698,7 +698,7 @@ public:
 
 public:
     /** creates an action with duration and color 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCTintTo* actionWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
     /** creates an action with duration and color */
@@ -724,7 +724,7 @@ public:
 
 public:
     /** creates an action with duration and color 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCTintBy* actionWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
     /** creates an action with duration and color */
@@ -750,7 +750,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCDelayTime* actionWithDuration(float d);
 
@@ -782,7 +782,7 @@ public:
 
 public:
     /** creates the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCReverseTime* actionWithAction(CCFiniteTimeAction *pAction);
     /** creates the action */
@@ -811,7 +811,7 @@ public:
 
 public:
     /** creates the action with an Animation and will restore the original frame when the animation is over 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCAnimate* actionWithAnimation(CCAnimation *pAnimation);
     /** creates the action with an Animation and will restore the original frame when the animation is over */
@@ -833,7 +833,7 @@ public:
     CCTargetedAction();
     virtual ~CCTargetedAction();
     /** Create an action with the specified action and forced target 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCTargetedAction* actionWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction);
     /** Create an action with the specified action and forced target */

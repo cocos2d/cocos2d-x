@@ -41,7 +41,7 @@ public:
 
 public:
     /** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCShakyTiles3D* actionWithRange(int nRange, bool bShakeZ, const ccGridSize& gridSize, float duration);
 
@@ -66,7 +66,7 @@ public:
 
 public:
     /** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCShatteredTiles3D* actionWithRange(int nRange, bool bShatterZ, const ccGridSize& gridSize,
         float duration);
@@ -100,7 +100,7 @@ public:
 
 public:
     /** creates the action with a random seed, the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCShuffleTiles* actionWithSeed(int s, const ccGridSize& gridSize, float duration);
     /** creates the action with a random seed, the grid size and the duration */
@@ -126,7 +126,7 @@ public:
 
 public:
     /** creates the action with the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFadeOutTRTiles* actionWithSize(const ccGridSize& gridSize, float time);
 
@@ -144,7 +144,7 @@ public:
 
 public:
     /** creates the action with the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFadeOutBLTiles* actionWithSize(const ccGridSize& gridSize, float time);
 
@@ -163,7 +163,7 @@ public:
 
 public:
     /** creates the action with the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFadeOutUpTiles* actionWithSize(const ccGridSize& gridSize, float time);
     /** creates the action with the grid size and the duration */
@@ -181,7 +181,7 @@ public:
 
 public:
     /** creates the action with the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFadeOutDownTiles* actionWithSize(const ccGridSize& gridSize, float time);
 
@@ -208,11 +208,11 @@ public:
 
 public:
     /** creates the action with the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCTurnOffTiles* actionWithSize(const ccGridSize& size, float d);
     /** creates the action with a random seed, the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCTurnOffTiles* actionWithSeed(int s, const ccGridSize& gridSize, float duration);
 
@@ -247,7 +247,7 @@ public:
 
 public:
     /** creates the action with a number of waves, the waves amplitude, the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCWavesTiles3D* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     /** creates the action with a number of waves, the waves amplitude, the grid size and the duration */
@@ -279,7 +279,7 @@ public:
 
 public:
     /** creates the action with the number of jumps, the sin amplitude, the grid size and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCJumpTiles3D* actionWithJumps(int j, float amp, const ccGridSize& gridSize, float duration);
     /** creates the action with the number of jumps, the sin amplitude, the grid size and the duration */
@@ -303,7 +303,7 @@ public :
 
 public:
     /** creates the action with the number of rows to split and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCSplitRows* actionWithRows(int nRows, float duration);
     /** creates the action with the number of rows to split and the duration */
@@ -326,7 +326,7 @@ public:
 
 public:
     /** creates the action with the number of columns to split and the duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCSplitCols* actionWithCols(int nCols, float duration);
     /** creates the action with the number of columns to split and the duration */

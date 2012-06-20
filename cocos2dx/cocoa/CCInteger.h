@@ -12,7 +12,7 @@ public:
         : m_nValue(v) {}
     int getValue() const {return m_nValue;}
 
-    // @warning: This interface will be deprecated in future.
+    // @deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCInteger* integerWithInt(int v)
     {
         return CCInteger::create(v);
