@@ -54,7 +54,7 @@ public:
     virtual ~CCLayer();
     bool init();
 
-    // @warning: This interface will be deprecated in future.
+    // @deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCLayer *node(void);
     /** create one layer */
     static CCLayer *create(void);
@@ -127,7 +127,7 @@ private:
 };
     
 // for the subclass of CCLayer, each has to implement the static "node" method 
-// @warning: This interface will be deprecated in future.
+// @deprecated: This interface will be deprecated sooner or later.
 #define LAYER_NODE_FUNC(layer) \
     CC_DEPRECATED_ATTRIBUTE static layer* node() \
     { \
@@ -164,7 +164,7 @@ private:
     } \
 }
 
-// @warning: This interface will be deprecated in future.
+// @deprecated: This interface will be deprecated sooner or later.
 #define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
     CC_DEPRECATED_ATTRIBUTE static layer* node(__PARAMTYPE__ __PARAM__) \
     { \
@@ -223,11 +223,11 @@ public:
     virtual void setContentSize(const CCSize& var);
 
     /** creates a CCLayer with color, width and height in Points 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
     /** creates a CCLayer with color. Width and height are the window size. 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLayerColor * layerWithColor(const ccColor4B& color);
 
@@ -260,7 +260,7 @@ public:
 
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) { return false;}
-    //@warning: This interface will be deprecated in future.
+    //@deprecated: This interface will be deprecated sooner or later.
     LAYER_CREATE_FUNC(CCLayerColor)
     LAYER_NODE_FUNC(CCLayerColor)
 protected:
@@ -294,12 +294,12 @@ class CC_DLL CCLayerGradient : public CCLayerColor
 {
 public:
     /** Creates a full-screen CCLayer with a gradient between start and end. 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end);
 
     /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
@@ -330,7 +330,7 @@ public:
     virtual void setCompressedInterpolation(bool bCompressedInterpolation);
     virtual bool isCompressedInterpolation();
 
-    // @warning: This interface will be deprecated in future.
+    // @deprecated: This interface will be deprecated sooner or later.
     LAYER_NODE_FUNC(CCLayerGradient)
     LAYER_CREATE_FUNC(CCLayerGradient)
 protected:
@@ -353,14 +353,14 @@ public:
     virtual ~CCLayerMultiplex();
 
     /** creates a CCLayerMultiplex with one or more layers using a variable argument list. 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
 
     /**
      * lua script can not init with undetermined number of variables
      * so add these functinons to be used with lua.
-     @warning: This interface will be deprecated in future.
+     @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
 
@@ -387,7 +387,7 @@ public:
     */
     void switchToAndReleaseMe(unsigned int n);
     
-    //@warning: This interface will be deprecated in future.
+    //@deprecated: This interface will be deprecated sooner or later.
     LAYER_NODE_FUNC(CCLayerMultiplex)
 
     LAYER_CREATE_FUNC(CCLayerMultiplex)

@@ -54,7 +54,7 @@ public:
 NS_CC_END
 
 // for the subclass of CCScene, each has to implement the static "node" method
-// @warning: This interface will be deprecated in future.
+// @deprecated: This interface will be deprecated sooner or later.
 #define SCENE_NODE_FUNC(scene) \
 CC_DEPRECATED_ATTRIBUTE static scene* node() \
 { \
@@ -72,7 +72,7 @@ CC_DEPRECATED_ATTRIBUTE static scene* node() \
     } \
 }; 
 
-// @warning: This interface will be deprecated in future.
+// @deprecated: This interface will be deprecated sooner or later.
 #define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
     CC_DEPRECATED_ATTRIBUTE static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
     { \

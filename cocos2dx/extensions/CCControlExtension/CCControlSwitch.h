@@ -47,7 +47,7 @@ public:
     bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
 
     /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
 
@@ -59,7 +59,7 @@ public:
     bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
 
     /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels.
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
 

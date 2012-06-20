@@ -61,7 +61,7 @@ public:
     {}
     virtual ~CCMenuItem();
     /** Creates a CCMenuItem with a target/selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItem * itemWithTarget(CCObject *rec, SEL_MenuHandler selector);
     /** Creates a CCMenuItem with a target/selector */
@@ -114,11 +114,11 @@ public:
     {}
     virtual ~CCMenuItemLabel();
     /** creates a CCMenuItemLabel with a Label, target and selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemLabel * itemWithLabel(CCNode*label, CCObject* target, SEL_MenuHandler selector);
     /** creates a CCMenuItemLabel with a Label. Target and selector will be nill 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemLabel* itemWithLabel(CCNode *label);
 
@@ -160,11 +160,11 @@ public:
     CCMenuItemAtlasFont(){}
     virtual ~CCMenuItemAtlasFont(){}
     /** creates a menu item from a string and atlas with a target/selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemAtlasFont* itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemAtlasFont* itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector);
     
@@ -193,11 +193,11 @@ public:
     /** get the default font name */
     static const char *fontName();
     /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemFont * itemWithString(const char *value);
     /** creates a menu item from a string with a target/selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemFont * itemWithString(const char *value, CCObject* target, SEL_MenuHandler selector);
 
@@ -256,15 +256,15 @@ public:
     ,m_pDisabledImage(NULL)
     {}
     /** creates a menu item with a normal, selected and disabled image
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
     /** creates a menu item with a normal and selected image with target/selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 
@@ -310,19 +310,19 @@ public:
     CCMenuItemImage(){}
     virtual ~CCMenuItemImage(){}
     /** creates a menu item with a normal and selected image
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage);
     /** creates a menu item with a normal,selected  and disabled image
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
     /** creates a menu item with a normal and selected image with target/selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemImage* itemWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
     
@@ -345,7 +345,7 @@ public:
     /** sets the sprite frame for the disabled image */
     void setDisabledSpriteFrame(CCSpriteFrame* frame);
     /** Creates an CCMenuItemImage.
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemImage* node();
 
@@ -379,7 +379,7 @@ public:
     virtual ~CCMenuItemToggle();
 
     /** creates a menu item from a list of items with a target/selector 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemToggle* itemWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);   
 
@@ -391,7 +391,7 @@ public:
     
     // The follow methods offered to lua
     /** creates a menu item with a item 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
 

@@ -64,24 +64,24 @@ public:
     virtual ~CCMenu(){}
 
     /** creates an empty CCMenu 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenu* node();
 
     /** creates a CCMenu with it's items 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithItems(CCMenuItem* item, ...);
 
     /** creates a CCMenu with a NSArray of CCMenuItem objects 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithArray(CCArray* pArrayOfItems);
 
     /** creates a CCMenu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
       * number of variables.
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithItem(CCMenuItem* item);
 

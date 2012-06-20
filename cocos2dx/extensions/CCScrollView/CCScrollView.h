@@ -66,7 +66,7 @@ public:
     virtual void registerWithTouchDispatcher();
     /**
      * Returns an autoreleased scroll view object.
-     * @warning: This interface will be deprecated in future.
+     * @deprecated: This interface will be deprecated sooner or later.
      * @param size view size
      * @param container parent object
      * @return autoreleased scroll view object
@@ -84,7 +84,7 @@ public:
 
     /**
      * Returns an autoreleased scroll view object.
-     * @warning: This interface will be deprecated in future.
+     * @deprecated: This interface will be deprecated sooner or later.
      * @param size view size
      * @param container parent object
      * @return autoreleased scroll view object
