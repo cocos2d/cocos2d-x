@@ -48,7 +48,7 @@ public:
 
 public:
     /** create the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCWaves3D* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     /** create the action */
@@ -71,7 +71,7 @@ public:
 
 public:
     /** creates the action with duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFlipX3D* actionWithDuration(float duration);
     /** creates the action with duration */
@@ -87,7 +87,7 @@ public:
 
 public:
     /** creates the action with duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFlipY3D* actionWithDuration(float duration);
     /** creates the action with duration */
@@ -113,7 +113,7 @@ public:
 
 public:
     /** creates the action with center position, radius, a grid size and duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLens3D* actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration);
     /** creates the action with center position, radius, a grid size and duration */
@@ -151,7 +151,7 @@ public:
 
 public:
     /** creates the action with radius, number of waves, amplitude, a grid size and duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCRipple3D* actionWithPosition(const CCPoint& pos, float r, int wav, float amp, 
         const ccGridSize& gridSize, float duration);
@@ -178,7 +178,7 @@ public:
 
 public:
     /** creates the action with a range, shake Z vertices, a grid and duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCShaky3D* actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration);
     /** creates the action with a range, shake Z vertices, a grid and duration */
@@ -205,7 +205,7 @@ public:
 
 public:
     /** creates the action with amplitude, a grid and duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLiquid* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     /** creates the action with amplitude, a grid and duration */
@@ -234,7 +234,7 @@ public:
 
 public:
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
          float duration);
@@ -273,7 +273,7 @@ public:
 
 public:
     /** creates the action with center position, number of twirls, amplitude, a grid size and duration 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize,
          float duration);

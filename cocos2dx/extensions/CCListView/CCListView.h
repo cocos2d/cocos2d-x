@@ -121,7 +121,7 @@ public:
     virtual ~CCListView(void);
     CCListView(void);
 
-    // @warning: This interface will be deprecated in future.
+    // @deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCListView* viewWithMode(CCListViewMode mode);
 
     static CCListView* create(CCListViewMode mode);

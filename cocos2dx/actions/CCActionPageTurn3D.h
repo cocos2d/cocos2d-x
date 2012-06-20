@@ -44,7 +44,7 @@ public:
 
 public:
     /** create the action 
-    @warning: This interface will be deprecated in future.
+    @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, float time);
     /** create the action */
