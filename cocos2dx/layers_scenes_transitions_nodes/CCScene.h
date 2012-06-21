@@ -96,7 +96,7 @@ CC_DEPRECATED_ATTRIBUTE static scene* node() \
         return scene; \
     }
 
-// for the subclass of CCScene, each has to implement the static "node" method 
+// for the subclass of CCScene, each has to implement the static "create" method 
 #define SCENE_CREATE_FUNC(scene) \
 static scene* create() \
 { \
