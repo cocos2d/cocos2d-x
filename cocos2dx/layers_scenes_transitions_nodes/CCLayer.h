@@ -151,7 +151,7 @@ private:
 }
 
 
-// for the subclass of CCLayer, each has to implement the static "node" method 
+// for the subclass of CCLayer, each has to implement the static "create" method 
 #define LAYER_CREATE_FUNC(layer) \
     static layer* create() \
     { \
