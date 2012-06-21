@@ -88,6 +88,7 @@ void* CDloadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outD
     theData = malloc(dataSize);
     if (theData)
     {
+        memset(theData, 0, dataSize);
         AudioFileReadBytes(afid, false, 0, &dataSize, theData);
         if(err == noErr)
         {
@@ -195,6 +196,7 @@ void* CDloadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDa
     theData = malloc(dataSize);
     if (theData)
     {
+        memset(theData, 0, dataSize);
         AudioBufferList        theDataBuffer;
         theDataBuffer.mNumberBuffers = 1;
         theDataBuffer.mBuffers[0].mDataByteSize = dataSize;
