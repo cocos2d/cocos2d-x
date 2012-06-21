@@ -7,10 +7,10 @@ using namespace CocosDenshion;
 CCScene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object
-    CCScene *scene = CCScene::node();
+    CCScene *scene = CCScene::create();
     
     // 'layer' is an autorelease object
-    HelloWorld *layer = HelloWorld::node();
+    HelloWorld *layer = HelloWorld::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -34,7 +34,7 @@ bool HelloWorld::init()
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::itemWithNormalImage(
+    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
                                         "CloseNormal.png",
                                         "CloseSelected.png",
                                         this,
@@ -42,7 +42,7 @@ bool HelloWorld::init()
     pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );
 
     // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL);
+    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
     pMenu->setPosition( CCPointZero );
     this->addChild(pMenu, 1);
 
@@ -51,7 +51,7 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    CCLabelTTF* pLabel = CCLabelTTF::labelWithString("Hello World", "Thonburi", 34);
+    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Thonburi", 34);
 
     // ask director the window size
     CCSize size = CCDirector::sharedDirector()->getWinSize();
@@ -63,7 +63,7 @@ bool HelloWorld::init()
     this->addChild(pLabel, 1);
 
     // add "HelloWorld" splash screen"
-    CCSprite* pSprite = CCSprite::spriteWithFile("HelloWorld.png");
+    CCSprite* pSprite = CCSprite::create("HelloWorld.png");
 
     // position the sprite on the center of the screen
     pSprite->setPosition( ccp(size.width/2, size.height/2) );

@@ -13,7 +13,7 @@ public:
     static cocos2d::CCScene* scene();
     
     // a selector callback
-    virtual void menuCloseCallback(CCObject* pSender);
+    void menuCloseCallback(CCObject* pSender);
 
     // implement the "static node()" method manually
     LAYER_CREATE_FUNC(HelloWorld);
