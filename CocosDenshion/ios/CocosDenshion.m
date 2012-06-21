@@ -521,7 +521,7 @@ static BOOL _mixerRateSet = NO;
         if (soundId >= bufferTotal) {
             //Need to resize the buffers
             int requiredIncrement = CD_BUFFERS_INCREMENT;
-            while (bufferTotal + requiredIncrement <= soundId) {
+            while (bufferTotal + requiredIncrement < soundId) {
                 requiredIncrement += CD_BUFFERS_INCREMENT;
             }
             CDLOGINFO(@"Denshion::CDSoundEngine - attempting to resize buffers by %i for sound %i",requiredIncrement,soundId);
@@ -1379,12 +1379,11 @@ static BOOL _mixerRateSet = NO;
 @synthesize filePath, soundId;
 
 -(id) init:(int) theSoundId filePath:(const NSString *) theFilePath {
-    if ((self = [super init])) {
-        soundId = theSoundId;
-        filePath = [theFilePath copy];//TODO: is retain necessary or does copy set retain count
-        [filePath retain];
-    } 
-    return self;
+	if ((self = [super init])) {
+		soundId = theSoundId;
+		filePath = [theFilePath copy];
+	}
+	return self;
 }
 
 -(void) dealloc {
