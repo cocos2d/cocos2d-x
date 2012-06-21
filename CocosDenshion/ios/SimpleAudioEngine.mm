@@ -169,7 +169,7 @@ void SimpleAudioEngine::end()
         s_pEngine = NULL;
     }
     
-            static_end();
+    static_end();
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
@@ -184,42 +184,42 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 {
-            static_stopBackgroundMusic();
+    static_stopBackgroundMusic();
 }
 
 void SimpleAudioEngine::pauseBackgroundMusic()
 {
-            static_pauseBackgroundMusic();
+    static_pauseBackgroundMusic();
 }
 
 void SimpleAudioEngine::resumeBackgroundMusic()
 {
-            static_resumeBackgroundMusic();
+    static_resumeBackgroundMusic();
 } 
 
 void SimpleAudioEngine::rewindBackgroundMusic()
 {
-            static_rewindBackgroundMusic();
+    static_rewindBackgroundMusic();
 }
 
 bool SimpleAudioEngine::willPlayBackgroundMusic()
 {
-            return static_willPlayBackgroundMusic();
+    return static_willPlayBackgroundMusic();
 }
 
 bool SimpleAudioEngine::isBackgroundMusicPlaying()
 {
-            return static_isBackgroundMusicPlaying();
+    return static_isBackgroundMusicPlaying();
 }
 
 float SimpleAudioEngine::getBackgroundMusicVolume()
 {
-            return static_getBackgroundMusicVolume();
+    return static_getBackgroundMusicVolume();
 }
 
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
-             static_setBackgroundMusicVolume(volume);
+    static_setBackgroundMusicVolume(volume);
 }
 
 float SimpleAudioEngine::getEffectsVolume()
