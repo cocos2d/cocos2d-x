@@ -37,7 +37,7 @@ public:
 
     virtual void draw();
     virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
-    void update(cocos2d::ccTime dt);
+    void update(float dt);
     
 private:
     b2World* world;
