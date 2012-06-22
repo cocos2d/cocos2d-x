@@ -123,7 +123,6 @@
 		<string>Resources/Icon@2x.png</string>
 		<string>Resources/Info.plist</string>
 		<string>Resources/iTunesArtwork</string>
-		<string>Resources/fps_images.fnt</string>
 		<string>Resources/fps_images.png</string>
 	</array>
 	<key>Platforms</key>
