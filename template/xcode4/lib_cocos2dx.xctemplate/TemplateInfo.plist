@@ -60,6 +60,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/actions/CCActionCatmullRom.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>actions</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/actions/CCActionCatmullRom.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/actions/CCActionCatmullRom.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>actions</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/actions/CCActionCatmullRom.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/actions/CCActionEase.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -530,30 +554,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/cocoa/CCData.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>cocoa</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/cocoa/CCData.cpp</string>
-		</dict>
-		<key>libs/cocos2dx/cocoa/CCData.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>cocoa</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/cocoa/CCData.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2dx/cocoa/CCDictionary.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -793,7 +793,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.cpp</key>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBFileLoader.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -803,9 +803,9 @@
 				<string>CCBReader</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.cpp</string>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBFileLoader.cpp</string>
 		</dict>
-		<key>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.h</key>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBFileLoader.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -815,9 +815,35 @@
 				<string>CCBReader</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.h</string>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBFileLoader.h</string>
 			<key>TargetIndices</key>
 			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBMemberVariableAssigner.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBMemberVariableAssigner.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBReader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBReader.cpp</string>
 		</dict>
 		<key>libs/cocos2dx/extensions/CCBReader/CCBReader.h</key>
 		<dict>
@@ -833,7 +859,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/extensions/CCBReader/CCBReader_v2.cpp</key>
+		<key>libs/cocos2dx/extensions/CCBReader/CCBSelectorResolver.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -843,7 +869,427 @@
 				<string>CCBReader</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2dx/extensions/CCBReader/CCBReader_v2.cpp</string>
+			<string>libs/cocos2dx/extensions/CCBReader/CCBSelectorResolver.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCControlButtonLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCControlButtonLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCControlButtonLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCControlButtonLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCControlLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCControlLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCControlLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCControlLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLabelBMFontLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLabelBMFontLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLabelBMFontLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLabelBMFontLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLabelTTFLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLabelTTFLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLabelTTFLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLabelTTFLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLayerColorLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLayerColorLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLayerColorLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLayerColorLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLayerGradientLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLayerGradientLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLayerGradientLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLayerGradientLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLayerLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLayerLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCLayerLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCLayerLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCMenuItemImageLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCMenuItemImageLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCMenuItemImageLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCMenuItemImageLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCMenuItemLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCMenuItemLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCMenuItemLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCMenuItemLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCMenuLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCMenuLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCNodeLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCNodeLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderLibrary.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderLibrary.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderLibrary.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderLibrary.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderListener.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderListener.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCParticleSystemQuadLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCParticleSystemQuadLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCParticleSystemQuadLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCParticleSystemQuadLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCScale9SpriteLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCScale9SpriteLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCScale9SpriteLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCScale9SpriteLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCScrollViewLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCScrollViewLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCScrollViewLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCScrollViewLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCSpriteLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCSpriteLoader.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCBReader/CCSpriteLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCBReader/CCSpriteLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/cocos2dx/extensions/CCControlExtension/CCControl.cpp</key>
 		<dict>
@@ -1260,6 +1706,32 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/extensions/CCNotificationCenter/CCNotificationCenter.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCScrollView/CCScrollView.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCScrollView</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCScrollView/CCScrollView.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/extensions/CCScrollView/CCScrollView.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>extensions</string>
+				<string>CCScrollView</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/extensions/CCScrollView/CCScrollView.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -3507,6 +3979,18 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/support/data_support/ccCArray.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>data_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/data_support/ccCArray.cpp</string>
+		</dict>
 		<key>libs/cocos2dx/support/data_support/ccCArray.h</key>
 		<dict>
 			<key>Group</key>
@@ -4059,6 +4543,8 @@
 		<string>libs/cocos2dx/actions/CCAction.h</string>
 		<string>libs/cocos2dx/actions/CCActionCamera.cpp</string>
 		<string>libs/cocos2dx/actions/CCActionCamera.h</string>
+		<string>libs/cocos2dx/actions/CCActionCatmullRom.cpp</string>
+		<string>libs/cocos2dx/actions/CCActionCatmullRom.h</string>
 		<string>libs/cocos2dx/actions/CCActionEase.cpp</string>
 		<string>libs/cocos2dx/actions/CCActionEase.h</string>
 		<string>libs/cocos2dx/actions/CCActionGrid.cpp</string>
@@ -4099,8 +4585,6 @@
 		<string>libs/cocos2dx/cocoa/CCArray.h</string>
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.h</string>
-		<string>libs/cocos2dx/cocoa/CCData.cpp</string>
-		<string>libs/cocos2dx/cocoa/CCData.h</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.h</string>
 		<string>libs/cocos2dx/cocoa/CCGeometry.cpp</string>
@@ -4121,10 +4605,44 @@
 		<string>libs/cocos2dx/effects/CCGrabber.h</string>
 		<string>libs/cocos2dx/effects/CCGrid.cpp</string>
 		<string>libs/cocos2dx/effects/CCGrid.h</string>
-		<string>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.cpp</string>
-		<string>libs/cocos2dx/extensions/CCBReader/CCBCustomClass.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBFileLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBFileLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBMemberVariableAssigner.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBReader.cpp</string>
 		<string>libs/cocos2dx/extensions/CCBReader/CCBReader.h</string>
-		<string>libs/cocos2dx/extensions/CCBReader/CCBReader_v2.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCBSelectorResolver.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCControlButtonLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCControlButtonLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCControlLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCControlLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLabelBMFontLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLabelBMFontLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLabelTTFLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLabelTTFLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLayerColorLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLayerColorLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLayerGradientLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLayerGradientLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLayerLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCLayerLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCMenuItemImageLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCMenuItemImageLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCMenuItemLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCMenuItemLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCMenuLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderLibrary.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderLibrary.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCNodeLoaderListener.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCParticleSystemQuadLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCParticleSystemQuadLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCScale9SpriteLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCScale9SpriteLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCScrollViewLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCScrollViewLoader.h</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCSpriteLoader.cpp</string>
+		<string>libs/cocos2dx/extensions/CCBReader/CCSpriteLoader.h</string>
 		<string>libs/cocos2dx/extensions/CCControlExtension/CCControl.cpp</string>
 		<string>libs/cocos2dx/extensions/CCControlExtension/CCControl.h</string>
 		<string>libs/cocos2dx/extensions/CCControlExtension/CCControlButton.cpp</string>
@@ -4157,6 +4675,8 @@
 		<string>libs/cocos2dx/extensions/CCListView/CCListViewCell.h</string>
 		<string>libs/cocos2dx/extensions/CCNotificationCenter/CCNotificationCenter.cpp</string>
 		<string>libs/cocos2dx/extensions/CCNotificationCenter/CCNotificationCenter.h</string>
+		<string>libs/cocos2dx/extensions/CCScrollView/CCScrollView.cpp</string>
+		<string>libs/cocos2dx/extensions/CCScrollView/CCScrollView.h</string>
 		<string>libs/cocos2dx/extensions/CCTextureWatcher/CCTextureWatcher.cpp</string>
 		<string>libs/cocos2dx/extensions/CCTextureWatcher/CCTextureWatcher.h</string>
 		<string>libs/cocos2dx/include/ccConfig.h</string>
@@ -4333,6 +4853,7 @@
 		<string>libs/cocos2dx/support/ccUtils.h</string>
 		<string>libs/cocos2dx/support/CCVertex.cpp</string>
 		<string>libs/cocos2dx/support/CCVertex.h</string>
+		<string>libs/cocos2dx/support/data_support/ccCArray.cpp</string>
 		<string>libs/cocos2dx/support/data_support/ccCArray.h</string>
 		<string>libs/cocos2dx/support/data_support/uthash.h</string>
 		<string>libs/cocos2dx/support/data_support/utlist.h</string>
