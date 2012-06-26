@@ -50,6 +50,9 @@ do
     fi
 done
 
+# Change the authority of Resources folder.
+chmod -R 666 $GAME_ANDROID_ROOT/assets
+
 # copy icons (if they exist)
 file=$GAME_ANDROID_ROOT/assets/Icon-72.png
 if [ -f "$file" ]; then

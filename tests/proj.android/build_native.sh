@@ -61,6 +61,9 @@ cp $file $TESTS_ROOT/assets
 fi
 done
 
+# Change the authority of Resources folder.
+chmod -R 666 $TESTS_ROOT/assets
+
 # remove test_image_rgba4444.pvr.gz
 rm -f $TESTS_ROOT/assets/Images/test_image_rgba4444.pvr.gz
 
