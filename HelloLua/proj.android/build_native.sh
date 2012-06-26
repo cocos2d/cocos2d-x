@@ -62,6 +62,9 @@ cp $file $GAME_ANDROID_ROOT/assets
 fi
 done
 
+# Change the authority of Resources folder.
+chmod -R 666 $GAME_ANDROID_ROOT/assets
+
 # build
 if [[ $buildexternalsfromsource ]]; then
 echo "Building external dependencies from source"
