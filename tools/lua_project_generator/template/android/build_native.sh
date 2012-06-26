@@ -25,6 +25,9 @@ do
     fi
 done
 
+# Change the authority of Resources folder.
+chmod -R 666 $GAME_ANDROID_ROOT/assets
+
 # build
 pushd $ANDROID_NDK_ROOT
 ./ndk-build -C $GAME_ANDROID_ROOT $*

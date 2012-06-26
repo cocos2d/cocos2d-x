@@ -60,6 +60,9 @@ cp $file $HELLOWORLD_ROOT/assets
 fi
 done
 
+# Change the authority of Resources folder.
+chmod -R 666 $HELLOWORLD_ROOT/assets
+
 if [[ $buildexternalsfromsource ]]; then
 echo "Building external dependencies from source"
 $NDK_ROOT_LOCAL/ndk-build -C $HELLOWORLD_ROOT $* \
