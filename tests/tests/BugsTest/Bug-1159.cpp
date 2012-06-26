@@ -22,6 +22,7 @@ bool Bug1159Layer::init()
 {
     if (BugsTestBaseLayer::init())
     {
+        CCDirector::sharedDirector()->setDepthTest(true);
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
         CCLayerColor *background = CCLayerColor::create(ccc4(255, 0, 255, 255));
@@ -58,4 +59,9 @@ bool Bug1159Layer::init()
 void Bug1159Layer::callBack(CCObject* pSender)
 {
     CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
+}
+
+void Bug1159Layer::onExit()
+{
+    CCDirector::sharedDirector()->setDepthTest(false);
 }
