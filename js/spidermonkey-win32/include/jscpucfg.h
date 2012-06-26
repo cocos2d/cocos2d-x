@@ -42,113 +42,50 @@
 
 #define JS_HAVE_LONG_LONG
 
+#if defined(XP_WIN) || defined(XP_OS2) || defined(WINCE)
+
 #if defined(_WIN64)
 
-# if defined(_M_X64) || defined(_M_AMD64) || defined(_AMD64_)
-#  define IS_LITTLE_ENDIAN 1
-#  undef  IS_BIG_ENDIAN
-#  define JS_BYTES_PER_DOUBLE 8
-#  define JS_BYTES_PER_WORD   8
-#  define JS_BITS_PER_WORD_LOG2   6
-#  define JS_ALIGN_OF_POINTER 8
-# else  /* !(defined(_M_X64) || defined(_M_AMD64) || defined(_AMD64_)) */
-#  error "CPU type is unknown"
-# endif /* !(defined(_M_X64) || defined(_M_AMD64) || defined(_AMD64_)) */
+#if defined(_M_X64) || defined(_M_AMD64) || defined(_AMD64_)
+#define IS_LITTLE_ENDIAN 1
+#undef  IS_BIG_ENDIAN
+#define JS_BYTES_PER_DOUBLE 8L
+#define JS_BYTES_PER_WORD   8L
+#define JS_BITS_PER_WORD_LOG2   6
+#define JS_ALIGN_OF_POINTER 8L
+#else  /* !(defined(_M_X64) || defined(_M_AMD64) || defined(_AMD64_)) */
+#error "CPU type is unknown"
+#endif /* !(defined(_M_X64) || defined(_M_AMD64) || defined(_AMD64_)) */
 
-#elif defined(_WIN32) || defined(XP_OS2)
+#elif defined(_WIN32) || defined(XP_OS2) || defined(WINCE)
 
-# ifdef __WATCOMC__
-#  define HAVE_VA_LIST_AS_ARRAY 1
-# endif
+#ifdef __WATCOMC__
+#define HAVE_VA_LIST_AS_ARRAY 1
+#endif
 
-# define IS_LITTLE_ENDIAN 1
-# undef  IS_BIG_ENDIAN
-# define JS_BYTES_PER_DOUBLE 8
-# define JS_BYTES_PER_WORD   4
-# define JS_BITS_PER_WORD_LOG2   5
-# define JS_ALIGN_OF_POINTER 4
+#define IS_LITTLE_ENDIAN 1
+#undef  IS_BIG_ENDIAN
+#define JS_BYTES_PER_DOUBLE 8L
+#define JS_BYTES_PER_WORD   4L
+#define JS_BITS_PER_WORD_LOG2   5
+#define JS_ALIGN_OF_POINTER 4L
 
-#elif defined(__APPLE__)
-# if __LITTLE_ENDIAN__
-#  define IS_LITTLE_ENDIAN 1
-#  undef  IS_BIG_ENDIAN
-# elif __BIG_ENDIAN__
-#  undef  IS_LITTLE_ENDIAN
-#  define IS_BIG_ENDIAN 1
-# endif
+#endif /* _WIN32 || XP_OS2 || WINCE*/
 
-#elif defined(JS_HAVE_ENDIAN_H)
-# include <endian.h>
+#elif defined(XP_UNIX) || defined(XP_BEOS)
 
-# if defined(__BYTE_ORDER)
-#  if __BYTE_ORDER == __LITTLE_ENDIAN
-#   define IS_LITTLE_ENDIAN 1
-#   undef  IS_BIG_ENDIAN
-#  elif __BYTE_ORDER == __BIG_ENDIAN
-#   undef  IS_LITTLE_ENDIAN
-#   define IS_BIG_ENDIAN 1
-#  endif
-# else /* !defined(__BYTE_ORDER) */
-#  error "endian.h does not define __BYTE_ORDER. Cannot determine endianness."
-# endif
+#error "This file is supposed to be auto-generated on UNIX platforms, but the"
+#error "static version for Mac and Windows platforms is being used."
+#error "Something's probably wrong with paths/headers/dependencies/Makefiles."
 
-/* BSDs */
-#elif defined(JS_HAVE_MACHINE_ENDIAN_H)
-# include <sys/types.h>
-# include <machine/endian.h>
+#else
 
-# if defined(_BYTE_ORDER)
-#  if _BYTE_ORDER == _LITTLE_ENDIAN
-#   define IS_LITTLE_ENDIAN 1
-#   undef  IS_BIG_ENDIAN
-#  elif _BYTE_ORDER == _BIG_ENDIAN
-#   undef  IS_LITTLE_ENDIAN
-#   define IS_BIG_ENDIAN 1
-#  endif
-# else /* !defined(_BYTE_ORDER) */
-#  error "machine/endian.h does not define _BYTE_ORDER. Cannot determine endianness."
-# endif
+#error "Must define one of XP_BEOS, XP_OS2, XP_WIN, or XP_UNIX"
 
-#elif defined(JS_HAVE_SYS_ISA_DEFS_H)
-# include <sys/isa_defs.h>
-
-# if defined(_BIG_ENDIAN)
-#  undef IS_LITTLE_ENDIAN
-#  define IS_BIG_ENDIAN 1
-# elif defined(_LITTLE_ENDIAN)
-#  define IS_LITTLE_ENDIAN 1
-#  undef IS_BIG_ENDIAN
-# else /* !defined(_LITTLE_ENDIAN) */
-#  error "sys/isa_defs.h does not define _BIG_ENDIAN or _LITTLE_ENDIAN. Cannot determine endianness."
-# endif
-# if !defined(JS_STACK_GROWTH_DIRECTION)
-#  if defined(_STACK_GROWS_UPWARD)
-#   define JS_STACK_GROWTH_DIRECTION (1)
-#  elif defined(_STACK_GROWS_DOWNWARD)
-#   define JS_STACK_GROWTH_DIRECTION (-1)
-#  endif
-# endif
-
-#elif defined(__sparc) || defined(__sparc__) || \
-      defined(_POWER) || defined(__powerpc__) || \
-      defined(__ppc__) || defined(__hppa) || \
-      defined(_MIPSEB) || defined(_BIG_ENDIAN)
-/* IA64 running HP-UX will have _BIG_ENDIAN defined.
- * IA64 running Linux will have endian.h and be handled above.
- */
-# undef IS_LITTLE_ENDIAN
-# define IS_BIG_ENDIAN 1
-
-#else /* !defined(__sparc) && !defined(__sparc__) && ... */
-# error "Cannot determine endianness of your platform. Please add support to jscpucfg.h."
 #endif
 
 #ifndef JS_STACK_GROWTH_DIRECTION
-# ifdef __hppa
-#  define JS_STACK_GROWTH_DIRECTION (1)
-# else
-#  define JS_STACK_GROWTH_DIRECTION (-1)
-# endif
+#define JS_STACK_GROWTH_DIRECTION (-1)
 #endif
 
 #endif /* js_cpucfg___ */
