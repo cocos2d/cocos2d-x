@@ -39,7 +39,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 
 @implementation CDLongAudioSource
 
-@synthesize audioSourcePlayer, audioSourceFilePath, delegate, backgroundMusic;
+@synthesize audioSourcePlayer, audioSourceFilePath, delegate, backgroundMusic, paused;
 
 -(id) init {
     if ((self = [super init])) {
@@ -47,6 +47,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
         volume = 1.0f;
         mute = NO;
         enabled_ = YES;
+        paused = NO;
     }
     return self;
 }
@@ -94,6 +95,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 -(void) play {
     if (enabled_) {
         self->systemPaused = NO;
+        self->paused = NO;
         [audioSourcePlayer play];
     } else {
         CDLOGINFO(@"Denshion::CDLongAudioSource long audio source didn't play because it is disabled");
@@ -101,22 +103,22 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 }    
 
 -(void) stop {
+    self->paused = NO;
     [audioSourcePlayer stop];
 }    
 
 -(void) pause {
+    self->paused = YES;
     [audioSourcePlayer pause];
 }    
 
 -(void) rewind {
+    self->paused = NO;
     [audioSourcePlayer setCurrentTime:0];
 }
 
 -(void) resume {
-    if (!self->systemPaused) {
-        return;
-    }
-    
+    self->paused = NO;
     [audioSourcePlayer play];
 }    
 
@@ -574,6 +576,10 @@ static BOOL configured = FALSE;
 {
     if (!willPlayBackgroundMusic || _mute) {
         CDLOGINFO(@"Denshion::CDAudioManager - resume bgm aborted because audio is not exclusive or sound is muted");
+        return;
+    }
+    
+    if (![self.backgroundMusic paused]) {
         return;
     }
     
