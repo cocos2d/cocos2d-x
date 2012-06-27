@@ -163,13 +163,13 @@ public:
 
     static CCDictionary* create();
 
-    static CCDictionary* createWithDictionary(CCDictionary* srcDict);
+    static CCDictionary* create(CCDictionary* srcDict);
     /**
     @brief   Generate a CCDictionary pointer by file
     @param   pFileName  The file name of *.plist file
     @return  The CCDictionary pointer generated from the file
     */
-    static CCDictionary* createWithContentsOfFile(const char *pFileName);
+    static CCDictionary* create(const char *pFileName);
 
     /*
     @brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the

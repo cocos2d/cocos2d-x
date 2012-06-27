@@ -379,7 +379,6 @@ public:
     static CCLayerMultiplex * createWithLayer(CCLayer* layer);
 
     void addLayer(CCLayer* layer);
-    bool initWithLayer(CCLayer* layer);
 
     /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
     bool initWithLayers(CCLayer* layer, va_list params);

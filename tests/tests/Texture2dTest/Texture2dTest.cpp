@@ -283,12 +283,12 @@ void TextureMipMap::onEnter()
 
     CCTexture2D *texture1 = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas_nomipmap.png");
 
-    CCSprite *img0 = CCSprite::createWithTexture(texture0);
+    CCSprite *img0 = CCSprite::create(texture0);
     img0->setTextureRect(CCRectMake(85, 121, 85, 121));
     img0->setPosition(ccp( s.width/3.0f, s.height/2.0f));
     addChild(img0);
 
-    CCSprite *img1 = CCSprite::createWithTexture(texture1);
+    CCSprite *img1 = CCSprite::create(texture1);
     img1->setTextureRect(CCRectMake(85, 121, 85, 121));
     img1->setPosition(ccp( 2*s.width/3.0f, s.height/2.0f));
     addChild(img1);
@@ -1162,7 +1162,7 @@ void TextureAsync::imageLoaded(CCObject* pObj)
 
     // This test just creates a sprite based on the Texture
 
-    CCSprite *sprite = CCSprite::createWithTexture(tex);
+    CCSprite *sprite = CCSprite::create(tex);
     sprite->setAnchorPoint(ccp(0,0));
     addChild(sprite, -1);
 

@@ -26,7 +26,7 @@ local function creatDog()
     rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)
     local frame1 = CCSpriteFrame:create(textureDog, rect)
 
-    local spriteDog = CCSprite:createWithSpriteFrame(frame0)
+    local spriteDog = CCSprite:create(frame0)
     spriteDog.isPaused = false
     spriteDog:setPosition(0, winSize.height / 4 * 3)
 
@@ -35,7 +35,7 @@ local function creatDog()
     animFrames:addObject(frame0)
     animFrames:addObject(frame1)
 
-    local animation = CCAnimation:createWithSpriteFrames(animFrames, 0.5)
+    local animation = CCAnimation:create(animFrames, 0.5)
     local animate = CCAnimate:create(animation);
     spriteDog:runAction(CCRepeatForever:create(animate))
 
@@ -76,11 +76,10 @@ local function createLayerFram()
     end
 
     -- add crop
-    local textureCrop = CCTextureCache:sharedTextureCache():addImage("crop.png")
-    local frameCrop = CCSpriteFrame:create(textureCrop, CCRectMake(0, 0, 105, 95))
+    local frameCrop = CCSpriteFrame:create("crop.png", CCRectMake(0, 0, 105, 95))
     for i = 0, 3 do
         for j = 0, 1 do
-            local spriteCrop = CCSprite:createWithSpriteFrame(frameCrop);
+            local spriteCrop = CCSprite:create(frameCrop);
             spriteCrop:setPosition(10 + 200 + j * 180 - i % 2 * 90, 30 + 10 + i * 95 / 2)
             layerFarm:addChild(spriteCrop)
         end

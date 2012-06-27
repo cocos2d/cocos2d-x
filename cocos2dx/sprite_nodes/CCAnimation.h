@@ -116,12 +116,12 @@ public:
      The frames will be added with one "delay unit".
      @since v0.99.5
     */
-    static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
+    static CCAnimation* create(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
 
     /* Creates an animation with an array of CCAnimationFrame, the delay per units in seconds and and how many times it should be executed.
      @since v2.0
      */
-    static CCAnimation* createWithAnimationFrames(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+    static CCAnimation* create(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
     /** Adds a CCSpriteFrame to a CCAnimation.
      The frame will be added with one "delay unit".
