@@ -123,22 +123,52 @@ std::string Effect3::title()
 // Effect4
 //
 //------------------------------------------------------------------
+
+class Lens3DTarget : public CCNode
+{
+public:
+    virtual void setPosition(const CCPoint& var)
+    {
+        m_pLens3D->setPosition(var);
+    }
+
+    static Lens3DTarget* create(CCLens3D* pAction)
+    {
+        Lens3DTarget* pRet = new Lens3DTarget();
+        pRet->m_pLens3D = pAction;
+        pRet->autorelease();
+        return pRet;
+    }
+private:
+
+    Lens3DTarget()
+        : m_pLens3D(NULL)
+    {}
+
+    CCLens3D* m_pLens3D;
+};
+
 void Effect4::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
 
-    CCActionInterval* lens = CCLens3D::create(ccp(100,180), 150, ccg(32,24), 10);
-    //id move = [MoveBy::create:5 position:ccp(400,0)];
+    CCLens3D* lens = CCLens3D::create(ccp(100,180), 150, ccg(32,24), 10);
+    CCActionInterval* move = CCJumpBy::create(5, ccp(380,0), 100, 4);
+    CCActionInterval* move_back = move->reverse();
+    CCActionInterval* seq = (CCActionInterval *)(CCSequence::create( move, move_back, NULL));
 
-    /**
-    @todo we only support CCNode run actions now.
+    /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'CCLens3D' as its target.
+        While in cocos2d-x, the target of action only supports CCNode or its subclass,
+        so we make an encapsulation for CCLens3D to achieve that.
     */
-//     CCActionInterval* move = CCJumpBy::create(5, ccp(380,0), 100, 4);
-//     CCActionInterval* move_back = move->reverse();
-//     CCActionInterval* seq = (CCActionInterval *)(CCSequence::create( move, move_back, NULL));
-//  CCActionManager::sharedManager()->addAction(seq, lens, false);
 
-    runAction( lens );
+    CCDirector* director = CCDirector::sharedDirector();
+    CCNode* pTarget = Lens3DTarget::create(lens);
+    // Please make sure the target been added to its parent.
+    this->addChild(pTarget);
+
+    director->getActionManager()->addAction(seq, pTarget, false);
+    this->runAction( lens );
 }
 
 std::string Effect4::title()
