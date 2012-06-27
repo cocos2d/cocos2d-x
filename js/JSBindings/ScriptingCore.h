@@ -12,6 +12,18 @@
 #include "jsapi.h"
 #include "cocos2d.h"
 
+/* Since there is an ugly bug in spiderMonkey-win32(cocos2d-2.0-rc0a), we updated spiderMonkey to v1.8.5 to resolve it.
+    But the api is a little different from the old version, so we define two marco here.
+*/
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+typedef unsigned int uint32_t;
+typedef int int32_t;
+
+#define JS_GetPrivate(obj) JS_GetPrivate(cx, obj)
+#define JS_SetPrivate(obj, data) JS_SetPrivate(cx, obj, data)
+
+#endif
+
 class ScriptingCore
 {
     JSRuntime *rt;
