@@ -97,10 +97,10 @@ CCAnimation* CCAnimation::create(void)
 
 CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
 {
-    return CCAnimation::createWithSpriteFrames(frames, delay);
+    return CCAnimation::create(frames, delay);
 }
 
-CCAnimation* CCAnimation::createWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
+CCAnimation* CCAnimation::create(CCArray *frames, float delay/* = 0.0f*/)
 {
     CCAnimation *pAnimation = new CCAnimation();
     pAnimation->initWithSpriteFrames(frames, delay);
@@ -111,10 +111,10 @@ CCAnimation* CCAnimation::createWithSpriteFrames(CCArray *frames, float delay/* 
 
 CCAnimation* CCAnimation::animationWithAnimationFrames(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
 {
-    return CCAnimation::createWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
+    return CCAnimation::create(arrayOfAnimationFrameNames, delayPerUnit, loops);
 }
 
-CCAnimation* CCAnimation::createWithAnimationFrames(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
+CCAnimation* CCAnimation::create(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
 {
     CCAnimation *pAnimation = new CCAnimation();
     pAnimation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);

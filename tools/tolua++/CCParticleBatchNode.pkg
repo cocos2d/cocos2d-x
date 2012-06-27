@@ -1,0 +1,23 @@
+class CCParticleBatchNode : public CCNode, public CCTextureProtocol
+{
+public:
+    static CCParticleBatchNode* create(CCTexture2D *tex, unsigned int capacity = kCCParticleDefaultCapacity);
+    static CCParticleBatchNode* create(const char* fileImage, unsigned int capacity = kCCParticleDefaultCapacity);
+
+    virtual void addChild(CCNode * child);
+    virtual void addChild(CCNode * child, int zOrder);
+    virtual void addChild(CCNode * child, int zOrder, int tag);
+
+    void insertChild(CCParticleSystem* pSystem, unsigned int index);
+
+    virtual void removeChild(CCNode* child, bool cleanup);
+    virtual void reorderChild(CCNode * child, int zOrder);
+    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void removeAllChildrenWithCleanup(bool doCleanup);
+    void disableParticle(unsigned int particleIndex);
+
+    virtual CCTexture2D* getTexture(void);
+    virtual void setTexture(CCTexture2D *texture);
+    virtual void setBlendFunc(ccBlendFunc blendFunc);
+    virtual ccBlendFunc getBlendFunc(void);
+};

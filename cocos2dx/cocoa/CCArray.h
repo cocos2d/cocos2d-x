@@ -165,7 +165,7 @@ public:
      @param   pFileName  The file name of *.plist file
      @return  The CCArray pointer generated from the file
      */
-    static CCArray* createWithContentsOfFile(const char* pFileName);
+    static CCArray* create(const char* pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the

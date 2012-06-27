@@ -309,10 +309,10 @@ CCDictionary* CCDictionary::create()
 
 CCDictionary* CCDictionary::dictionaryWithDictionary(CCDictionary* srcDict)
 {
-    return CCDictionary::createWithDictionary(srcDict);
+    return CCDictionary::create(srcDict);
 }
 
-CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
+CCDictionary* CCDictionary::create(CCDictionary* srcDict)
 {
     CCDictionary* pNewDict = (CCDictionary*)srcDict->copy();
     pNewDict->autorelease();
@@ -333,10 +333,10 @@ CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFile
 
 CCDictionary* CCDictionary::dictionaryWithContentsOfFile(const char *pFileName)
 {
-    return CCDictionary::createWithContentsOfFile(pFileName);
+    return CCDictionary::create(pFileName);
 }
 
-CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
+CCDictionary* CCDictionary::create(const char *pFileName)
 {
     CCDictionary* pRet = createWithContentsOfFileThreadSafe(pFileName);
     pRet->autorelease();

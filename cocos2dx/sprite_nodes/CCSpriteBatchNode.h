@@ -97,7 +97,7 @@ public:
     /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
     */
-    static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity = kDefaultSpriteBatchCapacity);
+    static CCSpriteBatchNode* create(CCTexture2D* tex, unsigned int capacity = kDefaultSpriteBatchCapacity);
 
     /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.

@@ -60,10 +60,10 @@ CCParticleBatchNode::~CCParticleBatchNode()
  */
 CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
-    return CCParticleBatchNode::createWithTexture(tex, capacity);
+    return CCParticleBatchNode::create(tex, capacity);
 }
 
-CCParticleBatchNode* CCParticleBatchNode::createWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
+CCParticleBatchNode* CCParticleBatchNode::create(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
     CCParticleBatchNode * p = new CCParticleBatchNode();
     if( p && p->initWithTexture(tex, capacity))
