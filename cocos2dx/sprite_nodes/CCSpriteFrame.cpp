@@ -199,7 +199,7 @@ CCTexture2D* CCSpriteFrame::getTexture(void)
         return m_pobTexture;
     }
 
-    if( m_strTextureFilename.length() <= 0 ) {
+    if( m_strTextureFilename.length() > 0 ) {
         return CCTextureCache::sharedTextureCache()->addImage(m_strTextureFilename.c_str());
     }
     // no texture or texture filename
