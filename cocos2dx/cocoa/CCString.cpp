@@ -171,10 +171,10 @@ CCString* CCString::stringWithString(const std::string& pStr)
 
 CCString* CCString::stringWithData(const unsigned char* pData, unsigned long nLen)
 {
-    return CCString::createWithData(pData, nLen);
+    return CCString::create(pData, nLen);
 }
 
-CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLen)
+CCString* CCString::create(const unsigned char* pData, unsigned long nLen)
 {
     CCString* pRet = NULL;
     if (pData != NULL)
@@ -219,7 +219,7 @@ CCString* CCString::createWithFormat(const char* format, ...)
 
 CCString* CCString::stringWithContentsOfFile(const char* pszFileName)
 {
-    return CCString::createWithContentsOfFile(pszFileName);
+    return CCString::create(pszFileName);
 }
 
 CCString* CCString::createWithContentsOfFile(const char* pszFileName)
@@ -228,7 +228,7 @@ CCString* CCString::createWithContentsOfFile(const char* pszFileName)
     unsigned char* pData = 0;
     CCString* pRet = NULL;
     pData = CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
-    pRet = CCString::createWithData(pData, size);
+    pRet = CCString::create(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;
 }

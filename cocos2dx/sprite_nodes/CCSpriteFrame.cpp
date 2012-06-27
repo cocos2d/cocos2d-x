@@ -47,10 +47,10 @@ CCSpriteFrame* CCSpriteFrame::create(CCTexture2D *pobTexture, const CCRect& rect
 
 CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, const CCRect& rect)
 {
-    return createWithTextureFilename(filename, rect);
+    return CCSpriteFrame::create(filename, rect);
 }
 
-CCSpriteFrame* CCSpriteFrame::createWithTextureFilename(const char* filename, const CCRect& rect)
+CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect);
@@ -75,10 +75,10 @@ CCSpriteFrame* CCSpriteFrame::create(CCTexture2D* pobTexture, const CCRect& rect
 
 CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
-    return CCSpriteFrame::createWithTextureFilename(filename, rect, rotated, offset, originalSize);
+    return CCSpriteFrame::create(filename, rect, rotated, offset, originalSize);
 }
 
-CCSpriteFrame* CCSpriteFrame::createWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
@@ -199,7 +199,7 @@ CCTexture2D* CCSpriteFrame::getTexture(void)
         return m_pobTexture;
     }
 
-    if( m_strTextureFilename.length() <= 0 ) {
+    if( m_strTextureFilename.length() > 0 ) {
         return CCTextureCache::sharedTextureCache()->addImage(m_strTextureFilename.c_str());
     }
     // no texture or texture filename

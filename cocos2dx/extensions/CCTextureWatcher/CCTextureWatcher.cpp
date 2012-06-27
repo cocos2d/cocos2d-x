@@ -321,7 +321,7 @@ void CCTextureWatcher::CCListView_cellForRow(CCListView *listView, CCListViewPro
                 labelName->setAnchorPoint(ccp(0.5f, 0));
                 cell->addChild(labelName);
 
-                CCSprite *sprite = CCSprite::createWithTexture(textrue);
+                CCSprite *sprite = CCSprite::create(textrue);
                 sprite->setAnchorPoint(ccp(0, 0));
 
                 CCSize spriteSize = sprite->getContentSize();

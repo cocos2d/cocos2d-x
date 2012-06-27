@@ -142,12 +142,12 @@ public:
      The rect used will be the size of the texture.
      The offset will be (0,0).
      */
-    static CCSprite* createWithTexture(CCTexture2D *pTexture);
+    static CCSprite* create(CCTexture2D *pTexture);
 
     /** Creates an sprite with a texture and a rect.
      The offset will be (0,0).
      */
-    static CCSprite* createWithTexture(CCTexture2D *pTexture, const CCRect& rect);
+    static CCSprite* create(CCTexture2D *pTexture, const CCRect& rect);
 
     /** Creates an sprite with an sprite frame. 
     @deprecated: This interface will be deprecated sooner or later.
@@ -163,7 +163,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
 
     /** Creates an sprite with an sprite frame. */
-    static CCSprite* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+    static CCSprite* create(CCSpriteFrame *pSpriteFrame);
 
     /** Creates an sprite with an sprite frame name.
      An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
@@ -347,21 +347,21 @@ protected:
     //
     // Data used when the sprite is rendered using a CCSpriteSheet
     //
-    CCTextureAtlas            *m_pobTextureAtlas;        // Sprite Sheet texture atlas (weak reference)
-    unsigned int            m_uAtlasIndex;            // Absolute (real) Index on the SpriteSheet
-    CCSpriteBatchNode       *m_pobBatchNode;        // Used batch node (weak reference)
+    CCTextureAtlas*     m_pobTextureAtlas;        // Sprite Sheet texture atlas (weak reference)
+    unsigned int        m_uAtlasIndex;            // Absolute (real) Index on the SpriteSheet
+    CCSpriteBatchNode*  m_pobBatchNode;        // Used batch node (weak reference)
     
-    bool                    m_bDirty;                // Sprite needs to be updated
-    bool                    m_bRecursiveDirty;        // Subchildren needs to be updated
-    bool                    m_bHasChildren;            // optimization to check if it contain children
-    bool                    m_bShouldBeHidden;        // should not be drawn because one of the ancestors is not visible
-    CCAffineTransform        m_transformToBatch;        //
+    bool                m_bDirty;                // Sprite needs to be updated
+    bool                m_bRecursiveDirty;        // Subchildren needs to be updated
+    bool                m_bHasChildren;            // optimization to check if it contain children
+    bool                m_bShouldBeHidden;        // should not be drawn because one of the ancestors is not visible
+    CCAffineTransform   m_transformToBatch;        //
     
     //
     // Data used when the sprite is self-rendered
     //
     ccBlendFunc        m_sBlendFunc;    // Needed for the texture protocol
-    CCTexture2D        *m_pobTexture;// Texture used to render the sprite
+    CCTexture2D*       m_pobTexture;// Texture used to render the sprite
 
     //
     // Shared data

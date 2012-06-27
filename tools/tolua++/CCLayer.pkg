@@ -62,5 +62,5 @@ class CCLayerMultiplex : public CCLayer
     void switchTo(unsigned int n);
     void switchToAndReleaseMe(unsigned int n);
 
-    static CCLayerMultiplex * create(CCLayer* layer);
+    static CCLayerMultiplex * createWithLayer(CCLayer* layer);
 };
