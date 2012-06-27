@@ -75,7 +75,7 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
         m_uMinGID = layerInfo->m_uMinGID;
         m_uMaxGID = layerInfo->m_uMaxGID;
         m_cOpacity = layerInfo->m_cOpacity;
-        setProperties(CCDictionary::createWithDictionary(layerInfo->getProperties()));
+        setProperties(CCDictionary::create(layerInfo->getProperties()));
         m_fContentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor(); 
 
         // tilesetInfo

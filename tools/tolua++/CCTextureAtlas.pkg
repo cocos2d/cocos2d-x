@@ -21,6 +21,6 @@ class CCTextureAtlas : public CCObject
 
     void drawQuads();
 
-    static CCTextureAtlas* textureAtlasWithFile(const char* file , unsigned int capacity);
-    static CCTextureAtlas* textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity);
+    static CCTextureAtlas* create(const char* file , unsigned int capacity);
+    static CCTextureAtlas* create(CCTexture2D *texture, unsigned int capacity);
 };

@@ -2399,7 +2399,7 @@ CCActionInterval* CCAnimate::reverse(void)
         }
     }
 
-    CCAnimation *newAnim = CCAnimation::createWithAnimationFrames(pNewArray, m_pAnimation->getDelayPerUnit(), m_pAnimation->getLoops());
+    CCAnimation *newAnim = CCAnimation::create(pNewArray, m_pAnimation->getDelayPerUnit(), m_pAnimation->getLoops());
     newAnim->setRestoreOriginalFrame(m_pAnimation->getRestoreOriginalFrame());
     return create(newAnim);
 }

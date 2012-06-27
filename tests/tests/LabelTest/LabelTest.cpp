@@ -195,7 +195,7 @@ void AtlasDemo::backCallback(CCObject* pSender)
 //------------------------------------------------------------------
 Atlas1::Atlas1()
 {
-    m_textureAtlas = CCTextureAtlas::textureAtlasWithFile(s_AtlasTest, 3); m_textureAtlas->retain();
+    m_textureAtlas = CCTextureAtlas::create(s_AtlasTest, 3); m_textureAtlas->retain();
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -1390,7 +1390,7 @@ std::string BMFontOneAtlas::subtitle()
 /// BMFontUnicode
 BMFontUnicode::BMFontUnicode()
 {
-    CCDictionary *strings = CCDictionary::createWithContentsOfFile("fonts/strings.xml");
+    CCDictionary *strings = CCDictionary::create("fonts/strings.xml");
     const char *chinese = ((CCString*)strings->objectForKey("chinese1"))->m_sString.c_str();
     const char *japanese = ((CCString*)strings->objectForKey("japanese"))->m_sString.c_str();
     const char *spanish = ((CCString*)strings->objectForKey("spanish"))->m_sString.c_str();

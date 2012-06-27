@@ -42,35 +42,35 @@ NS_CC_BEGIN
     #define M_PI       3.14159265358979323846
 #endif
 
-static bool initialized = false;
-static CCGLProgram *shader_ = NULL;
-static int colorLocation_ = -1;
-static ccColor4F color_ = {1,1,1,1};
-static int pointSizeLocation_ = -1;
-static GLfloat pointSize_ = 1;
+static bool s_bInitialized = false;
+static CCGLProgram* s_pShader = NULL;
+static int s_nColorLocation = -1;
+static ccColor4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
+static int s_nPointSizeLocation = -1;
+static GLfloat s_fPointSize = 1.0f;
 
 static void lazy_init( void )
 {
-    if( ! initialized ) {
+    if( ! s_bInitialized ) {
 
         //
         // Position and 1 color passed as a uniform (to similate glColor4ub )
         //
-        shader_ = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_Position_uColor);
+        s_pShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_Position_uColor);
 
-        colorLocation_ = glGetUniformLocation( shader_->getProgram(), "u_color");
+        s_nColorLocation = glGetUniformLocation( s_pShader->getProgram(), "u_color");
     CHECK_GL_ERROR_DEBUG();
-        pointSizeLocation_ = glGetUniformLocation( shader_->getProgram(), "u_pointSize");
+        s_nPointSizeLocation = glGetUniformLocation( s_pShader->getProgram(), "u_pointSize");
     CHECK_GL_ERROR_DEBUG();
 
-        initialized = true;
+        s_bInitialized = true;
     }
 }
 
 // When back to foreground on android, we want to it to inilialize again
 void ccDrawInit()
 {
-    initialized = false;
+    s_bInitialized = false;
 }
 
 void ccDrawPoint( const CCPoint& point )
@@ -82,11 +82,11 @@ void ccDrawPoint( const CCPoint& point )
     p.y = point.y;
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-    shader_->use();
-    shader_->setUniformForModelViewProjectionMatrix();
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();
 
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color_.r, 1);
-    shader_->setUniformLocationWith1f(pointSizeLocation_, pointSize_);
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
 
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &p);
 
@@ -100,10 +100,10 @@ void ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints )
     lazy_init();
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-    shader_->use();
-    shader_->setUniformForModelViewProjectionMatrix();
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color_.r, 1);
-    shader_->setUniformLocationWith1f(pointSizeLocation_, pointSize_);
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
     ccVertex2F* newPoints = new ccVertex2F[numberOfPoints];
@@ -140,11 +140,11 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
         {destination.x, destination.y}
     };
 
-    shader_->use();
+    s_pShader->use();
     CHECK_GL_ERROR_DEBUG();
-    shader_->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformForModelViewProjectionMatrix();
     CHECK_GL_ERROR_DEBUG();
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color_.r, 1);
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
     CHECK_GL_ERROR_DEBUG();
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -180,9 +180,9 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
 {
     lazy_init();
 
-    shader_->use();
-    shader_->setUniformForModelViewProjectionMatrix();
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color_.r, 1);
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
@@ -217,9 +217,9 @@ void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4
 {
     lazy_init();
 
-    shader_->use();
-    shader_->setUniformForModelViewProjectionMatrix();    
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color.r, 1);
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();    
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &color.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
@@ -272,9 +272,9 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
     vertices[(segments+1)*2] = center.x;
     vertices[(segments+1)*2+1] = center.y;
 
-    shader_->use();
-    shader_->setUniformForModelViewProjectionMatrix();
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color_.r, 1);
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
@@ -302,9 +302,9 @@ void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoi
     vertices[segments].x = destination.x;
     vertices[segments].y = destination.y;
 
-    shader_->use();
-    shader_->setUniformForModelViewProjectionMatrix();
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color_.r, 1);
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
@@ -354,9 +354,9 @@ void ccDrawCardinalSpline( CCPointArray *config, CCFloat tension,  unsigned int 
         vertices[i].y = newPos.y;
     }
 
-    shader_->use();
-    shader_->setUniformForModelViewProjectionMatrix();    
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*)&color_.r, 1);
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();    
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*)&s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
@@ -383,9 +383,9 @@ void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCP
     vertices[segments].x = destination.x;
     vertices[segments].y = destination.y;
 
-    shader_->use();
-    shader_->setUniformForModelViewProjectionMatrix();
-    shader_->setUniformLocationWith4fv(colorLocation_, (GLfloat*) &color_.r, 1);
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
@@ -398,15 +398,15 @@ void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCP
 
 void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 {
-    color_.r = r;
-    color_.g = g;
-    color_.b = b;
-    color_.a = a;
+    s_tColor.r = r;
+    s_tColor.g = g;
+    s_tColor.b = b;
+    s_tColor.a = a;
 }
 
 void ccPointSize( GLfloat pointSize )
 {
-    pointSize_ = pointSize * CC_CONTENT_SCALE_FACTOR();
+    s_fPointSize = pointSize * CC_CONTENT_SCALE_FACTOR();
 
     //TODO :glPointSize( pointSize );
 
@@ -414,10 +414,10 @@ void ccPointSize( GLfloat pointSize )
 
 void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
-    color_.r = r/255.0f;
-    color_.g = g/255.0f;
-    color_.b = b/255.0f;
-    color_.a = a/255.0f;
+    s_tColor.r = r/255.0f;
+    s_tColor.g = g/255.0f;
+    s_tColor.b = b/255.0f;
+    s_tColor.a = a/255.0f;
 }
 
 NS_CC_END
