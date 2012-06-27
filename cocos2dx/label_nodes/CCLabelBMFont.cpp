@@ -487,7 +487,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
-    CCString *contents = CCString::create(fullpath.c_str());
+    CCString *contents = CCString::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
 
