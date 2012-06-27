@@ -19,8 +19,8 @@ class CCDictionary : public CCObject
     void removeAllObjects();
 
     static CCDictionary* create();
-    static CCDictionary* createWithDictionary(CCDictionary* srcDict);
-    static CCDictionary* createWithContentsOfFile(const char *pFileName);
+    static CCDictionary* create(CCDictionary* srcDict);
+    static CCDictionary* create(const char *pFileName);
 
 };
 

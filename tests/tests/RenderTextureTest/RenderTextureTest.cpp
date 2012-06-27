@@ -188,7 +188,7 @@ void RenderTextureSave::saveImage(cocos2d::CCObject *pSender)
 
     CC_SAFE_DELETE(pImage);
 
-    CCSprite *sprite = CCSprite::createWithTexture(tex);
+    CCSprite *sprite = CCSprite::create(tex);
 
     sprite->setScale(0.3f);
     addChild(sprite);
@@ -457,7 +457,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     texture->end();
 
-    CCSprite *sprite = CCSprite::createWithTexture(texture->getSprite()->getTexture());
+    CCSprite *sprite = CCSprite::create(texture->getSprite()->getTexture());
 
     sprite->setPosition(ccp(256, 256));
     sprite->setOpacity(182);

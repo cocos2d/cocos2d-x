@@ -169,12 +169,12 @@ CCArray* CCArray::create(CCArray* otherArray)
 
 CCArray* CCArray::arrayWithContentsOfFile(const char* pFileName)
 {
-    return CCArray::createWithContentsOfFile(pFileName);
+    return CCArray::create(pFileName);
 }
 
-CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
+CCArray* CCArray::create(const char* pFileName)
 {
-    CCArray* pRet = createWithContentsOfFileThreadSafe(pFileName);
+    CCArray* pRet = CCArray::createWithContentsOfFileThreadSafe(pFileName);
     if (pRet != NULL)
     {
         pRet->autorelease();

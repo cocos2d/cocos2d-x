@@ -97,7 +97,7 @@ public:
     /** creates a CCMenu with it's items */
     static CCMenu* create(CCMenuItem* item, ...);
 
-    /** creates a CCMenu with a NSArray of CCMenuItem objects */
+    /** creates a CCMenu with a CCArray of CCMenuItem objects */
     static CCMenu* create(CCArray* pArrayOfItems);
 
     /** creates a CCMenu with it's item, then use addChild() to add 

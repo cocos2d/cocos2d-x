@@ -12,7 +12,7 @@ class CCString : public CCObject
     bool isEqual(const CCObject* pObject);
 
     static CCString* create(const char* pStr);
-    static CCString* createWithData(unsigned char* pData, unsigned long nLen);
+    static CCString* create(unsigned char* pData, unsigned long nLen);
     static CCString* createWithContentsOfFile(const char* pszFileName);
 };
 

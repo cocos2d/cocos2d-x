@@ -786,26 +786,13 @@ CCLayerMultiplex * CCLayerMultiplex::layerWithLayer(CCLayer* layer)
 
 CCLayerMultiplex * CCLayerMultiplex::createWithLayer(CCLayer* layer)
 {
-    CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
-    pMultiplexLayer->initWithLayer(layer);
-    pMultiplexLayer->autorelease();
-    return pMultiplexLayer;
+    return CCLayerMultiplex::create(layer, NULL);
 }
 
 void CCLayerMultiplex::addLayer(CCLayer* layer)
 {
     CCAssert(m_pLayers, "");
     m_pLayers->addObject(layer);
-}
-
-bool CCLayerMultiplex::initWithLayer(CCLayer* layer)
-{
-    m_pLayers = CCArray::create();
-    m_pLayers->retain();
-    m_pLayers->addObject(layer);
-    m_nEnabledLayer = 0;
-    this->addChild(layer);
-    return true;
 }
 
 bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)

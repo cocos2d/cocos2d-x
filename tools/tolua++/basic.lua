@@ -105,7 +105,7 @@ local CCObjectTypes = {
     "CCMotionStreak",
     "CCParallaxNode",
     "CCParticleSystem",
-    "CCParticleSystemPoint",
+    "CCParticleBatchNode",
     "CCParticleSystemQuad",
     "CCProgressTimer",
     "CCRenderTexture",

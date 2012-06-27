@@ -136,7 +136,7 @@ void ZwoptexGenericTest::onEnter()
     layer1->setPosition(ccp(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer1);
 
-    sprite1 = CCSprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_01.png"));
+    sprite1 = CCSprite::create(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_01.png"));
     sprite1->setPosition(ccp( s.width/2-80, s.height/2));
     addChild(sprite1);
 
@@ -147,7 +147,7 @@ void ZwoptexGenericTest::onEnter()
     layer2->setPosition(ccp(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer2);
     
-    sprite2 = CCSprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_generic_01.png"));
+    sprite2 = CCSprite::create(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("grossini_dance_generic_01.png"));
     sprite2->setPosition(ccp( s.width/2 + 80, s.height/2));
     addChild(sprite2);
 
