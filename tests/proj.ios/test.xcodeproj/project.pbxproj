@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		15527950157C64F9007CC855 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1552794F157C64F9007CC855 /* Shaders */; };
 		159A662715902CA2003AEEC0 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 159A662415902A26003AEEC0 /* libcocos2dx.a */; };
+		15A9C128159B03D200BF103F /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A9C126159B03D200BF103F /* fps_images-hd.png */; };
+		15A9C129159B03D200BF103F /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A9C127159B03D200BF103F /* fps_images-ipadhd.png */; };
 		15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8D156DD2E6003E7567 /* fps_images.png */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -323,6 +325,8 @@
 /* Begin PBXFileReference section */
 		1552794F157C64F9007CC855 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		159A661C15902A26003AEEC0 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
+		15A9C126159B03D200BF103F /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
+		15A9C127159B03D200BF103F /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
 		15DD6D8D156DD2E6003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
@@ -1161,6 +1165,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15A9C126159B03D200BF103F /* fps_images-hd.png */,
+				15A9C127159B03D200BF103F /* fps_images-ipadhd.png */,
 				4A2188021586CCE10069114E /* ccb */,
 				1552794F157C64F9007CC855 /* Shaders */,
 				789B560C15197BE00038CD1E /* animations */,
@@ -2118,6 +2124,8 @@
 				78CAE769156F8124002A7A68 /* Particles in Resources */,
 				15527950157C64F9007CC855 /* Shaders in Resources */,
 				4A2188031586CCE10069114E /* ccb in Resources */,
+				15A9C128159B03D200BF103F /* fps_images-hd.png in Resources */,
+				15A9C129159B03D200BF103F /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
