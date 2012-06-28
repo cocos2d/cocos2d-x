@@ -1524,6 +1524,21 @@ void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
 		case 0:
 			file = "Images/test_1021x1024.png";
 			break;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+            // android can not pack .gz file into apk file
+        case 1:
+            file = "Images/test_1021x1024_rgba8888.pvr";
+            break;
+        case 2:
+            file = "Images/test_1021x1024_rgb888.pvr";
+            break;
+        case 3:
+            file = "Images/test_1021x1024_rgba4444.pvr";
+            break;
+        case 4:
+            file = "Images/test_1021x1024_a8.pvr";
+            break;
+#else
 		case 1:
 			file = "Images/test_1021x1024_rgba8888.pvr.gz";
 			break;
@@ -1536,6 +1551,7 @@ void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
 		case 4:
 			file = "Images/test_1021x1024_a8.pvr.gz";
 			break;
+#endif
 	}
 
     m_pBackground = CCSprite::create(file.c_str());
