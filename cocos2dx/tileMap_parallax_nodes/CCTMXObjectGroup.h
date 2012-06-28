@@ -27,12 +27,17 @@ THE SOFTWARE.
 #ifndef __CCTMX_OBJECT_GROUP_H__
 #define __CCTMX_OBJECT_GROUP_H__
 
-#include "CCGeometry.h"
-#include "CCString.h"
-#include "CCArray.h"
-#include "CCDictionary.h"
+#include "cocoa/CCGeometry.h"
+#include "cocoa/CCString.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCDictionary.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
 
 /** @brief CCTMXObjectGroup represents the TMX object group.
 @since v0.99.0
@@ -63,6 +68,9 @@ protected:
     /** name of the group */
     std::string m_sGroupName;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #define __CC_PLATFORM_FILEUTILS_CPP__
-#include "CCFileUtilsCommon_cpp.h"
-#include "windows.h"
+#include "platform/CCFileUtilsCommon_cpp.h"
+#include <windows.h>
 #include "CCDirector.h"
 
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
@@ -47,6 +47,32 @@ static void _CheckPath()
             s_pszResourcePath, MAX_PATH, NULL, NULL);
         s_pszResourcePath[nNum] = '\\';
     }
+}
+
+static CCFileUtils* s_pFileUtils = NULL;
+
+CCFileUtils* CCFileUtils::sharedFileUtils()
+{
+    if (s_pFileUtils == NULL)
+    {
+        s_pFileUtils = new CCFileUtils();
+    }
+    return s_pFileUtils;
+}
+
+void CCFileUtils::purgeFileUtils()
+{
+    if (s_pFileUtils != NULL)
+    {
+        s_pFileUtils->purgeCachedEntries();
+    }
+    
+    CC_SAFE_DELETE(s_pFileUtils);
+}
+
+void CCFileUtils::purgeCachedEntries()
+{
+
 }
 
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
@@ -164,10 +190,11 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
     return pRet->m_sString.c_str();
 }
 
-unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long* pSize)
 {
-    unsigned char * pBuffer = NULL;
-
+    unsigned char* pBuffer = NULL;
+    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invaild parameters.");
+    *pSize = 0;
     do 
     {
         // read the file from hardware
@@ -182,7 +209,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         fclose(fp);
     } while (0);
 
-    if (! pBuffer && getIsPopupNotify())
+    if (! pBuffer && isPopupNotify())
     {
         std::string title = "Notification";
         std::string msg = "Get data from file(";

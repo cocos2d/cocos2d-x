@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="JSBindings">
+      <UniqueIdentifier>{e3cf2382-1ff3-40f9-8b7e-18b61a7c2c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{21e3383e-1ce0-44c9-a5f6-9583e571c46c}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;png;manifest</Extensions>
+    </Filter>
+    <Filter Include="win32">
+      <UniqueIdentifier>{42d8c7a8-ec45-498f-a33a-5805aab82fee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{3b086d97-dbd9-4069-810a-ea7b36ffc165}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\js\JSBindings\cocos2d_generated.cpp">
+      <Filter>JSBindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\js\JSBindings\cocos2d_manual_bindings.cpp">
+      <Filter>JSBindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\js\JSBindings\cocos_denshion_generated.cpp">
+      <Filter>JSBindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\js\JSBindings\ScriptingCore.cpp">
+      <Filter>JSBindings</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\simple_class.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\simple_native_generated.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\js\JSBindings\cocos2d_generated.hpp">
+      <Filter>JSBindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\js\JSBindings\cocos_denshion_generated.hpp">
+      <Filter>JSBindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\js\JSBindings\ScriptingCore.h">
+      <Filter>JSBindings</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\simple_class.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\simple_native_generated.hpp">
+      <Filter>Classes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\CloseNormal.png">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\CloseSelected.png">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\HelloWorld.png">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="res\testjs.ico">
+      <Filter>resource</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="testjs.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

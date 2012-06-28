@@ -120,23 +120,23 @@ void TextInputTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 24);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 24);
     addChild(label);
     label->setPosition(ccp(s.width/2, s.height-50));
 
     std::string subTitle = m_pNotificationLayer->subtitle();
     if(! subTitle.empty())
     {
-        CCLabelTTF* l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
+        CCLabelTTF* l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(TextInputTest::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(TextInputTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(TextInputTest::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(TextInputTest::backCallback));
+    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(TextInputTest::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(TextInputTest::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
     item1->setPosition(ccp( s.width/2 - 100,30));
     item2->setPosition(ccp( s.width/2, 30));
@@ -152,7 +152,7 @@ void TextInputTest::onEnter()
 KeyboardNotificationLayer::KeyboardNotificationLayer()
 : m_pTrackNode(0)
 {
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 }
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
@@ -322,10 +322,10 @@ void TextFieldTTFActionTest::onEnter()
 
     m_nCharLimit = 12;
 
-    m_pTextFieldAction = CCRepeatForever::actionWithAction(
-        (CCActionInterval*)CCSequence::actions(
-            CCFadeOut::actionWithDuration(0.25),
-            CCFadeIn::actionWithDuration(0.25),
+    m_pTextFieldAction = CCRepeatForever::create(
+        (CCActionInterval*)CCSequence::create(
+            CCFadeOut::create(0.25),
+            CCFadeIn::create(0.25),
             0
         ));
     m_pTextFieldAction->retain();
@@ -395,7 +395,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(CCTextFieldTTF * pSender, con
     }
 
     // create a insert text sprite and do some action
-    CCLabelTTF * label = CCLabelTTF::labelWithString(text, FONT_NAME, FONT_SIZE);
+    CCLabelTTF * label = CCLabelTTF::create(text, FONT_NAME, FONT_SIZE);
     this->addChild(label);
     ccColor3B color = { 226, 121, 7};
     label->setColor(color);
@@ -409,17 +409,17 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(CCTextFieldTTF * pSender, con
     CCSize  inputTextSize = label->getContentSize();
     CCPoint beginPos(endPos.x, CCDirector::sharedDirector()->getWinSize().height - inputTextSize.height * 2); 
 
-    ccTime duration = 0.5;
+    float duration = 0.5;
     label->setPosition(beginPos);
     label->setScale(8);
 
-    CCAction * seq = CCSequence::actions(
-        CCSpawn::actions(
-            CCMoveTo::actionWithDuration(duration, endPos),
-            CCScaleTo::actionWithDuration(duration, 1),
-            CCFadeOut::actionWithDuration(duration),
+    CCAction * seq = CCSequence::create(
+        CCSpawn::create(
+            CCMoveTo::create(duration, endPos),
+            CCScaleTo::create(duration, 1),
+            CCFadeOut::create(duration),
         0),
-        CCCallFuncN::actionWithTarget(this, callfuncN_selector(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction)),
+        CCCallFuncN::create(this, callfuncN_selector(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction)),
         0);
     label->runAction(seq);
     return false;
@@ -428,7 +428,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(CCTextFieldTTF * pSender, con
 bool TextFieldTTFActionTest::onTextFieldDeleteBackward(CCTextFieldTTF * pSender, const char * delText, int nLen)
 {
     // create a delete text sprite and do some action
-    CCLabelTTF * label = CCLabelTTF::labelWithString(delText, FONT_NAME, FONT_SIZE);
+    CCLabelTTF * label = CCLabelTTF::create(delText, FONT_NAME, FONT_SIZE);
     this->addChild(label);
 
     // move the sprite to fly out
@@ -440,20 +440,20 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(CCTextFieldTTF * pSender,
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     CCPoint endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
 
-    ccTime duration = 1;
-    ccTime rotateDuration = 0.2f;
+    float duration = 1;
+    float rotateDuration = 0.2f;
     int repeatTime = 5; 
     label->setPosition(beginPos);
 
-    CCAction * seq = CCSequence::actions(
-        CCSpawn::actions(
-            CCMoveTo::actionWithDuration(duration, endPos),
-            CCRepeat::actionWithAction(
-                CCRotateBy::actionWithDuration(rotateDuration, (rand()%2) ? 360 : -360),
+    CCAction * seq = CCSequence::create(
+        CCSpawn::create(
+            CCMoveTo::create(duration, endPos),
+            CCRepeat::create(
+                CCRotateBy::create(rotateDuration, (rand()%2) ? 360 : -360),
                 repeatTime),
-            CCFadeOut::actionWithDuration(duration),
+            CCFadeOut::create(duration),
         0),
-        CCCallFuncN::actionWithTarget(this, callfuncN_selector(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction)),
+        CCCallFuncN::create(this, callfuncN_selector(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction)),
         0);
     label->runAction(seq);
     return false;

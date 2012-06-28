@@ -43,7 +43,7 @@ void CCAutoreleasePool::addObject(CCObject* pObject)
 {
     m_pManagedObjectArray->addObject(pObject);
 
-    CCAssert(pObject->m_uReference > 1, "reference count should greager than 1");
+    CCAssert(pObject->m_uReference > 1, "reference count should be greater than 1");
 
     pObject->release(); // no ref count, in this case autorelease pool added.
 }

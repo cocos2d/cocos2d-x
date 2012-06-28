@@ -27,7 +27,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCActionTween* CCActionTween::actionWithDuration(ccTime aDuration, const char* key, float from, float to)
+CCActionTween* CCActionTween::actionWithDuration(float aDuration, const char* key, float from, float to)
+{
+    return CCActionTween::create(aDuration, key, from, to);
+}
+
+CCActionTween* CCActionTween::create(float aDuration, const char* key, float from, float to)
 {
     CCActionTween* pRet = new CCActionTween();
     if (pRet && pRet->initWithDuration(aDuration, key, from, to))
@@ -41,7 +46,7 @@ CCActionTween* CCActionTween::actionWithDuration(ccTime aDuration, const char* k
     return pRet;
 }
 
-bool CCActionTween::initWithDuration(ccTime aDuration, const char* key, float from, float to)
+bool CCActionTween::initWithDuration(float aDuration, const char* key, float from, float to)
 {
     if (CCActionInterval::initWithDuration(aDuration)) 
     {
@@ -61,14 +66,14 @@ void CCActionTween::startWithTarget(CCNode *pTarget)
     m_fDelta = m_fTo - m_fFrom;
 }
 
-void CCActionTween::update(ccTime dt)
+void CCActionTween::update(float dt)
 {
     dynamic_cast<CCActionTweenDelegate*>(m_pTarget)->updateTweenAction(m_fTo  - m_fDelta * (1 - dt), m_strKey.c_str());
 }
 
 CCActionInterval* CCActionTween::reverse()
 {
-    return CCActionTween::actionWithDuration(m_fDuration, m_strKey.c_str(), m_fTo, m_fFrom);
+    return CCActionTween::create(m_fDuration, m_strKey.c_str(), m_fTo, m_fFrom);
 }
 
 

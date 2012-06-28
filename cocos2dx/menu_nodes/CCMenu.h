@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -26,10 +26,16 @@ THE SOFTWARE.
 #define __CCMENU_H_
 
 #include "CCMenuItem.h"
-#include "CCLayer.h"
+#include "layers_scenes_transitions_nodes/CCLayer.h"
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup menu
+ * @{
+ */
 typedef enum  
 {
     kCCMenuStateWaiting,
@@ -54,7 +60,8 @@ class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
     /** Opacity: conforms with CCRGBAProtocol protocol */
     CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
     /** whether or not the menu will receive events */
-    CC_SYNTHESIZE(bool, m_bEnabled, Enabled);
+    bool m_bEnabled;
+    
 public:
     CCMenu()
         : m_cOpacity(0)
@@ -62,20 +69,42 @@ public:
     {}
     virtual ~CCMenu(){}
 
+    /** creates an empty CCMenu 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCMenu* node();
+
+    /** creates a CCMenu with it's items 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithItems(CCMenuItem* item, ...);
+
+    /** creates a CCMenu with a NSArray of CCMenuItem objects 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithArray(CCArray* pArrayOfItems);
+
+    /** creates a CCMenu with it's item, then use addChild() to add 
+      * other items. It is used for script, it can't init with undetermined
+      * number of variables.
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithItem(CCMenuItem* item);
+
     /** creates an empty CCMenu */
-    static CCMenu* node();
+    static CCMenu* create();
 
     /** creates a CCMenu with it's items */
-    static CCMenu* menuWithItems(CCMenuItem* item, ...);
+    static CCMenu* create(CCMenuItem* item, ...);
 
-    /** creates a CCMenu with a NSArray of CCMenuItem objects */
-    static CCMenu* menuWithArray(CCArray* pArrayOfItems);
+    /** creates a CCMenu with a CCArray of CCMenuItem objects */
+    static CCMenu* create(CCArray* pArrayOfItems);
 
     /** creates a CCMenu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
       * number of variables.
     */
-    static CCMenu* menuWithItem(CCMenuItem* item);
+    static CCMenu* createWithItem(CCMenuItem* item);
 
     /** initializes an empty CCMenu */
     bool init();
@@ -109,7 +138,7 @@ public:
     void alignItemsInRows(unsigned int rows, va_list args);
 
     /** set event handler priority. By default it is: kCCMenuTouchPriority */
-    void setHandlerPriority(unsigned int newPriority);
+    void setHandlerPriority(int newPriority);
 
     //super methods
     virtual void addChild(CCNode * child);
@@ -131,14 +160,21 @@ public:
     */
     virtual void onExit();
 
-    virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool getIsOpacityModifyRGB(void) { return false;}
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) { return false;}
+    
+    virtual bool isEnabled() { return m_bEnabled; }
+    virtual void setEnabled(bool value) { m_bEnabled = value; };
 
 protected:
     CCMenuItem* itemForTouch(CCTouch * touch);
     tCCMenuState m_eState;
     CCMenuItem *m_pSelectedItem;
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_END
 

@@ -34,5 +34,5 @@ class CCTMXLayer : public CCSpriteBatchNode
     void setLayerName(const char *layerName);
     const char* getLayerName();
 
-    static CCTMXLayer * layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+    static CCTMXLayer * create(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
 };

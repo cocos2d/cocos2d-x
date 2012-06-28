@@ -32,15 +32,15 @@ void AccelerometerTest::onEnter()
 {
     CCLayer::onEnter();
 
-    setIsAccelerometerEnabled(true);
+    setAccelerometerEnabled(true);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
     label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
-    m_pBall = CCSprite::spriteWithFile("Images/ball.png");
+    m_pBall = CCSprite::create("Images/ball.png");
     m_pBall->setPosition(ccp(s.width / 2, s.height / 2));
     addChild(m_pBall);
 

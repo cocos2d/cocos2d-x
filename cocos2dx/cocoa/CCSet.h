@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -22,13 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __NS_SET_H__
-#define __NS_SET_H__
+#ifndef __CC_SET_H__
+#define __CC_SET_H__
 
 #include <set>
 #include "CCObject.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup data_structures
+ * @{
+ */
 
 typedef std::set<CCObject *>::iterator CCSetIterator;
 
@@ -80,7 +85,10 @@ private:
     std::set<CCObject *> *m_pSet;
 };
 
+// end of data_structure group
+/// @}
+
 NS_CC_END
 
-#endif // __NS_SET_H__
+#endif // __CC_SET_H__
 

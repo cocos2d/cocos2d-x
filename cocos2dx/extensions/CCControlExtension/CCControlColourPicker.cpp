@@ -29,9 +29,9 @@
  */
 
 #include "CCControlColourPicker.h"
-#include "CCPointExtension.h"
-#include "CCSpriteFrameCache.h"
-#include "CCSpriteBatchNode.h"
+#include "support/CCPointExtension.h"
+#include "sprite_nodes/CCSpriteFrameCache.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 
 NS_CC_EXT_BEGIN
 
@@ -39,12 +39,12 @@ bool CCControlColourPicker::init()
 {
     if (CCControl::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         // Cache the sprites
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
         
         // Create the sprite batch node
-        CCSpriteBatchNode *spriteSheet  = CCSpriteBatchNode::batchNodeWithFile("extensions/CCControlColourPickerSpriteSheet.png");
+        CCSpriteBatchNode *spriteSheet  = CCSpriteBatchNode::create("extensions/CCControlColourPickerSpriteSheet.png");
         addChild(spriteSheet);
         
         // MIPMAP
@@ -67,12 +67,12 @@ bool CCControlColourPicker::init()
         float hueShift                = 8;
         float colourShift             = 28;
         
-        m_huePicker=CCControlHuePicker::pickerWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
-        m_colourPicker=CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
+        m_huePicker=CCControlHuePicker::create(spriteSheet, ccp(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
+        m_colourPicker=CCControlSaturationBrightnessPicker::create(spriteSheet, ccp(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
-        m_huePicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPicker::hueSliderValueChanged), CCControlEventValueChanged);
-        m_colourPicker->addTargetWithActionForControlEvents(this, menu_selector(CCControlColourPicker::colourSliderValueChanged), CCControlEventValueChanged);
+        m_huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPicker::hueSliderValueChanged), CCControlEventValueChanged);
+        m_colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlColourPicker::colourSliderValueChanged), CCControlEventValueChanged);
        
         // Set defaults
         updateHueAndControlPicker();
@@ -88,6 +88,11 @@ bool CCControlColourPicker::init()
 }
 
 CCControlColourPicker* CCControlColourPicker::colourPicker()
+{
+    return CCControlColourPicker::create();
+}
+
+CCControlColourPicker* CCControlColourPicker::create()
 {
     CCControlColourPicker *pRet = new CCControlColourPicker();
     pRet->init();
@@ -125,7 +130,7 @@ void CCControlColourPicker::updateHueAndControlPicker()
 }
 
 
-void CCControlColourPicker::hueSliderValueChanged(CCObject * sender)
+void CCControlColourPicker::hueSliderValueChanged(CCObject * sender, CCControlEvent controlEvent)
 {
     m_hsv.h      = ((CCControlHuePicker*)sender)->getHue();
 
@@ -138,7 +143,7 @@ void CCControlColourPicker::hueSliderValueChanged(CCObject * sender)
     updateControlPicker();
 }
 
-void CCControlColourPicker::colourSliderValueChanged(CCObject * sender)
+void CCControlColourPicker::colourSliderValueChanged(CCObject * sender, CCControlEvent controlEvent)
 {
     m_hsv.s=((CCControlSaturationBrightnessPicker*)sender)->getSaturation();
     m_hsv.v=((CCControlSaturationBrightnessPicker*)sender)->getBrightness();

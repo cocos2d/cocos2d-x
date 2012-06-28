@@ -37,6 +37,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 class CC_DLL CCControlHuePicker : public CCControl
 {
     //maunally put in the setters
@@ -54,8 +61,9 @@ class CC_DLL CCControlHuePicker : public CCControl
 public:    
     virtual ~CCControlHuePicker();
     virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
-    static CCControlHuePicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
-
+    //@deprecated: This interface will be deprecated sooner or later.
+    CC_DEPRECATED_ATTRIBUTE static CCControlHuePicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
+    static CCControlHuePicker* create(CCNode* target, CCPoint pos);
 protected:    
     void updateSliderPosition(CCPoint location);
     bool checkSliderPosition(CCPoint location);
@@ -63,6 +71,10 @@ protected:
     virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

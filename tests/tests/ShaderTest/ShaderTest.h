@@ -17,7 +17,7 @@ public:
     void nextCallback(CCObject* pSender);
     void backCallback(CCObject* pSender);
 
-    LAYER_NODE_FUNC(ShaderTestDemo);
+    LAYER_CREATE_FUNC(ShaderTestDemo);
 };
 
 class ShaderMonjori : public ShaderTestDemo
@@ -89,7 +89,7 @@ public:
     virtual std::string subtitle();
     virtual bool init();
     CCControlSlider* createSliderCtl();
-    void sliderAction(CCObject* sender);
+    void sliderAction(CCObject* sender, CCControlEvent controlEvent);
 protected:
     SpriteBlur* m_pBlurSprite;
     CCControlSlider* m_pSliderCtl;
@@ -102,10 +102,10 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     bool init();
-    void update(ccTime dt);
+    void update(float dt);
 protected:
     CCLabelBMFont* m_pLabel;
-    ccTime           m_fAccum;
+    float           m_fAccum;
 };
 
 class ShaderNode : public CCNode
@@ -116,7 +116,7 @@ public:
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
 
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
     virtual void setPosition(const CCPoint &newPosition);
     virtual void draw();
 

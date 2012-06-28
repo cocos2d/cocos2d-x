@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Jason Booth
 
 http://www.cocos2d-x.org
@@ -24,17 +24,19 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCConfiguration.h"
-#include "CCRenderTexture.h"
+#include "misc_nodes/CCRenderTexture.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
-#include "CCImage.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "platform/CCImage.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
 #include "CCConfiguration.h"
 #include "support/ccUtils.h"
-#include "CCTextureCache.h"
-#include "CCFileUtils.h"
+#include "textures/CCTextureCache.h"
+#include "platform/CCFileUtils.h"
 #include "CCGL.h"
+#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "CCEventType.h"
 // extern
 #include "kazmath/GL/matrix.h"
 
@@ -44,31 +46,70 @@ NS_CC_BEGIN
 CCRenderTexture::CCRenderTexture()
 : m_pSprite(NULL)
 , m_uFBO(0)
+, m_uDepthRenderBufffer(0)
 , m_nOldFBO(0)
 , m_pTexture(0)
 , m_pUITextureImage(NULL)
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 {
+    // Listen this event to save render texture before come to background.
+    // Then it can be restored after coming to foreground on Android.
+    extension::CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                             callfuncO_selector(CCRenderTexture::listenToBackground),
+                                                                             EVENT_COME_TO_BACKGROUND,
+                                                                             NULL);
 }
 
 CCRenderTexture::~CCRenderTexture()
 {
-//TODO: 2.0 remove this line.    removeAllChildrenWithCleanup(true);
     glDeleteFramebuffers(1, &m_uFBO);
-
+    if (m_uDepthRenderBufffer)
+    {
+        glDeleteRenderbuffers(1, &m_uDepthRenderBufffer);
+    }
     CC_SAFE_DELETE(m_pUITextureImage);
+    
+    extension::CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
+}
+
+void CCRenderTexture::listenToBackground(cocos2d::CCObject *obj)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    
+    CC_SAFE_DELETE(m_pUITextureImage);
+    
+    // to get the rendered texture data
+    m_pUITextureImage = newCCImage();
+
+
+    if (m_pUITextureImage)
+    {
+        const CCSize& s = m_pTexture->getContentSizeInPixels();
+        VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+    } 
+    else
+    {
+        CCLOG("Cache rendertexture failed!");
+    }
+#endif
 }
 
 CCSprite * CCRenderTexture::getSprite()
 {
     return m_pSprite;
 }
+
 void CCRenderTexture::setSprite(CCSprite* var)
 {
     m_pSprite = var;
 }
 
 CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
+{
+    return CCRenderTexture::create(w, h, eFormat);
+}
+
+CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat eFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
 
@@ -81,11 +122,34 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h,
     return NULL;
 }
 
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
+CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+{
+    return CCRenderTexture::create(w, h, eFormat, uDepthStencilFormat);
+}
+
+CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, kCCTexture2DPixelFormat_RGBA8888))
+    if(pRet && pRet->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
+{
+    return CCRenderTexture::create(w, h);
+}
+
+CCRenderTexture * CCRenderTexture::create(int w, int h)
+{
+    CCRenderTexture *pRet = new CCRenderTexture();
+
+    if(pRet && pRet->initWithWidthAndHeight(w, h, kCCTexture2DPixelFormat_RGBA8888, 0))
     {
         pRet->autorelease();
         return pRet;
@@ -95,6 +159,11 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
 }
 
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
+{
+    return initWithWidthAndHeight(w, h, eFormat, 0);
+}
+
+bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     CCAssert(m_ePixelFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
@@ -110,7 +179,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         unsigned int powW = 0;
         unsigned int powH = 0;
 
-        if( CCConfiguration::sharedConfiguration()->isSupportsNPOT() ) {
+        if( CCConfiguration::sharedConfiguration()->supportsNPOT() ) {
             powW = w;
             powH = h;
         } else {
@@ -130,6 +199,9 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
         free( data );
 
+        GLint oldRBO;
+        glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
+
         // generate FBO
         glGenFramebuffers(1, &m_uFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
@@ -137,12 +209,26 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         // associate texture with FBO
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
 
+        if (m_uDepthRenderBufffer != 0) 
+        {
+            //create and attach depth buffer
+            glGenRenderbuffers(1, &m_uDepthRenderBufffer);
+            glBindRenderbuffer(GL_RENDERBUFFER, m_uDepthRenderBufffer);
+            glRenderbufferStorage(GL_RENDERBUFFER, uDepthStencilFormat, powW, powH);
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_uDepthRenderBufffer);
+
+            // if depth format is the one with stencil part, bind same render buffer as stencil attachment
+            if (uDepthStencilFormat == CC_GL_DEPTH24_STENCIL8)
+                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_uDepthRenderBufffer);
+        }
+
+
         // check if it worked (probably worth doing :) )
         CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
 
         m_pTexture->setAliasTexParameters();
 
-        m_pSprite = CCSprite::spriteWithTexture(m_pTexture);
+        m_pSprite = CCSprite::create(m_pTexture);
 
         m_pTexture->release();
         m_pSprite->setScaleY(-1);
@@ -151,6 +237,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
         m_pSprite->setBlendFunc(tBlendFunc);
 
+        glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
         bRet = true;
     } while (0);
@@ -172,13 +259,8 @@ void CCRenderTexture::begin()
     float heightRatio = size.height / texSize.height;
 
     // Adjust the orthographic projection and viewport
-    glViewport(0, 0, (GLsizei)(texSize.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(texSize.height * CC_CONTENT_SCALE_FACTOR()));
+    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
 
-    // special viewport for 3d projection + retina display
-    if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
-    {
-        glViewport((GLsizei)(-texSize.width/2), (GLsizei)(-texSize.height/2), (GLsizei)(texSize.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(texSize.height * CC_CONTENT_SCALE_FACTOR()));
-    }
 
     kmMat4 orthoMatrix;
     kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
@@ -204,7 +286,49 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
     glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);     
 }
 
-void CCRenderTexture::end(bool bIsTOCacheTexture)
+void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue)
+{
+    this->begin();
+
+    // save clear color
+    GLfloat	clearColor[4];
+    GLfloat depthClearValue;
+    glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
+    glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+
+    glClearColor(r, g, b, a);
+    glClearDepth(depthValue);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // restore clear color
+    glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+    glClearDepth(depthClearValue);
+}
+
+void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue)
+{
+    this->begin();
+
+    // save clear color
+    GLfloat	clearColor[4];
+    GLfloat depthClearValue;
+    int stencilClearValue;
+    glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
+    glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+    glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+
+    glClearColor(r, g, b, a);
+    glClearDepth(depthValue);
+    glClearStencil(stencilValue);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+    // restore clear color
+    glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+    glClearDepth(depthClearValue);
+    glClearStencil(stencilClearValue);
+}
+
+void CCRenderTexture::end()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
     kmGLPopMatrix();
@@ -223,26 +347,6 @@ void CCRenderTexture::end(bool bIsTOCacheTexture)
     }
 
     director->setProjection(director->getProjection());
-
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
-    if (bIsTOCacheTexture)
-    {
-        CC_SAFE_DELETE(m_pUITextureImage);
-
-        // to get the rendered texture data
-        const CCSize& s = m_pTexture->getContentSizeInPixels();
-        m_pUITextureImage = newCCImage();
-
-        if (m_pUITextureImage)
-        {
-            VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
-        } 
-        else
-        {
-            CCLOG("Cache rendertexture failed!");
-        }
-    }
-#endif
 }
 
 void CCRenderTexture::clear(float r, float g, float b, float a)
@@ -250,6 +354,35 @@ void CCRenderTexture::clear(float r, float g, float b, float a)
     this->beginWithClear(r, g, b, a);
     this->end();
 }
+
+void CCRenderTexture::clearDepth(float depthValue)
+{
+    this->begin();
+    //! save old depth value
+    GLfloat depthClearValue;
+    glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+
+    glClearDepth(depthValue);
+    glClear(GL_DEPTH_BUFFER_BIT);
+
+    // restore clear color
+    glClearDepth(depthClearValue);
+    this->end();
+}
+
+void CCRenderTexture::clearStencil(int stencilValue)
+{
+    // save old stencil value
+    int stencilClearValue;
+    glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+
+    glClearStencil(stencilValue);
+    glClear(GL_STENCIL_BUFFER_BIT);
+
+    // restore clear color
+    glClearStencil(stencilClearValue);
+}
+
 
 bool CCRenderTexture::saveToFile(const char *szFilePath)
 {
@@ -273,7 +406,7 @@ bool CCRenderTexture::saveToFile(const char *fileName, tCCImageFormat format)
     CCImage *pImage = newCCImage();
     if (pImage)
     {
-        std::string fullpath = CCFileUtils::getWriteablePath() + fileName;
+        std::string fullpath = CCFileUtils::sharedFileUtils()->getWriteablePath() + fileName;
         
         bRet = pImage->saveToFile(fullpath.c_str(), true);
     }
@@ -320,7 +453,7 @@ CCImage* CCRenderTexture::newCCImage()
         this->begin();
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0,0,nSavedBufferWidth, nSavedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
-        this->end(false);
+        this->end();
 
         // to get the actual texture data 
         // #640 the image read from rendertexture is upseted

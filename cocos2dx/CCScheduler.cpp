@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
-#include "CCArray.h"
-#include "CCScriptSupport.h"
+#include "cocoa/CCArray.h"
+#include "script_support/CCScriptSupport.h"
 
 using namespace std;
 
@@ -96,7 +96,7 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
+CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds)
 {
     CCTimer *pTimer = new CCTimer();
 
@@ -106,7 +106,7 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, c
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithScriptHandler(int nHandler, ccTime fSeconds)
+CCTimer* CCTimer::timerWithScriptHandler(int nHandler, float fSeconds)
 {
     CCTimer *pTimer = new CCTimer();
 
@@ -116,7 +116,7 @@ CCTimer* CCTimer::timerWithScriptHandler(int nHandler, ccTime fSeconds)
     return pTimer;
 }
 
-bool CCTimer::initWithScriptHandler(int nHandler, ccTime fSeconds)
+bool CCTimer::initWithScriptHandler(int nHandler, float fSeconds)
 {
     m_nScriptHandler = nHandler;
     m_fElapsed = -1;
@@ -130,7 +130,7 @@ bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
     return initWithTarget(pTarget, pfnSelector, 0, kCCRepeatForever, 0.0f);
 }
 
-bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds, unsigned int nRepeat, ccTime fDelay)
+bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay)
 {
     m_pTarget = pTarget;
     m_pfnSelector = pfnSelector;
@@ -143,7 +143,7 @@ bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, ccTime
     return true;
 }
 
-void CCTimer::update(ccTime dt)
+void CCTimer::update(float dt)
 {
     if (m_fElapsed == -1)
     {
@@ -254,10 +254,10 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
     this->scheduleSelector(pfnSelector, pTarget, fInterval, bPaused, kCCRepeatForever, 0.0f);
 }
 
-void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, ccTime fInterval, bool bPaused, unsigned int repeat, ccTime delay)
+void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused, unsigned int repeat, float delay)
 {
-    CCAssert(pfnSelector, "");
-    CCAssert(pTarget, "");
+    CCAssert(pfnSelector, "Argument selector must be non-NULL");
+    CCAssert(pTarget, "Argument target must be non-NULL");
 
     tHashSelectorEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForSelectors, &pTarget, pElement);
@@ -292,7 +292,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
 
             if (pfnSelector == timer->m_pfnSelector)
             {
-                CCLOG("CCSheduler#scheduleSelector. Selector already scheduled.");
+                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), fInterval);
                 timer->m_fInterval = fInterval;
                 return;
             }        
@@ -511,6 +511,11 @@ void CCScheduler::unscheduleUpdateForTarget(const CCObject *pTarget)
 
 void CCScheduler::unscheduleAllSelectors(void)
 {
+    unscheduleAllSelectorsWithMinPriority(kCCPrioritySystem);
+}
+
+void CCScheduler::unscheduleAllSelectorsWithMinPriority(int nMinPriority)
+{
     // Custom Selectors
     tHashSelectorEntry *pElement = NULL;
     tHashSelectorEntry *pNextElement = NULL;
@@ -525,17 +530,31 @@ void CCScheduler::unscheduleAllSelectors(void)
 
     // Updates selectors
     tListEntry *pEntry, *pTmp;
-    DL_FOREACH_SAFE(m_pUpdates0List, pEntry, pTmp)
+    if(nMinPriority < 0) 
     {
-        unscheduleUpdateForTarget(pEntry->target);
+        DL_FOREACH_SAFE(m_pUpdatesNegList, pEntry, pTmp)
+        {
+            if(pEntry->priority >= nMinPriority) 
+            {
+                unscheduleUpdateForTarget(pEntry->target);
+            }
+        }
     }
-    DL_FOREACH_SAFE(m_pUpdatesNegList, pEntry, pTmp)
+
+    if(nMinPriority <= 0) 
     {
-        unscheduleUpdateForTarget(pEntry->target);
+        DL_FOREACH_SAFE(m_pUpdates0List, pEntry, pTmp)
+        {
+            unscheduleUpdateForTarget(pEntry->target);
+        }
     }
+
     DL_FOREACH_SAFE(m_pUpdatesPosList, pEntry, pTmp)
     {
-        unscheduleUpdateForTarget(pEntry->target);
+        if(pEntry->priority >= nMinPriority) 
+        {
+            unscheduleUpdateForTarget(pEntry->target);
+        }
     }
 
     if (m_pScriptHandlerEntries)
@@ -580,12 +599,12 @@ void CCScheduler::unscheduleAllSelectorsForTarget(CCObject *pTarget)
     unscheduleUpdateForTarget(pTarget);
 }
 
-unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, ccTime fInterval, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
 {
     CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::entryWithHandler(nHandler, fInterval, bPaused);
     if (!m_pScriptHandlerEntries)
     {
-        m_pScriptHandlerEntries = CCArray::arrayWithCapacity(20);
+        m_pScriptHandlerEntries = CCArray::create(20);
         m_pScriptHandlerEntries->retain();
     }
     m_pScriptHandlerEntries->addObject(pEntry);
@@ -663,8 +682,70 @@ bool CCScheduler::isTargetPaused(CCObject *pTarget)
     return false;  // should never get here
 }
 
+CCSet* CCScheduler::pauseAllTargets()
+{
+    return pauseAllTargetsWithMinPriority(kCCPrioritySystem);
+}
+
+CCSet* CCScheduler::pauseAllTargetsWithMinPriority(int nMinPriority)
+{
+    CCSet* idsWithSelectors = new CCSet();// setWithCapacity:50];
+    idsWithSelectors->autorelease();
+
+    // Custom Selectors
+    for(tHashSelectorEntry *element = m_pHashForSelectors; element != NULL;
+        element = (tHashSelectorEntry*)element->hh.next) 
+    {
+        element->paused = true;
+        idsWithSelectors->addObject(element->target);
+    }
+
+    // Updates selectors
+    tListEntry *entry, *tmp;
+    if(nMinPriority < 0) 
+    {
+        DL_FOREACH_SAFE( m_pUpdatesNegList, entry, tmp ) 
+        {
+            if(entry->priority >= nMinPriority) 
+            {
+                entry->paused = true;
+                idsWithSelectors->addObject(entry->target);
+            }
+        }
+    }
+
+    if(nMinPriority <= 0) 
+    {
+        DL_FOREACH_SAFE( m_pUpdates0List, entry, tmp )
+        {
+            entry->paused = true;
+            idsWithSelectors->addObject(entry->target);
+        }
+    }
+
+    DL_FOREACH_SAFE( m_pUpdatesPosList, entry, tmp ) 
+    {
+        if(entry->priority >= nMinPriority) 
+        {
+            entry->paused = true;
+            idsWithSelectors->addObject(entry->target);
+        }
+    }
+
+    return idsWithSelectors;
+}
+
+void CCScheduler::resumeTargets(CCSet* pTargetsToResume)
+{
+    CCSetIterator iter;
+    for (iter = pTargetsToResume->begin(); iter != pTargetsToResume->end(); ++iter)
+    {
+        resumeTarget(*iter);
+    }
+}
+
 // main loop
-void CCScheduler::update(ccTime dt)
+void CCScheduler::update(float dt)
 {
     m_bUpdateHashLocked = true;
 

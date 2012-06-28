@@ -22,10 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "SensorJni.h"
-#include "CCGeometry.h"
-#include "CCAccelerometer.h"
+#include "cocoa/CCGeometry.h"
 #include "platform/android/CCAccelerometer.h"
-#include "CCEGLView.h"
+#include "../CCEGLView.h"
 #include "JniHelper.h"
 #include <android/log.h>
 #include <jni.h>

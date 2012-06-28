@@ -26,14 +26,19 @@ THE SOFTWARE.
 #ifndef __CC_LIST_VIEW_H__
 #define __CC_LIST_VIEW_H__
 
-#include <time.h>
-#include "platform.h"
-#include <vector>
-#include <string>
-//#include "../lua/cocos2dx_support/CCLuaEngine.h"
+
+#include "platform/platform.h"
 #include "CCListViewCell.h"
+#include <string>
+#include <vector>
+#include <time.h>
 
 NS_CC_EXT_BEGIN
+
+/**
+ * @addtogroup GUI
+ * @{
+ */
 
 class CC_DLL CCRange
 {
@@ -121,7 +126,11 @@ public:
     virtual ~CCListView(void);
     CCListView(void);
 
-    static CCListView* viewWithMode(CCListViewMode mode);
+    // @deprecated: This interface will be deprecated sooner or later.
+    CC_DEPRECATED_ATTRIBUTE static CCListView* viewWithMode(CCListViewMode mode);
+
+    static CCListView* create(CCListViewMode mode);
+
     bool initWithMode(CCListViewMode mode);
 
     void setDelegateName(const char* pszName);
@@ -144,8 +153,8 @@ public:
     inline void setListViewParent(CCListView *pParent) { m_pListViewParent = pParent; }
     inline CCListView *getListViewParent(void) { return m_pListViewParent; }
 
-    inline void setIsEnabled(bool bEnabled) { m_bIsEnabled = bEnabled; }
-    inline bool getIsEnabled(void) { return m_bIsEnabled; }
+    inline void setEnabled(bool bEnabled) { m_bIsEnabled = bEnabled; }
+    inline bool isEnabled(void) { return m_bIsEnabled; }
 
     // un
     void setDelegate(const CCListViewDelegate *pDelegate) { m_pDelegate = const_cast<CCListViewDelegate*>(pDelegate);}
@@ -209,6 +218,9 @@ private:
     bool                   m_bIsEnabled;
     bool                   m_bIsOnTouch;
 };
+
+// end of GUI group
+/// @}
 
 NS_CC_EXT_END
 

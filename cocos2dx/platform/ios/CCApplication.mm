@@ -145,4 +145,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
+bool CCApplication::isIpad()
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
 NS_CC_END

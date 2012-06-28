@@ -39,7 +39,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 
 @implementation CDLongAudioSource
 
-@synthesize audioSourcePlayer, audioSourceFilePath, delegate, backgroundMusic;
+@synthesize audioSourcePlayer, audioSourceFilePath, delegate, backgroundMusic, paused;
 
 -(id) init {
     if ((self = [super init])) {
@@ -47,6 +47,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
         volume = 1.0f;
         mute = NO;
         enabled_ = YES;
+        paused = NO;
     }
     return self;
 }
@@ -94,6 +95,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 -(void) play {
     if (enabled_) {
         self->systemPaused = NO;
+        self->paused = NO;
         [audioSourcePlayer play];
     } else {
         CDLOGINFO(@"Denshion::CDLongAudioSource long audio source didn't play because it is disabled");
@@ -101,18 +103,22 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 }    
 
 -(void) stop {
+    self->paused = NO;
     [audioSourcePlayer stop];
 }    
 
 -(void) pause {
+    self->paused = YES;
     [audioSourcePlayer pause];
 }    
 
 -(void) rewind {
+    self->paused = NO;
     [audioSourcePlayer setCurrentTime:0];
 }
 
 -(void) resume {
+    self->paused = NO;
     [audioSourcePlayer play];
 }    
 
@@ -542,17 +548,18 @@ static BOOL configured = FALSE;
 {
     [self.backgroundMusic load:filePath];
 
-    if (!willPlayBackgroundMusic || _mute) {
-        CDLOGINFO(@"Denshion::CDAudioManager - play bgm aborted because audio is not exclusive or sound is muted");
-        return;
-    }
-        
-    if (loop) {
-        [self.backgroundMusic setNumberOfLoops:-1];
-    } else {
-        [self.backgroundMusic setNumberOfLoops:0];
-    }    
-    [self.backgroundMusic play];
+	if (loop) {
+		[self.backgroundMusic setNumberOfLoops:-1];
+	} else {
+		[self.backgroundMusic setNumberOfLoops:0];
+	}
+
+	if (!willPlayBackgroundMusic || _mute) {
+		CDLOGINFO(@"Denshion::CDAudioManager - play bgm aborted because audio is not exclusive or sound is muted");
+		return;
+	}
+
+	[self.backgroundMusic play];
 }
 
 -(void) stopBackgroundMusic
@@ -569,6 +576,10 @@ static BOOL configured = FALSE;
 {
     if (!willPlayBackgroundMusic || _mute) {
         CDLOGINFO(@"Denshion::CDAudioManager - resume bgm aborted because audio is not exclusive or sound is muted");
+        return;
+    }
+    
+    if (![self.backgroundMusic paused]) {
         return;
     }
     
@@ -713,7 +724,7 @@ static BOOL configured = FALSE;
     [self audioSessionResumed];
 }
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
+#if __CC_PLATFORM_IOS >= 40000
 -(void) endInterruptionWithFlags:(NSUInteger)flags {
     CDLOGINFO(@"Denshion::CDAudioManager - interruption ended with flags %i",flags);
     if (flags == AVAudioSessionInterruptionFlags_ShouldResume) {

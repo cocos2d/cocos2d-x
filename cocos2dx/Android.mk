@@ -13,6 +13,7 @@ CCScheduler.cpp \
 CCCamera.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
+actions/CCActionCatmullRom.cpp \
 actions/CCActionEase.cpp \
 actions/CCActionGrid.cpp \
 actions/CCActionGrid3D.cpp \
@@ -28,7 +29,6 @@ base_nodes/CCNode.cpp \
 cocoa/CCAffineTransform.cpp \
 cocoa/CCGeometry.cpp \
 cocoa/CCAutoreleasePool.cpp \
-cocoa/CCData.cpp \
 cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCObject.cpp \
@@ -56,8 +56,24 @@ extensions/CCControlExtension/CCSpacer.cpp \
 extensions/CCListView/CCListView.cpp \
 extensions/CCListView/CCListViewCell.cpp \
 extensions/CCTextureWatcher/CCTextureWatcher.cpp \
-extensions/CCBReader/CCBCustomClass.cpp \
-extensions/CCBReader/CCBReader_v2.cpp \
+extensions/CCBReader/CCBFileLoader.cpp \
+extensions/CCBReader/CCBReader.cpp \
+extensions/CCBReader/CCNodeLoaderLibrary.cpp \
+extensions/CCBReader/CCNodeLoader.cpp \
+extensions/CCBReader/CCControlButtonLoader.cpp \
+extensions/CCBReader/CCControlLoader.cpp \
+extensions/CCBReader/CCLabelBMFontLoader.cpp \
+extensions/CCBReader/CCLabelTTFLoader.cpp \
+extensions/CCBReader/CCLayerLoader.cpp \
+extensions/CCBReader/CCLayerColorLoader.cpp \
+extensions/CCBReader/CCLayerGradientLoader.cpp \
+extensions/CCBReader/CCMenuItemLoader.cpp \
+extensions/CCBReader/CCMenuItemImageLoader.cpp \
+extensions/CCBReader/CCSpriteLoader.cpp \
+extensions/CCBReader/CCScale9SpriteLoader.cpp \
+extensions/CCBReader/CCScrollViewLoader.cpp \
+extensions/CCBReader/CCParticleSystemQuadLoader.cpp \
+extensions/CCScrollView/CCScrollView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -124,6 +140,7 @@ support/CCUserDefault.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
 support/CCVertex.cpp \
+support/data_support/ccCArray.cpp \
 support/image_support/TGAlib.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
@@ -143,60 +160,20 @@ tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
 touch_dispatcher/CCTouchHandler.cpp 
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
-                    $(LOCAL_PATH)/actions \
-                    $(LOCAL_PATH)/base_nodes \
-                    $(LOCAL_PATH)/cocoa \
-                    $(LOCAL_PATH)/effects \
-                    $(LOCAL_PATH)/extensions \
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/kazmath/include \
-                    $(LOCAL_PATH)/keypad_dispatcher \
-                    $(LOCAL_PATH)/label_nodes \
-                    $(LOCAL_PATH)/layers_scenes_transitions_nodes \
-                    $(LOCAL_PATH)/menu_nodes \
-                    $(LOCAL_PATH)/misc_nodes \
-                    $(LOCAL_PATH)/particle_nodes \
-                    $(LOCAL_PATH)/platform \
-                    $(LOCAL_PATH)/platform/android \
-                    $(LOCAL_PATH)/script_support \
-                    $(LOCAL_PATH)/shaders \
-                    $(LOCAL_PATH)/sprite_nodes \
-                    $(LOCAL_PATH)/support \
-                    $(LOCAL_PATH)/text_input_node \
-                    $(LOCAL_PATH)/textures \
-                    $(LOCAL_PATH)/tileMap_parallax_nodes \
-                    $(LOCAL_PATH)/touch_dispatcher
+                    $(LOCAL_PATH)/platform/android
 
 
 LOCAL_EXPORT_LDLIBS := -llog\
                        -lz \
                        -lGLESv2
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
-                    $(LOCAL_PATH)/actions \
-                    $(LOCAL_PATH)/base_nodes \
-                    $(LOCAL_PATH)/cocoa \
-                    $(LOCAL_PATH)/effects \
-                    $(LOCAL_PATH)/extensions \
+LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/kazmath/include \
-                    $(LOCAL_PATH)/keypad_dispatcher \
-                    $(LOCAL_PATH)/label_nodes \
-                    $(LOCAL_PATH)/layers_scenes_transitions_nodes \
-                    $(LOCAL_PATH)/menu_nodes \
-                    $(LOCAL_PATH)/misc_nodes \
-                    $(LOCAL_PATH)/particle_nodes \
-                    $(LOCAL_PATH)/platform \
-                    $(LOCAL_PATH)/platform/android \
-                    $(LOCAL_PATH)/script_support \
-                    $(LOCAL_PATH)/shaders \
-                    $(LOCAL_PATH)/sprite_nodes \
-                    $(LOCAL_PATH)/support \
-                    $(LOCAL_PATH)/text_input_node \
-                    $(LOCAL_PATH)/textures \
-                    $(LOCAL_PATH)/tileMap_parallax_nodes \
-                    $(LOCAL_PATH)/touch_dispatcher
+                    $(LOCAL_PATH)/platform/android
 
 
 LOCAL_LDLIBS := -lGLESv2 \

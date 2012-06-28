@@ -31,11 +31,18 @@
 
 #include "CCInvocation.h"
 #include "CCControlUtils.h"
-#include "CCLayer.h"
+#include "layers_scenes_transitions_nodes/CCLayer.h"
 
 NS_CC_EXT_BEGIN
 
 class CCInvocation;
+
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
 
 /** Number of kinds of control event. */
 #define CONTROL_EVENT_TOTAL_NUMBER 9
@@ -84,20 +91,31 @@ class CC_DLL CCControl : public CCLayer, public CCRGBAProtocol
     //CCRGBAProtocol
     CC_PROPERTY(GLubyte, m_cOpacity, Opacity); 
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
-    CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB);
+    bool m_bIsOpacityModifyRGB;
+    bool isOpacityModifyRGB();
+    void setOpacityModifyRGB(bool isOpacityModifyRGB);
 
     /** Changes the priority of the button. The lower the number, the higher the priority. */
     CC_SYNTHESIZE(int, m_nDefaultTouchPriority, DefaultTouchPriority);
     /** The current control state constant. */
     CC_SYNTHESIZE_READONLY(CCControlState, m_nState, State);
+
+public:
     /** Tells whether the control is enabled. */
-    CC_SYNTHESIZE(bool, m_bEnabled, IsEnabled);
-    /** A Boolean value that determines the control’s selected state. */
-    CC_SYNTHESIZE(bool, m_bSelected, IsSelected);
+    virtual void setEnabled(bool bEnabled);
+    virtual bool isEnabled();
+    /** A Boolean value that determines the control selected state. */
+    virtual void setSelected(bool bSelected);
+    virtual bool isSelected();
     /** A Boolean value that determines whether the control is highlighted. */
-    CC_SYNTHESIZE(bool, m_bHighlighted, IsHighlighted);
-    
-    protected:
+    virtual void setHighlighted(bool bHighlighted);
+    virtual bool isHighlighted();
+
+protected:
+    bool m_bEnabled;
+    bool m_bSelected;
+    bool m_bHighlighted;
+
     // CCControlState, CCArray<CCInvocation*>
     CCDictionary* dispatchTable;
 
@@ -134,7 +152,7 @@ public:
     * @param controlEvents A bitmask specifying the control events for which the 
     * action message is sent. See "CCControlEvent" for bitmask constants.
     */
-    virtual void addTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents);
+    virtual void addTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents);
 
     /**
     * Removes a target and action for a particular event (or events) from an 
@@ -148,7 +166,7 @@ public:
     * @param controlEvents A bitmask specifying the control events associated with
     * target and action. See "CCControlEvent" for bitmask constants.
     */
-    virtual void removeTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents);
+    virtual void removeTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents);
 
     /**
     * Returns a point corresponding to the touh location converted into the 
@@ -183,7 +201,7 @@ protected:
  * @return an CCInvocation object able to construct messages using a given 
  * target-action pair.
  */
-    CCInvocation* invocationWithTargetAndActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
+    CCInvocation* invocationWithTargetAndActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
 
 
@@ -199,12 +217,16 @@ protected:
     //<CCInvocation*>
     CCArray* dispatchListforControlEvent(CCControlEvent controlEvent);
 public:
-    void addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
-    void removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
+    void addTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
+    void removeTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
-    LAYER_NODE_FUNC(CCControl);
+    LAYER_CREATE_FUNC(CCControl);
 
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

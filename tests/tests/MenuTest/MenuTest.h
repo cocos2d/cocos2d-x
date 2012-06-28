@@ -20,7 +20,7 @@ public:
     virtual void ccTouchCancelled(CCTouch *touch, CCEvent * pEvent);
     virtual void ccTouchMoved(CCTouch *touch, CCEvent * pEvent);
 
-    void allowTouches(ccTime dt);
+    void allowTouches(float dt);
     void menuCallback(CCObject* pSender);
     void menuCallbackConfig(CCObject* pSender);
     void menuCallbackDisabled(CCObject* pSender);

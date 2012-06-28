@@ -226,30 +226,11 @@ function AddConfigurations(proj, strProjectName) {
             // Additional Inlcude Directories
             var strAddIncludeDir = '.;..\\Classes';
             strAddIncludeDir += ';..\\..\\cocos2dx';
-            strAddIncludeDir += ';..\\..\\cocos2dx\\actions';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\base_nodes';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\cocoa';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\effects';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\include';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\kazmath\\include';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\keypad_dispatcher';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\label_nodes';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\layers_scenes_transitions_nodes';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\menu_nodes';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\misc_nodes';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\particle_nodes';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\script_support';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\shaders';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\sprite_nodes';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\support';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\text_input_node';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\textures';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\tileMap_parallax_nodes';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\touch_dispatcher';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\platform';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\win32';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\third_party\\win32';
-						strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\third_party\\win32\\OGLES';
+            strAddIncludeDir += ';..\\..\\cocos2dx\\include';
+            strAddIncludeDir += ';..\\..\\cocos2dx\\kazmath\\include';
+            strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\win32';
+            strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\third_party\\win32';
+            strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\third_party\\win32\\OGLES';
             
             if (wizard.FindSymbol('CC_USE_BOX2D')) {
                 strAddIncludeDir += ';..\\..\\';
@@ -283,7 +264,7 @@ function AddConfigurations(proj, strProjectName) {
             }
 
             var strDefines = GetPlatformDefine(config);
-            strDefines += "_WINDOWS;STRICT;";
+            strDefines += "_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS";
             if (bDebug)
                 strDefines += "_DEBUG;COCOS2D_DEBUG=1;";
             else
@@ -291,7 +272,7 @@ function AddConfigurations(proj, strProjectName) {
             CLTool.PreprocessorDefinitions = strDefines;
 
             // Disable special warning
-            CLTool.DisableSpecificWarnings = "4251";
+            CLTool.DisableSpecificWarnings = "4267;4251;4244";
 
             // Linker settings
             var LinkTool = config.Tools('VCLinkerTool');
@@ -306,7 +287,7 @@ function AddConfigurations(proj, strProjectName) {
             }
 
             // Additional Library Directories
-            var strAddDepends = 'libcocos2d.lib libGLESv2.lib';
+            var strAddDepends = 'libcocos2d.lib opengl32.lib glew32.lib';
             if (wizard.FindSymbol('CC_USE_BOX2D')) {
                 strAddDepends += ' libBox2d.lib';
             }

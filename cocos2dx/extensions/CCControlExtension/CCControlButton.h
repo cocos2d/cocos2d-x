@@ -35,6 +35,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 /** @class CCControlButton Button control for Cocos2D. */
 class CC_DLL CCControlButton : public CCControl
 {        
@@ -42,9 +49,9 @@ public:
     virtual ~CCControlButton();
     virtual void needsLayout(void);
 
-    virtual void setIsEnabled(bool enabled);
-    virtual void setIsSelected(bool enabled);
-    virtual void setIsHighlighted(bool enabled);
+    virtual void setEnabled(bool enabled);
+    virtual void setSelected(bool enabled);
+    virtual void setHighlighted(bool enabled);
 protected:
     // CCRGBAProtocol
     //bool m_bIsOpacityModifyRGB;
@@ -53,7 +60,14 @@ protected:
     background will use the prefered size of the background image. */
     CC_PROPERTY(bool, m_adjustBackgroundImage, AdjustBackgroundImage); 
 
-    
+    /** Adjust the button zooming on touchdown. Default value is YES. */
+    CC_PROPERTY(bool, m_zoomOnTouchDown, ZoomOnTouchDown);
+
+    /** The prefered size of the button, if label is larger it will be expanded. */
+    CC_PROPERTY(CCSize, m_preferredSize, PreferredSize);
+
+    CC_PROPERTY(CCPoint, m_labelAnchorPoint, LabelAnchorPoint);
+
     /** The current title that is displayed on the button. */
     CC_SYNTHESIZE_READONLY(CCString*, m_currentTitle, CurrentTitle); 
     /** The current color used to display the title. */
@@ -65,6 +79,9 @@ protected:
     //CC_PROPERTY(CCScale9Sprite*, m_backgroundSprite, BackgroundSprite);
     CCScale9Sprite* m_backgroundSprite;
 
+    /* Override setter to affect a background sprite too */
+    CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
+    
     /** Flag to know if the button is currently pushed.  */
     CC_SYNTHESIZE_READONLY(bool, pushed, IsPushed); 
     // <CCControlState, CCString*>
@@ -85,22 +102,30 @@ protected:
 
 
 public:
+    virtual bool init();
     virtual bool initWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
-    static CCControlButton* buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);    
+    //@deprecated: This interface will be deprecated sooner or later.
+    CC_DEPRECATED_ATTRIBUTE static CCControlButton* buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
+    static CCControlButton* create(CCNode* label, CCScale9Sprite* backgroundSprite);
     
     virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
-    static CCControlButton* buttonWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+    //@deprecated: This interface will be deprecated sooner or later.
+    CC_DEPRECATED_ATTRIBUTE static CCControlButton* buttonWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+
+    static CCControlButton* create(std::string title, const char * fontName, float fontSize);
     
     virtual bool initWithBackgroundSprite(CCScale9Sprite* sprite);
-    static CCControlButton* buttonWithBackgroundSprite(CCScale9Sprite* sprite);
+
+    //@deprecated: This interface will be deprecated sooner or later.
+    CC_DEPRECATED_ATTRIBUTE static CCControlButton* buttonWithBackgroundSprite(CCScale9Sprite* sprite);
+
+    static CCControlButton* create(CCScale9Sprite* sprite);
     
     //events
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
-
-
 
     /**
     * Returns the title used for a state.
@@ -162,6 +187,21 @@ public:
     */
     virtual void setTitleLabelForState(CCNode* label, CCControlState state);
 
+    virtual void setTitleTTFForState(const char * fntFile, CCControlState state);
+    virtual const char * getTitleTTFForState(CCControlState state);
+
+    virtual void setTitleTTFSizeForState(float size, CCControlState state);
+    virtual float getTitleTTFSizeForState(CCControlState state);
+
+    /**
+     * Sets the font of the label, changes the label to a CCLabelBMFont if neccessary.
+     * @param fntFile The name of the font to change to
+     * @param state The state that uses the specified fntFile. The values are described
+     * in "CCControlState".
+     */
+    virtual void setTitleBMFontForState(const char * fntFile, CCControlState state);
+    virtual const char * getTitleBMFontForState(CCControlState state);
+
     /**
     * Returns the background sprite used for a state.
     *
@@ -179,7 +219,22 @@ public:
     */
     virtual void setBackgroundSpriteForState(CCScale9Sprite* sprite, CCControlState state);
 
+    /**
+     * Sets the background spriteFrame to use for the specified button state.
+     *
+     * @param spriteFrame The background spriteFrame to use for the specified state.
+     * @param state The state that uses the specified image. The values are described
+     * in "CCControlState".
+     */
+    virtual void setBackgroundSpriteFrameForState(CCSpriteFrame * spriteFrame, CCControlState state);
+
+    CC_DEPRECATED_ATTRIBUTE static CCControlButton * node();
+    static CCControlButton* create();
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

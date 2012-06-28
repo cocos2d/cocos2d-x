@@ -204,6 +204,11 @@ static CGSize _calculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize
     return dim;
 }
 
+// refer CCImage::ETextAlign
+#define ALIGN_TOP    1
+#define ALIGN_CENTER 3
+#define ALIGN_BOTTOM 2
+
 static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
@@ -225,17 +230,14 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                 dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
         }      
         
-#if CC_FONT_LABEL_SUPPORT
         if (! font)
         {
                 font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
                 if (font)
                 {
-                    //dim = [str sizeWithZFont:font];
-                    dim =_caculateStringSizeWithFontOrZFont(str, font, &constrainSize, true);
+                    dim =_calculateStringSizeWithFontOrZFont(str, font, &constrainSize, true);
                 }  
         }
-#endif // CC_FONT_LABEL_SUPPORT
 
         if (! font)
         {
@@ -259,7 +261,20 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         int startH = 0;
         if (constrainSize.height > dim.height)
         {
-            startH = (constrainSize.height - dim.height) / 2;
+            // vertical alignment
+            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
+            if (vAlignment == ALIGN_TOP)
+            {
+                startH = 0;
+            }
+            else if (vAlignment == ALIGN_CENTER)
+            {
+                startH = (constrainSize.height - dim.height) / 2;
+            }
+            else 
+            {
+                startH = constrainSize.height - dim.height;
+            }
         }
         
         // adjust text rect
@@ -282,8 +297,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         if (! context)
         {
-                delete[] data;
-                break;
+            delete[] data;
+            break;
         }
         
         CGContextSetRGBFillColor(context, 1, 1, 1, 1);
@@ -298,17 +313,14 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                                 : UITextAlignmentLeft;
         
         // normal fonts
-    if( [font isKindOfClass:[UIFont class] ] )
-    {
-        [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
-    }
-    
-#if CC_FONT_LABEL_SUPPORT
-    else // ZFont class 
-    {
-        [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
-    }
-#endif
+        if( [font isKindOfClass:[UIFont class] ] )
+        {
+            [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+        }
+        else // ZFont class 
+        {
+            [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+        }
         
         UIGraphicsPopContext();
         
@@ -347,18 +359,35 @@ CCImage::~CCImage()
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
-    CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
-    return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
+	bool bRet = false;
+    unsigned long nSize = 0;
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(
+				CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath),
+				"rb",
+				&nSize);
+				
+    if (pBuffer != NULL && nSize > 0)
+    {
+        bRet = initWithImageData(pBuffer, nSize, eImgFmt);
+    }
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    return bRet;
 }
 
 bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
-      CC_UNUSED_PARAM(imageType);
-      /*
-       * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
-       */
-    CCFileData data(fullpath, "rb");
-    return initWithImageData(data.getBuffer(), data.getSize(), imageType);
+    /*
+     * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
+     */
+    bool bRet = false;
+    unsigned long nSize = 0;
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    if (pBuffer != NULL && nSize > 0)
+    {
+        bRet = initWithImageData(pBuffer, nSize, imageType);
+    }
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    return bRet;
 }
 
 bool CCImage::initWithImageData(void * pData, 
@@ -422,21 +451,25 @@ bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeigh
 bool CCImage::_initWithJpgData(void *pData, int nDatalen)
 {
     assert(0);
+	return false;
 }
 
 bool CCImage::_initWithPngData(void *pData, int nDatalen)
 {
     assert(0);
+	return false;
 }
 
 bool CCImage::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
 {
     assert(0);
+	return false;
 }
 
 bool CCImage::_saveImageToJPG(const char *pszFilePath)
 {
     assert(0);
+	return false;
 }
 
 bool CCImage::initWithString(

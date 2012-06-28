@@ -23,150 +23,52 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCEGLView.h"
-#include "CCSet.h"
+#include "cocoa/CCSet.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "CCTouch.h"
-#include "CCTouchDispatcher.h"
-#include "CCIMEDispatcher.h"
-#include "CCKeypadDispatcher.h"
+#include "touch_dispatcher/CCTouch.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "text_input_node/CCIMEDispatcher.h"
+#include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "CCApplication.h"
-
-#include "EGL/egl.h"
 
 NS_CC_BEGIN
 
-//////////////////////////////////////////////////////////////////////////
-// impliment CCEGL
-//////////////////////////////////////////////////////////////////////////
-
-class CCEGL
+static void SetupPixelFormat(HDC hDC)
 {
-public:
-    ~CCEGL() 
-    {
-        if (EGL_NO_SURFACE != m_eglSurface)
-        {
-            eglDestroySurface(m_eglDisplay, m_eglSurface);
-        }
-        if (EGL_NO_CONTEXT != m_eglContext)
-        {
-            eglDestroyContext(m_eglDisplay, m_eglContext);
-        }
-        eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-        eglTerminate(m_eglDisplay);
-        if (m_eglNativeDisplay)
-        {
-            ReleaseDC(m_eglNativeWindow, m_eglNativeDisplay);
-        }
-    }
+    int pixelFormat;
 
-    static CCEGL * create(CCEGLView * pWindow)
-    {
-        CCEGL * pEGL = new CCEGL;
-        BOOL bSuccess = FALSE;
-        do 
-        {
-            CC_BREAK_IF(! pEGL);
+    PIXELFORMATDESCRIPTOR pfd =
+    {   
+        sizeof(PIXELFORMATDESCRIPTOR),  // size
+        1,                          // version
+        PFD_SUPPORT_OPENGL |        // OpenGL window
+        PFD_DRAW_TO_WINDOW |        // render to window
+        PFD_DOUBLEBUFFER,           // support double-buffering
+        PFD_TYPE_RGBA,              // color type
+        32,                         // prefered color depth
+        0, 0, 0, 0, 0, 0,           // color bits (ignored)
+        0,                          // no alpha buffer
+        0,                          // alpha bits (ignored)
+        0,                          // no accumulation buffer
+        0, 0, 0, 0,                 // accum bits (ignored)
+        16,                         // depth buffer
+        0,                          // no stencil buffer
+        0,                          // no auxiliary buffers
+        PFD_MAIN_PLANE,             // main layer
+        0,                          // reserved
+        0, 0, 0,                    // no layer, visible, damage masks
+    };
 
-            pEGL->m_eglNativeWindow = pWindow->getHWnd();
-
-            pEGL->m_eglNativeDisplay = GetDC(pEGL->m_eglNativeWindow);
-
-            EGLDisplay eglDisplay;
-            CC_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
-
-            EGLint nMajor, nMinor;
-            CC_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
-
-            const EGLint aConfigAttribs[] =
-            {
-                EGL_LEVEL,                0,
-                EGL_SURFACE_TYPE,        EGL_WINDOW_BIT,
-                EGL_RENDERABLE_TYPE,    EGL_OPENGL_ES2_BIT,
-                EGL_NATIVE_RENDERABLE,    EGL_FALSE,
-                EGL_DEPTH_SIZE,            16,
-                EGL_NONE,
-            };
-            EGLint iConfigs;
-            EGLConfig eglConfig;
-            CC_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
-                || (iConfigs != 1));
-
-            EGLContext eglContext;
-            eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
-            CC_BREAK_IF(EGL_NO_CONTEXT == eglContext);
-
-            EGLSurface eglSurface;
-            eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, pEGL->m_eglNativeWindow, NULL);
-            CC_BREAK_IF(EGL_NO_SURFACE == eglSurface);
-
-            CC_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
-
-            pEGL->m_eglDisplay = eglDisplay;
-            pEGL->m_eglConfig  = eglConfig;
-            pEGL->m_eglContext = eglContext;
-            pEGL->m_eglSurface = eglSurface;
-            bSuccess = TRUE;
-        } while (0);
-
-        if (! bSuccess)
-        {
-            CC_SAFE_DELETE(pEGL);  
-        }
-
-        return pEGL;
-    }
-
-    void resizeSurface()
-    {
-//          if (! m_eglNativeWindow || EGL_NO_DISPLAY == m_eglDisplay)
-//          {
-//              return;
-//          }
-//  
-//          // release old surface
-//          if (EGL_NO_SURFACE != m_eglSurface)
-//          {
-//              eglDestroySurface(m_eglDisplay, m_eglSurface);
-//              m_eglSurface = EGL_NO_SURFACE;
-//          }
-//  
-//          // create new surface and make current
-//          m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_eglNativeWindow, NULL);
-//          eglMakeCurrent(m_eglDisplay, m_eglSurface, m_eglSurface, m_eglContext);
-    }
-
-    void swapBuffers()
-    {
-        if (EGL_NO_DISPLAY != m_eglDisplay)
-        {
-            eglSwapBuffers(m_eglDisplay, m_eglSurface);
-        }
-    }
-private:
-    CCEGL() 
-        : m_eglNativeWindow(NULL)
-        , m_eglNativeDisplay(EGL_DEFAULT_DISPLAY)
-        , m_eglDisplay(EGL_NO_DISPLAY)
-        , m_eglConfig(0)
-        , m_eglSurface(EGL_NO_SURFACE)
-        , m_eglContext(EGL_NO_CONTEXT)
-    {}
-
-    EGLNativeWindowType     m_eglNativeWindow;
-    EGLNativeDisplayType    m_eglNativeDisplay;
-    EGLDisplay              m_eglDisplay;
-    EGLConfig               m_eglConfig;
-    EGLSurface              m_eglSurface;
-    EGLContext              m_eglContext;
-};
+    pixelFormat = ChoosePixelFormat(hDC, &pfd);
+    SetPixelFormat(hDC, pixelFormat, &pfd);
+}
 
 //////////////////////////////////////////////////////////////////////////
 // impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
 static CCEGLView* s_pMainWindow = NULL;
-static const char* kWindowClassName = "Cocos2dxWin32";
+static const WCHAR* kWindowClassName = L"Cocos2dxWin32";
 
 static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -182,8 +84,9 @@ static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 CCEGLView::CCEGLView()
 : m_bCaptured(false)
-, m_pEGL(NULL)
 , m_hWnd(NULL)
+, m_hDC(NULL)
+, m_hRC(NULL)
 , m_lpfnAccelerometerKeyHook(NULL)
 {
     
@@ -191,6 +94,52 @@ CCEGLView::CCEGLView()
 
 CCEGLView::~CCEGLView()
 {
+
+}
+
+bool CCEGLView::initGL()
+{
+    m_hDC = GetDC(m_hWnd);
+    SetupPixelFormat(m_hDC);
+    //SetupPalette();
+    m_hRC = wglCreateContext(m_hDC);
+    wglMakeCurrent(m_hDC, m_hRC);
+
+    GLenum GlewInitResult = glewInit();
+    if (GLEW_OK != GlewInitResult) 
+    {
+        fprintf(stderr,"ERROR: %s\n",glewGetErrorString(GlewInitResult));
+        return false;
+    }
+
+    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
+    {
+        CCLog("Ready for GLSL\n");
+    }
+    else 
+    {
+        CCLog("Not totally ready :( \n");
+    }
+
+    if (glewIsSupported("GL_VERSION_2_0"))
+    {
+        CCLog("Ready for OpenGL 2.0\n");
+    }
+    else
+    {
+        CCLog("OpenGL 2.0 not supported\n");
+    }
+    return true;
+}
+
+void CCEGLView::destroyGL()
+{
+    if (m_hDC != NULL && m_hRC != NULL)
+    {
+        // deselect rendering context and delete it
+        wglMakeCurrent(m_hDC, NULL);
+        wglDeleteContext(m_hRC);
+    }
 }
 
 bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
@@ -221,11 +170,14 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
         RECT rcDesktop;
         GetWindowRect(GetDesktopWindow(), &rcDesktop);
 
+        WCHAR wszBuf[50] = {0};
+        MultiByteToWideChar(CP_UTF8, 0, m_szViewName, -1, wszBuf, sizeof(wszBuf));
+
         // create window
         m_hWnd = CreateWindowEx(
             WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,    // Extended Style For The Window
             kWindowClassName,                                    // Class Name
-            m_szViewName,                                                // Window Title
+            wszBuf,                                                // Window Title
             WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,        // Defined Window Style
             0, 0,                                                // Window Position
             0,                                                  // Window Width
@@ -239,16 +191,9 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
         resize(w, h);
 
-        // init egl
-        m_pEGL = CCEGL::create(this);
-
-        if (! m_pEGL)
-        {
-            DestroyWindow(m_hWnd);
-            m_hWnd = NULL;
-            break;
-        }
-
+        bRet = initGL();
+        CC_BREAK_IF(!bRet);
+        
         s_pMainWindow = this;
         bRet = true;
     } while (0);
@@ -258,8 +203,6 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
 LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
-    PAINTSTRUCT ps;
-
     switch (message)
     {
     case WM_LBUTTONDOWN:
@@ -359,7 +302,6 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             {
                 char szUtf8[8] = {0};
                 int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)&wParam, 1, szUtf8, sizeof(szUtf8), NULL, NULL);
-
                 CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
             }
             if ( m_lpfnAccelerometerKeyHook!=NULL )
@@ -368,8 +310,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-
     case WM_PAINT:
+        PAINTSTRUCT ps;
         BeginPaint(m_hWnd, &ps);
         EndPaint(m_hWnd, &ps);
         break;
@@ -379,6 +321,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_DESTROY:
+        destroyGL();
         PostQuitMessage(0);
         break;
 
@@ -396,7 +339,7 @@ void CCEGLView::setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelero
 
 bool CCEGLView::isOpenGLReady()
 {
-    return (NULL != m_pEGL);
+    return (m_hDC != NULL && m_hRC != NULL);
 }
 
 void CCEGLView::end()
@@ -413,9 +356,9 @@ void CCEGLView::end()
 
 void CCEGLView::swapBuffers()
 {
-    if (m_pEGL)
+    if (m_hDC != NULL)
     {
-        m_pEGL->swapBuffers();
+        ::SwapBuffers(m_hDC);
     }
 }
 
@@ -452,16 +395,11 @@ void CCEGLView::resize(int width, int height)
     // change width and height
     SetWindowPos(m_hWnd, 0, 0, 0, rcClient.right - rcClient.left, 
         rcClient.bottom - rcClient.top, SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-
-    if (m_pEGL)
-    {
-        m_pEGL->resizeSurface();
-    }
 }
 
 void CCEGLView::setFrameSize(float width, float height)
 {
-    Create((LPCTSTR)m_szViewName, width, height);
+    Create((LPCTSTR)m_szViewName, (int)width, (int)height);
     CCEGLViewProtocol::setFrameSize(width, height);
 }
 

@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef UTILITY_H_INCLUDED
 #define UTILITY_H_INCLUDED
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <math.h>
 
 #ifndef kmScalar

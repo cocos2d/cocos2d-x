@@ -29,7 +29,7 @@
  */
 
 #include "CCControlSaturationBrightnessPicker.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_EXT_BEGIN
 
@@ -42,7 +42,7 @@ bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, C
 {
     if (CCControl::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         // Add background and slider sprites
         m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, ccp(0.0f, 0.0f));
         m_overlay=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, ccp(0.0f, 0.0f));
@@ -59,6 +59,11 @@ bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, C
 }
 
 CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
+{
+    return CCControlSaturationBrightnessPicker::create(target, pos);
+}
+
+CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::create(CCNode* target, CCPoint pos)
 {
     CCControlSaturationBrightnessPicker *pRet = new CCControlSaturationBrightnessPicker();
     pRet->initWithTargetAndPos(target, pos);
@@ -94,8 +99,8 @@ void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPos
     // Clamp the position of the icon within the circle
     
     // Get the center point of the bkgd image
-    float centerX           = m_startPos.x + m_background->boundingBox().size.width*.5;
-    float centerY           = m_startPos.y + m_background->boundingBox().size.height*.5;
+    float centerX           = m_startPos.x + m_background->boundingBox().size.width*0.5f;
+    float centerY           = m_startPos.y + m_background->boundingBox().size.height*0.5f;
     
     // Work out the distance difference between the location and center
     float dx                = sliderPosition.x - centerX;
@@ -106,7 +111,7 @@ void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPos
     float angle             = atan2f(dy, dx);
     
     // Set the limit to the slider movement within the colour picker
-    float limit             = m_background->boundingBox().size.width*.5;
+    float limit             = m_background->boundingBox().size.width*0.5f;
     
     // Check distance doesn't exceed the bounds of the circle
     if (dist > limit)
@@ -126,7 +131,7 @@ void CCControlSaturationBrightnessPicker::updateSliderPosition(CCPoint sliderPos
     else if (sliderPosition.y > m_startPos.y + boxPos + boxSize)        sliderPosition.y = m_startPos.y + boxPos + boxSize;
     
     // Use the position / slider width to determin the percentage the dragger is at
-    m_saturation = 1.0 - fabs((m_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
+    m_saturation = 1.0f - fabs((m_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
     m_brightness = fabs((m_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
 }
 
@@ -135,8 +140,8 @@ bool CCControlSaturationBrightnessPicker::checkSliderPosition(CCPoint location)
     // Clamp the position of the icon within the circle
     
     // get the center point of the bkgd image
-    float centerX           = m_startPos.x + m_background->boundingBox().size.width*.5;
-    float centerY           = m_startPos.y + m_background->boundingBox().size.height*.5;
+    float centerX           = m_startPos.x + m_background->boundingBox().size.width*0.5f;
+    float centerY           = m_startPos.y + m_background->boundingBox().size.height*0.5f;
     
     // work out the distance difference between the location and center
     float dx                = location.x - centerX;

@@ -31,13 +31,20 @@
 
 #include "CCControl.h"
 #include "CCInvocation.h"
-#include "CCSprite.h"
-#include "CCMenuItem.h"
+#include "sprite_nodes/CCSprite.h"
+#include "menu_nodes/CCMenuItem.h"
 
 #define SLIDER_MARGIN_H 24
 #define SLIDER_MARGIN_V 8
 
 NS_CC_EXT_BEGIN
+
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
 
 class CC_DLL CCControlSlider: public CCControl
 {
@@ -75,8 +82,24 @@ public:
     /** 
     * Creates slider with a background filename, a progress filename and a 
     * thumb image filename.
+    @deprecated: This interface will be deprecated sooner or later.
     */
-    static CCControlSlider* sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile);
+    CC_DEPRECATED_ATTRIBUTE static CCControlSlider* sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile);
+
+    /** 
+    * Creates a slider with a given background sprite and a progress bar and a
+    * thumb item.
+    *@deprecated: This interface will be deprecated sooner or later.
+    * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
+
+
+    /** 
+    * Creates slider with a background filename, a progress filename and a 
+    * thumb image filename.
+    */
+    static CCControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile);
 
     /** 
     * Creates a slider with a given background sprite and a progress bar and a
@@ -84,9 +107,7 @@ public:
     *
     * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
     */
-    static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
-
-
+    static CCControlSlider* create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
 
 
 protected:
@@ -105,6 +126,10 @@ protected:
 /** Returns the value for the given location. */
     float valueForLocation(CCPoint location);
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

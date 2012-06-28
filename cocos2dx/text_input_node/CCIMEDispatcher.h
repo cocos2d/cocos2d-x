@@ -30,6 +30,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup input
+ * @{
+ */
+
+/**
 @brief    Input Method Edit Message Dispatcher.
 */
 class CC_DLL CCIMEDispatcher
@@ -97,6 +102,9 @@ private:
     class Impl;
     Impl * m_pImpl;
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

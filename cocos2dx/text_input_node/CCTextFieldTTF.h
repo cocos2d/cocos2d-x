@@ -25,13 +25,18 @@ THE SOFTWARE.
 #ifndef __CC_TEXT_FIELD_H__
 #define __CC_TEXT_FIELD_H__
 
-#include "CCLabelTTF.h"
-#include "CCIMEDelegate.h"
-#include "CCTouchDelegateProtocol.h"
+#include "label_nodes/CCLabelTTF.h"
+#include "text_input_node/CCIMEDelegate.h"
+#include "touch_dispatcher/CCTouchDelegateProtocol.h"
 
 NS_CC_BEGIN
 
 class CCTextFieldTTF;
+
+/**
+ * @addtogroup input
+ * @{
+ */
 
 class CC_DLL CCTextFieldDelegate
 {
@@ -155,6 +160,9 @@ private:
     class LengthStack;
     LengthStack * m_pLens;
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

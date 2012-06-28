@@ -163,10 +163,10 @@ void ccGLEnable( ccGLServerState flags )
 {
 #if CC_ENABLE_GL_STATE_CACHE
 
-    bool enabled = false;
+    int enabled = 0;
 
     /* GL_BLEND */
-    if( (enabled=(flags & CC_GL_BLEND)) != (s_eGLServerState & CC_GL_BLEND) ) {
+    if( (enabled = (flags & CC_GL_BLEND)) != (s_eGLServerState & CC_GL_BLEND) ) {
         if( enabled ) {
             glEnable( GL_BLEND );
             s_eGLServerState |= CC_GL_BLEND;

@@ -23,7 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCTextureCache.h"
+#include "textures/CCTextureCache.h"
 #include "CCSpriteFrame.h"
 #include "CCDirector.h"
 
@@ -32,6 +32,11 @@ NS_CC_BEGIN
 // implementation of CCSpriteFrame
 
 CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
+{
+    return CCSpriteFrame::create(pobTexture, rect);
+}
+
+CCSpriteFrame* CCSpriteFrame::create(CCTexture2D *pobTexture, const CCRect& rect)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect);
@@ -42,6 +47,11 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, const CC
 
 CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, const CCRect& rect)
 {
+    return CCSpriteFrame::create(filename, rect);
+}
+
+CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect)
+{
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect);
     pSpriteFrame->autorelease();
@@ -51,6 +61,11 @@ CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, con
 
 CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
+    return CCSpriteFrame::create(pobTexture, rect, rotated, offset, originalSize);
+}
+
+CCSpriteFrame* CCSpriteFrame::create(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+{
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect, rotated, offset, originalSize);
     pSpriteFrame->autorelease();
@@ -59,6 +74,11 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, const CC
 }
 
 CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+{
+    return CCSpriteFrame::create(filename, rect, rotated, offset, originalSize);
+}
+
+CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
@@ -179,7 +199,7 @@ CCTexture2D* CCSpriteFrame::getTexture(void)
         return m_pobTexture;
     }
 
-    if( m_strTextureFilename.length() <= 0 ) {
+    if( m_strTextureFilename.length() > 0 ) {
         return CCTextureCache::sharedTextureCache()->addImage(m_strTextureFilename.c_str());
     }
     // no texture or texture filename

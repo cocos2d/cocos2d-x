@@ -9,7 +9,6 @@ typedef unsigned short   GLushort;
 typedef unsigned int     GLuint;
 typedef float			 GLfloat;
 
-typedef float ccTime;
 typedef struct _ccColor3B
 {
     GLubyte	r;
@@ -234,11 +233,21 @@ typedef struct _ccBlendFunc
 //! delta time type
 //! if you want more resolution redefine it as a double
 
-//typedef double ccTime;
+//typedef double float;
 
 typedef enum
 {
-    CCTextAlignmentLeft,
-    CCTextAlignmentCenter,
-    CCTextAlignmentRight,
+    kCCVerticalTextAlignmentTop,
+    kCCVerticalTextAlignmentCenter,
+    kCCVerticalTextAlignmentBottom,
+} CCVerticalTextAlignment;
+
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+//! Horizontal text alignment type
+typedef enum
+{
+    kCCTextAlignmentLeft,
+    kCCTextAlignmentCenter,
+    kCCTextAlignmentRight,
 } CCTextAlignment;
+

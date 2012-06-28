@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup platform
+ * @{
+ */
+
 /* On iOS, should create autorelease pool when create a new thread
  * and release it when the thread end.
  */
@@ -44,6 +49,9 @@ public:
 private:
     void *m_pAutoreasePool;
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

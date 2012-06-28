@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "utility.h"
 
 struct kmMat4;

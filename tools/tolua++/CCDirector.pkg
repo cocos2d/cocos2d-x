@@ -9,7 +9,7 @@ class CCDirector : public CCObject
     void setDisplayStats(bool bDisplayFPS);
 
     bool isPaused(void);
-    unsigned int getFrames(void);
+    unsigned int getTotalFrames(void);
 
     CCSize getWinSize(void);
     CCSize getWinSizeInPixels(void);

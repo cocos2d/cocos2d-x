@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCCamera.h"
-#include "CCString.h"
+#include "cocoa/CCString.h"
 #include "CCGL.h"
 
 #include "CCDrawingPrimitives.h"
@@ -46,7 +46,7 @@ CCCamera::~CCCamera(void)
 
 const char* CCCamera::description(void)
 {
-    return CCString::stringWithFormat("<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ)->getCString();
+    return CCString::createWithFormat("<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ)->getCString();
 }
 
 void CCCamera::init(void)

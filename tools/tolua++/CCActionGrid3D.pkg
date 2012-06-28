@@ -6,17 +6,17 @@ class CCWaves3D : public CCGrid3DAction
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
 
-    static CCWaves3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+    static CCWaves3D* create(int wav, float amp, ccGridSize gridSize, float duration);
 };
 
 class CCFlipX3D : public CCGrid3DAction
 {
-    static CCFlipX3D* actionWithDuration(ccTime duration);
+    static CCFlipX3D* create(float duration);
 };
 
 class CCFlipY3D : public CCFlipX3D
 {
-    static CCFlipY3D* actionWithDuration(ccTime duration);
+    static CCFlipY3D* create(float duration);
 };
 
 class CCLens3D : public CCGrid3DAction
@@ -26,7 +26,7 @@ class CCLens3D : public CCGrid3DAction
     CCPoint getPosition(void);
     void setPosition(CCPoint position);
 
-    static CCLens3D* actionWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
+    static CCLens3D* create(CCPoint pos, float r, ccGridSize gridSize, float duration);
 };
 
 class CCRipple3D : public CCGrid3DAction
@@ -38,12 +38,12 @@ class CCRipple3D : public CCGrid3DAction
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
 
-    static CCRipple3D* actionWithPosition(CCPoint pos, float r, int wav, float amp, ccGridSize gridSize, ccTime duration);
+    static CCRipple3D* create(CCPoint pos, float r, int wav, float amp, ccGridSize gridSize, float duration);
 };
 
 class CCShaky3D : public CCGrid3DAction
 {
-    static CCShaky3D* actionWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
+    static CCShaky3D* create(int range, bool shakeZ, ccGridSize gridSize, float duration);
 };
 
 class CCLiquid : public CCGrid3DAction
@@ -53,7 +53,7 @@ class CCLiquid : public CCGrid3DAction
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
 
-    static CCLiquid* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+    static CCLiquid* create(int wav, float amp, ccGridSize gridSize, float duration);
 };
 
 class CCWaves : public CCGrid3DAction
@@ -63,7 +63,7 @@ class CCWaves : public CCGrid3DAction
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
 
-    static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,ccTime duration);
+    static CCWaves* create(int wav, float amp, bool h, bool v, ccGridSize gridSize,float duration);
 };
 
 class CCTwirl : public CCGrid3DAction
@@ -75,5 +75,5 @@ class CCTwirl : public CCGrid3DAction
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
 
-    static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,ccTime duration);
+    static CCTwirl* create(CCPoint pos, int t, float amp, ccGridSize gridSize,float duration);
 };

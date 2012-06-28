@@ -53,7 +53,7 @@ CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
     CCFloat x = m_pBody->p.x;
     CCFloat y = m_pBody->p.y;
 
-    if ( !getIsRelativeAnchorPoint() ) {
+    if ( isIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
@@ -93,10 +93,10 @@ HelloWorld::~HelloWorld()
 CCScene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object.
-    CCScene *scene = CCScene::node();
+    CCScene *scene = CCScene::create();
 
     // 'layer' is an autorelease object.
-    HelloWorld *layer = HelloWorld::node();
+    HelloWorld *layer = HelloWorld::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -113,13 +113,13 @@ bool HelloWorld::init()
     }
 
     // enable events
-    setIsTouchEnabled(true);
-    setIsAccelerometerEnabled(true);
+    setTouchEnabled(true);
+    setAccelerometerEnabled(true);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // title
-    CCLabelTTF *label = CCLabelTTF::labelWithString("Multi touch the screen", "Marker Felt", 36);
+    CCLabelTTF *label = CCLabelTTF::create("Multi touch the screen", "Marker Felt", 36);
     label->setPosition(ccp( s.width / 2, s.height - 30));
     this->addChild(label, -1);
 
@@ -128,7 +128,7 @@ bool HelloWorld::init()
 
 #if 1
     // Use batch node. Faster
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("grossini_dance_atlas.png", 100);
+    CCSpriteBatchNode *parent = CCSpriteBatchNode::create("grossini_dance_atlas.png", 100);
     m_pSpriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
@@ -179,7 +179,7 @@ void HelloWorld::initPhysics()
     }
 }
 
-void HelloWorld::update(ccTime delta)
+void HelloWorld::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;

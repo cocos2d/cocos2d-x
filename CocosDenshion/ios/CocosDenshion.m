@@ -975,7 +975,7 @@ static BOOL _mixerRateSet = NO;
       return;
   }
   alSourcePause(sourceId);
-  alGetError();//Clear error in case we stopped any sounds that couldn't be paused
+  alGetError();//Clear error in case we pause any sounds that couldn't be paused
 }
 
 - (void) pauseAllSounds {
@@ -989,6 +989,15 @@ static BOOL _mixerRateSet = NO;
   if (!functioning_) {
     return;
   }
+  
+    // only resume a sound id that is paused
+    ALint state;
+    alGetSourcei(soundId, AL_SOURCE_STATE, &state);
+    if (state != AL_PAUSED)
+    {
+        return;
+    }
+        
   alSourcePlay(soundId);
   alGetError();//Clear error in case we stopped any sounds that couldn't be resumed
 }
@@ -1370,12 +1379,11 @@ static BOOL _mixerRateSet = NO;
 @synthesize filePath, soundId;
 
 -(id) init:(int) theSoundId filePath:(const NSString *) theFilePath {
-    if ((self = [super init])) {
-        soundId = theSoundId;
-        filePath = [theFilePath copy];//TODO: is retain necessary or does copy set retain count
-        [filePath retain];
-    } 
-    return self;
+	if ((self = [super init])) {
+		soundId = theSoundId;
+		filePath = [theFilePath copy];
+	}
+	return self;
 }
 
 -(void) dealloc {

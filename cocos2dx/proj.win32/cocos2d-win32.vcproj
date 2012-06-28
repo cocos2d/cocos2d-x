@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -42,8 +42,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..;..\platform;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libtiff;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;..\actions;..\base_nodes;..\cocoa;..\effects;..\extensions;..\keypad_dispatcher;..\label_nodes;..\layers_scenes_transitions_nodes;..\menu_nodes;..\misc_nodes;..\particle_nodes;..\script_support;..\shaders;..\sprite_nodes;..\text_input_node;..\textures;..\tileMap_parallax_nodes;..\touch_dispatcher;..\support"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1"
+				AdditionalIncludeDirectories="..;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libtiff;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -51,7 +51,7 @@
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4996;4267"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libGLESv2.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="opengl32.lib glew32.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -104,7 +104,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -124,14 +124,14 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..;..\platform;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libtiff;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;..\actions;..\base_nodes;..\cocoa;..\effects;..\extensions;..\keypad_dispatcher;..\label_nodes;..\layers_scenes_transitions_nodes;..\menu_nodes;..\misc_nodes;..\particle_nodes;..\script_support;..\shaders;..\sprite_nodes;..\text_input_node;..\textures;..\tileMap_parallax_nodes;..\touch_dispatcher;..\support"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
+				AdditionalIncludeDirectories="..;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libtiff;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4267"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libGLESv2.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libiconv.lib pthreadVCE2.lib"
+				AdditionalDependencies="opengl32.lib glew32.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libiconv.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -229,14 +229,6 @@
 			</File>
 			<File
 				RelativePath="..\cocoa\CCAutoreleasePool.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cocoa\CCData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\cocoa\CCData.h"
 				>
 			</File>
 			<File
@@ -337,6 +329,14 @@
 			</File>
 			<File
 				RelativePath="..\actions\CCActionCamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionCatmullRom.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionCatmullRom.h"
 				>
 			</File>
 			<File
@@ -851,6 +851,10 @@
 				Name="data_support"
 				>
 				<File
+					RelativePath="..\support\data_support\ccCArray.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\support\data_support\ccCArray.h"
 					>
 				</File>
@@ -1235,11 +1239,19 @@
 				Name="CCBReader"
 				>
 				<File
-					RelativePath="..\extensions\CCBReader\CCBCustomClass.cpp"
+					RelativePath="..\extensions\CCBReader\CCBFileLoader.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\CCBReader\CCBCustomClass.h"
+					RelativePath="..\extensions\CCBReader\CCBFileLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBMemberVariableAssigner.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCBReader.cpp"
 					>
 				</File>
 				<File
@@ -1247,7 +1259,147 @@
 					>
 				</File>
 				<File
-					RelativePath="..\extensions\CCBReader\CCBReader_v2.cpp"
+					RelativePath="..\extensions\CCBReader\CCBSelectorResolver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCControlButtonLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCControlButtonLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCControlLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCControlLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLabelBMFontLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLabelBMFontLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLabelTTFLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLabelTTFLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerColorLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerColorLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerGradientLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerGradientLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCLayerLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuItemImageLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuItemImageLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuItemLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuItemLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCMenuLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoaderLibrary.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoaderLibrary.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCNodeLoaderListener.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCParticleSystemQuadLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCParticleSystemQuadLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCScale9SpriteLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCScale9SpriteLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCScrollViewLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCScrollViewLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCSpriteLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCBReader\CCSpriteLoader.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CCScrollView"
+				>
+				<File
+					RelativePath="..\extensions\CCScrollView\CCScrollView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\extensions\CCScrollView\CCScrollView.h"
 					>
 				</File>
 			</Filter>

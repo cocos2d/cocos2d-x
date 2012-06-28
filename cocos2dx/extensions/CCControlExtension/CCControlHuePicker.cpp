@@ -29,7 +29,7 @@
  */
 
 #include "CCControlHuePicker.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_EXT_BEGIN
 
@@ -37,8 +37,13 @@ CCControlHuePicker::~CCControlHuePicker()
 {
 
 }
-    
+
 CCControlHuePicker* CCControlHuePicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
+{
+    return CCControlHuePicker::create(target, pos);
+}
+
+CCControlHuePicker* CCControlHuePicker::create(CCNode* target, CCPoint pos)
 {
     CCControlHuePicker *pRet = new CCControlHuePicker();
     pRet->initWithTargetAndPos(target, pos);
@@ -51,7 +56,7 @@ bool CCControlHuePicker::initWithTargetAndPos(CCNode* target, CCPoint pos)
 {
     if (CCControl::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         // Add background and slider sprites
         m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, ccp(0.0f, 0.0f));
         m_slider=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, ccp(0.5f, 0.5f));

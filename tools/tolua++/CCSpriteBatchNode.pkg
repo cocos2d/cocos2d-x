@@ -20,6 +20,8 @@ class CCSpriteBatchNode : public CCNode
     void setBlendFunc(ccBlendFunc blendFunc);
     ccBlendFunc getBlendFunc(void);
 
-    static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D *tex);
-    static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);
+    static CCSpriteBatchNode* create(CCTexture2D *tex);
+    static CCSpriteBatchNode* create(CCTexture2D* tex, unsigned int capacity);
+    static CCSpriteBatchNode* create(const char* fileImage);
+    static CCSpriteBatchNode* create(const char* fileImage, unsigned int capacity);
 };

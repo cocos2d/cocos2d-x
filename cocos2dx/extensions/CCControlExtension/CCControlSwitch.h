@@ -37,6 +37,13 @@ NS_CC_EXT_BEGIN
 
 class CCControlSwitchSprite;
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 /** @class CCControlSwitch Switch control for Cocos2D. */
 class CC_DLL CCControlSwitch : public CCControl
 {
@@ -46,14 +53,26 @@ public:
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
     bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
 
+    /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
+
     /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
-    static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
+    static CCControlSwitch* create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
+
 
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
     bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
 
+    /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels.
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+
     /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
-    static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+    static CCControlSwitch* create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+
 
     /**
      * Set the state of the switch to On or Off, optionally animating the transition.
@@ -65,9 +84,9 @@ public:
      */
     void setOn(bool isOn, bool animated);
     void setOn(bool isOn);
-    bool getIsOn(void) { return m_bOn; }
+    bool isOn(void) { return m_bOn; }
     bool hasMoved() { return m_bMoved; }
-    void setIsEnabled(bool enabled);
+    virtual void setEnabled(bool enabled);
 
     CCPoint locationFromTouch(CCTouch* touch);
     //events
@@ -86,6 +105,9 @@ protected:
     bool m_bOn;
 };
 
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

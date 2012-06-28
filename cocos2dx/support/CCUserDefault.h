@@ -24,10 +24,15 @@ THE SOFTWARE.
 #ifndef __SUPPORT_CCUSERDEFAULT_H__
 #define __SUPPORT_CCUSERDEFAULT_H__
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <string>
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup data_storage
+ * @{
+ */
 
 /**
  * CCUserDefault acts as a tiny database. You can save and get base type values by it.
@@ -111,6 +116,9 @@ private:
     static std::string m_sFilePath;
     static bool m_sbIsFilePathInitialized;
 };
+
+// end of data_storage group
+/// @}
 
 NS_CC_END
 

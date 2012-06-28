@@ -81,8 +81,6 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new Box2dTestBedScene(); break;
     case TEST_EFFECT_ADVANCE:
         pScene = new EffectAdvanceScene(); break;
-    case TEST_HIRES:
-        pScene = new HiResTestScene(); break;
     case TEST_ACCELEROMRTER:
         pScene = new AccelerometerTestScene(); break;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
@@ -104,8 +102,6 @@ static TestScene* CreateTestScene(int nIdx)
 #endif
     case TEST_USERDEFAULT:
         pScene = new UserDefaultTestScene(); break;
-    case TEST_DIRECTOR:
-        pScene = new DirectorTestScene(); break;
     case TEST_BUGS:
         pScene = new BugsTestScene(); break;
     case TEST_FONTS:
@@ -137,23 +133,23 @@ TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
     // add close menu
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::itemWithNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
-    CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
+    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
+    CCMenu* pMenu =CCMenu::create(pCloseItem, NULL);
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     pMenu->setPosition( CCPointZero );
     pCloseItem->setPosition(CCPointMake( s.width - 30, s.height - 30));
 
     // add menu items for tests
-    m_pItemMenu = CCMenu::menuWithItems(NULL);
+    m_pItemMenu = CCMenu::create();
     for (int i = 0; i < TESTS_COUNT; ++i)
     {
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//         CCLabelBMFont* label = CCLabelBMFont::labelWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+//         CCLabelBMFont* label = CCLabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 // #else
-        CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);
+        CCLabelTTF* label = CCLabelTTF::create(g_aTestNames[i].c_str(), "Arial", 24);
 // #endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestController::menuCallback));
 
         m_pItemMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
@@ -163,7 +159,7 @@ TestController::TestController()
     m_pItemMenu->setPosition(s_tCurPos);
     addChild(m_pItemMenu);
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     addChild(pMenu, 1);
 

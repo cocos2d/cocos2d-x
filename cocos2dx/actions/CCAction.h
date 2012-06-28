@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -27,7 +27,9 @@ THE SOFTWARE.
 #ifndef __ACTIONS_CCACTION_H__
 #define __ACTIONS_CCACTION_H__
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCGeometry.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
@@ -35,6 +37,11 @@ enum {
     //! Default tag
     kCCActionTagInvalid = -1,
 };
+
+/**
+ * @addtogroup actions
+ * @{
+ */
 
 /** 
 @brief Base class for CCAction objects.
@@ -62,7 +69,7 @@ public:
     virtual void stop(void);
 
     //! called every frame with it's delta time. DON'T override unless you know what you are doing.
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
 
     /** 
     called once per frame. time a value between 0 and 1
@@ -72,7 +79,7 @@ public:
     - 0.5 means that the action is in the middle
     - 1 means that the action is over
     */
-    virtual void update(ccTime time);
+    virtual void update(float time);
     
     inline CCNode* getTarget(void) { return m_pTarget; }
     /** The action will modify the target properties. */
@@ -90,9 +97,13 @@ public:
     inline void setTag(int nTag) { m_nTag = nTag; }
 
 public:
-    /** Allocates and initializes the action */
-    static CCAction* action();
+    /** Allocates and initializes the action 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCAction* action();
 
+    /** Create an action */
+    static CCAction* create();
 protected:
     CCNode    *m_pOriginalTarget;
     /** The "target".
@@ -122,15 +133,15 @@ public:
     {}
     virtual ~CCFiniteTimeAction(){}
     //! get duration in seconds of the action
-    inline ccTime getDuration(void) { return m_fDuration; }
+    inline float getDuration(void) { return m_fDuration; }
     //! set duration in seconds of the action
-    inline void setDuration(ccTime duration) { m_fDuration = duration; }
+    inline void setDuration(float duration) { m_fDuration = duration; }
 
     /** returns a reversed action */
     virtual CCFiniteTimeAction* reverse(void);
 protected:
     //! duration in seconds
-    ccTime m_fDuration;
+    float m_fDuration;
 };
 
 class CCActionInterval;
@@ -161,7 +172,7 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode* pTarget);
     virtual void stop();
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
     virtual bool isDone(void);
     virtual CCActionInterval* reverse(void);
 
@@ -173,18 +184,18 @@ public:
     }
 
 public:
-    /** creates the action */
-    static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
+    /** creates the action 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
     
+    /** create the action */
+    static CCSpeed* create(CCActionInterval* pAction, float fSpeed);
 protected:
     float m_fSpeed;
     CCActionInterval *m_pInnerAction;
 };
 
-
-class CCNode;
-class CCPoint;
-class CCRect;
 /** 
 @brief CCFollow is an action that "follows" a node.
 
@@ -212,24 +223,24 @@ public:
     /** alter behavior - turn on/off boundary */
     inline void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
 
-    /** initializes the action */
-    bool initWithTarget(CCNode *pFollowedNode);
-
     /** initializes the action with a set boundary */
-    bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect);
+    bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
 
     virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void step(ccTime dt);
+    virtual void step(float dt);
     virtual bool isDone(void);
     virtual void stop(void);
 
 public:
-    /** creates the action with no boundary set */
-    static CCFollow* actionWithTarget(CCNode *pFollowedNode);
-
-    /** creates the action with a set boundary */
-    static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect);
-
+    /** creates the action with a set boundary,
+        It will work with no boundary if @param rect is equal to CCRectZero.
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
+    /** creates the action with a set boundary,
+    It will work with no boundary if @param rect is equal to CCRectZero.
+    */
+    static CCFollow* create(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
 protected:
     // node to follow
     CCNode *m_pobFollowedNode;
@@ -250,6 +261,9 @@ protected:
     float m_fTopBoundary;
     float m_fBottomBoundary;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

@@ -33,6 +33,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
+
 class CCTextureAtlas;
 
 /** @brief CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
@@ -63,7 +68,10 @@ protected:
     CC_PROPERTY(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
 
     // protocol variables
-    CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+    bool m_bIsOpacityModifyRGB;
+    bool isOpacityModifyRGB();
+    void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
     CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
@@ -76,9 +84,15 @@ public:
     CCAtlasNode();
     virtual ~CCAtlasNode();
 
-    /** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-    static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
-        unsigned int itemsToRender);
+    /** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render
+	@deprecated: This interface will be deprecated sooner or later.
+	*/
+    CC_DEPRECATED_ATTRIBUTE static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
+         unsigned int itemsToRender);
+
+	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+	static CCAtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
+		unsigned int itemsToRender);
 
     /** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
     bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
@@ -104,6 +118,9 @@ private :
     void updateOpacityModifyRGB();
 
 };
+
+// end of base_node group
+/// @}
 
 NS_CC_END
 

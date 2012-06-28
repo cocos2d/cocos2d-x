@@ -1,14 +1,14 @@
 
 class CCLayer : public CCNode
 {
-    void setIsTouchEnabled(bool bValue);
-    bool getIsTouchEnabled();
+    void setTouchEnabled(bool bValue);
+    bool isTouchEnabled();
 
-    void setIsAccelerometerEnabled(bool bValue);
-    bool getIsAccelerometerEnabled();
+    void setAccelerometerEnabled(bool bValue);
+    bool isAccelerometerEnabled();
 
-    void setIsKeypadEnabled(bool bValue);
-    bool getIsKeypadEnabled();
+    void setKeypadEnabled(bool bValue);
+    bool isKeypadEnabled();
 
     void registerScriptTouchHandler(LUA_FUNCTION funcID,
                                     bool bIsMultiTouches = false,
@@ -16,7 +16,7 @@ class CCLayer : public CCNode
                                     bool bSwallowsTouches = false);
     void unregisterScriptTouchHandler();
 
-    static CCLayer *node(void);
+    static CCLayer *create(void);
 };
 
 class CCLayerColor : public CCLayer
@@ -32,8 +32,8 @@ class CCLayerColor : public CCLayer
     void setBlendFunc(ccBlendFunc Value);
     ccBlendFunc getBlendFunc(void);
 
-    static CCLayerColor * layerWithColor(ccColor4B color, GLfloat width, GLfloat height);
-    static CCLayerColor * layerWithColor(ccColor4B color);
+    static CCLayerColor * create(ccColor4B color, GLfloat width, GLfloat height);
+    static CCLayerColor * create(ccColor4B color);
 };
 
 class CCLayerGradient : public CCLayerColor
@@ -49,11 +49,11 @@ class CCLayerGradient : public CCLayerColor
     void setVector(CCPoint Value);
     CCPoint getVector(void);
 
-    void setIsCompressedInterpolation(bool Value);
-    bool getIsCompressedInterpolation(void);
+    void setCompressedInterpolation(bool Value);
+    bool isCompressedInterpolation(void);
 
-    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
-    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CCPoint v);
+    static CCLayerGradient* create(ccColor4B start, ccColor4B end);
+    static CCLayerGradient* create(ccColor4B start, ccColor4B end, CCPoint v);
 };
 
 class CCLayerMultiplex : public CCLayer
@@ -62,5 +62,5 @@ class CCLayerMultiplex : public CCLayer
     void switchTo(unsigned int n);
     void switchToAndReleaseMe(unsigned int n);
 
-    static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
+    static CCLayerMultiplex * createWithLayer(CCLayer* layer);
 };

@@ -56,7 +56,7 @@ bool MutiTouchTestLayer::init()
 {
     if (CCLayer::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -121,7 +121,7 @@ void MutiTouchTestLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 
 void MutiTouchTestScene::runThisTest()
 {
-    MutiTouchTestLayer* pLayer = MutiTouchTestLayer::node();
+    MutiTouchTestLayer* pLayer = MutiTouchTestLayer::create();
 
     addChild(pLayer, 0);
 

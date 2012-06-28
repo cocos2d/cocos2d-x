@@ -25,12 +25,17 @@ THE SOFTWARE.
 #ifndef __CC_TOUCH_H__
 #define __CC_TOUCH_H__
 
-#include "CCObject.h"
-#include "CCGeometry.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCGeometry.h"
 
 NS_CC_BEGIN
 
-class CCTouch : public CCObject
+/**
+ * @addtogroup input
+ * @{
+ */
+
+class CC_DLL CCTouch : public CCObject
 {
 public:
     CCTouch() 
@@ -59,9 +64,12 @@ private:
     CCPoint m_prevPoint;
 };
 
-class CCEvent : public CCObject
+class CC_DLL CCEvent : public CCObject
 {
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

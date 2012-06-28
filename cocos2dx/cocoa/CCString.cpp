@@ -1,5 +1,5 @@
 #include "CCString.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -124,6 +124,11 @@ unsigned int CCString::length() const
     return m_sString.length();
 }
 
+int CCString::compare(const char * pStr) const
+{
+    return strcmp(getCString(), pStr);
+}
+
 CCObject* CCString::copyWithZone(CCZone* pZone)
 {
     CCAssert(pZone == NULL, "CCString should not be inherited.");
@@ -147,22 +152,43 @@ bool CCString::isEqual(const CCObject* pObject)
 
 CCString* CCString::stringWithCString(const char* pStr)
 {
+    return CCString::create(pStr);
+}
+
+CCString* CCString::create(const std::string& str)
+{
+    CCString* pRet = new CCString(str);
+    pRet->autorelease();
+    return pRet;
+}
+
+CCString* CCString::stringWithString(const std::string& pStr)
+{
     CCString* pRet = new CCString(pStr);
     pRet->autorelease();
     return pRet;
 }
 
-CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
+CCString* CCString::stringWithData(const unsigned char* pData, unsigned long nLen)
+{
+    return CCString::create(pData, nLen);
+}
+
+CCString* CCString::create(const unsigned char* pData, unsigned long nLen)
 {
     CCString* pRet = NULL;
-    if (pData != NULL && nLen > 0)
+    if (pData != NULL)
     {
         char* pStr = (char*)malloc(nLen+1);
         if (pStr != NULL)
         {
             pStr[nLen] = '\0';
-            memcpy(pStr, pData, nLen);
-            pRet = CCString::stringWithCString(pStr);
+            if (nLen > 0)
+            {
+                memcpy(pStr, pData, nLen);
+            }
+            
+            pRet = CCString::create(pStr);
             free(pStr);
         }
     }
@@ -171,7 +197,18 @@ CCString* CCString::stringWithData(unsigned char* pData, unsigned long nLen)
 
 CCString* CCString::stringWithFormat(const char* format, ...)
 {
-    CCString* pRet = CCString::stringWithCString("");
+    CCString* pRet = CCString::create("");
+    va_list ap;
+    va_start(ap, format);
+    pRet->initWithFormatAndValist(format, ap);
+    va_end(ap);
+
+    return pRet;
+}
+
+CCString* CCString::createWithFormat(const char* format, ...)
+{
+    CCString* pRet = CCString::create("");
     va_list ap;
     va_start(ap, format);
     pRet->initWithFormatAndValist(format, ap);
@@ -182,11 +219,16 @@ CCString* CCString::stringWithFormat(const char* format, ...)
 
 CCString* CCString::stringWithContentsOfFile(const char* pszFileName)
 {
+    return CCString::create(pszFileName);
+}
+
+CCString* CCString::createWithContentsOfFile(const char* pszFileName)
+{
     unsigned long size = 0;
     unsigned char* pData = 0;
     CCString* pRet = NULL;
-    pData = CCFileUtils::getFileData(pszFileName, "rb", &size);
-    pRet = stringWithData(pData, size);
+    pData = CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
+    pRet = CCString::create(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;
 }

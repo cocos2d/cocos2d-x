@@ -1,15 +1,11 @@
 #ifndef __CCPLATFORMDEFINE_H__
 #define __CCPLATFORMDEFINE_H__
 
+#include <assert.h>
+
 #define CC_DLL 
 
-#define CC_ASSERT(cond) \
-if (! (cond)) \
-{ \
-    char content[100]; \
-    sprintf(content, "%s function:%s line:%d", __FILE__, __FUNCTION__, __LINE__ - 3);  \
-    CCMessageBox(content, "Assert error"); \
-}
+#define CC_ASSERT(cond) assert(cond)
 
 
 #define CC_UNUSED_PARAM(unusedparam) (void)unusedparam

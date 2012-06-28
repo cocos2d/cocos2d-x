@@ -13,10 +13,10 @@ CCLayer* createTestCase(int nIndex)
 
     switch(nIndex)
     {
-    case 0: return new RenderTextureTest();
+    case 0: return new RenderTextureSave();
     case 1: return new RenderTextureIssue937();
-    case 2: return new RenderTextureZbuffer();
-    case 3: return new RenderTextureSave();
+    case 2: return new RenderTextureZbuffer();    
+    case 3: return new RenderTextureTestDepthStencil();
     }
 
     return NULL;
@@ -54,38 +54,39 @@ CCLayer* restartTestCase()
     return pLayer;
 }
 
-void RenderTextureTestDemo::onEnter()
+void RenderTextureTest::onEnter()
 {
     CCLayer::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
+
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 26);
     addChild(label, 1);
     label->setPosition( ccp(s.width/2, s.height-50) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
-        CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition( ccp(s.width/2, s.height-80) );
     }    
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(RenderTextureTestDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(RenderTextureTestDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(RenderTextureTestDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(RenderTextureTest::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(RenderTextureTest::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(RenderTextureTest::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - 100,30) );
-    item2->setPosition( ccp( s.width/2, 30) );
-    item3->setPosition( ccp( s.width/2 + 100,30) );
+    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
+    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
 
     addChild(menu, 1);
 }
 
-void RenderTextureTestDemo::restartCallback(CCObject* pSender)
+void RenderTextureTest::restartCallback(CCObject* pSender)
 {
     CCScene* s = new RenderTextureScene();
     s->addChild(restartTestCase()); 
@@ -94,7 +95,7 @@ void RenderTextureTestDemo::restartCallback(CCObject* pSender)
     s->release();
 }
 
-void RenderTextureTestDemo::nextCallback(CCObject* pSender)
+void RenderTextureTest::nextCallback(CCObject* pSender)
 {
     CCScene* s = new RenderTextureScene();
     s->addChild( nextTestCase() );
@@ -102,7 +103,7 @@ void RenderTextureTestDemo::nextCallback(CCObject* pSender)
     s->release();
 }
 
-void RenderTextureTestDemo::backCallback(CCObject* pSender)
+void RenderTextureTest::backCallback(CCObject* pSender)
 {
     CCScene* s = new RenderTextureScene();
     s->addChild( backTestCase() );
@@ -110,115 +111,14 @@ void RenderTextureTestDemo::backCallback(CCObject* pSender)
     s->release();
 } 
 
-std::string RenderTextureTestDemo::title()
+std::string RenderTextureTest::title()
 {
-    return "Render Texture Test";
+    return "No title";
 }
 
-std::string RenderTextureTestDemo::subtitle()
+std::string RenderTextureTest::subtitle()
 {
     return "";
-}
-
-RenderTextureTest::RenderTextureTest()
-: m_brush(NULL)
-{
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    // create a render texture, this is what we're going to draw into
-    m_target = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height);
-
-    if (NULL == m_target)
-    {
-        return;
-    }
-    
-    m_target->setPosition(ccp(s.width/2, s.height/2));
-
-    // note that the render texture is a cocosnode, and contains a sprite of it's texture for convience,
-    // so we can just parent it to the scene like any other cocos node
-    addChild(m_target, 1);
-
-    // create a brush image to draw into the texture with
-    m_brush = CCSprite::spriteWithFile("Images/stars.png");
-    m_brush->retain();
-
-    ccBlendFunc bf = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
-    m_brush->setBlendFunc( bf);
-    m_brush->setOpacity(20);
-    setIsTouchEnabled(true);
-}
-
-RenderTextureTest::~RenderTextureTest()
-{
-    if (NULL != m_brush)
-    {
-        m_brush->release();
-        m_brush = NULL;
-    }
-}
-
-void RenderTextureTest::ccTouchesMoved(CCSet* touches, CCEvent* event)
-{
-    CCSetIterator it = touches->begin();
-    CCTouch* touch = (CCTouch*)(*it);
-    CCPoint start = touch->locationInView();    
-    start = CCDirector::sharedDirector()->convertToGL( start );
-    CCPoint end = touch->previousLocationInView();
-    end = CCDirector::sharedDirector()->convertToGL(end);
-
-    // begin drawing to the render texture
-    m_target->begin();
-
-    // for extra points, we'll draw this smoothly from the last position and vary the sprite's
-    // scale/rotation/offset
-    float distance = ccpDistance(start, end);
-    if (distance > 1)
-    {
-        int d = (int)distance;
-        for (int i = 0; i < d; i++)
-        {
-            float difx = end.x - start.x;
-            float dify = end.y - start.y;
-            float delta = (float)i / distance;
-            m_brush->setPosition(ccp(start.x + (difx * delta), start.y + (dify * delta)) );
-            m_brush->setRotation( rand()%360 );
-            float r = ((float)(rand()%50)/50.f) + 0.25f;
-            m_brush->setScale( r );
-            // Call visit to draw the brush, don't call draw..
-            m_brush->visit();
-        }
-    }
-    // finish drawing and return context back to the screen
-    m_target->end(false);
-}
-
-void RenderTextureTest::ccTouchesEnded(CCSet* touches, CCEvent* event)
-{
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
-
-    CCSetIterator it;
-    CCTouch* touch;
-
-    for( it = touches->begin(); it != touches->end(); it++) 
-    {
-        touch = (CCTouch*)(*it);
-
-        if(!touch)
-            break;
-
-        CCPoint location = touch->locationInView();
-
-        location = CCDirector::sharedDirector()->convertToGL(location);
-
-        m_brush->setPosition(location);
-        m_brush->setRotation( rand()%360 );
-    }
-
-    m_target->begin();
-    m_brush->visit();
-    m_target->end(true);
-#endif
 }
 
 /**
@@ -229,7 +129,7 @@ RenderTextureSave::RenderTextureSave()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    m_pTarget = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
+    m_pTarget = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
     m_pTarget->retain();
     m_pTarget->setPosition(ccp(s.width / 2, s.height / 2));
 
@@ -238,17 +138,17 @@ RenderTextureSave::RenderTextureSave()
     this->addChild(m_pTarget, -1);
 
     // create a brush image to draw into the texture with
-    m_pBrush = CCSprite::spriteWithFile("Images/fire.png");
+    m_pBrush = CCSprite::create("Images/fire.png");
     m_pBrush->retain();
     m_pBrush->setColor(ccRED);
     m_pBrush->setOpacity(20);
-    this->setIsTouchEnabled(true);
+    this->setTouchEnabled(true);
 
     // Save Image menu
     CCMenuItemFont::setFontSize(16);
-    CCMenuItem *item1 = CCMenuItemFont::itemWithString("Save Image", this, menu_selector(RenderTextureSave::saveImage));
-    CCMenuItem *item2 = CCMenuItemFont::itemWithString("Clear", this, menu_selector(RenderTextureSave::clearImage));
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, NULL);
+    CCMenuItem *item1 = CCMenuItemFont::create("Save Image", this, menu_selector(RenderTextureSave::saveImage));
+    CCMenuItem *item2 = CCMenuItemFont::create("Clear", this, menu_selector(RenderTextureSave::clearImage));
+    CCMenu *menu = CCMenu::create(item1, item2, NULL);
     this->addChild(menu);
     menu->alignItemsVertically();
     menu->setPosition(ccp(s.width - 80, s.height - 30));
@@ -288,7 +188,7 @@ void RenderTextureSave::saveImage(cocos2d::CCObject *pSender)
 
     CC_SAFE_DELETE(pImage);
 
-    CCSprite *sprite = CCSprite::spriteWithTexture(tex);
+    CCSprite *sprite = CCSprite::create(tex);
 
     sprite->setScale(0.3f);
     addChild(sprite);
@@ -313,6 +213,7 @@ void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
     CCPoint start = touch->locationInView();
     start = CCDirector::sharedDirector()->convertToGL(start);
     CCPoint end = touch->previousLocationInView();
+    end = CCDirector::sharedDirector()->convertToGL(end);
 
     // begin drawing to the render texture
     m_pTarget->begin();
@@ -362,20 +263,20 @@ RenderTextureIssue937::RenderTextureIssue937()
     *  B1: non-premulti sprite
     *  B2: non-premulti render
     */
-    CCLayerColor *background = CCLayerColor::layerWithColor(ccc4(200,200,200,255));
+    CCLayerColor *background = CCLayerColor::create(ccc4(200,200,200,255));
     addChild(background);
 
-    CCSprite *spr_premulti = CCSprite::spriteWithFile("Images/fire.png");
+    CCSprite *spr_premulti = CCSprite::create("Images/fire.png");
     spr_premulti->setPosition(ccp(16,48));
 
-    CCSprite *spr_nonpremulti = CCSprite::spriteWithFile("Images/fire.png");
+    CCSprite *spr_nonpremulti = CCSprite::create("Images/fire.png");
     spr_nonpremulti->setPosition(ccp(16,16));
 
 
     
     
     /* A2 & B2 setup */
-    CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(32, 64, kCCTexture2DPixelFormat_RGBA8888);
+    CCRenderTexture *rend = CCRenderTexture::create(32, 64, kCCTexture2DPixelFormat_RGBA8888);
 
     if (NULL == rend)
     {
@@ -428,17 +329,17 @@ void RenderTextureScene::runThisTest()
 
 RenderTextureZbuffer::RenderTextureZbuffer()
 {
-    this->setIsTouchEnabled(true);
+    this->setTouchEnabled(true);
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF *label = CCLabelTTF::labelWithString("vertexZ = 50", "Marker Felt", 64);
+    CCLabelTTF *label = CCLabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(ccp(size.width / 2, size.height * 0.25f));
     this->addChild(label);
 
-    CCLabelTTF *label2 = CCLabelTTF::labelWithString("vertexZ = 0", "Marker Felt", 64);
+    CCLabelTTF *label2 = CCLabelTTF::create("vertexZ = 0", "Marker Felt", 64);
     label2->setPosition(ccp(size.width / 2, size.height * 0.5f));
     this->addChild(label2);
 
-    CCLabelTTF *label3 = CCLabelTTF::labelWithString("vertexZ = -50", "Marker Felt", 64);
+    CCLabelTTF *label3 = CCLabelTTF::create("vertexZ = -50", "Marker Felt", 64);
     label3->setPosition(ccp(size.width / 2, size.height * 0.75f));
     this->addChild(label3);
 
@@ -447,17 +348,17 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     label3->setVertexZ(-50);
 
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Images/bugs/circle.plist");
-    mgr = CCSpriteBatchNode::batchNodeWithFile("Images/bugs/circle.png", 9);
+    mgr = CCSpriteBatchNode::create("Images/bugs/circle.png", 9);
     this->addChild(mgr);
-    sp1 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp2 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp3 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp4 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp5 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp6 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp7 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp8 = CCSprite::spriteWithSpriteFrameName("circle.png");
-    sp9 = CCSprite::spriteWithSpriteFrameName("circle.png");
+    sp1 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp2 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp3 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp4 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp5 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp6 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp7 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp8 = CCSprite::createWithSpriteFrameName("circle.png");
+    sp9 = CCSprite::createWithSpriteFrameName("circle.png");
 
     mgr->addChild(sp1, 9);
     mgr->addChild(sp2, 8);
@@ -544,7 +445,7 @@ void RenderTextureZbuffer::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 void RenderTextureZbuffer::renderScreenShot()
 {
-    CCRenderTexture *texture = CCRenderTexture::renderTextureWithWidthAndHeight(512, 512);
+    CCRenderTexture *texture = CCRenderTexture::create(512, 512);
     if (NULL == texture)
     {
         return;
@@ -556,7 +457,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     texture->end();
 
-    CCSprite *sprite = CCSprite::spriteWithTexture(texture->getSprite()->getTexture());
+    CCSprite *sprite = CCSprite::create(texture->getSprite()->getTexture());
 
     sprite->setPosition(ccp(256, 256));
     sprite->setOpacity(182);
@@ -564,8 +465,54 @@ void RenderTextureZbuffer::renderScreenShot()
     this->addChild(sprite, 999999);
     sprite->setColor(ccGREEN);
 
-    sprite->runAction(CCSequence::actions(CCFadeTo::actionWithDuration(2, 0),
-                                          CCHide::action(),
+    sprite->runAction(CCSequence::create(CCFadeTo::create(2, 0),
+                                          CCHide::create(),
                                           NULL));
+}
+
+// RenderTextureTestDepthStencil
+
+RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSprite *sprite = CCSprite::create("Images/fire.png");
+    sprite->setPosition(ccp(s.width * 0.25f, 0));
+    sprite->setScale(10);
+    CCRenderTexture *rend = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, CC_GL_DEPTH24_STENCIL8);
+
+    glStencilMask(0xFF);
+    rend->beginWithClear(0, 0, 0, 0, 0, 0);
+
+    //! mark sprite quad into stencil buffer
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glColorMask(0, 0, 0, 1);
+    sprite->visit();
+
+    //! move sprite half width and height, and draw only where not marked
+    sprite->setPosition(ccpAdd(sprite->getPosition(), ccpMult(ccp(sprite->getContentSize().width * sprite->getScale(), sprite->getContentSize().height * sprite->getScale()), 0.5)));
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glColorMask(1, 1, 1, 1);
+    sprite->visit();
+
+    rend->end();
+
+    glDisable(GL_STENCIL_TEST);
+
+    rend->setPosition(ccp(s.width * 0.5f, s.height * 0.5f));
+
+    this->addChild(rend);
+}
+
+std::string RenderTextureTestDepthStencil::title()
+{
+    return "Testing depthStencil attachment";
+}
+
+std::string RenderTextureTestDepthStencil::subtitle()
+{
+    return "Circle should be missing 1/4 of its region";
 }
 

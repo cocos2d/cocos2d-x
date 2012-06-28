@@ -11,7 +11,7 @@
 
 #define TEST_BUG(bugNO)                                 \
 {                                                       \
-CCScene* pScene = CCScene::node();                      \
+CCScene* pScene = CCScene::create();                      \
 Bug##bugNO##Layer* pLayer = new Bug##bugNO##Layer();    \
 pLayer->init();                                         \
 pScene->addChild(pLayer);                               \
@@ -51,12 +51,12 @@ void BugsTestMainLayer::onEnter()
     CCLayer::onEnter();
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    m_pItmeMenu = CCMenu::menuWithItems(NULL);
+    m_pItmeMenu = CCMenu::create();
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < MAX_COUNT; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::itemWithString(testsName[i].c_str(), this,
+        CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
                                                     menu_selector(BugsTestMainLayer::menuCallback));
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         m_pItmeMenu->addChild(pItem, kItemTagBasic + i);
@@ -64,7 +64,7 @@ void BugsTestMainLayer::onEnter()
 
     m_pItmeMenu->setPosition(s_tCurPos);
     addChild(m_pItmeMenu);
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 }
 
 void BugsTestMainLayer::menuCallback(CCObject* pSender)
@@ -157,10 +157,10 @@ void BugsTestBaseLayer::onEnter()
 
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    CCMenuItemFont* pMainItem = CCMenuItemFont::itemWithString("Back", this,
+    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,
         menu_selector(BugsTestBaseLayer::backCallback));
     pMainItem->setPosition(ccp(s.width - 50, 25));
-    CCMenu* pMenu = CCMenu::menuWithItems(pMainItem, NULL);
+    CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
     pMenu->setPosition( CCPointZero );
     addChild(pMenu);
 }

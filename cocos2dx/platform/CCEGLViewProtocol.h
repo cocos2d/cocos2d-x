@@ -10,6 +10,11 @@ NS_CC_BEGIN
 class EGLTouchDelegate;
 class CCSet;
 
+/**
+ * @addtogroup platform
+ * @{
+ */
+
 class CC_DLL CCEGLViewProtocol
 {
 public:
@@ -21,7 +26,6 @@ public:
     virtual void    swapBuffers() = 0;
     virtual void    setIMEKeyboardState(bool bOpen) = 0;
 
-    virtual bool    isIpad();
     virtual CCRect  getViewPort();
     virtual CCSize  getSize();
     virtual void    setFrameSize(float width, float height);
@@ -54,6 +58,9 @@ protected:
     CCRect m_rcViewPort;
     char m_szViewName[50];
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

@@ -21,12 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCSet.h"
+#include "cocoa/CCSet.h"
 #include "CCDirector.h"
-#include "CCKeypadDispatcher.h"
-#include "CCTouch.h"
-#include "CCEGLView.h"
-#include "CCTouchDispatcher.h"
+#include "keypad_dispatcher/CCKeypadDispatcher.h"
+#include "touch_dispatcher/CCTouch.h"
+#include "../CCEGLView.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
 
 #include <android/log.h>
 #include <jni.h>

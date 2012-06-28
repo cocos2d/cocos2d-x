@@ -19,7 +19,7 @@
     #define MUSIC_FILE        "background.mp3"
 #endif // CC_PLATFORM_WIN32
 
-using namespace cocos2d;
+USING_NS_CC;
 using namespace CocosDenshion;
 
 #define LINE_SPACE          40
@@ -52,18 +52,18 @@ m_nSoundId(0)
     };
 
     // add menu items for tests
-    m_pItmeMenu = CCMenu::menuWithItems(NULL);
+    m_pItmeMenu = CCMenu::create();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     m_nTestCount = sizeof(testItems) / sizeof(testItems[0]);
 
     for (int i = 0; i < m_nTestCount; ++i)
     {
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//        CCLabelBMFont* label = CCLabelBMFont::labelWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
+//        CCLabelBMFont* label = CCLabelBMFont::create(testItems[i].c_str(),  "fonts/arial16.fnt");
 //#else
-        CCLabelTTF* label = CCLabelTTF::labelWithString(testItems[i].c_str(), "Arial", 24);
+        CCLabelTTF* label = CCLabelTTF::create(testItems[i].c_str(), "Arial", 24);
 //#endif        
-        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(CocosDenshionTest::menuCallback));
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(CocosDenshionTest::menuCallback));
         
         m_pItmeMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
@@ -73,11 +73,11 @@ m_nSoundId(0)
     m_pItmeMenu->setPosition(CCPointZero);
     addChild(m_pItmeMenu);
 
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
 
     // preload background music and effect
-    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::fullPathFromRelativePath(MUSIC_FILE) );
-    SimpleAudioEngine::sharedEngine()->preloadEffect( CCFileUtils::fullPathFromRelativePath(EFFECT_FILE) );
+    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE) );
+    SimpleAudioEngine::sharedEngine()->preloadEffect( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE) );
     
     // set default volume
     SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
@@ -106,7 +106,7 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
     // play background music
     case 0:
 
-        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::fullPathFromRelativePath(MUSIC_FILE)).c_str(), true);
+        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE)).c_str(), true);
         break;
     // stop background music
     case 1:
@@ -137,11 +137,11 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
         break;
     // play effect
     case 6:
-        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::fullPathFromRelativePath(EFFECT_FILE)).c_str());
+        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE)).c_str());
         break;
     // play effect
     case 7:
-        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::fullPathFromRelativePath(EFFECT_FILE)).c_str(), true);
+        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE)).c_str(), true);
         break;
     // stop effect
     case 8:
@@ -149,7 +149,7 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
         break;
     // unload effect
     case 9:
-        SimpleAudioEngine::sharedEngine()->unloadEffect(std::string(CCFileUtils::fullPathFromRelativePath(EFFECT_FILE)).c_str());
+        SimpleAudioEngine::sharedEngine()->unloadEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE)).c_str());
         break;
         // add bakcground music volume
     case 10:

@@ -31,7 +31,7 @@ THE SOFTWARE.
 #define _USE_MATH_DEFINES
 #endif
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "CCStdC.h"
 
 #ifndef CCAssert
@@ -85,7 +85,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_NODE_DRAW_SETUP() \
 do { \
     ccGLEnable( m_glServerState ); \
-    if (getShaderProgram() != NULL) \
+    CCAssert(getShaderProgram(), "No shader program set for this node"); \
     { \
         getShaderProgram()->use(); \
         getShaderProgram()->setUniformForModelViewProjectionMatrix(); \

@@ -27,8 +27,8 @@ THE SOFTWARE.
 #define __CCTMX_LAYER_H__
 
 #include "CCTMXObjectGroup.h"
-#include "CCAtlasNode.h"
-#include "CCSpriteBatchNode.h"
+#include "base_nodes/CCAtlasNode.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 #include "CCTMXXMLParser.h"
 NS_CC_BEGIN
 
@@ -36,6 +36,11 @@ class CCTMXMapInfo;
 class CCTMXLayerInfo;
 class CCTMXTilesetInfo;
 struct _ccCArray;
+
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
 
 /** @brief CCTMXLayer represents the TMX layer.
 
@@ -83,8 +88,14 @@ class CC_DLL CCTMXLayer : public CCSpriteBatchNode
 public:
     CCTMXLayer();
     virtual ~CCTMXLayer();
+    /** creates a CCTMXLayer with an tileset info, a layer info and a map info 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCTMXLayer * layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+  
     /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
-    static CCTMXLayer * layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+    static CCTMXLayer * create(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
+
     /** initializes a CCTMXLayer with a tileset info, a layer info and a map info */
     bool initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
 
@@ -186,11 +197,14 @@ protected:
 
     //! used for optimization
     CCSprite            *m_pReusedTile;
-    _ccCArray            *m_pAtlasIndexArray;
+    ccCArray            *m_pAtlasIndexArray;
     
     // used for retina display
     float               m_fContentScaleFactor;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

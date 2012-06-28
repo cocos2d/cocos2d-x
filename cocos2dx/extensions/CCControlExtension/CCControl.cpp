@@ -28,9 +28,9 @@
 
 #include "CCControl.h"
 #include "CCDirector.h"
-#include "CCTouchDispatcher.h"
-#include "CCMenu.h"
-#include "CCTouch.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "menu_nodes/CCMenu.h"
+#include "touch_dispatcher/CCTouch.h"
 
 NS_CC_EXT_BEGIN
 
@@ -43,7 +43,7 @@ bool CCControl::init()
 {
     if (CCLayer::init())
     {
-        //this->setIsTouchEnabled(true);
+        //this->setTouchEnabled(true);
         //m_bIsTouchEnabled=true;
         // Initialise instance variables
         m_nState=CCControlStateNormal;
@@ -107,7 +107,7 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
         }
     }
 }
-void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents)
+void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents)
 {
     // For each control events
     for (int i = 0; i < CONTROL_EVENT_TOTAL_NUMBER; i++)
@@ -135,7 +135,7 @@ void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_MenuHa
  * @param controlEvent A control event for which the action message is sent.
  * See "CCControlEvent" for constants.
  */
-void CCControl::addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent)
+void CCControl::addTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
 {    
     // Create the invocation object
     CCInvocation *invocation=new CCInvocation(target, action, controlEvent);
@@ -145,7 +145,7 @@ void CCControl::addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHan
     eventInvocationList->addObject(invocation);    
 }
 
-void CCControl::removeTargetWithActionForControlEvents(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvents)
+void CCControl::removeTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents)
 {
      // For each control events
     for (int i = 0; i < CONTROL_EVENT_TOTAL_NUMBER; i++)
@@ -170,7 +170,7 @@ void CCControl::removeTargetWithActionForControlEvents(CCObject* target, SEL_Men
  * @param controlEvent A control event for which the action message is sent.
  * See "CCControlEvent" for constants.
  */
-void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent)
+void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
 {
     // Retrieve all invocations for the given control event
     //<CCInvocation*>
@@ -249,7 +249,7 @@ GLubyte CCControl::getOpacity()
 }
 
 
-void CCControl::setIsOpacityModifyRGB(bool opacityModifyRGB)
+void CCControl::setOpacityModifyRGB(bool opacityModifyRGB)
 {
     m_bIsOpacityModifyRGB=opacityModifyRGB;
         CCObject* child;
@@ -259,12 +259,12 @@ void CCControl::setIsOpacityModifyRGB(bool opacityModifyRGB)
         CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
         if (pNode)
         {
-            pNode->setIsOpacityModifyRGB(opacityModifyRGB);
+            pNode->setOpacityModifyRGB(opacityModifyRGB);
         }
     }
 }
 
-bool CCControl::getIsOpacityModifyRGB()
+bool CCControl::isOpacityModifyRGB()
 {
     return m_bIsOpacityModifyRGB;
 }
@@ -293,10 +293,40 @@ CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
     // If the invocation list does not exist for the  dispatch table, we create it
     if (invocationList == NULL)
     {
-        invocationList = CCArray::arrayWithCapacity(1);
+        invocationList = CCArray::create(1);
         dispatchTable->setObject(invocationList, controlEvent);
     }    
     return invocationList;
+}
+
+void CCControl::setEnabled(bool bEnabled)
+{
+    m_bEnabled = bEnabled;
+}
+
+bool CCControl::isEnabled()
+{
+    return m_bEnabled;
+}
+
+void CCControl::setSelected(bool bSelected)
+{
+    m_bSelected = bSelected;
+}
+
+bool CCControl::isSelected()
+{
+    return m_bSelected;
+}
+
+void CCControl::setHighlighted(bool bHighlighted)
+{
+    m_bHighlighted = bHighlighted;
+}
+
+bool CCControl::isHighlighted()
+{
+    return m_bHighlighted;
 }
 
 NS_CC_EXT_END

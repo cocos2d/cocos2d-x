@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -41,14 +41,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\actions&quot;;&quot;$(SolutionDir)cocos2dx\base_nodes&quot;;&quot;$(SolutionDir)cocos2dx\cocoa&quot;;&quot;$(SolutionDir)cocos2dx\effects&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\keypad_dispatcher&quot;;&quot;$(SolutionDir)cocos2dx\label_nodes&quot;;&quot;$(SolutionDir)cocos2dx\layers_scenes_transitions_nodes&quot;;&quot;$(SolutionDir)cocos2dx\menu_nodes&quot;;&quot;$(SolutionDir)cocos2dx\misc_nodes&quot;;&quot;$(SolutionDir)cocos2dx\particle_nodes&quot;;&quot;$(SolutionDir)cocos2dx\script_support&quot;;&quot;$(SolutionDir)cocos2dx\shaders&quot;;&quot;$(SolutionDir)cocos2dx\sprite_nodes&quot;;&quot;$(SolutionDir)cocos2dx\support&quot;;&quot;$(SolutionDir)cocos2dx\text_input_node&quot;;&quot;$(SolutionDir)cocos2dx\textures&quot;;&quot;$(SolutionDir)cocos2dx\tileMap_parallax_nodes&quot;;&quot;$(SolutionDir)cocos2dx\touch_dispatcher&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\Classes"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\Classes"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -61,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libGLESv2.lib"
+				AdditionalDependencies="opengl32.lib glew32.lib libcocos2d.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
@@ -97,7 +98,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -119,13 +120,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\actions&quot;;&quot;$(SolutionDir)cocos2dx\base_nodes&quot;;&quot;$(SolutionDir)cocos2dx\cocoa&quot;;&quot;$(SolutionDir)cocos2dx\effects&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\keypad_dispatcher&quot;;&quot;$(SolutionDir)cocos2dx\label_nodes&quot;;&quot;$(SolutionDir)cocos2dx\layers_scenes_transitions_nodes&quot;;&quot;$(SolutionDir)cocos2dx\menu_nodes&quot;;&quot;$(SolutionDir)cocos2dx\misc_nodes&quot;;&quot;$(SolutionDir)cocos2dx\particle_nodes&quot;;&quot;$(SolutionDir)cocos2dx\script_support&quot;;&quot;$(SolutionDir)cocos2dx\shaders&quot;;&quot;$(SolutionDir)cocos2dx\sprite_nodes&quot;;&quot;$(SolutionDir)cocos2dx\support&quot;;&quot;$(SolutionDir)cocos2dx\text_input_node&quot;;&quot;$(SolutionDir)cocos2dx\textures&quot;;&quot;$(SolutionDir)cocos2dx\tileMap_parallax_nodes&quot;;&quot;$(SolutionDir)cocos2dx\touch_dispatcher&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\Classes"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\Classes"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -138,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib"
+				AdditionalDependencies="opengl32.lib glew32.lib libcocos2d.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"

@@ -82,9 +82,6 @@
     <Filter Include="classes\tests\EffectsAdvancedTest">
       <UniqueIdentifier>{4221f5af-c188-4880-84f4-6fdd49407dca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\tests\HiResTest">
-      <UniqueIdentifier>{af973cd5-e645-4f37-abde-df2d2ad84846}</UniqueIdentifier>
-    </Filter>
     <Filter Include="classes\tests\KeypadTest">
       <UniqueIdentifier>{cc2c4496-ec68-430b-b640-cd34bf6ed005}</UniqueIdentifier>
     </Filter>
@@ -111,9 +108,6 @@
     </Filter>
     <Filter Include="classes\tests\BugsTest\Bug-458">
       <UniqueIdentifier>{858c5109-0abf-42db-9fa8-33d44063c1af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\tests\DirectorTest">
-      <UniqueIdentifier>{4621182d-8908-4538-9b77-9e1da1233300}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\Texture2DTest">
       <UniqueIdentifier>{193709f6-8330-4eac-bda3-ff56f4c57e6c}</UniqueIdentifier>
@@ -171,6 +165,30 @@
     </Filter>
     <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest">
       <UniqueIdentifier>{2e6b7147-7836-4a98-a2f5-a00080e7ca23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest\ButtonTest">
+      <UniqueIdentifier>{b6567e7e-4af7-4e84-857a-affc03c1332a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder">
+      <UniqueIdentifier>{5b3fcb56-0c0f-4433-a209-50ffca282f88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest\LabelTest">
+      <UniqueIdentifier>{629b76d1-2144-49f0-a2ef-357caa97d0dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest\MenuTest">
+      <UniqueIdentifier>{eee8a971-55ff-46ca-8d1f-7b03feb9481c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest">
+      <UniqueIdentifier>{ff19ea2d-70c2-444d-8d41-7ce3cd208dbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest">
+      <UniqueIdentifier>{706efc28-51b2-48d9-bcd9-b76f49eb68a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest\SpriteTest">
+      <UniqueIdentifier>{8a4f12b4-f105-495c-83d6-0005d05b61a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\ExtensionsTest\CocosBuilderTest\TestHeader">
+      <UniqueIdentifier>{4c0682f3-b85a-4418-adda-9b25de410af0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -270,9 +288,6 @@
     <ClCompile Include="..\tests\EffectsAdvancedTest\EffectsAdvancedTest.cpp">
       <Filter>classes\tests\EffectsAdvancedTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\HiResTest\HiResTest.cpp">
-      <Filter>classes\tests\HiResTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\tests\KeypadTest\KeypadTest.cpp">
       <Filter>classes\tests\KeypadTest</Filter>
     </ClCompile>
@@ -342,9 +357,6 @@
     <ClCompile Include="..\tests\BugsTest\Bug-458\QuestionContainerSprite.cpp">
       <Filter>classes\tests\BugsTest\Bug-458</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp">
-      <Filter>classes\tests\DirectorTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp">
       <Filter>classes\tests\Texture2DTest</Filter>
     </ClCompile>
@@ -405,8 +417,17 @@
     <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp">
       <Filter>classes\tests\ExtensionsTest\CocosBuilderTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.cpp">
-      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest</Filter>
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.cpp">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.cpp">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.cpp">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.cpp">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -620,9 +641,6 @@
     <ClInclude Include="..\tests\EffectsAdvancedTest\EffectsAdvancedTest.h">
       <Filter>classes\tests\EffectsAdvancedTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\tests\HiResTest\HiResTest.h">
-      <Filter>classes\tests\HiResTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\tests\KeypadTest\KeypadTest.h">
       <Filter>classes\tests\KeypadTest</Filter>
     </ClInclude>
@@ -692,9 +710,6 @@
     <ClInclude Include="..\tests\BugsTest\Bug-458\QuestionContainerSprite.h">
       <Filter>classes\tests\BugsTest\Bug-458</Filter>
     </ClInclude>
-    <ClInclude Include="..\tests\DirectorTest\DirectorTest.h">
-      <Filter>classes\tests\DirectorTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h">
       <Filter>classes\tests\Texture2DTest</Filter>
     </ClInclude>
@@ -755,8 +770,53 @@
     <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h">
       <Filter>classes\tests\ExtensionsTest\CocosBuilderTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.h">
-      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest</Filter>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayerLoader.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayer.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayerLoader.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayer.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayerLoader.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayer.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayerLoader.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayerLoader.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayer.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\LabelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayerLoader.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\LabelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayerLoader.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayerLoader.h">
+      <Filter>classes\tests\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

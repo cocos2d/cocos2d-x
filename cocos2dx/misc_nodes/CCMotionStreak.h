@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011  cocos2d-x.org
+Copyright (c) 2010-2012  cocos2d-x.org
 Copyright (c) 2011 ForzeField Studios S.L.
 
 http://www.cocos2d-x.org
@@ -26,12 +26,16 @@ THE SOFTWARE.
 #define __CCMOTION_STREAK_H__
 
 #include "CCProtocols.h"
-#include "CCTexture2D.h"
+#include "textures/CCTexture2D.h"
 #include "ccTypes.h"
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup misc_nodes
+ * @{
+ */
 
 /** MotionStreak.
  Creates a trailing path.
@@ -41,10 +45,19 @@ class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol, public CC
 public:
     CCMotionStreak();
     virtual ~CCMotionStreak();
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
-    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
-    static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
     bool initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
@@ -60,7 +73,7 @@ public:
     /** Override super methods */
     virtual void setPosition(const CCPoint& position);
     virtual void draw();
-    virtual void update(ccTime delta);
+    virtual void update(float delta);
 
     /* Implement interfaces */
     virtual CCTexture2D* getTexture(void);
@@ -71,11 +84,21 @@ public:
     virtual const ccColor3B& getColor(void);
     virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte opacity);
-    virtual void setIsOpacityModifyRGB(bool bValue);
-    virtual bool getIsOpacityModifyRGB(void);
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB(void);
 
     /** When fast mode is enbled, new points are added faster but with lower precision */
-    CC_SYNTHESIZE(bool, m_bFastMode, IsFastMode);
+    inline bool isFastMode() { return m_bFastMode; }
+    inline void setFastMode(bool bFastMode) { m_bFastMode = bFastMode; }
+
+    inline bool isStartingPositionInitialized() { return m_bStartingPositionInitialized; }
+    inline void setStartingPositionInitialized(bool bStartingPositionInitialized) 
+    { 
+        m_bStartingPositionInitialized = bStartingPositionInitialized; 
+    }
+protected:
+    bool m_bFastMode;
+    bool m_bStartingPositionInitialized;
 private:
     /** texture used for the motion streak */
     CCTexture2D* m_pTexture;
@@ -89,6 +112,7 @@ private:
 
     unsigned int m_uMaxPoints;
     unsigned int m_uNuPoints;
+    unsigned int m_uPreviousNuPoints;
 
     /** Pointers */
     CCPoint* m_pPointVertexes;
@@ -99,6 +123,9 @@ private:
     GLubyte* m_pColorPointer;
     ccTex2F* m_pTexCoords;
 };
+
+// end of misc_nodes group
+/// @}
 
 NS_CC_END
 

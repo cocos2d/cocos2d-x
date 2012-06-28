@@ -33,23 +33,15 @@ extern "C"
         std::string filename(luaL_checkstring(L, 1));
         filename.append(".lua");
 
-        unsigned long size;
-        char *pFileContent = (char*)CCFileUtils::getFileData(filename.c_str(), "r", &size);
+        CCString* pFileContent = CCString::createWithContentsOfFile(filename.c_str());
 
         if (pFileContent)
         {
-            // copy the file contents and add '\0' at the end, or the lua parser can not parse it
-            char *pCodes = new char[size + 1];
-            pCodes[size] = '\0';
-            memcpy(pCodes, pFileContent, size);
-            delete[] pFileContent;
-
-            if (luaL_loadstring(L, pCodes) != 0)
+            if (luaL_loadstring(L, pFileContent->getCString()) != 0)
             {
                 luaL_error(L, "error loading module %s from file %s :\n\t%s",
                     lua_tostring(L, 1), filename.c_str(), lua_tostring(L, -1));
             }
-            delete []pCodes;
         }
         else
         {

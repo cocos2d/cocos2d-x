@@ -34,10 +34,16 @@ NS_CC_BEGIN
 class CCProgressTimer;
 class CCRenderTexture;
 
+/**
+ * @addtogroup transition
+ * @{
+ */
+
 class CC_DLL CCTransitionProgress : public CCTransitionScene
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgress)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgress)
+    TRANSITION_CREATE_FUNC(CCTransitionProgress)
 
     CCTransitionProgress();
     virtual void onEnter();
@@ -46,9 +52,9 @@ protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
     virtual void setupTransition();
     virtual void sceneOrder();
-    float to_;
-    float from_;
-    CCScene* sceneToBeModified_;
+    float m_fTo;
+    float m_fFrom;
+    CCScene* m_pSceneToBeModified;
 };
 
 
@@ -58,7 +64,8 @@ protected:
 class CC_DLL CCTransitionProgressRadialCCW : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressRadialCCW)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCCW)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCCW)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
   
@@ -71,7 +78,8 @@ protected:
 class CC_DLL CCTransitionProgressRadialCW : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressRadialCW)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCW)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressRadialCW)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 
@@ -83,7 +91,8 @@ protected:
 class CC_DLL CCTransitionProgressHorizontal : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressHorizontal)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressHorizontal)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressHorizontal)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 
@@ -92,7 +101,8 @@ protected:
 class CC_DLL CCTransitionProgressVertical : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressVertical)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressVertical)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressVertical)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 
@@ -101,7 +111,8 @@ protected:
 class CC_DLL CCTransitionProgressInOut : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressInOut)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressInOut)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressInOut)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
     virtual void sceneOrder();
@@ -111,11 +122,15 @@ protected:
 class CC_DLL CCTransitionProgressOutIn : public CCTransitionProgress
 {
 public:
-    DECLEAR_TRANSITIONWITHDURATION(CCTransitionProgressOutIn)
+    OLD_TRANSITION_CREATE_FUNC(CCTransitionProgressOutIn)
+    TRANSITION_CREATE_FUNC(CCTransitionProgressOutIn)
 protected:
     virtual CCProgressTimer* progressTimerNodeWithRenderTexture(CCRenderTexture* texture);
 
 };
+
+// end of transition group
+/// @}
 
 NS_CC_END
 

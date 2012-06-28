@@ -30,11 +30,11 @@ extern "C" {
 }
 
 #include "ccTypes.h"
-#include "CCObject.h"
-#include "CCTouch.h"
-#include "CCSet.h"
-#include "CCNode.h"
-#include "CCScriptSupport.h"
+#include "cocoa/CCObject.h"
+#include "touch_dispatcher/CCTouch.h"
+#include "cocoa/CCSet.h"
+#include "base_nodes/CCNode.h"
+#include "script_support/CCScriptSupport.h"
 
 NS_CC_BEGIN
 
@@ -112,7 +112,7 @@ public:
     virtual int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches);
     
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, cocos2d::ccTime dt);
+    virtual int executeSchedule(int nHandler, float dt);
     
     // Add lua loader, now it is used on android
     virtual void addLuaLoader(lua_CFunction func);

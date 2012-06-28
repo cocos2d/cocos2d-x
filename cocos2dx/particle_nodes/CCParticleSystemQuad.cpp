@@ -1,7 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009        Leonardo Kasperavičius
+Copyright (c) 2009      Leonardo Kasperavičius
 Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
@@ -27,13 +27,13 @@ THE SOFTWARE.
 
 #include "CCGL.h"
 #include "CCParticleSystemQuad.h"
-#include "CCSpriteFrame.h"
+#include "sprite_nodes/CCSpriteFrame.h"
 #include "CCDirector.h"
 #include "CCParticleBatchNode.h"
-#include "CCTextureAtlas.h"
-#include "CCShaderCache.h"
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
+#include "textures/CCTextureAtlas.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/ccGLStateCache.h"
+#include "shaders/CCGLProgram.h"
 #include "support/TransformUtils.h"
 #include "extensions/CCNotificationCenter/CCNotificationCenter.h"
 #include "CCEventType.h"
@@ -104,6 +104,11 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 
 // implementation CCParticleSystemQuad
 CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistFile)
+{
+    return CCParticleSystemQuad::create(plistFile);
+}
+
+CCParticleSystemQuad * CCParticleSystemQuad::create(const char *plistFile)
 {
     CCParticleSystemQuad *pRet = new CCParticleSystemQuad();
     if (pRet && pRet->initWithFile(plistFile))
@@ -236,8 +241,10 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const C
     {
         quad = &(m_pQuads[m_uParticleIdx]);
     }
-    ccColor4B color = {(GLubyte)(particle->color.r * 255), (GLubyte)(particle->color.g * 255), (GLubyte)(particle->color.b * 255), 
-        (GLubyte)(particle->color.a * 255)};
+    ccColor4B color = (m_bOpacityModifyRGB)
+        ? ccc4( particle->color.r*particle->color.a*255, particle->color.g*particle->color.a*255, particle->color.b*particle->color.a*255, particle->color.a*255)
+        : ccc4( particle->color.r*255, particle->color.g*255, particle->color.b*255, particle->color.a*255);
+
     quad->bl.colors = color;
     quad->br.colors = color;
     quad->tl.colors = color;
@@ -416,7 +423,7 @@ void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
         // Init particles
         if (m_pBatchNode)
         {
-            for (int i = 0; i < m_uTotalParticles; i++)
+            for (unsigned int i = 0; i < m_uTotalParticles; i++)
             {
                 m_pParticles[i].atlasIndex=i;
             }
@@ -560,6 +567,22 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
 #endif
         }
     }
+}
+
+CCParticleSystemQuad * CCParticleSystemQuad::node()
+{
+    return CCParticleSystemQuad::create();
+}
+
+CCParticleSystemQuad * CCParticleSystemQuad::create() {
+    CCParticleSystemQuad *pParticleSystemQuad = new CCParticleSystemQuad();
+    if (pParticleSystemQuad && pParticleSystemQuad->init())
+    {
+        pParticleSystemQuad->autorelease();
+        return pParticleSystemQuad;
+    }
+    CC_SAFE_DELETE(pParticleSystemQuad);
+    return NULL;
 }
 
 NS_CC_END

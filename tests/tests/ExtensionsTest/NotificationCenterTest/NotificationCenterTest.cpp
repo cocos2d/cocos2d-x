@@ -83,25 +83,25 @@ NotificationCenterTest::NotificationCenterTest()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCMenuItemFont* pBackItem = CCMenuItemFont::itemWithString("Back", this,
+    CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", this,
         menu_selector(NotificationCenterTest::toExtensionsMainLayer));
     pBackItem->setPosition(ccp(s.width - 50, 25));
-    CCMenu* pBackMenu = CCMenu::menuWithItems(pBackItem, NULL);
+    CCMenu* pBackMenu = CCMenu::create(pBackItem, NULL);
     pBackMenu->setPosition( CCPointZero );
     addChild(pBackMenu);
 
-    CCLabelTTF *label1 = CCLabelTTF::labelWithString("switch off", "Marker Felt", 26);
-    CCLabelTTF *label2 = CCLabelTTF::labelWithString("switch on", "Marker Felt", 26);
-    CCMenuItemLabel *item1 = CCMenuItemLabel::itemWithLabel(label1);
-    CCMenuItemLabel *item2 = CCMenuItemLabel::itemWithLabel(label2);
-    CCMenuItemToggle *item = CCMenuItemToggle::itemWithTarget(this, menu_selector(NotificationCenterTest::toggleSwitch), item1, item2, NULL);
+    CCLabelTTF *label1 = CCLabelTTF::create("switch off", "Marker Felt", 26);
+    CCLabelTTF *label2 = CCLabelTTF::create("switch on", "Marker Felt", 26);
+    CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
+    CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
+    CCMenuItemToggle *item = CCMenuItemToggle::create(this, menu_selector(NotificationCenterTest::toggleSwitch), item1, item2, NULL);
     // turn on
     item->setSelectedIndex(1);
-    CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+    CCMenu *menu = CCMenu::create(item, NULL);
     menu->setPosition(ccp(s.width/2+100, s.height/2));
     addChild(menu);
 
-    CCMenu *menuConnect = CCMenu::menuWithItems(NULL);
+    CCMenu *menuConnect = CCMenu::create();
     menuConnect->setPosition(CCPointZero);
     addChild(menuConnect);
 
@@ -112,11 +112,11 @@ NotificationCenterTest::NotificationCenterTest()
         light->setPosition(ccp(100, s.height/4*i));
         addChild(light);
 
-        CCLabelTTF *label1 = CCLabelTTF::labelWithString("not connected", "Marker Felt", 26);
-        CCLabelTTF *label2 = CCLabelTTF::labelWithString("connected", "Marker Felt", 26);
-        CCMenuItemLabel *item1 = CCMenuItemLabel::itemWithLabel(label1);
-        CCMenuItemLabel *item2 = CCMenuItemLabel::itemWithLabel(label2);
-        CCMenuItemToggle *item = CCMenuItemToggle::itemWithTarget(this, menu_selector(NotificationCenterTest::connectToSwitch), item1, item2, NULL);
+        CCLabelTTF *label1 = CCLabelTTF::create("not connected", "Marker Felt", 26);
+        CCLabelTTF *label2 = CCLabelTTF::create("connected", "Marker Felt", 26);
+        CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
+        CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
+        CCMenuItemToggle *item = CCMenuItemToggle::create(this, menu_selector(NotificationCenterTest::connectToSwitch), item1, item2, NULL);
         item->setTag(kTagConnect+i);
         item->setPosition(ccp(light->getPosition().x, light->getPosition().y+50));
         menuConnect->addChild(item, 0);
@@ -155,7 +155,7 @@ void NotificationCenterTest::connectToSwitch(CCObject *sender)
 
 void runNotificationCenterTest()
 {
-    CCScene* pScene = CCScene::node();
+    CCScene* pScene = CCScene::create();
     NotificationCenterTest* pLayer = new NotificationCenterTest();
     pScene->addChild(pLayer);
     CCDirector::sharedDirector()->replaceScene(pScene);

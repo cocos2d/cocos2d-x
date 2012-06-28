@@ -2,7 +2,7 @@
 
 NS_CC_EXT_BEGIN
 
-CCInvocation::CCInvocation(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent)
+CCInvocation::CCInvocation(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
 {
     m_target=target;
     m_action=action;
@@ -13,7 +13,7 @@ void CCInvocation::invoke(CCObject* sender)
 {
     if (m_target && m_action)
     {
-        (m_target->*m_action)(sender);
+        (m_target->*m_action)(sender, m_controlEvent);
     }                
 }
 

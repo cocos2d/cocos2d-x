@@ -43,21 +43,21 @@ bool CCControlSliderTest::init()
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
         // Add a label in which the slider value will be displayed
-        m_pDisplayValueLabel = CCLabelTTF::labelWithString("Move the slider thumb!" ,"Marker Felt", 32);
+        m_pDisplayValueLabel = CCLabelTTF::create("Move the slider thumb!" ,"Marker Felt", 32);
         m_pDisplayValueLabel->retain();
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1.0f));
         m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(m_pDisplayValueLabel);
 
         // Add the slider
-        CCControlSlider *slider = CCControlSlider::sliderWithFiles("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         slider->setAnchorPoint(ccp(0.5f, 1.0f));
         slider->setMinimumValue(0.0f); // Sets the min value of range
         slider->setMaximumValue(5.0f); // Sets the max value of range
         slider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
 
         // When the value of the slider will change, the given selector will be call
-        slider->addTargetWithActionForControlEvents(this, menu_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
+        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
 
         addChild(slider);    
         return true;
@@ -65,10 +65,10 @@ bool CCControlSliderTest::init()
     return false;
 }
 
-void CCControlSliderTest::valueChanged(CCObject *sender)
+void CCControlSliderTest::valueChanged(CCObject *sender, CCControlEvent controlEvent)
 {
     CCControlSlider* pSlider = (CCControlSlider*)sender;
     // Change value of label.
-    m_pDisplayValueLabel->setString(CCString::stringWithFormat("Slider value = %.02f", pSlider->getValue())->getCString());    
+    m_pDisplayValueLabel->setString(CCString::createWithFormat("Slider value = %.02f", pSlider->getValue())->getCString());    
 }
 

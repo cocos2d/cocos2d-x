@@ -234,7 +234,7 @@ class TextureAsync : public TextureDemo
 {
 public:
     virtual ~TextureAsync();
-    void loadImages(ccTime dt);
+    void loadImages(float dt);
     void imageLoaded(CCObject* pObj);
     virtual std::string title();
     virtual std::string subtitle();
@@ -277,14 +277,6 @@ public:
     virtual void onEnter();
 };
 
-class FileUtilsTest : public TextureDemo
-{
-public:
-    virtual std::string title();
-    virtual std::string subtitle();
-    virtual void onEnter();
-};
-
 class TextureDrawAtPoint : public TextureDemo
 {
 public:
@@ -313,6 +305,18 @@ class TextureTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
+};
+
+class TextureMemoryAlloc : public TextureDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void updateImage(CCObject *sender);
+    void changeBackgroundVisible(CCObject *sender);
+private:
+    CCSprite *m_pBackground;
 };
 
 #endif // __TEXTURE2D_TEST_H__

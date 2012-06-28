@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -27,11 +27,16 @@ THE SOFTWARE.
 #define __CCPARTICLE_SYSTEM_H__
 
 #include "CCProtocols.h"
-#include "CCNode.h"
-#include "CCDictionary.h"
-#include "CCString.h"
+#include "base_nodes/CCNode.h"
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCString.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup particle_nodes
+ * @{
+ */
 
 class CCParticleBatchNode;
 
@@ -99,7 +104,7 @@ typedef struct sCCParticle {
     float        rotation;
     float        deltaRotation;
 
-    ccTime        timeToLive;
+    float        timeToLive;
 
     unsigned int    atlasIndex;
 
@@ -237,7 +242,7 @@ protected:
     unsigned int m_uAllocatedParticles;
 
     /** Is the emitter active */
-    CC_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
+    bool m_bIsActive;
     /** Quantity of particles that are being simulated at the moment */
     CC_PROPERTY_READONLY(unsigned int, m_uParticleCount, ParticleCount)
     /** How many seconds the emitter wil run. -1 means 'forever' */
@@ -290,6 +295,10 @@ public:
     virtual void setRotation(float newRotation);
     virtual void setScaleX(float newScaleX);
     virtual void setScaleY(float newScaleY);
+    
+    virtual bool isActive();
+    virtual bool isBlendAdditive();
+    virtual void setBlendAdditive(bool value);
 //////////////////////////////////////////////////////////////////////////
     
     /** start size in pixels of each particle */
@@ -324,6 +333,9 @@ public:
     CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
     /** conforms to CocosNodeTexture protocol */
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+    /** does the alpha value modify color */
+    CC_PROPERTY(bool, m_bOpacityModifyRGB, OpacityModifyRGB)
+
     /** whether or not the particles are using blend additive.
     If enabled, the following blending function will be used.
     @code
@@ -331,7 +343,7 @@ public:
     dest blend function = GL_ONE;
     @endcode
     */
-    CC_PROPERTY(bool, m_bIsBlendAdditive, IsBlendAdditive)
+    bool m_bIsBlendAdditive;
     /** particles movement type: Free or Grouped
     @since v0.8
     */
@@ -340,7 +352,12 @@ public:
     By default it is false.
     @since v0.8
     */
-    CC_PROPERTY(bool, m_bIsAutoRemoveOnFinish, IsAutoRemoveOnFinish)
+protected:
+    bool m_bIsAutoRemoveOnFinish;
+public:
+    virtual bool isAutoRemoveOnFinish();
+    virtual void setAutoRemoveOnFinish(bool var);
+
     /** Switch between different kind of emitter modes:
     - kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
     - kCCParticleModeRadius: uses radius movement + rotation
@@ -353,9 +370,17 @@ public:
     /** creates an initializes a CCParticleSystem from a plist file.
     This plist files can be creted manually or with Particle Designer:
     http://particledesigner.71squared.com/
+    @deprecated: This interface will be deprecated sooner or later.
     @since v0.99.3
     */
-    static CCParticleSystem * particleWithFile(const char *plistFile);
+    CC_DEPRECATED_ATTRIBUTE static CCParticleSystem * particleWithFile(const char *plistFile);
+
+    /** creates an initializes a CCParticleSystem from a plist file.
+    This plist files can be creted manually or with Particle Designer:
+    http://particledesigner.71squared.com/
+    @since v2.0
+    */
+    static CCParticleSystem * create(const char *plistFile);
 
     /** initializes a CCParticleSystem*/
     bool init();
@@ -389,9 +414,15 @@ public:
     //! should be overriden by subclasses
     virtual void postStep();
 
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
     virtual void updateWithNoTime(void);
+
+protected:
+    virtual void updateBlendFunc();
 };
+
+// end of particle_nodes group
+/// @}
 
 NS_CC_END
 

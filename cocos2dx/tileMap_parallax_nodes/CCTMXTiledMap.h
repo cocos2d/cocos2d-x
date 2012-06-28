@@ -25,7 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCTMX_TILE_MAP_H__
 #define __CCTMX_TILE_MAP_H__
-#include "CCNode.h"
+
+#include "base_nodes/CCNode.h"
 #include "CCTMXObjectGroup.h"
 
 NS_CC_BEGIN
@@ -35,6 +36,11 @@ class CCTMXLayer;
 class CCTMXLayerInfo;
 class CCTMXTilesetInfo;
 class CCTMXMapInfo;
+
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
 
 /** Possible oritentations of the TMX map */
 enum
@@ -116,11 +122,21 @@ public:
     CCTMXTiledMap();
     virtual ~CCTMXTiledMap();
 
+    /** creates a TMX Tiled Map with a TMX file.
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCTMXTiledMap* tiledMapWithTMXFile(const char *tmxFile);
+
+    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCTMXTiledMap* tiledMapWithXML(const char* tmxString, const char* resourcePath);
+
     /** creates a TMX Tiled Map with a TMX file.*/
-    static CCTMXTiledMap* tiledMapWithTMXFile(const char *tmxFile);
+    static CCTMXTiledMap* create(const char *tmxFile);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-    static CCTMXTiledMap* tiledMapWithXML(const char* tmxString, const char* resourcePath);
+    static CCTMXTiledMap* create(const char* tmxString, const char* resourcePath);
 
     /** initializes a TMX Tiled Map with a TMX file */
     bool initWithTMXFile(const char *tmxFile);
@@ -149,6 +165,9 @@ protected:
     CCDictionary* m_pTileProperties;
 
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

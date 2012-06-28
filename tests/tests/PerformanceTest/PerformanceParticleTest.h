@@ -16,7 +16,7 @@ public:
     virtual void initWithSubTest(int subtest, int particles);
     virtual std::string title();
 
-    void step(ccTime dt);
+    void step(float dt);
     void createParticleSystem();
     void onDecrease(CCObject* pSender);
     void onIncrease(CCObject* pSender);

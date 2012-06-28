@@ -24,17 +24,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCTileMapAtlas.h"
-#include "CCFileUtils.h"
-#include "CCTextureAtlas.h"
+#include "platform/CCFileUtils.h"
+#include "textures/CCTextureAtlas.h"
 #include "support/image_support/TGAlib.h"
 #include "ccConfig.h"
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCInteger.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
-
 
 // implementation CCTileMapAtlas
 
 CCTileMapAtlas * CCTileMapAtlas::tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
+{
+    return CCTileMapAtlas::create(tile, mapFile, tileWidth, tileHeight);
+}
+
+CCTileMapAtlas * CCTileMapAtlas::create(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
 {
     CCTileMapAtlas *pRet = new CCTileMapAtlas();
     if (pRet->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
@@ -45,13 +52,16 @@ CCTileMapAtlas * CCTileMapAtlas::tileMapAtlasWithTileFile(const char *tile, cons
     CC_SAFE_DELETE(pRet);
     return NULL;
 }
+
 bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
 {
     this->loadTGAfile(mapFile);
     this->calculateItemsToRender();
+
     if( CCAtlasNode::initWithTileFile(tile, tileWidth, tileHeight, m_nItemsToRender) )
     {
-        m_pPosToAtlasIndex = new StringToIntegerDictionary();
+        m_tColor = ccWHITE;
+        m_pPosToAtlasIndex = new CCDictionary();
         this->updateAtlasValues();
         this->setContentSize(CCSizeMake((float)(m_pTGAInfo->width*m_uItemWidth),
                                         (float)(m_pTGAInfo->height*m_uItemHeight)));
@@ -59,25 +69,23 @@ bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int
     }
     return false;
 }
+
 CCTileMapAtlas::CCTileMapAtlas()
     :m_pTGAInfo(NULL)
     ,m_pPosToAtlasIndex(NULL)
     ,m_nItemsToRender(0)
 {
 }
+
 CCTileMapAtlas::~CCTileMapAtlas()
 {
     if (m_pTGAInfo)
     {
         tgaDestroy(m_pTGAInfo);
     }
-    if (m_pPosToAtlasIndex)
-    {
-        m_pPosToAtlasIndex->clear();
-        delete m_pPosToAtlasIndex;
-        m_pPosToAtlasIndex = NULL;
-    }
+    CC_SAFE_RELEASE(m_pPosToAtlasIndex);
 }
+
 void CCTileMapAtlas::releaseMap()
 {
     if (m_pTGAInfo)
@@ -86,13 +94,9 @@ void CCTileMapAtlas::releaseMap()
     }
     m_pTGAInfo = NULL;
 
-    if (m_pPosToAtlasIndex)
-    {
-        m_pPosToAtlasIndex->clear();
-        delete m_pPosToAtlasIndex;
-        m_pPosToAtlasIndex = NULL;
-    }
+    CC_SAFE_RELEASE_NULL(m_pPosToAtlasIndex);
 }
+
 void CCTileMapAtlas::calculateItemsToRender()
 {
     CCAssert( m_pTGAInfo != NULL, "tgaInfo must be non-nil");
@@ -111,16 +115,19 @@ void CCTileMapAtlas::calculateItemsToRender()
         }
     }
 }
+
 void CCTileMapAtlas::loadTGAfile(const char *file)
 {
     CCAssert( file != NULL, "file must be non-nil");
+
+    const char* pPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(file);
 
     //    //Find the path of the file
     //    NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
     //    CCString *resourcePath = [mainBndl resourcePath];
     //    CCString * path = [resourcePath stringByAppendingPathComponent:file];
 
-    m_pTGAInfo = tgaLoad( CCFileUtils::fullPathFromRelativePath(file) );
+    m_pTGAInfo = tgaLoad( pPath );
 #if 1
     if( m_pTGAInfo->status != TGA_OK ) 
     {
@@ -150,20 +157,11 @@ void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
 
         // XXX: this method consumes a lot of memory
         // XXX: a tree of something like that shall be impolemented
-        char buffer[32];
-        /*std::string key = itoa(position.x, buffer, 10);*/
-        sprintf(buffer, "%d", position.x);
-        std::string key = buffer;
-        
-        key += ",";
-        /*key += itoa(position.y, buffer, 10);*/
-        sprintf(buffer, "%d", position.y);
-        key += buffer;
-
-        int num = m_pPosToAtlasIndex->find(key)->second;
-        this->updateAtlasValueAt(position, tile, num);
+        CCInteger *num = (CCInteger*)m_pPosToAtlasIndex->objectForKey(CCString::createWithFormat("%d,%d", position.x, position.y)->getCString());
+        this->updateAtlasValueAt(position, tile, num->getValue());
     }    
 }
+
 ccColor3B CCTileMapAtlas::tileAt(const ccGridSize& position)
 {
     CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
@@ -175,6 +173,7 @@ ccColor3B CCTileMapAtlas::tileAt(const ccGridSize& position)
 
     return value;    
 }
+
 void CCTileMapAtlas::updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index)
 {
     ccV3F_C4B_T2F_Quad quad;
@@ -187,16 +186,19 @@ void CCTileMapAtlas::updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& 
     float textureWide = (float) (m_pTextureAtlas->getTexture()->getPixelsWide());
     float textureHigh = (float) (m_pTextureAtlas->getTexture()->getPixelsHigh());
 
+    float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
+    float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
+
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-    float left        = (2 * row * m_uItemWidth + 1) / (2 * textureWide);
-    float right        = left + (m_uItemWidth * 2 - 2) / (2 * textureWide);
-    float top        = (2 * col * m_uItemHeight + 1) / (2 * textureHigh);
-    float bottom    = top + (m_uItemHeight * 2 - 2) / (2 * textureHigh);
+    float left        = (2 * row * itemWidthInPixels + 1) / (2 * textureWide);
+    float right       = left + (itemWidthInPixels * 2 - 2) / (2 * textureWide);
+    float top         = (2 * col * itemHeightInPixels + 1) / (2 * textureHigh);
+    float bottom      = top + (itemHeightInPixels * 2 - 2) / (2 * textureHigh);
 #else
-    float left        = (row * m_uItemWidth) / textureWide;
-    float right        = left + m_uItemWidth / textureWide;
-    float top        = (col * m_uItemHeight) / textureHigh;
-    float bottom    = top + m_uItemHeight / textureHigh;
+    float left        = (row * itemWidthInPixels) / textureWide;
+    float right       = left + itemWidthInPixels / textureWide;
+    float top         = (col * itemHeightInPixels) / textureHigh;
+    float bottom      = top + itemHeightInPixels / textureHigh;
 #endif
 
     quad.tl.texCoords.u = left;
@@ -221,8 +223,15 @@ void CCTileMapAtlas::updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& 
     quad.tr.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
     quad.tr.vertices.z = 0.0f;
 
+    ccColor4B color = { m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity };
+    quad.tr.colors = color;
+    quad.tl.colors = color;
+    quad.br.colors = color;
+    quad.bl.colors = color;
+
     m_pTextureAtlas->updateQuad(&quad, index);
 }
+
 void CCTileMapAtlas::updateAtlasValues()
 {
     CCAssert( m_pTGAInfo != NULL, "tgaInfo must be non-nil");
@@ -242,17 +251,9 @@ void CCTileMapAtlas::updateAtlasValues()
                 {
                     this->updateAtlasValueAt(ccg(x,y), value, total);
 
-                    char buffer[32];
-                    /*std::string key = itoa(x, buffer, 10);*/
-                    sprintf(buffer, "%d", x);
-                    std::string key = buffer;
-
-                    key += ",";
-                    /*key += itoa(y, buffer, 10);*/
-                    sprintf(buffer, "%d", y);
-                    key += buffer;
-
-                    m_pPosToAtlasIndex->insert(StringToIntegerPair(key, total));
+                    CCString *key = CCString::createWithFormat("%d,%d", x,y);
+                    CCInteger *num = CCInteger::create(total);
+                    m_pPosToAtlasIndex->setObject(num, key->getCString());
 
                     total++;
                 }
@@ -260,10 +261,12 @@ void CCTileMapAtlas::updateAtlasValues()
         }
     }
 }
+
 void CCTileMapAtlas::setTGAInfo(struct sImageTGA* var)
 {
     m_pTGAInfo = var;
 }
+
 struct sImageTGA * CCTileMapAtlas::getTGAInfo()
 {
     return m_pTGAInfo;

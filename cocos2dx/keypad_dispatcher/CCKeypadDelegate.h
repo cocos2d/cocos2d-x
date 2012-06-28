@@ -26,9 +26,14 @@ THE SOFTWARE.
 #define __CCKEYPAD_DELEGATE_H__
 
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup input
+ * @{
+ */
 
 class CC_DLL CCKeypadDelegate
 {
@@ -64,6 +69,9 @@ public:
 protected:
     CCKeypadDelegate* m_pDelegate;
 };
+
+// end of input group
+/// @} 
 
 NS_CC_END
 

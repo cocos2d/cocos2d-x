@@ -33,13 +33,20 @@ Use any of these editors to generate BMFonts:
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
 
-#include "CCSpriteBatchNode.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 #include <map>
 #include <sstream>
 #include <iostream>
 #include <vector>
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup label
+ * @{
+ */
 
 enum {
     kCCLabelAutomaticWidth = -1,
@@ -91,8 +98,8 @@ public://@public
     // BMFont definitions
     struct _FontDefHashElement* m_pFontDefDictionary;
 
-    //! FNTConfig: Common Height
-    unsigned int m_uCommonHeight;
+    //! FNTConfig: Common Height Should be signed (issue #1343)
+    int m_nCommonHeight;
     //! Padding
     ccBMFontPadding    m_tPadding;
     //! atlas name
@@ -103,17 +110,25 @@ public:
     CCBMFontConfiguration();
     virtual ~CCBMFontConfiguration();
     const char * description();
+    /** allocates a CCBMFontConfiguration with a FNT file 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
+
     /** allocates a CCBMFontConfiguration with a FNT file */
-    static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
+    static CCBMFontConfiguration * create(const char *FNTfile);
+
     /** initializes a BitmapFontConfiguration with a FNT file */
     bool initWithFNTfile(const char *FNTfile);
+    
+    inline const char* getAtlasName(){ return m_sAtlasName.c_str(); }
+    inline void setAtlasName(const char* atlasName) { m_sAtlasName = atlasName; }
 private:
-    void parseConfigFile(const char *controlFile);
+    bool parseConfigFile(const char *controlFile);
     void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
     void parseImageFileName(std::string line, const char *fntFile);
-    void parseKerningCapacity(std::string line);
     void parseKerningEntry(std::string line);
     void purgeKerningDictionary();
     void purgeFontDefDictionary();
@@ -156,14 +171,25 @@ class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, p
     /** conforms to CCRGBAProtocol protocol */
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
     /** conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+    bool m_bIsOpacityModifyRGB;
+    bool isOpacityModifyRGB();
+    void setOpacityModifyRGB(bool isOpacityModifyRGB);
 protected:
     // string to render
     unsigned short* m_sString;
-    std::string m_sString_initial;
-    CCBMFontConfiguration *m_pConfiguration;
+    
+    // name of fntFile
+    std::string m_sFntFile;
+    
+    // initial string without line breaks
+    std::string m_sInitialString;
+    // alignment of all lines
     CCTextAlignment m_pAlignment;
+    // max width until a line break is added
     float m_fWidth;
+    
+    CCBMFontConfiguration *m_pConfiguration;
+    
     bool m_bLineBreakWithoutSpaces;
     // offset of the texture atlas
     CCPoint    m_tImageOffset;
@@ -176,15 +202,26 @@ public:
     @since v0.99.3
     */
     static void purgeCachedData();
+    /** creates a bitmap font altas with an initial string and the FNT file 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
     /** creates a bitmap font altas with an initial string and the FNT file */
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
+    static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
 
+    /** Creates an label.
+    @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCLabelBMFont * node();
+
+    /** Creates an label.
+     */
+    static CCLabelBMFont * create();
+
+    bool init();
     /** init a bitmap font altas with an initial string and the FNT file */
-    bool initWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
-    bool initWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
-    bool initWithString(const char *str, const char *fntFile);
+    bool initWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
+
     /** updates the font chars based on the string to render */
     void createFontChars();
     // super method
@@ -202,6 +239,8 @@ public:
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
 
+    void setFntFile(const char* fntFile);
+    const char* getFntFile();
 #if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW
@@ -219,6 +258,10 @@ CC_DLL CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
 /** Purges the FNT config cache
 */
 CC_DLL void FNTConfigRemoveCache( void );
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_END
 

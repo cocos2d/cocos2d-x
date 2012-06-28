@@ -4,7 +4,7 @@
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 class EaseSpriteDemo : public CCLayer
 {
@@ -35,7 +35,7 @@ public:
     void onEnter();
     virtual std::string title();
 
-    void testStopAction(ccTime dt);
+    void testStopAction(float dt);
 };
 
 class SpriteEaseInOut : public EaseSpriteDemo
@@ -121,7 +121,7 @@ public:
     void onEnter();
     virtual std::string title();
 
-    void altertime(ccTime dt);
+    void altertime(float dt);
 };
 
 class ActionsEaseTestScene : public TestScene

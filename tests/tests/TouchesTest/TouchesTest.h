@@ -4,7 +4,7 @@
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 class PongScene : public TestScene
 {
@@ -19,15 +19,17 @@ public:
 class Ball;
 class PongLayer : public CCLayer
 {
-    Ball*        m_ball;
+private:
+    CCSize      m_tWinSize;
+    Ball*       m_ball;
     CCArray*    m_paddles;
-    CCPoint        m_ballStartingVelocity; 
+    CCPoint     m_ballStartingVelocity; 
 public:
     PongLayer();
     ~PongLayer();
 
     void resetAndScoreBallForPlayer(int player);
-    void doStep(ccTime delta);
+    void doStep(float delta);
 };
 
 #endif

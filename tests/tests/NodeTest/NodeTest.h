@@ -30,8 +30,8 @@ class Test4 : public TestCocosNodeDemo
 {
 public:
     Test4();
-    void delay2(ccTime dt);
-    void delay4(ccTime dt);
+    void delay2(float dt);
+    void delay4(float dt);
 
     virtual std::string title();
 };
@@ -40,7 +40,7 @@ class Test5 : public TestCocosNodeDemo
 {
 public:
     Test5();
-    void addAndRemove(ccTime dt);
+    void addAndRemove(float dt);
 
     virtual std::string title();
 };
@@ -49,14 +49,14 @@ class Test6 : public TestCocosNodeDemo
 {
 public:
     Test6();
-    void addAndRemove(ccTime dt);
+    void addAndRemove(float dt);
 
     virtual std::string title();
 };
 
 class StressTest1 : public TestCocosNodeDemo
 {
-    void shouldNotCrash(ccTime dt);
+    void shouldNotCrash(float dt);
     void removeMe(CCNode* node);
 public:
     StressTest1();
@@ -66,7 +66,7 @@ public:
 
 class StressTest2 : public TestCocosNodeDemo
 {
-    void shouldNotLeak(ccTime dt);
+    void shouldNotLeak(float dt);
 public:
     StressTest2();
 
@@ -77,7 +77,7 @@ class SchedulerTest1 : public TestCocosNodeDemo
 {
 public:
     SchedulerTest1();
-    void doSomething(ccTime dt);
+    void doSomething(float dt);
 
     virtual std::string title();
 };
@@ -104,7 +104,7 @@ class CameraZoomTest : public TestCocosNodeDemo
     float    m_z;
 public:
     CameraZoomTest();
-    void update(ccTime dt);
+    void update(float dt);
 
     virtual void onEnter();
     virtual void onExit();

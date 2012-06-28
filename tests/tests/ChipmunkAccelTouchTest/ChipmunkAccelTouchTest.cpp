@@ -46,7 +46,7 @@ CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
     CCFloat x = m_pBody->p.x;
     CCFloat y = m_pBody->p.y;
 
-    if ( !getIsRelativeAnchorPoint() ) {
+    if ( isIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
@@ -71,13 +71,13 @@ CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
 ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
 {
     // enable events
-    setIsTouchEnabled(true);
-    setIsAccelerometerEnabled(true);
+    setTouchEnabled(true);
+    setAccelerometerEnabled(true);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // title
-    CCLabelTTF *label = CCLabelTTF::labelWithString("Multi touch the screen", "Marker Felt", 36);
+    CCLabelTTF *label = CCLabelTTF::create("Multi touch the screen", "Marker Felt", 36);
     label->setPosition(ccp( s.width / 2, s.height - 30));
     this->addChild(label, -1);
 
@@ -89,12 +89,12 @@ ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
 
 #if 1
     // Use batch node. Faster
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
+    CCSpriteBatchNode *parent = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
     m_pSpriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
     m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("Images/grossini_dance_atlas.png");
-    CCNode *parent = CCNode::node();
+    CCNode *parent = CCNode::create();
 #endif
     addChild(parent, 0, kTagParentNode);
 
@@ -119,7 +119,7 @@ void ChipmunkAccelTouchTestLayer::initPhysics()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // init chipmunk
-    cpInitChipmunk();
+    //cpInitChipmunk();
 
     m_pSpace = cpSpaceNew();
 
@@ -148,7 +148,7 @@ void ChipmunkAccelTouchTestLayer::initPhysics()
     }
 }
 
-void ChipmunkAccelTouchTestLayer::update(ccTime delta)
+void ChipmunkAccelTouchTestLayer::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;
@@ -161,9 +161,9 @@ void ChipmunkAccelTouchTestLayer::update(ccTime delta)
 
 void ChipmunkAccelTouchTestLayer::createResetButton()
 {
-    CCMenuItemImage *reset = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(ChipmunkAccelTouchTestLayer::reset));
+    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(ChipmunkAccelTouchTestLayer::reset));
 
-    CCMenu *menu = CCMenu::menuWithItems(reset, NULL);
+    CCMenu *menu = CCMenu::create(reset, NULL);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

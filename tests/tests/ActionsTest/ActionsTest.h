@@ -4,7 +4,7 @@
 #include "../testBasic.h"
 ////----#include "cocos2d.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 
 enum
@@ -16,6 +16,8 @@ enum
     ACTION_SKEW_LAYER,
     ACTION_SKEWROTATE_LAYER,
     ACTION_JUMP_LAYER,
+    ACTION_CARDINALSPLINE_LAYER,
+    ACTION_CATMULLROM_LAYER,
     ACTION_BEZIER_LAYER,
     ACTION_BLINK_LAYER,
     ACTION_FADE_LAYER,
@@ -37,6 +39,7 @@ enum
     ACTION_ORBIT_LAYER,
     ACTION_FLLOW_LAYER,
     ACTION_TARGETED_LAYER,
+    PAUSERESUMEACTIONS_LAYER,
     ACTION_ISSUE1305_LAYER,
     ACTION_ISSUE1305_2_LAYER,
     ACTION_ISSUE1288_LAYER,
@@ -290,7 +293,7 @@ public:
     virtual void onEnter();
     virtual void onExit();
     void log(CCNode* pSender);
-    void addSprite(ccTime dt);
+    void addSprite(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:
@@ -332,6 +335,46 @@ public:
     virtual std::string subtitle();
     virtual std::string title();
     void logSprRotation(CCNode* pSender);
+};
+
+class ActionCatmullRom : public ActionsDemo
+{
+public:
+    ~ActionCatmullRom();
+    
+    virtual void onEnter();
+    virtual void draw();
+    virtual std::string subtitle();
+    virtual std::string title();
+private:
+    CCPointArray *m_pArray1;
+    CCPointArray *m_pArray2;
+};
+
+class ActionCardinalSpline : public ActionsDemo
+{
+public:
+    ~ActionCardinalSpline();
+    
+    virtual void onEnter();
+    virtual void draw();
+    virtual std::string subtitle();
+    virtual std::string title();
+private:
+    CCPointArray *m_pArray;
+};
+
+class PauseResumeActions : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+    virtual std::string title();
+    
+    void pause(float dt);
+    void resume(float dt);
+private:
+    CCSet *m_pPausedTargets;
 };
 
 #endif

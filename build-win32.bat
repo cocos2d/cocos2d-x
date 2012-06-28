@@ -46,6 +46,7 @@ set CC_TEST_BIN=tests.exe
 set CC_TEST_RES=..\tests\Resources\*.*
 set CC_HELLOWORLD_RES=..\HelloWorld\Resources\*.*
 set CC_HELLOLUA_RES=..\HelloLua\Resources\*.*
+set CC_TESTJS_RES=..\testjs\Resources\*.*
 
 if not exist "%CC_TEST_BIN%" (
     echo Can't find the binary "tests.exe", is there build error?
@@ -59,6 +60,8 @@ echo.
 xcopy  /E /Y /Q "%CC_TEST_RES%" .
 xcopy  /E /Y /Q "%CC_HELLOWORLD_RES%" .
 xcopy  /E /Y /Q "%CC_HELLOLUA_RES%" .
+xcopy  /E /Y /Q "%CC_TESTJS_RES%" .
+
 call "%CC_TEST_BIN%"
 start http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Cocos2d-x_Application_Wizard_for_Visual_Studio_User_Guide
 goto EOF

@@ -28,9 +28,14 @@ THE SOFTWARE.
 #define __CCGLSTATE_H__
 
 #include "CCGL.h"
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup shaders
+ * @{
+ */
 
 class CCGLProgram;
 
@@ -133,6 +138,9 @@ void CC_DLL ccGLDeleteTexture(GLuint textureId);
  @since v2.0.0
  */
 void CC_DLL ccGLEnable( ccGLServerState flags );
+
+// end of shaders group
+/// @}
 
 NS_CC_END
 

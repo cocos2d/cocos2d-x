@@ -22,10 +22,10 @@ class CCAnimation : public CCObject
     CCAnimation();
     ~CCAnimation(void);
 
-    static CCAnimation* animation(void);
-    static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames);
-    static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
-    static CCAnimation* animationWithAnimationFrames(CCArray *arrayOfSpriteFrameNames, float delayPerUnit, unsigned int loops);
+    static CCAnimation* create(void);
+    static CCAnimation* create(CCArray* arrayOfSpriteFrameNames);
+    static CCAnimation* create(CCArray* arrayOfSpriteFrameNames, float delay);
+    static CCAnimation* create(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
     void addSpriteFrame(CCSpriteFrame *pFrame);
     void addSpriteFrameWithFileName(const char *pszFileName);

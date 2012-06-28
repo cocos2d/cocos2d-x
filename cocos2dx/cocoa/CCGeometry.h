@@ -25,13 +25,19 @@ THE SOFTWARE.
 #ifndef __CCGEMETRY_H__
 #define __CCGEMETRY_H__
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
+#include "CCObject.h"
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 typedef float CCFloat;
 
-class CC_DLL CCPoint
+class CC_DLL CCPoint : public CCObject
 {
 public:
     float x;
@@ -43,11 +49,13 @@ public:
     CCPoint(const CCPoint& other);
     CCPoint& operator= (const CCPoint& other);
     void setPoint(float x, float y);
+    virtual CCObject* copyWithZone(CCZone* pZone);
+
 public:
     static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
 
-class CC_DLL CCSize
+class CC_DLL CCSize : public CCObject
 {
 public:
     float width;
@@ -59,11 +67,12 @@ public:
     CCSize(const CCSize& other);
     CCSize& operator= (const CCSize& other);
     void setSize(float width, float height);
+    virtual CCObject* copyWithZone(CCZone* pZone);
 public:
     static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
 
-class CC_DLL CCRect
+class CC_DLL CCRect : public CCObject
 {
 public:
     CCPoint origin;
@@ -75,6 +84,7 @@ public:
     CCRect(const CCRect& other);
     CCRect& operator= (const CCRect& other);
     void setRect(float x, float y, float width, float height);
+    virtual CCObject* copyWithZone(CCZone* pZone);
 public:
     //! return the leftmost x-value of 'rect'
     static CCFloat CCRectGetMinX(const CCRect& rect);
@@ -114,6 +124,9 @@ const CCSize CCSizeZero = CCSizeMake(0,0);
 
 /* The "zero" rectangle -- equivalent to CCRectMake(0, 0, 0, 0). */ 
 const CCRect CCRectZero = CCRectMake(0,0,0,0);
+
+// end of data_structure group
+/// @}
 
 NS_CC_END
 

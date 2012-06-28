@@ -32,10 +32,10 @@ public:
     virtual ~CCControlColourPickerTest();
     bool init();
     /** Callback for the change value. */
-    void colourValueChanged(CCObject *sender);
+    void colourValueChanged(CCObject *sender, CCControlEvent controlEvent);
 
     CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pColorLabel, ColorLabel)
 
-    CONTROL_SCENE_NODE_FUNC(CCControlColourPickerTest)
+    CONTROL_SCENE_CREATE_FUNC(CCControlColourPickerTest)
 };
 

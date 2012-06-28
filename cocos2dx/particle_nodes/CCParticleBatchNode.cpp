@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2011 cocos2d-x.org
+ * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
@@ -28,24 +28,22 @@
  */
 
 #include "CCParticleBatchNode.h"
-#include "CCTextureCache.h"
-#include "CCTextureAtlas.h"
+#include "textures/CCTextureCache.h"
+#include "textures/CCTextureAtlas.h"
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "effects/CCGrid.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "CCParticleSystem.h"
-#include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
 #include "support/base64.h"
 #include "support/zip_support/ZipUtils.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 
 NS_CC_BEGIN
-
-#define kCCParticleDefaultCapacity 500
 
 CCParticleBatchNode::CCParticleBatchNode()
 : m_pTextureAtlas(NULL)
@@ -60,19 +58,12 @@ CCParticleBatchNode::~CCParticleBatchNode()
 /*
  * creation with CCTexture2D
  */
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D * tex)
+CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
-    CCParticleBatchNode * p = new CCParticleBatchNode();
-    if( p && p->initWithTexture(tex, kCCParticleDefaultCapacity))
-    {
-        p->autorelease();
-        return p;
-    }
-    CC_SAFE_DELETE(p);
-    return NULL;
+    return CCParticleBatchNode::create(tex, capacity);
 }
 
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity)
+CCParticleBatchNode* CCParticleBatchNode::create(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
     CCParticleBatchNode * p = new CCParticleBatchNode();
     if( p && p->initWithTexture(tex, capacity))
@@ -87,22 +78,15 @@ CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex,
 /*
  * creation with File Image
  */
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithFile(const char* imageFile, unsigned int capacity)
+CCParticleBatchNode* CCParticleBatchNode::batchNodeWithFile(const char* imageFile, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
+{
+    return CCParticleBatchNode::create(imageFile, capacity);
+}
+
+CCParticleBatchNode* CCParticleBatchNode::create(const char* imageFile, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
     CCParticleBatchNode * p = new CCParticleBatchNode();
     if( p && p->initWithFile(imageFile, capacity))
-    {
-        p->autorelease();
-        return p;
-    }
-    CC_SAFE_DELETE(p);
-    return NULL;
-}
-
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithFile(const char* imageFile)
-{
-    CCParticleBatchNode * p = new CCParticleBatchNode();
-    if( p && p->initWithFile(imageFile, kCCParticleDefaultCapacity))
     {
         p->autorelease();
         return p;
@@ -452,7 +436,7 @@ void CCParticleBatchNode::increaseAtlasCapacityTo(unsigned int quantity)
 
     if( ! m_pTextureAtlas->resizeCapacity(quantity) ) {
         // serious problems
-        CCLOG("cocos2d: WARNING: Not enough memory to resize the atlas");
+        CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
         CCAssert(false,"XXX: CCParticleBatchNode #increaseAtlasCapacity SHALL handle this assert");
     }
 }
@@ -509,7 +493,7 @@ void CCParticleBatchNode::updateAllAtlasIndexes()
 
 void CCParticleBatchNode::updateBlendFunc(void)
 {
-    if( ! m_pTextureAtlas->getTexture()->getHasPremultipliedAlpha()) {
+    if( ! m_pTextureAtlas->getTexture()->hasPremultipliedAlpha()) {
         m_tBlendFunc.src = GL_SRC_ALPHA;
         m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
     }
@@ -520,7 +504,7 @@ void CCParticleBatchNode::setTexture(CCTexture2D* texture)
     m_pTextureAtlas->setTexture(texture);
 
     // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-    if( texture && ! texture->getHasPremultipliedAlpha() && ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) )
+    if( texture && ! texture->hasPremultipliedAlpha() && ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) )
     {
             m_tBlendFunc.src = GL_SRC_ALPHA;
             m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;

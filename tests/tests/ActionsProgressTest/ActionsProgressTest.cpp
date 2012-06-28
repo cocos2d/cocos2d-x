@@ -94,30 +94,30 @@ void SpriteDemo::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 18);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 18);
     addChild(label, 1);
     label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
-        CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
+        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 22);
         addChild(l, 1);
         l->setPosition( CCPointMake(s.width/2, s.height-80) );
     }    
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(SpriteDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(SpriteDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(SpriteDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(SpriteDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(SpriteDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(SpriteDemo::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
-    menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );    
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
+    menu->setPosition(CCPointZero);
+    item1->setPosition(CCPointMake( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(CCPointMake( s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(CCPointMake( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));    
     addChild(menu, 1);    
 
-    CCLayerColor *background = CCLayerColor::layerWithColor(ccc4(255,0,0,255));
+    CCLayerColor *background = CCLayerColor::create(ccc4(255,0,0,255));
     addChild(background, -10);
 }
 
@@ -157,22 +157,22 @@ void SpriteProgressToRadial::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
-    CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);
+    CCProgressTo *to1 = CCProgressTo::create(2, 100);
+    CCProgressTo *to2 = CCProgressTo::create(2, 100);
 
-    CCProgressTimer *left = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister1));
+    CCProgressTimer *left = CCProgressTimer::create(CCSprite::create(s_pPathSister1));
     left->setType( kCCProgressTimerTypeRadial );
     addChild(left);
     left->setPosition(CCPointMake(100, s.height/2));
-    left->runAction( CCRepeatForever::actionWithAction(to1));
+    left->runAction( CCRepeatForever::create(to1));
     
-    CCProgressTimer *right = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathBlock));
+    CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathBlock));
     right->setType(kCCProgressTimerTypeRadial);
     // Makes the ridial CCW
     right->setReverseProgress(true);
     addChild(right);
     right->setPosition(CCPointMake(s.width-100, s.height/2));
-    right->runAction( CCRepeatForever::actionWithAction(to2));
+    right->runAction( CCRepeatForever::create(to2));
 }
 
 std::string SpriteProgressToRadial::subtitle()
@@ -192,10 +192,10 @@ void SpriteProgressToHorizontal::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
-    CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);
+    CCProgressTo *to1 = CCProgressTo::create(2, 100);
+    CCProgressTo *to2 = CCProgressTo::create(2, 100);
     
-    CCProgressTimer *left = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister1));
+    CCProgressTimer *left = CCProgressTimer::create(CCSprite::create(s_pPathSister1));
     left->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the left since the midpoint is 0 for the x
     left->setMidpoint(ccp(0,0));
@@ -203,9 +203,9 @@ void SpriteProgressToHorizontal::onEnter()
     left->setBarChangeRate(ccp(1, 0));
     addChild(left);
     left->setPosition(CCPointMake(100, s.height/2));
-    left->runAction( CCRepeatForever::actionWithAction(to1));
+    left->runAction( CCRepeatForever::create(to1));
     
-    CCProgressTimer *right = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister2));
+    CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathSister2));
     right->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the left since the midpoint is 1 for the x
     right->setMidpoint(ccp(1, 0));
@@ -213,7 +213,7 @@ void SpriteProgressToHorizontal::onEnter()
     right->setBarChangeRate(ccp(1, 0));
     addChild(right);
     right->setPosition(CCPointMake(s.width-100, s.height/2));
-    right->runAction( CCRepeatForever::actionWithAction(to2));
+    right->runAction( CCRepeatForever::create(to2));
 }
 
 std::string SpriteProgressToHorizontal::subtitle()
@@ -232,10 +232,10 @@ void SpriteProgressToVertical::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
-    CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);
+    CCProgressTo *to1 = CCProgressTo::create(2, 100);
+    CCProgressTo *to2 = CCProgressTo::create(2, 100);
     
-    CCProgressTimer *left = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister1));
+    CCProgressTimer *left = CCProgressTimer::create(CCSprite::create(s_pPathSister1));
     left->setType(kCCProgressTimerTypeBar);
 
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
@@ -244,9 +244,9 @@ void SpriteProgressToVertical::onEnter()
     left->setBarChangeRate(ccp(0, 1));
     addChild(left);
     left->setPosition(CCPointMake(100, s.height/2));
-    left->runAction( CCRepeatForever::actionWithAction(to1));
+    left->runAction( CCRepeatForever::create(to1));
     
-    CCProgressTimer *right = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister2));
+    CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathSister2));
     right->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     right->setMidpoint(ccp(0, 1));
@@ -254,7 +254,7 @@ void SpriteProgressToVertical::onEnter()
     right->setBarChangeRate(ccp(0, 1));
     addChild(right);
     right->setPosition(CCPointMake(s.width-100, s.height/2));
-    right->runAction( CCRepeatForever::actionWithAction(to2));
+    right->runAction( CCRepeatForever::create(to2));
 }
 
 std::string SpriteProgressToVertical::subtitle()
@@ -273,22 +273,22 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCProgressTo *action = CCProgressTo::actionWithDuration(2, 100);
+    CCProgressTo *action = CCProgressTo::create(2, 100);
 
     /**
    *  Our image on the left should be a radial progress indicator, clockwise
    */
-    CCProgressTimer *left = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathBlock));
+    CCProgressTimer *left = CCProgressTimer::create(CCSprite::create(s_pPathBlock));
     left->setType(kCCProgressTimerTypeRadial);
     addChild(left);
     left->setMidpoint(ccp(0.25f, 0.75f));
     left->setPosition(ccp(100, s.height/2));
-    left->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)action->copy()->autorelease()));
+    left->runAction(CCRepeatForever::create((CCActionInterval *)action->copy()->autorelease()));
 
     /**
    *  Our image on the left should be a radial progress indicator, counter clockwise
    */
-    CCProgressTimer *right = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathBlock));
+    CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathBlock));
     right->setType(kCCProgressTimerTypeRadial);
     right->setMidpoint(ccp(0.75f, 0.25f));
 
@@ -298,7 +298,7 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
    */
     addChild(right);
     right->setPosition(ccp(s.width-100, s.height/2));
-    right->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)action->copy()->autorelease()));
+    right->runAction(CCRepeatForever::create((CCActionInterval *)action->copy()->autorelease()));
 }
 
 std::string SpriteProgressToRadialMidpointChanged::subtitle()
@@ -317,9 +317,9 @@ void SpriteProgressBarVarious::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCProgressTo *to = CCProgressTo::actionWithDuration(2, 100);
+    CCProgressTo *to = CCProgressTo::create(2, 100);
 
-    CCProgressTimer *left = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister1));
+    CCProgressTimer *left = CCProgressTimer::create(CCSprite::create(s_pPathSister1));
     left->setType(kCCProgressTimerTypeBar);
 
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
@@ -328,9 +328,9 @@ void SpriteProgressBarVarious::onEnter()
     left->setBarChangeRate(ccp(1, 0));
     addChild(left);
     left->setPosition(ccp(100, s.height/2));
-    left->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
+    left->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
 
-    CCProgressTimer *middle = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister2));
+    CCProgressTimer *middle = CCProgressTimer::create(CCSprite::create(s_pPathSister2));
     middle->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     middle->setMidpoint(ccp(0.5f, 0.5f));
@@ -338,9 +338,9 @@ void SpriteProgressBarVarious::onEnter()
     middle->setBarChangeRate(ccp(1,1));
     addChild(middle);
     middle->setPosition(ccp(s.width/2, s.height/2));
-    middle->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
+    middle->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
 
-    CCProgressTimer *right = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister2));
+    CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathSister2));
     right->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     right->setMidpoint(ccp(0.5f, 0.5f));
@@ -348,7 +348,7 @@ void SpriteProgressBarVarious::onEnter()
     right->setBarChangeRate(ccp(0, 1));
     addChild(right);
     right->setPosition(ccp(s.width-100, s.height/2));
-    right->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
+    right->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
 }
 
 std::string SpriteProgressBarVarious::subtitle()
@@ -367,16 +367,16 @@ void SpriteProgressBarTintAndFade::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCProgressTo *to = CCProgressTo::actionWithDuration(6, 100);
-    CCAction *tint = CCSequence::actions(CCTintTo::actionWithDuration(1, 255, 0, 0),
-                                         CCTintTo::actionWithDuration(1, 0, 255, 0),
-                                         CCTintTo::actionWithDuration(1, 0, 0, 255),
+    CCProgressTo *to = CCProgressTo::create(6, 100);
+    CCAction *tint = CCSequence::create(CCTintTo::create(1, 255, 0, 0),
+                                         CCTintTo::create(1, 0, 255, 0),
+                                         CCTintTo::create(1, 0, 0, 255),
                                          NULL);
-    CCAction *fade = CCSequence::actions(CCFadeTo::actionWithDuration(1.0f, 0),
-                                         CCFadeTo::actionWithDuration(1.0f, 255),
+    CCAction *fade = CCSequence::create(CCFadeTo::create(1.0f, 0),
+                                         CCFadeTo::create(1.0f, 255),
                                          NULL);
 
-    CCProgressTimer *left = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister1));
+    CCProgressTimer *left = CCProgressTimer::create(CCSprite::create(s_pPathSister1));
     left->setType(kCCProgressTimerTypeBar);
 
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
@@ -385,12 +385,12 @@ void SpriteProgressBarTintAndFade::onEnter()
     left->setBarChangeRate(ccp(1, 0));
     addChild(left);
     left->setPosition(ccp(100, s.height/2));
-    left->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
-    left->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)tint->copy()->autorelease()));
+    left->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
+    left->runAction(CCRepeatForever::create((CCActionInterval *)tint->copy()->autorelease()));
 
-    left->addChild(CCLabelTTF::labelWithString("Tint", "Marker Felt", 20.0f));
+    left->addChild(CCLabelTTF::create("Tint", "Marker Felt", 20.0f));
 
-    CCProgressTimer *middle = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister2));
+    CCProgressTimer *middle = CCProgressTimer::create(CCSprite::create(s_pPathSister2));
     middle->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     middle->setMidpoint(ccp(0.5f, 0.5f));
@@ -398,12 +398,12 @@ void SpriteProgressBarTintAndFade::onEnter()
     middle->setBarChangeRate(ccp(1, 1));
     addChild(middle);
     middle->setPosition(ccp(s.width/2, s.height/2));
-    middle->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
-    middle->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)fade->copy()->autorelease()));
+    middle->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
+    middle->runAction(CCRepeatForever::create((CCActionInterval *)fade->copy()->autorelease()));
 
-    middle->addChild(CCLabelTTF::labelWithString("Fade", "Marker Felt", 20.0f));
+    middle->addChild(CCLabelTTF::create("Fade", "Marker Felt", 20.0f));
 
-    CCProgressTimer *right = CCProgressTimer::progressWithSprite(CCSprite::spriteWithFile(s_pPathSister2));
+    CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathSister2));
     right->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     right->setMidpoint(ccp(0.5f, 0.5f));
@@ -411,11 +411,11 @@ void SpriteProgressBarTintAndFade::onEnter()
     right->setBarChangeRate(ccp(0, 1));
     addChild(right);
     right->setPosition(ccp(s.width-100, s.height/2));
-    right->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
-    right->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)tint->copy()->autorelease()));
-    right->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)fade->copy()->autorelease()));
+    right->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
+    right->runAction(CCRepeatForever::create((CCActionInterval *)tint->copy()->autorelease()));
+    right->runAction(CCRepeatForever::create((CCActionInterval *)fade->copy()->autorelease()));
 
-    right->addChild(CCLabelTTF::labelWithString("Tint and Fade", "Marker Felt", 20.0f));
+    right->addChild(CCLabelTTF::create("Tint and Fade", "Marker Felt", 20.0f));
 }
 
 std::string SpriteProgressBarTintAndFade::subtitle()
@@ -434,11 +434,11 @@ void SpriteProgressWithSpriteFrame::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCProgressTo *to = CCProgressTo::actionWithDuration(6, 100);
+    CCProgressTo *to = CCProgressTo::create(6, 100);
 
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("zwoptex/grossini.plist");
 
-    CCProgressTimer *left = CCProgressTimer::progressWithSprite(CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png"));
+    CCProgressTimer *left = CCProgressTimer::create(CCSprite::createWithSpriteFrameName("grossini_dance_01.png"));
     left->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     left->setMidpoint(ccp(0.5f, 0.5f));
@@ -446,9 +446,9 @@ void SpriteProgressWithSpriteFrame::onEnter()
     left->setBarChangeRate(ccp(1, 0));
     addChild(left);
     left->setPosition(ccp(100, s.height/2));
-    left->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
+    left->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
 
-    CCProgressTimer *middle = CCProgressTimer::progressWithSprite(CCSprite::spriteWithSpriteFrameName("grossini_dance_02.png"));
+    CCProgressTimer *middle = CCProgressTimer::create(CCSprite::createWithSpriteFrameName("grossini_dance_02.png"));
     middle->setType(kCCProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     middle->setMidpoint(ccp(0.5f, 0.5f));
@@ -456,9 +456,9 @@ void SpriteProgressWithSpriteFrame::onEnter()
     middle->setBarChangeRate(ccp(1, 1));
     addChild(middle);
     middle->setPosition(ccp(s.width/2, s.height/2));
-    middle->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
+    middle->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
 
-    CCProgressTimer *right = CCProgressTimer::progressWithSprite(CCSprite::spriteWithSpriteFrameName("grossini_dance_03.png"));
+    CCProgressTimer *right = CCProgressTimer::create(CCSprite::createWithSpriteFrameName("grossini_dance_03.png"));
     right->setType(kCCProgressTimerTypeRadial);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     right->setMidpoint(ccp(0.5f, 0.5f));
@@ -466,7 +466,7 @@ void SpriteProgressWithSpriteFrame::onEnter()
     right->setBarChangeRate(ccp(0, 1));
     addChild(right);
     right->setPosition(ccp(s.width-100, s.height/2));
-    right->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)to->copy()->autorelease()));
+    right->runAction(CCRepeatForever::create((CCActionInterval *)to->copy()->autorelease()));
 }
 
 std::string SpriteProgressWithSpriteFrame::subtitle()

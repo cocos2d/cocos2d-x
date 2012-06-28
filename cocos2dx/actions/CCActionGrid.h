@@ -32,6 +32,11 @@ NS_CC_BEGIN
 
 class CCGridBase;
 
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** @brief Base class for Grid actions */
 class CC_DLL CCGridAction : public CCActionInterval
 {
@@ -41,14 +46,17 @@ public:
     virtual CCActionInterval* reverse(void);
 
     /** initializes the action with size and duration */
-    virtual bool initWithSize(const ccGridSize& gridSize, ccTime duration);
+    virtual bool initWithSize(const ccGridSize& gridSize, float duration);
     /** returns the grid */
     virtual CCGridBase* getGrid(void);
 
 public:
+    /** creates the action with size and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCGridAction* actionWithSize(const ccGridSize& gridSize, float duration);
     /** creates the action with size and duration */
-    static CCGridAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
-
+    static CCGridAction* create(const ccGridSize& gridSize, float duration);
 protected:
     ccGridSize m_sGridSize;
 };
@@ -70,8 +78,12 @@ public:
     void setVertex(const ccGridSize& pos, const ccVertex3F& vertex);
 
 public:
+    /** creates the action with size and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCGrid3DAction* actionWithSize(const ccGridSize& gridSize, float duration);
     /** creates the action with size and duration */
-    static CCGrid3DAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
+    static CCGrid3DAction* create(const ccGridSize& gridSize, float duration);
 };
 
 /** @brief Base class for CCTiledGrid3D actions */
@@ -89,8 +101,12 @@ public:
     virtual CCGridBase* getGrid(void);
 
 public:
+    /** creates the action with size and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCTiledGrid3DAction* actionWithSize(const ccGridSize& gridSize, float duration);
     /** creates the action with size and duration */
-    static CCTiledGrid3DAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
+    static CCTiledGrid3DAction* create(const ccGridSize& gridSize, float duration);
 };
 
 /** @brief CCAccelDeccelAmplitude action */
@@ -99,10 +115,10 @@ class CC_DLL CCAccelDeccelAmplitude : public CCActionInterval
 public:
     virtual ~CCAccelDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(CCAction *pAction, ccTime duration);
+    bool initWithAction(CCAction *pAction, float duration);
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(ccTime time);
+    virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
     /** get amplitude rate */
@@ -111,8 +127,12 @@ public:
     inline void setRate(float fRate) { m_fRate = fRate; }
 
 public:
+    /** creates the action with an inner action that has the amplitude property, and a duration time 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, float duration);
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static CCAccelDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+    static CCAccelDeccelAmplitude* create(CCAction *pAction, float duration);
 
 protected:
     float m_fRate;
@@ -125,7 +145,7 @@ class CC_DLL CCAccelAmplitude : public CCActionInterval
 public:
     ~CCAccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(CCAction *pAction, ccTime duration);
+    bool initWithAction(CCAction *pAction, float duration);
 
     /** get amplitude rate */
     inline float getRate(void) { return m_fRate; }
@@ -133,13 +153,16 @@ public:
     inline void setRate(float fRate) { m_fRate = fRate; }
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(ccTime time);
+    virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
+    /** creates the action with an inner action that has the amplitude property, and a duration time
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCAccelAmplitude* actionWithAction(CCAction *pAction, float duration);
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static CCAccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
-
+    static CCAccelAmplitude* create(CCAction *pAction, float duration);
 protected:
     float m_fRate;
     CCActionInterval *m_pOther;
@@ -151,7 +174,7 @@ class CC_DLL CCDeccelAmplitude : public CCActionInterval
 public:
     ~CCDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(CCAction *pAction, ccTime duration);
+    bool initWithAction(CCAction *pAction, float duration);
 
     /** get amplitude rate */
     inline float getRate(void) { return m_fRate; }
@@ -159,12 +182,16 @@ public:
     inline void setRate(float fRate) { m_fRate = fRate; }
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(ccTime time);
+    virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
+    /** creates the action with an inner action that has the amplitude property, and a duration time 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCDeccelAmplitude* actionWithAction(CCAction *pAction, float duration);
     /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static CCDeccelAmplitude* actionWithAction(CCAction *pAction, ccTime duration);
+    static CCDeccelAmplitude* create(CCAction *pAction, float duration);
 
 protected:
     float m_fRate;
@@ -182,8 +209,12 @@ public:
     virtual void startWithTarget(CCNode *pTarget);
 
 public:
+    /** Allocates and initializes the action 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCStopGrid* action(void);
     /** Allocates and initializes the action */
-    static CCStopGrid* action(void);
+    static CCStopGrid* create(void);
 };
 
 /** @brief CCReuseGrid action */
@@ -196,12 +227,18 @@ public:
     virtual void startWithTarget(CCNode *pTarget);
 
 public:
+    /** creates an action with the number of times that the current grid will be reused 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCReuseGrid* actionWithTimes(int times);
     /** creates an action with the number of times that the current grid will be reused */
-    static CCReuseGrid* actionWithTimes(int times);
-
+    static CCReuseGrid* create(int times);
 protected:
     int m_nTimes;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

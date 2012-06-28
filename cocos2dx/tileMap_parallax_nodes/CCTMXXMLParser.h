@@ -27,17 +27,16 @@ THE SOFTWARE.
 
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
-#include "CCArray.h"
-#include "CCDictionary.h"
-#include "CCGeometry.h"
 
-#include "../platform/CCSAXParser.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCGeometry.h"
+#include "platform/CCSAXParser.h"
 
 #include <string>
 
 NS_CC_BEGIN
 
-class CCData;
 class CCTMXObjectGroup;
 
 /** @file
@@ -47,6 +46,11 @@ class CCTMXObjectGroup;
 * since the user should not use them.
 *
 */
+
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
 
 enum {
     TMXLayerAttribNone = 1 << 0,
@@ -181,8 +185,6 @@ public:
     bool parseXMLFile(const char *xmlFilename);
     /* initalises parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
     bool parseXMLString(const char *xmlString);
-    /* handles the work of parsing for parseXMLFile: and parseXMLString: */
-    bool parseXMLData(const CCData* data);
 
     CCDictionary* getTileProperties();
     void setTileProperties(CCDictionary* tileProperties);
@@ -208,6 +210,9 @@ protected:
     //! tile properties
     CCDictionary* m_pTileProperties;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

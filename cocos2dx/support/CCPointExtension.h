@@ -43,10 +43,15 @@ THE SOFTWARE.
   - cpvadd( CCPointMake(1,1), CCPointMake(2,2) ); // mixing chipmunk and CG (avoid)
  */
 
-#include "CCGeometry.h"
+#include "cocoa/CCGeometry.h"
 #include <math.h>
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup data_structures
+ * @{
+ */
 
 /** Helper macro that creates a CCPoint
  @return CCPoint
@@ -328,6 +333,9 @@ ccpIntersectPoint returns the intersection point of line A-B, C-D
 @since v1.0.0
 */
 CCPoint CC_DLL ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
+
+// end of data_structures group
+/// @}
 
 NS_CC_END
 

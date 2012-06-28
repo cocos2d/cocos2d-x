@@ -31,6 +31,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup transition
+ * @{
+ */
+
+/**
 @brief A transition which peels back the bottom right hand corner of a scene
 to transition to the scene beneath it simulating a page turn.
 
@@ -54,15 +59,23 @@ public:
     * Creates a base transition with duration and incoming scene.
     * If back is true then the effect is reversed to appear as if the incoming 
     * scene is being turned from left over the outgoing scene.
+    @deprecated: This interface will be deprecated sooner or later.
     */
-    static CCTransitionPageTurn* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionPageTurn* transitionWithDuration(float t,CCScene* scene,bool backwards);
 
     /**
     * Creates a base transition with duration and incoming scene.
     * If back is true then the effect is reversed to appear as if the incoming 
     * scene is being turned from left over the outgoing scene.
     */
-    virtual bool initWithDuration(ccTime t,CCScene* scene,bool backwards);
+    static CCTransitionPageTurn* create(float t,CCScene* scene,bool backwards);
+
+    /**
+    * Creates a base transition with duration and incoming scene.
+    * If back is true then the effect is reversed to appear as if the incoming 
+    * scene is being turned from left over the outgoing scene.
+    */
+    virtual bool initWithDuration(float t,CCScene* scene,bool backwards);
 
     CCActionInterval* actionWithSize(const ccGridSize& vector);
 
@@ -71,6 +84,9 @@ public:
 protected:
     virtual void sceneOrder();
 };
+
+// end of transition group
+/// @}
 
 NS_CC_END
 

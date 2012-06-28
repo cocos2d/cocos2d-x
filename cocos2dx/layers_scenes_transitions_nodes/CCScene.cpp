@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -25,14 +25,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScene.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN
 
 CCScene::CCScene()
 {
-    m_bIsRelativeAnchorPoint = false;
+    m_bIgnoreAnchorPointForPosition = true;
     setAnchorPoint(ccp(0.5f, 0.5f));
 }
 
@@ -55,6 +55,11 @@ bool CCScene::init()
 }
 
 CCScene *CCScene::node()
+{
+    return CCScene::create();
+}
+
+CCScene *CCScene::create()
 {
     CCScene *pRet = new CCScene();
     if (pRet && pRet->init())

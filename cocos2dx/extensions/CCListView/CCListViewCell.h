@@ -27,9 +27,14 @@ THE SOFTWARE.
 #define __CC_LIST_VIEW_CELL_H_
 
 #include "CCControlDefine.h"
-#include "CCLayer.h"
+#include "layers_scenes_transitions_nodes/CCLayer.h"
 
 NS_CC_EXT_BEGIN
+
+/**
+ * @addtogroup GUI
+ * @{
+ */
 
 class CCListView;
 typedef enum
@@ -74,6 +79,9 @@ class CC_DLL CCListViewCell : public CCLayerColor
         ccColor4B        m_normalColor;
         ccColor3B        m_separatorLineColor;
 };
+
+// end of GUI group
+/// @}
 
 NS_CC_EXT_END
 

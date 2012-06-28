@@ -38,13 +38,13 @@ void ExtensionsMainLayer::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCMenu* pMenu = CCMenu::menuWithItems(NULL);
+    CCMenu* pMenu = CCMenu::create();
     pMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < TEST_MAX_COUNT; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::itemWithString(testsName[i].c_str(), this,
+        CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
                                                     menu_selector(ExtensionsMainLayer::menuCallback));
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         pMenu->addChild(pItem, kItemTagBasic + i);

@@ -25,10 +25,10 @@ THE SOFTWARE.
 
 #include "CCTransitionPageTurn.h"
 #include "CCDirector.h"
-#include "CCActionInterval.h"
-#include "CCActionInstant.h"
-#include "CCActionGrid.h"
-#include "CCActionPageTurn3D.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
+#include "actions/CCActionGrid.h"
+#include "actions/CCActionPageTurn3D.h"
 
 NS_CC_BEGIN
 
@@ -40,8 +40,13 @@ CCTransitionPageTurn::~CCTransitionPageTurn()
 {
 }
 
+CCTransitionPageTurn * CCTransitionPageTurn::transitionWithDuration(float t, CCScene *scene, bool backwards)
+{
+    return CCTransitionPageTurn::create(t,scene,backwards);
+}
+
 /** creates a base transition with duration and incoming scene */
-CCTransitionPageTurn * CCTransitionPageTurn::transitionWithDuration(ccTime t, CCScene *scene, bool backwards)
+CCTransitionPageTurn * CCTransitionPageTurn::create(float t, CCScene *scene, bool backwards)
 {
     CCTransitionPageTurn * pTransition = new CCTransitionPageTurn();
     pTransition->initWithDuration(t,scene,backwards);
@@ -50,7 +55,7 @@ CCTransitionPageTurn * CCTransitionPageTurn::transitionWithDuration(ccTime t, CC
 }
 
 /** initializes a transition with duration and incoming scene */
-bool CCTransitionPageTurn::initWithDuration(ccTime t, CCScene *scene, bool backwards)
+bool CCTransitionPageTurn::initWithDuration(float t, CCScene *scene, bool backwards)
 {
     // XXX: needed before [super init]
     m_bBack = backwards;
@@ -89,11 +94,11 @@ void CCTransitionPageTurn::onEnter()
     {
         m_pOutScene->runAction
         (
-            CCSequence::actions
+            CCSequence::create
             (
                 action,
-                CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
-                CCStopGrid::action(),
+                CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
+                CCStopGrid::create(),
                 NULL
             )
         );
@@ -101,15 +106,15 @@ void CCTransitionPageTurn::onEnter()
     else
     {
         // to prevent initial flicker
-        m_pInScene->setIsVisible(false);
+        m_pInScene->setVisible(false);
         m_pInScene->runAction
         (
-            CCSequence::actions
+            CCSequence::create
             (
-                CCShow::action(),
+                CCShow::create(),
                 action,
-                CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
-                CCStopGrid::action(),
+                CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
+                CCStopGrid::create(),
                 NULL
             )
         );
@@ -122,15 +127,15 @@ CCActionInterval* CCTransitionPageTurn:: actionWithSize(const ccGridSize& vector
     if( m_bBack )
     {
         // Get hold of the PageTurn3DAction
-        return CCReverseTime::actionWithAction
+        return CCReverseTime::create
         (
-            CCPageTurn3D::actionWithSize(vector, m_fDuration)
+            CCPageTurn3D::create(vector, m_fDuration)
         );
     }
     else
     {
         // Get hold of the PageTurn3DAction
-        return CCPageTurn3D::actionWithSize(vector, m_fDuration);
+        return CCPageTurn3D::create(vector, m_fDuration);
     }
 }
 

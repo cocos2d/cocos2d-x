@@ -34,7 +34,7 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float x = pos.x * PTM_RATIO;
     float y = pos.y * PTM_RATIO;
 
-    if ( !getIsRelativeAnchorPoint() ) {
+    if ( isIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
@@ -60,8 +60,8 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
 Box2DTestLayer::Box2DTestLayer()
 : m_pSpriteTexture(NULL)
 {
-    setIsTouchEnabled( true );
-    setIsAccelerometerEnabled( true );
+    setTouchEnabled( true );
+    setAccelerometerEnabled( true );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     // init physics
@@ -72,19 +72,19 @@ Box2DTestLayer::Box2DTestLayer()
     //Set up sprite
 #if 1
     // Use batch node. Faster
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("Images/blocks.png", 100);
+    CCSpriteBatchNode *parent = CCSpriteBatchNode::create("Images/blocks.png", 100);
     m_pSpriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
     m_pSpriteTexture = CCTextureCache::sharedTextureCache()->addImage("Images/blocks.png");
-    CCNode *parent = CCNode::node();
+    CCNode *parent = CCNode::create();
 #endif
     addChild(parent, 0, kTagParentNode);
 
 
     addNewSpriteAtPosition(ccp(s.width/2, s.height/2));
 
-    CCLabelTTF *label = CCLabelTTF::labelWithString("Tap screen", "Marker Felt", 32);
+    CCLabelTTF *label = CCLabelTTF::create("Tap screen", "Marker Felt", 32);
     addChild(label, 0);
     label->setColor(ccc3(0,0,255));
     label->setPosition(ccp( s.width/2, s.height-50));
@@ -158,9 +158,9 @@ void Box2DTestLayer::initPhysics()
 
 void Box2DTestLayer::createResetButton()
 {
-    CCMenuItemImage *reset = CCMenuItemImage::itemWithNormalImage("Images/r1.png", "Images/r2.png", this, menu_selector(Box2DTestLayer::reset));
+    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(Box2DTestLayer::reset));
 
-    CCMenu *menu = CCMenu::menuWithItems(reset, NULL);
+    CCMenu *menu = CCMenu::create(reset, NULL);
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -237,7 +237,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
 }
 
 
-void Box2DTestLayer::update(ccTime dt)
+void Box2DTestLayer::update(float dt)
 {
     //It is recommended that a fixed time step is used with Box2D for stability
     //of the simulation, however, we are using a variable time step here.

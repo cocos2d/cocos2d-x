@@ -28,13 +28,13 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "CCTextureCache.h"
 #include "ccMacros.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
 #include "extensions/CCNotificationCenter/CCNotificationCenter.h"
 #include "CCEventType.h"
 // support
 #include "CCTexture2D.h"
-#include "CCString.h"
+#include "cocoa/CCString.h"
 #include <stdlib.h>
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
@@ -102,8 +102,12 @@ void CCTextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
 }
 
 // TextureAtlas - alloc & init
-
 CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, unsigned int capacity)
+{
+    return CCTextureAtlas::create(file, capacity);
+}
+
+CCTextureAtlas * CCTextureAtlas::create(const char* file, unsigned int capacity)
 {
     CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
     if(pTextureAtlas && pTextureAtlas->initWithFile(file, capacity))
@@ -116,6 +120,11 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, unsigned
 }
 
 CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity)
+{
+    return CCTextureAtlas::create(texture, capacity);
+}
+
+CCTextureAtlas * CCTextureAtlas::create(CCTexture2D *texture, unsigned int capacity)
 {
     CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
     if (pTextureAtlas && pTextureAtlas->initWithTexture(texture, capacity))
@@ -209,7 +218,7 @@ void CCTextureAtlas::listenBackToForeground(CCObject *obj)
 
 const char* CCTextureAtlas::description()
 {
-    return CCString::stringWithFormat("<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads)->getCString();
+    return CCString::createWithFormat("<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads)->getCString();
 }
 
 
@@ -563,7 +572,7 @@ void CCTextureAtlas::fillWithEmptyQuadsFromIndex(unsigned int index, unsigned in
     memset(&quad, 0, sizeof(quad));
 
     unsigned int to = index + amount;
-    for (int i = index ; i < to ; i++)
+    for (unsigned int i = index ; i < to ; i++)
     {
         m_pQuads[i] = quad;
     }

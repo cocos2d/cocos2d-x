@@ -23,18 +23,44 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #define __CC_PLATFORM_FILEUTILS_CPP__
-#include "CCFileUtilsCommon_cpp.h"
+#include "platform/CCFileUtilsCommon_cpp.h"
+
+using namespace std;
 
 NS_CC_BEGIN
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "jni/SystemInfoJni.h"
-
-using namespace std;
 
 // record the resource path
 static string s_strResourcePath = "";
     
+static CCFileUtils* s_pFileUtils = NULL;
+
+CCFileUtils* CCFileUtils::sharedFileUtils()
+{
+    if (s_pFileUtils == NULL)
+    {
+        s_pFileUtils = new CCFileUtils();
+    }
+    return s_pFileUtils;
+}
+
+void CCFileUtils::purgeFileUtils()
+{
+    if (s_pFileUtils != NULL)
+    {
+        s_pFileUtils->purgeCachedEntries();
+    }
+
+    CC_SAFE_DELETE(s_pFileUtils);
+}
+
+void CCFileUtils::purgeCachedEntries()
+{
+
+}
+
 /*
  * This function is implemented for jni to set apk path.
  */
@@ -107,7 +133,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         } while (0);        
     }
 
-    if (! pData && getIsPopupNotify())
+    if (! pData && isPopupNotify())
     {
         std::string title = "Notification";
         std::string msg = "Get data from file(";
@@ -116,12 +142,6 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     }
 
     return pData;
-}
-
-int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
-{
-    CCAssert(0, "Have not implement!");
-    return 0;
 }
 
 string CCFileUtils::getWriteablePath()

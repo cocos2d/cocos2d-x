@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef VEC3_H_INCLUDED
 #define VEC3_H_INCLUDED
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <assert.h>
 
 #ifndef kmScalar

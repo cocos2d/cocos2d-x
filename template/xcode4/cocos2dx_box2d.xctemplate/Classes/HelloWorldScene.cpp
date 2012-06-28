@@ -44,7 +44,7 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float x = pos.x * PTM_RATIO;
     float y = pos.y * PTM_RATIO;
 
-    if ( !getIsRelativeAnchorPoint() ) {
+    if ( isIgnoreAnchorPointForPosition() ) {
         x += m_tAnchorPointInPoints.x;
         y += m_tAnchorPointInPoints.y;
     }
@@ -69,14 +69,14 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
 
 HelloWorld::HelloWorld()
 {
-    setIsTouchEnabled( true );
-    setIsAccelerometerEnabled( true );
+    setTouchEnabled( true );
+    setAccelerometerEnabled( true );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     // init physics
     this->initPhysics();
 
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::batchNodeWithFile("blocks.png", 100);
+    CCSpriteBatchNode *parent = CCSpriteBatchNode::create("blocks.png", 100);
     m_pSpriteTexture = parent->getTexture();
 
     addChild(parent, 0, kTagParentNode);
@@ -84,7 +84,7 @@ HelloWorld::HelloWorld()
 
     addNewSpriteAtPosition(ccp(s.width/2, s.height/2));
 
-    CCLabelTTF *label = CCLabelTTF::labelWithString("Tap screen", "Marker Felt", 32);
+    CCLabelTTF *label = CCLabelTTF::create("Tap screen", "Marker Felt", 32);
     addChild(label, 0);
     label->setColor(ccc3(0,0,255));
     label->setPosition(ccp( s.width/2, s.height-50));
@@ -214,7 +214,7 @@ void HelloWorld::addNewSpriteAtPosition(CCPoint p)
 }
 
 
-void HelloWorld::update(ccTime dt)
+void HelloWorld::update(float dt)
 {
     //It is recommended that a fixed time step is used with Box2D for stability
     //of the simulation, however, we are using a variable time step here.
@@ -264,7 +264,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 CCScene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object
-    CCScene *scene = CCScene::node();
+    CCScene *scene = CCScene::create();
     
     // add layer as a child to scene
     CCLayer* layer = new HelloWorld();

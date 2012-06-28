@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
-#include "CCCommon.h"
-#include "CCTouch.h"
-#include "CCSet.h"
+#include "platform/CCCommon.h"
+#include "touch_dispatcher/CCTouch.h"
+#include "cocoa/CCSet.h"
 
 typedef struct lua_State lua_State;
 
@@ -35,12 +35,17 @@ NS_CC_BEGIN
 
 class CCTimer;
 
+/**
+ * @addtogroup script_support
+ * @{
+ */
+
 // Lua support for CCScheduler
 class CCSchedulerScriptHandlerEntry : public CCObject
 {
 public:
     // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
-    static CCSchedulerScriptHandlerEntry* entryWithHandler(int nHandler, ccTime fInterval, bool bPaused);
+    static CCSchedulerScriptHandlerEntry* entryWithHandler(int nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
     inline cocos2d::CCTimer* getTimer(void) {
@@ -65,7 +70,7 @@ public:
     
 private:
     CCSchedulerScriptHandlerEntry(void);
-    bool initWithHandler(int nHandler, ccTime fInterval, bool bPaused);
+    bool initWithHandler(int nHandler, float fInterval, bool bPaused);
     
     cocos2d::CCTimer*   m_pTimer;
     bool                m_bPaused;
@@ -86,7 +91,7 @@ public:
         return m_nHandler;
     }
     
-    inline bool getIsMultiTouches(void) {
+    inline bool isMultiTouches(void) {
         return m_bIsMultiTouches;
     }
     
@@ -178,7 +183,7 @@ public:
     virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches) = 0;
     
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, ccTime dt) = 0;
+    virtual int executeSchedule(int nHandler, float dt) = 0;
 };
 
 /**
@@ -208,6 +213,9 @@ private:
     
     CCScriptEngineProtocol *m_pScriptEngine;
 };
+
+// end of script_support group
+/// @}
 
 NS_CC_END
 

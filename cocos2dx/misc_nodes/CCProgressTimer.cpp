@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Lam Pham
 
 http://www.cocos2d-x.org
@@ -25,11 +25,11 @@ THE SOFTWARE.
 #include "CCProgressTimer.h"
 
 #include "ccMacros.h"
-#include "CCTextureCache.h"
-#include "CCPointExtension.h"
-#include "CCGLProgram.h"
-#include "CCShaderCache.h"
-#include "ccGLStateCache.h"
+#include "textures/CCTextureCache.h"
+#include "support/CCPointExtension.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
 #include "CCDrawingPrimitives.h"
@@ -57,6 +57,11 @@ CCProgressTimer::CCProgressTimer()
 {}
 
 CCProgressTimer* CCProgressTimer::progressWithSprite(CCSprite* sp)
+{
+    return CCProgressTimer::create(sp);
+}
+
+CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
 {
     CCProgressTimer *pProgressTimer = new CCProgressTimer();
     if (pProgressTimer->initWithSprite(sp))
@@ -171,12 +176,12 @@ GLubyte CCProgressTimer::getOpacity(void)
     return m_pSprite->getOpacity();
 }
 
-void CCProgressTimer::setIsOpacityModifyRGB(bool bValue)
+void CCProgressTimer::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);
 }
 
-bool CCProgressTimer::getIsOpacityModifyRGB(void)
+bool CCProgressTimer::isOpacityModifyRGB(void)
 {
     return false;
 }

@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"
 #include "ccMacros.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "support/data_support/uthash.h"
-#include "CCString.h"
+#include "cocoa/CCString.h"
 // extern
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
@@ -116,15 +116,15 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
 
 bool CCGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(vShaderFilename))->getCString();
-    const GLchar * fragmentSource = (GLchar*) CCString::stringWithContentsOfFile(CCFileUtils::fullPathFromRelativePath(fShaderFilename))->getCString();
+    const GLchar * vertexSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(vShaderFilename))->getCString();
+    const GLchar * fragmentSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fShaderFilename))->getCString();
 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }
 
 const char* CCGLProgram::description()
 {
-    return CCString::stringWithFormat("<CCGLProgram = %08X | Program = %i, VertexShader = %i, FragmentShader = %i>", this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
+    return CCString::createWithFormat("<CCGLProgram = %08X | Program = %i, VertexShader = %i, FragmentShader = %i>", this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
 }
 
 bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
@@ -219,7 +219,7 @@ const char* CCGLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFu
     char *logBytes = (char*)malloc(logLength);
     logFunc(object, logLength, &charsWritten, logBytes);
 
-    CCString* log = CCString::stringWithCString(logBytes);
+    CCString* log = CCString::create(logBytes);
 
     free(logBytes);
     return log->getCString();

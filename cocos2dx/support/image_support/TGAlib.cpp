@@ -26,11 +26,11 @@ THE SOFTWARE.
 #include <stdlib.h>
 
 #include "TGAlib.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 
 namespace cocos2d {
 
-void tgaLoadRLEImageData(FILE *file, tImageTGA *info);
+static bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo);
 void tgaFlipImage( tImageTGA *info );
 
 // load the image header field from stream
@@ -197,9 +197,9 @@ tImageTGA * tgaLoad(const char *pszFilename)
 {
     int mode,total;
     tImageTGA *info = NULL;
-    CCFileData data(pszFilename, "rb");
-    unsigned long nSize = data.getSize();
-    unsigned char* pBuffer = data.getBuffer();
+    
+    unsigned long nSize = 0;
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pszFilename, "rb", &nSize);
 
     do
     {
@@ -269,6 +269,8 @@ tImageTGA * tgaLoad(const char *pszFilename)
             }
         }
     } while(0);
+
+    CC_SAFE_DELETE_ARRAY(pBuffer);
 
     return info;
 }
