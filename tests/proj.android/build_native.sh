@@ -63,6 +63,10 @@ done
 
 # remove test_image_rgba4444.pvr.gz
 rm -f $TESTS_ROOT/assets/Images/test_image_rgba4444.pvr.gz
+rm -f $TESTS_ROOT/assets/Images/test_1021x1024_rgba8888.pvr.gz
+rm -f $TESTS_ROOT/assets/Images/test_1021x1024_rgb888.pvr.gz
+rm -f $TESTS_ROOT/assets/Images/test_1021x1024_rgba4444.pvr.gz
+rm -f $TESTS_ROOT/assets/Images/test_1021x1024_a8.pvr.gz
 
 # build
 if [[ $buildexternalsfromsource ]]; then
