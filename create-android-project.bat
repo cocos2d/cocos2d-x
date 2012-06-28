@@ -11,15 +11,15 @@ if not exist "%cd%\create-android-project.bat" echo Error!!! You should run it u
 if not exist "%~dpn0.sh" echo Script "%~dpn0.sh" not found & pause & exit 3
 
 :: modify it to work under your environment	 
-set _CYGBIN=d:\programe\cygwin\bin
+set _CYGBIN=e:\cygwin\bin
 if not exist "%_CYGBIN%" echo Couldn't find Cygwin at "%_CYGBIN%" & pause & exit 4
 
 :: modify it to work under your environment
-set _ANDROIDTOOLS=d:\programe\android\android-sdk\tools
+set _ANDROIDTOOLS=e:\android\android-sdk\tools
 if not exist "%_ANDROIDTOOLS%" echo Couldn't find android sdk tools at "%_ANDROIDTOOLS%" & pause & exit 5
 
 :: modify it to work under your environment
-set _NDKROOT=d:\programe\android\ndk\android-ndk-r6b
+set _NDKROOT=e:\android\android-ndk-r8
 if not exist "%_NDKROOT%" echo Couldn't find ndk at "%_NDKROOT%" & pause & exit 6
 
 :: create android project
@@ -35,7 +35,7 @@ set _PROJECTDIR=%CD%\%_PROJECTNAME%
 echo Create android project
 mkdir %_PROJECTDIR%
 echo Create Android project inside proj.android
-call "%_ANDROIDTOOLS%\android.bat" create project -n %_PROJECTNAME% -t %_TARGETID% -k %_PACKAGEPATH% -a %_PROJECTNAME% -p %_PROJECTDIR%
+call "%_ANDROIDTOOLS%\android.bat" create project -n %_PROJECTNAME% -t %_TARGETID% -k %_PACKAGEPATH% -a %_PROJECTNAME% -p %_PROJECTDIR%\proj.android
 	 
 :: Resolve ___.sh to /cygdrive based *nix path and store in %_CYGSCRIPT%
 for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%~dpn0.sh"') do set _CYGSCRIPT=%%A
