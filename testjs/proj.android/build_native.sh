@@ -60,8 +60,6 @@ cp "$file" $TEST_JS_ROOT/assets
 fi
 done
 
-# Change the authority of Resources folder.
-chmod -R 666 $TEST_JS_ROOT/assets
 
 if [[ $buildexternalsfromsource ]]; then
 echo "Building external dependencies from source"
