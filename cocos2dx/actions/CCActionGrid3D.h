@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
 
 http://www.cocos2d-x.org
@@ -28,6 +28,12 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
 @brief CCWaves3D action 
 */
@@ -41,15 +47,18 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** init the action */
-    bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
+    bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** create the action 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCWaves3D* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     /** create the action */
-    static CCWaves3D* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
-
+    static CCWaves3D* create(int wav, float amp, const ccGridSize& gridSize, float duration);
 protected:
     int m_nWaves;
     float m_fAmplitude;
@@ -61,26 +70,34 @@ class CC_DLL CCFlipX3D : public CCGrid3DAction
 {
 public:
     /** initializes the action with duration */
-    bool initWithDuration(ccTime duration);
-    virtual bool initWithSize(const ccGridSize& gridSize, ccTime duration);
+    bool initWithDuration(float duration);
+    virtual bool initWithSize(const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** creates the action with duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCFlipX3D* actionWithDuration(float duration);
     /** creates the action with duration */
-    static CCFlipX3D* actionWithDuration(ccTime duration);
+    static CCFlipX3D* create(float duration);
 };
 
 /** @brief CCFlipY3D action */
 class CC_DLL CCFlipY3D : public CCFlipX3D
 {
 public:
-    virtual void update(ccTime time);
+    virtual void update(float time);
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
+    /** creates the action with duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCFlipY3D* actionWithDuration(float duration);
     /** creates the action with duration */
-    static CCFlipY3D* actionWithDuration(ccTime duration);
+    static CCFlipY3D* create(float duration);
 };
 
 /** @brief CCLens3D action */
@@ -96,13 +113,17 @@ public:
     void setPosition(const CCPoint& position);
 
     /** initializes the action with center position, radius, a grid size and duration */
-    bool initWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, ccTime duration);
+    bool initWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** creates the action with center position, radius, a grid size and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCLens3D* actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration);
     /** creates the action with center position, radius, a grid size and duration */
-    static CCLens3D* actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, ccTime duration);
+    static CCLens3D* create(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration);
 protected:
     /* lens center position */
     CCPoint m_position;
@@ -110,9 +131,6 @@ protected:
     /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
     float m_fLensEffect;
 
-    /* @since v0.99.5 */
-    // CCPoint m_lastPosition;
-    CCPoint m_positionInPixels;
     bool    m_bDirty;
 };
 
@@ -133,14 +151,19 @@ public:
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
     bool initWithPosition(const CCPoint& pos, float r, int wav, float amp, 
-        const ccGridSize& gridSize, ccTime duration);
+        const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** creates the action with radius, number of waves, amplitude, a grid size and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCRipple3D* actionWithPosition(const CCPoint& pos, float r, int wav, float amp, 
+        const ccGridSize& gridSize, float duration);
     /** creates the action with radius, number of waves, amplitude, a grid size and duration */
-    static CCRipple3D* actionWithPosition(const CCPoint& pos, float r, int wav, float amp, 
-        const ccGridSize& gridSize, ccTime duration);
+    static CCRipple3D* create(const CCPoint& pos, float r, int wav, float amp, 
+        const ccGridSize& gridSize, float duration);
 protected:
     /* center position */
     CCPoint m_position;
@@ -148,9 +171,6 @@ protected:
     int m_nWaves;
     float m_fAmplitude;
     float m_fAmplitudeRate;
-
-    /*@since v0.99.5*/
-    CCPoint m_positionInPixels;
 };
 
 /** @brief CCShaky3D action */
@@ -158,14 +178,17 @@ class CC_DLL CCShaky3D : public CCGrid3DAction
 {
 public:
     /** initializes the action with a range, shake Z vertices, a grid and duration */
-    bool initWithRange(int range, bool shakeZ, const ccGridSize& gridSize, ccTime duration);
+    bool initWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** creates the action with a range, shake Z vertices, a grid and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCShaky3D* actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration);
     /** creates the action with a range, shake Z vertices, a grid and duration */
-    static CCShaky3D* actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, ccTime duration);
-
+    static CCShaky3D* create(int range, bool shakeZ, const ccGridSize& gridSize, float duration);
 protected:
     int m_nRandrange;
     bool m_bShakeZ;
@@ -182,14 +205,17 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with amplitude, a grid and duration */
-    bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
+    bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** creates the action with amplitude, a grid and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCLiquid* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     /** creates the action with amplitude, a grid and duration */
-    static CCLiquid* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
-
+    static CCLiquid* create(int wav, float amp, const ccGridSize& gridSize, float duration);
 protected:
     int m_nWaves;
     float m_fAmplitude;
@@ -208,14 +234,20 @@ public:
 
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     bool initWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
-        ccTime duration);
+        float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
+         float duration);
+
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
-    static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
-        ccTime duration);
+    static CCWaves* create(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
+        float duration);
 protected:
     int m_nWaves;
     float m_fAmplitude;
@@ -241,24 +273,30 @@ public:
 
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
     bool initWithPosition(const CCPoint& pos, int t, float amp, const ccGridSize& gridSize,
-        ccTime duration);
+        float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** creates the action with center position, number of twirls, amplitude, a grid size and duration 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize,
+         float duration);
+
     /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
-    static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize,
-        ccTime duration);
+    static CCTwirl* create(CCPoint pos, int t, float amp, const ccGridSize& gridSize,
+        float duration);
 protected:
     /* twirl center */
     CCPoint m_position;
     int m_nTwirls;
     float m_fAmplitude;
     float m_fAmplitudeRate;
-
-    /*@since v0.99.5 */
-    CCPoint m_positionInPixels;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

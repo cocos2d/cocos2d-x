@@ -1,7 +1,7 @@
 #include "cocos2d.h"
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
-#include "CCScriptSupport.h"
+#include "script_support/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 
 USING_NS_CC;
@@ -32,8 +32,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
-    // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
@@ -42,13 +40,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    CCString* pstrFileContent = CCString::stringWithContentsOfFile("hello.lua");
+    CCString* pstrFileContent = CCString::createWithContentsOfFile("hello.lua");
     if (pstrFileContent)
     {
         pEngine->executeString(pstrFileContent->getCString());
     }
 #else
-    std::string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif 
@@ -59,13 +57,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->pause();
+    CCDirector::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->resume();
+    CCDirector::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

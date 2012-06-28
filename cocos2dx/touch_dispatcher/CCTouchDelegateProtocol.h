@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 #include "ccConfig.h"
 
 NS_CC_BEGIN
@@ -35,7 +35,12 @@ class CCTouch;
 class CCEvent;
 class CCSet;
 class CCTouchDispatcher;
-    
+
+/**
+ * @addtogroup input
+ * @{
+ */
+
 class CC_DLL CCTouchDelegate
 {
 public:
@@ -101,6 +106,9 @@ public:
      virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
  };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

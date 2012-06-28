@@ -23,27 +23,27 @@
 /// @{
 
 /// @private
-typedef struct cpPolyShapeAxis {
-    cpVect n;
-    cpFloat d;
-} cpPolyShapeAxis;
+typedef struct cpSplittingPlane {
+	cpVect n;
+	cpFloat d;
+} cpSplittingPlane;
 
 /// @private
 typedef struct cpPolyShape {
-    cpShape shape;
-    
-    int numVerts;
-    cpVect *verts, *tVerts;
-    cpPolyShapeAxis *axes, *tAxes;
+	cpShape shape;
+	
+	int numVerts;
+	cpVect *verts, *tVerts;
+	cpSplittingPlane *planes, *tPlanes;
 } cpPolyShape;
 
 /// Allocate a polygon shape.
 cpPolyShape* cpPolyShapeAlloc(void);
 /// Initialize a polygon shape.
-/// The vertexes must be convex and have a clockwise winding.
+/// A convex hull will be created from the vertexes.
 cpPolyShape* cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cpVect offset);
 /// Allocate and initialize a polygon shape.
-/// The vertexes must be convex and have a clockwise winding.
+/// A convex hull will be created from the vertexes.
 cpShape* cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset);
 
 /// Initialize a box shaped polygon shape.
@@ -56,6 +56,7 @@ cpShape* cpBoxShapeNew(cpBody *body, cpFloat width, cpFloat height);
 cpShape* cpBoxShapeNew2(cpBody *body, cpBB box);
 
 /// Check that a set of vertexes is convex and has a clockwise winding.
+/// NOTE: Due to floating point precision issues, hulls created with cpQuickHull() are not guaranteed to validate!
 cpBool cpPolyValidate(const cpVect *verts, const int numVerts);
 
 /// Get the number of verts in a polygon shape.

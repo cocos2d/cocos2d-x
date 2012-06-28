@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup platform
+ * @{
+ */
+
 struct CC_DLL cc_timeval
 {
     long    tv_sec;        // seconds
@@ -42,6 +47,9 @@ public:
     static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
     static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

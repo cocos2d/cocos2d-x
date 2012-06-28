@@ -19,7 +19,7 @@ void TestLayer::onEnter()
     //CCMutableArray *array = [UIFont familyNames];
     //for( CCString *s in array )
     //    NSLog( s );
-    CCLabelTTF* label = CCLabelTTF::labelWithString("cocos2d", "Tahoma", 64);
+    CCLabelTTF* label = CCLabelTTF::create("cocos2d", "Tahoma", 64);
 
     label->setPosition( CCPointMake(x/2,y/2) );
     
@@ -41,9 +41,9 @@ void SpriteLayer::onEnter()
     x = size.width;
     y = size.height;
     
-    CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
-    CCSprite* spriteSister1 = CCSprite::spriteWithFile(s_pPathSister1);
-    CCSprite* spriteSister2 = CCSprite::spriteWithFile(s_pPathSister2);
+    CCSprite* sprite = CCSprite::create(s_pPathGrossini);
+    CCSprite* spriteSister1 = CCSprite::create(s_pPathSister1);
+    CCSprite* spriteSister2 = CCSprite::create(s_pPathSister2);
     
     sprite->setScale(1.5f);
     spriteSister1->setScale(1.5f);
@@ -53,7 +53,7 @@ void SpriteLayer::onEnter()
     spriteSister1->setPosition(CCPointMake(40,y/2));
     spriteSister2->setPosition(CCPointMake(x-40,y/2));
 
-    CCAction *rot = CCRotateBy::actionWithDuration(16, -3600);
+    CCAction *rot = CCRotateBy::create(16, -3600);
     
     addChild(sprite);
     addChild(spriteSister1);
@@ -61,17 +61,17 @@ void SpriteLayer::onEnter()
     
     sprite->runAction(rot);
 
-    CCActionInterval *jump1 = CCJumpBy::actionWithDuration(4, CCPointMake(-400,0), 100, 4);
+    CCActionInterval *jump1 = CCJumpBy::create(4, CCPointMake(-400,0), 100, 4);
     CCActionInterval *jump2 = jump1->reverse();
     
-    CCActionInterval *rot1 = CCRotateBy::actionWithDuration(4, 360*2);
+    CCActionInterval *rot1 = CCRotateBy::create(4, 360*2);
     CCActionInterval *rot2 = rot1->reverse();
     
-    spriteSister1->runAction(CCRepeat::actionWithAction( CCSequence::actions(jump2, jump1, NULL), 5 ));
-    spriteSister2->runAction(CCRepeat::actionWithAction( CCSequence::actions((CCFiniteTimeAction *)(jump1->copy()->autorelease()), (CCFiniteTimeAction *)(jump2->copy()->autorelease()), NULL), 5 ));
+    spriteSister1->runAction(CCRepeat::create( CCSequence::create(jump2, jump1, NULL), 5 ));
+    spriteSister2->runAction(CCRepeat::create( CCSequence::create((CCFiniteTimeAction *)(jump1->copy()->autorelease()), (CCFiniteTimeAction *)(jump2->copy()->autorelease()), NULL), 5 ));
     
-    spriteSister1->runAction(CCRepeat::actionWithAction( CCSequence::actions(rot1, rot2, NULL), 5 ));
-    spriteSister2->runAction(CCRepeat::actionWithAction( CCSequence::actions((CCFiniteTimeAction *)(rot2->copy()->autorelease()), (CCFiniteTimeAction *)(rot1->copy()->autorelease()), NULL), 5 ));
+    spriteSister1->runAction(CCRepeat::create( CCSequence::create(rot1, rot2, NULL), 5 ));
+    spriteSister2->runAction(CCRepeat::create( CCSequence::create((CCFiniteTimeAction *)(rot2->copy()->autorelease()), (CCFiniteTimeAction *)(rot1->copy()->autorelease()), NULL), 5 ));
 }
 
 //------------------------------------------------------------------
@@ -90,31 +90,33 @@ void RotateWorldMainLayer::onEnter()
     x = size.width;
     y = size.height;
     
-    CCNode* blue =  CCLayerColor::layerWithColor(ccc4(0,0,255,255));
-    CCNode* red =   CCLayerColor::layerWithColor(ccc4(255,0,0,255));
-    CCNode* green = CCLayerColor::layerWithColor(ccc4(0,255,0,255));
-    CCNode* white = CCLayerColor::layerWithColor(ccc4(255,255,255,255));
+    CCNode* blue =  CCLayerColor::create(ccc4(0,0,255,255));
+    CCNode* red =   CCLayerColor::create(ccc4(255,0,0,255));
+    CCNode* green = CCLayerColor::create(ccc4(0,255,0,255));
+    CCNode* white = CCLayerColor::create(ccc4(255,255,255,255));
 
     blue->setScale(0.5f);
     blue->setPosition(CCPointMake(-x/4,-y/4));
-    blue->addChild( SpriteLayer::node() );
+    blue->addChild( SpriteLayer::create() );
     
     red->setScale(0.5f);
     red->setPosition(CCPointMake(x/4,-y/4));
 
     green->setScale(0.5f);
     green->setPosition(CCPointMake(-x/4,y/4));
-    green->addChild(TestLayer::node());
+    green->addChild(TestLayer::create());
 
     white->setScale(0.5f);
-    white->setPosition(CCPointMake(x/4,y/4));
+    white->setPosition(ccp(x/4,y/4));
+    white->ignoreAnchorPointForPosition(false);
+    white->setPosition(ccp(x/4*3,y/4*3));
 
     addChild(blue, -1);
     addChild(white);
     addChild(green);
     addChild(red);
 
-    CCAction* rot = CCRotateBy::actionWithDuration(8, 720);
+    CCAction* rot = CCRotateBy::create(8, 720);
     
     blue->runAction(rot);
     red->runAction((CCAction *)(rot->copy()->autorelease()));
@@ -124,10 +126,10 @@ void RotateWorldMainLayer::onEnter()
 
 void RotateWorldTestScene::runThisTest()
 {
-    CCLayer* pLayer = RotateWorldMainLayer::node();
+    CCLayer* pLayer = RotateWorldMainLayer::create();
 
     addChild(pLayer);
-    runAction( CCRotateBy::actionWithDuration(4, -360) );
+    runAction( CCRotateBy::create(4, -360) );
 
     CCDirector::sharedDirector()->replaceScene(this);
 

@@ -88,20 +88,20 @@ void ActionManagerTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    label->setPosition(CCPointMake(s.width/2, s.height-50));
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionManagerTest::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ActionManagerTest::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ActionManagerTest::nextCallback));
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ActionManagerTest::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ActionManagerTest::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ActionManagerTest::nextCallback));
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
-    menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
+    menu->setPosition(CCPointZero);
+    item1->setPosition(CCPointMake(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(CCPointMake(s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(CCPointMake(s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 }
@@ -141,22 +141,22 @@ void CrashTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CCSprite* child = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* child = CCSprite::create(s_pPathGrossini);
     child->setPosition( CCPointMake(200,200) );
     addChild(child, 1);
 
     //Sum of all action's duration is 1.5 second.
-    child->runAction(CCRotateBy::actionWithDuration(1.5f, 90));
-    child->runAction(CCSequence::actions(
-                                            CCDelayTime::actionWithDuration(1.4f),
-                                            CCFadeOut::actionWithDuration(1.1f),
+    child->runAction(CCRotateBy::create(1.5f, 90));
+    child->runAction(CCSequence::create(
+                                            CCDelayTime::create(1.4f),
+                                            CCFadeOut::create(1.1f),
                                             NULL)
                     );
     
     //After 1.5 second, self will be removed.
-    runAction( CCSequence::actions(
-                                    CCDelayTime::actionWithDuration(1.4f),
-                                    CCCallFunc::actionWithTarget(this, callfunc_selector(CrashTest::removeThis)),
+    runAction( CCSequence::create(
+                                    CCDelayTime::create(1.4f),
+                                    CCCallFunc::create(this, callfunc_selector(CrashTest::removeThis)),
                                     NULL)
              );
 }
@@ -182,13 +182,13 @@ void LogicTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CCSprite* grossini = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* grossini = CCSprite::create(s_pPathGrossini);
     addChild(grossini, 0, 2);
     grossini->setPosition(CCPointMake(200,200));
 
-    grossini->runAction( CCSequence::actions( 
-                                                CCMoveBy::actionWithDuration(1, CCPointMake(150,0)),
-                                                CCCallFuncN::actionWithTarget(this, callfuncN_selector(LogicTest::bugMe)),
+    grossini->runAction( CCSequence::create( 
+                                                CCMoveBy::create(1, CCPointMake(150,0)),
+                                                CCCallFuncN::create(this, callfuncN_selector(LogicTest::bugMe)),
                                                 NULL) 
                         );
 }
@@ -196,7 +196,7 @@ void LogicTest::onEnter()
 void LogicTest::bugMe(CCNode* node)
 {
     node->stopAllActions(); //After this stop next action not working, if remove this stop everything is working
-    node->runAction(CCScaleTo::actionWithDuration(2, 2));
+    node->runAction(CCScaleTo::create(2, 2));
 }
 
 std::string LogicTest::title()
@@ -220,7 +220,7 @@ void PauseTest::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* l = CCLabelTTF::labelWithString("After 5 seconds grossini should move", "Thonburi", 16);
+    CCLabelTTF* l = CCLabelTTF::create("After 5 seconds grossini should move", "Thonburi", 16);
     addChild(l);
     l->setPosition( CCPointMake(s.width/2, 245) );
     
@@ -228,11 +228,11 @@ void PauseTest::onEnter()
     //
     // Also, this test MUST be done, after [super onEnter]
     //
-    CCSprite* grossini = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* grossini = CCSprite::create(s_pPathGrossini);
     addChild(grossini, 0, kTagGrossini);
     grossini->setPosition( CCPointMake(200,200) );
     
-    CCAction* action = CCMoveBy::actionWithDuration(1, CCPointMake(150,0));
+    CCAction* action = CCMoveBy::create(1, CCPointMake(150,0));
 
     CCDirector* pDirector = CCDirector::sharedDirector();
     pDirector->getActionManager()->addAction(action, grossini, true);
@@ -240,7 +240,7 @@ void PauseTest::onEnter()
     schedule( schedule_selector(PauseTest::unpause), 3); 
 }
 
-void PauseTest::unpause(ccTime dt)
+void PauseTest::unpause(float dt)
 {
     unschedule( schedule_selector(PauseTest::unpause) );
     CCNode* node = getChildByTag( kTagGrossini );
@@ -264,16 +264,16 @@ void RemoveTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* l = CCLabelTTF::labelWithString("Should not crash", "Thonburi", 16);
+    CCLabelTTF* l = CCLabelTTF::create("Should not crash", "Thonburi", 16);
     addChild(l);
     l->setPosition( CCPointMake(s.width/2, 245) );
 
-    CCMoveBy* pMove = CCMoveBy::actionWithDuration(2, CCPointMake(200, 0));
-    CCCallFunc* pCallback = CCCallFunc::actionWithTarget(this, callfunc_selector(RemoveTest::stopAction));
-    CCActionInterval* pSequence = (CCActionInterval*) CCSequence::actions(pMove, pCallback, NULL);
+    CCMoveBy* pMove = CCMoveBy::create(2, CCPointMake(200, 0));
+    CCCallFunc* pCallback = CCCallFunc::create(this, callfunc_selector(RemoveTest::stopAction));
+    CCActionInterval* pSequence = (CCActionInterval*) CCSequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 
-    CCSprite* pChild = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* pChild = CCSprite::create(s_pPathGrossini);
     pChild->setPosition(CCPointMake(200, 200));
 
     addChild(pChild, 1, kTagGrossini);
@@ -307,24 +307,24 @@ void ResumeTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* l = CCLabelTTF::labelWithString("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
+    CCLabelTTF* l = CCLabelTTF::create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
     addChild(l);
     l->setPosition( CCPointMake(s.width/2, 245));
 
-    CCSprite* pGrossini = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* pGrossini = CCSprite::create(s_pPathGrossini);
     addChild(pGrossini, 0, kTagGrossini);
     pGrossini->setPosition(CCPointMake(s.width / 2, s.height / 2));
 
-    pGrossini->runAction(CCScaleBy::actionWithDuration(2, 2));
+    pGrossini->runAction(CCScaleBy::create(2, 2));
 
     CCDirector* pDirector = CCDirector::sharedDirector();
     pDirector->getActionManager()->pauseTarget(pGrossini);
-    pGrossini->runAction(CCRotateBy::actionWithDuration(2, 360));
+    pGrossini->runAction(CCRotateBy::create(2, 360));
 
     this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
 }
 
-void ResumeTest::resumeGrossini(ccTime time)
+void ResumeTest::resumeGrossini(float time)
 {
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 

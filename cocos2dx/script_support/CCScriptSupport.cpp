@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::entryWithHandler(int nHandler, ccTime fInterval, bool bPaused)
+CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::entryWithHandler(int nHandler, float fInterval, bool bPaused)
 {
     CCSchedulerScriptHandlerEntry* pEntry = new CCSchedulerScriptHandlerEntry();
     pEntry->initWithHandler(nHandler, fInterval, bPaused);
@@ -35,7 +35,7 @@ CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::entryWithHandler(i
     return pEntry;
 }
 
-bool CCSchedulerScriptHandlerEntry::initWithHandler(int nHandler, ccTime fInterval, bool bPaused)
+bool CCSchedulerScriptHandlerEntry::initWithHandler(int nHandler, float fInterval, bool bPaused)
 {
     m_pTimer = new CCTimer();
     m_pTimer->initWithScriptHandler(nHandler, fInterval);

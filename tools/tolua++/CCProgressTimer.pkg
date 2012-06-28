@@ -21,16 +21,16 @@ class CCProgressTimer : public CCNode
     const ccColor3B& getColor(void);
     GLubyte getOpacity(void);
     void setOpacity(GLubyte opacity);
-    void setIsOpacityModifyRGB(bool bValue);
-    bool getIsOpacityModifyRGB(void);
+    void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
 
-    static CCProgressTimer* progressWithSprite(CCSprite* sp);
+    static CCProgressTimer* create(CCSprite* sp);
 
     CCPoint getMidpoint();
     void setMidpoint(CCPoint pt);
     CCPoint getBarChangeRate();
     void setBarChangeRate(CCPoint rate);
 
-    bool getIsReverseDirection();
-    void setIsReverseDirection(bool bReverseDir);
+    bool isReverseDirection();
+    void setReverseDirection(bool bReverseDir);
 };

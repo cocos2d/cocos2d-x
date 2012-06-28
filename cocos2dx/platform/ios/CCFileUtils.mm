@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 #define MAX_PATH 260
 
-using namespace cocos2d;
+USING_NS_CC;
 
 static void static_addValueToCCDict(id key, id value, CCDictionary* pDict);
 static void static_addItemToCCArray(id item, CCArray* pArray);
@@ -211,6 +211,32 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
 }
 
 NS_CC_BEGIN
+
+static CCFileUtils* s_pFileUtils = NULL;
+
+CCFileUtils* CCFileUtils::sharedFileUtils()
+{
+    if (s_pFileUtils == NULL)
+    {
+        s_pFileUtils = new CCFileUtils();
+    }
+    return s_pFileUtils;
+}
+
+void CCFileUtils::purgeFileUtils()
+{
+    if (s_pFileUtils != NULL)
+    {
+        s_pFileUtils->purgeCachedEntries();
+    }
+
+    CC_SAFE_DELETE(s_pFileUtils);
+}
+
+void CCFileUtils::purgeCachedEntries()
+{
+
+}
 
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
@@ -389,7 +415,7 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    const char* pszFullPath = CCFileUtils::fullPathFromRelativePath(pFileName);
+    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
     NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
@@ -421,7 +447,8 @@ CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
-
+    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invaild parameters.");
+    *pSize = 0;
     do 
     {
         // read the file from hardware
@@ -436,7 +463,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         fclose(fp);
     } while (0);
 
-    if (! pBuffer && getIsPopupNotify()) 
+    if (! pBuffer && isPopupNotify()) 
     {
         std::string title = "Notification";
         std::string msg = "Get data from file(";
@@ -450,12 +477,12 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 // notification support when getFileData from a invalid file
 static bool s_bPopupNotify = true;
 
-void CCFileUtils::setIsPopupNotify(bool bNotify)
+void CCFileUtils::setPopupNotify(bool bNotify)
 {
     s_bPopupNotify = bNotify;
 }
 
-bool CCFileUtils::getIsPopupNotify()
+bool CCFileUtils::isPopupNotify()
 {
     return s_bPopupNotify;
 }

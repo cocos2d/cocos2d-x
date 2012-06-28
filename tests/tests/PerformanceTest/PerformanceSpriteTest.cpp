@@ -1,8 +1,8 @@
 #include "PerformanceSpriteTest.h"
 
 enum {
-    kMaxNodes = 5000,
-    kNodesIncrease = 50,
+    kMaxNodes = 50000,
+    kNodesIncrease = 250,
 
     TEST_COUNT = 7,
 };
@@ -68,36 +68,36 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
             ///
         case 2:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossinis_sister1.png", 100);
+            batchNode = CCSpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
         case 3:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossinis_sister1.png", 100);
+            batchNode = CCSpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
         case 5:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
+            batchNode = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
             break;                
         case 6:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
+            batchNode = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
         case 8:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/spritesheet1.png", 100);
+            batchNode = CCSpriteBatchNode::create("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
         case 9:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/spritesheet1.png", 100);
+            batchNode = CCSpriteBatchNode::create("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
 
@@ -123,14 +123,14 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
     {
         case 1:
             {
-                sprite = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+                sprite = CCSprite::create("Images/grossinis_sister1.png");
                 parent->addChild(sprite, 0, tag+100);
                 break;
             }
         case 2:
         case 3: 
             {
-                sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 52, 139));
+                sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(0, 0, 52, 139));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -139,7 +139,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
                 int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
                 char str[32] = {0};
                 sprintf(str, "Images/grossini_dance_%02d.png", idx);
-                sprite = CCSprite::spriteWithFile(str);
+                sprite = CCSprite::create(str);
                 parent->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -154,7 +154,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 85;
                 y *= 121;
-                sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(x,y,85,121));
+                sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(x,y,85,121));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -169,7 +169,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 char str[40] = {0};
                 sprintf(str, "Images/sprites_test/sprite-%d-%d.png", x, y);
-                sprite = CCSprite::spriteWithFile(str);
+                sprite = CCSprite::create(str);
                 parent->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -185,7 +185,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 32;
                 y *= 32;
-                sprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(x,y,32,32));
+                sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(x,y,32,32));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -287,17 +287,17 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     quantityNodes = 0;
 
     CCMenuItemFont::setFontSize(65);
-    CCMenuItemFont *decrease = CCMenuItemFont::itemWithString(" - ", this, menu_selector(SpriteMainScene::onDecrease));
+    CCMenuItemFont *decrease = CCMenuItemFont::create(" - ", this, menu_selector(SpriteMainScene::onDecrease));
     decrease->setColor(ccc3(0,200,20));
-    CCMenuItemFont *increase = CCMenuItemFont::itemWithString(" + ", this, menu_selector(SpriteMainScene::onIncrease));
+    CCMenuItemFont *increase = CCMenuItemFont::create(" + ", this, menu_selector(SpriteMainScene::onIncrease));
     increase->setColor(ccc3(0,200,20));
 
-    CCMenu *menu = CCMenu::menuWithItems(decrease, increase, NULL);
+    CCMenu *menu = CCMenu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
     menu->setPosition(ccp(s.width/2, s.height-65));
     addChild(menu, 1);
 
-    CCLabelTTF *infoLabel = CCLabelTTF::labelWithString("0 nodes", "Marker Felt", 30);
+    CCLabelTTF *infoLabel = CCLabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(ccc3(0,200,20));
     infoLabel->setPosition(ccp(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
@@ -309,12 +309,12 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 
     // Sub Tests
     CCMenuItemFont::setFontSize(32);
-    CCMenu* pSubMenu = CCMenu::menuWithItems(NULL);
+    CCMenu* pSubMenu = CCMenu::create();
     for (int i = 1; i <= 9; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::itemWithString(str, this, menu_selector(SpriteMainScene::testNCallback));
+        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, this, menu_selector(SpriteMainScene::testNCallback));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
@@ -331,7 +331,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(pSubMenu, 2);
 
     // add title label
-    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 40);
+    CCLabelTTF *label = CCLabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(ccp(s.width/2, s.height-32));
     label->setColor(ccc3(255,255,40));
@@ -414,14 +414,14 @@ void performanceActions(CCSprite* pSprite)
     pSprite->setPosition(ccp((rand() % (int)size.width), (rand() % (int)size.height)));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
-    CCRotateBy* rot = CCRotateBy::actionWithDuration(period, 360.0f * CCRANDOM_0_1());
+    CCRotateBy* rot = CCRotateBy::create(period, 360.0f * CCRANDOM_0_1());
     CCActionInterval* rot_back = rot->reverse();
-    CCAction *permanentRotation = CCRepeatForever::actionWithAction((CCActionInterval *)CCSequence::actions(rot, rot_back, NULL));
+    CCAction *permanentRotation = CCRepeatForever::create((CCActionInterval *)CCSequence::create(rot, rot_back, NULL));
     pSprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
-    CCActionInterval *grow = CCScaleBy::actionWithDuration(growDuration, 0.5f, 0.5f);
-    CCAction *permanentScaleLoop = CCRepeatForever::actionWithAction((CCActionInterval *)CCSequence::actionOneTwo(grow, grow->reverse()));
+    CCActionInterval *grow = CCScaleBy::create(growDuration, 0.5f, 0.5f);
+    CCAction *permanentScaleLoop = CCRepeatForever::create((CCActionInterval *)CCSequence::create(grow, grow->reverse()));
     pSprite->runAction(permanentScaleLoop);
 }
 
@@ -434,14 +434,14 @@ void performanceActions20(CCSprite* pSprite)
         pSprite->setPosition(ccp( -1000, -1000));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
-    CCRotateBy* rot = CCRotateBy::actionWithDuration(period, 360.0f * CCRANDOM_0_1());
+    CCRotateBy* rot = CCRotateBy::create(period, 360.0f * CCRANDOM_0_1());
     CCActionInterval* rot_back = rot->reverse();
-    CCAction *permanentRotation = CCRepeatForever::actionWithAction((CCActionInterval *)CCSequence::actions(rot, rot_back, NULL));
+    CCAction *permanentRotation = CCRepeatForever::create((CCActionInterval *)CCSequence::create(rot, rot_back, NULL));
     pSprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
-    CCActionInterval *grow = CCScaleBy::actionWithDuration(growDuration, 0.5f, 0.5f);
-    CCAction *permanentScaleLoop = CCRepeatForever::actionWithAction(CCSequence::actionOneTwo(grow, grow->reverse()));
+    CCActionInterval *grow = CCScaleBy::create(growDuration, 0.5f, 0.5f);
+    CCAction *permanentScaleLoop = CCRepeatForever::create(CCSequence::create(grow, grow->reverse()));
     pSprite->runAction(permanentScaleLoop);
 }
 

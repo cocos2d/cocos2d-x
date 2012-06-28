@@ -15,7 +15,7 @@ IntervalLayer::IntervalLayer()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     // sun
-    CCParticleSystem* sun = CCParticleSun::node();
+    CCParticleSystem* sun = CCParticleSun::create();
     sun->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
     sun->setPosition( CCPointMake(s.width-32,s.height-32) );
 
@@ -24,11 +24,11 @@ IntervalLayer::IntervalLayer()
     this->addChild(sun);
 
     // timers
-    m_label0 = CCLabelBMFont::labelWithString("0", "fonts/bitmapFontTest4.fnt");
-    m_label1 = CCLabelBMFont::labelWithString("0", "fonts/bitmapFontTest4.fnt");
-    m_label2 = CCLabelBMFont::labelWithString("0", "fonts/bitmapFontTest4.fnt");
-    m_label3 = CCLabelBMFont::labelWithString("0", "fonts/bitmapFontTest4.fnt");
-    m_label4 = CCLabelBMFont::labelWithString("0", "fonts/bitmapFontTest4.fnt");
+    m_label0 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    m_label1 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    m_label2 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    m_label3 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
+    m_label4 = CCLabelBMFont::create("0", "fonts/bitmapFontTest4.fnt");
 
     scheduleUpdate();
     schedule(schedule_selector(IntervalLayer::step1));
@@ -49,19 +49,19 @@ IntervalLayer::IntervalLayer()
     addChild(m_label4);
 
     // Sprite
-    CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* sprite = CCSprite::create(s_pPathGrossini);
     sprite->setPosition( CCPointMake(40,50) );
     
-    CCJumpBy* jump = CCJumpBy::actionWithDuration(3, CCPointMake(s.width-80,0), 50, 4);
+    CCJumpBy* jump = CCJumpBy::create(3, CCPointMake(s.width-80,0), 50, 4);
     
     addChild(sprite);
-    sprite->runAction( CCRepeatForever::actionWithAction(
-                                                            (CCActionInterval*)(CCSequence::actions(jump, jump->reverse(), NULL ))
+    sprite->runAction( CCRepeatForever::create(
+                                                            (CCActionInterval*)(CCSequence::create(jump, jump->reverse(), NULL ))
                                                         )
                      );
     // pause button
-    CCMenuItem* item1 = CCMenuItemFont::itemWithString("Pause", this, menu_selector(IntervalLayer::onPause) );
-    CCMenu* menu = CCMenu::menuWithItems(item1, NULL);
+    CCMenuItem* item1 = CCMenuItemFont::create("Pause", this, menu_selector(IntervalLayer::onPause) );
+    CCMenu* menu = CCMenu::create(item1, NULL);
     menu->setPosition( CCPointMake(s.width/2, s.height-50) );
 
     addChild( menu );
@@ -75,7 +75,7 @@ IntervalLayer::~IntervalLayer()
     }
 }
 
-void IntervalLayer::update(ccTime dt)
+void IntervalLayer::update(float dt)
 {
     m_time0 +=dt;
     char time[10] = {0};
@@ -92,7 +92,7 @@ void IntervalLayer::onPause(CCObject* pSender)
 
 }
 
-void IntervalLayer::step1(ccTime dt)
+void IntervalLayer::step1(float dt)
 {
     m_time1 +=dt;
 
@@ -101,7 +101,7 @@ void IntervalLayer::step1(ccTime dt)
     m_label1->setString( str );
 }
 
-void IntervalLayer::step2(ccTime dt)
+void IntervalLayer::step2(float dt)
 {
     m_time2 +=dt;
 
@@ -110,7 +110,7 @@ void IntervalLayer::step2(ccTime dt)
     m_label2->setString( str ); 
 }
 
-void IntervalLayer::step3(ccTime dt)
+void IntervalLayer::step3(float dt)
 {
     m_time3 +=dt;
 
@@ -119,7 +119,7 @@ void IntervalLayer::step3(ccTime dt)
     m_label3->setString( str ); 
 }
 
-void IntervalLayer::step4(ccTime dt)
+void IntervalLayer::step4(float dt)
 {
     m_time4 +=dt;
 

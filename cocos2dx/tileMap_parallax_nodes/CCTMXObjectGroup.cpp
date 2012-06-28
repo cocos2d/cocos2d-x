@@ -35,7 +35,7 @@ CCTMXObjectGroup::CCTMXObjectGroup()
     :m_tPositionOffset(CCPointZero)
     ,m_sGroupName("")        
 {
-    m_pObjects = CCArray::array();
+    m_pObjects = CCArray::create();
     m_pObjects->retain();
     m_pProperties = new CCDictionary();
 }

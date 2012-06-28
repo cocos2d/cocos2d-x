@@ -22,16 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCEGLView.h"
-#include "CCSet.h"
+#include "cocoa/CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
-#include "CCTouchDispatcher.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
 #include "jni/IMEJni.h"
 #include "jni/MessageJni.h"
+#include "CCGL.h"
 
 #include <stdlib.h>
 #include <android/log.h>
-#include "CCGL.h"
+
 
 
 #if CC_TEXTURE_ATLAS_USE_VAO

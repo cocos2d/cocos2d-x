@@ -20,7 +20,7 @@ CCLayer* restartParallaxAction();
 Parallax1::Parallax1()
 {
     // Top Layer, a simple image
-    CCSprite* cocosImage = CCSprite::spriteWithFile(s_Power);
+    CCSprite* cocosImage = CCSprite::create(s_Power);
     // scale the image (optional)
     cocosImage->setScale( 2.5f );
     // change the transform anchor point to 0,0 (optional)
@@ -28,7 +28,7 @@ Parallax1::Parallax1()
     
 
     // Middle layer: a Tile map atlas
-    CCTileMapAtlas *tilemap = CCTileMapAtlas::tileMapAtlasWithTileFile(s_TilesPng, s_LevelMapTga, 16, 16);
+    CCTileMapAtlas *tilemap = CCTileMapAtlas::create(s_TilesPng, s_LevelMapTga, 16, 16);
     tilemap->releaseMap();
     
     // change the transform anchor to 0,0 (optional)
@@ -39,7 +39,7 @@ Parallax1::Parallax1()
     
 
     // background layer: another image
-    CCSprite* background = CCSprite::spriteWithFile(s_back);
+    CCSprite* background = CCSprite::create(s_back);
     // scale the image (optional)
     background->setScale( 1.5f );
     // change the transform anchor point (optional)
@@ -47,7 +47,7 @@ Parallax1::Parallax1()
 
     
     // create a void node, a parent node
-    CCParallaxNode* voidNode = CCParallaxNode::node();
+    CCParallaxNode* voidNode = CCParallaxNode::create();
     
     // NOW add the 3 layers to the 'void' node
 
@@ -64,12 +64,12 @@ Parallax1::Parallax1()
     // now create some actions that will move the 'void' node
     // and the children of the 'void' node will move at different
     // speed, thus, simulation the 3D environment
-    CCActionInterval* goUp = CCMoveBy::actionWithDuration(4, ccp(0,-500) );
+    CCActionInterval* goUp = CCMoveBy::create(4, ccp(0,-500) );
     CCActionInterval* goDown = goUp->reverse();
-    CCActionInterval* go = CCMoveBy::actionWithDuration(8, ccp(-1000,0) );
+    CCActionInterval* go = CCMoveBy::create(8, ccp(-1000,0) );
     CCActionInterval* goBack = go->reverse();
-    CCFiniteTimeAction* seq = CCSequence::actions(goUp, go, goDown, goBack, NULL);
-    voidNode->runAction( (CCRepeatForever::actionWithAction((CCActionInterval*) seq) ));
+    CCFiniteTimeAction* seq = CCSequence::create(goUp, go, goDown, goBack, NULL);
+    voidNode->runAction( (CCRepeatForever::create((CCActionInterval*) seq) ));
     
     addChild( voidNode );
 }
@@ -87,10 +87,10 @@ std::string Parallax1::title()
 
 Parallax2::Parallax2()
 {
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     // Top Layer, a simple image
-    CCSprite* cocosImage = CCSprite::spriteWithFile(s_Power);
+    CCSprite* cocosImage = CCSprite::create(s_Power);
     // scale the image (optional)
     cocosImage->setScale( 2.5f );
     // change the transform anchor point to 0,0 (optional)
@@ -98,7 +98,7 @@ Parallax2::Parallax2()
     
     
     // Middle layer: a Tile map atlas
-    CCTileMapAtlas* tilemap = CCTileMapAtlas::tileMapAtlasWithTileFile(s_TilesPng, s_LevelMapTga, 16, 16);
+    CCTileMapAtlas* tilemap = CCTileMapAtlas::create(s_TilesPng, s_LevelMapTga, 16, 16);
     tilemap->releaseMap();
     
     // change the transform anchor to 0,0 (optional)
@@ -109,7 +109,7 @@ Parallax2::Parallax2()
     
     
     // background layer: another image
-    CCSprite* background = CCSprite::spriteWithFile(s_back);
+    CCSprite* background = CCSprite::create(s_back);
     // scale the image (optional)
     background->setScale( 1.5f );
     // change the transform anchor point (optional)
@@ -117,7 +117,7 @@ Parallax2::Parallax2()
     
     
     // create a void node, a parent node
-    CCParallaxNode* voidNode = CCParallaxNode::node();
+    CCParallaxNode* voidNode = CCParallaxNode::create();
     
     // NOW add the 3 layers to the 'void' node
     
@@ -244,20 +244,20 @@ void ParallaxDemo::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
     addChild(label, 1);
     label->setPosition( ccp(s.width/2, s.height-50) );
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ParallaxDemo::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ParallaxDemo::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ParallaxDemo::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ParallaxDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ParallaxDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ParallaxDemo::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - 100,30) );
-    item2->setPosition( ccp( s.width/2, 30) );
-    item3->setPosition( ccp( s.width/2 + 100,30) );
+    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
+    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
     
     addChild(menu, 1);    
 }

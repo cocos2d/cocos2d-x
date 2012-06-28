@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -26,12 +26,16 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "CCObject.h"
-#include <string>
+#include "cocoa/CCObject.h"
 #include "CCGL.h"
+#include <string>
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup global
+ * @{
+ */
 /**
  @brief CCConfiguration contains some openGL variables
  @since v0.99.0
@@ -70,13 +74,13 @@ public:
      
      @since v0.99.2
      */
-    inline bool isSupportsNPOT(void)
+    inline bool supportsNPOT(void)
     {
         return m_bSupportsNPOT;
     }
 
     /** Whether or not PVR Texture Compressed is supported */
-    inline bool isSupportsPVRTC(void)
+    inline bool supportsPVRTC(void)
     {
         return m_bSupportsPVRTC;
     }
@@ -84,7 +88,7 @@ public:
     /** Whether or not BGRA8888 textures are supported.
      @since v0.99.2
      */
-    inline bool isSupportsBGRA8888(void)
+    inline bool supportsBGRA8888(void)
     {
         return m_bSupportsBGRA8888;
     }
@@ -92,9 +96,17 @@ public:
     /** Whether or not glDiscardFramebufferEXT is supported
      @since v0.99.2
      */
-    inline bool isSupportsDiscardFramebuffer(void)
+    inline bool supportsDiscardFramebuffer(void)
     {
         return m_bSupportsDiscardFramebuffer;
+    }
+
+    /** Whether or not shareable VAOs are supported.
+     @since v2.0.0
+     */
+    inline bool supportsShareableVAO(void)
+    {
+        return m_bSupportsShareableVAO;
     }
 
     /** returns whether or not an OpenGL is supported */
@@ -113,10 +125,14 @@ protected:
     bool            m_bSupportsNPOT;
     bool            m_bSupportsBGRA8888;
     bool            m_bSupportsDiscardFramebuffer;
+    bool            m_bSupportsShareableVAO;
     GLint           m_nMaxSamplesAllowed;
     GLint           m_nMaxTextureUnits;
     char *          m_pGlExtensions;
 };
+
+// end of global group
+/// @}
 
 NS_CC_END
 

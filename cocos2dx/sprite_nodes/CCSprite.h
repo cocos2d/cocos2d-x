@@ -27,11 +27,11 @@ THE SOFTWARE.
 #ifndef __SPITE_NODE_CCSPRITE_H__
 #define __SPITE_NODE_CCSPRITE_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
-#include "CCTextureAtlas.h"
+#include "textures/CCTextureAtlas.h"
 #include "ccTypes.h"
-#include "CCDictionary.h"
+#include "cocoa/CCDictionary.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -44,6 +44,11 @@ class CCPoint;
 class CCSize;
 class CCTexture2D;
 struct transformValues_;
+
+/**
+ * @addtogroup sprite_nodes
+ * @{
+ */
 
 #define CCSpriteIndexNotInitialized 0xffffffff     /// CCSprite invalid index on the CCSpriteBatchode
 
@@ -123,41 +128,81 @@ public:
     /** Creates an sprite with a texture.
      The rect used will be the size of the texture.
      The offset will be (0,0).
+     @deprecated: This interface will be deprecated sooner or later.
      */
-    static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
+    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
+
+    /** Creates an sprite with a texture and a rect.
+     The offset will be (0,0).
+     @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect);
+
+        /** Creates an sprite with a texture.
+     The rect used will be the size of the texture.
+     The offset will be (0,0).
+     */
+    static CCSprite* create(CCTexture2D *pTexture);
 
     /** Creates an sprite with a texture and a rect.
      The offset will be (0,0).
      */
-    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect);
+    static CCSprite* create(CCTexture2D *pTexture, const CCRect& rect);
 
-    /** Creates an sprite with a texture, a rect and offset. */
-    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect, const CCPoint& offset);
+    /** Creates an sprite with an sprite frame. 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+
+    /** Creates an sprite with an sprite frame name.
+     An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
+     If the CCSpriteFrame doesn't exist it will raise an exception.
+     @deprecated: This interface will be deprecated sooner or later.
+     @since v0.9
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
 
     /** Creates an sprite with an sprite frame. */
-    static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+    static CCSprite* create(CCSpriteFrame *pSpriteFrame);
 
     /** Creates an sprite with an sprite frame name.
      An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
      If the CCSpriteFrame doesn't exist it will raise an exception.
      @since v0.9
      */
-    static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
+    static CCSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
 
     /** Creates an sprite with an image filename.
      The rect used will be the size of the image.
      The offset will be (0,0).
+     @deprecated: This interface will be deprecated sooner or later.
      */
-    static CCSprite* spriteWithFile(const char *pszFileName);
+    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithFile(const char *pszFileName);
+
+    /** Creates an sprite with an image filename and a rect.
+     The offset will be (0,0).
+     @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
+    
+    /** Creates an sprite with an image filename.
+     The rect used will be the size of the image.
+     The offset will be (0,0).
+     */
+    static CCSprite* create(const char *pszFileName);
 
     /** Creates an sprite with an image filename and a rect.
      The offset will be (0,0).
      */
-    static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
-    
+    static CCSprite* create(const char *pszFileName, const CCRect& rect);
+
+    /** Creates an sprite.
+    @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCSprite* node();
     /** Creates an sprite.
      */
-    static CCSprite* node();
+    static CCSprite* create();
 public:
     CCSprite(void);
     virtual ~CCSprite(void);
@@ -181,8 +226,8 @@ public:
     virtual void setScale(float fScale);
     virtual void setVertexZ(float fVertexZ);
     virtual void setAnchorPoint(const CCPoint& anchor);
-    virtual void setIsRelativeAnchorPoint(bool bRelative);
-    virtual void setIsVisible(bool bVisible);
+    virtual void ignoreAnchorPointForPosition(bool value);
+    virtual void setVisible(bool bVisible);
     void setFlipX(bool bFlipX);
     void setFlipY(bool bFlipY);
     /** whether or not the sprite is flipped horizontally. 
@@ -205,8 +250,8 @@ public:
     void updateColor(void);
     // RGBAProtocol
     /** opacity: conforms to CCRGBAProtocol protocol */
-    virtual void setIsOpacityModifyRGB(bool bValue);
-    virtual bool getIsOpacityModifyRGB(void);
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB(void);
 
     // CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);
@@ -302,21 +347,21 @@ protected:
     //
     // Data used when the sprite is rendered using a CCSpriteSheet
     //
-    CCTextureAtlas            *m_pobTextureAtlas;        // Sprite Sheet texture atlas (weak reference)
-    unsigned int            m_uAtlasIndex;            // Absolute (real) Index on the SpriteSheet
-    CCSpriteBatchNode       *m_pobBatchNode;        // Used batch node (weak reference)
+    CCTextureAtlas*     m_pobTextureAtlas;        // Sprite Sheet texture atlas (weak reference)
+    unsigned int        m_uAtlasIndex;            // Absolute (real) Index on the SpriteSheet
+    CCSpriteBatchNode*  m_pobBatchNode;        // Used batch node (weak reference)
     
-    bool                    m_bDirty;                // Sprite needs to be updated
-    bool                    m_bRecursiveDirty;        // Subchildren needs to be updated
-    bool                    m_bHasChildren;            // optimization to check if it contain children
-    bool                    m_bShouldBeHidden;        // should not be drawn because one of the ancestors is not visible
-    CCAffineTransform        m_transformToBatch;        //
+    bool                m_bDirty;                // Sprite needs to be updated
+    bool                m_bRecursiveDirty;        // Subchildren needs to be updated
+    bool                m_bHasChildren;            // optimization to check if it contain children
+    bool                m_bShouldBeHidden;        // should not be drawn because one of the ancestors is not visible
+    CCAffineTransform   m_transformToBatch;        //
     
     //
     // Data used when the sprite is self-rendered
     //
     ccBlendFunc        m_sBlendFunc;    // Needed for the texture protocol
-    CCTexture2D        *m_pobTexture;// Texture used to render the sprite
+    CCTexture2D*       m_pobTexture;// Texture used to render the sprite
 
     //
     // Shared data
@@ -341,6 +386,9 @@ protected:
     bool m_bFlipX;
     bool m_bFlipY;
 };
+
+// end of sprite_nodes group
+/// @}
 
 NS_CC_END
 

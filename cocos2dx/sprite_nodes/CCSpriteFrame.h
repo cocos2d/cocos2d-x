@@ -27,15 +27,20 @@ THE SOFTWARE.
 #ifndef __SPRITE_CCSPRITE_FRAME_H__
 #define __SPRITE_CCSPRITE_FRAME_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
-#include "CCObject.h"
-#include "CCGeometry.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCGeometry.h"
 
 NS_CC_BEGIN
 
 class CCTexture2D;
 class CCZone;
+
+/**
+ * @addtogroup sprite_nodes
+ * @{
+ */
 
 /** @brief A CCSpriteFrame has:
     - texture: A CCTexture2D that will be used by the CCSprite
@@ -91,24 +96,49 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 
     /** Create a CCSpriteFrame with a texture, rect in points.
+    @deprecated: This interface will be deprecated sooner or later.
      It is assumed that the frame was not trimmed.
      */
-    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+    CC_DEPRECATED_ATTRIBUTE static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+
+    /** Create a CCSpriteFrame with a texture filename, rect in points.
+     It is assumed that the frame was not trimmed.
+     @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCSpriteFrame* frameWithTextureFilename(const char* filename, const CCRect& rect);
+
+    /** Create a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+     The originalSize is the size in points of the frame before being trimmed.
+     @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+
+    /** Create a CCSpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
+     The originalSize is the size in pixels of the frame before being trimmed.
+     @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCSpriteFrame* frameWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+
+        /** Create a CCSpriteFrame with a texture, rect in points.
+     It is assumed that the frame was not trimmed.
+     */
+    static CCSpriteFrame* create(CCTexture2D* pobTexture, const CCRect& rect);
 
     /** Create a CCSpriteFrame with a texture filename, rect in points.
      It is assumed that the frame was not trimmed.
      */
-    static CCSpriteFrame* frameWithTextureFilename(const char* filename, const CCRect& rect);
+    static CCSpriteFrame* create(const char* filename, const CCRect& rect);
 
     /** Create a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in points of the frame before being trimmed.
      */
-    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+    static CCSpriteFrame* create(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
 
     /** Create a CCSpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
      */
-    static CCSpriteFrame* frameWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+    static CCSpriteFrame* create(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+
 public:
     /** Initializes a CCSpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
@@ -144,6 +174,9 @@ protected:
     CCTexture2D *m_pobTexture;
     std::string  m_strTextureFilename;
 };
+
+// end of sprite_nodes group
+/// @}
 
 NS_CC_END
 

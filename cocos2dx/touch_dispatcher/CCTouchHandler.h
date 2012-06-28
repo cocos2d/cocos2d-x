@@ -28,10 +28,15 @@ THE SOFTWARE.
 
 #include "CCTouchDelegateProtocol.h"
 #include "CCTouchDispatcher.h"
-#include "CCObject.h"
-#include "CCSet.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCSet.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup input
+ * @{
+ */
 
 /**
  CCTouchHandler
@@ -109,6 +114,9 @@ protected:
     bool m_bSwallowsTouches;
     CCSet *m_pClaimedTouches;
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

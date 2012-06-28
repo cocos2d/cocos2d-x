@@ -27,11 +27,11 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "effects/CCGrabber.h"
 #include "support/ccUtils.h"
-#include "CCGLProgram.h"
-#include "CCShaderCache.h"
-#include "ccGLStateCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/ccGLStateCache.h"
 #include "CCGL.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "support/TransformUtils.h"
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
@@ -40,6 +40,11 @@ NS_CC_BEGIN
 // implementation of CCGridBase
 
 CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
+{
+    return CCGridBase::create(gridSize);
+}
+
+CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
 {
     CCGridBase *pGridBase = new CCGridBase();
 
@@ -59,6 +64,11 @@ CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
 }
 
 CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
+{
+    return CCGridBase::create(gridSize, texture, flipped);
+}
+
+CCGridBase* CCGridBase::create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
 {
     CCGridBase *pGridBase = new CCGridBase();
 
@@ -89,7 +99,7 @@ bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture,
     CC_SAFE_RETAIN(m_pTexture);
     m_bIsTextureFlipped = bFlipped;
 
-    const CCSize& texSize = m_pTexture->getContentSizeInPixels();
+    const CCSize& texSize = m_pTexture->getContentSize();
     m_obStep.x = texSize.width / m_sGridSize.x;
     m_obStep.y = texSize.height / m_sGridSize.y;
 
@@ -168,7 +178,7 @@ void CCGridBase::setActive(bool bActive)
     }
 }
 
-void CCGridBase::setIsTextureFlipped(bool bFlipped)
+void CCGridBase::setTextureFlipped(bool bFlipped)
 {
     if (m_bIsTextureFlipped != bFlipped)
     {
@@ -218,7 +228,7 @@ void CCGridBase::afterDraw(cocos2d::CCNode *pTarget)
     CCDirector *director = CCDirector::sharedDirector();
     director->setProjection(m_directorProjection);
 
-    if (pTarget->getCamera()->getDirty())
+    if (pTarget->getCamera()->isDirty())
     {
         const CCPoint& offset = pTarget->getAnchorPointInPoints();
 

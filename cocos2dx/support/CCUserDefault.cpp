@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCUserDefault.h"
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
 #include <libxml/parser.h>
 #include <libxml/tree.h>
@@ -324,7 +324,7 @@ void CCUserDefault::initXMLFilePath()
 {
     if (! m_sbIsFilePathInitialized)
     {
-        m_sFilePath += CCFileUtils::getWriteablePath() + XML_FILE_NAME;
+        m_sFilePath += CCFileUtils::sharedFileUtils()->getWriteablePath() + XML_FILE_NAME;
         m_sbIsFilePathInitialized = true;
     }    
 }

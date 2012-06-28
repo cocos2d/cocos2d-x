@@ -92,7 +92,7 @@ kmMat3* const kmMat3Inverse(kmMat3* pOut, const kmScalar pDeterminate, const kmM
         return NULL;
     }
 
-    detInv = 1.0 / pDeterminate;
+    detInv = 1.0f / pDeterminate;
 
     kmMat3Adjugate(&adjugate, pM);
     kmMat3ScalarMultiply(pOut, &adjugate, detInv);

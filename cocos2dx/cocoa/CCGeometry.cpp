@@ -55,6 +55,13 @@ void CCPoint::setPoint(float x, float y)
     this->y = y;
 }
 
+CCObject* CCPoint::copyWithZone(CCZone* pZone)
+{
+    CCPoint* pRet = new CCPoint();
+    pRet->setPoint(this->x, this->y);
+    return pRet;
+}
+
 bool CCPoint::CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2)
 {
     return ((point1.x == point2.x) && (point1.y == point2.y));
@@ -87,6 +94,13 @@ void CCSize::setSize(float width, float height)
 {
     this->width = width;
     this->height = height;
+}
+
+CCObject* CCSize::copyWithZone(CCZone* pZone)
+{
+    CCSize* pRet = new CCSize();
+    pRet->setSize(this->width, this->width);
+    return pRet;
 }
 
 bool CCSize::CCSizeEqualToSize(const CCSize& size1, const CCSize& size2)
@@ -127,6 +141,13 @@ void CCRect::setRect(float x, float y, float width, float height)
 
     size.width = width;
     size.height = height;
+}
+
+CCObject* CCRect::copyWithZone(CCZone* pZone)
+{
+    CCRect* pRet = new CCRect();
+    pRet->setRect(this->origin.x, this->origin.y, this->size.width, this->size.height);
+    return pRet;
 }
 
 bool CCRect::CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2)

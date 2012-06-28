@@ -50,7 +50,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     
     m_entryID = entryId;
     
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     Box2DView* view = Box2DView::viewWithEntryID( entryId );
     addChild(view, 0, kTagBox2DNode);
@@ -58,18 +58,18 @@ bool MenuLayer::initWithEntryID(int entryId)
     view->setAnchorPoint( ccp(0,0) );
     view->setPosition( ccp(s.width/2, s.height/3) );
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//    CCLabelBMFont* label = CCLabelBMFont::labelWithString(view->title().c_str(),  "fonts/arial16.fnt");
+//    CCLabelBMFont* label = CCLabelBMFont::create(view->title().c_str(),  "fonts/arial16.fnt");
 //#else    
-    CCLabelTTF* label = CCLabelTTF::labelWithString(view->title().c_str(), "Arial", 28);
+    CCLabelTTF* label = CCLabelTTF::create(view->title().c_str(), "Arial", 28);
 //#endif
     addChild(label, 1);
     label->setPosition( ccp(s.width/2, s.height-50) );
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(MenuLayer::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(MenuLayer::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(MenuLayer::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(MenuLayer::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(MenuLayer::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(MenuLayer::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
     item1->setPosition( ccp( s.width/2 - 100,30) );
@@ -172,7 +172,7 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 bool Box2DView::initWithEntryID(int entryId)
 {    
 //    setIsAccelerometerEnabled( true );
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
 
     schedule( schedule_selector(Box2DView::tick) );
 
@@ -187,7 +187,7 @@ std::string Box2DView::title()
     return std::string(m_entry->name);
 }
 
-void Box2DView::tick(ccTime dt)
+void Box2DView::tick(float dt)
 {
     m_test->Step(&settings);
 }

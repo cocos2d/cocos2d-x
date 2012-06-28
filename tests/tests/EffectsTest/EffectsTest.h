@@ -18,7 +18,7 @@ public:
     TextLayer(void);
     ~TextLayer(void);
 
-    void checkAnim(ccTime dt);
+    void checkAnim(float dt);
 
     virtual void onEnter();
 
@@ -28,7 +28,7 @@ public:
 
     void newScene();
 
-    static TextLayer* node();
+    static TextLayer* create();
 };
 
 #endif

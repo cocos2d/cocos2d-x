@@ -36,10 +36,10 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void autoremove(ccTime dt);
-    void tick(ccTime dt);
+    void autoremove(float dt);
+    void tick(float dt);
 private:
-    ccTime accum;
+    float accum;
 };
 
 class SchedulerPauseResume : public SchedulerTestLayer
@@ -49,9 +49,45 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void tick1(ccTime dt);
-    void tick2(ccTime dt);
-    void pause(ccTime dt);
+    void tick1(float dt);
+    void tick2(float dt);
+    void pause(float dt);
+};
+
+class SchedulerPauseResumeAll : public SchedulerTestLayer
+{
+public:
+    SchedulerPauseResumeAll();
+    virtual ~SchedulerPauseResumeAll();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void tick1(float dt);
+    void tick2(float dt);
+    void pause(float dt);
+    void resume(float dt);
+private:
+    CCSet* m_pPausedTargets;
+};
+
+class SchedulerPauseResumeAllUser : public SchedulerTestLayer
+{
+public:
+    SchedulerPauseResumeAllUser();
+    virtual ~SchedulerPauseResumeAllUser();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void tick1(float dt);
+    void tick2(float dt);
+    void pause(float dt);
+    void resume(float dt);
+private:
+    CCSet* m_pPausedTargets;
 };
 
 class SchedulerUnscheduleAll : public SchedulerTestLayer
@@ -61,25 +97,42 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void tick1(ccTime dt);
-    void tick2(ccTime dt);
-    void tick3(ccTime dt);
-    void tick4(ccTime dt);
-    void unscheduleAll(ccTime dt);
+    void tick1(float dt);
+    void tick2(float dt);
+    void tick3(float dt);
+    void tick4(float dt);
+    void unscheduleAll(float dt);
 };
 
 class SchedulerUnscheduleAllHard : public SchedulerTestLayer
 {
 public:
     virtual void onEnter();
+    virtual void onExit();
     virtual std::string title();
     virtual std::string subtitle();
 
-    void tick1(ccTime dt);
-    void tick2(ccTime dt);
-    void tick3(ccTime dt);
-    void tick4(ccTime dt);
-    void unscheduleAll(ccTime dt);
+    void tick1(float dt);
+    void tick2(float dt);
+    void tick3(float dt);
+    void tick4(float dt);
+    void unscheduleAll(float dt);
+private:
+    bool m_bActionManagerActive;
+};
+
+class SchedulerUnscheduleAllUserLevel : public SchedulerTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void tick1(float dt);
+    void tick2(float dt);
+    void tick3(float dt);
+    void tick4(float dt);
+    void unscheduleAll(float dt);
 };
 
 class SchedulerSchedulesAndRemove : public SchedulerTestLayer
@@ -89,11 +142,11 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void tick1(ccTime dt);
-    void tick2(ccTime dt);
-    void tick3(ccTime dt);
-    void tick4(ccTime dt);
-    void scheduleAndUnschedule(ccTime dt);
+    void tick1(float dt);
+    void tick2(float dt);
+    void tick3(float dt);
+    void tick4(float dt);
+    void scheduleAndUnschedule(float dt);
 };
 
 class SchedulerUpdate : public SchedulerTestLayer
@@ -103,7 +156,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void removeUpdates(ccTime dt);
+    void removeUpdates(float dt);
 };
 
 class SchedulerUpdateAndCustom : public SchedulerTestLayer
@@ -113,9 +166,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void update(ccTime dt);
-    void tick(ccTime dt);
-    void stopSelectors(ccTime dt);
+    void update(float dt);
+    void tick(float dt);
+    void stopSelectors(float dt);
 };
 
 class SchedulerUpdateFromCustom : public SchedulerTestLayer
@@ -125,9 +178,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void update(ccTime dt);
-    void schedUpdate(ccTime dt);
-    void stopUpdate(ccTime dt);
+    void update(float dt);
+    void schedUpdate(float dt);
+    void stopUpdate(float dt);
 };
 
 class TestNode : public CCNode
@@ -147,7 +200,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void schedUpdate(ccTime dt);
+    void schedUpdate(float dt);
 private:
     float m_fInterval;
     int   m_nTicks;
@@ -159,7 +212,7 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void update(ccTime dt);
+    void update(float dt);
 };
 
 class SchedulerTimeScale : public SchedulerTestLayer
@@ -170,7 +223,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     CCControlSlider* sliderCtl();
-    void sliderAction(CCObject* pSender);
+    void sliderAction(CCObject* pSender, CCControlEvent controlEvent);
     CCControlSlider* m_pSliderCtl;
 };
 
@@ -183,7 +236,7 @@ public:
     virtual std::string subtitle();
     void onEnter();
     CCControlSlider* sliderCtl();
-    void sliderAction(CCObject* sender);
+    void sliderAction(CCObject* sender, CCControlEvent controlEvent);
     CCScheduler *sched1;
     CCScheduler *sched2;
     CCActionManager *actionManager1;

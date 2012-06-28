@@ -26,12 +26,17 @@ THE SOFTWARE.
 #ifndef __CCPARALLAX_NODE_H__
 #define __CCPARALLAX_NODE_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 /*#include "support/data_support/ccArray.h"*/
 
 NS_CC_BEGIN
 
 struct _ccArray;
+
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
 
 /** @brief CCParallaxNode: A node that simulates a parallax scroller
 
@@ -50,7 +55,9 @@ public:
     */
     CCParallaxNode();
     virtual ~CCParallaxNode();
-    static CCParallaxNode * node();
+    //@deprecated: This interface will be deprecated sooner or later.
+    CC_DEPRECATED_ATTRIBUTE static CCParallaxNode * node();
+    static CCParallaxNode * create();
     virtual void addChild(CCNode * child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
     // super methods
     virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
@@ -62,6 +69,9 @@ private:
 protected:
     CCPoint    m_tLastPosition;
 };
+
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

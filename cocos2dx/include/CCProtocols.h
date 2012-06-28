@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CCPROTOCOLS_H__
 
 #include "ccTypes.h"
-#include "CCTexture2D.h"
+#include "textures/CCTexture2D.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -63,12 +63,12 @@ public:
      Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
      @since v0.8
      */
-    virtual void setIsOpacityModifyRGB(bool bValue) = 0;
+    virtual void setOpacityModifyRGB(bool bValue) = 0;
 
     /** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
      @since v0.8
      */
-    virtual bool getIsOpacityModifyRGB(void) = 0;
+    virtual bool isOpacityModifyRGB(void) = 0;
 };
 
 /**

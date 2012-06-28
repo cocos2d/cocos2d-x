@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2011 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2009      Valentin Milea
  Copyright (c) 2011      Zynga Inc.
@@ -29,11 +29,11 @@
 #define __PLATFOMR_CCNODE_H__
 
 #include "ccMacros.h"
-#include "CCAffineTransform.h"
-#include "CCArray.h"
+#include "cocoa/CCAffineTransform.h"
+#include "cocoa/CCArray.h"
 #include "CCGL.h"
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
+#include "shaders/CCGLProgram.h"
 #include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
@@ -48,6 +48,11 @@ class CCLabelProtocol;
 class CCScheduler;
 class CCActionManager;
 
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
+
 enum {
     kCCNodeTagInvalid = -1,
 };
@@ -56,40 +61,6 @@ enum {
     kCCNodeOnEnter,
     kCCNodeOnExit
 };
-
-#define arrayMakeObjectsPerformSelector(pArray, func, elementType)  \
-do {                                                                  \
-    if(pArray && pArray->count() > 0)                                 \
-    {                                                                 \
-        CCObject* child;                                              \
-        CCARRAY_FOREACH(pArray, child)                                \
-        {                                                             \
-            elementType pNode = (elementType) child;                  \
-            if(pNode)                                                 \
-            {                                                         \
-                pNode->func();                                        \
-            }                                                         \
-        }                                                             \
-    }                                                                 \
-}                                                                     \
-while(false)
-
-#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
-do {                                                                  \
-    if(pArray && pArray->count() > 0)                                 \
-    {                                                                 \
-        CCObject* child = NULL;                                       \
-        CCARRAY_FOREACH(pArray, child)                                \
-        {                                                             \
-            elementType pNode = (elementType) child;                  \
-            if(pNode)                                                 \
-            {                                                         \
-                pNode->func(pObject);                                 \
-            }                                                         \
-        }                                                             \
-    }                                                                 \
-}                                                                     \
-while(false)
 
 /** @brief CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
@@ -230,7 +201,12 @@ class CC_DLL CCNode : public CCObject
     CC_PROPERTY(CCGridBase *, m_pGrid, Grid)
 
     /** Whether of not the node is visible. Default is true */
-    CC_PROPERTY(bool, m_bIsVisible, IsVisible)
+protected:
+    bool m_bIsVisible;
+public:
+    virtual bool isVisible();
+    virtual void setVisible(bool visible);
+
 
     /** anchorPoint is the point around which all transformations and positioning manipulations take place.
      It's like a pin in the node where it is "attached" to its parent.
@@ -251,19 +227,20 @@ class CC_DLL CCNode : public CCObject
      All nodes has a size. Layer and Scene has the same size of the screen.
      @since v0.8
      */
-    CC_PROPERTY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
+    CC_PROPERTY(CCSize, m_tContentSize, ContentSize)
 
     /** whether or not the node is running */
-    CC_PROPERTY_READONLY(bool, m_bIsRunning, IsRunning)
+    bool m_bIsRunning;
+    bool isRunning();
 
     /** A weak reference to the parent */
     CC_PROPERTY(CCNode *, m_pParent, Parent)
 
-    /** If true the transformtions will be relative to it's anchor point.
-     * Sprites, Labels and any other sizeble object use it have it enabled by default.
-     * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
-     */
-    CC_PROPERTY(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
+    // If ture, the Anchor Point will be (0,0) when you position the CCNode.
+	// Used by CCLayer and CCScene
+    bool m_bIgnoreAnchorPointForPosition;
+    bool isIgnoreAnchorPointForPosition();
+    void ignoreAnchorPointForPosition(bool isIgnoreAnchorPointForPosition);
 
     /** A tag used to identify the node easily */
     CC_PROPERTY(int, m_nTag, Tag)
@@ -334,8 +311,14 @@ public:
 
     /** allocates and initializes a node.
      The node will be created as "autorelease".
+	 @deprecated: This interface will be deprecated sooner or later.
      */
-    static CCNode * node(void);
+    CC_DEPRECATED_ATTRIBUTE static CCNode * node(void);
+
+	/** allocates and initializes a node.
+     The node will be created as "autorelease".
+     */
+    static CCNode * create(void);
 
     //scene managment
 
@@ -544,18 +527,18 @@ public:
      If the selector is already scheduled, then the interval parameter
      will be updated without scheduling it again.
      */
-    void schedule(SEL_SCHEDULE selector, ccTime interval);
+    void schedule(SEL_SCHEDULE selector, float interval);
 
     /**
      repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
      delay is the amount of time the action will wait before execution
      */
-    void schedule(SEL_SCHEDULE selector, ccTime interval, unsigned int repeat, ccTime delay);
+    void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
 
     /**
      Schedules a selector that runs only once, with a delay of 0 or larger
     */
-    void scheduleOnce(SEL_SCHEDULE selector, ccTime delay);
+    void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /** unschedules a custom selector.*/
     void unschedule(SEL_SCHEDULE selector);
@@ -628,6 +611,9 @@ public:
      */
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
 };
+
+// end of base_node group
+/// @}
 
 NS_CC_END
 

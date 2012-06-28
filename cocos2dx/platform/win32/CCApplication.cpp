@@ -160,17 +160,17 @@ static void PVRFrameEnableControlWindow(bool bEnable)
         return;
     }
 
-    const char * szValue = "hide_gui";
-    const char * szNewData = (bEnable) ? "NO" : "YES";
-    char szOldData[256] = {0};
-    DWORD   dwSize = sizeof(szOldData);
-    LSTATUS status = RegQueryValueEx(hKey, szValue, 0, NULL, (LPBYTE)szOldData, &dwSize);
+    const WCHAR* wszValue = L"hide_gui";
+    const WCHAR* wszNewData = (bEnable) ? L"NO" : L"YES";
+    WCHAR wszOldData[256] = {0};
+    DWORD   dwSize = sizeof(wszOldData);
+    LSTATUS status = RegQueryValueExW(hKey, wszValue, 0, NULL, (LPBYTE)wszOldData, &dwSize);
     if (ERROR_FILE_NOT_FOUND == status              // the key not exist
         || (ERROR_SUCCESS == status                 // or the hide_gui value is exist
-        && 0 != strcmp(szNewData, szOldData)))    // but new data and old data not equal
+        && 0 != wcscmp(wszNewData, wszOldData)))    // but new data and old data not equal
     {
-        dwSize = sizeof(wchar_t) * (strlen(szNewData) + 1);
-        RegSetValueEx(hKey, szValue, 0, REG_SZ, (const BYTE *)szNewData, dwSize);
+        dwSize = sizeof(WCHAR) * (wcslen(wszNewData) + 1);
+        RegSetValueEx(hKey, wszValue, 0, REG_SZ, (const BYTE *)wszNewData, dwSize);
     }
 
     RegCloseKey(hKey);

@@ -19,11 +19,11 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -57,8 +57,8 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..;..\platform;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;..\actions;..\base_nodes;..\cocoa;..\effects;..\extensions;..\keypad_dispatcher;..\label_nodes;..\layers_scenes_transitions_nodes;..\menu_nodes;..\misc_nodes;..\particle_nodes;..\script_support;..\shaders;..\sprite_nodes;..\text_input_node;..\textures;..\tileMap_parallax_nodes;..\touch_dispatcher;..\support;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libtiff;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -66,7 +66,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251;4996;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -74,11 +74,13 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libxml2.lib;libzlib.lib;libpng.lib;libtiff.lib;libjpeg.lib;libiconv.lib;pthreadVCE2.lib;%(AdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
@@ -95,14 +97,14 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>..;..\platform;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;..\actions;..\base_nodes;..\cocoa;..\effects;..\extensions;..\keypad_dispatcher;..\label_nodes;..\layers_scenes_transitions_nodes;..\menu_nodes;..\misc_nodes;..\particle_nodes;..\script_support;..\shaders;..\sprite_nodes;..\text_input_node;..\textures;..\tileMap_parallax_nodes;..\touch_dispatcher;..\support;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\platform\win32;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libtiff;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\pthread;..\platform\third_party\win32\OGLES;..\include;..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251;4996;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -110,10 +112,11 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libxml2.lib;libzlib.lib;libpng.lib;libtiff.lib;libjpeg.lib;libiconv.lib;pthreadVCE2.lib;;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -129,6 +132,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
   <ItemGroup>
     <ClCompile Include="..\actions\CCAction.cpp" />
     <ClCompile Include="..\actions\CCActionCamera.cpp" />
+    <ClCompile Include="..\actions\CCActionCatmullRom.cpp" />
     <ClCompile Include="..\actions\CCActionEase.cpp" />
     <ClCompile Include="..\actions\CCActionGrid.cpp" />
     <ClCompile Include="..\actions\CCActionGrid3D.cpp" />
@@ -149,7 +153,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
-    <ClCompile Include="..\cocoa\CCData.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCGeometry.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -160,8 +163,23 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\effects\CCGrabber.cpp" />
     <ClCompile Include="..\effects\CCGrid.cpp" />
-    <ClCompile Include="..\extensions\CCBReader\CCBCustomClass.cpp" />
-    <ClCompile Include="..\extensions\CCBReader\CCBReader_v2.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCBFileLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCBReader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCControlButtonLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCControlLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLabelBMFontLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLabelTTFLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLayerColorLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLayerGradientLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCLayerLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCMenuItemImageLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCMenuItemLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCNodeLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCNodeLoaderLibrary.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCParticleSystemQuadLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCScale9SpriteLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCScrollViewLoader.cpp" />
+    <ClCompile Include="..\extensions\CCBReader\CCSpriteLoader.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\extensions\CCControlExtension\CCControlColourPicker.cpp" />
@@ -177,6 +195,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\extensions\CCListView\CCListView.cpp" />
     <ClCompile Include="..\extensions\CCListView\CCListViewCell.cpp" />
     <ClCompile Include="..\extensions\CCNotificationCenter\CCNotificationCenter.cpp" />
+    <ClCompile Include="..\extensions\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="..\extensions\CCTextureWatcher\CCTextureWatcher.cpp" />
     <ClCompile Include="..\kazmath\src\aabb.c" />
     <ClCompile Include="..\kazmath\src\GL\mat4stack.c" />
@@ -212,7 +231,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
-    <ClCompile Include="..\platform\CCStdC.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
@@ -221,6 +239,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\platform\win32\CCEGLView.cpp" />
     <ClCompile Include="..\platform\win32\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\win32\CCImage.cpp" />
+    <ClCompile Include="..\platform\win32\CCStdC.cpp" />
     <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
     <ClCompile Include="..\shaders\CCGLProgram.cpp" />
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
@@ -238,6 +257,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\support\CCUserDefault.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
+    <ClCompile Include="..\support\data_support\ccCArray.cpp" />
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
@@ -261,6 +281,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h" />
     <ClInclude Include="..\actions\CCActionCamera.h" />
+    <ClInclude Include="..\actions\CCActionCatmullRom.h" />
     <ClInclude Include="..\actions\CCActionEase.h" />
     <ClInclude Include="..\actions\CCActionGrid.h" />
     <ClInclude Include="..\actions\CCActionGrid3D.h" />
@@ -281,7 +302,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
-    <ClInclude Include="..\cocoa\CCData.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
     <ClInclude Include="..\cocoa\CCGeometry.h" />
     <ClInclude Include="..\cocoa\CCInteger.h" />
@@ -292,8 +312,27 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\cocoa\CCZone.h" />
     <ClInclude Include="..\effects\CCGrabber.h" />
     <ClInclude Include="..\effects\CCGrid.h" />
-    <ClInclude Include="..\extensions\CCBReader\CCBCustomClass.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCBFileLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCBMemberVariableAssigner.h" />
     <ClInclude Include="..\extensions\CCBReader\CCBReader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCBSelectorResolver.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCControlButtonLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCControlLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLabelBMFontLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLabelTTFLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLayerColorLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLayerGradientLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCLayerLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCMenuItemImageLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCMenuItemLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCMenuLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCNodeLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCNodeLoaderLibrary.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCNodeLoaderListener.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCParticleSystemQuadLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCScale9SpriteLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCScrollViewLoader.h" />
+    <ClInclude Include="..\extensions\CCBReader\CCSpriteLoader.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControlButton.h" />
     <ClInclude Include="..\extensions\CCControlExtension\CCControlColourPicker.h" />
@@ -311,6 +350,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\extensions\CCListView\CCListView.h" />
     <ClInclude Include="..\extensions\CCListView\CCListViewCell.h" />
     <ClInclude Include="..\extensions\CCNotificationCenter\CCNotificationCenter.h" />
+    <ClInclude Include="..\extensions\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\extensions\CCTextureWatcher\CCTextureWatcher.h" />
     <ClInclude Include="..\include\ccConfig.h" />
     <ClInclude Include="..\include\CCEventType.h" />
@@ -363,7 +403,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\CCPlatformConfig.h" />
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
-    <ClInclude Include="..\platform\CCStdC.h" />
     <ClInclude Include="..\platform\CCThread.h" />
     <ClInclude Include="..\platform\platform.h" />
     <ClInclude Include="..\platform\win32\CCAccelerometer.h" />
@@ -371,6 +410,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\win32\CCEGLView.h" />
     <ClInclude Include="..\platform\win32\CCGL.h" />
     <ClInclude Include="..\platform\win32\CCPlatformDefine.h" />
+    <ClInclude Include="..\platform\win32\CCStdC.h" />
     <ClInclude Include="..\script_support\CCScriptSupport.h" />
     <ClInclude Include="..\shaders\CCGLProgram.h" />
     <ClInclude Include="..\shaders\ccGLStateCache.h" />

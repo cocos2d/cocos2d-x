@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 class TestController : public CCLayer
 {

@@ -29,9 +29,16 @@ THE SOFTWARE.
 #define __CCGLPROGRAM_H__
 
 #include "ccMacros.h"
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
+
+#include "CCGL.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup shaders
+ * @{
+ */
 
 enum {
     kCCVertexAttrib_Position,
@@ -159,6 +166,9 @@ private:
     GLint            m_uUniforms[kCCUniform_MAX];
     struct _hashUniformEntry* m_pHashForUniforms;
 };
+
+// end of shaders group
+/// @}
 
 NS_CC_END
 

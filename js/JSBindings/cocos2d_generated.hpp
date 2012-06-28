@@ -172,7 +172,7 @@ public:
 	static JSBool jsregisterWithTouchDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsregisterScriptTouchHandler(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsunregisterScriptTouchHandler(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -644,7 +644,7 @@ public:
 	static JSBool jsremoveChild(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsremoveAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsvisit(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -722,7 +722,7 @@ public:
 	static JSBool jsstreakWithFade(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinitWithFade(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsupdate(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -1178,7 +1178,7 @@ public:
 	static JSBool jsinitWithSprite(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsprogressWithSprite(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -1678,7 +1678,7 @@ public:
 	static JSBool jsinitWithTileFile(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsupdateAtlasValues(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -2466,7 +2466,7 @@ public:
 		kContentSizeInPixels,
 		kIsRunning,
 		kParent,
-		kIsRelativeAnchorPoint,
+		kIsIgnoreAnchorPointForPosition,
 		kTag,
 		kUserData,
 		kTransform,
@@ -2523,7 +2523,7 @@ public:
 	static JSBool jsconvertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsconvertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsconvertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -2741,7 +2741,7 @@ public:
 	static JSBool jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val);
 	static void jsCreateClass(JSContext *cx, JSObject *globalObj, const char *name);
 	static JSBool jsinit(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -3113,7 +3113,7 @@ public:
 	static JSBool jsunselected(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsregisterScriptHandler(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsunregisterScriptHandler(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 	void menuAction(cocos2d::CCObject *o);
 
 };
@@ -3185,7 +3185,7 @@ public:
 	static JSBool jstiledMapWithTMXFile(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsinitWithTMXFile(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jslayerNamed(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -3580,7 +3580,7 @@ public:
 	static JSBool jsend(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsclear(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jssaveToFile(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -4067,7 +4067,7 @@ public:
 	static JSBool jsupdateTransform(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsisFrameDisplayed(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsdisplayFrame(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 
@@ -4159,7 +4159,7 @@ public:
 	static JSBool jsremoveChild(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsremoveAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool jsdraw(JSContext *cx, uint32_t argc, jsval *vp);
-	virtual void update(ccTime delta);
+	virtual void update(float delta);
 
 };
 

@@ -4,7 +4,7 @@
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
 
-//using namespace cocos2d;
+//USING_NS_CC;
 
 class MotionStreakTest : public CCLayer
 {
@@ -13,6 +13,7 @@ public:
     ~MotionStreakTest(void);
 
     virtual std::string title();
+    virtual std::string subtitle();
     virtual void onEnter();
 
     void restartCallback(CCObject* pSender);
@@ -28,11 +29,10 @@ class MotionStreakTest1 : public MotionStreakTest
 protected:
     CCNode*        m_root;
     CCNode*        m_target;
-    CCMotionStreak*        m_streak;
 
 public:
     virtual void onEnter();
-    void onUpdate(ccTime delta);
+    void onUpdate(float delta);
     virtual std::string title();
 };
 
@@ -41,12 +41,24 @@ class MotionStreakTest2 : public MotionStreakTest
 protected:
     CCNode*        m_root;
     CCNode*        m_target;
-    CCMotionStreak*        m_streak;
 
 public:
     virtual void onEnter();
     void ccTouchesMoved(CCSet* touches, CCEvent* event);
     virtual std::string title();
+};
+
+class Issue1358 : public MotionStreakTest
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+    virtual void update(float dt);
+private:
+    CCPoint m_center;
+    float m_fRadius;
+    float m_fAngle;
 };
 
 class MotionStreakTestScene : public TestScene

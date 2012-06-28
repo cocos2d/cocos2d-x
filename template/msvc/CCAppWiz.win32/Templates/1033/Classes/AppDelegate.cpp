@@ -31,7 +31,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
 
-	// enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
+    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
 //     pDirector->enableRetinaDisplay(true);
 
     // turn on display FPS
@@ -46,13 +46,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    CCString* pstrFileContent = CCString::stringWithContentsOfFile("hello.lua");
+    CCString* pstrFileContent = CCString::createWithContentsOfFile("hello.lua");
     if (pstrFileContent)
     {
         pEngine->executeString(pstrFileContent->getCString());
     }
 #else
-	std::string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif
@@ -69,7 +69,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->pause();
+    CCDirector::sharedDirector()->stopAnimation();
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
@@ -79,7 +79,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->resume();
+    CCDirector::sharedDirector()->startAnimation();
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
 
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();

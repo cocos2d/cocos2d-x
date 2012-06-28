@@ -32,11 +32,11 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-#define CONTROL_SCENE_NODE_FUNC(controlScene) \
+#define CONTROL_SCENE_CREATE_FUNC(controlScene) \
 public: \
 static CCScene* sceneWithTitle(const char * title) \
 { \
-    CCScene* pScene = CCScene::node(); \
+    CCScene* pScene = CCScene::create(); \
     controlScene* controlLayer = new controlScene(); \
     if (controlLayer && controlLayer->init()) \
     { \
@@ -67,7 +67,7 @@ public:
     /** Title label of the scene. */
     CC_SYNTHESIZE_RETAIN(cocos2d::CCLabelTTF*, m_pSceneTitleLabel, SceneTitleLabel)
 
-    CONTROL_SCENE_NODE_FUNC(CCControlScene);
+    CONTROL_SCENE_CREATE_FUNC(CCControlScene);
 };
 
 #endif /* __CCCONTROLSCENE_H__ */

@@ -25,18 +25,51 @@
 #include "CocosBuilderTest.h"
 #include "../../testResource.h"
 #include "extensions/CCBReader/CCBReader.h"
-#include "HelloCocosBuilder.h"
+#include "extensions/CCBReader/CCNodeLoaderLibrary.h"
+#include "HelloCocosBuilder/HelloCocosBuilderLayerLoader.h"
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 
-void CocosBuilderTestScene::runThisTest()
-{
-    CCBCustomClassFactory::sharedFactory()->registCustomClass(
-                                "HelloCocosBuilder", 
-                                HelloCocosBuilder::createInstance);
+void CocosBuilderTestScene::runThisTest() {
+    /* Create an autorelease CCNodeLoaderLibrary. */
+    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
     
-    CCNode* node = CCBReader::nodeGraphFromFile("CocosBuilder_v2/example_relativeposition.ccb");
-	this->addChild(node) ;
+    ccNodeLoaderLibrary->registerCCNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
+
+    /* Create an autorelease CCBReader. */
+    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
+    ccbReader->autorelease();
     
+    /* Read a ccbi file. */
+    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/official/pub/", "ccb/HelloCocosBuilder.ccbi", this);
+
+    if(node != NULL) {
+        this->addChild(node);
+    }
+
     CCDirector::sharedDirector()->replaceScene(this);
 }
+
+
+//void CocosBuilderTestScene::runThisTest() {
+//    CCBIReaderLayer * ccbiReaderLayer = CCBIReaderLayer::node();
+//    
+//    /* Create an autorelease CCNodeLoaderLibrary. */
+//    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+//    
+//    /* Create an autorelease CCBReader. */
+//    CCBReader * ccbReader = new CCBReader(ccNodeLoaderLibrary, ccbiReaderLayer, ccbiReaderLayer);
+//    ccbReader->autorelease();
+//    
+//    /* Read a ccbi file. */
+//    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/simple/pub/", "ccb/test.ccbi", ccbiReaderLayer);
+//    
+//    if(node != NULL) {
+//        ccbiReaderLayer->addChild(node);
+//    }
+//    
+//    this->addChild(ccbiReaderLayer);
+//    
+//    CCDirector::sharedDirector()->replaceScene(this);
+//}

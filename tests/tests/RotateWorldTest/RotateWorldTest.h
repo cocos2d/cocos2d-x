@@ -13,13 +13,7 @@ class SpriteLayer : public CCLayer
 {
 public:
     virtual void onEnter();
-    static SpriteLayer* node()
-    {
-        SpriteLayer* pNode = new SpriteLayer();
-        pNode->autorelease();
-
-        return pNode;
-    }
+    LAYER_CREATE_FUNC(SpriteLayer)
 };
 
 class TestLayer : public CCLayer
@@ -27,13 +21,7 @@ class TestLayer : public CCLayer
 public:
     virtual void onEnter();
 
-    static TestLayer* node()
-    {
-        TestLayer* pNode = new TestLayer();
-        pNode->autorelease();
-
-        return pNode;
-    }
+    LAYER_CREATE_FUNC(TestLayer)
 };
 
 class RotateWorldMainLayer : public CCLayer
@@ -41,13 +29,7 @@ class RotateWorldMainLayer : public CCLayer
 public:
     virtual void onEnter();
 
-    static RotateWorldMainLayer* node()
-    {
-        RotateWorldMainLayer* pNode = new RotateWorldMainLayer();
-        pNode->autorelease();
-
-        return pNode;
-    }
+    LAYER_CREATE_FUNC(RotateWorldMainLayer)
 };
 
 #endif

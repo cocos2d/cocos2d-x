@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="testjs"
 	ProjectGUID="{D0F06A44-A245-4D13-A498-0120C203B539}"
+	RootNamespace="testjs"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -48,15 +49,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;..\Classes;&quot;..\..\js\spidermonkey-win32\include&quot;;..\..\js\JSBindings;..\..\js\BindingsExample;..\..\cocos2dx;..\..\cocos2dx\actions;..\..\cocos2dx\base_nodes;..\..\cocos2dx\cocoa;..\..\cocos2dx\effects;..\..\cocos2dx\include;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\keypad_dispatcher;..\..\cocos2dx\label_nodes;..\..\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx\menu_nodes;..\..\cocos2dx\misc_nodes;..\..\cocos2dx\particle_nodes;..\..\cocos2dx\script_support;..\..\cocos2dx\shaders;..\..\cocos2dx\sprite_nodes;..\..\cocos2dx\support;..\..\cocos2dx\text_input_node;..\..\cocos2dx\textures;..\..\cocos2dx\tileMap_parallax_nodes;..\..\cocos2dx\touch_dispatcher;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\CocosDenshion\Include"
-				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1;"
+				AdditionalIncludeDirectories=".;..\Classes;&quot;..\..\js\spidermonkey-win32\include&quot;;..\..\js\JSBindings;..\..\js\BindingsExample;..\..\cocos2dx;..\..\cocos2dx\include;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\CocosDenshion\Include"
+				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4251;4800;4244;4390;4065;4996"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -73,8 +74,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libGLESv2.lib libCocosDenshion.lib js.lib"
-				LinkIncremental="2"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib js.lib"
+				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -135,14 +136,14 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".;..\Classes;..\..\cocos2dx;..\..\cocos2dx\actions;..\..\cocos2dx\base_nodes;..\..\cocos2dx\cocoa;..\..\cocos2dx\effects;..\..\cocos2dx\include;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\keypad_dispatcher;..\..\cocos2dx\label_nodes;..\..\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx\menu_nodes;..\..\cocos2dx\misc_nodes;..\..\cocos2dx\particle_nodes;..\..\cocos2dx\script_support;..\..\cocos2dx\shaders;..\..\cocos2dx\sprite_nodes;..\..\cocos2dx\support;..\..\cocos2dx\text_input_node;..\..\cocos2dx\textures;..\..\cocos2dx\tileMap_parallax_nodes;..\..\cocos2dx\touch_dispatcher;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\CocosDenshion\Include"
-				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG"
+				AdditionalIncludeDirectories=".;..\Classes;&quot;..\..\js\spidermonkey-win32\include&quot;;..\..\js\JSBindings;..\..\js\BindingsExample;..\..\cocos2dx;..\..\cocos2dx\include;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\CocosDenshion\Include"
+				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="0"
-				DisableSpecificWarnings="4251"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -155,10 +156,11 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)js\spidermonkey-win32\lib\*.*&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libGLESv2.lib libCocosDenshion.lib"
+				AdditionalDependencies="libcocos2d.lib opengl32.lib glew32.lib libCocosDenshion.lib js.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				SubSystem="2"

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCNOTIFICATIONCENTER_H__
 #define __CCNOTIFICATIONCENTER_H__
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 
 
 namespace cocos2d { class CCArray; }

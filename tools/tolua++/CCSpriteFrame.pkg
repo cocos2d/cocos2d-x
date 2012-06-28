@@ -19,6 +19,8 @@ class CCSpriteFrame : public CCObject
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D* pobTexture);
 
-    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect);
-    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
+    static CCSpriteFrame* create(CCTexture2D* pobTexture, CCRect rect);
+    static CCSpriteFrame* create(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
+    static CCSpriteFrame* create(const char* filename, CCRect rect);
+    static CCSpriteFrame* create(const char* filename, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
 };

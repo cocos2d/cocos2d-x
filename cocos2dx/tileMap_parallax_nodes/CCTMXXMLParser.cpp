@@ -28,11 +28,10 @@ THE SOFTWARE.
 #include <map>
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
-#include "CCData.h"
 #include "ccMacros.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "support/base64.h"
 #include "platform/platform.h"
 
@@ -150,15 +149,15 @@ CCTMXMapInfo * CCTMXMapInfo::formatWithXML(const char* tmxString, const char* re
 
 void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
 {
-    m_pTilesets = CCArray::array();
+    m_pTilesets = CCArray::create();
     m_pTilesets->retain();
 
-    m_pLayers = CCArray::array();
+    m_pLayers = CCArray::create();
     m_pLayers->retain();
 
     if (tmxFileName != NULL)
     {
-        m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFileName);
+        m_sTMXFileName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(tmxFileName);
     }
     
     if (resourcePath != NULL)
@@ -166,7 +165,7 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
         m_sResources = resourcePath;
     }
     
-    m_pObjectGroups = CCArray::arrayWithCapacity(4);
+    m_pObjectGroups = CCArray::create(4);
     m_pObjectGroups->retain();
 
     m_pProperties = new CCDictionary();
@@ -284,12 +283,6 @@ bool CCTMXMapInfo::parseXMLString(const char *xmlString)
     return parser.parse(xmlString, len);
 }
 
-bool CCTMXMapInfo::parseXMLData(const CCData* data)
-{
-    //TODO: implementation.
-    return false;
-}
-
 bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 {
     CCSAXParser parser;
@@ -358,17 +351,17 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             if (m_sTMXFileName.length() == 0)
             {
-                string pszFullPath = CCFileUtils::fullPathFromRelativePath(m_sResources.c_str());
+                string pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(m_sResources.c_str());
                 if (pszFullPath.find_last_of("/\\") != pszFullPath.length()-1)
                 {
                     pszFullPath.append("/");
                 }
                 
-                externalTilesetFilename = CCFileUtils::fullPathFromRelativeFile(externalTilesetFilename.c_str(), pszFullPath.c_str()  );
+                externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(externalTilesetFilename.c_str(), pszFullPath.c_str()  );
             }
             else
             {
-                externalTilesetFilename = CCFileUtils::fullPathFromRelativeFile(externalTilesetFilename.c_str(), pTMXMapInfo->getTMXFileName());
+                externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(externalTilesetFilename.c_str(), pTMXMapInfo->getTMXFileName());
             }
             pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
@@ -457,17 +450,17 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         std::string imagename = valueForKey("source", attributeDict);
         if (m_sTMXFileName.length() == 0)
         {
-            string pszFullPath = CCFileUtils::fullPathFromRelativePath(m_sResources.c_str());
+            string pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(m_sResources.c_str());
             if (pszFullPath.find_last_of("/\\") != pszFullPath.length()-1)
             {
                 pszFullPath.append("/");
             }
 
-            tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativeFile(imagename.c_str(), pszFullPath.c_str()  );
+            tileset->m_sSourceImage = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(imagename.c_str(), pszFullPath.c_str()  );
         }
         else
         {
-            tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativeFile(imagename.c_str(), pTMXMapInfo->getTMXFileName());
+            tileset->m_sSourceImage = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(imagename.c_str(), pTMXMapInfo->getTMXFileName());
         }
     } 
     else if(elementName == "data")

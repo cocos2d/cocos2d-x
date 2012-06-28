@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -41,6 +41,7 @@ CCConfiguration::CCConfiguration(void)
 , m_bSupportsPVRTC(false)
 , m_bSupportsNPOT(false)
 , m_bSupportsBGRA8888(false)
+, m_bSupportsShareableVAO(false)
 , m_bSupportsDiscardFramebuffer(false)
 , m_nMaxSamplesAllowed(0)
 , m_pGlExtensions(NULL)
@@ -66,17 +67,22 @@ bool CCConfiguration::init(void)
     m_bSupportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
     m_bSupportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
 
+    m_bSupportsShareableVAO = checkForGLExtension("vertex_array_object");
+
     CCLOG("cocos2d: GL_MAX_TEXTURE_SIZE: %d", m_nMaxTextureSize);
     CCLOG("cocos2d: GL_MAX_TEXTURE_UNITS: %d",m_nMaxTextureUnits);
     CCLOG("cocos2d: GL supports PVRTC: %s", (m_bSupportsPVRTC ? "YES" : "NO"));
     CCLOG("cocos2d: GL supports BGRA8888 textures: %s", (m_bSupportsBGRA8888 ? "YES" : "NO"));
     CCLOG("cocos2d: GL supports NPOT textures: %s", (m_bSupportsNPOT ? "YES" : "NO"));
     CCLOG("cocos2d: GL supports discard_framebuffer: %s", (m_bSupportsDiscardFramebuffer ? "YES" : "NO"));
+    CCLOG("cocos2d: GL supports shareable VAO: %s", (m_bSupportsShareableVAO ? "YES" : "NO") );
 
     bool bEnableProfilers = false;
 
 #if CC_ENABLE_PROFILERS
     bEnableProfilers = true;
+#else
+	bEnableProfilers = false;
 #endif
 
     CCLOG("cocos2d: compiled with Profiling Support: %s",

@@ -25,9 +25,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
 # because the new Windows toolchain doesn't support Cygwin's drive
 # mapping (i.e /cygdrive/c/ instead of C:/)  
 LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../../libs/armeabi) \
-		-L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl \
-		-lcocos2d \
-		-lcocosdenshion \
-		-llua
+        -L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl \
+        -lcocos2d \
+        -lcocosdenshion \
+        -llua
             
 include $(BUILD_SHARED_LIBRARY)

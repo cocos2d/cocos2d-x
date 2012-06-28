@@ -11,8 +11,8 @@ class CCString : public CCObject
 
     bool isEqual(const CCObject* pObject);
 
-    static CCString* stringWithCString(const char* pStr);
-    static CCString* stringWithData(unsigned char* pData, unsigned long nLen);
-    static CCString* stringWithContentsOfFile(const char* pszFileName);
+    static CCString* create(const char* pStr);
+    static CCString* create(unsigned char* pData, unsigned long nLen);
+    static CCString* createWithContentsOfFile(const char* pszFileName);
 };
 

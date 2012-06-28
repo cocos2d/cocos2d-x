@@ -28,17 +28,17 @@ void Effect1::onEnter()
     //     Waves3D is Grid3D and it's size is (15,10)
     
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCActionInterval* lens = CCLens3D::actionWithPosition(ccp(size.width/2,size.height/2), 240, ccg(15,10), 0.0f);
-    CCActionInterval* waves = CCWaves3D::actionWithWaves(18, 15, ccg(15,10), 10);
+    CCActionInterval* lens = CCLens3D::create(ccp(size.width/2,size.height/2), 240, ccg(15,10), 0.0f);
+    CCActionInterval* waves = CCWaves3D::create(18, 15, ccg(15,10), 10);
 
-    CCFiniteTimeAction* reuse = CCReuseGrid::actionWithTimes(1);
-    CCActionInterval* delay = CCDelayTime::actionWithDuration(8);
+    CCFiniteTimeAction* reuse = CCReuseGrid::create(1);
+    CCActionInterval* delay = CCDelayTime::create(8);
 
-    CCActionInterval* orbit = CCOrbitCamera::actionWithDuration(5, 1, 2, 0, 180, 0, -90);
+    CCActionInterval* orbit = CCOrbitCamera::create(5, 1, 2, 0, 180, 0, -90);
     CCActionInterval* orbit_back = orbit->reverse();
 
-    target->runAction( CCRepeatForever::actionWithAction( (CCActionInterval *)(CCSequence::actions( orbit, orbit_back, NULL) ) ) );
-    target->runAction( CCSequence::actions(lens, delay, reuse, waves, NULL) );
+    target->runAction( CCRepeatForever::create( (CCActionInterval *)(CCSequence::create( orbit, orbit_back, NULL) ) ) );
+    target->runAction( CCSequence::create(lens, delay, reuse, waves, NULL) );
 }
 
 std::string Effect1::title()
@@ -62,24 +62,24 @@ void Effect2::onEnter()
     //     ShakyTiles is TiledGrid3D and it's size is (15,10)
     //     Shuffletiles is TiledGrid3D and it's size is (15,10)
     //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-    CCActionInterval* shaky = CCShakyTiles3D::actionWithRange(4, false, ccg(15,10), 5);
-    CCActionInterval* shuffle = CCShuffleTiles::actionWithSeed(0, ccg(15,10), 3);
-    CCActionInterval* turnoff = CCTurnOffTiles::actionWithSeed(0, ccg(15,10), 3);
+    CCActionInterval* shaky = CCShakyTiles3D::create(4, false, ccg(15,10), 5);
+    CCActionInterval* shuffle = CCShuffleTiles::create(0, ccg(15,10), 3);
+    CCActionInterval* turnoff = CCTurnOffTiles::create(0, ccg(15,10), 3);
     CCActionInterval* turnon = turnoff->reverse();
     
     // reuse 2 times:
     //   1 for shuffle
     //   2 for turn off
     //   turnon tiles will use a new grid
-    CCFiniteTimeAction* reuse = CCReuseGrid::actionWithTimes(2);
+    CCFiniteTimeAction* reuse = CCReuseGrid::create(2);
 
-    CCActionInterval* delay = CCDelayTime::actionWithDuration(1);
+    CCActionInterval* delay = CCDelayTime::create(1);
     
-//    id orbit = [OrbitCamera::actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
+//    id orbit = [OrbitCamera::create:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
 //    id orbit_back = [orbit reverse];
 //
-//    [target runAction: [RepeatForever::actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
-    target->runAction( (CCActionInterval *)(CCSequence::actions( shaky, delay, reuse, shuffle, delay->copy()->autorelease(), turnoff, turnon, NULL) ) );
+//    [target runAction: [RepeatForever::create: [Sequence actions: orbit, orbit_back, nil]]];
+    target->runAction( (CCActionInterval *)(CCSequence::create( shaky, delay, reuse, shuffle, delay->copy()->autorelease(), turnoff, turnon, NULL) ) );
 }
 
 std::string Effect2::title()
@@ -101,15 +101,15 @@ void Effect3::onEnter()
     CCNode* target1 = bg->getChildByTag(kTagSprite1);
     CCNode* target2 = bg->getChildByTag(kTagSprite2);    
     
-    CCActionInterval* waves = CCWaves::actionWithWaves(5, 20, true, false, ccg(15,10), 5);
-    CCActionInterval* shaky = CCShaky3D::actionWithRange(4, false, ccg(15,10), 5);
+    CCActionInterval* waves = CCWaves::create(5, 20, true, false, ccg(15,10), 5);
+    CCActionInterval* shaky = CCShaky3D::create(4, false, ccg(15,10), 5);
     
-    target1->runAction( CCRepeatForever::actionWithAction( waves ) );
-    target2->runAction( CCRepeatForever::actionWithAction( shaky ) );
+    target1->runAction( CCRepeatForever::create( waves ) );
+    target2->runAction( CCRepeatForever::create( shaky ) );
     
     // moving background. Testing issue #244
-    CCActionInterval* move = CCMoveBy::actionWithDuration(3, ccp(200,0) );
-    bg->runAction(CCRepeatForever::actionWithAction( (CCActionInterval *)(CCSequence::actions(move, move->reverse(), NULL) ) ) );    
+    CCActionInterval* move = CCMoveBy::create(3, ccp(200,0) );
+    bg->runAction(CCRepeatForever::create( (CCActionInterval *)(CCSequence::create(move, move->reverse(), NULL) ) ) );    
 }
 
 std::string Effect3::title()
@@ -123,22 +123,52 @@ std::string Effect3::title()
 // Effect4
 //
 //------------------------------------------------------------------
+
+class Lens3DTarget : public CCNode
+{
+public:
+    virtual void setPosition(const CCPoint& var)
+    {
+        m_pLens3D->setPosition(var);
+    }
+
+    static Lens3DTarget* create(CCLens3D* pAction)
+    {
+        Lens3DTarget* pRet = new Lens3DTarget();
+        pRet->m_pLens3D = pAction;
+        pRet->autorelease();
+        return pRet;
+    }
+private:
+
+    Lens3DTarget()
+        : m_pLens3D(NULL)
+    {}
+
+    CCLens3D* m_pLens3D;
+};
+
 void Effect4::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
 
-    CCActionInterval* lens = CCLens3D::actionWithPosition(ccp(100,180), 150, ccg(32,24), 10);
-    //id move = [MoveBy::actionWithDuration:5 position:ccp(400,0)];
+    CCLens3D* lens = CCLens3D::create(ccp(100,180), 150, ccg(32,24), 10);
+    CCActionInterval* move = CCJumpBy::create(5, ccp(380,0), 100, 4);
+    CCActionInterval* move_back = move->reverse();
+    CCActionInterval* seq = (CCActionInterval *)(CCSequence::create( move, move_back, NULL));
 
-    /**
-    @todo we only support CCNode run actions now.
+    /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'CCLens3D' as its target.
+        While in cocos2d-x, the target of action only supports CCNode or its subclass,
+        so we make an encapsulation for CCLens3D to achieve that.
     */
-//     CCActionInterval* move = CCJumpBy::actionWithDuration(5, ccp(380,0), 100, 4);
-//     CCActionInterval* move_back = move->reverse();
-//     CCActionInterval* seq = (CCActionInterval *)(CCSequence::actions( move, move_back, NULL));
-//  CCActionManager::sharedManager()->addAction(seq, lens, false);
 
-    runAction( lens );
+    CCDirector* director = CCDirector::sharedDirector();
+    CCNode* pTarget = Lens3DTarget::create(lens);
+    // Please make sure the target been added to its parent.
+    this->addChild(pTarget);
+
+    director->getActionManager()->addAction(seq, pTarget, false);
+    this->runAction( lens );
 }
 
 std::string Effect4::title()
@@ -157,13 +187,13 @@ void Effect5::onEnter()
 
     //CCDirector::sharedDirector()->setProjection(CCDirectorProjection2D);
     
-    CCActionInterval* effect = CCLiquid::actionWithWaves(1, 20, ccg(32,24), 2);    
+    CCActionInterval* effect = CCLiquid::create(1, 20, ccg(32,24), 2);    
 
-    CCActionInterval* stopEffect = (CCActionInterval *)( CCSequence::actions(
+    CCActionInterval* stopEffect = (CCActionInterval *)( CCSequence::create(
                                          effect,
-                                         CCDelayTime::actionWithDuration(2),
-                                         CCStopGrid::action(),
-                    //                     [DelayTime::actionWithDuration:2],
+                                         CCDelayTime::create(2),
+                                         CCStopGrid::create(),
+                    //                     [DelayTime::create:2],
                     //                     [[effect copy] autorelease],
                                          NULL) );
     
@@ -192,29 +222,29 @@ void Issue631::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
         
-    CCActionInterval* effect = (CCActionInterval*)(CCSequence::actions( CCDelayTime::actionWithDuration(2.0f), CCShaky3D::actionWithRange(16, false, ccg(5, 5), 5.0f), NULL));
+    CCActionInterval* effect = (CCActionInterval*)(CCSequence::create( CCDelayTime::create(2.0f), CCShaky3D::create(16, false, ccg(5, 5), 5.0f), NULL));
 
     // cleanup
     CCNode* bg = getChildByTag(kTagBackground);
     removeChild(bg, true);
 
     // background
-    CCLayerColor* layer = CCLayerColor::layerWithColor( ccc4(255,0,0,255) );
+    CCLayerColor* layer = CCLayerColor::create( ccc4(255,0,0,255) );
     addChild(layer, -10);
-    CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini.png");
+    CCSprite* sprite = CCSprite::create("Images/grossini.png");
     sprite->setPosition( ccp(50,80) );
     layer->addChild(sprite, 10);
     
     // foreground
-    CCLayerColor* layer2 = CCLayerColor::layerWithColor(ccc4( 0, 255,0,255 ) );
-    CCSprite* fog = CCSprite::spriteWithFile("Images/Fog.png");
+    CCLayerColor* layer2 = CCLayerColor::create(ccc4( 0, 255,0,255 ) );
+    CCSprite* fog = CCSprite::create("Images/Fog.png");
 
     ccBlendFunc bf = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
     fog->setBlendFunc(bf);
     layer2->addChild(fog, 1);
     addChild(layer2, 1);
     
-    layer2->runAction( CCRepeatForever::actionWithAction(effect) );
+    layer2->runAction( CCRepeatForever::create(effect) );
 }
 
 std::string Issue631::title()
@@ -305,25 +335,25 @@ void EffectAdvanceTextLayer::onEnter(void)
     x = size.width;
     y = size.height;
     
-    CCSprite *bg = CCSprite::spriteWithFile("Images/background3.png");
+    CCSprite *bg = CCSprite::create("Images/background3.png");
     addChild(bg, 0, kTagBackground);
     bg->setPosition( ccp(x/2,y/2) );
     
-    CCSprite* grossini = CCSprite::spriteWithFile("Images/grossinis_sister2.png");
+    CCSprite* grossini = CCSprite::create("Images/grossinis_sister2.png");
     bg->addChild(grossini, 1, kTagSprite1);
     grossini->setPosition( ccp(x/3.0f,200) );
-    CCActionInterval* sc = CCScaleBy::actionWithDuration(2, 5);
+    CCActionInterval* sc = CCScaleBy::create(2, 5);
     CCActionInterval* sc_back = sc->reverse();
-    grossini->runAction( CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions(sc, sc_back, NULL)) ) );
+    grossini->runAction( CCRepeatForever::create( (CCActionInterval*)(CCSequence::create(sc, sc_back, NULL)) ) );
 
-    CCSprite* tamara = CCSprite::spriteWithFile("Images/grossinis_sister1.png");
+    CCSprite* tamara = CCSprite::create("Images/grossinis_sister1.png");
     bg->addChild(tamara, 1, kTagSprite2);
     tamara->setPosition( ccp(2*x/3.0f,200) );
-    CCActionInterval* sc2 = CCScaleBy::actionWithDuration(2, 5);
+    CCActionInterval* sc2 = CCScaleBy::create(2, 5);
     CCActionInterval* sc2_back = sc2->reverse();
-    tamara->runAction( CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions(sc2, sc2_back, NULL)) ) );
+    tamara->runAction( CCRepeatForever::create( (CCActionInterval*)(CCSequence::create(sc2, sc2_back, NULL)) ) );
     
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Marker Felt", 28);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Marker Felt", 28);
     
     label->setPosition( ccp(x/2,y-80) );
     addChild(label);
@@ -332,21 +362,21 @@ void EffectAdvanceTextLayer::onEnter(void)
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
-        CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         addChild(l, 101);
         l->setPosition( ccp(size.width/2, size.height-80) );
     }    
 
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(EffectAdvanceTextLayer::backCallback) );
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(EffectAdvanceTextLayer::restartCallback) );
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(EffectAdvanceTextLayer::nextCallback) );
+    CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(EffectAdvanceTextLayer::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(EffectAdvanceTextLayer::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::create("Images/f1.png", "Images/f2.png", this, menu_selector(EffectAdvanceTextLayer::nextCallback) );
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
-    menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( size.width/2 - 100,30) );
-    item2->setPosition( ccp( size.width/2, 30) );
-    item3->setPosition( ccp( size.width/2 + 100,30) );
+    menu->setPosition(CCPointZero);
+    item1->setPosition(ccp(size.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(ccp(size.width/2, item2->getContentSize().height/2));
+    item3->setPosition(ccp(size.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 }

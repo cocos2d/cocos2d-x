@@ -25,9 +25,14 @@ THE SOFTWARE.
 #ifndef __CC_IMAGE_H__
 #define __CC_IMAGE_H__
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup platform
+ * @{
+ */
 
 class CC_DLL CCImage : public CCObject
 {
@@ -120,8 +125,8 @@ public:
     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
-    CC_SYNTHESIZE_READONLY(short,   m_nWidth,       Width);
-    CC_SYNTHESIZE_READONLY(short,   m_nHeight,      Height);
+    CC_SYNTHESIZE_READONLY(unsigned short,   m_nWidth,       Width);
+    CC_SYNTHESIZE_READONLY(unsigned short,   m_nHeight,      Height);
     CC_SYNTHESIZE_READONLY(int,     m_nBitsPerComponent,   BitsPerComponent);
 
 protected:
@@ -143,6 +148,9 @@ private:
     CCImage(const CCImage&    rImg);
     CCImage & operator=(const CCImage&);
 };
+
+// end of platform group
+/// @}
 
 NS_CC_END
 

@@ -27,10 +27,15 @@ THE SOFTWARE.
 #define __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 
 #include "CCTouchDelegateProtocol.h"
-#include "CCObject.h"
-#include "CCArray.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup input
+ * @{
+ */
 
 typedef enum
 {
@@ -164,6 +169,9 @@ protected:
     // 4, 1 for each type of event
     struct ccTouchHandlerHelperData m_sHandlerHelperData[ccTouchMax];
 };
+
+// end of input group
+/// @}
 
 NS_CC_END
 

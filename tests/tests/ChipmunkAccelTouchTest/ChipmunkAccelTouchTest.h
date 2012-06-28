@@ -19,7 +19,7 @@ public:
     void reset(CCObject* sender);
 
     void addNewSpriteAtPosition(CCPoint p);
-    void update(ccTime dt);
+    void update(float dt);
     virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 

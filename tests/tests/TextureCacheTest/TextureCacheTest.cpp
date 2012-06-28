@@ -3,7 +3,7 @@
 
 #include "TextureCacheTest.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 TextureCacheTest::TextureCacheTest()
 : m_nNumberOfSprites(20)
@@ -11,8 +11,8 @@ TextureCacheTest::TextureCacheTest()
 {
     CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-    m_pLabelLoading = CCLabelTTF::labelWithString("loading...", "Arial", 15);
-    m_pLabelPercent = CCLabelTTF::labelWithString("%0", "Arial", 15);
+    m_pLabelLoading = CCLabelTTF::create("loading...", "Arial", 15);
+    m_pLabelPercent = CCLabelTTF::create("%0", "Arial", 15);
 
     m_pLabelLoading->setPosition(CCPointMake(size.width / 2, size.height / 2 - 20));
     m_pLabelPercent->setPosition(CCPointMake(size.width / 2, size.height / 2 + 20));
@@ -64,30 +64,30 @@ void TextureCacheTest::addSprite()
 
     // create sprites
 
-    CCSprite *bg = CCSprite::spriteWithFile("Images/HelloWorld.png");
+    CCSprite *bg = CCSprite::create("Images/HelloWorld.png");
     bg->setPosition(CCPointMake(size.width / 2, size.height / 2));
 
-    CCSprite *s1 = CCSprite::spriteWithFile("Images/grossini.png");
-    CCSprite *s2 = CCSprite::spriteWithFile("Images/grossini_dance_01.png");
-    CCSprite *s3 = CCSprite::spriteWithFile("Images/grossini_dance_02.png");
-    CCSprite *s4 = CCSprite::spriteWithFile("Images/grossini_dance_03.png");
-    CCSprite *s5 = CCSprite::spriteWithFile("Images/grossini_dance_04.png");
-    CCSprite *s6 = CCSprite::spriteWithFile("Images/grossini_dance_05.png");
-    CCSprite *s7 = CCSprite::spriteWithFile("Images/grossini_dance_06.png");
-    CCSprite *s8 = CCSprite::spriteWithFile("Images/grossini_dance_07.png");
-    CCSprite *s9 = CCSprite::spriteWithFile("Images/grossini_dance_08.png");
-    CCSprite *s10 = CCSprite::spriteWithFile("Images/grossini_dance_09.png");
-    CCSprite *s11 = CCSprite::spriteWithFile("Images/grossini_dance_10.png");
-    CCSprite *s12 = CCSprite::spriteWithFile("Images/grossini_dance_11.png");
-    CCSprite *s13 = CCSprite::spriteWithFile("Images/grossini_dance_12.png");
-    CCSprite *s14 = CCSprite::spriteWithFile("Images/grossini_dance_13.png");
-    CCSprite *s15 = CCSprite::spriteWithFile("Images/grossini_dance_14.png");
+    CCSprite *s1 = CCSprite::create("Images/grossini.png");
+    CCSprite *s2 = CCSprite::create("Images/grossini_dance_01.png");
+    CCSprite *s3 = CCSprite::create("Images/grossini_dance_02.png");
+    CCSprite *s4 = CCSprite::create("Images/grossini_dance_03.png");
+    CCSprite *s5 = CCSprite::create("Images/grossini_dance_04.png");
+    CCSprite *s6 = CCSprite::create("Images/grossini_dance_05.png");
+    CCSprite *s7 = CCSprite::create("Images/grossini_dance_06.png");
+    CCSprite *s8 = CCSprite::create("Images/grossini_dance_07.png");
+    CCSprite *s9 = CCSprite::create("Images/grossini_dance_08.png");
+    CCSprite *s10 = CCSprite::create("Images/grossini_dance_09.png");
+    CCSprite *s11 = CCSprite::create("Images/grossini_dance_10.png");
+    CCSprite *s12 = CCSprite::create("Images/grossini_dance_11.png");
+    CCSprite *s13 = CCSprite::create("Images/grossini_dance_12.png");
+    CCSprite *s14 = CCSprite::create("Images/grossini_dance_13.png");
+    CCSprite *s15 = CCSprite::create("Images/grossini_dance_14.png");
 
     // just loading textures to slow down
-    CCSprite::spriteWithFile("Images/background1.png");
-    CCSprite::spriteWithFile("Images/background2.png");
-    CCSprite::spriteWithFile("Images/background3.png");
-    CCSprite::spriteWithFile("Images/blocks.png");
+    CCSprite::create("Images/background1.png");
+    CCSprite::create("Images/background2.png");
+    CCSprite::create("Images/background3.png");
+    CCSprite::create("Images/blocks.png");
 
     s1->setPosition(CCPointMake(50, 50));
     s2->setPosition(CCPointMake(60, 50));

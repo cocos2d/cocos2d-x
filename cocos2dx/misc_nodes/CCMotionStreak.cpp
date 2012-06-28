@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011 ForzeField Studios S.L.
 
 http://www.cocos2d-x.org
@@ -23,14 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCMotionStreak.h"
-#include "CCTextureCache.h"
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
-#include "CCShaderCache.h"
+#include "textures/CCTextureCache.h"
+#include "shaders/ccGLStateCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/CCShaderCache.h"
 #include "ccMacros.h"
 
 #include "support/CCVertex.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 
@@ -44,11 +44,13 @@ CCMotionStreak::CCMotionStreak()
 , m_fMinSeg(0.0f)
 , m_uMaxPoints(0)
 , m_uNuPoints(0)
+, m_uPreviousNuPoints(0)
 , m_pPointVertexes(NULL)
 , m_pPointState(NULL)
 , m_pVertices(NULL)
 , m_pColorPointer(NULL)
 , m_pTexCoords(NULL)
+, m_bStartingPositionInitialized(false)
 {
     m_tBlendFunc.src = GL_SRC_ALPHA;
     m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -66,6 +68,11 @@ CCMotionStreak::~CCMotionStreak()
 
 CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
 {
+    return CCMotionStreak::create(fade, minSeg, stroke, color, path);
+}
+
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+{
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
     {
@@ -78,6 +85,11 @@ CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float s
 }
 
 CCMotionStreak* CCMotionStreak::streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
+{
+    return CCMotionStreak::create(fade, minSeg, stroke, color, texture);
+}
+
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
 {
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
@@ -102,7 +114,8 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
 {
     CCNode::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
-    setIsRelativeAnchorPoint(false);
+    ignoreAnchorPointForPosition(true);
+    m_bStartingPositionInitialized = false;
 
     m_tPositionR = CCPointZero;
     m_bFastMode = true;
@@ -137,6 +150,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
 
 void CCMotionStreak::setPosition(const CCPoint& position)
 {
+    m_bStartingPositionInitialized = true;
     m_tPositionR = position;
 }
 
@@ -197,18 +211,23 @@ GLubyte CCMotionStreak::getOpacity(void)
     return 0;
 }
 
-void CCMotionStreak::setIsOpacityModifyRGB(bool bValue)
+void CCMotionStreak::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);
 }
 
-bool CCMotionStreak::getIsOpacityModifyRGB(void)
+bool CCMotionStreak::isOpacityModifyRGB(void)
 {
     return false;
 }
 
-void CCMotionStreak::update(ccTime delta)
+void CCMotionStreak::update(float delta)
 {
+    if (!m_bStartingPositionInitialized)
+    {
+        return;
+    }
+    
     delta *= m_fFadeDelta;
 
     unsigned int newIdx, newIdx2, i, i2;
@@ -261,14 +280,18 @@ void CCMotionStreak::update(ccTime delta)
     // Append new point
     bool appendNewPoint = true;
     if(m_uNuPoints >= m_uMaxPoints)
+    {
         appendNewPoint = false;
+    }
 
     else if(m_uNuPoints>0)
     {
         bool a1 = ccpDistanceSQ(m_pPointVertexes[m_uNuPoints-1], m_tPositionR) < m_fMinSeg;
         bool a2 = (m_uNuPoints == 1) ? false : (ccpDistanceSQ(m_pPointVertexes[m_uNuPoints-2], m_tPositionR) < (m_fMinSeg * 2.0f));
         if(a1 || a2)
+        {
             appendNewPoint = false;
+        }
     }
 
     if(appendNewPoint)
@@ -289,16 +312,33 @@ void CCMotionStreak::update(ccTime delta)
         if(m_uNuPoints > 0 && m_bFastMode )
         {
             if(m_uNuPoints > 1)
-                ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, m_pTexCoords, m_uNuPoints, 1);
+            {
+                ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, m_uNuPoints, 1);
+            }
             else
-                ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, m_pTexCoords, 0, 2);
+            {
+                ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, 0, 2);
+            }
         }
 
         m_uNuPoints ++;
     }
 
     if( ! m_bFastMode )
-        ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, m_pTexCoords, 0, m_uNuPoints);
+    {
+        ccVertexLineToPolygon(m_pPointVertexes, m_fStroke, m_pVertices, 0, m_uNuPoints);
+    }
+
+    // Updated Tex Coords only if they are different than previous step
+    if( m_uNuPoints  && m_uPreviousNuPoints != m_uNuPoints ) {
+        float texDelta = 1.0f / m_uNuPoints;
+        for( i=0; i < m_uNuPoints; i++ ) {
+            m_pTexCoords[i*2] = tex2(0, texDelta*i);
+            m_pTexCoords[i*2+1] = tex2(1, texDelta*i);
+        }
+
+        m_uPreviousNuPoints = m_uNuPoints;
+    }
 }
 
 void CCMotionStreak::reset()

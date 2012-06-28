@@ -26,11 +26,11 @@ THE SOFTWARE.
 #include "CCTMXLayer.h"
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
-#include "CCSprite.h"
-#include "CCTextureCache.h"
-#include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "CCPointExtension.h"
+#include "sprite_nodes/CCSprite.h"
+#include "textures/CCTextureCache.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/CCGLProgram.h"
+#include "support/CCPointExtension.h"
 #include "support/data_support/ccCArray.h"
 #include "CCDirector.h"
 
@@ -39,6 +39,11 @@ NS_CC_BEGIN
 
 // CCTMXLayer - init & alloc & dealloc
 CCTMXLayer * CCTMXLayer::layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
+{
+    return CCTMXLayer::create(tilesetInfo, layerInfo, mapInfo);
+}
+
+CCTMXLayer * CCTMXLayer::create(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
 {
     CCTMXLayer *pRet = new CCTMXLayer();
     if (pRet->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
@@ -70,7 +75,7 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
         m_uMinGID = layerInfo->m_uMinGID;
         m_uMaxGID = layerInfo->m_uMaxGID;
         m_cOpacity = layerInfo->m_cOpacity;
-        setProperties(CCDictionary::dictionaryWithDictionary(layerInfo->getProperties()));
+        setProperties(CCDictionary::create(layerInfo->getProperties()));
         m_fContentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor(); 
 
         // tilesetInfo
@@ -88,8 +93,6 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
         m_pAtlasIndexArray = ccCArrayNew((unsigned int)totalNumberOfTiles);
 
         this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(CCSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height)));
-                    m_tMapTileSize.width /= m_fContentScaleFactor;
-                    m_tMapTileSize.height /= m_fContentScaleFactor;
 
         m_bUseAutomaticVertexZ = false;
         m_nVertexZvalue = 0;
@@ -238,27 +241,52 @@ void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid
     sprite->setOpacity(m_cOpacity);
 
     //issue 1264, flip can be undone as well
-    if (gid & kCCTMXTileHorizontalFlag)
+    sprite->setFlipX(false);
+    sprite->setFlipX(false);
+    sprite->setRotation(0.0f);
+    sprite->setAnchorPoint(ccp(0,0));
+
+    // Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
+    if (gid & kCCTMXTileDiagonalFlag)
     {
-        sprite->setFlipX(true);
+        // put the anchor in the middle for ease of rotation.
+        sprite->setAnchorPoint(ccp(0.5f,0.5f));
+        sprite->setPosition(ccp(positionAt(pos).x + sprite->getContentSize().height/2,
+           positionAt(pos).y + sprite->getContentSize().width/2 ) );
+
+        unsigned int flag = gid & (kCCTMXTileHorizontalFlag | kCCTMXTileVerticalFlag );
+
+        // handle the 4 diagonally flipped states.
+        if (flag == kCCTMXTileHorizontalFlag)
+        {
+            sprite->setRotation(90.0f);
+        }
+        else if (flag == kCCTMXTileVerticalFlag)
+        {
+            sprite->setRotation(270.0f);
+        }
+        else if (flag == (kCCTMXTileVerticalFlag | kCCTMXTileHorizontalFlag) )
+        {
+            sprite->setRotation(90.0f);
+            sprite->setFlipX(true);
+        }
+        else
+        {
+            sprite->setRotation(270.0f);
+            sprite->setFlipX(true);
+        }
     }
     else
     {
-        sprite->setFlipX(false);
-    }
+        if (gid & kCCTMXTileHorizontalFlag)
+        {
+            sprite->setFlipX(true);
+        }
 
-    if (gid & kCCTMXTileVerticalFlag)
-    {    
-        sprite->setFlipY(true);
-    }
-    else
-    {
-        sprite->setFlipY(false);
-    }
-
-    if( gid & kCCTMXTileDiagonalFlag)
-    {
-        CCAssert(false, "Tiled Anti-Diagonally Flip not supported yet");
+        if (gid & kCCTMXTileVerticalFlag)
+        {
+            sprite->setFlipY(true);
+        }
     }
 }
 

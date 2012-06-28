@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -25,9 +25,9 @@ THE SOFTWARE.
 #include "CCMenu.h"
 #include "CCDirector.h"
 #include "CCApplication.h"
-#include "CCPointExtension.h"
-#include "CCTouchDispatcher.h"
-#include "CCTouch.h"
+#include "support/CCPointExtension.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "touch_dispatcher/CCTouch.h"
 #include "CCStdC.h"
 
 #include <vector>
@@ -48,7 +48,12 @@ enum
 
 CCMenu* CCMenu::node()
 {
-    return menuWithItem(NULL);
+    return CCMenu::create();
+}
+
+CCMenu* CCMenu::create()
+{
+    return CCMenu::create(NULL, NULL);
 }
 
 CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
@@ -67,7 +72,28 @@ CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
     return NULL;
 }
 
+CCMenu * CCMenu::create(CCMenuItem* item, ...)
+{
+    va_list args;
+    va_start(args,item);
+    CCMenu *pRet = new CCMenu();
+    if (pRet && pRet->initWithItems(item, args))
+    {
+        pRet->autorelease();
+        va_end(args);
+        return pRet;
+    }
+    va_end(args);
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
 CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
+{
+    return CCMenu::create(pArrayOfItems);
+}
+
+CCMenu* CCMenu::create(CCArray* pArrayOfItems)
 {
     CCMenu *pRet = new CCMenu();
     if (pRet && pRet->initWithArray(pArrayOfItems))
@@ -84,7 +110,12 @@ CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
 
 CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
 {
-    return menuWithItems(item, NULL);
+    return CCMenu::createWithItem(item);
+}
+
+CCMenu* CCMenu::createWithItem(CCMenuItem* item)
+{
+    return CCMenu::create(item, NULL);
 }
 
 bool CCMenu::init()
@@ -97,7 +128,7 @@ bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
     CCArray* pArray = NULL;
     if( item ) 
     {
-        pArray = CCArray::arrayWithObject(item);
+        pArray = CCArray::create(item, NULL);
         CCMenuItem *i = va_arg(args, CCMenuItem*);
         while(i) 
         {
@@ -113,13 +144,13 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
 {
     if (CCLayer::init())
     {
-        setIsTouchEnabled(true);
+        setTouchEnabled(true);
 
         m_bEnabled = true;
         // menu in the center of the screen
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        this->m_bIsRelativeAnchorPoint = false;
+        this->ignoreAnchorPointForPosition(true);
         setAnchorPoint(ccp(0.5f, 0.5f));
         this->setContentSize(s);
 
@@ -178,7 +209,7 @@ void CCMenu::onExit()
 
 //Menu - Events
 
-void CCMenu::setHandlerPriority(unsigned int newPriority)
+void CCMenu::setHandlerPriority(int newPriority)
 {
     CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
     pDispatcher->setPriority(newPriority, this);
@@ -200,7 +231,7 @@ bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
     for (CCNode *c = this->m_pParent; c != NULL; c = c->getParent())
     {
-        if (c->getIsVisible() == false)
+        if (c->isVisible() == false)
         {
             return false;
         }
@@ -623,7 +654,7 @@ CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
-            if (pChild && pChild->getIsVisible() && ((CCMenuItem*)pChild)->getIsEnabled())
+            if (pChild && pChild->isVisible() && ((CCMenuItem*)pChild)->isEnabled())
             {
                 CCPoint local = pChild->convertToNodeSpace(touchLocation);
                 CCRect r = ((CCMenuItem*)pChild)->rect();
@@ -635,7 +666,6 @@ CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
                 }
             }
         }
-        
     }
 
     return NULL;

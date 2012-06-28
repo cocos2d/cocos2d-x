@@ -5,11 +5,9 @@ class CCMenuItem : public CCNode
     void activate();
     void selected();
     void unselected();
-    void setIsEnabled(bool enabled);
-    bool getIsEnabled();
-    bool getIsSelected();
-
-    tolua_property__CCIsEnabled bool isEnabled;
+    void setEnabled(bool enabled);
+    bool isEnabled();
+    bool isSelected();
 
     void registerScriptHandler(LUA_FUNCTION funcID);
     void unregisterScriptHandler(void);
@@ -24,12 +22,12 @@ class CCMenuItemLabel : public CCMenuItem
     void setColor(ccColor3B color);
     ccColor3B getColor();
 
-    static CCMenuItemLabel* itemWithLabel(CCNode* label);
+    static CCMenuItemLabel* create(CCNode* label);
 };
 
 class CCMenuItemAtlasFont : public CCMenuItem
 {
-    static CCMenuItemAtlasFont* itemWithString(const char* value,
+    static CCMenuItemAtlasFont* create(const char* value,
                                                const char* charMapFile,
                                                int itemWidth,
                                                int itemHeight,
@@ -42,7 +40,7 @@ class CCMenuItemFont : public CCMenuItem
     static int fontSize();
     static void setFontName(const char* name);
     static const char* fontName();
-    static CCMenuItemFont * itemWithString(const char* value);
+    static CCMenuItemFont * create(const char* value);
 };
 
 class CCMenuItemSprite : public CCMenuItem
@@ -52,9 +50,9 @@ class CCMenuItemSprite : public CCMenuItem
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
 
-    static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite,
+    static CCMenuItemSprite * create(CCNode* normalSprite,
                                                    CCNode* selectedSprite);
-    static CCMenuItemSprite * itemWithNormalSprite(CCNode* normalSprite,
+    static CCMenuItemSprite * create(CCNode* normalSprite,
                                                    CCNode* selectedSprite,
                                                    CCNode* disabledSprite);
 };
@@ -66,9 +64,9 @@ class CCMenuItemImage : public CCMenuItem
     void setOpacity(GLubyte opacity);
     GLubyte getOpacity();
 
-    static CCMenuItemImage* itemWithNormalImage(const char* normalImage,
+    static CCMenuItemImage* create(const char* normalImage,
                                                 const char* selectedImage);
-    static CCMenuItemImage* itemWithNormalImage(const char* normalImage,
+    static CCMenuItemImage* create(const char* normalImage,
                                                 const char* selectedImage,
                                                 const char* disabledImage);
 };
@@ -78,5 +76,5 @@ class CCMenuItemToggle : public CCMenuItem
     void addSubItem(CCMenuItem *item);
     CCMenuItem* selectedItem();
 
-    static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
+    static CCMenuItemToggle* create(CCMenuItem *item);
 };

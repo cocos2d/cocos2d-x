@@ -27,8 +27,8 @@
  */
 
 #include "CCControlSlider.h"
-#include "CCPointExtension.h"
-#include "CCTouch.h"
+#include "support/CCPointExtension.h"
+#include "touch_dispatcher/CCTouch.h"
 #include "CCDirector.h"
 
 NS_CC_EXT_BEGIN
@@ -40,23 +40,33 @@ CCControlSlider::~CCControlSlider()
 
 CCControlSlider* CCControlSlider::sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile)
 {
+    return CCControlSlider::create(bgFile, progressFile, thumbFile);
+}
+
+CCControlSlider* CCControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile)
+{
     // Prepare background for slider
-    CCSprite *backgroundSprite      = CCSprite::spriteWithFile(bgFile);
+    CCSprite *backgroundSprite      = CCSprite::create(bgFile);
     
     // Prepare progress for slider
-    CCSprite *progressSprite        = CCSprite::spriteWithFile(progressFile);
+    CCSprite *progressSprite        = CCSprite::create(progressFile);
     
     // Prepare thumb (menuItem) for slider
-    CCSprite *thumbNormal           = CCSprite::spriteWithFile(thumbFile);
-    CCSprite *thumbSelected         = CCSprite::spriteWithFile(thumbFile);
+    CCSprite *thumbNormal           = CCSprite::create(thumbFile);
+    CCSprite *thumbSelected         = CCSprite::create(thumbFile);
     thumbSelected->setColor(ccGRAY);
     
-    CCMenuItemSprite* thumbMenuItem =CCMenuItemSprite::itemWithNormalSprite(thumbNormal, thumbSelected);
+    CCMenuItemSprite* thumbMenuItem =CCMenuItemSprite::create(thumbNormal, thumbSelected);
     
-    return CCControlSlider::sliderWithSprites(backgroundSprite, progressSprite, thumbMenuItem);
+    return CCControlSlider::create(backgroundSprite, progressSprite, thumbMenuItem);
 }
 
 CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem)
+{
+    return CCControlSlider::create(backgroundSprite, pogressSprite, thumbItem);
+}
+
+CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem)
 {
     CCControlSlider *pRet = new CCControlSlider();
     pRet->initWithSprites(backgroundSprite, pogressSprite, thumbItem);
@@ -68,8 +78,8 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
  {
      if (CCControl::init())
      {
-        setIsRelativeAnchorPoint(true);
-        setIsTouchEnabled(true);
+        ignoreAnchorPointForPosition(false);
+        setTouchEnabled(true);
 
         m_backgroundSprite=backgroundSprite;
         m_progressSprite=progessSprite;
@@ -205,7 +215,7 @@ void CCControlSlider::sliderMoved(CCPoint location)
 
 void CCControlSlider::sliderEnded(CCPoint location)
 {
-    if (m_thumbItem->getIsSelected())
+    if (m_thumbItem->isSelected())
     {
         m_thumbItem->unselected();
         setValue(valueForLocation(m_thumbItem->getPosition()));

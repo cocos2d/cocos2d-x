@@ -18,9 +18,9 @@ class CCDictionary : public CCObject
     void removeObjectsForKeys(CCArray* pKeyArray);
     void removeAllObjects();
 
-    static CCDictionary* dictionary();
-    static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
-    static CCDictionary* dictionaryWithContentsOfFile(const char *pFileName);
+    static CCDictionary* create();
+    static CCDictionary* create(CCDictionary* srcDict);
+    static CCDictionary* create(const char *pFileName);
 
 };
 

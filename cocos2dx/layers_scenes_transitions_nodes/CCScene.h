@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -27,9 +27,14 @@ THE SOFTWARE.
 #ifndef __CCSCENE_H__
 #define __CCSCENE_H__
 
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup scene
+ * @{
+ */
 
 /** @brief CCScene is a subclass of CCNode that is used only as an abstract concept.
 
@@ -47,14 +52,19 @@ public:
     CCScene();
     virtual ~CCScene();
     bool init();
-    static CCScene *node(void);
+    CC_DEPRECATED_ATTRIBUTE static CCScene *node(void);
+    static CCScene *create(void);
 };
+
+// end of scene group
+/// @}
 
 NS_CC_END
 
-// for the subclass of CCScene, each has to implement the static "node" method 
+// for the subclass of CCScene, each has to implement the static "node" method
+// @deprecated: This interface will be deprecated sooner or later.
 #define SCENE_NODE_FUNC(scene) \
-static scene* node() \
+CC_DEPRECATED_ATTRIBUTE static scene* node() \
 { \
     scene *pRet = new scene(); \
     if (pRet && pRet->init()) \
@@ -70,8 +80,9 @@ static scene* node() \
     } \
 }; 
 
+// @deprecated: This interface will be deprecated sooner or later.
 #define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
-    static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
+    CC_DEPRECATED_ATTRIBUTE static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
     { \
         cocos2d::CCScene * scene = NULL; \
         do  \
@@ -85,5 +96,37 @@ static scene* node() \
         return scene; \
     }
 
+// for the subclass of CCScene, each has to implement the static "create" method 
+#define SCENE_CREATE_FUNC(scene) \
+static scene* create() \
+{ \
+    scene *pRet = new scene(); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}; 
+
+#define SCENE_CREATE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
+    static cocos2d::CCScene* create(__PARAMTYPE__ __PARAM__) \
+    { \
+        cocos2d::CCScene * scene = NULL; \
+        do  \
+        { \
+            scene = cocos2d::CCScene::create(); \
+            CC_BREAK_IF(! scene); \
+            __TYPE__ *layer = __TYPE__::create(__PARAM__); \
+            CC_BREAK_IF(! layer); \
+            scene->addChild(layer); \
+        } while (0); \
+        return scene; \
+    }
 
 #endif // __CCSCENE_H__

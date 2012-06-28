@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -41,15 +41,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\actions&quot;;&quot;$(SolutionDir)cocos2dx\base_nodes&quot;;&quot;$(SolutionDir)cocos2dx\cocoa&quot;;&quot;$(SolutionDir)cocos2dx\effects&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\keypad_dispatcher&quot;;&quot;$(SolutionDir)cocos2dx\label_nodes&quot;;&quot;$(SolutionDir)cocos2dx\layers_scenes_transitions_nodes&quot;;&quot;$(SolutionDir)cocos2dx\menu_nodes&quot;;&quot;$(SolutionDir)cocos2dx\misc_nodes&quot;;&quot;$(SolutionDir)cocos2dx\particle_nodes&quot;;&quot;$(SolutionDir)cocos2dx\script_support&quot;;&quot;$(SolutionDir)cocos2dx\shaders&quot;;&quot;$(SolutionDir)cocos2dx\sprite_nodes&quot;;&quot;$(SolutionDir)cocos2dx\support&quot;;&quot;$(SolutionDir)cocos2dx\text_input_node&quot;;&quot;$(SolutionDir)cocos2dx\textures&quot;;&quot;$(SolutionDir)cocos2dx\tileMap_parallax_nodes&quot;;&quot;$(SolutionDir)cocos2dx\touch_dispatcher&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;.."
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4244;4996"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libGLESv2.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib opengl32.lib glew32.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -98,7 +98,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -120,14 +120,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\;.\"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;.."
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4244;4996"
+				DisableSpecificWarnings="4267;4251;4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libGLESv2.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib opengl32.lib glew32.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -520,18 +520,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="HiResTest"
-					>
-					<File
-						RelativePath="..\tests\HiResTest\HiResTest.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\tests\HiResTest\HiResTest.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="KeypadTest"
 					>
 					<File
@@ -652,18 +640,6 @@
 					</File>
 					<File
 						RelativePath="..\tests\UserDefaultTest\UserDefaultTest.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="DirectorTest"
-					>
-					<File
-						RelativePath="..\tests\DirectorTest\DirectorTest.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\tests\DirectorTest\DirectorTest.h"
 						>
 					</File>
 				</Filter>
@@ -925,14 +901,118 @@
 							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h"
 							>
 						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.cpp"
+						<Filter
+							Name="ButtonTest"
 							>
-						</File>
-						<File
-							RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder.h"
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="HelloCocosBuilder"
 							>
-						</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="LabelTest"
+							>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="MenuTest"
+							>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="ParticleSystemTest"
+							>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="SpriteTest"
+							>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="TestHeader"
+							>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayerLoader.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="ScrollViewTest"
+							>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayer.h"
+								>
+							</File>
+							<File
+								RelativePath="..\tests\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayerLoader.h"
+								>
+							</File>
+						</Filter>
 					</Filter>
 				</Filter>
 				<Filter

@@ -27,12 +27,17 @@ THE SOFTWARE.
 #ifndef __CCCAMERA_H__
 #define __CCCAMERA_H__
 
-#include "CCObject.h"
+#include "cocoa/CCObject.h"
 #include "ccMacros.h"
-#include <string>
 #include "kazmath/mat4.h"
+#include <string>
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup base_nodes
+ * @{
+ */
 
 /** 
 A CCCamera is used in every CCNode.
@@ -84,7 +89,7 @@ public:
     /** sets the dirty value */
     inline void setDirty(bool bValue) { m_bDirty = bValue; }
     /** get the dirty value */
-    inline bool getDirty(void) { return m_bDirty; }
+    inline bool isDirty(void) { return m_bDirty; }
 
     /** sets the camera in the default position */
     void restore(void);
@@ -110,6 +115,9 @@ public:
 private:
     DISALLOW_COPY_AND_ASSIGN(CCCamera);
 };
+
+// end of base_node group
+/// @}
 
 NS_CC_END
 

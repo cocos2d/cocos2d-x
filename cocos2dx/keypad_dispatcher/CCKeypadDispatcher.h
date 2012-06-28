@@ -26,9 +26,14 @@ THE SOFTWARE.
 #define __CCKEYPAD_DISPATCHER_H__
 
 #include "CCKeypadDelegate.h"
-#include "CCArray.h"
+#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup input
+ * @{
+ */
 
 typedef enum {
     // the back key clicked msg
@@ -82,6 +87,9 @@ protected:
     struct _ccCArray *m_pHandlersToAdd;
     struct _ccCArray *m_pHandlersToRemove;
 };
+
+// end of input group
+/// @} 
 
 NS_CC_END
 

@@ -24,10 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCActionCamera.h"
-#include "CCNode.h"
+#include "base_nodes/CCNode.h"
 #include "CCCamera.h"
 #include "CCStdC.h"
-#include "CCZone.h"
+#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 //
@@ -45,12 +45,17 @@ void CCActionCamera::startWithTarget(CCNode *pTarget)
 
 CCActionInterval * CCActionCamera::reverse()
 {
-    return CCReverseTime::actionWithAction(this);
+    return CCReverseTime::create(this);
 }
 //
 // CCOrbitCamera
 //
 CCOrbitCamera * CCOrbitCamera::actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
+{
+    return CCOrbitCamera::create(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX);
+}
+
+CCOrbitCamera * CCOrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {
     CCOrbitCamera * pRet = new CCOrbitCamera();
     if(pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
@@ -116,7 +121,7 @@ void CCOrbitCamera::startWithTarget(CCNode *pTarget)
     m_fRadX = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleX);
 }
 
-void CCOrbitCamera::update(ccTime dt)
+void CCOrbitCamera::update(float dt)
 {
     float r = (m_fRadius + m_fDeltaRadius * dt) * CCCamera::getZEye();
     float za = m_fRadZ + m_fRadDeltaZ * dt;

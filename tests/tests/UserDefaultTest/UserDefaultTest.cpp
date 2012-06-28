@@ -8,7 +8,7 @@
 UserDefaultTest::UserDefaultTest()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF* label = CCLabelTTF::labelWithString("CCUserDefault test see log", "Arial", 28);
+    CCLabelTTF* label = CCLabelTTF::create("CCUserDefault test see log", "Arial", 28);
     addChild(label, 0);
     label->setPosition( ccp(s.width/2, s.height-50) );
 

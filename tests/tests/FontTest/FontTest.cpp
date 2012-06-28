@@ -24,19 +24,35 @@ static std::string fontList[] =
     "fonts/Scissor Cuts.ttf",
 };
 
+static int fontCount = sizeof(fontList) / sizeof(*fontList);
+
+static int vAlignIdx = 0;
+static CCVerticalTextAlignment verticalAlignment[] =
+{
+    kCCVerticalTextAlignmentTop,
+    kCCVerticalTextAlignmentCenter,
+    kCCVerticalTextAlignmentBottom,
+};
+static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
+
 static const char* nextAction(void)
 {
     fontIdx++;
-    fontIdx = fontIdx % (sizeof(fontList) / sizeof(fontList[0]));
+    if(fontIdx >= fontCount) {
+        fontIdx = 0;
+        vAlignIdx = (vAlignIdx + 1) % vAlignCount;
+    }
     return fontList[fontIdx].c_str();
 }
 
 static const char* backAction(void)
 {
     fontIdx--;
-    if (fontIdx < 0)
-    {
-        fontIdx += (sizeof(fontList) / sizeof(fontList[0]));
+    if( fontIdx < 0 ) {
+        fontIdx = fontCount - 1;
+        vAlignIdx--;
+        if(vAlignIdx < 0)
+            vAlignIdx = vAlignCount - 1;
     }
 
     return fontList[fontIdx].c_str();
@@ -50,16 +66,16 @@ static const char* restartAction(void)
 
 FontTest::FontTest()
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(FontTest::backCallback));
-    CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(FontTest::restartCallback));
-    CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(FontTest::nextCallback));
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(FontTest::backCallback));
+    CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(FontTest::restartCallback));
+    CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(FontTest::nextCallback));
 
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(size.width/2 - 100,30));
-    item2->setPosition(ccp(size.width/2, 30));
-    item3->setPosition(ccp(size.width/2 + 100,30));
+    item1->setPosition(ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item2->setPosition(ccp( s.width/2, item2->getContentSize().height/2));
+    item3->setPosition(ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
     addChild(menu, 1);
     
     showFont(restartAction());
@@ -67,27 +83,53 @@ FontTest::FontTest()
 
 void FontTest::showFont(const char *pFont)
 {
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSize blockSize = CCSizeMake(s.width/3, 200);
+    CCFloat fontSize = 26;
+
     removeChildByTag(kTagLabel1, true);
     removeChildByTag(kTagLabel2, true);
     removeChildByTag(kTagLabel3, true);
     removeChildByTag(kTagLabel4, true);
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLabelTTF *top = CCLabelTTF::create(pFont, pFont, 24);
+    CCLabelTTF *left = CCLabelTTF::create("alignment left", blockSize, kCCTextAlignmentLeft, verticalAlignment[vAlignIdx], pFont, fontSize);
+    CCLabelTTF *center = CCLabelTTF::create("alignment center", blockSize, kCCTextAlignmentCenter, verticalAlignment[vAlignIdx], pFont, fontSize);
+    CCLabelTTF *right = CCLabelTTF::create("alignment right", blockSize, kCCTextAlignmentRight, verticalAlignment[vAlignIdx], pFont, fontSize);
 
-    CCLabelTTF *top = CCLabelTTF::labelWithString(pFont, pFont, 24);
-    CCLabelTTF *left = CCLabelTTF::labelWithString("alignment left", CCSizeMake(s.width, 50), CCTextAlignmentLeft, pFont, 32);
-    CCLabelTTF *center = CCLabelTTF::labelWithString("alignment center", CCSizeMake(s.width, 50), CCTextAlignmentCenter, pFont, 32);
-    CCLabelTTF *right = CCLabelTTF::labelWithString("alignment right", CCSizeMake(s.width, 50), CCTextAlignmentRight, pFont, 32);
+    CCLayerColor *leftColor = CCLayerColor::create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height);
+    CCLayerColor *centerColor = CCLayerColor::create(ccc4(200, 100, 100, 255), blockSize.width, blockSize.height);
+    CCLayerColor *rightColor = CCLayerColor::create(ccc4(100, 100, 200, 255), blockSize.width, blockSize.height);
 
-    top->setPosition(ccp(s.width/2, 250));
-    left->setPosition(ccp(s.width/2, 200));
-    center->setPosition(ccp(s.width/2, 150));
-    right->setPosition(ccp(s.width/2, 100));
+    leftColor->ignoreAnchorPointForPosition(false);
+    centerColor->ignoreAnchorPointForPosition(false);
+    rightColor->ignoreAnchorPointForPosition(false);
 
-    addChild(left, 0, kTagLabel1);
-    addChild(right, 0, kTagLabel2);
-    addChild(center, 0, kTagLabel3);
-    addChild(top, 0, kTagLabel4);
+
+    top->setAnchorPoint(ccp(0.5, 1));
+    left->setAnchorPoint(ccp(0,0.5));
+    leftColor->setAnchorPoint(ccp(0,0.5));
+    center->setAnchorPoint(ccp(0,0.5));
+    centerColor->setAnchorPoint(ccp(0,0.5));
+    right->setAnchorPoint(ccp(0,0.5));
+    rightColor->setAnchorPoint(ccp(0,0.5));
+
+    top->setPosition(ccp(s.width/2,s.height-20));
+    left->setPosition(ccp(0,s.height/2));
+    leftColor->setPosition(left->getPosition());
+    center->setPosition(ccp(blockSize.width, s.height/2));
+    centerColor->setPosition(center->getPosition());
+    right->setPosition(ccp(blockSize.width*2, s.height/2));
+    rightColor->setPosition(right->getPosition());
+
+    this->addChild(leftColor, -1);
+    this->addChild(left, 0, kTagLabel1);
+    this->addChild(rightColor, -1);
+    this->addChild(right, 0, kTagLabel2);
+    this->addChild(centerColor, -1);
+    this->addChild(center, 0, kTagLabel3);
+    this->addChild(top, 0, kTagLabel4);
 }
 
 void FontTest::backCallback(CCObject* pSender)
@@ -117,7 +159,7 @@ void FontTest::restartCallback(CCObject* pSender)
 ///---------------------------------------
 void FontTestScene::runThisTest()
 {
-    CCLayer* pLayer = FontTest::node();
+    CCLayer* pLayer = FontTest::create();
     addChild(pLayer);
 
     CCDirector::sharedDirector()->replaceScene(this);

@@ -72,6 +72,11 @@ void DrawPrimitivesTest::draw()
     ccDrawPoly( vertices, 5, false);
 
     CHECK_GL_ERROR_DEBUG();
+    
+    // filled poly
+	glLineWidth(1);
+	CCPoint filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
+	ccDrawSolidPoly(filledVertices, 5, ccc4f(0.5f, 0.5f, 1, 1 ) );
 
     // closed purble poly
     ccDrawColor4B(255, 0, 255, 255);
@@ -90,6 +95,10 @@ void DrawPrimitivesTest::draw()
     ccDrawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
 
     CHECK_GL_ERROR_DEBUG();
+    
+    //draw a solid polygon
+    CCPoint vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
+    ccDrawSolidPoly( vertices3, 4, ccc4f(1,1,0,1) );
 
     // restore original values
     glLineWidth(1);

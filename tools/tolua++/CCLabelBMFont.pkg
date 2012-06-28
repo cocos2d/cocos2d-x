@@ -13,5 +13,5 @@ class CCLabelBMFont : public CCNode
     tolua_property__CCOpacity   GLubyte opacity;
 
     static void purgeCachedData();
-    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
+    static CCLabelBMFont * create(const char *str, const char *fntFile);
 };

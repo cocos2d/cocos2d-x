@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #define __CC_PLATFORM_IMAGE_CPP__
-#include "CCImageCommon_cpp.h"
+#include "platform/CCImageCommon_cpp.h"
 
 NS_CC_BEGIN
 
@@ -57,13 +57,41 @@ public:
             DeleteObject(m_hFont);
             m_hFont = hDefFont;
         }
-        // release temp font resource    
-        if (m_curFontPath.size() > 0)
-        {
-            RemoveFontResource(m_curFontPath.c_str());
-            SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-        }
+		// release temp font resource	
+		if (m_curFontPath.size() > 0)
+		{
+			wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+			if (pwszBuffer)
+			{
+				RemoveFontResource(pwszBuffer);
+				SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+				delete [] pwszBuffer;
+				pwszBuffer = NULL;
+			}
+		}
     }
+
+	wchar_t * utf8ToUtf16(std::string nString)
+	{
+		wchar_t * pwszBuffer = NULL;
+		do 
+		{
+			if (nString.size() < 0)
+			{
+				break;
+			}
+			// utf-8 to utf-16
+			int nLen = nString.size();
+			int nBufLen  = nLen + 1;			
+			pwszBuffer = new wchar_t[nBufLen];
+			CC_BREAK_IF(! pwszBuffer);
+			memset(pwszBuffer,0,nBufLen);
+			nLen = MultiByteToWideChar(CP_UTF8, 0, nString.c_str(), nLen, pwszBuffer, nBufLen);		
+			pwszBuffer[nLen] = '\0';
+		} while (0);	
+		return pwszBuffer;
+
+	}
 
     bool setFont(const char * pFontName = NULL, int nSize = 0)
     {
@@ -83,7 +111,7 @@ public:
                 int nFindTTF = fontName.find(".TTF");
                 if (nFindttf >= 0 || nFindTTF >= 0)
                 {
-                    fontPath = CCFileUtils::fullPathFromRelativePath(fontName.c_str());
+                    fontPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fontName.c_str());
                     int nFindPos = fontName.rfind("/");
                     fontName = &fontName[nFindPos+1];
                     nFindPos = fontName.rfind(".");
@@ -110,26 +138,40 @@ public:
             if (m_hFont != hDefFont)
             {
                 DeleteObject(m_hFont);
-                // release old font register
-                if (m_curFontPath.size() > 0)
-                {
-                    if(RemoveFontResource(m_curFontPath.c_str()))
-                    {
-                        SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-                    }                        
-                }
-
-                fontPath.size()>0?(m_curFontPath = fontPath):(m_curFontPath.clear());
-                // register temp font
-                if (m_curFontPath.size() > 0)
-                {
-                    if(AddFontResource(m_curFontPath.c_str()))
-                    {
-                        SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-                    }                        
-                }
+				// release old font register
+				if (m_curFontPath.size() > 0)
+				{
+					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+					if (pwszBuffer)
+					{
+						if(RemoveFontResource(pwszBuffer))
+						{
+							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+						}						
+						delete [] pwszBuffer;
+						pwszBuffer = NULL;
+					}
+				}
+				fontPath.size()>0?(m_curFontPath = fontPath):(m_curFontPath.clear());
+				// register temp font
+				if (m_curFontPath.size() > 0)
+				{
+					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+					if (pwszBuffer)
+					{
+						if(AddFontResource(pwszBuffer))
+						{
+							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+						}						
+						delete [] pwszBuffer;
+						pwszBuffer = NULL;
+					}
+				}
             }
             m_hFont = NULL;
+
+            // disable Cleartype
+            tNewFont.lfQuality = ANTIALIASED_QUALITY;
 
             // create new font
             m_hFont = CreateFontIndirectA(&tNewFont);

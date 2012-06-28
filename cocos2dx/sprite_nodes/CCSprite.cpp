@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -31,17 +31,17 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
-#include "CCTextureCache.h"
+#include "textures/CCTextureCache.h"
 #include "CCDrawingPrimitives.h"
-#include "CCShaderCache.h"
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/ccGLStateCache.h"
+#include "shaders/CCGLProgram.h"
 #include "CCDirector.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "CCDrawingPrimitives.h"
-#include "CCGeometry.h"
-#include "CCTexture2D.h"
-#include "CCAffineTransform.h"
+#include "cocoa/CCGeometry.h"
+#include "textures/CCTexture2D.h"
+#include "cocoa/CCAffineTransform.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"
 // external
@@ -60,6 +60,11 @@ NS_CC_BEGIN
 
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
 {
+    return CCSprite::create(pTexture);
+}
+
+CCSprite* CCSprite::create(CCTexture2D *pTexture)
+{
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithTexture(pTexture))
     {
@@ -72,6 +77,11 @@ CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
 
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
 {
+    return CCSprite::create(pTexture, rect);
+}
+
+CCSprite* CCSprite::create(CCTexture2D *pTexture, const CCRect& rect)
+{
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithTexture(pTexture, rect))
     {
@@ -82,17 +92,12 @@ CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect, const CCPoint& offset)
+CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
 {
-    CC_UNUSED_PARAM(pTexture);
-    CC_UNUSED_PARAM(rect);
-    CC_UNUSED_PARAM(offset);
-    // not implement
-    CCAssert(0, "");
-    return NULL;
+    return CCSprite::create(pszFileName);
 }
 
-CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
+CCSprite* CCSprite::create(const char *pszFileName)
 {
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName))
@@ -106,6 +111,11 @@ CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
 
 CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
 {
+    return CCSprite::create(pszFileName, rect);
+}
+
+CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
+{
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName, rect))
     {
@@ -117,6 +127,11 @@ CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
 }
 
 CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+{
+    return CCSprite::create(pSpriteFrame);
+}
+
+CCSprite* CCSprite::create(CCSpriteFrame *pSpriteFrame)
 {
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
@@ -130,26 +145,34 @@ CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 
 CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 {
+    return CCSprite::createWithSpriteFrameName(pszSpriteFrameName);
+}
+
+CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
+{
     CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
     CCAssert(pFrame != NULL, msg);
-    return spriteWithSpriteFrame(pFrame);
+    return create(pFrame);
 }
 
 CCSprite* CCSprite::node()
+{
+    return CCSprite::create();
+}
+
+CCSprite* CCSprite::create()
 {
     CCSprite *pSprite = new CCSprite();
     if (pSprite && pSprite->init())
     {
         pSprite->autorelease();
+        return pSprite;
     }
-    else
-    {
-        CC_SAFE_DELETE(pSprite);
-    }
-    return pSprite;
+    CC_SAFE_DELETE(pSprite);
+    return NULL;
 }
 
 bool CCSprite::init(void)
@@ -392,9 +415,9 @@ void CCSprite::setTextureCoords(CCRect rect)
         bottom    = top+(rect.size.width*2-2)/(2*atlasHeight);
 #else
         left    = rect.origin.x/atlasWidth;
-        right    = left+(rect.size.height/atlasWidth);
+        right    = (rect.origin.x+rect.size.height) / atlasWidth;
         top        = rect.origin.y/atlasHeight;
-        bottom    = top+(rect.size.width/atlasHeight);
+        bottom    = (rect.origin.y+rect.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if (m_bFlipX)
@@ -425,9 +448,9 @@ void CCSprite::setTextureCoords(CCRect rect)
         bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
 #else
         left    = rect.origin.x/atlasWidth;
-        right    = left + rect.size.width/atlasWidth;
+        right    = (rect.origin.x + rect.size.width) / atlasWidth;
         top        = rect.origin.y/atlasHeight;
-        bottom    = top + rect.size.height/atlasHeight;
+        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if(m_bFlipX)
@@ -829,15 +852,15 @@ void CCSprite::setAnchorPoint(const CCPoint& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
-void CCSprite::setIsRelativeAnchorPoint(bool bRelative)
+void CCSprite::ignoreAnchorPointForPosition(bool value)
 {
-    CCAssert(! m_pobBatchNode, "relativeTransformAnchor is invalid in CCSprite");
-    CCNode::setIsRelativeAnchorPoint(bRelative);
+    CCAssert(! m_pobBatchNode, "ignoreAnchorPointForPosition is invalid in CCSprite");
+    CCNode::ignoreAnchorPointForPosition(value);
 }
 
-void CCSprite::setIsVisible(bool bVisible)
+void CCSprite::setVisible(bool bVisible)
 {
-    CCNode::setIsVisible(bVisible);
+    CCNode::setVisible(bVisible);
     SET_DIRTY_RECURSIVELY();
 }
 
@@ -943,14 +966,14 @@ void CCSprite::setColor(const ccColor3B& color3)
     updateColor();
 }
 
-void CCSprite::setIsOpacityModifyRGB(bool bValue)
+void CCSprite::setOpacityModifyRGB(bool bValue)
 {
     ccColor3B oldColor = m_sColor;
     m_bOpacityModifyRGB = bValue;
     m_sColor = oldColor;
 }
 
-bool CCSprite::getIsOpacityModifyRGB(void)
+bool CCSprite::isOpacityModifyRGB(void)
 {
     return m_bOpacityModifyRGB;
 }
@@ -1000,7 +1023,7 @@ bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
 
 CCSpriteFrame* CCSprite::displayFrame(void)
 {
-    return CCSpriteFrame::frameWithTexture(m_pobTexture,
+    return CCSpriteFrame::create(m_pobTexture,
                                            CC_RECT_POINTS_TO_PIXELS(m_obRect),
                                            m_bRectRotated,
                                            m_obUnflippedOffsetPositionFromCenter,
@@ -1047,27 +1070,28 @@ void CCSprite::updateBlendFunc(void)
     CCAssert (! m_pobBatchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet");
 
     // it is possible to have an untextured sprite
-    if (! m_pobTexture || ! m_pobTexture->getHasPremultipliedAlpha())
+    if (! m_pobTexture || ! m_pobTexture->hasPremultipliedAlpha())
     {
         m_sBlendFunc.src = GL_SRC_ALPHA;
         m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-        setIsOpacityModifyRGB(false);
+        setOpacityModifyRGB(false);
     }
     else
     {
         m_sBlendFunc.src = CC_BLEND_SRC;
         m_sBlendFunc.dst = CC_BLEND_DST;
-        setIsOpacityModifyRGB(true);
+        setOpacityModifyRGB(true);
     }
 }
 
 void CCSprite::setTexture(CCTexture2D *texture)
 {
-    CCAssert(! m_pobBatchNode, "setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
+    // If batchnode, then texture id should be the same
+    CCAssert(! m_pobBatchNode || texture->getName() == m_pobBatchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
 
-    if (m_pobTexture != texture)
+    if (!m_pobBatchNode && m_pobTexture != texture)
     {
         CC_SAFE_RETAIN(texture);
         CC_SAFE_RELEASE(m_pobTexture);

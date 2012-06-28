@@ -19,7 +19,7 @@ MciPlayer::MciPlayer()
 {
     if (! s_hInstance)
     {
-        s_hInstance       = GetModuleHandle( NULL );            // Grab An Instance For Our Window
+        s_hInstance = GetModuleHandle( NULL );            // Grab An Instance For Our Window
 
         WNDCLASS  wc;        // Windows Class Structure
 
@@ -35,8 +35,8 @@ MciPlayer::MciPlayer()
         wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
         wc.lpszClassName  = WIN_CLASS_NAME;                 // Set The Class Name
 
-        if (! RegisterClass(&wc)        // 注册 窗口类 失败
-            && 1410 != GetLastError())        // 并且失败的原因不是窗口类已注册   
+        if (! RegisterClass(&wc)
+            && 1410 != GetLastError())
         {
             return;
         }

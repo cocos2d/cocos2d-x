@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __CC_EGLVIEW_WIN32_H__
 
 #include <Windows.h>
-#include "CCCommon.h"
-#include "CCGeometry.h"
-#include "CCEGLViewProtocol.h"
+#include "platform/CCCommon.h"
+#include "cocoa/CCGeometry.h"
+#include "platform/CCEGLViewProtocol.h"
 
 NS_CC_BEGIN
 
@@ -51,6 +51,8 @@ public:
 
 private:
     virtual bool Create(LPCTSTR pTitle, int w, int h);
+    bool initGL();
+    void destroyGL();
 public:
     virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -71,10 +73,11 @@ public:
 protected:
 
 private:
-    bool                m_bCaptured;
-    CCEGL *            m_pEGL;
-    HWND                m_hWnd;
-    LPFN_ACCELEROMETER_KEYHOOK    m_lpfnAccelerometerKeyHook;
+    bool m_bCaptured;
+    HWND m_hWnd;
+    HDC  m_hDC;
+    HGLRC m_hRC;
+    LPFN_ACCELEROMETER_KEYHOOK m_lpfnAccelerometerKeyHook;
 };
 
 NS_CC_END

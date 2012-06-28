@@ -30,6 +30,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup actions
+ * @{
+ */
+
+/**
 @brief Progress to percentage
 @since v0.99.1
 */
@@ -37,16 +42,19 @@ class CC_DLL CCProgressTo : public CCActionInterval
 {
 public:
     /** Initializes with a duration and a percent */
-    bool initWithDuration(ccTime duration, float fPercent);
+    bool initWithDuration(float duration, float fPercent);
 
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** Creates and initializes with a duration and a percent 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCProgressTo* actionWithDuration(float duration, float fPercent);
     /** Creates and initializes with a duration and a percent */
-    static CCProgressTo* actionWithDuration(ccTime duration, float fPercent);
-
+    static CCProgressTo* create(float duration, float fPercent);
 protected:
     float m_fTo;
     float m_fFrom;
@@ -60,21 +68,27 @@ class CC_DLL CCProgressFromTo : public CCActionInterval
 {
 public:
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
-    bool initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
+    bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
 
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual CCActionInterval* reverse(void);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(ccTime time);
+    virtual void update(float time);
 
 public:
+    /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCProgressFromTo* actionWithDuration(float duration, float fFromPercentage, float fToPercentage);
     /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
-    static CCProgressFromTo* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
-
+    static CCProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
 protected:
     float m_fTo;
     float m_fFrom;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

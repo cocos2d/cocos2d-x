@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRID_H__
 #define __EFFECTS_CCGRID_H__
 
-#include "CCObject.h"
-#include "CCNode.h"
+#include "cocoa/CCObject.h"
+#include "base_nodes/CCNode.h"
 #include "CCCamera.h"
 #include "ccTypes.h"
-#include "CCTexture2D.h"
+#include "textures/CCTexture2D.h"
 #include "CCDirector.h"
 #include "kazmath/mat4.h"
 
@@ -38,6 +38,11 @@ NS_CC_BEGIN
 class CCTexture2D;
 class CCGrabber;
 class CCGLProgram;
+
+/**
+ * @addtogroup effects
+ * @{
+ */
 
 /** Base class for other
 */
@@ -64,7 +69,7 @@ public:
 
     /** is texture flipped */
     inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
-    void setIsTextureFlipped(bool bFlipped);
+    void setTextureFlipped(bool bFlipped);
 
     bool initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
     bool initWithSize(const ccGridSize& gridSize);
@@ -76,8 +81,20 @@ public:
     virtual void calculateVertexPoints(void);
 
 public:
-    static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
-    static CCGridBase* gridWithSize(const ccGridSize& gridSize);
+    /** create one Grid 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
+    /** create one Grid 
+    @deprecated: This interface will be deprecated sooner or later.
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCGridBase* gridWithSize(const ccGridSize& gridSize);
+
+    /** create one Grid */
+    static CCGridBase* create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
+    /** create one Grid */
+    static CCGridBase* create(const ccGridSize& gridSize);
+
     void set2DProjection(void);
 
 protected:
@@ -154,6 +171,9 @@ protected:
     GLvoid *m_pOriginalVertices;
     GLushort *m_pIndices;
 };
+
+// end of effects group
+/// @}
 
 NS_CC_END
 

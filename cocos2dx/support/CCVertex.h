@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011 ForzeField Studios S.L
 
  http://www.cocos2d-x.org
@@ -29,16 +29,24 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup data_structures
+ * @{
+ */
+
 /** @file CCVertex.h */
 
 /** converts a line to a polygon */
-void CC_DLL ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, ccTex2F *texCoords, unsigned int offset, unsigned int nuPoints);
+void CC_DLL ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, unsigned int offset, unsigned int nuPoints);
 
 /** returns wheter or not the line intersects */
 bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,
                              float Bx, float By,
                              float Cx, float Cy,
                              float Dx, float Dy, float *T);
+
+// end of data_structures group
+/// @}
 
 NS_CC_END
 

@@ -98,6 +98,8 @@ typedef enum {
     BOOL            mute;
     BOOL            enabled_;
     BOOL            backgroundMusic;
+    // whether background music is paused
+    BOOL            paused;
 @public    
     BOOL            systemPaused;//Used for auto resign handling
     NSTimeInterval    systemPauseLocation;//Used for auto resign handling
@@ -111,6 +113,7 @@ typedef enum {
 @property (assign) id<CDLongAudioSourceDelegate> delegate;
 /* This long audio source functions as background music */
 @property (readwrite, nonatomic) BOOL backgroundMusic;
+@property (readonly) BOOL paused;
 
 /** Loads the file into the audio source */
 -(void) load:(NSString*) filePath;

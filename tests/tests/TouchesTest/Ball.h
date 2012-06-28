@@ -5,7 +5,7 @@
 
 class Paddle;
 
-using namespace cocos2d;
+USING_NS_CC;
 
 class Ball : public CCSprite
 {
@@ -17,7 +17,7 @@ public:
     float radius();
     //BOOL initWithTexture(CCTexture2D* aTexture);
     //virtual void setTexture(CCTexture2D* newTexture);
-    void move(ccTime delta);
+    void move(float delta);
     void collideWithPaddle(Paddle* paddle);
 
 

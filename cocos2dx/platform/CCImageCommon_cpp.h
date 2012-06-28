@@ -94,16 +94,28 @@ CCImage::~CCImage()
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
-    CC_UNUSED_PARAM(eImgFmt);
-    CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
-    return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
+    bool bRet = false;
+    unsigned long nSize = 0;
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath), "rb", &nSize);
+    if (pBuffer != NULL && nSize > 0)
+    {
+        bRet = initWithImageData(pBuffer, nSize, eImgFmt);
+    }
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    return bRet;
 }
 
 bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
-    CC_UNUSED_PARAM(imageType);
-    CCFileData data(fullpath, "rb");
-    return initWithImageData(data.getBuffer(), data.getSize(), imageType);
+    bool bRet = false;
+    unsigned long nSize = 0;
+    unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
+    if (pBuffer != NULL && nSize > 0)
+    {
+        bRet = initWithImageData(pBuffer, nSize, imageType);
+    }
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    return bRet;
 }
 
 bool CCImage::initWithImageData(void * pData, 
@@ -244,8 +256,10 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         while( cinfo.output_scanline < cinfo.image_height )
         {
             jpeg_read_scanlines( &cinfo, row_pointer, 1 );
-            for( i=0; i<cinfo.image_width*cinfo.num_components;i++) 
+            for( i=0; i<cinfo.image_width*cinfo.output_components;i++) 
+            {
                 m_pData[location++] = row_pointer[0][i];
+            }
         }
 
         jpeg_finish_decompress( &cinfo );
@@ -354,7 +368,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         if (row_pointers)
         {
             const unsigned int stride = m_nWidth * channels;
-            for (size_t i = 0; i < m_nHeight; ++i)
+            for (unsigned short i = 0; i < m_nHeight; ++i)
             {
                 png_uint_32 q = i * stride;
                 row_pointers[i] = (png_bytep)m_pData + q;
@@ -364,9 +378,9 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
             if (m_bHasAlpha)
             {
                 unsigned int *tmp = (unsigned int *)m_pData;
-                for(unsigned int i = 0; i < m_nHeight; i++)
+                for(unsigned short i = 0; i < m_nHeight; i++)
                 {
-                    for(int j = 0; j < m_nWidth * channels; j += 4)
+                    for(unsigned int j = 0; j < m_nWidth * channels; j += 4)
                     {
                         *tmp++ = CC_RGB_PREMULTIPLY_APLHA( row_pointers[i][j], row_pointers[i][j + 1], 
                                                           row_pointers[i][j + 2], row_pointers[i][j + 3] );
@@ -392,19 +406,19 @@ out:
 static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
 {
     tImageSource* isource = (tImageSource*)fd;
-	uint8* ma;
-	uint64 mb;
-	unsigned long n;
-	unsigned long o;
-	tmsize_t p;
-	ma=(uint8*)buf;
-	mb=size;
-	p=0;
-	while (mb>0)
-	{
-		n=0x80000000UL;
-		if ((uint64)n>mb)
-			n=(unsigned long)mb;
+    uint8* ma;
+    uint64 mb;
+    unsigned long n;
+    unsigned long o;
+    tmsize_t p;
+    ma=(uint8*)buf;
+    mb=size;
+    p=0;
+    while (mb>0)
+    {
+        n=0x80000000UL;
+        if ((uint64)n>mb)
+            n=(unsigned long)mb;
 
 
         if((int)(isource->offset + n) <= isource->size)
@@ -418,15 +432,15 @@ static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
             return 0;
         }
 
-		ma+=o;
-		mb-=o;
-		p+=o;
-		if (o!=n)
+        ma+=o;
+        mb-=o;
+        p+=o;
+        if (o!=n)
         {
-			break;
+            break;
         }
-	}
-	return p;
+    }
+    return p;
 }
 
 static tmsize_t _tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
@@ -434,7 +448,7 @@ static tmsize_t _tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
     CC_UNUSED_PARAM(fd);
     CC_UNUSED_PARAM(buf);
     CC_UNUSED_PARAM(size);
-	return 0;
+    return 0;
 }
 
 
@@ -444,7 +458,7 @@ static uint64 _tiffSeekProc(thandle_t fd, uint64 off, int whence)
     uint64 ret = -1;
     do 
     {
-	    if (whence == SEEK_SET)
+        if (whence == SEEK_SET)
         {
             CC_BREAK_IF(off > isource->size-1);
             ret = isource->offset = (uint32)off;
@@ -515,9 +529,9 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 
         CC_BREAK_IF(NULL == tif);
 
-        uint32 w, h;
-        uint16 bitsPerSample, samplePerPixel, planarConfig, extraSample;
-        size_t npixels;
+        uint32 w = 0, h = 0;
+        uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
+        size_t npixels = 0;
         
         TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
         TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);

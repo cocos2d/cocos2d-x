@@ -36,7 +36,7 @@ public:
     virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
     virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
 
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
     void setEmitterPosition();
 };
 
@@ -195,7 +195,7 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void updateQuads(ccTime dt);
+    void updateQuads(float dt);
 
 private:
     int m_nIndex;
@@ -213,7 +213,7 @@ class ParticleBatchHybrid : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    void switchRender(ccTime dt);
+    void switchRender(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:
@@ -233,7 +233,7 @@ class ParticleReorder : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    void reorderParticles(ccTime dt);
+    void reorderParticles(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:
@@ -246,14 +246,14 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 };
 
 class MultipleParticleSystemsBatched : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:
@@ -264,8 +264,8 @@ class AddAndDeleteParticleSystems : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual void update(ccTime dt);
-    void removeSystem(ccTime dt);
+    virtual void update(float dt);
+    void removeSystem(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:
@@ -276,12 +276,28 @@ class ReorderParticleSystems : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    void reorderSystem(ccTime time);
-    virtual void update(ccTime dt);
+    void reorderSystem(float time);
+    virtual void update(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:
     CCParticleBatchNode* m_pBatchNode;
+};
+
+class PremultipliedAlphaTest : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class PremultipliedAlphaTest2 : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 #endif

@@ -29,14 +29,20 @@ THE SOFTWARE.
 #define __ACTION_CCACTION_MANAGER_H__
 
 #include "CCAction.h"
-#include "CCArray.h"
-#include "CCObject.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCObject.h"
 
 NS_CC_BEGIN
 
-#define kCCActionManagerPriority 0
+class CCSet;
 
 struct _hashElement;
+
+/**
+ * @addtogroup actions
+ * @{
+ */
+
 /** 
  @brief CCActionManager is a singleton that manages all the actions.
  Normally you won't need to use this singleton directly. 99% of the cases you will use the CCNode interface,
@@ -98,6 +104,14 @@ public:
     /** Resumes the target. All queued actions will be resumed.
     */
     void resumeTarget(CCObject *pTarget);
+    
+    /** Pauses all running actions, returning a list of targets whose actions were paused.
+     */
+    CCSet* pauseAllRunningActions();
+    
+    /** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
+     */
+    void resumeTargets(CCSet *targetsToResume);
 
 protected:
     // declared in CCActionManager.m
@@ -105,13 +119,16 @@ protected:
     void removeActionAtIndex(unsigned int uIndex, struct _hashElement *pElement);
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
-    void update(ccTime dt);
+    void update(float dt);
 
 protected:
     struct _hashElement    *m_pTargets;
     struct _hashElement    *m_pCurrentTarget;
     bool            m_bCurrentTargetSalvaged;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

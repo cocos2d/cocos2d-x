@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (C) 2008      Apple Inc. All Rights Reserved.
 
 http://www.cocos2d-x.org
@@ -27,13 +27,18 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <string>
-#include "CCObject.h"
-#include "CCGeometry.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCGeometry.h"
 #include "ccTypes.h"
 
 NS_CC_BEGIN
 
 class CCImage;
+
+/**
+ * @addtogroup textures
+ * @{
+ */
 
 //CONSTANTS:
 
@@ -41,7 +46,7 @@ class CCImage;
 Possible texture pixel formats
 */
 typedef enum {
-    kCCTexture2DPixelFormat_Automatic = 0,
+
     //! 32-bit texture: RGBA8888
     kCCTexture2DPixelFormat_RGBA8888,
     //! 24-bit texture: RGBA888
@@ -67,7 +72,6 @@ typedef enum {
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
 
     // backward compatibility stuff
-    kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
     kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
     kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
     kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
@@ -132,12 +136,8 @@ public:
 
     bool initWithImage(CCImage *uiImage, ccResolutionType resolution);
 
-    /**
-    Extensions to make it easy to create a CCTexture2D object from a string of text.
-    Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
-    */
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    bool initWithString(const char *text, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
 
@@ -155,6 +155,9 @@ public:
 
     /** sets the min filter, mag filter, wrap s and wrap t texture parameters.
     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
+
+    @warning Calling this method could allocate additional texture memory.
+
     @since v0.8
     */
     void setTexParameters(ccTexParams* texParams);
@@ -163,6 +166,8 @@ public:
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR
     - GL_TEXTURE_MAG_FILTER = GL_LINEAR
 
+    @warning Calling this method could allocate additional texture memory.
+
     @since v0.8
     */
     void setAntiAliasTexParameters();
@@ -170,6 +175,8 @@ public:
     /** sets alias texture parameters:
     - GL_TEXTURE_MIN_FILTER = GL_NEAREST
     - GL_TEXTURE_MAG_FILTER = GL_NEAREST
+
+    @warning Calling this method could allocate additional texture memory.
 
     @since v0.8
     */
@@ -182,11 +189,21 @@ public:
     */
     void generateMipmap();
 
+    /** returns the pixel format.
+     @since v2.0
+     */
+    const char* stringForFormat();
+
     /** returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
     unsigned int bitsPerPixelForFormat();  
-    
+
+    /** Helper functions that returns bits per pixels for a given format.
+     @since v2.0
+     */
+    unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format);
+
     /** sets the default pixel format for UIImagescontains alpha channel.
     If the UIImage contains alpha channel, then the options are:
     - generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
@@ -198,7 +215,9 @@ public:
 
     How does it work ?
     - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-    - If the image is an RGB (without Alpha) then an RGB565 or RGB888 texture will be used (16-bit texture)
+    - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
+
+    This parameter is not valid for PVR / PVR.CCZ images.
 
     @since v0.8
     */
@@ -221,6 +240,9 @@ public:
 
     /** content size */
     const CCSize& getContentSizeInPixels();
+    
+    bool hasPremultipliedAlpha();
+    bool hasMipmaps();
 private:
     bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
@@ -245,7 +267,9 @@ private:
     CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSize)
 
     /** whether or not the texture has their Alpha premultiplied */
-    CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
+    bool m_bHasPremultipliedAlpha;
+
+    bool m_bHasMipmaps;
 
     /** shader program used by drawAtPoint and drawInRect */
     CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
@@ -261,6 +285,9 @@ private:
      */
     CC_SYNTHESIZE(ccResolutionType, m_eResolutionType, ResolutionType);
 };
+
+// end of textures group
+/// @}
 
 NS_CC_END
 

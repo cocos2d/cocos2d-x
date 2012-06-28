@@ -24,7 +24,7 @@ void DemoFirework::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleFireworks::node();
+    m_emitter = CCParticleFireworks::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     
@@ -48,7 +48,7 @@ void DemoFire::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleFire::node();
+    m_emitter = CCParticleFire::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     
@@ -73,7 +73,7 @@ void DemoSun::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleSun::node();
+    m_emitter = CCParticleSun::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
 
@@ -96,7 +96,7 @@ void DemoGalaxy::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleGalaxy::node();
+    m_emitter = CCParticleGalaxy::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     
@@ -119,7 +119,7 @@ void DemoFlower::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleFlower::node();
+    m_emitter = CCParticleFlower::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
@@ -206,7 +206,7 @@ void DemoBigFlower::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
     
     // additive
-    m_emitter->setIsBlendAdditive(true);
+    m_emitter->setBlendAdditive(true);
 
     setEmitterPosition();
 }
@@ -291,7 +291,7 @@ void DemoRotFlower::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
 
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
     
     setEmitterPosition();
 }
@@ -310,7 +310,7 @@ void DemoMeteor::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleMeteor::node();
+    m_emitter = CCParticleMeteor::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     
@@ -333,7 +333,7 @@ void DemoSpiral::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleSpiral::node();
+    m_emitter = CCParticleSpiral::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     
@@ -356,13 +356,13 @@ void DemoExplosion::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleExplosion::node();
+    m_emitter = CCParticleExplosion::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
     
-    m_emitter->setIsAutoRemoveOnFinish(true);
+    m_emitter->setAutoRemoveOnFinish(true);
     
     setEmitterPosition();
 }
@@ -381,7 +381,7 @@ void DemoSmoke::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleSmoke::node();
+    m_emitter = CCParticleSmoke::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
@@ -406,7 +406,7 @@ void DemoSnow::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleSnow::node();
+    m_emitter = CCParticleSnow::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     
@@ -454,7 +454,7 @@ void DemoRain::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleRain::node();
+    m_emitter = CCParticleRain::create();
     m_emitter->retain();
     m_background->addChild(m_emitter, 10);
     
@@ -549,7 +549,7 @@ void DemoModernArt::onEnter()
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
     
     setEmitterPosition();
 }
@@ -568,7 +568,7 @@ void DemoRing::onEnter()
 {
     ParticleDemo::onEnter();
 
-    m_emitter = CCParticleFlower::node();
+    m_emitter = CCParticleFlower::create();
     m_emitter->retain();
 
     m_background->addChild(m_emitter, 10);
@@ -600,30 +600,30 @@ void ParallaxParticle::onEnter()
     m_background->getParent()->removeChild(m_background, true);
     m_background = NULL;
 
-    CCParallaxNode* p = CCParallaxNode::node(); 
+    CCParallaxNode* p = CCParallaxNode::create(); 
     addChild(p, 5);
 
-    CCSprite *p1 = CCSprite::spriteWithFile(s_back3);
-    CCSprite *p2 = CCSprite::spriteWithFile(s_back3);
+    CCSprite *p1 = CCSprite::create(s_back3);
+    CCSprite *p2 = CCSprite::create(s_back3);
     
     p->addChild( p1, 1, CCPointMake(0.5f,1), CCPointMake(0,250) );
     p->addChild(p2, 2, CCPointMake(1.5f,1), CCPointMake(0,50) );
 
-    m_emitter = CCParticleFlower::node();
+    m_emitter = CCParticleFlower::create();
     m_emitter->retain();
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 
     p1->addChild(m_emitter, 10);
     m_emitter->setPosition( CCPointMake(250,200) );
     
-    CCParticleSun* par = CCParticleSun::node();
+    CCParticleSun* par = CCParticleSun::create();
     p2->addChild(par, 10);
     par->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
-    CCActionInterval* move = CCMoveBy::actionWithDuration(4, CCPointMake(300,0));
+    CCActionInterval* move = CCMoveBy::create(4, CCPointMake(300,0));
     CCActionInterval* move_back = move->reverse();
-    CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-    p->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));    
+    CCFiniteTimeAction* seq = CCSequence::create( move, move_back, NULL);
+    p->runAction(CCRepeatForever::create((CCActionInterval*)seq));    
 }
 
 std::string ParallaxParticle::title()
@@ -707,7 +707,7 @@ void RadiusMode1::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
 
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
 }
 
 std::string RadiusMode1::title()
@@ -791,7 +791,7 @@ void RadiusMode2::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
 
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
 }
 
 std::string RadiusMode2::title()
@@ -875,10 +875,10 @@ void Issue704::onEnter()
     m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
 
     // additive
-    m_emitter->setIsBlendAdditive(false);
+    m_emitter->setBlendAdditive(false);
 
-    CCRotateBy* rot = CCRotateBy::actionWithDuration(16, 360);
-    m_emitter->runAction(CCRepeatForever::actionWithAction(rot));
+    CCRotateBy* rot = CCRotateBy::create(16, 360);
+    m_emitter->runAction(CCRepeatForever::create(rot));
 }
 
 std::string Issue704::title()
@@ -914,7 +914,7 @@ void Issue870::onEnter()
     schedule(schedule_selector(Issue870::updateQuads), 2.0f);
 }
 
-void Issue870::updateQuads(ccTime dt)
+void Issue870::updateQuads(float dt)
 {
     m_nIndex = (m_nIndex + 1) % 4;
     CCRect rect = CCRectMake(m_nIndex * 32, 0, 32, 32);
@@ -969,7 +969,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    41
+#define MAX_LAYER    43
 
 CCLayer* createParticleLayer(int nIndex)
 {
@@ -1017,6 +1017,8 @@ CCLayer* createParticleLayer(int nIndex)
         case 38: return new MultipleParticleSystemsBatched();
         case 39: return new AddAndDeleteParticleSystems();
         case 40: return new ReorderParticleSystems();
+        case 41: return new PremultipliedAlphaTest();
+        case 42: return new PremultipliedAlphaTest2();
         default:
             break;
     }
@@ -1070,53 +1072,53 @@ void ParticleDemo::onEnter(void)
     
     m_emitter = NULL;
     
-    setIsTouchEnabled( true );
+    setTouchEnabled( true );
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
+    CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
     addChild(label, 100, 1000);
     label->setPosition( CCPointMake(s.width/2, s.height-50) );
     
-    CCLabelTTF *sub = CCLabelTTF::labelWithString(subtitle().c_str(), "Arial", 16);
+    CCLabelTTF *sub = CCLabelTTF::create(subtitle().c_str(), "Arial", 16);
     addChild(sub, 100);
     sub->setPosition(CCPointMake(s.width/2, s.height-80));
     
     
-    CCMenuItemImage* item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ParticleDemo::backCallback) );
-    CCMenuItemImage* item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ParticleDemo::restartCallback) );
-    CCMenuItemImage* item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2,  this, menu_selector(ParticleDemo::nextCallback) );
+    CCMenuItemImage* item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ParticleDemo::backCallback) );
+    CCMenuItemImage* item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ParticleDemo::restartCallback) );
+    CCMenuItemImage* item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2,  this, menu_selector(ParticleDemo::nextCallback) );
     
-    CCMenuItemToggle* item4 = CCMenuItemToggle::itemWithTarget(    this, 
+    CCMenuItemToggle* item4 = CCMenuItemToggle::create(    this, 
                                                                menu_selector(ParticleDemo::toggleCallback), 
-                                                               CCMenuItemFont::itemWithString( "Free Movement" ),
-                                                               CCMenuItemFont::itemWithString( "Relative Movement" ),
-                                                               CCMenuItemFont::itemWithString( "Grouped Movement" ),
+                                                               CCMenuItemFont::create( "Free Movement" ),
+                                                               CCMenuItemFont::create( "Relative Movement" ),
+                                                               CCMenuItemFont::create( "Grouped Movement" ),
                                                                NULL );
     
-    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, item4, NULL);
+    CCMenu *menu = CCMenu::create(item1, item2, item3, item4, NULL);
     
     menu->setPosition( CCPointZero );
-    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CCPointMake( s.width/2, 30) );
-    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
-    item4->setPosition( CCPointMake( 0, 100) );
-    item4->setAnchorPoint( CCPointMake(0,0) );
+    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
+    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item4->setPosition( ccp( 0, 100) );
+    item4->setAnchorPoint( ccp(0,0) );
     
     addChild( menu, 100 );
     
-    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0000", "fonts/fps_images.png", 16, 24, '.');
+    CCLabelAtlas* labelAtlas = CCLabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 100, kTagParticleCount);
-    labelAtlas->setPosition(CCPointMake(s.width-66,50));
+    labelAtlas->setPosition(ccp(s.width-66,50));
     
     // moving background
-    m_background = CCSprite::spriteWithFile(s_back3);
+    m_background = CCSprite::create(s_back3);
     addChild(m_background, 5);
-    m_background->setPosition( CCPointMake(s.width/2, s.height-180) );
+    m_background->setPosition( ccp(s.width/2, s.height-180) );
     
-    CCActionInterval* move = CCMoveBy::actionWithDuration(4, CCPointMake(300,0) );
+    CCActionInterval* move = CCMoveBy::create(4, ccp(300,0) );
     CCActionInterval* move_back = move->reverse();
-    CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-    m_background->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq) );
+    CCFiniteTimeAction* seq = CCSequence::create( move, move_back, NULL);
+    m_background->runAction( CCRepeatForever::create((CCActionInterval*)seq) );
     
     
     scheduleUpdate();
@@ -1168,7 +1170,7 @@ void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
     }
 }
 
-void ParticleDemo::update(ccTime dt)
+void ParticleDemo::update(float dt)
 {
     if (m_emitter)
     {
@@ -1235,9 +1237,9 @@ void ParticleBatchHybrid::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = CCParticleSystemQuad::particleWithFile("Particles/LavaFlow.plist");
+    m_emitter = CCParticleSystemQuad::create("Particles/LavaFlow.plist");
     m_emitter->retain();
-    CCParticleBatchNode *batch = CCParticleBatchNode::batchNodeWithTexture(m_emitter->getTexture());
+    CCParticleBatchNode *batch = CCParticleBatchNode::create(m_emitter->getTexture());
 
     batch->addChild(m_emitter);
 
@@ -1245,14 +1247,14 @@ void ParticleBatchHybrid::onEnter()
 
      schedule(schedule_selector(ParticleBatchHybrid::switchRender), 2.0f);
  
-     CCNode *node = CCNode::node();
+     CCNode *node = CCNode::create();
      addChild(node);
  
      m_pParent1 = batch;
      m_pParent2 = node;
 }
 
-void ParticleBatchHybrid::switchRender(ccTime dt)
+void ParticleBatchHybrid::switchRender(float dt)
 {
      bool usingBatch = ( m_emitter->getBatchNode() != NULL );
      m_emitter->removeFromParentAndCleanup(false);
@@ -1283,11 +1285,11 @@ void ParticleBatchMultipleEmitters::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::particleWithFile("Particles/LavaFlow.plist");
+    CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter1->setStartColor(ccc4f(1,0,0,1));
-    CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::particleWithFile("Particles/LavaFlow.plist");
+    CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter2->setStartColor(ccc4f(0,1,0,1));
-    CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::particleWithFile("Particles/LavaFlow.plist");
+    CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter3->setStartColor(ccc4f(0,0,1,1));
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1296,7 +1298,7 @@ void ParticleBatchMultipleEmitters::onEnter()
     emitter2->setPosition(ccp( s.width/2, s.height/2));
     emitter3->setPosition(ccp( s.width/4, s.height/4));
 
-    CCParticleBatchNode *batch = CCParticleBatchNode::batchNodeWithTexture(emitter1->getTexture());
+    CCParticleBatchNode *batch = CCParticleBatchNode::create(emitter1->getTexture());
 
     batch->addChild(emitter1, 0);
     batch->addChild(emitter2, 0);
@@ -1326,24 +1328,24 @@ void ParticleReorder::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    CCParticleSystem* ignore = CCParticleSystemQuad::particleWithFile("Particles/SmallSun.plist");
-    CCNode *parent1 = CCNode::node();
-    CCNode *parent2 = CCParticleBatchNode::batchNodeWithTexture(ignore->getTexture());
+    CCParticleSystem* ignore = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    CCNode *parent1 = CCNode::create();
+    CCNode *parent2 = CCParticleBatchNode::create(ignore->getTexture());
     ignore->unscheduleUpdate();
 
     for( unsigned int i=0; i<2;i++) 
     {
         CCNode *parent = ( i==0 ? parent1 : parent2 );
 
-        CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::particleWithFile("Particles/SmallSun.plist");
+        CCParticleSystemQuad *emitter1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter1->setStartColor(ccc4f(1,0,0,1));
-        emitter1->setIsBlendAdditive(false);
-        CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::particleWithFile("Particles/SmallSun.plist");
+        emitter1->setBlendAdditive(false);
+        CCParticleSystemQuad *emitter2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter2->setStartColor(ccc4f(0,1,0,1));
-        emitter2->setIsBlendAdditive(false);
-        CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::particleWithFile("Particles/SmallSun.plist");
+        emitter2->setBlendAdditive(false);
+        CCParticleSystemQuad *emitter3 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter3->setStartColor(ccc4f(0,0,1,1));
-        emitter3->setIsBlendAdditive(false);
+        emitter3->setBlendAdditive(false);
 
         CCSize s = CCDirector::sharedDirector()->getWinSize();
 
@@ -1373,7 +1375,7 @@ std::string ParticleReorder::subtitle()
     return "Reordering particles with and without batches batches";
 }
 
-void ParticleReorder::reorderParticles(ccTime dt)
+void ParticleReorder::reorderParticles(float dt)
 {
     for( int i=0; i<2;i++) {
         CCNode *parent = getChildByTag(1000+i);
@@ -1407,7 +1409,7 @@ class RainbowEffect : public CCParticleSystemQuad
 public:
     bool init();
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    virtual void update(ccTime dt);
+    virtual void update(float dt);
 };
 
 bool RainbowEffect::init()
@@ -1420,7 +1422,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // additive
-        setIsBlendAdditive(false);
+        setBlendAdditive(false);
 
         // duration
         setDuration(kCCParticleDurationInfinity);
@@ -1481,7 +1483,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
     return false;
 }
 
-void RainbowEffect::update(ccTime dt)
+void RainbowEffect::update(float dt)
 {
     m_fEmitCounter = 0;
     CCParticleSystemQuad::update(dt);
@@ -1529,7 +1531,7 @@ void MultipleParticleSystems::onEnter()
     CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"); 
 
     for (int i = 0; i<5; i++) {
-        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Particles/SpinningPeas.plist");
+        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
         particleSystem->setPosition(ccp(i*50 ,i*50));
 
@@ -1551,7 +1553,7 @@ std::string MultipleParticleSystems::subtitle()
     return "v1.1 test: FPS should be lower than next test";
 }
 
-void MultipleParticleSystems::update(ccTime dt)
+void MultipleParticleSystems::update(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1588,7 +1590,7 @@ void MultipleParticleSystemsBatched::onEnter()
 
     for (int i = 0; i<5; i++) {
 
-        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Particles/SpinningPeas.plist");
+        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
         particleSystem->setPositionType(kCCPositionTypeGrouped);         
         particleSystem->setPosition(ccp(i*50 ,i*50));
@@ -1602,7 +1604,7 @@ void MultipleParticleSystemsBatched::onEnter()
     m_emitter = NULL;
 }
 
-void MultipleParticleSystemsBatched::update(ccTime dt)
+void MultipleParticleSystemsBatched::update(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1644,13 +1646,13 @@ void AddAndDeleteParticleSystems::onEnter()
     m_background = NULL;
 
     //adds the texture inside the plist to the texture cache
-    m_pBatchNode = CCParticleBatchNode::batchNodeWithTexture(NULL, 16000);
+    m_pBatchNode = CCParticleBatchNode::create((CCTexture2D*)NULL, 16000);
 
     addChild(m_pBatchNode, 1, 2);
 
     for (int i = 0; i<6; i++) {
 
-        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Particles/Spiral.plist");
+        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::create("Particles/Spiral.plist");
         m_pBatchNode->setTexture(particleSystem->getTexture());
 
         particleSystem->setPositionType(kCCPositionTypeGrouped);         
@@ -1668,7 +1670,7 @@ void AddAndDeleteParticleSystems::onEnter()
 
 }
 
-void AddAndDeleteParticleSystems::removeSystem(ccTime dt)
+void AddAndDeleteParticleSystems::removeSystem(float dt)
 {
     int nChildrenCount = m_pBatchNode->getChildren()->count();
     if (nChildrenCount > 0) 
@@ -1677,7 +1679,7 @@ void AddAndDeleteParticleSystems::removeSystem(ccTime dt)
         unsigned int uRand = rand() % (nChildrenCount - 1);
         m_pBatchNode->removeChild((CCNode*)m_pBatchNode->getChildren()->objectAtIndex(uRand), true);
 
-        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::particleWithFile("Particles/Spiral.plist");
+        CCParticleSystemQuad *particleSystem = CCParticleSystemQuad::create("Particles/Spiral.plist");
         //add new
 
         particleSystem->setPositionType(kCCPositionTypeGrouped);         
@@ -1691,7 +1693,7 @@ void AddAndDeleteParticleSystems::removeSystem(ccTime dt)
     }
 }
 
-void AddAndDeleteParticleSystems::update(ccTime dt)
+void AddAndDeleteParticleSystems::update(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1732,7 +1734,7 @@ void ReorderParticleSystems::onEnter()
     removeChild(m_background ,true);
     m_background = NULL;
 
-    m_pBatchNode = CCParticleBatchNode::batchNodeWithFile("Images/stars-grayscale.png" ,3000);
+    m_pBatchNode = CCParticleBatchNode::create("Images/stars-grayscale.png" ,3000);
 
     addChild(m_pBatchNode, 1, 2);
 
@@ -1820,14 +1822,14 @@ void ReorderParticleSystems::onEnter()
 
 }
 
-void ReorderParticleSystems::reorderSystem(ccTime time)
+void ReorderParticleSystems::reorderSystem(float time)
 {
     CCParticleSystem* system = (CCParticleSystem*)m_pBatchNode->getChildren()->objectAtIndex(1);
     m_pBatchNode->reorderChild(system, system->getZOrder() - 1);     
 }
 
 
-void ReorderParticleSystems::update(ccTime dt)
+void ReorderParticleSystems::update(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1858,6 +1860,72 @@ std::string ReorderParticleSystems::subtitle()
     return "changes every 2 seconds";
 }
 
+// PremultipliedAlphaTest
+
+std::string PremultipliedAlphaTest::title()
+{
+    return "premultiplied alpha";
+}
+
+std::string PremultipliedAlphaTest::subtitle()
+{
+    return "no black halo, particles should fade out";
+}
+
+void PremultipliedAlphaTest::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    this->setColor(ccBLUE);
+    this->removeChild(m_background, true);
+    m_background = NULL;
+
+    m_emitter = CCParticleSystemQuad::create("Particles/BoilingFoam.plist");
+    m_emitter->retain();
+    // Particle Designer "normal" blend func causes black halo on premul textures (ignores multiplication)
+    //this->emitter.blendFunc = (ccBlendFunc){ GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
+
+    // Cocos2d "normal" blend func for premul causes alpha to be ignored (oversaturates colors)
+    ccBlendFunc tBlendFunc = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
+    m_emitter->setBlendFunc(tBlendFunc);
+
+    CCAssert(m_emitter->getOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
+
+    // Toggle next line to see old behavior
+    //	this->emitter.opacityModifyRGB = NO;
+
+    m_emitter->setStartColor(ccc4f(1, 1, 1, 1));
+    m_emitter->setEndColor(ccc4f(1, 1, 1, 0));
+    m_emitter->setStartColorVar(ccc4f(0, 0, 0, 0));
+    m_emitter->setEndColorVar(ccc4f(0, 0, 0, 0));
+
+    this->addChild(m_emitter, 10);
+}
+
+// PremultipliedAlphaTest2
+
+void PremultipliedAlphaTest2::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    this->setColor(ccBLACK);
+    this->removeChild(m_background, true);
+    m_background = NULL;
+
+    m_emitter = CCParticleSystemQuad::create("Particles/TestPremultipliedAlpha.plist");
+    m_emitter->retain();
+    this->addChild(m_emitter ,10);
+}
+
+std::string PremultipliedAlphaTest2::title()
+{
+    return "premultiplied alpha 2";
+}
+
+std::string PremultipliedAlphaTest2::subtitle()
+{
+    return "Arrows should be faded";
+}
 
 void ParticleTestScene::runThisTest()
 {

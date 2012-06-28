@@ -3,7 +3,6 @@ Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
-
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup particle_nodes
+ * @{
+ */
+
 //! @brief A fire particle system
 class CC_DLL CCParticleFire : public CCParticleSystemQuad
 {
@@ -40,6 +44,11 @@ public:
     bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleFire * node()
+    {
+        return create();
+    }
+
+    static CCParticleFire * create()
     {
         CCParticleFire *pRet = new CCParticleFire();
         if (pRet->init())
@@ -62,6 +71,11 @@ public:
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleFireworks * node()
     {
+        return create();
+    }
+
+    static CCParticleFireworks * create()
+    {
         CCParticleFireworks *pRet = new CCParticleFireworks();
         if (pRet->init())
         {
@@ -82,6 +96,10 @@ public:
     bool init(){ return initWithTotalParticles(350); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleSun * node()
+    {
+        return create();
+    }
+    static CCParticleSun * create()
     {
         CCParticleSun *pRet = new CCParticleSun();
         if (pRet->init())
@@ -104,6 +122,11 @@ public:
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleGalaxy * node()
     {
+        return create();
+    }
+
+    static CCParticleGalaxy * create()
+    {
         CCParticleGalaxy *pRet = new CCParticleGalaxy();
         if (pRet->init())
         {
@@ -124,6 +147,11 @@ public:
     bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleFlower * node()
+    {
+        return create();
+    }
+
+    static CCParticleFlower * create()
     {
         CCParticleFlower *pRet = new CCParticleFlower();
         if (pRet->init())
@@ -146,6 +174,10 @@ public:
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleMeteor * node()
     {
+        return create();
+    }
+    static CCParticleMeteor * create()
+    {
         CCParticleMeteor *pRet = new CCParticleMeteor();
         if (pRet->init())
         {
@@ -166,6 +198,10 @@ public:
     bool init(){ return initWithTotalParticles(500); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleSpiral * node()
+    {
+        return create();
+    }
+    static CCParticleSpiral * create()
     {
         CCParticleSpiral *pRet = new CCParticleSpiral();
         if (pRet->init())
@@ -188,6 +224,10 @@ public:
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleExplosion * node()
     {
+        return create();
+    }
+    static CCParticleExplosion * create()
+    {
         CCParticleExplosion *pRet = new CCParticleExplosion();
         if (pRet->init())
         {
@@ -208,6 +248,10 @@ public:
     bool init(){ return initWithTotalParticles(200); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleSmoke * node()
+    {
+        return create();
+    }
+    static CCParticleSmoke * create()
     {
         CCParticleSmoke *pRet = new CCParticleSmoke();
         if (pRet->init())
@@ -230,6 +274,11 @@ public:
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleSnow * node()
     {
+        return create();
+    }
+
+    static CCParticleSnow * create()
+    {
         CCParticleSnow *pRet = new CCParticleSnow();
         if (pRet->init())
         {
@@ -251,6 +300,10 @@ public:
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     static CCParticleRain * node()
     {
+        return create();
+    }
+    static CCParticleRain * create()
+    {
         CCParticleRain *pRet = new CCParticleRain();
         if (pRet->init())
         {
@@ -261,6 +314,9 @@ public:
         return NULL;
     }
 };
+
+// end of particle_nodes group
+/// @}
 
 NS_CC_END
 

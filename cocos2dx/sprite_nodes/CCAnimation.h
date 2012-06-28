@@ -26,11 +26,11 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_H__
 #define __CC_ANIMATION_H__
 
-#include "CCPlatformConfig.h"
-#include "CCObject.h"
-#include "CCArray.h"
-#include "CCDictionary.h"
-#include "CCGeometry.h"
+#include "platform/CCPlatformConfig.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCGeometry.h"
 #include "CCSpriteFrame.h"
 #include <string>
 
@@ -38,6 +38,11 @@ NS_CC_BEGIN
 
 class CCTexture2D;
 class CCSpriteFrame;
+
+/**
+ * @addtogroup sprite_nodes
+ * @{
+ */
 
 /** CCAnimationFrame
  A frame of the animation. It contains information like:
@@ -84,26 +89,39 @@ public:
     ~CCAnimation(void);
 public:
     /** Creates an animation
+    @deprecated: This interface will be deprecated sooner or later.
     @since v0.99.5
     */
-    static CCAnimation* animation(void);
+    CC_DEPRECATED_ATTRIBUTE static CCAnimation* animation(void);
 
-    /** Creates an animation with an array of CCSpriteFrame.
-    The frames will be created with one "delay unit".
+    /* Creates an animation with an array of CCSpriteFrame and a delay between frames in seconds.
+     The frames will be added with one "delay unit".
+     @deprecated: This interface will be deprecated sooner or later.
+     @since v0.99.5
+    */
+    CC_DEPRECATED_ATTRIBUTE static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
+
+    /* Creates an animation with an array of CCAnimationFrame, the delay per units in seconds and and how many times it should be executed.
+     @deprecated: This interface will be deprecated sooner or later.
+     @since v2.0
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCAnimation* animationWithAnimationFrames(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+
+        /** Creates an animation
     @since v0.99.5
     */
-    static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames);
+    static CCAnimation* create(void);
 
     /* Creates an animation with an array of CCSpriteFrame and a delay between frames in seconds.
      The frames will be added with one "delay unit".
      @since v0.99.5
     */
-    static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
+    static CCAnimation* create(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
 
     /* Creates an animation with an array of CCAnimationFrame, the delay per units in seconds and and how many times it should be executed.
      @since v2.0
      */
-    static CCAnimation* animationWithAnimationFrames(CCArray *arrayOfSpriteFrameNames, float delayPerUnit, unsigned int loops);
+    static CCAnimation* create(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
     /** Adds a CCSpriteFrame to a CCAnimation.
      The frame will be added with one "delay unit".
@@ -123,15 +141,11 @@ public:
     void addSpriteFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
 
     bool init();
-    /** Initializes a CCAnimation with frames.
-    @since v0.99.5
-    */
-    bool initWithSpriteFrames(CCArray *pFrames);
 
     /** Initializes a CCAnimation with frames and a delay between frames
     @since v0.99.5
     */
-    bool initWithSpriteFrames(CCArray *pFrames, float delay);
+    bool initWithSpriteFrames(CCArray *pFrames, float delay = 0.0f);
 
     /** Initializes a CCAnimation with CCAnimationFrame
     @since v2.0
@@ -158,6 +172,9 @@ public:
     /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
     CC_SYNTHESIZE(unsigned int, m_uLoops, Loops)
 };
+
+// end of sprite_nodes group
+/// @}
 
 NS_CC_END
 

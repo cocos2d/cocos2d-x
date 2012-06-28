@@ -24,22 +24,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
-#include "CCTextureAtlas.h"
-#include "CCPointExtension.h"
+#include "textures/CCTextureAtlas.h"
+#include "support/CCPointExtension.h"
 #include "CCDrawingPrimitives.h"
 #include "ccConfig.h"
-#include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
+#include "cocoa/CCInteger.h"
+#include "platform/CCFileUtils.h"
 // external
 #include "kazmath/GL/matrix.h"
 
 NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
-CCLabelAtlas * CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned char startCharMap)
+CCLabelAtlas* CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
+{
+    return CCLabelAtlas::create(label, charMapFile, itemWidth, itemHeight, startCharMap);
+}
+
+CCLabelAtlas* CCLabelAtlas::create(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
 {
     CCLabelAtlas *pRet = new CCLabelAtlas();
     if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
@@ -51,16 +58,56 @@ CCLabelAtlas * CCLabelAtlas::labelWithString(const char *label, const char *char
     return NULL;
 }
 
-bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap)
+bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
     CCAssert(label != NULL, "");
     if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
     {
-        m_cMapStartChar = startCharMap;
+        m_uMapStartChar = startCharMap;
         this->setString(label);
         return true;
     }
     return false;
+}
+
+CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *fntFile)
+{
+    return CCLabelAtlas::create(string, fntFile);
+}
+
+CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
+{    
+    CCLabelAtlas *ret = new CCLabelAtlas();
+    if (ret)
+    {
+        if (ret->initWithString(string, fntFile))
+        {
+            ret->autorelease();
+        }
+        else 
+        {
+            CC_SAFE_RELEASE_NULL(ret);
+        }
+    }
+    
+    return ret;
+}
+
+bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
+{
+    CCDictionary *dict = CCDictionary::create(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fntFile));
+	
+    CCAssert(((CCString*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
+    
+    CCString *textureFilename = (CCString*)dict->objectForKey("textureFilename");
+    unsigned int width = ((CCString*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int height = ((CCString*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int startChar = ((CCString*)dict->objectForKey("firstChar"))->intValue();
+	
+
+    this->initWithString(theString, textureFilename->getCString(), width, height, startChar);
+    
+    return true;
 }
 
 //CCLabelAtlas - Atlas generation
@@ -79,7 +126,7 @@ void CCLabelAtlas::updateAtlasValues()
     float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
 
     for(unsigned int i = 0; i < n; i++) {
-        unsigned char a = s[i] - m_cMapStartChar;
+        unsigned char a = s[i] - m_uMapStartChar;
         float row = (float) (a % m_uItemsPerRow);
         float col = (float) (a / m_uItemsPerRow);
 

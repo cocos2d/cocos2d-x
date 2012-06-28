@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2009      Matt Oswald
 Copyright (c) 2011      Zynga Inc.
@@ -29,11 +29,11 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "effects/CCGrid.h"
 #include "CCDrawingPrimitives.h"
-#include "CCTextureCache.h"
-#include "CCPointExtension.h"
-#include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "textures/CCTextureCache.h"
+#include "support/CCPointExtension.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"
@@ -42,20 +42,16 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static const int defaultCapacity = 29;
 /*
 * creation with CCTexture2D
 */
-CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(CCTexture2D *tex)
-{
-    CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
-    batchNode->initWithTexture(tex, defaultCapacity);
-    batchNode->autorelease();
 
-    return batchNode;
+CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
+{
+    return CCSpriteBatchNode::create(tex, capacity);
 }
 
-CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity)
+CCSpriteBatchNode* CCSpriteBatchNode::create(CCTexture2D* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
     CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
     batchNode->initWithTexture(tex, capacity);
@@ -67,19 +63,15 @@ CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(CCTexture2D* tex, uns
 /*
 * creation with File Image
 */
-CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithFile(const char *fileImage, unsigned int capacity)
+CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithFile(const char *fileImage, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
+{
+    return CCSpriteBatchNode::create(fileImage, capacity);
+}
+
+CCSpriteBatchNode* CCSpriteBatchNode::create(const char *fileImage, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
     CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
-    batchNode->autorelease();
-
-    return batchNode;
-}
-
-CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithFile(const char *fileImage)
-{
-    CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
-    batchNode->initWithFile(fileImage, defaultCapacity);
     batchNode->autorelease();
 
     return batchNode;
@@ -93,6 +85,12 @@ bool CCSpriteBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacity)
     m_blendFunc.src = CC_BLEND_SRC;
     m_blendFunc.dst = CC_BLEND_DST;
     m_pobTextureAtlas = new CCTextureAtlas();
+
+    if (0 == capacity)
+    {
+        capacity = kDefaultSpriteBatchCapacity;
+    }
+    
     m_pobTextureAtlas->initWithTexture(tex, capacity);
 
     updateBlendFunc();
@@ -106,6 +104,13 @@ bool CCSpriteBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacity)
 
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
     return true;
+}
+
+bool CCSpriteBatchNode::init()
+{
+    CCTexture2D * texture = new CCTexture2D();
+    texture->autorelease();
+    return this->initWithTexture(texture, 0);
 }
 
 /*
@@ -418,7 +423,7 @@ void CCSpriteBatchNode::increaseAtlasCapacity(void)
     if (! m_pobTextureAtlas->resizeCapacity(quantity))
     {
         // serious problems
-        CCLOG("cocos2d: WARNING: Not enough memory to resize the atlas");
+        CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
         CCAssert(false, "Not enough memory to resize the atla");
     }
 }
@@ -663,7 +668,7 @@ void CCSpriteBatchNode::removeSpriteFromAtlas(CCSprite *pobSprite)
 
 void CCSpriteBatchNode::updateBlendFunc(void)
 {
-    if (! m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha())
+    if (! m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha())
     {
         m_blendFunc.src = GL_SRC_ALPHA;
         m_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;

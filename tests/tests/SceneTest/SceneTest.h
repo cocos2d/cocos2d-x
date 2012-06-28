@@ -13,7 +13,7 @@ public:
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
 
-    void testDealloc(ccTime dt);
+    void testDealloc(float dt);
     void onPushScene(CCObject* pSender);
     void onPushSceneTran(CCObject* pSender);
     void onQuit(CCObject* pSender);
@@ -27,7 +27,7 @@ class SceneTestLayer2 : public CCLayer
 public:
     SceneTestLayer2();
 
-    void testDealloc(ccTime dt);
+    void testDealloc(float dt);
     void onGoBack(CCObject* pSender);
     void onReplaceScene(CCObject* pSender);
     void onReplaceSceneTran(CCObject* pSender);
@@ -39,12 +39,12 @@ class SceneTestLayer3 : public CCLayerColor
 {
 public:
     SceneTestLayer3();
-
-    virtual void testDealloc(ccTime dt);
-
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
-
-    //CREATE_NODE(SceneTestLayer3);
+    bool init();
+    virtual void testDealloc(float dt);
+    void item0Clicked(CCObject* pSender);
+    void item1Clicked(CCObject* pSender);
+    void item2Clicked(CCObject* pSender);
+    LAYER_CREATE_FUNC(SceneTestLayer3)
 } ;
 
 class SceneTestScene : public TestScene

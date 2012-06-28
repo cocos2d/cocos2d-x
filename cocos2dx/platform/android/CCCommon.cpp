@@ -22,16 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCCommon.h"
-
-#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
-
+#include "platform/CCCommon.h"
+#include "jni/MessageJni.h"
 #include <android/log.h>
 #include <stdio.h>
 #include <jni.h>
-#include "android/jni/MessageJni.h"
 
 NS_CC_BEGIN
+
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
 void CCLog(const char * pszFormat, ...)
 {

@@ -33,13 +33,13 @@ void PerformanceMainLayer::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCMenu* pMenu = CCMenu::menuWithItems(NULL);
+    CCMenu* pMenu = CCMenu::create();
     pMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < MAX_COUNT; ++i)
     {
-        CCMenuItemFont* pItem = CCMenuItemFont::itemWithString(testsName[i].c_str(), this,
+        CCMenuItemFont* pItem = CCMenuItemFont::create(testsName[i].c_str(), this,
                                                     menu_selector(PerformanceMainLayer::menuCallback));
         pItem->setPosition(ccp(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         pMenu->addChild(pItem, kItemTagBasic + i);
@@ -96,17 +96,17 @@ void PerformBasicLayer::onEnter()
 
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    CCMenuItemFont* pMainItem = CCMenuItemFont::itemWithString("Back", this,
+    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,
                                                     menu_selector(PerformBasicLayer::toMainLayer));
     pMainItem->setPosition(ccp(s.width - 50, 25));
-    CCMenu* pMenu = CCMenu::menuWithItems(pMainItem, NULL);
+    CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
     pMenu->setPosition( CCPointZero );
 
     if (m_bControlMenuVisible)
     {
-        CCMenuItemImage *item1 = CCMenuItemImage::itemWithNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(PerformBasicLayer::backCallback) );
-        CCMenuItemImage *item2 = CCMenuItemImage::itemWithNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(PerformBasicLayer::restartCallback) );
-        CCMenuItemImage *item3 = CCMenuItemImage::itemWithNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(PerformBasicLayer::nextCallback) );
+        CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(PerformBasicLayer::backCallback) );
+        CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(PerformBasicLayer::restartCallback) );
+        CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(PerformBasicLayer::nextCallback) );
         item1->setPosition( ccp( s.width/2 - 100,30) );
         item2->setPosition( ccp( s.width/2, 30) );
         item3->setPosition( ccp( s.width/2 + 100,30) );

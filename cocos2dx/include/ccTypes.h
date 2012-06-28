@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
 
-#include "CCGeometry.h"
+#include "cocoa/CCGeometry.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
@@ -321,16 +321,22 @@ typedef enum
     
 } ccResolutionType;
 
-//! delta time type
-//! if you want more resolution redefine it as a double
-typedef float ccTime;
-//typedef double ccTime;
-
-typedef enum 
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+//! Vertical text alignment type
+typedef enum
 {
-    CCTextAlignmentLeft,
-    CCTextAlignmentCenter,
-    CCTextAlignmentRight,
+    kCCVerticalTextAlignmentTop,
+    kCCVerticalTextAlignmentCenter,
+    kCCVerticalTextAlignmentBottom,
+} CCVerticalTextAlignment;
+
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+//! Horizontal text alignment type
+typedef enum
+{
+    kCCTextAlignmentLeft,
+    kCCTextAlignmentCenter,
+    kCCTextAlignmentRight,
 } CCTextAlignment;
 
 // types for animation in particle systems
@@ -352,7 +358,7 @@ typedef struct _ccT2F_Quad
 typedef struct
 {
     ccT2F_Quad texCoords;
-    ccTime delay;
+    float delay;
     CCSize size; 
 } ccAnimationFrameData;
 

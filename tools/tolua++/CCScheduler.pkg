@@ -1,18 +1,18 @@
 
 class CCTimer : public CCObject
 {
-    ccTime getInterval(void);
-    void setInterval(ccTime fInterval);
-    void update(ccTime dt);
+    float getInterval(void);
+    void setInterval(float fInterval);
+    void update(float dt);
 };
 
 class CCScheduler : public CCObject
 {
-    ccTime getTimeScale(void);
-    void setTimeScale(ccTime fTimeScale);
+    float getTimeScale(void);
+    void setTimeScale(float fTimeScale);
 
 
-    unsigned int scheduleScriptFunc(LUA_FUNCTION funcID, ccTime fInterval, bool bPaused);
+    unsigned int scheduleScriptFunc(LUA_FUNCTION funcID, float fInterval, bool bPaused);
     void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
 
     void scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused);

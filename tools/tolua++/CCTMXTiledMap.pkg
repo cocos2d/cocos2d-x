@@ -31,5 +31,5 @@ class CCTMXTiledMap : public CCNode
     CCString *propertyNamed(const char *propertyName);
     CCDictionary *propertiesForGID(int GID);
 
-    static CCTMXTiledMap * tiledMapWithTMXFile(const char *tmxFile);
+    static CCTMXTiledMap * create(const char *tmxFile);
 };

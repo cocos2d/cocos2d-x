@@ -17,22 +17,22 @@ void ClickAndMoveTestScene::runThisTest()
 
 MainLayer::MainLayer()
 {
-    setIsTouchEnabled(true);
+    setTouchEnabled(true);
     
-    CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+    CCSprite* sprite = CCSprite::create(s_pPathGrossini);
     
-    CCLayer* layer = CCLayerColor::layerWithColor(ccc4(255,255,0,255));
+    CCLayer* layer = CCLayerColor::create(ccc4(255,255,0,255));
     addChild(layer, -1);
         
     addChild(sprite, 0, kTagSprite);
     sprite->setPosition( CCPointMake(20,150) );
     
-    sprite->runAction( CCJumpTo::actionWithDuration(4, CCPointMake(300,48), 100, 4) );
+    sprite->runAction( CCJumpTo::create(4, CCPointMake(300,48), 100, 4) );
     
-    layer->runAction( CCRepeatForever::actionWithAction( 
-                                                        (CCActionInterval*)( CCSequence::actions(    
-                                                                            CCFadeIn::actionWithDuration(1),
-                                                                            CCFadeOut::actionWithDuration(1),
+    layer->runAction( CCRepeatForever::create( 
+                                                        (CCActionInterval*)( CCSequence::create(    
+                                                                            CCFadeIn::create(1),
+                                                                            CCFadeOut::create(1),
                                                                             NULL) )
                                                         ) ); 
 }
@@ -47,7 +47,7 @@ void MainLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 
     CCNode* s = getChildByTag(kTagSprite);
     s->stopAllActions();
-    s->runAction( CCMoveTo::actionWithDuration(1, CCPointMake(convertedLocation.x, convertedLocation.y) ) );
+    s->runAction( CCMoveTo::create(1, CCPointMake(convertedLocation.x, convertedLocation.y) ) );
     float o = convertedLocation.x - s->getPosition().x;
     float a = convertedLocation.y - s->getPosition().y;
     float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
@@ -60,5 +60,5 @@ void MainLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
             at = 180 - fabs(at);    
     }
     
-    s->runAction( CCRotateTo::actionWithDuration(1, at) );
+    s->runAction( CCRotateTo::create(1, at) );
 }

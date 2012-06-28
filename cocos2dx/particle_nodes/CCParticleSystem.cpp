@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -44,12 +44,12 @@ THE SOFTWARE.
 #include "CCParticleSystem.h"
 #include "CCParticleBatchNode.h"
 #include "ccTypes.h"
-#include "CCTextureCache.h"
-#include "CCTextureAtlas.h"
+#include "textures/CCTextureCache.h"
+#include "textures/CCTextureAtlas.h"
 #include "support/base64.h"
-#include "CCPointExtension.h"
-#include "CCFileUtils.h"
-#include "CCImage.h"
+#include "support/CCPointExtension.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCImage.h"
 #include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
 #include "CCDirector.h"
@@ -103,6 +103,7 @@ CCParticleSystem::CCParticleSystem()
     ,m_fEmissionRate(0)
     ,m_uTotalParticles(0)
     ,m_pTexture(NULL)
+    ,m_bOpacityModifyRGB(false)
     ,m_bIsBlendAdditive(false)
     ,m_ePositionType(kCCPositionTypeFree)
     ,m_bIsAutoRemoveOnFinish(false)
@@ -131,6 +132,11 @@ CCParticleSystem::CCParticleSystem()
 // implementation CCParticleSystem
 CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
 {
+    return CCParticleSystem::create(plistFile);
+}
+
+CCParticleSystem * CCParticleSystem::create(const char *plistFile)
+{
     CCParticleSystem *pRet = new CCParticleSystem();
     if (pRet && pRet->initWithFile(plistFile))
     {
@@ -149,8 +155,8 @@ bool CCParticleSystem::init()
 bool CCParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
-    m_sPlistFile = CCFileUtils::fullPathFromRelativePath(plistFile);
-    CCDictionary *dict = CCDictionary::dictionaryWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
+    m_sPlistFile = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plistFile);
+    CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
     bRet = this->initWithDictionary(dict);
@@ -269,22 +275,25 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
             //don't get the internal texture if a batchNode is used
             if (!m_pBatchNode)
             {
+                // Set a compatible default for the alpha transfer
+                m_bOpacityModifyRGB = false;
+
                 // texture        
                 // Try to get the texture from the cache
                 const char* textureName = dictionary->valueForKey("textureFileName")->getCString();
-                std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
+                std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
                 
                 CCTexture2D *tex = NULL;
                 
                 if (strlen(textureName) > 0)
                 {
                     // set not pop-up message box when load image failed
-                    bool bNotify = CCFileUtils::getIsPopupNotify();
-                    CCFileUtils::setIsPopupNotify(false);
+                    bool bNotify = CCFileUtils::sharedFileUtils()->isPopupNotify();
+                    CCFileUtils::sharedFileUtils()->setPopupNotify(false);
                     tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
                     
                     // reset the value of UIImage notify
-                    CCFileUtils::setIsPopupNotify(bNotify);
+                    CCFileUtils::sharedFileUtils()->setPopupNotify(bNotify);
                 }
                 
                 if (tex)
@@ -347,7 +356,7 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
     if (m_pBatchNode)
     {
-        for (int i = 0; i < m_uTotalParticles; i++)
+        for (unsigned int i = 0; i < m_uTotalParticles; i++)
         {
             m_pParticles[i].atlasIndex=i;
         }
@@ -384,6 +393,7 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
 CCParticleSystem::~CCParticleSystem()
 {
+    unscheduleUpdate();
     CC_SAFE_FREE(m_pParticles);
     CC_SAFE_RELEASE(m_pTexture);
 }
@@ -534,7 +544,7 @@ bool CCParticleSystem::isFull()
 }
 
 // ParticleSystem - MainLoop
-void CCParticleSystem::update(ccTime dt)
+void CCParticleSystem::update(float dt)
 {
     CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 
@@ -723,16 +733,37 @@ void CCParticleSystem::postStep()
 // ParticleSystem - CCTexture protocol
 void CCParticleSystem::setTexture(CCTexture2D* var)
 {
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pTexture);
-    m_pTexture = var;
-
-    // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-    if( m_pTexture && ! m_pTexture->getHasPremultipliedAlpha() &&        
-        ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) ) 
+    if (m_pTexture != var)
     {
-        m_tBlendFunc.src = GL_SRC_ALPHA;
-        m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        CC_SAFE_RETAIN(var);
+        CC_SAFE_RELEASE(m_pTexture);
+        m_pTexture = var;
+        updateBlendFunc();
+    }
+}
+
+void CCParticleSystem::updateBlendFunc()
+{
+    CCAssert(! m_pBatchNode, "Can't change blending functions when the particle is being batched");
+
+    if(m_pTexture)
+    {
+        bool premultiplied = m_pTexture->hasPremultipliedAlpha();
+        
+        m_bOpacityModifyRGB = false;
+        
+        if( m_pTexture && ( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) )
+        {
+            if( premultiplied )
+            {
+                m_bOpacityModifyRGB = true;
+            }
+            else
+            {
+                m_tBlendFunc.src = GL_SRC_ALPHA;
+                m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+            }
+        }
     }
 }
 
@@ -742,7 +773,7 @@ CCTexture2D * CCParticleSystem::getTexture()
 }
 
 // ParticleSystem - Additive Blending
-void CCParticleSystem::setIsBlendAdditive(bool additive)
+void CCParticleSystem::setBlendAdditive(bool additive)
 {
     if( additive )
     {
@@ -751,7 +782,7 @@ void CCParticleSystem::setIsBlendAdditive(bool additive)
     }
     else
     {
-        if( m_pTexture && ! m_pTexture->getHasPremultipliedAlpha() )
+        if( m_pTexture && ! m_pTexture->hasPremultipliedAlpha() )
         {
             m_tBlendFunc.src = GL_SRC_ALPHA;
             m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -764,7 +795,7 @@ void CCParticleSystem::setIsBlendAdditive(bool additive)
     }
 }
 
-bool CCParticleSystem::getIsBlendAdditive()
+bool CCParticleSystem::isBlendAdditive()
 {
     return( m_tBlendFunc.src == GL_SRC_ALPHA && m_tBlendFunc.dst == GL_ONE);
 }
@@ -927,7 +958,7 @@ float CCParticleSystem::getRotatePerSecondVar()
     return modeB.rotatePerSecondVar;
 }
 
-bool CCParticleSystem::getIsActive()
+bool CCParticleSystem::isActive()
 {
     return m_bIsActive;
 }
@@ -1152,9 +1183,22 @@ ccBlendFunc CCParticleSystem::getBlendFunc()
     return m_tBlendFunc;
 }
 
-void CCParticleSystem::setBlendFunc(ccBlendFunc var)
+void CCParticleSystem::setBlendFunc(ccBlendFunc blendFunc)
 {
-    m_tBlendFunc = var;
+    if( m_tBlendFunc.src != blendFunc.src || m_tBlendFunc.dst != blendFunc.dst ) {
+        m_tBlendFunc = blendFunc;
+        this->updateBlendFunc();
+    }
+}
+
+bool CCParticleSystem::getOpacityModifyRGB()
+{
+    return m_bOpacityModifyRGB;
+}
+
+void CCParticleSystem::setOpacityModifyRGB(bool bOpacityModifyRGB)
+{
+    m_bOpacityModifyRGB = bOpacityModifyRGB;
 }
 
 tCCPositionType CCParticleSystem::getPositionType()
@@ -1167,12 +1211,12 @@ void CCParticleSystem::setPositionType(tCCPositionType var)
     m_ePositionType = var;
 }
 
-bool CCParticleSystem::getIsAutoRemoveOnFinish()
+bool CCParticleSystem::isAutoRemoveOnFinish()
 {
     return m_bIsAutoRemoveOnFinish;
 }
 
-void CCParticleSystem::setIsAutoRemoveOnFinish(bool var)
+void CCParticleSystem::setAutoRemoveOnFinish(bool var)
 {
     m_bIsAutoRemoveOnFinish = var;
 }
@@ -1203,7 +1247,7 @@ void CCParticleSystem::setBatchNode(CCParticleBatchNode* batchNode)
 
         if( batchNode ) {
             //each particle needs a unique index
-            for (int i = 0; i < m_uTotalParticles; i++)
+            for (unsigned int i = 0; i < m_uTotalParticles; i++)
             {
                 m_pParticles[i].atlasIndex=i;
             }

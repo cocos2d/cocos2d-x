@@ -13,7 +13,7 @@ public:
     void ccTouchesBegan(CCSet *touches, CCEvent * event);
     void restart(CCObject* sender);
 
-    LAYER_NODE_FUNC(Bug914Layer);
+    LAYER_CREATE_FUNC(Bug914Layer);
 };
 
 #endif // __BUG_914_H__

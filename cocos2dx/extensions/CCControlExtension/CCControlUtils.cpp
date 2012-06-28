@@ -1,11 +1,11 @@
 #include "CCControlUtils.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_EXT_BEGIN
 
 CCSprite* CCControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor)
 {
-    CCSprite *sprite =CCSprite::spriteWithSpriteFrameName(spriteName);
+    CCSprite *sprite =CCSprite::createWithSpriteFrameName(spriteName);
     
     if (!sprite)
         return NULL;

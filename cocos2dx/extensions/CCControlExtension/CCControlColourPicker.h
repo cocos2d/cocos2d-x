@@ -39,6 +39,13 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup control_extension
+ * @{
+ */
+
 class CC_DLL CCControlColourPicker: public CCControl
 {
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_colorValue, ColorValue);
@@ -52,11 +59,15 @@ protected:
     CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);   
     
 public:
-    static CCControlColourPicker* colourPicker();
+    //@deprecated: This interface will be deprecated sooner or later.
+    CC_DEPRECATED_ATTRIBUTE static CCControlColourPicker* colourPicker();
+
+    static CCControlColourPicker* create();
+
     virtual bool init();
     //virtual ~CCControlColourPicker();
-    void hueSliderValueChanged(CCObject * sender);
-    void colourSliderValueChanged(CCObject * sender);
+    void hueSliderValueChanged(CCObject * sender, CCControlEvent controlEvent);
+    void colourSliderValueChanged(CCObject * sender, CCControlEvent controlEvent);
 
 protected:    
     void updateControlPicker();
@@ -64,6 +75,10 @@ protected:
     virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     
 };
+
+// end of GUI group
+/// @}
+/// @}
 
 NS_CC_EXT_END
 

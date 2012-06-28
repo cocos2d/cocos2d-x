@@ -33,11 +33,11 @@ public:
     ~HelloWorld();
     bool init();
     static cocos2d::CCScene* scene();
-    LAYER_NODE_FUNC(HelloWorld);
+    LAYER_CREATE_FUNC(HelloWorld);
     
     void initPhysics();
     void addNewSpriteAtPosition(cocos2d::CCPoint p);
-    void update(cocos2d::ccTime dt);
+    void update(float dt);
     virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
     virtual void didAccelerate(cocos2d::CCAcceleration* pAccelerationValue);
 
