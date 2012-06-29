@@ -1,4 +1,4 @@
-cocos.log("welcome to cocos2d-x-javascript");
+cc.log("welcome to cocos2d-x-javascript");
 
 var Test = function () {
 };
@@ -19,7 +19,7 @@ Test.prototype.assertFloatEqual = function (num1, target, str) {
 };
 Test.prototype.setup = function () {};
 Test.prototype.run = function () {
-	cocos.log("Test started");
+	cc.log("Test started");
 	var ok = 0, fail = 0, failed = [];
 	for (var key in this) {
 		if (key.match(/^test/)) {
@@ -32,10 +32,10 @@ Test.prototype.run = function () {
 			}
 		}
 	}
-	cocos.log("total asserts: " + this.assertNum);
-	cocos.log("tests [ok]: " + ok);
-	cocos.log("tests [fail]: " + fail);
-	cocos.log(failed.join("\n"));
+	cc.log("total asserts: " + this.assertNum);
+	cc.log("tests [ok]: " + ok);
+	cc.log("tests [fail]: " + fail);
+	cc.log(failed.join("\n"));
 };
 
 var GeometryTest = function () {
@@ -43,7 +43,7 @@ var GeometryTest = function () {
 GeometryTest.prototype = Object.create(Test.prototype);
 
 GeometryTest.prototype.test_point1 = function () {
-	var pt = new cocos.Point();
+	var pt = new cc.Point();
 	this.assertEqual(pt.x, 0, "pt.x == 0");
 	this.assertEqual(pt.y, 0, "pt.y == 0");
 
@@ -54,8 +54,8 @@ GeometryTest.prototype.test_point1 = function () {
 };
 
 GeometryTest.prototype.test_point2 = function () {
-	var pt1 = new cocos.Point();
-	var pt2 = new cocos.Point();
+	var pt1 = new cc.Point();
+	var pt2 = new cc.Point();
 	pt1.x = 100.50;
 	pt2.y = 99;
 	pt1.y = pt1.x + pt2.y;
@@ -63,7 +63,7 @@ GeometryTest.prototype.test_point2 = function () {
 };
 
 GeometryTest.prototype.test_size1 = function () {
-	var sz1 = new cocos.Size();
+	var sz1 = new cc.Size();
 	this.assertEqual(sz1.width, 0, "sz1.width == 0");
 	this.assertEqual(sz1.height, 0, "sz1.height == 0");
 
@@ -74,7 +74,7 @@ GeometryTest.prototype.test_size1 = function () {
 };
 
 GeometryTest.prototype.test_rect1 = function () {
-	var rect = new cocos.Rect();
+	var rect = new cc.Rect();
 	var orig = rect.origin;
 	this.assertEqual(orig.x, 0, "orig.x == 0");
 	this.assertEqual(orig.y, 0, "orig.y == 0");
@@ -85,9 +85,9 @@ GeometryTest.prototype.test_rect1 = function () {
 };
 
 GeometryTest.prototype.test_rect2 = function () {
-	var rect1 = new cocos.Rect();
-	var rect2 = new cocos.Rect();
-	var pt1 = new cocos.Point();
+	var rect1 = new cc.Rect();
+	var rect2 = new cc.Rect();
+	var pt1 = new cc.Point();
 	var pt2 = rect1.origin;
 
 	pt2.x = 500; pt2.y = 900;
@@ -108,8 +108,8 @@ test.run();
 // small performance test
 
 var totalIter = 10000;
-var rect = new cocos.Rect();
-var pt = new cocos.Point();
+var rect = new cc.Rect();
+var pt = new cc.Point();
 var sum;
 
 sum = 0;
@@ -120,6 +120,6 @@ for (var i=0; i < totalIter; i++) {
 	var endTime = Date.now();
 	sum += (endTime - startTime) / 1000.0;
 }
-cocos.log(totalIter + "\t" + sum);
+cc.log(totalIter + "\t" + sum);
 
-cocos.log("END OF TEST");
+cc.log("END OF TEST");

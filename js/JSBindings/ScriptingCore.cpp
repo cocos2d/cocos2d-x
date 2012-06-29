@@ -36,7 +36,7 @@ ScriptingCore::ScriptingCore()
     // create the cocos namespace
     JSObject *cocos = JS_NewObject(cx, NULL, NULL, NULL);
     jsval cocosVal = OBJECT_TO_JSVAL(cocos);
-    JS_SetProperty(cx, global, "cocos", &cocosVal);
+    JS_SetProperty(cx, global, "cc", &cocosVal);
 
     // register the internal classes
     S_CCPoint::jsCreateClass(this->cx, cocos, "Point");

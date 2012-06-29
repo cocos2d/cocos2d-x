@@ -4,7 +4,7 @@
  */
 
 // taken from goog.inherits
-cocos.inherits = function(childCtor, parentCtor) {
+cc.inherits = function(childCtor, parentCtor) {
 	/** @constructor */
 	function tempCtor() {};
 	tempCtor.prototype = parentCtor.prototype;
@@ -13,21 +13,21 @@ cocos.inherits = function(childCtor, parentCtor) {
 	childCtor.prototype.constructor = childCtor;
 };
 
-var scene = new cocos.Scene();
+var scene = new cc.Scene();
 scene.init();
-var background = new cocos.Sprite();
+var background = new cc.Sprite();
 background.initWithFile("background.png");
 scene.addChild(background);
 
-var spriteFrameCache = cocos.SpriteFrameCache.sharedSpriteFrameCache();
+var spriteFrameCache = cc.SpriteFrameCache.sharedSpriteFrameCache();
 spriteFrameCache.addSpriteFramesWithFile("tank.plist");
 
 // wrapper around CCSprite
 var Tank = function () {
-	var sprite = new cocos.Sprite();
+	var sprite = new cc.Sprite();
 	sprite.initWithSpriteFrameName("tank1.png");
 
-	var pos = new cocos.Point();
+	var pos = new cc.Point();
 	pos.x = Math.random() * 320;
 	pos.y = Math.random() * 480;
 	sprite.position = pos;
@@ -68,7 +68,7 @@ var Tank = function () {
 
 // create animation
 var frames = ["tank1.png", "tank2.png", "tank3.png", "tank4.png", "tank5.png"];
-var animation = new cocos.Animation();
+var animation = new cc.Animation();
 animation.init();
 animation.delay = 0.1;
 for (var i=0; i < frames.length; i++) {
@@ -86,36 +86,36 @@ for (var i=0; i < tanks.length; i++) {
 	if (i === 0) {
 		// this is not working correctly (only on ccnodes)
 		tank.sprite.onEnter = function () {
-			cocos.log("on enter");
+			cc.log("on enter");
 		};
 	}
 
 	// second argument false by default
-	tank.action = new cocos.Animate();
+	tank.action = new cc.Animate();
 	tank.action.initWithAnimation(animation);
-	tank.repeat = new cocos.RepeatForever();
+	tank.repeat = new cc.RepeatForever();
 	tank.repeat.initWithAction(tank.action);
 	tank.sprite.runAction(tank.repeat);
 
 	tanks[i] = tank;
 }
 
-var layer = new cocos.Layer();
+var layer = new cc.Layer();
 layer.onEnter = function () {
-	cocos.log("layer enter");
+	cc.log("layer enter");
 };
 layer.isTouchEnabled = true;
 layer.ccTouchBegan = function (touch) {
 	var point = touch.locationInView();
-	cocos.log("cc touch: " + point.x + "," + point.y);
+	cc.log("cc touch: " + point.x + "," + point.y);
 };
 layer.ccTouchesBegan = function (touches) {
 	for (var i=0; i < touches.length; i++) {
 		var point = touches[i].locationInView();
-		cocos.log("cc touches: " + point.x + "," + point.y);
+		cc.log("cc touches: " + point.x + "," + point.y);
 	}
 };
 scene.addChild(layer);
 
-var director = cocos.Director.sharedDirector();
+var director = cc.Director.sharedDirector();
 director.runWithScene(scene);
