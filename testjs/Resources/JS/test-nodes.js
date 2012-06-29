@@ -1,18 +1,18 @@
-var director = cocos.Director.sharedDirector();
-var scene = new cocos.Scene();
+var director = cc.Director.sharedDirector();
+var scene = new cc.Scene();
 scene.init();
 
 // our test sprite
-var sprite = new cocos.Sprite();
+var sprite = new cc.Sprite();
 sprite.initWithFile("Icon.png");
-var pt = new cocos.Point();
+var pt = new cc.Point();
 pt.x = 160;
 pt.y = 240;
 sprite.position = pt;
 
 // will call "update" every frame if there's an update property
 //sprite.scheduleUpdate();
-sprite.speed = new cocos.Point();
+sprite.speed = new cc.Point();
 sprite.speed.x = Math.random() * 10 - 5;
 sprite.speed.y = Math.random() * 10 - 5;
 
@@ -30,19 +30,19 @@ sprite.update = function () {
 scene.addChild(sprite);
 
 // add a menu
-var item = new cocos.MenuItemImage();//Sprite();
-//var normal = new cocos.Sprite(); normal.initWithFile("CloseNormal.png");
-//var selected = new cocos.Sprite(); selected.initWithFile("CloseSelected.png");
+var item = new cc.MenuItemImage();//Sprite();
+//var normal = new cc.Sprite(); normal.initWithFile("CloseNormal.png");
+//var selected = new cc.Sprite(); selected.initWithFile("CloseSelected.png");
 //item.initWithNormalSprite(normal, selected);
 item.initFromNormalImage("CloseNormal.png", "CloseSelected.png");
 item.action = function () {
-	cocos.log("action");
+	cc.log("action");
 };
-cocos.log("normal image: " + item.normalImage);
+cc.log("normal image: " + item.normalImage);
 pt.x = 20;
 pt.y = 20;
 item.position = pt;
-var menu = new cocos.Menu();
+var menu = new cc.Menu();
 menu.init();
 menu.addChild(item);
 
