@@ -108,7 +108,7 @@ OBJECTS = ../tests/AccelerometerTest/AccelerometerTest.o \
 STATICLIBS_DIR = ../../cocos2dx/platform/third_party/linux/libraries
 STATICLIBS =  ../../lib/linux/Debug/libbox2d.a \
 							../../lib/linux/Debug/libchipmunk.a \
-							$(STATICLIBS_DIR)/libcurl.a 
+							$(STATICLIBS_DIR)/libcurl.a -lrt
 							
 SHAREDLIBS = -L../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../lib/linux/Debug/
 
