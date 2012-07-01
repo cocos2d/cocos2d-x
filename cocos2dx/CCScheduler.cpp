@@ -481,9 +481,13 @@ void CCScheduler::removeUpdateFromHash(struct _listEntry *entry)
         free(element->entry);
 
         // hash entry
-        element->target->release();
+        CCObject* pTarget = element->target;
         HASH_DEL(m_pHashForUpdates, element);
         free(element);
+
+        // target#release should be the last one to prevent
+        // a possible double-free. eg: If the [target dealloc] might want to remove it itself from there
+        pTarget->release();
     }
 }
 
