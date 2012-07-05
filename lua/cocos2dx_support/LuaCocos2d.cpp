@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Jul  3 14:15:48 2012.
+** Generated automatically by tolua++-1.0.92 on Thu Jul  5 21:28:40 2012.
 */
 
 
@@ -7417,6 +7417,37 @@ static int tolua_Cocos2d_CCConfiguration_sharedConfiguration00(lua_State* tolua_
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'sharedConfiguration'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: purgeCachedData of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_purgeCachedData00
+static int tolua_Cocos2d_CCDirector_purgeCachedData00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purgeCachedData'", NULL);
+#endif
+  {
+   self->purgeCachedData();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'purgeCachedData'.",&tolua_err);
  return 0;
 #endif
 }
@@ -35585,6 +35616,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCDeviceOrientationLandscapeRight",kCCDeviceOrientationLandscapeRight);
   tolua_cclass(tolua_S,"CCDirector","CCDirector","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCDirector");
+   tolua_function(tolua_S,"purgeCachedData",tolua_Cocos2d_CCDirector_purgeCachedData00);
    tolua_function(tolua_S,"getRunningScene",tolua_Cocos2d_CCDirector_getRunningScene00);
    tolua_function(tolua_S,"getAnimationInterval",tolua_Cocos2d_CCDirector_getAnimationInterval00);
    tolua_function(tolua_S,"setAnimationInterval",tolua_Cocos2d_CCDirector_setAnimationInterval00);
