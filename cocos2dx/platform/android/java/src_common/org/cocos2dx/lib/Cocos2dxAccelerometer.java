@@ -65,7 +65,6 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 		mSensorManager.unregisterListener(this);
 	}
 
-	@Override
 	public void onSensorChanged(SensorEvent event) {
 
 		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER){
@@ -99,7 +98,6 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
         // Log.d(TAG, "x = " + event.values[0] + " y = " + event.values[1] + " z = " + event.values[2]);
 	}
 
-	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	}
 
