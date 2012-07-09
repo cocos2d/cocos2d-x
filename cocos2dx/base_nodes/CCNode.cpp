@@ -71,7 +71,7 @@ CCNode::CCNode(void)
 , m_tContentSize(CCSizeZero)
 , m_bIsRunning(false)
 , m_pParent(NULL)
-// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
+// "whole screen" objects. like Scenes and Layers, should set m_bIgnoreAnchorPointForPosition to false
 , m_bIgnoreAnchorPointForPosition(false)
 , m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
