@@ -157,6 +157,21 @@ const CCScriptValue CCScriptValue::arrayValue(const CCScriptValueArray& arrayVal
     return value;
 }
 
+const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const char* objectTypename)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeCCObject;
+    value.m_field.ccobjectValue = ccobjectValue;
+    ccobjectValue->retain();
+    value.m_ccobjectType = new std::string(objectTypename);
+    return value;
+}
+
+const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename)
+{
+    return CCScriptValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
+}
+
 CCScriptValue::CCScriptValue(const CCScriptValue& rhs)
 {
     copy(rhs);
@@ -182,6 +197,11 @@ CCScriptValue::~CCScriptValue(void)
     {
         delete m_field.arrayValue;
     }
+    else if (m_type == CCScriptValueTypeCCObject)
+    {
+        m_field.ccobjectValue->release();
+        delete m_ccobjectType;
+    }
 }
 
 void CCScriptValue::copy(const CCScriptValue& rhs)
@@ -199,6 +219,12 @@ void CCScriptValue::copy(const CCScriptValue& rhs)
     else if (m_type == CCScriptValueTypeArray)
     {
         m_field.arrayValue = new CCScriptValueArray(*rhs.m_field.arrayValue);
+    }
+    else if (m_type == CCScriptValueTypeCCObject)
+    {
+        m_field.ccobjectValue = rhs.m_field.ccobjectValue;
+        m_field.ccobjectValue->retain();
+        m_ccobjectType = new std::string(*rhs.m_ccobjectType);
     }
 }
 

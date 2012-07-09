@@ -138,7 +138,8 @@ typedef enum {
     CCScriptValueTypeBoolean,
     CCScriptValueTypeString,
     CCScriptValueTypeDict,
-    CCScriptValueTypeArray
+    CCScriptValueTypeArray,
+    CCScriptValueTypeCCObject
 } CCScriptValueType;
 
 typedef union {
@@ -148,6 +149,7 @@ typedef union {
     std::string*        stringValue;
     CCScriptValueDict*  dictValue;
     CCScriptValueArray* arrayValue;
+    CCObject*           ccobjectValue;
 } CCScriptValueField;
 
 class CCScriptValue
@@ -160,9 +162,12 @@ public:
     static const CCScriptValue stringValue(const std::string& stringValue);
     static const CCScriptValue dictValue(const CCScriptValueDict& dictValue);
     static const CCScriptValue arrayValue(const CCScriptValueArray& arrayValue);
+    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
+    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
     
     CCScriptValue(void)
     : m_type(CCScriptValueTypeInt)
+    , m_ccobjectType(NULL)
     {
         memset(&m_field, 0, sizeof(m_field));
     }
@@ -172,6 +177,10 @@ public:
     
     const CCScriptValueType getType(void) const {
         return m_type;
+    }
+    
+    const std::string& getCCObjectTypename(void) const {
+        return *m_ccobjectType;
     }
     
     int intValue(void) const {
@@ -198,9 +207,14 @@ public:
         return *m_field.arrayValue;
     }
     
+    CCObject* ccobjectValue(void) const {
+        return m_field.ccobjectValue;
+    }
+    
 private:
-    CCScriptValueField m_field;
-    CCScriptValueType  m_type;
+    CCScriptValueField  m_field;
+    CCScriptValueType   m_type;
+    std::string*        m_ccobjectType;
     
     void copy(const CCScriptValue& rhs);
 };
