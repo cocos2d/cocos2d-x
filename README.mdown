@@ -32,3 +32,4 @@ Contact us
 [5]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
 [6]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [7]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
+
