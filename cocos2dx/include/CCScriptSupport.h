@@ -124,81 +124,85 @@ private:
 
 
 #pragma mark -
-#pragma mark CCLuaValue
+#pragma mark CCScriptValue
 
-class CCLuaValue;
-typedef std::map<std::string, CCLuaValue*>  CCLuaTableDict;
-typedef CCLuaTableDict::iterator            CCLuaTableDictIterator;
-typedef std::list<CCLuaValue*>              CCLuaTableArray;
-typedef CCLuaTableArray::iterator           CCLuaTableArrayIterator;
+class CCScriptValue;
+typedef std::map<std::string, CCScriptValue>    CCScriptValueDict;
+typedef CCScriptValueDict::const_iterator       CCScriptValueDictIterator;
+typedef std::list<CCScriptValue>                CCScriptValueArray;
+typedef CCScriptValueArray::const_iterator      CCScriptValueArrayIterator;
 
 typedef enum {
-    CCLuaValueTypeInt,
-    CCLuaValueTypeFloat,
-    CCLuaValueTypeBoolean,
-    CCLuaValueTypeString,
-    CCLuaValueTypeCCLuaTableDict,
-    CCLuaValueTypeCCLuaTableArray
-} CCLuaValueType;
+    CCScriptValueTypeInt,
+    CCScriptValueTypeFloat,
+    CCScriptValueTypeBoolean,
+    CCScriptValueTypeString,
+    CCScriptValueTypeDict,
+    CCScriptValueTypeArray
+} CCScriptValueType;
 
 typedef union {
     int                 intValue;
     float               floatValue;
     bool                booleanValue;
     std::string*        stringValue;
-    CCLuaTableDict*     tableDictValue;
-    CCLuaTableArray*    tableArrayValue;
-} CCLuaValueField;
+    CCScriptValueDict*  dictValue;
+    CCScriptValueArray* arrayValue;
+} CCScriptValueField;
 
-class CCLuaValue
+class CCScriptValue
 {
 public:
-    static CCLuaValue* valueWithInt(int intValue);
-    static CCLuaValue* valueWithFloat(float floatValue);
-    static CCLuaValue* valueWithBoolean(bool booleanValue);
-    static CCLuaValue* valueWithString(const char* stringValue);
-    static CCLuaValue* valueWithString(const std::string& stringValue);
-    static CCLuaValue* valueWithCCLuaTableDict(const CCLuaTableDict& tableDict);
-    static CCLuaValue* valueWithCCLuaTableArray(const CCLuaTableArray& tableArray);
+    static const CCScriptValue intValue(const int intValue);
+    static const CCScriptValue floatValue(const float floatValue);
+    static const CCScriptValue booleanValue(const bool booleanValue);
+    static const CCScriptValue stringValue(const char* stringValue);
+    static const CCScriptValue stringValue(const std::string& stringValue);
+    static const CCScriptValue dictValue(const CCScriptValueDict& dictValue);
+    static const CCScriptValue arrayValue(const CCScriptValueArray& arrayValue);
     
-    ~CCLuaValue(void);
+    CCScriptValue(void)
+    : m_type(CCScriptValueTypeInt)
+    {
+        memset(&m_field, 0, sizeof(m_field));
+    }
+    CCScriptValue(const CCScriptValue& rhs);
+    CCScriptValue& operator=(const CCScriptValue& rhs);
+    ~CCScriptValue(void);
     
-    CCLuaValueType getType(void) {
+    const CCScriptValueType getType(void) const {
         return m_type;
     }
     
-    int getIntValue(void) {
+    int intValue(void) const {
         return m_field.intValue;
     }
     
-    float getFloatValue(void) {
+    float floatValue(void) const {
         return m_field.floatValue;
     }
     
-    bool getBooleanValue(void) {
+    bool booleanValue(void) const {
         return m_field.booleanValue;
     }
     
-    const std::string& getStringValue(void) {
+    const std::string& stringValue(void) const {
         return *m_field.stringValue;
     }
     
-    CCLuaTableDict* getTableDictValue(void) {
-        return m_field.tableDictValue;
+    const CCScriptValueDict& dictValue(void) const {
+        return *m_field.dictValue;
     }
     
-    CCLuaTableArray* getTableArrayValue(void) {
-        return m_field.tableArrayValue;
+    const CCScriptValueArray& arrayValue(void) const {
+        return *m_field.arrayValue;
     }
     
 private:
-    CCLuaValue(void)
-    : m_type(CCLuaValueTypeInt) {
-        memset(&m_field, 0, sizeof(m_field));
-    }
+    CCScriptValueField m_field;
+    CCScriptValueType  m_type;
     
-    CCLuaValueField m_field;
-    CCLuaValueType  m_type;
+    void copy(const CCScriptValue& rhs);
 };
 
 
@@ -273,9 +277,9 @@ public:
     virtual int pushBooleanToLuaStack(int data) = 0;
     virtual int pushStringToLuaStack(const char* data) = 0;
     virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName) = 0;
-    virtual int pushCCLuaValueToLuaStack(CCLuaValue* pValue) = 0;
-    virtual int pushCCLuaTableDictToLuaStack(CCLuaTableDict* pDict) = 0;
-    virtual int pushCCLuaTableArrayToLuaStack(CCLuaTableArray* pArray) = 0;
+    virtual int pushCCScriptValueToLuaStack(const CCScriptValue& value) = 0;
+    virtual int pushCCScriptValueDictToLuaStack(const CCScriptValueDict& dict) = 0;
+    virtual int pushCCScriptValueArrayToLuaStack(const CCScriptValueArray& array) = 0;
     
     /**
      @brief Remove all values from Lua stack

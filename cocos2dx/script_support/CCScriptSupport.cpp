@@ -101,84 +101,110 @@ bool CCTouchScriptHandlerEntry::initWithHandler(int nHandler, bool bIsMultiTouch
 
 // ----------------------------
 
-
-CCLuaValue* CCLuaValue::valueWithInt(int intValue)
+const CCScriptValue CCScriptValue::intValue(const int intValue)
 {
-    CCLuaValue* value = new CCLuaValue();
-    value->m_field.intValue = intValue;
-    value->m_type = CCLuaValueTypeInt;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeInt;
+    value.m_field.intValue = intValue;
     return value;
 }
 
-CCLuaValue* CCLuaValue::valueWithFloat(float floatValue)
+const CCScriptValue CCScriptValue::floatValue(const float floatValue)
 {
-    CCLuaValue* value = new CCLuaValue();
-    value->m_field.floatValue = floatValue;
-    value->m_type = CCLuaValueTypeFloat;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeFloat;
+    value.m_field.floatValue = floatValue;
     return value;
 }
 
-CCLuaValue* CCLuaValue::valueWithBoolean(bool booleanValue)
+const CCScriptValue CCScriptValue::booleanValue(const bool booleanValue)
 {
-    CCLuaValue* value = new CCLuaValue();
-    value->m_field.booleanValue = booleanValue;
-    value->m_type = CCLuaValueTypeBoolean;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeBoolean;
+    value.m_field.booleanValue = booleanValue;
     return value;
 }
 
-CCLuaValue* CCLuaValue::valueWithString(const char* stringValue)
+const CCScriptValue CCScriptValue::stringValue(const char* stringValue)
 {
-    CCLuaValue* value = new CCLuaValue();
-    value->m_field.stringValue = new std::string(stringValue ? stringValue : "");
-    value->m_type = CCLuaValueTypeString;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeString;
+    value.m_field.stringValue = new std::string(stringValue);
     return value;
 }
 
-CCLuaValue* CCLuaValue::valueWithString(const std::string& stringValue)
+const CCScriptValue CCScriptValue::stringValue(const std::string& stringValue)
 {
-    CCLuaValue* value = new CCLuaValue();
-    value->m_field.stringValue = new std::string(stringValue);
-    value->m_type = CCLuaValueTypeString;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeString;
+    value.m_field.stringValue = new std::string(stringValue);
     return value;
 }
 
-CCLuaValue* CCLuaValue::valueWithCCLuaTableDict(const CCLuaTableDict& tableDict)
+const CCScriptValue CCScriptValue::dictValue(const CCScriptValueDict& dictValue)
 {
-    CCLuaValue* value = new CCLuaValue();
-    value->m_field.tableDictValue = new CCLuaTableDict(tableDict);
-    value->m_type = CCLuaValueTypeCCLuaTableDict;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeDict;
+    value.m_field.dictValue = new CCScriptValueDict(dictValue);
     return value;
 }
 
-CCLuaValue* CCLuaValue::valueWithCCLuaTableArray(const CCLuaTableArray& tableArray)
+const CCScriptValue CCScriptValue::arrayValue(const CCScriptValueArray& arrayValue)
 {
-    CCLuaValue* value = new CCLuaValue();
-    value->m_field.tableArrayValue = new CCLuaTableArray(tableArray);
-    value->m_type = CCLuaValueTypeCCLuaTableArray;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeArray;
+    value.m_field.arrayValue = new CCScriptValueArray(arrayValue);
     return value;
 }
 
-CCLuaValue::~CCLuaValue(void)
+CCScriptValue::CCScriptValue(const CCScriptValue& rhs)
 {
-    if (m_type == CCLuaValueTypeString)
+    copy(rhs);
+}
+
+CCScriptValue& CCScriptValue::operator=(const CCScriptValue& rhs)
+{
+    if (this != &rhs) copy(rhs);
+    return *this;
+}
+
+CCScriptValue::~CCScriptValue(void)
+{
+    if (m_type == CCScriptValueTypeString)
     {
         delete m_field.stringValue;
     }
-    else if (m_type == CCLuaValueTypeCCLuaTableDict)
+    else if (m_type == CCScriptValueTypeDict)
     {
-        delete m_field.tableDictValue;
+        delete m_field.dictValue;
     }
-    else if (m_type == CCLuaValueTypeCCLuaTableArray)
+    else if (m_type == CCScriptValueTypeArray)
     {
-        delete m_field.tableArrayValue;
+        delete m_field.arrayValue;
+    }
+}
+
+void CCScriptValue::copy(const CCScriptValue& rhs)
+{
+    memcpy(&m_field, &rhs.m_field, sizeof(m_field));
+    m_type = rhs.m_type;
+    if (m_type == CCScriptValueTypeString)
+    {
+        m_field.stringValue = new std::string(*rhs.m_field.stringValue);
+    }
+    else if (m_type == CCScriptValueTypeDict)
+    {
+        m_field.dictValue = new CCScriptValueDict(*rhs.m_field.dictValue);
+    }
+    else if (m_type == CCScriptValueTypeArray)
+    {
+        m_field.arrayValue = new CCScriptValueArray(*rhs.m_field.arrayValue);
     }
 }
 
 // ----------------------------
 
-
 static CCScriptEngineManager* s_pSharedScriptEngineManager = NULL;
-
 
 CCScriptEngineManager::~CCScriptEngineManager(void)
 {
