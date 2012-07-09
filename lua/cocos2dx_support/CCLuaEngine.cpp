@@ -287,6 +287,10 @@ int CCLuaEngine::pushCCScriptValueToLuaStack(const CCScriptValue& value)
     {
         pushCCScriptValueArrayToLuaStack(value.arrayValue());
     }
+    else if (type == CCScriptValueTypeCCObject)
+    {
+        pushCCObjectToLuaStack(value.ccobjectValue(), value.getCCObjectTypename().c_str());
+    }
     
     return lua_gettop(m_state);
 }
