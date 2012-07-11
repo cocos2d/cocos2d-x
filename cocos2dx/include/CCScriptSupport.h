@@ -34,12 +34,12 @@ THE SOFTWARE.
 
 typedef struct lua_State lua_State;
 
+NS_CC_BEGIN
+
 typedef int LUA_FUNCTION;
 typedef int LUA_HANDLE;
 typedef int LUA_TABLE;
 typedef int LUA_STRING;
-
-NS_CC_BEGIN
 
 class CCTimer;
 
