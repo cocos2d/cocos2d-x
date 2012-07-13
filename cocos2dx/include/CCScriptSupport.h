@@ -152,7 +152,7 @@ typedef union {
     CCObject*           ccobjectValue;
 } CCScriptValueField;
 
-class CCScriptValue
+class CC_DLL CCScriptValue
 {
 public:
     static const CCScriptValue intValue(const int intValue);
