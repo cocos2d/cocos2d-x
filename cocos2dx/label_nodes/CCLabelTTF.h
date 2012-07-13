@@ -46,6 +46,11 @@ NS_CC_BEGIN
 class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
 {
 public:
+    static const uint32_t OBJECT_TYPE = 0x10A;
+    virtual uint32_t getObjectType() {
+        return CCLabelTTF::OBJECT_TYPE;
+    };
+
     CCLabelTTF();
     virtual ~CCLabelTTF();
     const char* description();    
@@ -143,6 +148,7 @@ protected:
     
     std::string m_string;
 };
+
 
 // end of GUI group
 /// @}
