@@ -85,6 +85,10 @@ public:
     virtual void draw(void);
 
 public:
+    static const uint32_t OBJECT_TYPE = 0x101;
+    virtual uint32_t getObjectType() {
+        return CCSprite::OBJECT_TYPE;
+    };
     // attributes
 
     /** whether or not the Sprite needs to be updated in the Atlas */
@@ -386,6 +390,7 @@ protected:
     bool m_bFlipX;
     bool m_bFlipY;
 };
+
 
 // end of sprite_nodes group
 /// @}

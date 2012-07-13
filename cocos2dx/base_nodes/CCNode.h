@@ -28,6 +28,7 @@
 #ifndef __PLATFOMR_CCNODE_H__
 #define __PLATFOMR_CCNODE_H__
 
+#include <stdint.h>
 #include "ccMacros.h"
 #include "cocoa/CCAffineTransform.h"
 #include "cocoa/CCArray.h"
@@ -204,6 +205,11 @@ class CC_DLL CCNode : public CCObject
 protected:
     bool m_bIsVisible;
 public:
+    static const uint32_t OBJECT_TYPE = 0x100;
+    virtual uint32_t getObjectType() {
+        return CCNode::OBJECT_TYPE;
+    };
+
     virtual bool isVisible();
     virtual void setVisible(bool visible);
 
