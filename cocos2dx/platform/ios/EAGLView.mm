@@ -588,7 +588,7 @@ static EAGLView *view = 0;
 - (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other;
 {
     CCLOG("comparePosition");
-    return 0;
+    return (NSComparisonResult)0;
 }
 - (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition;
 {
