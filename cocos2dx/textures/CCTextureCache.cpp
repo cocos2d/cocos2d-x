@@ -444,9 +444,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 CC_SAFE_DELETE_ARRAY(pBuffer);
 
                 texture = new CCTexture2D();
-                texture->initWithImage(&image, resolution);
-
-                if( texture )
+                
+                if( texture &&
+                    texture->initWithImage(&image, resolution) )
                 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                     // cache the texture file name
