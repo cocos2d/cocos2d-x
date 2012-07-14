@@ -529,7 +529,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture file name
-        VolatileTexture::addImageTexture(tex, fullpath.c_str(), CCImage::kFmtRawData);
+        VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtRawData);
 #endif
         m_pTextures->setObject(texture, key.c_str());
         texture->autorelease();
