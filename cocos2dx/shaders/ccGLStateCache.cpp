@@ -46,7 +46,7 @@ static bool        s_bVertexAttribTexCoords = false;
 #define kCCMaxActiveTexture 16
 
 static GLuint    s_uCurrentShaderProgram = -1;
-static GLuint    s_uCurrentBoundTexture[kCCMaxActiveTexture] =  {-1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, };
+static GLuint    s_uCurrentBoundTexture[kCCMaxActiveTexture] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
 static GLenum    s_eCurrentActiveTexture = (GL_TEXTURE0 - GL_TEXTURE0);
 static GLenum    s_eBlendingSource = -1;
 static GLenum    s_eBlendingDest = -1;
