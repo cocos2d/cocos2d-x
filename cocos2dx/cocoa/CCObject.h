@@ -65,7 +65,7 @@ public:
     void retain(void);
     CCObject* autorelease(void);
     CCObject* copy(void);
-    bool isSingleRefrence(void);
+    bool isSingleReference(void);
     unsigned int retainCount(void);
     virtual bool isEqual(const CCObject* pObject);
 
