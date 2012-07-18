@@ -47,10 +47,6 @@ copy_src_and_jni(){
     sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/proj.android/jni/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 }
 
-copy_library_src(){
-    cp -rf $COCOSJAVALIB_ROOT/src_common/* $APP_DIR/proj.android/src/
-}
-
 # copy build_native.sh and replace something
 copy_build_native(){
     # here should use # instead of /, why??
@@ -70,8 +66,17 @@ modify_applicationdemo(){
     
     # rename APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java to 
     # APP_DIR/android/src/org/cocos2dx/application/$APP_NAME.java, change helloworld to game
-    sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $APP_DIR/proj.android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/proj.android/src/$PACKAGE_PATH_DIR/$APP_NAME.java    
+    sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $APP_DIR/proj.android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/proj.android/src/$PACKAGE_PATH_DIR/$APP_NAME.java
     rm -fr $APP_DIR/proj.android/src/org/cocos2dx/application
+}
+
+# modify project.properties
+modify_projectproperties(){
+    # fix library path
+	echo "" >> $APP_DIR/proj.android/project.properties
+
+	# TODO Eventually replace absolute with relative path?
+	echo "android.library.reference.1=$COCOS2DX_ROOT/cocos2dx/platform/android/java" >> $APP_DIR/proj.android/project.properties
 }
 
 modify_layout(){
@@ -91,9 +96,9 @@ copy_icon(){
 copy_cpp_h_from_helloworld
 copy_resouces
 copy_src_and_jni
-copy_library_src
 copy_build_native
 modify_androidmanifest
 modify_applicationdemo
 modify_layout
+modify_projectproperties
 copy_icon
