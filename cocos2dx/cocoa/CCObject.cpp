@@ -63,6 +63,15 @@ CCObject::~CCObject(void)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeCCObjectByID(m_nLuaID);
     }
+#ifdef COCOS2D_JAVASCRIPT
+    js_proxy_t* p;
+    JS_GET_PROXY(p, this);
+    if (p) {
+        JSContext *cx = ScriptingCore::getInstance().getGlobalContext();
+        JS_SetPrivate(p->obj, NULL);
+        JS_RemoveObjectRoot(cx, &p->obj);
+    }
+#endif
 }
 
 CCObject* CCObject::copy()

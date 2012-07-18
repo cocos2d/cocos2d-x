@@ -26,6 +26,9 @@ THE SOFTWARE.
 #define __CCOBJECT_H__
 
 #include "platform/CCPlatformMacros.h"
+#ifdef COCOS2D_JAVASCRIPT
+#include "ScriptingCore.h"
+#endif
 
 NS_CC_BEGIN
 

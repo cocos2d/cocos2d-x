@@ -121,7 +121,6 @@ CCNode::~CCNode(void)
 
     // children
     CC_SAFE_RELEASE(m_pChildren);
-
 }
 
 float CCNode::getSkewX()
