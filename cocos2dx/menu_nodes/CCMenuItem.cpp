@@ -49,6 +49,9 @@ const unsigned int    kDisableTag = 0x3;
 //
 // CCMenuItem
 //
+
+ADD_OBJECT_TYPE_DECL(CCMenuItem)
+
 CCMenuItem* CCMenuItem::itemWithTarget(CCObject *rec, SEL_MenuHandler selector)
 {
     return CCMenuItem::create(rec, selector);
@@ -156,6 +159,9 @@ void CCMenuItem::setTarget(CCObject *rec, SEL_MenuHandler selector)
 //
 //CCMenuItemLabel
 //
+
+ADD_OBJECT_TYPE_DECL(CCMenuItemLabel)
+
 const ccColor3B& CCMenuItemLabel::getDisabledColor()
 {
     return m_tDisabledColor;
@@ -317,6 +323,9 @@ const ccColor3B& CCMenuItemLabel::getColor()
 //
 //CCMenuItemAtlasFont
 //
+
+ADD_OBJECT_TYPE_DECL(CCMenuItemAtlasFont)
+
 CCMenuItemAtlasFont * CCMenuItemAtlasFont::itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 {
     return CCMenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap);
@@ -355,6 +364,9 @@ bool CCMenuItemAtlasFont::initWithString(const char *value, const char *charMapF
 //
 //CCMenuItemFont
 //
+
+ADD_OBJECT_TYPE_DECL(CCMenuItemFont)
+
 void CCMenuItemFont::setFontSize(unsigned int s)
 {
     _fontSize = s;
@@ -453,6 +465,9 @@ const char* CCMenuItemFont::fontNameObj()
 //
 //CCMenuItemSprite
 //
+
+ADD_OBJECT_TYPE_DECL(CCMenuItemSprite)
+
 CCNode * CCMenuItemSprite::getNormalImage()
 {
     return m_pNormalImage;
@@ -532,6 +547,7 @@ void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
 //
 //CCMenuItemSprite - CCRGBAProtocol protocol
 //
+
 void CCMenuItemSprite::setOpacity(GLubyte opacity)
 {
     dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->setOpacity(opacity);
@@ -699,6 +715,12 @@ void CCMenuItemSprite::updateImagesVisibility()
     }
 }
 
+///
+/// CCMenuItemImage
+///
+
+ADD_OBJECT_TYPE_DECL(CCMenuItemImage)
+
 CCMenuItemImage* CCMenuItemImage::node()
 {
     return CCMenuItemImage::create();
@@ -813,9 +835,13 @@ void CCMenuItemImage::setDisabledSpriteFrame(CCSpriteFrame * frame)
 {
     setDisabledImage(CCSprite::createWithSpriteFrame(frame));
 }
+
 //
 // MenuItemToggle
 //
+
+ADD_OBJECT_TYPE_DECL(CCMenuItemToggle)
+
 void CCMenuItemToggle::setSubItems(CCArray* var)
 {
     CC_SAFE_RETAIN(var);

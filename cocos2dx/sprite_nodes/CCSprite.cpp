@@ -58,6 +58,8 @@ NS_CC_BEGIN
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
+ADD_OBJECT_TYPE_DECL(CCSprite)
+
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
 {
     return CCSprite::createWithTexture(pTexture);

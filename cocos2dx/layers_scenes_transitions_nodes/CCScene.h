@@ -49,11 +49,7 @@ It is a good practice to use and CCScene as the parent of all your nodes.
 class CC_DLL CCScene : public CCNode
 {
 public:
-    static const uint32_t OBJECT_TYPE = 0x10F;
-    virtual uint32_t getObjectType() {
-        return CCScene::OBJECT_TYPE;
-    };
-
+    ADD_OBJECT_TYPE(CCScene)
     CCScene();
     virtual ~CCScene();
     bool init();
