@@ -65,7 +65,8 @@ CCObject::~CCObject(void)
     }
 #ifdef COCOS2D_JAVASCRIPT
     js_proxy_t* p;
-    JS_GET_PROXY(p, this);
+    void *ptr = this;
+    JS_GET_PROXY(p, ptr);
     if (p) {
         JSContext *cx = ScriptingCore::getInstance().getGlobalContext();
         JS_SetPrivate(p->obj, NULL);

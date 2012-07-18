@@ -205,11 +205,7 @@ class CC_DLL CCNode : public CCObject
 protected:
     bool m_bIsVisible;
 public:
-    static const uint32_t OBJECT_TYPE = 0x100;
-    virtual uint32_t getObjectType() {
-        return CCNode::OBJECT_TYPE;
-    };
-
+    ADD_OBJECT_TYPE(CCNode)
     virtual bool isVisible();
     virtual void setVisible(bool visible);
 

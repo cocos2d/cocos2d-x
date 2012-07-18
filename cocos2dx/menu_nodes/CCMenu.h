@@ -63,11 +63,7 @@ class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
     bool m_bEnabled;
     
 public:
-    static const uint32_t OBJECT_TYPE = 0x102;
-    virtual uint32_t getObjectType() {
-        return CCMenu::OBJECT_TYPE;
-    };
-
+    ADD_OBJECT_TYPE(CCMenu)
     CCMenu()
         : m_cOpacity(0)
         , m_pSelectedItem(NULL)
