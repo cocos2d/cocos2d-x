@@ -19608,9 +19608,9 @@ static int tolua_Cocos2d_CCObject_retain00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: isSingleRefrence of class  CCObject */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCObject_isSingleRefrence00
-static int tolua_Cocos2d_CCObject_isSingleRefrence00(lua_State* tolua_S)
+/* method: isSingleReference of class  CCObject */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCObject_isSingleReference00
+static int tolua_Cocos2d_CCObject_isSingleReference00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -19624,17 +19624,17 @@ static int tolua_Cocos2d_CCObject_isSingleRefrence00(lua_State* tolua_S)
  {
   CCObject* self = (CCObject*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSingleRefrence'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSingleReference'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->isSingleRefrence();
+   bool tolua_ret = (bool)  self->isSingleReference();
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'isSingleRefrence'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'isSingleReference'.",&tolua_err);
  return 0;
 #endif
 }
@@ -38293,7 +38293,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"CCObject");
    tolua_function(tolua_S,"release",tolua_Cocos2d_CCObject_release00);
    tolua_function(tolua_S,"retain",tolua_Cocos2d_CCObject_retain00);
-   tolua_function(tolua_S,"isSingleRefrence",tolua_Cocos2d_CCObject_isSingleRefrence00);
+   tolua_function(tolua_S,"isSingleReference",tolua_Cocos2d_CCObject_isSingleReference00);
    tolua_function(tolua_S,"retainCount",tolua_Cocos2d_CCObject_retainCount00);
    tolua_function(tolua_S,"isEqual",tolua_Cocos2d_CCObject_isEqual00);
   tolua_endmodule(tolua_S);
