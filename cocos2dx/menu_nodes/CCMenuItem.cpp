@@ -49,12 +49,17 @@ const unsigned int    kDisableTag = 0x3;
 //
 // CCMenuItem
 //
-CCMenuItem * CCMenuItem::itemWithTarget(CCObject *rec, SEL_MenuHandler selector)
+CCMenuItem* CCMenuItem::itemWithTarget(CCObject *rec, SEL_MenuHandler selector)
 {
     return CCMenuItem::create(rec, selector);
 }
 
-CCMenuItem * CCMenuItem::create(CCObject *rec, SEL_MenuHandler selector)
+CCMenuItem* CCMenuItem::create()
+{
+    return CCMenuItem::create(NULL, NULL);
+}
+
+CCMenuItem* CCMenuItem::create(CCObject *rec, SEL_MenuHandler selector)
 {
     CCMenuItem *pRet = new CCMenuItem();
     pRet->initWithTarget(rec, selector);

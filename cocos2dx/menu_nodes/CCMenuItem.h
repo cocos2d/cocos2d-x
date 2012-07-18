@@ -77,8 +77,10 @@ public:
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItem * itemWithTarget(CCObject *rec, SEL_MenuHandler selector);
+    /** Creates a CCMenuItem with no target/selector */
+    static CCMenuItem* create();
     /** Creates a CCMenuItem with a target/selector */
-    static CCMenuItem * create(CCObject *rec, SEL_MenuHandler selector);
+    static CCMenuItem* create(CCObject *rec, SEL_MenuHandler selector);
     /** Initializes a CCMenuItem with a target/selector */
     bool initWithTarget(CCObject *rec, SEL_MenuHandler selector);
     /** Returns the outside box */
