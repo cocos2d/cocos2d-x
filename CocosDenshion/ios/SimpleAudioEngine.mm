@@ -141,6 +141,8 @@ namespace CocosDenshion {
 
 static SimpleAudioEngine *s_pEngine;
 
+const char* SimpleAudioEngine::OBJECT_TYPE = "SimpleAudioEngine";
+
 SimpleAudioEngine::SimpleAudioEngine()
 {
 
