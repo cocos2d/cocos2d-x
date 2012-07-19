@@ -60,9 +60,6 @@ It's new in cocos2d-x since v0.99.5
     #define NS_CC_BEGIN                     namespace cocos2d {
     #define NS_CC_END                       }
     #define USING_NS_CC                     using namespace cocos2d
-    #define NS_CC_EXT_BEGIN                 namespace cocos2d { namespace extension { 
-    #define NS_CC_EXT_END                   }} 
-    #define USING_NS_CC_EXT                 using namespace cocos2d::extension
 #else
     #define NS_CC_BEGIN                     
     #define NS_CC_END
