@@ -109,7 +109,8 @@ namespace cocos2d{
             if (m_nScriptHandler)
             {
                 CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-                pEngine->executeFunctionWithCCObject(m_nScriptHandler, this, "CCMenuItem");
+//                pEngine->executeFunctionWithCCObject(m_nScriptHandler, this, "CCMenuItem");
+                pEngine->executeFunctionWithIntegerData(m_nScriptHandler, this->getTag());
             }
         }
     }
