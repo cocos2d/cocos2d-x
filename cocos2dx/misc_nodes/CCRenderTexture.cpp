@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "textures/CCTextureCache.h"
 #include "platform/CCFileUtils.h"
 #include "CCGL.h"
-#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "support/CCNotificationCenter.h"
 #include "CCEventType.h"
 // extern
 #include "kazmath/GL/matrix.h"
@@ -54,7 +54,7 @@ CCRenderTexture::CCRenderTexture()
 {
     // Listen this event to save render texture before come to background.
     // Then it can be restored after coming to foreground on Android.
-    extension::CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                              callfuncO_selector(CCRenderTexture::listenToBackground),
                                                                              EVENT_COME_TO_BACKGROUND,
                                                                              NULL);
@@ -69,7 +69,7 @@ CCRenderTexture::~CCRenderTexture()
     }
     CC_SAFE_DELETE(m_pUITextureImage);
     
-    extension::CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
 }
 
 void CCRenderTexture::listenToBackground(cocos2d::CCObject *obj)

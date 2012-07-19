@@ -31,13 +31,16 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "support/CCPointExtension.h"
+#include "support/CCNotificationCenter.h"
 #include "layers_scenes_transitions_nodes/CCTransition.h"
 #include "textures/CCTextureCache.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "cocoa/CCAutoreleasePool.h"
 #include "platform/platform.h"
+#include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "label_nodes/CCLabelBMFont.h"
+#include "label_nodes/CCLabelAtlas.h"
 #include "actions/CCActionManager.h"
 #include "CCConfiguration.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
@@ -51,9 +54,6 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
 #include "CCEGLView.h"
-#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
-#include "extensions/CCTextureWatcher/CCTextureWatcher.h"
-#include "extensions/CCBReader/CCNodeLoaderLibrary.h"
 #include <string>
 
 using namespace std;
@@ -606,9 +606,7 @@ void CCDirector::purgeDirector()
 
     // cocos2d-x specific data structures
     CCUserDefault::purgeSharedUserDefault();
-    extension::CCNotificationCenter::purgeNotificationCenter();
-    extension::CCTextureWatcher::purgeTextureWatcher();
-    extension::CCNodeLoaderLibrary::purgeSharedCCNodeLoaderLibrary();
+    CCNotificationCenter::purgeNotificationCenter();
 
     ccGLInvalidateStateCache();
     
