@@ -28,11 +28,6 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #ifdef COCOS2D_JAVASCRIPT
 #include "spidermonkey_specifics.h"
-#else
-#ifndef ADD_OBJECT_TYPE
-#define ADD_OBJECT_TYPE(x)
-#define ADD_OBJECT_TYPE_DECL(x)
-#endif
 #endif
 
 NS_CC_BEGIN

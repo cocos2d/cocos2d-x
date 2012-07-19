@@ -60,7 +60,6 @@ protected:
     bool m_bIsEnabled;
 
 public:
-    ADD_OBJECT_TYPE(CCMenuItem)
     CCMenuItem()
     : m_bIsSelected(false)
     , m_bIsEnabled(false)            
@@ -119,7 +118,6 @@ class CC_DLL CCMenuItemLabel : public CCMenuItem, public CCRGBAProtocol
     /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
     CC_PROPERTY(CCNode*, m_pLabel, Label);
 public:
-    ADD_OBJECT_TYPE(CCMenuItemLabel)
     CCMenuItemLabel()
     : m_pLabel(NULL)
     , m_fOriginalScale(0.0)
@@ -170,7 +168,6 @@ protected:
 class CC_DLL CCMenuItemAtlasFont : public CCMenuItemLabel
 {
 public:
-    ADD_OBJECT_TYPE(CCMenuItemAtlasFont)
     CCMenuItemAtlasFont(){}
     virtual ~CCMenuItemAtlasFont(){}
     /** creates a menu item from a string and atlas with a target/selector 
@@ -197,7 +194,6 @@ public:
 class CC_DLL CCMenuItemFont : public CCMenuItemLabel
 {
 public:
-    ADD_OBJECT_TYPE(CCMenuItemFont)
     CCMenuItemFont() : m_uFontSize(0), m_strFontName(""){}
     virtual ~CCMenuItemFont(){}
     /** set default font size */
@@ -267,7 +263,6 @@ class CC_DLL CCMenuItemSprite : public CCMenuItem, public CCRGBAProtocol
     /** the image used when the item is disabled */
     CC_PROPERTY(CCNode*, m_pDisabledImage, DisabledImage);
 public:
-    ADD_OBJECT_TYPE(CCMenuItemSprite)
     CCMenuItemSprite()
     :m_pNormalImage(NULL)
     ,m_pSelectedImage(NULL)
@@ -326,7 +321,6 @@ protected:
 class CC_DLL CCMenuItemImage : public CCMenuItemSprite
 {
 public:
-    ADD_OBJECT_TYPE(CCMenuItemImage)
     CCMenuItemImage(){}
     virtual ~CCMenuItemImage(){}
     /** creates a menu item with a normal and selected image
@@ -392,7 +386,6 @@ class CC_DLL CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
      */
     CC_PROPERTY(CCArray*, m_pSubItems, SubItems);
 public:
-    ADD_OBJECT_TYPE(CCMenuItemToggle)
     CCMenuItemToggle()
     : m_cOpacity(0)
     , m_uSelectedIndex(0)

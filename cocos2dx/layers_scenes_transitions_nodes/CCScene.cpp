@@ -30,8 +30,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-ADD_OBJECT_TYPE_DECL(CCScene)
-
 CCScene::CCScene()
 {
     m_bIgnoreAnchorPointForPosition = true;

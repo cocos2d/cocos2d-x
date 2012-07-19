@@ -50,8 +50,6 @@ const unsigned int    kDisableTag = 0x3;
 // CCMenuItem
 //
 
-ADD_OBJECT_TYPE_DECL(CCMenuItem)
-
 CCMenuItem* CCMenuItem::itemWithTarget(CCObject *rec, SEL_MenuHandler selector)
 {
     return CCMenuItem::create(rec, selector);
@@ -121,7 +119,7 @@ void CCMenuItem::activate()
             (m_pListener->*m_pfnSelector)(this);
         }
         
-        if (m_nScriptHandler)
+        if (1)
         {
             CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCMenuItemActivated, (CCNode *)this);
         }
@@ -159,8 +157,6 @@ void CCMenuItem::setTarget(CCObject *rec, SEL_MenuHandler selector)
 //
 //CCMenuItemLabel
 //
-
-ADD_OBJECT_TYPE_DECL(CCMenuItemLabel)
 
 const ccColor3B& CCMenuItemLabel::getDisabledColor()
 {
@@ -324,8 +320,6 @@ const ccColor3B& CCMenuItemLabel::getColor()
 //CCMenuItemAtlasFont
 //
 
-ADD_OBJECT_TYPE_DECL(CCMenuItemAtlasFont)
-
 CCMenuItemAtlasFont * CCMenuItemAtlasFont::itemWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 {
     return CCMenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap);
@@ -364,8 +358,6 @@ bool CCMenuItemAtlasFont::initWithString(const char *value, const char *charMapF
 //
 //CCMenuItemFont
 //
-
-ADD_OBJECT_TYPE_DECL(CCMenuItemFont)
 
 void CCMenuItemFont::setFontSize(unsigned int s)
 {
@@ -465,8 +457,6 @@ const char* CCMenuItemFont::fontNameObj()
 //
 //CCMenuItemSprite
 //
-
-ADD_OBJECT_TYPE_DECL(CCMenuItemSprite)
 
 CCNode * CCMenuItemSprite::getNormalImage()
 {
@@ -719,8 +709,6 @@ void CCMenuItemSprite::updateImagesVisibility()
 /// CCMenuItemImage
 ///
 
-ADD_OBJECT_TYPE_DECL(CCMenuItemImage)
-
 CCMenuItemImage* CCMenuItemImage::node()
 {
     return CCMenuItemImage::create();
@@ -839,8 +827,6 @@ void CCMenuItemImage::setDisabledSpriteFrame(CCSpriteFrame * frame)
 //
 // MenuItemToggle
 //
-
-ADD_OBJECT_TYPE_DECL(CCMenuItemToggle)
 
 void CCMenuItemToggle::setSubItems(CCArray* var)
 {

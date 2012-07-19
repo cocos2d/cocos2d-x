@@ -46,7 +46,6 @@ NS_CC_BEGIN
 class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
 {
 public:
-    ADD_OBJECT_TYPE(CCLabelTTF)
     CCLabelTTF();
     virtual ~CCLabelTTF();
     const char* description();    

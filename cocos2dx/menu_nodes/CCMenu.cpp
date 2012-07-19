@@ -46,8 +46,6 @@ enum
 //CCMenu
 //
 
-ADD_OBJECT_TYPE_DECL(CCMenu)
-
 CCMenu* CCMenu::node()
 {
     return CCMenu::create();
