@@ -137,11 +137,17 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	///////////////////////////////////////////////////////////////////////////
     public Cocos2dxGLSurfaceView(Context context) {
         super(context);
+
+        this.setEGLContextClientVersion(2);
+
         initView();
     }
 
     public Cocos2dxGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        this.setEGLContextClientVersion(2);
+
         initView();
     }
     
