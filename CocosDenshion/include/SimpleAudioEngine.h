@@ -38,9 +38,6 @@ namespace CocosDenshion {
 class EXPORT_DLL SimpleAudioEngine
 {
 public:
-    static const char* OBJECT_TYPE;
-    const char* getObjectType() { return SimpleAudioEngine::OBJECT_TYPE; }
-
     SimpleAudioEngine();
     ~SimpleAudioEngine();
 
