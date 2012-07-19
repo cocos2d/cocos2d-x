@@ -95,7 +95,6 @@ and when to execute the Scenes.
 class CC_DLL CCDirector : public CCObject
 {
 public:
-    ADD_OBJECT_TYPE(CCDirector)
     CCDirector(void);
     virtual ~CCDirector(void);
     virtual bool init(void);

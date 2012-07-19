@@ -206,7 +206,6 @@ class CC_DLL CCNode : public CCObject
 protected:
     bool m_bIsVisible;
 public:
-    ADD_OBJECT_TYPE(CCNode)
     virtual bool isVisible();
     virtual void setVisible(bool visible);
 

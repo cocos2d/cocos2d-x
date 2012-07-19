@@ -55,7 +55,6 @@ All features from CCNode are valid, plus the following new features:
 class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
 {
 public:
-    ADD_OBJECT_TYPE(CCLayer)
     CCLayer();
     virtual ~CCLayer();
     bool init();
@@ -148,7 +147,6 @@ protected:
     ccColor4F  m_pSquareColors[4];
 
 public:
-    ADD_OBJECT_TYPE(CCLayerColor)
     CCLayerColor();
     virtual ~CCLayerColor();
 
@@ -227,7 +225,6 @@ If ' compressedInterpolation' is enabled (default mode) you will see both the st
 class CC_DLL CCLayerGradient : public CCLayerColor
 {
 public:
-    ADD_OBJECT_TYPE(CCLayerGradient)
 
     /** Creates a full-screen CCLayer with a gradient between start and end. 
     @deprecated: This interface will be deprecated sooner or later.
@@ -285,7 +282,6 @@ protected:
     unsigned int m_nEnabledLayer;
     CCArray*     m_pLayers;
 public:
-    ADD_OBJECT_TYPE(CCLayerMultiplex)
     CCLayerMultiplex();
     virtual ~CCLayerMultiplex();
 

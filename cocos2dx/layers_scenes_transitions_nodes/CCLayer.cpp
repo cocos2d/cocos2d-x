@@ -41,8 +41,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-ADD_OBJECT_TYPE_DECL(CCLayer)
-
 // CCLayer
 CCLayer::CCLayer()
 :m_bIsTouchEnabled(false)
@@ -376,8 +374,6 @@ void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 
 /// ColorLayer
 
-ADD_OBJECT_TYPE_DECL(CCLayerColor)
-
 CCLayerColor::CCLayerColor()
 : m_cOpacity(0)
 , m_tColor( ccc3(0,0,0) )
@@ -562,8 +558,6 @@ void CCLayerColor::draw()
 // CCLayerGradient
 // 
 
-ADD_OBJECT_TYPE_DECL(CCLayerGradient)
-
 CCLayerGradient* CCLayerGradient::layerWithColor(const ccColor4B& start, const ccColor4B& end)
 {
     return CCLayerGradient::create(start, end);
@@ -740,8 +734,6 @@ void CCLayerGradient::setCompressedInterpolation(bool compress)
 }
 
 /// MultiplexLayer
-
-ADD_OBJECT_TYPE_DECL(CCLayerMultiplex)
 
 CCLayerMultiplex::CCLayerMultiplex()
 : m_nEnabledLayer(0)

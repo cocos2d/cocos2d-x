@@ -85,7 +85,6 @@ public:
     virtual void draw(void);
 
 public:
-    ADD_OBJECT_TYPE(CCSprite)
     // attributes
 
     /** whether or not the Sprite needs to be updated in the Atlas */

@@ -63,7 +63,6 @@ class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
     bool m_bEnabled;
     
 public:
-    ADD_OBJECT_TYPE(CCMenu)
     CCMenu()
         : m_cOpacity(0)
         , m_pSelectedItem(NULL)

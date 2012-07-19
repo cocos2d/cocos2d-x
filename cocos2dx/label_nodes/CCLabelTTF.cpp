@@ -36,8 +36,6 @@ NS_CC_BEGIN
 #define SHADER_PROGRAM kCCShader_PositionTextureA8Color
 #endif
 
-ADD_OBJECT_TYPE_DECL(CCLabelTTF)
-
 //
 //CCLabelTTF
 //
