@@ -67,13 +67,15 @@ CCObject::~CCObject(void)
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeCCObjectByID(m_nLuaID);
     }
 #ifdef COCOS2D_JAVASCRIPT
-    js_proxy_t* p;
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
     void *ptr = this;
-    JS_GET_PROXY(p, ptr);
-    if (p) {
+    JS_GET_PROXY(nproxy, ptr);
+    if (nproxy) {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_SetPrivate(p->obj, NULL);
-        JS_RemoveObjectRoot(cx, &p->obj);
+        JS_RemoveObjectRoot(cx, &nproxy->obj);
+        JS_GET_NATIVE_PROXY(jsproxy, nproxy->obj);
+        JS_REMOVE_PROXY(nproxy, jsproxy);
     }
 #endif
 }
