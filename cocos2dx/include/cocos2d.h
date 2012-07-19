@@ -79,7 +79,6 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "ccTypes.h"
-#include "cocos2dExt.h"
 
 // kazmath
 #include "kazmath/include/kazmath/kazmath.h"
