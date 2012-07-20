@@ -2,89 +2,89 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos_tests_common
+LOCAL_MODULE := cocos_testcpp_common
 
-LOCAL_MODULE_FILENAME := libtestscommon
+LOCAL_MODULE_FILENAME := libtestcppcommon
 
 LOCAL_SRC_FILES := \
-tests/AccelerometerTest/AccelerometerTest.cpp \
-tests/ActionManagerTest/ActionManagerTest.cpp \
-tests/ActionsTest/ActionsTest.cpp \
-tests/ActionsEaseTest/ActionsEaseTest.cpp \
-tests/ActionsProgressTest/ActionsProgressTest.cpp \
-tests/Box2DTest/Box2dTest.cpp \
-tests/Box2DTestBed/Box2dView.cpp \
-tests/Box2DTestBed/GLES-Render.cpp \
-tests/Box2DTestBed/Test.cpp \
-tests/Box2DTestBed/TestEntries.cpp \
-tests/BugsTest/Bug-1159.cpp \
-tests/BugsTest/Bug-1174.cpp \
-tests/BugsTest/Bug-350.cpp \
-tests/BugsTest/Bug-422.cpp \
-tests/BugsTest/Bug-624.cpp \
-tests/BugsTest/Bug-886.cpp \
-tests/BugsTest/Bug-899.cpp \
-tests/BugsTest/Bug-914.cpp \
-tests/BugsTest/BugsTest.cpp \
-tests/BugsTest/Bug-458/Bug-458.cpp \
-tests/BugsTest/Bug-458/QuestionContainerSprite.cpp \
-tests/ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.cpp \
-tests/ClickAndMoveTest/ClickAndMoveTest.cpp \
-tests/CocosDenshionTest/CocosDenshionTest.cpp \
-tests/CurlTest/CurlTest.cpp \
-tests/CurrentLanguageTest/CurrentLanguageTest.cpp \
-tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
-tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
-tests/EffectsTest/EffectsTest.cpp \
-tests/ExtensionsTest/ExtensionsTest.cpp \
-tests/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
-tests/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
-tests/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
-tests/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
-tests/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp \
-tests/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
-tests/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
-tests/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
-tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp \
-tests/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
-tests/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
-tests/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
-tests/FontTest/FontTest.cpp \
-tests/IntervalTest/IntervalTest.cpp \
-tests/KeypadTest/KeypadTest.cpp \
-tests/LabelTest/LabelTest.cpp \
-tests/LayerTest/LayerTest.cpp \
-tests/NodeTest/NodeTest.cpp \
-tests/TextInputTest/TextInputTest.cpp \
-tests/MenuTest/MenuTest.cpp \
-tests/MotionStreakTest/MotionStreakTest.cpp \
-tests/MutiTouchTest/MutiTouchTest.cpp \
-tests/ParallaxTest/ParallaxTest.cpp \
-tests/ParticleTest/ParticleTest.cpp \
-tests/PerformanceTest/PerformanceNodeChildrenTest.cpp \
-tests/PerformanceTest/PerformanceParticleTest.cpp \
-tests/PerformanceTest/PerformanceSpriteTest.cpp \
-tests/PerformanceTest/PerformanceTest.cpp \
-tests/PerformanceTest/PerformanceTextureTest.cpp \
-tests/PerformanceTest/PerformanceTouchesTest.cpp \
-tests/RenderTextureTest/RenderTextureTest.cpp \
-tests/RotateWorldTest/RotateWorldTest.cpp \
-tests/SceneTest/SceneTest.cpp \
-tests/SchedulerTest/SchedulerTest.cpp \
-tests/ShaderTest/ShaderTest.cpp \
-tests/SpriteTest/SpriteTest.cpp \
-tests/TextureCacheTest/TextureCacheTest.cpp \
-tests/Texture2dTest/Texture2dTest.cpp \
-tests/TileMapTest/TileMapTest.cpp \
-tests/TouchesTest/Ball.cpp \
-tests/TouchesTest/Paddle.cpp \
-tests/TouchesTest/TouchesTest.cpp \
-tests/TransitionsTest/TransitionsTest.cpp \
-tests/UserDefaultTest/UserDefaultTest.cpp \
-tests/ZwoptexTest/ZwoptexTest.cpp \
-tests/controller.cpp \
-tests/testBasic.cpp \
-AppDelegate.cpp
+Classes/AccelerometerTest/AccelerometerTest.cpp \
+Classes/ActionManagerTest/ActionManagerTest.cpp \
+Classes/ActionsTest/ActionsTest.cpp \
+Classes/ActionsEaseTest/ActionsEaseTest.cpp \
+Classes/ActionsProgressTest/ActionsProgressTest.cpp \
+Classes/Box2DTest/Box2dTest.cpp \
+Classes/Box2DTestBed/Box2dView.cpp \
+Classes/Box2DTestBed/GLES-Render.cpp \
+Classes/Box2DTestBed/Test.cpp \
+Classes/Box2DTestBed/TestEntries.cpp \
+Classes/BugsTest/Bug-1159.cpp \
+Classes/BugsTest/Bug-1174.cpp \
+Classes/BugsTest/Bug-350.cpp \
+Classes/BugsTest/Bug-422.cpp \
+Classes/BugsTest/Bug-624.cpp \
+Classes/BugsTest/Bug-886.cpp \
+Classes/BugsTest/Bug-899.cpp \
+Classes/BugsTest/Bug-914.cpp \
+Classes/BugsTest/BugsTest.cpp \
+Classes/BugsTest/Bug-458/Bug-458.cpp \
+Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
+Classes/ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.cpp \
+Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
+Classes/CocosDenshionTest/CocosDenshionTest.cpp \
+Classes/CurlTest/CurlTest.cpp \
+Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
+Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
+Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
+Classes/EffectsTest/EffectsTest.cpp \
+Classes/ExtensionsTest/ExtensionsTest.cpp \
+Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
+Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
+Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
+Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
+Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp \
+Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
+Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
+Classes/FontTest/FontTest.cpp \
+Classes/IntervalTest/IntervalTest.cpp \
+Classes/KeypadTest/KeypadTest.cpp \
+Classes/LabelTest/LabelTest.cpp \
+Classes/LayerTest/LayerTest.cpp \
+Classes/NodeTest/NodeTest.cpp \
+Classes/TextInputTest/TextInputTest.cpp \
+Classes/MenuTest/MenuTest.cpp \
+Classes/MotionStreakTest/MotionStreakTest.cpp \
+Classes/MutiTouchTest/MutiTouchTest.cpp \
+Classes/ParallaxTest/ParallaxTest.cpp \
+Classes/ParticleTest/ParticleTest.cpp \
+Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
+Classes/PerformanceTest/PerformanceParticleTest.cpp \
+Classes/PerformanceTest/PerformanceSpriteTest.cpp \
+Classes/PerformanceTest/PerformanceTest.cpp \
+Classes/PerformanceTest/PerformanceTextureTest.cpp \
+Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+Classes/RenderTextureTest/RenderTextureTest.cpp \
+Classes/RotateWorldTest/RotateWorldTest.cpp \
+Classes/SceneTest/SceneTest.cpp \
+Classes/SchedulerTest/SchedulerTest.cpp \
+Classes/ShaderTest/ShaderTest.cpp \
+Classes/SpriteTest/SpriteTest.cpp \
+Classes/TextureCacheTest/TextureCacheTest.cpp \
+Classes/Texture2dTest/Texture2dTest.cpp \
+Classes/TileMapTest/TileMapTest.cpp \
+Classes/TouchesTest/Ball.cpp \
+Classes/TouchesTest/Paddle.cpp \
+Classes/TouchesTest/TouchesTest.cpp \
+Classes/TransitionsTest/TransitionsTest.cpp \
+Classes/UserDefaultTest/UserDefaultTest.cpp \
+Classes/ZwoptexTest/ZwoptexTest.cpp \
+Classes/controller.cpp \
+Classes/testBasic.cpp \
+Classes/AppDelegate.cpp
 
 LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
 
@@ -92,13 +92,15 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
             
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,CocosDenshion/android)
-$(call import-module,Box2D)
-$(call import-module,chipmunk)
+$(call import-module,cocosdenshion/android)
+$(call import-module,external/Box2D)
+$(call import-module,external/chipmunk)
 $(call import-module,cocos2dx)
 $(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
+$(call import-module,extensions)

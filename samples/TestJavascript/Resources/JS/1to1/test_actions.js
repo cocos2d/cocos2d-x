@@ -39,7 +39,7 @@ scenes.currentScene = 1;
  */
 scenes['test_move'] = function () {
 	var s1 = new cc.Sprite.create("grossini_dance_05.png");
-	s1.position = cc.Point.create(winSize.width / 2 + 50, winSize.height / 2);
+	s1.position = {x:1,y:2};//cc.Point.create(winSize.width / 2 + 50, winSize.height / 2);
 	var s2 = new cc.Sprite.create("grossinis_sister1.png");
 	s2.position = cc.Point.create(winSize.width / 2 - 50, winSize.height / 2);
 

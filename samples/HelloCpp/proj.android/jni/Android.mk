@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := helloworld_shared
+LOCAL_MODULE := hellocpp_shared
 
-LOCAL_MODULE_FILENAME := libhelloworld
+LOCAL_MODULE_FILENAME := libhellocpp
 
 LOCAL_SRC_FILES := helloworld/main.cpp \
                    ../../Classes/AppDelegate.cpp \

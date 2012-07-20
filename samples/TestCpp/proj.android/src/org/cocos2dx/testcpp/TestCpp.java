@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package org.cocos2dx.application;
+package org.cocos2dx.testcpp;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxEditText;
@@ -36,17 +36,17 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.view.ViewGroup;
 
-public class ApplicationDemo extends Cocos2dxActivity{
+public class TestCpp extends Cocos2dxActivity{
 	private Cocos2dxGLSurfaceView mGLView;
 	
-	protected void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
-		
-		if (detectOpenGLES20()) {
-			// get the packageName,it's used to set the resource path
-			String packageName = getApplication().getPackageName();
-			super.setPackageName(packageName);
-			
+    protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);	
+        
+        if (detectOpenGLES20()) {
+        	// get the packageName,it's used to set the resource path
+    		String packageName = getApplication().getPackageName();
+    		super.setPackageName(packageName);
+
             // FrameLayout
             ViewGroup.LayoutParams framelayout_params =
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
@@ -80,18 +80,20 @@ public class ApplicationDemo extends Cocos2dxActivity{
 		else {
 			Log.d("activity", "don't support gles2.0");
 			finish();
-		}	
+		}
 	}
-	
+
 	 @Override
-	 protected void onPause() {
+	 protected void onPause() {		 
 	     super.onPause();
+	     
 	     mGLView.onPause();
 	 }
 
 	 @Override
 	 protected void onResume() {
 	     super.onResume();
+	     
 	     mGLView.onResume();
 	 }
 	 
@@ -102,8 +104,8 @@ public class ApplicationDemo extends Cocos2dxActivity{
 	     ConfigurationInfo info = am.getDeviceConfigurationInfo();
 	     return (info.reqGlEsVersion >= 0x20000);
 	 }
-	
+
      static {
-         System.loadLibrary("helloworld");
-     }
+         System.loadLibrary("testcpp");
+     }     
 }

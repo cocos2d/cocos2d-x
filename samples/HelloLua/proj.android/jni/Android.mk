@@ -2,16 +2,16 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := game_shared
+LOCAL_MODULE := hellolua_shared
 
-LOCAL_MODULE_FILENAME := libgame
+LOCAL_MODULE_FILENAME := libhellolua
 
-LOCAL_SRC_FILES := helloworld/main.cpp \
+LOCAL_SRC_FILES := hellolua/main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../../lua/cocos2dx_support/CCLuaEngine.cpp \
-                   ../../../lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
-                   ../../../lua/cocos2dx_support/LuaCocos2d.cpp \
-                   ../../../lua/cocos2dx_support/tolua_fix.c
+                   ../../../../scripting/lua/cocos2dx_support/CCLuaEngine.cpp \
+                   ../../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
+                   ../../../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
+                   ../../../../scripting/lua/cocos2dx_support/tolua_fix.c
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
@@ -22,5 +22,5 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_lua_static
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx)
-$(call import-module,CocosDenshion/android)
-$(call import-module,lua/proj.android/jni)
+$(call import-module,cocosdenshion/android)
+$(call import-module,scripting/lua/proj.android/jni)

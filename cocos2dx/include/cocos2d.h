@@ -169,6 +169,7 @@ THE SOFTWARE.
 #include "sprite_nodes/CCSpriteFrameCache.h"
 
 // support
+#include "support/CCNotificationCenter.h"
 #include "support/CCPointExtension.h"
 #include "support/CCProfiling.h"
 #include "support/CCUserDefault.h"

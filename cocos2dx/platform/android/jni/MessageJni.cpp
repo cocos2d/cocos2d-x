@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "../CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include "CCEventType.h"
-#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "support/CCNotificationCenter.h"
 
 #include <android/log.h>
 #include <jni.h>
@@ -59,7 +59,7 @@ extern "C"
     {
         CCApplication::sharedApplication().applicationDidEnterBackground();
         
-        extension::CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
+        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
     }
     
     void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume()
