@@ -16,7 +16,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CC_DLL CCMenuPassive : public CCLayer, public CCRGBAProtocol
+class CCMenuPassive : public CCLayer, public CCRGBAProtocol
 {
         /** Color: conforms with CCRGBAProtocol protocol */
         CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);

@@ -2,7 +2,7 @@
 #define __CCSPACER_H__
 
 #include "layers_scenes_transitions_nodes/CCLayer.h"
-#include "GlobalDefine.h"
+#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -13,7 +13,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CC_DLL CCSpacer: public CCLayer
+class CCSpacer: public CCLayer
 {
 public:
     static CCSpacer* verticalSpacer(float space);

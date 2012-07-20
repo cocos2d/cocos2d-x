@@ -85,7 +85,7 @@ typedef unsigned int CCControlState;
  *
  * To use the CCControl you have to subclass it.
  */
-class CC_DLL CCControl : public CCLayer, public CCRGBAProtocol
+class CCControl : public CCLayer, public CCRGBAProtocol
 {
 
     //CCRGBAProtocol

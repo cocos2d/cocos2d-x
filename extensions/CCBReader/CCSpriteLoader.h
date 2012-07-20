@@ -8,7 +8,7 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CC_DLL CCSpriteLoader : public CCNodeLoader {
+class CCSpriteLoader : public CCNodeLoader {
     public:
         virtual ~CCSpriteLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCSpriteLoader, loader);

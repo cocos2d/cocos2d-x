@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-class CC_DLL CCNodeLoaderListener {
+class CCNodeLoaderListener {
     public:
         virtual ~CCNodeLoaderListener() {};
 

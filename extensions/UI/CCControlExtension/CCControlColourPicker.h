@@ -46,7 +46,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CC_DLL CCControlColourPicker: public CCControl
+class CCControlColourPicker: public CCControl
 {
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_colorValue, ColorValue);
     virtual void setColorValue(const ccColor3B& colorValue);

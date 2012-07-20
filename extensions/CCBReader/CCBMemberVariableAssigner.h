@@ -17,7 +17,7 @@ NS_CC_EXT_BEGIN
         return true; \
     }
 
-class CC_DLL CCBMemberVariableAssigner {
+class CCBMemberVariableAssigner {
     public:
         virtual ~CCBMemberVariableAssigner() {};
 

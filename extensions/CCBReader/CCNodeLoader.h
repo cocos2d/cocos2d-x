@@ -1,7 +1,7 @@
 #ifndef _CCB_CCNODELOADER_H_
 #define _CCB_CCNODELOADER_H_
 
-#include "CCInvocation.h"
+#include "UI/CCControlExtension/CCInvocation.h"
 #include "cocos2d.h"
 #include "CCBReader.h"
 
@@ -27,7 +27,7 @@ struct BlockCCControlData {
 /* Forward declaration. */
 class CCBReader;
 
-class CC_DLL CCNodeLoader : public CCObject {
+class CCNodeLoader : public CCObject {
     public:
         virtual ~CCNodeLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoader, loader);
