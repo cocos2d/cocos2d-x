@@ -251,7 +251,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		152A373A15B7FBB700A1DCC7 /* GlobalDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
 		1552794F157C64F9007CC855 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		15A9C126159B03D200BF103F /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
 		15A9C127159B03D200BF103F /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
@@ -731,6 +730,8 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D4F9F37B12E54555005CA6D2 /* Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = SOURCE_ROOT; };
+		F28379F015B95F8000A5707B /* cocos-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos-ext.h"; sourceTree = "<group>"; };
+		F28379F115B95F8000A5707B /* ExtensionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionMacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -779,11 +780,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		15AA9C4015B7EC450033D6C2 /* classes */ = {
+		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
+				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
+				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
 				15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */,
+				15AA9CAB15B7EC460033D6C2 /* controller.h */,
+				15AA9D3215B7EC460033D6C2 /* testBasic.h */,
+				15AA9D3315B7EC460033D6C2 /* testResource.h */,
+				15AA9D3415B7EC460033D6C2 /* tests.h */,
 				15AA9C4115B7EC450033D6C2 /* AccelerometerTest */,
 				15AA9C4415B7EC450033D6C2 /* ActionManagerTest */,
 				15AA9C4715B7EC450033D6C2 /* ActionsEaseTest */,
@@ -795,8 +802,6 @@
 				15AA9CA115B7EC460033D6C2 /* ChipmunkAccelTouchTest */,
 				15AA9CA415B7EC460033D6C2 /* ClickAndMoveTest */,
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
-				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
-				15AA9CAB15B7EC460033D6C2 /* controller.h */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
 				15AA9CAF15B7EC460033D6C2 /* CurrentLanguageTest */,
 				15AA9CB215B7EC460033D6C2 /* DrawPrimitivesTest */,
@@ -821,10 +826,6 @@
 				15AA9D2815B7EC460033D6C2 /* SchedulerTest */,
 				15AA9D2B15B7EC460033D6C2 /* ShaderTest */,
 				15AA9D2E15B7EC460033D6C2 /* SpriteTest */,
-				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
-				15AA9D3215B7EC460033D6C2 /* testBasic.h */,
-				15AA9D3315B7EC460033D6C2 /* testResource.h */,
-				15AA9D3415B7EC460033D6C2 /* tests.h */,
 				15AA9D3515B7EC460033D6C2 /* TextInputTest */,
 				15AA9D3815B7EC460033D6C2 /* Texture2dTest */,
 				15AA9D3B15B7EC460033D6C2 /* TextureCacheTest */,
@@ -834,7 +835,7 @@
 				15AA9D4B15B7EC460033D6C2 /* UserDefaultTest */,
 				15AA9D4E15B7EC460033D6C2 /* ZwoptexTest */,
 			);
-			name = classes;
+			name = Classes;
 			path = ../classes;
 			sourceTree = "<group>";
 		};
@@ -1481,7 +1482,7 @@
 			path = ZwoptexTest;
 			sourceTree = "<group>";
 		};
-		15AA9D9E15B7EC7C0033D6C2 /* CocosDenshion */ = {
+		15AA9D9E15B7EC7C0033D6C2 /* cocosdenshion */ = {
 			isa = PBXGroup;
 			children = (
 				15AA9DA515B7EC7C0033D6C2 /* include */,
@@ -1779,9 +1780,10 @@
 		15AA9ED615B7EDCB0033D6C2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F28379F015B95F8000A5707B /* cocos-ext.h */,
+				F28379F115B95F8000A5707B /* ExtensionMacros.h */,
 				15AA9ED715B7EDCB0033D6C2 /* CCBReader */,
 				15AA9EFE15B7EDCB0033D6C2 /* UI */,
-				152A373A15B7FBB700A1DCC7 /* GlobalDefine.h */,
 			);
 			name = extensions;
 			path = ../../../extensions;
@@ -1896,8 +1898,8 @@
 				15AA9C2D15B7EBDF0033D6C2 /* cocos2dx.xcodeproj */,
 				15AA9DCC15B7EC960033D6C2 /* Box2D */,
 				15AA9E6715B7ECB00033D6C2 /* chipmunk */,
-				15AA9C4015B7EC450033D6C2 /* classes */,
-				15AA9D9E15B7EC7C0033D6C2 /* CocosDenshion */,
+				15AA9C4015B7EC450033D6C2 /* Classes */,
+				15AA9D9E15B7EC7C0033D6C2 /* cocosdenshion */,
 				15AA9ED615B7EDCB0033D6C2 /* extensions */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
@@ -2276,7 +2278,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../external/CocosDenshion/include",
+					"$(SRCROOT)/../../../cocosdenshion/include",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/constraints\"",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
@@ -2318,7 +2320,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../external/CocosDenshion/include",
+					"$(SRCROOT)/../../../cocosdenshion/include",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/constraints\"",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
