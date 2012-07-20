@@ -38,9 +38,9 @@ scenes.currentScene = 1;
  * tests the most basic function: moveTo and moveBy
  */
 scenes['test_move'] = function () {
-	var s1 = new cc.Sprite.create("grossini_dance_05.png");
-	s1.position = {x:1,y:2};//cc.Point.create(winSize.width / 2 + 50, winSize.height / 2);
-	var s2 = new cc.Sprite.create("grossinis_sister1.png");
+	var s1 = cc.Sprite.create("grossini_dance_05.png");
+	s1.position = cc.Point.create(winSize.width / 2 + 50, winSize.height / 2);
+	var s2 = cc.Sprite.create("grossinis_sister1.png");
 	s2.position = cc.Point.create(winSize.width / 2 - 50, winSize.height / 2);
 
 	var moveTo = new cc.MoveTo();
@@ -63,9 +63,9 @@ scenes['test_move'] = function () {
 };
 
 scenes['test_rotate'] = function () {
-	var s1 = new cc.Sprite.create("grossini_dance_05.png");
+	var s1 = cc.Sprite.create("grossini_dance_05.png");
 	s1.position = cc.Point.create(winSize.width / 2 + 50, winSize.height / 2);
-	var s2 = new cc.Sprite.create("grossinis_sister1.png");
+	var s2 = cc.Sprite.create("grossinis_sister1.png");
 	s2.rotation = 90;
 	s2.position = cc.Point.create(winSize.width / 2 - 100, winSize.height / 2);
 
@@ -124,7 +124,7 @@ scenes['test_animation'] = function () {
 };
 
 scenes['test_repeat'] = function () {
-	var s1 = new cc.Sprite.create("grossinis_sister1.png");
+	var s1 = cc.Sprite.create("grossinis_sister1.png");
 	s1.position = cc.Point.create(winSize.width / 2, winSize.height / 2);
 
 	var rotateBy = new cc.RotateBy();
@@ -145,7 +145,7 @@ scenes['test_repeat'] = function () {
 };
 
 scenes['test_sequence'] = function () {
-	var s1 = new cc.Sprite.create("grossini_dance_05.png");
+	var s1 = cc.Sprite.create("grossini_dance_05.png");
 	s1.position = cc.Point.create(winSize.width / 2 + 50, winSize.height / 2);
 
 	var rotate1 = new cc.RotateBy();
@@ -170,7 +170,7 @@ scenes['test_sequence'] = function () {
 
 scenes['test_wave3d'] = function () {
 	var node = new cc.Node();
-	var s1 = new cc.Sprite.create("grossini_dance_05.png");
+	var s1 = cc.Sprite.create("grossini_dance_05.png");
 	s1.position = cc.Point.create(winSize.width / 2 + 50, winSize.height / 2);
 
 	var rotate1 = new cc.RotateBy();
