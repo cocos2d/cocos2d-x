@@ -2,7 +2,7 @@
 #define _CCB_CCSCROLLVIEWLOADER_H_
 
 #include "CCNodeLoader.h"
-#include "UI/CCScrollView/CCScrollView.h"
+#include "../UI/CCScrollView/CCScrollView.h"
 
 NS_CC_EXT_BEGIN
 
