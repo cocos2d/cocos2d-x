@@ -253,8 +253,8 @@
 				15426A3E15B5722100712A7F /* include */,
 				15426A4115B5722100712A7F /* ios */,
 			);
-			name = CocosDenshion;
-			path = ../../../CocosDenshion;
+			name = cocosdenshion;
+			path = ../../../cocosdenshion;
 			sourceTree = "<group>";
 		};
 		15426A3E15B5722100712A7F /* include */ = {
