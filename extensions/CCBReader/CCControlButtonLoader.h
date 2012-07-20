@@ -2,14 +2,14 @@
 #define _CCB_CCCONTROLBUTTONLOADER_H_
 
 #include "CCControlLoader.h"
-#include "CCControlButton.h"
+#include "UI/CCControlExtension/CCControlButton.h"
 
 NS_CC_EXT_BEGIN
 
 /* Forward declaration. */
 class CCBReader;
 
-class CC_DLL CCControlButtonLoader : public CCControlLoader {
+class CCControlButtonLoader : public CCControlLoader {
     public:
         virtual ~CCControlButtonLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCControlButtonLoader, loader);

@@ -43,7 +43,7 @@ NS_CC_EXT_BEGIN
  */
 
 /** @class CCControlButton Button control for Cocos2D. */
-class CC_DLL CCControlButton : public CCControl
+class CCControlButton : public CCControl
 {        
 public:
     virtual ~CCControlButton();

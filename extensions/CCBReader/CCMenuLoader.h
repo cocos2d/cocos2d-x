@@ -8,7 +8,7 @@ NS_CC_EXT_BEGIN
 /* Forward declaration. */
 class CCBReader;
 
-class CC_DLL CCMenuLoader : public CCLayerLoader {
+class CCMenuLoader : public CCLayerLoader {
     public:
         virtual ~CCMenuLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuLoader, loader);

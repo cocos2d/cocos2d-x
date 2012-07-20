@@ -44,7 +44,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CC_DLL CCControlHuePicker : public CCControl
+class CCControlHuePicker : public CCControl
 {
     //maunally put in the setters
     CC_SYNTHESIZE_READONLY(float, m_hue, Hue);

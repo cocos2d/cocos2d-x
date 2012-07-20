@@ -6,7 +6,7 @@
 #define __CCINVOCATION_H__
 
 #include "cocoa/CCObject.h"
-#include "GlobalDefine.h"
+#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -23,7 +23,7 @@ typedef void (cocos2d::CCObject::*SEL_CCControlHandler)(cocos2d::CCObject*, CCCo
 
 #define cccontrol_selector(_SELECTOR) (SEL_CCControlHandler)(&_SELECTOR)
 
-class CC_DLL CCInvocation : public cocos2d::CCObject
+class CCInvocation : public cocos2d::CCObject
 {
     CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, m_action, Action);
     CC_SYNTHESIZE_READONLY(CCObject*, m_target, Target);

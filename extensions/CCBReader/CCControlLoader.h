@@ -2,14 +2,14 @@
 #define _CCB_CCCONTROLLOADER_H_
 
 #include "CCNodeLoader.h"
-#include "CCControl.h"
+#include "UI/CCControlExtension/CCControl.h"
 
 NS_CC_EXT_BEGIN
 
 /* Forward declaration. */
 class CCBReader;
 
-class CC_DLL CCControlLoader : public CCNodeLoader {
+class CCControlLoader : public CCNodeLoader {
     public:
         virtual ~CCControlLoader() {};
 

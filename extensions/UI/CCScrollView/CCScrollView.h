@@ -32,7 +32,7 @@
 #define __CCSCROLLVIEW_H__
 
 #include "layers_scenes_transitions_nodes/CCLayer.h"
-#include "GlobalDefine.h"
+#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -49,7 +49,7 @@ typedef enum {
 
 class CCScrollView;
 
-class CC_DLL CCScrollViewDelegate
+class CCScrollViewDelegate
 {
 public:
     virtual ~CCScrollViewDelegate() {}
@@ -62,7 +62,7 @@ public:
  * ScrollView support for cocos2d for iphone.
  * It provides scroll view functionalities to cocos2d projects natively.
  */
-class CC_DLL CCScrollView : public CCLayer
+class CCScrollView : public CCLayer
 {
 public:
     CCScrollView();

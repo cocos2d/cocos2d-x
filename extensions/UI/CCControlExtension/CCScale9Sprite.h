@@ -11,7 +11,7 @@
 
 #include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
-#include "GlobalDefine.h"
+#include "ExtensionMacros.h"
 
 
 namespace cocos2d { class CCSprite; }
@@ -40,7 +40,7 @@ enum positions
  * @{
  */
 
-class CC_DLL CCScale9Sprite : public CCNode, CCRGBAProtocol
+class CCScale9Sprite : public CCNode, CCRGBAProtocol
 {
 public:
     CCScale9Sprite();

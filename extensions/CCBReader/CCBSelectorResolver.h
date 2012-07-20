@@ -2,7 +2,7 @@
 #define _CCB_CCBSELECTORRESOLVER_H_
 
 #include "cocos2d.h"
-#include "GlobalDefine.h"
+#include "ExtensionMacros.h"
 
 USING_NS_CC;
 NS_CC_EXT_BEGIN
@@ -15,7 +15,7 @@ NS_CC_EXT_BEGIN
     return cccontrol_selector(METHOD); \
 }
 
-class CC_DLL CCBSelectorResolver {
+class CCBSelectorResolver {
     public:
         virtual ~CCBSelectorResolver() {};
 

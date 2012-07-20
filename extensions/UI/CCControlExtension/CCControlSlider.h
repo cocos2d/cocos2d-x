@@ -46,7 +46,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CC_DLL CCControlSlider: public CCControl
+class CCControlSlider: public CCControl
 {
     //maunally put in the setters
     CC_SYNTHESIZE_READONLY(float, m_value, Value);
