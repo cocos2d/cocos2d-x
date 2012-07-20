@@ -40,7 +40,7 @@ echo "use global definition of COCOS2DX_ROOT: $COCOS2DX_ROOT"
 COCOS2DX_ROOT_LOCAL=$COCOS2DX_ROOT
 fi
 
-TESTS_ROOT=$COCOS2DX_ROOT_LOCAL/tests/proj.android
+TESTS_ROOT=$COCOS2DX_ROOT_LOCAL/samples/TestCpp/proj.android
 
 # make sure assets is exist
 if [ -d $TESTS_ROOT/assets ]; then
@@ -50,7 +50,7 @@ fi
 mkdir $TESTS_ROOT/assets
 
 # copy resources
-for file in $COCOS2DX_ROOT_LOCAL/tests/Resources/*
+for file in $COCOS2DX_ROOT_LOCAL/samples/TestCpp/Resources/*
 do
 if [ -d $file ]; then
 cp -rf $file $TESTS_ROOT/assets

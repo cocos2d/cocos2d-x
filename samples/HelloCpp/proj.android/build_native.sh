@@ -39,7 +39,7 @@ echo "use global definition of COCOS2DX_ROOT: $COCOS2DX_ROOT"
 COCOS2DX_ROOT_LOCAL=$COCOS2DX_ROOT
 fi
 
-HELLOWORLD_ROOT=$COCOS2DX_ROOT_LOCAL/HelloWorld/proj.android
+HELLOWORLD_ROOT=$COCOS2DX_ROOT_LOCAL/samples/HelloCpp/proj.android
 
 # make sure assets is exist
 if [ -d $HELLOWORLD_ROOT/assets ]; then
@@ -49,7 +49,7 @@ fi
 mkdir $HELLOWORLD_ROOT/assets
 
 # copy resources
-for file in $COCOS2DX_ROOT_LOCAL/HelloWorld/Resources/*
+for file in $COCOS2DX_ROOT_LOCAL/samples/HelloCpp/Resources/*
 do
 if [ -d $file ]; then
 cp -rf $file $HELLOWORLD_ROOT/assets
