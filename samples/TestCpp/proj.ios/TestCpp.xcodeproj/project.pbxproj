@@ -698,7 +698,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* testsCpps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testsCpps.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* TestCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
@@ -1487,8 +1487,8 @@
 				15AA9DA515B7EC7C0033D6C2 /* include */,
 				15AA9DA815B7EC7C0033D6C2 /* ios */,
 			);
-			name = CocosDenshion;
-			path = ../../../CocosDenshion;
+			name = cocosdenshion;
+			path = ../../../cocosdenshion;
 			sourceTree = "<group>";
 		};
 		15AA9DA515B7EC7C0033D6C2 /* include */ = {
@@ -1885,7 +1885,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* testsCpps.app */,
+				1D6058910D05DD3D006BFB54 /* TestCpp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1957,9 +1957,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* testsCpp.ios */ = {
+		1D6058900D05DD3D006BFB54 /* TestCpp.ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "testsCpp.ios" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "TestCpp.ios" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -1970,9 +1970,9 @@
 			dependencies = (
 				15AA9F4815B7F39F0033D6C2 /* PBXTargetDependency */,
 			);
-			name = testsCpp.ios;
+			name = TestCpp.ios;
 			productName = iphone;
-			productReference = 1D6058910D05DD3D006BFB54 /* testsCpps.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* TestCpp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1980,7 +1980,7 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "testsCpp" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "TestCpp" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -2000,7 +2000,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* testsCpp.ios */,
+				1D6058900D05DD3D006BFB54 /* TestCpp.ios */,
 			);
 		};
 /* End PBXProject section */
@@ -2291,7 +2291,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"";
 				OTHER_CFLAGS = "-O2";
-				PRODUCT_NAME = testsCpps;
+				PRODUCT_NAME = TestCpp;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2332,7 +2332,7 @@
 				INFOPLIST_FILE = "Test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"";
-				PRODUCT_NAME = testsCpps;
+				PRODUCT_NAME = TestCpp;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2381,7 +2381,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "testsCpp.ios" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "TestCpp.ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -2390,7 +2390,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "testsCpp" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "TestCpp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

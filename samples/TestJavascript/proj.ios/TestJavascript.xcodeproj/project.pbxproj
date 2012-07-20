@@ -140,7 +140,7 @@
 		15DD7074156F2C6A003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		15F99094159C0C7200848A44 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
 		15F99095159C0C7200848A44 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
-		A922753D1517C094001B78AA /* testsjavascript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testsjavascript.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A922753D1517C094001B78AA /* TestJavascript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestJavascript.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A92275451517C094001B78AA /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -276,8 +276,8 @@
 				15426FCB15B5743C00712A7F /* include */,
 				15426FCE15B5743C00712A7F /* ios */,
 			);
-			name = CocosDenshion;
-			path = ../../../CocosDenshion;
+			name = cocosdenshion;
+			path = ../../../cocosdenshion;
 			sourceTree = "<group>";
 		};
 		15426FCB15B5743C00712A7F /* include */ = {
@@ -323,7 +323,7 @@
 		A922753E1517C094001B78AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A922753D1517C094001B78AA /* testsjavascript.app */,
+				A922753D1517C094001B78AA /* TestJavascript.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -451,9 +451,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A922753C1517C094001B78AA /* testsjavascript */ = {
+		A922753C1517C094001B78AA /* TestJavascript */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "testsjavascript" */;
+			buildConfigurationList = A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "TestJavascript" */;
 			buildPhases = (
 				A92275391517C094001B78AA /* Sources */,
 				A922753A1517C094001B78AA /* Frameworks */,
@@ -464,9 +464,9 @@
 			dependencies = (
 				15426FC215B5741900712A7F /* PBXTargetDependency */,
 			);
-			name = testsjavascript;
-			productName = testjs;
-			productReference = A922753D1517C094001B78AA /* testsjavascript.app */;
+			name = TestJavascript;
+			productName = TestJavascript;
+			productReference = A922753D1517C094001B78AA /* TestJavascript.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -477,7 +477,7 @@
 			attributes = {
 				LastUpgradeCheck = 0430;
 			};
-			buildConfigurationList = A92275371517C094001B78AA /* Build configuration list for PBXProject "testsjavascript" */;
+			buildConfigurationList = A92275371517C094001B78AA /* Build configuration list for PBXProject "TestJavascript" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -495,7 +495,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				A922753C1517C094001B78AA /* testsjavascript */,
+				A922753C1517C094001B78AA /* TestJavascript */,
 			);
 		};
 /* End PBXProject section */
@@ -691,7 +691,7 @@
 					"-lz",
 					"-ljs_static",
 				);
-				PRODUCT_NAME = testsjavascript;
+				PRODUCT_NAME = TestJavascript;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -721,7 +721,7 @@
 					"-lz",
 					"-ljs_static",
 				);
-				PRODUCT_NAME = testsjavascript;
+				PRODUCT_NAME = TestJavascript;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -730,7 +730,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A92275371517C094001B78AA /* Build configuration list for PBXProject "testsjavascript" */ = {
+		A92275371517C094001B78AA /* Build configuration list for PBXProject "TestJavascript" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A92276FE1517C097001B78AA /* Debug */,
@@ -739,7 +739,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "testsjavascript" */ = {
+		A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "TestJavascript" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A92277011517C097001B78AA /* Debug */,
