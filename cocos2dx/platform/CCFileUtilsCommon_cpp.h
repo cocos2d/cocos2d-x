@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "cocoa/CCDictionary.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
 #include "cocoa/CCString.h"
 #include "CCSAXParser.h"
@@ -455,4 +455,4 @@ bool CCFileUtils::isPopupNotify()
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
