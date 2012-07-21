@@ -54,8 +54,16 @@ CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName);
 
 static bool isIPad()
 {
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	return (winSize.width >= 1024 && winSize.height >= 768);
+	// save whether to load iPad resources so if the window is resized, we are consistent
+	static bool isSet = false;
+	static bool isIPad = false;
+	if( !isSet )
+	{
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+		isIPad = (winSize.width >= 1024 && winSize.height >= 768);
+		isSet = true;
+	}
+	return isIPad;
 }
 
 static NSString* removeSuffixFromPath(NSString *suffix, NSString *path)
