@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "CCFileUtils.h"
 #include "CCDirector.h"
+#include "CCApplication.h"
 #include "CCSAXParser.h"
 #include "CCDictionary.h"
 #include "support/zip_support/unzip.h"
@@ -48,22 +49,9 @@ static NSString *__suffixiPad =@"-ipad";
 static NSString *__suffixiPadRetinaDisplay =@"-ipadhd";
 static NSFileManager *__localFileManager= [[NSFileManager alloc] init];
 
-bool fileExistsAtPath(const char *cpath, const char *csuffix);
-CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
-CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName);
-
 static bool isIPad()
 {
-	// save whether to load iPad resources so if the window is resized, we are consistent
-	static bool isSet = false;
-	static bool isIPad = false;
-	if( !isSet )
-	{
-		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-		isIPad = (winSize.width >= 1024 && winSize.height >= 768);
-		isSet = true;
-	}
-	return isIPad;
+	return CCApplication::sharedApplication().isIpad();
 }
 
 static NSString* removeSuffixFromPath(NSString *suffix, NSString *path)
@@ -228,6 +216,10 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
 }
 
 NS_CC_BEGIN
+
+bool fileExistsAtPath(const char *cpath, const char *csuffix);
+CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
+CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName);
 
 static CCFileUtils* s_pFileUtils = NULL;
 

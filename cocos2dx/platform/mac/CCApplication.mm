@@ -27,6 +27,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "CCGeometry.h"
+#include "CCDirector.h"
 #import "CCDirectorCaller.h"
 
 NS_CC_BEGIN;
@@ -73,7 +74,16 @@ void CCApplication::statusBarFrame(cocos2d::CCRect * rect)
 
 bool CCApplication::isIpad()
 {
-	return false;
+	// save whether to load iPad resources so if the window is resized, we are consistent
+	static bool isSet = false;
+	static bool isIPad = false;
+	if( !isSet )
+	{
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+		isIPad = (winSize.width >= 1024 && winSize.height >= 768);
+		isSet = true;
+	}
+	return isIPad;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
