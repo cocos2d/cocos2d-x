@@ -144,13 +144,20 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFROM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "platform/win32/CCAccelerometer.h"
-#include "platform/win32/CCApplication.h"
-#include "platform/win32/CCEGLView.h"
-#include "platform/win32/CCGL.h"
-#include "platform/win32/CCStdC.h"
+	#include "platform/win32/CCAccelerometer.h"
+	#include "platform/win32/CCApplication.h"
+	#include "platform/win32/CCEGLView.h"
+	#include "platform/win32/CCGL.h"
+	#include "platform/win32/CCStdC.h"
 #endif // CC_TARGET_PLATFROM == CC_PLATFORM_WIN32
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    #include "platform/mac/CCAccelerometer.h"
+    #include "platform/mac/CCApplication.h"
+    #include "platform/mac/CCEGLView.h"
+    #include "platform/mac/CCGL.h"
+    #include "platform/mac/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 // script_support
 #include "script_support/CCScriptSupport.h"
