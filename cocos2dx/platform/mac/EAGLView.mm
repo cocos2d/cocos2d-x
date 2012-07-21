@@ -221,6 +221,7 @@ static EAGLView *view;
         // Show the fullscreen window
         [fullScreenWindow_ makeKeyAndOrderFront:self];
 		[fullScreenWindow_ makeMainWindow];
+		//[fullScreenWindow_ setNextResponder:superViewGLView_];
 
     } else {
 
@@ -247,14 +248,14 @@ static EAGLView *view;
 
     isFullScreen_ = fullscreen;
 
-    [openGLview retain]; // Retain +1
+    //[openGLview retain]; // Retain +1
 
 	// is this necessary?
     // re-configure glView
 	//cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
 	//director->setOpenGLView(openGLview); //[self setView:openGLview];
 
-    [openGLview release]; // Retain -1
+    //[openGLview release]; // Retain -1
 
     [openGLview setNeedsDisplay:YES];
 #else
@@ -269,7 +270,7 @@ static EAGLView *view;
 #define DISPATCH_EVENT(__event__, __selector__)												\
 	id obj = eventDelegate_;																\
 	[obj performSelector:__selector__														\
-			onThread:[(cocos2d::CCDirectorMac*)[CCDirector sharedDirector] runningThread]			\
+			onThread:[(cocos2d::CCDirector*)[CCDirector sharedDirector] runningThread]			\
 		  withObject:__event__																\
 	   waitUntilDone:NO];
 #endif
@@ -288,7 +289,7 @@ static EAGLView *view;
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
-	ids[0] = (int)theEvent;
+	ids[0] = [theEvent eventNumber];
 	xs[0] = x;
 	ys[0] = y;
 
@@ -312,7 +313,7 @@ static EAGLView *view;
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
-	ids[0] = (int)theEvent;
+	ids[0] = [theEvent eventNumber];
 	xs[0] = x;
 	ys[0] = y;
 
@@ -331,7 +332,7 @@ static EAGLView *view;
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
-	ids[0] = (int)theEvent; // index?
+	ids[0] = [theEvent eventNumber];
 	xs[0] = x;
 	ys[0] = y;
 
@@ -340,38 +341,49 @@ static EAGLView *view;
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+
+	// pass the event along to the next responder (like your NSWindow subclass)
+	[super rightMouseDown:theEvent];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+	[super rightMouseDragged:theEvent];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+	[super rightMouseUp:theEvent];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+	[super otherMouseDown:theEvent];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+	[super otherMouseDragged:theEvent];
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+	[super otherMouseUp:theEvent];
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+	[super mouseEntered:theEvent];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+	[super mouseExited:theEvent];
 }
 
 -(void) scrollWheel:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
+	[super scrollWheel:theEvent];
 }
 
 #pragma mark EAGLView - Key events
@@ -394,11 +406,17 @@ static EAGLView *view;
 - (void)keyDown:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
+	
+	// pass the event along to the next responder (like your NSWindow subclass)
+	[super keyDown:theEvent];
 }
 
 - (void)keyUp:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
+
+	// pass the event along to the next responder (like your NSWindow subclass)
+	[super keyUp:theEvent];
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent

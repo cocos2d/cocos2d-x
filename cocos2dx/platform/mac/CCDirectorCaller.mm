@@ -127,6 +127,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	
 	[openGLView unlockOpenGLContext];
 
+	// send any queued events
+	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
+
 	[pool release];
 }
 
