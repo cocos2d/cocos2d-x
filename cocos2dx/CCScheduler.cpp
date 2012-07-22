@@ -787,6 +787,9 @@ void CCScheduler::update(float dt)
     {
         if ((! pEntry->paused) && (! pEntry->markedForDeletion))
         {
+#ifdef COCOS2D_JAVASCRIPT
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(1, dt, (CCNode *)pEntry->target);
+#endif
             pEntry->target->update(dt);            
         }
     }
