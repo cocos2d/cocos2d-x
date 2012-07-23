@@ -6,7 +6,7 @@ LOCAL_MODULE := hellocpp_shared
 
 LOCAL_MODULE_FILENAME := libhellocpp
 
-LOCAL_SRC_FILES := helloworld/main.cpp \
+LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/HelloWorldScene.cpp
 

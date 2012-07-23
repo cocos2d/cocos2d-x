@@ -5,7 +5,7 @@
 APP_NAME=$2
 COCOS2DX_ROOT=$1
 APP_DIR=$COCOS2DX_ROOT/$APP_NAME
-HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloWorld
+HELLOWORLD_ROOT=$COCOS2DX_ROOT/samples/HelloCpp
 COCOSJAVALIB_ROOT=$COCOS2DX_ROOT/cocos2dx/platform/android/java
 NDK_ROOT=$3
 PACKAGE_PATH=$4
@@ -61,17 +61,17 @@ copy_build_native(){
 # replace AndroidManifext.xml and change the activity name
 # use sed to replace the specified line
 modify_androidmanifest(){
-    sed "s/ApplicationDemo/$APP_NAME/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $HELLOWORLD_ROOT/proj.android/AndroidManifest.xml > $APP_DIR/proj.android/AndroidManifest.xml
+    sed "s/HelloCpp/$APP_NAME/;s/org\.cocos2dx\.hellocpp/$PACKAGE_PATH/" $HELLOWORLD_ROOT/proj.android/AndroidManifest.xml > $APP_DIR/proj.android/AndroidManifest.xml
 }
 
-# modify ApplicationDemo.java
+# modify HelloCpp.java
 modify_applicationdemo(){
     convert_package_path_to_dir $PACKAGE_PATH
     
-    # rename APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java to 
-    # APP_DIR/android/src/org/cocos2dx/application/$APP_NAME.java, change helloworld to game
-    sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $APP_DIR/proj.android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/proj.android/src/$PACKAGE_PATH_DIR/$APP_NAME.java    
-    rm -fr $APP_DIR/proj.android/src/org/cocos2dx/application
+    # rename APP_DIR/android/src/org/cocos2dx/hellocpp/HelloCpp.java to 
+    # APP_DIR/android/src/org/cocos2dx/hellocpp/$APP_NAME.java, change hellocpp to game
+    sed "s/HelloCpp/$APP_NAME/;s/org\.cocos2dx\.hellocpp/$PACKAGE_PATH/;s/hellocpp/game/" $APP_DIR/proj.android/src/org/cocos2dx/hellocpp/HelloCpp.java > $APP_DIR/proj.android/src/$PACKAGE_PATH_DIR/$APP_NAME.java    
+    rm -fr $APP_DIR/proj.android/src/org/cocos2dx/hellocpp
 }
 
 modify_layout(){
