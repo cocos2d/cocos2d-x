@@ -120,25 +120,25 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     //
     
     // Centre
-    centre = CCSprite::create(scale9Image->getTexture(), m_capInsetsInternal);
+    centre = CCSprite::createWithTexture(scale9Image->getTexture(), m_capInsetsInternal);
     scale9Image->addChild(centre, 0, pCentre);
     
     // Top
-    top = CCSprite::create(scale9Image->getTexture(), CCRectMake(m_capInsetsInternal.origin.x,
+    top = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsetsInternal.origin.x,
                                                                 t,
                                                                 m_capInsetsInternal.size.width,
                                                                 m_capInsetsInternal.origin.y - t));
     scale9Image->addChild(top, 1, pTop);
     
     // Bottom
-    bottom = CCSprite::create(scale9Image->getTexture(), CCRectMake( m_capInsetsInternal.origin.x,
+    bottom = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake( m_capInsetsInternal.origin.x,
                                                                    m_capInsetsInternal.origin.y + m_capInsetsInternal.size.height,
                                                                    m_capInsetsInternal.size.width,
                                                                    h - (m_capInsetsInternal.origin.y - t + m_capInsetsInternal.size.height) ));
     scale9Image->addChild(bottom, 1, pBottom);
     
     // Left
-    left = CCSprite::create(scale9Image->getTexture(), CCRectMake(
+    left = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                  l,
                                                                  m_capInsetsInternal.origin.y,
                                                                  m_capInsetsInternal.origin.x - l,
@@ -146,7 +146,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     scale9Image->addChild(left, 1, pLeft);
     
     // Right
-    right = CCSprite::create(scale9Image->getTexture(), CCRectMake(
+    right = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                   m_capInsetsInternal.origin.x + m_capInsetsInternal.size.width,
                                                                   m_capInsetsInternal.origin.y,
                                                                   w - (m_capInsetsInternal.origin.x - l + m_capInsetsInternal.size.width),
@@ -154,7 +154,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     scale9Image->addChild(right, 1, pRight);
     
     // Top left
-    topLeft = CCSprite::create(scale9Image->getTexture(), CCRectMake(
+    topLeft = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                     l,
                                                                     t,
                                                                     m_capInsetsInternal.origin.x - l,
@@ -163,7 +163,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     scale9Image->addChild(topLeft, 2, pTopLeft);
     
     // Top right
-    topRight = CCSprite::create(scale9Image->getTexture(), CCRectMake(
+    topRight = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                      m_capInsetsInternal.origin.x + m_capInsetsInternal.size.width,
                                                                      t,
                                                                      w - (m_capInsetsInternal.origin.x - l + m_capInsetsInternal.size.width),
@@ -172,7 +172,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     scale9Image->addChild(topRight, 2, pTopRight);
     
     // Bottom left
-    bottomLeft = CCSprite::create(scale9Image->getTexture(), CCRectMake(
+    bottomLeft = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                        l,
                                                                        m_capInsetsInternal.origin.y + m_capInsetsInternal.size.height,
                                                                        m_capInsetsInternal.origin.x - l,
@@ -180,7 +180,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     scale9Image->addChild(bottomLeft, 2, pBottomLeft);
     
     // Bottom right
-    bottomRight = CCSprite::create(scale9Image->getTexture(), CCRectMake(
+    bottomRight = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
                                                                         m_capInsetsInternal.origin.x + m_capInsetsInternal.size.width,
                                                                         m_capInsetsInternal.origin.y + m_capInsetsInternal.size.height,
                                                                         w - (m_capInsetsInternal.origin.x - l + m_capInsetsInternal.size.width),
@@ -347,7 +347,7 @@ bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capI
 {
     CCAssert(spriteFrame != NULL, "Sprite frame must be not nil");
 
-    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::create(spriteFrame->getTexture(), 9);
+    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
     bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), capInsets);
     return pReturn;
 }
@@ -602,7 +602,7 @@ bool CCScale9Sprite::isOpacityModifyRGB()
 
 void CCScale9Sprite::setSpriteFrame(CCSpriteFrame * spriteFrame)
 {
-    CCSpriteBatchNode * batchnode = CCSpriteBatchNode::create(spriteFrame->getTexture(), 9);
+    CCSpriteBatchNode * batchnode = CCSpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
     this->updateWithBatchNode(batchnode, spriteFrame->getRect(), CCRectZero);
 
     // Reset insets

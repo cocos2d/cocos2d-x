@@ -103,7 +103,7 @@ public:
     ~CCSequence(void);
 
     /** initializes the action */
-    bool initOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+    bool initWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
@@ -130,7 +130,7 @@ public:
     /** helper contructor to create an array of sequenceable actions given an array */
     static CCFiniteTimeAction* create(CCArray *arrayOfActions);
     /** creates the action */
-    static CCSequence* create(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+    static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
 protected:
     CCFiniteTimeAction *m_pActions[2];
@@ -243,7 +243,7 @@ public:
     ~CCSpawn(void);
 
     /** initializes the Spawn action with the 2 actions to spawn */
-    bool initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+    bool initWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
@@ -274,7 +274,7 @@ public:
     static CCFiniteTimeAction* create(CCArray *arrayOfActions);
 
     /** creates the Spawn action */
-    static CCSpawn* create(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+    static CCSpawn* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
 protected:
     CCFiniteTimeAction *m_pOne;

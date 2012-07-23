@@ -29,7 +29,7 @@ CCArray* CCDictionary::allKeys()
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
 
-    CCArray* pArray = CCArray::create(iKeyCount);
+    CCArray* pArray = CCArray::createWithCapacity(iKeyCount);
 
     CCDictElement *pElement, *tmp;
     if (m_eDictType == kCCDictStr)
@@ -309,10 +309,10 @@ CCDictionary* CCDictionary::create()
 
 CCDictionary* CCDictionary::dictionaryWithDictionary(CCDictionary* srcDict)
 {
-    return CCDictionary::create(srcDict);
+    return CCDictionary::createWithDictionary(srcDict);
 }
 
-CCDictionary* CCDictionary::create(CCDictionary* srcDict)
+CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 {
     CCDictionary* pNewDict = (CCDictionary*)srcDict->copy();
     pNewDict->autorelease();
@@ -333,10 +333,10 @@ CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFile
 
 CCDictionary* CCDictionary::dictionaryWithContentsOfFile(const char *pFileName)
 {
-    return CCDictionary::create(pFileName);
+    return CCDictionary::createWithContentsOfFile(pFileName);
 }
 
-CCDictionary* CCDictionary::create(const char *pFileName)
+CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
 {
     CCDictionary* pRet = createWithContentsOfFileThreadSafe(pFileName);
     pRet->autorelease();

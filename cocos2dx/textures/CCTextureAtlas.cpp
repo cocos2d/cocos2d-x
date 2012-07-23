@@ -121,10 +121,10 @@ CCTextureAtlas * CCTextureAtlas::create(const char* file, unsigned int capacity)
 
 CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
-    return CCTextureAtlas::create(texture, capacity);
+    return CCTextureAtlas::createWithTexture(texture, capacity);
 }
 
-CCTextureAtlas * CCTextureAtlas::create(CCTexture2D *texture, unsigned int capacity)
+CCTextureAtlas * CCTextureAtlas::createWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
     CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
     if (pTextureAtlas && pTextureAtlas->initWithTexture(texture, capacity))
