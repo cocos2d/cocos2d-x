@@ -1,0 +1,424 @@
+
+############################################################################
+#
+#   Makefile for building : Lib_Cocos2d_Arm_Wophone.TMK3
+#   Created by TMK3_V2.3, please do not modify.
+#
+#############################################################################
+
+TO_PROJECT_ROOT = ../../../PRJ_TG3
+OUTPUT_FILENAME =  libCocos2dStatic.a
+
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
+
+DEFINES += -DCC_UNDER_WOPHONE \
+          -D__TG3_PURE_DLL__ \
+          -DUSE_FILE32API
+INCLUDE_PATH += -I../ \
+               -I../platform \
+               -I../include -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libxml2 \
+               -I$(TO_PROJECT_ROOT)/Include/ThirdParty/iconv \
+               -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libpng \
+               -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libjpeg
+
+OBJECTS_DIR = ./Debug-ARM
+DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
+TARGET = $(DESTDIR)/$(OUTPUT_FILENAME)
+
+DEL_FILE = rm -f
+MKDIR = mkdir -p
+
+first: all
+
+OBJECTS = \
+	$(OBJECTS_DIR)/CCCamera.o \
+	$(OBJECTS_DIR)/CCConfiguration.o \
+	$(OBJECTS_DIR)/CCDirector.o \
+	$(OBJECTS_DIR)/CCDrawingPrimitives.o \
+	$(OBJECTS_DIR)/CCScheduler.o \
+	$(OBJECTS_DIR)/cocos2d.o \
+	$(OBJECTS_DIR)/CCAction.o \
+	$(OBJECTS_DIR)/CCActionCamera.o \
+	$(OBJECTS_DIR)/CCActionEase.o \
+	$(OBJECTS_DIR)/CCActionGrid.o \
+	$(OBJECTS_DIR)/CCActionGrid3D.o \
+	$(OBJECTS_DIR)/CCActionInstant.o \
+	$(OBJECTS_DIR)/CCActionInterval.o \
+	$(OBJECTS_DIR)/CCActionManager.o \
+	$(OBJECTS_DIR)/CCActionPageTurn3D.o \
+	$(OBJECTS_DIR)/CCActionProgressTimer.o \
+	$(OBJECTS_DIR)/CCActionTiledGrid.o \
+	$(OBJECTS_DIR)/CCAtlasNode.o \
+	$(OBJECTS_DIR)/CCNode.o \
+	$(OBJECTS_DIR)/CCAffineTransform.o \
+	$(OBJECTS_DIR)/CCAutoreleasePool.o \
+	$(OBJECTS_DIR)/CCData.o \
+	$(OBJECTS_DIR)/CCGeometry.o \
+	$(OBJECTS_DIR)/CCNS.o \
+	$(OBJECTS_DIR)/CCObject.o \
+	$(OBJECTS_DIR)/CCSet.o \
+	$(OBJECTS_DIR)/CCZone.o \
+	$(OBJECTS_DIR)/CCGrabber.o \
+	$(OBJECTS_DIR)/CCGrid.o \
+	$(OBJECTS_DIR)/CCKeypadDelegate.o \
+	$(OBJECTS_DIR)/CCKeypadDispatcher.o \
+	$(OBJECTS_DIR)/CCLabelAtlas.o \
+	$(OBJECTS_DIR)/CCLabelBMFont.o \
+	$(OBJECTS_DIR)/CCLabelTTF.o \
+	$(OBJECTS_DIR)/CCLayer.o \
+	$(OBJECTS_DIR)/CCScene.o \
+	$(OBJECTS_DIR)/CCTransition.o \
+	$(OBJECTS_DIR)/CCTransitionPageTurn.o \
+	$(OBJECTS_DIR)/CCTransitionRadial.o \
+	$(OBJECTS_DIR)/CCMenu.o \
+	$(OBJECTS_DIR)/CCMenuItem.o \
+	$(OBJECTS_DIR)/CCMotionStreak.o \
+	$(OBJECTS_DIR)/CCProgressTimer.o \
+	$(OBJECTS_DIR)/CCRenderTexture.o \
+	$(OBJECTS_DIR)/CCRibbon.o \
+	$(OBJECTS_DIR)/CCParticleExamples.o \
+	$(OBJECTS_DIR)/CCParticleSystem.o \
+	$(OBJECTS_DIR)/CCParticleSystemPoint.o \
+	$(OBJECTS_DIR)/CCParticleSystemQuad.o \
+	$(OBJECTS_DIR)/CCCommon.o \
+	$(OBJECTS_DIR)/CCFileUtils.o \
+	$(OBJECTS_DIR)/CCGL.o \
+	$(OBJECTS_DIR)/CCImage.o \
+	$(OBJECTS_DIR)/CCSAXParser.o \
+	$(OBJECTS_DIR)/CCStdC.o \
+	$(OBJECTS_DIR)/CCThread.o \
+	$(OBJECTS_DIR)/platform.o \
+	$(OBJECTS_DIR)/CCLock.o \
+	$(OBJECTS_DIR)/CCAccelerometer_wophone.o \
+	$(OBJECTS_DIR)/CCApplication_wophone.o \
+	$(OBJECTS_DIR)/CCEGLView_wophone.o \
+	$(OBJECTS_DIR)/CCScriptSupport.o \
+	$(OBJECTS_DIR)/CCAnimation.o \
+	$(OBJECTS_DIR)/CCAnimationCache.o \
+	$(OBJECTS_DIR)/CCSprite.o \
+	$(OBJECTS_DIR)/CCSpriteBatchNode.o \
+	$(OBJECTS_DIR)/CCSpriteFrame.o \
+	$(OBJECTS_DIR)/CCSpriteFrameCache.o \
+	$(OBJECTS_DIR)/base64.o \
+	$(OBJECTS_DIR)/CCArray.o \
+	$(OBJECTS_DIR)/CCPointExtension.o \
+	$(OBJECTS_DIR)/CCProfiling.o \
+	$(OBJECTS_DIR)/CCUserDefault.o \
+	$(OBJECTS_DIR)/ccUtils.o \
+	$(OBJECTS_DIR)/TransformUtils.o \
+	$(OBJECTS_DIR)/TGAlib.o \
+	$(OBJECTS_DIR)/ioapi.o \
+	$(OBJECTS_DIR)/unzip.o \
+	$(OBJECTS_DIR)/ZipUtils.o \
+	$(OBJECTS_DIR)/CCIMEDispatcher.o \
+	$(OBJECTS_DIR)/CCTextFieldTTF.o \
+	$(OBJECTS_DIR)/CCTexture2D.o \
+	$(OBJECTS_DIR)/CCTextureAtlas.o \
+	$(OBJECTS_DIR)/CCTextureCache.o \
+	$(OBJECTS_DIR)/CCTexturePVR.o \
+	$(OBJECTS_DIR)/CCParallaxNode.o \
+	$(OBJECTS_DIR)/CCTileMapAtlas.o \
+	$(OBJECTS_DIR)/CCTMXLayer.o \
+	$(OBJECTS_DIR)/CCTMXObjectGroup.o \
+	$(OBJECTS_DIR)/CCTMXTiledMap.o \
+	$(OBJECTS_DIR)/CCTMXXMLParser.o \
+	$(OBJECTS_DIR)/CCTouchDispatcher.o \
+	$(OBJECTS_DIR)/CCTouchHandler.o
+
+ADD_OBJECTS += 
+
+$(OBJECTS_DIR) :
+	$(MKDIR) $(OBJECTS_DIR)
+
+$(DESTDIR) :
+	$(MKDIR) $(DESTDIR)
+
+all : $(OBJECTS_DIR) $(DESTDIR) $(TARGET)
+
+$(TARGET) : $(OBJECTS)
+	$(LINK) $(LINK_FLAGS) -o $(TARGET) $(SYS_OBJECTS) $(OBJECTS) $(ADD_OBJECTS) $(LIBS) $(SYS_LIBS)
+
+clean : 
+	-$(DEL_FILE) $(OBJECTS)
+	-$(DEL_FILE) $(TARGET)
+
+$(OBJECTS_DIR)/CCCamera.o : ../CCCamera.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCCamera.o ../CCCamera.cpp
+
+$(OBJECTS_DIR)/CCConfiguration.o : ../CCConfiguration.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCConfiguration.o ../CCConfiguration.cpp
+
+$(OBJECTS_DIR)/CCDirector.o : ../CCDirector.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCDirector.o ../CCDirector.cpp
+
+$(OBJECTS_DIR)/CCDrawingPrimitives.o : ../CCDrawingPrimitives.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCDrawingPrimitives.o ../CCDrawingPrimitives.cpp
+
+$(OBJECTS_DIR)/CCScheduler.o : ../CCScheduler.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCScheduler.o ../CCScheduler.cpp
+
+$(OBJECTS_DIR)/cocos2d.o : ../cocos2d.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cocos2d.o ../cocos2d.cpp
+
+$(OBJECTS_DIR)/CCAction.o : ../actions/CCAction.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAction.o ../actions/CCAction.cpp
+
+$(OBJECTS_DIR)/CCActionCamera.o : ../actions/CCActionCamera.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionCamera.o ../actions/CCActionCamera.cpp
+
+$(OBJECTS_DIR)/CCActionEase.o : ../actions/CCActionEase.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionEase.o ../actions/CCActionEase.cpp
+
+$(OBJECTS_DIR)/CCActionGrid.o : ../actions/CCActionGrid.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionGrid.o ../actions/CCActionGrid.cpp
+
+$(OBJECTS_DIR)/CCActionGrid3D.o : ../actions/CCActionGrid3D.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionGrid3D.o ../actions/CCActionGrid3D.cpp
+
+$(OBJECTS_DIR)/CCActionInstant.o : ../actions/CCActionInstant.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionInstant.o ../actions/CCActionInstant.cpp
+
+$(OBJECTS_DIR)/CCActionInterval.o : ../actions/CCActionInterval.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionInterval.o ../actions/CCActionInterval.cpp
+
+$(OBJECTS_DIR)/CCActionManager.o : ../actions/CCActionManager.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionManager.o ../actions/CCActionManager.cpp
+
+$(OBJECTS_DIR)/CCActionPageTurn3D.o : ../actions/CCActionPageTurn3D.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionPageTurn3D.o ../actions/CCActionPageTurn3D.cpp
+
+$(OBJECTS_DIR)/CCActionProgressTimer.o : ../actions/CCActionProgressTimer.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionProgressTimer.o ../actions/CCActionProgressTimer.cpp
+
+$(OBJECTS_DIR)/CCActionTiledGrid.o : ../actions/CCActionTiledGrid.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionTiledGrid.o ../actions/CCActionTiledGrid.cpp
+
+$(OBJECTS_DIR)/CCAtlasNode.o : ../base_nodes/CCAtlasNode.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAtlasNode.o ../base_nodes/CCAtlasNode.cpp
+
+$(OBJECTS_DIR)/CCNode.o : ../base_nodes/CCNode.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNode.o ../base_nodes/CCNode.cpp
+
+$(OBJECTS_DIR)/CCAffineTransform.o : ../cocoa/CCAffineTransform.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAffineTransform.o ../cocoa/CCAffineTransform.cpp
+
+$(OBJECTS_DIR)/CCAutoreleasePool.o : ../cocoa/CCAutoreleasePool.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAutoreleasePool.o ../cocoa/CCAutoreleasePool.cpp
+
+$(OBJECTS_DIR)/CCData.o : ../cocoa/CCData.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCData.o ../cocoa/CCData.cpp
+
+$(OBJECTS_DIR)/CCGeometry.o : ../cocoa/CCGeometry.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGeometry.o ../cocoa/CCGeometry.cpp
+
+$(OBJECTS_DIR)/CCNS.o : ../cocoa/CCNS.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNS.o ../cocoa/CCNS.cpp
+
+$(OBJECTS_DIR)/CCObject.o : ../cocoa/CCObject.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCObject.o ../cocoa/CCObject.cpp
+
+$(OBJECTS_DIR)/CCSet.o : ../cocoa/CCSet.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSet.o ../cocoa/CCSet.cpp
+
+$(OBJECTS_DIR)/CCZone.o : ../cocoa/CCZone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCZone.o ../cocoa/CCZone.cpp
+
+$(OBJECTS_DIR)/CCGrabber.o : ../effects/CCGrabber.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrabber.o ../effects/CCGrabber.cpp
+
+$(OBJECTS_DIR)/CCGrid.o : ../effects/CCGrid.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrid.o ../effects/CCGrid.cpp
+
+$(OBJECTS_DIR)/CCKeypadDelegate.o : ../keypad_dispatcher/CCKeypadDelegate.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeypadDelegate.o ../keypad_dispatcher/CCKeypadDelegate.cpp
+
+$(OBJECTS_DIR)/CCKeypadDispatcher.o : ../keypad_dispatcher/CCKeypadDispatcher.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeypadDispatcher.o ../keypad_dispatcher/CCKeypadDispatcher.cpp
+
+$(OBJECTS_DIR)/CCLabelAtlas.o : ../label_nodes/CCLabelAtlas.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLabelAtlas.o ../label_nodes/CCLabelAtlas.cpp
+
+$(OBJECTS_DIR)/CCLabelBMFont.o : ../label_nodes/CCLabelBMFont.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLabelBMFont.o ../label_nodes/CCLabelBMFont.cpp
+
+$(OBJECTS_DIR)/CCLabelTTF.o : ../label_nodes/CCLabelTTF.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLabelTTF.o ../label_nodes/CCLabelTTF.cpp
+
+$(OBJECTS_DIR)/CCLayer.o : ../layers_scenes_transitions_nodes/CCLayer.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLayer.o ../layers_scenes_transitions_nodes/CCLayer.cpp
+
+$(OBJECTS_DIR)/CCScene.o : ../layers_scenes_transitions_nodes/CCScene.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCScene.o ../layers_scenes_transitions_nodes/CCScene.cpp
+
+$(OBJECTS_DIR)/CCTransition.o : ../layers_scenes_transitions_nodes/CCTransition.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTransition.o ../layers_scenes_transitions_nodes/CCTransition.cpp
+
+$(OBJECTS_DIR)/CCTransitionPageTurn.o : ../layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTransitionPageTurn.o ../layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp
+
+$(OBJECTS_DIR)/CCTransitionRadial.o : ../layers_scenes_transitions_nodes/CCTransitionRadial.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTransitionRadial.o ../layers_scenes_transitions_nodes/CCTransitionRadial.cpp
+
+$(OBJECTS_DIR)/CCMenu.o : ../menu_nodes/CCMenu.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCMenu.o ../menu_nodes/CCMenu.cpp
+
+$(OBJECTS_DIR)/CCMenuItem.o : ../menu_nodes/CCMenuItem.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCMenuItem.o ../menu_nodes/CCMenuItem.cpp
+
+$(OBJECTS_DIR)/CCMotionStreak.o : ../misc_nodes/CCMotionStreak.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCMotionStreak.o ../misc_nodes/CCMotionStreak.cpp
+
+$(OBJECTS_DIR)/CCProgressTimer.o : ../misc_nodes/CCProgressTimer.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCProgressTimer.o ../misc_nodes/CCProgressTimer.cpp
+
+$(OBJECTS_DIR)/CCRenderTexture.o : ../misc_nodes/CCRenderTexture.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCRenderTexture.o ../misc_nodes/CCRenderTexture.cpp
+
+$(OBJECTS_DIR)/CCRibbon.o : ../misc_nodes/CCRibbon.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCRibbon.o ../misc_nodes/CCRibbon.cpp
+
+$(OBJECTS_DIR)/CCParticleExamples.o : ../particle_nodes/CCParticleExamples.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParticleExamples.o ../particle_nodes/CCParticleExamples.cpp
+
+$(OBJECTS_DIR)/CCParticleSystem.o : ../particle_nodes/CCParticleSystem.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParticleSystem.o ../particle_nodes/CCParticleSystem.cpp
+
+$(OBJECTS_DIR)/CCParticleSystemPoint.o : ../particle_nodes/CCParticleSystemPoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParticleSystemPoint.o ../particle_nodes/CCParticleSystemPoint.cpp
+
+$(OBJECTS_DIR)/CCParticleSystemQuad.o : ../particle_nodes/CCParticleSystemQuad.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParticleSystemQuad.o ../particle_nodes/CCParticleSystemQuad.cpp
+
+$(OBJECTS_DIR)/CCCommon.o : ../platform/CCCommon.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCCommon.o ../platform/CCCommon.cpp
+
+$(OBJECTS_DIR)/CCFileUtils.o : ../platform/CCFileUtils.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCFileUtils.o ../platform/CCFileUtils.cpp
+
+$(OBJECTS_DIR)/CCGL.o : ../platform/CCGL.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGL.o ../platform/CCGL.cpp
+
+$(OBJECTS_DIR)/CCImage.o : ../platform/CCImage.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCImage.o ../platform/CCImage.cpp
+
+$(OBJECTS_DIR)/CCSAXParser.o : ../platform/CCSAXParser.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSAXParser.o ../platform/CCSAXParser.cpp
+
+$(OBJECTS_DIR)/CCStdC.o : ../platform/CCStdC.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCStdC.o ../platform/CCStdC.cpp
+
+$(OBJECTS_DIR)/CCThread.o : ../platform/CCThread.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCThread.o ../platform/CCThread.cpp
+
+$(OBJECTS_DIR)/platform.o : ../platform/platform.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/platform.o ../platform/platform.cpp
+
+$(OBJECTS_DIR)/CCLock.o : ../platform/ios/CCLock.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLock.o ../platform/ios/CCLock.cpp
+
+$(OBJECTS_DIR)/CCAccelerometer_wophone.o : ../platform/wophone/CCAccelerometer_wophone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAccelerometer_wophone.o ../platform/wophone/CCAccelerometer_wophone.cpp
+
+$(OBJECTS_DIR)/CCApplication_wophone.o : ../platform/wophone/CCApplication_wophone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCApplication_wophone.o ../platform/wophone/CCApplication_wophone.cpp
+
+$(OBJECTS_DIR)/CCEGLView_wophone.o : ../platform/wophone/CCEGLView_wophone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCEGLView_wophone.o ../platform/wophone/CCEGLView_wophone.cpp
+
+$(OBJECTS_DIR)/CCScriptSupport.o : ../script_support/CCScriptSupport.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCScriptSupport.o ../script_support/CCScriptSupport.cpp
+
+$(OBJECTS_DIR)/CCAnimation.o : ../sprite_nodes/CCAnimation.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAnimation.o ../sprite_nodes/CCAnimation.cpp
+
+$(OBJECTS_DIR)/CCAnimationCache.o : ../sprite_nodes/CCAnimationCache.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAnimationCache.o ../sprite_nodes/CCAnimationCache.cpp
+
+$(OBJECTS_DIR)/CCSprite.o : ../sprite_nodes/CCSprite.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSprite.o ../sprite_nodes/CCSprite.cpp
+
+$(OBJECTS_DIR)/CCSpriteBatchNode.o : ../sprite_nodes/CCSpriteBatchNode.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSpriteBatchNode.o ../sprite_nodes/CCSpriteBatchNode.cpp
+
+$(OBJECTS_DIR)/CCSpriteFrame.o : ../sprite_nodes/CCSpriteFrame.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSpriteFrame.o ../sprite_nodes/CCSpriteFrame.cpp
+
+$(OBJECTS_DIR)/CCSpriteFrameCache.o : ../sprite_nodes/CCSpriteFrameCache.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSpriteFrameCache.o ../sprite_nodes/CCSpriteFrameCache.cpp
+
+$(OBJECTS_DIR)/base64.o : ../support/base64.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/base64.o ../support/base64.cpp
+
+$(OBJECTS_DIR)/CCArray.o : ../support/CCArray.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCArray.o ../support/CCArray.cpp
+
+$(OBJECTS_DIR)/CCPointExtension.o : ../support/CCPointExtension.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCPointExtension.o ../support/CCPointExtension.cpp
+
+$(OBJECTS_DIR)/CCProfiling.o : ../support/CCProfiling.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCProfiling.o ../support/CCProfiling.cpp
+
+$(OBJECTS_DIR)/CCUserDefault.o : ../support/CCUserDefault.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCUserDefault.o ../support/CCUserDefault.cpp
+
+$(OBJECTS_DIR)/ccUtils.o : ../support/ccUtils.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ccUtils.o ../support/ccUtils.cpp
+
+$(OBJECTS_DIR)/TransformUtils.o : ../support/TransformUtils.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TransformUtils.o ../support/TransformUtils.cpp
+
+$(OBJECTS_DIR)/TGAlib.o : ../support/image_support/TGAlib.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TGAlib.o ../support/image_support/TGAlib.cpp
+
+$(OBJECTS_DIR)/ioapi.o : ../support/zip_support/ioapi.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ioapi.o ../support/zip_support/ioapi.cpp
+
+$(OBJECTS_DIR)/unzip.o : ../support/zip_support/unzip.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/unzip.o ../support/zip_support/unzip.cpp
+
+$(OBJECTS_DIR)/ZipUtils.o : ../support/zip_support/ZipUtils.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ZipUtils.o ../support/zip_support/ZipUtils.cpp
+
+$(OBJECTS_DIR)/CCIMEDispatcher.o : ../text_input_node/CCIMEDispatcher.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCIMEDispatcher.o ../text_input_node/CCIMEDispatcher.cpp
+
+$(OBJECTS_DIR)/CCTextFieldTTF.o : ../text_input_node/CCTextFieldTTF.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTextFieldTTF.o ../text_input_node/CCTextFieldTTF.cpp
+
+$(OBJECTS_DIR)/CCTexture2D.o : ../textures/CCTexture2D.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTexture2D.o ../textures/CCTexture2D.cpp
+
+$(OBJECTS_DIR)/CCTextureAtlas.o : ../textures/CCTextureAtlas.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTextureAtlas.o ../textures/CCTextureAtlas.cpp
+
+$(OBJECTS_DIR)/CCTextureCache.o : ../textures/CCTextureCache.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTextureCache.o ../textures/CCTextureCache.cpp
+
+$(OBJECTS_DIR)/CCTexturePVR.o : ../textures/CCTexturePVR.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTexturePVR.o ../textures/CCTexturePVR.cpp
+
+$(OBJECTS_DIR)/CCParallaxNode.o : ../tileMap_parallax_nodes/CCParallaxNode.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParallaxNode.o ../tileMap_parallax_nodes/CCParallaxNode.cpp
+
+$(OBJECTS_DIR)/CCTileMapAtlas.o : ../tileMap_parallax_nodes/CCTileMapAtlas.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTileMapAtlas.o ../tileMap_parallax_nodes/CCTileMapAtlas.cpp
+
+$(OBJECTS_DIR)/CCTMXLayer.o : ../tileMap_parallax_nodes/CCTMXLayer.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTMXLayer.o ../tileMap_parallax_nodes/CCTMXLayer.cpp
+
+$(OBJECTS_DIR)/CCTMXObjectGroup.o : ../tileMap_parallax_nodes/CCTMXObjectGroup.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTMXObjectGroup.o ../tileMap_parallax_nodes/CCTMXObjectGroup.cpp
+
+$(OBJECTS_DIR)/CCTMXTiledMap.o : ../tileMap_parallax_nodes/CCTMXTiledMap.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTMXTiledMap.o ../tileMap_parallax_nodes/CCTMXTiledMap.cpp
+
+$(OBJECTS_DIR)/CCTMXXMLParser.o : ../tileMap_parallax_nodes/CCTMXXMLParser.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTMXXMLParser.o ../tileMap_parallax_nodes/CCTMXXMLParser.cpp
+
+$(OBJECTS_DIR)/CCTouchDispatcher.o : ../touch_dispatcher/CCTouchDispatcher.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTouchDispatcher.o ../touch_dispatcher/CCTouchDispatcher.cpp
+
+$(OBJECTS_DIR)/CCTouchHandler.o : ../touch_dispatcher/CCTouchHandler.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTouchHandler.o ../touch_dispatcher/CCTouchHandler.cpp
+

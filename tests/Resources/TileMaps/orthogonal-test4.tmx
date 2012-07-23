@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="14" height="8" tilewidth="32" tileheight="32">
+ <tileset name="Desert" firstgid="1" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="tmw_desert_spacing.png"/>
+ </tileset>
+ <layer name="Layer 0" width="14" height="8">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAFNjYGCQIxFrQGlGIGYCYmYglgRiKSiWRpJjQlID088JxFxAzA3EikCsAsSqQKwMlRMBYiEgFoWqwaVPB4h1kfRxI6nDpw/dPmL1odsnA/WbLJo+Qaj7hYFYE4i1oFgbSU4ISQ1Ijz4Z8WAAxADxIVkbwAEAAA==
+  </data>
+ </layer>
+</map>

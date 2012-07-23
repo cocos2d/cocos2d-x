@@ -1,0 +1,17 @@
+
+class CCAnimation : public CCObject
+{
+    char* getName(void);
+    void setName(char *pszName);
+
+    float getDelay(void);
+    void setDelay(float fDelay);
+
+    void addFrame(CCSpriteFrame *pFrame);
+    void addFrameWithFileName(char *pszFileName);
+    void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
+
+    static CCAnimation* animation(void);
+    static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames);
+    static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay);
+};

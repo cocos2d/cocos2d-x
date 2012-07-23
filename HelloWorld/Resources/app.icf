@@ -1,0 +1,17 @@
+[S3E]
+MemSize=4000000
+#MemFlags0=USE_STACK_ALLOCATOR
+#SysStackSwitch=1
+#landscape
+#DispFixRot=2
+#or portrait
+#DispFixRot=1
+#autorotate
+#DispFixRot=0
+# fix for new ati drivers in simulator
+# DisableGL=1
+
+[Trace]
+GAME=1
+IW_GL=1
+IW_GL_VERBOSE=1

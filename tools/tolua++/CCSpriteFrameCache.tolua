@@ -1,0 +1,17 @@
+
+class CCSpriteFrameCache : public CCObject
+{
+    void addSpriteFramesWithFile(char *pszPlist);
+    void addSpriteFramesWithFile(char* plist, char* textureFileName);
+    void addSpriteFramesWithFile(char *pszPlist, CCTexture2D *pobTexture);
+    void addSpriteFrame(CCSpriteFrame *pobFrame, char *pszFrameName);
+    void removeSpriteFrames(void);
+    void removeUnusedSpriteFrames(void);
+    void removeSpriteFrameByName(char *pszName);
+    void removeSpriteFramesFromFile(char* plist);
+    void removeSpriteFramesFromTexture(CCTexture2D* texture);
+    CCSpriteFrame* spriteFrameByName(char *pszName);
+
+    static CCSpriteFrameCache* sharedSpriteFrameCache(void);
+    static void purgeSharedSpriteFrameCache(void);
+};

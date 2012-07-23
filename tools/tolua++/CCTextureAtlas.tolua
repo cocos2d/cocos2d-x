@@ -1,0 +1,25 @@
+
+class CCTextureAtlas : public CCObject
+{
+    unsigned int getTotalQuads(void);
+    unsigned int getCapacity(void);
+
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D* texture);
+
+    // ccV3F_C4B_T2F_Quad getQuads(void);
+    // void setQuads(ccV3F_C4B_T2F_Quad quads);
+
+    static CCTextureAtlas * textureAtlasWithFile(char* file , unsigned int capacity);
+    static CCTextureAtlas * textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity);
+
+    // void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
+    // void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
+    void insertQuadFromIndex(unsigned int fromIndex, unsigned int newIndex);
+    void removeQuadAtIndex(unsigned int index);
+    void removeAllQuads();
+    bool resizeCapacity(unsigned int n);
+    void drawNumberOfQuads(unsigned int n);
+    void drawNumberOfQuads(unsigned int n, unsigned int start);
+    void drawQuads();
+};

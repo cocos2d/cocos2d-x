@@ -1,0 +1,26 @@
+
+class CCMutableDictionary : public CCObject
+{
+    TOLUA_TEMPLATE_BIND(K V, std::string CCObject*)
+
+    unsigned int count();
+    std::vector<std::string> allKeys();
+    std::vector<std::string> allKeysForObject(V object);
+
+    V objectForKey(K key);
+
+    bool setObject(V pObject, K key);
+    void removeObjectForKey(K key);
+    bool begin();
+    void endToLua();
+
+    V next(K* key = NULL);
+
+    void endToLua();
+
+    void removeAllObjects();
+
+    static CCMutableDictionary<K, V>* dictionaryWithDictionary(CCMutableDictionary<K, V>* srcDict);
+};
+
+typedef CCMutableDictionary<std::string, CCString*> CCStringToStringDictionary;

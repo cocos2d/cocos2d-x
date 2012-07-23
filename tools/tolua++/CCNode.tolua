@@ -1,0 +1,145 @@
+
+enum {
+    kCCNodeTagInvalid = -1,
+};
+
+enum {
+    kCCNodeOnEnter,
+    kCCNodeOnExit
+};
+
+class CCNode : public CCObject
+{
+    int     getZOrder();
+    tolua_readonly tolua_property__CCZOrder int zOrder;
+
+    float   getVertexZ();
+    void    setVertexZ(float var);
+    tolua_property__CCVertexZ       float vertexZ;
+
+    float   getRotation();
+    void    setRotation(float newRotation);
+    tolua_property__CCRotation      float rotation;
+
+    float   getScale();
+    void    setScale(float scale);
+    tolua_property__CCScale         float scale;
+
+    float   getScaleX();
+    void    setScaleX(float newScaleX);
+    tolua_property__CCScaleX        float scaleX;
+
+    float   getScaleY();
+    void    setScaleY(float newScaleY);
+    tolua_property__CCScaleY        float scaleY;
+
+    CCPoint getPositionLua();
+    void    getPosition(float* x = 0, float* y = 0);
+    float   getPositionX();
+    float   getPositionY();
+    void    setPosition(float x, float y);
+    void    setPositionX(float x);
+    void    setPositionY(float y);
+    tolua_property__CCPositionX     float x;
+    tolua_property__CCPositionY     float y;
+
+    float   getSkewX();
+    void    setSkewX(float skewX);
+    tolua_property__CCSkewX         float skewX;
+
+    float   getSkewY();
+    void    setSkewY(float skewY);
+    tolua_property__CCSkewY         float skewY;
+
+    CCArray* getChildren();
+    unsigned int getChildrenCount(void);
+
+    CCCamera*   getCamera();
+
+    CCGridBase* getGrid();
+    void    setGrid(CCGridBase* pGrid);
+
+    bool    getIsVisible();
+    void    setIsVisible(bool var);
+    tolua_property__CCIsVisible     bool  isVisible;
+
+    CCPoint getAnchorPoint();
+    void    setAnchorPoint(CCPoint point);
+    tolua_property__CCAnchorPoint   CCPoint anchorPoint;
+
+    CCPoint getAnchorPointInPixels();
+
+    CCSize  getContentSize();
+    void    setContentSize(CCSize size);
+    tolua_property__CCContentSize   CCSize contentSize;
+
+    CCSize  getContentSizeInPixels();
+    void    setContentSizeInPixels(CCSize sz);
+
+    bool    getIsRunning();
+
+    CCNode* getParent();
+    void    setParent(CCNode * var);
+
+    bool    getIsRelativeAnchorPoint();
+    void    setIsRelativeAnchorPoint(bool newValue);
+
+    int     getTag();
+    void    setTag(int var);
+    tolua_property__CCTag           int tag;
+
+    // void*   getUserData();
+    // void    setUserData(void *var);
+
+    void    registerScriptHandler(LUA_FUNCTION nHandler);
+    void    unregisterScriptHandler(void);
+
+    void    addChild(CCNode * child);
+    void    addChild(CCNode * child, int zOrder);
+    void    addChild(CCNode * child, int zOrder, int tag);
+    void    removeFromParentAndCleanup(bool cleanup);
+    void    removeChild(CCNode* child, bool cleanup);
+    void    removeChildByTag(int tag, bool cleanup);
+    void    removeAllChildrenWithCleanup(bool cleanup);
+
+    CCNode* getChildByTag(int tag);
+    void    reorderChild(CCNode * child, int zOrder);
+    void    cleanup(void);
+
+    void    draw(void);
+    void    visit(void);
+    void    transform(void);
+    void    transformAncestors(void);
+
+    CCRect  boundingBox(void);
+    CCRect  boundingBoxInPixels(void);
+
+    CCAction* runAction(CCAction* action);
+    void    stopAllActions(void);
+    void    stopAction(CCAction* action);
+    void    stopActionByTag(int tag);
+    CCAction* getActionByTag(int tag);
+    unsigned int numberOfRunningActions(void);
+
+    void    scheduleUpdate(void);
+    void    scheduleUpdateWithPriority(int priority);
+    void    unscheduleUpdate(void);
+    void    unscheduleAllSelectors(void);
+
+    void    resumeSchedulerAndActions(void);
+    void    pauseSchedulerAndActions(void);
+
+    CCAffineTransform nodeToParentTransform(void);
+    CCAffineTransform parentToNodeTransform(void);
+    CCAffineTransform nodeToWorldTransform(void);
+    CCAffineTransform worldToNodeTransform(void);
+
+    CCPoint convertToNodeSpace(CCPoint worldPoint);
+    CCPoint convertToWorldSpace(CCPoint nodePoint);
+    CCPoint convertToNodeSpaceAR(CCPoint worldPoint);
+    CCPoint convertToWorldSpaceAR(CCPoint nodePoint);
+    CCPoint convertTouchToNodeSpace(CCTouch * touch);
+    CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
+
+    static CCNode * node(void);
+};

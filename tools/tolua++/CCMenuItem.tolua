@@ -1,0 +1,96 @@
+
+class CCMenuItem : public CCNode
+{
+    bool getIsSelected(void);
+    bool getIsEnabled(void);
+    void setIsEnabled(bool isEnabled);
+
+    CCRect rect();
+    void activate();
+    void selected();
+    void unselected();
+    void registerScriptTapHandler(LUA_FUNCTION nHandler);
+    void unregisterScriptTapHandler(void);
+};
+
+class CCMenuItemLabel : public CCMenuItem
+{
+    ccColor3B getDisabledColor(void);
+    void setDisabledColor(ccColor3B color);
+
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity();
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
+
+    CCNode* getLabel(void);
+    void setLabel(CCNode* label);
+
+    static CCMenuItemLabel* itemWithLabel(CCNode* label);
+    void setString(char* label);
+
+    void setIsOpacityModifyRGB(bool bValue);
+    bool getIsOpacityModifyRGB(void);
+};
+
+class CCMenuItemAtlasFont : public CCMenuItemLabel
+{
+    static CCMenuItemAtlasFont* itemFromString(char* value, char* charMapFile, int itemWidth, int itemHeight, char startCharMap);
+};
+
+class CCMenuItemFont : public CCMenuItemLabel
+{
+    static void setFontSize(unsigned int s);
+    static unsigned int fontSize();
+    static void setFontName(char* name);
+    static char* fontName();
+    static CCMenuItemFont* itemFromString(char* value);
+    void setFontSizeObj(unsigned int s);
+    unsigned int fontSizeObj();
+    void setFontNameObj(char* name);
+    char* fontNameObj();
+};
+
+class CCMenuItemSprite : public CCMenuItem
+{
+    CCNode* getNormalImage(void);
+    void setNormalImage(CCNode* image);
+    CCNode* getSelectedImage(void);
+    void setSelectedImage(CCNode* image);
+    CCNode* getDisabledImage(void);
+    void setDisabledImage(CCNode* image);
+
+    static CCMenuItemSprite* itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite = NULL, CCNode* disabledSprite = NULL);
+
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity();
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
+
+    void setIsOpacityModifyRGB(bool bValue);
+    bool getIsOpacityModifyRGB(void);
+};
+
+class CCMenuItemImage : public CCMenuItemSprite
+{
+    static CCMenuItemImage* itemFromNormalImage(char* normalImage, char* selectedImage = NULL, char* disabledImage = NULL);
+};
+
+class CCMenuItemToggle : public CCMenuItem
+{
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity();
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
+
+    unsigned int getSelectedIndex(void);
+    void setSelectedIndex(unsigned int selectedIndex);
+
+    static CCMenuItemToggle* itemWithItem(CCMenuItem* item);
+    void addSubItem(CCMenuItem* item);
+
+    CCMenuItem* selectedItem();
+
+    void setIsOpacityModifyRGB(bool bValue);
+    bool getIsOpacityModifyRGB(void);
+};

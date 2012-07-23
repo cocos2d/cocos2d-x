@@ -1,0 +1,16 @@
+
+class CCCamera : public CCObject
+{
+    void setDirty(bool bValue);
+    bool getDirty(void);
+
+    void restore(void);
+    void locate(void);
+    void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
+    void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
+    void setUpXYZ(float fUpX, float fUpY, float fUpZ);
+    void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
+    void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
+    void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
+    static float getZEye();
+};

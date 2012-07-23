@@ -1,0 +1,45 @@
+options
+{
+# path to data of current game
+
+	s3e-data-dir="Data"
+
+# paths to modules of cocos2d-x - uncomment and customize if you need additional modules
+
+	module_path="../../cocos2dx/proj.marmalade/"
+#	module_path="../../Box2D/proj.marmalade/"
+#	module_path="../../chipmunk/proj.marmalade/"
+#	module_path="../../CocosDenshion/proj.marmalade/"
+
+}
+
+includepaths
+{
+	..
+}
+subprojects
+{
+# required module of Marmalade
+
+	IwGL
+
+# required module of cocos2d-x
+
+	cocos2dx
+
+# additional modules of cocos2d-x - uncomment if necessary
+
+#	Box2D
+#	chipmunk
+#	CocosDenshion
+}
+
+files
+{
+	[Source]	
+	("Source")
+	"*.h"
+	"*.cpp"
+}
+
+

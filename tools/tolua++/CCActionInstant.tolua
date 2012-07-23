@@ -1,0 +1,35 @@
+
+class CCActionInstant : public CCFiniteTimeAction
+{
+};
+
+class CCShow : public CCActionInstant
+{
+    static CCShow * action();
+};
+
+class CCHide : public CCActionInstant
+{
+    static CCHide * action();
+};
+
+class CCToggleVisibility : public CCActionInstant
+{
+    static CCToggleVisibility * action();
+};
+
+class CCFlipX : public CCActionInstant
+{
+    static CCFlipX * actionWithFlipX(bool x);
+};
+
+class CCFlipY : public CCActionInstant
+{
+    static CCFlipY * actionWithFlipY(bool y);
+};
+
+class CCPlace : public CCActionInstant
+{
+    static CCPlace * actionWithPosition(CCPoint pos);
+};
+

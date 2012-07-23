@@ -1,0 +1,21 @@
+
+class CCUserDefault
+{
+    bool    getBoolForKey(char* pKey, bool defaultValue = false);
+    int     getIntegerForKey(char* pKey, int defaultValue = 0);
+    float   getFloatForKey(char* pKey, float defaultValue=0.0f);
+    double  getDoubleForKey(char* pKey, double defaultValue=0.0);
+    std::string getStringForKey(char* pKey, std::string  defaultValue = "");
+
+    void    setBoolForKey(char* pKey, bool value);
+    void    setIntegerForKey(char* pKey, int value);
+    void    setFloatForKey(char* pKey, float value);
+    void    setDoubleForKey(char* pKey, double value);
+    void    setStringForKey(char* pKey, std::string  value);
+
+    void    flush();
+
+    static CCUserDefault* sharedUserDefault();
+    static void purgeSharedUserDefault();
+    static std::string getXMLFilePath();
+};

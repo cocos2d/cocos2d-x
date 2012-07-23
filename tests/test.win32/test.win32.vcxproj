@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>tests</ProjectName>
+    <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
+    <RootNamespace>test_win32</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir);$(SolutionDir)chipmunk\include\chipmunk;$(SolutionDir)CocosDenshion\include;..\tests;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir);$(SolutionDir)chipmunk\include\chipmunk;$(SolutionDir)CocosDenshion\include;..\tests;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\tests\AccelerometerTest\AccelerometerTest.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-1159.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-1174.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-350.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-422.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-458\Bug-458.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-458\QuestionContainerSprite.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-624.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-886.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-899.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-914.cpp" />
+    <ClCompile Include="..\tests\BugsTest\BugsTest.cpp" />
+    <ClCompile Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.cpp" />
+    <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\ExtensionsTest.cpp" />
+    <ClCompile Include="..\tests\ExtensionsTest\NotificationCenterTest.cpp" />
+    <ClCompile Include="..\tests\FontTest\FontTest.cpp" />
+    <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp" />
+    <ClCompile Include="..\tests\TextureCacheTest\TextureCacheTest.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\AppDelegate.cpp" />
+    <ClCompile Include="..\tests\controller.cpp" />
+    <ClCompile Include="..\tests\testBasic.cpp" />
+    <ClCompile Include="..\tests\ActionsTest\ActionsTest.cpp" />
+    <ClCompile Include="..\tests\TransitionsTest\TransitionsTest.cpp" />
+    <ClCompile Include="..\tests\ProgressActionsTest\ProgressActionsTest.cpp" />
+    <ClCompile Include="..\tests\EffectsTest\EffectsTest.cpp" />
+    <ClCompile Include="..\tests\ClickAndMoveTest\ClickAndMoveTest.cpp" />
+    <ClCompile Include="..\tests\RotateWorldTest\RotateWorldTest.cpp" />
+    <ClCompile Include="..\tests\ParticleTest\ParticleTest.cpp" />
+    <ClCompile Include="..\tests\EaseActionsTest\EaseActionsTest.cpp" />
+    <ClCompile Include="..\tests\MotionStreakTest\MotionStreakTest.cpp" />
+    <ClCompile Include="..\tests\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
+    <ClCompile Include="..\tests\CocosNodeTest\CocosNodeTest.cpp" />
+    <ClCompile Include="..\tests\TouchesTest\Ball.cpp" />
+    <ClCompile Include="..\tests\TouchesTest\Paddle.cpp" />
+    <ClCompile Include="..\tests\TouchesTest\TouchesTest.cpp" />
+    <ClCompile Include="..\tests\MenuTest\MenuTest.cpp" />
+    <ClCompile Include="..\tests\ActionManagerTest\ActionManagerTest.cpp" />
+    <ClCompile Include="..\tests\LayerTest\LayerTest.cpp" />
+    <ClCompile Include="..\tests\SceneTest\SceneTest.cpp" />
+    <ClCompile Include="..\tests\ParallaxTest\ParallaxTest.cpp" />
+    <ClCompile Include="..\tests\TileMapTest\TileMapTest.cpp" />
+    <ClCompile Include="..\tests\IntervalTest\IntervalTest.cpp" />
+    <ClCompile Include="..\tests\LabelTest\LabelTest.cpp" />
+    <ClCompile Include="..\tests\SpriteTest\SpriteTest.cpp" />
+    <ClCompile Include="..\tests\SchedulerTest\SchedulerTest.cpp" />
+    <ClCompile Include="..\tests\RenderTextureTest\RenderTextureTest.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Bounce.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\cocos2dChipmunkDemo.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\drawSpace.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Joints.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\LogoSmash.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\MagnetsElectric.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\OneWay.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Planet.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Player.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Plink.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Pump.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\PyramidStack.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\PyramidTopple.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Query.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Sensors.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Simple.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Springies.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Tank.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\TheoJansen.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Tumble.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\UnsafeOps.cpp" />
+    <ClCompile Include="..\tests\Box2DTest\Box2dTest.cpp" />
+    <ClCompile Include="..\tests\Box2DTestBed\Box2dView.cpp" />
+    <ClCompile Include="..\tests\Box2DTestBed\GLES-Render.cpp" />
+    <ClCompile Include="..\tests\Box2DTestBed\Test.cpp" />
+    <ClCompile Include="..\tests\Box2DTestBed\TestEntries.cpp" />
+    <ClCompile Include="..\tests\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
+    <ClCompile Include="..\tests\HiResTest\HiResTest.cpp" />
+    <ClCompile Include="..\tests\KeypadTest\KeypadTest.cpp" />
+    <ClCompile Include="..\tests\CocosDenshionTest\CocosDenshionTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceParticleTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceSpriteTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTextureTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTouchesTest.cpp" />
+    <ClCompile Include="..\tests\ZwoptexTest\ZwoptexTest.cpp" />
+    <ClCompile Include="..\tests\CurlTest\CurlTest.cpp" />
+    <ClCompile Include="..\tests\TextInputTest\TextInputTest.cpp" />
+    <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\tests\AccelerometerTest\AccelerometerTest.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-1159.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-1174.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-350.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-422.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-458\Bug-458.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-458\QuestionContainerSprite.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-624.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-886.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-899.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-914.h" />
+    <ClInclude Include="..\tests\BugsTest\BugsTest.h" />
+    <ClInclude Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.h" />
+    <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\ExtensionsTest.h" />
+    <ClInclude Include="..\tests\ExtensionsTest\NotificationCenterTest.h" />
+    <ClInclude Include="..\tests\FontTest\FontTest.h" />
+    <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h" />
+    <ClInclude Include="..\tests\TextureCacheTest\TextureCacheTest.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="..\AppDelegate.h" />
+    <ClInclude Include="..\tests\controller.h" />
+    <ClInclude Include="..\tests\testBasic.h" />
+    <ClInclude Include="..\tests\testResource.h" />
+    <ClInclude Include="..\tests\tests.h" />
+    <ClInclude Include="..\tests\ActionsTest\ActionsTest.h" />
+    <ClInclude Include="..\tests\TransitionsTest\TransitionsTest.h" />
+    <ClInclude Include="..\tests\ProgressActionsTest\ProgressActionsTest.h" />
+    <ClInclude Include="..\tests\EffectsTest\EffectsTest.h" />
+    <ClInclude Include="..\tests\ClickAndMoveTest\ClickAndMoveTest.h" />
+    <ClInclude Include="..\tests\RotateWorldTest\RotateWorldTest.h" />
+    <ClInclude Include="..\tests\ParticleTest\ParticleTest.h" />
+    <ClInclude Include="..\tests\EaseActionsTest\EaseActionsTest.h" />
+    <ClInclude Include="..\tests\MotionStreakTest\MotionStreakTest.h" />
+    <ClInclude Include="..\tests\DrawPrimitivesTest\DrawPrimitivesTest.h" />
+    <ClInclude Include="..\tests\CocosNodeTest\CocosNodeTest.h" />
+    <ClInclude Include="..\tests\TouchesTest\Ball.h" />
+    <ClInclude Include="..\tests\TouchesTest\Paddle.h" />
+    <ClInclude Include="..\tests\TouchesTest\TouchesTest.h" />
+    <ClInclude Include="..\tests\MenuTest\MenuTest.h" />
+    <ClInclude Include="..\tests\ActionManagerTest\ActionManagerTest.h" />
+    <ClInclude Include="..\tests\LayerTest\LayerTest.h" />
+    <ClInclude Include="..\tests\SceneTest\SceneTest.h" />
+    <ClInclude Include="..\tests\ParallaxTest\ParallaxTest.h" />
+    <ClInclude Include="..\tests\TileMapTest\TileMapTest.h" />
+    <ClInclude Include="..\tests\IntervalTest\IntervalTest.h" />
+    <ClInclude Include="..\tests\LabelTest\LabelTest.h" />
+    <ClInclude Include="..\tests\SpriteTest\SpriteTest.h" />
+    <ClInclude Include="..\tests\SchedulerTest\SchedulerTest.h" />
+    <ClInclude Include="..\tests\RenderTextureTest\RenderTextureTest.h" />
+    <ClInclude Include="..\tests\ChipmunkTest\ChipmunkDemo.h" />
+    <ClInclude Include="..\tests\ChipmunkTest\cocos2dChipmunkDemo.h" />
+    <ClInclude Include="..\tests\ChipmunkTest\drawSpace.h" />
+    <ClInclude Include="..\tests\Box2DTest\Box2dTest.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Box2dView.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\GLES-Render.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Test.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\ApplyForce.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\BodyTypes.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Breakable.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Bridge.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Cantilever.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Chain.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\CharacterCollision.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\CollisionFiltering.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\CollisionProcessing.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\CompoundShapes.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Confined.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\ContinuousTest.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\DistanceTest.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Dominos.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\DynamicTreeTest.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\EdgeShapes.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\ElasticBody.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Gears.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\LineJoint.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\OneSidedPlatform.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\PolyCollision.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\PolyShapes.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Prismatic.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Pulleys.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Pyramid.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\RayCast.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Revolute.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\SensorTest.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\ShapeEditing.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\SliderCrank.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\SphereStack.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\TheoJansen.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\TimeOfImpact.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\VaryingFriction.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\VaryingRestitution.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\VerticalStack.h" />
+    <ClInclude Include="..\tests\Box2DTestBed\Tests\Web.h" />
+    <ClInclude Include="..\tests\EffectsAdvancedTest\EffectsAdvancedTest.h" />
+    <ClInclude Include="..\tests\HiResTest\HiResTest.h" />
+    <ClInclude Include="..\tests\KeypadTest\KeypadTest.h" />
+    <ClInclude Include="..\tests\CocosDenshionTest\CocosDenshionTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceNodeChildrenTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceParticleTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceSpriteTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTextureTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTouchesTest.h" />
+    <ClInclude Include="..\tests\ZwoptexTest\ZwoptexTest.h" />
+    <ClInclude Include="..\tests\CurlTest\CurlTest.h" />
+    <ClInclude Include="..\tests\TextInputTest\TextInputTest.h" />
+    <ClInclude Include="..\tests\UserDefaultTest\UserDefaultTest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Box2D\proj.win32\Box2D.win32.vcxproj">
+      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\chipmunk\proj.win32\chipmunk.win32.vcxproj">
+      <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2dx\proj.win32\cocos2d-win32.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CocosDenshion\proj.win32\CocosDenshion.win32.vcxproj">
+      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

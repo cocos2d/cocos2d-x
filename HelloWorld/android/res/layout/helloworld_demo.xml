@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <org.cocos2dx.lib.Cocos2dxEditText 
+        android:id="@+id/textField"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@null"/>
+
+    <org.cocos2dx.lib.Cocos2dxGLSurfaceView
+        android:id="@+id/helloworld_gl_surfaceview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+
+</FrameLayout>

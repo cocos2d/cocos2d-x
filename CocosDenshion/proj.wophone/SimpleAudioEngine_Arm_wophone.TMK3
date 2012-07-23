@@ -1,0 +1,53 @@
+;
+; TG3 Makefile Auto Create Script
+;
+; 说明：
+;   1.在等号左边不要有空格
+;   2.所有的路径请使用"/"来分隔
+;   3.所有的文件名不可以有空格
+;   4.只能对当前目录及其子目录下的.c、.cpp生成Makefile
+;
+
+;本TMK3文件目录位置到项目根目录之间的转换，不支持多个串，如果有多个，以最后一个为准
+;即 ./$(TO_PROJECT_ROOT)/ 就是项目的根目录
+TO_PROJECT_ROOT=../../PRJ_TG3
+
+;输出目标的名字，不支持多个串，如果有多个，以最后一个为准
+OUTPUT_FILENAME=libCocosDenshion.a
+
+;包含的其他的TMK3文件，此文件和本文件一起构成MakeFile的内容
+;此项可以出现在TMK3文件内的任意地方，与已经存在的项依次组合
+;注意：此项不支持绝对路径，但是可以使用$(TO_PROJECT_ROOT)构成文件名
+INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_LIB_Arm.TMK3		;TOPS标准应用，包括动态库等
+
+;预定义串，生成MakeFile的时候直接放在MakeFile的前面
+;格式：PRE_DEFINE=STRING，生成MakeFile的时候，"PRE_DEFINE="后面的所有非注释非续行字符都会放在MakeFile前面
+;例如：PRE_DEFINE=AAA=BBB，会放入AAA=BBB到MakeFile中
+;可以使用多个PRE_DEFINE串，也可以使用PRE_DEFINE1、PRE_DEFINE2等方式，MakeFile中依据出现顺序(不是数字大小)排列
+;PRE_DEFINE=USE_IMAGEKIT=1	;使用 ImageToolKit 库，此时生成的 Makefile 会自动连接有关的LIB
+;PRE_DEFINE=USE_ICU=1				;使用 ICU 库，此时生成的 Makefile 会自动连接有关的LIB
+;PRE_DEFINE=USE_MTAPI=1			;使用 MTAPI 库，此时生成的 Makefile 会自动连接有关的LIB
+
+;C、C++预定义宏，可以使用多个DEFINES串，也可以使用DEFINES1、DEFINES2等方式，MakeFile中依据出现顺序(不是数字大小)排列
+DEFINES=-DCC_UNDER_WOPHONE				;是wophone环境下的makefile
+DEFINES=-D__TG3_PURE_DLL__		;生成的是纯动态库（意思是：不是TOPS应用，但可以是TCOM组件）
+DEFINES=-DUSE_FILE32API
+
+;包含路径，可以使用多个INCLUDE_PATH串，也可以使用INCLUDE_PATH1、INCLUDE_PATH2等方式，MakeFile中依据出现顺序(不是数字大小)排列
+INCLUDE_PATH=-I./include			;应用额外的包含路径。注意：ITOPS自己的所有路径都会自动包含，故此这里仅仅包含应用自己特有的路径即可
+
+;连接的库文件，可以使用多个LIBS串，也可以使用LIBS1、LIBS2等方式，MakeFile中依据出现顺序(不是数字大小)排列
+;LIBS=-lMyLib		;应用额外的连接库。注意：ITOPS自己的所需库自动包含，而且库包含路径也已经包含，故此这里仅仅包含应用自己特有的库的名字即可
+
+;强制包含文件的名字，不能使用通配符，一定要使用相对或者绝对路径
+;极力要求使用相对路径，多个文件之间使用“|”分隔
+;强制包含文件指的是不在本文件夹及其子文件夹下的.c、.cpp、.o文件
+;可以使用多个INCLUDEFILE串，也可以使用INCLUDEFILE1、INCLUDEFILE2等方式，MakeFile中依据出现顺序(不是数字大小)排列
+INCLUDEFILE=
+
+;强制排除文件，不能使用通配符，一定要使用相对路径
+;多个文件之间使用“|”分隔，路径必须以"./"，"../"开始
+;只能对.c、.cpp文件进行排除
+;如果要排除本目录的文件也要加入"./"
+;可以使用多个EXCLUDEFILE串，也可以使用EXCLUDEFILE1、EXCLUDEFILE2等方式，MakeFile中依据出现顺序(不是数字大小)排列
+EXCLUDEFILE=./win32

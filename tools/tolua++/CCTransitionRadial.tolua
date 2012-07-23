@@ -1,0 +1,10 @@
+
+class CCTransitionRadialCCW : public CCTransitionScene
+{
+    static CCTransitionRadialCCW* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionRadialCW : public CCTransitionRadialCCW
+{
+    static CCTransitionRadialCW* transitionWithDuration(ccTime t, CCScene* scene);
+};

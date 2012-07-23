@@ -1,0 +1,28 @@
+
+/** Possible oritentations of the TMX map */
+enum
+{
+    /** Orthogonal orientation */
+    CCTMXOrientationOrtho,
+    /** Hexagonal orientation */
+    CCTMXOrientationHex,
+    /** Isometric orientation */
+    CCTMXOrientationIso,
+};
+
+class CCTMXTiledMap : public CCNode
+{
+    CCSize getMapSize(void);
+    void setMapSize(CCSize size);
+
+    CCSize getTileSize(void);
+    void setTileSize(CCSize size);
+
+    int getMapOrientation(void);
+    void setMapOrientation(int orientation);
+
+    static CCTMXTiledMap * tiledMapWithTMXFile(char *tmxFile);
+
+    CCTMXLayer* layerNamed(char *layerName);
+    CCString* propertyNamed(char *propertyName);
+};

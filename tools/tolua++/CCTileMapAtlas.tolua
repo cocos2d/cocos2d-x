@@ -1,0 +1,8 @@
+class CCTileMapAtlas : public CCAtlasNode
+{
+    static CCTileMapAtlas* tileMapAtlasWithTileFile(char *tile, char *mapFile, int tileWidth, int tileHeight);
+
+    ccColor3B tileAt(ccGridSize position);
+    void setTile(ccColor3B tile, ccGridSize position);
+    void releaseMap();
+};

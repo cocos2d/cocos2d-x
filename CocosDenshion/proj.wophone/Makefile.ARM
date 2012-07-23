@@ -1,0 +1,71 @@
+
+############################################################################
+#
+#   Makefile for building : SimpleAudioEngine_Arm_wophone.TMK3
+#   Created by TMK3_V2.3, please do not modify.
+#
+#############################################################################
+
+TO_PROJECT_ROOT = ../../../PRJ_TG3
+OUTPUT_FILENAME = libCocosDenshionStatic.a
+
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
+
+DEFINES += -DCC_UNDER_WOPHONE \
+          -D__TG3_PURE_DLL__ \
+          -DUSE_FILE32API
+INCLUDE_PATH += -I../ \
+                -I../include
+
+OBJECTS_DIR = ./Debug-ARM
+DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
+TARGET = $(DESTDIR)/$(OUTPUT_FILENAME)
+
+DEL_FILE = rm -f
+MKDIR = mkdir -p
+
+first: all
+
+OBJECTS = \
+	$(OBJECTS_DIR)/FileUtils.o \
+	$(OBJECTS_DIR)/SimpleAudioEngine.o \
+	$(OBJECTS_DIR)/SoundDataManager.o \
+	$(OBJECTS_DIR)/SoundPlayer.o \
+	$(OBJECTS_DIR)/ioapi.o \
+	$(OBJECTS_DIR)/unzip.o
+
+ADD_OBJECTS += 
+
+$(OBJECTS_DIR) :
+	$(MKDIR) $(OBJECTS_DIR)
+
+$(DESTDIR) :
+	$(MKDIR) $(DESTDIR)
+
+all : $(OBJECTS_DIR) $(DESTDIR) $(TARGET)
+
+$(TARGET) : $(OBJECTS)
+	$(LINK) $(LINK_FLAGS) -o $(TARGET) $(SYS_OBJECTS) $(OBJECTS) $(ADD_OBJECTS) $(LIBS) $(SYS_LIBS)
+
+clean : 
+	-$(DEL_FILE) $(OBJECTS)
+	-$(DEL_FILE) $(TARGET)
+
+$(OBJECTS_DIR)/FileUtils.o : ../wophone/FileUtils.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/FileUtils.o ../wophone/FileUtils.cpp
+	
+$(OBJECTS_DIR)/SimpleAudioEngine.o : ../wophone/SimpleAudioEngine.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SimpleAudioEngine.o ../wophone/SimpleAudioEngine.cpp
+
+$(OBJECTS_DIR)/SoundDataManager.o : ../wophone/SoundDataManager.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SoundDataManager.o ../wophone/SoundDataManager.cpp
+
+$(OBJECTS_DIR)/SoundPlayer.o : ../wophone/SoundPlayer.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SoundPlayer.o ../wophone/SoundPlayer.cpp
+
+$(OBJECTS_DIR)/ioapi.o : ../wophone/zip_support/ioapi.cpp
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ioapi.o ../wophone/zip_support/ioapi.cpp
+
+$(OBJECTS_DIR)/unzip.o : ../wophone/zip_support/unzip.cpp
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/unzip.o ../wophone/zip_support/unzip.cpp

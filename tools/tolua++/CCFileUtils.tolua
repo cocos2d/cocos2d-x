@@ -1,0 +1,12 @@
+
+class CCFileUtils
+{
+    static std::string& removeSuffixFromFile(std::string& path);
+    static char* fullPathFromRelativePath(char *pszRelativePath);
+    static char* fullPathFromRelativeFile(char *pszFilename, char *pszRelativeFile);
+    static std::string getWriteablePath();
+    static void setiPhoneRetinaDisplaySuffix(const char *suffix);
+    static void setiPadRetinaDisplaySuffix(const char *suffix);
+    bool iPadFileExistsAtPath(const char *filename);
+    bool iPadRetinaDisplayFileExistsAtPath(const char *filename);
+};

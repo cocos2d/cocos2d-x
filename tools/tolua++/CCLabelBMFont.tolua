@@ -1,0 +1,24 @@
+
+
+class CCLabelBMFont : public CCSpriteBatchNode
+{
+    GLubyte getOpacity(void);
+    void setOpacity(GLubyte opacity);
+    ccColor3B getColor(void);
+    void setColor(ccColor3B color);
+    bool getIsOpacityModifyRGB(void);
+    void setIsOpacityModifyRGB(bool isOpacityModifyRGB);
+    void setString(char *label);
+    void setString(char *label, bool fromUpdate);
+    void updateString(bool fromUpdate);
+    char* getString(void);
+    void setAnchorPoint(CCPoint var);
+    void updateLabel();
+    void setAlignment(CCTextAlignment alignment);
+    void setWidth(float width);
+    void setLineBreakWithoutSpace(bool breakWithoutSpace);
+    static void purgeCachedData();
+    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
+    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
+    static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
+};

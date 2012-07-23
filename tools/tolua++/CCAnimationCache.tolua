@@ -1,0 +1,10 @@
+
+class CCAnimationCache : public CCObject
+{
+    void addAnimation(CCAnimation* animation, char * name);
+    void removeAnimationByName(char* name);
+    CCAnimation* animationByName(char* name);
+
+    static CCAnimationCache* sharedAnimationCache(void);
+    static void purgeSharedAnimationCache(void);
+};

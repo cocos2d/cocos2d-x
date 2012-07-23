@@ -1,0 +1,21 @@
+
+class CCTimer : public CCObject
+{
+    static CCTimer* timerWithScriptHandler(LUA_FUNCTION nHandler, ccTime fSeconds);
+};
+
+class CCScheduler : public CCObject
+{
+    ccTime getTimeScale(void);
+    void setTimeScale(ccTime fTimeScale);
+    // void scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused);
+    void unscheduleUpdateForTarget(CCObject *pTarget);
+    void unscheduleAllSelectorsForTarget(CCObject *pTarget);
+    void unscheduleAllSelectors(void);
+    unsigned int scheduleScriptFunc(LUA_FUNCTION nHandler, ccTime fInterval, bool bPaused);
+    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
+    void pauseTarget(CCObject *pTarget);
+    void resumeTarget(CCObject *pTarget);
+    bool isTargetPaused(CCObject *pTarget);
+    static CCScheduler* sharedScheduler(void);
+};

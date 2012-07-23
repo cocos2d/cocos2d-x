@@ -1,0 +1,15 @@
+
+class CCParticleSystem : public CCNode
+{
+    void stopSystem();
+    void resetSystem();
+    bool isFull();
+
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D* var);
+
+    ccBlendFunc getBlendFunc(void);
+    void setBlendFunc(ccBlendFunc var);
+
+    static CCParticleSystem* particleWithFile(char *plistFile);
+};

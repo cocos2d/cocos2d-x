@@ -1,0 +1,104 @@
+
+$#include "LuaCocos2d.h"
+
+// !!! DON'T CHANGE THE ORDER !!!
+
+// types
+$pfile "ccTypes.tolua"
+$pfile "CCCommon.tolua"
+
+// cocoa
+$pfile "CCAffineTransform.tolua"
+$pfile "CCGeometry.tolua"
+$pfile "CCObject.tolua"
+$pfile "CCString.tolua"
+$pfile "CCArray.tolua"
+$pfile "CCMutableArray.tolua"
+$pfile "CCMutableDictionary.tolua"
+
+// core
+$pfile "CCCamera.tolua"
+$pfile "CCConfiguration.tolua"
+$pfile "CCDirector.tolua"
+$pfile "CCScheduler.tolua"
+
+// actions
+$pfile "CCActionManager.tolua"
+$pfile "CCAction.tolua"
+$pfile "CCActionInterval.tolua"
+$pfile "CCActionInstant.tolua"
+$pfile "CCActionCamera.tolua"
+$pfile "CCActionEase.tolua"
+$pfile "CCActionGrid.tolua"
+$pfile "CCActionGrid3D.tolua"
+$pfile "CCActionPageTurn3D.tolua"
+$pfile "CCActionProgressTimer.tolua"
+$pfile "CCActionTiledGrid.tolua"
+
+// base_nodes
+$pfile "CCNode.tolua"
+$pfile "CCAtlasNode.tolua"
+
+// sprite nodes
+$pfile "CCSprite.tolua"
+$pfile "CCSpriteFrame.tolua"
+$pfile "CCSpriteFrameCache.tolua"
+$pfile "CCSpriteBatchNode.tolua"
+$pfile "CCAnimation.tolua"
+$pfile "CCAnimationCache.tolua"
+
+// label nodes
+$pfile "CCLabelAtlas.tolua"
+$pfile "CCLabelBMFont.tolua"
+$pfile "CCLabelTTF.tolua"
+
+// layers scenes transitions nodes
+$pfile "CCLayer.tolua"
+$pfile "CCScene.tolua"
+$pfile "CCTransition.tolua"
+$pfile "CCTransitionPageTurn.tolua"
+$pfile "CCTransitionRadial.tolua"
+
+// menu nodes
+$pfile "CCMenu.tolua"
+$pfile "CCMenuItem.tolua"
+
+// misc nodes
+$pfile "CCMotionStreak.tolua"
+$pfile "CCProgressTimer.tolua"
+$pfile "CCRenderTexture.tolua"
+$pfile "CCRibbon.tolua"
+
+// particle nodes
+$pfile "CCParticleExamples.tolua"
+$pfile "CCParticleSystem.tolua"
+$pfile "CCParticleSystemPoint.tolua"
+$pfile "CCParticleSystemQuad.tolua"
+
+// textures
+$pfile "CCTexture2D.tolua"
+$pfile "CCTextureAtlas.tolua"
+$pfile "CCTextureCache.tolua"
+
+// platform
+$pfile "CCApplication.tolua"
+$pfile "CCFileUtils.tolua"
+$pfile "CCImage.tolua"
+$pfile "CCTouch.tolua"
+$pfile "CCPointExtension.tolua"
+
+// tileMap parallax nodes
+$pfile "CCParallaxNode.tolua"
+$pfile "CCTileMapAtlas.tolua"
+$pfile "CCTMXLayer.tolua"
+$pfile "CCTMXTiledMap.tolua"
+
+// support
+$pfile "CCTextFieldTTF.tolua"
+$pfile "CCUserDefault.tolua"
+
+// extensions
+$pfile "CCNotificationCenter.tolua"
+
+// CocosDenshion
+$pfile "SimpleAudioEngine.tolua"

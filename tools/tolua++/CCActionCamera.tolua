@@ -1,0 +1,12 @@
+class CCActionCamera : public CCActionInterval
+{
+    CCActionInterval* reverse();
+};
+
+class CCOrbitCamera : public CCActionCamera
+{
+    static CCOrbitCamera * actionWithDuration(float t, float radius,
+                                              float deltaRadius, float angleZ,
+                                              float deltaAngleZ, float angleX,
+                                              float deltaAngleX);
+};

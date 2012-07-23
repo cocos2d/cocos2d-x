@@ -1,0 +1,73 @@
+
+typedef enum {
+    //! Translate with it's parent
+    CC_HONOR_PARENT_TRANSFORM_TRANSLATE =  1 << 0,
+    //! Rotate with it's parent
+    CC_HONOR_PARENT_TRANSFORM_ROTATE    =  1 << 1,
+    //! Scale with it's parent
+    CC_HONOR_PARENT_TRANSFORM_SCALE     =  1 << 2,
+    //! Skew with it's parent
+    CC_HONOR_PARENT_TRANSFORM_SKEW      =  1 << 3,
+
+    //! All possible transformation enabled. Default value.
+    CC_HONOR_PARENT_TRANSFORM_ALL       =  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_SKEW,
+
+} ccHonorParentTransform;
+
+class CCSprite : public CCNode
+{
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity();
+
+    tolua_property__CCOpacity   float opacity;
+
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
+
+    bool isDirty(void);
+    void setDirty(bool bDirty);
+    // ccV3F_C4B_T2F_Quad getQuad(void);
+    bool isTextureRectRotated(void);
+    unsigned int getAtlasIndex(void);
+    void setAtlasIndex(unsigned int uAtlasIndex);
+    CCRect getTextureRect(void);
+    bool isUsesBatchNode(void);
+    void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode);
+    CCTextureAtlas* getTextureAtlas(void);
+    void setTextureAtlas(CCTextureAtlas *pobTextureAtlas);
+    CCSpriteBatchNode* getSpriteBatchNode(void);
+    void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
+    ccHonorParentTransform getHonorParentTransform(void);
+    void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform);
+    CCPoint getOffsetPositionInPixels(void);
+    ccBlendFunc getBlendFunc(void);
+    void setBlendFunc(ccBlendFunc blendFunc);
+
+    static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
+    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect);
+    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset);
+    static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+    static CCSprite* spriteWithSpriteFrameName(char *pszSpriteFrameName);
+    static CCSprite* spriteWithFile(char *pszFileName);
+    static CCSprite* spriteWithFile(char *pszFileName, CCRect rect);
+    static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
+
+    void setDirtyRecursively(bool bValue);
+    void setFlipX(bool bFlipX);
+    void setFlipY(bool bFlipY);
+    bool isFlipX(void);
+    bool isFlipY(void);
+    void updateColor(void);
+    void setTexture(CCTexture2D *texture);
+    CCTexture2D* getTexture(void);
+
+    void updateTransform(void);
+    void useSelfRender(void);
+    void setTextureRect(CCRect rect);
+    void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
+    void useBatchNode(CCSpriteBatchNode *batchNode);
+    void setDisplayFrame(CCSpriteFrame *pNewFrame);
+    bool isFrameDisplayed(CCSpriteFrame *pFrame);
+    CCSpriteFrame* displayedFrame(void);
+    void setDisplayFrameWithAnimationName(char *animationName, int frameIndex);
+};

@@ -1,0 +1,17 @@
+
+class CCRibbon: public CCNode
+{
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D* texture);
+    void  setTextureLength(float textureLength);
+    float getTextureLength(void);
+    ccBlendFunc getBlendFunc(void);
+    void setBlendFunc(ccBlendFunc blendFunc);
+    ccColor4B getColor(void);
+    void setColor(ccColor4B color);
+
+    void addPointAt(CCPoint location, float width);
+    float sideOfLine(CCPoint p, CCPoint l1, CCPoint l2);
+
+    static CCRibbon* ribbonWithWidth(float w, char *path, float length, ccColor4B color, float fade);
+};

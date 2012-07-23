@@ -1,0 +1,5 @@
+
+class CCTransitionPageTurn : public CCTransitionScene
+{
+    static CCTransitionPageTurn* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
+};

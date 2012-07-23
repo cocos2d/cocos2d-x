@@ -1,0 +1,8 @@
+
+class CCString : public CCObject
+{
+    int toInt();
+    unsigned int toUInt();
+    float toFloat();
+    bool isEmpty();
+};

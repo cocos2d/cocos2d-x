@@ -1,0 +1,8 @@
+
+class CCLabelAtlas : public CCAtlasNode
+{
+    static CCLabelAtlas * labelWithString(char *label, char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
+    void updateAtlasValues();
+    void setString(char *label);
+    char* getString(void);
+};

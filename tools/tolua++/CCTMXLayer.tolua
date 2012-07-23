@@ -1,0 +1,26 @@
+
+class CCTMXLayer : public CCSpriteBatchNode
+{
+    CCSize getLayerSize(void);
+    void setLayerSize(CCSize size);
+
+    CCSize getMapTileSize(void);
+    void setMapTileSize(CCSize size);
+
+    unsigned int getLayerOrientation(void);
+    void setLayerOrientation(unsigned int orientation);
+
+    void releaseMap();
+
+    CCSprite* tileAt(CCPoint tileCoordinate);
+    unsigned int tileGIDAt(CCPoint tileCoordinate);
+    void setTileGID(unsigned int gid, CCPoint tileCoordinate);
+    void removeTileAt(CCPoint tileCoordinate);
+    CCPoint positionAt(CCPoint tileCoordinate);
+
+    CCString* propertyNamed(char *propertyName);
+
+    void setupTiles();
+    char* getLayerName();
+    inline void setLayerName(char *layerName);
+};

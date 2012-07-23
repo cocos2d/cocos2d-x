@@ -1,0 +1,68 @@
+
+class CCLayer : public CCNode
+{
+    void setIsTouchEnabled(bool bValue);
+    bool getIsTouchEnabled(void);
+
+    void setIsAccelerometerEnabled(bool bValue);
+    bool getIsAccelerometerEnabled(void);
+
+    void setIsKeypadEnabled(bool bValue);
+    bool getIsKeypadEnabled(void);
+
+    void registerScriptTouchHandler(LUA_FUNCTION nHandler,
+                                    bool bIsMultiTouches = false,
+                                    int nPriority = 0,
+                                    bool bSwallowsTouches = false);
+    void unregisterScriptTouchHandler();
+
+    static CCLayer*node(void);
+};
+
+class CCLayerColor : public CCLayer
+{
+    void changeWidth(GLfloat w);
+    void changeHeight(GLfloat h);
+    void changeWidthAndHeight(GLfloat w ,GLfloat h);
+
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity(void);
+    void setColor(ccColor3B color);
+    ccColor3B getColor(void);
+    void setBlendFunc(ccBlendFunc blendFunc);
+    ccBlendFunc getBlendFunc(void);
+
+    static CCLayerColor* layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+    static CCLayerColor* layerWithColor(ccColor4B color);
+    static CCLayerColor* node(void);
+};
+
+class CCLayerGradient : public CCLayerColor
+{
+    void setStartColor(ccColor3B color);
+    ccColor3B getStartColor();
+    void setEndColor(ccColor3B color);
+    ccColor3B getEndColor(void);
+    void setStartOpacity(GLubyte opacity);
+    GLubyte getStartOpacity(void);
+    void setEndOpacity(GLubyte opacity);
+    GLubyte getEndOpacity(void);
+    void setVector(CCPoint vector);
+    CCPoint getVector(void);
+
+    void setIsCompressedInterpolation(bool Value);
+    bool getIsCompressedInterpolation(void);
+
+    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
+    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CCPoint v);
+    static CCLayerGradient* node(void);
+};
+
+class CCLayerMultiplex : public CCLayer
+{
+    void addLayer(CCLayer* layer);
+    void switchTo(unsigned int n);
+    void switchToAndReleaseMe(unsigned int n);
+
+    static CCLayerMultiplex* layerWithLayer(CCLayer* layer);
+};

@@ -1,0 +1,34 @@
+cocos2d-x 
+==================
+
+[cocos2d-x][1] is a multi-platform 2D game engine in C++, based on [cocos2d-iphone][2] and licensed under MIT.
+Now this engine has been expended to iOS, Android, Bada, BlackBerry Playbook, Marmalade and desktop operating systems like Linux, WindowsXP & Windows7. 
+
+Multi Platform
+-------------
+   * iOS:  stable, well tested on iOS 4.0 ~ 5.0 SDK.
+   * Android: stable, well tested on 2.0~3.1, based on ndk r5 ~ r7.
+   * Bada: stable on Bada SDK 1.0 & 2.0
+   * BlackBerry Playbook: stable, contribued by engineers working at RIM
+   * Marmalade: stable since cocos2d-x-0.11.0
+   * Windows: stable, tested on WinXP, Vista, Win7. Please upgrde the drive of your video card if you meet problems on OpenGL functions
+   * Linux: usable.
+
+Document
+------------------
+   * Website: [www.cocos2d-x.org][3]
+   * [Online API References][4] 
+	
+Contact us
+------------------
+   * Forum: [http://forum.cocos2d-x.org][5]
+   * Twitter: [http://www.twitter.com/cocos2dx][6]
+   * Sina mini-blog: [http://t.sina.com.cn/cocos2dx][7]
+   
+[1]: http://www.cocos2d-x.org "cocos2d-x"
+[2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
+[3]: http://www.cocos2d-x.org "www.cocos2d-x.org"
+[4]: http://www.cocos2d-x.org/embedded/cocos2d-x/classes.html "API References"
+[5]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
+[6]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
+[7]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"

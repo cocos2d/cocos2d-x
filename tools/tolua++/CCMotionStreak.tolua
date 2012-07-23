@@ -1,0 +1,12 @@
+
+class CCMotionStreak : public CCNode
+{
+    CCRibbon* getRibbon(void);
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D* texture);
+    ccBlendFunc getBlendFunc(void);
+    void setBlendFunc(ccBlendFunc blendFunc);
+
+    static CCMotionStreak * streakWithFade(float fade, float seg, char *imagePath,
+                                           float width, float length, ccColor4B color);
+};

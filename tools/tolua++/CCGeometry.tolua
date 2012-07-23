@@ -1,0 +1,44 @@
+
+typedef float CGFloat;
+
+class CCPoint
+{
+    float x;
+    float y;
+    CCPoint();
+    CCPoint(float x, float y);
+
+    static bool CCPointEqualToPoint(CCPoint point1, CCPoint point2);
+};
+
+class CCSize
+{
+    float width;
+    float height;
+    CCSize();
+    CCSize(float width, float height);
+
+    static bool CCSizeEqualToSize(CCSize size1, CCSize size2);
+};
+
+class CCRect
+{
+    CCPoint origin;
+    CCSize  size;
+    CCRect();
+    CCRect(float x, float y, float width, float height);
+
+    static CGFloat CCRectGetMinX(CCRect rect);
+    static CGFloat CCRectGetMaxX(CCRect rect);
+    static CGFloat CCRectGetMidX(CCRect rect);
+    static CGFloat CCRectGetMinY(CCRect rect);
+    static CGFloat CCRectGetMaxY(CCRect rect);
+    static CGFloat CCRectGetMidY(CCRect rect);
+    static bool CCRectEqualToRect(CCRect rect1, CCRect rect2);
+    static bool CCRectContainsPoint(CCRect rect, CCPoint point);
+    static bool CCRectIntersectsRect(CCRect rectA, CCRect rectB);
+};
+
+CCPoint CCPointMake(float x, float y);
+CCSize  CCSizeMake(float width, float height);
+CCRect  CCRectMake(float x, float y, float width,float height);

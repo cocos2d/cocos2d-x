@@ -1,0 +1,71 @@
+<project name="Cocos2d-xToLua" default="create-lua-project" basedir=".">
+    <description>
+        Utilises an existing template project(s) to create a brand new cross-platform
+        lua project.
+    </description>
+    <property name="templateSrc" value="./template" />
+    <property name="destRoot" value="../.." />
+    <property name="template.project.name" value="LuaProjectTemplate" />
+    <property name="template.project.namespace" value="org.my" />
+
+  <target name="create-lua-project">
+    <input message="Please enter project name" addproperty="project.name" />
+    <input message="Please enter project namespace" addproperty="project.namespace" />
+    <input message="Please enter the full path to your NDK" addproperty="ndk.location" />
+    
+    <property name="destDir" value="${destRoot}/${project.name}" />
+      
+    <input message="Will create a project '${project.namespace}.${project.name} into ${destDir},  continue (y/n)?"
+        validargs="y,n"
+        addproperty="do.continue"
+      />
+      <condition property="do.abort">
+        <equals arg1="n" arg2="${do.continue}"/>
+      </condition>
+      <fail if="do.abort">Build aborted by user.</fail>
+      
+      <!-- If we get here we know we we're good to go! -->
+      <delete dir="${destDir}"/>
+      
+      <echo message="Copying template files..." />
+      <copy todir="${destDir}">
+         <fileset dir="${templateSrc}" />
+       </copy>
+       <echo message="Renaming project files"/>
+       <move todir="${destDir}" includeemptydirs="true">
+          <fileset dir="${destDir}" />
+          <regexpmapper from="^(.*)${template.project.name}(.*)$$" to="\1${project.name}\2"/>
+        </move>
+
+        <echo message="Updating project content"/>
+        <replace token= "${template.project.name}" value= "${project.name}" >
+          <fileset dir="${destDir}" defaultexcludes="false" excludes=".git"/>
+        </replace>
+        <replace token= "${template.project.namespace}" value= "${project.namespace}" >
+          <fileset dir="${destDir}"/>
+        </replace>
+        
+        <!-- Fix-up the Java entry point -->
+        <move todir="${destDir}/android/src/${project.namespace}.${project.name}.java" file="${destDir}/android/src/${project.name}.java" />
+        <pathconvert property="packageAsPath">
+              <path path="${destDir}/android/src/${project.namespace}.${project.name}.java"/>
+              <unpackagemapper from="*${project.name}.java" to="*"/>
+        </pathconvert>
+        <move file="${destDir}/android/src/${project.namespace}.${project.name}.java" tofile= "${packageAsPath}" />
+
+        <path id="cocos2dxLocation"  path="{basedir}/../../.." />
+        <property name="cocos2dxLocation.path" refid="cocos2dxLocation"/>
+        <!-- Point the android build_native script at your NDK locations -->
+        <replaceregexp file="${destDir}/android/build_native.sh"
+                       match="COCOS2DX_ROOT=.*$$"
+                       replace="COCOS2DX_ROOT=${cocos2dxLocation.path}"
+                       byline="true"/>
+        <replaceregexp file="${destDir}/android/build_native.sh"
+                       match="ANDROID_NDK_ROOT=.*$$"
+                       replace="ANDROID_NDK_ROOT=${ndk.location}"
+                       byline="true"/>
+
+        <chmod file="${destDir}/android/build_native.sh" perm="+x"/>
+        <copy file="${templateSrc}/.gitignore" tofile="${destDir}/.gitignore" />
+  </target>
+</project>

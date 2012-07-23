@@ -1,0 +1,28 @@
+
+class CCAction : public CCObject
+{
+    CCNode* getTarget(void);
+    int getTag(void);
+    void setTag(int nTag);
+};
+
+class CCFiniteTimeAction : public CCAction
+{
+    ccTime getDuration(void);
+    void setDuration(ccTime duration);
+};
+
+class CCSpeed : public CCAction
+{
+    float getSpeed(void);
+    void setSpeed(float fSpeed);
+    static CCSpeed* actionWithAction(CCActionInterval* pAction, float fRate);
+};
+
+class CCFollow : public CCAction
+{
+    bool isBoundarySet(void);
+    void setBoudarySet(bool bValue);
+    static CCFollow* actionWithTarget(CCNode *pFollowedNode);
+    static CCFollow* actionWithTarget(CCNode *pFollowedNode, CCRect rect);
+};

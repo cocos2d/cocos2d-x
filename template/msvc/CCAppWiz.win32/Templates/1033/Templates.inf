@@ -1,0 +1,40 @@
+win32/res/root.ico
+win32/root.rc
+win32/resource.h
+
+win32/main.h
+win32/main.cpp
+
+Classes/AppDelegate.h
+Classes/AppDelegate.cpp
+
+[! if CC_USE_LUA]
+../../../../../lua/cocos2dx_support/LuaCocos2d.cpp
+../../../../../lua/cocos2dx_support/LuaCocos2d.h
+../../../../../lua/cocos2dx_support/CCLuaEngine.cpp
+../../../../../lua/cocos2dx_support/CCLuaEngine.h
+../../../../../lua/cocos2dx_support/Cocos2dxLuaLoader.h
+../../../../../lua/cocos2dx_support/Cocos2dxLuaLoader.cpp
+../../../../../lua/cocos2dx_support/tolua_fix.c
+../../../../../lua/cocos2dx_support/tolua_fix.h
+[! else]
+Classes/HelloWorldScene.h
+Classes/HelloWorldScene.cpp
+[! endif]
+
+[! if CC_USE_LUA]
+Resources/Default.png
+Resources/crop.png
+Resources/farm.jpg
+Resources/land.png
+Resources/menu2.png
+Resources/Icon.png
+Resources/dog.png
+Resources/hello.lua
+Resources/hello2.lua
+Resources/menu1.png
+[! else]
+Resources/CloseSelected.png
+Resources/CloseNormal.png
+Resources/HelloWorld.png
+[! endif]

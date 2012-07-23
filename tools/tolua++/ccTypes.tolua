@@ -1,0 +1,58 @@
+
+typedef unsigned char    GLubyte;
+typedef int              GLint;
+typedef int              GLsizei;
+typedef unsigned char	 GLubyte;
+typedef unsigned short   GLushort;
+typedef unsigned int     GLuint;
+typedef float			 GLfloat;
+
+typedef float ccTime;
+typedef struct _ccColor3B
+{
+    GLubyte	r;
+    GLubyte	g;
+    GLubyte b;
+} ccColor3B;
+ccColor3B ccc3(GLubyte r, GLubyte g, GLubyte b);
+
+typedef struct _ccColor4B
+{
+    GLubyte r;
+    GLubyte g;
+    GLubyte b;
+    GLubyte a;
+} ccColor4B;
+//! helper macro that creates an ccColor4B type
+ccColor4B ccc4f(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o);
+
+typedef struct _ccColor4F {
+    GLfloat r;
+    GLfloat g;
+    GLfloat b;
+    GLfloat a;
+} ccColor4F;
+ccColor4F ccc4FFromccc3B(ccColor3B c);
+ccColor4F ccc4FFromccc4B(ccColor4B c);
+bool ccc4FEqual(ccColor4F a, ccColor4F b);
+
+typedef struct _ccGridSize
+{
+    int	x;
+    int	y;
+} ccGridSize;
+ccGridSize ccg(int x, int y);
+
+class ccBlendFunc
+{
+    ccBlendFunc(void);
+    GLenum src;
+    GLenum dst;
+};
+
+typedef enum
+{
+    CCTextAlignmentLeft,
+    CCTextAlignmentCenter,
+    CCTextAlignmentRight,
+} CCTextAlignment;

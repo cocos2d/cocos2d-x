@@ -1,0 +1,76 @@
+
+class CCWaves3D : public CCGrid3DAction
+{
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
+    static CCWaves3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+};
+
+class CCFlipX3D : public CCGrid3DAction
+{
+    static CCFlipX3D* actionWithDuration(ccTime duration);
+};
+
+class CCFlipY3D : public CCFlipX3D
+{
+    static CCFlipY3D* actionWithDuration(ccTime duration);
+};
+
+class CCLens3D : public CCGrid3DAction
+{
+    float getLensEffect(void);
+    void setLensEffect(float fLensEffect);
+    CCPoint getPosition(void);
+    void setPosition(CCPoint position);
+    static CCLens3D* actionWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
+};
+
+class CCRipple3D : public CCGrid3DAction
+{
+    CCPoint getPosition(void);
+    void setPosition(CCPoint position);
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
+    static CCRipple3D* actionWithPosition(CCPoint pos, float r, int wav, float amp,
+        ccGridSize gridSize, ccTime duration);
+};
+
+class CCShaky3D : public CCGrid3DAction
+{
+    static CCShaky3D* actionWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
+};
+
+class CCLiquid : public CCGrid3DAction
+{
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
+    static CCLiquid* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+};
+
+class CCWaves : public CCGrid3DAction
+{
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
+    static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,
+        ccTime duration);
+};
+
+class CCTwirl : public CCGrid3DAction
+{
+    CCPoint getPosition(void);
+    void setPosition(CCPoint position);
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
+    static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,
+        ccTime duration);
+};

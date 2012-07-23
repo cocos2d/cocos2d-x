@@ -1,0 +1,30 @@
+
+typedef enum
+{
+    kCCMenuStateWaiting,
+    kCCMenuStateTrackingTouch
+} tCCMenuState;
+
+enum {
+    kCCMenuTouchPriority = -128,
+};
+
+class CCMenu : public CCLayer
+{
+    ccColor3B getColor(void);
+    void setColor(ccColor3B color);
+    GLubyte getOpacity(void);
+    void setOpacity(GLubyte opacity);
+
+    void alignItemsVertically();
+    void alignItemsVerticallyWithPadding(float padding);
+    void alignItemsHorizontally();
+    void alignItemsHorizontallyWithPadding(float padding);
+    void addChild(CCNode * child, int zOrder = kCCMenuTouchPriority);
+    void addChild(CCNode * child, int zOrder, int tag);
+    void setIsOpacityModifyRGB(bool bValue);
+    bool getIsOpacityModifyRGB(void);
+
+    static CCMenu* node();
+    static CCMenu* menuWithItem(CCMenuItem* item);
+};

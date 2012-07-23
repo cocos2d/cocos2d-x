@@ -1,0 +1,152 @@
+
+class CCTransitionEaseScene
+{
+    virtual CCActionInterval* easeActionWithAction(CCActionInterval* action);
+};
+
+typedef enum {
+    kOrientationLeftOver = 0,
+    kOrientationRightOver = 1,
+    kOrientationUpOver = 0,
+    kOrientationDownOver = 1,
+} tOrientation;
+
+class CCTransitionScene : public CCScene
+{
+    static CCTransitionScene* transitionWithDuration(ccTime t, CCScene*scene);
+};
+
+class CCTransitionSceneOriented : public CCTransitionScene
+{
+    static CCTransitionSceneOriented* transitionWithDuration(ccTime t,CCScene* scene, tOrientation orientation);
+};
+
+class CCTransitionRotoZoom : public CCTransitionScene
+{
+    static CCTransitionRotoZoom* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionJumpZoom : public CCTransitionScene
+{
+    static CCTransitionJumpZoom* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionMoveInL : public CCTransitionScene, public CCTransitionEaseScene
+{
+    static CCTransitionMoveInL* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionMoveInR : public CCTransitionMoveInL
+{
+    static CCTransitionMoveInR* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionMoveInT : public CCTransitionMoveInL
+{
+    static CCTransitionMoveInT* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionMoveInB : public CCTransitionMoveInL
+{
+    static CCTransitionMoveInB* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionSlideInL : public CCTransitionScene, public CCTransitionEaseScene
+{
+    static CCTransitionSlideInL* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionSlideInR : public CCTransitionSlideInL
+{
+    static CCTransitionSlideInR* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionSlideInB : public CCTransitionSlideInL
+{
+    static CCTransitionSlideInB* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionSlideInT : public CCTransitionSlideInL
+{
+    static CCTransitionSlideInT* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionShrinkGrow : public CCTransitionScene , public CCTransitionEaseScene
+{
+    static CCTransitionShrinkGrow* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionFlipX : public CCTransitionSceneOriented
+{
+    static CCTransitionFlipX* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationRightOver);
+};
+
+class CCTransitionFlipY : public CCTransitionSceneOriented
+{
+    static CCTransitionFlipY* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationUpOver);
+};
+
+class CCTransitionFlipAngular : public CCTransitionSceneOriented
+{
+    static CCTransitionFlipAngular* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationRightOver);
+};
+
+class CCTransitionZoomFlipX : public CCTransitionSceneOriented
+{
+    static CCTransitionZoomFlipX* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationRightOver);
+};
+
+class CCTransitionZoomFlipY : public CCTransitionSceneOriented
+{
+    static CCTransitionZoomFlipY* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationUpOver);
+};
+
+class CCTransitionZoomFlipAngular : public CCTransitionSceneOriented
+{
+    static CCTransitionZoomFlipAngular* transitionWithDuration(ccTime t, CCScene* s, tOrientation o = kOrientationRightOver);
+};
+
+class CCTransitionFade : public CCTransitionScene
+{
+    static CCTransitionFade* transitionWithDuration(ccTime duration,CCScene* scene, ccColor3B color);
+};
+
+class CCTransitionCrossFade : public CCTransitionScene
+{
+    static CCTransitionCrossFade* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionTurnOffTiles : public CCTransitionScene ,public CCTransitionEaseScene
+{
+    static CCTransitionTurnOffTiles* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionSplitCols : public CCTransitionScene , public CCTransitionEaseScene
+{
+    static CCTransitionSplitCols* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionSplitRows : public CCTransitionSplitCols
+{
+    static CCTransitionSplitRows* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionFadeTR : public CCTransitionScene , public CCTransitionEaseScene
+{
+    static CCTransitionFadeTR* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionFadeBL : public CCTransitionFadeTR
+{
+    static CCTransitionFadeBL* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionFadeUp : public CCTransitionFadeTR
+{
+    static CCTransitionFadeUp* transitionWithDuration(ccTime t, CCScene* scene);
+};
+
+class CCTransitionFadeDown : public CCTransitionFadeTR
+{
+    static CCTransitionFadeDown* transitionWithDuration(ccTime t, CCScene* scene);
+};

@@ -1,0 +1,5 @@
+
+class CCScene : public CCNode
+{
+    static CCScene *node(void);
+};

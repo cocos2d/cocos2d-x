@@ -1,0 +1,35 @@
+# This file is for configuration settings for your
+# application.
+#
+# The syntax is similar to windows .ini files ie
+#
+# [GroupName]
+# Setting = Value
+#
+# Which can be read by your application using
+#  e.g s3eConfigGetString("GroupName", "Setting", string)
+#
+# All settings must be documented in .config.txt files.
+# New settings specific to this application should be
+# documented in app.config.txt
+#
+# Some conditional operations are also permitted, see the
+# S3E documentation for details.
+[S3E]
+
+MemSize=[s3e]DispAreaQ + 50331648
+#MemFlags0=USE_STACK_ALLOCATOR
+SysStackSwitch=1
+#landscape
+#DispFixRot=2
+#or portrait
+DispFixRot=1
+#autorotate
+#DispFixRot=0
+# fix for new ati drivers in simulator
+# DisableGL=1
+
+[Trace]
+GAME=1
+IW_GL=1
+IW_GL_VERBOSE=1

@@ -1,0 +1,73 @@
+
+Libpng 1.2.34 - December 18, 2008
+
+This is a public release of libpng, intended for use in production codes.
+
+Files available for download:
+
+Source files with LF line endings (for Unix/Linux) and with a
+"configure" script
+
+   libpng-1.2.34.tar.gz
+   libpng-1.2.34.tar.lzma
+     (Get the lzma codec from <http://tukaani.org/lzma>).
+   libpng-1.2.34.tar.bz2
+
+Source files with LF line endings (for Unix/Linux) without the
+"configure" script
+
+   libpng-1.2.34-no-config.tar.gz
+   libpng-1.2.34-no-config.tar.lzma
+   libpng-1.2.34-no-config.tar.bz2
+
+Source files with CRLF line endings (for Windows), without the
+"configure" script
+
+   lpng1234.zip
+   lpng1234.7z
+   lpng1234.tar.bz2
+
+Project files
+
+   libpng-1.2.34-project-netware.zip
+   libpng-1.2.34-project-wince.zip
+
+Other information:
+
+   libpng-1.2.34-README.txt
+   libpng-1.2.34-KNOWNBUGS.txt
+   libpng-1.2.34-LICENSE.txt
+   libpng-1.2.34-Y2K-compliance.txt
+   libpng-1.2.34-[previous version]-diff.txt
+
+Changes since the last public release (1.2.33):
+
+version 1.2.34 [December 18, 2008]
+
+version 1.2.34beta01 [December 18, 2008]
+  Revised png_warning() to write its message on standard output by default
+    when warning_fn is NULL. This was the behavior prior to libpng-1.2.9.
+  Fixed string vs pointer-to-string error in png_check_keyword().
+  Added png_check_cHRM_fixed() in png.c and moved checking from pngget.c,
+    pngrutil.c, and pngwrite.c, and eliminated floating point cHRM checking.
+  Added check for zero-area RGB cHRM triange in png_check_cHRM_fixed().
+  In png_check_cHRM_fixed(), ensure white_y is > 0, and removed redundant
+    check for all-zero coordinates that is detected by the triangle check.
+  Revised png_warning() to write its message on standard output by default
+    when warning_fn is NULL.
+  Corrected off-by-one error in bKGD validity check in png_write_bKGD()
+    and in png_handle_bKGD().
+  Merged with png_debug from libpng-1.4.0 to remove newlines.
+  Removed redundant check for key==NULL before calling png_check_keyword()
+    to ensure that new_key gets initialized and removed extra warning
+    (Arvan Pritchard).
+  Added PNG_TRANSFORM_STRIP_FILLER_BEFORE and
+    PNG_TRANSFORM_STRIP_FILLER_AFTER conditionals and deprecated
+    PNG_TRANSFORM_STRIP_FILLER (Jim Barry).
+
+Send comments/corrections/commendations to png-mng-implement at lists.sf.net
+(subscription required; visit 
+https://lists.sourceforge.net/lists/listinfo/png-mng-implement
+to subscribe) or to glennrp at users.sourceforge.net
+
+Glenn R-P

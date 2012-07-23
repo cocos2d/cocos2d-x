@@ -1,0 +1,5 @@
+
+class CCPageTurn3D : public CCGrid3DAction
+{
+    static CCPageTurn3D* actionWithSize(ccGridSize gridSize, ccTime time);
+};

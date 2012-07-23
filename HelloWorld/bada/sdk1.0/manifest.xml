@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+	<Id>93bt1p123e</Id>
+	<Secret>9C645DDBA19C71BAD1204DA4DAA7A0B9</Secret>
+	<AppVersion>1.0.0</AppVersion>
+	<Privileges>
+	    <Privilege>
+            <Name>SYSTEM_SERVICE</Name>
+        </Privilege>
+	</Privileges>
+	<DeviceProfile>
+		<MinimumVRAMSize>4</MinimumVRAMSize>
+		<Accelerator3D>OpenGL-ES1.1</Accelerator3D>
+		<Accelerator3D>OpenGL-ES2.0</Accelerator3D>
+		<BluetoothProfile>OPP</BluetoothProfile>
+		<BluetoothProfile>SPP</BluetoothProfile>
+		<WiFiMode>Infrastructure</WiFiMode>
+		<WiFiMode>Ad-hoc</WiFiMode>
+		<Sensor>GPS</Sensor>
+		<Sensor>Accelerometer</Sensor>
+		<Sensor>Magnetic</Sensor>
+		<Sensor>Proximity</Sensor>
+		<InputDevice>Touch</InputDevice>
+		<ScreenSize>480x800</ScreenSize>
+		<SoundMixing>Enable</SoundMixing>
+		<APIVersion>1.0</APIVersion>
+	</DeviceProfile>
+</Manifest>

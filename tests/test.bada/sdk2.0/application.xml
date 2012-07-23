@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Application>
+    <Entry>TestCocos2dx</Entry>
+    <Name>
+        <English>TestCocos2dx</English>
+        <eng-GB>TestCocos2dx</eng-GB>
+    </Name>
+    <Vendor/>
+    <Description/>
+    <Icons>
+        <MainMenu>test_type4.png<Type1/>
+            <Type2>test_type2.png</Type2>
+            <Type3>test_type3.png</Type3>
+            <Type4>test_type4.png</Type4>
+            <Type5/>
+        </MainMenu>
+        <Setting/>
+        <Ticker/>
+        <QuickPanel/>
+        <LaunchImage>Splash_type4.png<Type1/>
+            <Type2>Splash_type2.png</Type2>
+            <Type3>Splash_type3.png</Type3>
+            <Type4>Splash_type4.png</Type4>
+            <Type5/>
+        </LaunchImage>
+    </Icons>
+    <AutoScaling>
+        <Enabled>true</Enabled>
+        <BaseResolution>NormalSize</BaseResolution>
+    </AutoScaling>
+</Application>
