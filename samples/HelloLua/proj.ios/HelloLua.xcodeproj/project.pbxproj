@@ -254,14 +254,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		15426A3715B5722100712A7F /* cocosdenshion */ = {
+		15426A3715B5722100712A7F /* CocosDenshion */ = {
 			isa = PBXGroup;
 			children = (
 				15426A3E15B5722100712A7F /* include */,
 				15426A4115B5722100712A7F /* ios */,
 			);
-			name = cocosdenshion;
-			path = ../../../cocosdenshion;
+			name = CocosDenshion;
+			path = ../../../CocosDenshion;
 			sourceTree = "<group>";
 		};
 		15426A3E15B5722100712A7F /* include */ = {
@@ -303,7 +303,7 @@
 			children = (
 				15426A2B15B571B300712A7F /* cocos2dx.xcodeproj */,
 				BF82F41413A864B000616D55 /* Classes */,
-				15426A3715B5722100712A7F /* cocosdenshion */,
+				15426A3715B5722100712A7F /* CocosDenshion */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				F28379FB15B9606900A5707B /* lua */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,

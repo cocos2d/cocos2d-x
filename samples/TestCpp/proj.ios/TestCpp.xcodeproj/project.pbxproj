@@ -1482,14 +1482,14 @@
 			path = ZwoptexTest;
 			sourceTree = "<group>";
 		};
-		15AA9D9E15B7EC7C0033D6C2 /* cocosdenshion */ = {
+		15AA9D9E15B7EC7C0033D6C2 /* CocosDenshion */ = {
 			isa = PBXGroup;
 			children = (
 				15AA9DA515B7EC7C0033D6C2 /* include */,
 				15AA9DA815B7EC7C0033D6C2 /* ios */,
 			);
-			name = cocosdenshion;
-			path = ../../../cocosdenshion;
+			name = CocosDenshion;
+			path = ../../../CocosDenshion;
 			sourceTree = "<group>";
 		};
 		15AA9DA515B7EC7C0033D6C2 /* include */ = {
@@ -1899,7 +1899,7 @@
 				15AA9DCC15B7EC960033D6C2 /* Box2D */,
 				15AA9E6715B7ECB00033D6C2 /* chipmunk */,
 				15AA9C4015B7EC450033D6C2 /* Classes */,
-				15AA9D9E15B7EC7C0033D6C2 /* cocosdenshion */,
+				15AA9D9E15B7EC7C0033D6C2 /* CocosDenshion */,
 				15AA9ED615B7EDCB0033D6C2 /* extensions */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
@@ -2278,7 +2278,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../cocosdenshion/include",
+					"$(SRCROOT)/../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/constraints\"",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
@@ -2320,7 +2320,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../cocosdenshion/include",
+					"$(SRCROOT)/../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/constraints\"",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",

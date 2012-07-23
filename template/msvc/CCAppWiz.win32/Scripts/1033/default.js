@@ -239,7 +239,7 @@ function AddConfigurations(proj, strProjectName) {
                 strAddIncludeDir += ';$(SolutionDir)external\\chipmunk\\include\\chipmunk';
             }
             if (wizard.FindSymbol('CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE')) {
-                strAddIncludeDir += ';$(SolutionDir)cocosdenshion\\include';
+                strAddIncludeDir += ';$(SolutionDir)CocosDenshion\\include';
             }
             if (wizard.FindSymbol('CC_USE_LUA')) {
                 strAddIncludeDir += ';$(SolutionDir)scripting\\lua\\cocos2dx_support';
