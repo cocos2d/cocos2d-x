@@ -9,11 +9,15 @@
 	<key>CFBundleExecutable</key>
 	<string>HelloCpp</string>
 	<key>CFBundleIconFile</key>
-	<string>icon.png</string>
+	<string>Icon-57.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon.png</string>
 		<string>Icon@2x.png</string>
+		<string>Icon-57.png</string>
+		<string>Icon-114.png</string>
+		<string>Icon-72.png</string>
+		<string>Icon-144.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -23,13 +27,17 @@
 			<array>
 				<string>Icon.png</string>
 				<string>Icon@2x.png</string>
+				<string>Icon-57.png</string>
+				<string>Icon-114.png</string>
+				<string>Icon-72.png</string>
+				<string>Icon-144.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.cocos2d-x.${HelloCpp:rfc1034identifier}</string>
+	<string>org.cocos2d-x.HelloCpp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
