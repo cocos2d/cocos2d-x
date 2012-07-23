@@ -61,8 +61,6 @@
 		D454472E156DE7F300887EB5 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D45446F7156DE7F300887EB5 /* Icon-Small-50.png */; };
 		D454472F156DE7F300887EB5 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = D45446F8156DE7F300887EB5 /* Icon-Small.png */; };
 		D4544730156DE7F300887EB5 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D45446F9156DE7F300887EB5 /* Icon-Small@2x.png */; };
-		D4544731156DE7F300887EB5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D45446FA156DE7F300887EB5 /* Icon.png */; };
-		D4544732156DE7F300887EB5 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D45446FB156DE7F300887EB5 /* Icon@2x.png */; };
 		D4544733156DE7F300887EB5 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = D45446FC156DE7F300887EB5 /* iTunesArtwork */; };
 		D4544734156DE7F300887EB5 /* LavaFlow.plist in Resources */ = {isa = PBXBuildFile; fileRef = D45446FD156DE7F300887EB5 /* LavaFlow.plist */; };
 		D4544735156DE7F300887EB5 /* Phoenix.plist in Resources */ = {isa = PBXBuildFile; fileRef = D45446FE156DE7F300887EB5 /* Phoenix.plist */; };
@@ -86,6 +84,10 @@
 		D454520A156E22B400887EB5 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4545209156E22B400887EB5 /* libxml2.dylib */; };
 		D454520C156E22BD00887EB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D454520B156E22BD00887EB5 /* libz.dylib */; };
 		D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4545215156E28EF00887EB5 /* AppDelegate.cpp */; };
+		D4EF94B415BD2FE900D803EB /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94B315BD2FE900D803EB /* Icon-57.png */; };
+		D4EF94B615BD2FEC00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94B515BD2FEC00D803EB /* Icon-114.png */; };
+		D4EF94B815BD2FF500D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94B715BD2FF500D803EB /* Icon-144.png */; };
+		D4EF94C315BD304000D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94C215BD304000D803EB /* Icon-72.png */; };
 		F2837AA515B9639100A5707B /* cocos2d_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2837A9D15B9639100A5707B /* cocos2d_generated.cpp */; };
 		F2837AA615B9639100A5707B /* cocos2d_manual_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2837A9F15B9639100A5707B /* cocos2d_manual_bindings.cpp */; };
 		F2837AA715B9639100A5707B /* cocos_denshion_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2837AA015B9639100A5707B /* cocos_denshion_generated.cpp */; };
@@ -203,6 +205,10 @@
 		D454520B156E22BD00887EB5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D4545215156E28EF00887EB5 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		D4545216156E28EF00887EB5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D4EF94B315BD2FE900D803EB /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-57.png"; path = "../proj.ios/Icon-57.png"; sourceTree = "<group>"; };
+		D4EF94B515BD2FEC00D803EB /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-114.png"; path = "../proj.ios/Icon-114.png"; sourceTree = "<group>"; };
+		D4EF94B715BD2FF500D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
+		D4EF94C215BD304000D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		F2837A9D15B9639100A5707B /* cocos2d_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_generated.cpp; sourceTree = "<group>"; };
 		F2837A9E15B9639100A5707B /* cocos2d_generated.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2d_generated.hpp; sourceTree = "<group>"; };
 		F2837A9F15B9639100A5707B /* cocos2d_manual_bindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_manual_bindings.cpp; sourceTree = "<group>"; };
@@ -335,6 +341,10 @@
 		D45446D8156DE7F300887EB5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D4EF94C215BD304000D803EB /* Icon-72.png */,
+				D4EF94B715BD2FF500D803EB /* Icon-144.png */,
+				D4EF94B515BD2FEC00D803EB /* Icon-114.png */,
+				D4EF94B315BD2FE900D803EB /* Icon-57.png */,
 				15F99094159C0C7200848A44 /* fps_images-hd.png */,
 				15F99095159C0C7200848A44 /* fps_images-ipadhd.png */,
 				1554941915737858009041F8 /* JS */,
@@ -533,8 +543,6 @@
 				D454472E156DE7F300887EB5 /* Icon-Small-50.png in Resources */,
 				D454472F156DE7F300887EB5 /* Icon-Small.png in Resources */,
 				D4544730156DE7F300887EB5 /* Icon-Small@2x.png in Resources */,
-				D4544731156DE7F300887EB5 /* Icon.png in Resources */,
-				D4544732156DE7F300887EB5 /* Icon@2x.png in Resources */,
 				D4544733156DE7F300887EB5 /* iTunesArtwork in Resources */,
 				D4544734156DE7F300887EB5 /* LavaFlow.plist in Resources */,
 				D4544735156DE7F300887EB5 /* Phoenix.plist in Resources */,
@@ -560,6 +568,10 @@
 				15F99096159C0C7200848A44 /* fps_images-hd.png in Resources */,
 				15F99097159C0C7200848A44 /* fps_images-ipadhd.png in Resources */,
 				F2837AA815B9639100A5707B /* README.md in Resources */,
+				D4EF94B415BD2FE900D803EB /* Icon-57.png in Resources */,
+				D4EF94B615BD2FEC00D803EB /* Icon-114.png in Resources */,
+				D4EF94B815BD2FF500D803EB /* Icon-144.png in Resources */,
+				D4EF94C315BD304000D803EB /* Icon-72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +681,7 @@
 					"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/system_wrappers_js",
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -676,6 +689,7 @@
 					"-ljs_static",
 				);
 				PRODUCT_NAME = TestJavascript;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -699,6 +713,7 @@
 					"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/system_wrappers_js",
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -706,6 +721,7 @@
 					"-ljs_static",
 				);
 				PRODUCT_NAME = TestJavascript;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
