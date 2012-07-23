@@ -318,7 +318,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(CCPoint p)
     int y = (idx/5) * 121;
     
 
-    CCSprite* sprite = CCSprite::create(BatchNode->getTexture(), CCRectMake(x,y,85,121));
+    CCSprite* sprite = CCSprite::createWithTexture(BatchNode->getTexture(), CCRectMake(x,y,85,121));
     BatchNode->addChild(sprite);
 
     sprite->setPosition( ccp( p.x, p.y) );
@@ -463,15 +463,15 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
     CCSpriteBatchNode* batch = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
     addChild(batch, 0, kTagSpriteBatchNode);        
     
-    CCSprite* sprite1 = CCSprite::create(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
-    CCSprite* sprite2 = CCSprite::create(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
-    CCSprite* sprite3 = CCSprite::create(batch->getTexture(), CCRectMake(85*2, 121*1, 85, 121));
-    CCSprite* sprite4 = CCSprite::create(batch->getTexture(), CCRectMake(85*3, 121*1, 85, 121));
+    CCSprite* sprite1 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
+    CCSprite* sprite2 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    CCSprite* sprite3 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*2, 121*1, 85, 121));
+    CCSprite* sprite4 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*3, 121*1, 85, 121));
     
-    CCSprite* sprite5 = CCSprite::create(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
-    CCSprite* sprite6 = CCSprite::create(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
-    CCSprite* sprite7 = CCSprite::create(batch->getTexture(), CCRectMake(85*2, 121*1, 85, 121));
-    CCSprite* sprite8 = CCSprite::create(batch->getTexture(), CCRectMake(85*3, 121*1, 85, 121));
+    CCSprite* sprite5 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
+    CCSprite* sprite6 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    CCSprite* sprite7 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*2, 121*1, 85, 121));
+    CCSprite* sprite8 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*3, 121*1, 85, 121));
     
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -618,19 +618,19 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     float step = s.width/11;
     for(int i=0;i<5;i++) 
     {
-        CCSprite* sprite = CCSprite::create(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
+        CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
         batch->addChild(sprite, i);
     }
     
     for(int i=5;i<10;i++) 
     {
-        CCSprite* sprite = CCSprite::create(batch->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
+        CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
         batch->addChild(sprite, 14-i);
     }
     
-    CCSprite* sprite = CCSprite::create(batch->getTexture(), CCRectMake(85*3, 121*0, 85, 121));
+    CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*3, 121*0, 85, 121));
     batch->addChild(sprite, -1, kTagSprite1);
     sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
@@ -669,12 +669,12 @@ std::string SpriteBatchNodeZOrder::title()
 
 SpriteBatchNodeReorder::SpriteBatchNodeReorder()
 {
-    CCArray* a = CCArray::create(10);
+    CCArray* a = CCArray::createWithCapacity(10);
     CCSpriteBatchNode* asmtest = CCSpriteBatchNode::create("animations/ghosts.png");
     
     for(int i=0; i<10; i++)
     {
-        CCSprite* s1 = CCSprite::create(asmtest->getTexture(), CCRectMake(0, 0, 50, 50));
+        CCSprite* s1 = CCSprite::createWithTexture(asmtest->getTexture(), CCRectMake(0, 0, 50, 50));
         a->addObject(s1);
         asmtest->addChild(s1, 10);
     }
@@ -744,7 +744,7 @@ SpriteBatchNodeReorderIssue744::SpriteBatchNodeReorderIssue744()
     CCSpriteBatchNode* batch = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
     addChild(batch, 0, kTagSpriteBatchNode);        
 
-    CCSprite* sprite = CCSprite::create(batch->getTexture(),CCRectMake(0, 0, 85, 121));
+    CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(),CCRectMake(0, 0, 85, 121));
     sprite->setPosition( ccp(s.width/2, s.height/2) );
     batch->addChild(sprite, 3);
     batch->reorderChild(sprite, 1);
@@ -768,15 +768,15 @@ std::string SpriteBatchNodeReorderIssue744::subtitle()
 
 CCSprite* SpriteBatchNodeReorderIssue766::makeSpriteZ(int aZ)
 {
-    CCSprite *sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(128,0,64,64));
+    CCSprite *sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(128,0,64,64));
     batchNode->addChild(sprite, aZ+1, 0);
 
     //children
-    CCSprite *spriteShadow = CCSprite::create(batchNode->getTexture(), CCRectMake(0,0,64,64));
+    CCSprite *spriteShadow = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,64,64));
     spriteShadow->setOpacity(128);
     sprite->addChild(spriteShadow, aZ, 3);
 
-    CCSprite *spriteTop = CCSprite::create(batchNode->getTexture(), CCRectMake(64,0,64,64));
+    CCSprite *spriteTop = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(64,0,64,64));
     sprite->addChild(spriteTop, aZ+2, 3);
 
     return sprite;
@@ -1053,7 +1053,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     
     for(int i=0;i<5;i++) 
     {
-        CCSprite* sprite = CCSprite::create(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
+        CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
         sprite->setVertexZ(  10 + i*40 );
         batch->addChild(sprite, 0);
@@ -1061,7 +1061,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     }
     
     for(int i=5;i<11;i++) {
-        CCSprite* sprite = CCSprite::create(batch->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
+        CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
         sprite->setVertexZ(  10 + (10-i)*40 );
         batch->addChild(sprite, 0);
@@ -1145,7 +1145,7 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
     CCAction* action = CCRepeatForever::create(rotate);
     for(int i=0;i<3;i++) 
     {
-        CCSprite* sprite = CCSprite::create(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
+        CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
         sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
         
         CCSprite *point = CCSprite::create("Images/r1.png");
@@ -1217,7 +1217,7 @@ Sprite6::Sprite6()
 
     for(int i=0;i<3;i++) 
     {
-        CCSprite* sprite = CCSprite::create(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
+        CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
         sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 
         sprite->runAction( (CCAction*)(action->copy()->autorelease()) );
@@ -1284,11 +1284,11 @@ SpriteBatchNodeFlip::SpriteBatchNodeFlip()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    CCSprite* sprite1 = CCSprite::create(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    CCSprite* sprite1 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
     sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
     batch->addChild(sprite1, 0, kTagSprite1);
     
-    CCSprite* sprite2 = CCSprite::create(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    CCSprite* sprite2 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
     sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
@@ -1384,11 +1384,11 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite* sprite1 = CCSprite::create(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    CCSprite* sprite1 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
     sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
     batch->addChild(sprite1, 0, kTagSprite1);
     
-    CCSprite* sprite2 = CCSprite::create(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+    CCSprite* sprite2 = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
     sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
@@ -1465,7 +1465,7 @@ void SpriteNewTexture::addNewSprite()
     
     
     CCNode* node = getChildByTag( kTagSpriteBatchNode );
-    CCSprite* sprite = CCSprite::create(m_texture1, CCRectMake(x,y,85,121));
+    CCSprite* sprite = CCSprite::createWithTexture(m_texture1, CCRectMake(x,y,85,121));
     node->addChild(sprite);
     
     sprite->setPosition( ccp( p.x, p.y) );
@@ -1572,7 +1572,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     int y = (idx/5) * 121;
     
     
-    CCSprite* sprite = CCSprite::create(batch->getTexture(), CCRectMake(x,y,85,121));
+    CCSprite* sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(x,y,85,121));
     batch->addChild(sprite);
     
     sprite->setPosition( ccp( p.x, p.y) );
@@ -1641,7 +1641,7 @@ void SpriteFrameTest::onEnter()
     spritebatch->addChild(m_pSprite1);
     addChild(spritebatch);
 
-    CCArray* animFrames = CCArray::create(15);
+    CCArray* animFrames = CCArray::createWithCapacity(15);
 
     char str[100] = {0};
     for(int i = 1; i < 15; i++) 
@@ -1651,7 +1651,7 @@ void SpriteFrameTest::onEnter()
         animFrames->addObject(frame);
     }
 
-    CCAnimation* animation = CCAnimation::create(animFrames, 0.3f);
+    CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
     m_pSprite1->runAction( CCRepeatForever::create( CCAnimate::create(animation) ) );
 
     // to test issue #732, uncomment the following line
@@ -1666,7 +1666,7 @@ void SpriteFrameTest::onEnter()
     addChild(m_pSprite2);
 
 
-    CCArray* moreFrames = CCArray::create(20);
+    CCArray* moreFrames = CCArray::createWithCapacity(20);
     for(int i = 1; i < 15; i++) 
     {
         sprintf(str, "grossini_dance_gray_%02d.png",i);
@@ -1683,7 +1683,7 @@ void SpriteFrameTest::onEnter()
 
     // append frames from another batch
     moreFrames->addObjectsFromArray(animFrames);
-    CCAnimation *animMixed = CCAnimation::create(moreFrames, 0.3f);
+    CCAnimation *animMixed = CCAnimation::createWithSpriteFrames(moreFrames, 0.3f);
 
 
     m_pSprite2->runAction(CCRepeatForever::create( CCAnimate::create(animMixed) ) );
@@ -1797,7 +1797,7 @@ void SpriteFrameAliasNameTest::onEnter()
     spriteBatch->addChild(sprite);
     addChild(spriteBatch);
 
-    CCArray* animFrames = CCArray::create(15);
+    CCArray* animFrames = CCArray::createWithCapacity(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
@@ -1807,7 +1807,7 @@ void SpriteFrameAliasNameTest::onEnter()
         animFrames->addObject(frame);
     }
 
-    CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+    CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
     // 14 frames * 1sec = 14 seconds
     sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 }
@@ -1868,7 +1868,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
         
         point->setPosition( sprite->getPosition() );
         
-        CCArray* animFrames = CCArray::create(14);
+        CCArray* animFrames = CCArray::createWithCapacity(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
@@ -1877,7 +1877,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
             animFrames->addObject(frame);
         }
 
-        CCAnimation* animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create( CCAnimate::create(animation) ) );            
         sprite->runAction(CCRepeatForever::create(CCRotateBy::create(10, 360) ) );
 
@@ -1945,7 +1945,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
         
         point->setPosition( sprite->getPosition() );
         
-        CCArray* animFrames = CCArray::create(14);
+        CCArray* animFrames = CCArray::createWithCapacity(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
@@ -1954,7 +1954,7 @@ SpriteBatchNodeOffsetAnchorRotation::SpriteBatchNodeOffsetAnchorRotation()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create( CCAnimate::create(animation) ));
         sprite->runAction(CCRepeatForever::create(CCRotateBy::create(10, 360) ));
         
@@ -2020,7 +2020,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         
         point->setPosition( sprite->getPosition() );
         
-        CCArray* animFrames = CCArray::create(14);
+        CCArray* animFrames = CCArray::createWithCapacity(14);
         char str[100] = {0};
         for(int i = 0; i < 14; i++) 
         {
@@ -2029,7 +2029,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create( CCAnimate::create(animation) ));            
         
         CCActionInterval* scale = CCScaleBy::create(2, 2);
@@ -2097,7 +2097,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
         
         point->setPosition( sprite->getPosition() );
         
-        CCArray* animFrames = CCArray::create(14);
+        CCArray* animFrames = CCArray::createWithCapacity(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
         {
@@ -2106,7 +2106,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create( CCAnimate::create(animation) ) );
 
         CCActionInterval* scale = CCScaleBy::create(2, 2);
@@ -2144,22 +2144,22 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage("animations/dragon_animation.png");
     
     // manually add frames to the frame cache
-    CCSpriteFrame *frame0 = CCSpriteFrame::create(texture, CCRectMake(132*0, 132*0, 132, 132));
-    CCSpriteFrame *frame1 = CCSpriteFrame::create(texture, CCRectMake(132*1, 132*0, 132, 132));
-    CCSpriteFrame *frame2 = CCSpriteFrame::create(texture, CCRectMake(132*2, 132*0, 132, 132));
-    CCSpriteFrame *frame3 = CCSpriteFrame::create(texture, CCRectMake(132*3, 132*0, 132, 132));
-    CCSpriteFrame *frame4 = CCSpriteFrame::create(texture, CCRectMake(132*0, 132*1, 132, 132));
-    CCSpriteFrame *frame5 = CCSpriteFrame::create(texture, CCRectMake(132*1, 132*1, 132, 132));
+    CCSpriteFrame *frame0 = CCSpriteFrame::createWithTexture(texture, CCRectMake(132*0, 132*0, 132, 132));
+    CCSpriteFrame *frame1 = CCSpriteFrame::createWithTexture(texture, CCRectMake(132*1, 132*0, 132, 132));
+    CCSpriteFrame *frame2 = CCSpriteFrame::createWithTexture(texture, CCRectMake(132*2, 132*0, 132, 132));
+    CCSpriteFrame *frame3 = CCSpriteFrame::createWithTexture(texture, CCRectMake(132*3, 132*0, 132, 132));
+    CCSpriteFrame *frame4 = CCSpriteFrame::createWithTexture(texture, CCRectMake(132*0, 132*1, 132, 132));
+    CCSpriteFrame *frame5 = CCSpriteFrame::createWithTexture(texture, CCRectMake(132*1, 132*1, 132, 132));
     
     
     //
     // Animation using Sprite BatchNode
     //
-    CCSprite* sprite = CCSprite::create(frame0);
+    CCSprite* sprite = CCSprite::createWithSpriteFrame(frame0);
     sprite->setPosition( ccp( s.width/2-80, s.height/2) );
     addChild(sprite);
             
-    CCArray* animFrames = CCArray::create(6);
+    CCArray* animFrames = CCArray::createWithCapacity(6);
     animFrames->addObject(frame0);
     animFrames->addObject(frame1);
     animFrames->addObject(frame2);
@@ -2167,7 +2167,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
     animFrames->addObject(frame4);
     animFrames->addObject(frame5);
             
-    CCAnimation *animation = CCAnimation::create(animFrames, 0.2f);
+    CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
     CCAnimate *animate = CCAnimate::create(animation);
     CCActionInterval* seq = (CCActionInterval*)(CCSequence::create( animate,
                        CCFlipX::create(true),
@@ -2220,7 +2220,7 @@ SpriteHybrid::SpriteHybrid()
         char str[25] = {0};
         sprintf(str, "grossini_dance_%02d.png", (spriteIdx+1));
         CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str);
-        CCSprite* sprite = CCSprite::create(frame);
+        CCSprite* sprite = CCSprite::createWithSpriteFrame(frame);
         parent1->addChild(sprite, i, i);
         
         float x=-1000;
@@ -2246,7 +2246,7 @@ void SpriteHybrid::reparentSprite(float dt)
     CCNode *p1 = getChildByTag(kTagNode);
     CCNode *p2 = getChildByTag( kTagSpriteBatchNode );
     
-    CCArray* retArray = CCArray::create(250);
+    CCArray* retArray = CCArray::createWithCapacity(250);
 
     if( m_usingSpriteBatchNode )
         CC_SWAP(p1,p2, CCNode*);
@@ -2332,7 +2332,7 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
         animFrames->addObject(frame);
     }
     
-    CCAnimation* animation = CCAnimation::create(animFrames, 0.2f);
+    CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
     sprite1->runAction(CCRepeatForever::create( CCAnimate::create(animation) ) );
     // END NEW CODE
     
@@ -3474,7 +3474,7 @@ AnimationCache::AnimationCache()
     //
     // create animation "dance"
     //
-    CCArray* animFrames = CCArray::create(15);
+    CCArray* animFrames = CCArray::createWithCapacity(15);
     char str[100] = {0};
     for(int i = 1; i < 15; i++)
     {
@@ -3483,7 +3483,7 @@ AnimationCache::AnimationCache()
         animFrames->addObject(frame);
     }
 
-    CCAnimation *animation = CCAnimation::create(animFrames, 0.2f);
+    CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
 
     // Add an animation to the Cache
     CCAnimationCache::sharedAnimationCache()->addAnimation(animation, "dance");
@@ -3500,7 +3500,7 @@ AnimationCache::AnimationCache()
         animFrames->addObject(frame);
     }
 
-    animation = CCAnimation::create(animFrames, 0.2f);
+    animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
 
     // Add an animation to the Cache
     CCAnimationCache::sharedAnimationCache()->addAnimation(animation, "dance_gray");
@@ -3517,7 +3517,7 @@ AnimationCache::AnimationCache()
         animFrames->addObject(frame);
     }
 
-    animation = CCAnimation::create(animFrames, 0.2f);
+    animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
 
     // Add an animation to the Cache
     CCAnimationCache::sharedAnimationCache()->addAnimation(animation, "dance_blue");
@@ -3627,9 +3627,9 @@ SpriteBatchBug1217::SpriteBatchBug1217()
 {
     CCSpriteBatchNode *bn = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
 
-    CCSprite * s1 = CCSprite::create(bn->getTexture(), CCRectMake(0, 0, 57, 57));
-    CCSprite * s2 = CCSprite::create(bn->getTexture(), CCRectMake(0, 0, 57, 57));
-    CCSprite * s3 = CCSprite::create(bn->getTexture(), CCRectMake(0, 0, 57, 57));
+    CCSprite * s1 = CCSprite::createWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
+    CCSprite * s2 = CCSprite::createWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
+    CCSprite * s3 = CCSprite::createWithTexture(bn->getTexture(), CCRectMake(0, 0, 57, 57));
 
     s1->setColor(ccc3(255, 0, 0));
     s2->setColor(ccc3(0, 255, 0));
@@ -3716,7 +3716,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 
         CCSkewBy *skewX = CCSkewBy::create(2, 45, 0);
@@ -3794,7 +3794,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 
         CCSkewBy *skewX = CCSkewBy::create(2, 45, 0);
@@ -3869,7 +3869,7 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 
         // Skew
@@ -3951,7 +3951,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 
         // skew
@@ -4033,7 +4033,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 
         CCFlipY *flip = CCFlipY::create(true);
@@ -4115,7 +4115,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
             animFrames->addObject(frame);
         }
 
-        CCAnimation *animation = CCAnimation::create(animFrames, 0.3f);
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
         sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 
         CCFlipY *flip = CCFlipY::create(true);
@@ -4216,23 +4216,23 @@ SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
     m_pBatchNode = CCSpriteBatchNode::create("Images/piece.png", 15);
     addChild(m_pBatchNode, 1, 0);
 
-    m_pSprite1 = CCSprite::create(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
+    m_pSprite1 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
     m_pSprite1->setPosition(CCPointMake(100,160));
     m_pBatchNode->addChild(m_pSprite1, 3, 1);
 
-    m_pSprite2= CCSprite::create(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
+    m_pSprite2= CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
     m_pSprite2->setPosition(CCPointMake(164,160));
     m_pBatchNode->addChild(m_pSprite2, 4, 2);
 
-    m_pSprite3 = CCSprite::create(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
+    m_pSprite3 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
     m_pSprite3->setPosition(CCPointMake(228,160));
     m_pBatchNode->addChild(m_pSprite3, 4, 3);
 
-    m_pSprite4 = CCSprite::create(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
+    m_pSprite4 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
     m_pSprite4->setPosition(CCPointMake(292,160));
     m_pBatchNode->addChild(m_pSprite4, 5, 4);
 
-    m_pSprite5 = CCSprite::create(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
+    m_pSprite5 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
     m_pSprite5->setPosition(CCPointMake(356,160));
     m_pBatchNode->addChild(m_pSprite5, 6, 5);
 

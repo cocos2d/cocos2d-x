@@ -636,7 +636,7 @@ static int tolua_Cocos2d_CCSequence_create00(lua_State* tolua_S)
   CCFiniteTimeAction* pActionOne = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,2,0));
   CCFiniteTimeAction* pActionTwo = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  CCSequence::create(pActionOne,pActionTwo);
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  CCSequence::createWithTwoActions(pActionOne,pActionTwo);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
@@ -793,7 +793,7 @@ static int tolua_Cocos2d_CCSpawn_create01(lua_State* tolua_S)
   CCFiniteTimeAction* pAction1 = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,2,0));
   CCFiniteTimeAction* pAction2 = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCSpawn* tolua_ret = (CCSpawn*)  CCSpawn::create(pAction1,pAction2);
+   CCSpawn* tolua_ret = (CCSpawn*)  CCSpawn::createWithTwoActions(pAction1,pAction2);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpawn");
@@ -7260,7 +7260,7 @@ static int tolua_Cocos2d_CCAnimation_create01(lua_State* tolua_S)
  {
   CCArray* arrayOfSpriteFrameNames = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::create(arrayOfSpriteFrameNames);
+   CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::createWithSpriteFrames(arrayOfSpriteFrameNames);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
@@ -7289,7 +7289,7 @@ static int tolua_Cocos2d_CCAnimation_create02(lua_State* tolua_S)
   CCArray* arrayOfSpriteFrameNames = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
   float delay = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::create(arrayOfSpriteFrameNames,delay);
+   CCAnimation* tolua_ret = (CCAnimation*)  CCAnimation::createWithSpriteFrames(arrayOfSpriteFrameNames,delay);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
@@ -8057,7 +8057,7 @@ static int tolua_Cocos2d_CCArray_create01(lua_State* tolua_S)
  {
   const char* pFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   CCArray* tolua_ret = (CCArray*)  CCArray::create(pFileName);
+   CCArray* tolua_ret = (CCArray*)  CCArray::createWithContentsOfFile(pFileName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -8084,7 +8084,7 @@ static int tolua_Cocos2d_CCArray_create02(lua_State* tolua_S)
  {
   unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
   {
-   CCArray* tolua_ret = (CCArray*)  CCArray::create(capacity);
+   CCArray* tolua_ret = (CCArray*)  CCArray::createWithCapacity(capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -16305,7 +16305,7 @@ static int tolua_Cocos2d_CCDictionary_create01(lua_State* tolua_S)
  {
   CCDictionary* srcDict = ((CCDictionary*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCDictionary* tolua_ret = (CCDictionary*)  CCDictionary::create(srcDict);
+   CCDictionary* tolua_ret = (CCDictionary*)  CCDictionary::createWithDictionary(srcDict);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDictionary");
@@ -16332,7 +16332,7 @@ static int tolua_Cocos2d_CCDictionary_create02(lua_State* tolua_S)
  {
   const char* pFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   CCDictionary* tolua_ret = (CCDictionary*)  CCDictionary::create(pFileName);
+   CCDictionary* tolua_ret = (CCDictionary*)  CCDictionary::createWithContentsOfFile(pFileName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDictionary");
@@ -21550,7 +21550,7 @@ static int tolua_Cocos2d_CCParticleBatchNode_create00(lua_State* tolua_S)
   CCTexture2D* tex = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
   unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,3,kCCParticleDefaultCapacity));
   {
-   CCParticleBatchNode* tolua_ret = (CCParticleBatchNode*)  CCParticleBatchNode::create(tex,capacity);
+   CCParticleBatchNode* tolua_ret = (CCParticleBatchNode*)  CCParticleBatchNode::createWithTexture(tex,capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleBatchNode");
@@ -26020,7 +26020,7 @@ static int tolua_Cocos2d_CCSprite_create00(lua_State* tolua_S)
  {
   CCTexture2D* pTexture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCSprite* tolua_ret = (CCSprite*)  CCSprite::create(pTexture);
+   CCSprite* tolua_ret = (CCSprite*)  CCSprite::createWithTexture(pTexture);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
@@ -26052,7 +26052,7 @@ static int tolua_Cocos2d_CCSprite_create01(lua_State* tolua_S)
   CCTexture2D* pTexture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
   CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCSprite* tolua_ret = (CCSprite*)  CCSprite::create(pTexture,rect);
+   CCSprite* tolua_ret = (CCSprite*)  CCSprite::createWithTexture(pTexture,rect);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
@@ -26079,7 +26079,7 @@ static int tolua_Cocos2d_CCSprite_create02(lua_State* tolua_S)
  {
   CCSpriteFrame* pSpriteFrame = ((CCSpriteFrame*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCSprite* tolua_ret = (CCSprite*)  CCSprite::create(pSpriteFrame);
+   CCSprite* tolua_ret = (CCSprite*)  CCSprite::createWithSpriteFrame(pSpriteFrame);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
@@ -26713,7 +26713,7 @@ static int tolua_Cocos2d_CCSpriteBatchNode_create00(lua_State* tolua_S)
  {
   CCTexture2D* tex = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  CCSpriteBatchNode::create(tex);
+   CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  CCSpriteBatchNode::createWithTexture(tex);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
@@ -26745,7 +26745,7 @@ static int tolua_Cocos2d_CCSpriteBatchNode_create01(lua_State* tolua_S)
   CCTexture2D* tex = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
   unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
   {
-   CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  CCSpriteBatchNode::create(tex,capacity);
+   CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  CCSpriteBatchNode::createWithTexture(tex,capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
@@ -27264,7 +27264,7 @@ static int tolua_Cocos2d_CCSpriteFrame_create00(lua_State* tolua_S)
   CCTexture2D* pobTexture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
   CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::create(pobTexture,rect);
+   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::createWithTexture(pobTexture,rect);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
@@ -27302,7 +27302,7 @@ static int tolua_Cocos2d_CCSpriteFrame_create01(lua_State* tolua_S)
   CCPoint offset = *((CCPoint*)  tolua_tousertype(tolua_S,5,0));
   CCSize originalSize = *((CCSize*)  tolua_tousertype(tolua_S,6,0));
   {
-   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::create(pobTexture,rect,rotated,offset,originalSize);
+   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::createWithTexture(pobTexture,rect,rotated,offset,originalSize);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
@@ -28067,7 +28067,7 @@ static int tolua_Cocos2d_CCString_create01(lua_State* tolua_S)
   unsigned char* pData = ((unsigned char*)  tolua_tostring(tolua_S,2,0));
   unsigned long nLen = ((unsigned long)  tolua_tonumber(tolua_S,3,0));
   {
-   CCString* tolua_ret = (CCString*)  CCString::create(pData,nLen);
+   CCString* tolua_ret = (CCString*)  CCString::createWithData(pData,nLen);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
@@ -29714,7 +29714,7 @@ static int tolua_Cocos2d_CCTextureAtlas_create01(lua_State* tolua_S)
   CCTexture2D* texture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
   unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
   {
-   CCTextureAtlas* tolua_ret = (CCTextureAtlas*)  CCTextureAtlas::create(texture,capacity);
+   CCTextureAtlas* tolua_ret = (CCTextureAtlas*)  CCTextureAtlas::createWithTexture(texture,capacity);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");

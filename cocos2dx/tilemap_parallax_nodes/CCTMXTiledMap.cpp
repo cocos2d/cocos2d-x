@@ -51,10 +51,10 @@ CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
 
 CCTMXTiledMap* CCTMXTiledMap::tiledMapWithXML(const char* tmxString, const char* resourcePath)
 {
-    return CCTMXTiledMap::create(tmxString, resourcePath);
+    return CCTMXTiledMap::createWithXML(tmxString, resourcePath);
 }
 
-CCTMXTiledMap* CCTMXTiledMap::create(const char* tmxString, const char* resourcePath)
+CCTMXTiledMap* CCTMXTiledMap::createWithXML(const char* tmxString, const char* resourcePath)
 {
     CCTMXTiledMap *pRet = new CCTMXTiledMap();
     if (pRet->initWithXML(tmxString, resourcePath))

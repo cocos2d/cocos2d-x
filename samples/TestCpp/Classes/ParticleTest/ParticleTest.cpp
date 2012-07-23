@@ -1088,7 +1088,7 @@ void ParticleDemo::onEnter(void)
     CCMenuItemImage* item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ParticleDemo::restartCallback) );
     CCMenuItemImage* item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2,  this, menu_selector(ParticleDemo::nextCallback) );
     
-    CCMenuItemToggle* item4 = CCMenuItemToggle::create(    this, 
+    CCMenuItemToggle* item4 = CCMenuItemToggle::createWithTarget(this, 
                                                                menu_selector(ParticleDemo::toggleCallback), 
                                                                CCMenuItemFont::create( "Free Movement" ),
                                                                CCMenuItemFont::create( "Relative Movement" ),
@@ -1239,7 +1239,7 @@ void ParticleBatchHybrid::onEnter()
 
     m_emitter = CCParticleSystemQuad::create("Particles/LavaFlow.plist");
     m_emitter->retain();
-    CCParticleBatchNode *batch = CCParticleBatchNode::create(m_emitter->getTexture());
+    CCParticleBatchNode *batch = CCParticleBatchNode::createWithTexture(m_emitter->getTexture());
 
     batch->addChild(m_emitter);
 
@@ -1298,7 +1298,7 @@ void ParticleBatchMultipleEmitters::onEnter()
     emitter2->setPosition(ccp( s.width/2, s.height/2));
     emitter3->setPosition(ccp( s.width/4, s.height/4));
 
-    CCParticleBatchNode *batch = CCParticleBatchNode::create(emitter1->getTexture());
+    CCParticleBatchNode *batch = CCParticleBatchNode::createWithTexture(emitter1->getTexture());
 
     batch->addChild(emitter1, 0);
     batch->addChild(emitter2, 0);
@@ -1330,7 +1330,7 @@ void ParticleReorder::onEnter()
 
     CCParticleSystem* ignore = CCParticleSystemQuad::create("Particles/SmallSun.plist");
     CCNode *parent1 = CCNode::create();
-    CCNode *parent2 = CCParticleBatchNode::create(ignore->getTexture());
+    CCNode *parent2 = CCParticleBatchNode::createWithTexture(ignore->getTexture());
     ignore->unscheduleUpdate();
 
     for( unsigned int i=0; i<2;i++) 
@@ -1646,7 +1646,7 @@ void AddAndDeleteParticleSystems::onEnter()
     m_background = NULL;
 
     //adds the texture inside the plist to the texture cache
-    m_pBatchNode = CCParticleBatchNode::create((CCTexture2D*)NULL, 16000);
+    m_pBatchNode = CCParticleBatchNode::createWithTexture((CCTexture2D*)NULL, 16000);
 
     addChild(m_pBatchNode, 1, 2);
 
