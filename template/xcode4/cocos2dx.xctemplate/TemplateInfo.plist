@@ -7,7 +7,8 @@
 		<string>org.cocos2d-x.bundlebase</string>
 		<string>org.cocos2d-x.iosbase</string>
 		<string>org.cocos2d-x.libcocos2dx</string>
-        <string>org.cocos2d-x.libcocosdenshion</string>
+		<string>org.cocos2d-x.libcocosdenshion</string>
+		<string>org.cocos2d-x.libextensions</string>
 	</array>
 	<key>Concrete</key>
 	<true/>
@@ -68,20 +69,20 @@
 			<key>Path</key>
 			<string>ios/main.m</string>
 		</dict>
-        <key>ios/RootViewController.mm</key>
+		<key>ios/RootViewController.mm</key>
 		<dict>
 			<key>Group</key>
 			<string>ios</string>
 			<key>Path</key>
 			<string>ios/RootViewController.mm</string>
 		</dict>
-        <key>ios/RootViewController.h</key>
+		<key>ios/RootViewController.h</key>
 		<dict>
 			<key>Group</key>
 			<string>ios</string>
 			<key>Path</key>
 			<string>ios/RootViewController.h</string>
-            <key>TargetIndices</key>
+			<key>TargetIndices</key>
 			<array/>
 		</dict>
 		<key>Prefix.pch</key>
@@ -106,8 +107,8 @@
 		<string>ios/main.m</string>
 		<string>ios/AppController.h</string>
 		<string>ios/AppController.mm</string>
-        <string>ios/RootViewController.h</string>
-        <string>ios/RootViewController.mm</string>
+		<string>ios/RootViewController.h</string>
+		<string>ios/RootViewController.mm</string>
 		<string>Classes/AppDelegate.h</string>
 		<string>Classes/AppDelegate.cpp</string>
 		<string>Classes/HelloWorldScene.h</string>
