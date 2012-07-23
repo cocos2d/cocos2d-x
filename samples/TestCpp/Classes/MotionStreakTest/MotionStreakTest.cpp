@@ -258,7 +258,7 @@ void MotionStreakTest::onEnter()
     
     addChild(menu, 1);    
 
-    CCMenuItemToggle *itemMode = CCMenuItemToggle::create(this, menu_selector(MotionStreakTest::modeCallback),
+    CCMenuItemToggle *itemMode = CCMenuItemToggle::createWithTarget(this, menu_selector(MotionStreakTest::modeCallback),
         CCMenuItemFont::create("Use High Quality Mode"),
         CCMenuItemFont::create("Use Fast Mode"),
         NULL);

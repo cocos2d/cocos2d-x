@@ -152,20 +152,20 @@ public:
 
     /** Create an array */
     static CCArray* create();
-    /** Create an array with one object */
-    static CCArray* createWithObject(CCObject* pObject);
     /** Create an array with some objects */
     static CCArray* create(CCObject* pObject, ...);
+    /** Create an array with one object */
+    static CCArray* createWithObject(CCObject* pObject);
     /** Create an array with capacity */
-    static CCArray* create(unsigned int capacity);
+    static CCArray* createWithCapacity(unsigned int capacity);
     /** Create an array with an existing array */
-    static CCArray* create(CCArray* otherArray);
+    static CCArray* createWithArray(CCArray* otherArray);
     /**
      @brief   Generate a CCArray pointer by file
      @param   pFileName  The file name of *.plist file
      @return  The CCArray pointer generated from the file
      */
-    static CCArray* create(const char* pFileName);
+    static CCArray* createWithContentsOfFile(const char* pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the

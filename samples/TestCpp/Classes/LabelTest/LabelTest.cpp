@@ -1390,7 +1390,7 @@ std::string BMFontOneAtlas::subtitle()
 /// BMFontUnicode
 BMFontUnicode::BMFontUnicode()
 {
-    CCDictionary *strings = CCDictionary::create("fonts/strings.xml");
+    CCDictionary *strings = CCDictionary::createWithContentsOfFile("fonts/strings.xml");
     const char *chinese = ((CCString*)strings->objectForKey("chinese1"))->m_sString.c_str();
     const char *japanese = ((CCString*)strings->objectForKey("japanese"))->m_sString.c_str();
     const char *spanish = ((CCString*)strings->objectForKey("spanish"))->m_sString.c_str();

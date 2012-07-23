@@ -383,7 +383,7 @@ MenuLayer4::MenuLayer4()
     title1->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
-    CCMenuItemToggle* item1 = CCMenuItemToggle::create(    this, 
+    CCMenuItemToggle* item1 = CCMenuItemToggle::createWithTarget(this, 
                                                                 menu_selector(MenuLayer4::menuCallback), 
                                                                 CCMenuItemFont::create( "On" ),
                                                                 CCMenuItemFont::create( "Off"),
@@ -395,7 +395,7 @@ MenuLayer4::MenuLayer4()
     title2->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
-    CCMenuItemToggle *item2 = CCMenuItemToggle::create(    this, 
+    CCMenuItemToggle *item2 = CCMenuItemToggle::createWithTarget(this, 
                                                                 menu_selector(MenuLayer4::menuCallback),
                                                                 CCMenuItemFont::create( "On" ),
                                                                 CCMenuItemFont::create( "Off"),
@@ -407,7 +407,7 @@ MenuLayer4::MenuLayer4()
     title3->setEnabled( false );
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
-    CCMenuItemToggle *item3 = CCMenuItemToggle::create(    this, 
+    CCMenuItemToggle *item3 = CCMenuItemToggle::createWithTarget(this, 
                                                                 menu_selector(MenuLayer4::menuCallback), 
                                                                 CCMenuItemFont::create( "High" ),
                                                                 CCMenuItemFont::create( "Low" ),
@@ -419,7 +419,7 @@ MenuLayer4::MenuLayer4()
     title4->setEnabled(false);
     CCMenuItemFont::setFontName( "Marker Felt" );
     CCMenuItemFont::setFontSize(34);
-    CCMenuItemToggle *item4 = CCMenuItemToggle::create( this, 
+    CCMenuItemToggle *item4 = CCMenuItemToggle::createWithTarget(this, 
                                                                 menu_selector(MenuLayer4::menuCallback), 
                                                                 CCMenuItemFont::create( "Off" ), 
                                                                 NULL );
