@@ -8,6 +8,7 @@
 		<string>org.cocos2d-x.iosbase</string>
 		<string>org.cocos2d-x.libcocos2dx</string>
 		<string>org.cocos2d-x.libcocosdenshion</string>
+		<string>org.cocos2d-x.libextensions</string>
 		<string>org.cocos2d-x.libchipmunk</string>
 	</array>
 	<key>Concrete</key>
@@ -114,8 +115,8 @@
 		<string>ios/main.m</string>
 		<string>ios/AppController.h</string>
 		<string>ios/AppController.mm</string>
-        <string>ios/RootViewController.h</string>
-        <string>ios/RootViewController.mm</string>
+		<string>ios/RootViewController.h</string>
+		<string>ios/RootViewController.mm</string>
 		<string>Classes/AppDelegate.h</string>
 		<string>Classes/AppDelegate.cpp</string>
 		<string>Classes/HelloWorldScene.h</string>
