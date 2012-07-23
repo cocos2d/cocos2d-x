@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include <string>
 #include <ctype.h>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC) 
 
 NS_CC_BEGIN
 
@@ -860,7 +860,7 @@ bool CCImage::_saveImageToJPG(const char * pszFilePath)
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM != TARGET_OS_IPHONE)
+#endif // (CC_TARGET_PLATFORM != TARGET_OS_IPHONE && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 /* ios/CCImage_ios.mm uses "mm" as the extension, 
    so we cannot inclue it in this CCImage.cpp.
    It makes a little difference on ios */
