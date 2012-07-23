@@ -165,7 +165,7 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
         m_sResources = resourcePath;
     }
     
-    m_pObjectGroups = CCArray::create(4);
+    m_pObjectGroups = CCArray::createWithCapacity(4);
     m_pObjectGroups->retain();
 
     m_pProperties = new CCDictionary();

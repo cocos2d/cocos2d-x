@@ -635,6 +635,7 @@ void ActionAnimate::onEnter()
 
     centerSprites(3);
 
+
     //
     // Manual animation
     //
@@ -651,8 +652,7 @@ void ActionAnimate::onEnter()
 
     CCAnimate* action = CCAnimate::create(animation);
     m_grossini->runAction(CCSequence::create(action, action->reverse(), NULL));
-
-
+    
     //
     // File animation
     //

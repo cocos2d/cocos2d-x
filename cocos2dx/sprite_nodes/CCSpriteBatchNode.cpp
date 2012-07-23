@@ -48,10 +48,10 @@ NS_CC_BEGIN
 
 CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
-    return CCSpriteBatchNode::create(tex, capacity);
+    return CCSpriteBatchNode::createWithTexture(tex, capacity);
 }
 
-CCSpriteBatchNode* CCSpriteBatchNode::create(CCTexture2D* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
+CCSpriteBatchNode* CCSpriteBatchNode::createWithTexture(CCTexture2D* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
     CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
     batchNode->initWithTexture(tex, capacity);

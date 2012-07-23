@@ -314,7 +314,7 @@ LayerGradient::LayerGradient()
     CCLabelTTF *label2 = CCLabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);
     CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
     CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
-    CCMenuItemToggle *item = CCMenuItemToggle::create(this, menu_selector(LayerGradient::toggleItem), item1, item2, NULL);
+    CCMenuItemToggle *item = CCMenuItemToggle::createWithTarget(this, menu_selector(LayerGradient::toggleItem), item1, item2, NULL);
 
     CCMenu *menu = CCMenu::create(item, NULL);
     addChild(menu);

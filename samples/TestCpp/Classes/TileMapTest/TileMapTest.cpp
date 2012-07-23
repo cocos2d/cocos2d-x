@@ -1257,7 +1257,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     CCString* str = CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(file.c_str()));
     CCAssert(str != NULL, "Unable to open file");
 
-    CCTMXTiledMap *map = CCTMXTiledMap::create(str->getCString() ,resources.c_str());
+    CCTMXTiledMap *map = CCTMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
     addChild(map, 0, kTagTileMap);
 
     CCSize s = map->getContentSize();

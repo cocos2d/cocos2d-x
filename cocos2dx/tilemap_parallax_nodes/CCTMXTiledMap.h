@@ -136,7 +136,7 @@ public:
     static CCTMXTiledMap* create(const char *tmxFile);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-    static CCTMXTiledMap* create(const char* tmxString, const char* resourcePath);
+    static CCTMXTiledMap* createWithXML(const char* tmxString, const char* resourcePath);
 
     /** initializes a TMX Tiled Map with a TMX file */
     bool initWithTMXFile(const char *tmxFile);

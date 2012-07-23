@@ -90,10 +90,10 @@ CCMenu * CCMenu::create(CCMenuItem* item, ...)
 
 CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
 {
-    return CCMenu::create(pArrayOfItems);
+    return CCMenu::createWithArray(pArrayOfItems);
 }
 
-CCMenu* CCMenu::create(CCArray* pArrayOfItems)
+CCMenu* CCMenu::createWithArray(CCArray* pArrayOfItems)
 {
     CCMenu *pRet = new CCMenu();
     if (pRet && pRet->initWithArray(pArrayOfItems))

@@ -94,7 +94,7 @@ NotificationCenterTest::NotificationCenterTest()
     CCLabelTTF *label2 = CCLabelTTF::create("switch on", "Marker Felt", 26);
     CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
     CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
-    CCMenuItemToggle *item = CCMenuItemToggle::create(this, menu_selector(NotificationCenterTest::toggleSwitch), item1, item2, NULL);
+    CCMenuItemToggle *item = CCMenuItemToggle::createWithTarget(this, menu_selector(NotificationCenterTest::toggleSwitch), item1, item2, NULL);
     // turn on
     item->setSelectedIndex(1);
     CCMenu *menu = CCMenu::create(item, NULL);
@@ -116,7 +116,7 @@ NotificationCenterTest::NotificationCenterTest()
         CCLabelTTF *label2 = CCLabelTTF::create("connected", "Marker Felt", 26);
         CCMenuItemLabel *item1 = CCMenuItemLabel::create(label1);
         CCMenuItemLabel *item2 = CCMenuItemLabel::create(label2);
-        CCMenuItemToggle *item = CCMenuItemToggle::create(this, menu_selector(NotificationCenterTest::connectToSwitch), item1, item2, NULL);
+        CCMenuItemToggle *item = CCMenuItemToggle::createWithTarget(this, menu_selector(NotificationCenterTest::connectToSwitch), item1, item2, NULL);
         item->setTag(kTagConnect+i);
         item->setPosition(ccp(light->getPosition().x, light->getPosition().y+50));
         menuConnect->addChild(item, 0);

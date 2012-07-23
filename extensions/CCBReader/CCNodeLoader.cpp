@@ -416,7 +416,7 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
 
         CCTexture2D * texture = CCTextureCache::sharedTextureCache()->addImage(spriteFilePath->getCString());
         CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
-        spriteFrame = CCSpriteFrame::create(texture, bounds);
+        spriteFrame = CCSpriteFrame::createWithTexture(texture, bounds);
     } else {
         CCSpriteFrameCache * frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
 

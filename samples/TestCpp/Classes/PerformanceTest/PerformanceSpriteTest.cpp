@@ -130,7 +130,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
         case 2:
         case 3: 
             {
-                sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(0, 0, 52, 139));
+                sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 52, 139));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -154,7 +154,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 85;
                 y *= 121;
-                sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(x,y,85,121));
+                sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(x,y,85,121));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -185,7 +185,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
 
                 x *= 32;
                 y *= 32;
-                sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(x,y,32,32));
+                sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(x,y,32,32));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
@@ -441,7 +441,7 @@ void performanceActions20(CCSprite* pSprite)
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     CCActionInterval *grow = CCScaleBy::create(growDuration, 0.5f, 0.5f);
-    CCAction *permanentScaleLoop = CCRepeatForever::create(CCSequence::create(grow, grow->reverse()));
+    CCAction *permanentScaleLoop = CCRepeatForever::create(CCSequence::createWithTwoActions(grow, grow->reverse()));
     pSprite->runAction(permanentScaleLoop);
 }
 

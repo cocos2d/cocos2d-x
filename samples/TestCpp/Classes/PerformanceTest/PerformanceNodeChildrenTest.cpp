@@ -180,7 +180,7 @@ void IterateSpriteSheet::updateQuantityOfNodes()
     {
         for(int i = 0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
         {
-            CCSprite *sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
+            CCSprite *sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
             batchNode->addChild(sprite);
             sprite->setPosition(ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
         }
@@ -337,7 +337,7 @@ void AddRemoveSpriteSheet::updateQuantityOfNodes()
     {
         for (int i=0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
         {
-            CCSprite *sprite = CCSprite::create(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
+            CCSprite *sprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, 32, 32));
             batchNode->addChild(sprite);
             sprite->setPosition(ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
             sprite->setVisible(false);
@@ -376,13 +376,13 @@ void AddSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::create(totalToAdd);
+        CCArray* sprites = CCArray::createWithCapacity(totalToAdd);
         int         *zs      = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
-            CCSprite* pSprite = CCSprite::create(batchNode->getTexture(), CCRectMake(0,0,32,32));
+            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
             sprites->addObject(pSprite);
             zs[i]      = CCRANDOM_MINUS1_1() * 50;
         }
@@ -440,12 +440,12 @@ void RemoveSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::create(totalToAdd);
+        CCArray* sprites = CCArray::createWithCapacity(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            CCSprite* pSprite = CCSprite::create(batchNode->getTexture(), CCRectMake(0,0,32,32));
+            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
             sprites->addObject(pSprite);
         }
 
@@ -500,12 +500,12 @@ void ReorderSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::create(totalToAdd);
+        CCArray* sprites = CCArray::createWithCapacity(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            CCSprite* pSprite = CCSprite::create(batchNode->getTexture(), CCRectMake(0,0,32,32));
+            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
             sprites->addObject(pSprite);
         }
 
