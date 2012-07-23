@@ -61,24 +61,24 @@ public:
     /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas 
     @deprecated: This interface will be deprecated sooner or later.
     */
-    CC_DEPRECATED_ATTRIBUTE static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    CC_DEPRECATED_ATTRIBUTE static CCLabelAtlas * labelWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     
     /** creates the CCLabelAtlas with a string and a configuration file
     @deprecated: This interface will be deprecated sooner or later.
     @since v2.0
     */
-    CC_DEPRECATED_ATTRIBUTE static CCLabelAtlas* labelWithString(const char *sring, const char *fntFile);
+    CC_DEPRECATED_ATTRIBUTE static CCLabelAtlas* labelWithString(const char *string, const char *fntFile);
 
     /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    static CCLabelAtlas * create(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    static CCLabelAtlas * create(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     
     /** creates the CCLabelAtlas with a string and a configuration file
      @since v2.0
      */
-    static CCLabelAtlas* create(const char *sring, const char *fntFile);
+    static CCLabelAtlas* create(const char *string, const char *fntFile);
 
     /** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    bool initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    bool initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     
     /** initializes the CCLabelAtlas with a string and a configuration file
      @since v2.0

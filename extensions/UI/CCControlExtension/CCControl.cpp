@@ -293,7 +293,7 @@ CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
     // If the invocation list does not exist for the  dispatch table, we create it
     if (invocationList == NULL)
     {
-        invocationList = CCArray::create(1);
+        invocationList = CCArray::createWithCapacity(1);
         dispatchTable->setObject(invocationList, controlEvent);
     }    
     return invocationList;

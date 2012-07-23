@@ -142,12 +142,12 @@ public:
      The rect used will be the size of the texture.
      The offset will be (0,0).
      */
-    static CCSprite* create(CCTexture2D *pTexture);
+    static CCSprite* createWithTexture(CCTexture2D *pTexture);
 
     /** Creates an sprite with a texture and a rect.
      The offset will be (0,0).
      */
-    static CCSprite* create(CCTexture2D *pTexture, const CCRect& rect);
+    static CCSprite* createWithTexture(CCTexture2D *pTexture, const CCRect& rect);
 
     /** Creates an sprite with an sprite frame. 
     @deprecated: This interface will be deprecated sooner or later.
@@ -163,7 +163,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
 
     /** Creates an sprite with an sprite frame. */
-    static CCSprite* create(CCSpriteFrame *pSpriteFrame);
+    static CCSprite* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
     /** Creates an sprite with an sprite frame name.
      An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
