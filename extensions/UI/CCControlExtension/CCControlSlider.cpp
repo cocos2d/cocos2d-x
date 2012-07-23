@@ -142,7 +142,7 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
     // Stretches content proportional to newLevel
     CCRect textureRect          = m_progressSprite->getTextureRect();
     textureRect                 = CCRectMake(textureRect.origin.x, textureRect.origin.y, percent * m_backgroundSprite->getContentSize().width, textureRect.size.height);
-    m_progressSprite->setTextureRect(textureRect);
+    m_progressSprite->setTextureRect(textureRect, m_progressSprite->isTextureRectRotated(), textureRect.size);
     sendActionsForControlEvents(CCControlEventValueChanged);    
  }
 
