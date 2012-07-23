@@ -23,6 +23,6 @@ include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,scripting/javascript/spidermonkey-android)
 $(call import-module,cocos2dx)
-$(call import-module,cocosdenshion/android)
+$(call import-module,CocosDenshion/android)
 
 

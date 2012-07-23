@@ -22,5 +22,5 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_lua_static
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx)
-$(call import-module,cocosdenshion/android)
+$(call import-module,CocosDenshion/android)
 $(call import-module,scripting/lua/proj.android/jni)

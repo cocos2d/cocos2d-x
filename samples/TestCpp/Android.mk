@@ -98,7 +98,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
             
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,cocosdenshion/android)
+$(call import-module,CocosDenshion/android)
 $(call import-module,external/Box2D)
 $(call import-module,external/chipmunk)
 $(call import-module,cocos2dx)
