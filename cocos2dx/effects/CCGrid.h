@@ -46,7 +46,7 @@ class CCGLProgram;
 
 /** Base class for other
 */
-class CCGridBase : public CCObject
+class CC_DLL CCGridBase : public CCObject
 {
 public:
     virtual ~CCGridBase(void);
@@ -112,7 +112,7 @@ protected:
 /**
  CCGrid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
  */
-class CCGrid3D : public CCGridBase
+class CC_DLL CCGrid3D : public CCGridBase
 {
 public:
     CCGrid3D();
@@ -144,7 +144,7 @@ protected:
  CCTiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
  the tiles can be separated from the grid.
 */
-class CCTiledGrid3D : public CCGridBase
+class CC_DLL CCTiledGrid3D : public CCGridBase
 {
 public:
     CCTiledGrid3D();
