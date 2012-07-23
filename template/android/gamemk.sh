@@ -5,8 +5,11 @@ NEED_BOX2D=$2
 NEED_CHIPMUNK=$3
 NEED_LUA=$4
 
-LOCAL_STATIC_LIBRARIES="LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocosdenshion_static"
-MODULES_TO_CALL="\$(call import-module,CocosDenshion/android) \$(call import-module,cocos2dx)"
+LOCAL_STATIC_LIBRARIES="LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocosdenshion_static cocos_extension_static"
+MODULES_TO_CALL="\$(call import-module,CocosDenshion/android) \\
+\$(call import-module,cocos2dx) \\
+\$(call import-module,extensions)"
+
 LOCAL_SRC_FILES="LOCAL_SRC_FILES := hellocpp/main.cpp \\
                    ../../Classes/AppDelegate.cpp \\
                    ../../Classes/HelloWorldScene.cpp"
