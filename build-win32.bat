@@ -35,21 +35,21 @@ if %VC_VER%==90 (
 )
 
 echo./*
-echo.* Check the cocos2d-win32 application "tests.exe" ...
+echo.* Check the cocos2d-win32 application "TestCpp.exe" ...
 echo.*/
 echo.
 
 cd ".\Release.win32\"
 
-set CC_TEST_BIN=tests.exe
+set CC_TEST_BIN=TestCpp.exe
 
-set CC_TEST_RES=..\tests\Resources\*.*
-set CC_HELLOWORLD_RES=..\HelloWorld\Resources\*.*
-set CC_HELLOLUA_RES=..\HelloLua\Resources\*.*
-set CC_TESTJS_RES=..\testjs\Resources\*.*
+set CC_TEST_RES=..\samples\TestCpp\Resources\*.*
+set CC_HELLOWORLD_RES=..\samples\HelloCpp\Resources\*.*
+set CC_HELLOLUA_RES=..\samples\HelloLua\Resources\*.*
+set CC_TESTJS_RES=..\samples\TestJavascript\Resources\*.*
 
 if not exist "%CC_TEST_BIN%" (
-    echo Can't find the binary "tests.exe", is there build error?
+    echo Can't find the binary "TestCpp.exe", is there build error?
     goto ERROR
 )
 
