@@ -29,12 +29,15 @@
 		78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6A14EBB9B000DBD5A6 /* menu1.png */; };
 		78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6B14EBB9B000DBD5A6 /* menu2.png */; };
 		78DC4C9A15490B9500317402 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DC4C9815490B9500317402 /* Default.png */; };
-		78DC4C9B15490B9500317402 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DC4C9915490B9500317402 /* Icon.png */; };
 		BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41513A864D700616D55 /* AppDelegate.cpp */; };
 		BF82F42113A8652A00616D55 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* AppController.mm */; };
 		BF82F42213A8652A00616D55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42013A8652A00616D55 /* main.m */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4CEAD7713B4634300780515 /* RootViewController.mm */; };
+		D4EF94D715BD311700D803EB /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94D615BD311700D803EB /* Icon-57.png */; };
+		D4EF94D915BD311A00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94D815BD311A00D803EB /* Icon-114.png */; };
+		D4EF94DB15BD311E00D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94DA15BD311E00D803EB /* Icon-72.png */; };
+		D4EF94DD15BD312100D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94DC15BD312100D803EB /* Icon-144.png */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -134,7 +137,6 @@
 		78947C6A14EBB9B000DBD5A6 /* menu1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu1.png; sourceTree = "<group>"; };
 		78947C6B14EBB9B000DBD5A6 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
 		78DC4C9815490B9500317402 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
-		78DC4C9915490B9500317402 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		BF82F41513A864D700616D55 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
 		BF82F41613A864D700616D55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		BF82F41E13A8652A00616D55 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -144,6 +146,10 @@
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D4CEAD7713B4634300780515 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		D4CEAD7813B4634300780515 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		D4EF94D615BD311700D803EB /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-57.png"; path = "../proj.ios/Icon-57.png"; sourceTree = "<group>"; };
+		D4EF94D815BD311A00D803EB /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-114.png"; path = "../proj.ios/Icon-114.png"; sourceTree = "<group>"; };
+		D4EF94DA15BD311E00D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
+		D4EF94DC15BD312100D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -346,6 +352,10 @@
 		78947C5C14EBB9B000DBD5A6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D4EF94DC15BD312100D803EB /* Icon-144.png */,
+				D4EF94DA15BD311E00D803EB /* Icon-72.png */,
+				D4EF94D815BD311A00D803EB /* Icon-114.png */,
+				D4EF94D615BD311700D803EB /* Icon-57.png */,
 				15F990C0159C0DED00848A44 /* fps_images-hd.png */,
 				15F990C1159C0DED00848A44 /* fps_images-ipadhd.png */,
 				15DD6D81156DD1EF003E7567 /* fps_images.png */,
@@ -357,7 +367,6 @@
 				78947C6314EBB9B000DBD5A6 /* farm.jpg */,
 				78947C6614EBB9B000DBD5A6 /* hello.lua */,
 				78947C6714EBB9B000DBD5A6 /* hello2.lua */,
-				78DC4C9915490B9500317402 /* Icon.png */,
 				78947C6914EBB9B000DBD5A6 /* land.png */,
 				78947C6A14EBB9B000DBD5A6 /* menu1.png */,
 				78947C6B14EBB9B000DBD5A6 /* menu2.png */,
@@ -579,12 +588,15 @@
 				78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */,
 				78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */,
 				78DC4C9A15490B9500317402 /* Default.png in Resources */,
-				78DC4C9B15490B9500317402 /* Icon.png in Resources */,
 				15DD6D83156DD1EF003E7567 /* fps_images.png in Resources */,
 				15F990C2159C0DED00848A44 /* fps_images-hd.png in Resources */,
 				15F990C3159C0DED00848A44 /* fps_images-ipadhd.png in Resources */,
 				F2837A6C15B9606900A5707B /* Android.mk in Resources */,
 				F2837A6D15B9606900A5707B /* liblua.vcproj in Resources */,
+				D4EF94D715BD311700D803EB /* Icon-57.png in Resources */,
+				D4EF94D915BD311A00D803EB /* Icon-114.png in Resources */,
+				D4EF94DB15BD311E00D803EB /* Icon-72.png in Resources */,
+				D4EF94DD15BD312100D803EB /* Icon-144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,7 +791,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
@@ -801,7 +813,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
