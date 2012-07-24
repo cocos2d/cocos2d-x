@@ -1628,6 +1628,18 @@ string ActionCardinalSpline::subtitle()
 
 /** PauseResumeActions
  */
+
+PauseResumeActions::PauseResumeActions()
+: m_pPausedTargets(NULL)
+{
+
+}
+
+PauseResumeActions::~PauseResumeActions()
+{
+    CC_SAFE_RELEASE(m_pPausedTargets);
+}
+
 void PauseResumeActions::onEnter()
 {
     ActionsDemo::onEnter();
@@ -1656,12 +1668,15 @@ void PauseResumeActions::pause(float dt)
 {
     CCLog("Pausing");
     CCDirector *director = CCDirector::sharedDirector();
-    this->m_pPausedTargets = director->getActionManager()->pauseAllRunningActions();
+
+    CC_SAFE_RELEASE(m_pPausedTargets);
+    m_pPausedTargets = director->getActionManager()->pauseAllRunningActions();
+    CC_SAFE_RETAIN(m_pPausedTargets);
 }
 
 void PauseResumeActions::resume(float dt)
 {
     CCLog("Resuming");
     CCDirector *director = CCDirector::sharedDirector();
-    director->getActionManager()->resumeTargets(this->m_pPausedTargets);
+    director->getActionManager()->resumeTargets(m_pPausedTargets);
 }

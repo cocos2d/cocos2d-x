@@ -367,6 +367,8 @@ private:
 class PauseResumeActions : public ActionsDemo
 {
 public:
+    PauseResumeActions();
+    virtual ~PauseResumeActions();
     virtual void onEnter();
     virtual std::string subtitle();
     virtual std::string title();
