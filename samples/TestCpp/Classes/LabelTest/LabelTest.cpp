@@ -1178,7 +1178,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
 
     longSentences->setColor(ccRED);
     m_pLastSentenceItem = longSentences;
-    longSentences->setTag(LineBreaks);
+    longSentences->setTag(LongSentences);
     lineBreaks->setTag(LineBreaks);
     mixed->setTag(Mixed);
 
