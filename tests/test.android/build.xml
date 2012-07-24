@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="TestsDemo" default="help">
+<project name="Tests" default="help">
 
     <!-- The local.properties file is created and updated by the 'android' tool.
          It contains the path to the SDK. It should *NOT* be checked into
          Version Control Systems. -->
-    <property file="local.properties" />
+    <loadproperties srcFile="local.properties" />
 
     <!-- The ant.properties file can be created by you. It is only edited by the
          'android' tool to add properties to it.
@@ -41,19 +41,29 @@
 
     <!-- quick check on sdk.dir -->
     <fail
-            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through an env var"
+            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project'"
             unless="sdk.dir"
     />
 
 
 <!-- extension targets. Uncomment the ones where you want to do custom work
      in between standard targets -->
-<!--
+
     <target name="-pre-build">
+		<copy todir="src/org/cocos2dx">
+			<fileset dir="..\..\cocos2dx\platform\android\java\src_common\org\cocos2dx">
+				<include name="lib/" />
+			</fileset>
+		</copy>
     </target>
     <target name="-pre-compile">
+        <path id="android.target.classpath">
+            <pathelement path="${sdk.dir}/platforms/${target}/android.jar"/>
+            <pathelement path="${sdk.dir}/platforms/${target}/data/layoutlib.jar"/>
+        </path>
     </target>
 
+<!--
     /* This is typically used for code obfuscation.
        Compiled code location: ${out.classes.absolute.dir}
        If this is not done in place, override ${out.dex.input.absolute.dir} */
