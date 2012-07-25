@@ -22,22 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_MAC_CCACCELEROMETER_H__
-#define __PLATFORM_MAC_CCACCELEROMETER_H__
+#include "CCThread.h"
 
-#include "platform/CCAccelerometerDelegate.h"
+NS_CC_BEGIN
 
-namespace   cocos2d {
-
-class CC_DLL CCAccelerometer
+CCThread::~CCThread()
 {
-public:
-    CCAccelerometer() {}
-    ~CCAccelerometer() {}
+    [(id)m_pAutoreasePool release];
+}
 
-    void setDelegate(CCAccelerometerDelegate* pDelegate) { CC_UNUSED_PARAM(pDelegate); }
-};
+void CCThread::createAutoreleasePool()
+{
+    m_pAutoreasePool = [[NSAutoreleasePool alloc] init];
+}
 
-}//namespace   cocos2d 
-
-#endif
+NS_CC_END
