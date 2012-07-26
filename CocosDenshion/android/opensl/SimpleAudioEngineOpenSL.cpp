@@ -5,7 +5,7 @@
 #define  PLAYSTATE_PLAYING 3
 #define  FILE_NOT_FOUND	   -1
 
-OpenSLEngine * s_pOpenSL = 0;
+static OpenSLEngine * s_pOpenSL = 0;
 static SimpleAudioEngineOpenSL * s_pEngine = 0;
 
 SimpleAudioEngineOpenSL::SimpleAudioEngineOpenSL()
