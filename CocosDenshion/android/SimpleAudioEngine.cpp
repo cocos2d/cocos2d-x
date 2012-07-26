@@ -25,18 +25,27 @@ THE SOFTWARE.
 #include "SimpleAudioEngine.h"
 #include "jni/SimpleAudioEngineJni.h"
 
+/* 
+ *  for OpenSLES on Android 2.3 and over
+ */
+#ifdef ENABLE_OPENSL
+#include "opensl/SimpleAudioEngineOpenSL.h"
+#endif
+
+
 namespace CocosDenshion {
 
 static SimpleAudioEngine *s_pEngine = 0;
 
 SimpleAudioEngine::SimpleAudioEngine()
 {
-
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
-
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->end();
+#endif
 }
 
 SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
@@ -52,6 +61,10 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 void SimpleAudioEngine::end()
 {
     endJNI();
+
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->end();
+#endif
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
@@ -106,57 +119,101 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-    return getEffectsVolumeJNI();
+#ifdef ENABLE_OPENSL
+	return SimpleAudioEngineOpenSL::sharedEngine()->getEffectsVolume();
+#else
+	return getEffectsVolumeJNI();
+#endif
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
-    setEffectsVolumeJNI(volume);
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->setEffectsVolume(volume);
+#else
+	setEffectsVolumeJNI(volume);
+#endif
 }
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
-    return playEffectJNI(pszFilePath, bLoop);
+#ifdef ENABLE_OPENSL
+	return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(pszFilePath, bLoop);
+#else
+	return playEffectJNI(pszFilePath, bLoop);
+#endif
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
-    stopEffectJNI(nSoundId);
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->stopEffect(nSoundId);
+#else
+	stopEffectJNI(nSoundId);
+#endif
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
-    preloadEffectJNI(pszFilePath);
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->preloadEffect(pszFilePath);
+#else
+	preloadEffectJNI(pszFilePath);
+#endif
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-    unloadEffectJNI(pszFilePath);
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->unloadEffect(pszFilePath);
+#else
+	unloadEffectJNI(pszFilePath);
+#endif
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 {
-    pauseEffectJNI(nSoundId);
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->pauseEffect(nSoundId);
+#else
+	pauseEffectJNI(nSoundId);
+#endif
 }
 
 void SimpleAudioEngine::pauseAllEffects()
 {
-    pauseAllEffectsJNI();
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->pauseAllEffects();
+#else
+	pauseAllEffectsJNI();
+#endif
 }
 
 void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 {
-    resumeEffectJNI(nSoundId);
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->resumeEffect(nSoundId);
+#else
+	resumeEffectJNI(nSoundId);
+#endif
 }
 
 void SimpleAudioEngine::resumeAllEffects()
 {
-    resumeAllEffectsJNI();
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->resumeAllEffects();
+#else
+	resumeAllEffectsJNI();
+#endif
 }
 
 void SimpleAudioEngine::stopAllEffects()
 {
-    stopAllEffectsJNI();
+#ifdef ENABLE_OPENSL
+	SimpleAudioEngineOpenSL::sharedEngine()->stopAllEffects();
+#else
+	stopAllEffectsJNI();
+#endif
 }
 
 }
