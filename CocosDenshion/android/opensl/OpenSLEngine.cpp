@@ -188,14 +188,14 @@ int getFileDescriptor(AudioPlayer * player, const char * filename, off_t & start
 /**********************************************************************************
  *   engine
  **********************************************************************************/
-static SLObjectItf g_pEngineObject = NULL;
-static SLEngineItf g_pEngineEngine = NULL;
-static SLObjectItf g_pOutputMixObject = NULL;
+static SLObjectItf s_pEngineObject = NULL;
+static SLEngineItf s_pEngineEngine = NULL;
+static SLObjectItf s_pOutputMixObject = NULL;
 
 bool initAudioPlayer(AudioPlayer* player, const char* filename) 
 {
 	// configure audio sink
-	SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, g_pOutputMixObject};
+	SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, s_pOutputMixObject};
 	SLDataSink audioSnk = {&loc_outmix, NULL};
 
 	// configure audio source
@@ -212,7 +212,7 @@ bool initAudioPlayer(AudioPlayer* player, const char* filename)
 	// create audio player
 	const SLInterfaceID ids[3] = {SL_IID_SEEK, SL_IID_MUTESOLO, SL_IID_VOLUME};
 	const SLboolean req[3] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
-	SLresult result = (*g_pEngineEngine)->CreateAudioPlayer(g_pEngineEngine, &(player->fdPlayerObject), &(player->audioSrc), &audioSnk, 3, ids, req);
+	SLresult result = (*s_pEngineEngine)->CreateAudioPlayer(s_pEngineEngine, &(player->fdPlayerObject), &(player->audioSrc), &audioSnk, 3, ids, req);
 	assert(SL_RESULT_SUCCESS == result);
 
 	// realize the player
@@ -251,28 +251,28 @@ void OpenSLEngine::createEngine()
 	LOGD("createEngine");
 
 	// create engine
-	if (g_pEngineObject == NULL)
+	if (s_pEngineObject == NULL)
 	{
-		result = slCreateEngine(&g_pEngineObject, 0, NULL, 0, NULL, NULL);
+		result = slCreateEngine(&s_pEngineObject, 0, NULL, 0, NULL, NULL);
 		assert(SL_RESULT_SUCCESS == result);
 
 		// realize the engine
-		result = (*g_pEngineObject)->Realize(g_pEngineObject, SL_BOOLEAN_FALSE);
+		result = (*s_pEngineObject)->Realize(s_pEngineObject, SL_BOOLEAN_FALSE);
 		assert(SL_RESULT_SUCCESS == result);
 
 		// get the engine interface, which is needed in order to create other objects
-		result = (*g_pEngineObject)->GetInterface(g_pEngineObject, SL_IID_ENGINE, &g_pEngineEngine);
+		result = (*s_pEngineObject)->GetInterface(s_pEngineObject, SL_IID_ENGINE, &s_pEngineEngine);
 		assert(SL_RESULT_SUCCESS == result);
 
 		// create output mix
 		const SLInterfaceID ids[1] = {SL_IID_ENVIRONMENTALREVERB};
 		const SLboolean req[1] = {SL_BOOLEAN_FALSE};
-		result = (*g_pEngineEngine)->CreateOutputMix(g_pEngineEngine, &g_pOutputMixObject, 1, ids, req);
+		result = (*s_pEngineEngine)->CreateOutputMix(s_pEngineEngine, &s_pOutputMixObject, 1, ids, req);
 		assert(SL_RESULT_SUCCESS == result);
 	}
 
 	// realize the output mix
-	result = (*g_pOutputMixObject)->Realize(g_pOutputMixObject, SL_BOOLEAN_FALSE);
+	result = (*s_pOutputMixObject)->Realize(s_pOutputMixObject, SL_BOOLEAN_FALSE);
 	assert(SL_RESULT_SUCCESS == result);
 }
 
@@ -291,16 +291,16 @@ void OpenSLEngine::closeEngine()
 	sharedList().clear();
 
 	// destroy output mix interface
-	if (g_pOutputMixObject != NULL) {
-		(*g_pOutputMixObject)->Destroy(g_pOutputMixObject);
-		g_pOutputMixObject = NULL;
+	if (s_pOutputMixObject != NULL) {
+		(*s_pOutputMixObject)->Destroy(s_pOutputMixObject);
+		s_pOutputMixObject = NULL;
 	}
 
 	// destroy opensl engine
-	if (g_pEngineObject != NULL) {
-		(*g_pEngineObject)->Destroy(g_pEngineObject);
-		g_pEngineObject = NULL;
-		g_pEngineEngine = NULL;
+	if (s_pEngineObject != NULL) {
+		(*s_pEngineObject)->Destroy(s_pEngineObject);
+		s_pEngineObject = NULL;
+		s_pEngineEngine = NULL;
 	}
 }
 
