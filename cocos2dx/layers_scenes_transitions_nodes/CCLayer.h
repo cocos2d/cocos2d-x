@@ -225,7 +225,7 @@ public:
     virtual ~CCLayerColor();
 
     virtual void draw();
-    virtual void setContentSize(CCSize var);
+    virtual void setContentSize(CCSize & var);
 
     /** creates a CCLayer with color, width and height in Points 
     @deprecated: This interface will be deprecated sooner or later.
