@@ -330,7 +330,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         // low-bit-depth grayscale iamges are to be expanded to 8 bits
         if (color_type == PNG_COLOR_TYPE_GRAY && m_nBitsPerComponent < 8)
         {
-            png_set_gray_1_2_4_to_8(png_ptr);
+            png_set_expand_gray_1_2_4_to_8(png_ptr);
         }
         // expand any tRNS chunk data into a full alpha channel
         if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
@@ -352,7 +352,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         // m_nBitsPerComponent will always be 8
         m_nBitsPerComponent = 8;
         png_uint_32 rowbytes;
-        png_bytep row_pointers[m_nHeight];
+        png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * m_nHeight );
         
         png_read_update_info(png_ptr, info_ptr);
         
@@ -386,10 +386,11 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
             m_bPreMulti = true;
         }
 
+        CC_SAFE_FREE(row_pointers);
+
         bRet = true;
     } while (0);
 
-out:
     if (png_ptr)
     {
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
