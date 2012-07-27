@@ -357,7 +357,7 @@ void CCNode::setAnchorPoint(const CCPoint& point)
 }
 
 /// contentSize getter
-CCSize CCNode::getContentSize()
+const CCSize & CCNode::getContentSize()
 {
     return m_tContentSize;
 }
