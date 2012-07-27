@@ -3919,7 +3919,7 @@ JSBool S_CCSequence::jsinitOneTwo(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oo", &arg0, &arg1);
 		CCFiniteTimeAction* narg0; JSGET_PTRSHELL(CCFiniteTimeAction, narg0, arg0);
 		CCFiniteTimeAction* narg1; JSGET_PTRSHELL(CCFiniteTimeAction, narg1, arg1);
-		bool ret = self->initOneTwo(narg0, narg1);
+		bool ret = self->initWithTwoActions(narg0, narg1);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
