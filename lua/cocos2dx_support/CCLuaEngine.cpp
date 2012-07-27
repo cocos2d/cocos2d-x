@@ -260,57 +260,61 @@ int CCLuaEngine::pushCCObjectToLuaStack(CCObject* pObject, const char* typeName)
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushCCLuaValueToLuaStack(CCLuaValue* pValue)
+int CCLuaEngine::pushCCScriptValueToLuaStack(const CCScriptValue& value)
 {
-    CCLuaValueType type = pValue->getType();
-    if (type == CCLuaValueTypeInt)
+    const CCScriptValueType type = value.getType();
+    if (type == CCScriptValueTypeInt)
     {
-        return pushIntegerToLuaStack(pValue->getIntValue());
+        return pushIntegerToLuaStack(value.intValue());
     }
-    else if (type == CCLuaValueTypeFloat)
+    else if (type == CCScriptValueTypeFloat)
     {
-        return pushFloatToLuaStack(pValue->getFloatValue());
+        return pushFloatToLuaStack(value.floatValue());
     }
-    else if (type == CCLuaValueTypeBoolean)
+    else if (type == CCScriptValueTypeBoolean)
     {
-        return pushBooleanToLuaStack(pValue->getBooleanValue());
+        return pushBooleanToLuaStack(value.booleanValue());
     }
-    else if (type == CCLuaValueTypeString)
+    else if (type == CCScriptValueTypeString)
     {
-        return pushStringToLuaStack(pValue->getStringValue().c_str());
+        return pushStringToLuaStack(value.stringValue().c_str());
     }
-    else if (type == CCLuaValueTypeCCLuaTableDict)
+    else if (type == CCScriptValueTypeDict)
     {
-        pushCCLuaTableDictToLuaStack(pValue->getTableDictValue());
+        pushCCScriptValueDictToLuaStack(value.dictValue());
     }
-    else if (type == CCLuaValueTypeCCLuaTableArray)
+    else if (type == CCScriptValueTypeArray)
     {
-        pushCCLuaTableArrayToLuaStack(pValue->getTableArrayValue());
+        pushCCScriptValueArrayToLuaStack(value.arrayValue());
+    }
+    else if (type == CCScriptValueTypeCCObject)
+    {
+        pushCCObjectToLuaStack(value.ccobjectValue(), value.getCCObjectTypename().c_str());
     }
     
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushCCLuaTableDictToLuaStack(CCLuaTableDict* pDict)
+int CCLuaEngine::pushCCScriptValueDictToLuaStack(const CCScriptValueDict& dict)
 {
     lua_newtable(m_state);                                      /* stack: table */
-    for (CCLuaTableDictIterator it = pDict->begin(); it != pDict->end(); ++it)
+    for (CCScriptValueDictIterator it = dict.begin(); it != dict.end(); ++it)
     {
         lua_pushstring(m_state, it->first.c_str());             /* stack: table key */
-        pushCCLuaValueToLuaStack(it->second);                   /* stack: table key value */
+        pushCCScriptValueToLuaStack(it->second);                   /* stack: table key value */
         lua_rawset(m_state, -3);             /* table.key = value, stack: table */
     }
     
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushCCLuaTableArrayToLuaStack(CCLuaTableArray* pArray)
+int CCLuaEngine::pushCCScriptValueArrayToLuaStack(const CCScriptValueArray& array)
 {
     lua_newtable(m_state);                                      /* stack: table */
     int index = 1;
-    for (CCLuaTableArrayIterator it = pArray->begin(); it != pArray->end(); ++it)
+    for (CCScriptValueArrayIterator it = array.begin(); it != array.end(); ++it)
     {
-        pushCCLuaValueToLuaStack(*it);                          /* stack: table value */
+        pushCCScriptValueToLuaStack(*it);                          /* stack: table value */
         lua_rawseti(m_state, -2, index);  /* table[index] = value, stack: table */
         ++index;
     }

@@ -8,6 +8,7 @@ typedef enum {
 
 class CCDirector : public CCObject
 {
+    void purgeCachedData(void);
     CCScene* getRunningScene(void);
     double getAnimationInterval(void);
     void setAnimationInterval(double dValue);
