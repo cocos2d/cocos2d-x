@@ -92,12 +92,15 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CC_DLL CCDirector : public CCObject
+class CC_DLL CCDirector : public CCObject, public TypeInfo
 {
 public:
     CCDirector(void);
     virtual ~CCDirector(void);
     virtual bool init(void);
+    virtual uint32_t getClassTypeInfo() {
+        return reinterpret_cast<int>(typeid(cocos2d::CCDirector).name());
+    }
 
     // attribute
 

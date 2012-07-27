@@ -282,11 +282,15 @@ protected:
 @brief Calls a 'callback' with the node as the first argument
 N means Node
 */
-class CC_DLL CCCallFuncN : public CCCallFunc
+class CC_DLL CCCallFuncN : public CCCallFunc, public TypeInfo
 {
 public:
     CCCallFuncN(){}
     virtual ~CCCallFuncN(){}
+    virtual uint32_t getClassTypeInfo() {
+        return reinterpret_cast<int>(typeid(cocos2d::CCCallFunc).name());
+    }
+
     /** creates the action with the callback 
     @deprecated: This interface will be deprecated sooner or later.
     typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
@@ -317,9 +321,12 @@ public:
 @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
 * ND means: Node and Data. Data is void *, so it could be anything.
 */
-class CC_DLL CCCallFuncND : public CCCallFuncN
+class CC_DLL CCCallFuncND : public CCCallFuncN, public TypeInfo
 {
 public:
+    virtual uint32_t getClassTypeInfo() {
+        return reinterpret_cast<int>(typeid(cocos2d::CCCallFunc).name());
+    }
 
     /** creates the action with the callback and the data to pass as an argument 
     @deprecated: This interface will be deprecated sooner or later.
@@ -345,11 +352,14 @@ protected:
 O means Object.
 @since v0.99.5
 */
-class CC_DLL CCCallFuncO : public CCCallFunc
+class CC_DLL CCCallFuncO : public CCCallFunc, public TypeInfo
 {
 public:
     CCCallFuncO();
     virtual ~CCCallFuncO();
+    virtual uint32_t getClassTypeInfo() {
+        return reinterpret_cast<int>(typeid(cocos2d::CCCallFunc).name());
+    }
     /** creates the action with the callback 
     @deprecated: This interface will be deprecated sooner or later.
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
