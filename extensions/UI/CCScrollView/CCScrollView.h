@@ -207,8 +207,8 @@ public:
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
-    virtual void setContentSize(CCSize size);
-    virtual CCSize getContentSize();
+    virtual void setContentSize(const CCSize & size);
+    virtual const CCSize & getContentSize();
 
     /**
      * Determines whether it clips its children or not.
