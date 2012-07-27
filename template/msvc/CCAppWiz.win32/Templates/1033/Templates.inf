@@ -9,14 +9,14 @@ Classes/AppDelegate.h
 Classes/AppDelegate.cpp
 
 [! if CC_USE_LUA]
-../../../../../lua/cocos2dx_support/LuaCocos2d.cpp
-../../../../../lua/cocos2dx_support/LuaCocos2d.h
-../../../../../lua/cocos2dx_support/CCLuaEngine.cpp
-../../../../../lua/cocos2dx_support/CCLuaEngine.h
-../../../../../lua/cocos2dx_support/Cocos2dxLuaLoader.h
-../../../../../lua/cocos2dx_support/Cocos2dxLuaLoader.cpp
-../../../../../lua/cocos2dx_support/tolua_fix.c
-../../../../../lua/cocos2dx_support/tolua_fix.h
+../../../../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp
+../../../../../scripting/lua/cocos2dx_support/LuaCocos2d.h
+../../../../../scripting/lua/cocos2dx_support/CCLuaEngine.cpp
+../../../../../scripting/lua/cocos2dx_support/CCLuaEngine.h
+../../../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.h
+../../../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp
+../../../../../scripting/lua/cocos2dx_support/tolua_fix.c
+../../../../../scripting/lua/cocos2dx_support/tolua_fix.h
 [! else]
 Classes/HelloWorldScene.h
 Classes/HelloWorldScene.cpp

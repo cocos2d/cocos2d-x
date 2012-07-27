@@ -138,7 +138,7 @@ CCObject* CCGridAction::copyWithZone(CCZone *pZone)
 
 CCGridBase* CCGrid3DAction::getGrid(void)
 {
-    return CCGrid3D::gridWithSize(m_sGridSize);
+    return CCGrid3D::create(m_sGridSize);
 }
 
 ccVertex3F CCGrid3DAction::vertex(const ccGridSize& pos)
@@ -163,7 +163,7 @@ void CCGrid3DAction::setVertex(const ccGridSize& pos, const ccVertex3F& vertex)
 
 CCGridBase* CCTiledGrid3DAction::getGrid(void)
 {
-    return CCTiledGrid3D::gridWithSize(m_sGridSize);
+    return CCTiledGrid3D::create(m_sGridSize);
 }
 
 ccQuad3 CCTiledGrid3DAction::tile(const ccGridSize& pos)
