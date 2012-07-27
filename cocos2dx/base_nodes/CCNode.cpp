@@ -83,6 +83,8 @@ CCNode::CCNode(void)
 CCNode::~CCNode(void)
 {
 	CCLOGINFO( "cocos2d: deallocing" );
+    
+    if (m_nScriptHandler) unregisterScriptHandler();
 
 	// attributes
 	CC_SAFE_RELEASE(m_pCamera);
@@ -937,7 +939,11 @@ void CCNode::onEnter()
 
     if (m_nScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter);
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        CCScriptValueDict dict;
+        dict["name"] = CCScriptValue::stringValue("enter");
+        pEngine->pushCCScriptValueDictToLuaStack(dict);
+        pEngine->executeFunctionByHandler(m_nScriptHandler, 1);
     }
 }
 
@@ -954,7 +960,11 @@ void CCNode::onExit()
 
     if (m_nScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit);
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        CCScriptValueDict dict;
+        dict["name"] = CCScriptValue::stringValue("exit");
+        pEngine->pushCCScriptValueDictToLuaStack(dict);
+        pEngine->executeFunctionByHandler(m_nScriptHandler, 1);
     }
 
 	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::onExit);
