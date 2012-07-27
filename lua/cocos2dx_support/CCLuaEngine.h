@@ -110,9 +110,9 @@ public:
     virtual int pushBooleanToLuaStack(int data);
     virtual int pushStringToLuaStack(const char* data);
     virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName);
-    virtual int pushCCLuaValueToLuaStack(CCLuaValue* pValue);
-    virtual int pushCCLuaTableDictToLuaStack(CCLuaTableDict* pDict);
-    virtual int pushCCLuaTableArrayToLuaStack(CCLuaTableArray* pArray);
+    virtual int pushCCScriptValueToLuaStack(const CCScriptValue& value);
+    virtual int pushCCScriptValueDictToLuaStack(const CCScriptValueDict& dict);
+    virtual int pushCCScriptValueArrayToLuaStack(const CCScriptValueArray& array);
     virtual void cleanLuaStack(void);
     
     // functions for excute touch event
