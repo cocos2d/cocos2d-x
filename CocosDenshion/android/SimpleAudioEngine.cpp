@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "jni/SimpleAudioEngineJni.h"
 
 /* 
- *  for OpenSLES on Android 2.3 and over
+ *  for OpenSLES on Android 2.3 and above
  */
 #ifdef ENABLE_OPENSL
 #include "opensl/SimpleAudioEngineOpenSL.h"
@@ -129,7 +129,9 @@ float SimpleAudioEngine::getEffectsVolume()
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
 #ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->setEffectsVolume(volume);
+	// @TO-DO 
+	// Here may crash, fixing.
+	// SimpleAudioEngineOpenSL::sharedEngine()->setEffectsVolume(volume);
 #else
 	setEffectsVolumeJNI(volume);
 #endif

@@ -92,12 +92,12 @@ void SimpleAudioEngineOpenSL::pauseAllEffects()
 
 void SimpleAudioEngineOpenSL::resumeEffect(unsigned int nSoundId)
 {
-	s_pOpenSL->setEffectState(nSoundId, PLAYSTATE_PLAYING);
+	s_pOpenSL->resumeEffect(nSoundId);
 }
 
 void SimpleAudioEngineOpenSL::resumeAllEffects()
 {
-	s_pOpenSL->setAllEffectState(PLAYSTATE_PLAYING);
+	s_pOpenSL->resumeAllEffects();
 }
 
 void SimpleAudioEngineOpenSL::stopEffect(unsigned int nSoundId)

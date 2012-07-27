@@ -120,6 +120,9 @@ extern "C" {
 /*********************************************************************************
  *   helper
  ********************************************************************************/
+#define  PLAYSTATE_STOPPED 1
+#define  PLAYSTATE_PAUSED  2
+#define  PLAYSTATE_PLAYING 3
 #define FILE_NOT_FOUND -1
 #define ASSET_MANAGER_GETTER "getAssetManager"
 
@@ -421,6 +424,26 @@ void setSingleEffectState(AudioPlayer * player, int state)
 	}
 }
 
+int getEffectState(AudioPlayer * player)
+{
+	SLuint32 state = 0;
+	SLresult result;
+	result = (*(player->fdPlayerPlay))->GetPlayState(player->fdPlayerPlay, &state);
+	assert(result == SL_RESULT_SUCCESS);
+
+	return (int)state;
+}
+
+void resumeSingleEffect(AudioPlayer * player)
+{
+	int state = getEffectState(player);
+	// only resume the effect that has been paused
+	if (state == PLAYSTATE_PAUSED)
+	{
+		setSingleEffectState(player, PLAYSTATE_PLAYING);
+	}
+}
+
 unsigned int OpenSLEngine::preloadEffect(const char * filename)
 {
 	unsigned int nID = _Hash(filename);
@@ -460,8 +483,6 @@ void OpenSLEngine::unloadEffect(const char * filename)
 	{
 		destroyAudioPlayer(p->second);
 		sharedList().erase(nID);
-
-		LOGD("effect unloaded");
 	}
 }
 
@@ -480,6 +501,26 @@ void OpenSLEngine::setAllEffectState(int state)
 	for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
 	{
 		setSingleEffectState(iter->second, state);
+	}
+}
+
+void OpenSLEngine::resumeEffect(unsigned int effectID)
+{
+	EffectList::iterator p = sharedList().find(effectID);
+	if (p == sharedList().end())
+	{
+		return;
+	}
+	resumeSingleEffect(p->second);
+}
+
+void OpenSLEngine::resumeAllEffects()
+{
+	int state;
+	EffectList::iterator iter;
+	for (iter = sharedList().begin(); iter != sharedList().end() ; ++ iter)
+	{
+		resumeSingleEffect(iter->second);
 	}
 }
 
