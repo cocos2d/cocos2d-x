@@ -362,7 +362,7 @@ CCSize CCNode::getContentSize()
     return m_tContentSize;
 }
 
-void CCNode::setContentSize(CCSize size)
+void CCNode::setContentSize(const CCSize & size)
 {
     if( ! CCSize::CCSizeEqualToSize(size, m_tContentSize) ) 
     {
