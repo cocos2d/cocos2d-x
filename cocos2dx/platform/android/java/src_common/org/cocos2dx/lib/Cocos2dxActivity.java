@@ -31,6 +31,7 @@ import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,6 +42,7 @@ public class Cocos2dxActivity extends Activity{
     private static Cocos2dxMusic backgroundMusicPlayer;
     private static Cocos2dxSound soundPlayer;
     private static Cocos2dxAccelerometer accelerometer;
+    private static AssetManager assetManager;
     private static boolean accelerometerEnabled = false;
     private static Handler handler;
     private final static int HANDLER_SHOW_DIALOG = 1;
@@ -61,6 +63,9 @@ public class Cocos2dxActivity extends Activity{
         backgroundMusicPlayer = new Cocos2dxMusic(this);
         soundPlayer = new Cocos2dxSound(this);
         
+        // init asset manager for jni call
+        assetManager = getAssets();
+        
         // init bitmap context
         Cocos2dxBitmap.setContext(this);
         
@@ -73,6 +78,11 @@ public class Cocos2dxActivity extends Activity{
         		}
         	}
         };
+    }
+    
+    
+    public static AssetManager getAssetManager() {
+    	return assetManager;
     }
     
     public static String getCurrentLanguage() {
