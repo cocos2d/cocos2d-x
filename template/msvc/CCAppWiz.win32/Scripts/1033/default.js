@@ -225,26 +225,26 @@ function AddConfigurations(proj, strProjectName) {
 
             // Additional Inlcude Directories
             var strAddIncludeDir = '.;..\\Classes';
-            strAddIncludeDir += ';..\\..\\cocos2dx';
-            strAddIncludeDir += ';..\\..\\cocos2dx\\include';
-            strAddIncludeDir += ';..\\..\\cocos2dx\\kazmath\\include';
-            strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\win32';
-            strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\third_party\\win32';
-            strAddIncludeDir += ';..\\..\\cocos2dx\\platform\\third_party\\win32\\OGLES';
+            strAddIncludeDir += ';$(SolutionDir)cocos2dx';
+            strAddIncludeDir += ';$(SolutionDir)cocos2dx\\include';
+            strAddIncludeDir += ';$(SolutionDir)cocos2dx\\kazmath\\include';
+            strAddIncludeDir += ';$(SolutionDir)cocos2dx\\platform\\win32';
+            strAddIncludeDir += ';$(SolutionDir)cocos2dx\\platform\\third_party\\win32';
+            strAddIncludeDir += ';$(SolutionDir)cocos2dx\\platform\\third_party\\win32\\OGLES';
             
             if (wizard.FindSymbol('CC_USE_BOX2D')) {
-                strAddIncludeDir += ';..\\..\\';
+                strAddIncludeDir += ';$(SolutionDir)external';
             }
             if (wizard.FindSymbol('CC_USE_CHIPMUNK')) {
-                strAddIncludeDir += ';..\\..\\chipmunk\\include\\chipmunk';
+                strAddIncludeDir += ';$(SolutionDir)external\\chipmunk\\include\\chipmunk';
             }
             if (wizard.FindSymbol('CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE')) {
-                strAddIncludeDir += ';..\\..\\CocosDenshion\\Include';
+                strAddIncludeDir += ';$(SolutionDir)CocosDenshion\\include';
             }
             if (wizard.FindSymbol('CC_USE_LUA')) {
-                strAddIncludeDir += ';..\\..\\lua\\cocos2dx_support';
-                strAddIncludeDir += ';..\\..\\lua\\tolua';
-                strAddIncludeDir += ';..\\..\\lua\\lua';
+                strAddIncludeDir += ';$(SolutionDir)scripting\\lua\\cocos2dx_support';
+                strAddIncludeDir += ';$(SolutionDir)scripting\\lua\\tolua';
+                strAddIncludeDir += ';$(SolutionDir)scripting\\lua\\lua';
             }
             CLTool.AdditionalIncludeDirectories = strAddIncludeDir;
 
@@ -287,7 +287,7 @@ function AddConfigurations(proj, strProjectName) {
             }
 
             // Additional Library Directories
-            var strAddDepends = 'libcocos2d.lib opengl32.lib glew32.lib';
+            var strAddDepends = 'libcocos2d.lib libExtensions.lib opengl32.lib glew32.lib';
             if (wizard.FindSymbol('CC_USE_BOX2D')) {
                 strAddDepends += ' libBox2d.lib';
             }
@@ -401,7 +401,7 @@ function GetTargetName(strName, strProjectName) {
             strTarget = strName.substring(0, nIndex) + strProjectName + strName.substring(nIndex + 4, strName.length);
         }
 
-        var strTemp = "../../../../../lua";
+        var strTemp = "../../../../../scripting/lua";
         nIndex = strTarget.indexOf(strTemp);
         if (nIndex >= 0) {
             strTarget = "Classes" + strTarget.substring(nIndex + strTemp.length, strTarget.length);

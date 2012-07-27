@@ -467,7 +467,7 @@ const char* CCNode::description()
 // lazy allocs
 void CCNode::childrenAlloc(void)
 {
-    m_pChildren = CCArray::create(4);
+    m_pChildren = CCArray::createWithCapacity(4);
     m_pChildren->retain();
 }
 

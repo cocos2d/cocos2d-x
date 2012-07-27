@@ -136,10 +136,10 @@ CCArray* CCArray::create(CCObject* pObject, ...)
 
 CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
 {
-    return CCArray::create(capacity);
+    return CCArray::createWithCapacity(capacity);
 }
 
-CCArray* CCArray::create(unsigned int capacity)
+CCArray* CCArray::createWithCapacity(unsigned int capacity)
 {
     CCArray* pArray = new CCArray();
 
@@ -157,10 +157,10 @@ CCArray* CCArray::create(unsigned int capacity)
 
 CCArray* CCArray::arrayWithArray(CCArray* otherArray)
 {
-    return CCArray::create(otherArray);
+    return CCArray::createWithArray(otherArray);
 }
 
-CCArray* CCArray::create(CCArray* otherArray)
+CCArray* CCArray::createWithArray(CCArray* otherArray)
 {
     CCArray* pRet = (CCArray*)otherArray->copy();
     pRet->autorelease();
@@ -169,10 +169,10 @@ CCArray* CCArray::create(CCArray* otherArray)
 
 CCArray* CCArray::arrayWithContentsOfFile(const char* pFileName)
 {
-    return CCArray::create(pFileName);
+    return CCArray::createWithContentsOfFile(pFileName);
 }
 
-CCArray* CCArray::create(const char* pFileName)
+CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
 {
     CCArray* pRet = CCArray::createWithContentsOfFileThreadSafe(pFileName);
     if (pRet != NULL)

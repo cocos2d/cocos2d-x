@@ -315,7 +315,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         // normal fonts
         if( [font isKindOfClass:[UIFont class] ] )
         {
-            [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(NSLineBreakMode)UILineBreakModeWordWrap alignment:align];
+            [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
         }
         else // ZFont class 
         {

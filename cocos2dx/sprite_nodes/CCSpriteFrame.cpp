@@ -33,10 +33,10 @@ NS_CC_BEGIN
 
 CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
 {
-    return CCSpriteFrame::create(pobTexture, rect);
+    return CCSpriteFrame::createWithTexture(pobTexture, rect);
 }
 
-CCSpriteFrame* CCSpriteFrame::create(CCTexture2D *pobTexture, const CCRect& rect)
+CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect);
@@ -61,10 +61,10 @@ CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect)
 
 CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
-    return CCSpriteFrame::create(pobTexture, rect, rotated, offset, originalSize);
+    return CCSpriteFrame::createWithTexture(pobTexture, rect, rotated, offset, originalSize);
 }
 
-CCSpriteFrame* CCSpriteFrame::create(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect, rotated, offset, originalSize);

@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="CCBReader">
+      <UniqueIdentifier>{d37545ef-285b-4315-9fca-40da6fc2a6c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{202b519b-b5e0-499f-b3b8-ed5da144b248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\CCControlExtension">
+      <UniqueIdentifier>{c07abd14-e9dd-4e2d-85c4-a180070161b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\CCScrollView">
+      <UniqueIdentifier>{46797895-f71d-4ddb-b381-d0884e678d39}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CCBReader\CCBFileLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBReader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCControlLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLayerGradientLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLayerLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCNodeLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCControl.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCControlButton.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCControlColourPicker.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCControlHuePicker.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCControlSlider.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCControlSwitch.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCControlUtils.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCInvocation.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCMenuPassive.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCScale9Sprite.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCControlExtension\CCSpacer.cpp">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UI\CCScrollView\CCScrollView.cpp">
+      <Filter>UI\CCScrollView</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CCBReader\CCBFileLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBReader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBSelectorResolver.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCControlButtonLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCControlLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLayerColorLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLayerGradientLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLayerLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCMenuItemLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCMenuLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCNodeLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCParticleSystemQuadLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCScrollViewLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCSpriteLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControl.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControlButton.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControlColourPicker.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControlExtensions.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControlHuePicker.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControlSaturationBrightnessPicker.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControlSlider.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControlSwitch.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCControlUtils.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCInvocation.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCMenuPassive.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCScale9Sprite.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCControlExtension\CCSpacer.h">
+      <Filter>UI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\CCScrollView\CCScrollView.h">
+      <Filter>UI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\ExtensionMacros.h" />
+  </ItemGroup>
+</Project>

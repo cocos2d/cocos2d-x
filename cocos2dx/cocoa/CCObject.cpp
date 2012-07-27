@@ -96,7 +96,7 @@ CCObject* CCObject::autorelease(void)
     return this;
 }
 
-bool CCObject::isSingleRefrence(void)
+bool CCObject::isSingleReference(void)
 {
     return m_uReference == 1;
 }

@@ -391,7 +391,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemToggle* itemWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);   
 
     /** creates a menu item from a list of items with a target/selector */
-    static CCMenuItemToggle* create(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);  
+    static CCMenuItemToggle* createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);  
 
     /** initializes a menu item from a list of items with a target selector */
     bool initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args);

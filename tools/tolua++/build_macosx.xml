@@ -68,7 +68,7 @@ using namespace CocosDenshion;
     </replace>
 
     <echo message="Copying new bindings to target location" />
-    <move file="LuaCocos2d.cpp" todir="../../lua/cocos2dx_support/"/>
+    <move file="LuaCocos2d.cpp" todir="../../scripting/lua/cocos2dx_support/"/>
   </target>
   <target name="create-lua-bindings" depends="cocos2d-x-bindings" />
 </project>
