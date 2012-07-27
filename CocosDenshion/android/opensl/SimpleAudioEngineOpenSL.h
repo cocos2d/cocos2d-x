@@ -6,36 +6,36 @@
 class SimpleAudioEngineOpenSL
 {
 public:
-    SimpleAudioEngineOpenSL();
-    ~SimpleAudioEngineOpenSL();
+	SimpleAudioEngineOpenSL();
+	~SimpleAudioEngineOpenSL();
 
 	bool initEngine();
 
-    static SimpleAudioEngineOpenSL* sharedEngine();
+	static SimpleAudioEngineOpenSL* sharedEngine();
 
-    static void end();
+	static void end();
 
-    float getEffectsVolume();
+	float getEffectsVolume();
 
-    void setEffectsVolume(float volume);
+	void setEffectsVolume(float volume);
 
-    unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
+	unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
 
-    void pauseEffect(unsigned int nSoundId);
+	void pauseEffect(unsigned int nSoundId);
 
-    void pauseAllEffects();
+	void pauseAllEffects();
 
-    void resumeEffect(unsigned int nSoundId);
+	void resumeEffect(unsigned int nSoundId);
 
-    void resumeAllEffects();
+	void resumeAllEffects();
 
-    void stopEffect(unsigned int nSoundId);
+	void stopEffect(unsigned int nSoundId);
 
-    void stopAllEffects();
+	void stopAllEffects();
 
-    void preloadEffect(const char* pszFilePath);
+	void preloadEffect(const char* pszFilePath);
 
-    void unloadEffect(const char* pszFilePath);
+	void unloadEffect(const char* pszFilePath);
 };
 
 

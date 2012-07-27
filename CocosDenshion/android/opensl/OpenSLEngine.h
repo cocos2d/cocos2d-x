@@ -50,6 +50,10 @@ public:
 
 	void setAllEffectState(int state);
 
+	void resumeEffect(unsigned int effectID);
+
+	void resumeAllEffects();
+
 	void setEffectLooping(unsigned int effectID, bool isLooping);
 
 	void setEffectsVolume(int volume);

@@ -12,7 +12,7 @@ LOCAL_SRC_FILES := SimpleAudioEngine.cpp \
 ifeq ($(APP_PLATFORM), android-9)
 
 # define # define the macro to compile through CocosDenshion/android/SimpleAudioEngine.cpp
-LOCAL_CFLAGS := -DENABLE_OPENSL
+# LOCAL_CFLAGS := -DENABLE_OPENSL
 
 LOCAL_SRC_FILES += opensl/OpenSLEngine.cpp \
 		   opensl/SimpleAudioEngineOpenSL.cpp
