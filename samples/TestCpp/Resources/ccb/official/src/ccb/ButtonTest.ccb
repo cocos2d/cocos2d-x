@@ -453,25 +453,25 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>backgroundSpriteFrame|3</string>
+								<string>backgroundSpriteFrame|4</string>
 								<key>type</key>
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
 									<string></string>
-									<string></string>
+									<string>res/btn-test-2.png</string>
 								</array>
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>titleColor|3</string>
+								<string>titleColor|4</string>
 								<key>type</key>
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>76</integer>
+									<integer>76</integer>
+									<integer>76</integer>
 								</array>
 							</dict>
 						</array>
