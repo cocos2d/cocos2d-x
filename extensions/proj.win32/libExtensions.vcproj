@@ -304,109 +304,109 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="UI"
+			Name="GUI"
 			>
 			<Filter
 				Name="CCControlExtension"
 				>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControl.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCControl.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControl.h"
+					RelativePath="..\GUI\CCControlExtension\CCControl.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlButton.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCControlButton.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlButton.h"
+					RelativePath="..\GUI\CCControlExtension\CCControlButton.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlColourPicker.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCControlColourPicker.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlColourPicker.h"
+					RelativePath="..\GUI\CCControlExtension\CCControlColourPicker.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlExtensions.h"
+					RelativePath="..\GUI\CCControlExtension\CCControlExtensions.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlHuePicker.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCControlHuePicker.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlHuePicker.h"
+					RelativePath="..\GUI\CCControlExtension\CCControlHuePicker.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlSaturationBrightnessPicker.h"
+					RelativePath="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlSlider.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCControlSlider.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlSlider.h"
+					RelativePath="..\GUI\CCControlExtension\CCControlSlider.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlSwitch.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCControlSwitch.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlSwitch.h"
+					RelativePath="..\GUI\CCControlExtension\CCControlSwitch.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlUtils.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCControlUtils.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCControlUtils.h"
+					RelativePath="..\GUI\CCControlExtension\CCControlUtils.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCInvocation.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCInvocation.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCInvocation.h"
+					RelativePath="..\GUI\CCControlExtension\CCInvocation.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCMenuPassive.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCMenuPassive.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCMenuPassive.h"
+					RelativePath="..\GUI\CCControlExtension\CCMenuPassive.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCScale9Sprite.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCScale9Sprite.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCScale9Sprite.h"
+					RelativePath="..\GUI\CCControlExtension\CCScale9Sprite.h"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCSpacer.cpp"
+					RelativePath="..\GUI\CCControlExtension\CCSpacer.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCControlExtension\CCSpacer.h"
+					RelativePath="..\GUI\CCControlExtension\CCSpacer.h"
 					>
 				</File>
 			</Filter>
@@ -414,11 +414,11 @@
 				Name="CCScrollView"
 				>
 				<File
-					RelativePath="..\UI\CCScrollView\CCScrollView.cpp"
+					RelativePath="..\GUI\CCScrollView\CCScrollView.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\UI\CCScrollView\CCScrollView.h"
+					RelativePath="..\GUI\CCScrollView\CCScrollView.h"
 					>
 				</File>
 			</Filter>
