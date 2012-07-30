@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    Nat Weiss (iphonegamekit.com)
+        author of Mac port
+
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
     Di Wu (Zynga China)
@@ -21,14 +24,14 @@ Developers:
         contributes cocos2d-x port of CCControlExtension.
 
     Yannick Loriot
-        author of CCControlExtension of cocos2d-iphone port.
+        author of CCControlExtension in cocos2d-iphone.
 
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
-		added CCBReader (CCBI format)
+	added CCBReader (CCBI format)
         
     Jianfeng Zhou (NetGragon Inc)
         contributes CCListView and CCTextureWatcher.
