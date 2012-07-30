@@ -22,19 +22,19 @@ CCBReader/CCParticleSystemQuadLoader.cpp \
 CCBReader/CCScale9SpriteLoader.cpp \
 CCBReader/CCScrollViewLoader.cpp \
 CCBReader/CCSpriteLoader.cpp \
-UI/CCControlExtension/CCControl.cpp \
-UI/CCControlExtension/CCControlButton.cpp \
-UI/CCControlExtension/CCControlColourPicker.cpp \
-UI/CCControlExtension/CCControlHuePicker.cpp \
-UI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp \
-UI/CCControlExtension/CCControlSlider.cpp \
-UI/CCControlExtension/CCControlSwitch.cpp \
-UI/CCControlExtension/CCControlUtils.cpp \
-UI/CCControlExtension/CCInvocation.cpp \
-UI/CCControlExtension/CCMenuPassive.cpp \
-UI/CCControlExtension/CCScale9Sprite.cpp \
-UI/CCControlExtension/CCSpacer.cpp \
-UI/CCScrollView/CCScrollView.cpp
+GUI/CCControlExtension/CCControl.cpp \
+GUI/CCControlExtension/CCControlButton.cpp \
+GUI/CCControlExtension/CCControlColourPicker.cpp \
+GUI/CCControlExtension/CCControlHuePicker.cpp \
+GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp \
+GUI/CCControlExtension/CCControlSlider.cpp \
+GUI/CCControlExtension/CCControlSwitch.cpp \
+GUI/CCControlExtension/CCControlUtils.cpp \
+GUI/CCControlExtension/CCInvocation.cpp \
+GUI/CCControlExtension/CCMenuPassive.cpp \
+GUI/CCControlExtension/CCScale9Sprite.cpp \
+GUI/CCControlExtension/CCSpacer.cpp \
+GUI/CCScrollView/CCScrollView.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 
