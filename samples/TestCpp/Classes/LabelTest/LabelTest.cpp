@@ -1289,7 +1289,7 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
 void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
 {
     CCTouch *touch = (CCTouch *)pTouches->anyObject();
-    CCPoint location = touch->locationInView();
+    CCPoint location = touch->getLocationInView();
 
     if (CCRect::CCRectContainsPoint(this->m_pArrowsShouldRetain->boundingBox(), location))
     {
@@ -1314,7 +1314,7 @@ void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, coco
     }
 
     CCTouch *touch = (CCTouch *)pTouches->anyObject();
-    CCPoint location = touch->locationInView();
+    CCPoint location = touch->getLocationInView();
 
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
