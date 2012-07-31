@@ -65,13 +65,13 @@ public:
 
     /** Deletes a CCAnimation from the cache.
     */
-    void removeAnimationByName(const char* name);
+    void removeAnimation(const char* name);
 
     /** Returns a CCAnimation that was previously added.
     If the name is not found it will return nil.
     You should retain the returned copy if you are going to use it.
     */
-    CCAnimation* animationByName(const char* name);
+    CCAnimation* getAnimation(const char* name);
 
     /** Adds an animation from an NSDictionary
      Make sure that the frames were previously loaded in the CCSpriteFrameCache.

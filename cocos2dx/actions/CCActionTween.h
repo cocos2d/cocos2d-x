@@ -72,7 +72,7 @@ public:
     bool initWithDuration(float aDuration, const char* key, float from, float to);
 
     void startWithTarget(CCNode *pTarget);
-    void update(float dt);
+    void onUpdate(float dt);
     CCActionInterval* reverse();
 
     std::string        m_strKey;

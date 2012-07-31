@@ -94,7 +94,7 @@ void CCProgressTo::startWithTarget(CCNode *pTarget)
     }
 }
 
-void CCProgressTo::update(float time)
+void CCProgressTo::onUpdate(float time)
 {
     ((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 }
@@ -161,7 +161,7 @@ void CCProgressFromTo::startWithTarget(CCNode *pTarget)
     CCActionInterval::startWithTarget(pTarget);
 }
 
-void CCProgressFromTo::update(float time)
+void CCProgressFromTo::onUpdate(float time)
 {
     ((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 }

@@ -75,7 +75,7 @@ IntervalLayer::~IntervalLayer()
     }
 }
 
-void IntervalLayer::update(float dt)
+void IntervalLayer::onUpdate(float dt)
 {
     m_time0 +=dt;
     char time[10] = {0};

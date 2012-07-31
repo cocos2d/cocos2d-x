@@ -138,28 +138,22 @@ void Parallax2::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
-bool Parallax2::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool Parallax2::onTouchBegan(CCTouch* touch, CCEvent* event)
 {
     return true;
 }
 
-void Parallax2::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void Parallax2::onTouchEnded(CCTouch* touch, CCEvent* event)
 {
 }
 
-void Parallax2::ccTouchCancelled(CCTouch* touch, CCEvent* event)
+void Parallax2::onTouchCancelled(CCTouch* touch, CCEvent* event)
 {
 }
 
-void Parallax2::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void Parallax2::onTouchMoved(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();    
-    CCPoint prevLocation = touch->previousLocationInView();    
-
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
-    prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
-
-    CCPoint diff = ccpSub(touchLocation,prevLocation);
+    CCPoint diff = touch->getDelta();
     
     CCNode* node = getChildByTag(kTagNode);
     CCPoint currentPos = node->getPosition();

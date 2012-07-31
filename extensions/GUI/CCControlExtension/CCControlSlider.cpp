@@ -74,8 +74,8 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
     return pRet;
 }
 
- bool CCControlSlider::initWithSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem)
- {
+bool CCControlSlider::initWithSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem)
+{
      if (CCControl::init())
      {
         ignoreAnchorPointForPosition(false);
@@ -86,7 +86,7 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
         m_thumbItem=thumbItem;
 
         // Defines the content size
-        CCRect maxRect                  = CCControlUtils::CCRectUnion(backgroundSprite->boundingBox(), thumbItem->boundingBox());
+        CCRect maxRect                  = CCControlUtils::CCRectUnion(backgroundSprite->getBoundingBox(), thumbItem->getBoundingBox());
         CCSize size=CCSizeMake(maxRect.size.width+2*SLIDER_MARGIN_H, maxRect.size.height+2*SLIDER_MARGIN_V);
         setContentSize(size);
         //setContentSize(CCSizeMake(backgroundSprite->getContentSize().width, thumbItem->getContentSize().height));
@@ -115,23 +115,23 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
      {
          return false;
      }
- }
+}
 
 
- void CCControlSlider::setValue(float value)
- {
-     //clamp between the two bounds
-     value=MAX(value, m_minimumValue);
-     value=MIN(value, m_maximumValue);
+void CCControlSlider::setValue(float value)
+{
+    //clamp between the two bounds
+    value=MAX(value, m_minimumValue);
+    value=MIN(value, m_maximumValue);
 
-     //if we're snapping
-     if (m_snappingInterval>=0)
-     {
-         //int nTotal=(int)(ceil(m_maximumValue-m_minimumValue)/m_snappingInterval);
-         //floor (n + 0.5f) == round(n)
-         value=floor(0.5f + value/m_snappingInterval)*m_snappingInterval;
-     }
-     m_value=value;
+    //if we're snapping
+    if (m_snappingInterval>=0)
+    {
+        //int nTotal=(int)(ceil(m_maximumValue-m_minimumValue)/m_snappingInterval);
+        //floor (n + 0.5f) == round(n)
+        value=floor(0.5f + value/m_snappingInterval)*m_snappingInterval;
+    }
+    m_value=value;
 
     // Update thumb position for new value
     float percent               = (m_value - m_minimumValue) / (m_maximumValue - m_minimumValue);
@@ -144,59 +144,62 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
     textureRect                 = CCRectMake(textureRect.origin.x, textureRect.origin.y, percent * m_backgroundSprite->getContentSize().width, textureRect.size.height);
     m_progressSprite->setTextureRect(textureRect, m_progressSprite->isTextureRectRotated(), textureRect.size);
     sendActionsForControlEvents(CCControlEventValueChanged);    
- }
-
- void CCControlSlider::setMinimumValue(float minimumValue)
- {
-     m_minimumValue=minimumValue;
-     if (m_minimumValue >= m_maximumValue)    
-        m_maximumValue   = m_minimumValue + 1.0f;
-     setValue(m_value);
- }
-
-  void CCControlSlider::setMaximumValue(float maximumValue)
- {
-     m_maximumValue=maximumValue;
-     if (m_maximumValue <= m_minimumValue)    
-        m_minimumValue   = m_maximumValue - 1.0f;
-     setValue(m_value);
- }
-
-  //this is the same as CCControl::getTouchLocation, but it returns the position relative to the position of this control
-  CCPoint CCControlSlider::getTouchLocationInControl(CCTouch* touch)
-{
-    CCPoint touchLocation=touch->locationInView();;                      // Get the touch position
-    touchLocation           = CCDirector::sharedDirector()->convertToGL(touchLocation);  // Convert the position to GL space
-    touchLocation           = convertToNodeSpace(touchLocation);         // Convert to the node space of this class
-    
-   if (touchLocation.x < 0)
-   {
-        touchLocation.x     = 0;
-   } 
-   else if (touchLocation.x > m_backgroundSprite->getContentSize().width+SLIDER_MARGIN_H)
-   {
-        touchLocation.x     = m_backgroundSprite->getContentSize().width+SLIDER_MARGIN_H;
-   }    
-    return touchLocation;
 }
 
- bool CCControlSlider::ccTouchBegan(CCTouch* touch, CCEvent* pEvent)
-  {
-      if (!isTouchInside(touch))
-          return false;
+void CCControlSlider::setMinimumValue(float minimumValue)
+{
+    m_minimumValue=minimumValue;
+    if (m_minimumValue >= m_maximumValue) 
+    {
+        m_maximumValue   = m_minimumValue + 1.0f;
+    }
+    setValue(m_value);
+}
+
+void CCControlSlider::setMaximumValue(float maximumValue)
+{
+    m_maximumValue=maximumValue;
+    if (m_maximumValue <= m_minimumValue)
+    {
+        m_minimumValue   = m_maximumValue - 1.0f;
+    }
+    setValue(m_value);
+}
+
+  //this is the same as CCControl::getTouchLocation, but it returns the position relative to the position of this control
+CCPoint CCControlSlider::getTouchLocationInControl(CCTouch* touch)
+{
+    CCPoint touchLocation = touch->getLocation(); // Get the touch position
+    touchLocation  = convertToNodeSpace(touchLocation); // Convert to the node space of this class
+    
+    if (touchLocation.x < 0)
+    {
+        touchLocation.x = 0;
+    } 
+    else if (touchLocation.x > m_backgroundSprite->getContentSize().width+SLIDER_MARGIN_H)
+    {
+        touchLocation.x = m_backgroundSprite->getContentSize().width+SLIDER_MARGIN_H;
+    }    
+    return touchLocation;
+ }
+
+bool CCControlSlider::onTouchBegan(CCTouch* touch, CCEvent* pEvent)
+{
+    if (!isTouchInside(touch))
+        return false;
 
     CCPoint location = getTouchLocationInControl(touch);
     sliderBegan(location);
     return true;
 }
 
-void CCControlSlider::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+void CCControlSlider::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint location = getTouchLocationInControl(pTouch);
     sliderMoved(location);
 }
 
-void CCControlSlider::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+void CCControlSlider::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint location = getTouchLocationInControl(pTouch);
     sliderEnded(CCPointZero);

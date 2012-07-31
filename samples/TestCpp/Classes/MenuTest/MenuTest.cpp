@@ -119,20 +119,20 @@ void MenuLayerMainMenu::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority+1, true);
 }
 
-bool MenuLayerMainMenu::ccTouchBegan(CCTouch *touch, CCEvent * pEvent)
+bool MenuLayerMainMenu::onTouchBegan(CCTouch *touch, CCEvent * pEvent)
 {
     return true;
 }
 
-void MenuLayerMainMenu::ccTouchEnded(CCTouch *touch, CCEvent * pEvent)
+void MenuLayerMainMenu::onTouchEnded(CCTouch *touch, CCEvent * pEvent)
 {
 }
 
-void MenuLayerMainMenu::ccTouchCancelled(CCTouch *touch, CCEvent * pEvent)
+void MenuLayerMainMenu::onTouchCancelled(CCTouch *touch, CCEvent * pEvent)
 {
 }
 
-void MenuLayerMainMenu::ccTouchMoved(CCTouch *touch, CCEvent * pEvent)
+void MenuLayerMainMenu::onTouchMoved(CCTouch *touch, CCEvent * pEvent)
 {
 }
 

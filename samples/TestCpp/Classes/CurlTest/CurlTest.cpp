@@ -23,7 +23,7 @@ CurlTest::CurlTest()
 
 // the test code is
 // http://curl.haxx.se/mail/lib-2009-12/0071.html
-void CurlTest::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+void CurlTest::onTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
     CURL *curl;
     CURLcode res;

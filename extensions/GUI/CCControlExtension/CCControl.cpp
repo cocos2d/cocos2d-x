@@ -272,9 +272,8 @@ bool CCControl::isOpacityModifyRGB()
 
 CCPoint CCControl::getTouchLocation(CCTouch* touch)
 {
-    CCPoint touchLocation=touch->locationInView();;                      // Get the touch position
-    touchLocation           = CCDirector::sharedDirector()->convertToGL(touchLocation);  // Convert the position to GL space
-    touchLocation           = this->getParent()->convertToNodeSpace(touchLocation);         // Convert to the node space of this class
+    CCPoint touchLocation = touch->getLocation(); // Get the touch position
+    touchLocation = this->getParent()->convertToNodeSpace(touchLocation); // Convert to the node space of this class
     
     return touchLocation;
 }
@@ -282,7 +281,7 @@ CCPoint CCControl::getTouchLocation(CCTouch* touch)
 bool CCControl::isTouchInside(CCTouch* touch)
 {
     CCPoint touchLocation=getTouchLocation(touch);
-    CCRect bBox=boundingBox();
+    CCRect bBox=getBoundingBox();
     return CCRect::CCRectContainsPoint(bBox, touchLocation);
 }
 

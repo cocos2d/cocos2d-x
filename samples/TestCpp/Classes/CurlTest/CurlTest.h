@@ -10,7 +10,7 @@ public:
     CurlTest();
     ~CurlTest();
 
-    virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
+    virtual void onTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 private:
     cocos2d::CCLabelTTF*         m_pLabel;

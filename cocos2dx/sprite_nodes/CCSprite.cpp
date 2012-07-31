@@ -669,7 +669,7 @@ void CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 void CCSprite::reorderChild(CCNode *pChild, int zOrder)
 {
     CCAssert(pChild != NULL, "");
-    CCAssert(m_pChildren->containsObject(pChild), "");
+    CCAssert(m_pChildren->isContainObject(pChild), "");
 
     if (zOrder == pChild->getZOrder())
     {
@@ -1000,7 +1000,7 @@ void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int f
 {
     CCAssert(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
 
-    CCAnimation *a = CCAnimationCache::sharedAnimationCache()->animationByName(animationName);
+    CCAnimation *a = CCAnimationCache::sharedAnimationCache()->getAnimation(animationName);
 
     CCAssert(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
@@ -1021,7 +1021,7 @@ bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
         );
 }
 
-CCSpriteFrame* CCSprite::displayFrame(void)
+CCSpriteFrame* CCSprite::getDisplayFrame(void)
 {
     return CCSpriteFrame::createWithTexture(m_pobTexture,
                                            CC_RECT_POINTS_TO_PIXELS(m_obRect),

@@ -48,14 +48,14 @@ public:
 class CC_DLL CCObject : public CCCopying
 {
 public:
-    // object id, CCScriptSupport need public m_uID
+    /// object id, CCScriptSupport need public m_uID
     unsigned int        m_uID;
-    // Lua reference id
+    /// Lua reference id
     int                 m_nLuaID;
 protected:
-    // count of refrence
+    /// count of refrence
     unsigned int        m_uReference;
-    // is the object autoreleased
+    /// is the object autoreleased
     bool        m_bManaged;        
 public:
     CCObject(void);
@@ -67,9 +67,9 @@ public:
     CCObject* copy(void);
     bool isSingleReference(void);
     unsigned int retainCount(void);
-    virtual bool isEqual(const CCObject* pObject);
+    virtual bool isEqualTo(const CCObject* pObject);
 
-    virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
+    virtual void onUpdate(float dt) {CC_UNUSED_PARAM(dt);};
     
     friend class CCAutoreleasePool;
 };

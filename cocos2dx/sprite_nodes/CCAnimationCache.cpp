@@ -75,7 +75,7 @@ void CCAnimationCache::addAnimation(CCAnimation *animation, const char * name)
     m_pAnimations->setObject(animation, name);
 }
 
-void CCAnimationCache::removeAnimationByName(const char* name)
+void CCAnimationCache::removeAnimation(const char* name)
 {
     if (! name)
     {
@@ -85,7 +85,7 @@ void CCAnimationCache::removeAnimationByName(const char* name)
     m_pAnimations->removeObjectForKey(name);
 }
 
-CCAnimation* CCAnimationCache::animationByName(const char* name)
+CCAnimation* CCAnimationCache::getAnimation(const char* name)
 {
     return (CCAnimation*)m_pAnimations->objectForKey(name);
 }

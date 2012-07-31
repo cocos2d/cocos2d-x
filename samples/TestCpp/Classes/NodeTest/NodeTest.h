@@ -104,7 +104,7 @@ class CameraZoomTest : public TestCocosNodeDemo
     float    m_z;
 public:
     CameraZoomTest();
-    void update(float dt);
+    void onUpdate(float dt);
 
     virtual void onEnter();
     virtual void onExit();
@@ -124,7 +124,7 @@ class ConvertToNode : public TestCocosNodeDemo
 {
 public:
     ConvertToNode();
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent *event);
+    virtual void onTouchesEnded(CCSet* touches, CCEvent *event);
     virtual std::string title();
     virtual std::string subtitle();
 };

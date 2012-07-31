@@ -325,7 +325,7 @@ public:
     virtual bool isFrameDisplayed(CCSpriteFrame *pFrame);
 
     /** returns the current displayed frame. */
-    virtual CCSpriteFrame* displayFrame(void);
+    virtual CCSpriteFrame* getDisplayFrame(void);
 
     virtual CCSpriteBatchNode* getBatchNode(void);
     virtual void setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);

@@ -194,7 +194,7 @@ void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
     shader->release();
 }
 
-void ShaderNode::update(float dt)
+void ShaderNode::onUpdate(float dt)
 {
     m_time += dt;
 }
@@ -662,7 +662,7 @@ bool ShaderRetroEffect::init()
     return false;
 }
 
-void ShaderRetroEffect::update(float dt)
+void ShaderRetroEffect::onUpdate(float dt)
 {
     m_fAccum += dt;
 

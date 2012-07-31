@@ -223,7 +223,7 @@ std::string IterateSpriteSheet::profilerName()
 // IterateSpriteSheetFastEnum
 //
 ////////////////////////////////////////////////////////
-void IterateSpriteSheetFastEnum::update(float dt)
+void IterateSpriteSheetFastEnum::onUpdate(float dt)
 {
     // iterate using fast enumeration protocol
     CCArray* pChildren = batchNode->getChildren();
@@ -264,7 +264,7 @@ std::string IterateSpriteSheetFastEnum::profilerName()
 // IterateSpriteSheetCArray
 //
 ////////////////////////////////////////////////////////
-void IterateSpriteSheetCArray::update(float dt)
+void IterateSpriteSheetCArray::onUpdate(float dt)
 {
     // iterate using fast enumeration protocol
     CCArray* pChildren = batchNode->getChildren();
@@ -366,7 +366,7 @@ std::string AddRemoveSpriteSheet::profilerName()
 // AddSpriteSheet
 //
 ////////////////////////////////////////////////////////
-void AddSpriteSheet::update(float dt)
+void AddSpriteSheet::onUpdate(float dt)
 {
     // reset seed
     //srandom(0);
@@ -431,7 +431,7 @@ std::string AddSpriteSheet::profilerName()
 // RemoveSpriteSheet
 //
 ////////////////////////////////////////////////////////
-void RemoveSpriteSheet::update(float dt)
+void RemoveSpriteSheet::onUpdate(float dt)
 {
     //srandom(0);
 
@@ -491,7 +491,7 @@ std::string RemoveSpriteSheet::profilerName()
 // ReorderSpriteSheet
 //
 ////////////////////////////////////////////////////////
-void ReorderSpriteSheet::update(float dt)
+void ReorderSpriteSheet::onUpdate(float dt)
 {
     //srandom(0);
 

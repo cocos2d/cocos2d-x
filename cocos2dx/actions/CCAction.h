@@ -79,7 +79,7 @@ public:
     - 0.5 means that the action is in the middle
     - 1 means that the action is over
     */
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     
     inline CCNode* getTarget(void) { return m_pTarget; }
     /** The action will modify the target properties. */

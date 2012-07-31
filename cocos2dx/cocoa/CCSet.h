@@ -67,7 +67,7 @@ public:
     /**
     *@brief Check if CCSet contains a element equals pObject.
     */
-    bool containsObject(CCObject *pObject);
+    bool isContainObject(CCObject *pObject);
     /**
     *@brief Return the iterator that points to the first element.
     */

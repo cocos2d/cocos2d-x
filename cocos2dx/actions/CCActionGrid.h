@@ -118,7 +118,7 @@ public:
     bool initWithAction(CCAction *pAction, float duration);
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
     /** get amplitude rate */
@@ -153,7 +153,7 @@ public:
     inline void setRate(float fRate) { m_fRate = fRate; }
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -182,7 +182,7 @@ public:
     inline void setRate(float fRate) { m_fRate = fRate; }
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:

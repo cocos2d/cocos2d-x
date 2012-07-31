@@ -68,7 +68,7 @@ public:
     bool initWithScriptHandler(int nHandler, float fSeconds);
 
     /** triggers the timer */
-    void update(float dt);
+    void onUpdate(float dt);
 
 public:
     /** Allocates a timer with a target and a selector. */
@@ -135,7 +135,7 @@ public:
     /** 'update' the scheduler.
      You should NEVER call this method, unless you know what you are doing.
      */
-    void update(float dt);
+    void onUpdate(float dt);
 
     /** The scheduled method will be called every 'interval' seconds.
      If paused is YES, then it won't be called until it is resumed.

@@ -451,7 +451,7 @@ CCAnimation * CCNodeLoader::parsePropTypeAnimation(CCNode * pNode, CCNode * pPar
         CCAnimationCache * animationCache = CCAnimationCache::sharedAnimationCache();
         animationCache->addAnimationsWithFile(animationFile->getCString());
         
-        ccAnimation = animationCache->animationByName(animation->getCString());
+        ccAnimation = animationCache->getAnimation(animation->getCString());
     }
     return ccAnimation;
 }

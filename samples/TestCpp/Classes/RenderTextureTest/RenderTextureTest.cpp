@@ -207,13 +207,12 @@ RenderTextureSave::~RenderTextureSave()
     CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 
-void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
+void RenderTextureSave::onTouchesMoved(CCSet* touches, CCEvent* event)
 {
     CCTouch *touch = (CCTouch *)touches->anyObject();
-    CCPoint start = touch->locationInView();
-    start = CCDirector::sharedDirector()->convertToGL(start);
-    CCPoint end = touch->previousLocationInView();
-    end = CCDirector::sharedDirector()->convertToGL(end);
+    
+    CCPoint start = touch->getLocation();
+    CCPoint end = touch->getPreviousLocation();
 
     // begin drawing to the render texture
     m_pTarget->begin();
@@ -394,16 +393,15 @@ string RenderTextureZbuffer::subtitle()
     return "Touch screen. It should be green";
 }
 
-void RenderTextureZbuffer::ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *event)
+void RenderTextureZbuffer::onTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *event)
 {
     CCSetIterator iter;
     CCTouch *touch;
     for (iter = touches->begin(); iter != touches->end(); ++iter)
     {
         touch = (CCTouch *)(*iter);
-        CCPoint location = touch->locationInView();
+        CCPoint location = touch->getLocation();
 
-        location = CCDirector::sharedDirector()->convertToGL(location);
         sp1->setPosition(location);
         sp2->setPosition(location);
         sp3->setPosition(location);
@@ -416,16 +414,15 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEv
     }
 }
 
-void RenderTextureZbuffer::ccTouchesMoved(CCSet* touches, CCEvent* event)
+void RenderTextureZbuffer::onTouchesMoved(CCSet* touches, CCEvent* event)
 {
     CCSetIterator iter;
     CCTouch *touch;
     for (iter = touches->begin(); iter != touches->end(); ++iter)
     {
         touch = (CCTouch *)(*iter);
-        CCPoint location = touch->locationInView();
+        CCPoint location = touch->getLocation();
 
-        location = CCDirector::sharedDirector()->convertToGL(location);
         sp1->setPosition(location);
         sp2->setPosition(location);
         sp3->setPosition(location);
@@ -438,7 +435,7 @@ void RenderTextureZbuffer::ccTouchesMoved(CCSet* touches, CCEvent* event)
     }
 }
 
-void RenderTextureZbuffer::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void RenderTextureZbuffer::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     this->renderScreenShot();
 }

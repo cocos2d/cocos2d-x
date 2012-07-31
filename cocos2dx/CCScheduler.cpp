@@ -143,7 +143,7 @@ bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float 
     return true;
 }
 
-void CCTimer::update(float dt)
+void CCTimer::onUpdate(float dt)
 {
     if (m_fElapsed == -1)
     {
@@ -749,7 +749,7 @@ void CCScheduler::resumeTargets(CCSet* pTargetsToResume)
 }
 
 // main loop
-void CCScheduler::update(float dt)
+void CCScheduler::onUpdate(float dt)
 {
     m_bUpdateHashLocked = true;
 
@@ -766,7 +766,7 @@ void CCScheduler::update(float dt)
     {
         if ((! pEntry->paused) && (! pEntry->markedForDeletion))
         {
-            pEntry->target->update(dt);
+            pEntry->target->onUpdate(dt);
         }
     }
 
@@ -775,7 +775,7 @@ void CCScheduler::update(float dt)
     {
         if ((! pEntry->paused) && (! pEntry->markedForDeletion))
         {
-            pEntry->target->update(dt);            
+            pEntry->target->onUpdate(dt);            
         }
     }
 
@@ -784,7 +784,7 @@ void CCScheduler::update(float dt)
     {
         if ((! pEntry->paused) && (! pEntry->markedForDeletion))
         {
-            pEntry->target->update(dt);            
+            pEntry->target->onUpdate(dt);            
         }
     }
 
@@ -802,7 +802,7 @@ void CCScheduler::update(float dt)
                 elt->currentTimer = (CCTimer*)(elt->timers->arr[elt->timerIndex]);
                 elt->currentTimerSalvaged = false;
 
-                elt->currentTimer->update(dt);
+                elt->currentTimer->onUpdate(dt);
 
                 if (elt->currentTimerSalvaged)
                 {
@@ -839,7 +839,7 @@ void CCScheduler::update(float dt)
             }
             else if (!pEntry->isPaused())
             {
-                pEntry->getTimer()->update(dt);
+                pEntry->getTimer()->onUpdate(dt);
             }
         }
     }

@@ -106,7 +106,7 @@ unsigned int CCObject::retainCount(void)
     return m_uReference;
 }
 
-bool CCObject::isEqual(const CCObject *pObject)
+bool CCObject::isEqualTo(const CCObject *pObject)
 {
     return this == pObject;
 }

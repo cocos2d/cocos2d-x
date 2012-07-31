@@ -55,7 +55,7 @@ CCPageTurn3D* CCPageTurn3D::create(const ccGridSize& gridSize, float time)
  * Update each tick
  * Time is the percentage of the way through the duration
  */
-void CCPageTurn3D::update(float time)
+void CCPageTurn3D::onUpdate(float time)
 {
     float tt = MAX(0, time - 0.25f);
     float deltaAy = (tt * tt * 500);

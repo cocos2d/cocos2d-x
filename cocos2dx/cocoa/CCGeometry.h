@@ -50,9 +50,9 @@ public:
     CCPoint& operator= (const CCPoint& other);
     void setPoint(float x, float y);
     virtual CCObject* copyWithZone(CCZone* pZone);
-
+    bool isEqualTo(const CCPoint& point) const;
 public:
-    static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
+    CC_DEPRECATED_ATTRIBUTE static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
 
 class CC_DLL CCSize : public CCObject
@@ -68,8 +68,9 @@ public:
     CCSize& operator= (const CCSize& other);
     void setSize(float width, float height);
     virtual CCObject* copyWithZone(CCZone* pZone);
+    bool isEqualTo(const CCSize& size) const;
 public:
-    static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
+    CC_DEPRECATED_ATTRIBUTE static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
 
 class CC_DLL CCRect : public CCObject
@@ -85,30 +86,22 @@ public:
     CCRect& operator= (const CCRect& other);
     void setRect(float x, float y, float width, float height);
     virtual CCObject* copyWithZone(CCZone* pZone);
+    float getMinX() const;  ///! return the leftmost x-value of 'rect'
+    float getMidX() const;  ///! return the midpoint x-value of 'rect'
+    float getMaxX() const;  ///! return the rightmost x-value of 'rect' 
+    float getMinY() const;  ///! return the bottommost y-value of 'rect'
+    float getMidY() const;  ///! return the midpoint y-value of 'rect'
+    float getMaxY() const;  ///! return the topmost y-value of 'rect'
+    bool isEqualTo(const CCRect& target) const;
+    bool isContainPoint(const CCPoint& point) const;
+    bool isIntersectRect(const CCRect& target) const;
+    
 public:
-    //! return the leftmost x-value of 'rect'
-    static CCFloat CCRectGetMinX(const CCRect& rect);
+    CC_DEPRECATED_ATTRIBUTE static bool CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2);
 
-    //! return the rightmost x-value of 'rect'
-    static CCFloat CCRectGetMaxX(const CCRect& rect);
+    CC_DEPRECATED_ATTRIBUTE static bool CCRectContainsPoint(const CCRect& rect, const CCPoint& point);
 
-    //! return the midpoint x-value of 'rect'
-    static CCFloat CCRectGetMidX(const CCRect& rect);
-
-    //! Return the bottommost y-value of `rect'
-    static CCFloat CCRectGetMinY(const CCRect& rect);
-
-    //! Return the topmost y-value of `rect'
-    static CCFloat CCRectGetMaxY(const CCRect& rect);
-
-    //! Return the midpoint y-value of `rect'
-    static CCFloat CCRectGetMidY(const CCRect& rect);
-
-    static bool CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2);
-
-    static bool CCRectContainsPoint(const CCRect& rect, const CCPoint& point);
-
-    static bool CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB);
+    CC_DEPRECATED_ATTRIBUTE static bool CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB);
 };
 
 

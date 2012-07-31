@@ -112,7 +112,7 @@ void CCActionInterval::step(float dt)
         m_elapsed += dt;
     }
     
-    this->update(MAX (0,                                  // needed for rewind. elapsed could be negative
+    this->onUpdate(MAX (0,                                  // needed for rewind. elapsed could be negative
                       MIN(1, m_elapsed /
                           MAX(m_fDuration, FLT_EPSILON)   // division by 0
                           )
@@ -297,7 +297,7 @@ void CCSequence::stop(void)
     CCActionInterval::stop();
 }
 
-void CCSequence::update(float t)
+void CCSequence::onUpdate(float t)
 {
     int found = 0;
     float new_t = 0.0f;
@@ -324,13 +324,13 @@ void CCSequence::update(float t)
         if( m_last == -1 ) {
             // action[0] was skipped, execute it.
             m_pActions[0]->startWithTarget(m_pTarget);
-            m_pActions[0]->update(1.0f);
+            m_pActions[0]->onUpdate(1.0f);
             m_pActions[0]->stop();
         }
         else if( m_last == 0 )
         {
             // switching to action 1. stop action 0.
-            m_pActions[0]->update(1.0f);
+            m_pActions[0]->onUpdate(1.0f);
             m_pActions[0]->stop();
         }
     }
@@ -341,7 +341,7 @@ void CCSequence::update(float t)
         m_pActions[found]->startWithTarget(m_pTarget);
     }
 
-    m_pActions[found]->update(new_t);
+    m_pActions[found]->onUpdate(new_t);
     m_last = found;
 }
 
@@ -436,14 +436,14 @@ void CCRepeat::stop(void)
 
 // issue #80. Instead of hooking step:, hook update: since it can be called by any 
 // container action like CCRepeat, CCSequence, CCEase, etc..
-void CCRepeat::update(float dt)
+void CCRepeat::onUpdate(float dt)
 {
     if (dt >= m_fNextDt)
     {
         while (dt > m_fNextDt && m_uTotal < m_uTimes)
         {
 
-            m_pInnerAction->update(1.0f);
+            m_pInnerAction->onUpdate(1.0f);
             m_uTotal++;
 
             m_pInnerAction->stop();
@@ -462,19 +462,19 @@ void CCRepeat::update(float dt)
         {
             if (m_uTotal == m_uTimes)
             {
-                m_pInnerAction->update(1);
+                m_pInnerAction->onUpdate(1);
                 m_pInnerAction->stop();
             }
             else
             {
                 // issue #390 prevent jerk, use right update
-                m_pInnerAction->update(dt - (m_fNextDt - m_pInnerAction->getDuration()/m_fDuration));
+                m_pInnerAction->onUpdate(dt - (m_fNextDt - m_pInnerAction->getDuration()/m_fDuration));
             }
         }
     }
     else
     {
-        m_pInnerAction->update(fmodf(dt * m_uTimes,1.0f));
+        m_pInnerAction->onUpdate(fmodf(dt * m_uTimes,1.0f));
     }
 }
 
@@ -732,15 +732,15 @@ void CCSpawn::stop(void)
     CCActionInterval::stop();
 }
 
-void CCSpawn::update(float time)
+void CCSpawn::onUpdate(float time)
 {
     if (m_pOne)
     {
-        m_pOne->update(time);
+        m_pOne->onUpdate(time);
     }
     if (m_pTwo)
     {
-        m_pTwo->update(time);
+        m_pTwo->onUpdate(time);
     }
 }
 
@@ -828,7 +828,7 @@ void CCRotateTo::startWithTarget(CCNode *pTarget)
     }
 }
 
-void CCRotateTo::update(float time)
+void CCRotateTo::onUpdate(float time)
 {
     if (m_pTarget)
     {
@@ -893,7 +893,7 @@ void CCRotateBy::startWithTarget(CCNode *pTarget)
     m_fStartAngle = pTarget->getRotation();
 }
 
-void CCRotateBy::update(float time)
+void CCRotateBy::onUpdate(float time)
 {
     // XXX: shall I add % 360
     if (m_pTarget)
@@ -965,7 +965,7 @@ void CCMoveTo::startWithTarget(CCNode *pTarget)
     m_delta = ccpSub(m_endPosition, m_startPosition);
 }
 
-void CCMoveTo::update(float time)
+void CCMoveTo::onUpdate(float time)
 {
     if (m_pTarget)
     {
@@ -1150,7 +1150,7 @@ void CCSkewTo::startWithTarget(CCNode *pTarget)
     }
 }
 
-void CCSkewTo::update(float t)
+void CCSkewTo::onUpdate(float t)
 {
     m_pTarget->setSkewX(m_fStartSkewX + m_fDeltaX * t);
     m_pTarget->setSkewY(m_fStartSkewY + m_fDeltaY * t);
@@ -1283,7 +1283,7 @@ void CCJumpBy::startWithTarget(CCNode *pTarget)
     m_startPosition = pTarget->getPosition();
 }
 
-void CCJumpBy::update(float time)
+void CCJumpBy::onUpdate(float time)
 {
     // parabolic jump (since v0.8.2)
     if (m_pTarget)
@@ -1417,7 +1417,7 @@ CCObject* CCBezierBy::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCBezierBy::update(float time)
+void CCBezierBy::onUpdate(float time)
 {
     if (m_pTarget)
     {
@@ -1588,7 +1588,7 @@ void CCScaleTo::startWithTarget(CCNode *pTarget)
     m_fDeltaY = m_fEndScaleY - m_fStartScaleY;
 }
 
-void CCScaleTo::update(float time)
+void CCScaleTo::onUpdate(float time)
 {
     if (m_pTarget)
     {
@@ -1716,7 +1716,7 @@ CCObject* CCBlink::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCBlink::update(float time)
+void CCBlink::onUpdate(float time)
 {
     if (m_pTarget && ! isDone())
     {
@@ -1772,7 +1772,7 @@ CCObject* CCFadeIn::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCFadeIn::update(float time)
+void CCFadeIn::onUpdate(float time)
 {
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
@@ -1827,7 +1827,7 @@ CCObject* CCFadeOut::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCFadeOut::update(float time)
+void CCFadeOut::onUpdate(float time)
 {
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
@@ -1905,7 +1905,7 @@ void CCFadeTo::startWithTarget(CCNode *pTarget)
     /*m_fromOpacity = pTarget->getOpacity();*/
 }
 
-void CCFadeTo::update(float time)
+void CCFadeTo::onUpdate(float time)
 {
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
@@ -1977,7 +1977,7 @@ void CCTintTo::startWithTarget(CCNode *pTarget)
     /*m_from = pTarget->getColor();*/
 }
 
-void CCTintTo::update(float time)
+void CCTintTo::onUpdate(float time)
 {
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
@@ -2056,7 +2056,7 @@ void CCTintBy::startWithTarget(CCNode *pTarget)
     }    
 }
 
-void CCTintBy::update(float time)
+void CCTintBy::onUpdate(float time)
 {
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
@@ -2113,7 +2113,7 @@ CCObject* CCDelayTime::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCDelayTime::update(float time)
+void CCDelayTime::onUpdate(float time)
 {
     CC_UNUSED_PARAM(time);
     return;
@@ -2206,11 +2206,11 @@ void CCReverseTime::stop(void)
     CCActionInterval::stop();
 }
 
-void CCReverseTime::update(float time)
+void CCReverseTime::onUpdate(float time)
 {
     if (m_pOther)
     {
-        m_pOther->update(1 - time);
+        m_pOther->onUpdate(1 - time);
     }
 }
 
@@ -2319,7 +2319,7 @@ void CCAnimate::startWithTarget(CCNode *pTarget)
 
     if (m_pAnimation->getRestoreOriginalFrame())
     {
-        m_pOrigFrame = pSprite->displayFrame();
+        m_pOrigFrame = pSprite->getDisplayFrame();
         m_pOrigFrame->retain();
     }
     m_nNextFrame = 0;
@@ -2336,7 +2336,7 @@ void CCAnimate::stop(void)
     CCActionInterval::stop();
 }
 
-void CCAnimate::update(float t)
+void CCAnimate::onUpdate(float t)
 {
     // if t==1, ignore. Animation should finish with t==1
     if( t < 1.0f ) {
@@ -2477,9 +2477,9 @@ void CCTargetedAction::stop(void)
     m_pAction->stop();
 }
 
-void CCTargetedAction::update(float time)
+void CCTargetedAction::onUpdate(float time)
 {
-    m_pAction->update(time);
+    m_pAction->onUpdate(time);
 }
 
 NS_CC_END

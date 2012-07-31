@@ -323,7 +323,7 @@ CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
     return NULL;
 }
 
-unsigned int CCActionManager::numberOfRunningActionsInTarget(CCObject *pTarget)
+unsigned int CCActionManager::getNumberOfRunningActionsInTarget(CCObject *pTarget) const
 {
     tHashElement *pElement = NULL;
     HASH_FIND_INT(m_pTargets, &pTarget, pElement);
@@ -336,7 +336,7 @@ unsigned int CCActionManager::numberOfRunningActionsInTarget(CCObject *pTarget)
 }
 
 // main loop
-void CCActionManager::update(float dt)
+void CCActionManager::onUpdate(float dt)
 {
     for (tHashElement *elt = m_pTargets; elt != NULL; )
     {

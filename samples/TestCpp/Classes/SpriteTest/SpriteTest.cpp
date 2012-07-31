@@ -267,7 +267,7 @@ void Sprite1::addNewSpriteWithCoords(CCPoint p)
     sprite->runAction( CCRepeatForever::create(seq) );
 }
 
-void Sprite1::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void Sprite1::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     CCSetIterator it;
     CCTouch* touch;
@@ -279,9 +279,7 @@ void Sprite1::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
     
         addNewSpriteWithCoords( location );
     }
@@ -343,7 +341,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(CCPoint p)
     sprite->runAction( CCRepeatForever::create(seq));
 }
 
-void SpriteBatchNode1::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void SpriteBatchNode1::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     CCSetIterator it;
     CCTouch* touch;
@@ -355,9 +353,7 @@ void SpriteBatchNode1::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
     
         addNewSpriteWithCoords( location );
     }
@@ -1490,7 +1486,7 @@ void SpriteNewTexture::addNewSprite()
     sprite->runAction( CCRepeatForever::create(seq) );
 }
 
-void SpriteNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void SpriteNewTexture::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
 
     CCNode *node = getChildByTag( kTagSpriteBatchNode );
@@ -1596,7 +1592,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     sprite->runAction( CCRepeatForever::create(seq) );
 }
 
-void SpriteBatchNodeNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void SpriteBatchNodeNewTexture::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     CCSpriteBatchNode* batch = (CCSpriteBatchNode*) getChildByTag( kTagSpriteBatchNode );
     
@@ -3525,11 +3521,11 @@ AnimationCache::AnimationCache()
 
     CCAnimationCache *animCache = CCAnimationCache::sharedAnimationCache();
 
-    CCAnimation *normal = animCache->animationByName("dance");
+    CCAnimation *normal = animCache->getAnimation("dance");
     normal->setRestoreOriginalFrame(true);
-    CCAnimation *dance_grey = animCache->animationByName("dance_gray");
+    CCAnimation *dance_grey = animCache->getAnimation("dance_gray");
     dance_grey->setRestoreOriginalFrame(true);
-    CCAnimation *dance_blue = animCache->animationByName("dance_blue");
+    CCAnimation *dance_blue = animCache->getAnimation("dance_blue");
     dance_blue->setRestoreOriginalFrame(true);
 
     CCAnimate *animN = CCAnimate::create(normal);
@@ -3581,11 +3577,11 @@ AnimationCacheFile::AnimationCacheFile()
     animCache->addAnimationsWithFile("animations/animations.plist");
 
 
-    CCAnimation *normal = animCache->animationByName("dance_1");
+    CCAnimation *normal = animCache->getAnimation("dance_1");
     normal->setRestoreOriginalFrame(true);
-    CCAnimation *dance_grey = animCache->animationByName("dance_2");
+    CCAnimation *dance_grey = animCache->getAnimation("dance_2");
     dance_grey->setRestoreOriginalFrame(true);
-    CCAnimation *dance_blue = animCache->animationByName("dance_3");
+    CCAnimation *dance_blue = animCache->getAnimation("dance_3");
     dance_blue->setRestoreOriginalFrame(true);
 
     CCAnimate *animN = CCAnimate::create(normal);

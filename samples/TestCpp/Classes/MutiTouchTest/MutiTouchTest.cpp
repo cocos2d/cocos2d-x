@@ -69,15 +69,14 @@ void MutiTouchTestLayer::registerWithTouchDispatcher(void)
     CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
-void MutiTouchTestLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void MutiTouchTestLayer::onTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator iter = pTouches->begin();
     for (; iter != pTouches->end(); iter++)
     {
         CCTouch* pTouch = (CCTouch*)(*iter);
         TouchPoint* pTouchPoint = TouchPoint::touchPointWithParent(this);
-        CCPoint location = pTouch->locationInView();
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = pTouch->getLocation();
 
         pTouchPoint->setTouchPos(location);
         pTouchPoint->setTouchColor(s_TouchColors[pTouch->getID()]);
@@ -89,20 +88,19 @@ void MutiTouchTestLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 
 }
 
-void MutiTouchTestLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void MutiTouchTestLayer::onTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator iter = pTouches->begin();
     for (; iter != pTouches->end(); iter++)
     {
         CCTouch* pTouch = (CCTouch*)(*iter);
         TouchPoint* pTP = (TouchPoint*)s_dic.objectForKey(pTouch->getID());
-        CCPoint location = pTouch->locationInView();
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = pTouch->getLocation();
         pTP->setTouchPos(location);
     }
 }
 
-void MutiTouchTestLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+void MutiTouchTestLayer::onTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator iter = pTouches->begin();
     for (; iter != pTouches->end(); iter++)
@@ -114,9 +112,9 @@ void MutiTouchTestLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     }
 }
 
-void MutiTouchTestLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
+void MutiTouchTestLayer::onTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
-    ccTouchesEnded(pTouches, pEvent);
+    onTouchesEnded(pTouches, pEvent);
 }
 
 void MutiTouchTestScene::runThisTest()

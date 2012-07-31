@@ -73,7 +73,7 @@ public:
     /** Override super methods */
     virtual void setPosition(const CCPoint& position);
     virtual void draw();
-    virtual void update(float delta);
+    virtual void onUpdate(float delta);
 
     /* Implement interfaces */
     virtual CCTexture2D* getTexture(void);

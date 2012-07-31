@@ -63,14 +63,14 @@ bool Bug914Layer::init()
     return false;
 }
 
-void Bug914Layer::ccTouchesMoved(CCSet *touches, CCEvent * event)
+void Bug914Layer::onTouchesMoved(CCSet *touches, CCEvent * event)
 {
     CCLog("Number of touches: %d", touches->count());
 }
 
-void Bug914Layer::ccTouchesBegan(CCSet *touches, CCEvent * event)
+void Bug914Layer::onTouchesBegan(CCSet *touches, CCEvent * event)
 {
-    ccTouchesMoved(touches, event);
+    onTouchesMoved(touches, event);
 }
 
 void Bug914Layer::restart(CCObject* sender)

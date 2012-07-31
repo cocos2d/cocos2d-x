@@ -544,7 +544,7 @@ bool CCParticleSystem::isFull()
 }
 
 // ParticleSystem - MainLoop
-void CCParticleSystem::update(float dt)
+void CCParticleSystem::onUpdate(float dt)
 {
     CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , "CCParticleSystem - update");
 
@@ -715,7 +715,7 @@ void CCParticleSystem::update(float dt)
 
 void CCParticleSystem::updateWithNoTime(void)
 {
-    this->update(0.0f);
+    this->onUpdate(0.0f);
 }
 
 void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition)

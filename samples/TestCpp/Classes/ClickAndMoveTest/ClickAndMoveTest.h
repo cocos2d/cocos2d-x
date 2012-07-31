@@ -13,7 +13,7 @@ class MainLayer : public CCLayer
 {
 public:
     MainLayer();
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
 };
 
 #endif

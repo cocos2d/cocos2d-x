@@ -105,7 +105,7 @@ void CCAction::step(float dt)
     CCLOG("[Action step]. override me");
 }
 
-void CCAction::update(float time)
+void CCAction::onUpdate(float time)
 {
     CC_UNUSED_PARAM(time);
     CCLOG("[Action update]. override me");

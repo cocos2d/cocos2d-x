@@ -14,8 +14,8 @@ public:
     void menuCallback(CCObject * pSender);
     void closeCallback(CCObject * pSender);
 
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 private:
     CCPoint m_tBeginPos;

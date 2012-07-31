@@ -356,14 +356,14 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                 bool bClaimed = false;
                 if (uIndex == CCTOUCHBEGAN)
                 {
-                    bClaimed = pHandler->getDelegate()->ccTouchBegan(pTouch, pEvent);
+                    bClaimed = pHandler->getDelegate()->onTouchBegan(pTouch, pEvent);
 
                     if (bClaimed)
                     {
                         pHandler->getClaimedTouches()->addObject(pTouch);
                     }
                 } else
-                if (pHandler->getClaimedTouches()->containsObject(pTouch))
+                if (pHandler->getClaimedTouches()->isContainObject(pTouch))
                 {
                     // moved ended cancelled
                     bClaimed = true;
@@ -371,14 +371,14 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                     switch (sHelper.m_type)
                     {
                     case CCTOUCHMOVED:
-                        pHandler->getDelegate()->ccTouchMoved(pTouch, pEvent);
+                        pHandler->getDelegate()->onTouchMoved(pTouch, pEvent);
                         break;
                     case CCTOUCHENDED:
-                        pHandler->getDelegate()->ccTouchEnded(pTouch, pEvent);
+                        pHandler->getDelegate()->onTouchEnded(pTouch, pEvent);
                         pHandler->getClaimedTouches()->removeObject(pTouch);
                         break;
                     case CCTOUCHCANCELLED:
-                        pHandler->getDelegate()->ccTouchCancelled(pTouch, pEvent);
+                        pHandler->getDelegate()->onTouchCancelled(pTouch, pEvent);
                         pHandler->getClaimedTouches()->removeObject(pTouch);
                         break;
                     }
@@ -416,16 +416,16 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
             switch (sHelper.m_type)
             {
             case CCTOUCHBEGAN:
-                pHandler->getDelegate()->ccTouchesBegan(pMutableTouches, pEvent);
+                pHandler->getDelegate()->onTouchesBegan(pMutableTouches, pEvent);
                 break;
             case CCTOUCHMOVED:
-                pHandler->getDelegate()->ccTouchesMoved(pMutableTouches, pEvent);
+                pHandler->getDelegate()->onTouchesMoved(pMutableTouches, pEvent);
                 break;
             case CCTOUCHENDED:
-                pHandler->getDelegate()->ccTouchesEnded(pMutableTouches, pEvent);
+                pHandler->getDelegate()->onTouchesEnded(pMutableTouches, pEvent);
                 break;
             case CCTOUCHCANCELLED:
-                pHandler->getDelegate()->ccTouchesCancelled(pMutableTouches, pEvent);
+                pHandler->getDelegate()->onTouchesCancelled(pMutableTouches, pEvent);
                 break;
             }
         }

@@ -15,10 +15,10 @@ public:
 
 public:
     virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(CCTouch *touch, CCEvent * pEvent);
-    virtual void ccTouchEnded(CCTouch *touch, CCEvent * pEvent);
-    virtual void ccTouchCancelled(CCTouch *touch, CCEvent * pEvent);
-    virtual void ccTouchMoved(CCTouch *touch, CCEvent * pEvent);
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent * pEvent);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent * pEvent);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent * pEvent);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent * pEvent);
 
     void allowTouches(float dt);
     void menuCallback(CCObject* pSender);

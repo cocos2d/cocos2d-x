@@ -414,7 +414,7 @@ public:
     //! should be overriden by subclasses
     virtual void postStep();
 
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
     virtual void updateWithNoTime(void);
 
 protected:

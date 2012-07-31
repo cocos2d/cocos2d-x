@@ -106,22 +106,20 @@ void BugsTestMainLayer::menuCallback(CCObject* pSender)
     }
 }
 
-void BugsTestMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void BugsTestMainLayer::onTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    m_tBeginPos = touch->locationInView();    
-    m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
+    m_tBeginPos = touch->getLocation();
 }
 
-void BugsTestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void BugsTestMainLayer::onTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    CCPoint touchLocation = touch->locationInView();    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - m_tBeginPos.y;
 
     CCPoint curPos  = m_pItmeMenu->getPosition();

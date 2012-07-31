@@ -39,10 +39,10 @@ class CC_DLL CCKeypadDelegate
 {
 public:
     // The back key clicked
-    virtual void keyBackClicked() {}
+    virtual void onKeyBackClicked() {}
 
     // The menu key clicked. only avialble on wophone & android
-    virtual void keyMenuClicked() {};
+    virtual void onKeyMenuClicked() {};
 };
 
 /**

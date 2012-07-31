@@ -1143,20 +1143,19 @@ void ParticleDemo::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
-bool ParticleDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool ParticleDemo::onTouchBegan(CCTouch* touch, CCEvent* event)
 {
     return true;
 }
 
-void ParticleDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void ParticleDemo::onTouchMoved(CCTouch* touch, CCEvent* event)
 {
-    return ccTouchEnded(touch, event);
+    return onTouchEnded(touch, event);
 }
 
-void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void ParticleDemo::onTouchEnded(CCTouch* touch, CCEvent* event)
 {
-    CCPoint location = touch->locationInView();
-    CCPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
+    CCPoint location = touch->getLocation();
 
     CCPoint pos = CCPointZero;
     if (m_background)
@@ -1166,11 +1165,11 @@ void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
 
     if (m_emitter != NULL)
     {
-        m_emitter->setPosition( ccpSub(convertedLocation, pos) );    
+        m_emitter->setPosition( ccpSub(location, pos) );    
     }
 }
 
-void ParticleDemo::update(float dt)
+void ParticleDemo::onUpdate(float dt)
 {
     if (m_emitter)
     {
@@ -1409,7 +1408,7 @@ class RainbowEffect : public CCParticleSystemQuad
 public:
     bool init();
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
 };
 
 bool RainbowEffect::init()
@@ -1483,10 +1482,10 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
     return false;
 }
 
-void RainbowEffect::update(float dt)
+void RainbowEffect::onUpdate(float dt)
 {
     m_fEmitCounter = 0;
-    CCParticleSystemQuad::update(dt);
+    CCParticleSystemQuad::onUpdate(dt);
 }
 
 
@@ -1553,7 +1552,7 @@ std::string MultipleParticleSystems::subtitle()
     return "v1.1 test: FPS should be lower than next test";
 }
 
-void MultipleParticleSystems::update(float dt)
+void MultipleParticleSystems::onUpdate(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1604,7 +1603,7 @@ void MultipleParticleSystemsBatched::onEnter()
     m_emitter = NULL;
 }
 
-void MultipleParticleSystemsBatched::update(float dt)
+void MultipleParticleSystemsBatched::onUpdate(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1693,7 +1692,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
     }
 }
 
-void AddAndDeleteParticleSystems::update(float dt)
+void AddAndDeleteParticleSystems::onUpdate(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 
@@ -1829,7 +1828,7 @@ void ReorderParticleSystems::reorderSystem(float time)
 }
 
 
-void ReorderParticleSystems::update(float dt)
+void ReorderParticleSystems::onUpdate(float dt)
 {
     CCLabelAtlas *atlas = (CCLabelAtlas*) getChildByTag(kTagParticleCount);
 

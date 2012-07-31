@@ -24,9 +24,9 @@ public:
     virtual void onEnter();
     virtual void onExit();
     bool containsTouchLocation(CCTouch* touch);
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+    virtual bool onTouchBegan(CCTouch* touch, CCEvent* event);
+    virtual void onTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual void onTouchEnded(CCTouch* touch, CCEvent* event);
     virtual CCObject* copyWithZone(CCZone *pZone);
 
     virtual void touchDelegateRetain();

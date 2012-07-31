@@ -117,9 +117,9 @@ protected:
 
     virtual CCPoint getTouchLocationInControl(CCTouch* touch);
 
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool onTouchBegan(CCTouch* touch, CCEvent* pEvent);
+    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 
 
 

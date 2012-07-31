@@ -61,7 +61,7 @@ bool CCControlHuePicker::initWithTargetAndPos(CCNode* target, CCPoint pos)
         m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, ccp(0.0f, 0.0f));
         m_slider=CCControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, ccp(0.5f, 0.5f));
         
-        m_slider->setPosition(ccp(pos.x, pos.y + m_background->boundingBox().size.height * 0.5f));
+        m_slider->setPosition(ccp(pos.x, pos.y + m_background->getBoundingBox().size.height * 0.5f));
         m_startPos=pos;
 
         // Sets the default value
@@ -85,7 +85,7 @@ void CCControlHuePicker::setHuePercentage(float hueValueInPercent)
     m_hue=m_huePercentage*360.0f;
 
     // Clamp the position of the icon within the circle
-    CCRect backgroundBox=m_background->boundingBox();
+    CCRect backgroundBox=m_background->getBoundingBox();
 
     // Get the center point of the background image
     float centerX           = m_startPos.x + backgroundBox.size.width * 0.5f;
@@ -109,7 +109,7 @@ void CCControlHuePicker::updateSliderPosition(CCPoint location)
 {
 
     // Clamp the position of the icon within the circle
-    CCRect backgroundBox=m_background->boundingBox();
+    CCRect backgroundBox=m_background->getBoundingBox();
     
     // Get the center point of the background image
     float centerX           = m_startPos.x + backgroundBox.size.width * 0.5f;
@@ -133,7 +133,7 @@ void CCControlHuePicker::updateSliderPosition(CCPoint location)
 bool CCControlHuePicker::checkSliderPosition(CCPoint location)
 {
     // check that the touch location is within the bounding rectangle before sending updates
-    if (CCRect::CCRectContainsPoint(m_background->boundingBox(), location))
+    if (CCRect::CCRectContainsPoint(m_background->getBoundingBox(), location))
     {        
         updateSliderPosition(location);
         return true;
@@ -141,7 +141,7 @@ bool CCControlHuePicker::checkSliderPosition(CCPoint location)
     return false;
 }
 
-bool CCControlHuePicker::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool CCControlHuePicker::onTouchBegan(CCTouch* touch, CCEvent* event)
 {
     // Get the touch location
     CCPoint touchLocation=getTouchLocation(touch);
@@ -151,7 +151,7 @@ bool CCControlHuePicker::ccTouchBegan(CCTouch* touch, CCEvent* event)
 }
 
 
-void CCControlHuePicker::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void CCControlHuePicker::onTouchMoved(CCTouch* touch, CCEvent* event)
 {
     // Get the touch location
     CCPoint touchLocation=getTouchLocation(touch);

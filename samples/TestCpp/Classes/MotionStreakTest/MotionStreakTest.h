@@ -44,7 +44,7 @@ protected:
 
 public:
     virtual void onEnter();
-    void ccTouchesMoved(CCSet* touches, CCEvent* event);
+    void onTouchesMoved(CCSet* touches, CCEvent* event);
     virtual std::string title();
 };
 
@@ -54,7 +54,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual void onEnter();
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
 private:
     CCPoint m_center;
     float m_fRadius;

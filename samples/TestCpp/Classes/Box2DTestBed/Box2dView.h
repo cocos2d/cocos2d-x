@@ -20,8 +20,8 @@ public:
 
     virtual void registerWithTouchDispatcher();
 
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual bool onTouchBegan(CCTouch* touch, CCEvent* event);
+    virtual void onTouchMoved(CCTouch* touch, CCEvent* event);
 
 public:
     static MenuLayer* menuWithEntryID(int entryId);
@@ -44,9 +44,9 @@ public:
     void draw();
 
     virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+    virtual bool onTouchBegan(CCTouch* touch, CCEvent* event);
+    virtual void onTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual void onTouchEnded(CCTouch* touch, CCEvent* event);
     //virtual void accelerometer(UIAccelerometer* accelerometer, CCAcceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);

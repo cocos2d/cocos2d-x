@@ -103,7 +103,7 @@ void CCParallaxNode::removeChild(CCNode* child, bool cleanup)
     for( unsigned int i=0;i < m_pParallaxArray->num;i++)
     {
         CCPointObject *point = (CCPointObject*)m_pParallaxArray->arr[i];
-        if( point->getChild()->isEqual(child)) 
+        if( point->getChild()->isEqualTo(child)) 
         {
             ccArrayRemoveObjectAtIndex(m_pParallaxArray, i, true);
             break;

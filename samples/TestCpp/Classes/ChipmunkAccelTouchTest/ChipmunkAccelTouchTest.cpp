@@ -148,7 +148,7 @@ void ChipmunkAccelTouchTestLayer::initPhysics()
     }
 }
 
-void ChipmunkAccelTouchTestLayer::update(float delta)
+void ChipmunkAccelTouchTestLayer::onUpdate(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;
@@ -226,7 +226,7 @@ void ChipmunkAccelTouchTestLayer::onEnter()
     CCLayer::onEnter();
 }
 
-void ChipmunkAccelTouchTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void ChipmunkAccelTouchTestLayer::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     //Add a new body/atlas sprite at the touched location
     CCSetIterator it;
@@ -239,9 +239,7 @@ void ChipmunkAccelTouchTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
 
         addNewSpriteAtPosition( location );
     }

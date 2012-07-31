@@ -182,7 +182,7 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
     }
 
     // assume keyboard at the bottom of screen, calculate the vertical adjustment.
-    float adjustVert = CCRect::CCRectGetMaxY(info.end) - CCRect::CCRectGetMinY(rectTracked);
+    float adjustVert = info.end.getMaxY() - rectTracked.getMinY();
     CCLOG("TextInputTest:needAdjustVerticalPosition(%f)", adjustVert);
 
     // move all the children node of KeyboardNotificationLayer
@@ -201,23 +201,21 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
 
 // CCLayer function
 
-bool KeyboardNotificationLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+bool KeyboardNotificationLayer::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCLOG("++++++++++++++++++++++++++++++++++++++++++++");
-    m_beginPos = pTouch->locationInView();    
-    m_beginPos = CCDirector::sharedDirector()->convertToGL(m_beginPos);
+    m_beginPos = pTouch->getLocation();    
     return true;
 }
 
-void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+void KeyboardNotificationLayer::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (! m_pTrackNode)
     {
         return;
     }
     
-    CCPoint endPos = pTouch->locationInView();    
-    endPos = CCDirector::sharedDirector()->convertToGL(endPos);
+    CCPoint endPos = pTouch->getLocation();    
 
     float delta = 5.0f;
     if (::abs(endPos.x - m_beginPos.x) > delta

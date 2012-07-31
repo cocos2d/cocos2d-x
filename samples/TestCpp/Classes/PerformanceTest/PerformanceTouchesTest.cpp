@@ -57,7 +57,7 @@ void TouchesMainScene::onEnter()
     numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;    
 }
 
-void TouchesMainScene::update(float dt)
+void TouchesMainScene::onUpdate(float dt)
 {
     elapsedTime += dt;
 
@@ -103,23 +103,23 @@ void TouchesPerformTest1::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
-bool TouchesPerformTest1::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool TouchesPerformTest1::onTouchBegan(CCTouch* touch, CCEvent* event)
 {
     numberOfTouchesB++;
     return true;
 }
 
-void TouchesPerformTest1::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void TouchesPerformTest1::onTouchMoved(CCTouch* touch, CCEvent* event)
 {
     numberOfTouchesM++;
 }
 
-void TouchesPerformTest1::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void TouchesPerformTest1::onTouchEnded(CCTouch* touch, CCEvent* event)
 {
     numberOfTouchesE++;
 }
 
-void TouchesPerformTest1::ccTouchCancelled(CCTouch* touch, CCEvent* event)
+void TouchesPerformTest1::onTouchCancelled(CCTouch* touch, CCEvent* event)
 {
     numberOfTouchesC++;
 }
@@ -146,21 +146,21 @@ void TouchesPerformTest2::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
-void TouchesPerformTest2::ccTouchesBegan(CCSet* touches, CCEvent* event)
+void TouchesPerformTest2::onTouchesBegan(CCSet* touches, CCEvent* event)
 {
     numberOfTouchesB += touches->count();
 }
 
-void TouchesPerformTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
+void TouchesPerformTest2::onTouchesMoved(CCSet* touches, CCEvent* event)
 {
     numberOfTouchesM += touches->count();
 }
-void TouchesPerformTest2::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void TouchesPerformTest2::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     numberOfTouchesE += touches->count();
 }
 
-void TouchesPerformTest2::ccTouchesCancelled(CCSet* touches, CCEvent* event)
+void TouchesPerformTest2::onTouchesCancelled(CCSet* touches, CCEvent* event)
 {
     numberOfTouchesC += touches->count();
 }

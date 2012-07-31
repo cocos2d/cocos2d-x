@@ -451,7 +451,7 @@ public:
 
      @since v0.8.2
      */
-    CCRect boundingBox(void);
+    CCRect getBoundingBox(void);
 
     // actions
 
@@ -486,7 +486,7 @@ public:
      *    If you are running 1 Sequence of 7 actions, it will return 1.
      *    If you are running 7 Sequences of 2 actions, it will return 7.
      */
-    unsigned int numberOfRunningActions(void);
+    unsigned int getNumberOfRunningActions(void);
 
 
     // timers

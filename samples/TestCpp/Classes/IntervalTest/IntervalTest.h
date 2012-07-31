@@ -24,7 +24,7 @@ public:
     void step2(float dt);
     void step3(float dt);
     void step4(float dt);
-    void update(float dt);
+    void onUpdate(float dt);
 
     //CREATE_NODE(IntervalLayer);
 };

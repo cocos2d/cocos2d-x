@@ -248,7 +248,7 @@ void CCParticleBatchNode::reorderChild(CCNode * child, int zOrder)
 {
     CCAssert( child != NULL, "Child must be non-NULL");
     CCAssert( dynamic_cast<CCParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
-    CCAssert( m_pChildren->containsObject(child), "Child doesn't belong to batch" );
+    CCAssert( m_pChildren->isContainObject(child), "Child doesn't belong to batch" );
 
     CCParticleSystem* pChild = (CCParticleSystem*)(child);
 
@@ -377,7 +377,7 @@ void  CCParticleBatchNode::removeChild(CCNode* child, bool cleanup)
     }
     
     CCAssert( dynamic_cast<CCParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
-    CCAssert(m_pChildren->containsObject(child), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
+    CCAssert(m_pChildren->isContainObject(child), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
     CCParticleSystem* pChild = (CCParticleSystem*)child;
     CCNode::removeChild(pChild, cleanup);

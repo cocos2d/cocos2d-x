@@ -131,7 +131,7 @@ public:
     // super virtual functions
     virtual CCCardinalSplineTo* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse();
     
     virtual void updatePosition(CCPoint &newPos);

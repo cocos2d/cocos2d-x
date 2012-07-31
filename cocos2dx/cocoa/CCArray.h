@@ -199,9 +199,9 @@ public:
     /** Returns a random element */
     CCObject* randomObject();
     /** Returns a Boolean value that indicates whether object is present in array. */
-    bool containsObject(CCObject* object);
+    bool isContainObject(CCObject* object);
     /** @since 1.1 */
-    bool isEqualToArray(CCArray* pOtherArray);
+    bool isEqualTo(CCArray* pOtherArray);
     // Adding Objects
 
     /** Add a certain object */

@@ -168,7 +168,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void update(float dt);
+    void onUpdate(float dt);
     void tick(float dt);
     void stopSelectors(float dt);
 };
@@ -180,7 +180,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void update(float dt);
+    void onUpdate(float dt);
     void schedUpdate(float dt);
     void stopUpdate(float dt);
 };
@@ -214,7 +214,7 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void update(float dt);
+    void onUpdate(float dt);
 };
 
 class SchedulerTimeScale : public SchedulerTestLayer

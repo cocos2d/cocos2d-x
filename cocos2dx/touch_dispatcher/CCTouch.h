@@ -34,16 +34,27 @@ NS_CC_BEGIN
  * @addtogroup input
  * @{
  */
-
 class CC_DLL CCTouch : public CCObject
-{
+{    
 public:
     CCTouch() 
         : m_nId(0)
     {}
 
-    CCPoint locationInView() { return m_point; }
-    CCPoint previousLocationInView() { return m_prevPoint; }
+    ///@ return the current touch location in screen coordinates
+    CCPoint getLocationInView() const;
+    
+    ///@ return the current previous location in screen coordinates
+    CCPoint getPreviousLocationInView() const;
+    
+    ///@ return the current touch location in OpenGL coordinates
+    CCPoint getLocation() const;
+    
+    ///@ return the previous touch location in OpenGL coordinates
+    CCPoint getPreviousLocation() const;
+    
+    ///@ returns the delta position between the current location and the previous location in OpenGL coordinates
+    CCPoint getDelta() const;
 
     void setTouchInfo(int id, float x, float y)
     {
@@ -57,7 +68,7 @@ public:
     {
         return m_nId;
     }
-
+    
 private:
     int m_nId;
     CCPoint m_point;

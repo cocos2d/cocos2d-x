@@ -101,7 +101,7 @@ CCObject* CCShakyTiles3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCShakyTiles3D::update(float time)
+void CCShakyTiles3D::onUpdate(float time)
 {
     CC_UNUSED_PARAM(time);
     int i, j;
@@ -200,7 +200,7 @@ CCObject* CCShatteredTiles3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCShatteredTiles3D::update(float time)
+void CCShatteredTiles3D::onUpdate(float time)
 {
     CC_UNUSED_PARAM(time);
     int i, j;
@@ -393,7 +393,7 @@ void CCShuffleTiles::startWithTarget(CCNode *pTarget)
     }
 }
 
-void CCShuffleTiles::update(float time)
+void CCShuffleTiles::onUpdate(float time)
 {
     int i, j;
 
@@ -479,7 +479,7 @@ void CCFadeOutTRTiles::transformTile(const ccGridSize& pos, float distance)
     setTile(pos, coords);
 }
 
-void CCFadeOutTRTiles::update(float time)
+void CCFadeOutTRTiles::onUpdate(float time)
 {
     int i, j;
 
@@ -757,7 +757,7 @@ void CCTurnOffTiles::startWithTarget(CCNode *pTarget)
     shuffle(m_pTilesOrder, m_nTilesCount);
 }
 
-void CCTurnOffTiles::update(float time)
+void CCTurnOffTiles::onUpdate(float time)
 {
     unsigned int i, l, t;
 
@@ -841,7 +841,7 @@ CCObject* CCWavesTiles3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCWavesTiles3D::update(float time)
+void CCWavesTiles3D::onUpdate(float time)
 {
     int i, j;
 
@@ -923,7 +923,7 @@ CCObject* CCJumpTiles3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCJumpTiles3D::update(float time)
+void CCJumpTiles3D::onUpdate(float time)
 {
     int i, j;
 
@@ -1017,7 +1017,7 @@ void CCSplitRows::startWithTarget(CCNode *pTarget)
     m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 }
 
-void CCSplitRows::update(float time)
+void CCSplitRows::onUpdate(float time)
 {
     int j;
 
@@ -1099,7 +1099,7 @@ void CCSplitCols::startWithTarget(CCNode *pTarget)
     m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 }
 
-void CCSplitCols::update(float time)
+void CCSplitCols::onUpdate(float time)
 {
     int i;
 

@@ -512,7 +512,7 @@ void CCControlButton::needsLayout()
     m_backgroundSprite->setPosition(ccp (getContentSize().width / 2, getContentSize().height / 2));
 
     // Get the title label size
-    CCSize titleLabelSize =m_titleLabel->boundingBox().size;
+    CCSize titleLabelSize =m_titleLabel->getBoundingBox().size;
     
     // Adjust the background image if necessary
     if (m_adjustBackgroundImage)
@@ -538,7 +538,7 @@ void CCControlButton::needsLayout()
     
     // Set the content size
     
-    CCRect maxRect = CCControlUtils::CCRectUnion(m_titleLabel->boundingBox(), m_backgroundSprite->boundingBox());
+    CCRect maxRect = CCControlUtils::CCRectUnion(m_titleLabel->getBoundingBox(), m_backgroundSprite->getBoundingBox());
     setContentSize(CCSizeMake(maxRect.size.width, maxRect.size.height));        
     
     m_titleLabel->setPosition(ccp(getContentSize().width/2, getContentSize().height/2));
@@ -551,7 +551,7 @@ void CCControlButton::needsLayout()
 
 
 
-bool CCControlButton::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+bool CCControlButton::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (!isTouchInside(pTouch) || !isEnabled())
     {
@@ -565,7 +565,7 @@ bool CCControlButton::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     return true;
 }
 
-void CCControlButton::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+void CCControlButton::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {    
     if (!m_bEnabled || !pushed || m_bSelected)
     {
@@ -599,7 +599,7 @@ void CCControlButton::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         sendActionsForControlEvents(CCControlEventTouchDragOutside);        
     }
 }
-void CCControlButton::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+void CCControlButton::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
     m_nState = CCControlStateNormal;
     pushed = false;
@@ -643,7 +643,7 @@ GLubyte CCControlButton::getOpacity()
     return m_cOpacity;
 }
 
-void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+void CCControlButton::onTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     m_nState = CCControlStateNormal;
     pushed = false;

@@ -225,9 +225,9 @@ public:
     virtual std::string subtitle();
     void stringChanged(CCObject *sender);
     void alignmentChanged(CCObject *sender);
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 public:
     CCLabelBMFont *m_pLabelShouldRetain;

@@ -373,14 +373,13 @@ void CCControlSwitch::setEnabled(bool enabled)
 
 CCPoint CCControlSwitch::locationFromTouch(CCTouch* pTouch)
 {
-    CCPoint touchLocation   = pTouch->locationInView();                      // Get the touch position
-    touchLocation           = CCDirector::sharedDirector()->convertToGL(touchLocation);  // Convert the position to GL space
-    touchLocation           = this->convertToNodeSpace(touchLocation);                  // Convert to the node space of this class
+    CCPoint touchLocation   = pTouch->getLocation();                   // Get the touch position
+    touchLocation           = this->convertToNodeSpace(touchLocation); // Convert to the node space of this class
     
     return touchLocation;
 }
 
-bool CCControlSwitch::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+bool CCControlSwitch::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (!this->isTouchInside(pTouch)
         || !this->isEnabled())
@@ -400,7 +399,7 @@ bool CCControlSwitch::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     return true;
 }
 
-void CCControlSwitch::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+void CCControlSwitch::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint location    = this->locationFromTouch(pTouch);
     location            = ccp (location.x - m_fInitialTouchXPosition, 0);
@@ -410,7 +409,7 @@ void CCControlSwitch::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     m_pSwitchSprite->setSliderXPosition(location.x);
 }
 
-void CCControlSwitch::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+void CCControlSwitch::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint location   = this->locationFromTouch(pTouch);
     
@@ -426,7 +425,7 @@ void CCControlSwitch::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     }
 }
 
-void CCControlSwitch::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+void CCControlSwitch::onTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint location   = this->locationFromTouch(pTouch);
     

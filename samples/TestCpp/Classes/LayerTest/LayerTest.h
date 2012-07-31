@@ -31,9 +31,9 @@ public:
     void registerWithTouchDispatcher();
     void updateSize(CCPoint &touchLocation);
 
-    virtual bool ccTouchBegan(CCTouch* touche, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touche, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touche, CCEvent* event);
+    virtual bool onTouchBegan(CCTouch* touche, CCEvent* event);
+    virtual void onTouchMoved(CCTouch* touche, CCEvent* event);
+    virtual void onTouchEnded(CCTouch* touche, CCEvent* event);
 };
 
 class LayerTest2 : public LayerTest
@@ -56,7 +56,7 @@ class LayerGradient : public LayerTest
 {
 public:
     LayerGradient();
-    virtual void ccTouchesMoved(CCSet * touches, CCEvent *event);
+    virtual void onTouchesMoved(CCSet * touches, CCEvent *event);
     virtual std::string title();
     virtual std::string subtitle();
     void toggleItem(cocos2d::CCObject *sender);
