@@ -101,7 +101,7 @@ cd ..\..\..
 IF "%_PROJECTNAME%"=="TestCpp" set /a testresult1=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
 IF "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloLua&& goto project
 IF "%_PROJECTNAME%"=="HelloLua" set /a testresult3=(result8+result10+result11+result12+result13)
-set /a testresult=(testresult1+result2+result3)
+set /a testresult=(testresult1+testresult2+testresult3)
 IF %testresult% NEQ 0 goto error
 
 goto success
