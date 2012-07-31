@@ -26,8 +26,9 @@ THE SOFTWARE.
 #ifndef _SIMPLE_AUDIO_ENGINE_H_
 #define _SIMPLE_AUDIO_ENGINE_H_
 
-#include "Export.h"
 #include <stddef.h>
+#include "Export.h"
+#include "spidermonkey_specifics.h"
 
 namespace CocosDenshion {
 
@@ -35,11 +36,15 @@ namespace CocosDenshion {
 @class          SimpleAudioEngine
 @brief          offer a VERY simple interface to play background music & sound effect
 */
-class EXPORT_DLL SimpleAudioEngine
+class EXPORT_DLL SimpleAudioEngine : public TypeInfo
 {
 public:
     SimpleAudioEngine();
     ~SimpleAudioEngine();
+
+    virtual uint32_t getClassTypeInfo() {
+        return reinterpret_cast<int>(typeid(CocosDenshion::SimpleAudioEngine).name());
+    }
 
     /**
     @brief Get the shared Engine object,it will new one when first time be called
