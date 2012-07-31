@@ -325,7 +325,7 @@ void LayerGradient::toggleItem(CCObject *sender)
     gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
 }
 
-void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)
+void LayerGradient::onTouchesMoved(CCSet * touches, CCEvent *event)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

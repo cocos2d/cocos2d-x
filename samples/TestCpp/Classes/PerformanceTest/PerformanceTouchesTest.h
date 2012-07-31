@@ -55,10 +55,10 @@ public:
     virtual std::string title();
     virtual void registerWithTouchDispatcher();
 
-    virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesCancelled(CCSet* touches, CCEvent* event);
+    virtual void onTouchesBegan(CCSet* touches, CCEvent* event);
+    virtual void onTouchesMoved(CCSet* touches, CCEvent* event);
+    virtual void onTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual void onTouchesCancelled(CCSet* touches, CCEvent* event);
 };
 
 void runTouchesTest();

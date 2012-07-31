@@ -328,7 +328,7 @@ void CCLayer::onTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
     CC_UNUSED_PARAM(pEvent);
 }    
 
-void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void CCLayer::onTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     if (m_pScriptHandlerEntry)
     {
@@ -339,7 +339,7 @@ void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void CCLayer::onTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     if (m_pScriptHandlerEntry)
     {
@@ -350,7 +350,7 @@ void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+void CCLayer::onTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
     if (m_pScriptHandlerEntry)
     {
@@ -361,7 +361,7 @@ void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
+void CCLayer::onTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
     if (m_pScriptHandlerEntry)
     {

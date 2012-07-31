@@ -75,10 +75,10 @@ public:
     virtual void onTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
     // default implements are used to call script callback if exist
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    virtual void onTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
     
     virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
 

@@ -252,7 +252,7 @@ void Box2DTestLayer::onUpdate(float dt)
     world->Step(dt, velocityIterations, positionIterations);
 }
 
-void Box2DTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void Box2DTestLayer::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     //Add a new body/atlas sprite at the touched location
     CCSetIterator it;

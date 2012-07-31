@@ -9,8 +9,8 @@ public:
     static CCScene* scene();
     virtual bool init();
 
-    void ccTouchesMoved(CCSet *touches, CCEvent * event);
-    void ccTouchesBegan(CCSet *touches, CCEvent * event);
+    void onTouchesMoved(CCSet *touches, CCEvent * event);
+    void onTouchesBegan(CCSet *touches, CCEvent * event);
     void restart(CCObject* sender);
 
     LAYER_CREATE_FUNC(Bug914Layer);

@@ -207,7 +207,7 @@ RenderTextureSave::~RenderTextureSave()
     CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 
-void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
+void RenderTextureSave::onTouchesMoved(CCSet* touches, CCEvent* event)
 {
     CCTouch *touch = (CCTouch *)touches->anyObject();
     
@@ -393,7 +393,7 @@ string RenderTextureZbuffer::subtitle()
     return "Touch screen. It should be green";
 }
 
-void RenderTextureZbuffer::ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *event)
+void RenderTextureZbuffer::onTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *event)
 {
     CCSetIterator iter;
     CCTouch *touch;
@@ -414,7 +414,7 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEv
     }
 }
 
-void RenderTextureZbuffer::ccTouchesMoved(CCSet* touches, CCEvent* event)
+void RenderTextureZbuffer::onTouchesMoved(CCSet* touches, CCEvent* event)
 {
     CCSetIterator iter;
     CCTouch *touch;
@@ -435,7 +435,7 @@ void RenderTextureZbuffer::ccTouchesMoved(CCSet* touches, CCEvent* event)
     }
 }
 
-void RenderTextureZbuffer::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void RenderTextureZbuffer::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     this->renderScreenShot();
 }

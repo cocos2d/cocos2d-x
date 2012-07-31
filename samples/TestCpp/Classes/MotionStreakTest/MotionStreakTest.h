@@ -44,7 +44,7 @@ protected:
 
 public:
     virtual void onEnter();
-    void ccTouchesMoved(CCSet* touches, CCEvent* event);
+    void onTouchesMoved(CCSet* touches, CCEvent* event);
     virtual std::string title();
 };
 

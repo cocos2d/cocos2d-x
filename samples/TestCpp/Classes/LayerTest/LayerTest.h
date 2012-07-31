@@ -56,7 +56,7 @@ class LayerGradient : public LayerTest
 {
 public:
     LayerGradient();
-    virtual void ccTouchesMoved(CCSet * touches, CCEvent *event);
+    virtual void onTouchesMoved(CCSet * touches, CCEvent *event);
     virtual std::string title();
     virtual std::string subtitle();
     void toggleItem(cocos2d::CCObject *sender);

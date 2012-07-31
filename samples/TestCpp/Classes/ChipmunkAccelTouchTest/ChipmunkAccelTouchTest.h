@@ -20,7 +20,7 @@ public:
 
     void addNewSpriteAtPosition(CCPoint p);
     void onUpdate(float dt);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual void onTouchesEnded(CCSet* touches, CCEvent* event);
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 
 private:

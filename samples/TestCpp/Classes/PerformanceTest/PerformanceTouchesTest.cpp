@@ -146,21 +146,21 @@ void TouchesPerformTest2::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
-void TouchesPerformTest2::ccTouchesBegan(CCSet* touches, CCEvent* event)
+void TouchesPerformTest2::onTouchesBegan(CCSet* touches, CCEvent* event)
 {
     numberOfTouchesB += touches->count();
 }
 
-void TouchesPerformTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
+void TouchesPerformTest2::onTouchesMoved(CCSet* touches, CCEvent* event)
 {
     numberOfTouchesM += touches->count();
 }
-void TouchesPerformTest2::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void TouchesPerformTest2::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     numberOfTouchesE += touches->count();
 }
 
-void TouchesPerformTest2::ccTouchesCancelled(CCSet* touches, CCEvent* event)
+void TouchesPerformTest2::onTouchesCancelled(CCSet* touches, CCEvent* event)
 {
     numberOfTouchesC += touches->count();
 }

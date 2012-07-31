@@ -186,7 +186,7 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
     
 }
 
-void CocosDenshionTest::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void CocosDenshionTest::onTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
@@ -194,7 +194,7 @@ void CocosDenshionTest::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     m_tBeginPos = touch->getLocation();    
 }
 
-void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void CocosDenshionTest::onTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);

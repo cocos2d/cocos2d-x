@@ -106,7 +106,7 @@ void BugsTestMainLayer::menuCallback(CCObject* pSender)
     }
 }
 
-void BugsTestMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void BugsTestMainLayer::onTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
@@ -114,7 +114,7 @@ void BugsTestMainLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     m_tBeginPos = touch->getLocation();
 }
 
-void BugsTestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void BugsTestMainLayer::onTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);

@@ -226,7 +226,7 @@ void ChipmunkAccelTouchTestLayer::onEnter()
     CCLayer::onEnter();
 }
 
-void ChipmunkAccelTouchTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void ChipmunkAccelTouchTestLayer::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     //Add a new body/atlas sprite at the touched location
     CCSetIterator it;

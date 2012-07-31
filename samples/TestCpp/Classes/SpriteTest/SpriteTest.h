@@ -30,7 +30,7 @@ public:
     virtual std::string title();
 
     void addNewSpriteWithCoords(CCPoint p);
-    void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    void onTouchesEnded(CCSet* touches, CCEvent* event);
 };
 
 class SpriteBatchNode1: public SpriteTestDemo
@@ -38,7 +38,7 @@ class SpriteBatchNode1: public SpriteTestDemo
 public:
     SpriteBatchNode1();
     void addNewSpriteWithCoords(CCPoint p);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual void onTouchesEnded(CCSet* touches, CCEvent* event);
     virtual std::string title();
 };
 
@@ -204,7 +204,7 @@ public:
     SpriteNewTexture();
     virtual ~SpriteNewTexture();
     void addNewSprite();
-    void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    void onTouchesEnded(CCSet* touches, CCEvent* event);
     virtual std::string title();
 };
 
@@ -217,7 +217,7 @@ public:
     SpriteBatchNodeNewTexture();
     virtual ~SpriteBatchNodeNewTexture();
     void addNewSprite();
-    void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    void onTouchesEnded(CCSet* touches, CCEvent* event);
     virtual std::string title();
 };
 

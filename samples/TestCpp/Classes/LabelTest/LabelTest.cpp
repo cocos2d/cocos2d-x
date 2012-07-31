@@ -1287,10 +1287,10 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+void BitmapFontMultiLineAlignment::onTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
 {
     CCTouch *touch = (CCTouch *)pTouches->anyObject();
-    CCPoint location = touch->getLocation();
+    CCPoint location = touch->getLocationInView();
 
     if (CCRect::CCRectContainsPoint(this->m_pArrowsShouldRetain->getBoundingBox(), location))
     {
@@ -1299,7 +1299,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, coco
     }
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+void BitmapFontMultiLineAlignment::onTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
 {
     m_drag = false;
     this->snapArrowsToEdge();
@@ -1307,7 +1307,7 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::CCSet *pTouches, coco
     this->m_pArrowsBarShouldRetain->setVisible(false);
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+void BitmapFontMultiLineAlignment::onTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
 {
     if (! m_drag)
     {
@@ -1315,7 +1315,7 @@ void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, coco
     }
 
     CCTouch *touch = (CCTouch *)pTouches->anyObject();
-    CCPoint location = touch->getLocation();
+    CCPoint location = touch->getLocationInView();
 
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 

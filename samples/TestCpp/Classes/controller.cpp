@@ -192,7 +192,7 @@ void TestController::closeCallback(CCObject * pSender)
 #endif
 }
 
-void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void TestController::onTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
@@ -200,7 +200,7 @@ void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     m_tBeginPos = touch->getLocation();    
 }
 
-void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void TestController::onTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);

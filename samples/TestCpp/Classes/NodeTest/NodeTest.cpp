@@ -795,7 +795,7 @@ ConvertToNode::ConvertToNode()
     }
 }
 
-void ConvertToNode::ccTouchesEnded(CCSet* touches, CCEvent *event)
+void ConvertToNode::onTouchesEnded(CCSet* touches, CCEvent *event)
 {
     for( CCSetIterator it = touches->begin(); it != touches->end(); ++it)
     {

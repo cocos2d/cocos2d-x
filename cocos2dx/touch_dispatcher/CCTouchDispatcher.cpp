@@ -416,16 +416,16 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
             switch (sHelper.m_type)
             {
             case CCTOUCHBEGAN:
-                pHandler->getDelegate()->ccTouchesBegan(pMutableTouches, pEvent);
+                pHandler->getDelegate()->onTouchesBegan(pMutableTouches, pEvent);
                 break;
             case CCTOUCHMOVED:
-                pHandler->getDelegate()->ccTouchesMoved(pMutableTouches, pEvent);
+                pHandler->getDelegate()->onTouchesMoved(pMutableTouches, pEvent);
                 break;
             case CCTOUCHENDED:
-                pHandler->getDelegate()->ccTouchesEnded(pMutableTouches, pEvent);
+                pHandler->getDelegate()->onTouchesEnded(pMutableTouches, pEvent);
                 break;
             case CCTOUCHCANCELLED:
-                pHandler->getDelegate()->ccTouchesCancelled(pMutableTouches, pEvent);
+                pHandler->getDelegate()->onTouchesCancelled(pMutableTouches, pEvent);
                 break;
             }
         }

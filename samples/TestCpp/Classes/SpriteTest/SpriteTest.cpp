@@ -267,7 +267,7 @@ void Sprite1::addNewSpriteWithCoords(CCPoint p)
     sprite->runAction( CCRepeatForever::create(seq) );
 }
 
-void Sprite1::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void Sprite1::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     CCSetIterator it;
     CCTouch* touch;
@@ -341,7 +341,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(CCPoint p)
     sprite->runAction( CCRepeatForever::create(seq));
 }
 
-void SpriteBatchNode1::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void SpriteBatchNode1::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     CCSetIterator it;
     CCTouch* touch;
@@ -1486,7 +1486,7 @@ void SpriteNewTexture::addNewSprite()
     sprite->runAction( CCRepeatForever::create(seq) );
 }
 
-void SpriteNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void SpriteNewTexture::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
 
     CCNode *node = getChildByTag( kTagSpriteBatchNode );
@@ -1592,7 +1592,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     sprite->runAction( CCRepeatForever::create(seq) );
 }
 
-void SpriteBatchNodeNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void SpriteBatchNodeNewTexture::onTouchesEnded(CCSet* touches, CCEvent* event)
 {
     CCSpriteBatchNode* batch = (CCSpriteBatchNode*) getChildByTag( kTagSpriteBatchNode );
     
