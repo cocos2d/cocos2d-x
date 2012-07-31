@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -96,19 +96,19 @@
     <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCControl.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCControlButton.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCControlColourPicker.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCControlHuePicker.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCControlSlider.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCControlSwitch.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCControlUtils.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCInvocation.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCMenuPassive.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCScale9Sprite.cpp" />
-    <ClCompile Include="..\UI\CCControlExtension\CCSpacer.cpp" />
-    <ClCompile Include="..\UI\CCScrollView\CCScrollView.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCMenuPassive.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCSpacer.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
@@ -132,20 +132,20 @@
     <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h" />
     <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
     <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControl.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControlButton.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControlColourPicker.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControlExtensions.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControlHuePicker.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControlSlider.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControlSwitch.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCControlUtils.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCInvocation.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCMenuPassive.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCScale9Sprite.h" />
-    <ClInclude Include="..\UI\CCControlExtension\CCSpacer.h" />
-    <ClInclude Include="..\UI\CCScrollView\CCScrollView.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlExtensions.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCMenuPassive.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCSpacer.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
   </ItemGroup>
