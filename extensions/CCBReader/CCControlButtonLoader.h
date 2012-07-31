@@ -2,7 +2,7 @@
 #define _CCB_CCCONTROLBUTTONLOADER_H_
 
 #include "CCControlLoader.h"
-#include "../UI/CCControlExtension/CCControlButton.h"
+#include "../GUI/CCControlExtension/CCControlButton.h"
 
 NS_CC_EXT_BEGIN
 
