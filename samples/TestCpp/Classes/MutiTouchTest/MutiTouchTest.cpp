@@ -76,8 +76,7 @@ void MutiTouchTestLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     {
         CCTouch* pTouch = (CCTouch*)(*iter);
         TouchPoint* pTouchPoint = TouchPoint::touchPointWithParent(this);
-        CCPoint location = pTouch->locationInView();
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = pTouch->getLocation();
 
         pTouchPoint->setTouchPos(location);
         pTouchPoint->setTouchColor(s_TouchColors[pTouch->getID()]);
@@ -96,8 +95,7 @@ void MutiTouchTestLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     {
         CCTouch* pTouch = (CCTouch*)(*iter);
         TouchPoint* pTP = (TouchPoint*)s_dic.objectForKey(pTouch->getID());
-        CCPoint location = pTouch->locationInView();
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = pTouch->getLocation();
         pTP->setTouchPos(location);
     }
 }
