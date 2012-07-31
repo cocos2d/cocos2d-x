@@ -3505,6 +3505,17 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/touch_dispatcher/CCTouch.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>touch_dispatcher</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/touch_dispatcher/CCTouch.cpp</string>
+		</dict>
 		<key>libs/cocos2dx/touch_dispatcher/CCTouch.h</key>
 		<dict>
 			<key>Group</key>
@@ -3862,6 +3873,7 @@
 		<string>libs/cocos2dx/tilemap_parallax_nodes/CCTMXTiledMap.h</string>
 		<string>libs/cocos2dx/tilemap_parallax_nodes/CCTMXXMLParser.cpp</string>
 		<string>libs/cocos2dx/tilemap_parallax_nodes/CCTMXXMLParser.h</string>
+		<string>libs/cocos2dx/touch_dispatcher/CCTouch.cpp</string>
 		<string>libs/cocos2dx/touch_dispatcher/CCTouch.h</string>
 		<string>libs/cocos2dx/touch_dispatcher/CCTouchDelegateProtocol.h</string>
 		<string>libs/cocos2dx/touch_dispatcher/CCTouchDispatcher.cpp</string>

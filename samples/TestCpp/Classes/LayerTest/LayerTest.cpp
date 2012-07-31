@@ -181,8 +181,7 @@ void LayerTest1::updateSize(CCPoint &touchLocation)
 
 bool LayerTest1::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();
-    touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
+    CCPoint touchLocation = touch->getLocation();
 
     updateSize(touchLocation);
 
@@ -191,16 +190,14 @@ bool LayerTest1::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void LayerTest1::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();
-    touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
+    CCPoint touchLocation = touch->getLocation();
 
     updateSize(touchLocation);
 }
 
 void LayerTest1::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();
-    touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
+    CCPoint touchLocation = touch->getLocation();
 
     updateSize(touchLocation);
 }
@@ -334,8 +331,7 @@ void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)
 
     CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);
-    CCPoint start = touch->locationInView();    
-    start = CCDirector::sharedDirector()->convertToGL(start);
+    CCPoint start = touch->getLocation();    
 
     CCPoint diff = ccpSub( ccp(s.width/2,s.height/2), start);    
     diff = ccpNormalize(diff);
