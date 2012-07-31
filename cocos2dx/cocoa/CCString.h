@@ -77,7 +77,7 @@ public:
 
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual bool isEqual(const CCObject* pObject);
+    virtual bool isEqualTo(const CCObject* pObject);
 
     /* static funcitons */
     /** create a string with c string

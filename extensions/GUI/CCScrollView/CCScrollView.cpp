@@ -599,7 +599,7 @@ bool CCScrollView::onTouchBegan(CCTouch* touch, CCEvent* event)
         return false;
     }
 
-    if (!m_pTouches->containsObject(touch))
+    if (!m_pTouches->isContainObject(touch))
     {
         m_pTouches->addObject(touch);
     }
@@ -630,7 +630,7 @@ void CCScrollView::onTouchMoved(CCTouch* touch, CCEvent* event)
         return;
     }
 
-    if (m_pTouches->containsObject(touch))
+    if (m_pTouches->isContainObject(touch))
     {
         if (m_pTouches->count() == 1 && m_bDragging)
         { // scrolling
@@ -689,7 +689,7 @@ void CCScrollView::onTouchEnded(CCTouch* touch, CCEvent* event)
     {
         return;
     }
-    if (m_pTouches->containsObject(touch))
+    if (m_pTouches->isContainObject(touch))
     {
         if (m_pTouches->count() == 1 && m_bTouchMoved)
         {

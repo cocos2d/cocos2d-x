@@ -67,7 +67,7 @@ public:
     CCObject* copy(void);
     bool isSingleReference(void);
     unsigned int retainCount(void);
-    virtual bool isEqual(const CCObject* pObject);
+    virtual bool isEqualTo(const CCObject* pObject);
 
     virtual void onUpdate(float dt) {CC_UNUSED_PARAM(dt);};
     

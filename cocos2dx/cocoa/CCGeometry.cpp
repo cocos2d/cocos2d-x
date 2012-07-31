@@ -62,7 +62,7 @@ CCObject* CCPoint::copyWithZone(CCZone* pZone)
     return pRet;
 }
 
-bool CCPoint::equals(const CCPoint& point) const
+bool CCPoint::isEqualTo(const CCPoint& point) const
 {
     return ((this->x == point.x) && (this->y == point.y));
 }
@@ -109,7 +109,7 @@ CCObject* CCSize::copyWithZone(CCZone* pZone)
     return pRet;
 }
 
-bool CCSize::equals(const CCSize& size) const
+bool CCSize::isEqualTo(const CCSize& size) const
 {
     return ((this->width == size.width) && (this->height == size.height));
 }
@@ -192,13 +192,13 @@ float CCRect::getMinY() const
     return origin.y;
 }
 
-bool CCRect::equals(const CCRect& target) const
+bool CCRect::isEqualTo(const CCRect& target) const
 {    
-    return ( origin.equals(target.origin) &&
-             size.equals(target.size) );
+    return ( origin.isEqualTo(target.origin) &&
+             size.isEqualTo(target.size) );
 }
 
-bool CCRect::containsPoint(const CCPoint& point) const
+bool CCRect::isContainPoint(const CCPoint& point) const
 {
     bool bRet = false;
     
@@ -211,7 +211,7 @@ bool CCRect::containsPoint(const CCPoint& point) const
     return bRet;
 }
 
-bool CCRect::intersectsRect(const CCRect& target) const
+bool CCRect::isIntersectRect(const CCRect& target) const
 {
     return !(this->getMaxX() < target.getMinX()||
              target.getMaxX() < this->getMinX()||
@@ -229,12 +229,12 @@ bool CCRect::CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2)
 
 bool CCRect::CCRectContainsPoint(const CCRect& rect, const CCPoint& point)
 {
-    return rect.containsPoint(point);
+    return rect.isContainPoint(point);
 }
 
 bool CCRect::CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB)
 {
-    return rectA.intersectsRect(rectB);
+    return rectA.isIntersectRect(rectB);
 }
 
 NS_CC_END

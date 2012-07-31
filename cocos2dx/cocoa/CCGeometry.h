@@ -50,7 +50,7 @@ public:
     CCPoint& operator= (const CCPoint& other);
     void setPoint(float x, float y);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    bool equals(const CCPoint& point) const;
+    bool isEqualTo(const CCPoint& point) const;
 public:
     CC_DEPRECATED_ATTRIBUTE static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
@@ -68,7 +68,7 @@ public:
     CCSize& operator= (const CCSize& other);
     void setSize(float width, float height);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    bool equals(const CCSize& size) const;
+    bool isEqualTo(const CCSize& size) const;
 public:
     CC_DEPRECATED_ATTRIBUTE static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
@@ -92,9 +92,9 @@ public:
     float getMinY() const;  ///! return the bottommost y-value of 'rect'
     float getMidY() const;  ///! return the midpoint y-value of 'rect'
     float getMaxY() const;  ///! return the topmost y-value of 'rect'
-    bool equals(const CCRect& target) const;
-    bool containsPoint(const CCPoint& point) const;
-    bool intersectsRect(const CCRect& target) const;
+    bool isEqualTo(const CCRect& target) const;
+    bool isContainPoint(const CCPoint& point) const;
+    bool isIntersectRect(const CCRect& target) const;
     
 public:
     CC_DEPRECATED_ATTRIBUTE static bool CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2);

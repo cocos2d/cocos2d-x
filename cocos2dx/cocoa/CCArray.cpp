@@ -304,16 +304,16 @@ CCObject* CCArray::randomObject()
     return data->arr[(int)(data->num*CCRANDOM_0_1())];
 }
 
-bool CCArray::containsObject(CCObject* object)
+bool CCArray::isContainObject(CCObject* object)
 {
     return ccArrayContainsObject(data, object);
 }
 
-bool CCArray::isEqualToArray(CCArray* otherArray)
+bool CCArray::isEqualTo(CCArray* otherArray)
 {
     for (unsigned int i = 0; i< this->count(); i++)
     {
-        if (!this->objectAtIndex(i)->isEqual(otherArray->objectAtIndex(i)))
+        if (!this->objectAtIndex(i)->isEqualTo(otherArray->objectAtIndex(i)))
         {
             return false;
         }

@@ -669,7 +669,7 @@ void CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 void CCSprite::reorderChild(CCNode *pChild, int zOrder)
 {
     CCAssert(pChild != NULL, "");
-    CCAssert(m_pChildren->containsObject(pChild), "");
+    CCAssert(m_pChildren->isContainObject(pChild), "");
 
     if (zOrder == pChild->getZOrder())
     {

@@ -136,7 +136,7 @@ CCObject* CCString::copyWithZone(CCZone* pZone)
     return pStr;
 }
 
-bool CCString::isEqual(const CCObject* pObject)
+bool CCString::isEqualTo(const CCObject* pObject)
 {
     bool bRet = false;
     const CCString* pStr = dynamic_cast<const CCString*>(pObject);

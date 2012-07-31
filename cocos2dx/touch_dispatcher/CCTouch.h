@@ -42,10 +42,10 @@ public:
     {}
 
     ///@ return the current touch location in screen coordinates
-    inline CCPoint getLocationInView() const { return m_point; }
+    CCPoint getLocationInView() const;
     
     ///@ return the current previous location in screen coordinates
-    inline CCPoint getPreviousLocationInView() const { return m_prevPoint; }
+    CCPoint getPreviousLocationInView() const;
     
     ///@ return the current touch location in OpenGL coordinates
     CCPoint getLocation() const;

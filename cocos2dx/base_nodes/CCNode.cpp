@@ -548,7 +548,7 @@ void CCNode::removeChild(CCNode* child, bool cleanup)
         return;
     }
 
-    if ( m_pChildren->containsObject(child) )
+    if ( m_pChildren->isContainObject(child) )
     {
         this->detachChild(child,cleanup);
     }

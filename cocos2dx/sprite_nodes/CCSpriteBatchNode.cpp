@@ -198,7 +198,7 @@ void CCSpriteBatchNode::addChild(CCNode *child, int zOrder)
 void CCSpriteBatchNode::reorderChild(CCNode *child, int zOrder)
 {
     CCAssert(child != NULL, "the child should not be null");
-    CCAssert(m_pChildren->containsObject(child), "Child doesn't belong to Sprite");
+    CCAssert(m_pChildren->isContainObject(child), "Child doesn't belong to Sprite");
 
     if (zOrder == child->getZOrder())
     {
@@ -220,7 +220,7 @@ void CCSpriteBatchNode::removeChild(CCNode *child, bool cleanup)
         return;
     }
 
-    CCAssert(m_pChildren->containsObject(pSprite), "sprite batch node should contain the child");
+    CCAssert(m_pChildren->isContainObject(pSprite), "sprite batch node should contain the child");
 
     // cleanup before removing
     removeSpriteFromAtlas(pSprite);
@@ -446,7 +446,7 @@ unsigned int CCSpriteBatchNode::rebuildIndexInOrder(CCSprite *pobParent, unsigne
     }    
 
     // ignore self (batch node)
-    if (! pobParent->isEqual(this))
+    if (! pobParent->isEqualTo(this))
     {
         pobParent->setAtlasIndex(uIndex);
         uIndex++;

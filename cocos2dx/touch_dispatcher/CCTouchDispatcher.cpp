@@ -363,7 +363,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                         pHandler->getClaimedTouches()->addObject(pTouch);
                     }
                 } else
-                if (pHandler->getClaimedTouches()->containsObject(pTouch))
+                if (pHandler->getClaimedTouches()->isContainObject(pTouch))
                 {
                     // moved ended cancelled
                     bClaimed = true;
