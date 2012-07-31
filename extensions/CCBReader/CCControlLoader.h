@@ -2,7 +2,7 @@
 #define _CCB_CCCONTROLLOADER_H_
 
 #include "CCNodeLoader.h"
-#include "../UI/CCControlExtension/CCControl.h"
+#include "../GUI/CCControlExtension/CCControl.h"
 
 NS_CC_EXT_BEGIN
 
