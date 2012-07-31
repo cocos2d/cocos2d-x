@@ -279,9 +279,7 @@ void Sprite1::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
     
         addNewSpriteWithCoords( location );
     }
@@ -355,9 +353,7 @@ void SpriteBatchNode1::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
     
         addNewSpriteWithCoords( location );
     }
@@ -3525,11 +3521,11 @@ AnimationCache::AnimationCache()
 
     CCAnimationCache *animCache = CCAnimationCache::sharedAnimationCache();
 
-    CCAnimation *normal = animCache->animationByName("dance");
+    CCAnimation *normal = animCache->getAnimation("dance");
     normal->setRestoreOriginalFrame(true);
-    CCAnimation *dance_grey = animCache->animationByName("dance_gray");
+    CCAnimation *dance_grey = animCache->getAnimation("dance_gray");
     dance_grey->setRestoreOriginalFrame(true);
-    CCAnimation *dance_blue = animCache->animationByName("dance_blue");
+    CCAnimation *dance_blue = animCache->getAnimation("dance_blue");
     dance_blue->setRestoreOriginalFrame(true);
 
     CCAnimate *animN = CCAnimate::create(normal);
@@ -3581,11 +3577,11 @@ AnimationCacheFile::AnimationCacheFile()
     animCache->addAnimationsWithFile("animations/animations.plist");
 
 
-    CCAnimation *normal = animCache->animationByName("dance_1");
+    CCAnimation *normal = animCache->getAnimation("dance_1");
     normal->setRestoreOriginalFrame(true);
-    CCAnimation *dance_grey = animCache->animationByName("dance_2");
+    CCAnimation *dance_grey = animCache->getAnimation("dance_2");
     dance_grey->setRestoreOriginalFrame(true);
-    CCAnimation *dance_blue = animCache->animationByName("dance_3");
+    CCAnimation *dance_blue = animCache->getAnimation("dance_3");
     dance_blue->setRestoreOriginalFrame(true);
 
     CCAnimate *animN = CCAnimate::create(normal);

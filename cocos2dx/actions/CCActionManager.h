@@ -95,7 +95,7 @@ public:
      * - If you are running 1 Sequence of 7 actions, it will return 1.
      * - If you are running 7 Sequences of 2 actions, it will return 7.
      */
-    unsigned int numberOfRunningActionsInTarget(CCObject *pTarget);
+    unsigned int getNumberOfRunningActionsInTarget(CCObject *pTarget) const;
 
     /** Pauses the target: all running actions and newly added actions will be paused.
     */
@@ -119,7 +119,7 @@ protected:
     void removeActionAtIndex(unsigned int uIndex, struct _hashElement *pElement);
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
-    void update(float dt);
+    void onUpdate(float dt);
 
 protected:
     struct _hashElement    *m_pTargets;

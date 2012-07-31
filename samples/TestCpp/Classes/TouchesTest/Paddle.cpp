@@ -52,7 +52,7 @@ bool Paddle::containsTouchLocation(CCTouch* touch)
     return CCRect::CCRectContainsPoint(rect(), convertTouchToNodeSpaceAR(touch));
 }
 
-bool Paddle::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool Paddle::onTouchBegan(CCTouch* touch, CCEvent* event)
 {
     if (m_state != kPaddleStateUngrabbed) return false;
     if ( !containsTouchLocation(touch) ) return false;
@@ -61,7 +61,7 @@ bool Paddle::ccTouchBegan(CCTouch* touch, CCEvent* event)
     return true;
 }
 
-void Paddle::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void Paddle::onTouchMoved(CCTouch* touch, CCEvent* event)
 {
     // If it weren't for the TouchDispatcher, you would need to keep a reference
     // to the touch from touchBegan and check that the current touch is the same
@@ -72,8 +72,7 @@ void Paddle::ccTouchMoved(CCTouch* touch, CCEvent* event)
     
     CCAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");    
     
-    CCPoint touchPoint = touch->locationInView();
-    touchPoint = CCDirector::sharedDirector()->convertToGL( touchPoint );
+    CCPoint touchPoint = touch->getLocation();
     
     setPosition( CCPointMake(touchPoint.x, getPosition().y) );
 }
@@ -84,7 +83,7 @@ CCObject* Paddle::copyWithZone(CCZone *pZone)
     return this;
 }
 
-void Paddle::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void Paddle::onTouchEnded(CCTouch* touch, CCEvent* event)
 {
     CCAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");    
     

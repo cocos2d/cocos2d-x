@@ -50,7 +50,7 @@ public:
     bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** create the action 
@@ -73,7 +73,7 @@ public:
     bool initWithDuration(float duration);
     virtual bool initWithSize(const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with duration 
@@ -88,7 +88,7 @@ public:
 class CC_DLL CCFlipY3D : public CCFlipX3D
 {
 public:
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -115,7 +115,7 @@ public:
     /** initializes the action with center position, radius, a grid size and duration */
     bool initWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with center position, radius, a grid size and duration 
@@ -153,7 +153,7 @@ public:
     bool initWithPosition(const CCPoint& pos, float r, int wav, float amp, 
         const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with radius, number of waves, amplitude, a grid size and duration 
@@ -180,7 +180,7 @@ public:
     /** initializes the action with a range, shake Z vertices, a grid and duration */
     bool initWithRange(int range, bool shakeZ, const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with a range, shake Z vertices, a grid and duration 
@@ -207,7 +207,7 @@ public:
     /** initializes the action with amplitude, a grid and duration */
     bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with amplitude, a grid and duration 
@@ -236,7 +236,7 @@ public:
     bool initWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
         float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration 
@@ -275,7 +275,7 @@ public:
     bool initWithPosition(const CCPoint& pos, int t, float amp, const ccGridSize& gridSize,
         float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with center position, number of twirls, amplitude, a grid size and duration 

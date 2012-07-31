@@ -46,7 +46,7 @@ NS_CC_BEGIN
 class CC_DLL CCPageTurn3D : public CCGrid3DAction
 {
 public:
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** create the action 

@@ -69,10 +69,10 @@ public:
     virtual void onEnterTransitionDidFinish();
     
     // default implements are used to call script callback if exist
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
     // default implements are used to call script callback if exist
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);

@@ -40,8 +40,8 @@ public:
     virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
 
     // CCLayer
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 
 protected:
     CCNode * m_pTrackNode;

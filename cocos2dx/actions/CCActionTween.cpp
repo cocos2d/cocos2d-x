@@ -66,7 +66,7 @@ void CCActionTween::startWithTarget(CCNode *pTarget)
     m_fDelta = m_fTo - m_fFrom;
 }
 
-void CCActionTween::update(float dt)
+void CCActionTween::onUpdate(float dt)
 {
     dynamic_cast<CCActionTweenDelegate*>(m_pTarget)->updateTweenAction(m_fTo  - m_fDelta * (1 - dt), m_strKey.c_str());
 }

@@ -54,7 +54,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual void onEnter();
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
 private:
     CCPoint m_center;
     float m_fRadius;

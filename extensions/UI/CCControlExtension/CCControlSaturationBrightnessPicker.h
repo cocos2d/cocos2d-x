@@ -74,8 +74,8 @@ protected:
     void updateSliderPosition(CCPoint location);
     bool checkSliderPosition(CCPoint location);
 
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool onTouchBegan(CCTouch* touch, CCEvent* pEvent);
+    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 };
 
 // end of GUI group

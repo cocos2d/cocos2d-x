@@ -430,7 +430,7 @@ void CCNode::setUserData(void *var)
 }
 
 
-CCRect CCNode::boundingBox()
+CCRect CCNode::getBoundingBox()
 {
     CCRect rect = CCRectMake(0, 0, m_tContentSize.width, m_tContentSize.height);
     return CCRectApplyAffineTransform(rect, nodeToParentTransform());
@@ -887,9 +887,9 @@ CCAction * CCNode::getActionByTag(int tag)
     return m_pActionManager->getActionByTag(tag, this);
 }
 
-unsigned int CCNode::numberOfRunningActions()
+unsigned int CCNode::getNumberOfRunningActions()
 {
-    return m_pActionManager->numberOfRunningActionsInTarget(this);
+    return m_pActionManager->getNumberOfRunningActionsInTarget(this);
 }
 
 // CCNode - Callbacks
@@ -1094,14 +1094,12 @@ CCPoint CCNode::convertToWindowSpace(const CCPoint& nodePoint)
 // convenience methods which take a CCTouch instead of CCPoint
 CCPoint CCNode::convertTouchToNodeSpace(CCTouch *touch)
 {
-    CCPoint point = touch->locationInView();
-    point = CCDirector::sharedDirector()->convertToGL(point);
+    CCPoint point = touch->getLocation();
     return this->convertToNodeSpace(point);
 }
 CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
 {
-    CCPoint point = touch->locationInView();
-    point = CCDirector::sharedDirector()->convertToGL(point);
+    CCPoint point = touch->getLocation();
     return this->convertToNodeSpaceAR(point);
 }
 

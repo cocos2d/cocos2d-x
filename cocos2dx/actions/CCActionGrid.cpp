@@ -234,7 +234,7 @@ void CCAccelDeccelAmplitude::startWithTarget(CCNode *pTarget)
     m_pOther->startWithTarget(pTarget);
 }
 
-void CCAccelDeccelAmplitude::update(float time)
+void CCAccelDeccelAmplitude::onUpdate(float time)
 {
     float f = time * 2;
 
@@ -302,10 +302,10 @@ void CCAccelAmplitude::startWithTarget(CCNode *pTarget)
     m_pOther->startWithTarget(pTarget);
 }
 
-void CCAccelAmplitude::update(float time)
+void CCAccelAmplitude::onUpdate(float time)
 {
     ((CCAccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(time, m_fRate));
-    m_pOther->update(time);
+    m_pOther->onUpdate(time);
 }
 
 CCActionInterval* CCAccelAmplitude::reverse(void)
@@ -364,10 +364,10 @@ void CCDeccelAmplitude::startWithTarget(CCNode *pTarget)
     m_pOther->startWithTarget(pTarget);
 }
 
-void CCDeccelAmplitude::update(float time)
+void CCDeccelAmplitude::onUpdate(float time)
 {
     ((CCDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf((1 - time), m_fRate));
-    m_pOther->update(time);
+    m_pOther->onUpdate(time);
 }
 
 CCActionInterval* CCDeccelAmplitude::reverse(void)

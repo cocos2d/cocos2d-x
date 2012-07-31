@@ -43,7 +43,7 @@ public:
         float duration);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration 
@@ -68,7 +68,7 @@ public:
         float duration);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration 
@@ -101,7 +101,7 @@ public:
     void placeTile(const ccGridSize& pos, Tile *t);
 
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -128,7 +128,7 @@ public:
     void turnOnTile(const ccGridSize& pos);
     void turnOffTile(const ccGridSize& pos);
     virtual void transformTile(const ccGridSize& pos, float distance);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with the grid size and the duration 
@@ -210,7 +210,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with the grid size and the duration 
@@ -249,7 +249,7 @@ public:
     bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with a number of waves, the waves amplitude, the grid size and the duration 
@@ -281,7 +281,7 @@ public:
     /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
     bool initWithJumps(int j, float amp, const ccGridSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with the number of jumps, the sin amplitude, the grid size and the duration 
@@ -304,7 +304,7 @@ public :
     bool initWithRows(int nRows, float duration);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual void startWithTarget(CCNode *pTarget);
 
 public:
@@ -327,7 +327,7 @@ public:
     bool initWithCols(int nCols, float duration);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual void startWithTarget(CCNode *pTarget);
 
 public:

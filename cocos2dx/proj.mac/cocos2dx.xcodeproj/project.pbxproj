@@ -275,6 +275,7 @@
 		41CD6C4515BF7382005E6F29 /* CCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C3215BF7382005E6F29 /* CCWindow.m */; };
 		41CD6C4615BF7382005E6F29 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C3315BF7382005E6F29 /* EAGLView.h */; };
 		41CD6C4715BF7382005E6F29 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C3415BF7382005E6F29 /* EAGLView.mm */; };
+		D43F7F4E15C7AA1000D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F4D15C7AA1000D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -549,6 +550,7 @@
 		41CD6C3215BF7382005E6F29 /* CCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCWindow.m; sourceTree = "<group>"; };
 		41CD6C3315BF7382005E6F29 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		41CD6C3415BF7382005E6F29 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
+		D43F7F4D15C7AA1000D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1068,6 +1070,7 @@
 		1551A621158F2ADE00E66CFE /* touch_dispatcher */ = {
 			isa = PBXGroup;
 			children = (
+				D43F7F4D15C7AA1000D713FC /* CCTouch.cpp */,
 				1551A622158F2ADE00E66CFE /* CCTouch.h */,
 				1551A623158F2ADE00E66CFE /* CCTouchDelegateProtocol.h */,
 				1551A624158F2ADE00E66CFE /* CCTouchDispatcher.cpp */,
@@ -1433,6 +1436,7 @@
 				41CD6C4515BF7382005E6F29 /* CCWindow.m in Sources */,
 				41CD6C4715BF7382005E6F29 /* EAGLView.mm in Sources */,
 				41BC70B915BF7EA2006A0A6C /* CCThread.mm in Sources */,
+				D43F7F4E15C7AA1000D713FC /* CCTouch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

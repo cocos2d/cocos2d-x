@@ -237,7 +237,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
 }
 
 
-void Box2DTestLayer::update(float dt)
+void Box2DTestLayer::onUpdate(float dt)
 {
     //It is recommended that a fixed time step is used with Box2D for stability
     //of the simulation, however, we are using a variable time step here.
@@ -265,9 +265,7 @@ void Box2DTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
     
         addNewSpriteAtPosition( location );
     }

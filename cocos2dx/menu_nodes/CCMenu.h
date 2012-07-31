@@ -149,10 +149,10 @@ public:
     /**
     @brief For phone event handle functions
     */
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchCancelled(CCTouch *touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual bool onTouchBegan(CCTouch* touch, CCEvent* event);
+    virtual void onTouchEnded(CCTouch* touch, CCEvent* event);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent* event);
+    virtual void onTouchMoved(CCTouch* touch, CCEvent* event);
 
     /**
     @since v0.99.5

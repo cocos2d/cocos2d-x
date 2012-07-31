@@ -356,7 +356,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                 bool bClaimed = false;
                 if (uIndex == CCTOUCHBEGAN)
                 {
-                    bClaimed = pHandler->getDelegate()->ccTouchBegan(pTouch, pEvent);
+                    bClaimed = pHandler->getDelegate()->onTouchBegan(pTouch, pEvent);
 
                     if (bClaimed)
                     {
@@ -371,14 +371,14 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                     switch (sHelper.m_type)
                     {
                     case CCTOUCHMOVED:
-                        pHandler->getDelegate()->ccTouchMoved(pTouch, pEvent);
+                        pHandler->getDelegate()->onTouchMoved(pTouch, pEvent);
                         break;
                     case CCTOUCHENDED:
-                        pHandler->getDelegate()->ccTouchEnded(pTouch, pEvent);
+                        pHandler->getDelegate()->onTouchEnded(pTouch, pEvent);
                         pHandler->getClaimedTouches()->removeObject(pTouch);
                         break;
                     case CCTOUCHCANCELLED:
-                        pHandler->getDelegate()->ccTouchCancelled(pTouch, pEvent);
+                        pHandler->getDelegate()->onTouchCancelled(pTouch, pEvent);
                         pHandler->getClaimedTouches()->removeObject(pTouch);
                         break;
                     }

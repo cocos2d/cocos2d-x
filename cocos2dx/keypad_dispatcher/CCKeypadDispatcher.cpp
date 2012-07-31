@@ -138,10 +138,10 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
             switch (nMsgType)
             {
             case kTypeBackClicked:
-                pDelegate->keyBackClicked();
+                pDelegate->onKeyBackClicked();
                 break;
             case kTypeMenuClicked:
-                pDelegate->keyMenuClicked();
+                pDelegate->onKeyMenuClicked();
                 break;
             default:
                 break;

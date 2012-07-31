@@ -278,7 +278,7 @@ CCCardinalSplineTo* CCCardinalSplineTo::copyWithZone(cocos2d::CCZone *pZone)
     return pRet;
 }
 
-void CCCardinalSplineTo::update(float time)
+void CCCardinalSplineTo::onUpdate(float time)
 {
     unsigned int p;
     float lt;

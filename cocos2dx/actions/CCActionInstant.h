@@ -50,7 +50,7 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual bool isDone(void);
     virtual void step(float dt);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     //CCFiniteTimeAction method
     virtual CCFiniteTimeAction * reverse(void);
 };
@@ -63,7 +63,7 @@ public:
     CCShow(){}
     virtual ~CCShow(){}
     //super methods
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCFiniteTimeAction * reverse(void);
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
@@ -88,7 +88,7 @@ public:
     CCHide(){}
     virtual ~CCHide(){}
     //super methods
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCFiniteTimeAction * reverse(void);
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
@@ -110,7 +110,7 @@ public:
     CCToggleVisibility(){}
     virtual ~CCToggleVisibility(){}
     //super method
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
     //override static method
@@ -146,7 +146,7 @@ public:
     /** init the action */
     bool initWithFlipX(bool x);
     //super methods
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCFiniteTimeAction * reverse(void);
     virtual CCObject* copyWithZone(CCZone *pZone);
 
@@ -177,7 +177,7 @@ public:
     /** init the action */
     bool initWithFlipY(bool y);
     //super methods
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCFiniteTimeAction * reverse(void);
     virtual CCObject* copyWithZone(CCZone *pZone);
 
@@ -201,7 +201,7 @@ public:
     /** Initializes a Place action with a position */
     bool initWithPosition(const CCPoint& pos);
     //super methods
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCObject* copyWithZone(CCZone *pZone);
 protected:
     CCPoint m_tPosition;
@@ -241,7 +241,7 @@ public:
     /** executes the callback */
     virtual void execute();
     //super methods
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     CCObject * copyWithZone(CCZone *pZone);
 
     inline CCObject* getTargetCallback()

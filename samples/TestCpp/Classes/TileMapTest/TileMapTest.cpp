@@ -1518,28 +1518,22 @@ void TileDemo::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
-bool TileDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool TileDemo::onTouchBegan(CCTouch* touch, CCEvent* event)
 {
     return true;
 }
 
-void TileDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void TileDemo::onTouchEnded(CCTouch* touch, CCEvent* event)
 {
 }
 
-void TileDemo::ccTouchCancelled(CCTouch* touch, CCEvent* event)
+void TileDemo::onTouchCancelled(CCTouch* touch, CCEvent* event)
 {
 }
 
-void TileDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void TileDemo::onTouchMoved(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();    
-    CCPoint prevLocation = touch->previousLocationInView();    
-    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
-    prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
-    
-    CCPoint diff = ccpSub(touchLocation, prevLocation);
+    CCPoint diff = touch->getDelta();
     
     CCNode *node = getChildByTag(kTagTileMap);
     CCPoint currentPos = node->getPosition();

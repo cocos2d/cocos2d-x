@@ -62,6 +62,12 @@ CCObject* CCPoint::copyWithZone(CCZone* pZone)
     return pRet;
 }
 
+bool CCPoint::equals(const CCPoint& point) const
+{
+    return ((this->x == point.x) && (this->y == point.y));
+}
+
+// to be deprecated
 bool CCPoint::CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2)
 {
     return ((point1.x == point2.x) && (point1.y == point2.y));
@@ -103,6 +109,12 @@ CCObject* CCSize::copyWithZone(CCZone* pZone)
     return pRet;
 }
 
+bool CCSize::equals(const CCSize& size) const
+{
+    return ((this->width == size.width) && (this->height == size.height));
+}
+
+// to be deprecated
 bool CCSize::CCSizeEqualToSize(const CCSize& size1, const CCSize& size2)
 {
     return ((size1.width == size2.width) && (size1.height == size2.height));
@@ -150,61 +162,79 @@ CCObject* CCRect::copyWithZone(CCZone* pZone)
     return pRet;
 }
 
+float CCRect::getMaxX() const
+{
+    return (float)(origin.x + size.width);
+}
+
+float CCRect::getMidX() const
+{
+    return (float)(origin.x + size.width / 2.0);
+}
+
+float CCRect::getMinX() const
+{
+    return origin.x;
+}
+
+float CCRect::getMaxY() const
+{
+    return (float)(origin.y + size.height);
+}
+
+float CCRect::getMidY() const
+{
+    return (float)(origin.y + size.height / 2.0);
+}
+
+float CCRect::getMinY() const
+{
+    return origin.y;
+}
+
+bool CCRect::equals(const CCRect& target) const
+{    
+    return ( origin.equals(target.origin) &&
+             size.equals(target.size) );
+}
+
+bool CCRect::containsPoint(const CCPoint& point) const
+{
+    bool bRet = false;
+    
+    if (point.x >= getMinX() && point.x <= getMaxX()
+        && point.y >= getMinY() && point.y <= getMaxY())
+    {
+        bRet = true;
+    }
+    
+    return bRet;
+}
+
+bool CCRect::intersectsRect(const CCRect& target) const
+{
+    return !(this->getMaxX() < target.getMinX()||
+             target.getMaxX() < this->getMinX()||
+             this->getMaxY() < target.getMinY()||
+             target.getMaxY() < this->getMinY());
+}
+
+// to be deprecated
 bool CCRect::CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2)
 {
     return (CCPoint::CCPointEqualToPoint(rect1.origin, rect2.origin)
         && CCSize::CCSizeEqualToSize(rect1.size, rect2.size));
 }
 
-CCFloat CCRect::CCRectGetMaxX(const CCRect& rect)
-{
-    return rect.origin.x + rect.size.width;
-}
-
-CCFloat CCRect::CCRectGetMidX(const CCRect& rect)
-{
-    return (float)(rect.origin.x + rect.size.width / 2.0);
-}
-
-CCFloat CCRect::CCRectGetMinX(const CCRect& rect)
-{
-    return rect.origin.x;
-}
-
-CCFloat CCRect::CCRectGetMaxY(const CCRect& rect)
-{
-    return rect.origin.y + rect.size.height;
-}
-
-CCFloat CCRect::CCRectGetMidY(const CCRect& rect)
-{
-    return (float)(rect.origin.y + rect.size.height / 2.0);
-}
-
-CCFloat CCRect::CCRectGetMinY(const CCRect& rect)
-{
-    return rect.origin.y;
-}
 
 bool CCRect::CCRectContainsPoint(const CCRect& rect, const CCPoint& point)
 {
-    bool bRet = false;
-
-    if (point.x >= CCRectGetMinX(rect) && point.x <= CCRectGetMaxX(rect)
-        && point.y >= CCRectGetMinY(rect) && point.y <= CCRectGetMaxY(rect))
-    {
-        bRet = true;
-    }
-
-    return bRet;
+    return rect.containsPoint(point);
 }
 
 bool CCRect::CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB)
 {
-    return !(CCRectGetMaxX(rectA) < CCRectGetMinX(rectB)||
-            CCRectGetMaxX(rectB) < CCRectGetMinX(rectA)||
-            CCRectGetMaxY(rectA) < CCRectGetMinY(rectB)||
-            CCRectGetMaxY(rectB) < CCRectGetMinY(rectA));
+    return rectA.intersectsRect(rectB);
 }
 
 NS_CC_END

@@ -32,7 +32,7 @@ public:
     virtual void draw();
 
     void addNewSpriteAtPosition(CCPoint p);
-    void update(float dt);
+    void onUpdate(float dt);
     virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 
     //CREATE_NODE(Box2DTestLayer);

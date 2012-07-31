@@ -286,7 +286,7 @@ void CCLayer::onEnterTransitionDidFinish()
     CCNode::onEnterTransitionDidFinish();
 }
 
-bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+bool CCLayer::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (m_pScriptHandlerEntry)
     {
@@ -294,11 +294,11 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     }
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
-    CCAssert(false, "Layer#ccTouchBegan override me");
+    CCAssert(false, "Layer#onTouchBegan override me");
     return true;
 }
 
-void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
+void CCLayer::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
@@ -308,7 +308,7 @@ void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
     CC_UNUSED_PARAM(pEvent);
 }
     
-void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
+void CCLayer::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
@@ -318,7 +318,7 @@ void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
     CC_UNUSED_PARAM(pEvent);
 }
 
-void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
+void CCLayer::onTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);

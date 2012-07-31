@@ -46,7 +46,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** Creates and initializes with a duration and a percent 
@@ -73,7 +73,7 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual CCActionInterval* reverse(void);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage 

@@ -221,7 +221,7 @@ void CCMenu::registerWithTouchDispatcher()
     pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority, true);
 }
 
-bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool CCMenu::onTouchBegan(CCTouch* touch, CCEvent* event)
 {
     CC_UNUSED_PARAM(event);
     if (m_eState != kCCMenuStateWaiting || ! m_bIsVisible || !m_bEnabled)
@@ -247,11 +247,11 @@ bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
     return false;
 }
 
-void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
+void CCMenu::onTouchEnded(CCTouch *touch, CCEvent* event)
 {
     CC_UNUSED_PARAM(touch);
     CC_UNUSED_PARAM(event);
-    CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
+    CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu onTouchEnded] -- invalid state");
     if (m_pSelectedItem)
     {
         m_pSelectedItem->unselected();
@@ -260,11 +260,11 @@ void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
     m_eState = kCCMenuStateWaiting;
 }
 
-void CCMenu::ccTouchCancelled(CCTouch *touch, CCEvent* event)
+void CCMenu::onTouchCancelled(CCTouch *touch, CCEvent* event)
 {
     CC_UNUSED_PARAM(touch);
     CC_UNUSED_PARAM(event);
-    CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
+    CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu onTouchCancelled] -- invalid state");
     if (m_pSelectedItem)
     {
         m_pSelectedItem->unselected();
@@ -272,10 +272,10 @@ void CCMenu::ccTouchCancelled(CCTouch *touch, CCEvent* event)
     m_eState = kCCMenuStateWaiting;
 }
 
-void CCMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void CCMenu::onTouchMoved(CCTouch* touch, CCEvent* event)
 {
     CC_UNUSED_PARAM(event);
-    CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
+    CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu onTouchMoved] -- invalid state");
     CCMenuItem *currentItem = this->itemForTouch(touch);
     if (currentItem != m_pSelectedItem) 
     {
@@ -645,8 +645,7 @@ const ccColor3B& CCMenu::getColor(void)
 
 CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
 {
-    CCPoint touchLocation = touch->locationInView();
-    touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
+    CCPoint touchLocation = touch->getLocation();
 
     if (m_pChildren && m_pChildren->count() > 0)
     {

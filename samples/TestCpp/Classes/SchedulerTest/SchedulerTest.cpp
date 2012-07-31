@@ -733,7 +733,7 @@ void SchedulerUpdateAndCustom::onEnter()
     schedule(schedule_selector(SchedulerUpdateAndCustom::stopSelectors), 0.4f);
 }
 
-void SchedulerUpdateAndCustom::update(float dt)
+void SchedulerUpdateAndCustom::onUpdate(float dt)
 {
     CCLOG("update called:%f", dt);
 }
@@ -770,7 +770,7 @@ void SchedulerUpdateFromCustom::onEnter()
     schedule(schedule_selector(SchedulerUpdateFromCustom::schedUpdate), 2.0f);
 }
 
-void SchedulerUpdateFromCustom::update(float dt)
+void SchedulerUpdateFromCustom::onUpdate(float dt)
 {
     CCLOG("update called:%f", dt);
 }
@@ -840,7 +840,7 @@ void RescheduleSelector::schedUpdate(float dt)
 void SchedulerDelayAndRepeat::onEnter()
 {
     SchedulerTestLayer::onEnter();
-    schedule(schedule_selector(SchedulerDelayAndRepeat::update), 0, 4 , 3.f);
+    schedule(schedule_selector(SchedulerDelayAndRepeat::onUpdate), 0, 4 , 3.f);
     CCLOG("update is scheduled should begin after 3 seconds");
 }
 
@@ -854,7 +854,7 @@ std::string SchedulerDelayAndRepeat::subtitle()
     return "After 5 x executed, method unscheduled. See console";
 }
 
-void SchedulerDelayAndRepeat::update(float dt)
+void SchedulerDelayAndRepeat::onUpdate(float dt)
 {
     CCLog("update called:%f", dt);
 }

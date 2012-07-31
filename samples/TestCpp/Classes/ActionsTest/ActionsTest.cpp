@@ -659,7 +659,7 @@ void ActionAnimate::onEnter()
     // With 2 loops and reverse
     CCAnimationCache *cache = CCAnimationCache::sharedAnimationCache();
     cache->addAnimationsWithFile("animations/animations-2.plist");
-    CCAnimation *animation2 = cache->animationByName("dance_1");
+    CCAnimation *animation2 = cache->getAnimation("dance_1");
 
     CCAnimate* action2 = CCAnimate::create(animation2);
     m_tamara->runAction(CCSequence::create(action2, action2->reverse(), NULL));

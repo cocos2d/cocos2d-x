@@ -203,7 +203,7 @@ void CCDirector::drawScene(void)
     //tick before glClear: issue #533
     if (! m_bPaused)
     {
-        m_pScheduler->update(m_fDeltaTime);
+        m_pScheduler->onUpdate(m_fDeltaTime);
     }
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

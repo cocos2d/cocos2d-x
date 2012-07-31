@@ -32,11 +32,11 @@ public:
     void toggleCallback(CCObject* pSender);
 
     virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+    virtual bool onTouchBegan(CCTouch* touch, CCEvent* event);
+    virtual void onTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual void onTouchEnded(CCTouch* touch, CCEvent* event);
 
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
     void setEmitterPosition();
 };
 
@@ -246,14 +246,14 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
 };
 
 class MultipleParticleSystemsBatched : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:
@@ -264,7 +264,7 @@ class AddAndDeleteParticleSystems : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
     void removeSystem(float dt);
     virtual std::string title();
     virtual std::string subtitle();
@@ -277,7 +277,7 @@ class ReorderParticleSystems : public ParticleDemo
 public:
     virtual void onEnter();
     void reorderSystem(float time);
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
     virtual std::string title();
     virtual std::string subtitle();
 private:

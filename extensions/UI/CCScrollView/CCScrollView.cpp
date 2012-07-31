@@ -159,7 +159,7 @@ bool CCScrollView::isNodeVisible(CCNode* node)
     
     viewRect = CCRectMake(-offset.x/scale, -offset.y/scale, size.width/scale, size.height/scale); 
     
-    return CCRect::CCRectIntersectsRect(viewRect, node->boundingBox());
+    return CCRect::CCRectIntersectsRect(viewRect, node->getBoundingBox());
 }
 
 void CCScrollView::pause(CCObject* sender)
@@ -582,7 +582,7 @@ void CCScrollView::visit()
 //	glPopMatrix();
 }
 
-bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
+bool CCScrollView::onTouchBegan(CCTouch* touch, CCEvent* event)
 {
     if (!this->isVisible())
     {
@@ -623,7 +623,7 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
     return true;
 }
 
-void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void CCScrollView::onTouchMoved(CCTouch* touch, CCEvent* event)
 {
     if (!this->isVisible())
     {
@@ -683,7 +683,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
     }
 }
 
-void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void CCScrollView::onTouchEnded(CCTouch* touch, CCEvent* event)
 {
     if (!this->isVisible())
     {
@@ -705,7 +705,7 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
     }
 }
 
-void CCScrollView::ccTouchCancelled(CCTouch* touch, CCEvent* event)
+void CCScrollView::onTouchCancelled(CCTouch* touch, CCEvent* event)
 {
     if (!this->isVisible())
     {

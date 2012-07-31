@@ -22,10 +22,10 @@ public:
     void backCallback(CCObject* pSender);
 
     void registerWithTouchDispatcher();
-    bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    void ccTouchCancelled(CCTouch* touch, CCEvent* event);
-    void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    bool onTouchBegan(CCTouch* touch, CCEvent* event);
+    void onTouchEnded(CCTouch* touch, CCEvent* event);
+    void onTouchCancelled(CCTouch* touch, CCEvent* event);
+    void onTouchMoved(CCTouch* touch, CCEvent* event);
 };
 
 class TileMapTest : public TileDemo

@@ -108,7 +108,7 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
-    virtual void update(float t);
+    virtual void onUpdate(float t);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -152,7 +152,7 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
     virtual bool isDone(void);
     virtual CCActionInterval* reverse(void);
 
@@ -248,7 +248,7 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -293,7 +293,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action 
@@ -318,7 +318,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -343,7 +343,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action 
@@ -391,7 +391,7 @@ public:
     virtual bool initWithDuration(float t, float sx, float sy);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action 
@@ -441,7 +441,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -496,7 +496,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -544,7 +544,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates the action with the same scale factor for X and Y 
@@ -609,7 +609,7 @@ public:
     bool initWithDuration(float duration, unsigned int uBlinks);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -629,7 +629,7 @@ protected:
 class CC_DLL CCFadeIn : public CCActionInterval
 {
 public:
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
     virtual CCObject* copyWithZone(CCZone* pZone);
 
@@ -648,7 +648,7 @@ public:
 class CC_DLL CCFadeOut : public CCActionInterval
 {
 public:
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
     virtual CCObject* copyWithZone(CCZone* pZone);
 
@@ -673,7 +673,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates an action with duration and opacity
@@ -699,7 +699,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
 public:
     /** creates an action with duration and color 
@@ -724,7 +724,7 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -749,7 +749,7 @@ protected:
 class CC_DLL CCDelayTime : public CCActionInterval
 {
 public:
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
     virtual CCObject* copyWithZone(CCZone* pZone);
 
@@ -782,7 +782,7 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -811,7 +811,7 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
-    virtual void update(float t);
+    virtual void onUpdate(float t);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -850,7 +850,7 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void stop(void);
-    virtual void update(float time);
+    virtual void onUpdate(float time);
 
     /** This is the target that the action will be forced to run with */
     CC_SYNTHESIZE_RETAIN(CCNode*, m_pForcedTarget, ForcedTarget);

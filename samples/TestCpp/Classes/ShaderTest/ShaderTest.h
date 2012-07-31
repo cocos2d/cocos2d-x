@@ -104,7 +104,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     bool init();
-    void update(float dt);
+    void onUpdate(float dt);
 protected:
     CCLabelBMFont* m_pLabel;
     float           m_fAccum;
@@ -118,7 +118,7 @@ public:
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
 
-    virtual void update(float dt);
+    virtual void onUpdate(float dt);
     virtual void setPosition(const CCPoint &newPosition);
     virtual void draw();
 

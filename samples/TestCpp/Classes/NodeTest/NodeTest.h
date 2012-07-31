@@ -104,7 +104,7 @@ class CameraZoomTest : public TestCocosNodeDemo
     float    m_z;
 public:
     CameraZoomTest();
-    void update(float dt);
+    void onUpdate(float dt);
 
     virtual void onEnter();
     virtual void onExit();

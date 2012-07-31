@@ -93,7 +93,7 @@ CCObject* CCWaves3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCWaves3D::update(float time)
+void CCWaves3D::onUpdate(float time)
 {
     int i, j;
     for (i = 0; i < m_sGridSize.x + 1; ++i)
@@ -175,7 +175,7 @@ CCObject* CCFlipX3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCFlipX3D::update(float time)
+void CCFlipX3D::onUpdate(float time)
 {
     CCFloat angle = (CCFloat)M_PI * time; // 180 degrees
     CCFloat mz = sinf(angle);
@@ -288,7 +288,7 @@ CCObject* CCFlipY3D::copyWithZone(CCZone* pZone)
     return pCopy;
 }
 
-void CCFlipY3D::update(float time)
+void CCFlipY3D::onUpdate(float time)
 {
     CCFloat angle = (CCFloat)M_PI * time; // 180 degrees
     CCFloat mz = sinf( angle );
@@ -426,7 +426,7 @@ void CCLens3D::setPosition(const CCPoint& pos)
     }
 }
 
-void CCLens3D::update(float time)
+void CCLens3D::onUpdate(float time)
 {
     CC_UNUSED_PARAM(time);
     if (m_bDirty)
@@ -539,7 +539,7 @@ CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCRipple3D::update(float time)
+void CCRipple3D::onUpdate(float time)
 {
     int i, j;
 
@@ -625,7 +625,7 @@ CCObject* CCShaky3D::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCShaky3D::update(float time)
+void CCShaky3D::onUpdate(float time)
 {
     CC_UNUSED_PARAM(time);
     int i, j;
@@ -710,7 +710,7 @@ CCObject* CCLiquid::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCLiquid::update(float time)
+void CCLiquid::onUpdate(float time)
 {
     int i, j;
 
@@ -791,7 +791,7 @@ CCObject* CCWaves::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCWaves::update(float time)
+void CCWaves::onUpdate(float time)
 {
     int i, j;
 
@@ -886,7 +886,7 @@ CCObject* CCTwirl::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCTwirl::update(float time)
+void CCTwirl::onUpdate(float time)
 {
     int i, j;
     CCPoint    c = m_position;

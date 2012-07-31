@@ -95,8 +95,7 @@ void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
     CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    CCPoint touchLocation = touch->locationInView();    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint touchLocation = touch->getLocation();    
     
     streak->setPosition( touchLocation );
 }
@@ -127,10 +126,10 @@ void Issue1358::onEnter()
     m_fRadius = size.width/3;
     m_fAngle = 0.0f;
     
-    schedule(schedule_selector(Issue1358::update), 0);
+    schedule(schedule_selector(Issue1358::onUpdate), 0);
 }
 
-void Issue1358::update(float dt)
+void Issue1358::onUpdate(float dt)
 {
     m_fAngle += 1.0f;
     streak->setPosition(ccp(m_center.x + cosf(m_fAngle/180 * M_PI)*m_fRadius,
