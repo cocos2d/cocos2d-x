@@ -28,6 +28,8 @@ THE SOFTWARE.
 #define __CCINSTANT_ACTION_H__
 
 #include <string>
+#include <typeinfo>
+#include "spidermonkey_specifics.h"
 #include "CCAction.h"
 
 NS_CC_BEGIN
