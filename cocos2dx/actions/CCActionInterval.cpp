@@ -120,14 +120,14 @@ void CCActionInterval::step(float dt)
                  );
 }
 
-void CCActionInterval::setAmplitudeRate(CCFloat amp)
+void CCActionInterval::setAmplitudeRate(float amp)
 {
     CC_UNUSED_PARAM(amp);
     // Abstract class needs implementation
     CCAssert(0, "");
 }
 
-CCFloat CCActionInterval::getAmplitudeRate(void)
+float CCActionInterval::getAmplitudeRate(void)
 {
     // Abstract class needs implementation
     CCAssert(0, "");

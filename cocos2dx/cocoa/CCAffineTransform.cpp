@@ -30,7 +30,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-CCAffineTransform __CCAffineTransformMake(CCFloat a, CCFloat b, CCFloat c, CCFloat d, CCFloat tx, CCFloat ty)
+CCAffineTransform __CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty)
 {
   CCAffineTransform t;
   t.a = a; t.b = b; t.c = c; t.d = d; t.tx = tx; t.ty = ty;
@@ -40,16 +40,16 @@ CCAffineTransform __CCAffineTransformMake(CCFloat a, CCFloat b, CCFloat c, CCFlo
 CCPoint __CCPointApplyAffineTransform(const CCPoint& point, const CCAffineTransform& t)
 {
   CCPoint p;
-  p.x = (CCFloat)((double)t.a * point.x + (double)t.c * point.y + t.tx);
-  p.y = (CCFloat)((double)t.b * point.x + (double)t.d * point.y + t.ty);
+  p.x = (float)((double)t.a * point.x + (double)t.c * point.y + t.tx);
+  p.y = (float)((double)t.b * point.x + (double)t.d * point.y + t.ty);
   return p;
 }
 
 CCSize __CCSizeApplyAffineTransform(const CCSize& size, const CCAffineTransform& t)
 {
   CCSize s;
-  s.width = (CCFloat)((double)t.a * size.width + (double)t.c * size.height);
-  s.height = (CCFloat)((double)t.b * size.width + (double)t.d * size.height);
+  s.width = (float)((double)t.a * size.width + (double)t.c * size.height);
+  s.height = (float)((double)t.b * size.width + (double)t.d * size.height);
   return s;
 }
 
@@ -64,20 +64,20 @@ extern const CCAffineTransform CCAffineTransformIdentity = CCAffineTransformMake
 
 CCRect CCRectApplyAffineTransform(const CCRect& rect, const CCAffineTransform& anAffineTransform)
 {
-    CCFloat top = CCRect::CCRectGetMinY(rect);
-    CCFloat left = CCRect::CCRectGetMinX(rect);
-    CCFloat right = CCRect::CCRectGetMaxX(rect);
-    CCFloat bottom = CCRect::CCRectGetMaxY(rect);
+    float top    = rect.getMinY();
+    float left   = rect.getMinX();
+    float right  = rect.getMaxX();
+    float bottom = rect.getMaxY();
     
     CCPoint topLeft = CCPointApplyAffineTransform(CCPointMake(left, top), anAffineTransform);
     CCPoint topRight = CCPointApplyAffineTransform(CCPointMake(right, top), anAffineTransform);
     CCPoint bottomLeft = CCPointApplyAffineTransform(CCPointMake(left, bottom), anAffineTransform);
     CCPoint bottomRight = CCPointApplyAffineTransform(CCPointMake(right, bottom), anAffineTransform);
 
-    CCFloat minX = min(min(topLeft.x, topRight.x), min(bottomLeft.x, bottomRight.x));
-    CCFloat maxX = max(max(topLeft.x, topRight.x), max(bottomLeft.x, bottomRight.x));
-    CCFloat minY = min(min(topLeft.y, topRight.y), min(bottomLeft.y, bottomRight.y));
-    CCFloat maxY = max(max(topLeft.y, topRight.y), max(bottomLeft.y, bottomRight.y));
+    float minX = min(min(topLeft.x, topRight.x), min(bottomLeft.x, bottomRight.x));
+    float maxX = max(max(topLeft.x, topRight.x), max(bottomLeft.x, bottomRight.x));
+    float minY = min(min(topLeft.y, topRight.y), min(bottomLeft.y, bottomRight.y));
+    float maxY = max(max(topLeft.y, topRight.y), max(bottomLeft.y, bottomRight.y));
         
     return CCRectMake(minX, minY, (maxX - minX), (maxY - minY));
 }
@@ -87,12 +87,12 @@ CCAffineTransform CCAffineTransformTranslate(const CCAffineTransform& t, float t
     return __CCAffineTransformMake(t.a, t.b, t.c, t.d, t.tx + t.a * tx + t.c * ty, t.ty + t.b * tx + t.d * ty);
 }
 
-CCAffineTransform CCAffineTransformScale(const CCAffineTransform& t, CCFloat sx, CCFloat sy)
+CCAffineTransform CCAffineTransformScale(const CCAffineTransform& t, float sx, float sy)
 {
     return __CCAffineTransformMake(t.a * sx, t.b * sx, t.c * sy, t.d * sy, t.tx, t.ty);
 }
 
-CCAffineTransform CCAffineTransformRotate(const CCAffineTransform& t, CCFloat anAngle)
+CCAffineTransform CCAffineTransformRotate(const CCAffineTransform& t, float anAngle)
 {
     float fSin = sin(anAngle);
     float fCos = cos(anAngle);

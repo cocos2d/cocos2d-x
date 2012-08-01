@@ -133,7 +133,7 @@ void CCControlHuePicker::updateSliderPosition(CCPoint location)
 bool CCControlHuePicker::checkSliderPosition(CCPoint location)
 {
     // check that the touch location is within the bounding rectangle before sending updates
-    if (CCRect::CCRectContainsPoint(m_background->boundingBox(), location))
+    if (m_background->boundingBox().containsPoint(location))
     {        
         updateSliderPosition(location);
         return true;

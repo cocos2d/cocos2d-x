@@ -282,7 +282,7 @@ bool CCControl::isTouchInside(CCTouch* touch)
 {
     CCPoint touchLocation=getTouchLocation(touch);
     CCRect bBox=boundingBox();
-    return CCRect::CCRectContainsPoint(bBox, touchLocation);
+    return bBox.containsPoint(touchLocation);
 }
 
 CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
