@@ -24,6 +24,9 @@ THE SOFTWARE.
 #ifndef __CCSTRING_H__
 #define __CCSTRING_H__
 
+#include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
 #include <string>
 #include <functional>
 #include "CCObject.h"
