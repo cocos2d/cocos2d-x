@@ -47,6 +47,7 @@ CCEGLViewProtocol::CCEGLViewProtocol()
 , m_fScreenScaleFactor(1.0f)
 , m_fYScale(1.0f)
 , m_fXScale(1.0f)
+, m_bIsRetinaEnabled(false)
 {
     strncpy(m_szViewName, "Cocos2d-x Game", sizeof(m_szViewName));
 }
@@ -148,7 +149,7 @@ bool CCEGLViewProtocol::canSetContentScaleFactor()
 
 void CCEGLViewProtocol::setContentScaleFactor(float contentScaleFactor)
 {
-    m_fXScale = m_fYScale = m_fScreenScaleFactor = contentScaleFactor;
+    // should not run here
 }
 
 void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
@@ -209,8 +210,20 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             }
 
             CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
-            pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x) / m_fXScale, 
-                                 (y - m_obViewPortRect.origin.y) / m_fYScale);
+            if (m_bIsRetinaEnabled)
+            {
+                // on iOS, though retina is enabled, the value got from os is also 
+                // relative to its original size
+                pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x), 
+                                     (y - m_obViewPortRect.origin.y));
+            }
+            else 
+            {
+                pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x) / m_fXScale, 
+                                     (y - m_obViewPortRect.origin.y) / m_fYScale);
+            }
+            
+            CCLog("x = %f y = %f", pTouch->getLocation().x, pTouch->getLocation().y);
             
             CCInteger* pInterObj = new CCInteger(nUnusedIndex);
             s_TouchesIntergerDict.setObject(pInterObj, id);
@@ -247,8 +260,16 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         CCTouch* pTouch = s_pTouches[pIndex->getValue()];
         if (pTouch)
         {
-            pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fXScale, 
-                                 (y - m_obViewPortRect.origin.y) / m_fYScale);
+            if (m_bIsRetinaEnabled)
+            {
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x), 
+                                     (y - m_obViewPortRect.origin.y));
+            }
+            else 
+            {
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fXScale, 
+                                     (y - m_obViewPortRect.origin.y) / m_fYScale);
+            }
             
             set.addObject(pTouch);
         }
@@ -288,9 +309,18 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         if (pTouch)
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
-            pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fXScale, 
-                                 (y - m_obViewPortRect.origin.y) / m_fYScale);
             
+            if (m_bIsRetinaEnabled)
+            {
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x), 
+                                     (y - m_obViewPortRect.origin.y));
+            }
+            else 
+            {
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fXScale, 
+                                     (y - m_obViewPortRect.origin.y) / m_fYScale);
+            }
+
             set.addObject(pTouch);
 
             // release the object

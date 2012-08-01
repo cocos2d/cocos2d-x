@@ -73,6 +73,7 @@ protected:
     float  m_fXScale;
     float  m_fYScale;
     ResolutionPolicy m_eResolutionPolicy;
+    bool   m_bIsRetinaEnabled;
 };
 
 // end of platform group
