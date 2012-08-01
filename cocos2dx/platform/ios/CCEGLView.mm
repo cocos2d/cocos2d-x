@@ -67,6 +67,8 @@ void CCEGLView::setContentScaleFactor(float contentScaleFactor)
     UIView * view = [EAGLView sharedEGLView];
     view.contentScaleFactor = contentScaleFactor;
     [view setNeedsLayout];
+    
+    m_fXScale = m_fYScale = contentScaleFactor;
 }
 
 void CCEGLView::end()

@@ -64,7 +64,7 @@ CCEGLView::~CCEGLView()
 
 bool CCEGLView::isOpenGLReady()
 {
-    return (m_sSizeInPixel.width != 0 && m_sSizeInPixel.height != 0);
+    return (m_obScreenSize.width != 0 && m_obScreenSize.height != 0);
 }
 
 void CCEGLView::end()
