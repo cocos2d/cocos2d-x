@@ -1533,14 +1533,7 @@ void TileDemo::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 
 void TileDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();    
-    CCPoint prevLocation = touch->previousLocationInView();    
-    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
-    prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
-    
-    CCPoint diff = ccpSub(touchLocation, prevLocation);
-    
+    CCPoint diff = touch->getDelta();
     CCNode *node = getChildByTag(kTagTileMap);
     CCPoint currentPos = node->getPosition();
     node->setPosition( ccpAdd(currentPos, diff) );

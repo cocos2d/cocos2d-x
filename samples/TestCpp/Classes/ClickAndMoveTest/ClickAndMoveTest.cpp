@@ -42,14 +42,13 @@ void MainLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
     
-    CCPoint location = touch->locationInView();
-    CCPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
+    CCPoint location = touch->getLocation();
 
     CCNode* s = getChildByTag(kTagSprite);
     s->stopAllActions();
-    s->runAction( CCMoveTo::create(1, CCPointMake(convertedLocation.x, convertedLocation.y) ) );
-    float o = convertedLocation.x - s->getPosition().x;
-    float a = convertedLocation.y - s->getPosition().y;
+    s->runAction( CCMoveTo::create(1, CCPointMake(location.x, location.y) ) );
+    float o = location.x - s->getPosition().x;
+    float a = location.y - s->getPosition().y;
     float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
     
     if( a < 0 ) 
