@@ -1155,8 +1155,7 @@ void ParticleDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
 void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-    CCPoint location = touch->locationInView();
-    CCPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
+    CCPoint location = touch->getLocation();
 
     CCPoint pos = CCPointZero;
     if (m_background)
@@ -1166,7 +1165,7 @@ void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
 
     if (m_emitter != NULL)
     {
-        m_emitter->setPosition( ccpSub(convertedLocation, pos) );    
+        m_emitter->setPosition( ccpSub(location, pos) );    
     }
 }
 

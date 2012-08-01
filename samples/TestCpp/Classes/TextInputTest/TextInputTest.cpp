@@ -204,8 +204,7 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
 bool KeyboardNotificationLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCLOG("++++++++++++++++++++++++++++++++++++++++++++");
-    m_beginPos = pTouch->locationInView();    
-    m_beginPos = CCDirector::sharedDirector()->convertToGL(m_beginPos);
+    m_beginPos = pTouch->getLocation();    
     return true;
 }
 
@@ -216,8 +215,7 @@ void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         return;
     }
     
-    CCPoint endPos = pTouch->locationInView();    
-    endPos = CCDirector::sharedDirector()->convertToGL(endPos);
+    CCPoint endPos = pTouch->getLocation();    
 
     float delta = 5.0f;
     if (::abs(endPos.x - m_beginPos.x) > delta

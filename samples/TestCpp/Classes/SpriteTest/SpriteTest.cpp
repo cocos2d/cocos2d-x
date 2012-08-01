@@ -279,9 +279,7 @@ void Sprite1::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
     
         addNewSpriteWithCoords( location );
     }
@@ -355,10 +353,8 @@ void SpriteBatchNode1::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
-    
+        CCPoint location = touch->getLocation();
+            
         addNewSpriteWithCoords( location );
     }
 

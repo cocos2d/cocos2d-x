@@ -165,9 +165,8 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
   //this is the same as CCControl::getTouchLocation, but it returns the position relative to the position of this control
   CCPoint CCControlSlider::getTouchLocationInControl(CCTouch* touch)
 {
-    CCPoint touchLocation=touch->locationInView();;                      // Get the touch position
-    touchLocation           = CCDirector::sharedDirector()->convertToGL(touchLocation);  // Convert the position to GL space
-    touchLocation           = convertToNodeSpace(touchLocation);         // Convert to the node space of this class
+    CCPoint touchLocation = touch->getLocation();;                      // Get the touch position
+    touchLocation = convertToNodeSpace(touchLocation);         // Convert to the node space of this class
     
    if (touchLocation.x < 0)
    {
