@@ -28,7 +28,9 @@ THE SOFTWARE.
 
 #include <stddef.h>
 #include "Export.h"
+#ifdef COCOS2D_JAVASCRIPT
 #include "spidermonkey_specifics.h"
+#endif
 
 namespace CocosDenshion {
 
@@ -36,15 +38,21 @@ namespace CocosDenshion {
 @class          SimpleAudioEngine
 @brief          offer a VERY simple interface to play background music & sound effect
 */
+#ifdef COCOS2D_JAVASCRIPT
 class EXPORT_DLL SimpleAudioEngine : public TypeInfo
+#else
+class EXPORT_DLL SimpleAudioEngine
+#endif
 {
 public:
     SimpleAudioEngine();
     ~SimpleAudioEngine();
 
+#ifdef COCOS2D_JAVASCRIPT
     virtual uint32_t getClassTypeInfo() {
         return reinterpret_cast<int>(typeid(CocosDenshion::SimpleAudioEngine).name());
     }
+#endif
 
     /**
     @brief Get the shared Engine object,it will new one when first time be called
@@ -191,3 +199,4 @@ public:
 } // end of namespace CocosDenshion
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_
+
