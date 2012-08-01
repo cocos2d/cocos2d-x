@@ -87,8 +87,8 @@ public:
 
 public:
     //extension in CCGridAction 
-    void setAmplitudeRate(CCFloat amp);
-    CCFloat getAmplitudeRate(void);
+    void setAmplitudeRate(float amp);
+    float getAmplitudeRate(void);
 
 protected:
     float m_elapsed;

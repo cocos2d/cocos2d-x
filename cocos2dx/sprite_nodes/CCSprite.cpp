@@ -1015,10 +1015,9 @@ bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
 {
     CCRect r = pFrame->getRect();
 
-    return (CCRect::CCRectEqualToRect(r, m_obRect) &&
-        pFrame->getTexture()->getName() == m_pobTexture->getName() &&
-        CCPoint::CCPointEqualToPoint( pFrame->getOffset(), m_obUnflippedOffsetPositionFromCenter ) 
-        );
+    return (r.equals(m_obRect) &&
+            pFrame->getTexture()->getName() == m_pobTexture->getName() &&
+            pFrame->getOffset().equals(m_obUnflippedOffsetPositionFromCenter));
 }
 
 CCSpriteFrame* CCSprite::displayFrame(void)
