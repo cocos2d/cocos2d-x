@@ -862,6 +862,14 @@ CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_Menu
     return pRet;
 }
 
+CCMenuItemToggle * CCMenuItemToggle::create()
+{
+    CCMenuItemToggle *pRet = new CCMenuItemToggle();
+    pRet->initWithTarget(NULL, NULL, NULL, NULL);
+    pRet->autorelease();
+    return pRet;
+}
+
 bool CCMenuItemToggle::initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 {
     CCMenuItem::initWithTarget(target, selector);
@@ -915,7 +923,7 @@ CCMenuItemToggle::~CCMenuItemToggle()
 }
 void CCMenuItemToggle::setSelectedIndex(unsigned int index)
 {
-    if( index != m_uSelectedIndex )
+    if( index != m_uSelectedIndex && m_pSubItems->count() > 0 )
     {
         m_uSelectedIndex = index;
         CCMenuItem *currentItem = (CCMenuItem*)getChildByTag(kCurrentItem);
