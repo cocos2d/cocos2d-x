@@ -69,6 +69,7 @@ void CCEGLView::setContentScaleFactor(float contentScaleFactor)
     [view setNeedsLayout];
     
     m_fXScale = m_fYScale = contentScaleFactor;
+    m_bIsRetinaEnabled = true;
 }
 
 void CCEGLView::end()
