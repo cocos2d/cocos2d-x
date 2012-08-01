@@ -142,7 +142,7 @@ public:
      */
     void setZoomScale(float s, bool animated);
 
-    CCFloat getZoomScale();
+    float getZoomScale();
 
     /**
      * Sets a new scale for container in a given duration.
@@ -268,15 +268,15 @@ protected:
     /**
      * current zoom scale
      */
-    CCFloat m_fZoomScale;
+    float m_fZoomScale;
     /**
      * min zoom scale
      */
-    CCFloat m_fMinZoomScale;
+    float m_fMinZoomScale;
     /**
      * max zoom scale
      */
-    CCFloat m_fMaxZoomScale;
+    float m_fMaxZoomScale;
     /**
      * scroll view delegate
      */
@@ -327,7 +327,7 @@ protected:
     /**
      * length between two fingers
      */
-    CCFloat m_fTouchLength;
+    float m_fTouchLength;
     /**
      * UITouch objects to detect multitouch
      */
@@ -341,7 +341,7 @@ protected:
     /**
      * max and min scale
      */
-    CCFloat m_fMinScale, m_fMaxScale;
+    float m_fMinScale, m_fMaxScale;
 };
 
 // end of GUI group

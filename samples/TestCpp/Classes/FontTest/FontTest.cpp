@@ -86,7 +86,7 @@ void FontTest::showFont(const char *pFont)
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCSize blockSize = CCSizeMake(s.width/3, 200);
-    CCFloat fontSize = 26;
+    float fontSize = 26;
 
     removeChildByTag(kTagLabel1, true);
     removeChildByTag(kTagLabel2, true);

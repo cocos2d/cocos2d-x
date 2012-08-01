@@ -43,15 +43,15 @@ public:
         CCLabelTTF* offLabel);
     void draw();
     void needsLayout();
-    void setSliderXPosition(CCFloat sliderXPosition);
-    CCFloat getSliderXPosition() {return m_fSliderXPosition;}
-    CCFloat onSideWidth();
-    CCFloat offSideWidth();
+    void setSliderXPosition(float sliderXPosition);
+    float getSliderXPosition() {return m_fSliderXPosition;}
+    float onSideWidth();
+    float offSideWidth();
     virtual void updateTweenAction(float value, const char* key);
 /** Contains the position (in x-axis) of the slider inside the receiver. */
-    CCFloat m_fSliderXPosition;
-    CC_SYNTHESIZE(CCFloat, m_fOnPosition, OnPosition)
-    CC_SYNTHESIZE(CCFloat, m_fOffPosition, OffPosition)
+    float m_fSliderXPosition;
+    CC_SYNTHESIZE(float, m_fOnPosition, OnPosition)
+    CC_SYNTHESIZE(float, m_fOffPosition, OffPosition)
     
     CC_SYNTHESIZE_RETAIN(CCTexture2D*, m_pMaskTexture, MaskTexture)
     CC_SYNTHESIZE(GLuint, m_uTextureLocation, TextureLocation)
@@ -227,7 +227,7 @@ void CCControlSwitchSprite::needsLayout()
     setFlipY(true);
 }
 
-void CCControlSwitchSprite::setSliderXPosition(CCFloat sliderXPosition)
+void CCControlSwitchSprite::setSliderXPosition(float sliderXPosition)
 {
     if (sliderXPosition <= m_fOffPosition)
     {
@@ -245,12 +245,12 @@ void CCControlSwitchSprite::setSliderXPosition(CCFloat sliderXPosition)
 }
 
 
-CCFloat CCControlSwitchSprite::onSideWidth()
+float CCControlSwitchSprite::onSideWidth()
 {
     return m_pOnSprite->getContentSize().width;
 }
 
-CCFloat CCControlSwitchSprite::offSideWidth()
+float CCControlSwitchSprite::offSideWidth()
 {
     return m_pOffSprite->getContentSize().height;
 }

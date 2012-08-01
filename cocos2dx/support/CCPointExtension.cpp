@@ -32,13 +32,13 @@ NS_CC_BEGIN
 
 #define kCCPointEpsilon FLT_EPSILON
 
-CCFloat
+float
 ccpLength(const CCPoint& v)
 {
     return sqrtf(ccpLengthSQ(v));
 }
 
-CCFloat
+float
 ccpDistance(const CCPoint& v1, const CCPoint& v2)
 {
     return ccpLength(ccpSub(v1, v2));
@@ -51,12 +51,12 @@ ccpNormalize(const CCPoint& v)
 }
 
 CCPoint
-ccpForAngle(const CCFloat a)
+ccpForAngle(const float a)
 {
     return ccp(cosf(a), sinf(a));
 }
 
-CCFloat
+float
 ccpToAngle(const CCPoint& v)
 {
     return atan2f(v.y, v.x);
