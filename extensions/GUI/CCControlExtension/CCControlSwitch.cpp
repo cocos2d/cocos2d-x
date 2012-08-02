@@ -373,8 +373,7 @@ void CCControlSwitch::setEnabled(bool enabled)
 
 CCPoint CCControlSwitch::locationFromTouch(CCTouch* pTouch)
 {
-    CCPoint touchLocation   = pTouch->locationInView();                      // Get the touch position
-    touchLocation           = CCDirector::sharedDirector()->convertToGL(touchLocation);  // Convert the position to GL space
+    CCPoint touchLocation   = pTouch->getLocation();                      // Get the touch position
     touchLocation           = this->convertToNodeSpace(touchLocation);                  // Convert to the node space of this class
     
     return touchLocation;

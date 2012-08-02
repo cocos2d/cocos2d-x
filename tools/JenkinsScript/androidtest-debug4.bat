@@ -4,9 +4,11 @@
 ::%ANT_HOME% %ANDROID_HOME% %JAVA_HOME% %CYGWIN% %GITBIN% %ANDROID_NDK% 
 :: Don't change it until you know what you do.
 
-::In order to prevent the problem of permission,make the current user group get the ownership of project.
-::Set the current user name.
-::set _USERNAME=
+if not exist "%CYGWIN%" echo Couldn't find Cygwin at "%CYGWIN%" and you should set like this "C:\cygwin"& pause & exit 1
+if not exist "%GITBIN%" echo Couldn't find Gitbin at "%GITBIN%" and you should set like this "F:\Git\bin"& pause & exit 2
+if not exist "%ANDROID_HOME%" echo Couldn't find ANDROID_HOME at "%ANDROID_HOME%" and you should set like this "D:\Windows7\android-sdk-windows"& pause & exit 3
+if not exist "%ANDROID_NDK%" echo Couldn't find Cygwin at "%ANDROID_NDK%" and you should set like this "D:\Windows7\android-ndk-r8"& pause & exit 4
+if not exist "%JAVA_HOME%" echo Couldn't find Cygwin at "%JAVA_HOME%" and you should set like this "C:\Program Files\Java\jdk1.7.0_05"& pause & exit 5
 
 set _PROJECTNAME=TestCpp
 cd ..\..
@@ -74,23 +76,23 @@ cd ../../..
 IF "%_PROJECTNAME%"=="TestCpp" set /a testresult1=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
 IF "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloLua&& goto project
 IF "%_PROJECTNAME%"=="HelloLua" set /a testresult3=(result8+result10+result11+result12+result13)
-set /a testresult=(testresult1+result2+result3)
+set /a testresult=(testresult1+testresult2+testresult3)
 IF %testresult% NEQ 0 goto error
 
 goto success
 
 :error
 echo Error.
-git checkout -f|%GITBIN%\sh.exe --login
-git clean -df -x|%GITBIN%\sh.exe --login
+git checkout -f
+git clean -df -x
 pause
 exit 1
 goto end
 
 :success
 echo Success.
-git checkout -f|%GITBIN%\sh.exe --login
-git clean -df|%GITBIN%\sh.exe --login
+git checkout -f
+git clean -df -x
 pause
 exit 0
 goto end
