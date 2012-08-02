@@ -84,7 +84,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     m_capInsets = capInsets;
     
     // If there is no given rect
-    if ( CCRect::CCRectEqualToRect(rect, CCRectZero) )
+    if ( rect.equals(CCRectZero) )
     {
         // Get the texture size as original
         CCSize textureSize = scale9Image->getTextureAtlas()->getTexture()->getContentSize();
@@ -99,7 +99,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     m_capInsetsInternal = capInsets;
     
     // If there is no specified center region
-    if ( CCRect::CCRectEqualToRect(m_capInsetsInternal, CCRectZero) )
+    if ( m_capInsetsInternal.equals(CCRectZero) )
     {
         // Apply the 3x3 grid format
         m_capInsetsInternal = CCRectMake(

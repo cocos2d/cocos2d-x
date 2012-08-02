@@ -135,11 +135,10 @@ CCRect CCControlUtils::CCRectUnion(const CCRect& src1, const CCRect& src2)
 {
     CCRect result;
     
-    float x1 = MIN(CCRect::CCRectGetMinX(src1), CCRect::CCRectGetMinX(src2));
-    float y1 = MIN(CCRect::CCRectGetMinY(src1), CCRect::CCRectGetMinY(src2));
-
-    float x2 = MAX(CCRect::CCRectGetMaxX(src1), CCRect::CCRectGetMaxX(src2));
-    float y2 = MAX(CCRect::CCRectGetMaxY(src1), CCRect::CCRectGetMaxY(src2));
+    float x1 = MIN(src1.getMinX(), src2.getMinX());
+    float y1 = MIN(src1.getMinY(), src2.getMinY());
+    float x2 = MAX(src1.getMaxX(), src2.getMaxX());
+    float y2 = MAX(src1.getMaxY(), src2.getMaxY());
     
     result.origin=ccp(x1,x2);
     result.size=CCSizeMake(x2-x1, y2-y1);

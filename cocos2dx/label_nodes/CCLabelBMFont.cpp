@@ -1070,7 +1070,7 @@ bool CCLabelBMFont::isOpacityModifyRGB()
 // LabelBMFont - AnchorPoint
 void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 {
-    if( ! CCPoint::CCPointEqualToPoint(point, m_tAnchorPoint) )
+    if( ! point.equals(m_tAnchorPoint))
     {
         CCSpriteBatchNode::setAnchorPoint(point);
         updateLabel();
