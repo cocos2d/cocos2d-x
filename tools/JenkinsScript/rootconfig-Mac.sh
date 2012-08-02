@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 #get params for build_native.sh
 CUR=$(pwd)
 cd ../../..
