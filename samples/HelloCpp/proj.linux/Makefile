@@ -5,7 +5,7 @@ CCFLAGS = -Wall -g -O2
 CXXFLAGS = -Wall -g -O2 
 VISIBILITY = 
 
-COCOS2DX_PATH = ../../cocos2dx
+COCOS2DX_PATH = ../../../cocos2dx
 INCLUDES =  -I../ \
 			-I../Classes \
 			-I$(COCOS2DX_PATH) \
@@ -29,9 +29,9 @@ OBJECTS = ./main.o \
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
-STATICLIBS_DIR = ../../cocos2dx/platform/third_party/linux/libraries/lib64
+STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries/lib64
 else
-STATICLIBS_DIR = ../../cocos2dx/platform/third_party/linux/libraries
+STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries
 endif
 STATICLIBS = 
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
@@ -43,10 +43,10 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 #				$(STATICLIBS_DIR)/libGLEW.a \
 
 
-SHAREDLIBS = -L../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../lib/linux/Debug/ 
+SHAREDLIBS = -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../lib/linux/Debug/ 
 SHAREDLIBS += -lglfw
-SHAREDLIBS += -Wl,-rpath,../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
-SHAREDLIBS += -L../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
+SHAREDLIBS += -Wl,-rpath,../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
 #$(shell ../../build-linux.sh $<)
 ####### Build rules
