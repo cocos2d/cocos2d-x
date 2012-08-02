@@ -280,8 +280,8 @@ public:
     Only available when compiled using SDK >= 4.0.
     @since v0.99.4
     */
-    void setContentScaleFactor(CCFloat scaleFactor);
-    CCFloat getContentScaleFactor(void);
+    void setContentScaleFactor(float scaleFactor);
+    float getContentScaleFactor(void);
 
     typedef void(*WatcherCallbackFun)(void *pSender);
     void setWatcherCallbackFun(void *pSender, WatcherCallbackFun fun);
@@ -388,7 +388,7 @@ protected:
     CCSize m_obWinSizeInPixels;
     
     /* content scale factor */
-    CCFloat    m_fContentScaleFactor;
+    float    m_fContentScaleFactor;
 
     /* store the fps string */
     char *m_pszFPS;

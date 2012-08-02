@@ -47,12 +47,12 @@ void Ball::collideWithPaddle(Paddle* paddle)
     paddleRect.origin.x += paddle->getPosition().x;
     paddleRect.origin.y += paddle->getPosition().y;
     
-    float lowY = CCRect::CCRectGetMinY(paddleRect);
-    float midY = CCRect::CCRectGetMidY(paddleRect);
-    float highY = CCRect::CCRectGetMaxY(paddleRect);
+    float lowY  = paddleRect.getMinY();
+    float midY  = paddleRect.getMidY();
+    float highY = paddleRect.getMaxY();
     
-    float leftX = CCRect::CCRectGetMinX(paddleRect);
-    float rightX = CCRect::CCRectGetMaxX(paddleRect);
+    float leftX  = paddleRect.getMinX();
+    float rightX = paddleRect.getMaxX();
     
     if (getPosition().x > leftX && getPosition().x < rightX) {
     
