@@ -5,13 +5,13 @@ CCFLAGS = -Wall -g -O2
 CXXFLAGS = -Wall -g -O2 
 VISIBILITY = 
 
-COCOS2DX_PATH = ../../cocos2dx
-JSBINDING_PATH=../../js/JSBindings
+COCOS2DX_PATH = ../../../cocos2dx
+JSBINDING_PATH=../../../scripting/javascript/bindings
 INCLUDES =  -I../ \
 			-I../Classes \
-			-I../../js/JSBindings \
-			-I../../js/spidermonkey-linux/js-1.8.5/js/src \
-			-I../../CocosDenshion/include \
+			-I$(JSBINDING_PATH) \
+			-I$(JSBINDING_PATH)/../spidermonkey-linux/js-1.8.5/js/src \
+			-I../../../CocosDenshion/include \
 			-I$(COCOS2DX_PATH) \
 			-I$(COCOS2DX_PATH)/cocoa \
 			-I$(COCOS2DX_PATH)/include \
@@ -33,34 +33,34 @@ OBJECTS = ./main.o \
 		$(JSBINDING_PATH)/cocos_denshion_generated.o \
 		$(JSBINDING_PATH)/ScriptingCore.o \
         ../Classes/AppDelegate.o \
-		../Classes/simple_class.o \
-		../Classes/simple_native_generated.o
+#		../Classes/simple_class.o \
+#		../Classes/simple_native_generated.o
 
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
-STATICLIBS_DIR = ../../cocos2dx/platform/third_party/linux/libraries/lib64
+STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries/lib64
 else
-STATICLIBS_DIR = ../../cocos2dx/platform/third_party/linux/libraries
+STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries
 endif
 STATICLIBS =  
 STATICLIBS += $(STATICLIBS_DIR)/libtiff.a \
-				../../js/spidermonkey-linux/js-1.8.5/js/src/libjs_static.a \
+				$(JSBINDING_PATH)/../spidermonkey-linux/js-1.8.5/js/src/libjs_static.a \
 
 ifeq ($(LBITS),64)
-SHAREDLIBS_DIR = ../../CocosDenshion/third_party/fmod/lib64/api/lib
+SHAREDLIBS_DIR = ../../../CocosDenshion/third_party/fmod/lib64/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex64
 else
-SHAREDLIBS_DIR = ../../CocosDenshion/third_party/fmod/api/lib
+SHAREDLIBS_DIR = ../../../CocosDenshion/third_party/fmod/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
-SHAREDLIBS += -L../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../lib/linux/Debug/ 
+SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../lib/linux/Debug/ 
 SHAREDLIBS += -lglfw
 #SHAREDLIBS += -lGLEW
 SHAREDLIBS += -Wl,-rpath,$(SHAREDLIBS_DIR)
-SHAREDLIBS += -Wl,-rpath,../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib 
-SHAREDLIBS += -L../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
+SHAREDLIBS += -Wl,-rpath,../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib 
+SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
 #$(shell ../../build-linux.sh $<)
 ####### Build rules

@@ -39,7 +39,7 @@ if ! test -d $DIR_GLEW170/glew-1.7.0/; then
 		cd -
 	fi
 
-	DIR_SPIDERMONKEY_LINUX=$COCOS2DX20_TRUNK/js/spidermonkey-linux
+	DIR_SPIDERMONKEY_LINUX=$COCOS2DX20_TRUNK/scripting/javascript/spidermonkey-linux
 	if ! test -d $DIR_SPIDERMONKEY_LINUX/js-1.8.5; then
 		cd $DIR_SPIDERMONKEY_LINUX
 		echo -e $TXTCOLOR_GREEN"building spidermonkey ..."$TXTCOLOR_DEFAULT;
@@ -54,13 +54,13 @@ if ! test -d $OUTPUT_DEBUG; then
 	mkdir $OUTPUT_DEBUG -p
 fi
 
-make -C $COCOS2DX20_TRUNK/Box2D/proj.linux
+make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux
 check_make_result
-cp $COCOS2DX20_TRUNK/Box2D/proj.linux/libbox2d.a $OUTPUT_DEBUG
+cp $COCOS2DX20_TRUNK/external/Box2D/proj.linux/libbox2d.a $OUTPUT_DEBUG
 
-make -C $COCOS2DX20_TRUNK/chipmunk/proj.linux
+make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux
 check_make_result
-cp $COCOS2DX20_TRUNK/chipmunk/proj.linux/libchipmunk.a $OUTPUT_DEBUG
+cp $COCOS2DX20_TRUNK/external/chipmunk/proj.linux/libchipmunk.a $OUTPUT_DEBUG
 
 make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux
 check_make_result
@@ -71,11 +71,11 @@ check_make_result
 cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_DEBUG
 
 
-make -C $COCOS2DX20_TRUNK/tests/proj.linux
+make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux
 check_make_result
-make -C $COCOS2DX20_TRUNK/HelloWorld/Linux
+make -C $COCOS2DX20_TRUNK/samples/HelloCpp/Linux
 check_make_result
-make -C $COCOS2DX20_TRUNK/testjs/proj.linux
+make -C $COCOS2DX20_TRUNK/samples/TestJavascript/proj.linux
 check_make_result
 
 #cd $COCOS2DX20_TRUNK/tests/proj.linux

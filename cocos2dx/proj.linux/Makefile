@@ -173,9 +173,6 @@ OBJECTS = ../actions/CCAction.o \
 					../CCDrawingPrimitives.o \
 					../CCScheduler.o \
 					../cocos2d.o 
-#					../cocoa/CCData.o \
-#					../layers_scenes_transitions_nodes/CCTransitionRadial.o \
-#					../misc_nodes/CCRibbon.o \
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
@@ -190,7 +187,6 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
 				$(STATICLIBS_DIR)/libtiff.a \
-#				$(STATICLIBS_DIR)/libGLEW.a \
 
 SHAREDLIBS = 
 SHAREDLIBS += -lglfw -lGL
