@@ -851,7 +851,7 @@ void CCWavesTiles3D::update(float time)
         {
             ccQuad3 coords = originalTile(ccg(i, j));
 
-            coords.bl.z = (sinf(time * (CCFloat)M_PI  *m_nWaves * 2 + 
+            coords.bl.z = (sinf(time * (float)M_PI  *m_nWaves * 2 + 
                 (coords.bl.y+coords.bl.x) * .01f) * m_fAmplitude * m_fAmplitudeRate );
             coords.br.z    = coords.bl.z;
             coords.tl.z = coords.bl.z;
@@ -927,8 +927,8 @@ void CCJumpTiles3D::update(float time)
 {
     int i, j;
 
-    float sinz =  (sinf((CCFloat)M_PI * time * m_nJumps * 2) * m_fAmplitude * m_fAmplitudeRate );
-    float sinz2 = (sinf((CCFloat)M_PI * (time * m_nJumps * 2 + 1)) * m_fAmplitude * m_fAmplitudeRate );
+    float sinz =  (sinf((float)M_PI * time * m_nJumps * 2) * m_fAmplitude * m_fAmplitudeRate );
+    float sinz2 = (sinf((float)M_PI * (time * m_nJumps * 2 + 1)) * m_fAmplitude * m_fAmplitudeRate );
 
     for( i = 0; i < m_sGridSize.x; i++ )
     {

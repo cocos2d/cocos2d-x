@@ -112,7 +112,7 @@ void CC_DLL ccDrawCatmullRom( CCPointArray *arrayOfControlPoints, unsigned int s
  @warning This function could be pretty slow. Use it only for debugging purposes.
  @since v2.0
  */
-void CC_DLL ccDrawCardinalSpline( CCPointArray *config, CCFloat tension,  unsigned int segments );
+void CC_DLL ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int segments );
 
 /** set the drawing color with 4 unsigned bytes
  @since v2.0

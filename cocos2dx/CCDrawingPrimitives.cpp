@@ -320,19 +320,19 @@ void ccDrawCatmullRom( CCPointArray *points, unsigned int segments )
     ccDrawCardinalSpline( points, 0.5f, segments );
 }
 
-void ccDrawCardinalSpline( CCPointArray *config, CCFloat tension,  unsigned int segments )
+void ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int segments )
 {
     lazy_init();
 
     ccVertex2F* vertices = new ccVertex2F[segments + 1];
 
     unsigned int p;
-    CCFloat lt;
-    CCFloat deltaT = 1.0f / config->count();
+    float lt;
+    float deltaT = 1.0f / config->count();
 
     for( unsigned int i=0; i < segments+1;i++) {
 
-        CCFloat dt = (CCFloat)i / segments;
+        float dt = (float)i / segments;
 
         // border
         if( dt == 1 ) {
@@ -340,7 +340,7 @@ void ccDrawCardinalSpline( CCPointArray *config, CCFloat tension,  unsigned int 
             lt = 1;
         } else {
             p = dt / deltaT;
-            lt = (dt - deltaT * (CCFloat)p) / deltaT;
+            lt = (dt - deltaT * (float)p) / deltaT;
         }
 
         // Interpolate
