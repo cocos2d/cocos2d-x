@@ -626,7 +626,7 @@ CCPoint CCTMXLayer::calculateLayerOffset(const CCPoint& pos)
             (m_tMapTileSize.height /2 ) * (-pos.x - pos.y) );
         break;
     case CCTMXOrientationHex:
-        CCAssert(CCPoint::CCPointEqualToPoint(pos, CCPointZero), "offset for hexagonal map not implemented yet");
+        CCAssert(pos.equals(CCPointZero), "offset for hexagonal map not implemented yet");
         break;
     }
     return ret;    

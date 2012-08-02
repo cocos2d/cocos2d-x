@@ -98,8 +98,8 @@ bool CCOrbitCamera::initWithDuration(float t, float radius, float deltaRadius, f
         m_fAngleX = angleX;
         m_fDeltaAngleX = deltaAngleX;
 
-        m_fRadDeltaZ = (CCFloat)CC_DEGREES_TO_RADIANS(deltaAngleZ);
-        m_fRadDeltaX = (CCFloat)CC_DEGREES_TO_RADIANS(deltaAngleX);
+        m_fRadDeltaZ = (float)CC_DEGREES_TO_RADIANS(deltaAngleZ);
+        m_fRadDeltaX = (float)CC_DEGREES_TO_RADIANS(deltaAngleX);
         return true;
     }
     return false;
@@ -113,12 +113,12 @@ void CCOrbitCamera::startWithTarget(CCNode *pTarget)
     if( isnan(m_fRadius) )
         m_fRadius = r;
     if( isnan(m_fAngleZ) )
-        m_fAngleZ = (CCFloat)CC_RADIANS_TO_DEGREES(zenith);
+        m_fAngleZ = (float)CC_RADIANS_TO_DEGREES(zenith);
     if( isnan(m_fAngleX) )
-        m_fAngleX = (CCFloat)CC_RADIANS_TO_DEGREES(azimuth);
+        m_fAngleX = (float)CC_RADIANS_TO_DEGREES(azimuth);
 
-    m_fRadZ = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);
-    m_fRadX = (CCFloat)CC_DEGREES_TO_RADIANS(m_fAngleX);
+    m_fRadZ = (float)CC_DEGREES_TO_RADIANS(m_fAngleZ);
+    m_fRadX = (float)CC_DEGREES_TO_RADIANS(m_fAngleX);
 }
 
 void CCOrbitCamera::update(float dt)
@@ -157,7 +157,7 @@ void CCOrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azim
 
     *zenith = acosf( z/r);
     if( x < 0 )
-        *azimuth= (CCFloat)M_PI - asinf(y/s);
+        *azimuth= (float)M_PI - asinf(y/s);
     else
         *azimuth = asinf(y/s);
 

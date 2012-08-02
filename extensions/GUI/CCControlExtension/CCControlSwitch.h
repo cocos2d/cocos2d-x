@@ -98,7 +98,7 @@ public:
 protected:
     /** Sprite which represents the view. */
     CCControlSwitchSprite* m_pSwitchSprite;
-    CCFloat m_fInitialTouchXPosition;
+    float m_fInitialTouchXPosition;
     
     bool m_bMoved;
     /** A Boolean value that determines the off/on state of the switch. */
