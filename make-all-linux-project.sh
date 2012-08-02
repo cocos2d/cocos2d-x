@@ -71,10 +71,13 @@ check_make_result
 cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_DEBUG
 
 
+make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
 make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux
 check_make_result
+make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
 make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux
 check_make_result
+make -C $COCOS2DX20_TRUNK/samples/TestJavascript/proj.linux clean
 make -C $COCOS2DX20_TRUNK/samples/TestJavascript/proj.linux
 check_make_result
 
