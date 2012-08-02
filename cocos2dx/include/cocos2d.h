@@ -79,7 +79,6 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "ccTypes.h"
-#include "cocos2dExt.h"
 
 // kazmath
 #include "kazmath/include/kazmath/kazmath.h"
@@ -152,11 +151,11 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFROM == CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#include "platform/Linux/CCAccelerometer.h"
-#include "platform/Linux/CCApplication.h"
-#include "platform/Linux/CCEGLView.h"
-#include "platform/Linux/CCGL.h"
-#include "platform/Linux/CCStdC.h"
+#include "platform/linux/CCAccelerometer.h"
+#include "platform/linux/CCApplication.h"
+#include "platform/linux/CCEGLView.h"
+#include "platform/linux/CCGL.h"
+#include "platform/linux/CCStdC.h"
 #endif // CC_TARGET_PLATFROM == CC_PLATFORM_LINUX
 
 
@@ -195,12 +194,12 @@ THE SOFTWARE.
 #include "textures/CCTexturePVR.h"
 
 // tileMap_parallax_nodes
-#include "tileMap_parallax_nodes/CCParallaxNode.h"
-#include "tileMap_parallax_nodes/CCTMXLayer.h"
-#include "tileMap_parallax_nodes/CCTMXObjectGroup.h"
-#include "tileMap_parallax_nodes/CCTMXTiledMap.h"
-#include "tileMap_parallax_nodes/CCTMXXMLParser.h"
-#include "tileMap_parallax_nodes/CCTileMapAtlas.h"
+#include "tilemap_parallax_nodes/CCParallaxNode.h"
+#include "tilemap_parallax_nodes/CCTMXLayer.h"
+#include "tilemap_parallax_nodes/CCTMXObjectGroup.h"
+#include "tilemap_parallax_nodes/CCTMXTiledMap.h"
+#include "tilemap_parallax_nodes/CCTMXXMLParser.h"
+#include "tilemap_parallax_nodes/CCTileMapAtlas.h"
 
 // touch_dispatcher
 #include "touch_dispatcher/CCTouch.h"

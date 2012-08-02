@@ -17,11 +17,13 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH)/include \
 			-I$(COCOS2DX_PATH)/kazmath/include \
 			-I$(COCOS2DX_PATH)/platform \
-			-I$(COCOS2DX_PATH)/platform/Linux \
+			-I$(COCOS2DX_PATH)/platform/linux \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
 			-I../../../CocosDenshion/include \
+			-I../../../extensions/ \
+			-I../../../external/ \
 			-I../../../external/chipmunk/include/chipmunk \
 
 
@@ -111,7 +113,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/ZwoptexTest/ZwoptexTest.o \
 			../Classes/controller.o \
 			../Classes/testBasic.o \
-			../AppDelegate.o \
+			../Classes/AppDelegate.o \
 			./main.o 
 
 					

@@ -1,6 +1,6 @@
 #include "main.h"
 #include "cocos2d.h"
-#include "../AppDelegate.h"
+#include "../Classes/AppDelegate.h"
 
 USING_NS_CC;
 int main(int argc, char **argv) {

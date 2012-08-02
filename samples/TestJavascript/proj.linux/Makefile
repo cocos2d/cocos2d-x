@@ -15,24 +15,24 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH) \
 			-I$(COCOS2DX_PATH)/cocoa \
 			-I$(COCOS2DX_PATH)/include \
+			-I$(COCOS2DX_PATH)/platform \
+			-I$(COCOS2DX_PATH)/platform/linux \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libfreetype2 \
-			-I$(COCOS2DX_PATH)/platform \
-			-I$(COCOS2DX_PATH)/platform/Linux \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
-			-I$(COCOS2DX_PATH)/kazmath/include \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
+			-I$(COCOS2DX_PATH)/kazmath/include \
 
 
 DEFINES = -DLINUX
 
 OBJECTS = ./main.o \
+        ../Classes/AppDelegate.o \
+		$(JSBINDING_PATH)/ScriptingCore.o \
 		$(JSBINDING_PATH)/cocos2d_generated.o \
 		$(JSBINDING_PATH)/cocos2d_manual_bindings.o \
 		$(JSBINDING_PATH)/cocos_denshion_generated.o \
-		$(JSBINDING_PATH)/ScriptingCore.o \
-        ../Classes/AppDelegate.o \
 #		../Classes/simple_class.o \
 #		../Classes/simple_native_generated.o
 
