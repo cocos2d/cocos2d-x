@@ -371,17 +371,20 @@ LabelTTFAlignment::LabelTTFAlignment()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* ttf0 = CCLabelTTF::create("Alignment 0\nnew line", CCSizeMake(256, 32), kCCTextAlignmentLeft, "Helvetica", 12);
+    CCLabelTTF* ttf0 = CCLabelTTF::create("Alignment 0\nnew line", "Helvetica", 12,
+                                          CCSizeMake(256, 32), kCCTextAlignmentLeft);
     ttf0->setPosition(ccp(s.width/2,(s.height/6)*2));
     ttf0->setAnchorPoint(ccp(0.5f,0.5f));
     this->addChild(ttf0);
 
-    CCLabelTTF* ttf1 = CCLabelTTF::create("Alignment 1\nnew line", CCSizeMake(245, 32), kCCTextAlignmentCenter, "Helvetica", 12);
+    CCLabelTTF* ttf1 = CCLabelTTF::create("Alignment 1\nnew line", "Helvetica", 12,
+                                          CCSizeMake(245, 32), kCCTextAlignmentCenter);
     ttf1->setPosition(ccp(s.width/2,(s.height/6)*3));
     ttf1->setAnchorPoint(ccp(0.5f,0.5f));
     this->addChild(ttf1);
 
-    CCLabelTTF* ttf2 = CCLabelTTF::create("Alignment 2\nnew line", CCSizeMake(245, 32), kCCTextAlignmentRight, "Helvetica", 12);
+    CCLabelTTF* ttf2 = CCLabelTTF::create("Alignment 2\nnew line", "Helvetica", 12,
+                                          CCSizeMake(245, 32), kCCTextAlignmentRight);
     ttf2->setPosition(ccp(s.width/2,(s.height/6)*4));
     ttf2->setAnchorPoint(ccp(0.5f,0.5f));
     this->addChild(ttf2);
@@ -997,7 +1000,8 @@ void  LabelTTFTest::updateAlignment()
         m_plabel->removeFromParentAndCleanup(true);
     }
     
-    m_plabel = CCLabelTTF::create(this->getCurrentAlignment(), blockSize, m_eHorizAlign, m_eVertAlign, "Marker Felt", 32);
+    m_plabel = CCLabelTTF::create(this->getCurrentAlignment(), "Marker Felt", 32,
+                                  blockSize, m_eHorizAlign, m_eVertAlign);
     m_plabel->retain();
 
     m_plabel->setAnchorPoint(ccp(0,0));
@@ -1087,11 +1091,11 @@ LabelTTFMultiline::LabelTTFMultiline()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelTTF *center = CCLabelTTF::create("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
-        CCSizeMake(s.width/2,200),
-        kCCTextAlignmentCenter,
-        kCCVerticalTextAlignmentTop,
-        "Paint Boy",
-        32);
+                                            "Paint Boy",
+                                            32,
+                                            CCSizeMake(s.width/2,200),
+                                            kCCTextAlignmentCenter,
+                                            kCCVerticalTextAlignmentTop);
 
     center->setPosition(ccp(s.width / 2, 150));
 
@@ -1291,7 +1295,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, coco
     CCTouch *touch = (CCTouch *)pTouches->anyObject();
     CCPoint location = touch->getLocationInView();
 
-    if (CCRect::CCRectContainsPoint(this->m_pArrowsShouldRetain->boundingBox(), location))
+    if (this->m_pArrowsShouldRetain->boundingBox().containsPoint(location))
     {
         m_drag = true;
         this->m_pArrowsBarShouldRetain->setVisible(true);

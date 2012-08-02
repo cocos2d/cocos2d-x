@@ -49,7 +49,7 @@ void Paddle::onExit()
 
 bool Paddle::containsTouchLocation(CCTouch* touch)
 {
-    return CCRect::CCRectContainsPoint(rect(), convertTouchToNodeSpaceAR(touch));
+    return rect().containsPoint(convertTouchToNodeSpaceAR(touch));
 }
 
 bool Paddle::ccTouchBegan(CCTouch* touch, CCEvent* event)
