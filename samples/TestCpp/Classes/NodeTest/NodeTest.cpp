@@ -800,9 +800,7 @@ void ConvertToNode::ccTouchesEnded(CCSet* touches, CCEvent *event)
     for( CCSetIterator it = touches->begin(); it != touches->end(); ++it)
     {
         CCTouch* touch = (CCTouch*)(*it);
-        CCPoint location = touch->locationInView();
-
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
 
         for( int i = 0; i < 3; i++)
         {

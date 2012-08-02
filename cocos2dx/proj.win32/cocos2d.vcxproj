@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -211,6 +211,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXTiledMap.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXXMLParser.cpp" />
+    <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDelegate.cpp" />
