@@ -1,6 +1,6 @@
 CC      = gcc
 CXX     = g++
-TARGET	= HelloWorld
+TARGET	= HelloCpp
 CCFLAGS = -Wall -g -O2 
 CXXFLAGS = -Wall -g -O2 
 VISIBILITY = 
@@ -14,7 +14,7 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH)/cocoa \
 			-I$(COCOS2DX_PATH)/include \
 			-I$(COCOS2DX_PATH)/platform \
-			-I$(COCOS2DX_PATH)/platform/Linux \
+			-I$(COCOS2DX_PATH)/platform/linux \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I$(COCOS2DX_PATH)/kazmath/include \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \

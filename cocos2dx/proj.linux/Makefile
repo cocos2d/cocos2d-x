@@ -13,8 +13,11 @@ INCLUDES = -I.. \
 			-I../include \
 			-I../kazmath/include \
 			-I../platform \
-			-I../extensions \
-			-I../platform/Linux \
+			-I../../extensions \
+			-I../../extensions/CCBReader \
+			-I../../extensions/GUI/CCControlExtension \
+			-I../../extensions/GUI/CCControlExtension \
+			-I../platform/linux/ \
 			-I../platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I../platform/third_party/linux/libxml2 \
 			-I../platform/third_party/linux/libpng \
@@ -77,12 +80,12 @@ OBJECTS = ../actions/CCAction.o \
 					../platform/CCThread.o \
 					../platform/platform.o \
 					../platform/CCEGLViewProtocol.o \
-					../platform/Linux/CCStdC.o \
-					../platform/Linux/CCFileUtils.o \
-					../platform/Linux/CCCommon.o \
-					../platform/Linux/CCApplication.o \
-					../platform/Linux/CCEGLView.o \
-					../platform/Linux/CCImage.o \
+					../platform/linux/CCStdC.o \
+					../platform/linux/CCFileUtils.o \
+					../platform/linux/CCCommon.o \
+					../platform/linux/CCApplication.o \
+					../platform/linux/CCEGLView.o \
+					../platform/linux/CCImage.o \
 					../script_support/CCScriptSupport.o \
 					../sprite_nodes/CCAnimation.o \
 					../sprite_nodes/CCAnimationCache.o \
@@ -97,6 +100,7 @@ OBJECTS = ../actions/CCAction.o \
 					../support/base64.o \
 					../support/ccUtils.o \
 					../support/CCVertex.o \
+					../support/CCNotificationCenter.o \
 					../support/image_support/TGAlib.o \
 					../support/zip_support/ZipUtils.o \
 					../support/zip_support/ioapi.o \
@@ -108,52 +112,49 @@ OBJECTS = ../actions/CCAction.o \
 					../textures/CCTextureAtlas.o \
 					../textures/CCTextureCache.o \
 					../textures/CCTexturePVR.o \
-					../tileMap_parallax_nodes/CCParallaxNode.o \
-					../tileMap_parallax_nodes/CCTMXLayer.o \
-					../tileMap_parallax_nodes/CCTMXObjectGroup.o \
-					../tileMap_parallax_nodes/CCTMXTiledMap.o \
-					../tileMap_parallax_nodes/CCTMXXMLParser.o \
-					../tileMap_parallax_nodes/CCTileMapAtlas.o \
+					../tilemap_parallax_nodes/CCParallaxNode.o \
+					../tilemap_parallax_nodes/CCTMXLayer.o \
+					../tilemap_parallax_nodes/CCTMXObjectGroup.o \
+					../tilemap_parallax_nodes/CCTMXTiledMap.o \
+					../tilemap_parallax_nodes/CCTMXXMLParser.o \
+					../tilemap_parallax_nodes/CCTileMapAtlas.o \
 					../touch_dispatcher/CCTouchDispatcher.o \
 					../touch_dispatcher/CCTouchHandler.o \
+					../touch_dispatcher/CCTouch.o \
 					../shaders/CCGLProgram.o \
 					../shaders/ccGLStateCache.o \
 					../shaders/CCShaderCache.o \
 					../shaders/ccShaders.o \
-					../extensions/CCBReader/CCBFileLoader.o \
-					../extensions/CCBReader/CCMenuItemImageLoader.o \
-					../extensions/CCBReader/CCBReader.o \
-					../extensions/CCBReader/CCMenuItemLoader.o \
-					../extensions/CCBReader/CCControlButtonLoader.o \
-					../extensions/CCBReader/CCNodeLoader.o \
-					../extensions/CCBReader/CCControlLoader.o \
-					../extensions/CCBReader/CCNodeLoaderLibrary.o \
-					../extensions/CCBReader/CCLabelBMFontLoader.o \
-					../extensions/CCBReader/CCParticleSystemQuadLoader.o \
-					../extensions/CCBReader/CCLabelTTFLoader.o \
-					../extensions/CCBReader/CCScale9SpriteLoader.o \
-					../extensions/CCBReader/CCLayerColorLoader.o \
-					../extensions/CCBReader/CCScrollViewLoader.o \
-					../extensions/CCBReader/CCLayerGradientLoader.o \
-					../extensions/CCBReader/CCSpriteLoader.o \
-					../extensions/CCBReader/CCLayerLoader.o \
-					../extensions/CCListView/CCListViewCell.o \
-					../extensions/CCListView/CCListView.o \
-					../extensions/CCScrollView/CCScrollView.o \
-					../extensions/CCControlExtension/CCControlButton.o \
-					../extensions/CCControlExtension/CCControlColourPicker.o \
-					../extensions/CCControlExtension/CCControl.o \
-					../extensions/CCControlExtension/CCControlHuePicker.o \
-					../extensions/CCControlExtension/CCControlSaturationBrightnessPicker.o \
-					../extensions/CCControlExtension/CCControlSlider.o \
-					../extensions/CCControlExtension/CCControlSwitch.o \
-					../extensions/CCControlExtension/CCControlUtils.o \
-					../extensions/CCControlExtension/CCInvocation.o \
-					../extensions/CCControlExtension/CCMenuPassive.o \
-					../extensions/CCControlExtension/CCScale9Sprite.o \
-					../extensions/CCControlExtension/CCSpacer.o \
-					../extensions/CCNotificationCenter/CCNotificationCenter.o \
-					../extensions/CCTextureWatcher/CCTextureWatcher.o \
+					../../extensions/CCBReader/CCBFileLoader.o \
+					../../extensions/CCBReader/CCMenuItemImageLoader.o \
+					../../extensions/CCBReader/CCBReader.o \
+					../../extensions/CCBReader/CCMenuItemLoader.o \
+					../../extensions/CCBReader/CCControlButtonLoader.o \
+					../../extensions/CCBReader/CCNodeLoader.o \
+					../../extensions/CCBReader/CCControlLoader.o \
+					../../extensions/CCBReader/CCNodeLoaderLibrary.o \
+					../../extensions/CCBReader/CCLabelBMFontLoader.o \
+					../../extensions/CCBReader/CCParticleSystemQuadLoader.o \
+					../../extensions/CCBReader/CCLabelTTFLoader.o \
+					../../extensions/CCBReader/CCScale9SpriteLoader.o \
+					../../extensions/CCBReader/CCLayerColorLoader.o \
+					../../extensions/CCBReader/CCScrollViewLoader.o \
+					../../extensions/CCBReader/CCLayerGradientLoader.o \
+					../../extensions/CCBReader/CCSpriteLoader.o \
+					../../extensions/CCBReader/CCLayerLoader.o \
+					../../extensions/GUI/CCScrollView/CCScrollView.o \
+					../../extensions/GUI/CCControlExtension/CCControlButton.o \
+					../../extensions/GUI/CCControlExtension/CCControlColourPicker.o \
+					../../extensions/GUI/CCControlExtension/CCControl.o \
+					../../extensions/GUI/CCControlExtension/CCControlHuePicker.o \
+					../../extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.o \
+					../../extensions/GUI/CCControlExtension/CCControlSlider.o \
+					../../extensions/GUI/CCControlExtension/CCControlSwitch.o \
+					../../extensions/GUI/CCControlExtension/CCControlUtils.o \
+					../../extensions/GUI/CCControlExtension/CCInvocation.o \
+					../../extensions/GUI/CCControlExtension/CCMenuPassive.o \
+					../../extensions/GUI/CCControlExtension/CCScale9Sprite.o \
+					../../extensions/GUI/CCControlExtension/CCSpacer.o \
 					../kazmath/src/aabb.o \
 					../kazmath/src/plane.o \
 					../kazmath/src/vec2.o \
@@ -173,6 +174,9 @@ OBJECTS = ../actions/CCAction.o \
 					../CCDrawingPrimitives.o \
 					../CCScheduler.o \
 					../cocos2d.o 
+#					../../extensions/CCListView/CCListViewCell.o \
+#					../../extensions/CCListView/CCListView.o \
+#					../../extensions/GUI/CCTextureWatcher/CCTextureWatcher.o \
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
