@@ -812,12 +812,12 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
     return true;
 }
 
-CCFloat CCDirector::getContentScaleFactor(void)
+float CCDirector::getContentScaleFactor(void)
 {
     return m_fContentScaleFactor;
 }
 
-void CCDirector::setContentScaleFactor(CCFloat scaleFactor)
+void CCDirector::setContentScaleFactor(float scaleFactor)
 {
     if (scaleFactor != m_fContentScaleFactor)
     {

@@ -159,7 +159,7 @@ bool CCScrollView::isNodeVisible(CCNode* node)
     
     viewRect = CCRectMake(-offset.x/scale, -offset.y/scale, size.width/scale, size.height/scale); 
     
-    return CCRect::CCRectIntersectsRect(viewRect, node->boundingBox());
+    return viewRect.intersectsRect(node->boundingBox());
 }
 
 void CCScrollView::pause(CCObject* sender)
@@ -272,7 +272,7 @@ void CCScrollView::setZoomScale(float s)
     }
 }
 
-CCFloat CCScrollView::getZoomScale()
+float CCScrollView::getZoomScale()
 {
     return m_pContainer->getScale();
 }
@@ -347,7 +347,7 @@ void CCScrollView::setContainer(CCNode * pContainer)
 void CCScrollView::relocateContainer(bool animated)
 {
     CCPoint oldPoint, min, max;
-    CCFloat newX, newY;
+    float newX, newY;
     
     min = this->minContainerOffset();
     max = this->maxContainerOffset();
@@ -393,7 +393,7 @@ void CCScrollView::deaccelerateScrolling(float dt)
         return;
     }
     
-    CCFloat newX, newY;
+    float newX, newY;
     CCPoint maxInset, minInset;
     
     m_pContainer->setPosition(ccpAdd(m_pContainer->getPosition(), m_tScrollDistance));
@@ -594,7 +594,7 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (m_pTouches->count() > 2 ||
         m_bTouchMoved          ||
-        !CCRect::CCRectContainsPoint(frame, m_pContainer->convertToWorldSpace(m_pContainer->convertTouchToNodeSpace(touch))))
+        !frame.containsPoint(m_pContainer->convertToWorldSpace(m_pContainer->convertTouchToNodeSpace(touch))))
     {
         return false;
     }
@@ -636,7 +636,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
         { // scrolling
             CCPoint moveDistance, newPoint, maxInset, minInset;
             CCRect  frame;
-            CCFloat newX, newY;
+            float newX, newY;
             
             m_bTouchMoved  = true;
             frame        = CCRectMake(this->getPosition().x, this->getPosition().y, m_tViewSize.width, m_tViewSize.height);
@@ -644,7 +644,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             moveDistance = ccpSub(newPoint, m_tTouchPoint);
             m_tTouchPoint  = newPoint;
             
-            if (CCRect::CCRectContainsPoint(frame, this->convertToWorldSpace(newPoint)))
+            if (frame.containsPoint(this->convertToWorldSpace(newPoint)))
             {
                 switch (m_eDirection)
                 {
@@ -676,7 +676,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
         }
         else if (m_pTouches->count() == 2 && !m_bDragging)
         {
-            const CCFloat len = ccpDistance(m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0)),
+            const float len = ccpDistance(m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0)),
                                             m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(1)));
             this->setZoomScale(this->getZoomScale()*len/m_fTouchLength);
         }

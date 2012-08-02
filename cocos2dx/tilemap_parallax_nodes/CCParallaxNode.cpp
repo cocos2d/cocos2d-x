@@ -138,7 +138,7 @@ void CCParallaxNode::visit()
     //    CCPoint pos = position_;
     //    CCPoint    pos = [self convertToWorldSpace:CCPointZero];
     CCPoint pos = this->absolutePosition();
-    if( ! CCPoint::CCPointEqualToPoint(pos, m_tLastPosition) )
+    if( ! pos.equals(m_tLastPosition) )
     {
         for(unsigned int i=0; i < m_pParallaxArray->num; i++ ) 
         {

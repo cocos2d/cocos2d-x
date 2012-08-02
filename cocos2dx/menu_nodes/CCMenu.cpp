@@ -659,7 +659,7 @@ CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
                 CCRect r = ((CCMenuItem*)pChild)->rect();
                 r.origin = CCPointZero;
 
-                if (CCRect::CCRectContainsPoint(r, local))
+                if (r.containsPoint(local))
                 {
                     return (CCMenuItem*)pChild;
                 }
