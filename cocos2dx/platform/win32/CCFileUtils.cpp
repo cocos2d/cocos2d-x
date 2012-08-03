@@ -26,10 +26,6 @@ THE SOFTWARE.
 #include <windows.h>
 #include "CCDirector.h"
 
-#define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
-#define CC_IPAD_FILENAME_SUFFIX "-ipad"
-#define CC_IPAD_DISPLAY_RETINA_SUPPFIX "-ipadhd"
-
 using namespace std;
 
 NS_CC_BEGIN
