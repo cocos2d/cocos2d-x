@@ -16,10 +16,6 @@ bool initExtensions();
 
 NS_CC_BEGIN
 
-class CCSet;
-class CCTouch;
-class EGLTouchDelegate;
-
 class CCEGLView : public CCEGLViewProtocol{
 public:
 	CCEGLView();
@@ -35,31 +31,11 @@ public:
 	 * iWidth ,height: the point size, which may scale.
 	 * iDepth is not the buffer depth of opengl, it indicate how may bits for a pixel
 	 */
-	virtual bool Create(const char* pTitle, int iPixelWidth, int iPixelHeight, int iWidth, int iHeight, int iDepth=16);
-
-	CCSize getSize();
-	bool isOpenGLReady();
-    virtual void end();
-	void swapBuffers();
-	bool canSetContentScaleFactor();
-	void setContentScaleFactor(float contentScaleFactor);
-
-	int setDeviceOrientation(int eOritation);
-	void setViewPortInPoints(float x, float y, float w, float h);
-	void setScissorInPoints(float x, float y, float w, float h);
-
-	void setIMEKeyboardState(bool bOpen);
-
-	/**
-	 * not essential
-	 */
-//	void centerWindow();
-//	void setScreenScale(float factor);
-
-	/**
-	 * the width and height is the real size of phone
-	 */
-	void setFrameWidthAndHeight(int width, int height);
+	virtual void setSize(float width, float height);
+	virtual bool isOpenGLReady();
+	virtual void end();
+	virtual void swapBuffers();
+	virtual void setIMEKeyboardState(bool bOpen);
 
 	/**
 	 @brief	get the shared main open gl window
@@ -69,23 +45,10 @@ private:
     bool initGL();
     void destroyGL();
 private:
-
 	bool m_bCaptured;
-	bool m_bOrientationReverted;
-	bool m_bOrientationInitVertical;
-	CCSet * m_pSet;
-	CCTouch * m_pTouch;
-
 	//store current mouse point for moving, valid if and only if the mouse pressed
 	CCPoint m_mousePoint;
-
-	CCSize m_sSizeInPixel;
-	CCSize m_sSizeInPoint;
-	CCRect m_rcViewPort;
-
 	bool bIsInit;
-	int m_eInitOrientation;
-	float m_fScreenScaleFactor;
 };
 
 NS_CC_END
