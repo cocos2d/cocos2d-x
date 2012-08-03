@@ -865,7 +865,7 @@ CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_Menu
 CCMenuItemToggle * CCMenuItemToggle::create()
 {
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
-    pRet->initWithTarget(NULL, NULL, NULL, NULL);
+    pRet->initWithItem(NULL);
     pRet->autorelease();
     return pRet;
 }
