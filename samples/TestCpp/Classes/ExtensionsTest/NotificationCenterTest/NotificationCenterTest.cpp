@@ -61,8 +61,7 @@ void Light::setIsConnectToSwitch(bool bConnectToSwitch)
 
 void Light::switchStateChanged(CCObject* obj)
 {
-    int index = (int)obj;
-    s_bSwitchOn = index == 0 ? false : true;
+    s_bSwitchOn = obj == 0x00 ? false : true;
     updateLightState();
 }
 

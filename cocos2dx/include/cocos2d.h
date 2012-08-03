@@ -140,7 +140,7 @@ THE SOFTWARE.
     #include "platform/android/CCEGLView.h"
     #include "platform/android/CCGL.h"
     #include "platform/android/CCStdC.h"
-#endif // CC_TARGET_PLATFROM == CC_PLATFORM_ANDROID
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	#include "platform/win32/CCAccelerometer.h"
@@ -148,15 +148,24 @@ THE SOFTWARE.
 	#include "platform/win32/CCEGLView.h"
 	#include "platform/win32/CCGL.h"
 	#include "platform/win32/CCStdC.h"
-#endif // CC_TARGET_PLATFROM == CC_PLATFORM_WIN32
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    #include "platform/mac/CCAccelerometer.h"
-    #include "platform/mac/CCApplication.h"
-    #include "platform/mac/CCEGLView.h"
-    #include "platform/mac/CCGL.h"
-    #include "platform/mac/CCStdC.h"
+	#include "platform/mac/CCAccelerometer.h"
+	#include "platform/mac/CCApplication.h"
+	#include "platform/mac/CCEGLView.h"
+	#include "platform/mac/CCGL.h"
+	#include "platform/mac/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+	#include "platform/linux/CCAccelerometer.h"
+	#include "platform/linux/CCApplication.h"
+	#include "platform/linux/CCEGLView.h"
+	#include "platform/linux/CCGL.h"
+	#include "platform/linux/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+
 
 // script_support
 #include "script_support/CCScriptSupport.h"
