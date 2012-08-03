@@ -10008,19 +10008,19 @@ void S_CCRect::jsCreateClass(JSContext *cx, JSObject *globalObj, const char *nam
 		};
 
 		static JSFunctionSpec funcs[] = {
+			JS_FN("getMinX", S_CCRect::jsCCRectGetMinX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getMaxX", S_CCRect::jsCCRectGetMaxX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getMidX", S_CCRect::jsCCRectGetMidX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getMinY", S_CCRect::jsCCRectGetMinY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getMaxY", S_CCRect::jsCCRectGetMaxY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("getMidY", S_CCRect::jsCCRectGetMidY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("equals", S_CCRect::jsCCRectEqualToRect, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("containsPoint", S_CCRect::jsCCRectContainsPoint, 2, JSPROP_PERMANENT | JSPROP_SHARED),
+			JS_FN("intersectsRect", S_CCRect::jsCCRectIntersectsRect, 2, JSPROP_PERMANENT | JSPROP_SHARED),
 			JS_FS_END
 		};
 
 		static JSFunctionSpec st_funcs[] = {
-			JS_FN("CCRectGetMinX", S_CCRect::jsCCRectGetMinX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("CCRectGetMaxX", S_CCRect::jsCCRectGetMaxX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("CCRectGetMidX", S_CCRect::jsCCRectGetMidX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("CCRectGetMinY", S_CCRect::jsCCRectGetMinY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("CCRectGetMaxY", S_CCRect::jsCCRectGetMaxY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("CCRectGetMidY", S_CCRect::jsCCRectGetMidY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("CCRectEqualToRect", S_CCRect::jsCCRectEqualToRect, 2, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("CCRectContainsPoint", S_CCRect::jsCCRectContainsPoint, 2, JSPROP_PERMANENT | JSPROP_SHARED),
-			JS_FN("CCRectIntersectsRect", S_CCRect::jsCCRectIntersectsRect, 2, JSPROP_PERMANENT | JSPROP_SHARED),
 			JS_FS_END
 		};
 
@@ -10032,7 +10032,7 @@ JSBool S_CCRect::jsCCRectGetMinX(JSContext *cx, uint32_t argc, jsval *vp) {
 		JSObject *arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
-		float ret = CCRect::CCRectGetMinX(*narg0);
+		float ret = narg0->getMinX();
 		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
 		
 		return JS_TRUE;
@@ -10045,7 +10045,7 @@ JSBool S_CCRect::jsCCRectGetMaxX(JSContext *cx, uint32_t argc, jsval *vp) {
 		JSObject *arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
-		float ret = CCRect::CCRectGetMaxX(*narg0);
+		float ret = narg0->getMaxX();
 		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
 		
 		return JS_TRUE;
@@ -10058,7 +10058,7 @@ JSBool S_CCRect::jsCCRectGetMidX(JSContext *cx, uint32_t argc, jsval *vp) {
 		JSObject *arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
-		float ret = CCRect::CCRectGetMidX(*narg0);
+		float ret = narg0->getMidX();
 		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
 		
 		return JS_TRUE;
@@ -10071,7 +10071,7 @@ JSBool S_CCRect::jsCCRectGetMinY(JSContext *cx, uint32_t argc, jsval *vp) {
 		JSObject *arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
-		float ret = CCRect::CCRectGetMinY(*narg0);
+		float ret = narg0->getMinY();
 		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
 		
 		return JS_TRUE;
@@ -10084,7 +10084,7 @@ JSBool S_CCRect::jsCCRectGetMaxY(JSContext *cx, uint32_t argc, jsval *vp) {
 		JSObject *arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
-		float ret = CCRect::CCRectGetMaxY(*narg0);
+		float ret = narg0->getMaxY();
 		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
 		
 		return JS_TRUE;
@@ -10097,7 +10097,7 @@ JSBool S_CCRect::jsCCRectGetMidY(JSContext *cx, uint32_t argc, jsval *vp) {
 		JSObject *arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o", &arg0);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
-		float ret = CCRect::CCRectGetMidY(*narg0);
+		float ret = narg0->getMidY();
 		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
 		
 		return JS_TRUE;
@@ -10112,7 +10112,7 @@ JSBool S_CCRect::jsCCRectEqualToRect(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oo", &arg0, &arg1);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
 		CCRect* narg1; JSGET_PTRSHELL(CCRect, narg1, arg1);
-		bool ret = CCRect::CCRectEqualToRect(*narg0, *narg1);
+		bool ret = narg0->equals(*narg1);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -10127,7 +10127,7 @@ JSBool S_CCRect::jsCCRectContainsPoint(JSContext *cx, uint32_t argc, jsval *vp) 
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oo", &arg0, &arg1);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
 		CCPoint* narg1; JSGET_PTRSHELL(CCPoint, narg1, arg1);
-		bool ret = CCRect::CCRectContainsPoint(*narg0, *narg1);
+		bool ret = narg0->containsPoint(*narg1);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -10142,7 +10142,7 @@ JSBool S_CCRect::jsCCRectIntersectsRect(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "oo", &arg0, &arg1);
 		CCRect* narg0; JSGET_PTRSHELL(CCRect, narg0, arg0);
 		CCRect* narg1; JSGET_PTRSHELL(CCRect, narg1, arg1);
-		bool ret = CCRect::CCRectIntersectsRect(*narg0, *narg1);
+		bool ret = narg0->intersectsRect(*narg1);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
