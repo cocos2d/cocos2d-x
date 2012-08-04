@@ -213,6 +213,8 @@
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF3326F313690DA4007CAA22 /* RootViewController.mm */; };
+		CFEDE38915CD092500C46E56 /* CCHttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFEDE38715CD092500C46E56 /* CCHttpRequest.cpp */; };
+		CFEDE39615CD0FD700C46E56 /* HttpRequestTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFEDE39515CD0FD700C46E56 /* HttpRequestTest.cpp */; };
 		D429012E13B1D16900A3772F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D429012D13B1D16900A3772F /* libcurl.a */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -700,6 +702,10 @@
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF3326F213690DA4007CAA22 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF3326F313690DA4007CAA22 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		CFEDE38715CD092500C46E56 /* CCHttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCHttpRequest.cpp; sourceTree = "<group>"; };
+		CFEDE38815CD092500C46E56 /* CCHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCHttpRequest.h; sourceTree = "<group>"; };
+		CFEDE39415CD0E6F00C46E56 /* HttpRequestTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpRequestTest.h; sourceTree = "<group>"; };
+		CFEDE39515CD0FD700C46E56 /* HttpRequestTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestTest.cpp; sourceTree = "<group>"; };
 		D429012D13B1D16900A3772F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1078,6 +1084,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				CFEDE39315CD0E5B00C46E56 /* HttpRequestTest */,
 				15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */,
 				15AA9CDB15B7EC460033D6C2 /* ControlExtensionTest */,
 				15AA9CEC15B7EC460033D6C2 /* ExtensionsTest.cpp */,
@@ -1786,6 +1793,7 @@
 		15AA9ED615B7EDCB0033D6C2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CFEDE38515CD092500C46E56 /* Network */,
 				F28379F015B95F8000A5707B /* cocos-ext.h */,
 				F28379F115B95F8000A5707B /* ExtensionMacros.h */,
 				15AA9ED715B7EDCB0033D6C2 /* CCBReader */,
@@ -1913,6 +1921,33 @@
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		CFEDE38515CD092500C46E56 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CFEDE38615CD092500C46E56 /* CCHttpRequest */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		CFEDE38615CD092500C46E56 /* CCHttpRequest */ = {
+			isa = PBXGroup;
+			children = (
+				CFEDE38715CD092500C46E56 /* CCHttpRequest.cpp */,
+				CFEDE38815CD092500C46E56 /* CCHttpRequest.h */,
+			);
+			path = CCHttpRequest;
+			sourceTree = "<group>";
+		};
+		CFEDE39315CD0E5B00C46E56 /* HttpRequestTest */ = {
+			isa = PBXGroup;
+			children = (
+				CFEDE39415CD0E6F00C46E56 /* HttpRequestTest.h */,
+				CFEDE39515CD0FD700C46E56 /* HttpRequestTest.cpp */,
+			);
+			name = HttpRequestTest;
+			path = ../../Classes/ExtensionsTest/HttpRequestTest;
 			sourceTree = "<group>";
 		};
 		D4BF200315C6D23700692205 /* GUI */ = {
@@ -2259,6 +2294,8 @@
 				D4BF202B15C6D23700692205 /* CCScale9Sprite.cpp in Sources */,
 				D4BF202C15C6D23700692205 /* CCSpacer.cpp in Sources */,
 				D4BF202D15C6D23700692205 /* CCScrollView.cpp in Sources */,
+				CFEDE38915CD092500C46E56 /* CCHttpRequest.cpp in Sources */,
+				CFEDE39615CD0FD700C46E56 /* HttpRequestTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
