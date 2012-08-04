@@ -93,6 +93,9 @@ Developers:
     Nat Weiss
         Minor enhancements to the Cocos2D-X codebase and Android build scripts
 
+    Qingyun Huang (greathqy)
+        implement CCHttpRequest
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
