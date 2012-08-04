@@ -31,6 +31,11 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup Network
+ * @{
+ */
+
 //Http request type
 typedef enum {
     kHttpRequestGet,
@@ -179,6 +184,9 @@ private:
     
     std::string reqId;
 };
+
+// end of Network group
+/// @}
 
 NS_CC_EXT_END
 
