@@ -80,11 +80,17 @@ void HttpRequestTest::onLabelPostTestClicked(cocos2d::CCObject *sender)
 void HttpRequestTest::onLabelPostBinaryTestClicked(cocos2d::CCObject *sender)
 {
     string url = POSTURL;
-    const char *content = "username=hello&password=worl\0d";
+    const char *content = "username=a\0b";
     
+   
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     requestor->setReqId("postbinary");
     requestor->addPostTask(url, content, strlen(content) + 2, this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+    
+    std::vector<char> vec;
+    vec.insert(vec.end(), content, content + strlen(content) + 2);
+    requestor->setReqId("postbinary");
+    requestor->addPostTask(url, vec, this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
 }
 
 void HttpRequestTest::onLabelDownloadTestClicked(cocos2d::CCObject *sender)
@@ -119,7 +125,19 @@ void HttpRequestTest::onHttpRequestCompleted(cocos2d::CCObject *sender, void *da
     
     //If the response is binary, use response->responseData.data() and response->responseData.length()
     //To process the response
+    if (response->responseData.length() >= kMaxLogLen) {
+        response->responseData = response->responseData.substr(0, kMaxLogLen / 2);
+    }
     CCLog("Response Content: %s", response->responseData.c_str());
+    
+    if (response->request->reqId == "postbinary") {
+        int32_t length = response->responseData.length();
+        const char *data = response->responseData.data();
+        
+        for (int32_t i = 0; i < length; ++i) {
+            CCLog("%c", data[i]);
+        }
+    }
     
     if (response->request->reqId == "download") {
         string downloaded = response->request->files[0];
