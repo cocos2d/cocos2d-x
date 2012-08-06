@@ -187,44 +187,62 @@ class CCAnimate : public CCActionInterval
     static CCAction* create(CCAnimation *pAnimation);
 };
 
-class CCProgressTo : public CCAction
+class CCTargetAction : public CCActionInterval
 {
-    static CCAction* create(float duration, float fPercent);
-};
+    CCNode* getForcedTarget(void);
+    void setForcedTarget(CCNode* target);
 
-class CCProgressFromTo : public CCAction
-{
-    static CCAction* create(float duration, float fFromPercentage, float fToPercentage);
+    static CCTargetedAction* create(CCNode* pTarget, CCFiniteTimeAction* pAction);
 };
 
 
 // CCActionInstant
-class CCShow : public CCAction
+class CCShow : public CCActionInstant
 {
     static CCAction* create();
 };
 
-class CCHide : public CCAction
+class CCHide : public CCActionInstant
 {
     static CCAction* create();
 };
 
-class CCToggleVisibility : public CCAction
+class CCToggleVisibility : public CCActionInstant
 {
     static CCAction* create();
 };
 
-class CCFlipX : public CCAction
+class CCFlipX : public CCActionInstant
 {
     static CCAction* create(bool x);
 };
 
-class CCFlipY : public CCAction
+class CCFlipY : public CCActionInstant
 {
     static CCAction* create(bool y);
 };
 
-class CCPlace : public CCAction //<NSCopying>
+class CCPlace : public CCActionInstant //<NSCopying>
 {
     static CCAction* create(CCPoint pos);
+};
+
+class CCCallFunc : public CCActionInstant
+{
+    static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
+};
+
+class CCCallFuncN : public CCCallFunc
+{   
+    static CCCallFuncN * create(CCObject* pSelectorTarget, SEL_CallFuncN selector);
+};
+
+class CCCallFuncND : public CCCallFuncN
+{
+    static CCCallFuncND * create(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
+};
+
+class CCCallFuncO : public CCCallFunc
+{
+    static CCCallFuncO * create(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
 };
