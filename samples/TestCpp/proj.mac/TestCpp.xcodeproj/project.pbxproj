@@ -2336,6 +2336,7 @@
 					"\"$(SRCROOT)/../../../external\"",
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/include\"",
+					"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/mac\"",
 				);
 				INFOPLIST_FILE = Test_Info.plist;
@@ -2377,6 +2378,7 @@
 					"\"$(SRCROOT)/../../../external\"",
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/include\"",
+					"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/mac\"",
 				);
 				INFOPLIST_FILE = Test_Info.plist;
