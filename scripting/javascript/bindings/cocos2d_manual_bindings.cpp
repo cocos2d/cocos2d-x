@@ -225,7 +225,8 @@ JSBool S_CCLabelTTF::jsinitWithString(JSContext *cx, uint32_t argc, jsval *vp) {
         char *narg0 = JS_EncodeString(cx, arg0);
         CCSize* narg1; JSGET_PTRSHELL(CCSize, narg1, arg1);
         char *narg3 = JS_EncodeString(cx, arg3);
-        bool ret = self->initWithString(narg0, *narg1, (CCTextAlignment)arg2, narg3, arg4);
+//        bool ret = self->initWithString(narg0, *narg1, (CCTextAlignment)arg2, narg3, arg4);
+        bool ret = self->initWithString(narg0, narg3, arg4, *narg1, (CCTextAlignment)arg2);
         JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
         
         return JS_TRUE;
