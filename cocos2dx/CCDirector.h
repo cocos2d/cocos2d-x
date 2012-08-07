@@ -404,7 +404,9 @@ protected:
 
     WatcherCallbackFun m_pWatcherFun;
     void *m_pWatcherSender;
-
+    
+    // CCEGLViewProtocol will recreate stats labels to fit visible rect
+    friend class CCEGLViewProtocol;
 };
 
 /** 

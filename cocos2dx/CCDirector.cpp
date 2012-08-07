@@ -56,6 +56,15 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include <string>
 
+/**
+ Position of the FPS
+ 
+ Default: 0,0 (bottom-left corner)
+ */
+#ifndef CC_DIRECTOR_STATS_POSITION
+#define CC_DIRECTOR_STATS_POSITION CCDirector::sharedDirector()->getOpenGLView()->getVisibleOrigin()
+#endif
+
 using namespace std;
 
 unsigned int g_uNumberOfDraws = 0;
@@ -754,9 +763,9 @@ void CCDirector::createStatsLabel()
 
     CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    m_pDrawsLabel->setPosition( ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) );
-    m_pSPFLabel->setPosition( ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) );
-    m_pFPSLabel->setPosition( CC_DIRECTOR_STATS_POSITION );
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(0,34), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(0,17), CC_DIRECTOR_STATS_POSITION));
+    m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
 
@@ -766,16 +775,7 @@ void CCDirector::createStatsLabel()
 
 void CCDirector::updateContentScaleFactor()
 {
-    // [openGLView responseToSelector:@selector(setContentScaleFactor)]
-    if (m_pobOpenGLView->canSetContentScaleFactor())
-    {
-        m_pobOpenGLView->setContentScaleFactor(m_fContentScaleFactor);
-        m_bIsContentScaleSupported = true;
-    }
-    else
-    {
-        CCLOG("cocos2d: setContentScaleFactor:'is not supported on this device");
-    }
+    m_bIsContentScaleSupported = m_pobOpenGLView->setContentScaleFactor(m_fContentScaleFactor);
 }
 
 bool CCDirector::enableRetinaDisplay(bool enabled)
@@ -791,15 +791,8 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
     {
         return false;
     }
-
-    // setContentScaleFactor is not supported
-    if (! m_pobOpenGLView->canSetContentScaleFactor())
-    {
-        return false;
-    }
-
-    // SD device
-    if (m_pobOpenGLView->getMainScreenScale() == 1.0)
+    
+    if (! m_pobOpenGLView->enableRetina())
     {
         return false;
     }
