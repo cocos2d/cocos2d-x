@@ -288,8 +288,8 @@ class CC_DLL CCCallFuncN : public CCCallFunc, public TypeInfo
 public:
     CCCallFuncN(){}
     virtual ~CCCallFuncN(){}
-    virtual uint32_t getClassTypeInfo() {
-        return reinterpret_cast<int>(typeid(cocos2d::CCCallFunc).name());
+    virtual long getClassTypeInfo() {
+        return reinterpret_cast<long>(typeid(cocos2d::CCCallFunc).name());
     }
 
     /** creates the action with the callback 
@@ -325,8 +325,8 @@ public:
 class CC_DLL CCCallFuncND : public CCCallFuncN, public TypeInfo
 {
 public:
-    virtual uint32_t getClassTypeInfo() {
-        return reinterpret_cast<int>(typeid(cocos2d::CCCallFunc).name());
+    virtual long getClassTypeInfo() {
+        return reinterpret_cast<long>(typeid(cocos2d::CCCallFunc).name());
     }
 
     /** creates the action with the callback and the data to pass as an argument 
@@ -363,8 +363,8 @@ public:
     CCCallFuncO();
     virtual ~CCCallFuncO();
 #ifdef COCOS2D_JAVASCRIPT
-    virtual uint32_t getClassTypeInfo() {
-        return reinterpret_cast<int>(typeid(cocos2d::CCCallFunc).name());
+    virtual long getClassTypeInfo() {
+        return reinterpret_cast<long>(typeid(cocos2d::CCCallFunc).name());
     }
 #endif
     /** creates the action with the callback 

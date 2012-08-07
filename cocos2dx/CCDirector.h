@@ -98,8 +98,8 @@ public:
     CCDirector(void);
     virtual ~CCDirector(void);
     virtual bool init(void);
-    virtual uint32_t getClassTypeInfo() {
-        return reinterpret_cast<int>(typeid(cocos2d::CCDirector).name());
+    virtual long getClassTypeInfo() {
+        return reinterpret_cast<long>(typeid(cocos2d::CCDirector).name());
     }
 
     // attribute
