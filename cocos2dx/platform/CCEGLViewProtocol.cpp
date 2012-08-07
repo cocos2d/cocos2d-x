@@ -90,11 +90,12 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     
     m_eResolutionPolicy = resolutionPolicy;
     
-    setViewPortInPoints(0, 0, m_obScreenSize.width, m_obScreenSize.height);
+    //setViewPortInPoints(0, 0,m_obScreenSize.width, m_obScreenSize.height);
     
     // reset director's member vaviables to fit visible rect
     CCDirector::sharedDirector()->createStatsLabel();
     CCDirector::sharedDirector()->m_obWinSizeInPoints = CCDirector::sharedDirector()->m_obWinSizeInPixels = getSize(); 
+    CCDirector::sharedDirector()->setGLDefaultValues();
 }
 
 bool CCEGLViewProtocol::enableRetina()
@@ -205,7 +206,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
                                      (y - m_obViewPortRect.origin.y) / m_fYScale);
             }
             
-            CCLog("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
+            CCLOG("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             
             CCInteger* pInterObj = new CCInteger(nUnusedIndex);
             s_TouchesIntergerDict.setObject(pInterObj, id);
