@@ -10,7 +10,9 @@ enum ResolutionPolicy
     // the output will fill the screen, scale of x and y is the same
     kResolutionScaleFullScreen,
     // scale of x and y is the same, there may be black block in x or y coordinate
-    kResolutionScaleNotFullScreen
+    kResolutionScaleNotFullScreen,
+    
+    kResolutionUnKnown,
 };
 
 NS_CC_BEGIN
@@ -37,20 +39,16 @@ public:
     virtual void    setIMEKeyboardState(bool bOpen) = 0;
 
     virtual CCSize  getSize();
+    virtual void    setSize(float width, float height);
     virtual CCSize  getVisibleSize();
     virtual CCPoint getVisibleOrigin();
-    virtual void    setFrameSize(float width, float height);
-    virtual CCSize  getFrameSize();
     virtual void    setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
     virtual void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     virtual float   getScreenScaleFactor();
-    virtual bool    canSetContentScaleFactor();
-    virtual void    setContentScaleFactor(float contentScaleFactor);
+    virtual bool    setContentScaleFactor(float contentScaleFactor);
     virtual void    setViewPortInPoints(float x , float y , float w , float h);
     virtual void    setScissorInPoints(float x , float y , float w , float h);
-    virtual float   getMainScreenScale();
-    virtual void    setViewName(const char* pszViewName);
-    const char*     getViewName();
+    virtual bool    enableRetina();
 
     /** handle touch events by default, if you want to custom your handles, please override these functions */
     virtual void    handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
