@@ -38,12 +38,6 @@ HttpRequestTest::HttpRequestTest() : m_labelStatusCode(NULL)
     itemPostBinary->setPosition(ccp(winSize.width / 2, winSize.height - 160));
     menuRequest->addChild(itemPostBinary);
     
-    //Download File
-    CCLabelTTF *labelDownload = CCLabelTTF::create("Test Download", "Arial", 15);
-    CCMenuItemLabel *itemDownload = CCMenuItemLabel::create(labelDownload, this, menu_selector(HttpRequestTest::onLabelDownloadTestClicked));
-    itemDownload->setPosition(ccp(winSize.width / 2, winSize.height - 190));
-    menuRequest->addChild(itemDownload);
-    
     //Response Code Label
     CCLabelTTF *labelStatus = CCLabelTTF::create("Notice: Replace Post Url With Your Own", "Marker Felt", 20);
     labelStatus->setPosition(ccp(winSize.width / 2,  winSize.height - 250));
@@ -59,26 +53,65 @@ HttpRequestTest::HttpRequestTest() : m_labelStatusCode(NULL)
 }
 
 void HttpRequestTest::onLabelGetTestClicked(cocos2d::CCObject *sender)
-{
-    string url = GETURL;
+{    
+    /*****
+     test 1
+     ******/
     
-    CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
-    requestor->addGetTask(url, this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+    HttpRequest* request1 = new HttpRequest();
+    // required fields
+    request1->setUrl("http://www.google.com");
+    request1->setRequestType(HttpRequest::kHttpGet);
+    request1->setResponseCallback(this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+    // optional fields                            
+    request1->setTag("HttpTest: GET");
+    
+    CCHttpClient::getInstance()->send(request1);
+    
+    // don't forget to release it, pair to new
+    request1->release();
+    
+    /*****
+     test 2
+     ******/    
+    HttpRequest* request2 = new HttpRequest();
+    request2->setUrl("http://www.baidu.com");
+    request2->setRequestType(HttpRequest::kHttpGet);
+    request2->setResponseCallback(this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+    CCHttpClient::getInstance()->send(request2);
+    request2->release();
+    
+    /*****
+     test 3
+     ******/ 
+    HttpRequest* request3 = new HttpRequest();
+    request3->setUrl("http://just-make-this-request-failed.com");
+    request3->setRequestType(HttpRequest::kHttpGet);
+    request3->setResponseCallback(this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+    CCHttpClient::getInstance()->send(request3);
+    request3->release();
+
 }
 
 void HttpRequestTest::onLabelPostTestClicked(cocos2d::CCObject *sender)
 {
-    string url = POSTURL;
-    string content = "username=hello&password=world";
+    const char* content = "username=a\0b";
     
-    CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
-    //You may name the request
-    requestor->setReqId("login");
-    requestor->addPostTask(url, content, this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+    HttpRequest* request = new HttpRequest();
+    request->autorelease();
+    
+    request->setUrl(POSTURL);
+    request->setRequestData(content, strlen(content) + 2);
+    request->setResponseCallback(this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+    
+    request->setTag("HttpTest: POST");
+    
+    CCHttpClient::getInstance()->send(request);
 }
 
 void HttpRequestTest::onLabelPostBinaryTestClicked(cocos2d::CCObject *sender)
 {
+/*
     string url = POSTURL;
     const char *content = "username=a\0b";
     
@@ -91,45 +124,56 @@ void HttpRequestTest::onLabelPostBinaryTestClicked(cocos2d::CCObject *sender)
     vec.insert(vec.end(), content, content + strlen(content) + 2);
     requestor->setReqId("postbinary");
     requestor->addPostTask(url, vec, this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
-}
-
-void HttpRequestTest::onLabelDownloadTestClicked(cocos2d::CCObject *sender)
-{
-    string url = DOWNLOADURL;
-    vector<string> files;
-    
-    files.push_back(url);
-    
-    CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
-    requestor->setReqId("download");
-    requestor->addDownloadTask(files, this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+ */
 }
 
 void HttpRequestTest::onHttpRequestCompleted(cocos2d::CCObject *sender, void *data)
 {
-    HttpResponsePacket *response = (HttpResponsePacket *)data;
-    
-    //You can get original request type from: response->request->reqType
-    
-    if (response->request->reqId != "") {
-        CCLog("%s completed", response->request->reqId.c_str());
-    }
-    
-    char buffer[128];
-    sprintf(buffer, "Response code: %d", response->responseCode);
-    getLabelStatusCode()->setString(buffer);
-    
-    if (!response->succeed) {
+    HttpResponse *response = (HttpResponse*)data;
+
+    if (!response)
+    {
         return;
     }
     
+    // You can get original request type from: response->request->reqType
+    if (0 != strlen(response->getHttpRequest()->getTag())) 
+    {
+        CCLog("%s completed", response->getHttpRequest()->getTag());
+    }
+    
+    CCLog("response code: %d", response->getResponseCode());
+    
+    if (!response->isSucceed()) 
+    {
+        CCLog("response failed");
+        CCLog("error buffer: %s", response->getErrorBuffer());
+        return;
+    }
+    
+    std::vector<char> *buffer = response->getResponseData();
+    printf("Http Test, dump data: ");
+    for (int i = 0; i < buffer->size(); i++)
+    {
+        printf("%c", (*buffer)[i]);
+    }
+    printf("\n");
+         
+    // dump response data
+    
+    
     //If the response is binary, use response->responseData.data() and response->responseData.length()
     //To process the response
+    
+    /*
     if (response->responseData.length() >= kMaxLogLen) {
         response->responseData = response->responseData.substr(0, kMaxLogLen / 2);
     }
-    CCLog("Response Content: %s", response->responseData.c_str());
+    */
     
+    // CCLog("Response Content: %s", response->responseData.begin());
+    
+    /*
     if (response->request->reqId == "postbinary") {
         int32_t length = response->responseData.length();
         const char *data = response->responseData.data();
@@ -138,13 +182,8 @@ void HttpRequestTest::onHttpRequestCompleted(cocos2d::CCObject *sender, void *da
             CCLog("%c", data[i]);
         }
     }
+    */
     
-    if (response->request->reqId == "download") {
-        string downloaded = response->request->files[0];
-        string saved = downloaded.substr(downloaded.rfind("/") + 1);
-        
-        CCLog("%s downloaded, and saved as %s in your application's writeable directory", downloaded.c_str(), saved.c_str());
-    }
 }
 
 void HttpRequestTest::toExtensionsMainLayer(cocos2d::CCObject *sender)
