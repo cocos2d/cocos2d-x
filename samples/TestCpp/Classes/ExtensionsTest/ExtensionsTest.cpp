@@ -3,7 +3,7 @@
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
-#include "HttpRequestTest/HttpRequestTest.h"
+#include "NetworkTest/HttpRequestTest.h"
 
 enum
 {

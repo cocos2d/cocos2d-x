@@ -28,7 +28,9 @@
 #include "GUI/CCControlExtension/CCControlExtensions.h"
 #include "GUI/CCScrollView/CCScrollView.h"
 
-#include "Network/CCHttpRequest/CCHttpRequest.h"
+#include "network/HttpRequest.h"
+#include "network/HttpResponse.h"
+#include "network/HttpClient.h"
 
 #endif /* __COCOS2D_EXT_H__ */
 
