@@ -18,10 +18,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
     
     // can not enable retina if invoke
-    CCEGLView::sharedOpenGLView().setDesignResolutionSize(480, 320, kResolutionScaleFullScreen);
+    CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kResolutionScaleFullScreen);
 
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-    pDirector->enableRetinaDisplay(true);
+    //pDirector->enableRetinaDisplay(true);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
