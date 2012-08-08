@@ -1,5 +1,8 @@
 #include <math.h>
-//#include <stdint.h>
+
+#ifndef WIN32
+#include <stdint.h>
+#endif
 
 #ifdef __APPLE__
    #import "TargetConditionals.h"
