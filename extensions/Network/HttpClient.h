@@ -59,16 +59,6 @@ public:
      */
     void send(HttpRequest* request);
   
-
-    /**
-     * Add a download request to task queue
-     * @param url urls want to download
-     * @param pTarget  callback target
-     * @param pSelector callback selector
-     * @return NULL
-
-    void addDownloadTask(std::vector<std::string> &urls, cocos2d::CCObject *pTarget, cocos2d::SEL_CallFuncND pSelector);
-    */
     
     /**
      * Change the connect timeout

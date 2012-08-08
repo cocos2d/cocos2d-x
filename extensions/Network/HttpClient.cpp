@@ -84,7 +84,7 @@ int processPostTask(HttpRequest *task, write_callback callback, void *stream, in
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
-//Worker thread
+// Worker thread
 static void* networkThread(void *data)
 {    
     HttpRequest *request = NULL;
@@ -149,6 +149,7 @@ static void* networkThread(void *data)
                 break;
         }
                 
+        // write data to HttpResponse
         response->setResponseCode(responseCode);
         
         if (retValue != 0) 
@@ -160,6 +161,7 @@ static void* networkThread(void *data)
         {
             response->setSucceed(true);
         }
+        
         
         // add response packet into queue
         pthread_mutex_lock(&s_responseQueueMutex);
