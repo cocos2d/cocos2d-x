@@ -131,7 +131,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 #ifdef ENABLE_OPENSL
 	// @TO-DO 
 	// Here may crash, fixing.
-	// SimpleAudioEngineOpenSL::sharedEngine()->setEffectsVolume(volume);
+	SimpleAudioEngineOpenSL::sharedEngine()->setEffectsVolume(volume);
 #else
 	setEffectsVolumeJNI(volume);
 #endif
