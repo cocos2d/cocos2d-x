@@ -60,7 +60,7 @@ void HttpRequestTest::onLabelGetTestClicked(cocos2d::CCObject *sender)
     
     HttpRequest* request1 = new HttpRequest();
     // required fields
-    request1->setUrl("http://www.google.com");
+    request1->setUrl("http://www.httpbin.org/ip");
     request1->setRequestType(HttpRequest::kHttpGet);
     request1->setResponseCallback(this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
     // optional fields                            
@@ -75,7 +75,7 @@ void HttpRequestTest::onLabelGetTestClicked(cocos2d::CCObject *sender)
      test 2
      ******/    
     HttpRequest* request2 = new HttpRequest();
-    request2->setUrl("http://www.baidu.com");
+    request2->setUrl("http://www.httpbin.org/get");
     request2->setRequestType(HttpRequest::kHttpGet);
     request2->setResponseCallback(this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
     CCHttpClient::getInstance()->send(request2);
@@ -95,36 +95,34 @@ void HttpRequestTest::onLabelGetTestClicked(cocos2d::CCObject *sender)
 
 void HttpRequestTest::onLabelPostTestClicked(cocos2d::CCObject *sender)
 {
-    const char* content = "username=a\0b";
-    
     HttpRequest* request = new HttpRequest();
-    request->autorelease();
-    
-    request->setUrl(POSTURL);
-    request->setRequestData(content, strlen(content) + 2);
+    request->setUrl("http://www.httpbin.org/post");
+    request->setRequestType(HttpRequest::kHttpPost);
     request->setResponseCallback(this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
     
-    request->setTag("HttpTest: POST");
+    // write the post data
+    const char* postData = "visitor=cocos2d&TestSuite=Extensions Test/NetowrkTest";
+    request->setRequestData(postData, strlen(postData)); 
     
+    request->setTag("HttpRequestTest: POST JSON");
     CCHttpClient::getInstance()->send(request);
+    request->release();
 }
 
 void HttpRequestTest::onLabelPostBinaryTestClicked(cocos2d::CCObject *sender)
 {
-/*
-    string url = POSTURL;
-    const char *content = "username=a\0b";
+    HttpRequest* request = new HttpRequest();
+    request->setUrl("http://www.httpbin.org/post");
+    request->setRequestType(HttpRequest::kHttpPost);
+    request->setResponseCallback(this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
     
-   
-    CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
-    requestor->setReqId("postbinary");
-    requestor->addPostTask(url, content, strlen(content) + 2, this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
+    // write the post data
+    char postData[22] = "binary=hello\0\0cocos2d";  // including \0, the strings after \0 should not be cut in response
+    request->setRequestData(postData, 22); 
     
-    std::vector<char> vec;
-    vec.insert(vec.end(), content, content + strlen(content) + 2);
-    requestor->setReqId("postbinary");
-    requestor->addPostTask(url, vec, this, callfuncND_selector(HttpRequestTest::onHttpRequestCompleted));
- */
+    request->setTag("HttpRequestTest: POST Binary");
+    CCHttpClient::getInstance()->send(request);
+    request->release();
 }
 
 void HttpRequestTest::onHttpRequestCompleted(cocos2d::CCObject *sender, void *data)
@@ -151,6 +149,7 @@ void HttpRequestTest::onHttpRequestCompleted(cocos2d::CCObject *sender, void *da
         return;
     }
     
+    // dump data
     std::vector<char> *buffer = response->getResponseData();
     printf("Http Test, dump data: ");
     for (int i = 0; i < buffer->size(); i++)
@@ -158,32 +157,6 @@ void HttpRequestTest::onHttpRequestCompleted(cocos2d::CCObject *sender, void *da
         printf("%c", (*buffer)[i]);
     }
     printf("\n");
-         
-    // dump response data
-    
-    
-    //If the response is binary, use response->responseData.data() and response->responseData.length()
-    //To process the response
-    
-    /*
-    if (response->responseData.length() >= kMaxLogLen) {
-        response->responseData = response->responseData.substr(0, kMaxLogLen / 2);
-    }
-    */
-    
-    // CCLog("Response Content: %s", response->responseData.begin());
-    
-    /*
-    if (response->request->reqId == "postbinary") {
-        int32_t length = response->responseData.length();
-        const char *data = response->responseData.data();
-        
-        for (int32_t i = 0; i < length; ++i) {
-            CCLog("%c", data[i]);
-        }
-    }
-    */
-    
 }
 
 void HttpRequestTest::toExtensionsMainLayer(cocos2d::CCObject *sender)

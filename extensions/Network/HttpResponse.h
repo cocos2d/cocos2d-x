@@ -31,9 +31,17 @@
 
 NS_CC_EXT_BEGIN
 
+/** 
+ @brief defines the object which users will receive at onHttpCompleted(sender, HttpResponse) callback
+ Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpRequestTest.cpp as a sample
+ @since v2.0.2
+ */
 class HttpResponse : public cocos2d::CCObject
 {
 public:
+    /** Constructor, it's used by CCHttpClient internal, users don't need to create HttpResponse manually
+     @param request the corresponding HttpRequest which leads to this response 
+     */
     HttpResponse(HttpRequest* request)
     {
         _pHttpRequest = request;
@@ -46,6 +54,10 @@ public:
         _responseData.clear();
         _errorBuffer.clear();
     }
+    
+    /** Destructor, it will be called in CCHttpClient internal,
+     users don't need to desturct HttpResponse object manully 
+     */
     virtual ~HttpResponse()
     {
         if (_pHttpRequest)
@@ -54,66 +66,103 @@ public:
         }
     }
     
-    /** override autorelease method to prevent developers from calling it */
+    /** Override autorelease method to prevent developers from calling it */
     CCObject* autorelease(void)
     {
-        CCAssert(true, "HttpResponse is used between network thread and ui thread \
+        CCAssert(false, "HttpResponse is used between network thread and ui thread \
                         therefore, autorelease is forbidden here");
         return NULL;
     }
     
-    // setters,getters for properties
+    // getters, will be called by users
+    
+    /** Get the corresponding HttpRequest object which leads to this response 
+        There's no paired setter for it, coz it's already setted in class constructor
+     */
     inline HttpRequest* getHttpRequest()
     {
         return _pHttpRequest;
     }
-    
-    inline void setSucceed(bool value)
-    {
-        _succeed = value;
-    };
+        
+    /** To see if the http reqeust is returned successfully,
+        Althrough users can judge if (http return code = 200), we want an easier way
+        If this getter returns false, you can call getResponseCode and getErrorBuffer to find more details
+     */
     inline bool isSucceed()
     {
         return _succeed;
     };
-        
-    inline void setResponseData(std::vector<char>* data)
-    {
-        _responseData = *data;
-    }
+    
+    /** Get the http response raw data */
     inline std::vector<char>* getResponseData()
     {
         return &_responseData;
     }
-    
-    inline void setResponseCode(int value)
-    {
-        _responseCode = value;
-    }
+
+    /** Get the http response errorCode
+     *  I know that you want to see http 200 :)
+     */
     inline int getResponseCode()
     {
         return _responseCode;
     }
+
+    /** Get the rror buffer which will tell you more about the reason why http request failed
+     */
+    inline const char* getErrorBuffer()
+    {
+        return _errorBuffer.c_str();
+    }
     
+    // setters, will be called by CCHttpClient
+    // users should avoid invoking these methods
+    
+    
+    /** Set if the http request is returned successfully,
+     Althrough users can judge if (http code == 200), we want a easier way
+     This setter is mainly used in CCHttpClient, users mustn't set it directly
+     */
+    inline void setSucceed(bool value)
+    {
+        _succeed = value;
+    };
+    
+    
+    /** Set the http response raw buffer, is used by CCHttpClient      
+     */
+    inline void setResponseData(std::vector<char>* data)
+    {
+        _responseData = *data;
+    }
+    
+    
+    /** Set the http response errorCode
+     */
+    inline void setResponseCode(int value)
+    {
+        _responseCode = value;
+    }
+    
+    
+    /** Set the error buffer which will tell you more the reason why http request failed
+     */
     inline void setErrorBuffer(const char* value)
     {
         _errorBuffer.clear();
         _errorBuffer.assign(value);
     };
-    inline const char* getErrorBuffer()
-    {
-        return _errorBuffer.c_str();
-    }
+
     
 protected:
     bool initWithRequest(HttpRequest* request);
     
     // properties
     HttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
-    bool                _succeed;
-    std::vector<char>   _responseData;
+    bool                _succeed;       /// to indecate if the http reqeust is successful simply
+    std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
     int                 _responseCode;  /// the CURLcode returned from libcurl
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason 
+    
 };
 
 NS_CC_EXT_END
