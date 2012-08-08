@@ -438,6 +438,15 @@ bool CCFileUtils::iPhoneRetinaDisplayFileExistsAtPath(const char *filename)
     return false;
 }
 
+void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
+{
+    m_obDirectory = pszResourceDirectory;
+    if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
+    {
+        m_obDirectory.append("/");
+    }
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
 //////////////////////////////////////////////////////////////////////////

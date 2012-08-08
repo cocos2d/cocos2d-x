@@ -238,9 +238,9 @@ void CCFileUtils::purgeCachedEntries()
 
 }
 
-void CCFileUtils::setResourcePath(const char *pszResourcePath)
+void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
 {
-    assert(0);
+    m_obDirectory = pszDirectoryName;
 }
 
 std::string& CCFileUtils::removeSuffixFromFile(std::string& cpath )
@@ -353,7 +353,10 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
     
         // pathForResource also searches in .lproj directories. issue #1230
         NSString *file = [relPath lastPathComponent];
-        NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
+        
+        NSMutableString *imageDirectory = [NSMutableString stringWithUTF8String:m_obDirectory.c_str()];
+        [imageDirectory appendString:[relPath stringByDeletingLastPathComponent]];
+        //NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
     
         fullpath = [[NSBundle mainBundle] pathForResource:file
                                                ofType:nil
@@ -366,6 +369,8 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
     {
         fullpath = relPath;
     }
+    
+    /*
 
     NSString *ret = nil;
 
@@ -399,8 +404,9 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
         *pResolutionType = kCCResolutioniPhone;
         ret = fullpath;
     }
+     */
 
-    return [ret UTF8String];
+    return [fullpath UTF8String];
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)

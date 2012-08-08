@@ -145,13 +145,10 @@ public:
     bool iPhoneRetinaDisplayFileExistsAtPath(const char *filename);
 
     /**
-    @brief  Set the ResourcePath,we will find resource in this path
-    @param pszResourcePath  The absolute resource path
-    @warning Don't call this function in android and iOS, it has not effect.
-    In android, if you want to read file other than apk, you shoud use invoke getFileData(), and pass the 
-    absolute path.
+    @brief  Set the ResourcePath,we will find resource relative to this path
+    @param pszResourcePath  Relative path to root
     */
-    void setResourcePath(const char *pszResourcePath);
+    void setResourceDirectory(const char *pszDirectoryName);
 
     /**
     @brief   Get the writeable path
@@ -164,6 +161,9 @@ public:
     */
     void setPopupNotify(bool bNotify);
     bool isPopupNotify();
+    
+protected:
+    std::string m_obDirectory;
 };
 
 // end of platform group
