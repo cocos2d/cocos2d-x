@@ -40,7 +40,14 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback));
-    pCloseItem->setPosition(ccp(visibleSize.width - 40 + origin.x, 40 + origin.y));
+    if (CCApplication::sharedApplication().isIos() && !CCApplication::sharedApplication().isIpad())
+    {
+        pCloseItem->setPosition(ccp(visibleSize.width - 20 + origin.x, 20 + origin.y));
+    }
+    else 
+    {
+        pCloseItem->setPosition(ccp(visibleSize.width - 40 + origin.x, 40 + origin.y));
+    }
 
     // create menu, it's an autorelease object
     CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);

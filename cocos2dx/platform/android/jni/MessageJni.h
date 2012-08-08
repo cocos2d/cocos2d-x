@@ -29,6 +29,7 @@ extern "C"
 {
     extern void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
     extern void terminateProcessJNI();
+    extern char* getApkPath();
 }
 
 #endif // __ANDROID_MESSAGE_JNI_H__
