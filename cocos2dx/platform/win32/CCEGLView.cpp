@@ -397,7 +397,7 @@ void CCEGLView::resize(int width, int height)
         rcClient.bottom - rcClient.top, SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-void CCEGLView::setFrameSize(float width, float height)
+void CCEGLView::setSize(float width, float height)
 {
     Create((LPCTSTR)m_szViewName, (int)width, (int)height);
     CCEGLViewProtocol::setFrameSize(width, height);
@@ -435,16 +435,13 @@ void CCEGLView::centerWindow()
     SetWindowPos(m_hWnd, 0, offsetX, offsetY, 0, 0, SWP_NOCOPYBITS | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-bool CCEGLView::canSetContentScaleFactor()
-{
-    return true;
-}
-
-void CCEGLView::setContentScaleFactor(float contentScaleFactor)
+bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     CCEGLViewProtocol::setContentScaleFactor(contentScaleFactor);
     resize((int)(m_sSizeInPixel.width * contentScaleFactor), (int)(m_sSizeInPixel.height * contentScaleFactor));
     centerWindow();
+    
+    return true
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()

@@ -63,8 +63,7 @@ void CCFileUtils::purgeCachedEntries()
 
 }
 
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath,
-                                                  ccResolutionType *pResolutionType)
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
     return pszRelativePath;
 }
@@ -92,9 +91,18 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     if (pszFileName[0] != '/')
     {
         // read from apk
+        string pathWithoutDirectory = fullPath;
+        
         fullPath.insert(0, m_obDirectory.c_str());
         fullPath.insert(0, "assets/");
         pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+        
+        if (! pData && m_obDirectory.size() > 0)
+        {
+            // search from root
+            pathWithoutDirectory.insert(0, "assets/");
+            pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), pathWithoutDirectory.c_str(), pSize);
+        }
     }
     else
     {
