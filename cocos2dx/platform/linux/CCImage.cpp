@@ -163,13 +163,13 @@ public:
 		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
 			eAlignMask == CCImage::kAlignRight ) {
 			//vertical center
-			iRet = (borderHeight - txtHeight)/2;
+			iRet = (borderHeight - txtHeight)/2 + SHIFT6(face->size->metrics.ascender);
 
 		} else if (eAlignMask == CCImage::kAlignBottomRight || 
 				   eAlignMask == CCImage::kAlignBottom || 
 				   eAlignMask == CCImage::kAlignBottomLeft ) {
 			//vertical bottom
-			iRet = borderHeight - txtHeight;
+			iRet = borderHeight - txtHeight + SHIFT6(face->size->metrics.ascender);
 		} else {
 			// left or other situation
 			iRet = SHIFT6(face->size->metrics.ascender);
