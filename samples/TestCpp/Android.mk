@@ -49,6 +49,7 @@ Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer
 Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
+Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
@@ -86,8 +87,6 @@ Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/AppDelegate.cpp
 
-LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
-
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
@@ -102,5 +101,4 @@ $(call import-module,CocosDenshion/android)
 $(call import-module,external/Box2D)
 $(call import-module,external/chipmunk)
 $(call import-module,cocos2dx)
-$(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,extensions)
