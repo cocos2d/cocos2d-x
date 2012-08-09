@@ -83,6 +83,11 @@ public:
     void setResourceDirectory(const char *pszDirectoryName);
 
     /**
+    @brief  Get the ResourcePath
+    */
+    const char* getResourceDirectory();
+
+    /**
     @brief   Get the writeable path
     @return  The path that can write/read file
     */
