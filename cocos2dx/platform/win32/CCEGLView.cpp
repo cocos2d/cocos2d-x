@@ -89,7 +89,7 @@ CCEGLView::CCEGLView()
 , m_hRC(NULL)
 , m_lpfnAccelerometerKeyHook(NULL)
 {
-    
+    strcpy(m_szViewName, "Cocos2dxWin32");
 }
 
 CCEGLView::~CCEGLView()
@@ -210,7 +210,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
-            if (CCRect::CCRectContainsPoint(m_rcViewPort, pt))
+            //if (CCRect::CCRectContainsPoint(m_obViewPortRect, pt))
             {
                 m_bCaptured = true;
                 SetCapture(m_hWnd);
@@ -397,10 +397,10 @@ void CCEGLView::resize(int width, int height)
         rcClient.bottom - rcClient.top, SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-void CCEGLView::setFrameSize(float width, float height)
+void CCEGLView::setSize(float width, float height)
 {
     Create((LPCTSTR)m_szViewName, (int)width, (int)height);
-    CCEGLViewProtocol::setFrameSize(width, height);
+    CCEGLViewProtocol::setSize(width, height);
 }
 
 void CCEGLView::centerWindow()
@@ -435,16 +435,13 @@ void CCEGLView::centerWindow()
     SetWindowPos(m_hWnd, 0, offsetX, offsetY, 0, 0, SWP_NOCOPYBITS | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-bool CCEGLView::canSetContentScaleFactor()
-{
-    return true;
-}
-
-void CCEGLView::setContentScaleFactor(float contentScaleFactor)
+bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     CCEGLViewProtocol::setContentScaleFactor(contentScaleFactor);
-    resize((int)(m_sSizeInPixel.width * contentScaleFactor), (int)(m_sSizeInPixel.height * contentScaleFactor));
+    resize((int)(m_obScreenSize.width * contentScaleFactor), (int)(m_obScreenSize.height * contentScaleFactor));
     centerWindow();
+    
+    return true;
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()
