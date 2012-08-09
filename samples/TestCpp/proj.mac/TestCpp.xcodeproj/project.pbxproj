@@ -236,6 +236,8 @@
 		D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949B15BD2D8E00D803EB /* Icon-114.png */; };
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
+		D4EFE03315D272A0002D3DA0 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EFE02F15D272A0002D3DA0 /* HttpClient.cpp */; };
+		D4EFE03715D27336002D3DA0 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -740,6 +742,12 @@
 		D4EF949B15BD2D8E00D803EB /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-114.png"; path = "../proj.ios/Icon-114.png"; sourceTree = "<group>"; };
 		D4EF949D15BD2D9600D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
+		D4EFE02F15D272A0002D3DA0 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
+		D4EFE03015D272A0002D3DA0 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
+		D4EFE03115D272A0002D3DA0 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
+		D4EFE03215D272A0002D3DA0 /* HttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpResponse.h; sourceTree = "<group>"; };
+		D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClientTest.cpp; sourceTree = "<group>"; };
+		D4EFE03615D27336002D3DA0 /* HttpClientTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClientTest.h; sourceTree = "<group>"; };
 		F28379F015B95F8000A5707B /* cocos-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos-ext.h"; sourceTree = "<group>"; };
 		F28379F115B95F8000A5707B /* ExtensionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionMacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1059,6 +1067,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				D4EFE03415D27336002D3DA0 /* NetworkTest */,
 				15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */,
 				15AA9CDB15B7EC460033D6C2 /* ControlExtensionTest */,
 				15AA9CEC15B7EC460033D6C2 /* ExtensionsTest.cpp */,
@@ -1750,6 +1759,7 @@
 		15AA9ED615B7EDCB0033D6C2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D4EFE02E15D272A0002D3DA0 /* network */,
 				F28379F015B95F8000A5707B /* cocos-ext.h */,
 				F28379F115B95F8000A5707B /* ExtensionMacros.h */,
 				15AA9ED715B7EDCB0033D6C2 /* CCBReader */,
@@ -1977,6 +1987,27 @@
 				D4BF205415C6D32E00692205 /* CCScrollView.h */,
 			);
 			path = CCScrollView;
+			sourceTree = "<group>";
+		};
+		D4EFE02E15D272A0002D3DA0 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				D4EFE02F15D272A0002D3DA0 /* HttpClient.cpp */,
+				D4EFE03015D272A0002D3DA0 /* HttpClient.h */,
+				D4EFE03115D272A0002D3DA0 /* HttpRequest.h */,
+				D4EFE03215D272A0002D3DA0 /* HttpResponse.h */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
+		D4EFE03415D27336002D3DA0 /* NetworkTest */ = {
+			isa = PBXGroup;
+			children = (
+				D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */,
+				D4EFE03615D27336002D3DA0 /* HttpClientTest.h */,
+			);
+			name = NetworkTest;
+			path = ../../Classes/ExtensionsTest/NetworkTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2276,6 +2307,8 @@
 				D4BF205F15C6D32E00692205 /* CCScale9Sprite.cpp in Sources */,
 				D4BF206015C6D32E00692205 /* CCSpacer.cpp in Sources */,
 				D4BF206115C6D32E00692205 /* CCScrollView.cpp in Sources */,
+				D4EFE03315D272A0002D3DA0 /* HttpClient.cpp in Sources */,
+				D4EFE03715D27336002D3DA0 /* HttpClientTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
