@@ -32,10 +32,10 @@ NS_CC_EXT_BEGIN
 
 /** 
  @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.
- Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpRequestTest.cpp as a sample
+ Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
  */
-class HttpRequest : public cocos2d::CCObject
+class CCHttpRequest : public cocos2d::CCObject
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
@@ -52,7 +52,7 @@ public:
         new/retain/release still works, which means you need to release it manually
         Please refer to HttpRequestTest.cpp to find its usage
      */
-    HttpRequest()
+    CCHttpRequest()
     {
         _requestType = kHttpUnkown;
         _url.clear();
@@ -64,7 +64,7 @@ public:
     };
     
     /** Destructor */
-    virtual ~HttpRequest()
+    virtual ~CCHttpRequest()
     {
         if (_pTarget)
         {
