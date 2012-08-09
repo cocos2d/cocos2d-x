@@ -44,6 +44,8 @@ using namespace cocos2d;
 
 extern "C"
 {
+    char *g_pApkPath;
+    
     //////////////////////////////////////////////////////////////////////////
     // native renderer
     //////////////////////////////////////////////////////////////////////////
@@ -127,8 +129,13 @@ extern "C"
     //////////////////////////////////////////////////////////////////////////
     void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
     {
-        const char* str = env->GetStringUTFChars(apkPath, NULL);
-        cocos2d::CCFileUtils::sharedFileUtils()->setResourcePath(str);
-        env->ReleaseStringUTFChars(apkPath, str);
+        g_pApkPath = (char*)env->GetStringUTFChars(apkPath, NULL);
+        // don't release it, we will use it later
+        //env->ReleaseStringUTFChars(apkPath, str);
+    }
+    
+    char* getApkPath()
+    {
+        return g_pApkPath;
     }
 }

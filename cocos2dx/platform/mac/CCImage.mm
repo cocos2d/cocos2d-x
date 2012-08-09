@@ -268,7 +268,7 @@ static bool _initWithFile(const char* path, tImageInfo *pImageinfo)
 {
     CGImageRef                CGImage;    
     NSImage                    *jpg;
-    NSImage                    *png;
+    //NSImage                    *png;
     bool            ret;
     
     // convert jpg to png before loading the texture
@@ -281,7 +281,7 @@ static bool _initWithFile(const char* path, tImageInfo *pImageinfo)
     
     ret = _initWithImage(CGImage, pImageinfo, 1.0, 1.0);
     
-    [png release];
+    //[png release];
     [jpg release];
     
     return ret;
