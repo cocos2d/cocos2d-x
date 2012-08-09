@@ -21,6 +21,7 @@ class CCActionInterval : public CCAction
     // float getElapsed(void);
     // void setAmplitudeRate(CGFloat amp);
     // CGFloat getAmplitudeRate(void);
+	CCActionInterval* reverse(void);
 };
 
 class CCFiniteTimeAction : public CCActionInterval
@@ -187,62 +188,44 @@ class CCAnimate : public CCActionInterval
     static CCAction* create(CCAnimation *pAnimation);
 };
 
-class CCTargetAction : public CCActionInterval
+class CCProgressTo : public CCAction
 {
-    CCNode* getForcedTarget(void);
-    void setForcedTarget(CCNode* target);
+    static CCAction* create(float duration, float fPercent);
+};
 
-    static CCTargetedAction* create(CCNode* pTarget, CCFiniteTimeAction* pAction);
+class CCProgressFromTo : public CCAction
+{
+    static CCAction* create(float duration, float fFromPercentage, float fToPercentage);
 };
 
 
 // CCActionInstant
-class CCShow : public CCActionInstant
+class CCShow : public CCAction
 {
     static CCAction* create();
 };
 
-class CCHide : public CCActionInstant
+class CCHide : public CCAction
 {
     static CCAction* create();
 };
 
-class CCToggleVisibility : public CCActionInstant
+class CCToggleVisibility : public CCAction
 {
     static CCAction* create();
 };
 
-class CCFlipX : public CCActionInstant
+class CCFlipX : public CCAction
 {
     static CCAction* create(bool x);
 };
 
-class CCFlipY : public CCActionInstant
+class CCFlipY : public CCAction
 {
     static CCAction* create(bool y);
 };
 
-class CCPlace : public CCActionInstant //<NSCopying>
+class CCPlace : public CCAction //<NSCopying>
 {
     static CCAction* create(CCPoint pos);
-};
-
-class CCCallFunc : public CCActionInstant
-{
-    static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
-};
-
-class CCCallFuncN : public CCCallFunc
-{   
-    static CCCallFuncN * create(CCObject* pSelectorTarget, SEL_CallFuncN selector);
-};
-
-class CCCallFuncND : public CCCallFuncN
-{
-    static CCCallFuncND * create(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
-};
-
-class CCCallFuncO : public CCCallFunc
-{
-    static CCCallFuncO * create(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
 };

@@ -22,6 +22,7 @@ class CCNode : public CCObject
     float   getPositionX();
     float   getPositionY();
     void    setPosition(float x, float y);
+	void 	setPosition(CCPoint pos);
     void    setPositionX(float x);
     void    setPositionY(float y);
     float   getSkewX();
