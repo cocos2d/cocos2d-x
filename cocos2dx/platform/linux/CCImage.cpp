@@ -50,7 +50,7 @@ public:
 		vLines.clear();
 	}
 
-	void buildLine(stringstream& ss, FT_Face face, int iCurXCursor, int iCurYCursor, char cLastChar) {
+	void buildLine(stringstream& ss, FT_Face face, int iCurXCursor, char cLastChar) {
 		TextLine oTempLine;
 		ss << '\0';
 		oTempLine.sLineStr = ss.str();
@@ -84,7 +84,7 @@ public:
 
 		while (*pText != '\0') {
 			if (*pText == '\n') {
-				buildLine(ss, face, iCurXCursor, iCurYCursor, cLastCh);
+				buildLine(ss, face, iCurXCursor, cLastCh);
 
 				pText++;
 				iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
@@ -108,7 +108,7 @@ public:
 			if ((iMaxWidth > 0
 							&& iCurXCursor + SHIFT6(face->glyph->metrics.width)
 							> iMaxWidth)) {
-				buildLine(ss, face , iCurXCursor, iCurYCursor, cLastCh);
+				buildLine(ss, face , iCurXCursor, cLastCh);
 
 				iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
 			}
@@ -123,7 +123,7 @@ public:
 			return false;
 		}
 
-		buildLine(ss,face, iCurXCursor, iCurYCursor, cLastCh);
+		buildLine(ss,face, iCurXCursor, cLastCh);
 
 		return true;
 	}
