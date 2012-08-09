@@ -293,32 +293,6 @@ void CCLabelTTF::updateTexture()
                             m_pFontName->c_str(),
                             m_fFontSize * CC_CONTENT_SCALE_FACTOR());
     }
-		
-	// iPad ?
-	//if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-    if (CCApplication::sharedApplication().isIpad())
-    {            
-		if (CC_CONTENT_SCALE_FACTOR() == 2)
-        {
-            tex->setResolutionType(kCCResolutioniPadRetinaDisplay);
-        }
-		else
-        {
-            tex->setResolutionType(kCCResolutioniPad);
-        }
-	}
-	// iPhone ?
-	else
-	{
-		if (CC_CONTENT_SCALE_FACTOR() == 2)
-        {
-            tex->setResolutionType(kCCResolutioniPhoneRetinaDisplay);
-        }
-		else
-        {
-            tex->setResolutionType(kCCResolutioniPhone);
-        }
-	}
 	
     this->setTexture(tex);
     tex->release();

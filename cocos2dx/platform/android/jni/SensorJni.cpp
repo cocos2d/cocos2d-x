@@ -49,12 +49,6 @@ extern "C"
     void Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp)
     {
         // We need to invert to make it compatible with iOS.
-        CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
-        float fScreenScaleFactor = CCEGLView::sharedOpenGLView().getScreenScaleFactor();
-//         cocos2d::CCAccelerometer::sharedAccelerometer()->update((x - rcRect.origin.x) / fScreenScaleFactor,
-//             (y - rcRect.origin.y) / fScreenScaleFactor, 
-//             z, 
-//             timeStamp);
         CCDirector* pDirector = CCDirector::sharedDirector();
         pDirector->getAccelerometer()->update(x, y, z, timeStamp);
     }    

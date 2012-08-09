@@ -235,7 +235,6 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     m_bHasPremultipliedAlpha = false;
     m_bHasMipmaps = false;
 
-    m_eResolutionType = kCCResolutionUnknown;
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 
     return true;
@@ -251,11 +250,6 @@ const char* CCTexture2D::description(void)
 
 bool CCTexture2D::initWithImage(CCImage *uiImage)
 {
-    return initWithImage(uiImage, kCCResolutionUnknown);
-}
-
-bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
-{
     if (uiImage == NULL)
     {
         CCLOG("cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
@@ -267,7 +261,7 @@ bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
     unsigned int imageHeight = uiImage->getHeight();
     
     CCConfiguration *conf = CCConfiguration::sharedConfiguration();
-
+    
     unsigned maxTextureSize = conf->getMaxTextureSize();
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 
     {
@@ -275,12 +269,11 @@ bool CCTexture2D::initWithImage(CCImage * uiImage, ccResolutionType resolution)
         this->release();
         return NULL;
     }
-
-    m_eResolutionType = resolution;
-
+    
     // always load premultiplied images
     return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
 }
+
 bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned int width, unsigned int height)
 {
     unsigned char*            tempData = image->getData();
