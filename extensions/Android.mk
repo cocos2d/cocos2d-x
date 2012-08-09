@@ -34,16 +34,19 @@ GUI/CCControlExtension/CCInvocation.cpp \
 GUI/CCControlExtension/CCMenuPassive.cpp \
 GUI/CCControlExtension/CCScale9Sprite.cpp \
 GUI/CCControlExtension/CCSpacer.cpp \
-GUI/CCScrollView/CCScrollView.cpp
+GUI/CCScrollView/CCScrollView.cpp \
+network/HttpClient.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/CCBReader \
-                           $(LOCAL_PATH)/UI/CCControlExtension \
-                           $(LOCAL_PATH)/UI/CCScrollView
+                           $(LOCAL_PATH)/GUI/CCControlExtension \
+                           $(LOCAL_PATH)/GUI/CCScrollView \
+                           $(LOCAL_PATH)/network
                     
-
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,cocos2dx)
+$(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)

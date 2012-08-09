@@ -317,7 +317,7 @@ CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
     }
     else
     {
-        CCLOG("cocos2d : getActionByTag: Target not found");
+        // CCLOG("cocos2d : getActionByTag: Target not found");
     }
 
     return NULL;
