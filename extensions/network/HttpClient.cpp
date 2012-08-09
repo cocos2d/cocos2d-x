@@ -53,6 +53,10 @@ static unsigned long    s_asyncRequestCount = 0;
 static sem_t s_sem;
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+typedef int int32_t;
+#endif
+
 static bool need_quit = false;
 
 static CCArray* s_requestQueue = NULL;
