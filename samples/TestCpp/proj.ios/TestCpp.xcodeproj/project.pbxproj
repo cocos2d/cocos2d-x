@@ -213,10 +213,12 @@
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF3326F313690DA4007CAA22 /* RootViewController.mm */; };
+		D4144C0F15D23C9C00F4FD92 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4144C0D15D23C9C00F4FD92 /* HttpClientTest.cpp */; };
 		D429012E13B1D16900A3772F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D429012D13B1D16900A3772F /* libcurl.a */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		D49E9D6915CFAD7300B5A0D6 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D49E9D6715CFAD7300B5A0D6 /* HttpClient.cpp */; };
 		D4BF202115C6D23700692205 /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4BF200515C6D23700692205 /* CCControl.cpp */; };
 		D4BF202215C6D23700692205 /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4BF200715C6D23700692205 /* CCControlButton.cpp */; };
 		D4BF202315C6D23700692205 /* CCControlColourPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4BF200915C6D23700692205 /* CCControlColourPicker.cpp */; };
@@ -700,10 +702,16 @@
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF3326F213690DA4007CAA22 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF3326F313690DA4007CAA22 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		D4144C0D15D23C9C00F4FD92 /* HttpClientTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClientTest.cpp; sourceTree = "<group>"; };
+		D4144C0E15D23C9C00F4FD92 /* HttpClientTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClientTest.h; sourceTree = "<group>"; };
 		D429012D13B1D16900A3772F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D49E9D6715CFAD7300B5A0D6 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
+		D49E9D6815CFAD7300B5A0D6 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
+		D49E9D9C15D0E19B00B5A0D6 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
+		D49E9D9E15D0E19C00B5A0D6 /* HttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpResponse.h; sourceTree = "<group>"; };
 		D4BF200515C6D23700692205 /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
 		D4BF200615C6D23700692205 /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
 		D4BF200715C6D23700692205 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
@@ -1078,6 +1086,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				D4144C0C15D23C9C00F4FD92 /* NetworkTest */,
 				15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */,
 				15AA9CDB15B7EC460033D6C2 /* ControlExtensionTest */,
 				15AA9CEC15B7EC460033D6C2 /* ExtensionsTest.cpp */,
@@ -1786,6 +1795,7 @@
 		15AA9ED615B7EDCB0033D6C2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D49E9D6615CFAD7300B5A0D6 /* network */,
 				F28379F015B95F8000A5707B /* cocos-ext.h */,
 				F28379F115B95F8000A5707B /* ExtensionMacros.h */,
 				15AA9ED715B7EDCB0033D6C2 /* CCBReader */,
@@ -1913,6 +1923,27 @@
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		D4144C0C15D23C9C00F4FD92 /* NetworkTest */ = {
+			isa = PBXGroup;
+			children = (
+				D4144C0D15D23C9C00F4FD92 /* HttpClientTest.cpp */,
+				D4144C0E15D23C9C00F4FD92 /* HttpClientTest.h */,
+			);
+			name = NetworkTest;
+			path = ../../Classes/ExtensionsTest/NetworkTest;
+			sourceTree = "<group>";
+		};
+		D49E9D6615CFAD7300B5A0D6 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				D49E9D9C15D0E19B00B5A0D6 /* HttpRequest.h */,
+				D49E9D9E15D0E19C00B5A0D6 /* HttpResponse.h */,
+				D49E9D6715CFAD7300B5A0D6 /* HttpClient.cpp */,
+				D49E9D6815CFAD7300B5A0D6 /* HttpClient.h */,
+			);
+			path = network;
 			sourceTree = "<group>";
 		};
 		D4BF200315C6D23700692205 /* GUI */ = {
@@ -2259,6 +2290,8 @@
 				D4BF202B15C6D23700692205 /* CCScale9Sprite.cpp in Sources */,
 				D4BF202C15C6D23700692205 /* CCSpacer.cpp in Sources */,
 				D4BF202D15C6D23700692205 /* CCScrollView.cpp in Sources */,
+				D49E9D6915CFAD7300B5A0D6 /* HttpClient.cpp in Sources */,
+				D4144C0F15D23C9C00F4FD92 /* HttpClientTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
