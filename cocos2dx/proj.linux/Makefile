@@ -24,7 +24,7 @@ INCLUDES = -I.. \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
 			-I../platform/third_party/linux/libtiff/include \
-			-I../platform/third_party/linux/curl/include \
+			-I../platform/third_party/linux/ \
 
 #			-I../platform/third_party/linux/libpng \
 
