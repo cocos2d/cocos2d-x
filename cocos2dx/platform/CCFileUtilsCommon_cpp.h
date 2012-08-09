@@ -381,6 +381,11 @@ void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
     }
 }
 
+const char* CCFileUtils::getResourceDirectory()
+{
+    return m_obDirectory.c_str();
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
 //////////////////////////////////////////////////////////////////////////
