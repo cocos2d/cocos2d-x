@@ -165,6 +165,16 @@ public:
     /** returns the size of the OpenGL view in pixels.
     */
     CCSize getWinSizeInPixels(void);
+    
+    /** returns visible size of the OpenGL view in points.
+     *  the value is equal to getWinSize if don't invoke
+     *  CCEGLView::setDesignResolutionSize()
+     */
+    CCSize getVisibleSize();
+    
+    /** returns visible origin of the OpenGL view in points.
+     */
+    CCPoint getVisibleOrigin();
 
     /** changes the projection size */
     void reshapeProjection(const CCSize& newWindowSize);

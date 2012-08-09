@@ -62,7 +62,7 @@ THE SOFTWARE.
  Default: 0,0 (bottom-left corner)
  */
 #ifndef CC_DIRECTOR_STATS_POSITION
-#define CC_DIRECTOR_STATS_POSITION CCDirector::sharedDirector()->getOpenGLView()->getVisibleOrigin()
+#define CC_DIRECTOR_STATS_POSITION CCDirector::sharedDirector()->getVisibleOrigin()
 #endif
 
 using namespace std;
@@ -472,6 +472,30 @@ CCSize CCDirector::getWinSize(void)
 CCSize CCDirector::getWinSizeInPixels()
 {
     return m_obWinSizeInPixels;
+}
+
+CCSize CCDirector::getVisibleSize()
+{
+    if (m_pobOpenGLView)
+    {
+        return m_pobOpenGLView->getVisibleSize();
+    }
+    else 
+    {
+        return CCSizeZero;
+    }
+}
+
+CCPoint CCDirector::getVisibleOrigin()
+{
+    if (m_pobOpenGLView)
+    {
+        return m_pobOpenGLView->getVisibleOrigin();
+    }
+    else 
+    {
+        return CCPointZero;
+    }
 }
 
 void CCDirector::reshapeProjection(const CCSize& newWindowSize)

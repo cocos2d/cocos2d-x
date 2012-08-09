@@ -5,12 +5,15 @@
 
 enum ResolutionPolicy
 {
-    // the output will fill the screen, scale of x and y may be different
-    kResolutionFullScreen,
-    // the output will fill the screen, scale of x and y is the same
-    kResolutionScaleFullScreen,
-    // scale of x and y is the same, there may be black block in x or y coordinate
-    kResolutionScaleNotFullScreen,
+    // The entire application is visible in the specified area without trying to preserve the original aspect ratio. 
+    // Distortion can occur, and the application may appear stretched or compressed.
+    kCCResolutionExactFit,
+    // The entire application fills the specified area, without distortion but possibly with some cropping, 
+    // while maintaining the original aspect ratio of the application.
+    kCCResolutionNoBorder,
+    // The entire application is visible in the specified area without distortion while maintaining the original 
+    // aspect ratio of the application. Borders can appear on two sides of the application.
+    kCCResolutionShowAll,
     
     kResolutionUnKnown,
 };
