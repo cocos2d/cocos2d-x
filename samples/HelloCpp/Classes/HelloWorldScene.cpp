@@ -27,8 +27,8 @@ bool HelloWorld::init()
         return false;
     }
     
-    CCSize visibleSize = CCDirector::sharedDirector()->getOpenGLView()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getOpenGLView()->getVisibleOrigin();
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program

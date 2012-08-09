@@ -72,12 +72,12 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     m_fXScale = (float)m_obScreenSize.width / m_obDesignResolutionSize.width;
     m_fYScale = (float)m_obScreenSize.height / m_obDesignResolutionSize.height;
     
-    if (resolutionPolicy == kResolutionScaleFullScreen)
+    if (resolutionPolicy == kCCResolutionNoBorder)
     {
         m_fXScale = m_fYScale = MAX(m_fXScale, m_fYScale);
     }
     
-    if (resolutionPolicy == kResolutionScaleNotFullScreen)
+    if (resolutionPolicy == kCCResolutionShowAll)
     {
         m_fXScale = m_fYScale = MIN(m_fXScale, m_fYScale);
     }
@@ -115,7 +115,7 @@ void CCEGLViewProtocol::setSize(float width, float height)
 
 CCSize  CCEGLViewProtocol::getVisibleSize()
 {
-    if (m_eResolutionPolicy == kResolutionScaleFullScreen)
+    if (m_eResolutionPolicy == kCCResolutionNoBorder)
     {
         return CCSizeMake(m_obScreenSize.width/m_fXScale, m_obScreenSize.height/m_fYScale);
     }
@@ -127,7 +127,7 @@ CCSize  CCEGLViewProtocol::getVisibleSize()
 
 CCPoint CCEGLViewProtocol::getVisibleOrigin()
 {
-    if (m_eResolutionPolicy == kResolutionScaleFullScreen)
+    if (m_eResolutionPolicy == kCCResolutionNoBorder)
     {
         return CCPointMake((m_obDesignResolutionSize.width - m_obScreenSize.width/m_fXScale)/2, 
                            (m_obDesignResolutionSize.height - m_obScreenSize.height/m_fYScale)/2);

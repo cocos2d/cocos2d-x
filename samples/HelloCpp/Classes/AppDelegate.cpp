@@ -24,7 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
         
         // don't enable retina because we don't have ipad hd resource
-        CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kResolutionScaleFullScreen);
+        CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kCCResolutionNoBorder);
     }
     else 
     {
@@ -32,20 +32,22 @@ bool AppDelegate::applicationDidFinishLaunching() {
         
         if (pDirector->enableRetinaDisplay(true))
         {
-            // iphone
+            // iphone hd
             CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
         }
         else 
         {
             if (isIos())
             {
+                // iphone
                 CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
             }
             else 
             {
-                CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
                 // android or other platform, use hd resource
-                CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kResolutionScaleFullScreen);
+                
+                CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
+                CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kCCResolutionNoBorder);
             }
         }
     }
