@@ -44,74 +44,6 @@ USING_NS_CC;
 static void static_addValueToCCDict(id key, id value, CCDictionary* pDict);
 static void static_addItemToCCArray(id item, CCArray* pArray);
 
-
-static NSFileManager *__localFileManager= [[NSFileManager alloc] init];
-
-static NSString* removeSuffixFromPath(NSString *suffix, NSString *path)
-{
-    // quick return
-    if( ! suffix || [suffix length] == 0 )
-    {
-        return path;
-    }
-    
-    NSString *name = [path lastPathComponent];
-    
-    // check if path already has the suffix.
-    if( [name rangeOfString:suffix].location != NSNotFound ) {
-        
-        CCLOG("cocos2d: Filename(%s) contains %s suffix. Removing it. See cocos2d issue #1040", [path UTF8String], [suffix UTF8String]);
-        
-        NSString *newLastname = [name stringByReplacingOccurrencesOfString:suffix withString:@""];
-        
-        NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
-        return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
-    }
-    
-    return path;
-}
-
-static NSString* getPathForSuffix(NSString *path, NSString *suffix)
-{
-    // quick return
-    if( ! suffix || [suffix length] == 0 )
-    {
-        return path;
-    }
-    
-    NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
-    NSString *name = [pathWithoutExtension lastPathComponent];
-    
-    // check if path already has the suffix.
-    if( [name rangeOfString:suffix].location != NSNotFound ) {
-        
-        CCLOG("cocos2d: WARNING Filename(%s) already has the suffix %s. Using it.", [name UTF8String], [suffix UTF8String]);
-        return path;
-    }
-    
-    
-    NSString *extension = [path pathExtension];
-    
-    if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
-    {
-        // All ccz / gz files should be in the format filename.xxx.ccz
-        // so we need to pull off the .xxx part of the extension as well
-        extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
-        pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
-    }
-    
-    
-    NSString *newName = [pathWithoutExtension stringByAppendingString:suffix];
-    newName = [newName stringByAppendingPathExtension:extension];
-    
-    if( [__localFileManager fileExistsAtPath:newName] )
-        return newName;
-    
-    CCLOG("cocos2d: CCFileUtils: Warning file not found: %s", [[newName lastPathComponent] UTF8String] );
-    
-    return nil;
-}
-
 static void static_addItemToCCArray(id item, CCArray *pArray)
 {
     // add string value into array
@@ -239,32 +171,6 @@ void CCFileUtils::purgeCachedEntries()
 void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
 {
     m_obDirectory = pszDirectoryName;
-}
-
-bool fileExistsAtPath(const char *cpath, const char *csuffix)
-{
-    NSString *fullpath = nil;
-    NSString *relPath = [NSString stringWithUTF8String:cpath];
-    NSString *suffix = [NSString stringWithUTF8String:csuffix];
-
-    // only if it is not an absolute path
-    if( ! [relPath isAbsolutePath] ) {
-        // pathForResource also searches in .lproj directories. issue #1230
-        NSString *file = [relPath lastPathComponent];
-        NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
-    
-        fullpath = [[NSBundle mainBundle] pathForResource:file
-                                               ofType:nil
-                                          inDirectory:imageDirectory];
-    
-    }
-
-    if (fullpath == nil)
-        fullpath = relPath;
-
-    NSString *path = getPathForSuffix(fullpath, suffix);
-
-    return ( path != nil );
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
