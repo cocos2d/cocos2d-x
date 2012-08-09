@@ -54,10 +54,10 @@ public:
         
     /**
      * Add a get request to task queue
-     * @param request a HttpRequest object, which includes url, response callback etc.
+     * @param request a CCHttpRequest object, which includes url, response callback etc.
      * @return NULL
      */
-    void send(HttpRequest* request);
+    void send(CCHttpRequest* request);
   
     
     /**

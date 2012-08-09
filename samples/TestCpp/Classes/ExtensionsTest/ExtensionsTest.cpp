@@ -3,7 +3,7 @@
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
-#include "NetworkTest/HttpRequestTest.h"
+#include "NetworkTest/HttpClientTest.h"
 
 enum
 {
@@ -16,7 +16,7 @@ enum
     TEST_NOTIFICATIONCENTER = 0,
     TEST_CCCONTROLBUTTON,
     TEST_COCOSBUILDER,
-    TEST_HTTPREQUEST,
+    TEST_HTTPCLIENT,
     TEST_MAX_COUNT,
 };
 
@@ -25,7 +25,7 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "NotificationCenterTest",
     "CCControlButtonTest",
     "CocosBuilderTest",
-    "HttpRequestTest",
+    "HttpClientTest",
 };
 
 ////////////////////////////////////////////////////////
@@ -83,9 +83,9 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             }
         }
         break;
-    case TEST_HTTPREQUEST:
+    case TEST_HTTPCLIENT:
         {
-            runHttpRequestTest();
+            runHttpClientTest();
         }
     default:
         break;

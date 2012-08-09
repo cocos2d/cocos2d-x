@@ -33,16 +33,16 @@ NS_CC_EXT_BEGIN
 
 /** 
  @brief defines the object which users will receive at onHttpCompleted(sender, HttpResponse) callback
- Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpRequestTest.cpp as a sample
+ Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
  */
-class HttpResponse : public cocos2d::CCObject
+class CCHttpResponse : public cocos2d::CCObject
 {
 public:
     /** Constructor, it's used by CCHttpClient internal, users don't need to create HttpResponse manually
      @param request the corresponding HttpRequest which leads to this response 
      */
-    HttpResponse(HttpRequest* request)
+    CCHttpResponse(CCHttpRequest* request)
     {
         _pHttpRequest = request;
         if (_pHttpRequest)
@@ -58,7 +58,7 @@ public:
     /** Destructor, it will be called in CCHttpClient internal,
      users don't need to desturct HttpResponse object manully 
      */
-    virtual ~HttpResponse()
+    virtual ~CCHttpResponse()
     {
         if (_pHttpRequest)
         {
@@ -79,7 +79,7 @@ public:
     /** Get the corresponding HttpRequest object which leads to this response 
         There's no paired setter for it, coz it's already setted in class constructor
      */
-    inline HttpRequest* getHttpRequest()
+    inline CCHttpRequest* getHttpRequest()
     {
         return _pHttpRequest;
     }
@@ -151,16 +151,15 @@ public:
         _errorBuffer.clear();
         _errorBuffer.assign(value);
     };
-
     
 protected:
-    bool initWithRequest(HttpRequest* request);
+    bool initWithRequest(CCHttpRequest* request);
     
     // properties
-    HttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
+    CCHttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
     bool                _succeed;       /// to indecate if the http reqeust is successful simply
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
-    int                 _responseCode;  /// the CURLcode returned from libcurl
+    int                 _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason 
     
 };

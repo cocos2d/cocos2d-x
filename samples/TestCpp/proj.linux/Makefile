@@ -21,6 +21,7 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux/curl  \
 			-I../../../CocosDenshion/include \
 			-I../../../extensions/ \
 			-I../../../external/ \
@@ -78,6 +79,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.o \
 			../Classes/ExtensionsTest/ExtensionsTest.o \
 			../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.o \
+			../Classes/ExtensionsTest/NetworkTest/HttpClientTest.o \
 			../Classes/FontTest/FontTest.o \
 			../Classes/IntervalTest/IntervalTest.o \
 			../Classes/KeypadTest/KeypadTest.o \

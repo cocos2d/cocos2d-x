@@ -79,15 +79,15 @@ size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 
 // Prototypes
 bool configureCURL(CURL *handle);
-int processGetTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
-int processPostTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
+int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
 // Worker thread
 static void* networkThread(void *data)
 {    
-    HttpRequest *request = NULL;
+    CCHttpRequest *request = NULL;
     
     while (true) 
     {
@@ -109,8 +109,9 @@ static void* networkThread(void *data)
         pthread_mutex_lock(&s_requestQueueMutex); //Get request task from queue
         if (0 != s_requestQueue->count())
         {
-            request = dynamic_cast<HttpRequest*>(s_requestQueue->objectAtIndex(0));
-            s_requestQueue->removeObjectAtIndex(0);
+            request = dynamic_cast<CCHttpRequest*>(s_requestQueue->objectAtIndex(0));
+            s_requestQueue->removeObjectAtIndex(0);  
+            // request's refcount = 1 here
         }
         pthread_mutex_unlock(&s_requestQueueMutex);
         
@@ -122,22 +123,26 @@ static void* networkThread(void *data)
         // step 2: libcurl sync access
         
         // Create a HttpResponse object, the default setting is http access failed
-        HttpResponse *response = new HttpResponse(request);
+        CCHttpResponse *response = new CCHttpResponse(request);
         
-        int responseCode = CURL_LAST;
+        // request's refcount = 2 here, it's retained by HttpRespose constructor
+        request->release();
+        // ok, refcount = 1 now, only HttpResponse hold it.
+        
+        int responseCode = -1;
         int retValue = 0;
 
         // Process the request -> get response packet
         switch (request->getRequestType())
         {
-            case HttpRequest::kHttpGet: // HTTP GET
+            case CCHttpRequest::kHttpGet: // HTTP GET
                 retValue = processGetTask(request, 
                                           writeData, 
                                           response->getResponseData(), 
                                           &responseCode);
                 break;
             
-            case HttpRequest::kHttpPost: // HTTP POST
+            case CCHttpRequest::kHttpPost: // HTTP POST
                 retValue = processPostTask(request, 
                                            writeData, 
                                            response->getResponseData(), 
@@ -161,7 +166,7 @@ static void* networkThread(void *data)
         {
             response->setSucceed(true);
         }
-        
+
         
         // add response packet into queue
         pthread_mutex_lock(&s_responseQueueMutex);
@@ -174,18 +179,9 @@ static void* networkThread(void *data)
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
     pthread_mutex_lock(&s_requestQueueMutex);
-    
-    CCObject* pObj = NULL;    
-    CCARRAY_FOREACH(s_requestQueue, pObj)
-    {
-        HttpRequest* request = dynamic_cast<HttpRequest*>(pObj);
-        request->getTarget()->release();
-        s_asyncRequestCount--;
-    }
     s_requestQueue->removeAllObjects();
-    
     pthread_mutex_unlock(&s_requestQueueMutex);
-    
+    s_asyncRequestCount -= s_requestQueue->count();
     
     if (s_pSem != NULL) {
 #if CC_ASYNC_HTTPREQUEST_USE_NAMED_SEMAPHORE
@@ -234,7 +230,7 @@ bool configureCURL(CURL *handle)
 }
 
 //Process Get Request
-int processGetTask(HttpRequest *request, write_callback callback, void *stream, int *responseCode)
+int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int *responseCode)
 {
     CURLcode code = CURL_LAST;
     CURL *curl = curl_easy_init();
@@ -284,7 +280,7 @@ int processGetTask(HttpRequest *request, write_callback callback, void *stream, 
 }
 
 //Process POST Request
-int processPostTask(HttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
 {
     CURLcode code = CURL_LAST;
     CURL *curl = curl_easy_init();
@@ -347,6 +343,8 @@ CCHttpClient* CCHttpClient::getInstance()
 
 void CCHttpClient::destroyInstance()
 {
+    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), 
+                                                                     CCHttpClient::getInstance());
     CC_SAFE_RELEASE_NULL(s_pHttpClient);
 }
 
@@ -412,7 +410,7 @@ bool CCHttpClient::lazyInitThreadSemphore()
 }
 
 //Add a get task to queue
-void CCHttpClient::send(HttpRequest* request)
+void CCHttpClient::send(CCHttpRequest* request)
 {    
     if (false == lazyInitThreadSemphore()) 
     {
@@ -427,10 +425,6 @@ void CCHttpClient::send(HttpRequest* request)
     ++s_asyncRequestCount;
     
     request->retain();
-    if (request->getTarget()) 
-    {
-        request->getTarget()->retain();
-    }
         
     pthread_mutex_lock(&s_requestQueueMutex);
     s_requestQueue->addObject(request);
@@ -443,13 +437,14 @@ void CCHttpClient::send(HttpRequest* request)
 // Poll and notify main thread if responses exists in queue
 void CCHttpClient::dispatchResponseCallbacks(float delta)
 {
-    CCLog("CCHttpClient::dispatchResponseCallbacks is running");
-    HttpResponse* response = NULL;
+    // CCLog("CCHttpClient::dispatchResponseCallbacks is running");
+    
+    CCHttpResponse* response = NULL;
     
     pthread_mutex_lock(&s_responseQueueMutex);
     if (s_responseQueue->count())
     {
-        response = dynamic_cast<HttpResponse*>(s_responseQueue->objectAtIndex(0));
+        response = dynamic_cast<CCHttpResponse*>(s_responseQueue->objectAtIndex(0));
         s_responseQueue->removeObjectAtIndex(0);
     }
     pthread_mutex_unlock(&s_responseQueueMutex);
@@ -458,7 +453,7 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
     {
         --s_asyncRequestCount;
         
-        HttpRequest *request = response->getHttpRequest();
+        CCHttpRequest *request = response->getHttpRequest();
         CCObject *pTarget = request->getTarget();
         SEL_CallFuncND pSelector = request->getSelector();
 
