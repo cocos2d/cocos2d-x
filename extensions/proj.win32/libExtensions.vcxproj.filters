@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="CCBReader">
       <UniqueIdentifier>{d37545ef-285b-4315-9fca-40da6fc2a6c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI">
+    <Filter Include="GUI">
       <UniqueIdentifier>{202b519b-b5e0-499f-b3b8-ed5da144b248}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\CCControlExtension">
+    <Filter Include="GUI\CCControlExtension">
       <UniqueIdentifier>{c07abd14-e9dd-4e2d-85c4-a180070161b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\CCScrollView">
+    <Filter Include="GUI\CCScrollView">
       <UniqueIdentifier>{46797895-f71d-4ddb-b381-d0884e678d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\network">
+      <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,43 +70,46 @@
       <Filter>CCBReader</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCMenuPassive.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCSpacer.cpp">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
-      <Filter>UI\CCScrollView</Filter>
+      <Filter>GUI\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\HttpClient.cpp">
+      <Filter>GUI\network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,48 +177,57 @@
       <Filter>CCBReader</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlExtensions.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCMenuPassive.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCSpacer.h">
-      <Filter>UI\CCControlExtension</Filter>
+      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
-      <Filter>UI\CCScrollView</Filter>
+      <Filter>GUI\CCScrollView</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
+    <ClInclude Include="..\network\HttpClient.h">
+      <Filter>GUI\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpRequest.h">
+      <Filter>GUI\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpResponse.h">
+      <Filter>GUI\network</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

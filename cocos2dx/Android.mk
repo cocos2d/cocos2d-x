@@ -154,7 +154,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 
-
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
 
@@ -164,4 +163,3 @@ $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libxml2)
 $(call import-module,libtiff)
-

@@ -187,6 +187,9 @@
     <Filter Include="Classes\MutiTouchTest">
       <UniqueIdentifier>{b3be049f-74ff-44a5-8895-0766e4807671}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\NetworkTest">
+      <UniqueIdentifier>{28e8af6a-0e73-4069-bdf4-735138ed886d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -425,6 +428,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp">
       <Filter>Classes\MutiTouchTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -838,6 +844,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h">
       <Filter>Classes\MutiTouchTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
