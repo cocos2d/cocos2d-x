@@ -21,6 +21,7 @@ class CCActionInterval : public CCAction
     // float getElapsed(void);
     // void setAmplitudeRate(CGFloat amp);
     // CGFloat getAmplitudeRate(void);
+	CCActionInterval* reverse(void);
 };
 
 class CCFiniteTimeAction : public CCActionInterval
