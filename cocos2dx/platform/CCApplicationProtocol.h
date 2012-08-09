@@ -50,6 +50,7 @@ public:
     virtual ccLanguageType getCurrentLanguage() = 0;
     
     virtual bool isIpad() { return false; }
+    virtual bool isIos() { return false; }
 
 };
 

@@ -81,6 +81,7 @@ public:
     virtual ccLanguageType getCurrentLanguage();
     
     virtual bool isIpad();
+    virtual bool isIos();
 
 protected:
     static CCApplication * sm_pSharedApplication;

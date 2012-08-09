@@ -83,7 +83,7 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
     strcpy(s_pszResourcePath, pszResourcePath);
 }
 
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
     _CheckPath();
 
