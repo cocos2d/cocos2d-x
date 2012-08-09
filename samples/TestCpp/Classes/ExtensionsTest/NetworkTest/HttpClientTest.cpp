@@ -137,7 +137,7 @@ void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::CCObject *sender)
     m_labelStatusCode->setString("waiting...");
 }
 
-void HttpClientTest::onHttpRequestCompleted(cocos2d::CCObject *sender, void *data)
+void HttpClientTest::onHttpRequestCompleted(cocos2d::CCNode *sender, void *data)
 {
     CCHttpResponse *response = (CCHttpResponse*)data;
 
