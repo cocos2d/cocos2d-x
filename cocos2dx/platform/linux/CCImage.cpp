@@ -50,7 +50,7 @@ public:
 		vLines.clear();
 	}
 
-	void buildLine(stringstream& ss, FT_Face face, int iCurXCursor, char cLastChar) {
+	void buildLine(stringstream& ss, FT_Face face, int iCurXCursor, int iCurYCursor, char cLastChar) {
 		TextLine oTempLine;
 		ss << '\0';
 		oTempLine.sLineStr = ss.str();
@@ -60,6 +60,7 @@ public:
 
         oTempLine.iLineWidth = iCurXCursor - SHIFT6((face->glyph->metrics.horiAdvance + face->glyph->metrics.horiBearingX - face->glyph->metrics.width))/*-iInterval*/;//TODO interval
 		iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
+
 		ss.clear();
 		ss.str("");
 		vLines.push_back(oTempLine);
@@ -68,13 +69,14 @@ public:
 	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
 		const char* pText = sText;
 		int iError = 0;
-		int iCurXCursor;
+		int iCurXCursor, iCurYCursor;
 		iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
 				FT_LOAD_DEFAULT);
 		if (iError) {
 			return false;
 		}
 		iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
+
 		//init stringstream
 		stringstream ss;
 
@@ -82,7 +84,7 @@ public:
 
 		while (*pText != '\0') {
 			if (*pText == '\n') {
-				buildLine(ss, face, iCurXCursor, cLastCh);
+				buildLine(ss, face, iCurXCursor, iCurYCursor, cLastCh);
 
 				pText++;
 				iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
@@ -106,10 +108,9 @@ public:
 			if ((iMaxWidth > 0
 							&& iCurXCursor + SHIFT6(face->glyph->metrics.width)
 							> iMaxWidth)) {
-				buildLine(ss, face , iCurXCursor, cLastCh);
+				buildLine(ss, face , iCurXCursor, iCurYCursor, cLastCh);
 
 				iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
-
 			}
 
 			cLastCh = *pText;
@@ -122,7 +123,7 @@ public:
 			return false;
 		}
 
-		buildLine(ss,face, iCurXCursor, cLastCh);
+		buildLine(ss,face, iCurXCursor, iCurYCursor, cLastCh);
 
 		return true;
 	}
@@ -153,6 +154,25 @@ public:
 		} else {
 			// left or other situation
 			iRet = -SHIFT6(face->glyph->metrics.horiBearingX );
+		}
+		return iRet;
+	}
+
+	int computeLineStartY( FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+		int iRet;
+		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
+			eAlignMask == CCImage::kAlignRight ) {
+			//vertical center
+			iRet = (borderHeight - txtHeight)/2;
+
+		} else if (eAlignMask == CCImage::kAlignBottomRight || 
+				   eAlignMask == CCImage::kAlignBottom || 
+				   eAlignMask == CCImage::kAlignBottomLeft ) {
+			//vertical bottom
+			iRet = borderHeight - txtHeight;
+		} else {
+			// left or other situation
+			iRet = SHIFT6(face->size->metrics.ascender);
 		}
 		return iRet;
 	}
@@ -198,10 +218,13 @@ public:
 			- (face->size->metrics.descender >> 6);
 			iMaxLineHeight *= vLines.size();
 
+			int txtHeight = iMaxLineHeight;
+
 			//compute the final line height
 			iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 			m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
-			iCurYCursor = SHIFT6(face->size->metrics.ascender);
+//			iCurYCursor = SHIFT6(face->size->metrics.ascender);
+			iCurYCursor = computeLineStartY( face, eAlignMask, txtHeight, iMaxLineHeight );
 
 			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
 
