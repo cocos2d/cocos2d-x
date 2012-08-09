@@ -3354,11 +3354,6 @@ bool DoubleSprite::initWithTexture(CCTexture2D* texture, CCRect rect)
 {
     if( CCSprite::initWithTexture(texture, rect)) 
     {
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        ccResolutionType resolutionType = texture->getResolutionType();
-        m_bHD = ( resolutionType == kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
-#endif
         return true;
     }
 

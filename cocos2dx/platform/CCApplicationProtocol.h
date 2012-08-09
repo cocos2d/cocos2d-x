@@ -1,11 +1,7 @@
 #ifndef __CC_APPLICATION_PROTOCOL_H__
 #define __CC_APPLICATION_PROTOCOL_H__
 
-#include "ccTypes.h"
-
 NS_CC_BEGIN
-
-class CCRect;
 
 /**
  * @addtogroup platform

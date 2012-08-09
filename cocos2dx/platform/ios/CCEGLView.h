@@ -41,7 +41,6 @@ public:
     virtual bool    isOpenGLReady();
     virtual bool    isIpad();
     virtual bool    setContentScaleFactor(float contentScaleFactor);
-    virtual CCSize  getFrameSize();
     virtual bool    enableRetina();
     
     // keep compatible
