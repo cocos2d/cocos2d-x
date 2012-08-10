@@ -3,9 +3,10 @@ class CCAnimationFrame : public CCObject
 {
     CCAnimationFrame();
     ~CCAnimationFrame();
-    
+	CCObject* copyWithZone(CCZone* pZone);
+
     bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
-    
+
     CCSpriteFrame* getSpriteFrame();
     void setSpriteFrame(CCSpriteFrame* pSpFrame);
 
@@ -21,10 +22,11 @@ class CCAnimation : public CCObject
 {
     CCAnimation();
     ~CCAnimation(void);
+	CCObject* copyWithZone(CCZone* pZone);
 
     static CCAnimation* create(void);
-    static CCAnimation* create(CCArray* arrayOfSpriteFrameNames);
-    static CCAnimation* create(CCArray* arrayOfSpriteFrameNames, float delay);
+    static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames);
+    static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
     static CCAnimation* create(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
     void addSpriteFrame(CCSpriteFrame *pFrame);

@@ -8,6 +8,7 @@ class CCSpriteBatchNode : public CCNode
     void increaseAtlasCapacity();
     void removeChildAtIndex(unsigned int index, bool doCleanup);
     void insertChild(CCSprite *child, unsigned int index);
+	void appendChild(CCSprite *child);
     void removeSpriteFromAtlas(CCSprite *sprite);
 
     unsigned int rebuildIndexInOrder(CCSprite *parent, unsigned int index);
@@ -15,13 +16,23 @@ class CCSpriteBatchNode : public CCNode
     unsigned int lowestAtlasIndexInChild(CCSprite *sprite);
     unsigned int atlasIndexForChild(CCSprite *sprite, int z);
 
+	void reorderBatch(bool reorder);
     void setTexture(CCTexture2D *texture);
     CCTexture2D* getTexture(void);
     void setBlendFunc(ccBlendFunc blendFunc);
     ccBlendFunc getBlendFunc(void);
 
-    static CCSpriteBatchNode* create(CCTexture2D *tex);
-    static CCSpriteBatchNode* create(CCTexture2D* tex, unsigned int capacity);
+	void addChild(CCNode * child);
+    void addChild(CCNode * child, int zOrder);
+    void addChild(CCNode * child, int zOrder, int tag);
+    void reorderChild(CCNode * child, int zOrder);
+
+    void removeChild(CCNode* child, bool cleanup);
+    void removeAllChildrenWithCleanup(bool cleanup);
+    void sortAllChildren();
+
+    static CCSpriteBatchNode* createWithTexture(CCTexture2D *tex);
+    static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity);
     static CCSpriteBatchNode* create(const char* fileImage);
     static CCSpriteBatchNode* create(const char* fileImage, unsigned int capacity);
 };

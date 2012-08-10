@@ -5,29 +5,34 @@ enum {
 
 class CCAction : public CCObject
 {
-    // bool isDone(void);
-    // CCNode* getTarget(void);
+	bool isDone(void);
+    CCNode* getTarget(void);
     // void setTarget(CCNode *pTarget);
-    // CCNode* getOriginalTarget(void);
+    CCNode* getOriginalTarget(void);
     // void setOriginalTarget(CCNode *pOriginalTarget);
-    // int getTag(void);
-    // void setTag(int nTag);
-
-    // static CCAction* create();
+	// static CCAction* create();
+    int getTag(void);
+    void setTag(int nTag);
+	CCObject* copyWithZone(CCZone* pZone);
 };
 
 class CCActionInterval : public CCAction
 {
-    // float getElapsed(void);
-    // void setAmplitudeRate(CGFloat amp);
-    // CGFloat getAmplitudeRate(void);
+    float getElapsed(void);
+	bool isDone(void);
+    void setAmplitudeRate(float amp);
+    float getAmplitudeRate(void);
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
+	CCActionInterval* create(float d);
 };
 
 class CCFiniteTimeAction : public CCActionInterval
 {
-    // float getDuration(void);
-    // void setDuration(float duration);
-    // CCFiniteTimeAction* reverse(void);
+    float getDuration(void);
+    void setDuration(float duration);
+    CCFiniteTimeAction* reverse(void);
 };
 
 // CCActionInterval
@@ -35,7 +40,9 @@ class CCSpeed : public CCAction
 {
     float getSpeed(void);
     void setSpeed(float fSpeed);
-    CCAction* reverse(void);
+    CCActionInterval* reverse(void);
+	bool isDone(void);
+	CCObject* copyWithZone(CCZone* pZone);
 
     static CCSpeed* create(CCActionInterval *pAction, float fRate);
 };
@@ -44,6 +51,8 @@ class CCFollow : public CCAction
 {
     bool isBoundarySet(void);
     void setBoudarySet(bool bValue);
+	bool isDone(void);
+	CCObject* copyWithZone(CCZone* pZone);
 
     static CCFollow* create(CCNode *pFollowedNode);
     static CCFollow* create(CCNode *pFollowedNode, CCRect rect);
@@ -51,63 +60,97 @@ class CCFollow : public CCAction
 
 class CCSequence : public CCActionInterval
 {
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
+    static CCFiniteTimeAction* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
     static CCFiniteTimeAction* create(CCArray *actions);
 };
 
 class CCRepeat : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	bool isDone(void);
+	CCActionInterval* reverse(void);
+
     static CCRepeat* create(CCActionInterval *pAction, unsigned int times);
 };
 
 class CCRepeatForever : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	bool isDone(void);
+	CCActionInterval* reverse(void);
+
     static CCRepeatForever* create(CCActionInterval *pAction);
 };
 
 class CCSpawn : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCFiniteTimeAction* create(CCArray *actions);
-    static CCSpawn* create(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 };
 
 class CCRotateTo : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCRotateTo* create(float duration, float fDeltaAngle);
 };
 
 class CCRotateBy : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCRotateBy* create(float duration, float fDeltaAngle);
 };
 
 class CCMoveTo : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCMoveTo* create(float duration, CCPoint position);
 };
 
 class CCMoveBy : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCMoveBy* create(float duration, CCPoint position);
 };
 
 class CCSkewTo : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCSkewTo* create(float t, float sx, float sy);
 };
 
 class CCSkewBy : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCSkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 };
 
 class CCJumpBy : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCJumpBy* create(float duration, CCPoint position, float height, int jumps);
 };
 
 class CCJumpTo : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCJumpTo* create(float duration, CCPoint position, float height, int jumps);
 };
 
@@ -119,112 +162,169 @@ typedef struct _ccBezierConfig {
 
 class CCBezierBy : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCBezierBy* create(float t, ccBezierConfig c);
 };
 
 class CCBezierTo : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCBezierTo* create(float t, ccBezierConfig c);
 };
 
 class CCScaleTo : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCScaleTo* create(float duration, float s);
     static CCScaleTo* create(float duration, float sx, float sy);
 };
 
 class CCScaleBy : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCScaleBy* create(float duration, float s);
     static CCScaleBy* create(float duration, float sx, float sy);
 };
 
 class CCBlink : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCBlink* create(float duration, unsigned int uBlinks);
 };
 
 class CCFadeIn : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCFadeIn* create(float d);
 };
 
 class CCFadeOut : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCFadeOut* create(float d);
 };
 
 class CCFadeTo : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCFadeTo* create(float duration, GLubyte opacity);
 };
 
 class CCTintTo : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCTintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
 };
 
 class CCTintBy : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCTintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 };
 
 class CCDelayTime : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCDelayTime* create(float d);
 };
 
 class CCReverseTime : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     static CCReverseTime* create(CCFiniteTimeAction *pAction);
 };
 
 class CCAnimate : public CCActionInterval
 {
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse(void);
+
     CCAnimation* getAnimation(void);
     void setAnimation(CCAnimation *pAnimation);
 
-    static CCAction* create(CCAnimation *pAnimation);
+    static CCAnimate* create(CCAnimation *pAnimation);
 };
 
-class CCProgressTo : public CCAction
+class CCTargetedAction : public CCActionInterval
 {
-    static CCAction* create(float duration, float fPercent);
-};
+	CCObject* copyWithZone(CCZone* pZone);
+	CCNode* getForcedTarget(void);
+	void setForcedTarget(CCNode* target);
 
-class CCProgressFromTo : public CCAction
-{
-    static CCAction* create(float duration, float fFromPercentage, float fToPercentage);
+	static CCTargetedAction* create(CCNode* pTarget, CCFiniteTimeAction* pAction);
 };
 
 
 // CCActionInstant
-class CCShow : public CCAction
+class CCActionInstant : public CCFiniteTimeAction
 {
-    static CCAction* create();
+	CCObject* copyWithZone(CCZone* pZone);
+	CCFiniteTimeAction* reverse(void);
+	bool isDone(void);
 };
 
-class CCHide : public CCAction
+class CCShow : public CCActionInstant
 {
-    static CCAction* create();
+	CCObject* copyWithZone(CCZone* pZone);
+	CCFiniteTimeAction* reverse(void);
+
+    static CCShow* create();
 };
 
-class CCToggleVisibility : public CCAction
+class CCHide : public CCActionInstant
 {
-    static CCAction* create();
+	CCObject* copyWithZone(CCZone* pZone);
+	CCFiniteTimeAction* reverse(void);
+
+    static CCHide* create();
 };
 
-class CCFlipX : public CCAction
+class CCToggleVisibility : public CCActionInstant
 {
-    static CCAction* create(bool x);
+	CCObject* copyWithZone(CCZone* pZone);
+
+    static CCToggleVisibility* create();
 };
 
-class CCFlipY : public CCAction
+class CCFlipX : public CCActionInstant
 {
-    static CCAction* create(bool y);
+	CCObject* copyWithZone(CCZone* pZone);
+	CCFiniteTimeAction* reverse(void);
+
+    static CCFlipX* create(bool x);
 };
 
-class CCPlace : public CCAction //<NSCopying>
+class CCFlipY : public CCActionInstant
 {
-    static CCAction* create(CCPoint pos);
+	CCObject* copyWithZone(CCZone* pZone);
+	CCFiniteTimeAction* reverse(void);
+
+    static CCFlipY* create(bool y);
+};
+
+class CCPlace : public CCActionInstant //<NSCopying>
+{
+	CCObject* copyWithZone(CCZone* pZone);
+
+    static CCPlace* create(CCPoint pos);
 };

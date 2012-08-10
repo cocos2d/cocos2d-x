@@ -1,9 +1,31 @@
+enum {
+    kCCParticleDurationInfinity = -1,
+    kCCParticleStartSizeEqualToEndSize = -1,
+    kCCParticleStartRadiusEqualToEndRadius = -1,
+    kParticleStartSizeEqualToEndSize = kCCParticleStartSizeEqualToEndSize,
+    kParticleDurationInfinity = kCCParticleDurationInfinity,
+};
+
+enum {
+    kCCParticleModeGravity,
+    kCCParticleModeRadius,
+};
+
+typedef enum {
+    kCCPositionTypeFree,
+    kCCPositionTypeRelative,
+    kCCPositionTypeGrouped,
+}tCCPositionType;
+
+enum {
+    kPositionTypeFree = kCCPositionTypeFree,
+    kPositionTypeGrouped = kCCPositionTypeGrouped,
+};
 
 class CCParticleSystem : public CCNode
 {
     // mode A
     const CCPoint& getGravity();
-
     void setGravity(const CCPoint& g);
     float getSpeed();
     void setSpeed(float speed);
@@ -40,6 +62,26 @@ class CCParticleSystem : public CCNode
     void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
     void postStep();
 
+	float getStartSize();
+    float getStartSizeVar();
+    float getEndSize();
+    float getEndSizeVar();
+    const ccColor4F & getStartColor();
+    const ccColor4F & getStartColorVar();
+    const ccColor4F & getEndColor();
+    const ccColor4F & getEndColorVar();
+    float getStartSpin();
+    float getStartSpinVar();
+    float getEndSpin();
+    float getEndSpinVar();
+    float getEmissionRate();
+    unsigned int getTotalParticles();
+
+	bool isAutoRemoveOnFinish();
+	void setAutoRemoveOnFinish(bool var);
+	int  getEmitterMode();
+	void setEmitterMode(int mode);
+
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D* var);
 
@@ -50,7 +92,7 @@ class CCParticleSystem : public CCNode
     void setRotation(float newRotation);
     void setScaleX(float newScaleX);
     void setScaleY(float newScaleY);
-    
+
     bool isActive();
     bool isBlendAdditive();
     void setBlendAdditive(bool value);
@@ -58,7 +100,20 @@ class CCParticleSystem : public CCNode
     static CCParticleSystem * create(const char *plistFile);
 };
 
-class CCParticleSystemQuad : public CCParticleSystem {
+class CCParticleSystemQuad : public CCParticleSystem
+{
+	void postStep();
+	void setDisplayFrame(CCSpriteFrame* spriteFrame);
+	void setTexture(CCTexture2D* texture);
+	void setTextureWithRect(CCTexture2D *texture, const CCRect& rect);
+	void setBatchNode(CCParticleBatchNode* batchNode);
+	void setTotalParticles(unsigned int tp);
+
+    void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
+    void postStep();
+    void setTotalParticles(unsigned int tp);
+
+	static CCParticleSystemQuad * create();
     static CCParticleSystemQuad * create(const char *plistFile);
 };
 

@@ -1,3 +1,6 @@
+enum {
+    kCCNodeTagInvalid = -1,
+};
 
 enum {
     kCCNodeOnEnter,
@@ -22,6 +25,7 @@ class CCNode : public CCObject
     float   getPositionX();
     float   getPositionY();
     void    setPosition(float x, float y);
+	void 	setPosition(CCPoint pos);
     void    setPositionX(float x);
     void    setPositionY(float y);
     float   getSkewX();
@@ -33,7 +37,7 @@ class CCNode : public CCObject
     CCPoint getAnchorPoint();
     void    setAnchorPoint(CCPoint point);
     CCSize  getContentSize();
-    void    setContentSize(CCSize size);
+    void    setContentSize(const CCSize & size);
     int     getTag();
     void    setTag(int var);
 
@@ -61,6 +65,7 @@ class CCNode : public CCObject
     //CCPoint getAnchorPointInPixels();
     //CCSize  getContentSizeInPixels();
     //void    setContentSizeInPixels(CCSize sz);
+	CCPoint getAnchorPointInPoints();
     bool    isRunning();
     CCNode* getParent();
     void    setParent(CCNode * var);
@@ -68,6 +73,18 @@ class CCNode : public CCObject
     void    ignoreAnchorPointForPosition(bool newValue);
     void*   getUserData();
     void    setUserData(void *var);
+	CCObject* getUserObject();
+	void    setUserObject(CCObject* pObject);
+	CCGLProgram* getShaderProgram();
+	void    setShaderProgram(CCGLProgram* pShaderProgram);
+	int     getOrderOfArrival();
+	void    setOrderOfArrival(int order);
+	ccGLServerState getGLServerState();
+	void    setGLServerState(ccGLServerState state);
+	CCActionManager* getActionManager();
+	void    setActionManager(CCActionManager* pActionMgr);
+	CCScheduler* getScheduler();
+	void    setScheduler(CCScheduler* pScheduler);
     void    addChild(CCNode * child);
     void    addChild(CCNode * child, int zOrder);
     void    addChild(CCNode * child, int zOrder, int tag);
