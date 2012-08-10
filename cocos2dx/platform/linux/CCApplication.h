@@ -27,11 +27,6 @@ public:
 	void setAnimationInterval(double interval);
 
 	/**
-	 @brief	Get status bar rectangle in EGLView window.
-	 */
-	void statusBarFrame(CCRect * rect);
-
-	/**
 	 @brief	Run the message loop.
 	 */
 	int run();
@@ -42,8 +37,13 @@ public:
 	 */
 	static CCApplication& sharedApplication();
 
-    /* override functions */
+	/* override functions */
 	virtual ccLanguageType getCurrentLanguage();
+
+	/* set the Resource root path */
+	void setResourceRootPath(const char* pszRootResDir);
+	/* get the Resource root path */
+	const char* getResourceRootPath(void);
 protected:
     long       m_nAnimationInterval;  //micro second
 

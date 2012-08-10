@@ -98,7 +98,7 @@ public:
 
 public:
     /** Allocates and initializes the action 
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use create() instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCAction* action();
 
@@ -185,7 +185,7 @@ public:
 
 public:
     /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use create(CCActionInterval* float) instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCSpeed* actionWithAction(CCActionInterval *pAction, float fSpeed);
     
@@ -234,7 +234,7 @@ public:
 public:
     /** creates the action with a set boundary,
         It will work with no boundary if @param rect is equal to CCRectZero.
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use create(CCNode*, const CCRect&) intead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
     /** creates the action with a set boundary,

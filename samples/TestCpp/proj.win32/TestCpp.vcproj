@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)external&quot;;&quot;$(SolutionDir)external\chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;&quot;$(SolutionDir)extensions&quot;;..\Classes;.."
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\pthread&quot;;&quot;$(SolutionDir)external&quot;;&quot;$(SolutionDir)external\chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;&quot;$(SolutionDir)extensions&quot;;..\Classes;.."
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libExtensions.lib libcocos2d.lib libCocosDenshion.lib opengl32.lib glew32.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib"
+				AdditionalDependencies="libExtensions.lib libcocos2d.lib libCocosDenshion.lib opengl32.lib glew32.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)external&quot;;&quot;$(SolutionDir)external\chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;&quot;$(SolutionDir)extensions&quot;;..\Classes;.."
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\pthread&quot;;&quot;$(SolutionDir)external&quot;;&quot;$(SolutionDir)external\chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;&quot;$(SolutionDir)extensions&quot;;..\Classes;.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib opengl32.lib glew32.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib libExtensions.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib opengl32.lib glew32.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib libExtensions.lib pthreadVCE2.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -1010,6 +1010,18 @@
 							>
 						</File>
 					</Filter>
+				</Filter>
+				<Filter
+					Name="NetworkTest"
+					>
+					<File
+						RelativePath="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

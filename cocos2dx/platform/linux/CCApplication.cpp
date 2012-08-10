@@ -7,10 +7,13 @@
 #include "CCApplication.h"
 #include <unistd.h>
 #include <sys/time.h>
-
+#include <string>
 #include "CCDirector.h"
 
 NS_CC_BEGIN
+
+
+static std::string s_strRootResPath = "";
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
@@ -58,22 +61,28 @@ int CCApplication::run()
 	return -1;
 }
 
-void CCApplication::statusBarFrame(CCRect * rect) {
-
-	if (rect)
-	{
-		// linux doesn't have status bar.
-		*rect = CCRectMake(0, 0, 0, 0);
-	}
-
-}
-
 void CCApplication::setAnimationInterval(double interval)
 {
 	//TODO do something else
 	m_nAnimationInterval = interval*1000.0f;
 }
 
+void CCApplication::setResourceRootPath(const char* pszRootResDir)
+{
+  if (pszRootResDir)
+  {
+      s_strRootResPath = pszRootResDir;
+      if (s_strRootResPath[s_strRootResPath.length()-1] != '/')
+      {
+	  s_strRootResPath += '/';
+      }
+  }
+}
+
+const char* CCApplication::getResourceRootPath(void)
+{
+  return s_strRootResPath.c_str();
+}
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////

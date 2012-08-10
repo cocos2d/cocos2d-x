@@ -13,7 +13,7 @@ cd ../../..
 #echo $_COCOS2DX_ROOT
 
 #Modify the configuration files
-sed -i  '' '3,4d' $CUR/build_native.sh
+#sed -i  '' '3,4d' $CUR/build_native.sh
 sed -i  '' '13d' $CUR/project.properties
 #gsed -i "3 i\\$_NDK_ROOT" $CUR/build_native.sh
 #gsed -i "4 i\\$_COCOS2DX_ROOT" $CUR/build_native.sh
