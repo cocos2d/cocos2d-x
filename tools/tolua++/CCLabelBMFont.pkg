@@ -2,7 +2,21 @@
 class CCLabelBMFont : public CCNode
 {
     void setString(const char *label);
-    const char* getString(void);
+	void setString(const char *label, bool fromUpdate);
+    void setCString(const char *label);
+	const char* getString(void);
+	void updateString(bool fromUpdate);
+
+	void setAnchorPoint(const CCPoint & var);
+	void setAlignment(CCTextAlignment alignment);
+	void setWidth(float width);
+	void setLineBreakWithoutSpace(bool breakWithoutSpace);
+	void setScale(float scale);
+	void setScaleX(float scaleX);
+	void setScaleY(float scaleY);
+
+	void setFntFile(const char* fntFile);
+	const char* getFntFile();
 
     void setColor(const ccColor3B& color);
     const ccColor3B& getColor(void);
@@ -10,8 +24,12 @@ class CCLabelBMFont : public CCNode
     GLubyte getOpacity(void);
     void setOpacity(GLubyte opacity);
 
+	bool isOpacityModifyRGB();
+    void setOpacityModifyRGB(bool isOpacityModifyRGB);
+
     tolua_property__CCOpacity   GLubyte opacity;
 
     static void purgeCachedData();
-    static CCLabelBMFont * create(const char *str, const char *fntFile);
+	static CCLabelBMFont * create();
+	static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointMake(0, 0));
 };

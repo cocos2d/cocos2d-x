@@ -15,6 +15,8 @@ class CCUserDefault
     void	setDoubleForKey(const char* pKey, double value);
     void	setStringForKey(const char* pKey, std::string value);
 
+	void flush();
+
     static CCUserDefault* sharedUserDefault();
     static void purgeSharedUserDefault();
     const static std::string& getXMLFilePath();
