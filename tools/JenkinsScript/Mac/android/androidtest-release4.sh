@@ -6,39 +6,15 @@
 
 antcompile()
 {
-	#Make sure the original target is android-8
-	sed '/target=/s/=.*$/=android-8/' ant.properties > anttmp.properties
-	cp anttmp.properties ant.properties
-	rm anttmp.properties
-
-	#Android ant build(debug ,API level:8)
-	ant release
-	#If build failed,make sure the Jenkins could get the errorlevel.
-	compileresult=$[$compileresult+$?]
-
-	#Change API level.(API level:10)
-	sed '/target=/s/=.*$/=android-10/' ant.properties > anttmp.properties
+	#Change API level.(API level:14)
+	sed '/target=/s/=.*$/=android-14/' ant.properties > anttmp.properties
 	cp anttmp.properties ant.properties
 	rm anttmp.properties
 	ant release
 	compileresult=$[$compileresult+$?]
 
-	#Change API level.(API level:11)
-	sed '/target=/s/=.*$/=android-11/' ant.properties > anttmp.properties
-	cp anttmp.properties ant.properties
-	rm anttmp.properties
-	ant release
-	compileresult=$[$compileresult+$?]
-
-	#Change API level.(API level:12)
-	sed '/target=/s/=.*$/=android-12/' ant.properties > anttmp.properties
-	cp anttmp.properties ant.properties
-	rm anttmp.properties
-	ant release
-	compileresult=$[$compileresult+$?]
-
-	#Change API level.(API level:13)
-	sed '/target=/s/=.*$/=android-13/' ant.properties > anttmp.properties
+	#Change API level.(API level:15)
+	sed '/target=/s/=.*$/=android-15/' ant.properties > anttmp.properties
 	cp anttmp.properties ant.properties
 	rm anttmp.properties
 	ant release
@@ -53,17 +29,17 @@ antcompile()
 #record the relevant catalog
 compileresult=0
 CUR=$(pwd)
-cd ../..
+cd ../../../..
 ROOT=$(pwd)
 
 #copy configuration files to target.
 sed -i  '' '14d' $CUR/ant.properties
 gsed -i "14 i\\key.store=$ANDROID_HOME/debug.keystore" $CUR/ant.properties
-cp $CUR/debug.keystore $ANDROID_HOME
+cp $CUR/../debug.keystore $ANDROID_HOME
 
-cp $CUR/ant.properties $ROOT/samples/TestCpp/proj.android
-cp $CUR/build.xml $ROOT/samples/TestCpp/proj.android
-cp $CUR/rootconfig-Mac.sh $ROOT/samples/TestCpp/proj.android 
+cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/TestCpp/proj.android
+cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/TestCpp/proj.android
+cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/TestCpp/proj.android 
 cd samples/TestCpp/proj.android
 sh rootconfig-Mac.sh TestCpp
 sh build_native.sh
@@ -74,9 +50,9 @@ android update project -p proj.android
 cd proj.android
 antcompile
 
-cp $CUR/ant.properties $ROOT/samples/HelloCpp/proj.android 
-cp $CUR/build.xml $ROOT/samples/HelloCpp/proj.android 
-cp $CUR/rootconfig-Mac.sh $ROOT/samples/HelloCpp/proj.android 
+cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/HelloCpp/proj.android
+cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/HelloCpp/proj.android
+cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/HelloCpp/proj.android 
 cd ../../HelloCpp/proj.android
 sh rootconfig-Mac.sh HelloCpp
 sh build_native.sh
@@ -85,9 +61,9 @@ android update project -p proj.android
 cd proj.android
 antcompile
 
-cp $CUR/ant.properties $ROOT/samples/HelloLua/proj.android 
-cp $CUR/build.xml $ROOT/samples/HelloLua/proj.android 
-cp $CUR/rootconfig-Mac.sh $ROOT/samples/HelloLua/proj.android  
+cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/HelloLua/proj.android
+cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/HelloLua/proj.android
+cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/HelloLua/proj.android 
 cd ../../HelloLua/proj.android
 sh rootconfig-Mac.sh HelloLua
 sh build_native.sh

@@ -11,13 +11,13 @@ if not exist "%ANDROID_NDK%" echo Couldn't find Cygwin at "%ANDROID_NDK%" and yo
 if not exist "%JAVA_HOME%" echo Couldn't find Cygwin at "%JAVA_HOME%" and you should set like this "C:\Program Files\Java\jdk1.7.0_05"& pause & exit 5
 
 set _PROJECTNAME=TestCpp
-cd ..\..
+cd ..\..\..\..
 
 :project
 ::Copy build Configuration files to target directory
 copy %cd%\tools\JenkinsScript\ant.properties %cd%\samples\%_PROJECTNAME%\proj.android
 copy %cd%\tools\JenkinsScript\build.xml %cd%\samples\%_PROJECTNAME%\proj.android
-copy %cd%\tools\JenkinsScript\rootconfig.sh %cd%\samples\%_PROJECTNAME%\proj.android
+copy %cd%\tools\JenkinsScript\Windows\android\rootconfig.sh %cd%\samples\%_PROJECTNAME%\proj.android
 
 ::Modify the configuration files
 cd samples\%_PROJECTNAME%\proj.android

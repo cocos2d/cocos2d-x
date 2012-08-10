@@ -17,12 +17,14 @@ INCLUDES = -I.. \
 			-I../../extensions/CCBReader \
 			-I../../extensions/GUI/CCControlExtension \
 			-I../../extensions/GUI/CCControlExtension \
+			-I../../extensions/network \
 			-I../platform/linux/ \
 			-I../platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I../platform/third_party/linux/libxml2 \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
 			-I../platform/third_party/linux/libtiff/include \
+			-I../platform/third_party/linux/ \
 
 #			-I../platform/third_party/linux/libpng \
 
@@ -155,6 +157,7 @@ OBJECTS = ../actions/CCAction.o \
 					../../extensions/GUI/CCControlExtension/CCMenuPassive.o \
 					../../extensions/GUI/CCControlExtension/CCScale9Sprite.o \
 					../../extensions/GUI/CCControlExtension/CCSpacer.o \
+					../../extensions/network/HttpClient.o \
 					../kazmath/src/aabb.o \
 					../kazmath/src/plane.o \
 					../kazmath/src/vec2.o \

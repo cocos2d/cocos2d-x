@@ -116,37 +116,37 @@ public:
 
     /* static functions */
     /** Create an array 
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use create() instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCArray* array();
     /** Create an array with one object 
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use createWithObject(CCObject*) instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithObject(CCObject* pObject);
     /** Create an array with some objects 
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use create(CCObject*, ...) instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithObjects(CCObject* pObject, ...);
     /** Create an array with capacity 
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use createWithCapacity(unsigned int) instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithCapacity(unsigned int capacity);
     /** Create an array with an existing array
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use createWithArray(CCArray*) instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithArray(CCArray* otherArray);
     /**
      @brief   Generate a CCArray pointer by file
      @param   pFileName  The file name of *.plist file
      @return  The CCArray pointer generated from the file
-     @deprecated: This interface will be deprecated sooner or later.
+     @deprecated: Please use createWithContentsOfFile(const char*) intead. This interface will be deprecated sooner or later.
      */
      CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithContentsOfFile(const char* pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
      invoker should call release().
-     @deprecated: This interface will be deprecated sooner or later.
+     @deprecated: Please use createWithContentsOfFileThreadSafe(const char*) instead. This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithContentsOfFileThreadSafe(const char* pFileName);
 

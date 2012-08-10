@@ -62,16 +62,6 @@ public:
     */
     unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
 
-    /** removes the suffix from a path
-     * On RetinaDisplay it will remove the -hd suffix
-     * On iPad it will remove the -ipad suffix
-     * On iPhone it will remove the (empty) suffix
-     Only valid on iOS. Not valid for OS X.
- 
-     @since v0.99.5
-     */
-    std::string& removeSuffixFromFile(std::string& path);
-
     /**
     @brief   Generate the absolute path of the file.
     @param   pszRelativePath     The relative path of the file.
@@ -82,76 +72,20 @@ public:
     */
     const char* fullPathFromRelativePath(const char *pszRelativePath);
 
-    /** Returns the fullpath of an filename including the resolution of the image.
- 
-        If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
-        If in iPad mode, and an iPad file is found, it will return that path.
- 
-        Examples:
- 
-        * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
-        * In RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
- 
-        If an iPad file is found, it will set resolution type to kCCResolutioniPad
-        If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
- 
-      */
-    const char* fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType);
-
     /// @cond
     const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
     /// @endcond
 
-    /** Sets the iPhone RetinaDisplay suffix to load resources.
-        By default it is "-hd".
-        Only valid on iOS. Not valid for OS X.
- 
-        @since v1.1
-     */
-    void setiPhoneRetinaDisplaySuffix(const char *suffix);
-
-    /** Sets the iPad suffix to load resources.
-        By default it is "".
-        Only valid on iOS. Not valid for OS X.
- 
-
-     */
-    void setiPadSuffix(const char *suffix);
-
-    /** Sets the iPad Retina Display suffix to load resources.
-        By default it is "-ipadhd".
-        Only valid on iOS. Not valid for OS X.
- 
-        @since v1.1
-     */
-    void setiPadRetinaDisplaySuffix(const char *suffix);
-
-    /** Returns whether or not a given filename exists with the iPad suffix.
-        Only available on iOS. Not supported on OS X.
-        @since v1.1
+    /**
+    @brief  Set the ResourcePath,we will find resource relative to this path
+    @param pszResourcePath  Relative path to root
     */
-    bool iPadFileExistsAtPath(const char *filename);
-
-    /** Returns whether or not a given filename exists with the iPad RetinaDisplay suffix.
-     Only available on iOS. Not supported on OS X.
-     @since v2.0
-     */
-    bool iPadRetinaDisplayFileExistsAtPath(const char *filename);
-
-    /** Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.
-        Only available on iOS. Not supported on OS X.
-        @since v1.1
-    */
-    bool iPhoneRetinaDisplayFileExistsAtPath(const char *filename);
+    void setResourceDirectory(const char *pszDirectoryName);
 
     /**
-    @brief  Set the ResourcePath,we will find resource in this path
-    @param pszResourcePath  The absolute resource path
-    @warning Don't call this function in android and iOS, it has not effect.
-    In android, if you want to read file other than apk, you shoud use invoke getFileData(), and pass the 
-    absolute path.
+    @brief  Get the ResourcePath
     */
-    void setResourcePath(const char *pszResourcePath);
+    const char* getResourceDirectory();
 
     /**
     @brief   Get the writeable path
@@ -164,6 +98,9 @@ public:
     */
     void setPopupNotify(bool bNotify);
     bool isPopupNotify();
+    
+protected:
+    std::string m_obDirectory;
 };
 
 // end of platform group
