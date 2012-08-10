@@ -906,7 +906,9 @@ bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
     CCMenuItem::initWithTarget(NULL, NULL);
     this->m_pSubItems = CCArray::create();
     this->m_pSubItems->retain();
-    m_pSubItems->addObject(item);
+    if (item) {
+        m_pSubItems->addObject(item);
+    }
     m_uSelectedIndex = UINT_MAX;
     this->setSelectedIndex(0);
     return true;
