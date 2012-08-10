@@ -49,8 +49,8 @@ public:
     ~SimpleAudioEngine();
 
 #ifdef COCOS2D_JAVASCRIPT
-    virtual uint32_t getClassTypeInfo() {
-        return reinterpret_cast<int>(typeid(CocosDenshion::SimpleAudioEngine).name());
+    virtual long getClassTypeInfo() {
+        return reinterpret_cast<long>(typeid(CocosDenshion::SimpleAudioEngine).name());
     }
 #endif
 
