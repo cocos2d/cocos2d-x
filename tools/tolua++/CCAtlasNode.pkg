@@ -1,9 +1,24 @@
 
 class CCAtlasNode : public CCNode
 {
-    void updateAtlasValues();
-    CCTexture2D* getTexture(void);
+	CCTextureAtlas* getTextureAtlas();
+	void setTextureAtlas(CCTextureAtlas* atlas);
+
+	CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D *texture);
 
-    static CCAtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+	ccColor3B getColor();
+	void setColor(ccColor3B color);
+
+	unsigned int getQuadsToDraw();
+	void setQuadsToDraw(unsigned int quadsToDraw);
+
+	GLubyte getOpacity();
+	void setOpacity(GLubyte opacity);
+
+    void updateAtlasValues();
+	bool isOpacityModifyRGB();
+	void setOpacityModifyRGB(bool isOpacityModifyRGB);
+
+    static CCAtlasNode * create(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 };

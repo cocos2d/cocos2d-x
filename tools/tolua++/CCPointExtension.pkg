@@ -12,6 +12,7 @@ static  CCPoint ccpProject(const CCPoint& v1, const CCPoint& v2);
 static  CCPoint ccpRotate(const CCPoint& v1, const CCPoint& v2);
 static  CCPoint ccpUnrotate(const CCPoint& v1, const CCPoint& v2);
 static  CGFloat ccpLengthSQ(const CCPoint& v);
+static  CGFloat ccpDistanceSQ(const CCPoint p1, const CCPoint p2);
 CGFloat ccpLength(const CCPoint& v);
 CGFloat ccpDistance(const CCPoint& v1, const CCPoint& v2);
 CCPoint ccpNormalize(const CCPoint& v);

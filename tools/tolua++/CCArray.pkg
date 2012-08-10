@@ -1,10 +1,13 @@
 class CCArray : public CCObject
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCArray* create();
-    static CCArray* createWithObject(CCObject* pObject);
-    static CCArray* create(const char*  pFileName);
-    static CCArray* create(unsigned int capacity);
-    static CCArray* create(CCArray* otherArray);
+
+	static CCArray* createWithObject(CCObject* pObject);
+	static CCArray* createWithArray(CCArray* otherArray);
+    static CCArray* createWithCapacity(unsigned int capacity);
+	static CCArray* createWithContentsOfFile(const char* pFileName);
 
     unsigned int count();
 
@@ -17,6 +20,8 @@ class CCArray : public CCObject
     CCObject* lastObject();
 
     CCObject* randomObject();
+
+	bool isEqualToArray(CCArray* pOtherArray);
 
     bool containsObject(CCObject* object);
 

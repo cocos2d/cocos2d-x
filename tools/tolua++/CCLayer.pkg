@@ -25,12 +25,17 @@ class CCLayerColor : public CCLayer
     void changeHeight(GLfloat h);
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
+	void setContentSize(const CCSize & var);
+
     void setOpacity(GLubyte var);
     GLubyte getOpacity(void);
     void setColor(ccColor3B Value);
     ccColor3B getColor(void);
     void setBlendFunc(ccBlendFunc Value);
     ccBlendFunc getBlendFunc(void);
+
+	void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
 
     static CCLayerColor * create(ccColor4B color, GLfloat width, GLfloat height);
     static CCLayerColor * create(ccColor4B color);
@@ -62,5 +67,6 @@ class CCLayerMultiplex : public CCLayer
     void switchTo(unsigned int n);
     void switchToAndReleaseMe(unsigned int n);
 
+	static CCLayerMultiplex * create(CCLayer* layer);
     static CCLayerMultiplex * createWithLayer(CCLayer* layer);
 };
