@@ -2,7 +2,15 @@
 void  ccDrawPoint(CCPoint point);
 void  ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints);
 void  ccDrawLine(CCPoint origin, CCPoint destination);
-void  ccDrawPoly(const CCPoint *vertices, int numOfVertices, bool closePolygon);
+void  ccDrawRect(CCPoint origin, CCPoint destination);
+void  ccDrawSolidRect(CCPoint origin, CCPoint destination, ccColor4F color);
+void  ccDrawPoly(const CCPoint *vertices, unsigned int numOfVertices, bool closePolygon);
+void  ccDrawSolidPoly(const CCPoint* poli, unsigned int numberOfPoints, ccColor4F color);
 void  ccDrawCircle(CCPoint center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
 void  ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, unsigned int segments);
 void  ccDrawCubicBezier(CCPoint origin, CCPoint control1, CCPoint control2, CCPoint destination, unsigned int segments);
+void  ccDrawCatmullRom(CCPointArray* arrayOfControlPoints, unsigned int segments);
+void  ccDrawCardinalSpline(CCPointArray* config, float tension, unsigned int segments);
+void  ccDrawColor4B(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
+void  ccDrawColor4F(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
+void  ccPointSize(GLfloat pointSize);
