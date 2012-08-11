@@ -299,9 +299,19 @@ CCObject* CCArray::lastObject()
 
 CCObject* CCArray::randomObject()
 {
-    if(data->num==0) return NULL;
+    if (data->num==0)
+    {
+        return NULL;
+    }
 
-    return data->arr[(int)(data->num*CCRANDOM_0_1())];
+    float r = CCRANDOM_0_1();
+    
+    if (r == 1) // to prevent from accessing data-arr[data->num], out of range.
+    {
+        r = 0;
+    }
+    
+    return data->arr[(int)(data->num * r)];
 }
 
 bool CCArray::containsObject(CCObject* object)
